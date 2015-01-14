@@ -10,6 +10,7 @@ import IntlComponent from './main';
 import escape from '../utils/escape';
 
 var FormatHTMLMessageComponent = IntlComponent.extend({
+	tagName:           'format-html-message',
 	instrumentDisplay: '{{format-html-message}}',
 
 	escapeProps: function (props) {

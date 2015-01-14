@@ -8,6 +8,7 @@ var get      = Ember.get;
 var validKey = /[\w|.]/;
 
 var FormatMessageComponent = IntlComponent.extend({
+	tagName:           'format-message',
 	instrumentDisplay: '{{format-message}}',
 
 	model:      null,

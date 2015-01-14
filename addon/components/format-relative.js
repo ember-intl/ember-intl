@@ -1,6 +1,7 @@
 import IntlComponent from './main';
 
 var FormatRelativeComponent = IntlComponent.extend({
+	tagName:           'format-relative',
 	instrumentDisplay: '{{format-relative}}',
 
 	renderer: function (props, options) {
