@@ -5,7 +5,7 @@ var Writer             = require('./lib/writer');
 var path               = require('path');
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
-var intlPath           = path.dirname(require.resolve('Intl'));
+var intlPath           = path.dirname(require.resolve('intl'));
 
 module.exports = {
   name: 'ember-intl',

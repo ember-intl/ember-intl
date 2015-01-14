@@ -19,7 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "intl": "~0.1.2",
+    "intl": "^0.1.4",
     "intl-messageformat": "~1.0.2",
     "intl-relativeformat": "~1.0.1"
   },
