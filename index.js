@@ -46,18 +46,18 @@ module.exports = {
     return this.mergeTrees(trees);
   },
 
-  postprocessTree: function (type, tree) {
+  treeForPublic: function (tree) {
     var app        = this.app;
     var config     = this.project.config(app.env);
     var intlConfig = config.intl || {};
 
-    if (!tree || intlConfig.disableShim) {
+    if (intlConfig.disableShim) {
       return tree;
-    } 
+    }
 
     var trees = [tree];
 
-    if (type === 'all' && intlConfig.locales) {
+    if (intlConfig.locales) {
       trees.push(new Writer(tree, intlConfig.locales));
     }
 
