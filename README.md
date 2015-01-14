@@ -46,7 +46,7 @@ module.exports = app.toTree();
 ### Format Time
 ```hbs
 {{format-time value=now format='hhmmss'}}
-{{format-time value=now hour='numeric' minute='numeric' second='numeric' hour12=false}}
+{{format-time value=now hour='numeric' minute='numeric' hour12=false}}
 ```
 
 ### Format Relative
