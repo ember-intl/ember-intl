@@ -3,32 +3,49 @@ Choose a locale: {{view 'select' value=value content=options}}
 <h2>Components</h2>
 
 <h3>Format Number</h3>
-{{format-number value=photosTaken}}
-{{format-number value=photosTaken format='EUR'}}
-{{format-number value=photosTaken style='currency' currency='USD'}}
-{{code-snippet name="format-number.hbs"}}
+<div>{{format-number value=photosTaken}}</div>
+<div>{{format-number value=photosTaken format='EUR'}}</div>
+<div>{{format-number value=photosTaken style='currency' currency='USD'}}</div>
+
+{{code-snippet name='format-number.hbs'}}
 
 <h3>Format Time</h3>
-{{format-time value=now format='hhmmss'}}
-{{format-time value=now hour='numeric' minute='numeric' second='numeric' hour12=false}}
+<div>{{format-time value=now format='hhmmss'}}</div>
+<div>{{format-time value=now hour='numeric' minute='numeric' second='numeric' hour12=false}}</div>
 
-{{code-snippet name="format-time.hbs"}}
+{{code-snippet name='format-time.hbs'}}
 
 <h3>Format Relative</h3>
-{{format-relative value=yesterday}}
+<div>{{format-relative value=yesterday}}</div>
 
 <h3>Format Message</h3>
 
-{{format-message
-	messageKey='product.info'
-	product='Apple watch'
-	price=200
-	deadline=yesterday}}
+<div>
+	{{format-message
+		messageKey='product.info'
+		product='Apple watch'
+		price=200
+		deadline=yesterday}}
+</div>
+<div>
+	{{format-message
+		message=messages.photos
+		name='Jason'
+		numPhotos=photosTaken
+		takenDate=yesterday}}
+</div>
 
-{{format-message
-	message=messages.photos
-	name='Jason'
-	numPhotos=photosTaken
-	takenDate=yesterday}}
+{{code-snippet name='format-message.hbs'}}
 
-{{code-snippet name="format-message.hbs"}}
+<h3>Format HTML Message</h3>
+<div>
+	{{format-html-message message='<strong>{product}</strong>' product='Apple watch'}}
+</div>
+<div>
+	{{format-html-message
+		messageKey='product.html.info'
+		product='Apple watch'
+		price=200
+		deadline=yesterday}}
+</div>
+{{code-snippet name='format-html-message.hbs'}}
