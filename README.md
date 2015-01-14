@@ -1,6 +1,7 @@
 # ember-intl
 
-> This library is under heavy development.  API is likely to change and there is likely known issues being worked on.
+> This library is under heavy development.
+> API is likely to change and there are likely known issues being worked on.
 
 ## Features
 
