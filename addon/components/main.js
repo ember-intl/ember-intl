@@ -57,13 +57,20 @@ IntlComponent.reopenClass({
 	formatOptions: Ember.A(),
 
 	filterFormatOptions: function (obj) {
-		return (this.formatOptions || Ember.A()).reduce(function (opts, name) {
+		var match = false;
+
+		var options = this.formatOptions.reduce(function (opts, name) {
 			if (obj.hasOwnProperty(name)) {
+				match = true;
 				opts[name] = obj[name];
 			}
 
 			return opts;
 		}, {});
+
+		if (match) {
+			return options;
+		}
 	}
 });
 
