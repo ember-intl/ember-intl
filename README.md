@@ -26,29 +26,38 @@ module.exports = app.toTree();
 
 ## Examples
 
-### Handlebars
+### Format Number
+```hbs
+{{format-number value=photosTaken}}
+{{format-number value=photosTaken format='EUR'}}
+{{format-number value=photosTaken style='currency' currency='USD'}}
+```
+
+### Format Time
+```hbs
+{{format-time value=now format='hhmmss'}}
+{{format-time value=now hour='numeric' minute='numeric' second='numeric' hour12=false}}
+```
+
+### Format Relative
+```hbs
+{{format-relative value=yesterday}}
+```
+
+### Format Message
 
 ```hbs
-<h3>Format Date</h3>
-{{format-date '12/29/1984'}}
+{{format-message
+	messageKey='product.info'
+	product='Apple watch'
+	price=200
+	deadline=yesterday}}
 
-<h3>Format Time</h3>
-{{format-time today "hhmm"}}
-
-<h3>Format Number</h3>
-{{format-number 10 style="currency" currency="USD"}}
-
-{{#x-intl locales="fr-FR"}}
-	<p>
-		<b>{{format-date today day="numeric" month="long"}}</b>
-		<i>("fr-FR" locale)</i>
-	</p>
-{{/x-intl}}
-
-{{format-message (intl-get "messages.photos")
-	name="Jason"
+{{format-message
+	message=messages.photos
+	name='Jason'
 	numPhotos=photosTaken
-	takenDate=today}}
+	takenDate=yesterday}}
 ```
 
 ## Running
