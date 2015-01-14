@@ -36,6 +36,20 @@ var IntlComponent = Ember.Component.extend({
 		if (bindingRegex.test(propertyName) || this.get(propertyName + 'Binding')) {
 			this.removeObserver(propertyName, this, this.scheduleRender);
 		}
+	},
+
+	layout: function (context, options) {
+		var view    = options.data.view;
+		var intl    = view.get('intl');
+		var locales = view.get('locales');
+		var props   = view.getProperties(view.propKeys);
+		var formats = view.get('format') || view.constructor.filterFormatOptions(props);
+		props.value = context.get('value');
+
+		return view.renderer.call(view, props, {
+			locales: locales,
+			formats: formats
+		});
 	}
 });
 

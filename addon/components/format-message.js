@@ -102,17 +102,8 @@ var FormatMessageComponent = IntlComponent.extend({
 		return out;
 	},
 
-	layout: function (context, options) {
-		var view    = options.data.view;
-		var locales = view.get('locales');
-		var intl    = view.get('intl');
-		var props   = view.getProperties(view.propKeys);
-		var formats = view.get('format') || FormatMessageComponent.filterFormatOptions(props);
-
-		return intl.formatMessage(context.get('value'), get(view, 'pojoContext'), {
-			locales: locales,
-			formats: formats
-		});
+	renderer: function (props, options) {
+		return this.get('intl').formatMessage(props.value, this.get('pojoContext'), options);
 	}
 });
 
