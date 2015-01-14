@@ -1,0 +1,34 @@
+Choose a locale: {{view 'select' value=value content=options}}
+
+<h2>Components</h2>
+
+<h3>Format Number</h3>
+{{format-number value=photosTaken}}
+{{format-number value=photosTaken format='EUR'}}
+{{format-number value=photosTaken style='currency' currency='USD'}}
+{{code-snippet name="format-number.hbs"}}
+
+<h3>Format Time</h3>
+{{format-time value=now format='hhmmss'}}
+{{format-time value=now hour='numeric' minute='numeric' second='numeric' hour12=false}}
+
+{{code-snippet name="format-time.hbs"}}
+
+<h3>Format Relative</h3>
+{{format-relative value=yesterday}}
+
+<h3>Format Message</h3>
+
+{{format-message
+	messageKey='product.info'
+	product='Apple watch'
+	price=200
+	deadline=yesterday}}
+
+{{format-message
+	message=messages.photos
+	name='Jason'
+	numPhotos=photosTaken
+	takenDate=yesterday}}
+
+{{code-snippet name="format-message.hbs"}}

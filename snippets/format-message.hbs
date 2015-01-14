@@ -1,0 +1,15 @@
+Reference a message key, defined in your messages module corresponding to the current locale.
+
+{{format-message
+    messageKey='product.info'
+    product='Apple watch'
+    price=200
+    deadline=yesterday}}
+
+Passing a static message or a message via a data-binding also works.
+
+{{format-message
+    message=messages.photos
+    name='Jason'
+    numPhotos=photosTaken
+    takenDate=yesterday}}

@@ -30,7 +30,7 @@ module.exports = function(environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
-    ENV.locationType = 'auto';
+    ENV.locationType = 'none';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -42,6 +42,24 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
+
+  // example configuration
+  ENV.intl = {
+    shimUrl:          '/assets/intl/Intl.js',
+    shimLocaleData:   '/assets/intl/base-locales/',
+    defaultLocales:   ['en-US'],
+    currentLocales:   ['en-US'],
+    locales: {
+      en: {
+        dest:    '/assets/intl/locales',
+        locales: 'en'
+      },
+      fr: {
+        dest:    '/assets/intl/locales',
+        locales: 'fr-FR'
+      }
+    }
+  };
 
   return ENV;
 };
