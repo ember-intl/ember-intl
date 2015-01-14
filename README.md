@@ -1,5 +1,7 @@
 # ember-intl
 
+> This library is under heavy development.  API is likely to change and there is likely known issues being worked on.
+
 ## Installation
 
 * `npm install ember-intl --save-dev`
