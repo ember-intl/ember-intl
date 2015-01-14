@@ -2,6 +2,13 @@
 
 > This library is under heavy development.  API is likely to change and there is likely known issues being worked on.
 
+## Features
+
+* Auto extracts CLDR based on targeted locales
+* Automatically loads Intl API shim when browser does not support native API
+* Data bound Ember components
+* Hot swap locale at runtime
+
 ## Installation
 
 * `npm install ember-intl --save-dev`
