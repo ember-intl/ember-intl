@@ -38,20 +38,20 @@ module.exports = app.toTree();
 
 ### Format Number
 ```hbs
-{{intl-number value=photosTaken}}
-{{intl-number value=photosTaken format='EUR'}}
-{{intl-number value=photosTaken style='currency' currency='USD'}}
+{{intl-number num}}
+{{intl-number num format='EUR'}}
+{{intl-number num style='currency' currency='USD'}}
 ```
 
 ### Format Time
 ```hbs
-{{intl-time value=now format='hhmmss'}}
-{{intl-time value=now hour='numeric' minute='numeric' hour12=false}}
+{{intl-time now format='hhmmss'}}
+{{intl-time now hour='numeric' minute='numeric' hour12=false}}
 ```
 
 ### Format Relative
 ```hbs
-{{intl-relative value=yesterday}}
+{{intl-relative yesterday}}
 ```
 
 ### Format Message
@@ -64,9 +64,9 @@ module.exports = app.toTree();
 	deadline=yesterday}}
 
 {{intl-message
-	message=messages.photos
+	messages.photos
 	name='Jason'
-	numPhotos=photosTaken
+	numPhotos=num
 	takenDate=yesterday}}
 ```
 

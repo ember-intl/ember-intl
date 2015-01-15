@@ -14,7 +14,7 @@ function formatNumber (number, options) {
 
 export default Ember.Controller.extend({
 	options:     ['en-US', 'fr-FR'],
-	photosTaken: 1000,
+	num: 1000,
 	yesterday:   yesterday,
 	now:         now,
 
@@ -48,7 +48,7 @@ export default Ember.Controller.extend({
 		setInterval(function() {
 			Ember.run(function() {
 				self.set('now', new Date());
-				self.incrementProperty('photosTaken');
+				self.incrementProperty('num');
 			});
 		}, 1000);
 	})

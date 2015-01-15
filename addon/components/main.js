@@ -3,7 +3,7 @@ import Ember from 'ember';
 var bindingExp = new RegExp(/Binding$/);
 var computed   = Ember.computed;
 
-var IntlComponent = Ember.Component.extend({
+var IntlBase = Ember.Component.extend({
 	value:     null,
 	propKeys:  Ember.A(),
 	locales:   computed.oneWay('intl.locales'),
@@ -54,7 +54,7 @@ var IntlComponent = Ember.Component.extend({
 	}
 });
 
-IntlComponent.reopenClass({
+IntlBase.reopenClass({
 	formatOptions: Ember.A(),
 
 	filterFormatOptions: function (obj) {
@@ -75,4 +75,4 @@ IntlComponent.reopenClass({
 	}
 });
 
-export default IntlComponent;
+export default IntlBase;

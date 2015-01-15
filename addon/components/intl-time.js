@@ -1,6 +1,6 @@
-import IntlComponent from './main';
+import IntlBase from './main';
 
-var FormatTimeComponent = IntlComponent.extend({
+var IntlTime = IntlBase.extend({
 	tagName:           'intl-time',
 	instrumentDisplay: '{{intl-time}}',
 
@@ -9,7 +9,7 @@ var FormatTimeComponent = IntlComponent.extend({
 	}
 });
 
-FormatTimeComponent.reopenClass({
+IntlTime.reopenClass({
 	formatOptions: [
 		'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
 		'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
@@ -17,4 +17,4 @@ FormatTimeComponent.reopenClass({
 	]
 });
 
-export default FormatTimeComponent;
+export default IntlTime;

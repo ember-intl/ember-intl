@@ -1,6 +1,6 @@
-import IntlComponent from './main';
+import IntlBase from './main';
 
-var FormatDateComponent = IntlComponent.extend({
+var IntlDate = IntlBase.extend({
 	tagName:           'intl-date',
 	instrumentDisplay: '{{intl-date}}',
 
@@ -9,7 +9,7 @@ var FormatDateComponent = IntlComponent.extend({
 	}
 });
 
-FormatDateComponent.reopenClass({
+IntlDate.reopenClass({
 	formatOptions: [
 		'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
 		'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
@@ -17,4 +17,4 @@ FormatDateComponent.reopenClass({
 	]
 });
 
-export default FormatDateComponent;
+export default IntlDate;

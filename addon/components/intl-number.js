@@ -1,6 +1,6 @@
-import IntlComponent from './main';
+import IntlBase from './main';
 
-var FormatNumberComponent = IntlComponent.extend({
+var IntlNumber = IntlBase.extend({
 	tagName:           'intl-number',
 	instrumentDisplay: '{{intl-number}}',
 
@@ -9,7 +9,7 @@ var FormatNumberComponent = IntlComponent.extend({
 	}
 });
 
-FormatNumberComponent.reopenClass({
+IntlNumber.reopenClass({
 	formatOptions: [
 		'localeMatcher', 'style', 'currency', 'currencyDisplay',
 		'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
@@ -18,4 +18,4 @@ FormatNumberComponent.reopenClass({
 	]
 });
 
-export default FormatNumberComponent;
+export default IntlNumber;

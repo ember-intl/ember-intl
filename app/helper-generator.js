@@ -7,7 +7,13 @@ import Ember from 'ember';
  * HTMLBars:   http://jsbin.com/qopufe/1/edit
  */
 
-export default function (EmberHandlebars, helperName, ComponentType) {
+var htmlbars = !!Ember.HTMLBars;
+
+if (htmlbars) {
+	throw new Error('HTMLBars is not yet supported.');
+}
+
+var helperCreator = function (EmberHandlebars, helperName, ComponentType) {
 	var fn = function (/* values .. , options */) {
 		var args    = Array.prototype.slice.call(arguments);
 		var options = args[args.length - 1];
@@ -17,7 +23,9 @@ export default function (EmberHandlebars, helperName, ComponentType) {
 			value = args[0];
 			view  = options.data.view;
 
-			if (typeof value === 'string' && (options.hashTypes[value] === 'ID' || options.hashTypes[value] === undefined)) {
+			if (typeof value === 'string' &&
+				(options.hashTypes[value] === 'ID' ||
+				(options.types && options.types[0] === 'ID'))) {
 				options.hash.valueBinding = view.getStream(value);
 			} else {
 				options.hash.value = value;
@@ -29,6 +37,7 @@ export default function (EmberHandlebars, helperName, ComponentType) {
 		return EmberHandlebars.helpers.view.call(this, ComponentType, options);
 	}
 
-	EmberHandlebars.registerHelper(Ember.String.dasherize(helperName), fn);
-	EmberHandlebars.registerHelper(Ember.String.camelize(helperName),  fn);
+	EmberHandlebars.registerHelper(helperName, fn);
 }
+
+export default helperCreator;

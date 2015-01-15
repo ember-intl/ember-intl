@@ -101,7 +101,6 @@ ServiceInitializer.prototype = {
 		});
 
 		app.inject('controller', 'intl', 'intl:main');
-		app.inject('component',  'intl', 'intl:main');
 		app.inject('route',      'intl', 'intl:main');
 		app.inject('model',      'intl', 'intl:main');
 		app.inject('view',       'intl', 'intl:main');

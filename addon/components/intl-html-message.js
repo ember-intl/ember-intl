@@ -1,4 +1,4 @@
-import IntlComponent from './intl-message';
+import IntlMessage from './intl-message';
 import escape from '../utils/escape';
 
 function escapeProps (props) {
@@ -16,7 +16,7 @@ function escapeProps (props) {
 	}, {});
 }
 
-var FormatHTMLMessageComponent = IntlComponent.extend({
+var IntlHTMLMessage = IntlMessage.extend({
 	tagName:           'intl-html-message',
 	instrumentDisplay: '{{intl-html-message}}',
 
@@ -25,4 +25,4 @@ var FormatHTMLMessageComponent = IntlComponent.extend({
 	}
 });
 
-export default FormatHTMLMessageComponent;
+export default IntlHTMLMessage;

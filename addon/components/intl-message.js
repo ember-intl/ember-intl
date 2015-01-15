@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import IntlComponent from './main';
+import IntlBase from './main';
 
 var computed = Ember.computed;
 var alias    = computed.alias;
 var get      = Ember.get;
 var validKey = /[\w|.]/;
 
-var FormatMessageComponent = IntlComponent.extend({
+var IntlMessage = IntlBase.extend({
 	tagName:           'intl-message',
 	instrumentDisplay: '{{intl-message}}',
 
@@ -109,4 +109,4 @@ var FormatMessageComponent = IntlComponent.extend({
 	}
 });
 
-export default FormatMessageComponent;
+export default IntlMessage;

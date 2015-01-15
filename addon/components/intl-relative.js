@@ -1,6 +1,6 @@
-import IntlComponent from './main';
+import IntlBase from './main';
 
-var FormatRelativeComponent = IntlComponent.extend({
+var IntlRelative = IntlBase.extend({
 	tagName:           'intl-relative',
 	instrumentDisplay: '{{intl-relative}}',
 
@@ -9,10 +9,10 @@ var FormatRelativeComponent = IntlComponent.extend({
 	}
 });
 
-FormatRelativeComponent.reopenClass({
+IntlRelative.reopenClass({
 	formatOptions: [
 		'style', 'units'
 	]
 });
 
-export default FormatRelativeComponent;
+export default IntlRelative;
