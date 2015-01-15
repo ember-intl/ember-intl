@@ -1,4 +1,3 @@
-import { objCreate } from '../format-cache/es5';
 import Ember from 'ember';
 import IntlComponent from './main';
 
@@ -30,7 +29,7 @@ var FormatMessageComponent = IntlComponent.extend({
 		var model   = get(this, 'model') || {};
 		var message = get(this, 'value');
 		var keys    = this.getICUKeys(message);
-		var out     = objCreate(null);
+		var out     = Ember.create(null);
 		var length  = keys.length;
 		var i       = 0;
 		var key, value;

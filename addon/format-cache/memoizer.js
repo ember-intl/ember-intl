@@ -6,12 +6,12 @@ See the accompanying LICENSE file for terms.
 
 /* jshint esnext: true */
 
-import { objCreate } from './es5';
+import Ember from 'ember';
 
 // -----------------------------------------------------------------------------
 
 function createFormatCache(FormatConstructor) {
-    var cache = objCreate(null);
+    var cache = Ember.create(null);
 
     return function () {
         var args    = Array.prototype.slice.call(arguments);
@@ -19,7 +19,7 @@ function createFormatCache(FormatConstructor) {
         var format  = cacheId && cache[cacheId];
 
         if (!format) {
-            format = objCreate(FormatConstructor.prototype);
+            format = Ember.create(FormatConstructor.prototype);
             FormatConstructor.apply(format, args);
 
             if (cacheId) {
