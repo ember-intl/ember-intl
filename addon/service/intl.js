@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
 	getNumberFormat:   null,
 
 	current: Ember.computed('locales', 'fallbackLocales', function () {
-		var locales = makeArray(get(this, 'locales'));
+		var locales         = makeArray(get(this, 'locales'));
 		var fallbackLocales = makeArray(get(this, 'fallbackLocales'));
 
 		fallbackLocales = fallbackLocales.filter(function (locale) {

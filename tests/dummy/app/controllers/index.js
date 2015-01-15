@@ -14,7 +14,7 @@ function formatNumber (number, options) {
 
 export default Ember.Controller.extend({
 	options:     ['en-US', 'fr-FR'],
-	num: 1000,
+	num:         1000,
 	yesterday:   yesterday,
 	now:         now,
 
@@ -50,6 +50,6 @@ export default Ember.Controller.extend({
 				self.set('now', new Date());
 				self.incrementProperty('num');
 			});
-		}, 1000);
+		}, 50);
 	})
 });

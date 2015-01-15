@@ -3,7 +3,7 @@ import Ember from 'ember';
 var bindingExp = new RegExp(/Binding$/);
 var computed   = Ember.computed;
 
-var IntlBase = Ember.Component.extend({
+var IntlBase = Ember.Object.extend({
 	tagName:   '',
 	value:     null,
 	propKeys:  Ember.A(),
@@ -32,25 +32,17 @@ var IntlBase = Ember.Component.extend({
 		return this._super.apply(this, arguments);
 	},
 
-	_createObserver: function (propertyName) {
-		this.addObserver(propertyName.replace(bindingExp, ''), this, this.scheduleRender);
-	},
-
-	_removeObserver: function (propertyName) {
-		this.removeObserver(propertyName, this, this.scheduleRender);
-	},
-
-	layout: function (context, options) {
-		var view    = options.data.view;
-		var intl    = view.get('intl');
-		var locales = view.get('locales');
-		var props   = view.getProperties(view.propKeys);
-		var formats = view.get('format') || view.constructor.filterFormatOptions(props);
-
-		return view.renderer.call(view, intl, context.get('value'), {
-			locales: locales,
-			formats: formats
-		});
+	render: function (value, options) {
+		// var view    = options.data.view;
+		// var intl    = view.get('intl');
+		// var locales = view.get('locales');
+		// var props   = view.getProperties(view.propKeys);
+		// var formats = view.get('format') || view.constructor.filterFormatOptions(props);
+		//
+		// return view.renderer.call(view, intl, value, {
+		// 	locales: locales,
+		// 	formats: formats
+		// });
 	}
 });
 
