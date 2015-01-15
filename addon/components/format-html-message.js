@@ -20,8 +20,8 @@ var FormatHTMLMessageComponent = IntlComponent.extend({
 	tagName:           'format-html-message',
 	instrumentDisplay: '{{format-html-message}}',
 
-	renderer: function (props, options) {
-		return this.get('intl').formatMessage(props.value, escapeProps(this.get('pojoContext')), options);
+	renderer: function (intl, props, options) {
+		return intl.formatMessage(props.value, escapeProps(this.get('pojoContext')), options);
 	}
 });
 

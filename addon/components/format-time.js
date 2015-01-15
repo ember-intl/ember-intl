@@ -4,8 +4,8 @@ var FormatTimeComponent = IntlComponent.extend({
 	tagName:           'format-time',
 	instrumentDisplay: '{{format-time}}',
 
-	renderer: function (props, options) {
-		return this.get('intl').formatTime(props.value, options);
+	renderer: function (intl, props, options) {
+		return intl.formatTime(props.value, options);
 	}
 });
 

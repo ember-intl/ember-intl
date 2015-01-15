@@ -14,11 +14,11 @@ export default {
 		}
 
 		var initializer = new ServiceInitializer(container, app, {
-			currentLocales: get(env, 'intl.currentLocales') || app.currentLocales,
-			defaultLocales: get(env, 'intl.defaultLocales') || app.defaultLocales,
-			shimLocaleData: get(env, 'intl.shimLocaleData'),
-			shimUrl:        get(env, 'intl.shimUrl'),
-			disableShim:    get(env, 'intl.disableShim')
+			locales:         get(env, 'intl.locales')         || app.locales,
+			fallbackLocales: get(env, 'intl.fallbackLocales') || app.fallbackLocales,
+			shimLocaleData:  get(env, 'intl.shimLocaleData'),
+			shimUrl:         get(env, 'intl.shimUrl'),
+			disableShim:     get(env, 'intl.disableShim')
 		});
 
 		initializer.init().then(function () {

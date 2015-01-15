@@ -4,8 +4,8 @@ var FormatNumberComponent = IntlComponent.extend({
 	tagName:           'format-number',
 	instrumentDisplay: '{{format-number}}',
 
-	renderer: function (props, options) {
-		return this.get('intl').formatNumber(props.value, options);
+	renderer: function (intl, props, options) {
+		return intl.formatNumber(props.value, options);
 	}
 });
 

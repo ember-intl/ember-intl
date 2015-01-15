@@ -47,17 +47,20 @@ module.exports = function(environment) {
   ENV.intl = {
     shimUrl:          '/assets/intl/Intl.js',
     shimLocaleData:   '/assets/intl/base-locales/',
-    defaultLocales:   ['en-US'],
-    currentLocales:   ['en-US'],
-    locales: {
-      en: {
-        dest:    '/assets/intl/locales',
-        locales: 'en'
-      },
-      fr: {
-        dest:    '/assets/intl/locales',
-        locales: 'fr-FR'
-      }
+    fallbackLocales:   ['en-US'],
+    locales:           ['en-US'],
+
+    // Defines the locales to extract CLDR data for
+    // by default these files are stored in:
+    // /assets/intl/locales
+    //
+    // However, you can override the by passing `dest`
+    // example: en: { locales: ['en'], dest: '/assets/intl/locales' }
+    //
+
+    i18n: {
+      en: { locales: ['en'] },
+      fr: { locales: ['fr-FR'] }
     }
   };
 

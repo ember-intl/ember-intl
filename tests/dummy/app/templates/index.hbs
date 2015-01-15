@@ -39,13 +39,14 @@ Choose a locale: {{view 'select' value=value content=options}}
 
 <h3>Format HTML Message</h3>
 <div>
-	{{format-html-message message='<strong>{product}</strong>' product='Apple watch'}}
-</div>
-<div>
 	{{format-html-message
 		messageKey='product.html.info'
 		product='Apple watch'
 		price=200
 		deadline=yesterday}}
 </div>
+<div>
+	{{format-html-message message='<strong>{product}</strong>' product='Apple watch'}}
+</div>
+
 {{code-snippet name='format-html-message.hbs'}}

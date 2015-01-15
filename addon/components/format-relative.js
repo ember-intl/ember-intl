@@ -4,8 +4,8 @@ var FormatRelativeComponent = IntlComponent.extend({
 	tagName:           'format-relative',
 	instrumentDisplay: '{{format-relative}}',
 
-	renderer: function (props, options) {
-		return this.get('intl').formatRelative(props.value, options);
+	renderer: function (intl, props, options) {
+		return intl.formatRelative(props.value, options);
 	}
 });
 

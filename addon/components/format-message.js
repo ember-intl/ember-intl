@@ -20,7 +20,9 @@ var FormatMessageComponent = IntlComponent.extend({
 		var key = get(this, 'messageKey');
 
 		if (!Ember.isBlank(key)) {
-			return get(this, 'intl.messages.' + key);
+			var msg = get(this, 'intl.messages.' + key);
+			Ember.assert('No message was discovered on key: ' + key, msg);
+			return msg;
 		}
 	}),
 
@@ -103,8 +105,8 @@ var FormatMessageComponent = IntlComponent.extend({
 		return out;
 	},
 
-	renderer: function (props, options) {
-		return this.get('intl').formatMessage(props.value, this.get('pojoContext'), options);
+	renderer: function (intl, props, options) {
+		return intl.formatMessage(props.value, this.get('pojoContext'), options);
 	}
 });
 

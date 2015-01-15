@@ -15,14 +15,15 @@ export function fetch (url) {
 function ServiceInitializer (container, app, options) {
 	options = options || {};
 
-	this.container      = container;
-	this.application    = app;
+	this.app             = app;
+	this.container       = container;
 
-	this.shimUrl        = options.shimUrl;
-	this.disableShim    = options.disableShim;
-	this.defaultLocales = options.defaultLocales;
-	this.currentLocales = options.currentLocales;
-	this.shimLocaleData = options.shimLocaleData;
+	this.shimUrl         = options.shimUrl;
+	this.disableShim     = options.disableShim;
+	this.shimLocaleData  = options.shimLocaleData;
+
+	this.locales         = options.locales;
+	this.fallbackLocales = options.fallbackLocales;
 }
 
 ServiceInitializer.prototype = {
@@ -30,7 +31,7 @@ ServiceInitializer.prototype = {
 
 	init: function () {
 		return new Ember.RSVP.Promise(function (resolve, reject) {
-			var app = this.application;
+			var app = this.app;
 
 			app.deferReadiness();
 
@@ -61,11 +62,12 @@ ServiceInitializer.prototype = {
 	},
 
 	createService: function (shimmed) {
-		var app            = this.application;
-		var ServiceKlass   = app.IntlService || IntlService;
-		var service        = ServiceKlass.create({ container: this.container });
-		var locales        = makeArray(this.currentLocales);
-		var defaultLocales = makeArray(this.defaultLocales);
+		var app             = this.app;
+		var ServiceKlass    = app.IntlService || IntlService;
+		var service         = ServiceKlass.create({ container: this.container });
+
+		var locales         = makeArray(this.locales);
+		var fallbackLocales = makeArray(this.fallbackLocales);
 
 		if (shimmed) {
 			app.deferReadiness();
@@ -75,18 +77,18 @@ ServiceInitializer.prototype = {
 				dir += '/';
 			}
 
-			Ember.RSVP.all(locales.concat(defaultLocales).map(function (locale) {
+			Ember.RSVP.all(locales.concat(fallbackLocales).map(function (locale) {
 				return fetch(dir + locale + '.js');
 			})).finally(function () {
 				app.advanceReadiness();
 			});
 		}
 
-		Ember.assert('Locales has not been configured.  You must define a locale on your application.', locales || defaultLocales);
+		Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || fallbackLocales);
 
 		service.setProperties({
-			locales:        makeArray(locales),
-			defaultLocales: makeArray(defaultLocales),
+			locales:         makeArray(locales),
+			fallbackLocales: makeArray(fallbackLocales),
 
 			shimmed: Ember.computed(function () {
 				return !!shimmed;

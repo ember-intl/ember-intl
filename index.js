@@ -57,8 +57,8 @@ module.exports = {
 
     var trees = [tree];
 
-    if (intlConfig.locales) {
-      trees.push(new Writer(tree, intlConfig.locales));
+    if (intlConfig.i18n) {
+      trees.push(new Writer(tree, intlConfig.i18n));
     }
 
     trees.push(this.pickFiles(intlPath, {

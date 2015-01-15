@@ -6,7 +6,7 @@ var defaultConfig = {
 	disableShim:    false,
 	shimUrl:        '/assets/intl/Intl.js',
 	shimLocaleData: '/assets/intl/base-locales/',
-	locales: {
+	i18n: {
 		en: {
 			dest:    '/assets/intl/locales',
 			locales: ['en-US']
@@ -18,8 +18,8 @@ module.exports = function(env, appConfig) {
 	appConfig = appConfig || {};
 
 	appConfig.intl = defaults(defaultConfig, appConfig.intl);
-	appConfig.APP.currentLocales = ['en-US'];
-	appConfig.APP.defaultLocales = ['en-US'];
+	appConfig.APP.locales = ['en-US'];
+	appConfig.APP.fallbackLocales = ['en-US'];
 
 	return appConfig;
 };

@@ -1,19 +1,25 @@
 import Ember from 'ember';
 
-var bindingRegex = new RegExp(/Binding$/);
+var bindingExp = new RegExp(/Binding$/);
+var computed   = Ember.computed;
 
 var IntlComponent = Ember.Component.extend({
-	propKeys:  Ember.A(),
 	value:     null,
+	propKeys:  Ember.A(),
+	locales:   computed.oneWay('intl.locales'),
 
-	locales: Ember.computed.oneWay('intl.locales'),
+	setup: Ember.on('init', function () {
+		Ember.defineProperty(this, 'intl', computed(function () {
+			return this.container.lookup('intl:main');
+		}).readOnly());
 
-	intl: Ember.computed(function () {
-		return this.container.lookup('intl:main');
-	}).readOnly(),
+		Ember.defineProperty(this, 'boundKeys', computed('propKeys.[]', function () {
+			return this.get('propKeys').filter(function (key) {
+				return bindingExp.test(key) || this.get(key + 'Binding');
+			}.bind(this));
+		}).readOnly());
 
-	setupPropObservers: Ember.on('init', function () {
-		this.propKeys.forEach(this.createIntlObservers, this);
+		this.get('boundKeys').forEach(this._createObserver, this);
 	}),
 
 	scheduleRender: Ember.observer('locales', function () {
@@ -21,21 +27,16 @@ var IntlComponent = Ember.Component.extend({
 	}),
 
 	destroy: function () {
-		this.propKeys.forEach(this.removeIntlObservers, this);
-
+		this.get('boundKeys').forEach(this._removeObserver, this);
 		return this._super.apply(this, arguments);
 	},
 
-	createIntlObservers: function (propertyName) {
-		if (bindingRegex.test(propertyName) || this.get(propertyName + 'Binding')) {
-			this.addObserver(propertyName.replace(bindingRegex, ''), this, this.scheduleRender);
-		}
+	_createObserver: function (propertyName) {
+		this.addObserver(propertyName.replace(bindingExp, ''), this, this.scheduleRender);
 	},
 
-	removeIntlObservers: function (propertyName) {
-		if (bindingRegex.test(propertyName) || this.get(propertyName + 'Binding')) {
-			this.removeObserver(propertyName, this, this.scheduleRender);
-		}
+	_removeObserver: function (propertyName) {
+		this.removeObserver(propertyName, this, this.scheduleRender);
 	},
 
 	layout: function (context, options) {
@@ -46,7 +47,7 @@ var IntlComponent = Ember.Component.extend({
 		var formats = view.get('format') || view.constructor.filterFormatOptions(props);
 		props.value = context.get('value');
 
-		return view.renderer.call(view, props, {
+		return view.renderer.call(view, intl, props, {
 			locales: locales,
 			formats: formats
 		});

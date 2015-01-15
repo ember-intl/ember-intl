@@ -16,17 +16,22 @@ function assertIsDate (date, errMsg) {
 
 export default Ember.Controller.extend({
 	locales:           null,
-	defaultLocales:    null,
+	fallbackLocales:   null,
 	shimmed:           null,
 	getDateTimeFormat: null,
 	getRelativeFormat: null,
 	getMessageFormat:  null,
 	getNumberFormat:   null,
 
-	current: Ember.computed('locales', 'defaultLocales', function () {
-		return makeArray(get(this, 'locales'))
-			.concat(makeArray(get(this, 'defaultLocales')))
-			.uniq();
+	current: Ember.computed('locales', 'fallbackLocales', function () {
+		var locales = makeArray(get(this, 'locales'));
+		var fallbackLocales = makeArray(get(this, 'fallbackLocales'));
+
+		fallbackLocales = fallbackLocales.filter(function (locale) {
+			return !locales.contains(locale);
+		});
+
+		return fallbackLocales.concat(locales);
 	}).readOnly(),
 
 	setupMemoizers: Ember.on('init', function () {
@@ -49,30 +54,28 @@ export default Ember.Controller.extend({
 		return formats;
 	}).readOnly(),
 
-	lookupMessage: function (name) {
-		return this.container.resolver('message:' + name);
-	},
-
 	messages: Ember.computed('current', function () {
-		var messages = {};
 		var locales  = get(this, 'current');
+		var messages = {};
 
-		if (Ember.isEmpty(locales)) {
-			return;
-		}
+		if (!Ember.isEmpty(locales)) {
+			locales.forEach(function (localeKey) {
+				var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
 
-		locales.forEach(function (localeKey) {
-			var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
-
-			for (var key in locale) {
-				if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
-					messages[key] = locale[key];
+				for (var key in locale) {
+					if (locale.hasOwnProperty(key)) {
+						messages[key] = Ember.$.extend(true, messages[key], locale[key]);
+					}
 				}
-			}
-		}, this);
+			}, this);
+		}
 
 		return messages;
 	}),
+
+	lookupMessage: function (localeName) {
+		return this.container.resolver('message:' + localeName);
+	},
 
 	addLocaleData: function (data) {
 		Ember.assert('IntlMessageFormat has not yet been loaded',  IntlMessageFormat);

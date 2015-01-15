@@ -4,8 +4,8 @@ var FormatDateComponent = IntlComponent.extend({
 	tagName:           'format-date',
 	instrumentDisplay: '{{format-date}}',
 
-	renderer: function (props, options) {
-		return this.get('intl').formatDate(props.value, options);
+	renderer: function (intl, props, options) {
+		return intl.formatDate(props.value, options);
 	}
 });
 
