@@ -58,7 +58,7 @@ module.exports = function(environment) {
     // example: en: { locales: ['en'], dest: '/assets/intl/locales' }
     //
 
-    i18n: {
+    intl: {
       en: { locales: ['en'] },
       fr: { locales: ['fr-FR'] }
     }

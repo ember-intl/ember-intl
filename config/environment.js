@@ -6,7 +6,7 @@ var defaultConfig = {
 	disableShim:    false,
 	shimUrl:        '/assets/intl/Intl.js',
 	shimLocaleData: '/assets/intl/base-locales/',
-	i18n: {
+	intl: {
 		en: {
 			dest:    '/assets/intl/locales',
 			locales: ['en-US']
