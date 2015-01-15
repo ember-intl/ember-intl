@@ -1,4 +1,4 @@
-import IntlComponent from './format-message';
+import IntlComponent from './intl-message';
 import escape from '../utils/escape';
 
 function escapeProps (props) {
@@ -17,8 +17,8 @@ function escapeProps (props) {
 }
 
 var FormatHTMLMessageComponent = IntlComponent.extend({
-	tagName:           'format-html-message',
-	instrumentDisplay: '{{format-html-message}}',
+	tagName:           'intl-html-message',
+	instrumentDisplay: '{{intl-html-message}}',
 
 	renderer: function (intl, props, options) {
 		return intl.formatMessage(props.value, escapeProps(this.get('pojoContext')), options);

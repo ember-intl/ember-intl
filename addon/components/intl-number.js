@@ -1,8 +1,8 @@
 import IntlComponent from './main';
 
 var FormatNumberComponent = IntlComponent.extend({
-	tagName:           'format-number',
-	instrumentDisplay: '{{format-number}}',
+	tagName:           'intl-number',
+	instrumentDisplay: '{{intl-number}}',
 
 	renderer: function (intl, props, options) {
 		return intl.formatNumber(props.value, options);

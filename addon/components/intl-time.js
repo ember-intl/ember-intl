@@ -1,8 +1,8 @@
 import IntlComponent from './main';
 
 var FormatTimeComponent = IntlComponent.extend({
-	tagName:           'format-time',
-	instrumentDisplay: '{{format-time}}',
+	tagName:           'intl-time',
+	instrumentDisplay: '{{intl-time}}',
 
 	renderer: function (intl, props, options) {
 		return intl.formatTime(props.value, options);

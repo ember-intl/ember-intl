@@ -7,8 +7,8 @@ var get      = Ember.get;
 var validKey = /[\w|.]/;
 
 var FormatMessageComponent = IntlComponent.extend({
-	tagName:           'format-message',
-	instrumentDisplay: '{{format-message}}',
+	tagName:           'intl-message',
+	instrumentDisplay: '{{intl-message}}',
 
 	model:      null,
 	messageKey: null,
@@ -42,7 +42,7 @@ var FormatMessageComponent = IntlComponent.extend({
 			//
 			// For example, if decided to pass:
 			//
-			// {{format-message pojoContext='oops'}}
+			// {{intl-message pojoContext='oops'}}
 			//
 			// This is in the pipeline for Ember 2.0 to take the
 			// same approach as React and put them on a `props` object
