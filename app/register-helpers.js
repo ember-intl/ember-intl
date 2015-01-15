@@ -1,12 +1,12 @@
 import Ember from 'ember';
 import createHelper from './helper-generator';
 
-import FormatNumberComponent from './components/intl-number';
-import FormatDateComponent from './components/intl-date';
-import FormatTimeComponent from './components/intl-time';
-import FormatMessageComponent from './components/intl-message';
-import FormatHTMLMessageComponent from './components/intl-html-message';
-import FormatRelativeComponent from './components/intl-relative';
+import FormatNumberComponent from 'ember-intl/components/intl-number';
+import FormatDateComponent from 'ember-intl/components/intl-date';
+import FormatTimeComponent from 'ember-intl/components/intl-time';
+import FormatMessageComponent from 'ember-intl/components/intl-message';
+import FormatHTMLMessageComponent from 'ember-intl/components/intl-html-message';
+import FormatRelativeComponent from 'ember-intl/components/intl-relative';
 
 /**
 	Creates a handlebar helper for each of the intl components.
