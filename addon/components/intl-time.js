@@ -4,8 +4,8 @@ var IntlTime = IntlBase.extend({
 	tagName:           'intl-time',
 	instrumentDisplay: '{{intl-time}}',
 
-	renderer: function (intl, props, options) {
-		return intl.formatTime(props.value, options);
+	renderer: function (intl, inputValue, options) {
+		return intl.formatTime(inputValue, options);
 	}
 });
 

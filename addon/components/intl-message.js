@@ -104,8 +104,8 @@ var IntlMessage = IntlBase.extend({
 		return out;
 	},
 
-	renderer: function (intl, props, options) {
-		return intl.formatMessage(props.value, this.get('pojoContext'), options);
+	renderer: function (intl, inputValue, options) {
+		return intl.formatMessage(inputValue, this.get('pojoContext'), options);
 	}
 });
 

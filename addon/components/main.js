@@ -45,9 +45,8 @@ var IntlBase = Ember.Component.extend({
 		var locales = view.get('locales');
 		var props   = view.getProperties(view.propKeys);
 		var formats = view.get('format') || view.constructor.filterFormatOptions(props);
-		props.value = context.get('value');
 
-		return view.renderer.call(view, intl, props, {
+		return view.renderer.call(view, intl, context.get('value'), {
 			locales: locales,
 			formats: formats
 		});

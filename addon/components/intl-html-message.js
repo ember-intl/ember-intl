@@ -20,8 +20,8 @@ var IntlHTMLMessage = IntlMessage.extend({
 	tagName:           'intl-html-message',
 	instrumentDisplay: '{{intl-html-message}}',
 
-	renderer: function (intl, props, options) {
-		return intl.formatMessage(props.value, escapeProps(this.get('pojoContext')), options);
+	renderer: function (intl, inputValue, options) {
+		return intl.formatMessage(inputValue, escapeProps(this.get('pojoContext')), options);
 	}
 });
 

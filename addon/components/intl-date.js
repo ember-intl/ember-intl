@@ -4,8 +4,8 @@ var IntlDate = IntlBase.extend({
 	tagName:           'intl-date',
 	instrumentDisplay: '{{intl-date}}',
 
-	renderer: function (intl, props, options) {
-		return intl.formatDate(props.value, options);
+	renderer: function (intl, inputValue, options) {
+		return intl.formatDate(inputValue, options);
 	}
 });
 

@@ -4,8 +4,8 @@ var IntlRelative = IntlBase.extend({
 	tagName:           'intl-relative',
 	instrumentDisplay: '{{intl-relative}}',
 
-	renderer: function (intl, props, options) {
-		return intl.formatRelative(props.value, options);
+	renderer: function (intl, inputValue, options) {
+		return intl.formatRelative(inputValue, options);
 	}
 });
 

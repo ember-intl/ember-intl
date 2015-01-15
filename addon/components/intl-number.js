@@ -4,8 +4,8 @@ var IntlNumber = IntlBase.extend({
 	tagName:           'intl-number',
 	instrumentDisplay: '{{intl-number}}',
 
-	renderer: function (intl, props, options) {
-		return intl.formatNumber(props.value, options);
+	renderer: function (intl, inputValue, options) {
+		return intl.formatNumber(inputValue, options);
 	}
 });
 
