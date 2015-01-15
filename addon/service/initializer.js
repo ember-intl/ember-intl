@@ -87,8 +87,8 @@ ServiceInitializer.prototype = {
 		Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || fallbackLocales);
 
 		service.setProperties({
-			locales:         makeArray(locales),
-			fallbackLocales: makeArray(fallbackLocales),
+			locales:         locales,
+			fallbackLocales: fallbackLocales,
 
 			shimmed: Ember.computed(function () {
 				return !!shimmed;

@@ -18,7 +18,7 @@
 ```js
 /* Brocfile.js */
 var app = new EmberApp({
-	locales: {
+	i18n: {
 		en: {
 			// writes files to /locales/en.js and /locales.fr.js
 			dest: 'locales',
