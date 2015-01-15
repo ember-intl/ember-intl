@@ -1,7 +1,6 @@
 import IntlBase from './main';
 
 var IntlNumber = IntlBase.extend({
-	tagName:           'intl-number',
 	instrumentDisplay: '{{intl-number}}',
 
 	renderer: function (intl, inputValue, options) {

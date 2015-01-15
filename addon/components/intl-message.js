@@ -7,7 +7,6 @@ var get      = Ember.get;
 var validKey = /[\w|.]/;
 
 var IntlMessage = IntlBase.extend({
-	tagName:           'intl-message',
 	instrumentDisplay: '{{intl-message}}',
 
 	model:      null,

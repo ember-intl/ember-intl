@@ -17,7 +17,6 @@ function escapeProps (props) {
 }
 
 var IntlHTMLMessage = IntlMessage.extend({
-	tagName:           'intl-html-message',
 	instrumentDisplay: '{{intl-html-message}}',
 
 	renderer: function (intl, inputValue, options) {

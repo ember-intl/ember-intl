@@ -4,6 +4,7 @@ var bindingExp = new RegExp(/Binding$/);
 var computed   = Ember.computed;
 
 var IntlBase = Ember.Component.extend({
+	tagName:   '',
 	value:     null,
 	propKeys:  Ember.A(),
 	locales:   computed.oneWay('intl.locales'),

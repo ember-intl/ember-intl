@@ -1,7 +1,6 @@
 import IntlBase from './main';
 
 var IntlTime = IntlBase.extend({
-	tagName:           'intl-time',
 	instrumentDisplay: '{{intl-time}}',
 
 	renderer: function (intl, inputValue, options) {

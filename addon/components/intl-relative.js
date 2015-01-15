@@ -1,7 +1,6 @@
 import IntlBase from './main';
 
 var IntlRelative = IntlBase.extend({
-	tagName:           'intl-relative',
 	instrumentDisplay: '{{intl-relative}}',
 
 	renderer: function (intl, inputValue, options) {

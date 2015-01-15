@@ -1,7 +1,6 @@
 import IntlBase from './main';
 
 var IntlDate = IntlBase.extend({
-	tagName:           'intl-date',
 	instrumentDisplay: '{{intl-date}}',
 
 	renderer: function (intl, inputValue, options) {
