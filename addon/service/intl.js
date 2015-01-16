@@ -6,10 +6,6 @@ var alias     = Ember.computed.alias;
 var makeArray = Ember.makeArray;
 var get       = Ember.get;
 
-function assertIsNumber (num, errMsg) {
-	Ember.assert(errMsg, typeof num === 'number');
-}
-
 function assertIsDate (date, errMsg) {
 	Ember.assert(errMsg, isFinite(date));
 }
@@ -131,8 +127,6 @@ export default Ember.Controller.extend({
 	},
 
 	formatNumber: function (num, options) {
-		assertIsNumber(num, 'A number must be provided to formatNumber()');
-
 		return this._format('number', num, options);
 	},
 

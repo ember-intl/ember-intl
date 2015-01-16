@@ -3,56 +3,52 @@ Choose a locale: {{view 'select' value=value content=options}}
 <h2>Components</h2>
 
 <h3>Format Number</h3>
+<div>{{format-number num}}</div>
+<div>{{format-number num format='EUR'}}</div>
+<div>{{format-number num style='currency' currency='USD'}}</div>
 
-{{x-number num}}
-{{x-number num}}
-{{x-number num}}
+{{code-snippet name='format-number.hbs'}}
 
-<h3>Format Number</h3>
-<div>{{!intl-number value=num}}</div>
-<div>{{!intl-number value=num format='EUR'}}</div>
-<div>{{!intl-number value=num style='currency' currency='USD'}}</div>
-
-{{code-snippet name='intl-number.hbs'}}
+<h3>Format Date</h3>
+<div>{{format-date now}}</div>
+<div>{{format-date yesterday}}</div>
 
 <h3>Format Time</h3>
-<div>{{!intl-time value=now format='hhmmss'}}</div>
-<div>{{!intl-time value=now hour='numeric' minute='numeric' hour12=false}}</div>
+<div>{{format-time now format='hhmmss'}}</div>
+<div>{{format-time now hour='numeric' second='numeric' minute='numeric' hour12=false}}</div>
 
-{{code-snippet name='intl-time.hbs'}}
+{{code-snippet name='format-time.hbs'}}
 
 <h3>Format Relative</h3>
-<div>{{!intl-relative value=yesterday}}</div>
+<div>{{format-relative yesterday}}</div>
+<div>{{format-relative now}}</div>
 
 <h3>Format Message</h3>
 
 <div>
-	{{!intl-message
-		messageKey='product.info'
+	{{format-message (intl-get 'product.info')
 		product='Apple watch'
 		price=200
 		deadline=yesterday}}
 </div>
 <div>
-	{{!intl-message
-		value=messages.photos
+	{{format-message messages.photos
 		name='Jason'
 		numPhotos=num
 		takenDate=yesterday}}
 </div>
 
-{{code-snippet name='intl-message.hbs'}}
+{{code-snippet name='format-message.hbs'}}
 
 <h3>Format HTML Message</h3>
 <div>
-	{{!intl-html-message
-		messageKey='product.html.info'
+	{{format-html-message  (intl-get 'product.html.info')
 		product='Apple watch'
 		price=200
 		deadline=yesterday}}
 </div>
 <div>
-	{{!intl-html-message value='<strong>{product}</strong>' product='Apple watch'}}
+	{{format-html-message '<strong>{product}</strong>' product='Apple watch'}}
 </div>
 
-{{code-snippet name='intl-html-message.hbs'}}
+{{code-snippet name='format-html-message.hbs'}}
