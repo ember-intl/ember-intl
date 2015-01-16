@@ -6,10 +6,6 @@ var alias     = Ember.computed.alias;
 var makeArray = Ember.makeArray;
 var get       = Ember.get;
 
-function assertIsNumber (num, errMsg) {
-	Ember.assert(errMsg, typeof num === 'number');
-}
-
 function assertIsDate (date, errMsg) {
 	Ember.assert(errMsg, isFinite(date));
 }
@@ -24,7 +20,7 @@ export default Ember.Controller.extend({
 	getNumberFormat:   null,
 
 	current: Ember.computed('locales', 'fallbackLocales', function () {
-		var locales = makeArray(get(this, 'locales'));
+		var locales         = makeArray(get(this, 'locales'));
 		var fallbackLocales = makeArray(get(this, 'fallbackLocales'));
 
 		fallbackLocales = fallbackLocales.filter(function (locale) {
@@ -131,8 +127,6 @@ export default Ember.Controller.extend({
 	},
 
 	formatNumber: function (num, options) {
-		assertIsNumber(num, 'A number must be provided to formatNumber()');
-
 		return this._format('number', num, options);
 	},
 

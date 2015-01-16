@@ -1,15 +1,13 @@
 Reference a message key, defined in your messages module corresponding to the current locale.
 
-{{intl-message
-    messageKey='product.info'
+{{format-message (intl-get 'product.info')
     product='Apple watch'
     price=200
     deadline=yesterday}}
 
 Passing a static message or a message via a data-binding also works.
 
-{{intl-message
-    messages.photos
+{{format-message messages.photos
     name='Jason'
     numPhotos=num
     takenDate=yesterday}}

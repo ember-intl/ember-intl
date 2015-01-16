@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import env from '../config/environment';
-import registerHelpers from 'ember-intl';
 import ServiceInitializer from 'ember-intl/service/initializer';
 
 var get = Ember.get;
@@ -21,6 +20,6 @@ export default {
 			disableShim:     get(env, 'intl.disableShim')
 		});
 
-		initializer.init().then(registerHelpers);
+		initializer.init();
 	}
 }

@@ -1,10 +1,18 @@
 html, body {
   font-family: HelveticaNeue-Thin,'Helvetica 35 Thin','HelveticaNeue Thin','Custom Helvetica Neue Thin','Helvetica Neue',Helvetica,Arial,sans-serif;
-  margin: 20px;
+  margin: 0;
 }
 
 h1 {
   font-weight: 100;
+}
+
+h3 {
+  margin-top: 50px;
+}
+
+h3:first-of-type {
+  margin-top: 10px;
 }
 
 .header {
@@ -14,7 +22,6 @@ h1 {
   margin-bottom: 10px;
   text-align: center;
   border-bottom: 1px solid #eee;
-  background: #fff;
 }
 
 .content {
@@ -22,5 +29,11 @@ h1 {
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
-  max-width: 768px;
+  max-width: 900px;
+}
+
+.hljs {
+  border: 1px solid #eee;
+  border-radius: 2px;
+  font-size: 11px;
 }

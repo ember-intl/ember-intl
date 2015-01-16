@@ -14,8 +14,10 @@ function formatNumber (number, options) {
 
 export default Ember.Controller.extend({
 	options:     ['en-US', 'fr-FR'],
-	num: 1000,
+	numType:     'currency',
+	num:         1000,
 	yesterday:   yesterday,
+	deadline:    Ember.computed.readOnly('yesterday'),
 	now:         now,
 
 	value: Ember.computed('intl.locales', function (key, value) {
@@ -50,6 +52,6 @@ export default Ember.Controller.extend({
 				self.set('now', new Date());
 				self.incrementProperty('num');
 			});
-		}, 1000);
+		}, 10);
 	})
 });
