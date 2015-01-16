@@ -10,8 +10,9 @@ function assertIsDate (date, errMsg) {
 	Ember.assert(errMsg, isFinite(date));
 }
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Ember.Evented, {
 	locales:           null,
+	localesStream:     null,
 	fallbackLocales:   null,
 	shimmed:           null,
 	getDateTimeFormat: null,
@@ -29,6 +30,14 @@ export default Ember.Controller.extend({
 
 		return fallbackLocales.concat(locales);
 	}).readOnly(),
+
+	notifyLocaleChanged: function () {
+		this.trigger('localesChanged');
+	},
+
+	localeChanged: Ember.observer('current', function () {
+		Ember.run.once(this, this.notifyLocaleChanged);
+	}),
 
 	setupMemoizers: Ember.on('init', function () {
 		this.setProperties({
@@ -99,6 +108,7 @@ export default Ember.Controller.extend({
 		options = options || {};
 
 		var locales = makeArray(options.locales);
+
 		var formats = options.formats || get(this, 'formats');
 
 		if (Ember.isEmpty(locales)) {
