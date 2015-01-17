@@ -2,13 +2,14 @@ import Ember from 'ember';
 
 var get = Ember.get;
 
-function filterFormatOptions (obj, formatOptions) {
+function filterFormatOptions (formatOptions) {
 	var match = false;
+	var self  = this;
 
 	var options = formatOptions.reduce(function (opts, name) {
-		if (obj.hasOwnProperty(name)) {
+		if (self.hasOwnProperty(name)) {
 			match = true;
-			opts[name] = obj[name];
+			opts[name] = self[name];
 		}
 
 		return opts;
@@ -32,7 +33,7 @@ export default function (formatOptions, callback) {
 		});
 
 		var helperOptions = Ember.create({
-			formats: hash.format  || filterFormatOptions(hash, formatOptions),
+			formats: hash.format  || filterFormatOptions.call(hash, formatOptions),
 			locales: hash.locales || get(intl, 'locales')
 		});
 

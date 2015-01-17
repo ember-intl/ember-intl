@@ -30,35 +30,39 @@ ServiceInitializer.prototype = {
 	constructor: ServiceInitializer,
 
 	init: function () {
+		var self = this;
+
 		return new Ember.RSVP.Promise(function (resolve, reject) {
-			var app = this.app;
+			var app = self.app;
 
 			app.deferReadiness();
 
-			this.optionallyLoadShim().then(function (shimmed) {
-				var service = this.createService(shimmed);
+			self.optionallyLoadShim().then(function (shimmed) {
+				var service = self.createService(shimmed);
 
 				// signals the locale data modules to execute
 				Ember.instrument('intl.loaded', Ember, function () {
 					// intentionally left blank
 				});
-			}.bind(this)).finally(function () {
+			}).finally(function () {
 				app.advanceReadiness();
 				resolve();
 			});
-		}.bind(this));
+		});
 	},
 
 	optionallyLoadShim: function () {
+		var self = this;
+
 		return new Ember.RSVP.Promise(function (resolve, reject) {
-			if (window && !window.Intl && !this.disableShim) {
-				fetch(this.shimUrl).then(function () {
+			if (window && !window.Intl && !self.disableShim) {
+				fetch(self.shimUrl).then(function () {
 					resolve(true);
 				}, reject);
 			} else {
 				resolve();
 			}
-		}.bind(this));
+		});
 	},
 
 	createService: function (shimmed) {
