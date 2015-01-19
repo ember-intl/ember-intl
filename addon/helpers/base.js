@@ -29,7 +29,7 @@ export default function (formatOptions, callback) {
 		var value  = params[0];
 
 		intl.one('localesChanged', this, function () {
-			Ember.run.once(this, this.rerender);
+			Ember.run.scheduleOnce('render', this, this.rerender);
 		});
 
 		var helperOptions = Ember.create({
