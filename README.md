@@ -3,36 +3,55 @@
 > This library is under heavy development.
 > API is likely to change and there are likely known issues being worked on.
 
-## Features
-
-* Auto extracts CLDR based on targeted locales
-* Automatically loads Intl API shim when browser does not support native API
-* Data bound Ember components
-* Hot swap locale at runtime
 
 ## Installation
 
+* Ensure your application is running ember-cli >= 0.1.5
 * `npm install ember-intl --save-dev`
 * `ember g ember-intl`
+* Configure which locales you want extracted at build time:
 
 ```js
-/* Brocfile.js */
-var app = new EmberApp({
-	intl: {
-		en: {
-			// writes files to /locales/en.js and /locales.fr.js
-			dest: 'locales',
-			locales: ['en', 'fr']
-		},
-		all: {
-			// write a file to locales.js contains /all/ locales
-			dest: 'locales.js'
+/* config/environment.js */
+module.exports = function() {
+	var ENV = {};
+
+	...
+
+	ENV.intl = {
+		intl: {
+			en: { locales: ['en', 'en-US'], dest: '/assets/intl/locales/en.js' },
+			es: { locales: ['es'] },
+			fr: { locales: ['fr-FR'] }
 		}
 	}
-});
 
-module.exports = app.toTree();
+	...
+
+	return ENV;
 ```
+
+* Open your index.html and include the locale files:
+```html
+<script src="/assets/intl/locales/en.js"></script>
+<script src="/assets/intl/locales/fr-FR.js"></script>
+<script src="/assets/intl/locales/es.js"></script>
+```
+
+* Configure which locale you want to use at runtime:
+	* Open app/app.js
+	* Add a `ready` hook:
+	```js
+	var App = Ember.Application.extend({
+		ready: function () {
+			// setup default locale to fr-FR but will fallback to en
+			this.intl.setProperties({
+				locales: ['fr-FR'],
+				defaultLocales: ['en']
+				});
+			}
+		});
+	```
 
 ## Examples
 

@@ -2,101 +2,31 @@ import Ember from 'ember';
 import IntlService from './intl';
 
 var makeArray = Ember.makeArray;
-var get       = Ember.get;
-
-export function fetch (url) {
-	return new Ember.RSVP.Promise(function (resolve, reject) {
-		Ember.$.getScript(url)
-			.done(function (result) { Ember.run(null, function () { resolve(result); }); })
-			.fail(function (err)    { Ember.run(null, function () { reject(err); }); });
-	});
-}
 
 function ServiceInitializer (container, app, options) {
 	options = options || {};
 
 	this.app             = app;
 	this.container       = container;
-
-	this.shimUrl         = options.shimUrl;
-	this.disableShim     = options.disableShim;
-	this.shimLocaleData  = options.shimLocaleData;
-
-	this.locales         = options.locales;
-	this.fallbackLocales = options.fallbackLocales;
+	this.locales         = app.locales || options.locales;
+	this.defaultLocales  = app.defaultLocales || options.defaultLocales;
 }
 
 ServiceInitializer.prototype = {
 	constructor: ServiceInitializer,
 
 	init: function () {
-		var self = this;
+		var app            = this.app;
+		var ServiceKlass   = app.IntlService || IntlService;
+		var service        = ServiceKlass.create({ container: this.container });
+		var locales        = makeArray(this.locales);
+		var defaultLocales = makeArray(this.defaultLocales);
 
-		return new Ember.RSVP.Promise(function (resolve, reject) {
-			var app = self.app;
-
-			app.deferReadiness();
-
-			self.optionallyLoadShim().then(function (shimmed) {
-				var service = self.createService(shimmed);
-
-				// signals the locale data modules to execute
-				Ember.instrument('intl.loaded', Ember, function () {
-					// intentionally left blank
-				});
-			}).finally(function () {
-				app.advanceReadiness();
-				resolve();
-			});
-		});
-	},
-
-	optionallyLoadShim: function () {
-		var self = this;
-
-		return new Ember.RSVP.Promise(function (resolve, reject) {
-			if (window && !window.Intl && !self.disableShim) {
-				fetch(self.shimUrl).then(function () {
-					resolve(true);
-				}, reject);
-			} else {
-				resolve();
-			}
-		});
-	},
-
-	createService: function (shimmed) {
-		var app             = this.app;
-		var ServiceKlass    = app.IntlService || IntlService;
-		var service         = ServiceKlass.create({ container: this.container });
-
-		var locales         = makeArray(this.locales);
-		var fallbackLocales = makeArray(this.fallbackLocales);
-
-		if (shimmed) {
-			app.deferReadiness();
-
-			var dir = this.shimLocaleData;
-			if (dir[dir.length - 1] !== '/') {
-				dir += '/';
-			}
-
-			Ember.RSVP.all(locales.concat(fallbackLocales).map(function (locale) {
-				return fetch(dir + locale + '.js');
-			})).finally(function () {
-				app.advanceReadiness();
-			});
-		}
-
-		Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || fallbackLocales);
+		Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || defaultLocales);
 
 		service.setProperties({
-			locales:         locales,
-			fallbackLocales: fallbackLocales,
-
-			shimmed: Ember.computed(function () {
-				return !!shimmed;
-			}).readOnly()
+			locales:        locales,
+			defaultLocales: defaultLocales
 		});
 
 		app.register('intl:main', service, {
@@ -104,10 +34,14 @@ ServiceInitializer.prototype = {
 			instantiate: false
 		});
 
-		app.inject('controller', 'intl', 'intl:main');
-		app.inject('route',      'intl', 'intl:main');
-		app.inject('model',      'intl', 'intl:main');
-		app.inject('view',       'intl', 'intl:main');
+		app.intl = service;
+
+		app.inject('controller',            'intl', 'intl:main');
+		app.inject('component',             'intl', 'intl:main');
+		app.inject('route',                 'intl', 'intl:main');
+		app.inject('model',                 'intl', 'intl:main');
+		app.inject('view',                  'intl', 'intl:main');
+		app.inject('ember-intl@formatter',  'intl', 'intl:main');
 
 		return service;
 	}
