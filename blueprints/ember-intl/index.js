@@ -1,5 +1,7 @@
 module.exports = {
-	description: 'Generates a message module for a locale',
+	description: 'Generates a boilerplate message and format',
+
+	normalizeEntityName: function () {},
 
 	afterInstall: function (options) {
 		// todo

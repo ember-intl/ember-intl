@@ -6,6 +6,7 @@
 
 ## Installation
 
+* Ensure your application is running ember-cli >= 0.1.5
 * `npm install ember-intl --save-dev`
 * `ember g ember-intl`
 * Configure which locales you want extracted at build time:
