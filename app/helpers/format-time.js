@@ -1,11 +1,3 @@
-import helperBase from 'ember-intl/helpers/base';
+import FormatHelper from 'ember-intl/helpers/base';
 
-var formatOptions = [
-	'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
-	'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
-	'timeZoneName'
-];
-
-export default helperBase(formatOptions, function (intl, inputValue, options, hash) {
-	return intl.formatTime(inputValue, options);
-});
+export default FormatHelper('format-time');

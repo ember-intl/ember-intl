@@ -12,32 +12,11 @@ function assertIsDate (date, errMsg) {
 
 export default Ember.Controller.extend(Ember.Evented, {
 	locales:           null,
-	localesStream:     null,
-	fallbackLocales:   null,
-	shimmed:           null,
+	defaultLocales:    null,
 	getDateTimeFormat: null,
 	getRelativeFormat: null,
 	getMessageFormat:  null,
 	getNumberFormat:   null,
-
-	current: Ember.computed('locales', 'fallbackLocales', function () {
-		var locales         = makeArray(get(this, 'locales'));
-		var fallbackLocales = makeArray(get(this, 'fallbackLocales'));
-
-		fallbackLocales = fallbackLocales.filter(function (locale) {
-			return !locales.contains(locale);
-		});
-
-		return fallbackLocales.concat(locales);
-	}).readOnly(),
-
-	notifyLocaleChanged: function () {
-		this.trigger('localesChanged');
-	},
-
-	localeChanged: Ember.observer('current', function () {
-		Ember.run.once(this, this.notifyLocaleChanged);
-	}),
 
 	setupMemoizers: Ember.on('init', function () {
 		this.setProperties({
@@ -47,6 +26,17 @@ export default Ember.Controller.extend(Ember.Evented, {
 			getMessageFormat:  createFormatCache(IntlMessageFormat)
 		});
 	}),
+
+	current: Ember.computed('locales', 'defaultLocales', function () {
+		var locales         = makeArray(get(this, 'locales'));
+		var defaultLocales  = makeArray(get(this, 'defaultLocales'));
+
+		defaultLocales = defaultLocales.filter(function (locale) {
+			return !locales.contains(locale);
+		});
+
+		return locales.concat(defaultLocales);
+	}).readOnly(),
 
 	formats: Ember.computed(function () {
 		var formats = this.container.resolver('formats:main');
@@ -68,7 +58,7 @@ export default Ember.Controller.extend(Ember.Evented, {
 				var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
 
 				for (var key in locale) {
-					if (locale.hasOwnProperty(key)) {
+					if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
 						messages[key] = Ember.$.extend(true, messages[key], locale[key]);
 					}
 				}
@@ -76,7 +66,15 @@ export default Ember.Controller.extend(Ember.Evented, {
 		}
 
 		return messages;
+	}).readOnly(),
+
+	localeChanged: Ember.observer('current', function () {
+		Ember.run.once(this, this.notifyLocaleChanged);
 	}),
+
+	notifyLocaleChanged: function () {
+		this.trigger('localesChanged');
+	},
 
 	lookupMessage: function (localeName) {
 		return this.container.resolver('message:' + localeName);

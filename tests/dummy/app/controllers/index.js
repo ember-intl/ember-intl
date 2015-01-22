@@ -13,7 +13,7 @@ function formatNumber (number, options) {
 }
 
 export default Ember.Controller.extend({
-	options:     ['en-US', 'fr-FR'],
+	options:     ['en-US', 'fr', 'es'],
 	numType:     'currency',
 	num:         1000,
 	yesterday:   yesterday,

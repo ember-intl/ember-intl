@@ -1,7 +1,3 @@
-import helperBase from 'ember-intl/helpers/base';
+import FormatHelper from 'ember-intl/helpers/base';
 
-var formatOptions = ['style', 'units'];
-
-export default helperBase(formatOptions, function (intl, inputValue, options, hash) {
-	return intl.formatRelative(inputValue, options);
-});
+export default FormatHelper('format-relative');
