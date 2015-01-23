@@ -81,6 +81,23 @@ export default {
 	takenDate=yesterday}}
 ```
 
+### Format HTML Message
+
+```hbs
+{{format-html-message (intl-get 'product.html.info')
+	product='Apple watch'
+	price=200
+	deadline=yesterday}}
+
+{{format-html-message '<strong>{numPhotos}</strong>'
+	numPhotos=(formatNumber num)}}
+```
+
+### Helper Options
+* All helpers accept an optional:
+	* `locales` argument to explicitly pass/override the application locale
+	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
+
 ## Running
 
 * `ember server`
