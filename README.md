@@ -10,6 +10,23 @@
 * `npm install ember-intl --save-dev`
 * `ember g ember-intl`
 * `ember g locale en`
+* Add custom messages per locale in their respective ES6 locale module.
+Example of app/locales/en.js:
+
+```js
+export default {
+	locale: "en",
+	...
+	messages: {
+		product: {
+			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
+			html: {
+				info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
+			}
+		}
+	}
+}
+```
 
 * Configure which locale you want to use at runtime:
 	* Open app/app.js

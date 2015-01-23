@@ -1,5 +1,6 @@
 export default {
-	locale: <%= locale %>,
-	fields: <%= fields %>,
-	pluralRuleFunction: <%= pluralRuleFunction %>
+	locale:             <%= locale %>,
+	fields:             <%= fields %>,
+	pluralRuleFunction: <%= pluralRuleFunction %>,
+	messages:           {}
 }

@@ -77,7 +77,17 @@ export default Ember.Controller.extend(Ember.Evented, {
 	},
 
 	lookupMessage: function (localeName) {
-		return this.container.resolver('message:' + localeName);
+		Ember.assert('The locale name specific to lookupMessage must be a string.', typeof localeName === 'string');
+
+		localeName = localeName.toLowerCase();
+
+		var locale = this.container.resolver('locale:' + localeName);
+
+		if (locale) {
+			return locale.messages || {};
+		}
+
+		return {};
 	},
 
 	formatRelative: function (date, options) {
