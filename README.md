@@ -4,9 +4,12 @@
 > API is likely to change and there are likely known issues being worked on.
 
 
-## Installation
+## Requirements
+* Ember >= 1.10-beta-*
+* HTMLBars
+* Ember-cli >= 0.1.5
 
-* Ensure your application is running ember-cli >= 0.1.5
+## Installation
 * `npm install ember-intl --save-dev`
 * `ember g ember-intl`
 * `ember g locale en`
