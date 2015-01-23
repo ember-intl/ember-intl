@@ -20,14 +20,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "broccoli-caching-writer": "^0.5.4",
     "cldr": "^2.3.2",
     "intl-messageformat": "~1.0.2",
     "intl-relativeformat": "~1.0.1",
     "intl": "^0.1.4",
-    "lodash-node": "^2.4.1",
-    "mkdirp": "^0.5.0",
-    "rsvp": "^3.0.16",
     "serialize-javascript": "^1.0.0",
     "uglify-js": "^2.4.16"
   },

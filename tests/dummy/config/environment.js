@@ -42,22 +42,5 @@ module.exports = function(environment) {
 
   }
 
-  // example configuration
-  ENV.intl = {
-    // Defines the locales to extract CLDR data for
-    // by default these files are stored in:
-    // /assets/intl/locales
-    //
-    // However, you can override the by passing `dest`
-    // example: en: { locales: ['en'], dest: '/assets/intl/locales' }
-    //
-
-    intl: {
-      en: { locales: ['en', 'en-US'], dest: '/assets/intl/locales/en.js' },
-      es: { locales: ['es'] },
-      fr: { locales: ['fr-FR'] }
-    }
-  };
-
   return ENV;
 };

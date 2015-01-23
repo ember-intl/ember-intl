@@ -1,7 +1,6 @@
 /* jshint node: true */
 'use strict';
 
-var Writer             = require('./lib/writer');
 var path               = require('path');
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
@@ -40,13 +39,8 @@ module.exports = {
   treeForPublic: function (tree) {
     var app        = this.app;
     var config     = this.project.config(app.env);
-    var intlConfig = config.intl || {};
 
     var trees = [tree];
-
-    if (intlConfig.intl) {
-      trees.push(new Writer(tree, intlConfig.intl));
-    }
 
     trees.push(this.pickFiles(intlPath, {
       srcDir:  '/',
@@ -62,6 +56,6 @@ module.exports = {
       destDir: '/assets/intl/polyfill/locales/'
     }));
 
-    return this.mergeTrees(trees);
+    return this.mergeTrees(trees, { overwrite: true });
   }
 };

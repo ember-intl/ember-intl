@@ -80,14 +80,6 @@ export default Ember.Controller.extend(Ember.Evented, {
 		return this.container.resolver('message:' + localeName);
 	},
 
-	addLocaleData: function (data) {
-		Ember.assert('IntlMessageFormat has not yet been loaded',  IntlMessageFormat);
-		Ember.assert('IntlRelativeFormat has not yet been loaded', IntlRelativeFormat);
-
-		IntlMessageFormat.__addLocaleData(data);
-		IntlRelativeFormat.__addLocaleData(data);
-	},
-
 	formatRelative: function (date, options) {
 		date = new Date(date);
 		assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');

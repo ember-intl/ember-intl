@@ -9,49 +9,23 @@
 * Ensure your application is running ember-cli >= 0.1.5
 * `npm install ember-intl --save-dev`
 * `ember g ember-intl`
-* Configure which locales you want extracted at build time:
-
-```js
-/* config/environment.js */
-module.exports = function() {
-	var ENV = {};
-
-	...
-
-	ENV.intl = {
-		intl: {
-			en: { locales: ['en', 'en-US'], dest: '/assets/intl/locales/en.js' },
-			es: { locales: ['es'] },
-			fr: { locales: ['fr-FR'] }
-		}
-	}
-
-	...
-
-	return ENV;
-```
-
-* Open your index.html and include the locale files:
-```html
-<script src="/assets/intl/locales/en.js"></script>
-<script src="/assets/intl/locales/fr-FR.js"></script>
-<script src="/assets/intl/locales/es.js"></script>
-```
+* `ember g locale en`
 
 * Configure which locale you want to use at runtime:
 	* Open app/app.js
 	* Add a `ready` hook:
-	```js
+
+```js
 	var App = Ember.Application.extend({
 		ready: function () {
-			// setup default locale to fr-FR but will fallback to en
+			// setup default locale to fr but will fallback to en
 			this.intl.setProperties({
 				locales: ['fr-FR'],
 				defaultLocales: ['en']
-				});
-			}
-		});
-	```
+			});
+		}
+	});
+```
 
 ## Examples
 
