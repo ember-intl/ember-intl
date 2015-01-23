@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import createFormatCache from '../format-cache/memoizer';
 
-var forEach   = Ember.EnumerableUtils.forEach;
-var alias     = Ember.computed.alias;
 var makeArray = Ember.makeArray;
 var get       = Ember.get;
 
