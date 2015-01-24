@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import createFormatCache from '../format-cache/memoizer';
+import createFormatCache from 'npm:intl-format-cache';
 
 var makeArray = Ember.makeArray;
 var get       = Ember.get;

@@ -2,7 +2,6 @@ var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
 var extract     = require('../../lib/extract');
 var serialize   = require('serialize-javascript');
-var uglify      = require('uglify-js');
 
 module.exports = {
 	description: 'Extract a CLDR data into an ES6 module for a given locale code',
