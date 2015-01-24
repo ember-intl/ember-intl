@@ -6,10 +6,10 @@ var makeArray = Ember.makeArray;
 function ServiceInitializer (container, app, options) {
 	options = options || {};
 
-	this.app             = app;
-	this.container       = container;
-	this.locales         = app.locales || options.locales;
-	this.defaultLocales  = app.defaultLocales || options.defaultLocales;
+	this.app            = app;
+	this.container      = container;
+	this.locales        = app.locales || options.locales;
+	this.defaultLocales = app.defaultLocales || options.defaultLocales;
 }
 
 ServiceInitializer.prototype = {

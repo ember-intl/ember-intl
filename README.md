@@ -13,6 +13,14 @@
 * `npm install ember-intl --save-dev`
 * `ember g ember-intl`
 * `ember g locale en`
+* If you are targeting a browser that doesn't support the native Intl API, you need to load the shim.  The
+[Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder,
+so you need to add the following to your index.html:
+
+```html
+<script src="/assets/intl/polyfill/Intl.complete.js"></script>
+```
+
 * Add custom messages per locale in their respective ES6 locale module.
 Example of app/locales/en.js:
 
