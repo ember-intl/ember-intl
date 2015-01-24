@@ -3,4 +3,4 @@ export default {
 	fields:             <%= fields %>,
 	pluralRuleFunction: <%= pluralRuleFunction %>,
 	messages:           {}
-}
+};
