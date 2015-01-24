@@ -25,6 +25,7 @@
     "intl-format-cache": "^2.0.4",
     "intl-messageformat": "~1.0.4",
     "intl-relativeformat": "~1.0.3",
+    "js-beautify": "^1.5.4",
     "serialize-javascript": "^1.0.0"
   },
   "devDependencies": {

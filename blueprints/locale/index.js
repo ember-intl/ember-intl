@@ -2,6 +2,10 @@ var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
 var extract     = require('../../lib/extract');
 var serialize   = require('serialize-javascript');
+var beautify    = require('js-beautify').js_beautify;
+var fs          = require('fs');
+var path        = require('path');
+var Promise     = require('ember-cli/lib/ext/promise');
 
 module.exports = {
 	description: 'Extract a CLDR data into an ES6 module for a given locale code',
@@ -19,6 +23,21 @@ module.exports = {
 		}
 
 		return localeName;
+	},
+
+	afterInstall: function (options) {
+		var file = path.join(this.project.root, 'app', 'locales', options.entity.name + '.js');
+
+		return new Promise(function (resolve, reject) {
+			fs.readFile(file, 'utf8', function (err, data) {
+				if (err) { return reject(err); }
+
+				fs.writeFile(file, beautify(data, { indent_size: 2 }), function (_err) {
+					if (_err) { return reject(_err); }
+					resolve();
+				})
+			});
+		});
 	},
 
 	validLocale: function (localeName) {
