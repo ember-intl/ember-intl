@@ -4,10 +4,6 @@ module.exports = {
 	normalizeEntityName: function () {},
 
 	afterInstall: function (options) {
-		// todo
-	},
-
-	afterUninstall: function (options) {
-		// todo
+		return this.addPackageToProject('intl-format-cache', '^2.0.4');
 	}
 }
