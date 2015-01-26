@@ -1,3 +1,8 @@
+/**
+* Copyright 2014, Yahoo! Inc.
+* Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+*/
+
 var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
 var extract     = require('../../lib/extract');
