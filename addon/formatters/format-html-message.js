@@ -26,7 +26,11 @@ var FormatHtmlMessage = FormatterMessage.extend({
 		var inputValue = params[0];
 		var context    = Ember.get(env, 'data.view.context');
 		var icuKeys    = this.extractICUKeys(inputValue);
-		var model      = Ember.$.extend(context.getProperties(icuKeys), hash);
+		var model = {};
+
+		if (icuKeys && icuKeys.length) {
+			model = Ember.$.extend(context.getProperties(icuKeys), hash);
+		}
 
 		var formatOptions = {
 			formats: hash.format || this.filterFormatOptions()

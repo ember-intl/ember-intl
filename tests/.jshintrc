@@ -9,6 +9,7 @@
     "QUnit",
     "define",
     "console",
+    "escape",
     "equal",
     "notEqual",
     "notStrictEqual",

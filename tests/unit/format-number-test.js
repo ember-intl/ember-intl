@@ -1,21 +1,29 @@
 import formatNumber from '../../helpers/format-number';
-import IntlService from 'ember-intl/service/intl';
-import { moduleFor } from 'ember-qunit';
+import IntlService from '../../service/intl';
+import invoke from '../helpers/call-helper';
 
-moduleFor('helper:format-number', '' , {
-	setup: function () {
-		this.container.register('intl:main', IntlService.create({
-			locales: ['en']
-		}));
-	}
-});
+module('format-number');
 
-test('exists', function() {
+test('FormatNumber exists', function() {
 	expect(1);
 	ok(formatNumber);
 });
 
-test('number is formatted', function() {
+test('Number is formatted correctly', function() {
 	expect(1);
-	ok(formatNumber);
+
+	var result = invoke(formatNumber, [1000, {}]);
+	equal(result, "1,000");
+});
+
+test('Number is formatted correctly with locale argument', function() {
+	expect(1);
+
+	var result = invoke(formatNumber, [1000, {
+		locales: ['fr-FR']
+	}]);
+
+	// non-breaking space so we can't just compare "1 000" to "1 000"
+	// since it's not a %20 space character
+	equal(escape(result), "1%A0000");
 });
