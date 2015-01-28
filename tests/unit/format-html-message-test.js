@@ -36,3 +36,30 @@ test('should throw if called with out a value', function(assert) {
 	view = this.intlBlock('{{format-html-message}}');
 	assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-html-message');
 });
+
+test('should allow for inlined html in the value', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-html-message "<strong>Hello {name}</strong>" name="Jason"}}');
+	runAppend(view);
+
+	equal(view.$().html(), "<strong>Hello Jason</strong>");
+});
+
+test('should escape arguments', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-html-message "{foo}" foo="<em>BAR</em>"}}');
+	runAppend(view);
+
+	equal(view.$().html(), "&lt;em&gt;BAR&lt;/em&gt;");
+});
+
+test('should allow for inlined html in the value but escape arguments', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-html-message "<strong>Hello {name}</strong>" name="<em>Jason</em>"}}');
+	runAppend(view);
+
+	equal(view.$().html(), "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>");
+});

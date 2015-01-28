@@ -18,7 +18,6 @@ moduleForIntl('format-time', {
 
 test('exists', function() {
 	expect(1);
-
 	ok(formatTimeHelper);
 });
 

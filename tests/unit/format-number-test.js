@@ -1,8 +1,8 @@
 import Ember from 'ember';
+import moduleForIntl from '../helpers/intl-block';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatNumber from 'ember-intl/formatters/format-number';
 import formatNumberHelper from '../../helpers/format-number';
-import moduleForIntl from '../helpers/intl-block';
 
 var view;
 
@@ -18,7 +18,6 @@ moduleForIntl('format-number', {
 
 test('exists', function() {
 	expect(1);
-
 	ok(formatNumberHelper);
 });
 

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import IntlService from '../../service/intl';
-import { runAppend, runDestroy } from '../helpers/run-append';
+import { runDestroy } from '../helpers/run-append';
 
 export default function (name, callbacks) {
 	callbacks = callbacks || {};
@@ -27,8 +27,11 @@ export default function (name, callbacks) {
 
 				container.injection('ember-intl@formatter', 'intl', 'intl:main');
 
+				// mock the component lookup service since it's invoked prior to
+				// looking up a handlebar helper to determine if the helper
+				// is a valid component.
 				container.register('component-lookup:main', Ember.Object.extend({
-					lookupFactory: function () { }
+					lookupFactory: function () { return false; }
 				}));
 
 				return Ember.View.create({

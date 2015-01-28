@@ -18,7 +18,6 @@ moduleForIntl('format-date', {
 
 test('exists', function() {
 	expect(1);
-
 	ok(formatDateHelper);
 });
 

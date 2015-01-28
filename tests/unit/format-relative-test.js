@@ -18,7 +18,6 @@ moduleForIntl('format-relative', {
 
 test('exists', function() {
 	expect(1);
-
 	ok(formatRelativehelper);
 });
 

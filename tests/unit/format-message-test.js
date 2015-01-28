@@ -18,7 +18,6 @@ moduleForIntl('format-message', {
 
 test('exists', function() {
 	expect(1);
-
 	ok(formatMessageHelper);
 });
 
