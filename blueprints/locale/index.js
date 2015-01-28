@@ -37,7 +37,9 @@ module.exports = {
 			fs.readFile(file, 'utf8', function (err, data) {
 				if (err) { return reject(err); }
 
-				fs.writeFile(file, beautify(data, { indent_size: 2 }), function (_err) {
+				fs.writeFile(file, beautify(data, {
+					indent_size: 2
+				}), function (_err) {
 					if (_err) { return reject(_err); }
 					resolve();
 				})

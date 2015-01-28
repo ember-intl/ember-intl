@@ -7,7 +7,7 @@ import Ember from 'ember';
 import Formatter from '../formatter-base';
 
 var FormatNumber = Formatter.extend({
-	render: function (params, hash, options, env) {
+	format: function (value, hash) {
 		var formatOptions = {
 			formats: hash.format || this.filterFormatOptions()
 		};
@@ -16,7 +16,7 @@ var FormatNumber = Formatter.extend({
 			formatOptions.locales = hash.locales;
 		}
 
-		return this.intl.formatNumber(params[0], formatOptions);
+		return this.intl.formatNumber(value, formatOptions);
 	}
 });
 

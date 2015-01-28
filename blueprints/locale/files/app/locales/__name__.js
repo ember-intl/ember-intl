@@ -1,3 +1,4 @@
+/* jshint curly: false */
 export default {
 	locale:             <%= locale %>,
 	messages:           {},

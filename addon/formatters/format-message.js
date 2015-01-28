@@ -42,14 +42,12 @@ var FormatMessage = Formatter.extend({
 		return out;
 	},
 
-	render: function (params, hash, options, env) {
-		var inputValue   = params[0];
-		var context      = Ember.get(env, 'data.view.context');
-		var icuKeys      = this.extractICUKeys(inputValue);
+	format: function (value, hash, context) {
+		var icuKeys = this.extractICUKeys(value);
 		var model;
 
 		if (icuKeys && icuKeys.length) {
-			model = Ember.$.extend(context.getProperties(icuKeys), hash);
+			model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
 		}
 
 		var formatOptions = {
@@ -60,7 +58,7 @@ var FormatMessage = Formatter.extend({
 			formatOptions.locales = hash.locales;
 		}
 
-		return this.intl.formatMessage(inputValue, model, formatOptions);
+		return this.intl.formatMessage(value, model, formatOptions);
 	}
 });
 
