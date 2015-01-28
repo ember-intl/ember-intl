@@ -7,25 +7,25 @@ import Ember from 'ember';
 import Formatter from '../formatter-base';
 
 var FormatDate = Formatter.extend({
-	format: function (value, hash) {
-		var formatOptions = {
-			formats: hash.format || this.filterFormatOptions(hash)
-		};
+    format: function (value, hash) {
+        var formatOptions = {
+            formats: hash.format || this.filterFormatOptions(hash)
+        };
 
-		if (hash.locales) {
-			formatOptions.locales = hash.locales;
-		}
+        if (hash.locales) {
+            formatOptions.locales = hash.locales;
+        }
 
-		return this.intl.formatDate(value, formatOptions);
-	}
+        return this.intl.formatDate(value, formatOptions);
+    }
 });
 
 FormatDate.reopenClass({
-	formatOptions: [
-		'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
-		'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
-		'timeZoneName'
-	]
+    formatOptions: [
+        'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
+        'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
+        'timeZoneName'
+    ]
 });
 
 export default FormatDate;

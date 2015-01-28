@@ -6,28 +6,28 @@
 import Ember from 'ember';
 
 var FormatBase = Ember.Object.extend({
-	filterFormatOptions: function (hash) {
-		hash = hash || {};
+    filterFormatOptions: function (hash) {
+        hash = hash || {};
 
-		var match = false;
+        var match = false;
 
-		var options = this.constructor.formatOptions.reduce(function (opts, name) {
-			if (hash.hasOwnProperty(name)) {
-				match = true;
-				opts[name] = hash[name];
-			}
+        var options = this.constructor.formatOptions.reduce(function (opts, name) {
+            if (hash.hasOwnProperty(name)) {
+                match = true;
+                opts[name] = hash[name];
+            }
 
-			return opts;
-		}, {});
+            return opts;
+        }, {});
 
-		if (match) {
-			return options;
-		}
-	}
+        if (match) {
+            return options;
+        }
+    }
 });
 
 FormatBase.reopenClass({
-	formatOptions: Ember.A()
+    formatOptions: Ember.A()
 });
 
 export default FormatBase;

@@ -26,29 +26,29 @@ Choose a locale: {{view 'select' value=value content=options}}
 <h3>Format Message</h3>
 
 <div>
-	{{format-message (intl-get 'product.info')
-		product='Apple watch'
-		price=200
-		deadline=yesterday}}
+    {{format-message (intl-get 'product.info')
+      product='Apple watch'
+      price=200
+      deadline=yesterday}}
 </div>
 <div>
-	{{format-message messages.photos
-		name='Jason'
-		numPhotos=num
-		takenDate=yesterday}}
+    {{format-message messages.photos
+      name='Jason'
+      numPhotos=num
+      takenDate=yesterday}}
 </div>
 
 {{code-snippet name='format-message.hbs'}}
 
 <h3>Format HTML Message</h3>
 <div>
-	{{format-html-message  (intl-get 'product.html.info')
-		product='Apple watch'
-		price=200
-		deadline=yesterday}}
+    {{format-html-message  (intl-get 'product.html.info')
+      product='Apple watch'
+      price=200
+      deadline=yesterday}}
 </div>
 <div>
-	{{format-html-message '<strong>{product}</strong>' product='Apple watch'}}
+    {{format-html-message '<strong>{product}</strong>' product='Apple watch'}}
 </div>
 
 {{code-snippet name='format-html-message.hbs'}}

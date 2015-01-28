@@ -13,55 +13,55 @@ var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
 
 module.exports = {
-  name: 'ember-intl',
+    name: 'ember-intl',
 
-  included: function (app) {
-    this.app = app;
+    included: function (app) {
+        this.app = app;
 
-    app.import('vendor/messageformat/intl-messageformat.js');
-    app.import('vendor/relativeformat/intl-relativeformat.js');
-  },
+        app.import('vendor/messageformat/intl-messageformat.js');
+        app.import('vendor/relativeformat/intl-relativeformat.js');
+    },
 
-  treeForVendor: function (tree) {
-    var trees = [];
+    treeForVendor: function (tree) {
+        var trees = [];
 
-    if (tree) {
-      trees.push(tree);
+        if (tree) {
+            trees.push(tree);
+        }
+
+        trees.push(this.pickFiles(this.treeGenerator(messageFormatPath), {
+            srcDir:  '/dist',
+            destDir: 'messageformat'
+        }));
+
+        trees.push(this.pickFiles(this.treeGenerator(relativeFormatPath), {
+            srcDir:  '/dist',
+            destDir: 'relativeformat'
+        }))
+
+        return this.mergeTrees(trees);
+    },
+
+    treeForPublic: function (tree) {
+        var app        = this.app;
+        var config     = this.project.config(app.env);
+
+        var trees = [tree];
+
+        trees.push(this.pickFiles(intlPath, {
+            srcDir:  '/',
+            files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
+            destDir: '/assets/intl/polyfill/'
+        }));
+
+        // only use these when using Intl.js, should not be used
+        // with the native Intl API
+        trees.push(this.pickFiles(intlPath + '/locale-data/jsonp', {
+            srcDir:  '/',
+            files:   ['*.js'],
+            destDir: '/assets/intl/polyfill/locales/'
+        }));
+
+        return this.mergeTrees(trees, { overwrite: true });
     }
-
-    trees.push(this.pickFiles(this.treeGenerator(messageFormatPath), {
-      srcDir:  '/dist',
-      destDir: 'messageformat'
-    }));
-
-    trees.push(this.pickFiles(this.treeGenerator(relativeFormatPath), {
-      srcDir:  '/dist',
-      destDir: 'relativeformat'
-    }))
-
-    return this.mergeTrees(trees);
-  },
-
-  treeForPublic: function (tree) {
-    var app        = this.app;
-    var config     = this.project.config(app.env);
-
-    var trees = [tree];
-
-    trees.push(this.pickFiles(intlPath, {
-      srcDir:  '/',
-      files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-      destDir: '/assets/intl/polyfill/'
-    }));
-
-    // only use these when using Intl.js, should not be used
-    // with the native Intl API
-    trees.push(this.pickFiles(intlPath + '/locale-data/jsonp', {
-      srcDir:  '/',
-      files:   ['*.js'],
-      destDir: '/assets/intl/polyfill/locales/'
-    }));
-
-    return this.mergeTrees(trees, { overwrite: true });
-  }
 };

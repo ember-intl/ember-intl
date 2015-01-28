@@ -7,21 +7,21 @@ import Ember from 'ember';
 import Formatter from '../formatter-base';
 
 var FormatRelative = Formatter.extend({
-	format: function (value, hash) {
-		var formatOptions = {
-			formats: hash.format || this.filterFormatOptions(hash)
-		};
+    format: function (value, hash) {
+        var formatOptions = {
+            formats: hash.format || this.filterFormatOptions(hash)
+        };
 
-		if (hash.locales) {
-			formatOptions.locales = hash.locales;
-		}
+        if (hash.locales) {
+            formatOptions.locales = hash.locales;
+        }
 
-		return this.intl.formatRelative(value, formatOptions);
-	}
+        return this.intl.formatRelative(value, formatOptions);
+    }
 });
 
 FormatRelative.reopenClass({
-	formatOptions: ['style', 'units']
+    formatOptions: ['style', 'units']
 });
 
 export default FormatRelative;

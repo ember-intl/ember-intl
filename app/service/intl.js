@@ -10,177 +10,177 @@ var makeArray = Ember.makeArray;
 var get       = Ember.get;
 
 function assertIsDate (date, errMsg) {
-	Ember.assert(errMsg, isFinite(date));
+    Ember.assert(errMsg, isFinite(date));
 }
 
 export default Ember.Controller.extend(Ember.Evented, {
-	locales:           null,
-	defaultLocales:    null,
-	getDateTimeFormat: null,
-	getRelativeFormat: null,
-	getMessageFormat:  null,
-	getNumberFormat:   null,
+    locales:           null,
+    defaultLocales:    null,
+    getDateTimeFormat: null,
+    getRelativeFormat: null,
+    getMessageFormat:  null,
+    getNumberFormat:   null,
 
-	setupMemoizers: Ember.on('init', function () {
-		this.setProperties({
-			getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
-			getRelativeFormat: createFormatCache(IntlRelativeFormat),
-			getNumberFormat:   createFormatCache(Intl.NumberFormat),
-			getMessageFormat:  createFormatCache(IntlMessageFormat)
-		});
-	}),
+    setupMemoizers: Ember.on('init', function () {
+        this.setProperties({
+            getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
+            getRelativeFormat: createFormatCache(IntlRelativeFormat),
+            getNumberFormat:   createFormatCache(Intl.NumberFormat),
+            getMessageFormat:  createFormatCache(IntlMessageFormat)
+        });
+    }),
 
-	current: Ember.computed('locales', 'defaultLocales', function () {
-		var locales         = makeArray(get(this, 'locales'));
-		var defaultLocales  = makeArray(get(this, 'defaultLocales'));
+    current: Ember.computed('locales', 'defaultLocales', function () {
+        var locales         = makeArray(get(this, 'locales'));
+        var defaultLocales  = makeArray(get(this, 'defaultLocales'));
 
-		defaultLocales = defaultLocales.filter(function (locale) {
-			return !locales.contains(locale);
-		});
+        defaultLocales = defaultLocales.filter(function (locale) {
+            return !locales.contains(locale);
+        });
 
-		return locales.concat(defaultLocales);
-	}).readOnly(),
+        return locales.concat(defaultLocales);
+    }).readOnly(),
 
-	formats: Ember.computed(function () {
-		var formats = this.container.resolver('formats:main');
+    formats: Ember.computed(function () {
+        var formats = this.container.resolver('formats:main');
 
-		if (!formats) {
-			Ember.Logger.warn('No `formats:main` module found.  Did you forget to export it?');
-			return {};
-		}
+        if (!formats) {
+            Ember.Logger.warn('No `formats:main` module found.  Did you forget to export it?');
+            return {};
+        }
 
-		return formats;
-	}).readOnly(),
+        return formats;
+    }).readOnly(),
 
-	messages: Ember.computed('current', function () {
-		var locales  = get(this, 'current');
-		var messages = {};
+    messages: Ember.computed('current', function () {
+        var locales  = get(this, 'current');
+        var messages = {};
 
-		if (!Ember.isEmpty(locales)) {
-			locales.forEach(function (localeKey) {
-				var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
+        if (!Ember.isEmpty(locales)) {
+            locales.forEach(function (localeKey) {
+                var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
 
-				for (var key in locale) {
-					if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
-						messages[key] = Ember.$.extend(true, messages[key], locale[key]);
-					}
-				}
-			}, this);
-		}
+                for (var key in locale) {
+                    if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
+                        messages[key] = Ember.$.extend(true, messages[key], locale[key]);
+                    }
+                }
+            }, this);
+        }
 
-		return messages;
-	}).readOnly(),
+        return messages;
+    }).readOnly(),
 
-	localeChanged: Ember.observer('current', function () {
-		Ember.run.once(this, this.notifyLocaleChanged);
-	}),
+    localeChanged: Ember.observer('current', function () {
+        Ember.run.once(this, this.notifyLocaleChanged);
+    }),
 
-	notifyLocaleChanged: function () {
-		this.trigger('localesChanged');
-	},
+    notifyLocaleChanged: function () {
+        this.trigger('localesChanged');
+    },
 
-	lookupMessage: function (localeName) {
-		Ember.assert('The locale name specific to lookupMessage must be a string.', typeof localeName === 'string');
+    lookupMessage: function (localeName) {
+        Ember.assert('The locale name specific to lookupMessage must be a string.', typeof localeName === 'string');
 
-		localeName = localeName.toLowerCase();
+        localeName = localeName.toLowerCase();
 
-		var locale = this.container.resolver('locale:' + localeName);
+        var locale = this.container.resolver('locale:' + localeName);
 
-		if (locale) {
-			return locale.messages || {};
-		}
+        if (locale) {
+            return locale.messages || {};
+        }
 
-		return {};
-	},
+        return {};
+    },
 
-	formatRelative: function (date, options) {
-		date = new Date(date);
-		assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
+    formatRelative: function (date, options) {
+        date = new Date(date);
+        assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
 
-		return this._format('relative', date, options);
-	},
+        return this._format('relative', date, options);
+    },
 
-	formatMessage: function (message, values, options) {
-		// When `message` is a function, assume it's an IntlMessageFormat
-		// instance's `format()` method passed by reference, and call it. This
-		// is possible because its `this` will be pre-bound to the instance.
-		if (typeof message === 'function') {
-			return message(values);
-		}
+    formatMessage: function (message, values, options) {
+        // When `message` is a function, assume it's an IntlMessageFormat
+        // instance's `format()` method passed by reference, and call it. This
+        // is possible because its `this` will be pre-bound to the instance.
+        if (typeof message === 'function') {
+            return message(values);
+        }
 
-		options = options || {};
+        options = options || {};
 
-		var locales = makeArray(options.locales);
+        var locales = makeArray(options.locales);
 
-		var formats = options.formats || get(this, 'formats');
+        var formats = options.formats || get(this, 'formats');
 
-		if (Ember.isEmpty(locales)) {
-			locales = get(this, 'current');
-		}
+        if (Ember.isEmpty(locales)) {
+            locales = get(this, 'current');
+        }
 
-		if (typeof message === 'string') {
-			message = this.getMessageFormat(message, locales, formats);
-		}
+        if (typeof message === 'string') {
+            message = this.getMessageFormat(message, locales, formats);
+        }
 
-		return message.format(values);
-	},
+        return message.format(values);
+    },
 
-	formatTime: function (date, options) {
-		date = new Date(date);
-		assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
+    formatTime: function (date, options) {
+        date = new Date(date);
+        assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
 
-		return this._format('time', date, options);
-	},
+        return this._format('time', date, options);
+    },
 
-	formatDate: function (date, options) {
-		date = new Date(date);
-		assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
+    formatDate: function (date, options) {
+        date = new Date(date);
+        assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
 
-	  return this._format('date', date, options);
-	},
+        return this._format('date', date, options);
+    },
 
-	formatNumber: function (num, options) {
-		return this._format('number', num, options);
-	},
+    formatNumber: function (num, options) {
+        return this._format('number', num, options);
+    },
 
-	_format: function (type, value, options) {
-		options = options || {};
+    _format: function (type, value, options) {
+        options = options || {};
 
-		var locales = makeArray(options.locales);
-		var formats = get(this, 'formats');
+        var locales = makeArray(options.locales);
+        var formats = get(this, 'formats');
 
-		if (Ember.isEmpty(locales)) {
-			locales = get(this, 'current');
-		}
+        if (Ember.isEmpty(locales)) {
+            locales = get(this, 'current');
+        }
 
-		if (typeof options.formats === 'string') {
-			options = get(this, 'formats.' + type + '.' + options.formats);
-		} else if (typeof options.formats === 'object') {
-			options = options.formats;
-		}
+        if (typeof options.formats === 'string') {
+            options = get(this, 'formats.' + type + '.' + options.formats);
+        } else if (typeof options.formats === 'object') {
+            options = options.formats;
+        }
 
-		if (typeof options === 'string') {
-			try {
-				options = formats[type][options];
-			} catch (e) {
-				options = undefined;
-			} finally {
-				if (options === undefined) {
-					throw new ReferenceError('No ' + type + ' format named: ' + options);
-				}
-			}
-		}
+        if (typeof options === 'string') {
+            try {
+                options = formats[type][options];
+            } catch (e) {
+                options = undefined;
+            } finally {
+                if (options === undefined) {
+                    throw new ReferenceError('No ' + type + ' format named: ' + options);
+                }
+            }
+        }
 
-		switch (type) {
-			case 'date':
-			case 'time':
-				return this.getDateTimeFormat(locales, options).format(value);
-			case 'number':
-				return this.getNumberFormat(locales, options).format(value);
-			case 'relative':
-				return this.getRelativeFormat(locales, options).format(value);
-			default:
-				throw new Error('Unrecognized simple format type: ' + type);
-		}
-	}
+        switch (type) {
+            case 'date':
+            case 'time':
+                return this.getDateTimeFormat(locales, options).format(value);
+            case 'number':
+                return this.getNumberFormat(locales, options).format(value);
+            case 'relative':
+                return this.getRelativeFormat(locales, options).format(value);
+            default:
+                throw new Error('Unrecognized simple format type: ' + type);
+        }
+      }
 });

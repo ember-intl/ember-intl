@@ -1,9 +1,9 @@
 module.exports = {
-	description: 'Generates a boilerplate message and format',
+    description: 'Generates a boilerplate message and format',
 
-	normalizeEntityName: function () {},
+    normalizeEntityName: function () {},
 
-	afterInstall: function (options) {
-		return this.addPackageToProject('intl-format-cache', '^2.0.4');
-	}
+    afterInstall: function (options) {
+        return this.addPackageToProject('intl-format-cache', '^2.0.4');
+    }
 }

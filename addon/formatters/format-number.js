@@ -7,26 +7,26 @@ import Ember from 'ember';
 import Formatter from '../formatter-base';
 
 var FormatNumber = Formatter.extend({
-	format: function (value, hash) {
-		var formatOptions = {
-			formats: hash.format || this.filterFormatOptions(hash)
-		};
+    format: function (value, hash) {
+        var formatOptions = {
+            formats: hash.format || this.filterFormatOptions(hash)
+        };
 
-		if (hash.locales) {
-			formatOptions.locales = hash.locales;
-		}
+        if (hash.locales) {
+            formatOptions.locales = hash.locales;
+        }
 
-		return this.intl.formatNumber(value, formatOptions);
-	}
+        return this.intl.formatNumber(value, formatOptions);
+    }
 });
 
 FormatNumber.reopenClass({
-	formatOptions: [
-		'localeMatcher', 'style', 'currency', 'currencyDisplay',
-		'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
-		'maximumFractionDigits', 'minimumSignificantDigits',
-		'maximumSignificantDigits'
-	]
+    formatOptions: [
+        'localeMatcher', 'style', 'currency', 'currencyDisplay',
+        'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
+        'maximumFractionDigits', 'minimumSignificantDigits',
+        'maximumSignificantDigits'
+    ]
 });
 
 export default FormatNumber;
