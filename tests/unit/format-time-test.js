@@ -1,19 +1,32 @@
 import Ember from 'ember';
-import IntlService from '../../service/intl';
+import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import FormatTime from 'ember-intl/formatters/format-time';
 import formatTimeHelper from '../../helpers/format-time';
-import setupIntlBlock from '../helpers/intl-block';
 
-var intlBlock, container, view, service, lookup;
+var view;
 var dateStr   = 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)';
 var timeStamp = 1390518044403;
 
-QUnit.module('format-time', setupIntlBlock());
+moduleForIntl('format-time', {
+	setup: function (container) {
+		container.register('ember-intl@formatter:format-time', FormatTime);
+		container.register('helper:format-time', formatTimeHelper, { instantiate: false });
+	},
+	teardown: function () {
+		runDestroy(view);
+	}
+});
 
-test('FormatTime exists', function() {
+test('exists', function() {
 	expect(1);
-
 	ok(formatTimeHelper);
+});
+
+test('should throw if called with out a value', function(assert) {
+	expect(1);
+	view = this.intlBlock('{{format-time}}');
+	assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-time');
 });
 
 test('it should return a formatted string', function() {

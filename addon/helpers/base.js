@@ -18,6 +18,8 @@ export default function (formatterName) {
 
 			if (typeof params[0] !== 'undefined') {
 				args.push(params[0]);
+			} else {
+				return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
 			}
 
 			args.push(hash);
@@ -37,6 +39,8 @@ export default function (formatterName) {
 
 			if (typeof value !== 'undefined') {
 				args.push(value);
+			} else {
+				return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
 			}
 
 			args.push(options.hash);
