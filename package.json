@@ -18,7 +18,7 @@
     "node": ">= 0.10.0"
   },
   "author": "",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "cldr": "^2.3.2",
     "ember-browserify": "^0.6.0",
