@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import moduleForIntl from '../helpers/intl-block';
+import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatTime from 'ember-intl/formatters/format-time';
 import formatTimeHelper from '../../helpers/format-time';

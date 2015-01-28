@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import moduleForIntl from '../helpers/intl-block';
+import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatHtmlMessage from 'ember-intl/formatters/format-html-message';
 import formatHtmlHelper from '../../helpers/format-html-message';
@@ -18,7 +18,6 @@ moduleForIntl('format-html-message', {
 
 test('exists', function() {
 	expect(1);
-
 	ok(formatHtmlHelper);
 });
 
