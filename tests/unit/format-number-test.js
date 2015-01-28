@@ -28,8 +28,6 @@ test('number is formatted correctly with default locale', function() {
 
 	runAppend(view);
 
-	// non-breaking space so we can't just compare "1 000" to "1 000"
-	// since it's not a %20 space character
 	equal(view.$().text(), "1,000");
 });
 
@@ -49,4 +47,111 @@ test('should throw if called with out a value', function(assert) {
 	expect(1);
 	view = this.intlBlock('{{format-number}}');
 	assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-number');
+});
+
+test('should return a string', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number 4}}', { locales: 'en-US' });
+
+	runAppend(view);
+
+	equal(view.$().html(), '4');
+});
+
+test('should return a decimal as a string', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number NUM}}', { locales: 'en-US' });
+
+	view.set('context', {
+		NUM: 4.004
+	});
+
+	runAppend(view);
+
+	equal(view.$().html(), '4.004');
+});
+
+
+test('should return a formatted string with a thousand separator', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number NUM}}', { locales: 'en-US' });
+
+	view.set('context', {
+		NUM: 40000
+	});
+
+	runAppend(view);
+
+	equal(view.$().html(), '40,000');
+});
+
+
+test('should return a formatted string with a thousand separator and decimal', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number NUM}}', { locales: 'en-US' });
+
+	view.set('context', {
+		NUM: 40000.004
+	});
+
+	runAppend(view);
+
+	equal(view.$().html(), '40,000.004');
+});
+
+test('in another locale - should return a string', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number 4}}', { locales: 'de-DE' });
+
+	runAppend(view);
+
+	equal(view.$().html(), '4');
+});
+
+test('in another locale - should return a decimal as a string', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number NUM}}', { locales: 'de-DE' });
+
+	view.set('context', {
+		NUM: 4.004
+	});
+
+	runAppend(view);
+
+	equal(view.$().html(), '4,004');
+});
+
+
+test('in another locale - should return a formatted string with a thousand separator', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number NUM}}', { locales: 'de-DE' });
+
+	view.set('context', {
+		NUM: 40000
+	});
+
+	runAppend(view);
+
+	equal(view.$().html(), '40.000');
+});
+
+test('in another locale - should return a formatted string with a thousand separator and decimal', function() {
+	expect(1);
+
+	view = this.intlBlock('{{format-number NUM}}', { locales: 'de-DE' });
+
+	view.set('context', {
+		NUM: 40000.004
+	});
+
+	runAppend(view);
+
+	equal(view.$().html(), '40.000,004');
 });
