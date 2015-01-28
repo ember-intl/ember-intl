@@ -52,6 +52,6 @@ export default Ember.Controller.extend({
 				self.set('now', new Date());
 				self.incrementProperty('num');
 			});
-		}, 10);
+		}, 200);
 	})
 });
