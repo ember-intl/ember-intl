@@ -1,11 +1,5 @@
 import Ember from 'ember';
 import IntlService from '../../service/intl';
-import FormatDate from 'ember-intl/formatters/format-date';
-import formatDateHelper from '../../helpers/format-date';
-import FormatTime from 'ember-intl/formatters/format-time';
-import formatTimeHelper from '../../helpers/format-time';
-import FormatRelative from 'ember-intl/formatters/format-relative';
-import formatRelativeHelper from '../../helpers/format-relative';
 import { runAppend, runDestroy } from '../helpers/run-append';
 
 export default function (name, callbacks) {
