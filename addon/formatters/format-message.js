@@ -51,7 +51,7 @@ var FormatMessage = Formatter.extend({
 		}
 
 		var formatOptions = {
-			formats: hash.format || this.filterFormatOptions()
+			formats: hash.format || this.filterFormatOptions(hash)
 		};
 
 		if (hash.locales) {

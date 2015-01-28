@@ -6,14 +6,15 @@
 import Ember from 'ember';
 
 var FormatBase = Ember.Object.extend({
-	filterFormatOptions: function () {
+	filterFormatOptions: function (hash) {
+		hash = hash || {};
+
 		var match = false;
-		var self  = this;
 
 		var options = this.constructor.formatOptions.reduce(function (opts, name) {
-			if (self.hasOwnProperty(name)) {
+			if (hash.hasOwnProperty(name)) {
 				match = true;
-				opts[name] = self[name];
+				opts[name] = hash[name];
 			}
 
 			return opts;
