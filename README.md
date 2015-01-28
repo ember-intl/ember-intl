@@ -5,9 +5,8 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 
 
 ## Requirements
-* Ember >= 1.10-beta-*
-* HTMLBars
 * Ember-cli >= 0.1.5
+* HTMLBars and Handlebars supported
 
 ## Installation
 * `npm install ember-intl --save-dev`

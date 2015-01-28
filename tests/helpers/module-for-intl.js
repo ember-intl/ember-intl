@@ -14,16 +14,29 @@ export default function (name, callbacks) {
 			container = this.container = new Ember.Container();
 
 			this.intlBlock = function (templateString, serviceContext, viewContext) {
-				var service = this.service = IntlService.create(Ember.$.extend({
-					container:      this.container,
-					locales:        ['en'],
-					defaultLocales: ['en']
-				}, serviceContext || {}));
+				var service;
 
-				container.register('intl:main', service, {
-					singleton:   true,
-					instantiate: false
-				});
+				serviceContext = serviceContext || {};
+
+				if (!container.has('intl:main')) {
+					service = IntlService.create(Ember.$.extend({
+						container:      this.container,
+						locales:        ['en'],
+						defaultLocales: ['en']
+					}, serviceContext));
+
+					container.register('intl:main', service, {
+						singleton:   true,
+						instantiate: false
+					});
+				} else {
+					service = container.lookup('intl:main');
+					Ember.run(function () {
+						service.setProperties(serviceContext);
+					});
+				}
+
+				this.service = service;
 
 				container.injection('ember-intl@formatter', 'intl', 'intl:main');
 

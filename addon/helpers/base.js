@@ -6,6 +6,10 @@
 import Ember from 'ember';
 
 export default function (formatterName) {
+	function throwError () {
+		return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
+	}
+
 	if (Ember.HTMLBars) {
 		return Ember.HTMLBars.makeBoundHelper(function (params, hash, options, env) {
 			var formatter = this.container.lookup('ember-intl@formatter:' + formatterName);
@@ -14,14 +18,12 @@ export default function (formatterName) {
 				Ember.run.once(this, this.rerender);
 			});
 
-			var args = [];
-
-			if (typeof params[0] !== 'undefined') {
-				args.push(params[0]);
-			} else {
-				return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
+			if (!params || (params && !params.length)) {
+				return throwError();
 			}
 
+			var args = [];
+			args.push(params[0]);
 			args.push(hash);
 			args.push(Ember.get(env, 'data.view.context'));
 
@@ -35,14 +37,12 @@ export default function (formatterName) {
 				Ember.run.once(this, this.rerender);
 			});
 
-			var args = [];
-
-			if (typeof value !== 'undefined') {
-				args.push(value);
-			} else {
-				return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
+			if (typeof value === 'undefined') {
+				return throwError();
 			}
 
+			var args = [];
+			args.push(value);
 			args.push(options.hash);
 			args.push(options.contexts[0]);
 

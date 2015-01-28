@@ -155,3 +155,59 @@ test('in another locale - should return a formatted string with a thousand separ
 
 	equal(view.$().html(), '40.000,004');
 });
+
+test('currency - should return a string formatted to currency', function() {
+	expect(3);
+
+	view = this.intlBlock('{{format-number 40000 style="currency" currency="USD"}}', { locales: 'en-US' });
+
+	runAppend(view);
+
+	equal(view.$().text(), '$40,000.00');
+
+	view = this.intlBlock('{{format-number 40000 style="currency" currency="EUR"}}', { locales: 'en-US' });
+
+	runAppend(view);
+
+	equal(view.$().text(), '€40,000.00');
+
+	view = this.intlBlock('{{format-number 40000 style="currency" currency="JPY"}}', { locales: 'en-US' });
+
+	runAppend(view);
+
+	equal(view.$().text(), '¥40,000');
+});
+
+test('should function within an `each` block helper', function() {
+	expect(1);
+
+	view = this.intlBlock('{{#each currency in currencies}} {{format-number currency.AMOUNT style="currency" currency=currency.CURRENCY}}{{/each}}', { locales: 'en-US' });
+
+	view.set('context', {
+		currencies: [
+			{ AMOUNT: 3, CURRENCY: 'USD'},
+			{ AMOUNT: 8, CURRENCY: 'EUR'},
+			{ AMOUNT: 10, CURRENCY: 'JPY'}
+		]
+	});
+
+	runAppend(view);
+
+	equal(view.$().text(), ' $3.00 €8.00 ¥10');
+});
+
+test('used to format percentages', function() {
+	expect(2);
+
+	view = this.intlBlock('{{format-number 400 style="percent"}}', { locales: 'en-US' });
+
+	runAppend(view);
+
+	equal(view.$().text(), '40,000%', 'should return a string formatted to a percent');
+
+	view = this.intlBlock('{{format-number 400 style="percent"}}', { locales: 'de-DE' });
+
+	runAppend(view);
+
+	equal(escape(view.$().text()), '40.000%A0%25', 'de should return a string formatted to a percent');
+});
