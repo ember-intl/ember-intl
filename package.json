@@ -35,7 +35,7 @@
     "ember-cli-htmlbars": "^0.6.0",
     "ember-cli-inject-live-reload": "^1.3.0",
     "ember-cli-qunit": "0.1.2",
-    "ember-cli": "0.1.7",
+    "ember-cli": "0.1.10",
     "ember-code-snippet": "^0.1.3",
     "express": "^4.8.5",
     "glob": "^4.0.5"
