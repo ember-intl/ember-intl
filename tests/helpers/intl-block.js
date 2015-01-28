@@ -24,13 +24,13 @@ export default function () {
 
 			container = this.container = new Ember.Container();
 
-			var service = this.service = IntlService.create({
-				container:      this.container,
-				locales:        ['en'],
-				defaultLocales: ['en']
-			});
+			this.intlBlock = function (templateString, serviceContext) {
+				var service = this.service = IntlService.create(Ember.$.extend({
+					container:      this.container,
+					locales:        ['en'],
+					defaultLocales: ['en']
+				}, serviceContext || {}));
 
-			this.intlBlock = function (templateString) {
 				container.register('intl:main', service, {
 					singleton:   true,
 					instantiate: false
