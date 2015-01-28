@@ -19,7 +19,7 @@ export default function (name, callbacks) {
 
 			container = this.container = new Ember.Container();
 
-			this.intlBlock = function (templateString, serviceContext) {
+			this.intlBlock = function (templateString, serviceContext, viewContext) {
 				var service = this.service = IntlService.create(Ember.$.extend({
 					container:      this.container,
 					locales:        ['en'],
@@ -39,7 +39,8 @@ export default function (name, callbacks) {
 
 				return Ember.View.create({
 					container: container,
-					template:  Ember.HTMLBars.compile(templateString)
+					template:  Ember.HTMLBars.compile(templateString),
+					context:   viewContext || {}
 				});
 			};
 
