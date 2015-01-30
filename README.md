@@ -123,12 +123,12 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 
 ```hbs
 {{format-html-message (intl-get 'product.html.info')
-product='Apple watch'
-price=200
-deadline=yesterday}}
+	product='Apple watch'
+	price=200
+	deadline=yesterday}}
 
 {{format-html-message '<strong>{numPhotos}</strong>'
-numPhotos=(format-number num)}}
+	numPhotos=(format-number num)}}
 ```
 
 ### Intl-Get
@@ -137,9 +137,9 @@ Utility helper for accessing and returning the value the properties from the loc
 
 ```hbs
 {{format-message (intl-get 'product.info')
-product='Apple watch'
-price=200
-deadline=yesterday}}
+	product='Apple watch'
+	price=200
+	deadline=yesterday}}
 ```
 
 Will return the message from the current locale, or locale explicitly passed as an argument, message object.
