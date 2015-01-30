@@ -128,7 +128,7 @@ price=200
 deadline=yesterday}}
 
 {{format-html-message '<strong>{numPhotos}</strong>'
-numPhotos=(formatNumber num)}}
+numPhotos=(format-number num)}}
 ```
 
 ### Intl-Get
@@ -142,7 +142,7 @@ price=200
 deadline=yesterday}}
 ```
 
-Will return the message from the current locales message, or the locale key passed in as a hash value.
+Will return the message from the current locale, or locale explicitly passed as an argument, message object.
 
 ```js
 // app/locales/en.js
