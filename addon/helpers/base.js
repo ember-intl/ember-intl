@@ -44,7 +44,14 @@ export default function (formatterName) {
             var args = [];
             args.push(value);
             args.push(options.hash);
-            args.push(options.contexts[0]);
+
+            var context = this;
+
+            if (options.contexts && options.contexts[0]) {
+              context = options.contexts[0];
+            }
+
+            args.push(context);
 
             return formatter.format.apply(formatter, args);
         });
