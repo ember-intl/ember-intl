@@ -59,24 +59,51 @@ export default {
 ## Examples
 
 ### Format Number
+
+Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted string value.
+
 ```hbs
 {{format-number num}}
 {{format-number num format='EUR'}}
 {{format-number num style='currency' currency='USD'}}
 ```
 
+### Format Date
+
+Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
+
+```hbs
+{{format-date now weekday='long' timeZone='UTC'}}
+{{format-date now hour='numeric' minute='numeric' hour12=false}}
+```
+
 ### Format Time
+
+This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
+
 ```hbs
 {{format-time now format='hhmmss'}}
 {{format-time now hour='numeric' minute='numeric' hour12=false}}
 ```
 
 ### Format Relative
+
+Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
+
 ```hbs
 {{format-relative yesterday}}
 ```
 
 ### Format Message
+
+Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.
+
+```
+You have {numPhotos, plural,
+	=0 {no photos.}
+	=1 {one photo.}
+	other {# photos.}}
+```
 
 ```hbs
 {{format-message (intl-get 'product.info')
@@ -92,14 +119,44 @@ export default {
 
 ### Format HTML Message
 
+This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
+
 ```hbs
 {{format-html-message (intl-get 'product.html.info')
-	product='Apple watch'
-	price=200
-	deadline=yesterday}}
+product='Apple watch'
+price=200
+deadline=yesterday}}
 
 {{format-html-message '<strong>{numPhotos}</strong>'
-	numPhotos=(formatNumber num)}}
+numPhotos=(formatNumber num)}}
+```
+
+### Intl-Get
+
+Utility helper for accessing and returning the value the properties from the locale's message object via a string namespace.
+
+```hbs
+{{format-message (intl-get 'product.info')
+product='Apple watch'
+price=200
+deadline=yesterday}}
+```
+
+Will return the message from the current locales message, or the locale key passed in as a hash value.
+
+```js
+// app/locales/en.js
+export default {
+	locale: "en",
+	messages: {
+		product: {
+			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
+		}
+	},
+	fields: {
+		...
+	}
+}
 ```
 
 ### Helper Options
@@ -116,3 +173,13 @@ export default {
 
 * `ember test`
 * `ember test --server`
+
+[Intl-RF]: https://github.com/yahoo/intl-relativeformat
+[Intl-MF]: https://github.com/yahoo/intl-messageformat
+[Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+[Intl-NF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
+[Intl-DTF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+[ICU]: http://userguide.icu-project.org/formatparse/messages
+[CLDR]: http://cldr.unicode.org/
+[Intl.js]: https://github.com/andyearnshaw/Intl.js
+[LICENSE]: https://github.com/yahoo/yahoo-intl/blob/master/LICENSE
