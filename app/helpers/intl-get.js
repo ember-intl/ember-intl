@@ -5,7 +5,10 @@
 
 import Ember from 'ember';
 
-export default Ember.HTMLBars.makeBoundHelper(function (params/*, hash, options, env*/) {
+var helper;
+
+if (Ember.HTMLBars) {
+  helper = Ember.HTMLBars.makeBoundHelper(function (params/*, hash, options, env*/) {
     params = params || [];
 
     var intl = this.container.lookup('intl:main');
@@ -13,4 +16,16 @@ export default Ember.HTMLBars.makeBoundHelper(function (params/*, hash, options,
     Ember.assert('You must pass in a message key in the form of a string.', typeof params[0] === 'string');
 
     return intl.get('messages.' + params[0]);
-});
+  });
+}
+else {
+  helper = Ember.Handlebars.makeBoundHelper(function (value, options) {
+    Ember.assert('You must pass in a message key in the form of a string.', typeof value === 'string');
+
+    var intl = this.container.lookup('intl:main');
+
+    return intl.get('messages.' + value);
+  });
+}
+
+export default helper;
