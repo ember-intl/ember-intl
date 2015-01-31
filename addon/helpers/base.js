@@ -5,6 +5,15 @@
 
 import Ember from 'ember';
 
+var Stream = Ember.__loader.require('ember-metal/streams/stream')['default'];
+var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
+
+function destroyStream (stream) {
+    if (stream && !stream.destroyed) {
+        stream.destroy();
+    }
+}
+
 export default function (formatterName) {
     function throwError () {
         return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
@@ -30,30 +39,81 @@ export default function (formatterName) {
             return formatter.format.apply(formatter, args);
         });
     } else {
-        return Ember.Handlebars.makeBoundHelper(function (value, options) {
-            var formatter = this.container.lookup('ember-intl@formatter:' + formatterName);
-
-            formatter.intl.one('localesChanged', this, function () {
-                Ember.run.once(this, this.rerender);
-            });
-
+        return function (value, options) {
             if (typeof value === 'undefined') {
                 return throwError();
             }
 
-            var args = [];
-            args.push(value);
-            args.push(options.hash);
+            var args      = Ember.A();
+            var streams   = Ember.A();
+            var view      = options.data.view;
+            var types     = options.types;
+            var hash      = Ember.$.extend({}, options.hash);
+            var formatter = view.container.lookup('ember-intl@formatter:' + formatterName);
+            var stream;
 
-            var context = this;
-
-            if (options.contexts && options.contexts[0]) {
-              context = options.contexts[0];
+            function rerenderView () {
+                Ember.run.scheduleOnce('render', view, view.rerender);
             }
 
-            args.push(context);
+            args.push(hash);
+            args.push(this);
 
-            return formatter.format.apply(formatter, args);
-        });
+            if (types[0] === 'ID') {
+                value = view.getStream(value);
+            }
+
+            stream = new Stream(function () {
+                var currentValue = value;
+
+                if (currentValue.isStream) {
+                    currentValue = currentValue.value();
+                }
+
+                return formatter.format.apply(formatter, [currentValue].concat(args));
+            });
+
+            var simpleView = new SimpleBoundView(stream, options.escaped);
+
+            Ember.keys(options.hashTypes).forEach(function (key) {
+                if (options.hashTypes[key] === 'ID') {
+                    var hashStream = view.getStream(options.hash[key]);
+                    hash[key] = hashStream.value();
+
+                    if (!options.data.isUnbound) {
+                        hashStream.subscribe(function () {
+                            // update the hash with the new value
+                            // since the above stream closes over `hash`
+                            // within `args`
+                            hash[key] = hashStream.value();
+                            stream.notify();
+                        });
+
+                        streams.push(hashStream);
+                    }
+                }
+            });
+
+            if (!options.data.isUnbound) {
+                stream.subscribe(view._wrapAsScheduled(function () {
+                    Ember.run.scheduleOnce('render', simpleView, 'rerender');
+                }));
+
+                if (value.isStream) {
+                    value.subscribe(stream.notify, stream);
+                    streams.push(value);
+                }
+
+                formatter.intl.one('localesChanged', rerenderView);
+            }
+
+            view.on('willDestroyElement', function () {
+                streams.forEach(destroyStream);
+                streams = [];
+                formatter.intl.off('localesChanged', rerenderView);
+            });
+
+            view.appendChild(simpleView);
+        };
     }
 }

@@ -8,6 +8,7 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 
 ## Requirements
 * Ember-cli >= 0.1.5
+* Ember >= 1.9.x (1.10-beta-* supported)
 * HTMLBars and Handlebars supported
 
 ## Installation
@@ -49,7 +50,7 @@ export default {
 		ready: function () {
 			// setup default locale to fr but will fallback to en
 			this.intl.setProperties({
-				locales: ['fr-FR'],
+				locales:        ['fr-FR'],
 				defaultLocales: ['en']
 			});
 		}
