@@ -20,4 +20,4 @@ sudo npm install -g broccoli-cli
 
 And doing a Broccoli build in this directory:
 
-broccoli build ./dist
+grunt

@@ -1,66 +1,63 @@
 'use strict';
 
 module.exports = function (grunt) {
-		grunt.initConfig({
-				clean: {
-						dist: 'packaging/dist/'
+    grunt.initConfig({
+				broccoli: {
+						packaging: {
+								config: './packaging/Brocfile.js',
+								dest: 'dist'
+						}
 				},
 
-				extract_cldr_data: {
-						options: {
-								fields : ['second', 'minute', 'hour', 'day', 'month', 'year'],
-								plurals: true
-						},
+        clean: {
+            dist: 'packaging/dist/'
+        },
 
-						src_en: {
-								dest: 'packaging/dist/locale-data/en.js',
+        extract_cldr_data: {
+            options: {
+                fields : ['second', 'minute', 'hour', 'day', 'month', 'year'],
+                plurals: true
+            },
 
-								options: {
-										locales: ['en'],
+            lib_all: {
+                dest: 'dist/locale-data/complete.js',
 
-										wrapEntry: function (entry) {
-												return 'export default ' + entry + ';';
-										}
-								}
-						},
+                options: {
+                    prelude: [
+                        '// GENERATED FILE',
+                        'var EmberIntl = require("ember-intl");\n\n'
+                    ].join('\n'),
 
-						lib_all: {
-								dest: 'packaging/dist/locale-data/complete.js',
+                    wrapEntry: function (entry) {
+                        return 'EmberIntl.__addLocaleData(' + entry + ');';
+                    }
+                }
+            },
 
-								options: {
-										prelude: [
-												'// GENERATED FILE',
-												'var EmberIntl = require("ember-intl");\n\n'
-										].join('\n'),
+            dist_all: {
+                dest: 'dist/locale-data/locales/',
+                prelude: [
+                    '// GENERATED FILE',
+                    'var EmberIntl = require("ember-intl");\n\n'
+                ].join('\n'),
+                options: {
+                    wrapEntry: function (entry) {
+                        return 'EmberIntl.__addLocaleData(' + entry + ');';
+                    }
+                }
+            }
+        }
+    });
 
-										wrapEntry: function (entry) {
-												return 'EmberIntl.__addLocaleData(' + entry + ');';
-										}
-								}
-						},
+		grunt.loadNpmTasks('grunt-broccoli');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-extract-cldr-data');
 
-						dist_all: {
-								dest: 'packaging/dist/locale-data/locales/',
-								prelude: [
-										'// GENERATED FILE',
-										'var EmberIntl = require("ember-intl");\n\n'
-								].join('\n'),
-								options: {
-										wrapEntry: function (entry) {
-												return 'EmberIntl.__addLocaleData(' + entry + ');';
-										}
-								}
-						}
-				}
-		});
+    grunt.registerTask('cldr', ['extract_cldr_data']);
 
-		grunt.loadNpmTasks('grunt-contrib-clean');
-		grunt.loadNpmTasks('grunt-extract-cldr-data');
-
-		grunt.registerTask('cldr', ['extract_cldr_data']);
-
-		grunt.registerTask('default', [
-				'clean',
-				'cldr'
-		]);
+    grunt.registerTask('default', [
+        'clean',
+				'broccoli:packaging:build',
+        'cldr'
+    ]);
 };

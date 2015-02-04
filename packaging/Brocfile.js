@@ -2,13 +2,14 @@
 
 'use strict';
 
+process.chdir(__dirname);
+
 /**
  * Packaging was dervived from the work of by:
  * https://github.com/ef4/liquid-fire/tree/master/packaging
  * Full credit to Edward Faulkner (https://github.com/ef4)
  * and the rest of the liquid-fire team
  */
-
 var mergeTrees    = require('broccoli-merge-trees');
 var pickFiles     = require('broccoli-static-compiler');
 var compileES6    = require('broccoli-es6-concatenator');

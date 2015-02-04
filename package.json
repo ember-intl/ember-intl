@@ -38,7 +38,6 @@
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-static-compiler": "^0.2.1",
     "broccoli-writer": "^0.1.1",
-    "commander": "^2.6.0",
     "ember-cli": "0.1.10",
     "ember-cli-dependency-checker": "0.0.6",
     "ember-cli-htmlbars": "^0.6.0",
