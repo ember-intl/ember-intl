@@ -1,4 +1,4 @@
-// ideally these would be imported ..
+// ideally these would be imported as node modules
 var IntlMessageFormat  = window.IntlMessageFormat;
 var IntlRelativeFormat = window.IntlRelativeFormat;
 
