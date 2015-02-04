@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatTime from 'ember-intl/formatters/format-time';
+import FormatTime from '../../formatters/format-time';
 import formatTimeHelper from '../../helpers/format-time';
 
 var view;
@@ -10,7 +10,7 @@ var timeStamp = 1390518044403;
 
 moduleForIntl('format-time', {
     setup: function (container) {
-        container.register('ember-intl@formatter:format-time', FormatTime);
+        container.register('formatter:format-time', FormatTime);
         container.register('helper:format-time', formatTimeHelper, { instantiate: false });
     },
     teardown: function () {

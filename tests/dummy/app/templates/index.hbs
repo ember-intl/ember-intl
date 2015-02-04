@@ -26,7 +26,7 @@ Choose a locale: {{view 'select' value=value content=options}}
 <h3>Format Message</h3>
 
 <div>
-    {{format-message (intl-get 'product.info')
+    {{format-message (intl-get 'messages.product.info')
       product='Apple watch'
       price=200
       deadline=yesterday}}
@@ -42,7 +42,7 @@ Choose a locale: {{view 'select' value=value content=options}}
 
 <h3>Format HTML Message</h3>
 <div>
-    {{format-html-message  (intl-get 'product.html.info')
+    {{format-html-message  (intl-get 'messages.product.html.info')
       product='Apple watch'
       price=200
       deadline=yesterday}}

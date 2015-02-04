@@ -7,7 +7,7 @@ var numeric   = 'numeric';
 var currency  = 'currency';
 
 function formatNumber (number, options) {
-    return Ember.computed('intl.locale', function () {
+    return Ember.computed('intl.locales', function () {
         return this.intl.formatNumber(number, options);
     });
 }
@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
     formatNumberSimple:  formatNumber(400),
     formatNumberEuro:    formatNumber(400, 'EUR'),
 
-    formatMessageExample: Ember.computed('intl.locale', function () {
+    formatMessageExample: Ember.computed('intl.locales', function () {
         return this.intl.formatMessage(this.messages.photos, {
             name:      'Jason',
             numPhotos: 1400,

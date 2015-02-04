@@ -1,16 +1,24 @@
 {
   "name": "ember-intl",
+  "version": "1.0.0",
   "keyboards": [
     "intl",
+    "formatjs",
     "i18n",
     "internationalization",
     "ecma402",
     "ember",
     "emberjs"
   ],
+  "main": ["packaging/dist/ember-intl.js"],
   "authors": [
-    "Jason Mitchell <jason.mitchell.w@gmail.com>"
+    { "name": "Jason Mitchell", "email": "jason.mitchell.w@gmail.com" }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yahoo/ember-intl.git"
+  },
+  "license": "BSD-3-Clause",
   "dependencies": {
     "handlebars": "~2.0.0",
     "jquery": "^1.11.1",
@@ -19,7 +27,9 @@
     "loader.js": "stefanpenner/loader.js#1.0.1",
     "ember-cli-shims": "stefanpenner/ember-cli-shims#0.0.3",
     "ember-cli-test-loader": "rwjblue/ember-cli-test-loader#0.0.4",
-    "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.2",
+    "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.2"
+  },
+  "devDependencies": {
     "ember-qunit": "0.1.8",
     "ember-qunit-notifications": "0.0.4",
     "qunit": "~1.15.0"

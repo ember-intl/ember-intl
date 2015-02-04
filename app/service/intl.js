@@ -4,7 +4,8 @@
  */
 
 import Ember from 'ember';
-import createFormatCache from 'npm:intl-format-cache';
+import createFormatCache from 'ember-intl/format-cache/memoizer';
+import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
 
 var makeArray = Ember.makeArray;
 var get       = Ember.get;
@@ -45,7 +46,6 @@ export default Ember.Controller.extend(Ember.Evented, {
         var formats = this.container.resolver('formats:main');
 
         if (!formats) {
-            Ember.Logger.warn('No `formats:main` module found.  Did you forget to export it?');
             return {};
         }
 
@@ -62,7 +62,7 @@ export default Ember.Controller.extend(Ember.Evented, {
 
                 for (var key in locale) {
                     if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
-                        messages[key] = Ember.$.extend(true, messages[key], locale[key]);
+                        messages[key] = locale[key];
                     }
                 }
             }, this);
@@ -82,9 +82,9 @@ export default Ember.Controller.extend(Ember.Evented, {
     lookupMessage: function (localeName) {
         Ember.assert('The locale name specific to lookupMessage must be a string.', typeof localeName === 'string');
 
-        localeName = localeName.toLowerCase();
-
-        var locale = this.container.resolver('locale:' + localeName);
+        var key       = 'locale:' + localeName.toLowerCase();
+        var container = this.container;
+        var locale    = container.lookup(key);
 
         if (locale) {
             return locale.messages || {};

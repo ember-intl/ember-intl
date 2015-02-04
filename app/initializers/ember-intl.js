@@ -4,8 +4,8 @@
  */
 
 import Ember from 'ember';
-import env from '../config/environment';
 import IntlService from '../service/intl';
+import { addLocaleData } from 'ember-intl/utils/data';
 
 var get = Ember.get;
 var makeArray = Ember.makeArray;
@@ -43,12 +43,12 @@ ServiceInitializer.prototype = {
 
         app.intl = service;
 
-        app.inject('controller',            'intl', 'intl:main');
-        app.inject('component',             'intl', 'intl:main');
-        app.inject('route',                 'intl', 'intl:main');
-        app.inject('model',                 'intl', 'intl:main');
-        app.inject('view',                  'intl', 'intl:main');
-        app.inject('ember-intl@formatter',  'intl', 'intl:main');
+        app.inject('controller', 'intl', 'intl:main');
+        app.inject('component',  'intl', 'intl:main');
+        app.inject('route',      'intl', 'intl:main');
+        app.inject('model',      'intl', 'intl:main');
+        app.inject('view',       'intl', 'intl:main');
+        app.inject('formatter',  'intl', 'intl:main');
 
         return service;
     }
@@ -59,17 +59,18 @@ export default {
 
     initialize: function (container, app) {
         Ember.keys(requirejs._eak_seen).filter(function (key) {
-            return key.indexOf(env.modulePrefix + '\/locales\/') === 0;
+            return key.indexOf(app.modulePrefix + '\/locales\/') === 0;
         }).forEach(function (moduleName) {
-            var locale = require(moduleName, null, null, true)['default'];
+            var locale     = require(moduleName, null, null, true)['default'];
+            var localeName = moduleName.replace(app.modulePrefix + '\/locales\/', '');
 
-            IntlMessageFormat.__addLocaleData(locale);
-            IntlRelativeFormat.__addLocaleData(locale);
+            container.register('locale:' + localeName, locale, { instantiate: false });
+            addLocaleData(locale);
         });
 
         var initializer = new ServiceInitializer(container, app, {
-            locales:        get(env, 'intl.locales')        || app.locales,
-            defaultLocales: get(env, 'intl.defaultLocales') || app.defaultLocales
+            locales:        app.locales,
+            defaultLocales: app.defaultLocales
         });
 
         initializer.init();

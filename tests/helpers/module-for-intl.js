@@ -38,7 +38,7 @@ export default function (name, callbacks) {
 
                 this.service = service;
 
-                container.injection('ember-intl@formatter', 'intl', 'intl:main');
+                container.injection('formatter', 'intl', 'intl:main');
 
                 // mock the component lookup service since it's invoked prior to
                 // looking up a handlebar helper to determine if the helper
