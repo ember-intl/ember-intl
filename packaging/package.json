@@ -1,7 +1,6 @@
 {
   "name": "ember-intl-packaging",
   "description": "Ember packer for apps that are not ember-cli apps.",
-  "version": "1.0.0-rc1",
   "scripts": {
     "start": "grunt"
   },

@@ -407,7 +407,7 @@ var define, requireModule, require, requirejs;
   ["exports"],
   function(__exports__) {
     "use strict";
-    // ideally these would be imported ..
+    // ideally these would be imported as node modules
     var IntlMessageFormat  = messageformat;
     var IntlRelativeFormat = relativeformat;
 
