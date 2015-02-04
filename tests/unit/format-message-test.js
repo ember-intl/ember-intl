@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatMessage from 'ember-intl/formatters/format-message';
+import FormatMessage from '../../formatters/format-message';
 import formatMessageHelper from '../../helpers/format-message';
 
 var view;
 
 moduleForIntl('format-message', {
     setup: function (container) {
-        container.register('ember-intl@formatter:format-message', FormatMessage);
+        container.register('formatter:format-message', FormatMessage);
         container.register('helper:format-message', formatMessageHelper, { instantiate: false });
     },
     teardown: function () {

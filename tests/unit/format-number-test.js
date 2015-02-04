@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatNumber from 'ember-intl/formatters/format-number';
+import FormatNumber from '../../formatters/format-number';
 import formatNumberHelper from '../../helpers/format-number';
 
 var view;
 
 moduleForIntl('format-number', {
     setup: function (container) {
-        container.register('ember-intl@formatter:format-number', FormatNumber);
+        container.register('formatter:format-number', FormatNumber);
         container.register('helper:format-number', formatNumberHelper, { instantiate: false });
     },
     teardown: function () {

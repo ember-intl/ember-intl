@@ -4,8 +4,8 @@
  */
 
 import Ember from 'ember';
+import { Stream, read } from '../utils/streams';
 
-var Stream = Ember.__loader.require('ember-metal/streams/stream')['default'];
 var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
 
 function destroyStream (stream) {
@@ -21,7 +21,7 @@ export default function (formatterName) {
 
     if (Ember.HTMLBars) {
         return Ember.HTMLBars.makeBoundHelper(function (params, hash, options, env) {
-            var formatter = this.container.lookup('ember-intl@formatter:' + formatterName);
+            var formatter = this.container.lookup('formatter:' + formatterName);
 
             formatter.intl.one('localesChanged', this, function () {
                 Ember.run.once(this, this.rerender);
@@ -49,7 +49,7 @@ export default function (formatterName) {
             var view      = options.data.view;
             var types     = options.types;
             var hash      = Ember.$.extend({}, options.hash);
-            var formatter = view.container.lookup('ember-intl@formatter:' + formatterName);
+            var formatter = view.container.lookup('formatter:' + formatterName);
             var stream;
 
             function rerenderView () {
@@ -67,7 +67,7 @@ export default function (formatterName) {
                 var currentValue = value;
 
                 if (currentValue.isStream) {
-                    currentValue = currentValue.value();
+                    currentValue = read(currentValue);
                 }
 
                 return formatter.format.apply(formatter, [currentValue].concat(args));
@@ -78,14 +78,14 @@ export default function (formatterName) {
             Ember.keys(options.hashTypes).forEach(function (key) {
                 if (options.hashTypes[key] === 'ID') {
                     var hashStream = view.getStream(options.hash[key]);
-                    hash[key] = hashStream.value();
+                    hash[key] = read(hashStream);
 
                     if (!options.data.isUnbound) {
                         hashStream.subscribe(function () {
                             // update the hash with the new value
                             // since the above stream closes over `hash`
                             // within `args`
-                            hash[key] = hashStream.value();
+                            hash[key] = read(hashStream);
                             stream.notify();
                         });
 

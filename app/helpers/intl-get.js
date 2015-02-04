@@ -15,7 +15,13 @@ if (Ember.HTMLBars) {
 
         Ember.assert('You must pass in a message key in the form of a string.', typeof params[0] === 'string');
 
-        return intl.get('messages.' + params[0]);
+        var obj = intl.get(params[0]);
+
+        if (obj === undefined) {
+            throw new ReferenceError('Could not find Intl object: ' + path);
+        }
+
+        return obj;
     });
 }
 else {
@@ -24,7 +30,13 @@ else {
 
         var intl = this.container.lookup('intl:main');
 
-        return intl.get('messages.' + value);
+        var obj = intl.get(value);
+
+        if (obj === undefined) {
+            throw new ReferenceError('Could not find Intl object: ' + path);
+        }
+
+        return obj;
     };
 }
 

@@ -107,7 +107,7 @@ You have {numPhotos, plural,
 ```
 
 ```hbs
-{{format-message (intl-get 'product.info')
+{{format-message (intl-get 'messages.product.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -123,7 +123,7 @@ You have {numPhotos, plural,
 This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
-{{format-html-message (intl-get 'product.html.info')
+{{format-html-message (intl-get 'messages.product.html.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -137,7 +137,7 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 Utility helper for accessing and returning the value the properties from the locale's message object via a string namespace.
 
 ```hbs
-{{format-message (intl-get 'product.info')
+{{format-message (intl-get 'messages.product.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
