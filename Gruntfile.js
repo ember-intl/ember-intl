@@ -3,9 +3,7 @@
 module.exports = function (grunt) {
 		grunt.initConfig({
 				clean: {
-						dist: 'packaging/dist/',
-						lib : 'lib/',
-						tmp : 'tmp/'
+						dist: 'packaging/dist/'
 				},
 
 				extract_cldr_data: {
