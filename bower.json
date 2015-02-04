@@ -10,7 +10,6 @@
     "ember",
     "emberjs"
   ],
-  "main": ["packaging/dist/ember-intl.js"],
   "authors": [
     { "name": "Jason Mitchell", "email": "jason.mitchell.w@gmail.com" }
   ],
