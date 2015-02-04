@@ -46,8 +46,8 @@ WrapFilter.prototype.processString = function (inputString) {
         // knock off the sourcemap and the portion where the the module
         // is setting itself as a global on `window`
         fileContent = fileContent
-          .replace(/\r?\n?[^\r\n]*$/, '')
-          .replace(new RegExp('this\\[\'' + pkg.exports + '\'\\] = '), 'return ');
+            .replace(/\r?\n?[^\r\n]*$/, '')
+            .replace(new RegExp('this\\[\'' + pkg.exports + '\'\\] = '), 'return ');
 
         return 'var ' + varName + ' = ' + fileContent;
     });
