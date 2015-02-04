@@ -2,15 +2,15 @@
 
 module.exports = function (grunt) {
     grunt.initConfig({
-				broccoli: {
-						packaging: {
-								config: './packaging/Brocfile.js',
-								dest: 'dist'
-						}
-				},
+        shell: {
+            broccoli: {
+              command: 'broccoli build ./dist'
+            }
+        },
 
         clean: {
-            dist: 'packaging/dist/'
+            dist: 'dist/',
+            tmp: 'tmp/'
         },
 
         extract_cldr_data: {
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         }
     });
 
-		grunt.loadNpmTasks('grunt-broccoli');
+    grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-extract-cldr-data');
 
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'clean',
-				'broccoli:packaging:build',
+        'shell:broccoli',
         'cldr'
     ]);
 };
