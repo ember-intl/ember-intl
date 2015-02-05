@@ -1,7 +1,7 @@
 {
   "name": "ember-intl",
   "description": "Ember toolbox for internationalization.",
-  "version": "1.0.0-rc5",
+  "version": "1.0.0-rc6",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -29,7 +29,6 @@
     "intl-messageformat": "1.0.4",
     "intl-relativeformat": "1.0.3",
     "intl": "0.1.4",
-    "recast": "^0.9.16",
     "serialize-javascript": "^1.0.0"
   },
   "devDependencies": {

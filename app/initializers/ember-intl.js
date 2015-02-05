@@ -58,14 +58,24 @@ export default {
     name: 'ember-intl',
 
     initialize: function (container, app) {
-        Ember.keys(requirejs._eak_seen).filter(function (key) {
-            return key.indexOf(app.modulePrefix + '\/locales\/') === 0;
-        }).forEach(function (moduleName) {
-            var locale     = require(moduleName, null, null, true)['default'];
-            var localeName = moduleName.replace(app.modulePrefix + '\/locales\/', '');
+        var seen = requirejs._eak_seen;
+        var prefix = app.modulePrefix;
 
-            container.register('locale:' + localeName, locale, { instantiate: false });
-            addLocaleData(locale);
+        // this isn't pretty..
+        Object.keys(seen).filter(function (key) {
+            return key.indexOf(prefix + '\/cldrs\/') === 0 || key.indexOf(prefix + '\/locales\/') === 0;
+        }).forEach(function (key) {
+            var isLocale    = key.indexOf(prefix + '\/locales\/') === 0;
+            var factoryType = isLocale ? 'locale' : 'cldr';
+            var obj         = require(key, null, null, true);
+            var moduleName  = key.substr(key.lastIndexOf('/') + 1);
+
+            container.register(factoryType + ':' + moduleName, obj, { instantiate: false });
+
+            // only register the CLDR data
+            if (!isLocale) {
+                addLocaleData(obj['default']);
+            }
         });
 
         var initializer = new ServiceInitializer(container, app, {
