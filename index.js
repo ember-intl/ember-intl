@@ -68,8 +68,9 @@ LocaleProcessor.prototype.transform = function (localeName, fields, pluralFn) {
 
 LocaleProcessor.prototype.processString = function (inputString, filename) {
     var localeName = path.basename(filename, path.extname(filename));
+    var root = localeName.split('-')[0];
 
-    if (!isValidLocale(localeName)) {
+    if (!extractor.isValidLocale(root)) {
         throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
     }
 
