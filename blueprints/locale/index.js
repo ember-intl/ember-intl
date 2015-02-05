@@ -32,7 +32,7 @@ module.exports = {
             fs.readFile(file, 'utf8', function (err, data) {
                 if (err) { return reject(err); }
 
-                fs.writeFile(file, data), function (_err) {
+                fs.writeFile(file, data, function (_err) {
                     if (_err) { return reject(_err); }
                     resolve();
                 });
@@ -46,7 +46,7 @@ module.exports = {
 
     normalizeLocaleName: function (localeName) {
         return localeName.toLowerCase().replace('-', '_');
-    }
+    },
 
     locals: function (options) {
         var localeName = options.args[1];
