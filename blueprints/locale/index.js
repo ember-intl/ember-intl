@@ -57,7 +57,7 @@ module.exports = {
         }
 
         return {
-            locale: '"'+ localeName + '"',
+            locale: '\''+ localeName + '\'',
             fields: fields
         }
     }
