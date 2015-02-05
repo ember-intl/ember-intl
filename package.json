@@ -13,7 +13,10 @@
     "bower": "node_modules/bower/bin/bower install",
     "postinstall": "[ -f node_modules/bower/bin/bower ] && (npm run-script bower) || echo 'Bower not installed, skipping'"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/yahoo/ember-intl.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
