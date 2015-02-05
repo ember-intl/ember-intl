@@ -33,7 +33,7 @@ else {
         var obj = intl.get(value);
 
         if (obj === undefined) {
-            throw new ReferenceError('Could not find Intl object: ' + path);
+            throw new ReferenceError('Could not find Intl object: ' + value);
         }
 
         return obj;

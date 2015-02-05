@@ -806,7 +806,7 @@ var define, requireModule, require, requirejs;
             var obj = intl.get(value);
 
             if (obj === undefined) {
-                throw new ReferenceError('Could not find Intl object: ' + path);
+                throw new ReferenceError('Could not find Intl object: ' + value);
             }
 
             return obj;
@@ -879,14 +879,24 @@ var define, requireModule, require, requirejs;
         name: 'ember-intl',
 
         initialize: function (container, app) {
-            Ember.keys(requirejs._eak_seen).filter(function (key) {
-                return key.indexOf(app.modulePrefix + '\/locales\/') === 0;
-            }).forEach(function (moduleName) {
-                var locale     = require(moduleName, null, null, true)['default'];
-                var localeName = moduleName.replace(app.modulePrefix + '\/locales\/', '');
+            var seen = requirejs._eak_seen;
+            var prefix = app.modulePrefix;
 
-                container.register('locale:' + localeName, locale, { instantiate: false });
-                addLocaleData(locale);
+            // this isn't pretty..
+            Object.keys(seen).filter(function (key) {
+                return key.indexOf(prefix + '\/cldrs\/') === 0 || key.indexOf(prefix + '\/locales\/') === 0;
+            }).forEach(function (key) {
+                var isLocale    = key.indexOf(prefix + '\/locales\/') === 0;
+                var factoryType = isLocale ? 'locale' : 'cldr';
+                var obj         = require(key, null, null, true);
+                var moduleName  = key.substr(key.lastIndexOf('/') + 1);
+
+                container.register(factoryType + ':' + moduleName, obj, { instantiate: false });
+
+                // only register the CLDR data
+                if (!isLocale) {
+                    addLocaleData(obj['default']);
+                }
             });
 
             var initializer = new ServiceInitializer(container, app, {
@@ -1090,22 +1100,6 @@ var define, requireModule, require, requirejs;
           }
     });
   });
-;define("app/locales/en", 
-  ["exports"],
-  function(__exports__) {
-    "use strict";
-    __exports__["default"] = {
-        locale: "en",
-        messages: {
-            product: {
-                info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
-                html: {
-                    info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
-                }
-            }
-        }
-    }
-  });
 ;define('ember-intl-shim', ["exports"], function(__exports__) {__exports__.initialize = function(container){
   container.register('formatter:format-date', require('app/formatters/format-date')['default']);
   container.register('formatter:format-html-message', require('app/formatters/format-html-message')['default']);
@@ -1121,7 +1115,6 @@ var define, requireModule, require, requirejs;
   container.register('helper:format-time', require('app/helpers/format-time')['default']);
   container.register('helper:intl-get', require('app/helpers/intl-get')['default']);
   container.register('initializer:ember-intl', require('app/initializers/ember-intl')['default']);
-  container.register('locale:en', require('app/locales/en')['default']);
   container.register('service:intl', require('app/service/intl')['default']);
 };});
 ;/* global define, require */

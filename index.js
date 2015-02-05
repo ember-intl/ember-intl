@@ -7,15 +7,11 @@
 
 'use strict';
 
-var Filter     = require('broccoli-filter');
-var Funnel     = require('broccoli-funnel');
-var serialize  = require('serialize-javascript');
-var path       = require('path');
-var recast     = require('recast');
-var extractor  = require('./lib/extract');
-
-var types      = recast.types;
-var builders   = types.builders
+var Filter      = require('broccoli-filter');
+var serialize   = require('serialize-javascript');
+var path        = require('path');
+var extractor   = require('./lib/extract');
+var SilentError = require('ember-cli/lib/errors/silent');
 
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
@@ -50,53 +46,39 @@ function extract (locale, settings) {
     return data;
 }
 
-function LocaleReplacer (inputTree) {
-    if (!(this instanceof LocaleReplacer)) {
-        return new LocaleReplacer(inputTree);
+function LocaleProcessor (inputTree) {
+    if (!(this instanceof LocaleProcessor)) {
+        return new LocaleProcessor(inputTree);
     }
 
     Filter.call(this, inputTree);
     this.extensions = ['js'];
 }
 
-LocaleReplacer.prototype = Object.create(Filter.prototype);
-LocaleReplacer.prototype.constructor = LocaleReplacer;
+LocaleProcessor.prototype = Object.create(Filter.prototype);
+LocaleProcessor.prototype.constructor = LocaleProcessor;
 
-LocaleReplacer.prototype.processString = function (inputString) {
-    var ast     = recast.parse(inputString);
-    var locales = [];
+LocaleProcessor.prototype.transform = function (localeName, fields, pluralFn) {
+    return ['export default {',
+    '    locale: "' + localeName + '",',
+    '    fields: ' + serialize(fields) + ',',
+    '    pluralRuleFunction: ' + serialize(pluralFn),
+    '};'].join('\n');
+}
 
-    ast.program.body.filter(function (item) {
-        return item.type === 'ExportDeclaration';
-    }).forEach(function (item) {
-        item.declaration.properties.forEach(function (property) {
-            if (property.key.name.toLowerCase() === 'locale') {
-                locales.push({
-                    name: property.value.value,
-                    properties: item.declaration.properties
-                });
-            }
-        });
+LocaleProcessor.prototype.processString = function (inputString, filename) {
+    var localeName = path.basename(filename, path.extname(filename));
+
+    if (!isValidLocale(localeName)) {
+        throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
+    }
+
+    var cldr = extract(localeName, {
+        plurals: true,
+        fields:  ['year', 'month', 'day', 'hour', 'minute', 'second']
     });
 
-    locales.forEach(function (locale) {
-        var cldr = extract(locale.name, {
-            plurals: true,
-            fields:  ['year', 'month', 'day', 'hour', 'minute', 'second']
-        });
-
-        // assigning to a variable since it's an unassigned POJO
-        // which recast/esprima cannot tolerate
-        var fieldsAst = recast.parse('var fields = ' + serialize(cldr.fields));
-        var pluralAst = recast.parse('var pluralRuleFunction = ' + serialize(cldr.pluralRuleFunction));
-        var fields    = fieldsAst.program.body[0].declarations[0].init;
-        var plural    = pluralAst.program.body[0].declarations[0].init;
-
-        locale.properties.push(builders.property("init", builders.identifier("fields"), fields));
-        locale.properties.push(builders.property("init", builders.identifier("pluralRuleFunction"), plural));
-    }, this);
-
-    return recast.print(ast).code;
+    return this.transform(localeName, cldr.fields, cldr.pluralRuleFunction);
 }
 
 module.exports = {
@@ -108,25 +90,14 @@ module.exports = {
         app.import('vendor/relativeformat/intl-relativeformat.js');
     },
 
-    treeForApp: function (sourceTree) {
-        var localeSource = sourceTree;
+    treeForApp: function (tree) {
+        var workingTree = tree;
 
-        var trees = [];
+        var localeTree = new this.Funnel('app/locales', {
+            destDir: 'cldrs'
+        });
 
-        if (sourceTree) {
-            trees.push(sourceTree);
-
-            var localeTree = new Funnel(sourceTree, {
-                srcDir:  'locales',
-                destDir: 'locales'
-            });
-
-            if (localeTree) {
-                trees.push(LocaleReplacer(localeTree));
-            }
-        }
-
-        return this.mergeTrees(trees, { overwrite: true });
+        return this.mergeTrees([new LocaleProcessor(localeTree), workingTree], { overwrite: true });
     },
 
     treeForVendor: function (tree) {
