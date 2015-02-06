@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import IntlService from '../../service/intl';
+import IntlService from '../../services/intl';
 import { runDestroy } from '../helpers/run-append';
 
 export default function (name, callbacks) {

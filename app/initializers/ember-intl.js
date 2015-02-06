@@ -4,7 +4,7 @@
  */
 
 import Ember from 'ember';
-import IntlService from '../service/intl';
+import IntlService from '../services/intl';
 import { addLocaleData } from 'ember-intl/utils/data';
 
 var get = Ember.get;
