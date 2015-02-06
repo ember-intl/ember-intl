@@ -50,8 +50,8 @@ export default {
 		ready: function () {
 			// setup default locale to fr but will fallback to en
 			this.intl.setProperties({
-				locales:        ['fr-FR'],
-				defaultLocales: ['en']
+				locales:       ['fr-FR'],
+				defaultLocale: 'en'
 			});
 		}
 	});

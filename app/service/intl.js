@@ -16,7 +16,7 @@ function assertIsDate (date, errMsg) {
 
 export default Ember.Controller.extend(Ember.Evented, {
     locales:           null,
-    defaultLocales:    null,
+    defaultLocale:     null,
     getDateTimeFormat: null,
     getRelativeFormat: null,
     getMessageFormat:  null,
@@ -31,15 +31,15 @@ export default Ember.Controller.extend(Ember.Evented, {
         });
     }),
 
-    current: Ember.computed('locales', 'defaultLocales', function () {
-        var locales         = makeArray(get(this, 'locales'));
-        var defaultLocales  = makeArray(get(this, 'defaultLocales'));
+    current: Ember.computed('locales', 'defaultLocale', function () {
+        var locales       = makeArray(get(this, 'locales'));
+        var defaultLocale = get(this, 'defaultLocale');
+        
+        if (Ember.isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
+            locales.push(defaultLocale);
+        }
 
-        defaultLocales = defaultLocales.filter(function (locale) {
-            return !locales.contains(locale);
-        });
-
-        return locales.concat(defaultLocales);
+        return locales;
     }).readOnly(),
 
     formats: Ember.computed(function () {

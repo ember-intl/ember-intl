@@ -837,24 +837,23 @@ var define, requireModule, require, requirejs;
         this.app            = app;
         this.container      = container;
         this.locales        = app.locales || options.locales;
-        this.defaultLocales = app.defaultLocales || options.defaultLocales;
+        this.defaultLocale = app.defaultLocale || options.defaultLocale;
     }
 
     ServiceInitializer.prototype = {
         constructor: ServiceInitializer,
 
         init: function () {
-            var app            = this.app;
-            var ServiceKlass   = app.IntlService || IntlService;
-            var service        = ServiceKlass.create({ container: this.container });
-            var locales        = makeArray(this.locales);
-            var defaultLocales = makeArray(this.defaultLocales);
+            var app           = this.app;
+            var ServiceKlass  = app.IntlService || IntlService;
+            var service       = ServiceKlass.create({ container: this.container });
+            var locales       = makeArray(this.locales);
 
-            Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || defaultLocales);
+            Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || this.defaultLocale);
 
             service.setProperties({
-                locales:        locales,
-                defaultLocales: defaultLocales
+                locales:       locales,
+                defaultLocale: this.defaultLocale
             });
 
             app.register('intl:main', service, {
@@ -900,8 +899,8 @@ var define, requireModule, require, requirejs;
             });
 
             var initializer = new ServiceInitializer(container, app, {
-                locales:        app.locales,
-                defaultLocales: app.defaultLocales
+                locales:       app.locales,
+                defaultLocale: app.defaultLocale
             });
 
             initializer.init();
@@ -931,7 +930,7 @@ var define, requireModule, require, requirejs;
 
     __exports__["default"] = Ember.Controller.extend(Ember.Evented, {
         locales:           null,
-        defaultLocales:    null,
+        defaultLocale:     null,
         getDateTimeFormat: null,
         getRelativeFormat: null,
         getMessageFormat:  null,
@@ -946,15 +945,15 @@ var define, requireModule, require, requirejs;
             });
         }),
 
-        current: Ember.computed('locales', 'defaultLocales', function () {
-            var locales         = makeArray(get(this, 'locales'));
-            var defaultLocales  = makeArray(get(this, 'defaultLocales'));
+        current: Ember.computed('locales', 'defaultLocale', function () {
+            var locales       = makeArray(get(this, 'locales'));
+            var defaultLocale = get(this, 'defaultLocale');
+            
+            if (Ember.isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
+                locales.push(defaultLocale);
+            }
 
-            defaultLocales = defaultLocales.filter(function (locale) {
-                return !locales.contains(locale);
-            });
-
-            return locales.concat(defaultLocales);
+            return locales;
         }).readOnly(),
 
         formats: Ember.computed(function () {

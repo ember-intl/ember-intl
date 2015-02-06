@@ -12,8 +12,8 @@ var App = Ember.Application.extend({
       ready: function () {
         // setup default values
         this.intl.setProperties({
-            locales:        ['en-US'],
-            defaultLocales: ['en-US']
+            locales:       ['en-US'],
+            defaultLocale: 'en-US'
         });
     }
 });

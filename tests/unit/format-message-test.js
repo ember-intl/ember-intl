@@ -72,7 +72,7 @@ test('should return a formatted string with formatted numbers and dates', functi
 
 test('should return a formatted string with formatted numbers and dates in a different locale', function() {
     expect(1);
-
+    
     view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locales: 'de-DE'});
 
     view.set('context', {

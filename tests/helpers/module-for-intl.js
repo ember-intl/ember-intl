@@ -20,9 +20,9 @@ export default function (name, callbacks) {
 
                 if (!container.has('intl:main')) {
                     service = IntlService.create(Ember.$.extend({
-                        container:      this.container,
-                        locales:        ['en'],
-                        defaultLocales: ['en']
+                        container:     this.container,
+                        locales:       ['en'],
+                        defaultLocale: 'en'
                     }, serviceContext));
 
                     container.register('intl:main', service, {
