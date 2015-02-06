@@ -10,11 +10,12 @@ process.chdir(__dirname);
  * Full credit to Edward Faulkner (https://github.com/ef4)
  * and the rest of the liquid-fire team
  */
-var mergeTrees    = require('broccoli-merge-trees');
-var pickFiles     = require('broccoli-static-compiler');
-var compileES6    = require('broccoli-es6-concatenator');
-var es3Safe       = require('broccoli-es3-safe-recast');
-var Funnel        = require('broccoli-funnel');
+var uglify     = require('broccoli-uglify-js');
+var mergeTrees = require('broccoli-merge-trees');
+var pickFiles  = require('broccoli-static-compiler');
+var compileES6 = require('broccoli-es6-concatenator');
+var es3Safe    = require('broccoli-es3-safe-recast');
+var Funnel     = require('broccoli-funnel');
 
 var registry      = require('./registry');
 var wrap          = require('./wrap');
@@ -35,13 +36,22 @@ var registrations = registry(pickFiles(precompiled,  {
 
 var jsTree = mergeTrees([emberAppend, mergeTrees([precompiled, registrations, loader])]);
 
-var compiled = wrap(compileES6(jsTree, {
+var compiled = es3Safe(wrap(compileES6(jsTree, {
     wrapInEval:          false,
     loaderFile:          'loader.js',
     outputFile:          '/ember-intl.js',
     inputFiles:          ['ember-intl/index.js', 'app/**/*.js'],
     ignoredModules:      ['ember', 'ember-intl'],
     legacyFilesToAppend: ['registry-output.js', 'ember-append.js']
-}));
+})));
 
-module.exports = mergeTrees([es3Safe(compiled)]);
+var minified = uglify(es3Safe(wrap(compileES6(jsTree, {
+    wrapInEval:          false,
+    loaderFile:          'loader.js',
+    outputFile:          '/ember-intl.min.js',
+    inputFiles:          ['ember-intl/index.js', 'app/**/*.js'],
+    ignoredModules:      ['ember', 'ember-intl'],
+    legacyFilesToAppend: ['registry-output.js', 'ember-append.js']
+}))));
+
+module.exports = mergeTrees([minified, compiled]);

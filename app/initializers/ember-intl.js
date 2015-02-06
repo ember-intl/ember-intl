@@ -16,24 +16,23 @@ function ServiceInitializer (container, app, options) {
     this.app            = app;
     this.container      = container;
     this.locales        = app.locales || options.locales;
-    this.defaultLocales = app.defaultLocales || options.defaultLocales;
+    this.defaultLocale = app.defaultLocale || options.defaultLocale;
 }
 
 ServiceInitializer.prototype = {
     constructor: ServiceInitializer,
 
     init: function () {
-        var app            = this.app;
-        var ServiceKlass   = app.IntlService || IntlService;
-        var service        = ServiceKlass.create({ container: this.container });
-        var locales        = makeArray(this.locales);
-        var defaultLocales = makeArray(this.defaultLocales);
+        var app           = this.app;
+        var ServiceKlass  = app.IntlService || IntlService;
+        var service       = ServiceKlass.create({ container: this.container });
+        var locales       = makeArray(this.locales);
 
-        Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || defaultLocales);
+        Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || this.defaultLocale);
 
         service.setProperties({
-            locales:        locales,
-            defaultLocales: defaultLocales
+            locales:       locales,
+            defaultLocale: this.defaultLocale
         });
 
         app.register('intl:main', service, {
@@ -79,8 +78,8 @@ export default {
         });
 
         var initializer = new ServiceInitializer(container, app, {
-            locales:        app.locales,
-            defaultLocales: app.defaultLocales
+            locales:       app.locales,
+            defaultLocale: app.defaultLocale
         });
 
         initializer.init();
