@@ -29,18 +29,20 @@ test('should throw if called with out a value', function(assert) {
     assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-time');
 });
 
-test('it should return a formatted string', function() {
+test('it should return a formatted string from a date string', function() {
     expect(1);
 
-    view = this.intlBlock('{{format-time "' + dateStr + '"}}', {locales: 'en-US'});
+    // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+    view = this.intlBlock('{{format-time "' + dateStr + '" timeZone="UTC"}}', {locales: 'en-US'});
     runAppend(view);
     equal(view.$().text(), '1/23/2014');
 });
 
-test('it should return a formatted string', function() {
+test('it should return a formatted string from a timestamp', function() {
     expect(1);
 
-    view = this.intlBlock('{{format-time ' + timeStamp + '}}', {locales: 'en-US'});
+    // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+    view = this.intlBlock('{{format-time ' + timeStamp + ' timeZone="UTC"}}', {locales: 'en-US'});
     runAppend(view);
     equal(view.$().text(), '1/23/2014');
 });
