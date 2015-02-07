@@ -17,6 +17,7 @@ function assertIsDate (date, errMsg) {
 export default Ember.Controller.extend(Ember.Evented, {
     locales:           null,
     defaultLocale:     null,
+
     getDateTimeFormat: null,
     getRelativeFormat: null,
     getMessageFormat:  null,
@@ -52,45 +53,12 @@ export default Ember.Controller.extend(Ember.Evented, {
         return formats;
     }).readOnly(),
 
-    messages: Ember.computed('current', function () {
-        var locales  = get(this, 'current');
-        var messages = {};
-
-        if (!Ember.isEmpty(locales)) {
-            locales.forEach(function (localeKey) {
-                var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
-
-                for (var key in locale) {
-                    if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
-                        messages[key] = locale[key];
-                    }
-                }
-            }, this);
-        }
-
-        return messages;
-    }).readOnly(),
-
     localeChanged: Ember.observer('current', function () {
         Ember.run.once(this, this.notifyLocaleChanged);
     }),
 
     notifyLocaleChanged: function () {
         this.trigger('localesChanged');
-    },
-
-    lookupMessage: function (localeName) {
-        Ember.assert('The locale name specific to lookupMessage must be a string.', typeof localeName === 'string');
-
-        var key       = 'locale:' + localeName.toLowerCase();
-        var container = this.container;
-        var locale    = container.lookup(key);
-
-        if (locale) {
-            return locale.messages || {};
-        }
-
-        return {};
     },
 
     formatRelative: function (date, options) {

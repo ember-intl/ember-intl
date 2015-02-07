@@ -13,9 +13,9 @@ var makeArray = Ember.makeArray;
 function ServiceInitializer (container, app, options) {
     options = options || {};
 
-    this.app            = app;
-    this.container      = container;
-    this.locales        = app.locales || options.locales;
+    this.app           = app;
+    this.container     = container;
+    this.locales       = app.locales || options.locales;
     this.defaultLocale = app.defaultLocale || options.defaultLocale;
 }
 
@@ -25,15 +25,16 @@ ServiceInitializer.prototype = {
     init: function () {
         var app           = this.app;
         var ServiceKlass  = app.IntlService || IntlService;
-        var service       = ServiceKlass.create({ container: this.container });
+
         var locales       = makeArray(this.locales);
 
-        Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || this.defaultLocale);
-
-        service.setProperties({
+        var service       = ServiceKlass.create({ 
+            container:     this.container,
             locales:       locales,
             defaultLocale: this.defaultLocale
         });
+
+        Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || this.defaultLocale);
 
         app.register('intl:main', service, {
             singleton:   true,
@@ -57,24 +58,16 @@ export default {
     name: 'ember-intl',
 
     initialize: function (container, app) {
-        var seen = requirejs._eak_seen;
+        var seen   = requirejs._eak_seen;
         var prefix = app.modulePrefix;
 
-        // this isn't pretty..
         Object.keys(seen).filter(function (key) {
-            return key.indexOf(prefix + '\/cldrs\/') === 0 || key.indexOf(prefix + '\/locales\/') === 0;
+            return key.indexOf(prefix + '\/cldrs\/') === 0;
         }).forEach(function (key) {
-            var isLocale    = key.indexOf(prefix + '\/locales\/') === 0;
-            var factoryType = isLocale ? 'locale' : 'cldr';
             var obj         = require(key, null, null, true);
             var moduleName  = key.substr(key.lastIndexOf('/') + 1);
-
-            container.register(factoryType + ':' + moduleName, obj, { instantiate: false });
-
-            // only register the CLDR data
-            if (!isLocale) {
-                addLocaleData(obj['default']);
-            }
+            container.register('cldr:' + moduleName, obj, { instantiate: false });
+            addLocaleData(obj['default']);
         });
 
         var initializer = new ServiceInitializer(container, app, {
