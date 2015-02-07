@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import createFormatCache from 'ember-intl/format-cache/memoizer';
+import LocaleModel from 'ember-intl/models/locale';
 import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
 
 var makeArray = Ember.makeArray;
@@ -12,6 +13,10 @@ var get       = Ember.get;
 
 function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
+}
+
+function isLocale (object) {
+    return object instanceof LocaleModel;
 }
 
 export default Ember.Controller.extend(Ember.Evented, {
@@ -56,6 +61,26 @@ export default Ember.Controller.extend(Ember.Evented, {
     localeChanged: Ember.observer('current', function () {
         Ember.run.once(this, this.notifyLocaleChanged);
     }),
+    
+    addMessage: function (localeId, key, value) {
+        var locale = localeId;
+
+        if (!isLocale(localeId)) {
+            locale = this.container.lookup('locale:' + localeId);
+        }
+
+        return locale.addMessage(key, value); 
+    },
+    
+    addMessages: function (localeId, messageObject) {
+        var locale = localeId;
+
+        if (!isLocale(localeId)) {
+            locale = this.container.lookup('locale:' + localeId);
+        }
+
+        return locale.addMessages(messageObject); 
+    },
 
     notifyLocaleChanged: function () {
         this.trigger('localesChanged');

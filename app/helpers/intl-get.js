@@ -5,22 +5,23 @@
 
 import Ember from 'ember';
 
-function intlGet (key, container) {
-    var intl = container.lookup('intl:main');
+function intlGet (key) {
+    var intl = this.container.lookup('intl:main');
 
     Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
-    
+
     // current is an array of locales 
     // (usually "active" and the defaultLocale at the tail of the array)
     var locales = intl.get('current');
     
     for (var i=0; i<locales.length; i++) {
-        var locale = container.lookup('locale:' + locales[i]);
+        var locale = this.container.lookup('locale:' + locales[i]);
+
         if (locale) {
-            return locale.intlGetAccessor(key);
+            return locale.accessor(key);
         }
     }
-    
+
     throw new ReferenceError('Could not find Intl object: ' + key);
 }
 
@@ -29,15 +30,13 @@ var helper;
 if (Ember.HTMLBars) {
     helper = Ember.HTMLBars.makeBoundHelper(function (params) {
         params = params || [];
-        
-        return intlGet(params[0], this.container);
+
+        return intlGet.call(this, params[0]);
     });
 }
 else {
     helper = function (value) {
-        Ember.assert('You must pass in a message key in the form of a string.', typeof value === 'string');
-
-        return intlGet(value, this.container);
+        return intlGet.call(this, value);
     };
 }
 
