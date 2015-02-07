@@ -32,7 +32,8 @@ test('should throw if called with out a value', function(assert) {
 test('it should return a formatted string from a date string', function() {
     expect(1);
 
-    view = this.intlBlock('{{format-date "' + dateStr + '"}}', {locales: 'en-US'});
+    // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+    view = this.intlBlock('{{format-date "' + dateStr + '" timeZone="UTC"}}', {locales: 'en-US'});
     runAppend(view);
     equal(view.$().text(), '1/23/2014');
 });
@@ -40,7 +41,8 @@ test('it should return a formatted string from a date string', function() {
 test('it should return a formatted string from a timestamp', function() {
     expect(1);
 
-    view = this.intlBlock('{{format-date ' + timeStamp + '}}', {locales: 'en-US'});
+    // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+    view = this.intlBlock('{{format-date ' + timeStamp + ' timeZone="UTC"}}', {locales: 'en-US'});
     runAppend(view);
     equal(view.$().text(), '1/23/2014');
 });
