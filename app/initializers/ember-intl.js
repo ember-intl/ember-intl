@@ -7,34 +7,23 @@ import Ember from 'ember';
 import IntlService from '../services/intl';
 import { addLocaleData } from 'ember-intl/utils/data';
 
-var get = Ember.get;
-var makeArray = Ember.makeArray;
+export default {
+    name: 'ember-intl',
 
-function ServiceInitializer (container, app, options) {
-    options = options || {};
+    initialize: function (container, app) {
+        var seen   = requirejs._eak_seen;
+        var prefix = app.modulePrefix;
+        
+        container.optionsForType('locale', { singleton: true, instantiate: true  });
 
-    this.app           = app;
-    this.container     = container;
-    this.locales       = app.locales || options.locales;
-    this.defaultLocale = app.defaultLocale || options.defaultLocale;
-}
-
-ServiceInitializer.prototype = {
-    constructor: ServiceInitializer,
-
-    init: function () {
-        var app           = this.app;
-        var ServiceKlass  = app.IntlService || IntlService;
-
-        var locales       = makeArray(this.locales);
-
-        var service       = ServiceKlass.create({ 
-            container:     this.container,
-            locales:       locales,
-            defaultLocale: this.defaultLocale
+        Object.keys(seen).filter(function (key) {
+            return key.indexOf(prefix + '\/cldrs\/') === 0;
+        }).forEach(function (key) {
+            addLocaleData(require(key, null, null, true)['default']);
         });
 
-        Ember.assert('Locales has not been configured.  You must define a locale on your app.', locales || this.defaultLocale);
+        var ServiceKlass  = app.IntlService || IntlService;
+        var service       = ServiceKlass.create({ container: container });
 
         app.register('intl:main', service, {
             singleton:   true,
@@ -49,32 +38,5 @@ ServiceInitializer.prototype = {
         app.inject('model',      'intl', 'intl:main');
         app.inject('view',       'intl', 'intl:main');
         app.inject('formatter',  'intl', 'intl:main');
-
-        return service;
-    }
-};
-
-export default {
-    name: 'ember-intl',
-
-    initialize: function (container, app) {
-        var seen   = requirejs._eak_seen;
-        var prefix = app.modulePrefix;
-
-        Object.keys(seen).filter(function (key) {
-            return key.indexOf(prefix + '\/cldrs\/') === 0;
-        }).forEach(function (key) {
-            var obj         = require(key, null, null, true);
-            var moduleName  = key.substr(key.lastIndexOf('/') + 1);
-            container.register('cldr:' + moduleName, obj, { instantiate: false });
-            addLocaleData(obj['default']);
-        });
-
-        var initializer = new ServiceInitializer(container, app, {
-            locales:       app.locales,
-            defaultLocale: app.defaultLocale
-        });
-
-        initializer.init();
     }
 }

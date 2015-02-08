@@ -4,7 +4,7 @@
  */
 
 import Ember from 'ember';
-import LocaleModel from 'ember-intl/models/locale';
+import Locale from 'ember-intl/models/locale';
 import createFormatCache from 'ember-intl/format-cache/memoizer';
 import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
 
@@ -16,11 +16,11 @@ function assertIsDate (date, errMsg) {
 }
 
 function getLocaleInstance (locale) {
-    if (locale instanceof LocaleModel) {
+    if (locale instanceof Locale) {
         return locale;
     };
 
-    if (typeof locale === 'string')
+    if (typeof locale === 'string') {
         return this.container.lookup('locale:' + localeId.toLowerCase());
     }
 

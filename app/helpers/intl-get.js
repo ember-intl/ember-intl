@@ -16,9 +16,13 @@ function intlGet (key) {
     
     for (var i=0; i<locales.length; i++) {
         var locale = this.container.lookup('locale:' + locales[i]);
-
+        
         if (locale) {
-            return locale.accessor(key);
+            var value = locale.getValue(key);
+
+            if (typeof value !== 'undefined') {
+                return value;
+            }
         }
     }
 

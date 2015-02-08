@@ -3,13 +3,25 @@ import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatMessage from '../../formatters/format-message';
 import formatMessageHelper from '../../helpers/format-message';
+import intlGet from '../../helpers/intl-get';
+import Locale from 'ember-intl/models/locale';
 
 var view;
 
 moduleForIntl('format-message', {
     setup: function (container) {
+        window.container = container;
         container.register('formatter:format-message', FormatMessage);
         container.register('helper:format-message', formatMessageHelper, { instantiate: false });
+        container.register('helper:intl-get', intlGet, { instantiate: false });
+        
+        container.register('locale:en', Locale.extend({
+            messages: {
+                foo: {
+                    bar: "foo bar baz"
+                }
+            }
+        }));
     },
     teardown: function () {
         runDestroy(view);
@@ -104,4 +116,40 @@ test('should return a formatted string with an `each` block', function() {
     runAppend(view);
 
     equal(view.$().text(), " Allison harvested 10 apples. Jeremy harvested 60 apples.");
+});
+
+test('intl-get returns message and format-message renders', function () {
+    expect(1);
+
+    view = this.intlBlock('{{format-message (intl-get "messages.foo.bar")}}');
+    
+    runAppend(view);
+
+    equal(view.$().text(), "foo bar baz");
+});
+
+test('intl-get returns message for key that is a literal string (not an object path)', function () {
+    expect(1);
+
+    var locale = container.lookup('locale:en');
+    
+    try {
+        container.unregister('locale:en');
+        container.register('locale:en', Locale.extend({
+            'string.path.works': 'yes it does',
+            getValue: function (key) {
+                return this[key];
+            }
+        }));
+        
+        view = this.intlBlock('{{format-message (intl-get "string.path.works")}}');
+        
+        runAppend(view);
+
+        equal(view.$().text(), "yes it does");
+    }
+    finally {
+        container.unregister('locale:en');
+        container.register('locale:en', locale, { instantiate: false });
+    }
 });
