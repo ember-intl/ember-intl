@@ -7,14 +7,16 @@
 
 'use strict';
 
-var Filter      = require('broccoli-filter');
-var serialize   = require('serialize-javascript');
-var path        = require('path');
-var extractor   = require('./lib/extract');
-var SilentError = require('ember-cli/lib/errors/silent');
 
-var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
+var SilentError = require('ember-cli/lib/errors/silent');
+var serialize   = require('serialize-javascript');
+var Filter      = require('broccoli-filter');
+var path        = require('path');
+
+var extractor   = require('./lib/extract');
+
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
+var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
 
 function normalize (localeName) {
@@ -87,25 +89,29 @@ module.exports = {
 
     included: function (app) {
         this.app = app;
-        app.import('vendor/messageformat/intl-messageformat.js');
-        app.import('vendor/relativeformat/intl-relativeformat.js');
+
+        var vendorPath = this.treePaths['vendor'];
+        app.import(vendorPath + '/messageformat/intl-messageformat.js');
+        app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
     },
 
-    treeForApp: function (tree) {
-        var workingTree = tree;
+    treeForApp: function (inputTree) {
+        var appPath = this.treePaths.app;
 
-        var localeTree = new this.Funnel('app/locales', {
+        var localeTree = new this.Funnel(appPath + '/locales', {
             destDir: 'cldrs'
         });
 
-        return this.mergeTrees([new LocaleProcessor(localeTree), workingTree], { overwrite: true });
+        return this.mergeTrees([new LocaleProcessor(localeTree), inputTree], {
+            overwrite: true
+        });
     },
 
-    treeForVendor: function (tree) {
+    treeForVendor: function (inputTree) {
         var trees = [];
 
-        if (tree) {
-            trees.push(tree);
+        if (inputTree) {
+            trees.push(inputTree);
         }
 
         trees.push(this.pickFiles(this.treeGenerator(messageFormatPath), {
@@ -121,10 +127,9 @@ module.exports = {
         return this.mergeTrees(trees);
     },
 
-    treeForPublic: function (tree) {
-        var app    = this.app;
-        var config = this.project.config(app.env);
-        var trees  = [tree];
+    treeForPublic: function (inputTree) {
+        var config = this.project.config(this.app.env);
+        var trees  = [inputTree];
 
         trees.push(this.pickFiles(intlPath, {
             srcDir:  '/',

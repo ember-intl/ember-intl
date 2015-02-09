@@ -4,6 +4,7 @@
  */
 
 import Ember from 'ember';
+import Locale from 'ember-intl/models/locale';
 import createFormatCache from 'ember-intl/format-cache/memoizer';
 import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
 
@@ -14,9 +15,22 @@ function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
 }
 
+function getLocaleInstance (locale) {
+    if (locale instanceof Locale) {
+        return locale;
+    };
+
+    if (typeof locale === 'string') {
+        return this.container.lookup('locale:' + localeId.toLowerCase());
+    }
+
+    throw new Error('`locale` must be a string or a locale instance');
+}
+
 export default Ember.Controller.extend(Ember.Evented, {
     locales:           null,
     defaultLocale:     null,
+
     getDateTimeFormat: null,
     getRelativeFormat: null,
     getMessageFormat:  null,
@@ -34,7 +48,7 @@ export default Ember.Controller.extend(Ember.Evented, {
     current: Ember.computed('locales', 'defaultLocale', function () {
         var locales       = makeArray(get(this, 'locales'));
         var defaultLocale = get(this, 'defaultLocale');
-        
+
         if (Ember.isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
             locales.push(defaultLocale);
         }
@@ -43,54 +57,29 @@ export default Ember.Controller.extend(Ember.Evented, {
     }).readOnly(),
 
     formats: Ember.computed(function () {
-        var formats = this.container.resolver('formats:main');
-
-        if (!formats) {
-            return {};
-        }
-
-        return formats;
-    }).readOnly(),
-
-    messages: Ember.computed('current', function () {
-        var locales  = get(this, 'current');
-        var messages = {};
-
-        if (!Ember.isEmpty(locales)) {
-            locales.forEach(function (localeKey) {
-                var locale = this.lookupMessage(localeKey) || this.lookupMessage(localeKey.split('-')[0]);
-
-                for (var key in locale) {
-                    if (locale.hasOwnProperty(key) && !messages.hasOwnProperty(key)) {
-                        messages[key] = locale[key];
-                    }
-                }
-            }, this);
-        }
-
-        return messages;
+        return this.container.lookup('formats:main', {
+            instantiate: false
+        }) || {};
     }).readOnly(),
 
     localeChanged: Ember.observer('current', function () {
         Ember.run.once(this, this.notifyLocaleChanged);
     }),
 
-    notifyLocaleChanged: function () {
-        this.trigger('localesChanged');
+    addMessage: function (locale, key, value) {
+        locale = getLocaleInstance.call(this, locale);
+
+        return locale.addMessage(key, value);
     },
 
-    lookupMessage: function (localeName) {
-        Ember.assert('The locale name specific to lookupMessage must be a string.', typeof localeName === 'string');
+    addMessages: function (locale, messageObject) {
+        locale = getLocaleInstance.call(this, locale);
 
-        var key       = 'locale:' + localeName.toLowerCase();
-        var container = this.container;
-        var locale    = container.lookup(key);
+        return locale.addMessages(messageObject);
+    },
 
-        if (locale) {
-            return locale.messages || {};
-        }
-
-        return {};
+    notifyLocaleChanged: function () {
+        this.trigger('localesChanged');
     },
 
     formatRelative: function (date, options) {
@@ -111,7 +100,6 @@ export default Ember.Controller.extend(Ember.Evented, {
         options = options || {};
 
         var locales = makeArray(options.locales);
-
         var formats = options.formats || get(this, 'formats');
 
         if (Ember.isEmpty(locales)) {

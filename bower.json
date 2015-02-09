@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "1.0.0-rc3",
+  "version": "1.0.0",
   "keyboards": [
     "intl",
     "formatjs",
@@ -21,7 +21,7 @@
   "dependencies": {
     "handlebars": "~2.0.0",
     "jquery": "^1.11.1",
-    "ember": "v1.10.0-beta.4",
+    "ember": "v1.10.0",
     "ember-resolver": "~0.1.10",
     "loader.js": "stefanpenner/loader.js#1.0.1",
     "ember-cli-shims": "stefanpenner/ember-cli-shims#0.0.3",

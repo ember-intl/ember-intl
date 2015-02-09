@@ -2,39 +2,36 @@ import Ember from 'ember';
 
 var now       = new Date();
 var yesterday = now.setDate(now.getDate() - 1);
-var alias     = Ember.computed.alias;
-var numeric   = 'numeric';
-var currency  = 'currency';
 
-function formatNumber (number, options) {
+function computedNumber (number, options) {
     return Ember.computed('intl.locales', function () {
         return this.intl.formatNumber(number, options);
     });
 }
 
 export default Ember.Controller.extend({
-    options:     ['en-US', 'fr-FR', 'es'],
-    numType:     'currency',
-    num:         1000,
-    yesterday:   yesterday,
-    deadline:    Ember.computed.readOnly('yesterday'),
-    now:         now,
+    options:   ['en-US', 'fr-FR', 'es'],
+    numType:   'currency',
+    num:       1000,
+    yesterday: yesterday,
+    deadline:  Ember.computed.readOnly('yesterday'),
+    now:       now,
 
     value: Ember.computed('intl.locales', function (key, value) {
         if (arguments.length === 2) {
-            this.set('intl.locales', arguments[1]);
+            this.intl.set('locales', arguments[1]);
         }
 
-        return this.get('intl.locales.firstObject') || this.get('intl.locales');
+        return this.intl.get('locales.firstObject') || this.intl.get('locales');
     }),
 
     messages: {
         photos: '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}.\n'
     },
 
-    formatNumberPercent: formatNumber(400, { style: 'percent' }),
-    formatNumberSimple:  formatNumber(400),
-    formatNumberEuro:    formatNumber(400, 'EUR'),
+    formatNumberPercent: computedNumber(400, { style: 'percent' }),
+    formatNumberSimple:  computedNumber(400),
+    formatNumberEuro:    computedNumber(400, 'EUR'),
 
     formatMessageExample: Ember.computed('intl.locales', function () {
         return this.intl.formatMessage(this.messages.photos, {

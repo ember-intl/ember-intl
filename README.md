@@ -27,9 +27,9 @@ so you need to add the following to your index.html:
 Example of app/locales/en.js:
 
 ```js
-export default {
-	locale: "en",
-	...
+import Locale from 'ember-intl/models/locale';
+
+export default Locale.extend({
 	messages: {
 		product: {
 			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
@@ -38,7 +38,7 @@ export default {
 			}
 		}
 	}
-}
+});
 ```
 
 * Configure which locale you want to use at runtime:
@@ -147,14 +147,15 @@ Will return the message from the current locale, or locale explicitly passed as 
 
 ```js
 // app/locales/en.js
-export default {
-	locale: "en",
+import Locale from 'ember-intl/models/locale';
+
+export default Locale.extend({
 	messages: {
 		product: {
 			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 		}
 	}
-}
+});
 ```
 
 ### Helper Options

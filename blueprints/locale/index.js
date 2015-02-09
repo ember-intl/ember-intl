@@ -5,10 +5,11 @@
 
 var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
-var extract     = require('../../lib/extract');
-var fs          = require('fs');
-var path        = require('path');
 var Promise     = require('ember-cli/lib/ext/promise');
+var path        = require('path');
+var fs          = require('fs');
+
+var extract     = require('../../lib/extract');
 
 module.exports = {
     description: 'Extract a CLDR data into an ES6 module for a given locale code',
