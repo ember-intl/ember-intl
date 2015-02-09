@@ -13,8 +13,11 @@ export default {
     initialize: function (container, app) {
         var seen   = requirejs._eak_seen;
         var prefix = app.modulePrefix;
-        
-        container.optionsForType('locale', { singleton: true, instantiate: true  });
+
+        container.optionsForType('locale', {
+            singleton:   true,
+            instantiate: true
+        });
 
         Object.keys(seen).filter(function (key) {
             return key.indexOf(prefix + '\/cldrs\/') === 0;
@@ -22,8 +25,8 @@ export default {
             addLocaleData(require(key, null, null, true)['default']);
         });
 
-        var ServiceKlass  = app.IntlService || IntlService;
-        var service       = ServiceKlass.create({ container: container });
+        var ServiceKlass = app.IntlService || IntlService;
+        var service      = ServiceKlass.create({ container: container });
 
         app.register('intl:main', service, {
             singleton:   true,

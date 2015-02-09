@@ -90,26 +90,30 @@ module.exports = {
     included: function (app) {
         this.app = app;
 
+        if (app.env === 'test' && app.name === 'dummy') {
+            app.import(app.bowerDirectory + '/ember/ember-template-compiler.js');
+        }
+
         var vendorPath = this.treePaths['vendor'];
         app.import(vendorPath + '/messageformat/intl-messageformat.js');
         app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
     },
 
-    treeForApp: function (tree) {
+    treeForApp: function (inputTree) {
         var appPath = this.treePaths.app;
-        
+
         var localeTree = new this.Funnel(appPath + '/locales', {
             destDir: 'cldrs'
         });
 
-        return this.mergeTrees([new LocaleProcessor(localeTree), tree], { overwrite: true });
+        return this.mergeTrees([new LocaleProcessor(localeTree), inputTree], { overwrite: true });
     },
 
-    treeForVendor: function (tree) {
+    treeForVendor: function (inputTree) {
         var trees = [];
 
-        if (tree) {
-            trees.push(tree);
+        if (inputTree) {
+            trees.push(inputTree);
         }
 
         trees.push(this.pickFiles(this.treeGenerator(messageFormatPath), {
@@ -125,10 +129,9 @@ module.exports = {
         return this.mergeTrees(trees);
     },
 
-    treeForPublic: function (tree) {
-        var app    = this.app;
-        var config = this.project.config(app.env);
-        var trees  = [tree];
+    treeForPublic: function (inputTree) {
+        var config = this.project.config(this.app.env);
+        var trees  = [inputTree];
 
         trees.push(this.pickFiles(intlPath, {
             srcDir:  '/',
