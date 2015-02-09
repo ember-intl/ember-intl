@@ -170,5 +170,5 @@ export default Ember.Controller.extend(Ember.Evented, {
             default:
                 throw new Error('Unrecognized simple format type: ' + type);
         }
-      }
+    }
 });
