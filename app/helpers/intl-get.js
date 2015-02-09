@@ -13,8 +13,6 @@ function normalize (fullName) {
 function intlGet (key) {
     Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
 
-    // current is an array of locales
-    // (usually "active" and the defaultLocale at the tail of the array)
     var intl    = this.container.lookup('intl:main');
     var locales = intl.get('current');
 
