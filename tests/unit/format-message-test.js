@@ -1,3 +1,5 @@
+/* global container */
+
 import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
