@@ -15,18 +15,6 @@ function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
 }
 
-function getLocaleInstance (locale) {
-    if (locale instanceof Locale) {
-        return locale;
-    };
-
-    if (typeof locale === 'string') {
-        return this.container.lookup('locale:' + localeId.toLowerCase());
-    }
-
-    throw new Error('`locale` must be a string or a locale instance');
-}
-
 export default Ember.Service.extend(Ember.Evented, {
     locales:           null,
     defaultLocale:     null,
@@ -67,15 +55,15 @@ export default Ember.Service.extend(Ember.Evented, {
     }),
 
     addMessage: function (locale, key, value) {
-        locale = getLocaleInstance.call(this, locale);
+        var localeInstance = this._getLocaleInstance(locale);
 
-        return locale.addMessage(key, value);
+        return localeInstance.addMessage(key, value);
     },
 
     addMessages: function (locale, messageObject) {
-        locale = getLocaleInstance.call(this, locale);
+        var localeInstance = this._getLocaleInstance(locale);
 
-        return locale.addMessages(messageObject);
+        return localeInstance.addMessages(messageObject);
     },
 
     notifyLocaleChanged: function () {
@@ -170,5 +158,17 @@ export default Ember.Service.extend(Ember.Evented, {
             default:
                 throw new Error('Unrecognized simple format type: ' + type);
         }
+    },
+
+    _getLocaleInstance: function (locale) {
+        if (locale instanceof Locale) {
+            return locale;
+        }
+
+        if (typeof locale === 'string') {
+            return this.container.lookup('locale:' + localeId.toLowerCase());
+        }
+
+        throw new Error('`locale` must be a string or a locale instance');
     }
 });
