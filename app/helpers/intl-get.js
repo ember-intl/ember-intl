@@ -5,6 +5,11 @@
 
 import Ember from 'ember';
 
+function normalize (fullName) {
+    Ember.assert('Lookup name must be a string', typeof fullName === 'string');
+    return fullName.toLowerCase();
+}
+
 function intlGet (key) {
     Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
 
@@ -14,7 +19,7 @@ function intlGet (key) {
     var locales = intl.get('current');
 
     for (var i=0; i < locales.length; i++) {
-        var locale = this.container.lookup('locale:' + locales[i]);
+        var locale = this.container.lookup('locale:' + normalize(locales[i]));
 
         if (locale) {
             var value = locale.getValue(key);
