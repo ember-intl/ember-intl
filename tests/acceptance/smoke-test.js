@@ -25,7 +25,7 @@ test('format-number', function() {
   visit('/smoke');
 
   andThen(function() {
-    contains('.format-number', '€1,000');
+    contains('.format-number', '€1,000.00');
   });
 });
 
