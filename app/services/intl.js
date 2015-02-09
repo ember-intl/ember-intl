@@ -27,7 +27,7 @@ function getLocaleInstance (locale) {
     throw new Error('`locale` must be a string or a locale instance');
 }
 
-export default Ember.Controller.extend(Ember.Evented, {
+export default Ember.Service.extend(Ember.Evented, {
     locales:           null,
     defaultLocale:     null,
 
