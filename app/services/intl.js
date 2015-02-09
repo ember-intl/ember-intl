@@ -48,7 +48,7 @@ export default Ember.Controller.extend(Ember.Evented, {
     current: Ember.computed('locales', 'defaultLocale', function () {
         var locales       = makeArray(get(this, 'locales'));
         var defaultLocale = get(this, 'defaultLocale');
-        
+
         if (Ember.isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
             locales.push(defaultLocale);
         }
@@ -57,29 +57,25 @@ export default Ember.Controller.extend(Ember.Evented, {
     }).readOnly(),
 
     formats: Ember.computed(function () {
-        var formats = this.container.resolver('formats:main');
-
-        if (!formats) {
-            return {};
-        }
-
-        return formats;
+        return this.container.lookup('formats:main', {
+            instantiate: false
+        }) || {};
     }).readOnly(),
 
     localeChanged: Ember.observer('current', function () {
         Ember.run.once(this, this.notifyLocaleChanged);
     }),
-    
+
     addMessage: function (locale, key, value) {
         locale = getLocaleInstance.call(this, locale);
 
-        return locale.addMessage(key, value); 
+        return locale.addMessage(key, value);
     },
-    
+
     addMessages: function (locale, messageObject) {
         locale = getLocaleInstance.call(this, locale);
 
-        return locale.addMessages(messageObject); 
+        return locale.addMessages(messageObject);
     },
 
     notifyLocaleChanged: function () {
@@ -104,7 +100,6 @@ export default Ember.Controller.extend(Ember.Evented, {
         options = options || {};
 
         var locales = makeArray(options.locales);
-
         var formats = options.formats || get(this, 'formats');
 
         if (Ember.isEmpty(locales)) {

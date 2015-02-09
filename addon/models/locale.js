@@ -10,11 +10,11 @@ var LocaleModel = Ember.Object.extend({
     messages: {},
 
     addMessage: function (key, value) {
-        this.set('message.' + key, value);
+        this.set('messages.' + key, value);
 
         return value;
     },
-    
+
     addMessages: function (messageObject) {
         var messages = this.get('messages');
 
@@ -27,7 +27,7 @@ var LocaleModel = Ember.Object.extend({
 
         return messages;
     },
-    
+
     // Exposes an accesor on the locale modules
     // so that if you want to implement your own custom logic
     // for example, this[key] versus Ember.get

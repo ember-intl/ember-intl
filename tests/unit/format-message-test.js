@@ -14,7 +14,7 @@ moduleForIntl('format-message', {
         container.register('formatter:format-message', FormatMessage);
         container.register('helper:format-message', formatMessageHelper, { instantiate: false });
         container.register('helper:intl-get', intlGet, { instantiate: false });
-        
+
         container.register('locale:en', Locale.extend({
             messages: {
                 foo: {
@@ -25,6 +25,7 @@ moduleForIntl('format-message', {
     },
     teardown: function () {
         runDestroy(view);
+        window.container = undefined;
     }
 });
 
@@ -84,7 +85,7 @@ test('should return a formatted string with formatted numbers and dates', functi
 
 test('should return a formatted string with formatted numbers and dates in a different locale', function() {
     expect(1);
-    
+
     view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locales: 'de-DE'});
 
     view.set('context', {
@@ -122,17 +123,40 @@ test('intl-get returns message and format-message renders', function () {
     expect(1);
 
     view = this.intlBlock('{{format-message (intl-get "messages.foo.bar")}}');
-    
     runAppend(view);
 
     equal(view.$().text(), "foo bar baz");
+});
+
+test('locale can add message and intl-get can read it', function () {
+    expect(1);
+
+    var locale = container.lookup('locale:en');
+    locale.addMessage('adding', 'this works also');
+
+    view = this.intlBlock('{{format-message (intl-get "messages.adding")}}');
+    runAppend(view);
+    equal(view.$().text(), "this works also");
+});
+
+test('locale can add messages object and intl-get can read it', function () {
+    expect(1);
+
+    var locale = container.lookup('locale:en');
+    locale.addMessages({
+        'bulk-add': 'bulk add works'
+    });
+
+    view = this.intlBlock('{{format-message (intl-get "messages.bulk-add")}}');
+    runAppend(view);
+    equal(view.$().text(), "bulk add works");
 });
 
 test('intl-get returns message for key that is a literal string (not an object path)', function () {
     expect(1);
 
     var locale = container.lookup('locale:en');
-    
+
     try {
         container.unregister('locale:en');
         container.register('locale:en', Locale.extend({
@@ -140,10 +164,9 @@ test('intl-get returns message for key that is a literal string (not an object p
             getValue: function (key) {
                 return this[key];
             }
-        }));
-        
+        }), { singleton: true, instantiate: true });
+
         view = this.intlBlock('{{format-message (intl-get "string.path.works")}}');
-        
         runAppend(view);
 
         equal(view.$().text(), "yes it does");

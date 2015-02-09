@@ -90,10 +90,6 @@ module.exports = {
     included: function (app) {
         this.app = app;
 
-        if (app.env === 'test' && app.name === 'dummy') {
-            app.import(app.bowerDirectory + '/ember/ember-template-compiler.js');
-        }
-
         var vendorPath = this.treePaths['vendor'];
         app.import(vendorPath + '/messageformat/intl-messageformat.js');
         app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
@@ -106,7 +102,9 @@ module.exports = {
             destDir: 'cldrs'
         });
 
-        return this.mergeTrees([new LocaleProcessor(localeTree), inputTree], { overwrite: true });
+        return this.mergeTrees([new LocaleProcessor(localeTree), inputTree], {
+            overwrite: true
+        });
     },
 
     treeForVendor: function (inputTree) {
