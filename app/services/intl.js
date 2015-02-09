@@ -8,20 +8,21 @@ import Locale from 'ember-intl/models/locale';
 import createFormatCache from 'ember-intl/format-cache/memoizer';
 import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
 
-var makeArray = Ember.makeArray;
-var get       = Ember.get;
-var on        = Ember.on;
-var computed  = Ember.computed;
-var observer  = Ember.observer;
-var isEmpty   = Ember.isEmpty;
-var isPresent = Ember.isPresent;
-var run       = Ember.run;
+var ServiceKlass = Ember.Service || Ember.Controller;
+var makeArray    = Ember.makeArray;
+var get          = Ember.get;
+var on           = Ember.on;
+var computed     = Ember.computed;
+var observer     = Ember.observer;
+var isEmpty      = Ember.isEmpty;
+var isPresent    = Ember.isPresent;
+var run          = Ember.run;
 
 function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
 }
 
-export default Ember.Service.extend(Ember.Evented, {
+export default ServiceKlass.extend(Ember.Evented, {
     locales:           null,
     defaultLocale:     null,
 
