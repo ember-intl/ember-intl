@@ -13,6 +13,11 @@ export default {
     initialize: function (container, app) {
         var seen   = requirejs._eak_seen;
         var prefix = app.modulePrefix;
+        
+        container.optionsForType('formats', {
+            singleton:   true,
+            instantiate: false
+        });
 
         container.optionsForType('locale', {
             singleton:   true,
