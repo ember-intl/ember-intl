@@ -21,6 +21,10 @@
     "node": ">= 0.10.0"
   },
   "author": "jason.mitchell.w@gmail.com",
+  "contributors": [{
+      "name": "Gabor Babicz",
+      "email": "gabor.babicz@gmail.com"
+  }],
   "license": "BSD-3-Clause",
   "dependencies": {
     "broccoli-filter": "^0.1.11",
