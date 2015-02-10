@@ -9,7 +9,8 @@ function contains(selector, string) {
     return ok(false, 'can\'t find element: ' + selector);
   }
 
-  return equal(element.innerText.replace(/^\s+|\s+$/g, ''), string);
+  var text = element.textContent || element.innerText;
+  return equal(text.replace(/^\s+|\s+$/g, ''), string);
 }
 
 module('Acceptance: Smoke', {
