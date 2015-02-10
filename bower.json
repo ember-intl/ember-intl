@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "1.0.0-rc9",
+  "version": "1.0.0-rc10",
   "keyboards": [
     "intl",
     "formatjs",

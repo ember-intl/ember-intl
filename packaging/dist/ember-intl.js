@@ -222,8 +222,8 @@ var define, requireModule, require, requirejs;
     __exports__["default"] = FormatBase;
   });
 ;define("ember-intl/format-cache/memoizer", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
+  ["exports"],
+  function(__exports__) {
     "use strict";
     /*
     Copyright (c) 2014, Yahoo! Inc. All rights reserved.
@@ -233,53 +233,8 @@ var define, requireModule, require, requirejs;
 
     /* jshint esnext: true */
 
-    var Ember = __dependency1__["default"];
 
     // -----------------------------------------------------------------------------
-
-    function createFormatCache(FormatConstructor) {
-        var cache = Ember.create(null);
-
-        return function () {
-            var args    = Array.prototype.slice.call(arguments);
-            var cacheId = getCacheId(args);
-            var format  = cacheId && cache[cacheId];
-
-            if (!format) {
-                format = Ember.create(FormatConstructor.prototype);
-                FormatConstructor.apply(format, args);
-
-                if (cacheId) {
-                    cache[cacheId] = format;
-                }
-            }
-
-            return format;
-        };
-    }
-
-    // -- Utilities ----------------------------------------------------------------
-
-    function getCacheId(inputs) {
-        // When JSON is not available in the runtime, we will not create a cache id.
-        if (typeof JSON === 'undefined') { return; }
-
-        var cacheId = [];
-
-        var i, len, input;
-
-        for (i = 0, len = inputs.length; i < len; i += 1) {
-            input = inputs[i];
-
-            if (input && typeof input === 'object') {
-                cacheId.push(orderedProps(input));
-            } else {
-                cacheId.push(input);
-            }
-        }
-
-        return JSON.stringify(cacheId);
-    }
 
     function orderedProps(obj) {
         var props = [], keys  = [];
@@ -303,6 +258,48 @@ var define, requireModule, require, requirejs;
         }
 
         return props;
+    }
+
+    function getCacheId(inputs) {
+        // When JSON is not available in the runtime, we will not create a cache id.
+        if (typeof JSON === 'undefined') { return; }
+
+        var cacheId = [];
+
+        var i, len, input;
+
+        for (i = 0, len = inputs.length; i < len; i += 1) {
+            input = inputs[i];
+
+            if (input && typeof input === 'object') {
+                cacheId.push(orderedProps(input));
+            } else {
+                cacheId.push(input);
+            }
+        }
+
+        return JSON.stringify(cacheId);
+    }
+
+    function createFormatCache(FormatConstructor) {
+        var cache = Object.create(null);
+
+        return function () {
+            var args    = Array.prototype.slice.call(arguments);
+            var cacheId = getCacheId(args);
+            var format  = cacheId && cache[cacheId];
+
+            if (!format) {
+                format = Object.create(FormatConstructor.prototype);
+                FormatConstructor.apply(format, args);
+
+                if (cacheId) {
+                    cache[cacheId] = format;
+                }
+            }
+
+            return format;
+        };
     }
 
     __exports__["default"] = createFormatCache;
@@ -433,9 +430,11 @@ var define, requireModule, require, requirejs;
     }
   });
 ;define("ember-intl/utils/streams", 
-  ["exports"],
-  function(__exports__) {
+  ["ember","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var Ember = __dependency1__["default"];
+
     var Stream = Ember.__loader.require('ember-metal/streams/stream')['default'];
 
     function read (object) {
@@ -452,7 +451,7 @@ var define, requireModule, require, requirejs;
     __exports__["default"] = {
         Stream: Stream,
         read:   read
-    }
+    };
   });
 ;define("ember-intl/utils/data", 
   ["exports"],
@@ -842,8 +841,6 @@ var define, requireModule, require, requirejs;
     function intlGet (key) {
         Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
 
-        // current is an array of locales
-        // (usually "active" and the defaultLocale at the tail of the array)
         var intl    = this.container.lookup('intl:main');
         var locales = intl.get('current');
 
@@ -896,7 +893,7 @@ var define, requireModule, require, requirejs;
         initialize: function (container, app) {
             var seen   = requirejs._eak_seen;
             var prefix = app.modulePrefix;
-            
+
             container.optionsForType('formats', {
                 singleton:   true,
                 instantiate: false
@@ -947,26 +944,21 @@ var define, requireModule, require, requirejs;
     var IntlRelativeFormat = __dependency4__.IntlRelativeFormat;
     var IntlMessageFormat = __dependency4__.IntlMessageFormat;
 
-    var makeArray = Ember.makeArray;
-    var get       = Ember.get;
+    var ServiceKlass = Ember.Service || Ember.Controller;
+    var makeArray    = Ember.makeArray;
+    var get          = Ember.get;
+    var on           = Ember.on;
+    var computed     = Ember.computed;
+    var observer     = Ember.observer;
+    var isEmpty      = Ember.isEmpty;
+    var isPresent    = Ember.isPresent;
+    var run          = Ember.run;
 
     function assertIsDate (date, errMsg) {
         Ember.assert(errMsg, isFinite(date));
     }
 
-    function getLocaleInstance (locale) {
-        if (locale instanceof Locale) {
-            return locale;
-        };
-
-        if (typeof locale === 'string') {
-            return this.container.lookup('locale:' + localeId.toLowerCase());
-        }
-
-        throw new Error('`locale` must be a string or a locale instance');
-    }
-
-    __exports__["default"] = Ember.Controller.extend(Ember.Evented, {
+    __exports__["default"] = ServiceKlass.extend(Ember.Evented, {
         locales:           null,
         defaultLocale:     null,
 
@@ -975,7 +967,7 @@ var define, requireModule, require, requirejs;
         getMessageFormat:  null,
         getNumberFormat:   null,
 
-        setupMemoizers: Ember.on('init', function () {
+        setupMemoizers: on('init', function () {
             this.setProperties({
                 getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
                 getRelativeFormat: createFormatCache(IntlRelativeFormat),
@@ -984,37 +976,37 @@ var define, requireModule, require, requirejs;
             });
         }),
 
-        current: Ember.computed('locales', 'defaultLocale', function () {
+        current: computed('locales', 'defaultLocale', function () {
             var locales       = makeArray(get(this, 'locales'));
             var defaultLocale = get(this, 'defaultLocale');
 
-            if (Ember.isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
+            if (isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
                 locales.push(defaultLocale);
             }
 
             return locales;
         }).readOnly(),
 
-        formats: Ember.computed(function () {
+        formats: computed(function () {
             return this.container.lookup('formats:main', {
                 instantiate: false
             }) || {};
         }).readOnly(),
 
-        localeChanged: Ember.observer('current', function () {
-            Ember.run.once(this, this.notifyLocaleChanged);
+        localeChanged: observer('current', function () {
+            run.once(this, this.notifyLocaleChanged);
         }),
 
         addMessage: function (locale, key, value) {
-            locale = getLocaleInstance.call(this, locale);
+            var localeInstance = this._getLocaleInstance(locale);
 
-            return locale.addMessage(key, value);
+            return localeInstance.addMessage(key, value);
         },
 
         addMessages: function (locale, messageObject) {
-            locale = getLocaleInstance.call(this, locale);
+            var localeInstance = this._getLocaleInstance(locale);
 
-            return locale.addMessages(messageObject);
+            return localeInstance.addMessages(messageObject);
         },
 
         notifyLocaleChanged: function () {
@@ -1041,7 +1033,7 @@ var define, requireModule, require, requirejs;
             var locales = makeArray(options.locales);
             var formats = options.formats || get(this, 'formats');
 
-            if (Ember.isEmpty(locales)) {
+            if (isEmpty(locales)) {
                 locales = get(this, 'current');
             }
 
@@ -1076,7 +1068,7 @@ var define, requireModule, require, requirejs;
             var locales = makeArray(options.locales);
             var formats = get(this, 'formats');
 
-            if (Ember.isEmpty(locales)) {
+            if (isEmpty(locales)) {
                 locales = get(this, 'current');
             }
 
@@ -1109,7 +1101,19 @@ var define, requireModule, require, requirejs;
                 default:
                     throw new Error('Unrecognized simple format type: ' + type);
             }
-          }
+        },
+
+        _getLocaleInstance: function (locale) {
+            if (locale instanceof Locale) {
+                return locale;
+            }
+
+            if (typeof locale === 'string') {
+                return this.container.lookup('locale:' + localeId.toLowerCase());
+            }
+
+            throw new Error('`locale` must be a string or a locale instance');
+        }
     });
   });
 ;define('ember-intl-shim', ["exports"], function(__exports__) {__exports__.initialize = function(container){
