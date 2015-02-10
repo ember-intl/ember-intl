@@ -15,4 +15,4 @@ export function addLocaleData(data) {
 export {
     IntlRelativeFormat,
     IntlMessageFormat
-}
+};

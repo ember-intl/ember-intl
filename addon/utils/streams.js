@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 var Stream = Ember.__loader.require('ember-metal/streams/stream')['default'];
 
 function read (object) {
@@ -14,4 +16,4 @@ export var read = read;
 export default {
     Stream: Stream,
     read:   read
-}
+};

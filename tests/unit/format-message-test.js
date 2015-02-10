@@ -6,11 +6,12 @@ import formatMessageHelper from '../../helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Locale from 'ember-intl/models/locale';
 
-var view;
+var view, container;
 
 moduleForIntl('format-message', {
-    setup: function (container) {
-        window.container = container;
+    setup: function (__container) {
+        container = __container;
+
         container.register('formatter:format-message', FormatMessage);
         container.register('helper:format-message', formatMessageHelper, { instantiate: false });
         container.register('helper:intl-get', intlGet, { instantiate: false });
@@ -25,7 +26,7 @@ moduleForIntl('format-message', {
     },
     teardown: function () {
         runDestroy(view);
-        window.container = undefined;
+        container = undefined;
     }
 });
 

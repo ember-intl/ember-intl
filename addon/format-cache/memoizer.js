@@ -6,53 +6,8 @@ See the accompanying LICENSE file for terms.
 
 /* jshint esnext: true */
 
-import Ember from 'ember';
 
 // -----------------------------------------------------------------------------
-
-function createFormatCache(FormatConstructor) {
-    var cache = Ember.create(null);
-
-    return function () {
-        var args    = Array.prototype.slice.call(arguments);
-        var cacheId = getCacheId(args);
-        var format  = cacheId && cache[cacheId];
-
-        if (!format) {
-            format = Ember.create(FormatConstructor.prototype);
-            FormatConstructor.apply(format, args);
-
-            if (cacheId) {
-                cache[cacheId] = format;
-            }
-        }
-
-        return format;
-    };
-}
-
-// -- Utilities ----------------------------------------------------------------
-
-function getCacheId(inputs) {
-    // When JSON is not available in the runtime, we will not create a cache id.
-    if (typeof JSON === 'undefined') { return; }
-
-    var cacheId = [];
-
-    var i, len, input;
-
-    for (i = 0, len = inputs.length; i < len; i += 1) {
-        input = inputs[i];
-
-        if (input && typeof input === 'object') {
-            cacheId.push(orderedProps(input));
-        } else {
-            cacheId.push(input);
-        }
-    }
-
-    return JSON.stringify(cacheId);
-}
 
 function orderedProps(obj) {
     var props = [], keys  = [];
@@ -76,6 +31,48 @@ function orderedProps(obj) {
     }
 
     return props;
+}
+
+function getCacheId(inputs) {
+    // When JSON is not available in the runtime, we will not create a cache id.
+    if (typeof JSON === 'undefined') { return; }
+
+    var cacheId = [];
+
+    var i, len, input;
+
+    for (i = 0, len = inputs.length; i < len; i += 1) {
+        input = inputs[i];
+
+        if (input && typeof input === 'object') {
+            cacheId.push(orderedProps(input));
+        } else {
+            cacheId.push(input);
+        }
+    }
+
+    return JSON.stringify(cacheId);
+}
+
+function createFormatCache(FormatConstructor) {
+    var cache = Object.create(null);
+
+    return function () {
+        var args    = Array.prototype.slice.call(arguments);
+        var cacheId = getCacheId(args);
+        var format  = cacheId && cache[cacheId];
+
+        if (!format) {
+            format = Object.create(FormatConstructor.prototype);
+            FormatConstructor.apply(format, args);
+
+            if (cacheId) {
+                cache[cacheId] = format;
+            }
+        }
+
+        return format;
+    };
 }
 
 export default createFormatCache;

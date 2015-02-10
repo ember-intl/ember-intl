@@ -20,4 +20,4 @@ export {
     createFormatCache,
     FormatterBase,
     HelperBase
-}
+};
