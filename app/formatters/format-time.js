@@ -8,15 +8,10 @@ import Formatter from 'ember-intl/formatter-base';
 
 var FormatTime = Formatter.extend({
     format: function (value, hash) {
-        var formatOptions = {
-            formats: hash.format || this.filterFormatOptions(hash)
-        };
+        var args = this.buildOptions(value, hash);
+        var intl = this.intl;
 
-        if (hash.locales) {
-            formatOptions.locales = hash.locales;
-        }
-
-        return this.intl.formatTime(value, formatOptions);
+        return intl.formatTime.apply(intl, args);
     }
 });
 

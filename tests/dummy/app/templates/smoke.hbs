@@ -4,26 +4,26 @@ Choose a locale: {{view 'select' value=currentLocale content=locales}}
 
 <h3>Format Number</h3>
 <div class="format-number">
-  {{format-number num style='currency' currency='EUR'}}
+    {{format-number num format='currency' style='currency' currency='EUR'}}
 </div>
 
 <h3>Format Date</h3>
 <div class="format-date">
-  {{format-date 'Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)'}}
+    {{format-date 'Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)'}}
 </div>
 
 <h3>Format Time</h3>
 <div class="format-time">
-  {{format-time 'Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)'
+    {{format-time 'Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)'
       hour='numeric'
       second='numeric'
       minute='numeric'
       hour12=false
       timeZone='UTC'
-  }}
+}}
 </div>
 
 <h3>Format Relative</h3>
 <div class="format-relative">
-  {{format-relative yesterday}}
+    {{format-relative yesterday}}
 </div>
