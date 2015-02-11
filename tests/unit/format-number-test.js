@@ -4,15 +4,27 @@ import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatNumber from '../../formatters/format-number';
 import formatNumberHelper from '../../helpers/format-number';
 
-var view;
+var view, container;
 
 moduleForIntl('format-number', {
-    setup: function (container) {
+    setup: function (_container) {
+        container = _container;
+        
+        container.register('formats:main', {
+            number: {
+                currency: {
+                    style: 'currency',
+                    minimumFractionDigits: 2
+                }
+            }
+        }, { instantiate: false });
+
         container.register('formatter:format-number', FormatNumber);
         container.register('helper:format-number', formatNumberHelper, { instantiate: false });
     },
     teardown: function () {
         runDestroy(view);
+        container.unregister('formats:main');
     }
 });
 
@@ -155,13 +167,13 @@ test('in another locale - should return a formatted string with a thousand separ
 test('currency - should return a string formatted to currency', function() {
     expect(3);
 
-    view = this.intlBlock('{{format-number 40000 style="currency" currency="USD"}}', { locales: 'en-US' });
+    view = this.intlBlock('{{format-number 40000 format="currency" style="currency" currency="USD"}}', { locales: 'en-US' });
 
     runAppend(view);
 
     equal(view.$().text(), '$40,000.00');
 
-    view = this.intlBlock('{{format-number 40000 style="currency" currency="EUR"}}', { locales: 'en-US' });
+    view = this.intlBlock('{{format-number 40000 format="currency" style="currency" currency="EUR"}}', { locales: 'en-US' });
 
     runAppend(view);
 
@@ -177,7 +189,7 @@ test('currency - should return a string formatted to currency', function() {
 test('should function within an `each` block helper', function() {
     expect(1);
 
-    view = this.intlBlock('{{#each currency in currencies}} {{format-number currency.AMOUNT style="currency" currency=currency.CURRENCY}}{{/each}}', { locales: 'en-US' });
+    view = this.intlBlock('{{#each currency in currencies}} {{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}', { locales: 'en-US' });
 
     view.set('context', {
         currencies: [
@@ -189,7 +201,7 @@ test('should function within an `each` block helper', function() {
 
     runAppend(view);
 
-    equal(view.$().text(), ' $3.00 €8.00 ¥10');
+    equal(view.$().text(), ' $3.00 €8.00 ¥10.00');
 });
 
 test('used to format percentages', function() {

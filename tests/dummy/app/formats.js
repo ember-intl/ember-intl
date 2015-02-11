@@ -9,8 +9,13 @@ export default {
         }
     },
     number: {
+        currency: {
+            style: 'currency',
+            minimumFractionDigits: 2
+        },
         EUR: { style: 'currency', currency: 'EUR' },
-        USD: { style: 'currency', currency: 'USD' }
+        USD: { style: 'currency', currency: 'USD' },
+        JPY: { style: 'currency', currency: 'JPY' }
     },
     time: {
         hhmmss: {

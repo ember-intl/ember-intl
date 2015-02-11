@@ -6,6 +6,24 @@
 import Ember from 'ember';
 
 var FormatBase = Ember.Object.extend({
+    buildOptions: function (value, hash) {
+        var args = [value];
+
+        if (typeof hash.format !== 'undefined') {
+            args.push(hash.format);
+        }
+
+        var helperOptions = this.filterFormatOptions(hash) || {};
+
+        if (hash.locales) {
+            helperOptions.locales = hash.locales;
+        }
+        
+        args.push(helperOptions);
+
+        return args;
+    },
+
     filterFormatOptions: function (hash) {
         hash = hash || {};
 
