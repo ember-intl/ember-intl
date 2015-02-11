@@ -4,6 +4,7 @@
  */
 
 import Ember from 'ember';
+import { Stream, read, destroyStream } from 'ember-intl/utils/streams';
 
 function normalize (fullName) {
     Ember.assert('Lookup name must be a string', typeof fullName === 'string');
@@ -35,7 +36,29 @@ var helper;
 
 if (Ember.HTMLBars) {
     helper = Ember.HTMLBars.makeBoundHelper(function (params) {
-        return intlGet.call(this, params[0]);
+        var intl = this.container.lookup('intl:main');
+        var self = this;
+        var currentValue;
+
+        var outStream = new Stream(function () {
+            return currentValue;
+        });
+
+        function render () {
+            currentValue = intlGet.call(self, read(params[0]));
+            outStream.notify();
+        }
+
+        intl.on('localesChanged', self, render);
+        
+        this.on('willDestroyElement', this, function () {
+            intl.off('localesChanged', self, render);
+            destroyStream(outStream);
+        });
+
+        render();
+
+        return outStream;
     });
 }
 else {

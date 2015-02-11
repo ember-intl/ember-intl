@@ -334,14 +334,8 @@ var define, requireModule, require, requirejs;
     var Ember = __dependency1__["default"];
     var Stream = __dependency2__.Stream;
     var read = __dependency2__.read;
-
-    var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
-
-    function destroyStream (stream) {
-        if (stream && !stream.destroyed) {
-            stream.destroy();
-        }
-    }
+    var readHash = __dependency2__.readHash;
+    var destroyStream = __dependency2__.destroyStream;
 
     __exports__["default"] = function (formatterName) {
         function throwError () {
@@ -350,24 +344,22 @@ var define, requireModule, require, requirejs;
 
         if (Ember.HTMLBars) {
             return Ember.HTMLBars.makeBoundHelper(function (params, hash, options, env) {
-                var formatter = this.container.lookup('formatter:' + formatterName);
-
-                formatter.intl.one('localesChanged', this, function () {
-                    Ember.run.once(this, this.rerender);
-                });
-
                 if (!params || (params && !params.length)) {
                     return throwError();
                 }
 
-                var args = [];
-                args.push(params[0]);
-                args.push(hash);
+                var formatter = this.container.lookup('formatter:' + formatterName);
+                var args      = [];
+
+                args.push(read(params[0]));
+                args.push(readHash(hash));
                 args.push(Ember.get(env, 'data.view.context'));
 
                 return formatter.format.apply(formatter, args);
             });
         } else {
+            var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
+
             return function (value, options) {
                 if (typeof value === 'undefined') {
                     return throwError();
@@ -455,6 +447,9 @@ var define, requireModule, require, requirejs;
 
     var Stream = Ember.__loader.require('ember-metal/streams/stream')['default'];
 
+    // The below read, readHash methods are from Ember.js
+    // https://github.com/emberjs/ember.js/blob/master/packages/ember-metal/lib/streams/utils.js
+    // License: https://github.com/emberjs/ember.js/blob/master/LICENSE
     function read (object) {
         if (object && object.isStream) {
             return object.value();
@@ -463,7 +458,26 @@ var define, requireModule, require, requirejs;
         }
     }
 
-    var Stream = Stream;
+    function readHash (object) {
+        var ret = {};
+
+        for (var key in object) {
+            ret[key] = read(object[key]);
+        }
+
+        return ret;
+    }
+
+    __exports__.readHash = readHash;
+    function destroyStream (stream) {
+        if (stream && !stream.destroyed) {
+            stream.destroy();
+        }
+    }
+
+    var readHash = readHash;
+    __exports__.readHash = readHash;var destroyStream = destroyStream;
+    __exports__.destroyStream = destroyStream;var Stream = Stream;
     __exports__.Stream = Stream;var read = read;
     __exports__.read = read;
     __exports__["default"] = {
@@ -821,8 +835,8 @@ var define, requireModule, require, requirejs;
     __exports__["default"] = FormatHelper('format-time');
   });
 ;define("app/helpers/intl-get", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
+  ["ember","ember-intl/utils/streams","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
     /**
      * Copyright 2015, Yahoo! Inc.
@@ -830,6 +844,9 @@ var define, requireModule, require, requirejs;
      */
 
     var Ember = __dependency1__["default"];
+    var Stream = __dependency2__.Stream;
+    var read = __dependency2__.read;
+    var destroyStream = __dependency2__.destroyStream;
 
     function normalize (fullName) {
         Ember.assert('Lookup name must be a string', typeof fullName === 'string');
@@ -861,7 +878,29 @@ var define, requireModule, require, requirejs;
 
     if (Ember.HTMLBars) {
         helper = Ember.HTMLBars.makeBoundHelper(function (params) {
-            return intlGet.call(this, params[0]);
+            var intl = this.container.lookup('intl:main');
+            var self = this;
+            var currentValue;
+
+            var outStream = new Stream(function () {
+                return currentValue;
+            });
+
+            function render () {
+                currentValue = intlGet.call(self, read(params[0]));
+                outStream.notify();
+            }
+
+            intl.on('localesChanged', self, render);
+            
+            this.on('willDestroyElement', this, function () {
+                intl.off('localesChanged', self, render);
+                destroyStream(outStream);
+            });
+
+            render();
+
+            return outStream;
         });
     }
     else {
