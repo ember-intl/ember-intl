@@ -77,7 +77,7 @@ export default ServiceKlass.extend(Ember.Evented, {
         this.trigger('localesChanged');
     },
 
-    formatMessage: function (message, values, formatOptions, helperOptions) {
+    formatMessage: function (message, values, formatOptions, options) {
         // When `message` is a function, assume it's an IntlMessageFormat
         // instance's `format()` method passed by reference, and call it. This
         // is possible because its `this` will be pre-bound to the instance.
@@ -99,29 +99,29 @@ export default ServiceKlass.extend(Ember.Evented, {
         return message.format(values);
     },
 
-    formatTime: function (date, formatOptions, helperOptions) {
+    formatTime: function (date, formatOptions, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
 
-        return this._format('time', date, formatOptions, helperOptions);
+        return this._format('time', date, formatOptions, options);
     },
     
-    formatRelative: function (date, formatOptions, helperOptions) {
+    formatRelative: function (date, formatOptions, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
 
-        return this._format('relative', date, formatOptions, helperOptions);
+        return this._format('relative', date, formatOptions, options);
     },
 
-    formatDate: function (date, formatOptions, helperOptions) {
+    formatDate: function (date, formatOptions, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
 
-        return this._format('date', date, formatOptions, helperOptions);
+        return this._format('date', date, formatOptions, options);
     },
 
-    formatNumber: function (num, formatOptions, helperOptions) {
-        return this._format('number', num, formatOptions, helperOptions);
+    formatNumber: function (num, formatOptions, options) {
+        return this._format('number', num, formatOptions, options);
     },
 
     _format: function (type, value, formatOptions, helperOptions) {
