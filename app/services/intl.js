@@ -77,7 +77,7 @@ export default ServiceKlass.extend(Ember.Evented, {
         this.trigger('localesChanged');
     },
 
-    formatMessage: function (message, values, formatOptions, options) {
+    formatMessage: function (message, values, options) {
         // When `message` is a function, assume it's an IntlMessageFormat
         // instance's `format()` method passed by reference, and call it. This
         // is possible because its `this` will be pre-bound to the instance.
@@ -85,8 +85,8 @@ export default ServiceKlass.extend(Ember.Evented, {
             return message(values);
         }
 
-        var locales = makeArray(formatOptions.locales);
-        var formats = formatOptions.formats || get(this, 'formats');
+        var locales = makeArray(options.locales);
+        var formats = options.formats || get(this, 'formats');
 
         if (isEmpty(locales)) {
             locales = get(this, 'current');
