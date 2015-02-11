@@ -4,15 +4,7 @@
  */
 
 import Ember from 'ember';
-import { Stream, read } from '../utils/streams';
-
-var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
-
-function destroyStream (stream) {
-    if (stream && !stream.destroyed) {
-        stream.destroy();
-    }
-}
+import { Stream, read, readHash, destroyStream } from '../utils/streams';
 
 export default function (formatterName) {
     function throwError () {
@@ -21,24 +13,22 @@ export default function (formatterName) {
 
     if (Ember.HTMLBars) {
         return Ember.HTMLBars.makeBoundHelper(function (params, hash, options, env) {
-            var formatter = this.container.lookup('formatter:' + formatterName);
-
-            formatter.intl.one('localesChanged', this, function () {
-                Ember.run.once(this, this.rerender);
-            });
-
             if (!params || (params && !params.length)) {
                 return throwError();
             }
 
-            var args = [];
-            args.push(params[0]);
-            args.push(hash);
+            var formatter = this.container.lookup('formatter:' + formatterName);
+            var args      = [];
+
+            args.push(read(params[0]));
+            args.push(readHash(hash));
             args.push(Ember.get(env, 'data.view.context'));
 
             return formatter.format.apply(formatter, args);
         });
     } else {
+        var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
+
         return function (value, options) {
             if (typeof value === 'undefined') {
                 return throwError();

@@ -13,7 +13,7 @@
     "eqnull": false,
     "esnext": true,
     "evil": false,
-    "forin": true,
+    "forin": false,
     "immed": true,
     "laxbreak": false,
     "newcap": true,
