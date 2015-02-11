@@ -12,6 +12,9 @@ moduleForIntl('format-number', {
         
         container.register('formats:main', {
             number: {
+                digits: {
+                    minimumFractionDigits: 2
+                },
                 currency: {
                     style: 'currency',
                     minimumFractionDigits: 2
@@ -204,18 +207,28 @@ test('should function within an `each` block helper', function() {
     equal(view.$().text(), ' $3.00 €8.00 ¥10.00');
 });
 
+test('should be able to combine hash options with format options', function() {
+    expect(1);
+
+    view = this.intlBlock('{{format-number 1 format="digits" minimumIntegerDigits=10}}', { locales: 'en-US' });
+
+    runAppend(view);
+
+    equal(view.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
+});
+
 test('used to format percentages', function() {
-  expect(2);
+    expect(2);
 
-  view = this.intlBlock('{{format-number 400 style="percent"}}', { locales: 'en-US' });
+    view = this.intlBlock('{{format-number 400 style="percent"}}', { locales: 'en-US' });
 
-  runAppend(view);
+    runAppend(view);
 
-  equal(view.$().text(), '40,000%', 'should return a string formatted to a percent');
+    equal(view.$().text(), '40,000%', 'should return a string formatted to a percent');
 
-  view = this.intlBlock('{{format-number 400 style="percent"}}', { locales: 'de-DE' });
+    view = this.intlBlock('{{format-number 400 style="percent"}}', { locales: 'de-DE' });
 
-  runAppend(view);
+    runAppend(view);
 
-  equal(escape(view.$().text()), '40.000%A0%25', 'de should return a string formatted to a percent');
+    equal(escape(view.$().text()), '40.000%A0%25', 'de should return a string formatted to a percent');
 });
