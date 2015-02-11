@@ -195,6 +195,24 @@ var define, requireModule, require, requirejs;
     var Ember = __dependency1__["default"];
 
     var FormatBase = Ember.Object.extend({
+        buildOptions: function (value, hash) {
+            var args = [value];
+
+            if (typeof hash.format !== 'undefined') {
+                args.push(hash.format);
+            }
+
+            var helperOptions = this.filterFormatOptions(hash) || {};
+
+            if (hash.locales) {
+                helperOptions.locales = hash.locales;
+            }
+            
+            args.push(helperOptions);
+
+            return args;
+        },
+
         filterFormatOptions: function (hash) {
             hash = hash || {};
 
@@ -489,15 +507,10 @@ var define, requireModule, require, requirejs;
 
     var FormatDate = Formatter.extend({
         format: function (value, hash) {
-            var formatOptions = {
-                formats: hash.format || this.filterFormatOptions(hash)
-            };
+            var args = this.buildOptions(value, hash);
+            var intl = this.intl;
 
-            if (hash.locales) {
-                formatOptions.locales = hash.locales;
-            }
-
-            return this.intl.formatDate(value, formatOptions);
+            return intl.formatDate.apply(intl, args);
         }
     });
 
@@ -653,15 +666,10 @@ var define, requireModule, require, requirejs;
 
     var FormatNumber = Formatter.extend({
         format: function (value, hash) {
-            var formatOptions = {
-                formats: hash.format || this.filterFormatOptions(hash)
-            };
+            var args = this.buildOptions(value, hash);
+            var intl = this.intl;
 
-            if (hash.locales) {
-                formatOptions.locales = hash.locales;
-            }
-
-            return this.intl.formatNumber(value, formatOptions);
+            return intl.formatNumber.apply(intl, args);
         }
     });
 
@@ -690,15 +698,10 @@ var define, requireModule, require, requirejs;
 
     var FormatRelative = Formatter.extend({
         format: function (value, hash) {
-            var formatOptions = {
-                formats: hash.format || this.filterFormatOptions(hash)
-            };
+            var args = this.buildOptions(value, hash);
+            var intl = this.intl;
 
-            if (hash.locales) {
-                formatOptions.locales = hash.locales;
-            }
-
-            return this.intl.formatRelative(value, formatOptions);
+            return intl.formatRelative.apply(intl, args);
         }
     });
 
@@ -722,15 +725,10 @@ var define, requireModule, require, requirejs;
 
     var FormatTime = Formatter.extend({
         format: function (value, hash) {
-            var formatOptions = {
-                formats: hash.format || this.filterFormatOptions(hash)
-            };
+            var args = this.buildOptions(value, hash);
+            var intl = this.intl;
 
-            if (hash.locales) {
-                formatOptions.locales = hash.locales;
-            }
-
-            return this.intl.formatTime(value, formatOptions);
+            return intl.formatTime.apply(intl, args);
         }
     });
 
@@ -1013,13 +1011,6 @@ var define, requireModule, require, requirejs;
             this.trigger('localesChanged');
         },
 
-        formatRelative: function (date, options) {
-            date = new Date(date);
-            assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
-
-            return this._format('relative', date, options);
-        },
-
         formatMessage: function (message, values, options) {
             // When `message` is a function, assume it's an IntlMessageFormat
             // instance's `format()` method passed by reference, and call it. This
@@ -1027,8 +1018,6 @@ var define, requireModule, require, requirejs;
             if (typeof message === 'function') {
                 return message(values);
             }
-
-            options = options || {};
 
             var locales = makeArray(options.locales);
             var formats = options.formats || get(this, 'formats');
@@ -1044,60 +1033,62 @@ var define, requireModule, require, requirejs;
             return message.format(values);
         },
 
-        formatTime: function (date, options) {
+        formatTime: function (date, formatOptions, options) {
             date = new Date(date);
             assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
 
-            return this._format('time', date, options);
+            return this._format('time', date, formatOptions, options);
+        },
+        
+        formatRelative: function (date, formatOptions, options) {
+            date = new Date(date);
+            assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
+
+            return this._format('relative', date, formatOptions, options);
         },
 
-        formatDate: function (date, options) {
+        formatDate: function (date, formatOptions, options) {
             date = new Date(date);
             assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
 
-            return this._format('date', date, options);
+            return this._format('date', date, formatOptions, options);
         },
 
-        formatNumber: function (num, options) {
-            return this._format('number', num, options);
+        formatNumber: function (num, formatOptions, options) {
+            return this._format('number', num, formatOptions, options);
         },
 
-        _format: function (type, value, options) {
-            options = options || {};
+        _format: function (type, value, formatOptions, helperOptions) {
+            if (!helperOptions) {
+                helperOptions = formatOptions;
+                formatOptions = null;
+            }
 
-            var locales = makeArray(options.locales);
+            var locales = makeArray(helperOptions.locales);
             var formats = get(this, 'formats');
 
             if (isEmpty(locales)) {
                 locales = get(this, 'current');
             }
-
-            if (typeof options.formats === 'string') {
-                options = get(this, 'formats.' + type + '.' + options.formats);
-            } else if (typeof options.formats === 'object') {
-                options = options.formats;
-            }
-
-            if (typeof options === 'string') {
-                try {
-                    options = formats[type][options];
-                } catch (e) {
-                    options = undefined;
-                } finally {
-                    if (options === undefined) {
-                        throw new ReferenceError('No ' + type + ' format named: ' + options);
-                    }
+            
+            if (formatOptions) {
+                if (typeof formatOptions === 'string' && formats) {
+                    formatOptions = get(formats, type + '.' + formatOptions);
                 }
+                
+                formatOptions = Ember.$.extend({}, formatOptions, helperOptions);
+            } else {
+                formatOptions = helperOptions;
             }
 
             switch (type) {
                 case 'date':
                 case 'time':
-                    return this.getDateTimeFormat(locales, options).format(value);
+                    return this.getDateTimeFormat(locales, formatOptions).format(value);
                 case 'number':
-                    return this.getNumberFormat(locales, options).format(value);
+                    return this.getNumberFormat(locales, formatOptions).format(value);
                 case 'relative':
-                    return this.getRelativeFormat(locales, options).format(value);
+                    return this.getRelativeFormat(locales, formatOptions).format(value);
                 default:
                     throw new Error('Unrecognized simple format type: ' + type);
             }
