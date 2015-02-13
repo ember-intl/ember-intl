@@ -19,11 +19,8 @@ var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
 
-function normalize (localeName) {
-    return localeName.toLowerCase().replace('-', '_');
-}
-
 function extract (locale, settings) {
+    var normalize = extractor.normalize;
     var data = { locale: locale };
 
     if (settings.plurals) {
