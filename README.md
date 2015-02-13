@@ -12,7 +12,7 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 * HTMLBars and Handlebars supported
 
 ## Installation
-* `npm install ember-intl --save-dev`
+* `npm install --save ember-intl`
 * `ember g ember-intl`
 * `ember g locale en`
 * If you are targeting a browser that doesn't support the native Intl API, you need to load the shim.  The
