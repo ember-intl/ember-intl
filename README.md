@@ -109,7 +109,7 @@ You have {numPhotos, plural,
 	price=200
 	deadline=yesterday}}
 
-{{format-message messages.photos
+{{format-message boundProperty
 	name='Jason'
 	numPhotos=num
 	takenDate=yesterday}}
