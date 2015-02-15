@@ -13,18 +13,17 @@ var serialize   = require('serialize-javascript');
 var Filter      = require('broccoli-filter');
 var path        = require('path');
 
-var extractor   = require('./lib/extract');
+var extract   = require('./lib/extract');
 
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
 
 function extract (locale, settings) {
-    var normalize = extractor.normalize;
     var data = { locale: locale };
 
     if (settings.plurals) {
-        var pluralRuleFunction = extractor.pluralRuleFunction(normalize(locale));
+        var pluralRuleFunction = extract.pluralRuleFunction(locale);
 
         if (pluralRuleFunction) {
             data.pluralRuleFunction = pluralRuleFunction;
@@ -34,7 +33,7 @@ function extract (locale, settings) {
     }
 
     if (settings.fields) {
-        var fields = extractor.fields(normalize(locale), settings.fields);
+        var fields = extract.fields(locale, settings.fields);
         if (fields && Object.keys(fields).length) {
             data.fields = fields;
         } else {
@@ -67,9 +66,8 @@ LocaleProcessor.prototype.transform = function (localeName, fields, pluralFn) {
 
 LocaleProcessor.prototype.processString = function (inputString, filename) {
     var localeName = path.basename(filename, path.extname(filename));
-    var root = localeName.split('-')[0];
 
-    if (!extractor.isValidLocale(root)) {
+    if (!extract.isValidLocale(localeName)) {
         throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
     }
 

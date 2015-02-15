@@ -19,7 +19,7 @@ module.exports = {
     normalizeEntityName: function (localeName) {
         entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
 
-        if (!this.validLocale(this.normalizeLocaleName(localeName))) {
+        if (!extract.isValidLocale(localeName)) {
             throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
         }
 
@@ -28,7 +28,7 @@ module.exports = {
 
     afterInstall: function (options) {
         var file = path.join(this.project.root, 'app', 'locales', options.entity.name + '.js');
-        
+
         return new Promise(function (resolve, reject) {
             fs.readFile(file, 'utf8', function (err, data) {
                 if (err) { return reject(err); }
@@ -39,14 +39,6 @@ module.exports = {
                 });
             });
         });
-    },
-
-    validLocale: function (localeName) {
-        return extract.isValidLocale(localeName);
-    },
-
-    normalizeLocaleName: function (localeName) {
-        return extract.normalize(localeName);
     },
 
     locals: function (options) {
