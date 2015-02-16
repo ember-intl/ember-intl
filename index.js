@@ -19,7 +19,11 @@ var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
 
-function extract (locale, settings) {
+function process (locale, settings) {
+    if (!extract.isValidLocale(locale)) {
+        throw new SilentError('Aborting. `' + locale + '` is not a know locale code');
+    }
+
     var data = { locale: locale };
 
     if (settings.plurals) {
@@ -67,11 +71,7 @@ LocaleProcessor.prototype.transform = function (localeName, fields, pluralFn) {
 LocaleProcessor.prototype.processString = function (inputString, filename) {
     var localeName = path.basename(filename, path.extname(filename));
 
-    if (!extract.isValidLocale(localeName)) {
-        throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
-    }
-
-    var cldr = extract(localeName, {
+    var cldr = process(localeName, {
         plurals: true,
         fields:  ['year', 'month', 'day', 'hour', 'minute', 'second']
     });

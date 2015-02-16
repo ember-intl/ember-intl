@@ -3,6 +3,10 @@
         <h1 id='title'>ember-intl</h1>
     </div>
     <div class="content">
+        <div>
+            Choose a locale: {{view 'select' value=value content=options}}
+        </div>
+
         {{outlet}}
     </div>
 </div>

@@ -9,7 +9,7 @@ var view, container;
 moduleForIntl('format-number', {
     setup: function (_container) {
         container = _container;
-        
+
         container.register('formats:main', {
             number: {
                 digits: {
@@ -23,7 +23,7 @@ moduleForIntl('format-number', {
         }, { instantiate: false });
 
         container.register('formatter:format-number', FormatNumber);
-        container.register('helper:format-number', formatNumberHelper, { instantiate: false });
+        Ember.HTMLBars._registerHelper('format-number', formatNumberHelper);
     },
     teardown: function () {
         runDestroy(view);

@@ -10,20 +10,11 @@ function computedNumber (number, options) {
 }
 
 export default Ember.Controller.extend({
-    options:   ['en-US', 'fr-FR', 'es'],
     numType:   'currency',
     num:       1000,
     yesterday: yesterday,
     deadline:  Ember.computed.readOnly('yesterday'),
     now:       now,
-
-    value: Ember.computed('intl.locales', function (key, value) {
-        if (arguments.length === 2) {
-            this.intl.set('locales', arguments[1]);
-        }
-
-        return this.intl.get('locales.firstObject') || this.intl.get('locales');
-    }),
 
     messages: {
         photos: '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}.\n'
