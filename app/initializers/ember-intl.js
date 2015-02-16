@@ -55,8 +55,8 @@ export default {
         app.inject('formatter',  'intl', 'intl:main');
 
         if (Ember.HTMLBars) {
-            Ember.HTMLBars._registerHelper('format-date', FormatTime);
-            Ember.HTMLBars._registerHelper('format-time', FormatDate);
+            Ember.HTMLBars._registerHelper('format-date', FormatDate);
+            Ember.HTMLBars._registerHelper('format-time', FormatTime);
             Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
             Ember.HTMLBars._registerHelper('format-number', FormatNumber);
             Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
