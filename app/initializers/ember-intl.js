@@ -6,6 +6,13 @@
 import Ember from 'ember';
 import IntlService from '../services/intl';
 import { addLocaleData } from 'ember-intl/utils/data';
+import FormatDate from '../helpers/format-date';
+import FormatTime from '../helpers/format-time';
+import FormatRelative from '../helpers/format-relative';
+import FormatNumber from '../helpers/format-number';
+import IntlGet from '../helpers/intl-get';
+import FormatHtmlMessage from '../helpers/format-html-message';
+import FormatMessage from '../helpers/format-message';
 
 export default {
     name: 'ember-intl',
@@ -46,5 +53,14 @@ export default {
         app.inject('model',      'intl', 'intl:main');
         app.inject('view',       'intl', 'intl:main');
         app.inject('formatter',  'intl', 'intl:main');
+
+        if (Ember.HTMLBars) {
+            Ember.HTMLBars._registerHelper('format-date', FormatTime);
+            Ember.HTMLBars._registerHelper('format-time', FormatDate);
+            Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
+            Ember.HTMLBars._registerHelper('format-number', FormatNumber);
+            Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
+            Ember.HTMLBars._registerHelper('format-message', FormatMessage);
+        }
     }
 }

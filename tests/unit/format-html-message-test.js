@@ -9,7 +9,7 @@ var view;
 moduleForIntl('format-html-message', {
     setup: function (container) {
         container.register('formatter:format-html-message', FormatHtmlMessage);
-        container.register('helper:format-html-message', formatHtmlHelper, { instantiate: false });
+        Ember.HTMLBars._registerHelper('format-html-message', formatHtmlHelper);
     },
     teardown: function () {
         runDestroy(view);

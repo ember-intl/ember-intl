@@ -19,7 +19,7 @@ export default function (name, callbacks) {
                 serviceContext = serviceContext || {};
 
                 if (!container.has('intl:main')) {
-                    service = IntlService.create(Ember.$.extend({
+                    service = IntlService.create(Ember.$.extend({}, {
                         container:     this.container,
                         locales:       ['en'],
                         defaultLocale: 'en'
@@ -48,6 +48,7 @@ export default function (name, callbacks) {
                 }));
 
                 return Ember.View.create({
+                    intl:      service,
                     container: container,
                     template:  Ember.HTMLBars.compile(templateString),
                     context:   viewContext || {}

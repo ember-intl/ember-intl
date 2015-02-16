@@ -11,7 +11,7 @@ var timeStamp = 1390518044403;
 moduleForIntl('format-time', {
     setup: function (container) {
         container.register('formatter:format-time', FormatTime);
-        container.register('helper:format-time', formatTimeHelper, { instantiate: false });
+        Ember.HTMLBars._registerHelper('format-time', formatTimeHelper);
     },
     teardown: function () {
         runDestroy(view);

@@ -6,103 +6,128 @@
 import Ember from 'ember';
 import { Stream, read, readHash, destroyStream } from '../utils/streams';
 
+var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
+var extend = Ember.$.extend;
+
 export default function (formatterName) {
     function throwError () {
         return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
     }
 
     if (Ember.HTMLBars) {
-        return Ember.HTMLBars.makeBoundHelper(function (params, hash, options, env) {
+        return function (params, hash, options, env) {
             if (!params || (params && !params.length)) {
                 return throwError();
             }
 
+            var currentValue, outStream;
+
+            function touchStream () {
+                outStream.notify();
+            }
+
+            var value     = params[0];
+            var view      = env.data.view;
+            var intl      = this.container.lookup('intl:main');
+            var seenHash  = readHash(hash);
+            var context   = view.get('context');
             var formatter = this.container.lookup('formatter:' + formatterName);
-            var args      = [];
 
-            args.push(read(params[0]));
-            args.push(readHash(hash));
-            args.push(Ember.get(env, 'data.view.context'));
+            if (value.isStream) {
+                value.subscribe(function (_stream) {
+                    currentValue = _stream.value();
+                    touchStream();
+                }, value);
+            }
 
-            return formatter.format.apply(formatter, args);
-        });
+            currentValue = read(value);
+
+            outStream = new Stream(function () {
+                return formatter.format.call(formatter, read(currentValue), seenHash, context);
+            });
+
+            Ember.keys(hash).forEach(function (key) {
+                if (!hash[key].isStream) {
+                    return;
+                }
+
+                var hashStream = hash[key];
+                hash[key] = read(hashStream);
+
+                hashStream.subscribe(function (valueStream) {
+                    seenHash[key] = read(valueStream);
+                    touchStream();
+                });
+            });
+
+            view.one('willDestroyElement', function () {
+                destroyStream(outStream);
+            });
+
+            intl.on('localesChanged', touchStream);
+
+            return outStream;
+        };
     } else {
-        var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
-
         return function (value, options) {
             if (typeof value === 'undefined') {
                 return throwError();
             }
 
-            var args      = Ember.A();
-            var streams   = Ember.A();
-            var view      = options.data.view;
-            var types     = options.types;
-            var hash      = Ember.$.extend({}, options.hash);
-            var formatter = view.container.lookup('formatter:' + formatterName);
-            var stream;
-
-            function rerenderView () {
-                Ember.run.scheduleOnce('render', view, view.rerender);
+            function touchStream () {
+                simpleViewStream.notify();
+                simpleView.rerender();
             }
 
-            args.push(hash);
-            args.push(this);
+            var view      = options.data.view;
+            var intl      = this.container.lookup('intl:main');
+            var types     = options.types;
+            var context   = view.get('context');
+            var hash      = extend({}, options.hash);
+            var formatter = view.container.lookup('formatter:' + formatterName);
+            var simpleView, simpleViewStream, currentValue;
 
             if (types[0] === 'ID') {
                 value = view.getStream(value);
             }
 
-            stream = new Stream(function () {
-                var currentValue = value;
-
-                if (currentValue.isStream) {
-                    currentValue = read(currentValue);
-                }
-
-                return formatter.format.apply(formatter, [currentValue].concat(args));
-            });
-
-            var simpleView = new SimpleBoundView(stream, options.escaped);
-
-            Ember.keys(options.hashTypes).forEach(function (key) {
-                if (options.hashTypes[key] === 'ID') {
-                    var hashStream = view.getStream(options.hash[key]);
-                    hash[key] = read(hashStream);
-
-                    if (!options.data.isUnbound) {
-                        hashStream.subscribe(function () {
-                            // update the hash with the new value
-                            // since the above stream closes over `hash`
-                            // within `args`
-                            hash[key] = read(hashStream);
-                            stream.notify();
-                        });
-
-                        streams.push(hashStream);
-                    }
-                }
-            });
-
-            if (!options.data.isUnbound) {
-                stream.subscribe(view._wrapAsScheduled(function () {
-                    Ember.run.scheduleOnce('render', simpleView, 'rerender');
-                }));
-
-                if (value.isStream) {
-                    value.subscribe(stream.notify, stream);
-                    streams.push(value);
-                }
-
-                formatter.intl.one('localesChanged', rerenderView);
+            if (value.isStream && !options.data.isUnbound) {
+                value.subscribe(function (valueStream) {
+                    currentValue = valueStream.value();
+                    touchStream();
+                }, value);
             }
 
-            view.on('willDestroyElement', function () {
-                streams.forEach(destroyStream);
-                streams = [];
-                formatter.intl.off('localesChanged', rerenderView);
+            currentValue = read(value);
+
+            simpleViewStream = new Stream(function () {
+                return formatter.format.call(formatter, read(currentValue), hash, context);
             });
 
+            Ember.keys(options.hashTypes).forEach(function (key) {
+                if (options.hashTypes[key] !== 'ID') {
+                    return;
+                }
+
+                var hashStream = view.getStream(options.hash[key]);
+                hash[key] = read(hashStream);
+
+                if (!options.data.isUnbound) {
+                    hashStream.subscribe(function (valueStream) {
+                        hash[key] = read(valueStream);
+                        touchStream();
+                    });
+                }
+            });
+
+            view.one('willDestroyElement', function () {
+                destroyStream(simpleViewStream);
+                intl.off('localesChanged', touchStream);
+            });
+
+            intl.on('localesChanged', touchStream);
+
+            simpleView = new SimpleBoundView(simpleViewStream, options.escaped);
             view.appendChild(simpleView);
         };
     }

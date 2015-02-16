@@ -9,7 +9,7 @@ var view;
 moduleForIntl('format-relative', {
     setup: function (container) {
         container.register('formatter:format-relative', FormatRelative);
-        container.register('helper:format-relative', formatRelativehelper, { instantiate: false });
+        Ember.HTMLBars._registerHelper('format-relative', formatRelativehelper);
     },
     teardown: function () {
         runDestroy(view);

@@ -13,7 +13,7 @@ moduleForIntl('format-message', {
         container = __container;
 
         container.register('formatter:format-message', FormatMessage);
-        container.register('helper:format-message', formatMessageHelper, { instantiate: false });
+        Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
         container.register('helper:intl-get', intlGet, { instantiate: false });
 
         container.register('locale:en', Locale.extend({
