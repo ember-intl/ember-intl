@@ -6,7 +6,55 @@ export default function (name, callbacks) {
     callbacks = callbacks || {};
 
     QUnit.module(name, {
-        createService: function (container, serviceContext) {
+        intlBlock: function (templateString, serviceContext, viewContext) {
+            var service   = this.service;
+            var container = this.container;
+
+            if (typeof serviceContext === 'object') {
+                Ember.run(function () {
+                    service.setProperties(serviceContext);
+                });
+            }
+
+            container.injection('formatter', 'intl', 'intl:main');
+
+            // mock the component lookup service since it's invoked prior to
+            // looking up a handlebar helper to determine if the helper
+            // is a valid component.
+            container.register('component-lookup:main', Ember.Object.extend({
+                lookupFactory: function () { return false; }
+            }));
+
+            return Ember.View.create({
+                intl:      service,
+                container: container,
+                template:  Ember.HTMLBars.compile(templateString),
+                context:   viewContext || {}
+            });
+        },
+
+        setup: function () {
+            var self = this;
+
+            Ember.lookup = this.lookup = { Ember: Ember };
+
+            this.container = new Ember.Container();
+            this.service = this.getService(this.container);
+            
+            if (callbacks.setup) {
+                callbacks.setup(this.container);
+            }
+        },
+
+        teardown: function () {
+            runDestroy(this.container);
+
+            if (callbacks.teardown) {
+                callbacks.teardown(this.container);
+            }
+        },
+
+        getService: function (container, serviceContext) {
             serviceContext = serviceContext || {};
 
             var service;
@@ -31,50 +79,6 @@ export default function (name, callbacks) {
             }
             
             return service;
-        },
-
-        setup: function () {
-            var self = this;
-
-            Ember.lookup = this.lookup = { Ember: Ember };
-
-            var container = this.container = new Ember.Container();
-            var service   = this.service = this.createService(container);
-            
-            this.intlBlock = function (templateString, serviceContext, viewContext) {
-                if (typeof serviceContext === 'object') {
-                    Ember.run(function () {
-                        service.setProperties(serviceContext);
-                    });
-                }
-
-                container.injection('formatter', 'intl', 'intl:main');
-
-                // mock the component lookup service since it's invoked prior to
-                // looking up a handlebar helper to determine if the helper
-                // is a valid component.
-                container.register('component-lookup:main', Ember.Object.extend({
-                    lookupFactory: function () { return false; }
-                }));
-
-                return Ember.View.create({
-                    intl:      service,
-                    container: container,
-                    template:  Ember.HTMLBars.compile(templateString),
-                    context:   viewContext || {}
-                });
-            };
-
-            if (callbacks.setup) {
-                callbacks.setup(container);
-            }
-        },
-        teardown: function () {
-            runDestroy(this.container);
-
-            if (callbacks.teardown) {
-                callbacks.teardown(this.container);
-            }
         }
     });
 }
