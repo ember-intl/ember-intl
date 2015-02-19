@@ -126,7 +126,7 @@ export default ServiceKlass.extend(Ember.Evented, {
 
     _format: function (type, value, formatOptions, helperOptions) {
         if (!helperOptions) {
-            helperOptions = formatOptions;
+            helperOptions = formatOptions || {};
             formatOptions = null;
         }
 
