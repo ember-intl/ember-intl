@@ -23,6 +23,11 @@ test('exists', function() {
     ok(formatTimeHelper);
 });
 
+test('invoke formatTime directly', function() {
+    expect(1);
+    equal(this.service.formatTime(timeStamp, { timeZone: 'UTC' }), '1/23/2014');
+});
+
 test('should throw if called with out a value', function(assert) {
     expect(1);
     view = this.intlBlock('{{format-time}}');

@@ -35,6 +35,14 @@ test('exists', function() {
     ok(formatMessageHelper);
 });
 
+test('invoke formatMessage directly', function() {
+    expect(1);
+
+    equal(this.service.formatMessage('hello {world}', {
+        world: 'world'
+    }), 'hello world');
+});
+
 test('message is formatted correctly with argument', function() {
     expect(1);
 

@@ -85,6 +85,8 @@ export default ServiceKlass.extend(Ember.Evented, {
             return message(values);
         }
 
+        options = options || {};
+
         var locales = makeArray(options.locales);
         var formats = options.formats || get(this, 'formats');
 
@@ -126,7 +128,7 @@ export default ServiceKlass.extend(Ember.Evented, {
 
     _format: function (type, value, formatOptions, helperOptions) {
         if (!helperOptions) {
-            helperOptions = formatOptions;
+            helperOptions = formatOptions || {};
             formatOptions = null;
         }
 

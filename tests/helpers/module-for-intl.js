@@ -5,38 +5,48 @@ import { runDestroy } from '../helpers/run-append';
 export default function (name, callbacks) {
     callbacks = callbacks || {};
 
-    var container;
-
     QUnit.module(name, {
+        createService: function (container, serviceContext) {
+            serviceContext = serviceContext || {};
+
+            var service;
+
+            if (!container.has('intl:main')) {
+                service = IntlService.create(Ember.$.extend({}, {
+                    container:     this.container,
+                    locales:       ['en'],
+                    defaultLocale: 'en'
+                }, serviceContext));
+
+                container.register('intl:main', service, {
+                    singleton:   true,
+                    instantiate: false
+                });
+            } else {
+                service = container.lookup('intl:main');
+
+                Ember.run(function () {
+                    service.setProperties(serviceContext);
+                });
+            }
+            
+            return service;
+        },
+
         setup: function () {
+            var self = this;
+
             Ember.lookup = this.lookup = { Ember: Ember };
 
-            container = this.container = new Ember.Container();
-
+            var container = this.container = new Ember.Container();
+            var service   = this.service = this.createService(container);
+            
             this.intlBlock = function (templateString, serviceContext, viewContext) {
-                var service;
-
-                serviceContext = serviceContext || {};
-
-                if (!container.has('intl:main')) {
-                    service = IntlService.create(Ember.$.extend({}, {
-                        container:     this.container,
-                        locales:       ['en'],
-                        defaultLocale: 'en'
-                    }, serviceContext));
-
-                    container.register('intl:main', service, {
-                        singleton:   true,
-                        instantiate: false
-                    });
-                } else {
-                    service = container.lookup('intl:main');
+                if (typeof serviceContext === 'object') {
                     Ember.run(function () {
                         service.setProperties(serviceContext);
                     });
                 }
-
-                this.service = service;
 
                 container.injection('formatter', 'intl', 'intl:main');
 
@@ -60,10 +70,10 @@ export default function (name, callbacks) {
             }
         },
         teardown: function () {
-            runDestroy(container);
+            runDestroy(this.container);
 
             if (callbacks.teardown) {
-                callbacks.teardown(container);
+                callbacks.teardown(this.container);
             }
         }
     });
