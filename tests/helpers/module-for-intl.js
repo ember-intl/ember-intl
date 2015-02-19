@@ -54,31 +54,25 @@ export default function (name, callbacks) {
             }
         },
 
-        getService: function (container, serviceContext) {
-            serviceContext = serviceContext || {};
-
-            var service;
+        getService: function () {
+            var container = this.container;
 
             if (!container.has('intl:main')) {
-                service = IntlService.create(Ember.$.extend({}, {
+                var service = IntlService.create(Ember.$.extend({}, {
                     container:     this.container,
                     locales:       ['en'],
                     defaultLocale: 'en'
-                }, serviceContext));
+                }));
 
                 container.register('intl:main', service, {
                     singleton:   true,
                     instantiate: false
                 });
-            } else {
-                service = container.lookup('intl:main');
-
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
+                
+                return service;
             }
-            
-            return service;
+
+            return container.lookup('intl:main');
         }
     });
 }
