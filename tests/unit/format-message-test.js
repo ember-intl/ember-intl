@@ -148,6 +148,17 @@ test('locale can add message and intl-get can read it', function () {
     equal(view.$().text(), "this works also");
 });
 
+test('locale can add message to intl service and read it', function () {
+    expect(1);
+
+    var service = this.service;
+    service.addMessage('en', 'oh', 'hai!');
+
+    view = this.intlBlock('{{format-message (intl-get "messages.oh")}}');
+    runAppend(view);
+    equal(view.$().text(), "hai!");
+});
+
 test('locale can add messages object and intl-get can read it', function () {
     expect(1);
 
