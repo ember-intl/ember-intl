@@ -25,6 +25,7 @@ moduleForIntl('format-number', {
         container.register('formatter:format-number', FormatNumber);
         Ember.HTMLBars._registerHelper('format-number', formatNumberHelper);
     },
+
     teardown: function () {
         runDestroy(view);
         container.unregister('formats:main');
@@ -34,6 +35,12 @@ moduleForIntl('format-number', {
 test('exists', function() {
     expect(1);
     ok(formatNumberHelper);
+});
+
+test('invoke the formatNumber method', function() {
+    expect(1);
+
+    equal(this.service.formatNumber(100), 100);
 });
 
 test('number is formatted correctly with default locale', function() {

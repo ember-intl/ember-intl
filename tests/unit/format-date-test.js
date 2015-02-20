@@ -23,6 +23,13 @@ test('exists', function() {
     ok(formatDateHelper);
 });
 
+test('invoke the formatDate directly', function() {
+    expect(1);
+    equal(this.service.formatDate(dateStr, {
+        timeZone: 'UTC'
+    }), '1/23/2014');
+});
+
 test('should throw if called with out a value', function(assert) {
     expect(1);
     view = this.intlBlock('{{format-date}}');

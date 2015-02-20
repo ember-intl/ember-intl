@@ -21,6 +21,11 @@ test('exists', function() {
     ok(formatRelativehelper);
 });
 
+test('invoke the formatRelative directly', function() {
+    expect(1);
+    equal(this.service.formatRelative(new Date()), 'now');
+});
+
 test('should throw if called with out a value', function(assert) {
     expect(1);
     view = this.intlBlock('{{format-relative}}');
