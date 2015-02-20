@@ -168,7 +168,7 @@ export default ServiceKlass.extend(Ember.Evented, {
         }
 
         if (typeof locale === 'string') {
-            return this.container.lookup('locale:' + localeId.toLowerCase());
+            return this.container.lookup('locale:' + locale.toLowerCase());
         }
 
         throw new Error('`locale` must be a string or a locale instance');
