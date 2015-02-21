@@ -19,7 +19,8 @@ moduleForIntl('format-message', {
         container.register('locale:en', Locale.extend({
             messages: {
                 foo: {
-                    bar: "foo bar baz"
+                    bar: 'foo bar baz',
+                    baz: 'baz baz baz'
                 }
             }
         }));
@@ -146,6 +147,29 @@ test('locale can add message and intl-get can read it', function () {
     view = this.intlBlock('{{format-message (intl-get "messages.adding")}}');
     runAppend(view);
     equal(view.$().text(), "this works also");
+});
+
+test('intl-get handles bound computed property', function () {
+    expect(2);
+
+    view = this.intlBlock('{{format-message (intl-get computedMessage)}}');
+    
+    view.set('context', Ember.Controller.extend({
+        foo: true,
+        computedMessage: Ember.computed('foo', function () {
+            return this.get('foo') ? 'messages.foo.bar' : 'messages.foo.baz';
+        })
+    }).create());
+
+    runAppend(view);
+    
+    equal(view.$().text(), "foo bar baz");
+    
+    Ember.run(function () {
+        view.set('context.foo', false);
+    });
+    
+    equal(view.$().text(), "baz baz baz");
 });
 
 test('locale can add message to intl service and read it', function () {

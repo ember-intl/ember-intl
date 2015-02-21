@@ -33,29 +33,48 @@ function intlGet (key, locale) {
 }
 
 export default function (value, options) {
-    var view = options.data.view;
-    var hash = readHash(options.hash);
-    var intl = this.container.lookup('intl:main');
-    var self = this;
-    var currentValue;
+    var view  = options.data.view;
+    var types = options.types;
+    var hash  = readHash(options.hash);
+    var intl  = this.container.lookup('intl:main');
+    var self  = this;
+
+    var currentValue = value;
+    var valueStream, outStreamValue;
 
     var outStream = new Stream(function () {
-        return currentValue;
+        return outStreamValue;
     });
 
     outStream.setValue = function(_value) {
-        currentValue = _value;
+        outStreamValue = _value;
         this.notify();
+    }
+    
+    function valueStreamChanged () {
+        currentValue = valueStream.value();
+        pokeStream();
     }
 
     function pokeStream () {
-        outStream.setValue(intlGet.call(self, read(value), hash.locales));
+        outStream.setValue(intlGet.call(self, read(currentValue), hash.locales));
+    }
+
+    if (types[0] === 'ID') {
+        valueStream  = view.getStream(value);
+        currentValue = valueStream.value();
+        valueStream.subscribe(valueStreamChanged);
     }
 
     intl.on('localesChanged', this, pokeStream);
 
     view.one('willDestroyElement', this, function () {
         intl.off('localesChanged', this, pokeStream);
+
+        if (valueStream) {
+            valueStream.unsubscribe(valueStreamChanged);
+        }
+
         destroyStream(outStream);
     });
 
