@@ -16,3 +16,9 @@ Passing a static message or a message via a data-binding also works.
     name='Jason'
     numPhotos=num
     takenDate=yesterday}}
+    
+Use within bind-attr
+
+<button {{bind-attr title=(format-message (intl-get 'messages.product.title'))}}>
+    Hover to see title
+</button>

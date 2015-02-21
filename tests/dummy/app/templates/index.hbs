@@ -35,6 +35,10 @@
       numPhotos=num
       takenDate=yesterday}}
 </div>
+<br />
+<button {{bind-attr title=(format-message (intl-get 'messages.product.title'))}}>
+    Use with bind-attr
+</button>
 
 {{code-snippet name='format-message.hbs'}}
 
