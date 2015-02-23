@@ -5,6 +5,10 @@
 This library provides Ember Handlebar helpers and a localization service injected into views, routes, models, controllers, and components.  The
 service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
+## Overview
+**Ember Intl is part of [FormatJS][], the docs can be found on the website:**
+
+**<http://formatjs.io/ember/>**
 
 ## Requirements
 * Ember-cli >= 0.1.5
@@ -179,3 +183,4 @@ export default Locale.extend({
 [CLDR]: http://cldr.unicode.org/
 [Intl.js]: https://github.com/andyearnshaw/Intl.js
 [LICENSE]: https://github.com/yahoo/yahoo-intl/blob/master/LICENSE
+[FormatJS]: http://formatjs.io/
