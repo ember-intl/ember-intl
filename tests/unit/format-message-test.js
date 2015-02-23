@@ -161,7 +161,6 @@ test('intl-get handles bound computed property', function () {
         })
     }).create();
 
-
     view.set('context', context);
 
     runAppend(view);
