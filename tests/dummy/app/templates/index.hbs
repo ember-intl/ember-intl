@@ -24,7 +24,7 @@
 <h3>Format Message</h3>
 
 <div>
-    {{format-message (intl-get 'messages.product.info')
+    {{format-message (intl-get computedMessage)
       product='Apple watch'
       price=200
       deadline=yesterday}}
@@ -35,6 +35,10 @@
       numPhotos=num
       takenDate=yesterday}}
 </div>
+<br />
+<button {{bind-attr title=(format-message (intl-get 'messages.product.title'))}}>
+    Use with bind-attr
+</button>
 
 {{code-snippet name='format-message.hbs'}}
 

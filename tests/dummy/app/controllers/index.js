@@ -19,17 +19,9 @@ export default Ember.Controller.extend({
     messages: {
         photos: '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}.\n'
     },
-
-    formatNumberPercent: computedNumber(400, { style: 'percent' }),
-    formatNumberSimple:  computedNumber(400),
-    formatNumberEuro:    computedNumber(400, 'EUR'),
-
-    formatMessageExample: Ember.computed('intl.locales', function () {
-        return this.intl.formatMessage(this.messages.photos, {
-            name:      'Jason',
-            numPhotos: 1400,
-            takenDate: now
-        });
+    
+    computedMessage: Ember.computed(function () {
+        return 'messages.product.info';
     }),
 
     incrementTime: Ember.on('init', function() {
