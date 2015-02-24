@@ -107,7 +107,7 @@ export default ServiceKlass.extend(Ember.Evented, {
 
         return this._format('time', date, formatOptions, options);
     },
-    
+
     formatRelative: function (date, formatOptions, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
@@ -138,12 +138,12 @@ export default ServiceKlass.extend(Ember.Evented, {
         if (isEmpty(locales)) {
             locales = get(this, 'current');
         }
-        
+
         if (formatOptions) {
             if (typeof formatOptions === 'string' && formats) {
                 formatOptions = get(formats, type + '.' + formatOptions);
             }
-            
+
             formatOptions = Ember.$.extend({}, formatOptions, helperOptions);
         } else {
             formatOptions = helperOptions;

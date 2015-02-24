@@ -206,6 +206,30 @@ test('locale can add messages object and intl-get can read it', function () {
     equal(view.$().text(), "bulk add works");
 });
 
+test('should respect format options for date ICU block', function () {
+    expect(1);
+
+    container.optionsForType('formats', {
+        singleton:   true,
+        instantiate: false
+    });
+
+    container.register('formats:main', {
+        date: {
+            shortWeekDay: {
+                day:   'numeric',
+                month: 'long',
+                year:  'numeric'
+            }
+        }
+    });
+
+    view = this.intlBlock('{{format-message "Sale begins {day, date, shortWeekDay}" day=1390518044403}}');
+    runAppend(view);
+
+    equal(view.$().text(), "Sale begins January 23, 2014");
+});
+
 test('intl-get returns message for key that is a literal string (not an object path)', function () {
     expect(1);
 

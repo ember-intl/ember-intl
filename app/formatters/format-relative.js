@@ -16,7 +16,7 @@ var FormatRelative = Formatter.extend({
 });
 
 FormatRelative.reopenClass({
-    formatOptions: ['style', 'units']
+    formatOptions: Ember.A(['style', 'units'])
 });
 
 export default FormatRelative;

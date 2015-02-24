@@ -16,12 +16,12 @@ var FormatNumber = Formatter.extend({
 });
 
 FormatNumber.reopenClass({
-    formatOptions: [
+    formatOptions: Ember.A([
         'localeMatcher', 'style', 'currency', 'currencyDisplay',
         'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
         'maximumFractionDigits', 'minimumSignificantDigits',
         'maximumSignificantDigits'
-    ]
+    ])
 });
 
 export default FormatNumber;
