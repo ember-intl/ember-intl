@@ -50,9 +50,7 @@ var FormatMessage = Formatter.extend({
             model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
         }
 
-        var formatOptions = {
-            formats: hash.format || this.filterFormatOptions(hash)
-        };
+        var formatOptions = {};
 
         if (hash.locales) {
             formatOptions.locales = hash.locales;
@@ -63,11 +61,7 @@ var FormatMessage = Formatter.extend({
 });
 
 FormatMessage.reopenClass({
-    formatOptions: [
-        'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
-        'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
-        'timeZoneName'
-    ]
+    formatOptions: Ember.A()
 });
 
 export default FormatMessage;

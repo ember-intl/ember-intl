@@ -30,9 +30,7 @@ var FormatHtmlMessage = FormatterMessage.extend({
             model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
         }
 
-        var formatOptions = {
-            formats: hash.format || this.filterFormatOptions(hash)
-        };
+        var formatOptions = {};
 
         if (hash.locales) {
             formatOptions.locales = hash.locales;

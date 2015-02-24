@@ -16,11 +16,11 @@ var FormatDate = Formatter.extend({
 });
 
 FormatDate.reopenClass({
-    formatOptions: [
+    formatOptions: Ember.A([
         'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
         'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
         'timeZoneName'
-    ]
+    ])
 });
 
 export default FormatDate;
