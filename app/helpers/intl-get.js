@@ -11,14 +11,14 @@ function normalize (fullName) {
     return fullName.toLowerCase();
 }
 
-function intlGet (key, locale) {
+function intlGet (key, locale, container) {
     Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
 
-    var intl    = this.container.lookup('intl:main');
+    var intl    = container.lookup('intl:main');
     var locales = locale ? Ember.makeArray(locale) : intl.get('current');
 
     for (var i=0; i < locales.length; i++) {
-        var locale = this.container.lookup('locale:' + normalize(locales[i]));
+        var locale = container.lookup('locale:' + normalize(locales[i]));
 
         if (locale) {
             var value = locale.getValue(key);
@@ -36,8 +36,7 @@ export default function (value, options) {
     var view  = options.data.view;
     var types = options.types;
     var hash  = readHash(options.hash);
-    var intl  = this.container.lookup('intl:main');
-    var self  = this;
+    var intl  = view.container.lookup('intl:main');
 
     var currentValue = value;
     var valueStream, outStreamValue;
@@ -50,14 +49,14 @@ export default function (value, options) {
         outStreamValue = _value;
         this.notify();
     }
-    
+
     function valueStreamChanged () {
         currentValue = valueStream.value();
         pokeStream();
     }
 
     function pokeStream () {
-        outStream.setValue(intlGet.call(self, read(currentValue), hash.locales));
+        outStream.setValue(intlGet(read(currentValue), hash.locales, view.container));
     }
 
     if (types[0] === 'ID') {
