@@ -28,10 +28,10 @@ export default function (formatterName) {
 
             var value     = params[0];
             var view      = env.data.view;
-            var intl      = this.container.lookup('intl:main');
+            var intl      = view.container.lookup('intl:main');
             var seenHash  = readHash(hash);
             var context   = view.get('context');
-            var formatter = this.container.lookup('formatter:' + formatterName);
+            var formatter = view.container.lookup('formatter:' + formatterName);
 
             if (value.isStream) {
                 value.subscribe(function (_stream) {
