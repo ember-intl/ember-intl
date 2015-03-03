@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var locales     = require('formatjs-extract-cldr-data/lib/locales');
+var cldrLocales = require('formatjs-extract-cldr-data/lib/locales');
 var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
 var Promise     = require('ember-cli/lib/ext/promise');
@@ -16,7 +16,7 @@ module.exports = {
     normalizeEntityName: function (localeName) {
         entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
 
-        if (!locales.has(localeName)) {
+        if (!cldrLocales.locales.has(localeName)) {
             throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
         }
 
