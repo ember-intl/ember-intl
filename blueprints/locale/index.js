@@ -3,23 +3,20 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+var cldrLocales = require('formatjs-extract-cldr-data/lib/locales');
 var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
 var Promise     = require('ember-cli/lib/ext/promise');
 var path        = require('path');
 var fs          = require('fs');
 
-var extract     = require('../../lib/extract');
-
 module.exports = {
     description: 'Extract a CLDR data into an ES6 module for a given locale code',
-
-    anonymousOptions: ['fields'],
 
     normalizeEntityName: function (localeName) {
         entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
 
-        if (!extract.isValidLocale(localeName)) {
+        if (!cldrLocales.locales.has(localeName)) {
             throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
         }
 
@@ -43,15 +40,9 @@ module.exports = {
 
     locals: function (options) {
         var localeName = options.args[1];
-        var fields     = options.args.slice(3);
-
-        if (!fields.length)  {
-            fields = ['year', 'month', 'day', 'hour', 'minute', 'second'];
-        }
 
         return {
-            locale: '\''+ localeName + '\'',
-            fields: fields
+            locale: '\''+ localeName + '\''
         }
     }
 };

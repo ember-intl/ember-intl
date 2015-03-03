@@ -7,46 +7,18 @@
 
 'use strict';
 
-
 var SilentError = require('ember-cli/lib/errors/silent');
 var serialize   = require('serialize-javascript');
 var Filter      = require('broccoli-filter');
 var path        = require('path');
 
-var extract   = require('./lib/extract');
+var cldr        = require('formatjs-extract-cldr-data');
+var cldrLocales = require('formatjs-extract-cldr-data/lib/locales');
+var assign      = require('object.assign');
 
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
-
-function process (locale, settings) {
-    if (!extract.isValidLocale(locale)) {
-        throw new SilentError('Aborting. `' + locale + '` is not a know locale code');
-    }
-
-    var data = { locale: locale };
-
-    if (settings.plurals) {
-        var pluralRuleFunction = extract.pluralRuleFunction(locale);
-
-        if (pluralRuleFunction) {
-            data.pluralRuleFunction = pluralRuleFunction;
-        } else {
-            return null;
-        }
-    }
-
-    if (settings.fields) {
-        var fields = extract.fields(locale, settings.fields);
-        if (fields && Object.keys(fields).length) {
-            data.fields = fields;
-        } else {
-            return null;
-        }
-    }
-
-    return data;
-}
 
 function LocaleProcessor (inputTree) {
     if (!(this instanceof LocaleProcessor)) {
@@ -71,12 +43,30 @@ LocaleProcessor.prototype.transform = function (localeName, fields, pluralFn) {
 LocaleProcessor.prototype.processString = function (inputString, filename) {
     var localeName = path.basename(filename, path.extname(filename));
 
-    var cldr = process(localeName, {
-        plurals: true,
-        fields:  ['year', 'month', 'day', 'hour', 'minute', 'second']
+    localeName = cldrLocales.locales.normalize(localeName);
+
+    var out   = {};
+    var parts = localeName.split('-');
+    
+    var data = cldr({
+        locales:        [localeName],
+        pluralRules:    true,
+        relativeFields: ['year', 'month', 'day', 'hour', 'minute', 'second']
     });
 
-    return this.transform(localeName, cldr.fields, cldr.pluralRuleFunction);
+    parts.map(function(part, idx) {
+        /* 
+         * if the locale is 'zh-Hant-TW' this map will build an
+         * array of strings ['zh', 'zh-Hant', 'zh-Hant-TW']
+         * which is used to walk the CLDR results to progressively
+         * build up the results object
+         */
+        return parts.slice(0, ++idx).join('-'); 
+    }).forEach(function (part) {
+        assign(out, data[part] || {});
+    });
+
+    return this.transform(localeName, out.fields, out.pluralRuleFunction);
 }
 
 module.exports = {
