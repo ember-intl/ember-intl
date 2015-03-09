@@ -7,7 +7,6 @@
 
 'use strict';
 
-var SilentError  = require('ember-cli/lib/errors/silent');
 var serialize    = require('serialize-javascript');
 var Funnel       = require('broccoli-funnel');
 var walkSync     = require('walk-sync');
@@ -30,29 +29,6 @@ module.exports = {
         app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
     },
 
-    _transformLocale: function (locale, result) {
-        var data = ['export default {'];
-        data.push('  locale: "' + locale + '",');
-
-        if (result.parentLocale) {
-            data.push('  parentLocale: "' + result.parentLocale + '",');
-        }
-
-        if (result.fields) {
-            data.push('  fields: ' + serialize(result.fields) + ',');
-        }
-
-        if (result.pluralFn) {
-            data.push('  pluralRuleFunction: ' + serialize(result.pluralFn) + ',');
-        }
-
-        var lastObject = data[data.length - 1];
-        var pos = lastObject.lastIndexOf(',');
-        data[data.length - 1] = lastObject.substr(0, pos);
-        data.push('};');
-        return data.join('\n');
-    },
-
     treeForApp: function (inputTree) {
         var appPath = this.treePaths.app;
         var localesPath = path.join(this.project.root, appPath, 'locales');
@@ -72,7 +48,7 @@ module.exports = {
             trees.push(localeTree)
         }
 
-        return this.mergeTrees(trees, { overwrite: true });
+        return this.mergeTrees(trees);
     },
 
     treeForVendor: function (inputTree) {
@@ -114,5 +90,28 @@ module.exports = {
         }));
 
         return this.mergeTrees(trees, { overwrite: true });
+    },
+
+    _transformLocale: function (locale, result) {
+        var data = ['export default {'];
+        data.push('  locale: "' + locale + '",');
+
+        if (result.parentLocale) {
+            data.push('  parentLocale: "' + result.parentLocale + '",');
+        }
+
+        if (result.fields) {
+            data.push('  fields: ' + serialize(result.fields) + ',');
+        }
+
+        if (result.pluralFn) {
+            data.push('  pluralRuleFunction: ' + serialize(result.pluralFn) + ',');
+        }
+
+        var lastObject = data[data.length - 1];
+        var pos = lastObject.lastIndexOf(',');
+        data[data.length - 1] = lastObject.substr(0, pos);
+        data.push('};');
+        return data.join('\n');
     }
 };
