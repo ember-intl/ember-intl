@@ -40,9 +40,11 @@ module.exports = {
             }).filter(LocaleWriter.hasCLDR);
 
             var localeTree = new LocaleWriter(inputTree, {
-                locales:   locales,
-                destDir:   'cldrs',
-                transform: this._transformLocale
+                locales:        locales,
+                outputPath:     'cldrs',
+                pluralRules:    true,
+                relativeFields: true,
+                wrapEntry:      this._transformLocale
             });
 
             trees.push(localeTree)
