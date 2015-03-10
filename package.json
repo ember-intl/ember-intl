@@ -27,9 +27,10 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "broccoli-caching-writer": "^0.5.5",
+    "broccoli-caching-writer": "0.5.1",
     "broccoli-filter": "^0.1.11",
     "broccoli-funnel": "^0.2.2",
+    "core-object": "0.0.4",
     "formatjs-extract-cldr-data": "^1.1.0",
     "intl": "0.1.4",
     "intl-messageformat": "1.1.0",
@@ -42,7 +43,7 @@
   "devDependencies": {
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-static-compiler": "^0.2.1",
-    "ember-cli": "0.1.12",
+    "ember-cli": "0.1.15",
     "ember-cli-htmlbars": "^0.6.0",
     "ember-cli-inject-live-reload": "^1.3.0",
     "ember-cli-qunit": "^0.3.1",

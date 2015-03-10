@@ -39,7 +39,7 @@ module.exports = {
                 return path.basename(filename, path.extname(filename));
             }).filter(LocaleWriter.hasCLDR);
 
-            var localeTree = new LocaleWriter([inputTree], {
+            var localeTree = new LocaleWriter(inputTree, {
                 locales:   locales,
                 destDir:   'cldrs',
                 transform: this._transformLocale
