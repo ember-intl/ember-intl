@@ -27,10 +27,9 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "broccoli-caching-writer": "0.5.1",
+    "broccoli-caching-writer": "^0.5.5",
     "broccoli-filter": "^0.1.11",
     "broccoli-funnel": "^0.2.2",
-    "core-object": "0.0.4",
     "formatjs-extract-cldr-data": "^1.1.0",
     "intl": "0.1.4",
     "intl-messageformat": "1.1.0",

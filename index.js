@@ -50,7 +50,7 @@ module.exports = {
             trees.push(localeTree)
         }
 
-        return this.mergeTrees(trees);
+        return this.mergeTrees(trees, { overwrite: true });
     },
 
     treeForVendor: function (inputTree) {
