@@ -52,8 +52,8 @@ export default Locale.extend({
 ```js
 	var App = Ember.Application.extend({
 		ready: function () {
-			// setup default locale to fr but will fallback to en
-			this.intl.set('locales', ['fr-FR', 'en']);
+			// setup default locale to navigator.language but will fallback to en
+			this.intl.set('locales', [navigator.language, 'en']);
 		}
 	});
 ```

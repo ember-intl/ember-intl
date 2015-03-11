@@ -4,7 +4,6 @@
  */
 
 import Ember from 'ember';
-import Locale from 'ember-intl/models/locale';
 import createFormatCache from 'ember-intl/format-cache/memoizer';
 import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
 
@@ -16,7 +15,7 @@ var computed     = Ember.computed;
 var observer     = Ember.observer;
 var isEmpty      = Ember.isEmpty;
 var isPresent    = Ember.isPresent;
-var run          = Ember.run;
+var runOnce      = Ember.run.once;
 
 function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
@@ -31,6 +30,8 @@ export default ServiceKlass.extend(Ember.Evented, {
     getMessageFormat:  null,
     getNumberFormat:   null,
 
+    adapterType:       '-intl-adapter',
+
     setupMemoizers: on('init', function () {
         this.setProperties({
             getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
@@ -39,6 +40,19 @@ export default ServiceKlass.extend(Ember.Evented, {
             getMessageFormat:  createFormatCache(IntlMessageFormat)
         });
     }),
+
+    adapter: computed('adapterType', function () {
+        var adapterType = get(this, 'adapterType');
+        var app = this.container.lookup('application:main');
+
+        if (app.IntlAdapter) {
+            return app.IntlAdapter.create({
+                container: this.container
+            });
+        } else if (typeof adapterType === 'string'){
+            return this.container.lookup('adapter:' + adapterType);
+        }
+    }).readOnly(),
 
     current: computed('locales', 'defaultLocale', function () {
         var locales       = makeArray(get(this, 'locales'));
@@ -58,19 +72,19 @@ export default ServiceKlass.extend(Ember.Evented, {
     }).readOnly(),
 
     localeChanged: observer('current', function () {
-        run.once(this, this.notifyLocaleChanged);
+        runOnce(this, this.notifyLocaleChanged);
     }),
 
     addMessage: function (locale, key, value) {
-        var localeInstance = this._getLocaleInstance(locale);
-
-        return localeInstance.addMessage(key, value);
+        return this._getLocaleInstance(locale).then(function (localeInstance) {
+            return localeInstance.addMessage(key, value);
+        });
     },
 
     addMessages: function (locale, messageObject) {
-        var localeInstance = this._getLocaleInstance(locale);
-
-        return localeInstance.addMessages(messageObject);
+        return this._getLocaleInstance(locale).then(function (localeInstance) {
+            return localeInstance.addMessages(messageObject);
+        });
     },
 
     notifyLocaleChanged: function () {
@@ -163,14 +177,28 @@ export default ServiceKlass.extend(Ember.Evented, {
     },
 
     _getLocaleInstance: function (locale) {
-        if (locale instanceof Locale) {
-            return locale;
-        }
+        var result = this.get('adapter').findLocale(locale);
+        
+        return Ember.RSVP.cast(result).then(function (localeInstance) {
+            if (typeof localeInstance === 'undefined') {
+                throw new Error('`locale` must be a string or a locale instance');
+            }
 
-        if (typeof locale === 'string') {
-            return this.container.lookup('locale:' + locale.toLowerCase());
-        }
+            return localeInstance;
+        });
+    },
 
-        throw new Error('`locale` must be a string or a locale instance');
+    _getTranslation: function (key, locales) {
+        locales = locales ? Ember.makeArray(locales) : this.get('current');
+
+        var result = this.get('adapter').findTranslation(locales, key);
+
+        return Ember.RSVP.cast(result).then(function (result) {
+            if (typeof result === 'undefined') {
+                throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
+            }
+
+            return result;
+        });
     }
 });

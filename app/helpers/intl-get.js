@@ -6,58 +6,34 @@
 import Ember from 'ember';
 import { Stream, read, readHash, destroyStream } from 'ember-intl/utils/streams';
 
-function normalize (fullName) {
-    Ember.assert('Lookup name must be a string', typeof fullName === 'string');
-    return fullName.toLowerCase();
-}
-
-function intlGet (key, locale) {
-    Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
-
-    var intl    = this.container.lookup('intl:main');
-    var locales = locale ? Ember.makeArray(locale) : intl.get('current');
-
-    for (var i=0; i < locales.length; i++) {
-        var locale = this.container.lookup('locale:' + normalize(locales[i]));
-
-        if (locale) {
-            var value = locale.getValue(key);
-
-            if (typeof value !== 'undefined') {
-                return value;
-            }
-        }
-    }
-
-    throw new ReferenceError('Could not find Intl object: ' + key);
-}
-
 export default function (value, options) {
     var view  = options.data.view;
     var types = options.types;
     var hash  = readHash(options.hash);
-    var intl  = this.container.lookup('intl:main');
-    var self  = this;
+    var intl  = view.container.lookup('intl:main');
 
     var currentValue = value;
-    var valueStream, outStreamValue;
+    var outStreamValue = '';
+    var valueStream;
 
     var outStream = new Stream(function () {
         return outStreamValue;
     });
 
-    outStream.setValue = function(_value) {
+    outStream.setValue = function (_value) {
         outStreamValue = _value;
         this.notify();
     }
-    
+
     function valueStreamChanged () {
         currentValue = valueStream.value();
         pokeStream();
     }
 
     function pokeStream () {
-        outStream.setValue(intlGet.call(self, read(currentValue), hash.locales));
+        return intl._getTranslation(read(currentValue), hash.locales).then(function (translation) {
+            outStream.setValue(translation);
+        });
     }
 
     if (types[0] === 'ID') {

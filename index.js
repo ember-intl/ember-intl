@@ -39,9 +39,8 @@ module.exports = {
                 return path.basename(filename, path.extname(filename));
             }).filter(LocaleWriter.hasCLDR);
 
-            var localeTree = new LocaleWriter(inputTree, {
+            var localeTree = new LocaleWriter(inputTree, 'cldrs', {
                 locales:        locales,
-                outputPath:     'cldrs',
                 pluralRules:    true,
                 relativeFields: true,
                 wrapEntry:      this._transformLocale
@@ -95,7 +94,8 @@ module.exports = {
     },
 
     _transformLocale: function (locale, result) {
-        var data = ['export default {'];
+        var data = ['/*jslint eqeq: true*/', 'export default {'];
+
         data.push('  locale: "' + locale + '",');
 
         if (result.parentLocale) {
