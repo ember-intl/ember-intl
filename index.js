@@ -37,7 +37,7 @@ module.exports = {
         if (fs.existsSync(localesPath)) {
             var locales = walkSync(localesPath).map(function (filename) {
                 return path.basename(filename, path.extname(filename));
-            }).filter(LocaleWriter.hasCLDR);
+            }).filter(LocaleWriter.has);
 
             var localeTree = new LocaleWriter(inputTree, 'cldrs', {
                 locales:        locales,
