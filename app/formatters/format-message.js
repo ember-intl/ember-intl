@@ -13,7 +13,6 @@ var FormatMessage = Formatter.extend({
     format: function (value, hash, optionalLocale) {
         var locales = optionalLocale || hash.locales;
         var formatOptions = {};
-        var icuKeys;
 
         if (value instanceof IntlGetResult) {
             if (typeof locales === 'undefined') {
