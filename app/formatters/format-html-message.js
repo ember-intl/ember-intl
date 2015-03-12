@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import FormatterMessage from './format-message';
+import IntlGetResult from 'ember-intl/models/intl-get-result';
 
 var FormatHtmlMessage = FormatterMessage.extend({
     escapeProps: function (props) {
@@ -23,17 +24,28 @@ var FormatHtmlMessage = FormatterMessage.extend({
     },
 
     format: function (value, hash, context) {
-        var icuKeys = this.extractICUKeys(value);
-        var model   = {};
+        var locales = hash.locales;
+        var formatOptions = {};
+        var model = {};
+        var icuKeys;
+
+        if (value instanceof IntlGetResult) {
+            if (typeof locales === 'undefined') {
+                locales = value.locale;
+            }
+
+            value = value.translation;
+        }
+
+        icuKeys = this.extractICUKeys(value);
 
         if (icuKeys && icuKeys.length) {
             model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
         }
 
-        var formatOptions = {};
 
-        if (hash.locales) {
-            formatOptions.locales = hash.locales;
+        if (locales) {
+            formatOptions.locales = locales;
         }
 
         return Ember.String.htmlSafe(this.intl.formatMessage(value, this.escapeProps(model), formatOptions));

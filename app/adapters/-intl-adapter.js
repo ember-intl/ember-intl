@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import IntlGetResult from 'ember-intl/models/intl-get-result';
 import Locale from 'ember-intl/models/locale';
 import IntlAdapter from 'ember-intl/adapter';
 
@@ -19,18 +20,19 @@ export default IntlAdapter.extend({
         }
     },
 
-    findTranslation: function (locales, key) {
+    findTranslation: function (locales, translationKey) {
         var container = this.container;
-        var locale, value;
+        var locale, translation, key;
 
         for (var i=0, len = locales.length; i < len; i++) {
-            locale = container.lookup('locale:' + normalize(locales[i]));
+            key = locales[i];
+            locale = container.lookup('locale:' + normalize(key));
 
             if (locale) {
-                value = locale.getValue(key);
+                translation = locale.getValue(translationKey);
 
-                if (typeof value !== 'undefined') {
-                    return value;
+                if (typeof translation !== 'undefined') {
+                    return new IntlGetResult(translation, key);
                 }
             }
         }

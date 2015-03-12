@@ -4,8 +4,9 @@
  */
 
 import Ember from 'ember';
-import createFormatCache from 'ember-intl/format-cache/memoizer';
 import { IntlRelativeFormat, IntlMessageFormat } from 'ember-intl/utils/data';
+import createFormatCache from 'ember-intl/format-cache/memoizer';
+import IntlGetResult from 'ember-intl/models/intl-get-result';
 
 var ServiceKlass = Ember.Service || Ember.Controller;
 var makeArray    = Ember.makeArray;
@@ -194,6 +195,8 @@ export default ServiceKlass.extend(Ember.Evented, {
         var result = this.get('adapter').findTranslation(locales, key);
 
         return Ember.RSVP.cast(result).then(function (result) {
+            Ember.assert('findTranslation should return an object of instance `IntlGetResult`', result instanceof IntlGetResult);
+        
             if (typeof result === 'undefined') {
                 throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
             }

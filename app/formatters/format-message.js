@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import Formatter from 'ember-intl/formatter-base';
+import IntlGetResult from 'ember-intl/models/intl-get-result';
 
 var validKey = /[\w|.]/;
 
@@ -43,17 +44,26 @@ var FormatMessage = Formatter.extend({
     },
 
     format: function (value, hash, context) {
-        var icuKeys = this.extractICUKeys(value);
-        var model;
+        var locales = hash.locales;
+        var formatOptions = {};
+        var model, icuKeys;
+
+        if (value instanceof IntlGetResult) {
+            if (typeof locales === 'undefined') {
+                locales = value.locale;
+            }
+
+            value = value.translation;
+        }
+
+        icuKeys = this.extractICUKeys(value);
 
         if (icuKeys && icuKeys.length) {
             model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
         }
 
-        var formatOptions = {};
-
-        if (hash.locales) {
-            formatOptions.locales = hash.locales;
+        if (locales) {
+            formatOptions.locales = locales;
         }
 
         return this.intl.formatMessage(value, model, formatOptions);
