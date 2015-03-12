@@ -10,43 +10,10 @@ import IntlGetResult from 'ember-intl/models/intl-get-result';
 var validKey = /[\w|.]/;
 
 var FormatMessage = Formatter.extend({
-    extractICUKeys: function (msg) {
-        var length = msg.length;
-        var buf    = [], out = Ember.A();
-        var i      = 0;
-        var char, key;
-
-        for (; i < length; i++) {
-          char = msg[i];
-
-          if (buf.length && !validKey.test(char)) {
-              buf.shift();
-              key = buf.join('');
-
-              // do not include empty strings: {}
-              if (key) { out.addObject(key); }
-
-              buf = [];
-          }
-          else if (
-            // does not include escaped curly braces
-            // and double curly braces does not mistake the first
-            // as the starting point of the key {{foo}} should return `foo`
-            (char === '{' && msg[i-1] !== "\\" && msg[i+1] !== '{') ||
-            buf.length
-          )
-          {
-              buf.push(char);
-          }
-        }
-
-        return out;
-    },
-
-    format: function (value, hash, context) {
-        var locales = hash.locales;
+    format: function (value, hash, optionalLocale) {
+        var locales = optionalLocale || hash.locales;
         var formatOptions = {};
-        var model, icuKeys;
+        var icuKeys;
 
         if (value instanceof IntlGetResult) {
             if (typeof locales === 'undefined') {
@@ -56,17 +23,11 @@ var FormatMessage = Formatter.extend({
             value = value.translation;
         }
 
-        icuKeys = this.extractICUKeys(value);
-
-        if (icuKeys && icuKeys.length) {
-            model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
-        }
-
         if (locales) {
             formatOptions.locales = locales;
         }
 
-        return this.intl.formatMessage(value, model, formatOptions);
+        return this.intl.formatMessage(value, hash, formatOptions);
     }
 });
 
