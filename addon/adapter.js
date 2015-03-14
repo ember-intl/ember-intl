@@ -5,6 +5,6 @@ function notImplemented () {
 }
 
 export default Ember.Object.extend({
-    findLocale: notImplemented,
+    findLanguage:    notImplemented,
     findTranslation: notImplemented
 });

@@ -10,13 +10,13 @@ function normalize (fullName) {
 }
 
 export default IntlAdapter.extend({
-    findLocale: function (locale) {
+    findLanguage: function (locale) {
         if (locale instanceof Locale) {
             return locale;
         }
 
         if (typeof locale === 'string') {
-            return this.container.lookup('locale:' + locale.toLowerCase());
+            return this.container.lookup('locale:' + normalize(locale));
         }
     },
 
@@ -26,7 +26,7 @@ export default IntlAdapter.extend({
 
         for (var i=0, len = locales.length; i < len; i++) {
             key = locales[i];
-            locale = container.lookup('locale:' + normalize(key));
+            locale = this.findLanguage(key);
 
             if (locale) {
                 translation = locale.getValue(translationKey);

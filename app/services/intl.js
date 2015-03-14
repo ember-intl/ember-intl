@@ -77,13 +77,13 @@ export default ServiceKlass.extend(Ember.Evented, {
     }),
 
     addMessage: function (locale, key, value) {
-        return this._getLocaleInstance(locale).then(function (localeInstance) {
+        return this._getLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessage(key, value);
         });
     },
 
     addMessages: function (locale, messageObject) {
-        return this._getLocaleInstance(locale).then(function (localeInstance) {
+        return this._getLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessages(messageObject);
         });
     },
@@ -177,9 +177,9 @@ export default ServiceKlass.extend(Ember.Evented, {
         }
     },
 
-    _getLocaleInstance: function (locale) {
-        var result = this.get('adapter').findLocale(locale);
-        
+    _getLanguage: function (locale) {
+        var result = this.get('adapter').findLanguage(locale);
+
         return Ember.RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
                 throw new Error('`locale` must be a string or a locale instance');
@@ -196,7 +196,7 @@ export default ServiceKlass.extend(Ember.Evented, {
 
         return Ember.RSVP.cast(result).then(function (result) {
             Ember.assert('findTranslation should return an object of instance `IntlGetResult`', result instanceof IntlGetResult);
-        
+
             if (typeof result === 'undefined') {
                 throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
             }

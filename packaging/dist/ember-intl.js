@@ -1035,13 +1035,13 @@ var define, requireModule, require, requirejs;
         }),
 
         addMessage: function (locale, key, value) {
-            var localeInstance = this._getLocaleInstance(locale);
+            var localeInstance = this._getLanguage(locale);
 
             return localeInstance.addMessage(key, value);
         },
 
         addMessages: function (locale, messageObject) {
-            var localeInstance = this._getLocaleInstance(locale);
+            var localeInstance = this._getLanguage(locale);
 
             return localeInstance.addMessages(messageObject);
         },
@@ -1133,7 +1133,7 @@ var define, requireModule, require, requirejs;
             }
         },
 
-        _getLocaleInstance: function (locale) {
+        _getLanguage: function (locale) {
             if (locale instanceof Locale) {
                 return locale;
             }
