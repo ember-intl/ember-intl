@@ -94,15 +94,7 @@ module.exports = {
         return this.mergeTrees(trees, { overwrite: true });
     },
 
-    _transformLocale: function (locale, result) {
-        result.locale = locale;
-
-        // todo: figure out why parentLocale is being returned within the result
-        // object when its value is undefined
-        if (result.parentLocale === undefined) {
-            delete result.parentLocale;
-        }
-
+    _transformLocale: function (result) {
         return 'export default ' + serialize(result)+ ';';
     }
 };
