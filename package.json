@@ -33,7 +33,7 @@
     "formatjs-extract-cldr-data": "^1.1.0",
     "intl": "0.1.4",
     "intl-messageformat": "1.1.0",
-    "intl-relativeformat": "1.0.3",
+    "intl-relativeformat": "1.1.0",
     "mkdirp": "^0.5.0",
     "object.assign": "^1.1.1",
     "serialize-javascript": "^1.0.0",
