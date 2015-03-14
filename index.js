@@ -43,6 +43,7 @@ module.exports = {
                 locales:        locales,
                 pluralRules:    true,
                 relativeFields: true,
+                prelude:        '/*jslint eqeq: true*/\n',
                 wrapEntry:      this._transformLocale
             });
 
@@ -94,26 +95,14 @@ module.exports = {
     },
 
     _transformLocale: function (locale, result) {
-        var data = ['/*jslint eqeq: true*/', 'export default {'];
+        result.locale = locale;
 
-        data.push('  locale: "' + locale + '",');
-
-        if (result.parentLocale) {
-            data.push('  parentLocale: "' + result.parentLocale + '",');
+        // todo: figure out why parentLocale is being returned within the result
+        // object when its value is undefined
+        if (result.parentLocale === undefined) {
+            delete result.parentLocale;
         }
 
-        if (result.fields) {
-            data.push('  fields: ' + serialize(result.fields) + ',');
-        }
-
-        if (result.pluralFn) {
-            data.push('  pluralRuleFunction: ' + serialize(result.pluralFn) + ',');
-        }
-
-        var lastObject = data[data.length - 1];
-        var pos = lastObject.lastIndexOf(',');
-        data[data.length - 1] = lastObject.substr(0, pos);
-        data.push('};');
-        return data.join('\n');
+        return 'export default ' + serialize(result)+ ';';
     }
 };
