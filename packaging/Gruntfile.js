@@ -15,8 +15,8 @@ module.exports = function (grunt) {
 
         extract_cldr_data: {
             options: {
-                fields : ['second', 'minute', 'hour', 'day', 'month', 'year'],
-                plurals: true
+                relativeFields: true,
+                pluralRules: true
             },
 
             lib_all: {

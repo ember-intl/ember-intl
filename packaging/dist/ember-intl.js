@@ -337,103 +337,127 @@ var define, requireModule, require, requirejs;
     var readHash = __dependency2__.readHash;
     var destroyStream = __dependency2__.destroyStream;
 
+    var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
+    var extend = Ember.$.extend;
+
     __exports__["default"] = function (formatterName) {
         function throwError () {
             return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
         }
 
         if (Ember.HTMLBars) {
-            return Ember.HTMLBars.makeBoundHelper(function (params, hash, options, env) {
+            return function (params, hash, options, env) {
                 if (!params || (params && !params.length)) {
                     return throwError();
                 }
 
-                var formatter = this.container.lookup('formatter:' + formatterName);
-                var args      = [];
+                var currentValue, outStream;
 
-                args.push(read(params[0]));
-                args.push(readHash(hash));
-                args.push(Ember.get(env, 'data.view.context'));
+                function touchStream () {
+                    outStream.notify();
+                }
 
-                return formatter.format.apply(formatter, args);
-            });
+                var value     = params[0];
+                var view      = env.data.view;
+                var intl      = view.container.lookup('intl:main');
+                var seenHash  = readHash(hash);
+                var formatter = view.container.lookup('formatter:' + formatterName);
+
+                if (value.isStream) {
+                    value.subscribe(function (_stream) {
+                        currentValue = _stream.value();
+                        touchStream();
+                    }, value);
+                }
+
+                currentValue = read(value);
+
+                outStream = new Stream(function () {
+                    return formatter.format.call(formatter, read(currentValue), seenHash);
+                });
+
+                Ember.keys(hash).forEach(function (key) {
+                    if (!hash[key].isStream) {
+                        return;
+                    }
+
+                    var hashStream = hash[key];
+                    hash[key] = read(hashStream);
+
+                    hashStream.subscribe(function (valueStream) {
+                        seenHash[key] = read(valueStream);
+                        touchStream();
+                    });
+                });
+
+                view.one('willDestroyElement', function () {
+                    destroyStream(outStream);
+                });
+
+                intl.on('localesChanged', touchStream);
+
+                return outStream;
+            };
         } else {
-            var SimpleBoundView = Ember._SimpleHandlebarsView || Ember._SimpleBoundView;
-
             return function (value, options) {
                 if (typeof value === 'undefined') {
                     return throwError();
                 }
 
-                var args      = Ember.A();
-                var streams   = Ember.A();
-                var view      = options.data.view;
-                var types     = options.types;
-                var hash      = Ember.$.extend({}, options.hash);
-                var formatter = view.container.lookup('formatter:' + formatterName);
-                var stream;
-
-                function rerenderView () {
-                    Ember.run.scheduleOnce('render', view, view.rerender);
+                function touchStream () {
+                    simpleViewStream.notify();
+                    simpleView.rerender();
                 }
 
-                args.push(hash);
-                args.push(this);
+                var view      = options.data.view;
+                var intl      = this.container.lookup('intl:main');
+                var types     = options.types;
+                var hash      = extend({}, options.hash);
+                var formatter = view.container.lookup('formatter:' + formatterName);
+
+                var simpleView, simpleViewStream, currentValue;
 
                 if (types[0] === 'ID') {
                     value = view.getStream(value);
                 }
 
-                stream = new Stream(function () {
-                    var currentValue = value;
-
-                    if (currentValue.isStream) {
-                        currentValue = read(currentValue);
-                    }
-
-                    return formatter.format.apply(formatter, [currentValue].concat(args));
-                });
-
-                var simpleView = new SimpleBoundView(stream, options.escaped);
-
-                Ember.keys(options.hashTypes).forEach(function (key) {
-                    if (options.hashTypes[key] === 'ID') {
-                        var hashStream = view.getStream(options.hash[key]);
-                        hash[key] = read(hashStream);
-
-                        if (!options.data.isUnbound) {
-                            hashStream.subscribe(function () {
-                                // update the hash with the new value
-                                // since the above stream closes over `hash`
-                                // within `args`
-                                hash[key] = read(hashStream);
-                                stream.notify();
-                            });
-
-                            streams.push(hashStream);
-                        }
-                    }
-                });
-
-                if (!options.data.isUnbound) {
-                    stream.subscribe(view._wrapAsScheduled(function () {
-                        Ember.run.scheduleOnce('render', simpleView, 'rerender');
-                    }));
-
-                    if (value.isStream) {
-                        value.subscribe(stream.notify, stream);
-                        streams.push(value);
-                    }
-
-                    formatter.intl.one('localesChanged', rerenderView);
+                if (value.isStream && !options.data.isUnbound) {
+                    value.subscribe(function (valueStream) {
+                        currentValue = valueStream.value();
+                        touchStream();
+                    }, value);
                 }
 
-                view.on('willDestroyElement', function () {
-                    streams.forEach(destroyStream);
-                    streams = [];
-                    formatter.intl.off('localesChanged', rerenderView);
+                currentValue = read(value);
+
+                simpleViewStream = new Stream(function () {
+                    return formatter.format.call(formatter, read(currentValue), hash);
                 });
 
+                Ember.keys(options.hashTypes).forEach(function (key) {
+                    if (options.hashTypes[key] !== 'ID') {
+                        return;
+                    }
+
+                    var hashStream = view.getStream(options.hash[key]);
+                    hash[key] = read(hashStream);
+
+                    if (!options.data.isUnbound) {
+                        hashStream.subscribe(function (valueStream) {
+                            hash[key] = read(valueStream);
+                            touchStream();
+                        });
+                    }
+                });
+
+                view.one('willDestroyElement', function () {
+                    destroyStream(simpleViewStream);
+                    intl.off('localesChanged', touchStream);
+                });
+
+                intl.on('localesChanged', touchStream);
+
+                simpleView = new SimpleBoundView(simpleViewStream, options.escaped);
                 view.appendChild(simpleView);
             };
         }
@@ -498,7 +522,7 @@ var define, requireModule, require, requirejs;
     var IntlMessageFormat  = messageformat;
     var IntlRelativeFormat = relativeformat;
 
-    function addLocaleData(data) {
+    function addLocaleData (data) {
         IntlMessageFormat.__addLocaleData(data);
         IntlRelativeFormat.__addLocaleData(data);
     }
@@ -506,6 +530,77 @@ var define, requireModule, require, requirejs;
     __exports__.addLocaleData = addLocaleData;
     __exports__.IntlRelativeFormat = IntlRelativeFormat;
     __exports__.IntlMessageFormat = IntlMessageFormat;
+  });
+;define("app/adapters/-intl-adapter", 
+  ["ember","ember-intl/models/intl-get-result","ember-intl/models/locale","ember-intl/adapter","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"];
+    var IntlGetResult = __dependency2__["default"];
+    var Locale = __dependency3__["default"];
+    var IntlAdapter = __dependency4__["default"];
+
+    function normalize (fullName) {
+        Ember.assert('Lookup name must be a string', typeof fullName === 'string');
+
+        return fullName.toLowerCase();
+    }
+
+    __exports__["default"] = IntlAdapter.extend({
+        findLanguage: function (locale) {
+            if (locale instanceof Locale) {
+                return locale;
+            }
+
+            if (typeof locale === 'string') {
+                return this.container.lookup('locale:' + normalize(locale));
+            }
+        },
+
+        findTranslation: function (locales, translationKey) {
+            var container = this.container;
+            var locale, translation, key;
+
+            for (var i=0, len = locales.length; i < len; i++) {
+                key = locales[i];
+                locale = this.findLanguage(key);
+
+                if (locale) {
+                    translation = locale.getValue(translationKey);
+
+                    if (typeof translation !== 'undefined') {
+                        return new IntlGetResult(translation, key);
+                    }
+                }
+            }
+        }
+    });
+  });
+;define("ember-intl/models/intl-get-result", 
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    function IntlGetResult (translation, locale) {
+        this.translation = translation;
+        this.locale = locale;
+    }
+
+    __exports__["default"] = IntlGetResult;
+  });
+;define("ember-intl/adapter", 
+  ["ember","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var Ember = __dependency1__["default"];
+
+    function notImplemented () {
+        throw new Error('not implemented');
+    }
+
+    __exports__["default"] = Ember.Object.extend({
+        findLanguage:    notImplemented,
+        findTranslation: notImplemented
+    });
   });
 ;define("app/formatters/format-date", 
   ["ember","ember-intl/formatter-base","exports"],
@@ -529,18 +624,18 @@ var define, requireModule, require, requirejs;
     });
 
     FormatDate.reopenClass({
-        formatOptions: [
+        formatOptions: Ember.A([
             'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
             'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
             'timeZoneName'
-        ]
+        ])
     });
 
     __exports__["default"] = FormatDate;
   });
 ;define("app/formatters/format-html-message", 
-  ["ember","app/formatters/format-message","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+  ["ember","app/formatters/format-message","ember-intl/models/intl-get-result","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     /**
      * Copyright 2015, Yahoo! Inc.
@@ -549,48 +644,37 @@ var define, requireModule, require, requirejs;
 
     var Ember = __dependency1__["default"];
     var FormatterMessage = __dependency2__["default"];
+    var IntlGetResult = __dependency3__["default"];
 
     var FormatHtmlMessage = FormatterMessage.extend({
-        escapeProps: function (props) {
-            return Object.keys(props).reduce(function (escapedProps, name) {
-                var value = props[name];
+        escapeProps: function (hash) {
+            var value;
 
-                // TODO: Can we force string coersion here? Or would that not be needed
-                // and possible mess with IntlMessageFormat?
+            return Object.keys(hash).reduce(function (result, hashKey) {
+                value = hash[hashKey];
+
                 if (typeof value === 'string') {
                     value = Ember.Handlebars.Utils.escapeExpression(value);
                 }
 
-                escapedProps[name] = value;
-                return escapedProps;
+                result[hashKey] = value;
+                return result;
             }, {});
         },
 
-        format: function (value, hash, context) {
-            var icuKeys = this.extractICUKeys(value);
-            var model   = {};
-
-            if (icuKeys && icuKeys.length) {
-                model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
-            }
-
-            var formatOptions = {
-                formats: hash.format || this.filterFormatOptions(hash)
-            };
-
-            if (hash.locales) {
-                formatOptions.locales = hash.locales;
-            }
-
-            return Ember.String.htmlSafe(this.intl.formatMessage(value, this.escapeProps(model), formatOptions));
+        format: function (value, hash) {
+            var locales = hash.locales;
+            hash = this.escapeProps(hash);
+            var superResult = this._super(value, hash, locales);
+            return Ember.String.htmlSafe(superResult);
         }
     });
 
     __exports__["default"] = FormatHtmlMessage;
   });
 ;define("app/formatters/format-message", 
-  ["ember","ember-intl/formatter-base","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+  ["ember","ember-intl/formatter-base","ember-intl/models/intl-get-result","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     /**
      * Copyright 2015, Yahoo! Inc.
@@ -599,69 +683,33 @@ var define, requireModule, require, requirejs;
 
     var Ember = __dependency1__["default"];
     var Formatter = __dependency2__["default"];
+    var IntlGetResult = __dependency3__["default"];
 
     var validKey = /[\w|.]/;
 
     var FormatMessage = Formatter.extend({
-        extractICUKeys: function (msg) {
-            var length = msg.length;
-            var buf    = [], out = Ember.A();
-            var i      = 0;
-            var char, key;
+        format: function (value, hash, optionalLocale) {
+            var locales = optionalLocale || hash.locales;
+            var formatOptions = {};
 
-            for (; i < length; i++) {
-              char = msg[i];
+            if (value instanceof IntlGetResult) {
+                if (typeof locales === 'undefined') {
+                    locales = value.locale;
+                }
 
-              if (buf.length && !validKey.test(char)) {
-                  buf.shift();
-                  key = buf.join('');
-
-                  // do not include empty strings: {}
-                  if (key) { out.addObject(key); }
-
-                  buf = [];
-              }
-              else if (
-                // does not include escaped curly braces
-                // and double curly braces does not mistake the first
-                // as the starting point of the key {{foo}} should return `foo`
-                (char === '{' && msg[i-1] !== "\\" && msg[i+1] !== '{') ||
-                buf.length
-              )
-              {
-                  buf.push(char);
-              }
+                value = value.translation;
             }
 
-            return out;
-        },
-
-        format: function (value, hash, context) {
-            var icuKeys = this.extractICUKeys(value);
-            var model;
-
-            if (icuKeys && icuKeys.length) {
-                model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
+            if (locales) {
+                formatOptions.locales = locales;
             }
 
-            var formatOptions = {
-                formats: hash.format || this.filterFormatOptions(hash)
-            };
-
-            if (hash.locales) {
-                formatOptions.locales = hash.locales;
-            }
-
-            return this.intl.formatMessage(value, model, formatOptions);
+            return this.intl.formatMessage(value, hash, formatOptions);
         }
     });
 
     FormatMessage.reopenClass({
-        formatOptions: [
-            'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
-            'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
-            'timeZoneName'
-        ]
+        formatOptions: Ember.A()
     });
 
     __exports__["default"] = FormatMessage;
@@ -688,12 +736,12 @@ var define, requireModule, require, requirejs;
     });
 
     FormatNumber.reopenClass({
-        formatOptions: [
+        formatOptions: Ember.A([
             'localeMatcher', 'style', 'currency', 'currencyDisplay',
             'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
             'maximumFractionDigits', 'minimumSignificantDigits',
             'maximumSignificantDigits'
-        ]
+        ])
     });
 
     __exports__["default"] = FormatNumber;
@@ -720,7 +768,7 @@ var define, requireModule, require, requirejs;
     });
 
     FormatRelative.reopenClass({
-        formatOptions: ['style', 'units']
+        formatOptions: Ember.A(['style', 'units'])
     });
 
     __exports__["default"] = FormatRelative;
@@ -747,11 +795,11 @@ var define, requireModule, require, requirejs;
     });
 
     FormatTime.reopenClass({
-        formatOptions: [
+        formatOptions: Ember.A([
             'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
             'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
             'timeZoneName'
-        ]
+        ])
     });
 
     __exports__["default"] = FormatTime;
@@ -846,74 +894,65 @@ var define, requireModule, require, requirejs;
     var Ember = __dependency1__["default"];
     var Stream = __dependency2__.Stream;
     var read = __dependency2__.read;
+    var readHash = __dependency2__.readHash;
     var destroyStream = __dependency2__.destroyStream;
 
-    function normalize (fullName) {
-        Ember.assert('Lookup name must be a string', typeof fullName === 'string');
-        return fullName.toLowerCase();
-    }
+    __exports__["default"] = function (value, options) {
+        var view  = options.data.view;
+        var types = options.types;
+        var hash  = readHash(options.hash);
+        var intl  = view.container.lookup('intl:main');
 
-    function intlGet (key) {
-        Ember.assert('You must pass in a message key in the form of a string.', typeof key === 'string');
+        var currentValue = value;
+        var outStreamValue = '';
+        var valueStream;
 
-        var intl    = this.container.lookup('intl:main');
-        var locales = intl.get('current');
+        var outStream = new Stream(function () {
+            return outStreamValue;
+        });
 
-        for (var i=0; i < locales.length; i++) {
-            var locale = this.container.lookup('locale:' + normalize(locales[i]));
-
-            if (locale) {
-                var value = locale.getValue(key);
-
-                if (typeof value !== 'undefined') {
-                    return value;
-                }
-            }
+        outStream.setValue = function (_value) {
+            outStreamValue = _value;
+            this.notify();
         }
 
-        throw new ReferenceError('Could not find Intl object: ' + key);
-    }
+        function valueStreamChanged () {
+            currentValue = valueStream.value();
+            pokeStream();
+        }
 
-    var helper;
-
-    if (Ember.HTMLBars) {
-        helper = Ember.HTMLBars.makeBoundHelper(function (params) {
-            var intl = this.container.lookup('intl:main');
-            var self = this;
-            var currentValue;
-
-            var outStream = new Stream(function () {
-                return currentValue;
+        function pokeStream () {
+            return intl.getTranslation(read(currentValue), hash.locales).then(function (translation) {
+                outStream.setValue(translation);
             });
+        }
 
-            function render () {
-                currentValue = intlGet.call(self, read(params[0]));
-                outStream.notify();
+        if (types[0] === 'ID') {
+            valueStream  = view.getStream(value);
+            currentValue = valueStream.value();
+            valueStream.subscribe(valueStreamChanged);
+        }
+
+        intl.on('localesChanged', this, pokeStream);
+
+        view.one('willDestroyElement', this, function () {
+            intl.off('localesChanged', this, pokeStream);
+
+            if (valueStream) {
+                valueStream.unsubscribe(valueStreamChanged);
             }
 
-            intl.on('localesChanged', self, render);
-            
-            this.on('willDestroyElement', this, function () {
-                intl.off('localesChanged', self, render);
-                destroyStream(outStream);
-            });
-
-            render();
-
-            return outStream;
+            destroyStream(outStream);
         });
-    }
-    else {
-        helper = function (value) {
-            return intlGet.call(this, value);
-        };
-    }
 
-    __exports__["default"] = helper;
+        pokeStream();
+
+        return outStream;
+    };
   });
 ;define("app/initializers/ember-intl", 
-  ["ember","app/services/intl","ember-intl/utils/data","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
+  ["ember","app/services/intl","ember-intl/utils/data","app/helpers/format-date","app/helpers/format-time","app/helpers/format-relative","app/helpers/format-number","app/helpers/intl-get","app/helpers/format-html-message","app/helpers/format-message","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __exports__) {
     "use strict";
     /**
      * Copyright 2015, Yahoo! Inc.
@@ -923,6 +962,13 @@ var define, requireModule, require, requirejs;
     var Ember = __dependency1__["default"];
     var IntlService = __dependency2__["default"];
     var addLocaleData = __dependency3__.addLocaleData;
+    var FormatDate = __dependency4__["default"];
+    var FormatTime = __dependency5__["default"];
+    var FormatRelative = __dependency6__["default"];
+    var FormatNumber = __dependency7__["default"];
+    var IntlGet = __dependency8__["default"];
+    var FormatHtmlMessage = __dependency9__["default"];
+    var FormatMessage = __dependency10__["default"];
 
     __exports__["default"] = {
         name: 'ember-intl',
@@ -963,11 +1009,20 @@ var define, requireModule, require, requirejs;
             app.inject('model',      'intl', 'intl:main');
             app.inject('view',       'intl', 'intl:main');
             app.inject('formatter',  'intl', 'intl:main');
+
+            if (Ember.HTMLBars) {
+                Ember.HTMLBars._registerHelper('format-date', FormatDate);
+                Ember.HTMLBars._registerHelper('format-time', FormatTime);
+                Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
+                Ember.HTMLBars._registerHelper('format-number', FormatNumber);
+                Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
+                Ember.HTMLBars._registerHelper('format-message', FormatMessage);
+            }
         }
     }
   });
 ;define("app/services/intl", 
-  ["ember","ember-intl/models/locale","ember-intl/format-cache/memoizer","ember-intl/utils/data","exports"],
+  ["ember","ember-intl/utils/data","ember-intl/format-cache/memoizer","ember-intl/models/intl-get-result","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
     /**
@@ -976,10 +1031,10 @@ var define, requireModule, require, requirejs;
      */
 
     var Ember = __dependency1__["default"];
-    var Locale = __dependency2__["default"];
+    var IntlRelativeFormat = __dependency2__.IntlRelativeFormat;
+    var IntlMessageFormat = __dependency2__.IntlMessageFormat;
     var createFormatCache = __dependency3__["default"];
-    var IntlRelativeFormat = __dependency4__.IntlRelativeFormat;
-    var IntlMessageFormat = __dependency4__.IntlMessageFormat;
+    var IntlGetResult = __dependency4__["default"];
 
     var ServiceKlass = Ember.Service || Ember.Controller;
     var makeArray    = Ember.makeArray;
@@ -989,7 +1044,7 @@ var define, requireModule, require, requirejs;
     var observer     = Ember.observer;
     var isEmpty      = Ember.isEmpty;
     var isPresent    = Ember.isPresent;
-    var run          = Ember.run;
+    var runOnce      = Ember.run.once;
 
     function assertIsDate (date, errMsg) {
         Ember.assert(errMsg, isFinite(date));
@@ -1004,6 +1059,8 @@ var define, requireModule, require, requirejs;
         getMessageFormat:  null,
         getNumberFormat:   null,
 
+        adapterType:       '-intl-adapter',
+
         setupMemoizers: on('init', function () {
             this.setProperties({
                 getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
@@ -1012,6 +1069,19 @@ var define, requireModule, require, requirejs;
                 getMessageFormat:  createFormatCache(IntlMessageFormat)
             });
         }),
+
+        adapter: computed('adapterType', function () {
+            var adapterType = get(this, 'adapterType');
+            var app = this.container.lookup('application:main');
+
+            if (app.IntlAdapter) {
+                return app.IntlAdapter.create({
+                    container: this.container
+                });
+            } else if (typeof adapterType === 'string'){
+                return this.container.lookup('adapter:' + adapterType);
+            }
+        }).readOnly(),
 
         current: computed('locales', 'defaultLocale', function () {
             var locales       = makeArray(get(this, 'locales'));
@@ -1031,19 +1101,19 @@ var define, requireModule, require, requirejs;
         }).readOnly(),
 
         localeChanged: observer('current', function () {
-            run.once(this, this.notifyLocaleChanged);
+            runOnce(this, this.notifyLocaleChanged);
         }),
 
         addMessage: function (locale, key, value) {
-            var localeInstance = this._getLanguage(locale);
-
-            return localeInstance.addMessage(key, value);
+            return this.getLanguage(locale).then(function (localeInstance) {
+                return localeInstance.addMessage(key, value);
+            });
         },
 
         addMessages: function (locale, messageObject) {
-            var localeInstance = this._getLanguage(locale);
-
-            return localeInstance.addMessages(messageObject);
+            return this.getLanguage(locale).then(function (localeInstance) {
+                return localeInstance.addMessages(messageObject);
+            });
         },
 
         notifyLocaleChanged: function () {
@@ -1057,6 +1127,8 @@ var define, requireModule, require, requirejs;
             if (typeof message === 'function') {
                 return message(values);
             }
+
+            options = options || {};
 
             var locales = makeArray(options.locales);
             var formats = options.formats || get(this, 'formats');
@@ -1078,7 +1150,7 @@ var define, requireModule, require, requirejs;
 
             return this._format('time', date, formatOptions, options);
         },
-        
+
         formatRelative: function (date, formatOptions, options) {
             date = new Date(date);
             assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
@@ -1099,7 +1171,7 @@ var define, requireModule, require, requirejs;
 
         _format: function (type, value, formatOptions, helperOptions) {
             if (!helperOptions) {
-                helperOptions = formatOptions;
+                helperOptions = formatOptions || {};
                 formatOptions = null;
             }
 
@@ -1109,12 +1181,12 @@ var define, requireModule, require, requirejs;
             if (isEmpty(locales)) {
                 locales = get(this, 'current');
             }
-            
+
             if (formatOptions) {
                 if (typeof formatOptions === 'string' && formats) {
                     formatOptions = get(formats, type + '.' + formatOptions);
                 }
-                
+
                 formatOptions = Ember.$.extend({}, formatOptions, helperOptions);
             } else {
                 formatOptions = helperOptions;
@@ -1133,20 +1205,37 @@ var define, requireModule, require, requirejs;
             }
         },
 
-        _getLanguage: function (locale) {
-            if (locale instanceof Locale) {
-                return locale;
-            }
+        getLanguage: function (locale) {
+            var result = this.get('adapter').findLanguage(locale);
 
-            if (typeof locale === 'string') {
-                return this.container.lookup('locale:' + localeId.toLowerCase());
-            }
+            return Ember.RSVP.cast(result).then(function (localeInstance) {
+                if (typeof localeInstance === 'undefined') {
+                    throw new Error('`locale` must be a string or a locale instance');
+                }
 
-            throw new Error('`locale` must be a string or a locale instance');
+                return localeInstance;
+            });
+        },
+
+        getTranslation: function (key, locales) {
+            locales = locales ? Ember.makeArray(locales) : this.get('current');
+
+            var result = this.get('adapter').findTranslation(locales, key);
+
+            return Ember.RSVP.cast(result).then(function (result) {
+                Ember.assert('findTranslation should return an object of instance `IntlGetResult`', result instanceof IntlGetResult);
+
+                if (typeof result === 'undefined') {
+                    throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
+                }
+
+                return result;
+            });
         }
     });
   });
 ;define('ember-intl-shim', ["exports"], function(__exports__) {__exports__.initialize = function(container){
+  container.register('adapter:-intl-adapter', require('app/adapters/-intl-adapter')['default']);
   container.register('formatter:format-date', require('app/formatters/format-date')['default']);
   container.register('formatter:format-html-message', require('app/formatters/format-html-message')['default']);
   container.register('formatter:format-message', require('app/formatters/format-message')['default']);
@@ -1187,69 +1276,6 @@ window.Ember.Application.initializer({
 
 var relativeformat = (function() {
     "use strict";
-
-    // Purposely using the same implementation as the Intl.js `Intl` polyfill.
-    // Copyright 2013 Andy Earnshaw, MIT License
-
-    var $$es5$$hop = Object.prototype.hasOwnProperty;
-    var $$es5$$toString = Object.prototype.toString;
-
-    var $$es5$$realDefineProp = (function () {
-        try { return !!Object.defineProperty({}, 'a', {}); }
-        catch (e) { return false; }
-    })();
-
-    var $$es5$$es3 = !$$es5$$realDefineProp && !Object.prototype.__defineGetter__;
-
-    var $$es5$$defineProperty = $$es5$$realDefineProp ? Object.defineProperty :
-            function (obj, name, desc) {
-
-        if ('get' in desc && obj.__defineGetter__) {
-            obj.__defineGetter__(name, desc.get);
-        } else if (!$$es5$$hop.call(obj, name) || 'value' in desc) {
-            obj[name] = desc.value;
-        }
-    };
-
-    var $$es5$$objCreate = Object.create || function (proto, props) {
-        var obj, k;
-
-        function F() {}
-        F.prototype = proto;
-        obj = new F();
-
-        for (k in props) {
-            if ($$es5$$hop.call(props, k)) {
-                $$es5$$defineProperty(obj, k, props[k]);
-            }
-        }
-
-        return obj;
-    };
-
-    var $$es5$$arrIndexOf = Array.prototype.indexOf || function (search, fromIndex) {
-        /*jshint validthis:true */
-        var arr = this;
-        if (!arr.length) {
-            return -1;
-        }
-
-        for (var i = fromIndex || 0, max = arr.length; i < max; i++) {
-            if (arr[i] === search) {
-                return i;
-            }
-        }
-
-        return -1;
-    };
-
-    var $$es5$$isArray = Array.isArray || function (obj) {
-        return $$es5$$toString.call(obj) === '[object Array]';
-    };
-
-    var $$es5$$dateNow = Date.now || function () {
-        return new Date().getTime();
-    };
     var $$utils$$hop = Object.prototype.hasOwnProperty;
 
     function $$utils$$extend(obj) {
@@ -1409,7 +1435,9 @@ var relativeformat = (function() {
 
             case 'pluralFormat':
                 options = this.compileOptions(element);
-                return new $$compiler$$PluralFormat(element.id, format.offset, options, pluralFn);
+                return new $$compiler$$PluralFormat(
+                    element.id, format.ordinal, format.offset, options, pluralFn
+                );
 
             case 'selectFormat':
                 options = this.compileOptions(element);
@@ -1426,8 +1454,8 @@ var relativeformat = (function() {
             optionsHash = {};
 
         // Save the current plural element, if any, then set it to a new value when
-        // compiling the options sub-patterns. This conform's the spec's algorithm
-        // for handling `"#"` synax in message text.
+        // compiling the options sub-patterns. This conforms the spec's algorithm
+        // for handling `"#"` syntax in message text.
         this.pluralStack.push(this.currentPlural);
         this.currentPlural = format.type === 'pluralFormat' ? element : null;
 
@@ -1440,7 +1468,7 @@ var relativeformat = (function() {
             optionsHash[option.selector] = this.compileMessage(option.value);
         }
 
-        // Pop the plural stack to put back the original currnet plural value.
+        // Pop the plural stack to put back the original current plural value.
         this.currentPlural = this.pluralStack.pop();
 
         return optionsHash;
@@ -1460,18 +1488,19 @@ var relativeformat = (function() {
         return typeof value === 'string' ? value : String(value);
     };
 
-    function $$compiler$$PluralFormat(id, offset, options, pluralFn) {
-        this.id       = id;
-        this.offset   = offset;
-        this.options  = options;
-        this.pluralFn = pluralFn;
+    function $$compiler$$PluralFormat(id, useOrdinal, offset, options, pluralFn) {
+        this.id         = id;
+        this.useOrdinal = useOrdinal;
+        this.offset     = offset;
+        this.options    = options;
+        this.pluralFn   = pluralFn;
     }
 
     $$compiler$$PluralFormat.prototype.getOption = function (value) {
         var options = this.options;
 
         var option = options['=' + value] ||
-                options[this.pluralFn(value - this.offset)];
+                options[this.pluralFn(value - this.offset, this.useOrdinal)];
 
         return option || options.other;
     };
@@ -1593,67 +1622,85 @@ var relativeformat = (function() {
                 },
             peg$c22 = "plural",
             peg$c23 = { type: "literal", value: "plural", description: "\"plural\"" },
-            peg$c24 = function(offset, options) {
+            peg$c24 = function(pluralStyle) {
                     return {
-                        type   : 'pluralFormat',
-                        offset : offset || 0,
-                        options: options
+                        type   : pluralStyle.type,
+                        ordinal: false,
+                        offset : pluralStyle.offset || 0,
+                        options: pluralStyle.options
+                    };
+                },
+            peg$c25 = "selectordinal",
+            peg$c26 = { type: "literal", value: "selectordinal", description: "\"selectordinal\"" },
+            peg$c27 = function(pluralStyle) {
+                    return {
+                        type   : pluralStyle.type,
+                        ordinal: true,
+                        offset : pluralStyle.offset || 0,
+                        options: pluralStyle.options
                     }
                 },
-            peg$c25 = "select",
-            peg$c26 = { type: "literal", value: "select", description: "\"select\"" },
-            peg$c27 = function(options) {
+            peg$c28 = "select",
+            peg$c29 = { type: "literal", value: "select", description: "\"select\"" },
+            peg$c30 = function(options) {
                     return {
                         type   : 'selectFormat',
                         options: options
-                    }
+                    };
                 },
-            peg$c28 = "=",
-            peg$c29 = { type: "literal", value: "=", description: "\"=\"" },
-            peg$c30 = function(selector, pattern) {
+            peg$c31 = "=",
+            peg$c32 = { type: "literal", value: "=", description: "\"=\"" },
+            peg$c33 = function(selector, pattern) {
                     return {
                         type    : 'optionalFormatPattern',
                         selector: selector,
                         value   : pattern
                     };
                 },
-            peg$c31 = "offset:",
-            peg$c32 = { type: "literal", value: "offset:", description: "\"offset:\"" },
-            peg$c33 = function(number) {
+            peg$c34 = "offset:",
+            peg$c35 = { type: "literal", value: "offset:", description: "\"offset:\"" },
+            peg$c36 = function(number) {
                     return number;
                 },
-            peg$c34 = { type: "other", description: "whitespace" },
-            peg$c35 = /^[ \t\n\r]/,
-            peg$c36 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-            peg$c37 = { type: "other", description: "optionalWhitespace" },
-            peg$c38 = /^[0-9]/,
-            peg$c39 = { type: "class", value: "[0-9]", description: "[0-9]" },
-            peg$c40 = /^[0-9a-f]/i,
-            peg$c41 = { type: "class", value: "[0-9a-f]i", description: "[0-9a-f]i" },
-            peg$c42 = "0",
-            peg$c43 = { type: "literal", value: "0", description: "\"0\"" },
-            peg$c44 = /^[1-9]/,
-            peg$c45 = { type: "class", value: "[1-9]", description: "[1-9]" },
-            peg$c46 = function(digits) {
+            peg$c37 = function(offset, options) {
+                    return {
+                        type   : 'pluralFormat',
+                        offset : offset,
+                        options: options
+                    };
+                },
+            peg$c38 = { type: "other", description: "whitespace" },
+            peg$c39 = /^[ \t\n\r]/,
+            peg$c40 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
+            peg$c41 = { type: "other", description: "optionalWhitespace" },
+            peg$c42 = /^[0-9]/,
+            peg$c43 = { type: "class", value: "[0-9]", description: "[0-9]" },
+            peg$c44 = /^[0-9a-f]/i,
+            peg$c45 = { type: "class", value: "[0-9a-f]i", description: "[0-9a-f]i" },
+            peg$c46 = "0",
+            peg$c47 = { type: "literal", value: "0", description: "\"0\"" },
+            peg$c48 = /^[1-9]/,
+            peg$c49 = { type: "class", value: "[1-9]", description: "[1-9]" },
+            peg$c50 = function(digits) {
                 return parseInt(digits, 10);
             },
-            peg$c47 = /^[^{}\\\0-\x1F \t\n\r]/,
-            peg$c48 = { type: "class", value: "[^{}\\\\\\0-\\x1F \\t\\n\\r]", description: "[^{}\\\\\\0-\\x1F \\t\\n\\r]" },
-            peg$c49 = "\\#",
-            peg$c50 = { type: "literal", value: "\\#", description: "\"\\\\#\"" },
-            peg$c51 = function() { return '\\#'; },
-            peg$c52 = "\\{",
-            peg$c53 = { type: "literal", value: "\\{", description: "\"\\\\{\"" },
-            peg$c54 = function() { return '\u007B'; },
-            peg$c55 = "\\}",
-            peg$c56 = { type: "literal", value: "\\}", description: "\"\\\\}\"" },
-            peg$c57 = function() { return '\u007D'; },
-            peg$c58 = "\\u",
-            peg$c59 = { type: "literal", value: "\\u", description: "\"\\\\u\"" },
-            peg$c60 = function(digits) {
+            peg$c51 = /^[^{}\\\0-\x1F \t\n\r]/,
+            peg$c52 = { type: "class", value: "[^{}\\\\\\0-\\x1F \\t\\n\\r]", description: "[^{}\\\\\\0-\\x1F \\t\\n\\r]" },
+            peg$c53 = "\\#",
+            peg$c54 = { type: "literal", value: "\\#", description: "\"\\\\#\"" },
+            peg$c55 = function() { return '\\#'; },
+            peg$c56 = "\\{",
+            peg$c57 = { type: "literal", value: "\\{", description: "\"\\\\{\"" },
+            peg$c58 = function() { return '\u007B'; },
+            peg$c59 = "\\}",
+            peg$c60 = { type: "literal", value: "\\}", description: "\"\\\\}\"" },
+            peg$c61 = function() { return '\u007D'; },
+            peg$c62 = "\\u",
+            peg$c63 = { type: "literal", value: "\\u", description: "\"\\\\u\"" },
+            peg$c64 = function(digits) {
                     return String.fromCharCode(parseInt(digits, 16));
                 },
-            peg$c61 = function(chars) { return chars.join(''); },
+            peg$c65 = function(chars) { return chars.join(''); },
 
             peg$currPos          = 0,
             peg$reportedPos      = 0,
@@ -2082,7 +2129,10 @@ var relativeformat = (function() {
           if (s0 === peg$FAILED) {
             s0 = peg$parsepluralFormat();
             if (s0 === peg$FAILED) {
-              s0 = peg$parseselectFormat();
+              s0 = peg$parseselectOrdinalFormat();
+              if (s0 === peg$FAILED) {
+                s0 = peg$parseselectFormat();
+              }
             }
           }
 
@@ -2172,7 +2222,7 @@ var relativeformat = (function() {
         }
 
         function peg$parsepluralFormat() {
-          var s0, s1, s2, s3, s4, s5, s6, s7, s8;
+          var s0, s1, s2, s3, s4, s5;
 
           s0 = peg$currPos;
           if (input.substr(peg$currPos, 6) === peg$c22) {
@@ -2195,35 +2245,64 @@ var relativeformat = (function() {
               if (s3 !== peg$FAILED) {
                 s4 = peg$parse_();
                 if (s4 !== peg$FAILED) {
-                  s5 = peg$parseoffset();
-                  if (s5 === peg$FAILED) {
-                    s5 = peg$c9;
-                  }
+                  s5 = peg$parsepluralStyle();
                   if (s5 !== peg$FAILED) {
-                    s6 = peg$parse_();
-                    if (s6 !== peg$FAILED) {
-                      s7 = [];
-                      s8 = peg$parseoptionalFormatPattern();
-                      if (s8 !== peg$FAILED) {
-                        while (s8 !== peg$FAILED) {
-                          s7.push(s8);
-                          s8 = peg$parseoptionalFormatPattern();
-                        }
-                      } else {
-                        s7 = peg$c2;
-                      }
-                      if (s7 !== peg$FAILED) {
-                        peg$reportedPos = s0;
-                        s1 = peg$c24(s5, s7);
-                        s0 = s1;
-                      } else {
-                        peg$currPos = s0;
-                        s0 = peg$c2;
-                      }
-                    } else {
-                      peg$currPos = s0;
-                      s0 = peg$c2;
-                    }
+                    peg$reportedPos = s0;
+                    s1 = peg$c24(s5);
+                    s0 = s1;
+                  } else {
+                    peg$currPos = s0;
+                    s0 = peg$c2;
+                  }
+                } else {
+                  peg$currPos = s0;
+                  s0 = peg$c2;
+                }
+              } else {
+                peg$currPos = s0;
+                s0 = peg$c2;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$c2;
+            }
+          } else {
+            peg$currPos = s0;
+            s0 = peg$c2;
+          }
+
+          return s0;
+        }
+
+        function peg$parseselectOrdinalFormat() {
+          var s0, s1, s2, s3, s4, s5;
+
+          s0 = peg$currPos;
+          if (input.substr(peg$currPos, 13) === peg$c25) {
+            s1 = peg$c25;
+            peg$currPos += 13;
+          } else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) { peg$fail(peg$c26); }
+          }
+          if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+              if (input.charCodeAt(peg$currPos) === 44) {
+                s3 = peg$c10;
+                peg$currPos++;
+              } else {
+                s3 = peg$FAILED;
+                if (peg$silentFails === 0) { peg$fail(peg$c11); }
+              }
+              if (s3 !== peg$FAILED) {
+                s4 = peg$parse_();
+                if (s4 !== peg$FAILED) {
+                  s5 = peg$parsepluralStyle();
+                  if (s5 !== peg$FAILED) {
+                    peg$reportedPos = s0;
+                    s1 = peg$c27(s5);
+                    s0 = s1;
                   } else {
                     peg$currPos = s0;
                     s0 = peg$c2;
@@ -2252,12 +2331,12 @@ var relativeformat = (function() {
           var s0, s1, s2, s3, s4, s5, s6;
 
           s0 = peg$currPos;
-          if (input.substr(peg$currPos, 6) === peg$c25) {
-            s1 = peg$c25;
+          if (input.substr(peg$currPos, 6) === peg$c28) {
+            s1 = peg$c28;
             peg$currPos += 6;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c26); }
+            if (peg$silentFails === 0) { peg$fail(peg$c29); }
           }
           if (s1 !== peg$FAILED) {
             s2 = peg$parse_();
@@ -2284,7 +2363,7 @@ var relativeformat = (function() {
                   }
                   if (s5 !== peg$FAILED) {
                     peg$reportedPos = s0;
-                    s1 = peg$c27(s5);
+                    s1 = peg$c30(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -2316,11 +2395,11 @@ var relativeformat = (function() {
           s0 = peg$currPos;
           s1 = peg$currPos;
           if (input.charCodeAt(peg$currPos) === 61) {
-            s2 = peg$c28;
+            s2 = peg$c31;
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c29); }
+            if (peg$silentFails === 0) { peg$fail(peg$c32); }
           }
           if (s2 !== peg$FAILED) {
             s3 = peg$parsenumber();
@@ -2379,7 +2458,7 @@ var relativeformat = (function() {
                         }
                         if (s8 !== peg$FAILED) {
                           peg$reportedPos = s0;
-                          s1 = peg$c30(s2, s6);
+                          s1 = peg$c33(s2, s6);
                           s0 = s1;
                         } else {
                           peg$currPos = s0;
@@ -2421,12 +2500,12 @@ var relativeformat = (function() {
           var s0, s1, s2, s3;
 
           s0 = peg$currPos;
-          if (input.substr(peg$currPos, 7) === peg$c31) {
-            s1 = peg$c31;
+          if (input.substr(peg$currPos, 7) === peg$c34) {
+            s1 = peg$c34;
             peg$currPos += 7;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c32); }
+            if (peg$silentFails === 0) { peg$fail(peg$c35); }
           }
           if (s1 !== peg$FAILED) {
             s2 = peg$parse_();
@@ -2434,7 +2513,48 @@ var relativeformat = (function() {
               s3 = peg$parsenumber();
               if (s3 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c33(s3);
+                s1 = peg$c36(s3);
+                s0 = s1;
+              } else {
+                peg$currPos = s0;
+                s0 = peg$c2;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$c2;
+            }
+          } else {
+            peg$currPos = s0;
+            s0 = peg$c2;
+          }
+
+          return s0;
+        }
+
+        function peg$parsepluralStyle() {
+          var s0, s1, s2, s3, s4;
+
+          s0 = peg$currPos;
+          s1 = peg$parseoffset();
+          if (s1 === peg$FAILED) {
+            s1 = peg$c9;
+          }
+          if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+              s3 = [];
+              s4 = peg$parseoptionalFormatPattern();
+              if (s4 !== peg$FAILED) {
+                while (s4 !== peg$FAILED) {
+                  s3.push(s4);
+                  s4 = peg$parseoptionalFormatPattern();
+                }
+              } else {
+                s3 = peg$c2;
+              }
+              if (s3 !== peg$FAILED) {
+                peg$reportedPos = s0;
+                s1 = peg$c37(s1, s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -2457,22 +2577,22 @@ var relativeformat = (function() {
 
           peg$silentFails++;
           s0 = [];
-          if (peg$c35.test(input.charAt(peg$currPos))) {
+          if (peg$c39.test(input.charAt(peg$currPos))) {
             s1 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c36); }
+            if (peg$silentFails === 0) { peg$fail(peg$c40); }
           }
           if (s1 !== peg$FAILED) {
             while (s1 !== peg$FAILED) {
               s0.push(s1);
-              if (peg$c35.test(input.charAt(peg$currPos))) {
+              if (peg$c39.test(input.charAt(peg$currPos))) {
                 s1 = input.charAt(peg$currPos);
                 peg$currPos++;
               } else {
                 s1 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c36); }
+                if (peg$silentFails === 0) { peg$fail(peg$c40); }
               }
             }
           } else {
@@ -2481,7 +2601,7 @@ var relativeformat = (function() {
           peg$silentFails--;
           if (s0 === peg$FAILED) {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c34); }
+            if (peg$silentFails === 0) { peg$fail(peg$c38); }
           }
 
           return s0;
@@ -2505,7 +2625,7 @@ var relativeformat = (function() {
           peg$silentFails--;
           if (s0 === peg$FAILED) {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c37); }
+            if (peg$silentFails === 0) { peg$fail(peg$c41); }
           }
 
           return s0;
@@ -2514,12 +2634,12 @@ var relativeformat = (function() {
         function peg$parsedigit() {
           var s0;
 
-          if (peg$c38.test(input.charAt(peg$currPos))) {
+          if (peg$c42.test(input.charAt(peg$currPos))) {
             s0 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s0 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c39); }
+            if (peg$silentFails === 0) { peg$fail(peg$c43); }
           }
 
           return s0;
@@ -2528,12 +2648,12 @@ var relativeformat = (function() {
         function peg$parsehexDigit() {
           var s0;
 
-          if (peg$c40.test(input.charAt(peg$currPos))) {
+          if (peg$c44.test(input.charAt(peg$currPos))) {
             s0 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s0 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c41); }
+            if (peg$silentFails === 0) { peg$fail(peg$c45); }
           }
 
           return s0;
@@ -2544,21 +2664,21 @@ var relativeformat = (function() {
 
           s0 = peg$currPos;
           if (input.charCodeAt(peg$currPos) === 48) {
-            s1 = peg$c42;
+            s1 = peg$c46;
             peg$currPos++;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c43); }
+            if (peg$silentFails === 0) { peg$fail(peg$c47); }
           }
           if (s1 === peg$FAILED) {
             s1 = peg$currPos;
             s2 = peg$currPos;
-            if (peg$c44.test(input.charAt(peg$currPos))) {
+            if (peg$c48.test(input.charAt(peg$currPos))) {
               s3 = input.charAt(peg$currPos);
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c45); }
+              if (peg$silentFails === 0) { peg$fail(peg$c49); }
             }
             if (s3 !== peg$FAILED) {
               s4 = [];
@@ -2585,7 +2705,7 @@ var relativeformat = (function() {
           }
           if (s1 !== peg$FAILED) {
             peg$reportedPos = s0;
-            s1 = peg$c46(s1);
+            s1 = peg$c50(s1);
           }
           s0 = s1;
 
@@ -2595,63 +2715,63 @@ var relativeformat = (function() {
         function peg$parsechar() {
           var s0, s1, s2, s3, s4, s5, s6, s7;
 
-          if (peg$c47.test(input.charAt(peg$currPos))) {
+          if (peg$c51.test(input.charAt(peg$currPos))) {
             s0 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s0 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c48); }
+            if (peg$silentFails === 0) { peg$fail(peg$c52); }
           }
           if (s0 === peg$FAILED) {
             s0 = peg$currPos;
-            if (input.substr(peg$currPos, 2) === peg$c49) {
-              s1 = peg$c49;
+            if (input.substr(peg$currPos, 2) === peg$c53) {
+              s1 = peg$c53;
               peg$currPos += 2;
             } else {
               s1 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c50); }
+              if (peg$silentFails === 0) { peg$fail(peg$c54); }
             }
             if (s1 !== peg$FAILED) {
               peg$reportedPos = s0;
-              s1 = peg$c51();
+              s1 = peg$c55();
             }
             s0 = s1;
             if (s0 === peg$FAILED) {
               s0 = peg$currPos;
-              if (input.substr(peg$currPos, 2) === peg$c52) {
-                s1 = peg$c52;
+              if (input.substr(peg$currPos, 2) === peg$c56) {
+                s1 = peg$c56;
                 peg$currPos += 2;
               } else {
                 s1 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c53); }
+                if (peg$silentFails === 0) { peg$fail(peg$c57); }
               }
               if (s1 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c54();
+                s1 = peg$c58();
               }
               s0 = s1;
               if (s0 === peg$FAILED) {
                 s0 = peg$currPos;
-                if (input.substr(peg$currPos, 2) === peg$c55) {
-                  s1 = peg$c55;
+                if (input.substr(peg$currPos, 2) === peg$c59) {
+                  s1 = peg$c59;
                   peg$currPos += 2;
                 } else {
                   s1 = peg$FAILED;
-                  if (peg$silentFails === 0) { peg$fail(peg$c56); }
+                  if (peg$silentFails === 0) { peg$fail(peg$c60); }
                 }
                 if (s1 !== peg$FAILED) {
                   peg$reportedPos = s0;
-                  s1 = peg$c57();
+                  s1 = peg$c61();
                 }
                 s0 = s1;
                 if (s0 === peg$FAILED) {
                   s0 = peg$currPos;
-                  if (input.substr(peg$currPos, 2) === peg$c58) {
-                    s1 = peg$c58;
+                  if (input.substr(peg$currPos, 2) === peg$c62) {
+                    s1 = peg$c62;
                     peg$currPos += 2;
                   } else {
                     s1 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c59); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c63); }
                   }
                   if (s1 !== peg$FAILED) {
                     s2 = peg$currPos;
@@ -2688,7 +2808,7 @@ var relativeformat = (function() {
                     s2 = s3;
                     if (s2 !== peg$FAILED) {
                       peg$reportedPos = s0;
-                      s1 = peg$c60(s2);
+                      s1 = peg$c64(s2);
                       s0 = s1;
                     } else {
                       peg$currPos = s0;
@@ -2722,7 +2842,7 @@ var relativeformat = (function() {
           }
           if (s1 !== peg$FAILED) {
             peg$reportedPos = s0;
-            s1 = peg$c61(s1);
+            s1 = peg$c65(s1);
           }
           s0 = s1;
 
@@ -2768,12 +2888,11 @@ var relativeformat = (function() {
         // Defined first because it's used to build the format pattern.
         $$es51$$defineProperty(this, '_locale',  {value: this._resolveLocale(locales)});
 
-        var pluralFn = $$core1$$MessageFormat.__localeData__[this._locale].pluralRuleFunction;
-
         // Compile the `ast` to a pattern that is highly optimized for repeated
         // `format()` invocations. **Note:** This passes the `locales` set provided
         // to the constructor instead of just the resolved locale.
-        var pattern = this._compilePattern(ast, locales, formats, pluralFn);
+        var pluralFn = this._findPluralRuleFunction(this._locale);
+        var pattern  = this._compilePattern(ast, locales, formats, pluralFn);
 
         // "Bind" `format()` method to `this` so it can be passed by reference like
         // the other `Intl` APIs.
@@ -2866,17 +2985,7 @@ var relativeformat = (function() {
             );
         }
 
-        if (!data.pluralRuleFunction) {
-            throw new Error(
-                'Locale data provided to IntlMessageFormat is missing a ' +
-                '`pluralRuleFunction` property'
-            );
-        }
-
-        // Message format locale data only requires the first part of the tag.
-        var locale = data.locale.toLowerCase().split('-')[0];
-
-        $$core1$$MessageFormat.__localeData__[locale] = data;
+        $$core1$$MessageFormat.__localeData__[data.locale.toLowerCase()] = data;
     }});
 
     // Defines `__parse()` static method as an exposed private.
@@ -2900,6 +3009,26 @@ var relativeformat = (function() {
     $$core1$$MessageFormat.prototype._compilePattern = function (ast, locales, formats, pluralFn) {
         var compiler = new $$compiler$$default(locales, formats, pluralFn);
         return compiler.compile(ast);
+    };
+
+    $$core1$$MessageFormat.prototype._findPluralRuleFunction = function (locale) {
+        var localeData = $$core1$$MessageFormat.__localeData__;
+        var data       = localeData[locale.toLowerCase()];
+
+        // The locale data is de-duplicated, so we have to traverse the locale's
+        // hierarchy until we find a `pluralRuleFunction` to return.
+        while (data) {
+            if (data.pluralRuleFunction) {
+                return data.pluralRuleFunction;
+            }
+
+            data = data.parentLocale && localeData[data.parentLocale.toLowerCase()];
+        }
+
+        throw new Error(
+            'Locale data added to IntlMessageFormat is missing a ' +
+            '`pluralRuleFunction` for :' + locale
+        );
     };
 
     $$core1$$MessageFormat.prototype._format = function (pattern, values) {
@@ -2955,67 +3084,62 @@ var relativeformat = (function() {
     };
 
     $$core1$$MessageFormat.prototype._resolveLocale = function (locales) {
-        if (!locales) {
-            locales = $$core1$$MessageFormat.defaultLocale;
-        }
-
         if (typeof locales === 'string') {
             locales = [locales];
         }
 
+        // Create a copy of the array so we can push on the default locale.
+        locales = (locales || []).concat($$core1$$MessageFormat.defaultLocale);
+
         var localeData = $$core1$$MessageFormat.__localeData__;
-        var i, len, locale;
+        var i, len, localeParts, data;
 
+        // Using the set of locales + the default locale, we look for the first one
+        // which that has been registered. When data does not exist for a locale, we
+        // traverse its ancestors to find something that's been registered within
+        // its hierarchy of locales. Since we lack the proper `parentLocale` data
+        // here, we must take a naive approach to traversal.
         for (i = 0, len = locales.length; i < len; i += 1) {
-            // We just need the root part of the langage tag.
-            locale = locales[i].split('-')[0].toLowerCase();
+            localeParts = locales[i].toLowerCase().split('-');
 
-            // Validate that the langage tag is structurally valid.
-            if (!/[a-z]{2,3}/.test(locale)) {
-                throw new Error(
-                    'Language tag provided to IntlMessageFormat is not ' +
-                    'structrually valid: ' + locale
-                );
-            }
+            while (localeParts.length) {
+                data = localeData[localeParts.join('-')];
+                if (data) {
+                    // Return the normalized locale string; e.g., we return "en-US",
+                    // instead of "en-us".
+                    return data.locale;
+                }
 
-            // Return the first locale for which we have CLDR data registered.
-            if ($$utils$$hop.call(localeData, locale)) {
-                return locale;
+                localeParts.pop();
             }
         }
 
+        var defaultLocale = locales.pop();
         throw new Error(
             'No locale data has been added to IntlMessageFormat for: ' +
-            locales.join(', ')
+            locales.join(', ') + ', or the default locale: ' + defaultLocale
         );
     };
-    var $$en1$$default = {"locale":"en","pluralRuleFunction":function (n) {var i=Math.floor(Math.abs(n)),v=n.toString().replace(/^[^.]*\.?/,"").length;n=Math.floor(n);if(i===1&&v===0)return"one";return"other";}};
+    var $$en1$$default = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"}};
 
     $$core1$$default.__addLocaleData($$en1$$default);
     $$core1$$default.defaultLocale = 'en';
 
     var intl$messageformat$$default = $$core1$$default;
-    /*
-    Copyright (c) 2014, Yahoo! Inc. All rights reserved.
-    Copyrights licensed under the New BSD License.
-    See the accompanying LICENSE file for terms.
-    */
-
-    /* jslint esnext: true */
 
     var $$diff$$round = Math.round;
 
-    function $$diff$$daysToYears (days) {
+    function $$diff$$daysToYears(days) {
         // 400 years have 146097 days (taking into account leap year rules)
         return days * 400 / 146097;
     }
 
-    var $$diff$$default = function (dfrom, dto) {
+    var $$diff$$default = function (from, to) {
         // Convert to ms timestamps.
-        dfrom = +dfrom;
-        dto   = +dto;
+        from = +from;
+        to   = +to;
 
-        var millisecond = $$diff$$round(dto - dfrom),
+        var millisecond = $$diff$$round(to - from),
             second      = $$diff$$round(millisecond / 1000),
             minute      = $$diff$$round(second / 60),
             hour        = $$diff$$round(minute / 60),
@@ -3038,6 +3162,68 @@ var relativeformat = (function() {
         };
     };
 
+    // Purposely using the same implementation as the Intl.js `Intl` polyfill.
+    // Copyright 2013 Andy Earnshaw, MIT License
+
+    var $$es5$$hop = Object.prototype.hasOwnProperty;
+    var $$es5$$toString = Object.prototype.toString;
+
+    var $$es5$$realDefineProp = (function () {
+        try { return !!Object.defineProperty({}, 'a', {}); }
+        catch (e) { return false; }
+    })();
+
+    var $$es5$$es3 = !$$es5$$realDefineProp && !Object.prototype.__defineGetter__;
+
+    var $$es5$$defineProperty = $$es5$$realDefineProp ? Object.defineProperty :
+            function (obj, name, desc) {
+
+        if ('get' in desc && obj.__defineGetter__) {
+            obj.__defineGetter__(name, desc.get);
+        } else if (!$$es5$$hop.call(obj, name) || 'value' in desc) {
+            obj[name] = desc.value;
+        }
+    };
+
+    var $$es5$$objCreate = Object.create || function (proto, props) {
+        var obj, k;
+
+        function F() {}
+        F.prototype = proto;
+        obj = new F();
+
+        for (k in props) {
+            if ($$es5$$hop.call(props, k)) {
+                $$es5$$defineProperty(obj, k, props[k]);
+            }
+        }
+
+        return obj;
+    };
+
+    var $$es5$$arrIndexOf = Array.prototype.indexOf || function (search, fromIndex) {
+        /*jshint validthis:true */
+        var arr = this;
+        if (!arr.length) {
+            return -1;
+        }
+
+        for (var i = fromIndex || 0, max = arr.length; i < max; i++) {
+            if (arr[i] === search) {
+                return i;
+            }
+        }
+
+        return -1;
+    };
+
+    var $$es5$$isArray = Array.isArray || function (obj) {
+        return $$es5$$toString.call(obj) === '[object Array]';
+    };
+
+    var $$es5$$dateNow = Date.now || function () {
+        return new Date().getTime();
+    };
     var $$core$$default = $$core$$RelativeFormat;
 
     // -----------------------------------------------------------------------------
@@ -3057,19 +3243,20 @@ var relativeformat = (function() {
         }
 
         $$es5$$defineProperty(this, '_locale', {value: this._resolveLocale(locales)});
-        $$es5$$defineProperty(this, '_locales', {value: locales});
         $$es5$$defineProperty(this, '_options', {value: {
             style: this._resolveStyle(options.style),
             units: this._isValidUnits(options.units) && options.units
         }});
 
+        $$es5$$defineProperty(this, '_locales', {value: locales});
+        $$es5$$defineProperty(this, '_fields', {value: this._findFields(this._locale)});
         $$es5$$defineProperty(this, '_messages', {value: $$es5$$objCreate(null)});
 
         // "Bind" `format()` method to `this` so it can be passed by reference like
         // the other `Intl` APIs.
         var relativeFormat = this;
-        this.format = function format(date) {
-            return relativeFormat._format(date);
+        this.format = function format(date, options) {
+            return relativeFormat._format(date, options);
         };
     }
 
@@ -3083,25 +3270,15 @@ var relativeformat = (function() {
             );
         }
 
-        if (!data.fields) {
-            throw new Error(
-                'Locale data provided to IntlRelativeFormat is missing a ' +
-                '`fields` property value'
-            );
-        }
+        $$core$$RelativeFormat.__localeData__[data.locale.toLowerCase()] = data;
 
         // Add data to IntlMessageFormat.
         intl$messageformat$$default.__addLocaleData(data);
-
-        // Relative format locale data only requires the first part of the tag.
-        var locale = data.locale.toLowerCase().split('-')[0];
-
-        $$core$$RelativeFormat.__localeData__[locale] = data;
     }});
 
     // Define public `defaultLocale` property which can be set by the developer, or
-    // it will be set when the first RelativeFormat instance is created by leveraging
-    // the resolved locale from `Intl`.
+    // it will be set when the first RelativeFormat instance is created by
+    // leveraging the resolved locale from `Intl`.
     $$es5$$defineProperty($$core$$RelativeFormat, 'defaultLocale', {
         enumerable: true,
         writable  : true,
@@ -3131,13 +3308,12 @@ var relativeformat = (function() {
     };
 
     $$core$$RelativeFormat.prototype._compileMessage = function (units) {
-        // `this._locales` is the original set of locales the user specificed to the
+        // `this._locales` is the original set of locales the user specified to the
         // constructor, while `this._locale` is the resolved root locale.
         var locales        = this._locales;
         var resolvedLocale = this._locale;
 
-        var localeData   = $$core$$RelativeFormat.__localeData__;
-        var field        = localeData[resolvedLocale].fields[units];
+        var field        = this._fields[units];
         var relativeTime = field.relativeTime;
         var future       = '';
         var past         = '';
@@ -3166,15 +3342,61 @@ var relativeformat = (function() {
         return new intl$messageformat$$default(message, locales);
     };
 
-    $$core$$RelativeFormat.prototype._format = function (date) {
-        var now = $$es5$$dateNow();
+    $$core$$RelativeFormat.prototype._getMessage = function (units) {
+        var messages = this._messages;
+
+        // Create a new synthetic message based on the locale data from CLDR.
+        if (!messages[units]) {
+            messages[units] = this._compileMessage(units);
+        }
+
+        return messages[units];
+    };
+
+    $$core$$RelativeFormat.prototype._getRelativeUnits = function (diff, units) {
+        var field = this._fields[units];
+
+        if (field.relative) {
+            return field.relative[diff];
+        }
+    };
+
+    $$core$$RelativeFormat.prototype._findFields = function (locale) {
+        var localeData = $$core$$RelativeFormat.__localeData__;
+        var data       = localeData[locale.toLowerCase()];
+
+        // The locale data is de-duplicated, so we have to traverse the locale's
+        // hierarchy until we find `fields` to return.
+        while (data) {
+            if (data.fields) {
+                return data.fields;
+            }
+
+            data = data.parentLocale && localeData[data.parentLocale.toLowerCase()];
+        }
+
+        throw new Error(
+            'Locale data added to IntlRelativeFormat is missing `fields` for :' +
+            locale
+        );
+    };
+
+    $$core$$RelativeFormat.prototype._format = function (date, options) {
+        var now = options && options.now !== undefined ? options.now : $$es5$$dateNow();
 
         if (date === undefined) {
             date = now;
         }
 
-        // Determine if the `date` is valid, and throw a similar error to what
-        // `Intl.DateTimeFormat#format()` would throw.
+        // Determine if the `date` and optional `now` values are valid, and throw a
+        // similar error to what `Intl.DateTimeFormat#format()` would throw.
+        if (!isFinite(now)) {
+            throw new RangeError(
+                'The `now` option provided to IntlRelativeFormat#format() is not ' +
+                'in valid range.'
+            );
+        }
+
         if (!isFinite(date)) {
             throw new RangeError(
                 'The date value provided to IntlRelativeFormat#format() is not ' +
@@ -3187,13 +3409,13 @@ var relativeformat = (function() {
         var diffInUnits = diffReport[units];
 
         if (this._options.style !== 'numeric') {
-            var relativeUnits = this._resolveRelativeUnits(diffInUnits, units);
+            var relativeUnits = this._getRelativeUnits(diffInUnits, units);
             if (relativeUnits) {
                 return relativeUnits;
             }
         }
 
-        return this._resolveMessage(units).format({
+        return this._getMessage(units).format({
             '0' : Math.abs(diffInUnits),
             when: diffInUnits < 0 ? 'past' : 'future'
         });
@@ -3221,59 +3443,41 @@ var relativeformat = (function() {
     };
 
     $$core$$RelativeFormat.prototype._resolveLocale = function (locales) {
-        if (!locales) {
-            locales = $$core$$RelativeFormat.defaultLocale;
-        }
-
         if (typeof locales === 'string') {
             locales = [locales];
         }
 
-        var hop        = Object.prototype.hasOwnProperty;
+        // Create a copy of the array so we can push on the default locale.
+        locales = (locales || []).concat($$core$$RelativeFormat.defaultLocale);
+
         var localeData = $$core$$RelativeFormat.__localeData__;
-        var i, len, locale;
+        var i, len, localeParts, data;
 
+        // Using the set of locales + the default locale, we look for the first one
+        // which that has been registered. When data does not exist for a locale, we
+        // traverse its ancestors to find something that's been registered within
+        // its hierarchy of locales. Since we lack the proper `parentLocale` data
+        // here, we must take a naive approach to traversal.
         for (i = 0, len = locales.length; i < len; i += 1) {
-            // We just need the root part of the language tag.
-            locale = locales[i].split('-')[0].toLowerCase();
+            localeParts = locales[i].toLowerCase().split('-');
 
-            // Validate that the language tag is structurally valid.
-            if (!/[a-z]{2,3}/.test(locale)) {
-                throw new Error(
-                    'Language tag provided to IntlRelativeFormat is not ' +
-                    'structrually valid: ' + locale
-                );
-            }
+            while (localeParts.length) {
+                data = localeData[localeParts.join('-')];
+                if (data) {
+                    // Return the normalized locale string; e.g., we return "en-US",
+                    // instead of "en-us".
+                    return data.locale;
+                }
 
-            // Return the first locale for which we have CLDR data registered.
-            if (hop.call(localeData, locale)) {
-                return locale;
+                localeParts.pop();
             }
         }
 
+        var defaultLocale = locales.pop();
         throw new Error(
             'No locale data has been added to IntlRelativeFormat for: ' +
-            locales.join(', ')
+            locales.join(', ') + ', or the default locale: ' + defaultLocale
         );
-    };
-
-    $$core$$RelativeFormat.prototype._resolveMessage = function (units) {
-        var messages = this._messages;
-
-        // Create a new synthetic message based on the locale data from CLDR.
-        if (!messages[units]) {
-            messages[units] = this._compileMessage(units);
-        }
-
-        return messages[units];
-    };
-
-    $$core$$RelativeFormat.prototype._resolveRelativeUnits = function (diff, units) {
-        var field = $$core$$RelativeFormat.__localeData__[this._locale].fields[units];
-
-        if (field.relative) {
-            return field.relative[diff];
-        }
     };
 
     $$core$$RelativeFormat.prototype._resolveStyle = function (style) {
@@ -3305,7 +3509,7 @@ var relativeformat = (function() {
 
         return units;
     };
-    var $$en$$default = {"locale":"en","pluralRuleFunction":function (n) {var i=Math.floor(Math.abs(n)),v=n.toString().replace(/^[^.]*\.?/,"").length;n=Math.floor(n);if(i===1&&v===0)return"one";return"other";},"fields":{"second":{"displayName":"Second","relative":{"0":"now"},"relativeTime":{"future":{"one":"in {0} second","other":"in {0} seconds"},"past":{"one":"{0} second ago","other":"{0} seconds ago"}}},"minute":{"displayName":"Minute","relativeTime":{"future":{"one":"in {0} minute","other":"in {0} minutes"},"past":{"one":"{0} minute ago","other":"{0} minutes ago"}}},"hour":{"displayName":"Hour","relativeTime":{"future":{"one":"in {0} hour","other":"in {0} hours"},"past":{"one":"{0} hour ago","other":"{0} hours ago"}}},"day":{"displayName":"Day","relative":{"0":"today","1":"tomorrow","-1":"yesterday"},"relativeTime":{"future":{"one":"in {0} day","other":"in {0} days"},"past":{"one":"{0} day ago","other":"{0} days ago"}}},"month":{"displayName":"Month","relative":{"0":"this month","1":"next month","-1":"last month"},"relativeTime":{"future":{"one":"in {0} month","other":"in {0} months"},"past":{"one":"{0} month ago","other":"{0} months ago"}}},"year":{"displayName":"Year","relative":{"0":"this year","1":"next year","-1":"last year"},"relativeTime":{"future":{"one":"in {0} year","other":"in {0} years"},"past":{"one":"{0} year ago","other":"{0} years ago"}}}}};
+    var $$en$$default = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"},"fields":{"year":{"displayName":"Year","relative":{"0":"this year","1":"next year","-1":"last year"},"relativeTime":{"future":{"one":"in {0} year","other":"in {0} years"},"past":{"one":"{0} year ago","other":"{0} years ago"}}},"month":{"displayName":"Month","relative":{"0":"this month","1":"next month","-1":"last month"},"relativeTime":{"future":{"one":"in {0} month","other":"in {0} months"},"past":{"one":"{0} month ago","other":"{0} months ago"}}},"day":{"displayName":"Day","relative":{"0":"today","1":"tomorrow","-1":"yesterday"},"relativeTime":{"future":{"one":"in {0} day","other":"in {0} days"},"past":{"one":"{0} day ago","other":"{0} days ago"}}},"hour":{"displayName":"Hour","relativeTime":{"future":{"one":"in {0} hour","other":"in {0} hours"},"past":{"one":"{0} hour ago","other":"{0} hours ago"}}},"minute":{"displayName":"Minute","relativeTime":{"future":{"one":"in {0} minute","other":"in {0} minutes"},"past":{"one":"{0} minute ago","other":"{0} minutes ago"}}},"second":{"displayName":"Second","relative":{"0":"now"},"relativeTime":{"future":{"one":"in {0} second","other":"in {0} seconds"},"past":{"one":"{0} second ago","other":"{0} seconds ago"}}}}};
 
     $$core$$default.__addLocaleData($$en$$default);
     $$core$$default.defaultLocale = 'en';
@@ -3475,7 +3679,9 @@ var messageformat = (function() {
 
             case 'pluralFormat':
                 options = this.compileOptions(element);
-                return new $$compiler$$PluralFormat(element.id, format.offset, options, pluralFn);
+                return new $$compiler$$PluralFormat(
+                    element.id, format.ordinal, format.offset, options, pluralFn
+                );
 
             case 'selectFormat':
                 options = this.compileOptions(element);
@@ -3492,8 +3698,8 @@ var messageformat = (function() {
             optionsHash = {};
 
         // Save the current plural element, if any, then set it to a new value when
-        // compiling the options sub-patterns. This conform's the spec's algorithm
-        // for handling `"#"` synax in message text.
+        // compiling the options sub-patterns. This conforms the spec's algorithm
+        // for handling `"#"` syntax in message text.
         this.pluralStack.push(this.currentPlural);
         this.currentPlural = format.type === 'pluralFormat' ? element : null;
 
@@ -3506,7 +3712,7 @@ var messageformat = (function() {
             optionsHash[option.selector] = this.compileMessage(option.value);
         }
 
-        // Pop the plural stack to put back the original currnet plural value.
+        // Pop the plural stack to put back the original current plural value.
         this.currentPlural = this.pluralStack.pop();
 
         return optionsHash;
@@ -3526,18 +3732,19 @@ var messageformat = (function() {
         return typeof value === 'string' ? value : String(value);
     };
 
-    function $$compiler$$PluralFormat(id, offset, options, pluralFn) {
-        this.id       = id;
-        this.offset   = offset;
-        this.options  = options;
-        this.pluralFn = pluralFn;
+    function $$compiler$$PluralFormat(id, useOrdinal, offset, options, pluralFn) {
+        this.id         = id;
+        this.useOrdinal = useOrdinal;
+        this.offset     = offset;
+        this.options    = options;
+        this.pluralFn   = pluralFn;
     }
 
     $$compiler$$PluralFormat.prototype.getOption = function (value) {
         var options = this.options;
 
         var option = options['=' + value] ||
-                options[this.pluralFn(value - this.offset)];
+                options[this.pluralFn(value - this.offset, this.useOrdinal)];
 
         return option || options.other;
     };
@@ -3659,67 +3866,85 @@ var messageformat = (function() {
                 },
             peg$c22 = "plural",
             peg$c23 = { type: "literal", value: "plural", description: "\"plural\"" },
-            peg$c24 = function(offset, options) {
+            peg$c24 = function(pluralStyle) {
                     return {
-                        type   : 'pluralFormat',
-                        offset : offset || 0,
-                        options: options
+                        type   : pluralStyle.type,
+                        ordinal: false,
+                        offset : pluralStyle.offset || 0,
+                        options: pluralStyle.options
+                    };
+                },
+            peg$c25 = "selectordinal",
+            peg$c26 = { type: "literal", value: "selectordinal", description: "\"selectordinal\"" },
+            peg$c27 = function(pluralStyle) {
+                    return {
+                        type   : pluralStyle.type,
+                        ordinal: true,
+                        offset : pluralStyle.offset || 0,
+                        options: pluralStyle.options
                     }
                 },
-            peg$c25 = "select",
-            peg$c26 = { type: "literal", value: "select", description: "\"select\"" },
-            peg$c27 = function(options) {
+            peg$c28 = "select",
+            peg$c29 = { type: "literal", value: "select", description: "\"select\"" },
+            peg$c30 = function(options) {
                     return {
                         type   : 'selectFormat',
                         options: options
-                    }
+                    };
                 },
-            peg$c28 = "=",
-            peg$c29 = { type: "literal", value: "=", description: "\"=\"" },
-            peg$c30 = function(selector, pattern) {
+            peg$c31 = "=",
+            peg$c32 = { type: "literal", value: "=", description: "\"=\"" },
+            peg$c33 = function(selector, pattern) {
                     return {
                         type    : 'optionalFormatPattern',
                         selector: selector,
                         value   : pattern
                     };
                 },
-            peg$c31 = "offset:",
-            peg$c32 = { type: "literal", value: "offset:", description: "\"offset:\"" },
-            peg$c33 = function(number) {
+            peg$c34 = "offset:",
+            peg$c35 = { type: "literal", value: "offset:", description: "\"offset:\"" },
+            peg$c36 = function(number) {
                     return number;
                 },
-            peg$c34 = { type: "other", description: "whitespace" },
-            peg$c35 = /^[ \t\n\r]/,
-            peg$c36 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-            peg$c37 = { type: "other", description: "optionalWhitespace" },
-            peg$c38 = /^[0-9]/,
-            peg$c39 = { type: "class", value: "[0-9]", description: "[0-9]" },
-            peg$c40 = /^[0-9a-f]/i,
-            peg$c41 = { type: "class", value: "[0-9a-f]i", description: "[0-9a-f]i" },
-            peg$c42 = "0",
-            peg$c43 = { type: "literal", value: "0", description: "\"0\"" },
-            peg$c44 = /^[1-9]/,
-            peg$c45 = { type: "class", value: "[1-9]", description: "[1-9]" },
-            peg$c46 = function(digits) {
+            peg$c37 = function(offset, options) {
+                    return {
+                        type   : 'pluralFormat',
+                        offset : offset,
+                        options: options
+                    };
+                },
+            peg$c38 = { type: "other", description: "whitespace" },
+            peg$c39 = /^[ \t\n\r]/,
+            peg$c40 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
+            peg$c41 = { type: "other", description: "optionalWhitespace" },
+            peg$c42 = /^[0-9]/,
+            peg$c43 = { type: "class", value: "[0-9]", description: "[0-9]" },
+            peg$c44 = /^[0-9a-f]/i,
+            peg$c45 = { type: "class", value: "[0-9a-f]i", description: "[0-9a-f]i" },
+            peg$c46 = "0",
+            peg$c47 = { type: "literal", value: "0", description: "\"0\"" },
+            peg$c48 = /^[1-9]/,
+            peg$c49 = { type: "class", value: "[1-9]", description: "[1-9]" },
+            peg$c50 = function(digits) {
                 return parseInt(digits, 10);
             },
-            peg$c47 = /^[^{}\\\0-\x1F \t\n\r]/,
-            peg$c48 = { type: "class", value: "[^{}\\\\\\0-\\x1F \\t\\n\\r]", description: "[^{}\\\\\\0-\\x1F \\t\\n\\r]" },
-            peg$c49 = "\\#",
-            peg$c50 = { type: "literal", value: "\\#", description: "\"\\\\#\"" },
-            peg$c51 = function() { return '\\#'; },
-            peg$c52 = "\\{",
-            peg$c53 = { type: "literal", value: "\\{", description: "\"\\\\{\"" },
-            peg$c54 = function() { return '\u007B'; },
-            peg$c55 = "\\}",
-            peg$c56 = { type: "literal", value: "\\}", description: "\"\\\\}\"" },
-            peg$c57 = function() { return '\u007D'; },
-            peg$c58 = "\\u",
-            peg$c59 = { type: "literal", value: "\\u", description: "\"\\\\u\"" },
-            peg$c60 = function(digits) {
+            peg$c51 = /^[^{}\\\0-\x1F \t\n\r]/,
+            peg$c52 = { type: "class", value: "[^{}\\\\\\0-\\x1F \\t\\n\\r]", description: "[^{}\\\\\\0-\\x1F \\t\\n\\r]" },
+            peg$c53 = "\\#",
+            peg$c54 = { type: "literal", value: "\\#", description: "\"\\\\#\"" },
+            peg$c55 = function() { return '\\#'; },
+            peg$c56 = "\\{",
+            peg$c57 = { type: "literal", value: "\\{", description: "\"\\\\{\"" },
+            peg$c58 = function() { return '\u007B'; },
+            peg$c59 = "\\}",
+            peg$c60 = { type: "literal", value: "\\}", description: "\"\\\\}\"" },
+            peg$c61 = function() { return '\u007D'; },
+            peg$c62 = "\\u",
+            peg$c63 = { type: "literal", value: "\\u", description: "\"\\\\u\"" },
+            peg$c64 = function(digits) {
                     return String.fromCharCode(parseInt(digits, 16));
                 },
-            peg$c61 = function(chars) { return chars.join(''); },
+            peg$c65 = function(chars) { return chars.join(''); },
 
             peg$currPos          = 0,
             peg$reportedPos      = 0,
@@ -4148,7 +4373,10 @@ var messageformat = (function() {
           if (s0 === peg$FAILED) {
             s0 = peg$parsepluralFormat();
             if (s0 === peg$FAILED) {
-              s0 = peg$parseselectFormat();
+              s0 = peg$parseselectOrdinalFormat();
+              if (s0 === peg$FAILED) {
+                s0 = peg$parseselectFormat();
+              }
             }
           }
 
@@ -4238,7 +4466,7 @@ var messageformat = (function() {
         }
 
         function peg$parsepluralFormat() {
-          var s0, s1, s2, s3, s4, s5, s6, s7, s8;
+          var s0, s1, s2, s3, s4, s5;
 
           s0 = peg$currPos;
           if (input.substr(peg$currPos, 6) === peg$c22) {
@@ -4261,35 +4489,64 @@ var messageformat = (function() {
               if (s3 !== peg$FAILED) {
                 s4 = peg$parse_();
                 if (s4 !== peg$FAILED) {
-                  s5 = peg$parseoffset();
-                  if (s5 === peg$FAILED) {
-                    s5 = peg$c9;
-                  }
+                  s5 = peg$parsepluralStyle();
                   if (s5 !== peg$FAILED) {
-                    s6 = peg$parse_();
-                    if (s6 !== peg$FAILED) {
-                      s7 = [];
-                      s8 = peg$parseoptionalFormatPattern();
-                      if (s8 !== peg$FAILED) {
-                        while (s8 !== peg$FAILED) {
-                          s7.push(s8);
-                          s8 = peg$parseoptionalFormatPattern();
-                        }
-                      } else {
-                        s7 = peg$c2;
-                      }
-                      if (s7 !== peg$FAILED) {
-                        peg$reportedPos = s0;
-                        s1 = peg$c24(s5, s7);
-                        s0 = s1;
-                      } else {
-                        peg$currPos = s0;
-                        s0 = peg$c2;
-                      }
-                    } else {
-                      peg$currPos = s0;
-                      s0 = peg$c2;
-                    }
+                    peg$reportedPos = s0;
+                    s1 = peg$c24(s5);
+                    s0 = s1;
+                  } else {
+                    peg$currPos = s0;
+                    s0 = peg$c2;
+                  }
+                } else {
+                  peg$currPos = s0;
+                  s0 = peg$c2;
+                }
+              } else {
+                peg$currPos = s0;
+                s0 = peg$c2;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$c2;
+            }
+          } else {
+            peg$currPos = s0;
+            s0 = peg$c2;
+          }
+
+          return s0;
+        }
+
+        function peg$parseselectOrdinalFormat() {
+          var s0, s1, s2, s3, s4, s5;
+
+          s0 = peg$currPos;
+          if (input.substr(peg$currPos, 13) === peg$c25) {
+            s1 = peg$c25;
+            peg$currPos += 13;
+          } else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) { peg$fail(peg$c26); }
+          }
+          if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+              if (input.charCodeAt(peg$currPos) === 44) {
+                s3 = peg$c10;
+                peg$currPos++;
+              } else {
+                s3 = peg$FAILED;
+                if (peg$silentFails === 0) { peg$fail(peg$c11); }
+              }
+              if (s3 !== peg$FAILED) {
+                s4 = peg$parse_();
+                if (s4 !== peg$FAILED) {
+                  s5 = peg$parsepluralStyle();
+                  if (s5 !== peg$FAILED) {
+                    peg$reportedPos = s0;
+                    s1 = peg$c27(s5);
+                    s0 = s1;
                   } else {
                     peg$currPos = s0;
                     s0 = peg$c2;
@@ -4318,12 +4575,12 @@ var messageformat = (function() {
           var s0, s1, s2, s3, s4, s5, s6;
 
           s0 = peg$currPos;
-          if (input.substr(peg$currPos, 6) === peg$c25) {
-            s1 = peg$c25;
+          if (input.substr(peg$currPos, 6) === peg$c28) {
+            s1 = peg$c28;
             peg$currPos += 6;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c26); }
+            if (peg$silentFails === 0) { peg$fail(peg$c29); }
           }
           if (s1 !== peg$FAILED) {
             s2 = peg$parse_();
@@ -4350,7 +4607,7 @@ var messageformat = (function() {
                   }
                   if (s5 !== peg$FAILED) {
                     peg$reportedPos = s0;
-                    s1 = peg$c27(s5);
+                    s1 = peg$c30(s5);
                     s0 = s1;
                   } else {
                     peg$currPos = s0;
@@ -4382,11 +4639,11 @@ var messageformat = (function() {
           s0 = peg$currPos;
           s1 = peg$currPos;
           if (input.charCodeAt(peg$currPos) === 61) {
-            s2 = peg$c28;
+            s2 = peg$c31;
             peg$currPos++;
           } else {
             s2 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c29); }
+            if (peg$silentFails === 0) { peg$fail(peg$c32); }
           }
           if (s2 !== peg$FAILED) {
             s3 = peg$parsenumber();
@@ -4445,7 +4702,7 @@ var messageformat = (function() {
                         }
                         if (s8 !== peg$FAILED) {
                           peg$reportedPos = s0;
-                          s1 = peg$c30(s2, s6);
+                          s1 = peg$c33(s2, s6);
                           s0 = s1;
                         } else {
                           peg$currPos = s0;
@@ -4487,12 +4744,12 @@ var messageformat = (function() {
           var s0, s1, s2, s3;
 
           s0 = peg$currPos;
-          if (input.substr(peg$currPos, 7) === peg$c31) {
-            s1 = peg$c31;
+          if (input.substr(peg$currPos, 7) === peg$c34) {
+            s1 = peg$c34;
             peg$currPos += 7;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c32); }
+            if (peg$silentFails === 0) { peg$fail(peg$c35); }
           }
           if (s1 !== peg$FAILED) {
             s2 = peg$parse_();
@@ -4500,7 +4757,48 @@ var messageformat = (function() {
               s3 = peg$parsenumber();
               if (s3 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c33(s3);
+                s1 = peg$c36(s3);
+                s0 = s1;
+              } else {
+                peg$currPos = s0;
+                s0 = peg$c2;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$c2;
+            }
+          } else {
+            peg$currPos = s0;
+            s0 = peg$c2;
+          }
+
+          return s0;
+        }
+
+        function peg$parsepluralStyle() {
+          var s0, s1, s2, s3, s4;
+
+          s0 = peg$currPos;
+          s1 = peg$parseoffset();
+          if (s1 === peg$FAILED) {
+            s1 = peg$c9;
+          }
+          if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+              s3 = [];
+              s4 = peg$parseoptionalFormatPattern();
+              if (s4 !== peg$FAILED) {
+                while (s4 !== peg$FAILED) {
+                  s3.push(s4);
+                  s4 = peg$parseoptionalFormatPattern();
+                }
+              } else {
+                s3 = peg$c2;
+              }
+              if (s3 !== peg$FAILED) {
+                peg$reportedPos = s0;
+                s1 = peg$c37(s1, s3);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -4523,22 +4821,22 @@ var messageformat = (function() {
 
           peg$silentFails++;
           s0 = [];
-          if (peg$c35.test(input.charAt(peg$currPos))) {
+          if (peg$c39.test(input.charAt(peg$currPos))) {
             s1 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c36); }
+            if (peg$silentFails === 0) { peg$fail(peg$c40); }
           }
           if (s1 !== peg$FAILED) {
             while (s1 !== peg$FAILED) {
               s0.push(s1);
-              if (peg$c35.test(input.charAt(peg$currPos))) {
+              if (peg$c39.test(input.charAt(peg$currPos))) {
                 s1 = input.charAt(peg$currPos);
                 peg$currPos++;
               } else {
                 s1 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c36); }
+                if (peg$silentFails === 0) { peg$fail(peg$c40); }
               }
             }
           } else {
@@ -4547,7 +4845,7 @@ var messageformat = (function() {
           peg$silentFails--;
           if (s0 === peg$FAILED) {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c34); }
+            if (peg$silentFails === 0) { peg$fail(peg$c38); }
           }
 
           return s0;
@@ -4571,7 +4869,7 @@ var messageformat = (function() {
           peg$silentFails--;
           if (s0 === peg$FAILED) {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c37); }
+            if (peg$silentFails === 0) { peg$fail(peg$c41); }
           }
 
           return s0;
@@ -4580,12 +4878,12 @@ var messageformat = (function() {
         function peg$parsedigit() {
           var s0;
 
-          if (peg$c38.test(input.charAt(peg$currPos))) {
+          if (peg$c42.test(input.charAt(peg$currPos))) {
             s0 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s0 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c39); }
+            if (peg$silentFails === 0) { peg$fail(peg$c43); }
           }
 
           return s0;
@@ -4594,12 +4892,12 @@ var messageformat = (function() {
         function peg$parsehexDigit() {
           var s0;
 
-          if (peg$c40.test(input.charAt(peg$currPos))) {
+          if (peg$c44.test(input.charAt(peg$currPos))) {
             s0 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s0 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c41); }
+            if (peg$silentFails === 0) { peg$fail(peg$c45); }
           }
 
           return s0;
@@ -4610,21 +4908,21 @@ var messageformat = (function() {
 
           s0 = peg$currPos;
           if (input.charCodeAt(peg$currPos) === 48) {
-            s1 = peg$c42;
+            s1 = peg$c46;
             peg$currPos++;
           } else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c43); }
+            if (peg$silentFails === 0) { peg$fail(peg$c47); }
           }
           if (s1 === peg$FAILED) {
             s1 = peg$currPos;
             s2 = peg$currPos;
-            if (peg$c44.test(input.charAt(peg$currPos))) {
+            if (peg$c48.test(input.charAt(peg$currPos))) {
               s3 = input.charAt(peg$currPos);
               peg$currPos++;
             } else {
               s3 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c45); }
+              if (peg$silentFails === 0) { peg$fail(peg$c49); }
             }
             if (s3 !== peg$FAILED) {
               s4 = [];
@@ -4651,7 +4949,7 @@ var messageformat = (function() {
           }
           if (s1 !== peg$FAILED) {
             peg$reportedPos = s0;
-            s1 = peg$c46(s1);
+            s1 = peg$c50(s1);
           }
           s0 = s1;
 
@@ -4661,63 +4959,63 @@ var messageformat = (function() {
         function peg$parsechar() {
           var s0, s1, s2, s3, s4, s5, s6, s7;
 
-          if (peg$c47.test(input.charAt(peg$currPos))) {
+          if (peg$c51.test(input.charAt(peg$currPos))) {
             s0 = input.charAt(peg$currPos);
             peg$currPos++;
           } else {
             s0 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c48); }
+            if (peg$silentFails === 0) { peg$fail(peg$c52); }
           }
           if (s0 === peg$FAILED) {
             s0 = peg$currPos;
-            if (input.substr(peg$currPos, 2) === peg$c49) {
-              s1 = peg$c49;
+            if (input.substr(peg$currPos, 2) === peg$c53) {
+              s1 = peg$c53;
               peg$currPos += 2;
             } else {
               s1 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c50); }
+              if (peg$silentFails === 0) { peg$fail(peg$c54); }
             }
             if (s1 !== peg$FAILED) {
               peg$reportedPos = s0;
-              s1 = peg$c51();
+              s1 = peg$c55();
             }
             s0 = s1;
             if (s0 === peg$FAILED) {
               s0 = peg$currPos;
-              if (input.substr(peg$currPos, 2) === peg$c52) {
-                s1 = peg$c52;
+              if (input.substr(peg$currPos, 2) === peg$c56) {
+                s1 = peg$c56;
                 peg$currPos += 2;
               } else {
                 s1 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c53); }
+                if (peg$silentFails === 0) { peg$fail(peg$c57); }
               }
               if (s1 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c54();
+                s1 = peg$c58();
               }
               s0 = s1;
               if (s0 === peg$FAILED) {
                 s0 = peg$currPos;
-                if (input.substr(peg$currPos, 2) === peg$c55) {
-                  s1 = peg$c55;
+                if (input.substr(peg$currPos, 2) === peg$c59) {
+                  s1 = peg$c59;
                   peg$currPos += 2;
                 } else {
                   s1 = peg$FAILED;
-                  if (peg$silentFails === 0) { peg$fail(peg$c56); }
+                  if (peg$silentFails === 0) { peg$fail(peg$c60); }
                 }
                 if (s1 !== peg$FAILED) {
                   peg$reportedPos = s0;
-                  s1 = peg$c57();
+                  s1 = peg$c61();
                 }
                 s0 = s1;
                 if (s0 === peg$FAILED) {
                   s0 = peg$currPos;
-                  if (input.substr(peg$currPos, 2) === peg$c58) {
-                    s1 = peg$c58;
+                  if (input.substr(peg$currPos, 2) === peg$c62) {
+                    s1 = peg$c62;
                     peg$currPos += 2;
                   } else {
                     s1 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c59); }
+                    if (peg$silentFails === 0) { peg$fail(peg$c63); }
                   }
                   if (s1 !== peg$FAILED) {
                     s2 = peg$currPos;
@@ -4754,7 +5052,7 @@ var messageformat = (function() {
                     s2 = s3;
                     if (s2 !== peg$FAILED) {
                       peg$reportedPos = s0;
-                      s1 = peg$c60(s2);
+                      s1 = peg$c64(s2);
                       s0 = s1;
                     } else {
                       peg$currPos = s0;
@@ -4788,7 +5086,7 @@ var messageformat = (function() {
           }
           if (s1 !== peg$FAILED) {
             peg$reportedPos = s0;
-            s1 = peg$c61(s1);
+            s1 = peg$c65(s1);
           }
           s0 = s1;
 
@@ -4834,12 +5132,11 @@ var messageformat = (function() {
         // Defined first because it's used to build the format pattern.
         $$es5$$defineProperty(this, '_locale',  {value: this._resolveLocale(locales)});
 
-        var pluralFn = $$core$$MessageFormat.__localeData__[this._locale].pluralRuleFunction;
-
         // Compile the `ast` to a pattern that is highly optimized for repeated
         // `format()` invocations. **Note:** This passes the `locales` set provided
         // to the constructor instead of just the resolved locale.
-        var pattern = this._compilePattern(ast, locales, formats, pluralFn);
+        var pluralFn = this._findPluralRuleFunction(this._locale);
+        var pattern  = this._compilePattern(ast, locales, formats, pluralFn);
 
         // "Bind" `format()` method to `this` so it can be passed by reference like
         // the other `Intl` APIs.
@@ -4932,17 +5229,7 @@ var messageformat = (function() {
             );
         }
 
-        if (!data.pluralRuleFunction) {
-            throw new Error(
-                'Locale data provided to IntlMessageFormat is missing a ' +
-                '`pluralRuleFunction` property'
-            );
-        }
-
-        // Message format locale data only requires the first part of the tag.
-        var locale = data.locale.toLowerCase().split('-')[0];
-
-        $$core$$MessageFormat.__localeData__[locale] = data;
+        $$core$$MessageFormat.__localeData__[data.locale.toLowerCase()] = data;
     }});
 
     // Defines `__parse()` static method as an exposed private.
@@ -4966,6 +5253,26 @@ var messageformat = (function() {
     $$core$$MessageFormat.prototype._compilePattern = function (ast, locales, formats, pluralFn) {
         var compiler = new $$compiler$$default(locales, formats, pluralFn);
         return compiler.compile(ast);
+    };
+
+    $$core$$MessageFormat.prototype._findPluralRuleFunction = function (locale) {
+        var localeData = $$core$$MessageFormat.__localeData__;
+        var data       = localeData[locale.toLowerCase()];
+
+        // The locale data is de-duplicated, so we have to traverse the locale's
+        // hierarchy until we find a `pluralRuleFunction` to return.
+        while (data) {
+            if (data.pluralRuleFunction) {
+                return data.pluralRuleFunction;
+            }
+
+            data = data.parentLocale && localeData[data.parentLocale.toLowerCase()];
+        }
+
+        throw new Error(
+            'Locale data added to IntlMessageFormat is missing a ' +
+            '`pluralRuleFunction` for :' + locale
+        );
     };
 
     $$core$$MessageFormat.prototype._format = function (pattern, values) {
@@ -5021,41 +5328,43 @@ var messageformat = (function() {
     };
 
     $$core$$MessageFormat.prototype._resolveLocale = function (locales) {
-        if (!locales) {
-            locales = $$core$$MessageFormat.defaultLocale;
-        }
-
         if (typeof locales === 'string') {
             locales = [locales];
         }
 
+        // Create a copy of the array so we can push on the default locale.
+        locales = (locales || []).concat($$core$$MessageFormat.defaultLocale);
+
         var localeData = $$core$$MessageFormat.__localeData__;
-        var i, len, locale;
+        var i, len, localeParts, data;
 
+        // Using the set of locales + the default locale, we look for the first one
+        // which that has been registered. When data does not exist for a locale, we
+        // traverse its ancestors to find something that's been registered within
+        // its hierarchy of locales. Since we lack the proper `parentLocale` data
+        // here, we must take a naive approach to traversal.
         for (i = 0, len = locales.length; i < len; i += 1) {
-            // We just need the root part of the langage tag.
-            locale = locales[i].split('-')[0].toLowerCase();
+            localeParts = locales[i].toLowerCase().split('-');
 
-            // Validate that the langage tag is structurally valid.
-            if (!/[a-z]{2,3}/.test(locale)) {
-                throw new Error(
-                    'Language tag provided to IntlMessageFormat is not ' +
-                    'structrually valid: ' + locale
-                );
-            }
+            while (localeParts.length) {
+                data = localeData[localeParts.join('-')];
+                if (data) {
+                    // Return the normalized locale string; e.g., we return "en-US",
+                    // instead of "en-us".
+                    return data.locale;
+                }
 
-            // Return the first locale for which we have CLDR data registered.
-            if ($$utils$$hop.call(localeData, locale)) {
-                return locale;
+                localeParts.pop();
             }
         }
 
+        var defaultLocale = locales.pop();
         throw new Error(
             'No locale data has been added to IntlMessageFormat for: ' +
-            locales.join(', ')
+            locales.join(', ') + ', or the default locale: ' + defaultLocale
         );
     };
-    var $$en$$default = {"locale":"en","pluralRuleFunction":function (n) {var i=Math.floor(Math.abs(n)),v=n.toString().replace(/^[^.]*\.?/,"").length;n=Math.floor(n);if(i===1&&v===0)return"one";return"other";}};
+    var $$en$$default = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"}};
 
     $$core$$default.__addLocaleData($$en$$default);
     $$core$$default.defaultLocale = 'en';

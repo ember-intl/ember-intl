@@ -31,7 +31,7 @@ export default function (value, options) {
     }
 
     function pokeStream () {
-        return intl._getTranslation(read(currentValue), hash.locales).then(function (translation) {
+        return intl.getTranslation(read(currentValue), hash.locales).then(function (translation) {
             outStream.setValue(translation);
         });
     }
