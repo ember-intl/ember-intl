@@ -5,38 +5,29 @@
 
 import Ember from 'ember';
 import FormatterMessage from './format-message';
+import IntlGetResult from 'ember-intl/models/intl-get-result';
 
 var FormatHtmlMessage = FormatterMessage.extend({
-    escapeProps: function (props) {
-        return Object.keys(props).reduce(function (escapedProps, name) {
-            var value = props[name];
+    escapeProps: function (hash) {
+        var value;
 
-            // TODO: Can we force string coersion here? Or would that not be needed
-            // and possible mess with IntlMessageFormat?
+        return Object.keys(hash).reduce(function (result, hashKey) {
+            value = hash[hashKey];
+
             if (typeof value === 'string') {
                 value = Ember.Handlebars.Utils.escapeExpression(value);
             }
 
-            escapedProps[name] = value;
-            return escapedProps;
+            result[hashKey] = value;
+            return result;
         }, {});
     },
 
-    format: function (value, hash, context) {
-        var icuKeys = this.extractICUKeys(value);
-        var model   = {};
-
-        if (icuKeys && icuKeys.length) {
-            model = Ember.$.extend(Ember.getProperties(context, icuKeys), hash);
-        }
-
-        var formatOptions = {};
-
-        if (hash.locales) {
-            formatOptions.locales = hash.locales;
-        }
-
-        return Ember.String.htmlSafe(this.intl.formatMessage(value, this.escapeProps(model), formatOptions));
+    format: function (value, hash) {
+        var locales = hash.locales;
+        hash = this.escapeProps(hash);
+        var superResult = this._super(value, hash, locales);
+        return Ember.String.htmlSafe(superResult);
     }
 });
 

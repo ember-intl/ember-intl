@@ -5,6 +5,7 @@ import FormatMessage from '../../formatters/format-message';
 import formatMessageHelper from '../../helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Locale from 'ember-intl/models/locale';
+import IntlAdapter from '../../adapters/-intl-adapter';
 
 var view, container;
 
@@ -12,9 +13,12 @@ moduleForIntl('format-message', {
     setup: function (__container) {
         container = __container;
 
-        container.register('formatter:format-message', FormatMessage);
-        Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
         container.register('helper:intl-get', intlGet, { instantiate: false });
+        container.register('application:main', Ember.Application.extend());
+        container.register('adapter:-intl-adapter', IntlAdapter.extend());
+        container.register('formatter:format-message', FormatMessage);
+
+        Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
 
         container.register('locale:en', Locale.extend({
             messages: {
@@ -185,12 +189,16 @@ test('intl-get handles bound computed property', function () {
 test('locale can add message to intl service and read it', function () {
     expect(1);
 
+    var self = this;
     var service = this.service;
-    service.addMessage('en', 'oh', 'hai!');
 
-    view = this.intlBlock('{{format-message (intl-get "messages.oh")}}');
-    runAppend(view);
-    equal(view.$().text(), "hai!");
+    Ember.run(function () {
+        service.addMessage('en', 'oh', 'hai!').then(function () {
+            view = self.intlBlock('{{format-message (intl-get "messages.oh")}}');
+            runAppend(view);
+            equal(view.$().text(), "hai!");
+        });
+    });
 });
 
 test('locale can add messages object and intl-get can read it', function () {

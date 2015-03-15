@@ -30,7 +30,6 @@ export default function (formatterName) {
             var view      = env.data.view;
             var intl      = view.container.lookup('intl:main');
             var seenHash  = readHash(hash);
-            var context   = view.get('context');
             var formatter = view.container.lookup('formatter:' + formatterName);
 
             if (value.isStream) {
@@ -43,7 +42,7 @@ export default function (formatterName) {
             currentValue = read(value);
 
             outStream = new Stream(function () {
-                return formatter.format.call(formatter, read(currentValue), seenHash, context);
+                return formatter.format.call(formatter, read(currentValue), seenHash);
             });
 
             Ember.keys(hash).forEach(function (key) {
@@ -82,9 +81,9 @@ export default function (formatterName) {
             var view      = options.data.view;
             var intl      = this.container.lookup('intl:main');
             var types     = options.types;
-            var context   = view.get('context');
             var hash      = extend({}, options.hash);
             var formatter = view.container.lookup('formatter:' + formatterName);
+
             var simpleView, simpleViewStream, currentValue;
 
             if (types[0] === 'ID') {
@@ -101,7 +100,7 @@ export default function (formatterName) {
             currentValue = read(value);
 
             simpleViewStream = new Stream(function () {
-                return formatter.format.call(formatter, read(currentValue), hash, context);
+                return formatter.format.call(formatter, read(currentValue), hash);
             });
 
             Ember.keys(options.hashTypes).forEach(function (key) {
