@@ -1,6 +1,6 @@
 # ember-intl
 
-[![Build Status](https://api.travis-ci.org/yahoo/ember-intl.svg?branch=master)](https://api.travis-ci.org/yahoo/ember-intl.svg?branch=master)
+[![Build Status](https://img.shields.io/travis/yahoo/ember-intl/master.svg?style=flat-square)](https://travis-ci.org/yahoo/ember-intl)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
 This library provides Ember Handlebar helpers and a localization service injected into views, routes, models, controllers, and components.  The
