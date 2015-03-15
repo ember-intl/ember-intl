@@ -1,6 +1,7 @@
 # ember-intl
 
 [![Build Status](https://api.travis-ci.org/yahoo/ember-intl.svg?branch=master)](https://api.travis-ci.org/yahoo/ember-intl.svg?branch=master)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
 This library provides Ember Handlebar helpers and a localization service injected into views, routes, models, controllers, and components.  The
 service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
