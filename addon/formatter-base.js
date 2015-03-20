@@ -6,24 +6,6 @@
 import Ember from 'ember';
 
 var FormatBase = Ember.Object.extend({
-    buildOptions: function (value, hash) {
-        var args = [value];
-
-        if (typeof hash.format !== 'undefined') {
-            args.push(hash.format);
-        }
-
-        var helperOptions = this.filterFormatOptions(hash) || {};
-
-        if (hash.locales) {
-            helperOptions.locales = hash.locales;
-        }
-        
-        args.push(helperOptions);
-
-        return args;
-    },
-
     filterFormatOptions: function (hash) {
         hash = hash || {};
 
@@ -45,7 +27,8 @@ var FormatBase = Ember.Object.extend({
 });
 
 FormatBase.reopenClass({
-    formatOptions: Ember.A()
+    formatOptions: Ember.A(['locales', 'format']),
+    concatenatedProperties: Ember.A(['formatOptions'])
 });
 
 export default FormatBase;

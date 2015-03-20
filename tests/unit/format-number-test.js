@@ -74,7 +74,7 @@ test('should return a string', function() {
     view = this.intlBlock('{{format-number 4}}', { locales: 'en-US' });
     runAppend(view);
 
-    equal(view.$().html(), '4');
+    equal(view.$().text(), '4');
 });
 
 test('should return a decimal as a string', function() {
@@ -88,7 +88,7 @@ test('should return a decimal as a string', function() {
 
     runAppend(view);
 
-    equal(view.$().html(), '4.004');
+    equal(view.$().text(), '4.004');
 });
 
 
@@ -103,7 +103,7 @@ test('should return a formatted string with a thousand separator', function() {
 
     runAppend(view);
 
-    equal(view.$().html(), '40,000');
+    equal(view.$().text(), '40,000');
 });
 
 
@@ -118,7 +118,21 @@ test('should return a formatted string with a thousand separator and decimal', f
 
     runAppend(view);
 
-    equal(view.$().html(), '40,000.004');
+    equal(view.$().text(), '40,000.004');
+});
+
+test('locales can be passed as an argument', function() {
+    expect(1);
+
+    view = this.intlBlock('{{format-number NUM locales="de-DE"}}');
+
+    view.set('context', {
+        NUM: 4.004
+    });
+
+    runAppend(view);
+
+    equal(view.$().text(), '4,004');
 });
 
 test('in another locale - should return a string', function() {
@@ -128,7 +142,7 @@ test('in another locale - should return a string', function() {
 
     runAppend(view);
 
-    equal(view.$().html(), '4');
+    equal(view.$().text(), '4');
 });
 
 test('in another locale - should return a decimal as a string', function() {
@@ -142,7 +156,7 @@ test('in another locale - should return a decimal as a string', function() {
 
     runAppend(view);
 
-    equal(view.$().html(), '4,004');
+    equal(view.$().text(), '4,004');
 });
 
 
@@ -157,7 +171,7 @@ test('in another locale - should return a formatted string with a thousand separ
 
     runAppend(view);
 
-    equal(view.$().html(), '40.000');
+    equal(view.$().text(), '40.000');
 });
 
 test('in another locale - should return a formatted string with a thousand separator and decimal', function() {
@@ -171,7 +185,7 @@ test('in another locale - should return a formatted string with a thousand separ
 
     runAppend(view);
 
-    equal(view.$().html(), '40.000,004');
+    equal(view.$().text(), '40.000,004');
 });
 
 test('currency - should return a string formatted to currency', function() {
