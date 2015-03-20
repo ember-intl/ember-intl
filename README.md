@@ -1,6 +1,6 @@
 # ember-intl
-
-[![Build Status](https://img.shields.io/travis/yahoo/ember-intl/master.svg?style=flat-square)](https://travis-ci.org/yahoo/ember-intl)
+[![npm Version][npm-badge]][npm]
+[![Build Status][travis-badge]][travis]
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
 This library provides Ember Handlebar helpers and a localization service injected into views, routes, models, controllers, and components.  The
@@ -176,6 +176,10 @@ export default Locale.extend({
 * `ember test`
 * `ember test --server`
 
+[npm]: https://www.npmjs.org/package/ember-intl
+[npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
+[travis]: https://travis-ci.org/yahoo/ember-intl
+[travis-badge]: https://img.shields.io/travis/yahoo/ember-intl/master.svg?style=flat-square
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
 [Intl-MF]: https://github.com/yahoo/intl-messageformat
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
