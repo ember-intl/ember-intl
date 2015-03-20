@@ -38,3 +38,11 @@ test('can specify a `value` and `now` on the options hash', function(assert) {
     runAppend(view);
     equal(view.$().text(), 'in 2 seconds');
 });
+
+
+test('should return now', function(assert) {
+    expect(1);
+    view = this.intlBlock('{{format-relative ' + new Date().getTime() + '}}');
+    runAppend(view);
+    equal(view.$().text(), 'now');
+});
