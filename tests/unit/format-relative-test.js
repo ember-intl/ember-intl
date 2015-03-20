@@ -9,6 +9,20 @@ var view;
 moduleForIntl('format-relative', {
     setup: function (container) {
         container.register('formatter:format-relative', FormatRelative);
+
+        container.optionsForType('formats', {
+            singleton:   true,
+            instantiate: false
+        });
+
+        container.register('formats:main', {
+            relative: {
+                hours: {
+                    units: "hour",
+                    style: "numeric"
+                }
+            }
+        });
         Ember.HTMLBars._registerHelper('format-relative', formatRelativehelper);
     },
     teardown: function () {
@@ -37,6 +51,17 @@ test('can specify a `value` and `now` on the options hash', function(assert) {
     view = this.intlBlock('{{format-relative 2000 now=0}}');
     runAppend(view);
     equal(view.$().text(), 'in 2 seconds');
+});
+
+test('should return relative time in hours, not best fit', function(assert) {
+    expect(1);
+
+    var twoDays = (1000 * 60 * 60 * 24) * 2;
+
+    view = this.intlBlock('{{format-relative ' + twoDays + ' now=0 format="hours"}}');
+    runAppend(view);
+
+    equal(view.$().text(), 'in 48 hours');
 });
 
 
