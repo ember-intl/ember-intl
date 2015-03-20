@@ -121,6 +121,20 @@ test('should return a formatted string with a thousand separator and decimal', f
     equal(view.$().html(), '40,000.004');
 });
 
+test('locales can be passed as an argument', function() {
+    expect(1);
+
+    view = this.intlBlock('{{format-number NUM locales="de-DE"}}');
+
+    view.set('context', {
+        NUM: 4.004
+    });
+
+    runAppend(view);
+
+    equal(view.$().html(), '4,004');
+});
+
 test('in another locale - should return a string', function() {
     expect(1);
 

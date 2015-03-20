@@ -116,62 +116,58 @@ export default ServiceKlass.extend(Ember.Evented, {
         return message.format(values);
     },
 
-    formatTime: function (date, formatOptions, options) {
+    formatTime: function (date, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
 
-        return this._format('time', date, formatOptions, options);
+        return this._format('time', date, options);
     },
 
-    formatRelative: function (date, formatOptions, options) {
+    formatRelative: function (date, options, formatOptions) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
-
-        return this._format('relative', date, formatOptions, options);
+        return this._format('relative', date, options, formatOptions);
     },
 
-    formatDate: function (date, formatOptions, options) {
+    formatDate: function (date, options) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
 
-        return this._format('date', date, formatOptions, options);
+        return this._format('date', date, options);
     },
 
-    formatNumber: function (num, formatOptions, options) {
-        return this._format('number', num, formatOptions, options);
+    formatNumber: function (num, options) {
+        return this._format('number', num, options);
     },
 
-    _format: function (type, value, formatOptions, helperOptions) {
-        if (!helperOptions) {
-            helperOptions = formatOptions || {};
-            formatOptions = null;
-        }
+    _format: function (type, value, options, formatOptions) {
+        options = options || {};
 
-        var locales = makeArray(helperOptions.locales);
+        var locales = makeArray(options.locales);
         var formats = get(this, 'formats');
 
         if (isEmpty(locales)) {
             locales = get(this, 'current');
         }
 
-        if (formatOptions) {
-            if (typeof formatOptions === 'string' && formats) {
-                formatOptions = get(formats, type + '.' + formatOptions);
+        if (options && options.format) {
+            var format;
+
+            if (typeof options.format === 'string' && formats) {
+                format = get(formats, type + '.' + options.format);
             }
 
-            formatOptions = Ember.$.extend({}, formatOptions, helperOptions);
-        } else {
-            formatOptions = helperOptions;
+            Ember.merge(options, format);
         }
 
         switch (type) {
             case 'date':
             case 'time':
-                return this.getDateTimeFormat(locales, formatOptions).format(value);
+                return this.getDateTimeFormat(locales, options).format(value);
             case 'number':
-                return this.getNumberFormat(locales, formatOptions).format(value);
+                return this.getNumberFormat(locales, options).format(value);
             case 'relative':
-                return this.getRelativeFormat(locales, formatOptions).format(value);
+                return this.getRelativeFormat(locales, options).format(value, formatOptions);
             default:
                 throw new Error('Unrecognized simple format type: ' + type);
         }
@@ -190,7 +186,7 @@ export default ServiceKlass.extend(Ember.Evented, {
     },
 
     getTranslation: function (key, locales) {
-        locales = locales ? Ember.makeArray(locales) : this.get('current');
+        locales = locales ? makeArray(locales) : this.get('current');
 
         var result = this.get('adapter').findTranslation(locales, key);
 

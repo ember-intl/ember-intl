@@ -31,3 +31,10 @@ test('should throw if called with out a value', function(assert) {
     view = this.intlBlock('{{format-relative}}');
     assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-relative');
 });
+
+test('can specify a `value` and `now` on the options hash', function(assert) {
+    expect(1);
+    view = this.intlBlock('{{format-relative 2000 now=0}}');
+    runAppend(view);
+    equal(view.$().text(), 'in 2 seconds');
+});

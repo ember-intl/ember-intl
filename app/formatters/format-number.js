@@ -8,10 +8,8 @@ import Formatter from 'ember-intl/formatter-base';
 
 var FormatNumber = Formatter.extend({
     format: function (value, hash) {
-        var args = this.buildOptions(value, hash);
-        var intl = this.intl;
-
-        return intl.formatNumber.apply(intl, args);
+        var options = this.filterFormatOptions(hash);
+        return this.intl.formatNumber(value, options);
     }
 });
 
