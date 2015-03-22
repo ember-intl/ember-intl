@@ -79,7 +79,7 @@ export default function (formatterName) {
             }
 
             var view      = options.data.view;
-            var intl      = this.container.lookup('service:intl');
+            var intl      = view.container.lookup('service:intl');
             var types     = options.types;
             var hash      = extend({}, options.hash);
             var formatter = view.container.lookup('formatter:' + formatterName);
