@@ -4,15 +4,13 @@
  */
 
 import Ember from 'ember';
-import IntlService from '../services/intl';
 import { addLocaleData } from 'ember-intl/utils/data';
 import FormatDate from '../helpers/format-date';
 import FormatTime from '../helpers/format-time';
-import FormatRelative from '../helpers/format-relative';
 import FormatNumber from '../helpers/format-number';
-import IntlGet from '../helpers/intl-get';
-import FormatHtmlMessage from '../helpers/format-html-message';
 import FormatMessage from '../helpers/format-message';
+import FormatRelative from '../helpers/format-relative';
+import FormatHtmlMessage from '../helpers/format-html-message';
 
 export var injectIntl = function (container) {
     container.optionsForType('formats', {
