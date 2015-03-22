@@ -161,6 +161,59 @@ export default Locale.extend({
 });
 ```
 
+### Writing Unit Tests
+
+If you are using the intl helpers in your components or views, you'll need to `needs` the service, helper, and formatter into your unit test.  
+
+In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke `injectIntl(container);` -- which is a utility function to setup the injection logic on the unit test container.
+
+```javascript
+//
+// unit test for testing index view which contains the format-number helper
+// unit/views/index-test.js
+//
+import Ember from 'ember';
+
+import {
+  injectIntl
+} from '../../../initializers/ember-intl';
+
+import {
+  moduleFor,
+  test
+} from 'ember-qunit';
+
+moduleFor('view:index', 'IndexView', {
+  needs: [
+    'service:intl',
+    'template:index',
+    'helper:format-number',
+    'formatter:format-number'
+  ],
+  setup: function (container) {
+    injectIntl(container);
+  }
+});
+
+test('view renders', function () {
+  var view = this.subject({
+    // context is the controller, since we are only testing the view
+    // i've decided to shim this
+    context: Ember.Object.create({
+      num: 1000
+    })
+  });
+
+  // render view
+  Ember.run(view, 'appendTo', '#qunit-fixture');
+
+  ok(view);
+
+  // destroy view
+  Ember.run(view, 'destroy');
+});
+```
+
 ### Helper Options
 * All helpers accept an optional:
 	* `locales` argument to explicitly pass/override the application locale
