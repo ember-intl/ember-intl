@@ -168,10 +168,11 @@ If you are using the intl helpers in your components or views, you'll need to `n
 In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke `injectIntl(container);` -- which is a utility function to setup the injection logic on the unit test container.
 
 ```javascript
-//
-// unit test for testing index view which contains the format-number helper
-// unit/views/index-test.js
-//
+/**
+ * unit test for testing index view which contains the format-number helper
+ *
+ * unit/views/index-test.js
+ */
 import Ember from 'ember';
 
 import {
@@ -188,10 +189,15 @@ moduleFor('view:index', 'IndexView', {
     'service:intl',
     'template:index',
     'helper:format-number',
+    'locale:en-us',
     'formatter:format-number'
   ],
   setup: function (container) {
     injectIntl(container);
+
+    // set the intl service locale to `en-us`
+    var service = container.lookup('service:intl');
+    service.set('locales', ['en-us']);
   }
 });
 
