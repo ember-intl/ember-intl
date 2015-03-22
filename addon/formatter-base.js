@@ -6,6 +6,8 @@
 import Ember from 'ember';
 
 var FormatBase = Ember.Object.extend({
+    intl: Ember.inject.service('intl'),
+
     filterFormatOptions: function (hash) {
         hash = hash || {};
 

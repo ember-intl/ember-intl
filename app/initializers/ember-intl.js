@@ -30,7 +30,6 @@ export var injectIntl = function (container) {
     container.injection('route',      'intl', 'service:intl');
     container.injection('model',      'intl', 'service:intl');
     container.injection('view',       'intl', 'service:intl');
-    container.injection('formatter',  'intl', 'service:intl');
 }
 
 export default {
@@ -50,13 +49,11 @@ export default {
 
         app.intl = container.lookup('service:intl');
         
-        if (Ember.HTMLBars) {
-            Ember.HTMLBars._registerHelper('format-date', FormatDate);
-            Ember.HTMLBars._registerHelper('format-time', FormatTime);
-            Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
-            Ember.HTMLBars._registerHelper('format-number', FormatNumber);
-            Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
-            Ember.HTMLBars._registerHelper('format-message', FormatMessage);
-        }
+        Ember.HTMLBars._registerHelper('format-date', FormatDate);
+        Ember.HTMLBars._registerHelper('format-time', FormatTime);
+        Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
+        Ember.HTMLBars._registerHelper('format-number', FormatNumber);
+        Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
+        Ember.HTMLBars._registerHelper('format-message', FormatMessage);
     }
 }

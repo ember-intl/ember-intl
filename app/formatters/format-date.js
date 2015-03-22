@@ -9,7 +9,7 @@ import Formatter from 'ember-intl/formatter-base';
 var FormatDate = Formatter.extend({
     format: function (value, hash) {
         var options = this.filterFormatOptions(hash);
-        return this.intl.formatDate(value, options);
+        return this.get('intl').formatDate(value, options);
     }
 });
 
