@@ -10,7 +10,7 @@ var FormatRelative = Formatter.extend({
     format: function (value, hash) {
         var options = this.filterFormatOptions(hash);
 
-        return this.intl.formatRelative(value, options, {
+        return this.get('intl').formatRelative(value, options, {
             now: hash.now
         });
     }

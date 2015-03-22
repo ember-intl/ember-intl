@@ -13,8 +13,8 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 
 ## Requirements
 * Ember-cli >= 0.1.5
-* Ember >= 1.9.x (1.10-beta-* supported)
-* HTMLBars and Handlebars supported
+* Ember >= 1.10.x
+* HTMLBars
 
 ## Installation
 * `npm install --save ember-intl`
@@ -158,6 +158,65 @@ export default Locale.extend({
 			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 		}
 	}
+});
+```
+
+### Writing Unit Tests
+
+If you are using the intl helpers in your components or views, you'll need to `needs` the service, helper, and formatter into your unit test.  
+
+In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke `injectIntl(container);` -- which is a utility function to setup the injection logic on the unit test container.
+
+```javascript
+/**
+ * unit test for testing index view which contains the format-number helper
+ *
+ * unit/views/index-test.js
+ */
+import Ember from 'ember';
+
+import {
+  injectIntl
+} from '../../../initializers/ember-intl';
+
+import {
+  moduleFor,
+  test
+} from 'ember-qunit';
+
+moduleFor('view:index', 'IndexView', {
+  needs: [
+    'service:intl',
+    'template:index',
+    'helper:format-number',
+    'locale:en-us',
+    'formatter:format-number'
+  ],
+  setup: function (container) {
+    injectIntl(container);
+
+    // set the intl service locale to `en-us`
+    var service = container.lookup('service:intl');
+    service.set('locales', ['en-us']);
+  }
+});
+
+test('view renders', function () {
+  var view = this.subject({
+    // context is the controller, since we are only testing the view
+    // i've decided to shim this
+    context: Ember.Object.create({
+      num: 1000
+    })
+  });
+
+  // render view
+  Ember.run(view, 'appendTo', '#qunit-fixture');
+
+  ok(view);
+
+  // destroy view
+  Ember.run(view, 'destroy');
 });
 ```
 

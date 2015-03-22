@@ -19,11 +19,10 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "handlebars": "~2.0.0",
     "jquery": "^1.11.1",
     "ember": "v1.10.0",
     "ember-resolver": "~0.1.10",
-    "loader.js": "stefanpenner/loader.js#1.0.1",
+    "loader.js": "stefanpenner/loader.js#3.2.0",
     "ember-cli-shims": "stefanpenner/ember-cli-shims#0.0.3",
     "ember-cli-test-loader": "rwjblue/ember-cli-test-loader#0.1.0",
     "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.2"
