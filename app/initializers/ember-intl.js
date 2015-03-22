@@ -37,22 +37,14 @@ export default {
             addLocaleData(require(key, null, null, true)['default']);
         });
 
-        var ServiceKlass = app.IntlService || IntlService;
-        var service      = ServiceKlass.create({ container: container });
+        app.intl = container.lookup('service:intl');
 
-        app.register('intl:main', service, {
-            singleton:   true,
-            instantiate: false
-        });
-
-        app.intl = service;
-
-        app.inject('controller', 'intl', 'intl:main');
-        app.inject('component',  'intl', 'intl:main');
-        app.inject('route',      'intl', 'intl:main');
-        app.inject('model',      'intl', 'intl:main');
-        app.inject('view',       'intl', 'intl:main');
-        app.inject('formatter',  'intl', 'intl:main');
+        app.inject('controller', 'intl', 'service:intl');
+        app.inject('component',  'intl', 'service:intl');
+        app.inject('route',      'intl', 'service:intl');
+        app.inject('model',      'intl', 'service:intl');
+        app.inject('view',       'intl', 'service:intl');
+        app.inject('formatter',  'intl', 'service:intl');
 
         if (Ember.HTMLBars) {
             Ember.HTMLBars._registerHelper('format-date', FormatDate);
