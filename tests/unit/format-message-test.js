@@ -5,7 +5,7 @@ import FormatMessage from '../../formatters/format-message';
 import formatMessageHelper from '../../helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Locale from 'ember-intl/models/locale';
-import IntlAdapter from '../../adapters/-intl-adapter';
+import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
 var view, container;
 

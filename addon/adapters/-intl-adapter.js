@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import IntlGetResult from 'ember-intl/models/intl-get-result';
-import Locale from 'ember-intl/models/locale';
-import IntlAdapter from 'ember-intl/adapter';
+import IntlGetResult from '../models/intl-get-result';
+import Locale from '../models/locale';
 
 function normalize (fullName) {
     Ember.assert('Lookup name must be a string', typeof fullName === 'string');
@@ -9,7 +8,7 @@ function normalize (fullName) {
     return fullName.toLowerCase();
 }
 
-export default IntlAdapter.extend({
+export default Ember.Object.extend({
     findLanguage: function (locale) {
         if (locale instanceof Locale) {
             return locale;
@@ -21,7 +20,6 @@ export default IntlAdapter.extend({
     },
 
     findTranslation: function (locales, translationKey) {
-        var container = this.container;
         var locale, translation, key;
 
         for (var i=0, len = locales.length; i < len; i++) {

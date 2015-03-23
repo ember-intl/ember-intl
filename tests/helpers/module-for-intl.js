@@ -16,7 +16,7 @@ export default function (name, callbacks) {
                 });
             }
 
-            container.injection('formatter', 'intl', 'intl:main');
+            container.injection('formatter', 'intl', 'service:intl');
 
             // mock the component lookup service since it's invoked prior to
             // looking up a handlebar helper to determine if the helper
@@ -57,14 +57,14 @@ export default function (name, callbacks) {
         getService: function () {
             var container = this.container;
 
-            if (!container.has('intl:main')) {
+            if (!container.has('service:intl')) {
                 var service = IntlService.create(Ember.$.extend({}, {
                     container:     this.container,
                     locales:       ['en'],
                     defaultLocale: 'en'
                 }));
 
-                container.register('intl:main', service, {
+                container.register('service:intl', service, {
                     singleton:   true,
                     instantiate: false
                 });
@@ -72,7 +72,7 @@ export default function (name, callbacks) {
                 return service;
             }
 
-            return container.lookup('intl:main');
+            return container.lookup('service:intl');
         }
     });
 }

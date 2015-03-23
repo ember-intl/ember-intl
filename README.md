@@ -162,9 +162,89 @@ export default Locale.extend({
 ```
 
 ### Helper Options
-* All helpers accept an optional:
+* All helpers accept optional arguments:
 	* `locales` argument to explicitly pass/override the application locale
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
+
+## Writing Unit Tests
+
+If using the intl helpers within a components or views that is unit tested, `needs` the service, helper, and formatter into the unit test.
+
+In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke `registerIntl(container);` -- which is a utility function to setup the injection logic on the unit test container.
+
+**NOTE**: Add the following above all script tags in `tests/index.html`
+
+`<script src="assets/intl/polyfill/Intl.complete.js"></script>`
+
+This is to shim your test runner if running within phantomjs, or any browser which does not natiely support the Intl API.
+
+### Example unit test
+
+```javascript
+/**
+ * unit test for testing index view which contains the helpers: `format-message` and `intl-get`
+ *
+ * unit/views/index-test.js
+ */
+import Ember from 'ember';
+
+import { registerIntl } from '../../../initializers/ember-intl';
+
+import {
+  moduleFor,
+  test
+} from 'ember-qunit';
+
+moduleFor('view:index', 'IndexView', {
+  needs: [
+    'template:index',
+    'service:intl',
+    'helper:format-message',
+    'helper:intl-get',
+    'formatter:format-message'
+    'locale:en',
+    'locale:es'
+  ],
+  setup: function () {
+	// depending on your test library, container will be hanging off `this`
+	// or otherwise passed in as the first argument
+	var container = this.container || arguments[0];
+
+	// injects the service on to all logical factory types
+    registerIntl(container);
+
+    // set the initial intl service locale to `en-us`
+    var intl = container.lookup('service:intl');
+    intl.set('locales', 'en-us');
+  }
+});
+
+test('index renders', function () {
+  expect(2);
+  
+  var view = this.subject({
+    context: Ember.Object.create({
+      firstName: 'Tom'
+    })
+  });
+
+  var intl = view.get('intl');
+
+  // render view
+  Ember.run(view, 'appendTo', '#qunit-fixture');
+
+  equal(view.$().text().trim(), "hello Tom");
+
+  Ember.run(function () {
+    intl.set('locales', 'es');
+  });
+
+  equal(view.$().text().trim(), "hola Tom");
+
+  // destroy view
+  Ember.run(view, 'destroy');
+});
+```
 
 ## Running
 
