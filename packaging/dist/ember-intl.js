@@ -359,7 +359,7 @@ var define, requireModule, require, requirejs;
 
                 var value     = params[0];
                 var view      = env.data.view;
-                var intl      = view.container.lookup('intl:main');
+                var intl      = view.container.lookup('service:intl');
                 var seenHash  = readHash(hash);
                 var formatter = view.container.lookup('formatter:' + formatterName);
 
@@ -410,7 +410,7 @@ var define, requireModule, require, requirejs;
                 }
 
                 var view      = options.data.view;
-                var intl      = this.container.lookup('intl:main');
+                var intl      = this.container.lookup('service:intl');
                 var types     = options.types;
                 var hash      = extend({}, options.hash);
                 var formatter = view.container.lookup('formatter:' + formatterName);
@@ -901,7 +901,7 @@ var define, requireModule, require, requirejs;
         var view  = options.data.view;
         var types = options.types;
         var hash  = readHash(options.hash);
-        var intl  = view.container.lookup('intl:main');
+        var intl  = view.container.lookup('service:intl');
 
         var currentValue = value;
         var outStreamValue = '';
@@ -996,19 +996,19 @@ var define, requireModule, require, requirejs;
             var ServiceKlass = app.IntlService || IntlService;
             var service      = ServiceKlass.create({ container: container });
 
-            app.register('intl:main', service, {
+            app.register('service:intl', service, {
                 singleton:   true,
                 instantiate: false
             });
 
             app.intl = service;
 
-            app.inject('controller', 'intl', 'intl:main');
-            app.inject('component',  'intl', 'intl:main');
-            app.inject('route',      'intl', 'intl:main');
-            app.inject('model',      'intl', 'intl:main');
-            app.inject('view',       'intl', 'intl:main');
-            app.inject('formatter',  'intl', 'intl:main');
+            app.inject('controller', 'intl', 'service:intl');
+            app.inject('component',  'intl', 'service:intl');
+            app.inject('route',      'intl', 'service:intl');
+            app.inject('model',      'intl', 'service:intl');
+            app.inject('view',       'intl', 'service:intl');
+            app.inject('formatter',  'intl', 'service:intl');
 
             if (Ember.HTMLBars) {
                 Ember.HTMLBars._registerHelper('format-date', FormatDate);

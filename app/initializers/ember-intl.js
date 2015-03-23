@@ -13,54 +13,56 @@ import FormatNumber from '../helpers/format-number';
 import IntlGet from '../helpers/intl-get';
 import FormatHtmlMessage from '../helpers/format-html-message';
 import FormatMessage from '../helpers/format-message';
+import ENV from '../config/environment';
+import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
+
+export var registerIntl = function (container) {
+    var seen   = requirejs._eak_seen;
+    var prefix = ENV.modulePrefix;
+
+    Object.keys(seen).filter(function (key) {
+        return key.indexOf(prefix + '\/cldrs\/') === 0;
+    }).forEach(function (key) {
+        addLocaleData(require(key, null, null, true)['default']);
+    });
+
+    container.optionsForType('locale', {
+        singleton:   true,
+        instantiate: true
+    });
+
+    container.optionsForType('formats', {
+        singleton:   true,
+        instantiate: false
+    });
+
+    container.injection('controller', 'intl', 'service:intl');
+    container.injection('component',  'intl', 'service:intl');
+    container.injection('route',      'intl', 'service:intl');
+    container.injection('model',      'intl', 'service:intl');
+    container.injection('view',       'intl', 'service:intl');
+    container.injection('formatter',  'intl', 'service:intl');
+
+    if (!container.has('adapter:-intl-adapter')) {
+        container.register('adapter:-intl-adapter', IntlAdapter);
+    }
+
+    if (Ember.HTMLBars) {
+        Ember.HTMLBars._registerHelper('format-date', FormatDate);
+        Ember.HTMLBars._registerHelper('format-time', FormatTime);
+        Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
+        Ember.HTMLBars._registerHelper('format-number', FormatNumber);
+        Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
+        Ember.HTMLBars._registerHelper('format-message', FormatMessage);
+    }
+}
 
 export default {
     name: 'ember-intl',
 
     initialize: function (container, app) {
-        var seen   = requirejs._eak_seen;
-        var prefix = app.modulePrefix;
+        registerIntl(container);
 
-        container.optionsForType('formats', {
-            singleton:   true,
-            instantiate: false
-        });
-
-        container.optionsForType('locale', {
-            singleton:   true,
-            instantiate: true
-        });
-
-        Object.keys(seen).filter(function (key) {
-            return key.indexOf(prefix + '\/cldrs\/') === 0;
-        }).forEach(function (key) {
-            addLocaleData(require(key, null, null, true)['default']);
-        });
-
-        var ServiceKlass = app.IntlService || IntlService;
-        var service      = ServiceKlass.create({ container: container });
-
-        app.register('intl:main', service, {
-            singleton:   true,
-            instantiate: false
-        });
-
-        app.intl = service;
-
-        app.inject('controller', 'intl', 'intl:main');
-        app.inject('component',  'intl', 'intl:main');
-        app.inject('route',      'intl', 'intl:main');
-        app.inject('model',      'intl', 'intl:main');
-        app.inject('view',       'intl', 'intl:main');
-        app.inject('formatter',  'intl', 'intl:main');
-
-        if (Ember.HTMLBars) {
-            Ember.HTMLBars._registerHelper('format-date', FormatDate);
-            Ember.HTMLBars._registerHelper('format-time', FormatTime);
-            Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
-            Ember.HTMLBars._registerHelper('format-number', FormatNumber);
-            Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
-            Ember.HTMLBars._registerHelper('format-message', FormatMessage);
-        }
+        app.intl = container.lookup('service:intl');
     }
 }
