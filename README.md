@@ -201,16 +201,15 @@ moduleFor('view:index', 'IndexView', {
     'service:intl',
     'helper:format-message',
     'helper:intl-get',
-    'formatter:format-message'
+    'formatter:format-message',
     'locale:en',
     'locale:es'
   ],
   setup: function () {
-	// depending on your test library, container will be hanging off `this`
-	// or otherwise passed in as the first argument
-	var container = this.container || arguments[0];
-
-	// injects the service on to all logical factory types
+    // depending on your test library, container will be hanging off `this`
+    // or otherwise passed in as the first argument
+    var container = this.container || arguments[0];
+    // injects the service on to all logical factory types
     registerIntl(container);
 
     // set the initial intl service locale to `en-us`
