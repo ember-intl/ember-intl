@@ -199,7 +199,6 @@ moduleFor('view:index', 'IndexView', {
   needs: [
     'template:index',
     'service:intl',
-    'helper:format-message',
     'helper:intl-get',
     'formatter:format-message',
     'locale:en',

@@ -4,15 +4,13 @@
  */
 
 import Ember from 'ember';
-import IntlService from '../services/intl';
 import { addLocaleData } from 'ember-intl/utils/data';
-import FormatDate from '../helpers/format-date';
-import FormatTime from '../helpers/format-time';
-import FormatRelative from '../helpers/format-relative';
-import FormatNumber from '../helpers/format-number';
-import IntlGet from '../helpers/intl-get';
-import FormatHtmlMessage from '../helpers/format-html-message';
-import FormatMessage from '../helpers/format-message';
+import FormatDate from 'ember-intl/helpers/format-date';
+import FormatTime from 'ember-intl/helpers/format-time';
+import FormatRelative from 'ember-intl/helpers/format-relative';
+import FormatNumber from 'ember-intl/helpers/format-number';
+import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
+import FormatMessage from 'ember-intl/helpers/format-message';
 import ENV from '../config/environment';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
@@ -47,14 +45,12 @@ export var registerIntl = function (container) {
         container.register('adapter:-intl-adapter', IntlAdapter);
     }
 
-    if (Ember.HTMLBars) {
-        Ember.HTMLBars._registerHelper('format-date', FormatDate);
-        Ember.HTMLBars._registerHelper('format-time', FormatTime);
-        Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
-        Ember.HTMLBars._registerHelper('format-number', FormatNumber);
-        Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
-        Ember.HTMLBars._registerHelper('format-message', FormatMessage);
-    }
+    Ember.HTMLBars._registerHelper('format-date', FormatDate);
+    Ember.HTMLBars._registerHelper('format-time', FormatTime);
+    Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
+    Ember.HTMLBars._registerHelper('format-number', FormatNumber);
+    Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
+    Ember.HTMLBars._registerHelper('format-message', FormatMessage);
 }
 
 export default {
