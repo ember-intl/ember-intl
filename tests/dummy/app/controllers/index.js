@@ -5,11 +5,12 @@ var yesterday = now.setDate(now.getDate() - 1);
 
 function computedNumber (number, options) {
     return Ember.computed('intl.locales', function () {
-        return this.intl.formatNumber(number, options);
+        return this.get('intl').formatNumber(number, options);
     });
 }
 
 export default Ember.Controller.extend({
+    intl:      Ember.inject.service(),
     numType:   'currency',
     num:       1000,
     yesterday: yesterday,

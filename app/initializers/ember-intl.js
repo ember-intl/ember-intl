@@ -34,13 +34,6 @@ export var registerIntl = function (container) {
         instantiate: false
     });
 
-    container.injection('controller', 'intl', 'service:intl');
-    container.injection('component',  'intl', 'service:intl');
-    container.injection('route',      'intl', 'service:intl');
-    container.injection('model',      'intl', 'service:intl');
-    container.injection('view',       'intl', 'service:intl');
-    container.injection('formatter',  'intl', 'service:intl');
-
     if (!container.has('adapter:-intl-adapter')) {
         container.register('adapter:-intl-adapter', IntlAdapter);
     }
