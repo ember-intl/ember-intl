@@ -8,7 +8,6 @@ import { IntlRelativeFormat, IntlMessageFormat } from '../utils/data';
 import createFormatCache from '../format-cache/memoizer';
 import IntlGetResult from '../models/intl-get-result';
 
-var ServiceKlass = Ember.Service || Ember.Controller;
 var makeArray    = Ember.makeArray;
 var get          = Ember.get;
 var on           = Ember.on;
@@ -22,7 +21,7 @@ function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
 }
 
-export default ServiceKlass.extend(Ember.Evented, {
+export default Ember.Service.extend(Ember.Evented, {
     locales:           null,
     defaultLocale:     null,
 
