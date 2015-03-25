@@ -1,5 +1,6 @@
 ### MASTER
 * [BREAKING] Removing support for handlebars in favor of just supporting htmlbars going forward
+* [BREAKING] Removed injection of `intl` service into all popular types.  Instead use `Ember.inject.service('intl')` where you need to programmatically interface with the intl service.
 * [BREAKING] `intl:main` is now `service:intl` on the container
   * This allows for `Ember.inject.service()` support and easier unit testing
 * [ENHANCEMENT] format-relative now accepts a `now` argument
