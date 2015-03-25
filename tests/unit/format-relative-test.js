@@ -2,7 +2,7 @@ import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatRelative from '../../formatters/format-relative';
-import formatRelativehelper from '../../helpers/format-relative';
+import formatRelativehelper from 'ember-intl/helpers/format-relative';
 
 var view;
 

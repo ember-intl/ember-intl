@@ -2,7 +2,7 @@ import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatMessage from '../../formatters/format-message';
-import formatMessageHelper from '../../helpers/format-message';
+import formatMessageHelper from 'ember-intl/helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Locale from 'ember-intl/models/locale';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';

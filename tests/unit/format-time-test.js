@@ -2,7 +2,7 @@ import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatTime from '../../formatters/format-time';
-import formatTimeHelper from '../../helpers/format-time';
+import formatTimeHelper from 'ember-intl/helpers/format-time';
 
 var view;
 var dateStr   = 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)';

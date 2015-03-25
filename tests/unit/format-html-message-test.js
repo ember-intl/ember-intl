@@ -2,7 +2,7 @@ import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatHtmlMessage from '../../formatters/format-html-message';
-import formatHtmlHelper from '../../helpers/format-html-message';
+import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 
 var view;
 

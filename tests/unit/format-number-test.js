@@ -2,7 +2,7 @@ import Ember from 'ember';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatNumber from '../../formatters/format-number';
-import formatNumberHelper from '../../helpers/format-number';
+import formatNumberHelper from 'ember-intl/helpers/format-number';
 
 var view, container;
 
