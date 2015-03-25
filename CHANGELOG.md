@@ -1,6 +1,9 @@
 ### MASTER
-
+* [BREAKING] Removing support for handlebars in favor of just supporting htmlbars going forward
+* [BREAKING] `intl:main` is now `service:intl` on the container
+  * This allows for `Ember.inject.service()` support and easier unit testing
 * [ENHANCEMENT] format-relative now accepts a `now` argument
+* [DOCUMENTATION] Documented unit testing components which utilize format-* helpers
 
 ```hbs
 {{format-relative 2000 now=0}} -> in 2 seconds
