@@ -26,7 +26,7 @@ var FormatMessage = Formatter.extend({
             formatOptions.locales = locales;
         }
 
-        return this.intl.formatMessage(value, hash, formatOptions);
+        return this.get('intl').formatMessage(value, hash, formatOptions);
     }
 });
 
