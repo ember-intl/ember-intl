@@ -4,6 +4,8 @@
 * [BREAKING] `intl:main` is now `service:intl` on the container
   * This allows for `Ember.inject.service()` support and easier unit testing
 * [ENHANCEMENT] format-relative now accepts a `now` argument
+* [ENHANCEMENT] Eliminate `currentValue` closure from base helper
+* [ENHANCEMENT] Assert `intl-get` helper is used only as a subexpression
 * [DOCUMENTATION] Documented unit testing components which utilize format-* helpers
 
 ```hbs
