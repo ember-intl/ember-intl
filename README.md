@@ -137,7 +137,7 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 
 ### Intl-Get
 
-Utility helper for accessing and returning the value the properties from the locale's message object via a string namespace.
+Utility helper for returning the value, or eventual value, based on a translation key.  *Should only ever be used as a subexpression, never as a standalone helper.*
 
 ```hbs
 {{format-message (intl-get 'messages.product.info')
@@ -219,7 +219,7 @@ moduleFor('view:index', 'IndexView', {
 
 test('index renders', function () {
   expect(2);
-  
+
   var view = this.subject({
     context: Ember.Object.create({
       firstName: 'Tom'

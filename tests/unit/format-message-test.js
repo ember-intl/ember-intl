@@ -64,6 +64,17 @@ test('should throw if called with out a value', function(assert) {
     assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-message');
 });
 
+test('should throw intl-get is used standalone helper', function(assert) {
+    assert.expect(1);
+    view = this.intlBlock('{{intl-get "messages.foo.bar"}}');
+
+    try {
+        runAppend(view);
+    } catch (ex) {
+        assert.ok(ex, 'intl-get threw when run standalone');
+    }
+});
+
 test('should return a formatted string', function(assert) {
     assert.expect(1);
 

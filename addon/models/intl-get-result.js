@@ -1,6 +1,6 @@
-function IntlGetResult (translation, locale) {
-    this.translation = translation;
-    this.locale = locale;
+function IntlGetResult (content, locale) {
+    this.content = content;
+    this.locale  = locale;
 }
 
 export default IntlGetResult;

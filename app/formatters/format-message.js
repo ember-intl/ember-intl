@@ -19,7 +19,7 @@ var FormatMessage = Formatter.extend({
                 locales = value.locale;
             }
 
-            value = value.translation;
+            value = value.content;
         }
 
         if (locales) {

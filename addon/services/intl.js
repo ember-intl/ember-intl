@@ -79,13 +79,13 @@ export default Ember.Service.extend(Ember.Evented, {
     }),
 
     addMessage: function (locale, key, value) {
-        return this.getLanguage(locale).then(function (localeInstance) {
+        return this.findLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessage(key, value);
         });
     },
 
     addMessages: function (locale, messageObject) {
-        return this.getLanguage(locale).then(function (localeInstance) {
+        return this.findLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessages(messageObject);
         });
     },
@@ -175,7 +175,7 @@ export default Ember.Service.extend(Ember.Evented, {
         }
     },
 
-    getLanguage: function (locale) {
+    findLanguage: function (locale) {
         var result = this.get('adapter').findLanguage(locale);
 
         return Ember.RSVP.cast(result).then(function (localeInstance) {
@@ -187,7 +187,7 @@ export default Ember.Service.extend(Ember.Evented, {
         });
     },
 
-    getTranslation: function (key, locales) {
+    findTranslation: function (key, locales) {
         locales = locales ? makeArray(locales) : this.get('current');
 
         var result = this.get('adapter').findTranslation(locales, key);
