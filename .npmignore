@@ -8,3 +8,4 @@
 .wafpickle-*
 CVS
 npm-debug.log
+bower_components/
