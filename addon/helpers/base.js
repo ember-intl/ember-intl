@@ -16,7 +16,7 @@ export default function (formatterName) {
             return throwError();
         }
 
-        var currentValue, outStream;
+        var outStream;
 
         function touchStream () {
             outStream.notify();
@@ -29,16 +29,13 @@ export default function (formatterName) {
         var formatter = view.container.lookup('formatter:' + formatterName);
 
         if (value.isStream) {
-            value.subscribe(function (_stream) {
-                currentValue = _stream.value();
+            value.subscribe(function () {
                 touchStream();
             }, value);
         }
 
-        currentValue = read(value);
-
         outStream = new Stream(function () {
-            return formatter.format.call(formatter, read(currentValue), seenHash);
+            return formatter.format.call(formatter, read(value), seenHash);
         });
 
         Ember.keys(hash).forEach(function (key) {
