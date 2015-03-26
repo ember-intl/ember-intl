@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var application;
@@ -15,15 +16,15 @@ function contains(selector, string) {
 }
 
 module('Acceptance: Smoke', {
-    setup: function() {
+    beforeEach: function() {
         application = startApp();
     },
-    teardown: function() {
+    afterEach: function() {
         Ember.run(application, 'destroy');
     }
 });
 
-test('format-number', function() {
+test('format-number', function(assert) {
     visit('/smoke');
 
     andThen(function() {
@@ -31,7 +32,7 @@ test('format-number', function() {
     });
 });
 
-test('format-date', function() {
+test('format-date', function(assert) {
     visit('/smoke');
 
     andThen(function() {
@@ -39,7 +40,7 @@ test('format-date', function() {
     });
 });
 
-test('format-time', function() {
+test('format-time', function(assert) {
     visit('/smoke');
 
     andThen(function() {
@@ -47,7 +48,7 @@ test('format-time', function() {
     });
 });
 
-test('format-relative', function() {
+test('format-relative', function(assert) {
     visit('/smoke');
 
     andThen(function() {
