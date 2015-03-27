@@ -8,7 +8,6 @@
 'use strict';
 
 var serialize    = require('serialize-javascript');
-var Funnel       = require('broccoli-funnel');
 var walkSync     = require('walk-sync');
 var path         = require('path');
 var fs           = require('fs');
@@ -30,9 +29,9 @@ module.exports = {
     },
 
     treeForApp: function (inputTree) {
-        var appPath = this.treePaths.app;
+        var appPath     = this.treePaths.app;
         var localesPath = path.join(this.project.root, appPath, 'locales');
-        var trees = [inputTree];
+        var trees       = [inputTree];
 
         if (fs.existsSync(localesPath)) {
             var locales = walkSync(localesPath).map(function (filename) {
