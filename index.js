@@ -56,7 +56,7 @@ module.exports = {
 
     treeForApp: function (inputTree) {
         var appPath     = this.treePaths.app;
-        var localesPath = path.join(this.project.root, appPath, 'locales');
+        var localesPath = path.join(this.project.root, 'translations');
         var trees       = [inputTree];
 
         if (fs.existsSync(localesPath)) {
