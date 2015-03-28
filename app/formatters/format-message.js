@@ -10,8 +10,8 @@ import IntlGetResult from 'ember-intl/models/intl-get-result';
 var validKey = /[\w|.]/;
 
 var FormatMessage = Formatter.extend({
-    format: function (value, hash, optionalLocale) {
-        var locales = optionalLocale || hash.locales;
+    format: function (value, options, optionalLocale) {
+        var locales = optionalLocale || options.locales;
         var formatOptions = {};
 
         if (value instanceof IntlGetResult) {
@@ -26,7 +26,7 @@ var FormatMessage = Formatter.extend({
             formatOptions.locales = locales;
         }
 
-        return this.get('intl').formatMessage(value, hash, formatOptions);
+        return this.get('intl').formatMessage(value, options, formatOptions);
     }
 });
 

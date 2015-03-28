@@ -254,8 +254,8 @@ test('intl-get returns message for key that is a literal string (not an object p
     var translation = container.lookup('ember-intl@translation:en');
 
     try {
-        container.unregister('translation:en');
-        container.register('translation:en', Translation.extend({
+        container.unregister('ember-intl@translation:en');
+        container.register('ember-intl@translation:en', Translation.extend({
             'string.path.works': 'yes it does',
             getValue: function (key) {
                 return this[key];
@@ -268,7 +268,7 @@ test('intl-get returns message for key that is a literal string (not an object p
         assert.equal(view.$().text(), "yes it does");
     }
     finally {
-        container.unregister('translation:en');
-        container.register('translation:en', translation, { instantiate: false });
+        container.unregister('ember-intl@translation:en');
+        container.register('ember-intl@translation:en', translation, { instantiate: false });
     }
 });

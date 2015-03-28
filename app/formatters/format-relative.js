@@ -7,11 +7,11 @@ import Ember from 'ember';
 import Formatter from 'ember-intl/formatter-base';
 
 var FormatRelative = Formatter.extend({
-    format: function (value, hash) {
-        var options = this.filterFormatOptions(hash);
+    format: function (value, options) {
+        var formatOptions = this.filterFormatOptions(options);
 
-        return this.get('intl').formatRelative(value, options, {
-            now: hash.now
+        return this.get('intl').formatRelative(value, formatOptions, {
+            now: options.now
         });
     }
 });

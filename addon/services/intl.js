@@ -128,6 +128,7 @@ export default Ember.Service.extend(Ember.Evented, {
     formatRelative: function (date, options, formatOptions) {
         date = new Date(date);
         assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
+
         return this._format('relative', date, options, formatOptions);
     },
 

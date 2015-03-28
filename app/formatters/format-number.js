@@ -7,9 +7,9 @@ import Ember from 'ember';
 import Formatter from 'ember-intl/formatter-base';
 
 var FormatNumber = Formatter.extend({
-    format: function (value, hash) {
-        var options = this.filterFormatOptions(hash);
-        return this.get('intl').formatNumber(value, options);
+    format: function (value, options) {
+        var formatOptions = this.filterFormatOptions(options);
+        return this.get('intl').formatNumber(value, formatOptions);
     }
 });
 
