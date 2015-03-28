@@ -20,7 +20,7 @@ export default function (formatterName) {
                 return throwError();
             }
 
-            var currentValue, outStream;
+            var outStream;
 
             function touchStream () {
                 outStream.notify();
@@ -33,16 +33,13 @@ export default function (formatterName) {
             var formatter = view.container.lookup('formatter:' + formatterName);
 
             if (value.isStream) {
-                value.subscribe(function (_stream) {
-                    currentValue = _stream.value();
+                value.subscribe(function () {
                     touchStream();
                 }, value);
             }
 
-            currentValue = read(value);
-
             outStream = new Stream(function () {
-                return formatter.format.call(formatter, read(currentValue), seenHash);
+                return formatter.format.call(formatter, read(value), seenHash);
             });
 
             Ember.keys(hash).forEach(function (key) {
@@ -84,7 +81,7 @@ export default function (formatterName) {
             var hash      = extend({}, options.hash);
             var formatter = view.container.lookup('formatter:' + formatterName);
 
-            var simpleView, simpleViewStream, currentValue;
+            var simpleView, simpleViewStream;
 
             if (types[0] === 'ID') {
                 value = view.getStream(value);
@@ -92,15 +89,11 @@ export default function (formatterName) {
 
             if (value.isStream && !options.data.isUnbound) {
                 value.subscribe(function (valueStream) {
-                    currentValue = valueStream.value();
                     touchStream();
                 }, value);
             }
-
-            currentValue = read(value);
-
             simpleViewStream = new Stream(function () {
-                return formatter.format.call(formatter, read(currentValue), hash);
+                return formatter.format.call(formatter, read(value), hash);
             });
 
             Ember.keys(options.hashTypes).forEach(function (key) {

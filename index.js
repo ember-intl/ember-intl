@@ -8,7 +8,6 @@
 'use strict';
 
 var serialize    = require('serialize-javascript');
-var Funnel       = require('broccoli-funnel');
 var walkSync     = require('walk-sync');
 var path         = require('path');
 var fs           = require('fs');
