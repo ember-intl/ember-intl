@@ -88,7 +88,7 @@ export default function (formatterName) {
             }
 
             if (value.isStream && !options.data.isUnbound) {
-                value.subscribe(function (valueStream) {
+                value.subscribe(function () {
                     touchStream();
                 }, value);
             }
