@@ -1,6 +1,6 @@
 import Ember from 'ember';
+import Translation from '../models/translation';
 import IntlGetResult from '../models/intl-get-result';
-import Locale from '../models/locale';
 
 function normalize (fullName) {
     Ember.assert('Lookup name must be a string', typeof fullName === 'string');
@@ -9,13 +9,13 @@ function normalize (fullName) {
 }
 
 export default Ember.Object.extend({
-    findLanguage: function (locale) {
-        if (locale instanceof Locale) {
-            return locale;
+    findLanguage: function (localeName) {
+        if (localeName instanceof Translation) {
+            return localeName;
         }
 
-        if (typeof locale === 'string') {
-            return this.container.lookup('locale:' + normalize(locale));
+        if (typeof localeName === 'string') {
+            return this.container.lookup('translation:' + normalize(localeName));
         }
     },
 
@@ -23,7 +23,7 @@ export default Ember.Object.extend({
         var locale, translation, key;
 
         for (var i=0, len = locales.length; i < len; i++) {
-            key = locales[i];
+            key    = locales[i];
             locale = this.findLanguage(key);
 
             if (locale) {

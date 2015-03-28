@@ -49,7 +49,7 @@ AddonRegistry.prototype.write = function (readTree, destDir) {
                 }
             });
             
-            output.push("  container.register('ember-intl@model:locale', require('ember-intl/models/locale')['default'])");
+            output.push("  container.register('ember-intl@model:locale', require('ember-intl/models/translation')['default'])");
 
             output.push("};});");
 

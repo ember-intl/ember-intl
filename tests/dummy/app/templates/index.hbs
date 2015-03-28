@@ -30,13 +30,13 @@
       deadline=yesterday}}
 </div>
 <div>
-    {{format-message messages.photos
+    {{format-message photos
       name='Jason'
       numPhotos=num
       takenDate=yesterday}}
 </div>
 <br />
-<button {{bind-attr title=(format-message (intl-get 'messages.product.title'))}}>
+<button {{bind-attr title=(format-message (intl-get 'product.title'))}}>
     Use with bind-attr
 </button>
 
@@ -44,7 +44,7 @@
 
 <h3>Format HTML Message</h3>
 <div>
-    {{format-html-message  (intl-get 'messages.product.html.info')
+    {{format-html-message  (intl-get 'product.html.info')
       product='Apple watch'
       price=200
       deadline=yesterday}}

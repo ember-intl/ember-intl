@@ -5,7 +5,7 @@ import { runAppend, runDestroy } from '../helpers/run-append';
 import FormatMessage from '../../formatters/format-message';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import intlGet from '../../helpers/intl-get';
-import Locale from 'ember-intl/models/locale';
+import Translation from 'ember-intl/models/translation';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
 var view, container;
@@ -21,12 +21,10 @@ moduleForIntl('format-message', {
 
         Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
 
-        container.register('locale:en', Locale.extend({
-            messages: {
-                foo: {
-                    bar: 'foo bar baz',
-                    baz: 'baz baz baz'
-                }
+        container.register('translation:en', Translation.extend({
+            foo: {
+                bar: 'foo bar baz',
+                baz: 'baz baz baz'
             }
         }));
     },
@@ -66,7 +64,7 @@ test('should throw if called with out a value', function(assert) {
 
 test('should throw intl-get is used standalone helper', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{intl-get "messages.foo.bar"}}');
+    view = this.intlBlock('{{intl-get "foo.bar"}}');
 
     try {
         runAppend(view);
@@ -148,7 +146,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 test('intl-get returns message and format-message renders', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-message (intl-get "messages.foo.bar")}}');
+    view = this.intlBlock('{{format-message (intl-get "foo.bar")}}');
     runAppend(view);
 
     assert.equal(view.$().text(), "foo bar baz");
@@ -157,10 +155,10 @@ test('intl-get returns message and format-message renders', function(assert) {
 test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
 
-    var locale = container.lookup('locale:en');
+    var locale = container.lookup('translation:en');
     locale.addMessage('adding', 'this works also');
 
-    view = this.intlBlock('{{format-message (intl-get "messages.adding")}}');
+    view = this.intlBlock('{{format-message (intl-get "adding")}}');
     runAppend(view);
     assert.equal(view.$().text(), "this works also");
 });
@@ -173,7 +171,7 @@ test('intl-get handles bound computed property', function(assert) {
     var context = Ember.Object.extend({
         foo: true,
         computedMessage: Ember.computed('foo', function () {
-            return this.get('foo') ? 'messages.foo.bar' : 'messages.foo.baz';
+            return this.get('foo') ? 'foo.bar' : 'foo.baz';
         })
     }).create();
 
@@ -206,7 +204,7 @@ test('locale can add message to intl service and read it', function(assert) {
 
     Ember.run(function () {
         service.addMessage('en', 'oh', 'hai!').then(function () {
-            view = self.intlBlock('{{format-message (intl-get "messages.oh")}}');
+            view = self.intlBlock('{{format-message (intl-get "oh")}}');
             runAppend(view);
             assert.equal(view.$().text(), "hai!");
         });
@@ -216,12 +214,12 @@ test('locale can add message to intl service and read it', function(assert) {
 test('locale can add messages object and intl-get can read it', function(assert) {
     assert.expect(1);
 
-    var locale = container.lookup('locale:en');
+    var locale = container.lookup('translation:en');
     locale.addMessages({
         'bulk-add': 'bulk add works'
     });
 
-    view = this.intlBlock('{{format-message (intl-get "messages.bulk-add")}}');
+    view = this.intlBlock('{{format-message (intl-get "bulk-add")}}');
     runAppend(view);
     assert.equal(view.$().text(), "bulk add works");
 });
@@ -253,11 +251,11 @@ test('should respect format options for date ICU block', function(assert) {
 test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
     assert.expect(1);
 
-    var locale = container.lookup('locale:en');
+    var locale = container.lookup('translation:en');
 
     try {
-        container.unregister('locale:en');
-        container.register('locale:en', Locale.extend({
+        container.unregister('translation:en');
+        container.register('translation:en', Translation.extend({
             'string.path.works': 'yes it does',
             getValue: function (key) {
                 return this[key];
@@ -270,7 +268,7 @@ test('intl-get returns message for key that is a literal string (not an object p
         assert.equal(view.$().text(), "yes it does");
     }
     finally {
-        container.unregister('locale:en');
-        container.register('locale:en', locale, { instantiate: false });
+        container.unregister('translation:en');
+        container.register('translation:en', locale, { instantiate: false });
     }
 });

@@ -24,7 +24,7 @@ export var registerIntl = function (container) {
         addLocaleData(require(key, null, null, true)['default']);
     });
 
-    container.optionsForType('locale', {
+    container.optionsForType('translation', {
         singleton:   true,
         instantiate: true
     });

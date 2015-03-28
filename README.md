@@ -12,7 +12,7 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 **<http://formatjs.io/ember/>**
 
 ## Requirements
-* Ember-cli >= 0.1.5
+* Ember-cli >= 0.2.0
 * Ember >= 1.10.x
 * HTMLBars
 
@@ -32,15 +32,13 @@ so you need to add the following to your index.html:
 Example of app/locales/en.js:
 
 ```js
-import Locale from 'ember-intl/models/locale';
+import Translation from 'ember-intl/models/translation';
 
-export default Locale.extend({
-	messages: {
-		product: {
-			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
-			html: {
-				info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
-			}
+export default Translation.extend({
+	product: {
+		info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
+		html: {
+			info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
 		}
 	}
 });
@@ -110,7 +108,7 @@ You have {numPhotos, plural,
 ```
 
 ```hbs
-{{format-message (intl-get 'messages.product.info')
+{{format-message (intl-get 'product.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -126,7 +124,7 @@ You have {numPhotos, plural,
 This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
-{{format-html-message (intl-get 'messages.product.html.info')
+{{format-html-message (intl-get 'product.html.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -140,7 +138,7 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 Utility helper for returning the value, or eventual value, based on a translation key.  *Should only ever be used as a subexpression, never as a standalone helper.*
 
 ```hbs
-{{format-message (intl-get 'messages.product.info')
+{{format-message (intl-get 'product.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -149,14 +147,12 @@ Utility helper for returning the value, or eventual value, based on a translatio
 Will return the message from the current locale, or locale explicitly passed as an argument, message object.
 
 ```js
-// app/locales/en.js
-import Locale from 'ember-intl/models/locale';
+// translations/en.js
+import Translation from 'ember-intl/models/translation';
 
-export default Locale.extend({
-	messages: {
-		product: {
-			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
-		}
+export default Translation.extend({
+	product: {
+		info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 	}
 });
 ```
@@ -201,8 +197,8 @@ moduleFor('view:index', 'IndexView', {
     'service:intl',
     'helper:intl-get',
     'formatter:format-message',
-    'locale:en',
-    'locale:es'
+    'translation:en',
+    'translation:es'
   ],
   setup: function () {
     // depending on your test library, container will be hanging off `this`
