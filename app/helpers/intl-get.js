@@ -7,6 +7,8 @@ import Ember from 'ember';
 import { Stream, read, readHash, destroyStream } from 'ember-intl/utils/streams';
 
 export default function (value, options) {
+    Ember.assert('intl-get helper must be used as a subexpression', options.isInline === true);
+
     var view  = options.data.view;
     var types = options.types;
     var hash  = readHash(options.hash);
