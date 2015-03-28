@@ -14,7 +14,8 @@ var walkSync     = require('walk-sync');
 var path         = require('path');
 var fs           = require('fs');
 
-var LocaleWriter = require('./lib/locale-writer');
+var LocaleWriter       = require('./lib/locale-writer');
+var TranslationBlender = require('./lib/translation-blender');
 
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
@@ -31,12 +32,14 @@ module.exports = {
             ext:  'js',
             toTree: function (tree) {
                 var config = addon.intlConfig();
-                var translationTree = new Funnel(config.inputPath, {
-                    destDir: config.outputPath,
+                var translations = new Funnel(config.inputPath, {
                     allowEmpty: true
                 });
 
-                return mergeTrees([tree, translationTree]);
+                return mergeTrees([
+                    tree,
+                    TranslationBlender(translations, config)
+                ]);
             }
         });
     },

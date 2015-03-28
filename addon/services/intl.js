@@ -147,14 +147,13 @@ export default Ember.Service.extend(Ember.Evented, {
 
         var locales = makeArray(options.locales);
         var formats = get(this, 'formats');
+        var format;
 
         if (isEmpty(locales)) {
             locales = get(this, 'current');
         }
 
         if (options && options.format) {
-            var format;
-
             if (typeof options.format === 'string' && formats) {
                 format = get(formats, type + '.' + options.format);
             }
@@ -173,6 +172,17 @@ export default Ember.Service.extend(Ember.Evented, {
             default:
                 throw new Error('Unrecognized simple format type: ' + type);
         }
+    },
+
+    createLocale: function (locale, payload) {
+        var name = 'ember-intl@translation:' + locale;
+        var modelType = this.container.lookupFactory('ember-intl@model:translation');
+
+        if (this.container.has(name)) {
+            this.container.unregister(name);
+        }
+
+        this.container.register(name, modelType.extend(payload));
     },
 
     findLanguage: function (locale) {

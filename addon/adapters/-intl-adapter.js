@@ -15,7 +15,7 @@ export default Ember.Object.extend({
         }
 
         if (typeof localeName === 'string') {
-            return this.container.lookup('translation:' + normalize(localeName));
+            return this.container.lookup('ember-intl@translation:' + normalize(localeName));
         }
     },
 

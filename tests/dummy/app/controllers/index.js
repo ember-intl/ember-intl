@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
     },
 
     computedMessage: Ember.computed(function () {
-        return 'product.info';
+        return 'info';
     }),
 
     incrementTime: Ember.on('init', function() {

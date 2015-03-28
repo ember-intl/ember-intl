@@ -24,7 +24,7 @@ module.exports = {
     },
 
     afterInstall: function (options) {
-        var file = path.join(this.project.root, 'app', 'locales', options.entity.name + '.js');
+        var file = path.join(this.project.root, 'translations', options.entity.name + '.json');
 
         return new Promise(function (resolve, reject) {
             fs.readFile(file, 'utf8', function (err, data) {
@@ -42,7 +42,7 @@ module.exports = {
         var localeName = options.args[1];
 
         return {
-            locale: '\''+ localeName + '\''
+            locale: localeName
         }
     }
 };
