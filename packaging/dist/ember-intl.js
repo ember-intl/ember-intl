@@ -155,7 +155,7 @@ var define, requireModule, require, requirejs;
         messages: {},
 
         addMessage: function (key, value) {
-            this.set('messages.' + key, value);
+            this.set('' + key, value);
 
             return value;
         },

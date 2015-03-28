@@ -7,16 +7,15 @@ import Ember from 'ember';
 
 var LocaleModel = Ember.Object.extend({
     locale:   Ember.required(),
-    messages: {},
 
     addMessage: function (key, value) {
-        this.set('messages.' + key, value);
+        this.set(key, value);
 
         return value;
     },
 
     addMessages: function (messageObject) {
-        var messages = this.get('messages');
+        var messages = this;
 
         // shallow merge intentional
         for (var key in messageObject) {
