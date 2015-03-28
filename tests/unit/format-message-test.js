@@ -21,7 +21,7 @@ moduleForIntl('format-message', {
 
         Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
 
-        container.register('translation:en', Translation.extend({
+        container.register('ember-intl@translation:en', Translation.extend({
             foo: {
                 bar: 'foo bar baz',
                 baz: 'baz baz baz'
@@ -155,8 +155,8 @@ test('intl-get returns message and format-message renders', function(assert) {
 test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
 
-    var locale = container.lookup('translation:en');
-    locale.addMessage('adding', 'this works also');
+    var translation = container.lookup('ember-intl@translation:en');
+    translation.addMessage('adding', 'this works also');
 
     view = this.intlBlock('{{format-message (intl-get "adding")}}');
     runAppend(view);
@@ -214,8 +214,8 @@ test('locale can add message to intl service and read it', function(assert) {
 test('locale can add messages object and intl-get can read it', function(assert) {
     assert.expect(1);
 
-    var locale = container.lookup('translation:en');
-    locale.addMessages({
+    var translation = container.lookup('ember-intl@translation:en');
+    translation.addMessages({
         'bulk-add': 'bulk add works'
     });
 
@@ -251,7 +251,7 @@ test('should respect format options for date ICU block', function(assert) {
 test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
     assert.expect(1);
 
-    var locale = container.lookup('translation:en');
+    var translation = container.lookup('ember-intl@translation:en');
 
     try {
         container.unregister('translation:en');
@@ -269,6 +269,6 @@ test('intl-get returns message for key that is a literal string (not an object p
     }
     finally {
         container.unregister('translation:en');
-        container.register('translation:en', locale, { instantiate: false });
+        container.register('translation:en', translation, { instantiate: false });
     }
 });
