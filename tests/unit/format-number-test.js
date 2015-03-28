@@ -8,8 +8,8 @@ import formatNumberHelper from 'ember-intl/helpers/format-number';
 var view, container;
 
 moduleForIntl('format-number', {
-    setup: function (_container) {
-        container = _container;
+    beforeEach: function () {
+        container = this.container;
 
         container.register('formats:main', {
             number: {
@@ -27,7 +27,7 @@ moduleForIntl('format-number', {
         Ember.HTMLBars._registerHelper('format-number', formatNumberHelper);
     },
 
-    teardown: function () {
+    afterEach: function () {
         runDestroy(view);
         container.unregister('formats:main');
     }

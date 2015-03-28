@@ -11,8 +11,8 @@ import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 var view, container;
 
 moduleForIntl('format-message', {
-    setup: function (__container) {
-        container = __container;
+    beforeEach: function () {
+        container = this.container;
 
         container.register('helper:intl-get', intlGet, { instantiate: false });
         container.register('application:main', Ember.Application.extend());
@@ -30,7 +30,7 @@ moduleForIntl('format-message', {
             }
         }));
     },
-    teardown: function () {
+    afterEach: function () {
         runDestroy(view);
         container = undefined;
     }

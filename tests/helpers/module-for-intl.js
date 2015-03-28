@@ -2,8 +2,8 @@ import Ember from 'ember';
 import IntlService from '../../services/intl';
 import { runDestroy } from '../helpers/run-append';
 
-export default function (name, callbacks) {
-    callbacks = callbacks || {};
+export default function (name, tester) {
+    tester = tester || {};
 
     QUnit.module(name, {
         intlBlock: function (templateString, serviceContext, viewContext) {
@@ -33,24 +33,24 @@ export default function (name, callbacks) {
             });
         },
 
-        setup: function () {
+        beforeEach: function () {
             var self = this;
 
             Ember.lookup = this.lookup = { Ember: Ember };
 
-            this.container = new Ember.Container();
+            this.container = tester.container = new Ember.Container();
             this.service = this.getService(this.container);
-            
-            if (callbacks.setup) {
-                callbacks.setup(this.container);
+
+            if (tester.beforeEach) {
+                tester.beforeEach(this.container);
             }
         },
 
-        teardown: function () {
+        afterEach: function () {
             runDestroy(this.container);
 
-            if (callbacks.teardown) {
-                callbacks.teardown(this.container);
+            if (tester.afterEach) {
+                tester.afterEach(this.container);
             }
         },
 

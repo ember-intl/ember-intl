@@ -10,11 +10,11 @@ var dateStr   = 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)';
 var timeStamp = 1390518044403;
 
 moduleForIntl('format-date', {
-    setup: function (container) {
-        container.register('formatter:format-date', FormatDate);
+    beforeEach: function () {
+        this.container.register('formatter:format-date', FormatDate);
         Ember.HTMLBars._registerHelper('format-date', formatDateHelper);
     },
-    teardown: function () {
+    afterEach: function () {
         runDestroy(view);
     }
 });

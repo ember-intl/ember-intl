@@ -8,15 +8,15 @@ import formatRelativehelper from 'ember-intl/helpers/format-relative';
 var view;
 
 moduleForIntl('format-relative', {
-    setup: function (container) {
-        container.register('formatter:format-relative', FormatRelative);
+    beforeEach: function () {
+        this.container.register('formatter:format-relative', FormatRelative);
 
-        container.optionsForType('formats', {
+        this.container.optionsForType('formats', {
             singleton:   true,
             instantiate: false
         });
 
-        container.register('formats:main', {
+        this.container.register('formats:main', {
             relative: {
                 hours: {
                     units: "hour",
@@ -24,9 +24,11 @@ moduleForIntl('format-relative', {
                 }
             }
         });
+
         Ember.HTMLBars._registerHelper('format-relative', formatRelativehelper);
     },
-    teardown: function () {
+
+    afterEach: function () {
         runDestroy(view);
     }
 });

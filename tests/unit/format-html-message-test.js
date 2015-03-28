@@ -8,11 +8,11 @@ import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 var view;
 
 moduleForIntl('format-html-message', {
-    setup: function (container) {
-        container.register('formatter:format-html-message', FormatHtmlMessage);
+    beforeEach: function () {
+        this.container.register('formatter:format-html-message', FormatHtmlMessage);
         Ember.HTMLBars._registerHelper('format-html-message', formatHtmlHelper);
     },
-    teardown: function () {
+    afterEach: function () {
         runDestroy(view);
     }
 });
