@@ -14,7 +14,7 @@ var walkSync     = require('walk-sync');
 var path         = require('path');
 var fs           = require('fs');
 
-var LocaleWriter = require('./lib/broccoli-cldr');
+var LocaleWriter = require('./lib/locale-writer');
 
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
@@ -24,22 +24,31 @@ module.exports = {
     name: 'ember-intl',
 
     setupPreprocessorRegistry: function (type, registry) {
-        var config = this.projectConfig();
-        var prefix = config.modulePrefix;
-        var pathPrefix = prefix === 'dummy' ? 'tests/' : '';
+        var addon = this;
 
         registry.add('js', {
             name: 'translations',
             ext:  'js',
             toTree: function (tree) {
-                var translationTree = new Funnel(pathPrefix + prefix + '/translations', {
-                    destDir: path.join(prefix, 'translations'),
+                var config = addon.intlConfig();
+                var translationTree = new Funnel(config.inputPath, {
+                    destDir: config.outputPath,
                     allowEmpty: true
                 });
 
                 return mergeTrees([tree, translationTree]);
             }
         });
+    },
+
+    intlConfig: function () {
+        var projectConfig = this.projectConfig();
+
+        return Object.assign({
+            defaultLocale: 'en',
+            outputPath: projectConfig.modulePrefix + '/translations',
+            inputPath: 'translations'
+        }, projectConfig.intl || {});
     },
 
     projectConfig: function () {
