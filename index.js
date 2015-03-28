@@ -8,6 +8,8 @@
 'use strict';
 
 var serialize    = require('serialize-javascript');
+var mergeTrees   = require('broccoli-merge-trees');
+var Funnel       = require('broccoli-funnel');
 var walkSync     = require('walk-sync');
 var path         = require('path');
 var fs           = require('fs');
@@ -21,7 +23,31 @@ var intlPath           = path.dirname(require.resolve('intl'));
 module.exports = {
     name: 'ember-intl',
 
+    setupPreprocessorRegistry: function (type, registry) {
+        var config = this.projectConfig();
+        var prefix = config.modulePrefix;
+        var pathPrefix = prefix === 'dummy' ? 'tests/' : '';
+
+        registry.add('js', {
+            name: 'translations',
+            ext:  'js',
+            toTree: function (tree) {
+                var translationTree = new Funnel(pathPrefix + prefix + '/translations', {
+                    destDir: path.join(prefix, 'translations'),
+                    allowEmpty: true
+                });
+
+                return mergeTrees([tree, translationTree]);
+            }
+        });
+    },
+
+    projectConfig: function () {
+        return this.project.config(process.env.EMBER_ENV);
+    },
+
     included: function (app) {
+        this._super.included.apply(this, arguments);
         this.app = app;
         var vendorPath = this.treePaths.vendor;
         app.import(vendorPath + '/messageformat/intl-messageformat.js');

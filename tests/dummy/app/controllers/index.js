@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
     messages: {
         photos: '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}.\n'
     },
-    
+
     computedMessage: Ember.computed(function () {
         return 'product.info';
     }),
