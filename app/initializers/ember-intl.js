@@ -14,31 +14,25 @@ import FormatMessage from 'ember-intl/helpers/format-message';
 import ENV from '../config/environment';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
-export var registerIntl = function (container, service) {
-    var seen   = requirejs._eak_seen;
-    var prefix = ENV.modulePrefix;
+function filterBy (type) {
+    return Object.keys(requirejs._eak_seen).filter(function (key) {
+        return key.indexOf(ENV.modulePrefix + '\/' + type + '\/') === 0;
+    });
+}
 
+export var registerIntl = function (container, service) {
     if (!service) {
         service = container.lookup('service:intl');
     }
 
-    Object.keys(seen).filter(function (key) {
-        return key.indexOf(prefix + '\/cldrs\/') === 0;
-    }).forEach(function (key) {
+    filterBy('cldrs').forEach(function (key) {
         addLocaleData(require(key, null, null, true)['default']);
     });
 
-    Object.keys(seen).filter(function (key) {
-        return key.indexOf(prefix + '\/translations\/') === 0;
-    }).forEach(function (key) {
+    filterBy('translations').forEach(function (key) {
         var localeSplit = key.split('\/');
         var locale = localeSplit[localeSplit.length - 1];
         service.createLocale(locale, require(key, null, null, true)['default']);
-    });
-
-    container.optionsForType('translation', {
-        singleton:   true,
-        instantiate: true
     });
 
     container.optionsForType('formats', {
