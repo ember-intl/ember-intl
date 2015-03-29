@@ -196,7 +196,7 @@ moduleFor('view:index', 'IndexView', {
     'template:index',
     'service:intl',
     'helper:intl-get',
-    'formatter:format-message',
+    'ember-intl@formatter:format-message',
     'translation:en',
     'translation:es'
   ],

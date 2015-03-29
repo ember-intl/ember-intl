@@ -2,14 +2,14 @@ import Ember from 'ember';
 import {module, test} from 'qunit';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatRelative from '../../formatters/format-relative';
+import FormatRelative from 'ember-intl/formatters/format-relative';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
 
 var view;
 
 moduleForIntl('format-relative', {
     beforeEach: function () {
-        this.container.register('formatter:format-relative', FormatRelative);
+        this.container.register('ember-intl@formatter:format-relative', FormatRelative);
 
         this.container.optionsForType('formats', {
             singleton:   true,

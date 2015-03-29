@@ -26,7 +26,7 @@ export default function (formatterName) {
         var view      = env.data.view;
         var intl      = view.container.lookup('service:intl');
         var seenHash  = readHash(hash);
-        var formatter = view.container.lookup('formatter:' + formatterName);
+        var formatter = view.container.lookup('ember-intl@formatter:' + formatterName);
 
         if (value.isStream) {
             value.subscribe(function () {

@@ -4,10 +4,8 @@
  */
 
 import Ember from 'ember';
-import Formatter from 'ember-intl/formatter-base';
-import IntlGetResult from 'ember-intl/models/intl-get-result';
-
-var validKey = /[\w|.]/;
+import Formatter from './-base';
+import IntlGetResult from '../models/intl-get-result';
 
 var FormatMessage = Formatter.extend({
     format: function (value, options, optionalLocale) {

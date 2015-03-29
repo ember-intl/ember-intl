@@ -5,7 +5,6 @@
 
 import Ember from 'ember';
 import FormatterMessage from './format-message';
-import IntlGetResult from 'ember-intl/models/intl-get-result';
 
 var FormatHtmlMessage = FormatterMessage.extend({
     escapeProps: function (options) {

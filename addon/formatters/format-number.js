@@ -4,14 +4,14 @@
  */
 
 import Ember from 'ember';
-import Formatter from 'ember-intl/formatter-base';
-import createFormatCache from 'ember-intl/format-cache/memoizer';
+import Formatter from './-base';
+import createFormatCache from '../format-cache/memoizer';
 
 var FormatNumber = Formatter.extend({
     formatType: 'number',
 
     formatter: Ember.computed(function () {
-        return createFormatCache(Intl.NumberFormat)
+        return createFormatCache(Intl.NumberFormat);
     }).readOnly(),
 
     format: function (value, options) {

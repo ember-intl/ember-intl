@@ -2,7 +2,7 @@ import Ember from 'ember';
 import {module, test} from 'qunit';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatDate from '../../formatters/format-date';
+import FormatDate from 'ember-intl/formatters/format-date';
 import formatDateHelper from 'ember-intl/helpers/format-date';
 
 var view;
@@ -11,7 +11,7 @@ var timeStamp = 1390518044403;
 
 moduleForIntl('format-date', {
     beforeEach: function () {
-        this.container.register('formatter:format-date', FormatDate);
+        this.container.register('ember-intl@formatter:format-date', FormatDate);
         Ember.HTMLBars._registerHelper('format-date', formatDateHelper);
     },
     afterEach: function () {

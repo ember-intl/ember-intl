@@ -2,14 +2,14 @@ import Ember from 'ember';
 import {module, test} from 'qunit';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatHtmlMessage from '../../formatters/format-html-message';
+import FormatHtmlMessage from 'ember-intl/formatters/format-html-message';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 
 var view;
 
 moduleForIntl('format-html-message', {
     beforeEach: function () {
-        this.container.register('formatter:format-html-message', FormatHtmlMessage);
+        this.container.register('ember-intl@formatter:format-html-message', FormatHtmlMessage);
         Ember.HTMLBars._registerHelper('format-html-message', formatHtmlHelper);
     },
     afterEach: function () {

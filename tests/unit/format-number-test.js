@@ -2,7 +2,7 @@ import Ember from 'ember';
 import {module, test} from 'qunit';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatNumber from '../../formatters/format-number';
+import FormatNumber from 'ember-intl/formatters/format-number';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
 
 var view, container;
@@ -23,7 +23,7 @@ moduleForIntl('format-number', {
             }
         }, { instantiate: false });
 
-        container.register('formatter:format-number', FormatNumber);
+        container.register('ember-intl@formatter:format-number', FormatNumber);
         Ember.HTMLBars._registerHelper('format-number', formatNumberHelper);
     },
 

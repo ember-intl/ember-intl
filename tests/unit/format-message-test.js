@@ -2,7 +2,7 @@ import Ember from 'ember';
 import {module, test} from 'qunit';
 import moduleForIntl from '../helpers/module-for-intl';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatMessage from '../../formatters/format-message';
+import FormatMessage from 'ember-intl/formatters/format-message';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Translation from 'ember-intl/models/translation';
@@ -17,7 +17,7 @@ moduleForIntl('format-message', {
         container.register('helper:intl-get', intlGet, { instantiate: false });
         container.register('application:main', Ember.Application.extend());
         container.register('adapter:-intl-adapter', IntlAdapter.extend());
-        container.register('formatter:format-message', FormatMessage);
+        container.register('ember-intl@formatter:format-message', FormatMessage);
 
         Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
 

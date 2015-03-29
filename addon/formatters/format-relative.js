@@ -4,8 +4,8 @@
  */
 
 import Ember from 'ember';
-import Formatter from 'ember-intl/formatter-base';
-import createFormatCache from 'ember-intl/format-cache/memoizer';
+import Formatter from './-base';
+import createFormatCache from '../format-cache/memoizer';
 import { IntlRelativeFormat } from 'ember-intl/utils/data';
 
 function assertIsDate (date, errMsg) {
@@ -16,7 +16,7 @@ var FormatRelative = Formatter.extend({
     formatType: 'relative',
 
     formatter: Ember.computed(function () {
-        return createFormatCache(IntlRelativeFormat)
+        return createFormatCache(IntlRelativeFormat);
     }).readOnly(),
 
     format: function (datetime, options) {
