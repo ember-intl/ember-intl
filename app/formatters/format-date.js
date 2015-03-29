@@ -5,11 +5,25 @@
 
 import Ember from 'ember';
 import Formatter from 'ember-intl/formatter-base';
+import createFormatCache from 'ember-intl/format-cache/memoizer';
+
+function assertIsDate (date, errMsg) {
+    Ember.assert(errMsg, isFinite(date));
+}
 
 var FormatDate = Formatter.extend({
-    format: function (value, options) {
+    formatType: 'date',
+
+    formatter: Ember.computed(function () {
+        return createFormatCache(Intl.DateTimeFormat)
+    }).readOnly(),
+
+    format: function (datetime, options) {
+        datetime = new Date(datetime);
+        assertIsDate(datetime, 'A date or timestamp must be provided to format-date');
         var formatOptions = this.filterFormatOptions(options);
-        return this.get('intl').formatDate(value, formatOptions);
+
+        return this._format(datetime, formatOptions);
     }
 });
 

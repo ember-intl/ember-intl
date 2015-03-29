@@ -5,6 +5,10 @@
 
 import Ember from 'ember';
 
+var makeArray = Ember.makeArray;
+var isEmpty = Ember.isEmpty;
+var get = Ember.get;
+
 var FormatBase = Ember.Object.extend({
     intl: Ember.inject.service(),
 
@@ -25,6 +29,31 @@ var FormatBase = Ember.Object.extend({
         if (match) {
             return options;
         }
+    },
+
+    _format: function (value, options, formatOptions) {
+        options = options || {};
+
+        var formatter = this.get('formatter');
+
+        var intl      = this.get('intl'); // todo: remove?
+        var locales   = makeArray(options.locales);
+        var formats   = get(intl, 'formats');
+        var format;
+
+        if (isEmpty(locales)) {
+            locales = get(intl, 'current');
+        }
+
+        if (options && options.format) {
+            if (typeof options.format === 'string' && formats) {
+                format = get(formats, this.formatType + '.' + options.format);
+            }
+
+            Ember.merge(options, format);
+        }
+
+        return formatter(locales, options).format(value, formatOptions);
     }
 });
 

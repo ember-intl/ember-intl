@@ -5,11 +5,18 @@
 
 import Ember from 'ember';
 import Formatter from 'ember-intl/formatter-base';
+import createFormatCache from 'ember-intl/format-cache/memoizer';
 
 var FormatNumber = Formatter.extend({
+    formatType: 'number',
+
+    formatter: Ember.computed(function () {
+        return createFormatCache(Intl.NumberFormat)
+    }).readOnly(),
+
     format: function (value, options) {
         var formatOptions = this.filterFormatOptions(options);
-        return this.get('intl').formatNumber(value, formatOptions);
+        return this._format(value, formatOptions);
     }
 });
 
