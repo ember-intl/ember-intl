@@ -30,6 +30,7 @@
     "broccoli-caching-writer": "^0.5.5",
     "broccoli-funnel": "^0.2.2",
     "broccoli-merge-trees": "^0.2.1",
+    "chalk": "^1.0.0",
     "extend": "^2.0.0",
     "formatjs-extract-cldr-data": "^1.1.0",
     "intl": "0.1.4",
