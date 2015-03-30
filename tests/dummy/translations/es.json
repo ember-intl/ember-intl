@@ -1,6 +1,5 @@
 {
-    "locale": "es",
-    "product": {
-        "title": "Hola mundo"
-    }
+  "product": {
+    "title": "Hola mundo"
+  }
 }
