@@ -22,7 +22,7 @@ export default Ember.Object.extend({
     findTranslation: function (locales, translationKey) {
         var locale, translation, key;
 
-        for (var i=0, len = locales.length; i < len; i++) {
+        for (var i = 0, len = locales.length; i < len; i++) {
             key    = locales[i];
             locale = this.findLanguage(key);
 

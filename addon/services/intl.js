@@ -201,16 +201,14 @@ export default Ember.Service.extend(Ember.Evented, {
     findTranslation: function (key, locales) {
         locales = locales ? makeArray(locales) : this.get('current');
 
-        var result = this.get('adapter').findTranslation(locales, key);
+        var translation = this.get('adapter').findTranslation(locales, key);
 
-        return Ember.RSVP.cast(result).then(function (translation) {
-            Ember.assert('findTranslation should return an object of instance `IntlGetResult`', translation instanceof IntlGetResult);
+        Ember.assert('findTranslation should return an object of instance `IntlGetResult`', translation instanceof IntlGetResult);
 
-            if (typeof translation === 'undefined') {
-                throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
-            }
+        if (typeof translation === 'undefined') {
+            throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
+        }
 
-            return translation;
-        });
+        return translation;
     }
 });
