@@ -10,6 +10,7 @@
 var serialize    = require('serialize-javascript');
 var mergeTrees   = require('broccoli-merge-trees');
 var Funnel       = require('broccoli-funnel');
+var commands     = require('./lib/commands');
 var walkSync     = require('walk-sync');
 var path         = require('path');
 var fs           = require('fs');
@@ -64,6 +65,10 @@ module.exports = {
         var vendorPath = this.treePaths.vendor;
         app.import(vendorPath + '/messageformat/intl-messageformat.js');
         app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
+    },
+
+    includedCommands: function () {
+        return commands;
     },
 
     treeForApp: function (inputTree) {
