@@ -40,7 +40,6 @@ test('exists', function(assert) {
 
 test('invoke the formatNumber method', function(assert) {
     assert.expect(1);
-
     assert.equal(this.service.formatNumber(100), 100);
 });
 

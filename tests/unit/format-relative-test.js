@@ -40,7 +40,7 @@ test('exists', function(assert) {
 
 test('invoke the formatRelative directly', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatRelative(new Date()), 'now');
+    assert.equal(this.service.formatRelative(new Date()), 'now', {});
 });
 
 test('should throw if called with out a value', function(assert) {

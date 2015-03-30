@@ -21,6 +21,7 @@ var FormatRelative = Formatter.extend({
 
     format: function (datetime, options) {
         datetime = new Date(datetime);
+        options = options || {};
         assertIsDate(datetime, 'A date or timestamp must be provided to format-relative');
         var formatOptions = this.filterFormatOptions(options);
 

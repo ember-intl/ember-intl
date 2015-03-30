@@ -20,7 +20,9 @@ module('Acceptance: Smoke', {
         application = startApp();
     },
     afterEach: function() {
-        Ember.run(application, 'destroy');
+        if (application) {
+            Ember.run(application, 'destroy');
+        }
     }
 });
 
