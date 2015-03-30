@@ -14,7 +14,6 @@ var on           = Ember.on;
 var computed     = Ember.computed;
 var observer     = Ember.observer;
 var isEmpty      = Ember.isEmpty;
-var isPresent    = Ember.isPresent;
 var runOnce      = Ember.run.once;
 
 function assertIsDate (date, errMsg) {
@@ -23,7 +22,6 @@ function assertIsDate (date, errMsg) {
 
 export default Ember.Service.extend(Ember.Evented, {
     locales:           null,
-    defaultLocale:     null,
 
     getDateTimeFormat: null,
     getRelativeFormat: null,
@@ -57,24 +55,13 @@ export default Ember.Service.extend(Ember.Evented, {
         }
     }).readOnly(),
 
-    current: computed('locales', 'defaultLocale', function () {
-        var locales       = makeArray(get(this, 'locales'));
-        var defaultLocale = get(this, 'defaultLocale');
-
-        if (isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
-            locales.push(defaultLocale);
-        }
-
-        return locales;
-    }).readOnly(),
-
     formats: computed(function () {
         return this.container.lookup('formats:main', {
             instantiate: false
         }) || {};
     }).readOnly(),
 
-    localeChanged: observer('current', function () {
+    localeChanged: observer('locales', function () {
         runOnce(this, this.notifyLocaleChanged);
     }),
 
@@ -104,11 +91,11 @@ export default Ember.Service.extend(Ember.Evented, {
 
         options = options || {};
 
-        var locales = makeArray(options.locales);
+        var locales = options.locales;
         var formats = options.formats || get(this, 'formats');
 
         if (isEmpty(locales)) {
-            locales = get(this, 'current');
+            locales = get(this, 'locales');
         }
 
         if (typeof message === 'string') {
@@ -146,12 +133,12 @@ export default Ember.Service.extend(Ember.Evented, {
     _format: function (type, value, options, formatOptions) {
         options = options || {};
 
-        var locales = makeArray(options.locales);
+        var locales = options.locales;
         var formats = get(this, 'formats');
         var format;
 
         if (isEmpty(locales)) {
-            locales = get(this, 'current');
+            locales = get(this, 'locales');
         }
 
         if (options && options.format) {
@@ -199,7 +186,7 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     findTranslation: function (key, locales) {
-        locales = locales ? makeArray(locales) : this.get('current');
+        locales = locales ? makeArray(locales) : makeArray(get(this, 'locales'));
 
         var translation = this.get('adapter').findTranslation(locales, key);
 

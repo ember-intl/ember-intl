@@ -5,7 +5,6 @@
 
 import Ember from 'ember';
 
-var makeArray = Ember.makeArray;
 var isEmpty = Ember.isEmpty;
 var get = Ember.get;
 
@@ -34,18 +33,17 @@ var FormatBase = Ember.Object.extend({
     _format: function (value, options, formatOptions) {
         options = options || {};
 
-        var formatter = this.get('formatter');
-
-        var intl      = this.get('intl'); // todo: remove?
-        var locales   = makeArray(options.locales);
-        var formats   = get(intl, 'formats');
-        var format;
+        var formatter = get(this, 'formatter');
+        var intl      = get(this, 'intl');
+        var locales   = options.locales;
+        var formats, format;
 
         if (isEmpty(locales)) {
-            locales = get(intl, 'current');
+            locales = get(intl, 'locales');
         }
 
         if (options && options.format) {
+            formats = get(intl, 'formats');
             if (typeof options.format === 'string' && formats) {
                 format = get(formats, this.formatType + '.' + options.format);
             }
