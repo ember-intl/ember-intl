@@ -4,7 +4,7 @@
 
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 var mergeTrees = require('broccoli-merge-trees');
-var pickFiles  = require('broccoli-static-compiler');
+var Funnel     = require('broccoli-funnel');
 
 var app = new EmberAddon({});
 
@@ -15,7 +15,7 @@ function treeGenerator (dir) {
     }
 };
 
-var templateCompilerTree = pickFiles(treeGenerator(app.bowerDirectory + '/ember'), {
+var templateCompilerTree = new Funnel(treeGenerator(app.bowerDirectory + '/ember'), {
     files:   ['ember-template-compiler.js'],
     srcDir:  '/',
     destDir: '/assets/tests/'
