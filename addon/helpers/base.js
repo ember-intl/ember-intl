@@ -28,7 +28,7 @@ export default function (formatterName) {
 
             var value     = params[0];
             var view      = env.data.view;
-            var intl      = view.container.lookup('intl:main');
+            var intl      = view.container.lookup('service:intl');
             var seenHash  = readHash(hash);
             var formatter = view.container.lookup('formatter:' + formatterName);
 
@@ -76,7 +76,7 @@ export default function (formatterName) {
             }
 
             var view      = options.data.view;
-            var intl      = this.container.lookup('intl:main');
+            var intl      = this.container.lookup('service:intl');
             var types     = options.types;
             var hash      = extend({}, options.hash);
             var formatter = view.container.lookup('formatter:' + formatterName);

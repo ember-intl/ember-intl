@@ -46,7 +46,7 @@ export default ServiceKlass.extend(Ember.Evented, {
         var adapterType = get(this, 'adapterType');
         var app = this.container.lookup('application:main');
 
-        if (app.IntlAdapter) {
+        if (app && app.IntlAdapter) {
             return app.IntlAdapter.create({
                 container: this.container
             });

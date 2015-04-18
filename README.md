@@ -165,6 +165,72 @@ export default Locale.extend({
 	* `locales` argument to explicitly pass/override the application locale
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
+### Example unit test
+
+```javascript
+/**
+ * unit test for testing index view which contains the helpers: `format-message` and `intl-get`
+ *
+ * unit/views/index-test.js
+ */
+import Ember from 'ember';
+
+import { registerIntl } from '../../../initializers/ember-intl';
+
+import {
+  moduleFor,
+  test
+} from 'ember-qunit';
+
+moduleFor('view:index', 'IndexView', {
+  needs: [
+    'template:components/x-foo',
+    'adapter:-intl-adapter',
+    'service:intl',
+    'helper:intl-get',
+    'formatter:format-message',
+    'locale:en'
+  ],
+  setup: function () {
+    // depending on your test library, container will be hanging off `this`
+    // or otherwise passed in as the first argument
+    var container = this.container || arguments[0];
+    // injects the service on to all logical factory types
+    registerIntl(container);
+
+    // set the initial intl service locale to `en-us`
+    var intl = container.lookup('service:intl');
+    intl.set('locales', 'en');
+  }
+});
+
+test('index renders', function () {
+  expect(2);
+
+  var view = this.subject({
+    context: Ember.Object.create({
+      firstName: 'Tom'
+    })
+  });
+
+  var intl = view.get('intl');
+
+  // render view
+  Ember.run(view, 'appendTo', '#qunit-fixture');
+
+  equal(view.$().text().trim(), "hello Tom");
+
+  Ember.run(function () {
+    intl.set('locales', 'es');
+  });
+
+  equal(view.$().text().trim(), "hola Tom");
+
+  // destroy view
+  Ember.run(view, 'destroy');
+});
+```
+
 ## Running
 
 * `ember server`

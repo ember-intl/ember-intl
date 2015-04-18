@@ -12,7 +12,7 @@ export default function (value, options) {
     var view  = options.data.view;
     var types = options.types;
     var hash  = readHash(options.hash);
-    var intl  = view.container.lookup('intl:main');
+    var intl  = view.container.lookup('service:intl');
 
     var currentValue = value;
     var outStreamValue = '';
