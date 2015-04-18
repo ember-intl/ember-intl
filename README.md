@@ -28,7 +28,7 @@ so you need to add the following to your index.html:
 <script src="/assets/intl/polyfill/Intl.complete.js"></script>
 ```
 
-Translations are defined in /translations, *outside of `app`*.  Example of `translations/en-us.json`:
+Translations are defined in `/translations`, *outside of `app`*.  Example of `/translations/en-us.json`:
 
 ```json
 {
