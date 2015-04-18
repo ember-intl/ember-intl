@@ -178,6 +178,7 @@ In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke
 
 This is to shim your test runner if running within phantomjs, or any browser which does not natiely support the Intl API.
 
+=======
 ### Example unit test
 
 ```javascript
@@ -197,12 +198,12 @@ import {
 
 moduleFor('view:index', 'IndexView', {
   needs: [
-    'template:index',
+    'template:components/x-foo',
+    'adapter:-intl-adapter',
     'service:intl',
     'helper:intl-get',
     'formatter:format-message',
-    'locale:en',
-    'locale:es'
+    'locale:en'
   ],
   setup: function () {
     // depending on your test library, container will be hanging off `this`
@@ -213,7 +214,7 @@ moduleFor('view:index', 'IndexView', {
 
     // set the initial intl service locale to `en-us`
     var intl = container.lookup('service:intl');
-    intl.set('locales', 'en-us');
+    intl.set('locales', 'en');
   }
 });
 
