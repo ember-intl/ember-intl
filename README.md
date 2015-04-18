@@ -198,12 +198,13 @@ import {
 
 moduleFor('view:index', 'IndexView', {
   needs: [
-    'template:components/x-foo',
+    'template:index',
     'adapter:-intl-adapter',
     'service:intl',
     'helper:intl-get',
     'formatter:format-message',
-    'locale:en'
+		'locale:en',
+		'locale:es'
   ],
   setup: function () {
     // depending on your test library, container will be hanging off `this`
