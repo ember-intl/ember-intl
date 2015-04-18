@@ -28,20 +28,18 @@ so you need to add the following to your index.html:
 <script src="/assets/intl/polyfill/Intl.complete.js"></script>
 ```
 
-* Add custom messages per locale in their respective ES6 locale module.
-Example of app/locales/en.js:
+Translations are defined in /translations, outside of your "app" folder.  Example of `translations/en-us.json`:
 
-```js
-import Translation from 'ember-intl/models/translation';
-
-export default Translation.extend({
-	product: {
-		info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
-		html: {
-			info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
-		}
-	}
-});
+```json
+{
+  "product": {
+    "info": "{product} will cost {price, number, EUR} if ordered by {deadline, date, time}",
+    "title": "Hello world!",
+    "html": {
+        "info": "<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}"
+    }
+  }
+}
 ```
 
 * Configure which locale you want to use at runtime:
