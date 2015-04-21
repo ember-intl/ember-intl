@@ -17,7 +17,7 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 * HTMLBars
 
 ## Installation
-* `ember install ember-intl`
+* `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3) 
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
 
 ```html
