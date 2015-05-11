@@ -4,6 +4,7 @@
  */
 
 import Ember from 'ember';
+import ENV from '../config/environment';
 import { addLocaleData } from 'ember-intl/utils/data';
 import FormatDate from 'ember-intl/helpers/format-date';
 import FormatTime from 'ember-intl/helpers/format-time';
@@ -11,7 +12,6 @@ import FormatRelative from 'ember-intl/helpers/format-relative';
 import FormatNumber from 'ember-intl/helpers/format-number';
 import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
 import FormatMessage from 'ember-intl/helpers/format-message';
-import ENV from '../config/environment';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
 function filterBy (type) {
@@ -44,6 +44,12 @@ export var registerIntl = function (container, service) {
         container.register('adapter:-intl-adapter', IntlAdapter);
     }
 
+    // only here for backwards compat.
+    container.register('intl:main', container.lookup('service:intl'), {
+        instantiate: false,
+        singleton:   true
+    });
+
     Ember.HTMLBars._registerHelper('format-date', FormatDate);
     Ember.HTMLBars._registerHelper('format-time', FormatTime);
     Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
@@ -59,4 +65,4 @@ export default {
         app.intl = container.lookup('service:intl');
         registerIntl(container, app.intl);
     }
-}
+};

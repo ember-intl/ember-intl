@@ -68,7 +68,7 @@ export default function (name, tester) {
                     singleton:   true,
                     instantiate: false
                 });
-                
+
                 return service;
             }
 

@@ -92,7 +92,7 @@ module.exports = {
             trees.push(localeTree)
         }
 
-        return this.mergeTrees(trees, { overwrite: true });
+        return mergeTrees(trees, { overwrite: true });
     },
 
     treeForVendor: function (inputTree) {
@@ -102,24 +102,24 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(this.pickFiles(this.treeGenerator(messageFormatPath), {
+        trees.push(new Funnel(this.treeGenerator(messageFormatPath), {
             srcDir:  '/dist',
             destDir: 'messageformat'
         }));
 
-        trees.push(this.pickFiles(this.treeGenerator(relativeFormatPath), {
+        trees.push(new Funnel(this.treeGenerator(relativeFormatPath), {
             srcDir:  '/dist',
             destDir: 'relativeformat'
         }));
 
-        return this.mergeTrees(trees);
+        return mergeTrees(trees);
     },
 
     treeForPublic: function (inputTree) {
         var config = this.project.config(this.app.env);
         var trees  = [inputTree];
 
-        trees.push(this.pickFiles(intlPath, {
+        trees.push(new Funnel(intlPath, {
             srcDir:  '/',
             files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: '/assets/intl/polyfill/'
@@ -127,13 +127,13 @@ module.exports = {
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
-        trees.push(this.pickFiles(intlPath + '/locale-data/jsonp', {
+        trees.push(new Funnel(intlPath + '/locale-data/jsonp', {
             srcDir:  '/',
             files:   ['*.js'],
             destDir: '/assets/intl/polyfill/locales/'
         }));
 
-        return this.mergeTrees(trees, { overwrite: true });
+        return mergeTrees(trees, { overwrite: true });
     },
 
     _transformLocale: function (result) {

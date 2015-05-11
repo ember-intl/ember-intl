@@ -1,4 +1,6 @@
 # ember-intl
+
+[![Join the chat at https://gitter.im/yahoo/ember-intl](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yahoo/ember-intl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm Version][npm-badge]][npm]
 [![Build Status][travis-badge]][travis]
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
@@ -17,12 +19,8 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 * HTMLBars
 
 ## Installation
-* `npm install --save ember-intl`
-* `ember g ember-intl`
-* `ember g locale en`
-* If you are targeting a browser that doesn't support the native Intl API, you need to load the shim.  The
-[Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder,
-so you need to add the following to your index.html:
+* `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3) 
+* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
 
 ```html
 <script src="/assets/intl/polyfill/Intl.complete.js"></script>
@@ -170,6 +168,7 @@ In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke
 
 This is to shim your test runner if running within phantomjs, or any browser which does not natiely support the Intl API.
 
+=======
 ### Example unit test
 
 ```javascript
@@ -190,6 +189,7 @@ import {
 moduleFor('view:index', 'IndexView', {
   needs: [
     'template:index',
+    'adapter:-intl-adapter',
     'service:intl',
     'helper:intl-get',
     'ember-intl@formatter:format-message',
@@ -205,7 +205,7 @@ moduleFor('view:index', 'IndexView', {
 
     // set the initial intl service locale to `en-us`
     var intl = container.lookup('service:intl');
-    intl.set('locales', 'en-us');
+    intl.set('locales', 'en');
   }
 });
 
@@ -235,6 +235,13 @@ test('index renders', function () {
   Ember.run(view, 'destroy');
 });
 ```
+## Known Gotchas
+
+> `date value is not finite in DateTimeFormat.format()`
+
+Browser vendors implement datetime parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
+
+The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
 
 ## Running
 
