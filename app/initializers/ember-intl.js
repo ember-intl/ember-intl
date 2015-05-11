@@ -15,7 +15,7 @@ import FormatMessage from 'ember-intl/helpers/format-message';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
 function filterBy (type) {
-    return Object.keys(requirejs._eak_seen).filter(function (key) {
+    return Object.keys(requirejs._eak_seen).filter((key) => {
         return key.indexOf(ENV.modulePrefix + '\/' + type + '\/') === 0;
     });
 }
@@ -25,13 +25,13 @@ export var registerIntl = function (container, service) {
         service = container.lookup('service:intl');
     }
 
-    filterBy('cldrs').forEach(function (key) {
+    filterBy('cldrs').forEach((key) => {
         addLocaleData(require(key, null, null, true)['default']);
     });
 
-    filterBy('translations').forEach(function (key) {
-        var localeSplit = key.split('\/');
-        var locale = localeSplit[localeSplit.length - 1];
+    filterBy('translations').forEach((key) => {
+        let localeSplit = key.split('\/');
+        let locale = localeSplit[localeSplit.length - 1];
         service.createLocale(locale, require(key, null, null, true)['default']);
     });
 
@@ -61,7 +61,7 @@ export var registerIntl = function (container, service) {
 export default {
     name: 'ember-intl',
 
-    initialize: function (container, app) {
+    initialize(container, app) {
         app.intl = container.lookup('service:intl');
         registerIntl(container, app.intl);
     }

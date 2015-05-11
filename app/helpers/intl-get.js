@@ -9,16 +9,16 @@ import { Stream, read, readHash, destroyStream } from 'ember-intl/utils/streams'
 export default function (value, options) {
     Ember.assert('intl-get helper must be used as a subexpression', options.isInline === true);
 
-    var types = options.types;
-    var view  = options.data.view;
-    var hash  = readHash(options.hash);
-    var intl  = view.container.lookup('service:intl');
+    let types = options.types;
+    let view  = options.data.view;
+    let hash  = readHash(options.hash);
+    let intl  = view.container.lookup('service:intl');
 
-    var currentValue = value;
-    var outStreamValue = '';
-    var valueStream;
+    let currentValue = value;
+    let outStreamValue = '';
+    let valueStream;
 
-    var outStream = new Stream(function () {
+    let outStream = new Stream(() => {
         return outStreamValue;
     });
 
@@ -46,7 +46,7 @@ export default function (value, options) {
 
     intl.on('localesChanged', this, pokeStream);
 
-    view.one('willDestroyElement', this, function () {
+    view.one('willDestroyElement', this, () => {
         intl.off('localesChanged', this, pokeStream);
 
         if (valueStream) {

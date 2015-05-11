@@ -28,19 +28,13 @@ function proxy (formatType) {
 }
 
 export default Ember.Service.extend(Ember.Evented, {
-    locales:           null,
-    getMessageFormat:  null,
-    adapterType:       '-intl-adapter',
-
-    init: function () {
-        this._super.apply(this, arguments);
-        this.getMessageFormat = createFormatCache(IntlMessageFormat);
-    },
-
-    formatRelative: proxy('relative'),
-    formatNumber:   proxy('number'),
-    formatTime:     proxy('time'),
-    formatDate:     proxy('date'),
+    locales:          null,
+    getMessageFormat: null,
+    adapterType:      '-intl-adapter',
+    formatRelative:   proxy('relative'),
+    formatNumber:     proxy('number'),
+    formatTime:       proxy('time'),
+    formatDate:       proxy('date'),
 
     adapter: computed('adapterType', function () {
         var adapterType = get(this, 'adapterType');
@@ -68,23 +62,28 @@ export default Ember.Service.extend(Ember.Evented, {
         runOnce(this, this.notifyLocaleChanged);
     }),
 
-    addMessage: function (locale, key, value) {
+    init() {
+        this._super(...arguments);
+        this.getMessageFormat = createFormatCache(IntlMessageFormat);
+    },
+
+    addMessage(locale, key, value) {
         return this.findLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessage(key, value);
         });
     },
 
-    addMessages: function (locale, messageObject) {
+    addMessages(locale, messageObject) {
         return this.findLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessages(messageObject);
         });
     },
 
-    notifyLocaleChanged: function () {
+    notifyLocaleChanged() {
         this.trigger('localesChanged');
     },
 
-    formatMessage: function (message, values, options) {
+    formatMessage(message, values, options) {
         // When `message` is a function, assume it's an IntlMessageFormat
         // instance's `format()` method passed by reference, and call it. This
         // is possible because its `this` will be pre-bound to the instance.
@@ -94,8 +93,8 @@ export default Ember.Service.extend(Ember.Evented, {
 
         options = options || {};
 
-        var locales = options.locales;
-        var formats = options.formats || get(this, 'formats');
+        let locales = options.locales;
+        let formats = options.formats || get(this, 'formats');
 
         if (isEmpty(locales)) {
             locales = get(this, 'locales');
@@ -108,9 +107,9 @@ export default Ember.Service.extend(Ember.Evented, {
         return message.format(values);
     },
 
-    createLocale: function (locale, payload) {
-        var name = 'ember-intl@translation:' + locale;
-        var modelType = this.container.lookupFactory('ember-intl@model:translation');
+    createLocale(locale, payload) {
+        let name = 'ember-intl@translation:' + locale;
+        let modelType = this.container.lookupFactory('ember-intl@model:translation');
 
         if (this.container.has(name)) {
             this.container.unregister(name);
@@ -119,8 +118,8 @@ export default Ember.Service.extend(Ember.Evented, {
         this.container.register(name, modelType.extend(payload));
     },
 
-    getFormat: function(formatType, format) {
-        var formats = get(this, 'formats');
+    getFormat(formatType, format) {
+        let formats = get(this, 'formats');
 
         if (formats && formatType && typeof format === 'string') {
             return get(formats, formatType + '.' + format) || {};
@@ -129,8 +128,8 @@ export default Ember.Service.extend(Ember.Evented, {
         return {};
     },
 
-    findLanguage: function (locale) {
-        var result = this.get('adapter').findLanguage(locale);
+    findLanguage(locale) {
+        let result = this.get('adapter').findLanguage(locale);
 
         return Ember.RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
@@ -141,10 +140,10 @@ export default Ember.Service.extend(Ember.Evented, {
         });
     },
 
-    findTranslation: function (key, locales) {
+    findTranslation(key, locales) {
         locales = locales ? makeArray(locales) : makeArray(get(this, 'locales'));
 
-        var translation = this.get('adapter').findTranslation(locales, key);
+        let translation = this.get('adapter').findTranslation(locales, key);
 
         if (typeof translation === 'undefined') {
             throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');

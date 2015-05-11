@@ -8,12 +8,12 @@ import Ember from 'ember';
 var get = Ember.get;
 
 var FormatBase = Ember.Object.extend({
-    filterFormatOptions: function (hash) {
+    filterFormatOptions(hash) {
         hash = hash || {};
 
-        var match = false;
+        let match = false;
 
-        var options = this.constructor.formatOptions.reduce(function (opts, name) {
+        let options = this.constructor.formatOptions.reduce((opts, name) => {
             if (hash.hasOwnProperty(name)) {
                 match = true;
                 opts[name] = hash[name];
@@ -27,10 +27,10 @@ var FormatBase = Ember.Object.extend({
         }
     },
 
-    _format: function (value, options, formatOptions) {
+    _format(value, options, formatOptions) {
         options = options || {};
-        var formatter = get(this, 'formatter');
-        var locales   = options.locales;
+        let formatter = get(this, 'formatter');
+        let locales   = options.locales;
         return formatter(locales, options).format(value, formatOptions);
     }
 });

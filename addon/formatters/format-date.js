@@ -14,14 +14,14 @@ function assertIsDate (date, errMsg) {
 var FormatDate = Formatter.extend({
     formatType: 'date',
 
-    formatter: Ember.computed(function () {
+    formatter: Ember.computed(() => {
         return createFormatCache(Intl.DateTimeFormat);
     }).readOnly(),
 
-    format: function (value, options) {
+    format(value, options) {
         value = new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-date');
-        var formatOptions = this.filterFormatOptions(options);
+        let formatOptions = this.filterFormatOptions(options);
         return this._format(value, formatOptions);
     }
 });

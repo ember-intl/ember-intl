@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import { Stream, read, readHash, destroyStream } from '../utils/streams';
 
-var getProperties = Ember.getProperties;
+let getProperties = Ember.getProperties;
 
 export default function (formatType) {
     function throwError () {
@@ -18,7 +18,7 @@ export default function (formatType) {
             return throwError();
         }
 
-        var outStream;
+        let outStream;
 
         function touchStream () {
             outStream.notify();
@@ -26,19 +26,19 @@ export default function (formatType) {
 
         seenHash      = readHash(hash);
 
-        var view      = env.data.view;
-        var intl      = view.container.lookup('service:intl');
-        var formatter = view.container.lookup('ember-intl@formatter:format-' + formatType);
-        var value     = params[0];
+        let view      = env.data.view;
+        let intl      = view.container.lookup('service:intl');
+        let formatter = view.container.lookup('ember-intl@formatter:format-' + formatType);
+        let value     = params[0];
 
         if (value.isStream) {
-            value.subscribe(function () {
+            value.subscribe(() => {
                 touchStream();
             }, value);
         }
 
-        outStream = new Stream(function () {
-            var format = {};
+        outStream = new Stream(() => {
+            let format = {};
 
             if (seenHash && seenHash.format) {
                 format = intl.getFormat(formatType, seenHash.format);
@@ -51,12 +51,12 @@ export default function (formatType) {
             );
         });
 
-        Ember.keys(hash).forEach(function (key) {
+        Ember.keys(hash).forEach((key) => {
             if (!hash[key].isStream) {
                 return;
             }
 
-            var hashStream = hash[key];
+            let hashStream = hash[key];
             hash[key] = read(hashStream);
 
             hashStream.subscribe(function (valueStream) {
@@ -65,7 +65,7 @@ export default function (formatType) {
             });
         });
 
-        view.one('willDestroyElement', function () {
+        view.one('willDestroyElement', () => {
             destroyStream(outStream);
         });
 

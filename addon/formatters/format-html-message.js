@@ -7,10 +7,10 @@ import Ember from 'ember';
 import FormatterMessage from './format-message';
 
 var FormatHtmlMessage = FormatterMessage.extend({
-    escapeProps: function (options) {
-        var value;
+    escapeProps(options) {
+        let value;
 
-        return Object.keys(options).reduce(function (result, hashKey) {
+        return Object.keys(options).reduce((result, hashKey) => {
             value = options[hashKey];
 
             if (typeof value === 'string') {
@@ -22,10 +22,10 @@ var FormatHtmlMessage = FormatterMessage.extend({
         }, {});
     },
 
-    format: function (value, options) {
-        var locales = options.locales;
+    format(value, options) {
+        let locales = options.locales;
         options = this.escapeProps(options);
-        var superResult = this._super(value, options, locales);
+        let superResult = this._super(value, options, locales);
         return Ember.String.htmlSafe(superResult);
     }
 });

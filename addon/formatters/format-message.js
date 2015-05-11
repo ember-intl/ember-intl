@@ -12,13 +12,13 @@ import { IntlMessageFormat } from '../utils/data';
 var FormatMessage = Formatter.extend({
     intl: Ember.inject.service(),
 
-    formatter: Ember.computed(function () {
+    formatter: Ember.computed(() => {
         return createFormatCache(IntlMessageFormat);
     }).readOnly(),
 
-    format: function (value, options, optionalLocale) {
-        var locales = optionalLocale || options.locales;
-        var formatOptions = {};
+    format(value, options, optionalLocale) {
+        let locales = optionalLocale || options.locales;
+        let formatOptions = {};
 
         if (value instanceof IntlGetResult) {
             if (typeof locales === 'undefined') {

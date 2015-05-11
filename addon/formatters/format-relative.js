@@ -15,15 +15,15 @@ function assertIsDate (date, errMsg) {
 var FormatRelative = Formatter.extend({
     formatType: 'relative',
 
-    formatter: Ember.computed(function () {
+    formatter: Ember.computed(() => {
         return createFormatCache(IntlRelativeFormat);
     }).readOnly(),
 
-    format: function (value, options) {
+    format(value, options) {
         value = new Date(value);
         options = options || {};
         assertIsDate(value, 'A date or timestamp must be provided to format-relative');
-        var formatOptions = this.filterFormatOptions(options);
+        let formatOptions = this.filterFormatOptions(options);
 
         return this._format(value, formatOptions, {
             now: options.now

@@ -10,11 +10,11 @@ import createFormatCache from '../format-cache/memoizer';
 var FormatNumber = Formatter.extend({
     formatType: 'number',
 
-    formatter: Ember.computed(function () {
+    formatter: Ember.computed(() => {
         return createFormatCache(Intl.NumberFormat);
     }).readOnly(),
 
-    format: function (value, options) {
+    format(value, options) {
         var formatOptions = this.filterFormatOptions(options);
         return this._format(value, formatOptions);
     }
