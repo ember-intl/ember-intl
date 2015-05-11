@@ -19,13 +19,13 @@ var FormatRelative = Formatter.extend({
         return createFormatCache(IntlRelativeFormat);
     }).readOnly(),
 
-    format: function (datetime, options) {
-        datetime = new Date(datetime);
+    format: function (value, options) {
+        value = new Date(value);
         options = options || {};
-        assertIsDate(datetime, 'A date or timestamp must be provided to format-relative');
+        assertIsDate(value, 'A date or timestamp must be provided to format-relative');
         var formatOptions = this.filterFormatOptions(options);
 
-        return this._format(datetime, formatOptions, {
+        return this._format(value, formatOptions, {
             now: options.now
         });
     }

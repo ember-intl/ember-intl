@@ -18,12 +18,12 @@ var FormatTime = Formatter.extend({
         return createFormatCache(Intl.DateTimeFormat);
     }).readOnly(),
 
-    format: function (datetime, options) {
-        datetime = new Date(datetime);
-        assertIsDate(datetime, 'A date or timestamp must be provided to format-time');
+    format: function (value, options) {
+        value = new Date(value);
+        assertIsDate(value, 'A date or timestamp must be provided to format-time');
         var formatOptions = this.filterFormatOptions(options);
 
-        return this._format(datetime, formatOptions);
+        return this._format(value, formatOptions);
     }
 });
 

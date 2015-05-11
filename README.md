@@ -145,14 +145,12 @@ Utility helper for returning the value, or eventual value, based on a translatio
 Will return the message from the current locale, or locale explicitly passed as an argument, message object.
 
 ```js
-// translations/en.js
-import Translation from 'ember-intl/models/translation';
-
-export default Translation.extend({
-	product: {
-		info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
+// translations/en.json
+{
+	"product": {
+		"info": "{product} will cost {price, number, EUR} if ordered by {deadline, date, time}"
 	}
-});
+};
 ```
 
 ### Helper Options
