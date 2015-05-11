@@ -27,8 +27,10 @@ test('exists', function(assert) {
 test('invoke the formatDate directly', function(assert) {
     assert.expect(1);
     assert.equal(this.service.formatDate(dateStr, {
-        timeZone: 'UTC'
-    }), '1/23/2014');
+        day: 'numeric',
+        timeZone: 'UTC',
+        locales: 'en-US'
+    }), '23');
 });
 
 test('should throw if called with out a value', function(assert) {

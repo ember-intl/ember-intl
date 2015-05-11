@@ -6,8 +6,16 @@
 import Ember from 'ember';
 import Formatter from './-base';
 import IntlGetResult from '../models/intl-get-result';
+import createFormatCache from '../format-cache/memoizer';
+import { IntlMessageFormat } from '../utils/data';
 
 var FormatMessage = Formatter.extend({
+    intl: Ember.inject.service(),
+
+    formatter: Ember.computed(function () {
+        return createFormatCache(IntlMessageFormat);
+    }).readOnly(),
+
     format: function (value, options, optionalLocale) {
         var locales = optionalLocale || options.locales;
         var formatOptions = {};

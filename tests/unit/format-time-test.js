@@ -24,9 +24,32 @@ test('exists', function(assert) {
     assert.ok(formatTimeHelper);
 });
 
+test('invoke formatTime directly with format', function(assert) {
+    assert.expect(1);
+
+    this.container.unregister('formats:main');
+    this.container.register('formats:main', {
+        time: {
+            test: {
+                timeZone: 'UTC',
+                locales: 'fr-FR'
+            }
+        }
+    }, { instantiate: false });
+
+    assert.equal(this.service.formatTime(timeStamp, {
+        format: 'test'
+    }), '23/1/2014');
+
+    this.container.unregister('formats:main');
+});
+
 test('invoke formatTime directly', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatTime(timeStamp, { timeZone: 'UTC' }), '1/23/2014');
+    assert.equal(this.service.formatTime(timeStamp, {
+        timeZone: 'UTC',
+        locales: 'fr-FR'
+    }), '23/1/2014');
 });
 
 test('should throw if called with out a value', function(assert) {

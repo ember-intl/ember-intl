@@ -6,12 +6,14 @@
 import Ember from 'ember';
 import { Stream, read, readHash, destroyStream } from '../utils/streams';
 
-export default function (formatterName) {
+var getProperties = Ember.getProperties;
+
+export default function (formatType) {
     function throwError () {
-        return new Error(formatterName + ' requires a single unname argument. {{' + formatterName + ' value}}');
+        return new Error(formatType + ' requires a single unname argument. {{format-' + formatType + ' value}}');
     }
 
-    return function (params, hash, options, env) {
+    return function (params, hash, seenHash, env) {
         if (!params || (params && !params.length)) {
             return throwError();
         }
@@ -22,11 +24,12 @@ export default function (formatterName) {
             outStream.notify();
         }
 
-        var value     = params[0];
+        seenHash      = readHash(hash);
+
         var view      = env.data.view;
         var intl      = view.container.lookup('service:intl');
-        var seenHash  = readHash(hash);
-        var formatter = view.container.lookup('ember-intl@formatter:' + formatterName);
+        var formatter = view.container.lookup('ember-intl@formatter:format-' + formatType);
+        var value     = params[0];
 
         if (value.isStream) {
             value.subscribe(function () {
@@ -35,7 +38,17 @@ export default function (formatterName) {
         }
 
         outStream = new Stream(function () {
-            return formatter.format.call(formatter, read(value), seenHash);
+            var format = {};
+
+            if (seenHash && seenHash.format) {
+                format = intl.getFormat(formatType, seenHash.format);
+            }
+
+            return formatter.format.call(
+                formatter,
+                read(value),
+                Ember.$.extend(getProperties(intl, 'locales'), format, seenHash)
+            );
         });
 
         Ember.keys(hash).forEach(function (key) {

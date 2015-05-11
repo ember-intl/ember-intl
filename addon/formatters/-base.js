@@ -5,12 +5,9 @@
 
 import Ember from 'ember';
 
-var isEmpty = Ember.isEmpty;
 var get = Ember.get;
 
 var FormatBase = Ember.Object.extend({
-    intl: Ember.inject.service(),
-
     filterFormatOptions: function (hash) {
         hash = hash || {};
 
@@ -32,25 +29,8 @@ var FormatBase = Ember.Object.extend({
 
     _format: function (value, options, formatOptions) {
         options = options || {};
-
         var formatter = get(this, 'formatter');
-        var intl      = get(this, 'intl');
         var locales   = options.locales;
-        var formats, format;
-
-        if (isEmpty(locales)) {
-            locales = get(intl, 'locales');
-        }
-
-        if (options && options.format) {
-            formats = get(intl, 'formats');
-            if (typeof options.format === 'string' && formats) {
-                format = get(formats, this.formatType + '.' + options.format);
-            }
-
-            Ember.merge(options, format);
-        }
-
         return formatter(locales, options).format(value, formatOptions);
     }
 });

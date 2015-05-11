@@ -7,22 +7,23 @@ import Ember from 'ember';
 import { IntlMessageFormat } from '../utils/data';
 import createFormatCache from '../format-cache/memoizer';
 
-var makeArray    = Ember.makeArray;
-var get          = Ember.get;
-var computed     = Ember.computed;
-var observer     = Ember.observer;
-var isEmpty      = Ember.isEmpty;
-var runOnce      = Ember.run.once;
+var makeArray = Ember.makeArray;
+var computed  = Ember.computed;
+var observer  = Ember.observer;
+var runOnce   = Ember.run.once;
+var isEmpty   = Ember.isEmpty;
+var get       = Ember.get;
 
-function proxy (name) {
-    var formatter;
+function proxy (formatType) {
+    return function (value, options) {
+        var formatter = this.container.lookup('ember-intl@formatter:format-' + formatType);
 
-    return function () {
-        if (!formatter) {
-            formatter = this.container.lookup('ember-intl@formatter:format-' + name);
+        if (options && typeof options.format === 'string') {
+            var format = this.getFormat(formatType, options.format);
+            options = Ember.$.extend(format, options);
         }
 
-        return formatter.format.apply(formatter, arguments);
+        return formatter.format.call(formatter, value, options);
     };
 }
 
@@ -33,7 +34,6 @@ export default Ember.Service.extend(Ember.Evented, {
 
     init: function () {
         this._super.apply(this, arguments);
-
         this.getMessageFormat = createFormatCache(IntlMessageFormat);
     },
 
@@ -117,6 +117,16 @@ export default Ember.Service.extend(Ember.Evented, {
         }
 
         this.container.register(name, modelType.extend(payload));
+    },
+
+    getFormat: function(formatType, format) {
+        var formats = get(this, 'formats');
+
+        if (formats && formatType && typeof format === 'string') {
+            return get(formats, formatType + '.' + format) || {};
+        }
+
+        return {};
     },
 
     findLanguage: function (locale) {
