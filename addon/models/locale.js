@@ -21,7 +21,7 @@ var LocaleModel = Ember.Object.extend({
         // shallow merge intentional
         for (var key in messageObject) {
             if (messageObject.hasOwnProperty(key)) {
-                messages[key] = messageObject[key];
+                Ember.set(messages, key, messageObject[key]);
             }
         }
 
