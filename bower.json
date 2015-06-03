@@ -20,7 +20,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "jquery": "^1.11.1",
-    "ember": "v1.11.1",
+    "ember": "^1.12.1",
     "ember-resolver": "~0.1.15",
     "loader.js": "ember-cli/loader.js#3.2.0",
     "ember-cli-shims": "stefanpenner/ember-cli-shims#0.0.3",
