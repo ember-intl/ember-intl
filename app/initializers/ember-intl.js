@@ -6,6 +6,7 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
 import { addLocaleData } from 'ember-intl/utils/data';
+import { filterBy } from 'ember-intl/utils/initialize';
 import FormatDate from 'ember-intl/helpers/format-date';
 import FormatTime from 'ember-intl/helpers/format-time';
 import FormatRelative from 'ember-intl/helpers/format-relative';
@@ -14,22 +15,16 @@ import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
 import FormatMessage from 'ember-intl/helpers/format-message';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 
-function filterBy (type) {
-    return Object.keys(requirejs._eak_seen).filter((key) => {
-        return key.indexOf(ENV.modulePrefix + '\/' + type + '\/') === 0;
-    });
-}
-
 export var registerIntl = function (container, service) {
     if (!service) {
         service = container.lookup('service:intl');
     }
 
-    filterBy('cldrs').forEach((key) => {
+    filterBy(ENV, 'cldrs').forEach((key) => {
         addLocaleData(require(key, null, null, true)['default']);
     });
 
-    filterBy('translations').forEach((key) => {
+    filterBy(ENV, 'translations').forEach((key) => {
         let localeSplit = key.split('\/');
         let locale = localeSplit[localeSplit.length - 1];
         service.createLocale(locale, require(key, null, null, true)['default']);
@@ -61,8 +56,29 @@ export var registerIntl = function (container, service) {
 export default {
     name: 'ember-intl',
 
-    initialize(container, app) {
-        app.intl = container.lookup('service:intl');
-        registerIntl(container, app.intl);
+    initialize(registry, application) {
+        application.intl = registry.lookup('service:intl');
+
+        registry.optionsForType('formats', {
+            singleton:   true,
+            instantiate: false
+        });
+
+        if (!registry.has('adapter:-intl-adapter')) {
+            registry.register('adapter:-intl-adapter', IntlAdapter);
+        }
+
+        // only here for backwards compat.
+        registry.register('intl:main', registry.lookup('service:intl'), {
+            instantiate: false,
+            singleton:   true
+        });
+
+        Ember.HTMLBars._registerHelper('format-date', FormatDate);
+        Ember.HTMLBars._registerHelper('format-time', FormatTime);
+        Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
+        Ember.HTMLBars._registerHelper('format-number', FormatNumber);
+        Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
+        Ember.HTMLBars._registerHelper('format-message', FormatMessage);
     }
 };
