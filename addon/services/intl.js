@@ -83,18 +83,14 @@ export default Ember.Service.extend(Ember.Evented, {
         this.trigger('localesChanged');
     },
 
-    formatMessage(message, values, options) {
+    // Ignoring JSHint while waiting on jshint#1941
+    formatMessage(message, values, { locales = null, formats = get(this, 'formats') } = {}) { // jshint ignore:line
         // When `message` is a function, assume it's an IntlMessageFormat
         // instance's `format()` method passed by reference, and call it. This
         // is possible because its `this` will be pre-bound to the instance.
         if (typeof message === 'function') {
             return message(values);
         }
-
-        options = options || {};
-
-        let locales = options.locales;
-        let formats = options.formats || get(this, 'formats');
 
         if (isEmpty(locales)) {
             locales = get(this, 'locales');
