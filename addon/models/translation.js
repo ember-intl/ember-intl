@@ -6,7 +6,7 @@
 import Ember from 'ember';
 
 var LocaleModel = Ember.Object.extend({
-    locale:   Ember.required(),
+    locale: null,
 
     addMessage(key, value) {
         this.set(key, value);

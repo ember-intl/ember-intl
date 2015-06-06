@@ -7,13 +7,13 @@
 
 'use strict';
 
-var serialize    = require('serialize-javascript');
-var mergeTrees   = require('broccoli-merge-trees');
-var Funnel       = require('broccoli-funnel');
-var commands     = require('./lib/commands');
-var walkSync     = require('walk-sync');
-var path         = require('path');
-var fs           = require('fs');
+var serialize  = require('serialize-javascript');
+var mergeTrees = require('broccoli-merge-trees');
+var Funnel     = require('broccoli-funnel');
+var commands   = require('./lib/commands');
+var walkSync   = require('walk-sync');
+var path       = require('path');
+var fs         = require('fs');
 
 var LocaleWriter       = require('./lib/locale-writer');
 var TranslationBlender = require('./lib/translation-blender');

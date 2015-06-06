@@ -27,6 +27,21 @@ moduleForIntl('format-message', {
                 baz: 'baz baz baz'
             }
         }));
+
+        container.optionsForType('formats', {
+            singleton:   true,
+            instantiate: false
+        });
+
+        container.register('formats:main', {
+            date: {
+                shortWeekDay: {
+                    day:   'numeric',
+                    month: 'long',
+                    year:  'numeric'
+                }
+            }
+        });
     },
     afterEach: function () {
         runDestroy(view);
@@ -227,21 +242,6 @@ test('locale can add messages object and intl-get can read it', function(assert)
 test('should respect format options for date ICU block', function(assert) {
     assert.expect(1);
 
-    container.optionsForType('formats', {
-        singleton:   true,
-        instantiate: false
-    });
-
-    container.register('formats:main', {
-        date: {
-            shortWeekDay: {
-                day:   'numeric',
-                month: 'long',
-                year:  'numeric'
-            }
-        }
-    });
-
     view = this.intlBlock('{{format-message "Sale begins {day, date, shortWeekDay}" day=1390518044403}}');
     runAppend(view);
 
@@ -252,23 +252,22 @@ test('intl-get returns message for key that is a literal string (not an object p
     assert.expect(1);
 
     var translation = container.lookup('ember-intl@translation:en');
+    var fn = translation.getValue;
+
+    translation.getValue = function (key) {
+        return this[key];
+    };
+
+    translation['string.path.works'] = 'yes it does';
 
     try {
-        container.unregister('ember-intl@translation:en');
-        container.register('ember-intl@translation:en', Translation.extend({
-            'string.path.works': 'yes it does',
-            getValue: function (key) {
-                return this[key];
-            }
-        }), { singleton: true, instantiate: true });
-
-        view = this.intlBlock('{{format-message (intl-get "string.path.works")}}');
-        runAppend(view);
-
-        assert.equal(view.$().text(), "yes it does");
-    }
-    finally {
-        container.unregister('ember-intl@translation:en');
-        container.register('ember-intl@translation:en', translation, { instantiate: false });
+      view = this.intlBlock('{{format-message (intl-get "string.path.works")}}', {locales: 'en'});
+      runAppend(view);
+      assert.equal(view.$().text(), "yes it does");
+    } catch(ex) {
+      console.error(ex);
+    } finally {
+      // reset the function back
+      translation.getValue = fn;
     }
 });
