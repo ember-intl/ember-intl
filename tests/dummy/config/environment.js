@@ -19,6 +19,7 @@ module.exports = function(environment) {
         },
 
         intl: {
+            translationType: 'json',
             defaultTranslation: 'en-us',
             outputPath: 'dummy/translations',
             inputPath: 'tests/dummy/translations'

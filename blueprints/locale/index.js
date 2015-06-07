@@ -11,13 +11,13 @@ var path        = require('path');
 var fs          = require('fs');
 
 module.exports = {
-    description: 'Extract a CLDR data into an ES6 module for a given locale code',
+    description: 'Extract CLDR data as an ES6 module for a given locale',
 
     normalizeEntityName: function (localeName) {
         entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
 
         if (!broccoliCLDR.has(localeName)) {
-            throw new SilentError('Aborting. `' + localeName + '` is not a know locale code');
+            throw new SilentError('Aborting. `' + localeName + '` is not a know locale');
         }
 
         return localeName;

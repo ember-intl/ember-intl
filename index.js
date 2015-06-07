@@ -10,7 +10,6 @@
 var serialize  = require('serialize-javascript');
 var mergeTrees = require('broccoli-merge-trees');
 var Funnel     = require('broccoli-funnel');
-var commands   = require('./lib/commands');
 var walkSync   = require('walk-sync');
 var path       = require('path');
 var fs         = require('fs');
@@ -49,10 +48,11 @@ module.exports = {
         var projectConfig = this.projectConfig();
 
         return Object.assign({
+            translationType:    'json',
             defaultTranslation: 'en',
-            outputPath: projectConfig.modulePrefix + '/translations',
-            inputPath: 'translations'
-        }, projectConfig.intl || {});
+            inputPath:          'translations',
+            outputPath:         projectConfig.modulePrefix + '/translations',
+        }, projectConfig.intl);
     },
 
     projectConfig: function () {
@@ -67,14 +67,10 @@ module.exports = {
         app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
     },
 
-    includedCommands: function () {
-        return commands;
-    },
-
     treeForApp: function (inputTree) {
+        var trees       = [inputTree];
         var appPath     = this.treePaths.app;
         var localesPath = path.join(this.project.root, 'translations');
-        var trees       = [inputTree];
 
         if (fs.existsSync(localesPath)) {
             var locales = walkSync(localesPath).map(function (filename) {
@@ -89,7 +85,7 @@ module.exports = {
                 wrapEntry:      this._transformLocale
             });
 
-            trees.push(localeTree)
+            trees.push(localeTree);
         }
 
         return mergeTrees(trees, { overwrite: true });
