@@ -49,8 +49,8 @@ module.exports = {
 
         return Object.assign({
             defaultLocale: 'en',
-            inputPath:          'translations',
-            outputPath:         projectConfig.modulePrefix + '/translations',
+            inputPath    : 'translations',
+            outputPath   : path.join(projectConfig.modulePrefix, 'translations'),
         }, projectConfig.intl);
     },
 
@@ -62,8 +62,8 @@ module.exports = {
         this._super.included.apply(this, arguments);
         this.app = app;
         var vendorPath = this.treePaths.vendor;
-        app.import(vendorPath + '/messageformat/intl-messageformat.js');
-        app.import(vendorPath + '/relativeformat/intl-relativeformat.js');
+        app.import(path.join(vendorPath, 'messageformat/intl-messageformat.js'));
+        app.import(path.join(vendorPath, 'relativeformat/intl-relativeformat.js'));
     },
 
     treeForApp: function (inputTree) {
