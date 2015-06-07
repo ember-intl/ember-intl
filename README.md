@@ -19,7 +19,7 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 * HTMLBars
 
 ## Installation
-* `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3) 
+* `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3)
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
 
 ```html
@@ -52,6 +52,18 @@ Translations are defined in `/translations`, *outside of `app`*.  Example of `/t
 			this.intl.set('locales', [language, 'en']);
 		}
 	});
+```
+
+* *** A default locale is required ***.  This is used as the "source of truth" to determine if any translations are missing a translation at build time.  It will offer warnings displaying with locale's are missing translations for a particular key.  The default locale is configurable within `config/environment.js`.
+
+```js
+// config/environment.js
+ENV: {
+  ...
+  intl: {
+      defaultLocale: 'en' /* default value */
+  }
+}
 ```
 
 ## Examples

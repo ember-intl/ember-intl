@@ -48,8 +48,7 @@ module.exports = {
         var projectConfig = this.projectConfig();
 
         return Object.assign({
-            translationType:    'json',
-            defaultTranslation: 'en',
+            defaultLocale: 'en',
             inputPath:          'translations',
             outputPath:         projectConfig.modulePrefix + '/translations',
         }, projectConfig.intl);
