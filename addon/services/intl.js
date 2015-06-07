@@ -14,7 +14,7 @@ var runOnce   = Ember.run.once;
 var isEmpty   = Ember.isEmpty;
 var get       = Ember.get;
 
-function proxy (formatType) {
+function formatterProxy (formatType) {
     return function (value, options) {
         var formatter = this.container.lookup('ember-intl@formatter:format-' + formatType);
 
@@ -31,10 +31,12 @@ export default Ember.Service.extend(Ember.Evented, {
     locales:          null,
     getMessageFormat: null,
     adapterType:      '-intl-adapter',
-    formatRelative:   proxy('relative'),
-    formatNumber:     proxy('number'),
-    formatTime:       proxy('time'),
-    formatDate:       proxy('date'),
+
+    //formatMessage:    formatterProxy('message'),
+    formatRelative:   formatterProxy('relative'),
+    formatNumber:     formatterProxy('number'),
+    formatTime:       formatterProxy('time'),
+    formatDate:       formatterProxy('date'),
 
     adapter: computed('adapterType', function () {
         var adapterType = get(this, 'adapterType');
@@ -84,9 +86,6 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     formatMessage(message, values, options) {
-        // When `message` is a function, assume it's an IntlMessageFormat
-        // instance's `format()` method passed by reference, and call it. This
-        // is possible because its `this` will be pre-bound to the instance.
         if (typeof message === 'function') {
             return message(values);
         }
