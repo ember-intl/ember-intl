@@ -54,7 +54,7 @@ Translations are defined in `/translations`, *outside of `app`*.  Example of `/t
 	});
 ```
 
-* *** A default locale is required ***.  This is used as the "source of truth" to determine if any translations are missing a translation at build time.  It will offer warnings displaying with locale's are missing translations for a particular key.  The default locale is configurable within `config/environment.js`.
+* **A default locale is required**.  This is used as the "source of truth" to determine if any translations are missing a translation at build time.  It will offer warnings displaying with locale's are missing translations for a particular key.  The default locale is configurable within `config/environment.js`.
 
 ```js
 // config/environment.js
