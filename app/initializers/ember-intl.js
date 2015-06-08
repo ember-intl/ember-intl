@@ -4,12 +4,7 @@
  */
 
 import Ember from 'ember';
-
-import ENV from '../config/environment';
 import { initializeIntl } from '../instance-initializers/ember-intl';
-
-import { addLocaleData } from 'ember-intl/utils/data';
-import { filterBy } from 'ember-intl/utils/initialize';
 import FormatDate from 'ember-intl/helpers/format-date';
 import FormatTime from 'ember-intl/helpers/format-time';
 import FormatRelative from 'ember-intl/helpers/format-relative';
@@ -22,8 +17,6 @@ export default {
     name: 'ember-intl',
 
     initialize(registry, app) {
-        app.intl = registry.lookup('service:intl');
-
         registry.optionsForType('formats', {
             singleton:   true,
             instantiate: false
@@ -31,14 +24,6 @@ export default {
 
         if (!registry.has('adapter:-intl-adapter')) {
             registry.register('adapter:-intl-adapter', IntlAdapter);
-        }
-
-        // only here for backwards compat.
-        if (!registry.has('intl:main')) {
-            registry.register('intl:main', registry.lookup('service:intl'), {
-                instantiate: false,
-                singleton:   true
-            });
         }
 
         Ember.HTMLBars._registerHelper('format-date', FormatDate);
@@ -52,6 +37,6 @@ export default {
             return;
         }
 
-        initializeIntl(registry, app);
+        initializeIntl(app);
     }
 };

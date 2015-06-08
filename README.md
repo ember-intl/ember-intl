@@ -41,17 +41,25 @@ Translations are defined in `/translations`, *outside of `app`*.  Example of `/t
 ```
 
 * Configure which locale you want to use at runtime:
-	* Open app/app.js
-	* Add a `ready` hook:
+	* Open (or create) app/routes/application.js
 
 ```js
-	var App = Ember.Application.extend({
-		ready: function () {
-			// read more: http://formatjs.io/guide/#client-side
-			var language = navigator.language || navigator.browserLanguage;
-			this.intl.set('locales', [language, 'en']);
-		}
-	});
+  // app/routes/application.js
+  export default Ember.Route.extend({
+    intl: Ember.inject.service(),
+
+    beforeModel: function() {
+      // define the app's runtime locale
+      // For example, here you would maybe do an API lookup to resolver
+      // which locale the user should be targeted and perhaps lazily
+      // load translations using XHR and calling intl's `addMessage`/`addMessages`
+      // method with the results of the XHR request
+      this.get('intl').setProperties({
+          locales:       ['en-US'],
+          defaultLocale: 'en-US'
+      });
+    }
+  });
 ```
 
 * **A default locale is required**.  This is used as the "source of truth" to determine if any translations are missing a translation at build time.  It will offer warnings displaying with locale's are missing translations for a particular key.  The default locale is configurable within `config/environment.js`.
