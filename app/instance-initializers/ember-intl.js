@@ -10,6 +10,8 @@ import { filterBy } from 'ember-intl/utils/initialize';
 export function instanceInitializer(instance) {
     let service = instance.container.lookup('service:intl');
 
+    service.createLocale = service.createLocale.bind(service, instance);
+
     filterBy(ENV, 'cldrs').forEach((key) => {
         addLocaleData(require(key, null, null, true)['default']);
     });
