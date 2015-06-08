@@ -17,19 +17,19 @@ var FormatMessage = Formatter.extend({
     }).readOnly(),
 
     format(value, options, optionalLocale) {
-        let locales = optionalLocale || options.locales;
+        let locale = optionalLocale || options.locale;
         let formatOptions = {};
 
         if (value instanceof IntlGetResult) {
-            if (typeof locales === 'undefined') {
-                locales = value.locale;
+            if (typeof locale === 'undefined') {
+                locale = value.locale;
             }
 
             value = value.content;
         }
 
-        if (locales) {
-            formatOptions.locales = locales;
+        if (locale) {
+            formatOptions.locale = locale;
         }
 
         return this.get('intl').formatMessage(value, options, formatOptions);

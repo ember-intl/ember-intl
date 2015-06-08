@@ -28,7 +28,18 @@ function formatterProxy (formatType) {
 }
 
 export default Ember.Service.extend(Ember.Evented, {
-    locales:          null,
+    // proxies to locales, eventually
+    locale: null,
+
+    locales: computed(function(key, value) {
+        if (arguments.length === 1) {
+            return this.get('locale');
+        }
+
+        Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
+        this.set('locale', Ember.makeArray(value));
+    }),
+
     getMessageFormat: null,
     adapterType:      '-intl-adapter',
 
@@ -60,7 +71,7 @@ export default Ember.Service.extend(Ember.Evented, {
         }) || {};
     }).readOnly(),
 
-    localeChanged: observer('locales', function () {
+    localeChanged: observer('locale', function () {
         runOnce(this, this.notifyLocaleChanged);
     }),
 
@@ -82,7 +93,7 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     notifyLocaleChanged() {
-        this.trigger('localesChanged');
+        this.trigger('localeChanged');
     },
 
     formatMessage(message, values, options) {
@@ -92,15 +103,15 @@ export default Ember.Service.extend(Ember.Evented, {
 
         options = options || {};
 
-        let locales = options.locales;
+        let locale = options.locale;
         let formats = options.formats || get(this, 'formats');
 
-        if (isEmpty(locales)) {
-            locales = get(this, 'locales');
+        if (isEmpty(locale)) {
+            locale = get(this, 'locale');
         }
 
         if (typeof message === 'string') {
-            message = this.getMessageFormat(message, locales, formats);
+            message = this.getMessageFormat(message, locale, formats);
         }
 
         return message.format(values);
@@ -139,13 +150,13 @@ export default Ember.Service.extend(Ember.Evented, {
         });
     },
 
-    findTranslation(key, locales) {
-        locales = locales ? makeArray(locales) : makeArray(get(this, 'locales'));
+    findTranslation(key, locale) {
+        locale = locale ? makeArray(locale) : makeArray(get(this, 'locale'));
 
-        let translation = this.get('adapter').findTranslation(locales, key);
+        let translation = this.get('adapter').findTranslation(locale, key);
 
         if (typeof translation === 'undefined') {
-            throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
+            throw new Error('translation: `' + key + '` on locale(s): ' + locale.join(',') + ' was not found.');
         }
 
         return translation;

@@ -47,7 +47,7 @@ export default function (formatType) {
             return formatter.format.call(
                 formatter,
                 read(value),
-                Ember.$.extend(getProperties(intl, 'locales'), format, seenHash)
+                Ember.$.extend(getProperties(intl, 'locale'), format, seenHash)
             );
         });
 
@@ -69,7 +69,7 @@ export default function (formatType) {
             destroyStream(outStream);
         });
 
-        intl.on('localesChanged', touchStream);
+        intl.on('localeChanged', touchStream);
 
         return outStream;
     };

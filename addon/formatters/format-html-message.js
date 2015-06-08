@@ -23,9 +23,9 @@ var FormatHtmlMessage = FormatterMessage.extend({
     },
 
     format(value, options) {
-        let locales = options.locales;
+        let locale = options.locale;
         options = this.escapeProps(options);
-        let superResult = this._super(value, options, locales);
+        let superResult = this._super(value, options, locale);
         return Ember.String.htmlSafe(superResult);
     }
 });

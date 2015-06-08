@@ -30,13 +30,13 @@ var FormatBase = Ember.Object.extend({
     _format(value, options, formatOptions) {
         options = options || {};
         let formatter = get(this, 'formatter');
-        let locales   = options.locales;
-        return formatter(locales, options).format(value, formatOptions);
+        let locale   = options.locale;
+        return formatter(locale, options).format(value, formatOptions);
     }
 });
 
 FormatBase.reopenClass({
-    formatOptions: Ember.A(['locales', 'format']),
+    formatOptions: Ember.A(['locale', 'format']),
     concatenatedProperties: Ember.A(['formatOptions'])
 });
 

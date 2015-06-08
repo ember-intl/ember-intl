@@ -59,9 +59,8 @@ export default function (name, tester) {
 
             if (!container.has('service:intl')) {
                 var service = IntlService.create(Ember.$.extend({}, {
-                    container:     this.container,
-                    locales:       ['en'],
-                    defaultLocale: 'en'
+                    container: this.container,
+                    locale:    'en'
                 }));
 
                 container.register('service:intl', service, {

@@ -32,7 +32,7 @@ test('invoke formatTime directly with format', function(assert) {
         time: {
             test: {
                 timeZone: 'UTC',
-                locales: 'fr-FR'
+                locale: 'fr-FR'
             }
         }
     }, { instantiate: false });
@@ -48,7 +48,7 @@ test('invoke formatTime directly', function(assert) {
     assert.expect(1);
     assert.equal(this.service.formatTime(timeStamp, {
         timeZone: 'UTC',
-        locales: 'fr-FR'
+        locale: 'fr-FR'
     }), '23/1/2014');
 });
 
@@ -62,7 +62,7 @@ test('it should return a formatted string from a date string', function(assert) 
     assert.expect(1);
 
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
-    view = this.intlBlock('{{format-time "' + dateStr + '" timeZone="UTC"}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-time "' + dateStr + '" timeZone="UTC"}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), '1/23/2014');
 });
@@ -71,7 +71,7 @@ test('it should return a formatted string from a timestamp', function(assert) {
     assert.expect(1);
 
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
-    view = this.intlBlock('{{format-time ' + timeStamp + ' timeZone="UTC"}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-time ' + timeStamp + ' timeZone="UTC"}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), '1/23/2014');
 });
@@ -79,7 +79,7 @@ test('it should return a formatted string from a timestamp', function(assert) {
 test('it should return a formatted string of just the time', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-time ' + timeStamp + ' hour="numeric" minute="numeric" timeZone="UTC"}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-time ' + timeStamp + ' hour="numeric" minute="numeric" timeZone="UTC"}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), '11:00 PM');
 });
@@ -87,7 +87,7 @@ test('it should return a formatted string of just the time', function(assert) {
 test('it should format the epoch timestamp', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-time 0}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-time 0}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), new Intl.DateTimeFormat('en').format(0));
 });

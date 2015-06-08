@@ -28,7 +28,7 @@ test('invoke the formatDate directly', function(assert) {
     assert.expect(1);
     assert.equal(this.service.formatDate(dateStr, {
         timeZone: 'UTC',
-        locales: 'en-US'
+        locale: 'en-US'
     }), '1/23/2014');
 });
 
@@ -42,7 +42,7 @@ test('it should return a formatted string from a date string', function(assert) 
     assert.expect(1);
 
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
-    view = this.intlBlock('{{format-date "' + dateStr + '" timeZone="UTC"}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-date "' + dateStr + '" timeZone="UTC"}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), '1/23/2014');
 });
@@ -51,7 +51,7 @@ test('it should return a formatted string from a timestamp', function(assert) {
     assert.expect(1);
 
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
-    view = this.intlBlock('{{format-date ' + timeStamp + ' timeZone="UTC"}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-date ' + timeStamp + ' timeZone="UTC"}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), '1/23/2014');
 });
@@ -59,7 +59,7 @@ test('it should return a formatted string from a timestamp', function(assert) {
 test('it should return a formatted string of just the time', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-date ' + timeStamp + ' hour="numeric" minute="numeric" timeZone="UTC"}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-date ' + timeStamp + ' hour="numeric" minute="numeric" timeZone="UTC"}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), '11:00 PM');
 });
@@ -67,7 +67,7 @@ test('it should return a formatted string of just the time', function(assert) {
 test('it should format the epoch timestamp', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-date 0}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-date 0}}', {locale: 'en-US'});
     runAppend(view);
     assert.equal(view.$().text(), new Intl.DateTimeFormat('en').format(0));
 });

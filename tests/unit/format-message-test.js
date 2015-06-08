@@ -91,7 +91,7 @@ test('should throw intl-get is used standalone helper', function(assert) {
 test('should return a formatted string', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-message MSG firstName=firstName lastName=lastName}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-message MSG firstName=firstName lastName=lastName}}', {locale: 'en-US'});
 
     view.set('context', {
         MSG      : 'Hi, my name is {firstName} {lastName}.',
@@ -107,7 +107,7 @@ test('should return a formatted string', function(assert) {
 test('should return a formatted string with formatted numbers and dates', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locales: 'en-US'});
+    view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locale: 'en-US'});
 
     view.set('context', {
         POP_MSG    : '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
@@ -125,7 +125,7 @@ test('should return a formatted string with formatted numbers and dates', functi
 test('should return a formatted string with formatted numbers and dates in a different locale', function(assert) {
     assert.expect(1);
 
-    view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locales: 'de-DE'});
+    view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locale: 'de-DE'});
 
     view.set('context', {
         POP_MSG    : '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
@@ -261,7 +261,7 @@ test('intl-get returns message for key that is a literal string (not an object p
     translation['string.path.works'] = 'yes it does';
 
     try {
-      view = this.intlBlock('{{format-message (intl-get "string.path.works")}}', {locales: 'en'});
+      view = this.intlBlock('{{format-message (intl-get "string.path.works")}}', {locale: 'en'});
       runAppend(view);
       assert.equal(view.$().text(), "yes it does");
     } catch(ex) {

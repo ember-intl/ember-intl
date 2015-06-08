@@ -54,10 +54,7 @@ Translations are defined in `/translations`, *outside of `app`*.  Example of `/t
       // which locale the user should be targeted and perhaps lazily
       // load translations using XHR and calling intl's `addMessage`/`addMessages`
       // method with the results of the XHR request
-      this.get('intl').setProperties({
-          locales:       ['en-US'],
-          defaultLocale: 'en-US'
-      });
+      this.get('intl').set('locale', 'en-US');
     }
   });
 ```
@@ -173,7 +170,7 @@ Will return the message from the current locale, or locale explicitly passed as 
 
 ### Helper Options
 * All helpers accept optional arguments:
-	* `locales` argument to explicitly pass/override the application locale
+	* `locale` argument to explicitly pass/override the application locale
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
 ## Writing Unit Tests
@@ -225,7 +222,7 @@ moduleFor('view:index', 'IndexView', {
 
     // set the initial intl service locale to `en-us`
     var intl = container.lookup('service:intl');
-    intl.set('locales', 'en');
+    intl.set('locale', 'en');
   }
 });
 
@@ -246,7 +243,7 @@ test('index renders', function () {
   equal(view.$().text().trim(), "hello Tom");
 
   Ember.run(function () {
-    intl.set('locales', 'es');
+    intl.set('locale', 'es');
   });
 
   equal(view.$().text().trim(), "hola Tom");

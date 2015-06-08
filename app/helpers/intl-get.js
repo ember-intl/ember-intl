@@ -33,7 +33,7 @@ export default function (value, options) {
     }
 
     function pokeStream () {
-        return Ember.RSVP.cast(intl.findTranslation(read(currentValue), hash.locales)).then(function (translation) {
+        return Ember.RSVP.cast(intl.findTranslation(read(currentValue), hash.locale)).then(function (translation) {
             outStream.setValue(translation);
         });
     }
@@ -44,10 +44,10 @@ export default function (value, options) {
         valueStream.subscribe(valueStreamChanged);
     }
 
-    intl.on('localesChanged', this, pokeStream);
+    intl.on('localeChanged', this, pokeStream);
 
     view.one('willDestroyElement', this, () => {
-        intl.off('localesChanged', this, pokeStream);
+        intl.off('localeChanged', this, pokeStream);
 
         if (valueStream) {
             valueStream.unsubscribe(valueStreamChanged);

@@ -19,17 +19,17 @@ export default Ember.Object.extend({
         }
     },
 
-    findTranslation(locales, translationKey) {
+    findTranslation(locale, translationKey) {
         let i = 0;
-        let len = locales.length;
-        let locale, translation, key;
+        let len = locale.length;
+        let _locale, translation, key;
 
         for (; i < len; i++) {
-            key    = locales[i];
-            locale = this.findLanguage(key);
+            key    = locale[i];
+            _locale = this.findLanguage(key);
 
-            if (locale) {
-                translation = locale.getValue(translationKey);
+            if (_locale) {
+                translation = _locale.getValue(translationKey);
 
                 if (typeof translation !== 'undefined') {
                     return new IntlGetResult(translation, key);
