@@ -3,12 +3,11 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
 import ENV from '../config/environment';
 import { addLocaleData } from 'ember-intl/utils/data';
 import { filterBy } from 'ember-intl/utils/initialize';
 
-export function initializeIntl (instance) {
+export function instanceInitializer(instance) {
     let service = instance.container.lookup('service:intl');
 
     filterBy(ENV, 'cldrs').forEach((key) => {
@@ -24,5 +23,5 @@ export function initializeIntl (instance) {
 
 export default {
   name: 'ember-intl',
-  initialize: initializeIntl
+  initialize: instanceInitializer
 }
