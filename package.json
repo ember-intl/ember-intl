@@ -53,6 +53,7 @@
     "ember-disable-prototype-extensions": "^1.0.1",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-template-compiler": "*1.9.0-alpha",
+    "ember-try": "0.0.7",
     "express": "^4.8.5",
     "phantomjs-polyfill": "0.0.1"
   },
