@@ -6,11 +6,12 @@
 import Ember from 'ember';
 import Formatter from './-base';
 import createFormatCache from '../format-cache/memoizer';
+import computed from 'ember-new-computed';
 
 var FormatNumber = Formatter.extend({
     formatType: 'number',
 
-    formatter: Ember.computed(() => {
+    formatter: computed(() => {
         return createFormatCache(Intl.NumberFormat);
     }).readOnly(),
 

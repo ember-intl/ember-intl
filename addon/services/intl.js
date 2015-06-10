@@ -6,9 +6,9 @@
 import Ember from 'ember';
 import { IntlMessageFormat } from '../utils/data';
 import createFormatCache from '../format-cache/memoizer';
+import computed from 'ember-new-computed';
 
 var makeArray = Ember.makeArray;
-var computed  = Ember.computed;
 var observer  = Ember.observer;
 var runOnce   = Ember.run.once;
 var isEmpty   = Ember.isEmpty;
@@ -31,13 +31,15 @@ export default Ember.Service.extend(Ember.Evented, {
     // proxies to locales, eventually
     locale: null,
 
-    locales: computed(function(key, value) {
-        if (arguments.length === 1) {
-            return this.get('locale');
-        }
-
+    locales: computed({
+      get() {
+        return this.get('locale');
+      },
+      set(key, value) {
         Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
         this.set('locale', Ember.makeArray(value));
+        return value;
+      }
     }),
 
     getMessageFormat: null,

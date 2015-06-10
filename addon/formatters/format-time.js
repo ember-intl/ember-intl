@@ -6,6 +6,7 @@
 import Ember from 'ember';
 import Formatter from './-base';
 import createFormatCache from '../format-cache/memoizer';
+import computed from 'ember-new-computed';
 
 function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
@@ -14,7 +15,7 @@ function assertIsDate (date, errMsg) {
 var FormatTime = Formatter.extend({
     formatType: 'time',
 
-    formatter: Ember.computed(() => {
+    formatter: computed(() => {
         return createFormatCache(Intl.DateTimeFormat);
     }).readOnly(),
 

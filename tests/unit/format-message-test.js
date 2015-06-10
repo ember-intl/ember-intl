@@ -7,6 +7,7 @@ import formatMessageHelper from 'ember-intl/helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Translation from 'ember-intl/models/translation';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
+import computed from 'ember-new-computed';
 
 var view, container;
 
@@ -185,7 +186,7 @@ test('intl-get handles bound computed property', function(assert) {
 
     var context = Ember.Object.extend({
         foo: true,
-        computedMessage: Ember.computed('foo', function () {
+        computedMessage: computed('foo', function () {
             return this.get('foo') ? 'foo.bar' : 'foo.baz';
         })
     }).create();
