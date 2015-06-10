@@ -34,7 +34,10 @@ export function initializer(registry, app) {
         return;
     }
 
-    instanceInitializer(app);
+    // for backwards compatability < 1.12
+    instanceInitializer({
+      container: registry
+    });
 }
 
 export default {
