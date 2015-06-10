@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import computedPolyfill from 'ember-new-computed';
+import computed from 'ember-new-computed';
 
 export default Ember.Controller.extend({
     intl:      Ember.inject.service(),
     options:   ['en-US', 'fr-FR', 'es'],
 
-    value: computedPolyfill('intl.locale', {
+    value: computed('intl.locale', {
       get() {
         return this.get('intl.locale.firstObject') || this.get('intl.locale');
       },

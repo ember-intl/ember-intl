@@ -1,7 +1,7 @@
 import Ember from 'ember';
+import computed from 'ember-new-computed';
 
 var Controller = Ember.Controller;
-var computed = Ember.computed;
 
 var now       = new Date();
 var yesterday = new Date(now).setDate(now.getDate() - 1);

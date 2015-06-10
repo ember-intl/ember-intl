@@ -8,11 +8,12 @@ import Formatter from './-base';
 import IntlGetResult from '../models/intl-get-result';
 import createFormatCache from '../format-cache/memoizer';
 import { IntlMessageFormat } from '../utils/data';
+import computed from 'ember-new-computed';
 
 var FormatMessage = Formatter.extend({
     intl: Ember.inject.service(),
 
-    formatter: Ember.computed(() => {
+    formatter: computed(() => {
         return createFormatCache(IntlMessageFormat);
     }).readOnly(),
 

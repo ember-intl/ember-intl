@@ -6,10 +6,9 @@
 import Ember from 'ember';
 import { IntlMessageFormat } from '../utils/data';
 import createFormatCache from '../format-cache/memoizer';
-import computedPolyfill from 'ember-new-computed';
+import computed from 'ember-new-computed';
 
 var makeArray = Ember.makeArray;
-var computed  = Ember.computed;
 var observer  = Ember.observer;
 var runOnce   = Ember.run.once;
 var isEmpty   = Ember.isEmpty;
@@ -32,7 +31,7 @@ export default Ember.Service.extend(Ember.Evented, {
     // proxies to locales, eventually
     locale: null,
 
-    locales: computedPolyfill({
+    locales: computed({
       get() {
         return this.get('locale');
       },
