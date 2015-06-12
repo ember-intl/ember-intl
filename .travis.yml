@@ -8,7 +8,7 @@ install:
 - npm install
 - bower install
 script:
-- npm test
+- ember try:testall
 after_success:
 - test $(cat $TRAVIS_BUILD_DIR/package.json | grep version | awk '{print $2}' | sed
   's/"//g' | sed 's/,//g') = $TRAVIS_TAG && export VALID_VERSION=true
