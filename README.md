@@ -18,6 +18,11 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 * Ember >= 1.10.x
 * HTMLBars
 
+## Ember-Intl 2.0
+
+This README is targetting and explaining the 2.0 API which differs from previous versions.  If you are looking for the 1.3.0 documentation, please check [here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
+
+
 ## Installation
 * `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3)
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
@@ -26,18 +31,14 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 <script src="/assets/intl/polyfill/Intl.complete.js"></script>
 ```
 
-Translations are defined in `/translations`, *outside of `app`*.  Example of `/translations/en-us.json`:
+Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
 
-```json
-{
-  "product": {
-    "info": "{product} will cost {price, number, EUR} if ordered by {deadline, date, time}",
-    "title": "Hello world!",
-    "html": {
-        "info": "<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}"
-    }
-  }
-}
+```yaml
+product:
+  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
+  title: 'Hello world!'
+  html:
+    info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
 ```
 
 * Configure which locale you want to use at runtime:
@@ -159,13 +160,9 @@ Utility helper for returning the value, or eventual value, based on a translatio
 
 Will return the message from the current locale, or locale explicitly passed as an argument, message object.
 
-```js
-// translations/en.json
-{
-	"product": {
-		"info": "{product} will cost {price, number, EUR} if ordered by {deadline, date, time}"
-	}
-};
+```yaml
+product:
+  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
 ### Helper Options
