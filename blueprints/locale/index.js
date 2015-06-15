@@ -6,9 +6,6 @@
 var broccoliCLDR = require('../../lib/locale-writer');
 var Blueprint   = require('ember-cli/lib/models/blueprint');
 var SilentError = require('ember-cli/lib/errors/silent');
-var Promise     = require('ember-cli/lib/ext/promise');
-var path        = require('path');
-var fs          = require('fs');
 
 module.exports = {
     description: 'Extract CLDR data as an ES6 module for a given locale',
@@ -21,21 +18,6 @@ module.exports = {
         }
 
         return localeName;
-    },
-
-    afterInstall: function (options) {
-        var file = path.join(this.project.root, 'translations', options.entity.name + '.json');
-
-        return new Promise(function (resolve, reject) {
-            fs.readFile(file, 'utf8', function (err, data) {
-                if (err) { return reject(err); }
-
-                fs.writeFile(file, data, function (_err) {
-                    if (_err) { return reject(_err); }
-                    resolve();
-                });
-            });
-        });
     },
 
     locals: function (options) {
