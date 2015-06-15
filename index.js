@@ -115,7 +115,7 @@ module.exports = {
         var trees  = [inputTree];
 
         trees.push(new Funnel(intlPath, {
-            srcDir:  '/',
+            srcDir:  '/dist',
             files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: '/assets/intl/polyfill/'
         }));
