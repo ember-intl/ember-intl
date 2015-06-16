@@ -4,7 +4,6 @@
  */
 
 import Ember from 'ember';
-import { Stream, read, readHash, destroyStream } from '../utils/streams';
 
 let getProperties = Ember.getProperties;
 
