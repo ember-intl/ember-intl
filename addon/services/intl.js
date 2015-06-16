@@ -16,7 +16,7 @@ var get       = Ember.get;
 
 function formatterProxy (formatType) {
     return function (value, options) {
-        var formatter = this.container.lookup('ember-intl@formatter:format-' + formatType);
+        var formatter = this.get('appInstance').container.lookup('ember-intl@formatter:format-' + formatType);
 
         if (options && typeof options.format === 'string') {
             var format = this.getFormat(formatType, options.format);
@@ -53,22 +53,22 @@ export default Ember.Service.extend(Ember.Evented, {
 
     adapter: computed('adapterType', function () {
         var adapterType = get(this, 'adapterType');
-        var app         = this.container.lookup('application:main');
+        var app         = this.get('appInstance.container').lookup('application:main');
 
         // app can be undefined unit testing
         if (app && app.IntlAdapter) {
             return app.IntlAdapter.create({
-                container: this.container
+                container: this.get('appInstance.container')
             });
         }
 
         if (typeof adapterType === 'string') {
-            return this.container.lookup('adapter:' + adapterType);
+            return this.get('appInstance.container').lookup('adapter:' + adapterType);
         }
     }).readOnly(),
 
     formats: computed(function () {
-        return this.container.lookup('formats:main', {
+        return this.get('appInstance.container').lookup('formats:main', {
             instantiate: false
         }) || {};
     }).readOnly(),

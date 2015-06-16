@@ -16,6 +16,7 @@ import FormatMessage from 'ember-intl/helpers/format-message';
 export function instanceInitializer(instance) {
     let service = instance.container.lookup('service:intl');
 
+    service.set('appInstance', instance);
     service.createLocale = service.createLocale.bind(service, instance);
 
     filterBy(ENV, 'cldrs').forEach((key) => {
