@@ -6,10 +6,73 @@
 import Ember from 'ember';
 import { Stream, read, readHash, destroyStream } from 'ember-intl/utils/streams';
 
-export default Ember.Helper.extend({
-    intl: Ember.inject.service(),
+var Helper = null;
 
-    compute(params, hash) {
-        return this.get('intl').findTranslation(params[0], hash.locale)
-    }
-});
+if( Ember.Helper ) {
+    // Helper for Ember >= 1.13
+    Helper = Ember.Helper.extend({
+        intl: Ember.inject.service(),
+
+        compute(params, hash) {
+            return this.get('intl').findTranslation(params[0], hash.locale)
+        }
+    });
+} else {
+    // Backwards compatibility for Ember < 1.13
+    Helper = function (value, options) {
+        Ember.assert('intl-get helper must be used as a subexpression', options.isInline === true);
+
+        let types = options.types;
+        let view  = options.data.view;
+        let hash  = readHash(options.hash);
+        let intl  = view.container.lookup('service:intl');
+
+        let currentValue = value;
+        let outStreamValue = '';
+        let valueStream;
+
+        let outStream = new Stream(() => {
+            return outStreamValue;
+        });
+
+        outStream.setValue = function (_value) {
+            outStreamValue = _value;
+            this.notify();
+        }
+
+        function valueStreamChanged () {
+            currentValue = valueStream.value();
+            pokeStream();
+        }
+
+        function pokeStream () {
+            return Ember.RSVP.cast(intl.findTranslation(read(currentValue), hash.locale)).then(function (translation) {
+                outStream.setValue(translation);
+            });
+        }
+
+        if (types[0] === 'ID') {
+            valueStream  = view.getStream(value);
+            currentValue = valueStream.value();
+            valueStream.subscribe(valueStreamChanged);
+        }
+
+        intl.on('localeChanged', this, pokeStream);
+
+        view.one('willDestroyElement', this, () => {
+            intl.off('localeChanged', this, pokeStream);
+
+            if (valueStream) {
+                valueStream.unsubscribe(valueStreamChanged);
+            }
+
+            destroyStream(outStream);
+        });
+
+        pokeStream();
+
+        return outStream;
+    };
+}
+
+export default Helper;
