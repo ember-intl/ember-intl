@@ -23,12 +23,12 @@ export function initializer(registry, app) {
         registry.register('adapter:-intl-adapter', IntlAdapter);
     }
 
-    Ember.HTMLBars._registerHelper('format-date', FormatDate);
-    Ember.HTMLBars._registerHelper('format-time', FormatTime);
-    Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
-    Ember.HTMLBars._registerHelper('format-number', FormatNumber);
-    Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
-    Ember.HTMLBars._registerHelper('format-message', FormatMessage);
+    registry.register('helper:format-date', FormatDate);
+    registry.register('helper:format-time', FormatTime);
+    registry.register('helper:format-relative', FormatRelative);
+    registry.register('helper:format-number', FormatNumber);
+    registry.register('helper:format-html-message', FormatHtmlMessage);
+    registry.register('helper:format-message', FormatMessage);
 
     if (app.instanceInitializer) {
         return;

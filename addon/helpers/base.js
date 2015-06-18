@@ -13,64 +13,103 @@ export default function (formatType) {
         return new Error(formatType + ' requires a single unname argument. {{format-' + formatType + ' value}}');
     }
 
-    return function (params, hash, seenHash, env) {
-        if (!params || (params && !params.length)) {
-            return throwError();
-        }
+    var Helper = null;
 
-        let outStream;
+    if( Ember.Helper ) {
+        // Helper for Ember >= 1.13
+        Helper =  Ember.Helper.extend({
+            intl: Ember.inject.service(),
 
-        function touchStream () {
-            outStream.notify();
-        }
+            init() {
+                this.set('formatter', this.container.lookup('ember-intl@formatter:format-' + formatType));
+            },
 
-        seenHash      = readHash(hash);
+            onIntlLocaleChanged: Ember.observer('intl.locale', function() {
+                this.recompute();
+            }),
 
-        let view      = env.data.view;
-        let intl      = view.container.lookup('service:intl');
-        let formatter = view.container.lookup('ember-intl@formatter:format-' + formatType);
-        let value     = params[0];
+            compute(params, hash) {
+                if( !params || (params && !params.length)) {
+                    return throwError();
+                }
 
-        if (value.isStream) {
-            value.subscribe(() => {
-                touchStream();
-            }, value);
-        }
+                let format = {};
+                let value = params[0];
 
-        outStream = new Stream(() => {
-            let format = {};
+                if( hash && hash.format ) {
+                    format = this.get('intl').getFormat(formatType, hash.format);
+                }
 
-            if (seenHash && seenHash.format) {
-                format = intl.getFormat(formatType, seenHash.format);
+                return this.get('formatter').format.call(
+                    this.get('formatter'),
+                    value,
+                    Ember.$.extend(getProperties(this.get('intl'), 'locale'), format, hash)
+                );
             }
-
-            return formatter.format.call(
-                formatter,
-                read(value),
-                Ember.$.extend(getProperties(intl, 'locale'), format, seenHash)
-            );
         });
-
-        Ember.keys(hash).forEach((key) => {
-            if (!hash[key].isStream) {
-                return;
+    } else {
+        // Backwards compatibility for < 1.13
+        Helper = function (params, hash, seenHash, env) {
+            if (!params || (params && !params.length)) {
+                return throwError();
             }
 
-            let hashStream = hash[key];
-            hash[key] = read(hashStream);
+            let outStream;
 
-            hashStream.subscribe(function (valueStream) {
-                seenHash[key] = read(valueStream);
-                touchStream();
+            function touchStream () {
+                outStream.notify();
+            }
+
+            seenHash      = readHash(hash);
+
+            let view      = env.data.view;
+            let intl      = view.container.lookup('service:intl');
+            let formatter = view.container.lookup('ember-intl@formatter:format-' + formatType);
+            let value     = params[0];
+
+            if (value.isStream) {
+                value.subscribe(() => {
+                    touchStream();
+                }, value);
+            }
+
+            outStream = new Stream(() => {
+                let format = {};
+
+                if (seenHash && seenHash.format) {
+                    format = intl.getFormat(formatType, seenHash.format);
+                }
+
+                return formatter.format.call(
+                    formatter,
+                    read(value),
+                    Ember.$.extend(getProperties(intl, 'locale'), format, seenHash)
+                );
             });
-        });
 
-        view.one('willDestroyElement', () => {
-            destroyStream(outStream);
-        });
+            Ember.keys(hash).forEach((key) => {
+                if (!hash[key].isStream) {
+                    return;
+                }
 
-        intl.on('localeChanged', touchStream);
+                let hashStream = hash[key];
+                hash[key] = read(hashStream);
 
-        return outStream;
-    };
+                hashStream.subscribe(function (valueStream) {
+                    seenHash[key] = read(valueStream);
+                    touchStream();
+                });
+            });
+
+            view.one('willDestroyElement', () => {
+                destroyStream(outStream);
+            });
+
+            intl.on('localeChanged', touchStream);
+
+            return outStream;
+        };
+    }
+
+    return Helper;
 }
