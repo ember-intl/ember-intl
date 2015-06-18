@@ -1,16 +1,13 @@
 import Ember from 'ember';
-import {module, test} from 'qunit';
-import moduleForIntl from '../helpers/module-for-intl';
+import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatRelative from 'ember-intl/formatters/format-relative';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
 
 var view;
 
-moduleForIntl('format-relative', {
+moduleFor('ember-intl@formatter:format-relative', {
+    needs: ['service:intl'],
     beforeEach: function () {
-        this.container.register('ember-intl@formatter:format-relative', FormatRelative);
-
         this.container.optionsForType('formats', {
             singleton:   true,
             instantiate: false
@@ -19,15 +16,33 @@ moduleForIntl('format-relative', {
         this.container.register('formats:main', {
             relative: {
                 hours: {
-                    units: "hour",
-                    style: "numeric"
+                    units: 'hour',
+                    style: 'numeric'
                 }
             }
         });
 
-        Ember.HTMLBars._registerHelper('format-relative', formatRelativehelper);
-    },
+        this.container.injection('formatter', 'intl', 'service:intl');
+        this.container.register('helper:format-relative', formatRelativehelper);
+        this.service = this.container.lookup('service:intl');
 
+        var container = this.container;
+        var service = this.service;
+
+        this.intlBlock = function intlBlock(template, serviceContext) {
+            if (typeof serviceContext === 'object') {
+                Ember.run(function () {
+                    service.setProperties(serviceContext);
+                });
+            }
+
+            return Ember.View.create({
+                template: Ember.HTMLBars.compile(template),
+                container: container,
+                context: {}
+            });
+        };
+    },
     afterEach: function () {
         runDestroy(view);
     }
@@ -51,26 +66,23 @@ test('should throw if called with out a value', function(assert) {
 
 test('can specify a `value` and `now` on the options hash', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-relative 2000 now=0}}');
+    view = this.intlBlock('{{format-relative 2000 now=0}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), 'in 2 seconds');
 });
 
 test('should return relative time in hours, not best fit', function(assert) {
     assert.expect(1);
-
     var twoDays = (1000 * 60 * 60 * 24) * 2;
-
-    view = this.intlBlock('{{format-relative ' + twoDays + ' now=0 format="hours"}}');
+    view = this.intlBlock('{{format-relative ' + twoDays + ' now=0 format="hours"}}', { locale: 'en' });
     runAppend(view);
-
     assert.equal(view.$().text(), 'in 48 hours');
 });
 
 
 test('should return now', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-relative ' + new Date().getTime() + '}}');
+    view = this.intlBlock('{{format-relative ' + new Date().getTime() + '}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), 'now');
 });

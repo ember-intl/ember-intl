@@ -1,8 +1,6 @@
 import Ember from 'ember';
-import {module, test} from 'qunit';
-import moduleForIntl from '../helpers/module-for-intl';
+import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
-import FormatMessage from 'ember-intl/formatters/format-message';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Translation from 'ember-intl/models/translation';
@@ -11,30 +9,24 @@ import computed from 'ember-new-computed';
 
 var view, container;
 
-moduleForIntl('format-message', {
+moduleFor('ember-intl@formatter:format-message', {
+    needs: ['service:intl'],
     beforeEach: function () {
-        container = this.container;
-
-        container.register('helper:intl-get', intlGet, { instantiate: false });
-        container.register('application:main', Ember.Application.extend());
-        container.register('adapter:-intl-adapter', IntlAdapter.extend());
-        container.register('ember-intl@formatter:format-message', FormatMessage);
-
-        Ember.HTMLBars._registerHelper('format-message', formatMessageHelper);
-
-        container.register('ember-intl@translation:en', Translation.extend({
+        this.container.register('adapter:-intl-adapter', IntlAdapter.extend());
+        this.container.register('application:main', Ember.Application.extend());
+        this.container.register('ember-intl@translation:en', Translation.extend({
             foo: {
                 bar: 'foo bar baz',
                 baz: 'baz baz baz'
             }
         }));
 
-        container.optionsForType('formats', {
+        this.container.optionsForType('formats', {
             singleton:   true,
             instantiate: false
         });
 
-        container.register('formats:main', {
+        this.container.register('formats:main', {
             date: {
                 shortWeekDay: {
                     day:   'numeric',
@@ -43,10 +35,32 @@ moduleForIntl('format-message', {
                 }
             }
         });
+
+        this.container.injection('formatter', 'intl', 'service:intl');
+        this.container.register('helper:intl-get', intlGet);
+        this.container.register('helper:format-message', formatMessageHelper);
+        this.service = this.container.lookup('service:intl');
+
+        container = this.container;
+        var service = this.service;
+
+        this.intlBlock = function intlBlock(template, serviceContext) {
+            if (typeof serviceContext === 'object') {
+                Ember.run(function () {
+                    service.setProperties(serviceContext);
+                });
+            }
+
+            return Ember.View.create({
+                template: Ember.HTMLBars.compile(template),
+                container: container,
+                context: {}
+            });
+        };
     },
     afterEach: function () {
         runDestroy(view);
-        container = undefined;
+        container = null;
     }
 });
 
@@ -57,7 +71,6 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
     assert.expect(1);
-
     assert.equal(this.service.formatMessage('hello {world}', {
         world: 'world'
     }), 'hello world');
@@ -65,51 +78,32 @@ test('invoke formatMessage directly', function(assert) {
 
 test('message is formatted correctly with argument', function(assert) {
     assert.expect(1);
-
-    view = this.intlBlock('{{format-message "Hello {name}" name="Jason"}}');
+    view = this.intlBlock('{{format-message "Hello {name}" name="Jason"}}', { locale: 'en' });
     runAppend(view);
-
     assert.equal(view.$().text(), "Hello Jason");
 });
 
 test('should throw if called with out a value', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-message}}');
+    view = this.intlBlock('{{format-message}}', { locale: 'en' });
     assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-message');
-});
-
-test('should throw intl-get is used standalone helper', function(assert) {
-    assert.expect(1);
-    view = this.intlBlock('{{intl-get "foo.bar"}}');
-
-    try {
-        runAppend(view);
-    } catch (ex) {
-        assert.ok(ex, 'intl-get threw when run standalone');
-    }
 });
 
 test('should return a formatted string', function(assert) {
     assert.expect(1);
-
     view = this.intlBlock('{{format-message MSG firstName=firstName lastName=lastName}}', {locale: 'en-US'});
-
     view.set('context', {
         MSG      : 'Hi, my name is {firstName} {lastName}.',
         firstName: 'Anthony',
         lastName : 'Pipkin'
     });
-
     runAppend(view);
-
     assert.equal(view.$().text(), "Hi, my name is Anthony Pipkin.");
 });
 
 test('should return a formatted string with formatted numbers and dates', function(assert) {
     assert.expect(1);
-
     view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locale: 'en-US'});
-
     view.set('context', {
         POP_MSG    : '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
         city       : 'Atlanta',
@@ -117,17 +111,13 @@ test('should return a formatted string with formatted numbers and dates', functi
         census_date: (new Date('1/1/2010')).getTime(),
         timeZone   : 'UTC'
     });
-
     runAppend(view);
-
     assert.equal(view.$().text(), "Atlanta has a population of 5,475,213 as of January 1, 2010.");
 });
 
 test('should return a formatted string with formatted numbers and dates in a different locale', function(assert) {
     assert.expect(1);
-
     view = this.intlBlock('{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}', {locale: 'de-DE'});
-
     view.set('context', {
         POP_MSG    : '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
         city       : 'Atlanta',
@@ -135,17 +125,13 @@ test('should return a formatted string with formatted numbers and dates in a dif
         census_date: (new Date('1/1/2010')),
         timeZone   : 'UTC'
     });
-
     runAppend(view);
-
     assert.equal(view.$().text(), "Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.");
 });
 
 test('should return a formatted string with an `each` block', function(assert) {
     assert.expect(1);
-
-    view = this.intlBlock('{{#each harvest in harvests}} {{format-message HARVEST_MSG person=harvest.person count=harvest.count }}{{/each}}');
-
+    view = this.intlBlock('{{#each harvest in harvests}} {{format-message HARVEST_MSG person=harvest.person count=harvest.count }}{{/each}}', { locale: 'en' });
     view.set('context', {
         HARVEST_MSG : '{person} harvested {count, plural, one {# apple} other {# apples}}.',
         harvests    : [
@@ -153,74 +139,56 @@ test('should return a formatted string with an `each` block', function(assert) {
             { person: 'Jeremy', count: 60 }
         ]
     });
-
     runAppend(view);
-
     assert.equal(view.$().text(), " Allison harvested 10 apples. Jeremy harvested 60 apples.");
 });
 
 test('intl-get returns message and format-message renders', function(assert) {
     assert.expect(1);
-
-    view = this.intlBlock('{{format-message (intl-get "foo.bar")}}');
+    view = this.intlBlock('{{format-message (intl-get "foo.bar")}}', { locale: 'en' });
     runAppend(view);
-
     assert.equal(view.$().text(), "foo bar baz");
 });
 
 test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
-
     var translation = container.lookup('ember-intl@translation:en');
     translation.addMessage('adding', 'this works also');
-
-    view = this.intlBlock('{{format-message (intl-get "adding")}}');
+    view = this.intlBlock('{{format-message (intl-get "adding")}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), "this works also");
 });
 
 test('intl-get handles bound computed property', function(assert) {
     assert.expect(3);
-
-    view = this.intlBlock('{{format-message (intl-get computedMessage)}}');
-
+    view = this.intlBlock('{{format-message (intl-get computedMessage)}}', { locale: 'en' });
     var context = Ember.Object.extend({
         foo: true,
         computedMessage: computed('foo', function () {
             return this.get('foo') ? 'foo.bar' : 'foo.baz';
         })
     }).create();
-
     view.set('context', context);
-
     runAppend(view);
-
     assert.equal(view.$().text(), "foo bar baz");
-
     Ember.run(function () {
         view.set('context.foo', false);
     });
-
     assert.equal(view.$().text(), "baz baz baz");
-
     runDestroy(view);
-
     Ember.run(function () {
         context.set('foo', true);
     });
-
     assert.ok(context, 'Updting binding to view after view is destroyed should not raise exception.');
 });
 
 test('locale can add message to intl service and read it', function(assert) {
     assert.expect(1);
-
     var self = this;
     var service = this.service;
-
     Ember.run(function () {
         service.addMessage('en', 'oh', 'hai!').then(function () {
-            view = self.intlBlock('{{format-message (intl-get "oh")}}');
+            view = self.intlBlock('{{format-message (intl-get "oh")}}', { locale: 'en' });
             runAppend(view);
             assert.equal(view.$().text(), "hai!");
         });
@@ -235,17 +203,15 @@ test('locale can add messages object and intl-get can read it', function(assert)
         'bulk-add': 'bulk add works'
     });
 
-    view = this.intlBlock('{{format-message (intl-get "bulk-add")}}');
+    view = this.intlBlock('{{format-message (intl-get "bulk-add")}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), "bulk add works");
 });
 
 test('should respect format options for date ICU block', function(assert) {
     assert.expect(1);
-
-    view = this.intlBlock('{{format-message "Sale begins {day, date, shortWeekDay}" day=1390518044403}}');
+    view = this.intlBlock('{{format-message "Sale begins {day, date, shortWeekDay}" day=1390518044403}}', { locale: 'en' });
     runAppend(view);
-
     assert.equal(view.$().text(), "Sale begins January 23, 2014");
 });
 
