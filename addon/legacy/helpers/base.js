@@ -14,7 +14,7 @@ import {
 
 export default function (formatType, throwError) {
     return function (params, hash, seenHash, env) {
-        if (!params || (params && !params.length)) {
+        if (!params || !params.length) {
             return throwError();
         }
 
