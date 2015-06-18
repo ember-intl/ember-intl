@@ -1,35 +1,24 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 import formatTimeHelper from 'ember-intl/helpers/format-time';
 
-var view;
 var dateStr   = 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)';
 var timeStamp = 1390518044403;
+var view;
 
 moduleFor('ember-intl@formatter:format-time', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.service = this.container.lookup('service:intl');
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.container.register('helper:format-time', formatTimeHelper);
-
-        var container = this.container;
-        var service = this.service;
-
-        this.intlBlock = function intlBlock(template, serviceContext) {
-            if (typeof serviceContext === 'object') {
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
-            }
-
-            return Ember.View.create({
-              template: Ember.HTMLBars.compile(template),
-              container: container,
-              context: {}
-            });
-        };
+        this.container.injection('formatter', 'intl', 'service:intl');
+        this.intlBlock = createIntlBlock(this.container);
     },
     afterEach: function () {
         runDestroy(view);
@@ -43,7 +32,7 @@ test('exists', function(assert) {
 
 test('invoke formatTime directly with format', function(assert) {
     assert.expect(1);
-
+    var service = this.container.lookup('service:intl');
     this.container.unregister('formats:main');
     this.container.register('formats:main', {
         time: {
@@ -54,7 +43,7 @@ test('invoke formatTime directly with format', function(assert) {
         }
     }, { instantiate: false });
 
-    assert.equal(this.service.formatTime(timeStamp, {
+    assert.equal(service.formatTime(timeStamp, {
         format: 'test'
     }), '23/1/2014');
 
@@ -63,7 +52,8 @@ test('invoke formatTime directly with format', function(assert) {
 
 test('invoke formatTime directly', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatTime(timeStamp, {
+    var service = this.container.lookup('service:intl');
+    assert.equal(service.formatTime(timeStamp, {
         timeZone: 'UTC',
         locale: 'fr-FR'
     }), '23/1/2014');

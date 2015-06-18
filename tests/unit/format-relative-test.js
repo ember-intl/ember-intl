@@ -1,6 +1,12 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
 
 var view;
@@ -8,11 +14,7 @@ var view;
 moduleFor('ember-intl@formatter:format-relative', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.container.optionsForType('formats', {
-            singleton:   true,
-            instantiate: false
-        });
-
+        this.container.register('helper:format-relative', formatRelativehelper);
         this.container.register('formats:main', {
             relative: {
                 hours: {
@@ -22,26 +24,13 @@ moduleFor('ember-intl@formatter:format-relative', {
             }
         });
 
+        this.container.optionsForType('formats', {
+            singleton:   true,
+            instantiate: false
+        });
+
         this.container.injection('formatter', 'intl', 'service:intl');
-        this.container.register('helper:format-relative', formatRelativehelper);
-        this.service = this.container.lookup('service:intl');
-
-        var container = this.container;
-        var service = this.service;
-
-        this.intlBlock = function intlBlock(template, serviceContext) {
-            if (typeof serviceContext === 'object') {
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
-            }
-
-            return Ember.View.create({
-                template: Ember.HTMLBars.compile(template),
-                container: container,
-                context: {}
-            });
-        };
+        this.intlBlock = createIntlBlock(this.container);
     },
     afterEach: function () {
         runDestroy(view);
@@ -55,7 +44,8 @@ test('exists', function(assert) {
 
 test('invoke the formatRelative directly', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatRelative(new Date()), 'now', {});
+    var service = this.container.lookup('service:intl');
+    assert.equal(service.formatRelative(new Date()), 'now', {});
 });
 
 test('should throw if called with out a value', function(assert) {

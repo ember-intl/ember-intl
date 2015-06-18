@@ -1,6 +1,12 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 import formatDateHelper from 'ember-intl/helpers/format-date';
 
 var view;
@@ -10,26 +16,9 @@ var timeStamp = 1390518044403;
 moduleFor('ember-intl@formatter:format-date', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.service = this.container.lookup('service:intl');
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.container.register('helper:format-date', formatDateHelper);
-
-        var container = this.container;
-        var service = this.service;
-
-        this.intlBlock = function intlBlock(template, serviceContext) {
-            if (typeof serviceContext === 'object') {
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
-            }
-
-            return Ember.View.create({
-              template: Ember.HTMLBars.compile(template),
-              container: container,
-              context: {}
-            });
-        };
+        this.container.injection('formatter', 'intl', 'service:intl');
+        this.intlBlock = createIntlBlock(this.container);
     },
     afterEach: function () {
         runDestroy(view);
@@ -43,7 +32,8 @@ test('exists', function(assert) {
 
 test('invoke the formatDate directly', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatDate(dateStr, {
+    var service = this.container.lookup('service:intl');
+    assert.equal(service.formatDate(dateStr, {
         timeZone: 'UTC',
         locale: 'en-US'
     }), '1/23/2014');

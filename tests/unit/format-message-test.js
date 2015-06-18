@@ -1,17 +1,25 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import intlGet from '../../helpers/intl-get';
 import Translation from 'ember-intl/models/translation';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 import computed from 'ember-new-computed';
 
-var view, container;
+var view;
 
 moduleFor('ember-intl@formatter:format-message', {
     needs: ['service:intl'],
     beforeEach: function () {
+        this.container.register('helper:intl-get', intlGet);
+        this.container.register('helper:format-message', formatMessageHelper);
         this.container.register('adapter:-intl-adapter', IntlAdapter.extend());
         this.container.register('application:main', Ember.Application.extend());
         this.container.register('ember-intl@translation:en', Translation.extend({
@@ -20,11 +28,6 @@ moduleFor('ember-intl@formatter:format-message', {
                 baz: 'baz baz baz'
             }
         }));
-
-        this.container.optionsForType('formats', {
-            singleton:   true,
-            instantiate: false
-        });
 
         this.container.register('formats:main', {
             date: {
@@ -36,31 +39,16 @@ moduleFor('ember-intl@formatter:format-message', {
             }
         });
 
+        this.container.optionsForType('formats', {
+            singleton:   true,
+            instantiate: false
+        });
+
         this.container.injection('formatter', 'intl', 'service:intl');
-        this.container.register('helper:intl-get', intlGet);
-        this.container.register('helper:format-message', formatMessageHelper);
-        this.service = this.container.lookup('service:intl');
-
-        container = this.container;
-        var service = this.service;
-
-        this.intlBlock = function intlBlock(template, serviceContext) {
-            if (typeof serviceContext === 'object') {
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
-            }
-
-            return Ember.View.create({
-                template: Ember.HTMLBars.compile(template),
-                container: container,
-                context: {}
-            });
-        };
+        this.intlBlock = createIntlBlock(this.container);
     },
     afterEach: function () {
         runDestroy(view);
-        container = null;
     }
 });
 
@@ -71,7 +59,8 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatMessage('hello {world}', {
+    var service = this.container.lookup('service:intl');
+    assert.equal(service.formatMessage('hello {world}', {
         world: 'world'
     }), 'hello world');
 });
@@ -152,7 +141,7 @@ test('intl-get returns message and format-message renders', function(assert) {
 
 test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
-    var translation = container.lookup('ember-intl@translation:en');
+    var translation = this.container.lookup('ember-intl@translation:en');
     translation.addMessage('adding', 'this works also');
     view = this.intlBlock('{{format-message (intl-get "adding")}}', { locale: 'en' });
     runAppend(view);
@@ -185,8 +174,8 @@ test('intl-get handles bound computed property', function(assert) {
 test('locale can add message to intl service and read it', function(assert) {
     assert.expect(1);
     var self = this;
-    var service = this.service;
-    Ember.run(function () {
+    Ember.run(this, function () {
+        var service = self.container.lookup('service:intl');
         service.addMessage('en', 'oh', 'hai!').then(function () {
             view = self.intlBlock('{{format-message (intl-get "oh")}}', { locale: 'en' });
             runAppend(view);
@@ -198,7 +187,7 @@ test('locale can add message to intl service and read it', function(assert) {
 test('locale can add messages object and intl-get can read it', function(assert) {
     assert.expect(1);
 
-    var translation = container.lookup('ember-intl@translation:en');
+    var translation = this.container.lookup('ember-intl@translation:en');
     translation.addMessages({
         'bulk-add': 'bulk add works'
     });
@@ -218,7 +207,7 @@ test('should respect format options for date ICU block', function(assert) {
 test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
     assert.expect(1);
 
-    var translation = container.lookup('ember-intl@translation:en');
+    var translation = this.container.lookup('ember-intl@translation:en');
     var fn = translation.getValue;
 
     translation.getValue = function (key) {

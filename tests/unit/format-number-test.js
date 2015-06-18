@@ -1,6 +1,12 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
 
 var view;
@@ -8,8 +14,6 @@ var view;
 moduleFor('ember-intl@formatter:format-number', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.service = this.container.lookup('service:intl');
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.container.register('helper:format-number', formatNumberHelper);
         this.container.register('formats:main', {
             number: {
@@ -22,23 +26,8 @@ moduleFor('ember-intl@formatter:format-number', {
                 }
             }
         }, { instantiate: false });
-
-        var service = this.service;
-        var container = this.container;
-
-        this.intlBlock = function intlBlock(template, serviceContext) {
-            if (typeof serviceContext === 'object') {
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
-            }
-
-            return Ember.View.create({
-              template: Ember.HTMLBars.compile(template),
-              container: container,
-              context: {}
-            });
-        };
+        this.container.injection('formatter', 'intl', 'service:intl');
+        this.intlBlock = createIntlBlock(this.container);
     },
     afterEach: function () {
         runDestroy(view);
@@ -53,7 +42,8 @@ test('exists', function(assert) {
 
 test('invoke the formatNumber method', function(assert) {
     assert.expect(1);
-    assert.equal(this.service.formatNumber(100), 100);
+    var service = this.container.lookup('service:intl');
+    assert.equal(service.formatNumber(100), 100);
 });
 
 test('number is formatted correctly with default locale', function(assert) {

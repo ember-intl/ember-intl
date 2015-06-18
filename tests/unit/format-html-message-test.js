@@ -1,6 +1,12 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 
 var view;
@@ -8,26 +14,9 @@ var view;
 moduleFor('ember-intl@formatter:format-html-message', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.service = this.container.lookup('service:intl');
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.container.register('helper:format-html-message', formatHtmlHelper);
-
-        var container = this.container;
-        var service = this.service;
-
-        this.intlBlock = function intlBlock(template, serviceContext) {
-            if (typeof serviceContext === 'object') {
-                Ember.run(function () {
-                    service.setProperties(serviceContext);
-                });
-            }
-
-            return Ember.View.create({
-              template: Ember.HTMLBars.compile(template),
-              container: container,
-              context: {}
-            });
-        };
+        this.container.injection('formatter', 'intl', 'service:intl');
+        this.intlBlock = createIntlBlock(this.container);
     },
     afterEach: function () {
         runDestroy(view);
