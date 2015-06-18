@@ -46,7 +46,7 @@
     "walk-sync": "^0.1.3"
   },
   "devDependencies": {
-    "ember-cli": "0.2.3",
+    "ember-cli": "0.2.7",
     "ember-cli-htmlbars": "0.7.4",
     "ember-cli-inject-live-reload": "^1.3.0",
     "ember-cli-qunit": "0.3.10",

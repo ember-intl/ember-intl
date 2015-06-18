@@ -25,7 +25,7 @@ export default function (formatType) {
             }),
 
             compute(params, hash) {
-                if (!params || !params.length)) {
+                if (!params || !params.length) {
                     return throwError();
                 }
 
