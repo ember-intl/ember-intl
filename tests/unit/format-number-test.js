@@ -5,16 +5,19 @@
 
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
+import formatNumberHelper from 'ember-intl/helpers/format-number';
+import registerHelper from 'ember-intl/utils/register-helper';
+
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
-import formatNumberHelper from 'ember-intl/helpers/format-number';
 
 var view;
 
 moduleFor('ember-intl@formatter:format-number', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.container.register('helper:format-number', formatNumberHelper);
+        registerHelper('format-number', formatNumberHelper, this.container);
+
         this.container.register('formats:main', {
             number: {
                 digits: {

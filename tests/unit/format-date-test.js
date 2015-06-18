@@ -5,9 +5,11 @@
 
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
+import formatDateHelper from 'ember-intl/helpers/format-date';
+import registerHelper from 'ember-intl/utils/register-helper';
+
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
-import formatDateHelper from 'ember-intl/helpers/format-date';
 
 var view;
 var dateStr   = 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)';
@@ -16,7 +18,7 @@ var timeStamp = 1390518044403;
 moduleFor('ember-intl@formatter:format-date', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.container.register('helper:format-date', formatDateHelper);
+        registerHelper('format-date', formatDateHelper, this.container);
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },

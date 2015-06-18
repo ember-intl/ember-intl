@@ -5,16 +5,18 @@
 
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
+import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
+import registerHelper from 'ember-intl/utils/register-helper';
+
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
-import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 
 var view;
 
 moduleFor('ember-intl@formatter:format-html-message', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.container.register('helper:format-html-message', formatHtmlHelper);
+        registerHelper('format-html-message', formatHtmlHelper, this.container);
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },

@@ -5,16 +5,19 @@
 
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
+import formatRelativehelper from 'ember-intl/helpers/format-relative';
+import registerHelper from 'ember-intl/utils/register-helper';
+
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
-import formatRelativehelper from 'ember-intl/helpers/format-relative';
 
 var view;
 
 moduleFor('ember-intl@formatter:format-relative', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.container.register('helper:format-relative', formatRelativehelper);
+        registerHelper('format-relative', formatRelativehelper, this.container);
+
         this.container.register('formats:main', {
             relative: {
                 hours: {

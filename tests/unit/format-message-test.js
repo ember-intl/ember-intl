@@ -5,21 +5,24 @@
 
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
-import intlGet from '../../helpers/intl-get';
 import Translation from 'ember-intl/models/translation';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
+import registerHelper from 'ember-intl/utils/register-helper';
 import computed from 'ember-new-computed';
+
+import intlGet from '../../helpers/intl-get';
+import { runAppend, runDestroy } from '../helpers/run-append';
+import createIntlBlock from '../helpers/create-intl-block';
 
 var view;
 
 moduleFor('ember-intl@formatter:format-message', {
     needs: ['service:intl'],
     beforeEach: function () {
-        this.container.register('helper:intl-get', intlGet);
-        this.container.register('helper:format-message', formatMessageHelper);
+        registerHelper('intl-get', intlGet, this.container);
+        registerHelper('format-message', formatMessageHelper, this.container);
+
         this.container.register('adapter:-intl-adapter', IntlAdapter.extend());
         this.container.register('application:main', Ember.Application.extend());
         this.container.register('ember-intl@translation:en', Translation.extend({
