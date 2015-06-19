@@ -6,11 +6,11 @@
 import Ember from 'ember';
 
 function createIntlBlock (container) {
-    return function(template, serviceContext) {
+    return (template, serviceContext) => {
         var service = container.lookup('service:intl');
 
         if (typeof serviceContext === 'object') {
-            Ember.run(function () {
+            Ember.run(() => {
                 service.setProperties(serviceContext);
             });
         }

@@ -29,8 +29,8 @@ export default Ember.Controller.extend({
     incrementTime: Ember.on('init', function() {
         var self = this;
 
-        setInterval(function() {
-            Ember.run(function() {
+        setInterval(() => {
+            Ember.run(() => {
                 self.set('now', new Date());
                 self.incrementProperty('num');
             });
