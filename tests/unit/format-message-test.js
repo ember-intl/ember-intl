@@ -20,9 +20,8 @@ var view;
 moduleFor('ember-intl@formatter:format-message', {
     needs: ['service:intl'],
     beforeEach: function () {
-        registerHelper('intl-get', intlGet, this.container);
         registerHelper('format-message', formatMessageHelper, this.container);
-
+        this.container.register('helper:intl-get', intlGet);
         this.container.register('adapter:-intl-adapter', IntlAdapter.extend());
         this.container.register('application:main', Ember.Application.extend());
         this.container.register('ember-intl@translation:en', Translation.extend({

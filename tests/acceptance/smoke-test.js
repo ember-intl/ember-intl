@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import {module, test} from 'qunit';
+import { module } from 'qunit';
+import test from '../helpers/test';
 import startApp from '../helpers/start-app';
 
 var application;

@@ -5,12 +5,11 @@
 
 import Ember from 'ember';
 
-var Helper;
+var Helper = null;
 
 if (Ember.Helper) {
     Helper = Ember.Helper.extend({
        intl: Ember.inject.service(),
-
        compute(params, hash) {
            return this.get('intl').findTranslation(params[0], hash.locale);
        }
