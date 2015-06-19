@@ -155,7 +155,7 @@ var define, requireModule, require, requirejs;
         messages: {},
 
         addMessage: function (key, value) {
-            this.set('' + key, value);
+            this.set('messages.' + key, value);
 
             return value;
         },
@@ -361,7 +361,7 @@ var define, requireModule, require, requirejs;
                 var view      = env.data.view;
                 var intl      = view.container.lookup('service:intl');
                 var seenHash  = readHash(hash);
-                var formatter = view.container.lookup('ember-intl@formatter:' + formatterName);
+                var formatter = view.container.lookup('formatter:' + formatterName);
 
                 if (value.isStream) {
                     value.subscribe(function (_stream) {
@@ -413,7 +413,7 @@ var define, requireModule, require, requirejs;
                 var intl      = this.container.lookup('service:intl');
                 var types     = options.types;
                 var hash      = extend({}, options.hash);
-                var formatter = view.container.lookup('ember-intl@formatter:' + formatterName);
+                var formatter = view.container.lookup('formatter:' + formatterName);
 
                 var simpleView, simpleViewStream, currentValue;
 
@@ -1236,12 +1236,12 @@ var define, requireModule, require, requirejs;
   });
 ;define('ember-intl-shim', ["exports"], function(__exports__) {__exports__.initialize = function(container){
   container.register('adapter:-intl-adapter', require('app/adapters/-intl-adapter')['default']);
-  container.register('ember-intl@formatter:format-date', require('app/formatters/format-date')['default']);
-  container.register('ember-intl@formatter:format-html-message', require('app/formatters/format-html-message')['default']);
-  container.register('ember-intl@formatter:format-message', require('app/formatters/format-message')['default']);
-  container.register('ember-intl@formatter:format-number', require('app/formatters/format-number')['default']);
-  container.register('ember-intl@formatter:format-relative', require('app/formatters/format-relative')['default']);
-  container.register('ember-intl@formatter:format-time', require('app/formatters/format-time')['default']);
+  container.register('formatter:format-date', require('app/formatters/format-date')['default']);
+  container.register('formatter:format-html-message', require('app/formatters/format-html-message')['default']);
+  container.register('formatter:format-message', require('app/formatters/format-message')['default']);
+  container.register('formatter:format-number', require('app/formatters/format-number')['default']);
+  container.register('formatter:format-relative', require('app/formatters/format-relative')['default']);
+  container.register('formatter:format-time', require('app/formatters/format-time')['default']);
   container.register('helper:format-date', require('app/helpers/format-date')['default']);
   container.register('helper:format-html-message', require('app/helpers/format-html-message')['default']);
   container.register('helper:format-message', require('app/helpers/format-message')['default']);
