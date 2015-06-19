@@ -1,4 +1,8 @@
-Choose a locale: {{view 'select' value=currentLocale content=locales}}
+{{x-select
+    action=(action 'changeLocale')
+    options=locales
+    value=currentLocale
+}}
 
 <h2>Components</h2>
 

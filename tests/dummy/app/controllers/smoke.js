@@ -13,11 +13,15 @@ export default Controller.extend({
   num:        1000,
   yesterday:  yesterday,
 
-  currentLocale: computed('intl.locale', function (key, value) {
-    if (arguments.length === 2) {
-      this.set('intl.locale', arguments[1]);
-    }
+  actions: {
+      changeLocale: function(localeName) {
+          this.set('intl.locale', localeName);
+      }
+  },
 
-    return this.get('intl.locale.firstObject') || this.get('intl.locale');
+  currentLocale: computed('intl.locale', {
+      get() {
+          return this.get('intl.locale.firstObject') || this.get('intl.locale');
+      }
   })
 });
