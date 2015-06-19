@@ -15,12 +15,12 @@ var view;
 
 moduleFor('ember-intl@formatter:format-html-message', {
     needs: ['service:intl'],
-    beforeEach: function () {
+    beforeEach() {
         registerHelper('format-html-message', formatHtmlHelper, this.container);
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
-    afterEach: function () {
+    afterEach() {
         runDestroy(view);
     }
 });

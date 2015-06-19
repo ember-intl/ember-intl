@@ -15,7 +15,7 @@ var view;
 
 moduleFor('ember-intl@formatter:format-number', {
     needs: ['service:intl'],
-    beforeEach: function () {
+    beforeEach() {
         registerHelper('format-number', formatNumberHelper, this.container);
 
         this.container.register('formats:main', {
@@ -32,7 +32,7 @@ moduleFor('ember-intl@formatter:format-number', {
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
-    afterEach: function () {
+    afterEach() {
         runDestroy(view);
         this.container.unregister('formats:main');
     }

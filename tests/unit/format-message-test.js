@@ -19,7 +19,7 @@ var view;
 
 moduleFor('ember-intl@formatter:format-message', {
     needs: ['service:intl'],
-    beforeEach: function () {
+    beforeEach() {
         registerHelper('format-message', formatMessageHelper, this.container);
         this.container.register('helper:intl-get', intlGet);
         this.container.register('adapter:-intl-adapter', IntlAdapter.extend());
@@ -49,7 +49,7 @@ moduleFor('ember-intl@formatter:format-message', {
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
-    afterEach: function () {
+    afterEach() {
         runDestroy(view);
     }
 });

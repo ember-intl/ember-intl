@@ -15,7 +15,7 @@ var view;
 
 moduleFor('ember-intl@formatter:format-relative', {
     needs: ['service:intl'],
-    beforeEach: function () {
+    beforeEach() {
         registerHelper('format-relative', formatRelativehelper, this.container);
 
         this.container.register('formats:main', {
@@ -35,7 +35,7 @@ moduleFor('ember-intl@formatter:format-relative', {
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
-    afterEach: function () {
+    afterEach() {
         runDestroy(view);
     }
 });

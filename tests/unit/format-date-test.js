@@ -17,12 +17,12 @@ var timeStamp = 1390518044403;
 
 moduleFor('ember-intl@formatter:format-date', {
     needs: ['service:intl'],
-    beforeEach: function () {
+    beforeEach() {
         registerHelper('format-date', formatDateHelper, this.container);
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
-    afterEach: function () {
+    afterEach() {
         runDestroy(view);
     }
 });

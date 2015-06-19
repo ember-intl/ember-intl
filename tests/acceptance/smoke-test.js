@@ -17,10 +17,10 @@ function contains(selector, string) {
 }
 
 module('Acceptance: Smoke', {
-    beforeEach: function() {
+    beforeEach() {
         application = startApp();
     },
-    afterEach: function() {
+    afterEach() {
         if (application) {
             Ember.run(application, 'destroy');
         }

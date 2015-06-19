@@ -16,12 +16,12 @@ var view;
 
 moduleFor('ember-intl@formatter:format-time', {
     needs: ['service:intl'],
-    beforeEach: function () {
+    beforeEach() {
         registerHelper('format-time', formatTimeHelper, this.container);
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
-    afterEach: function () {
+    afterEach() {
         runDestroy(view);
     }
 });
