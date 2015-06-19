@@ -12,6 +12,7 @@ import FormatNumber from 'ember-intl/helpers/format-number';
 import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
 import FormatMessage from 'ember-intl/helpers/format-message';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
+import registerHelper from 'ember-intl/utils/register-helper';
 
 export function initializer(registry, app) {
     registry.optionsForType('formats', {
@@ -23,12 +24,12 @@ export function initializer(registry, app) {
         registry.register('adapter:-intl-adapter', IntlAdapter);
     }
 
-    Ember.HTMLBars._registerHelper('format-date', FormatDate);
-    Ember.HTMLBars._registerHelper('format-time', FormatTime);
-    Ember.HTMLBars._registerHelper('format-relative', FormatRelative);
-    Ember.HTMLBars._registerHelper('format-number', FormatNumber);
-    Ember.HTMLBars._registerHelper('format-html-message', FormatHtmlMessage);
-    Ember.HTMLBars._registerHelper('format-message', FormatMessage);
+    registerHelper('format-date', FormatDate, registry);
+    registerHelper('format-time', FormatTime, registry);
+    registerHelper('format-relative', FormatRelative, registry);
+    registerHelper('format-number', FormatNumber, registry);
+    registerHelper('format-html-message', FormatHtmlMessage, registry);
+    registerHelper('format-message', FormatMessage, registry);
 
     if (app.instanceInitializer) {
         return;
@@ -36,7 +37,7 @@ export function initializer(registry, app) {
 
     // for backwards compatability < 1.12
     instanceInitializer({
-      container: registry
+        container: registry
     });
 }
 

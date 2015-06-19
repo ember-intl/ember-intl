@@ -1,10 +1,14 @@
 <div class="main">
     <div class="header">
-        <h1 id='title'>ember-intl</h1>
+        <h1 id="title">ember-intl</h1>
     </div>
     <div class="content">
         <div>
-            Choose a locale: {{view 'select' value=value content=options}}
+            {{x-select
+                action=(action 'changeLocale')
+                options=locales
+                value=currentLocale
+            }}
         </div>
 
         {{outlet}}

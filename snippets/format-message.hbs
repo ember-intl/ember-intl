@@ -4,7 +4,7 @@ Reference a message key, defined in your messages module corresponding to the cu
     product='Apple watch'
     price=200
     deadline=yesterday}}
-    
+
 {{format-message (intl-get computedProperty)
     product='Apple watch'
     price=200
@@ -16,9 +16,9 @@ Passing a static message or a message via a data-binding also works.
     name='Jason'
     numPhotos=num
     takenDate=yesterday}}
-    
+
 Use within bind-attr
 
-<button {{bind-attr title=(format-message (intl-get 'product.title'))}}>
+<button title={{format-message (intl-get 'product.title')}}>
     Hover to see title
 </button>

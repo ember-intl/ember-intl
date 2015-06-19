@@ -123,7 +123,7 @@ export default Ember.Service.extend(Ember.Evented, {
         let name = 'ember-intl@translation:' + locale;
         let modelType = instance.container.lookupFactory('ember-intl@model:translation');
         let container = instance.registry || instance.container;
-  
+
         if (container.has(name)) {
           container.unregister(name);
         }

@@ -4,73 +4,48 @@
  */
 
 import Ember from 'ember';
-import { Stream, read, readHash, destroyStream } from '../utils/streams';
-
-let getProperties = Ember.getProperties;
+import legacyBase from '../legacy/helpers/base';
 
 export default function (formatType) {
     function throwError () {
         return new Error(formatType + ' requires a single unname argument. {{format-' + formatType + ' value}}');
     }
 
-    return function (params, hash, seenHash, env) {
-        if (!params || (params && !params.length)) {
-            return throwError();
-        }
+    if (Ember.Helper) {
+        return Ember.Helper.extend({
+            intl: Ember.inject.service(),
 
-        let outStream;
+            init() {
+                this._super.apply(this, arguments);
+                this.formatter = this.container.lookup('ember-intl@formatter:format-' + formatType);
+            },
 
-        function touchStream () {
-            outStream.notify();
-        }
+            onIntlLocaleChanged: Ember.observer('intl.locale', function() {
+                this.recompute();
+            }),
 
-        seenHash      = readHash(hash);
+            compute(params, hash) {
+                if (!params || !params.length) {
+                    return throwError();
+                }
 
-        let view      = env.data.view;
-        let intl      = view.container.lookup('service:intl');
-        let formatter = view.container.lookup('ember-intl@formatter:format-' + formatType);
-        let value     = params[0];
+                let format = {};
+                let value = params[0];
+                let intl = this.get('intl');
 
-        if (value.isStream) {
-            value.subscribe(() => {
-                touchStream();
-            }, value);
-        }
+                if (hash && hash.format) {
+                    format = intl.getFormat(formatType, hash.format);
+                }
 
-        outStream = new Stream(() => {
-            let format = {};
-
-            if (seenHash && seenHash.format) {
-                format = intl.getFormat(formatType, seenHash.format);
+                return this.formatter.format.call(
+                    this.formatter,
+                    value,
+                    Ember.$.extend(Ember.getProperties(intl, 'locale'), format, hash)
+                );
             }
-
-            return formatter.format.call(
-                formatter,
-                read(value),
-                Ember.$.extend(getProperties(intl, 'locale'), format, seenHash)
-            );
         });
+    }
 
-        Ember.keys(hash).forEach((key) => {
-            if (!hash[key].isStream) {
-                return;
-            }
-
-            let hashStream = hash[key];
-            hash[key] = read(hashStream);
-
-            hashStream.subscribe(function (valueStream) {
-                seenHash[key] = read(valueStream);
-                touchStream();
-            });
-        });
-
-        view.one('willDestroyElement', () => {
-            destroyStream(outStream);
-        });
-
-        intl.on('localeChanged', touchStream);
-
-        return outStream;
-    };
+    // Backwards compatibility for < 1.13
+    return legacyBase(formatType, throwError);
 }
