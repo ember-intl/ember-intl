@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import LocaleModel from './models/locale';
+import LocaleModel from './models/translation';
 import FormatterBase from './formatter-base';
 import createFormatCache from './format-cache/memoizer';
 import HelperBase from './helpers/base';

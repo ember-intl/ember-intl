@@ -1,14 +1,13 @@
 import Ember from 'ember';
+import computed from 'ember-new-computed';
 
 export default Ember.Controller.extend({
-    intl:      Ember.inject.service(),
-    options:   ['en-US', 'fr-FR', 'es'],
+    intl:    Ember.inject.service(),
+    locales: Ember.A(['en-US', 'fr-FR', 'es']),
 
-    value: Ember.computed('intl.locales', function (key, value) {
-        if (arguments.length === 2) {
-            this.set('intl.locales', arguments[1]);
+    actions: {
+        changeLocale(localeName) {
+            this.set('intl.locale', localeName);
         }
-
-        return this.get('intl.locales.firstObject') || this.get('intl.locales');
-    })
+    }
 });
