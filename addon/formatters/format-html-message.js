@@ -5,14 +5,13 @@
 
 import Ember from 'ember';
 import FormatterMessage from './format-message';
-import IntlGetResult from 'ember-intl/models/intl-get-result';
 
 var FormatHtmlMessage = FormatterMessage.extend({
-    escapeProps: function (hash) {
-        var value;
+    escapeProps(options) {
+        let value;
 
-        return Object.keys(hash).reduce(function (result, hashKey) {
-            value = hash[hashKey];
+        return Object.keys(options).reduce((result, hashKey) => {
+            value = options[hashKey];
 
             if (typeof value === 'string') {
                 value = Ember.Handlebars.Utils.escapeExpression(value);
@@ -23,10 +22,10 @@ var FormatHtmlMessage = FormatterMessage.extend({
         }, {});
     },
 
-    format: function (value, hash) {
-        var locales = hash.locales;
-        hash = this.escapeProps(hash);
-        var superResult = this._super(value, hash, locales);
+    format(value, options) {
+        let locale = options.locale;
+        options = this.escapeProps(options);
+        let superResult = this._super(value, options, locale);
         return Ember.String.htmlSafe(superResult);
     }
 });

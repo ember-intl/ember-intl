@@ -1,14 +1,24 @@
 language: node_js
 sudo: false
+node_js:
+- "0.12"
+- "iojs"
 cache:
   directories:
   - node_modules
+before_install:
+- mkdir travis-phantomjs
+- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+- tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
+- export PATH=$PWD/travis-phantomjs:$PATH
+- "npm config set spin false"
+- "npm install -g npm@^2"
 install:
 - npm install -g bower
 - npm install
 - bower install
 script:
-- npm test
+- ember try:testall
 after_success:
 - test $(cat $TRAVIS_BUILD_DIR/package.json | grep version | awk '{print $2}' | sed
   's/"//g' | sed 's/,//g') = $TRAVIS_TAG && export VALID_VERSION=true

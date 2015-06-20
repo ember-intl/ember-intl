@@ -4,12 +4,20 @@
  */
 
 import Ember from 'ember';
-import Formatter from 'ember-intl/formatter-base';
+import Formatter from './-base';
+import createFormatCache from '../format-cache/memoizer';
+import computed from 'ember-new-computed';
 
 var FormatNumber = Formatter.extend({
-    format: function (value, hash) {
-        var options = this.filterFormatOptions(hash);
-        return this.get('intl').formatNumber(value, options);
+    formatType: 'number',
+
+    formatter: computed(() => {
+        return createFormatCache(Intl.NumberFormat);
+    }).readOnly(),
+
+    format(value, options) {
+        var formatOptions = this.filterFormatOptions(options);
+        return this._format(value, formatOptions);
     }
 });
 

@@ -5,4 +5,4 @@
 
 import formatHelper from 'ember-intl/helpers/base';
 
-export default formatHelper('format-time');
+export default formatHelper('time');

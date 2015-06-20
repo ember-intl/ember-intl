@@ -6,6 +6,7 @@ module.exports = function(environment) {
         environment: environment,
         baseURL: '/',
         locationType: 'auto',
+
         EmberENV: {
           FEATURES: {
             'ember-htmlbars': true
@@ -15,6 +16,12 @@ module.exports = function(environment) {
         APP: {
           // Here you can pass flags/options to your application instance
           // when it is created
+        },
+
+        intl: {
+            defaultLocale: 'en-us',
+            outputPath: 'dummy/translations',
+            inputPath: 'tests/dummy/translations'
         }
     };
 
@@ -36,6 +43,7 @@ module.exports = function(environment) {
         ENV.APP.LOG_VIEW_LOOKUPS = false;
 
         ENV.APP.rootElement = '#ember-testing';
+
     }
 
     if (environment === 'production') {
