@@ -4,7 +4,6 @@
  */
 
 import Ember from 'ember';
-import { instanceInitializer } from '../instance-initializers/ember-intl';
 import FormatDate from 'ember-intl/helpers/format-date';
 import FormatTime from 'ember-intl/helpers/format-time';
 import FormatRelative from 'ember-intl/helpers/format-relative';
@@ -13,6 +12,7 @@ import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
 import FormatMessage from 'ember-intl/helpers/format-message';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 import registerHelper from 'ember-intl/utils/register-helper';
+import { instanceInitializer } from '../instance-initializers/ember-intl';
 
 export function initializer(registry, app) {
     registry.optionsForType('formats', {

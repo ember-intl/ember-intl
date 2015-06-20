@@ -11,7 +11,6 @@ import { IntlMessageFormat } from '../utils/data';
 import computed from 'ember-new-computed';
 
 var get = Ember.get;
-var isEmpty = Ember.isEmpty;
 
 var FormatMessage = Formatter.extend({
     // TODO: move all the intl service logic out of here
@@ -35,10 +34,6 @@ var FormatMessage = Formatter.extend({
 
         if (typeof value === 'function') {
             return value(options);
-        }
-
-        if (isEmpty(locale)) {
-            locale = get(this, 'intl.locale');
         }
 
         if (typeof value === 'string') {
