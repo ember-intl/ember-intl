@@ -54,7 +54,7 @@ product:
       // which locale the user should be targeted and perhaps lazily
       // load translations using XHR and calling intl's `addMessage`/`addMessages`
       // method with the results of the XHR request
-      this.get('intl').set('locale', 'en-US');
+      Ember.set(this, 'intl.locale', 'en-US');
     }
   });
 ```

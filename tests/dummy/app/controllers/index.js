@@ -6,7 +6,7 @@ var yesterday = now.setDate(now.getDate() - 1);
 
 function computedNumber (number, options) {
     return computed('intl.locale', function () {
-        return this.get('intl').formatNumber(number, options);
+        return Ember.get(this, 'intl').formatNumber(number, options);
     });
 }
 

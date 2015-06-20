@@ -31,7 +31,7 @@ export default function (formatType) {
 
                 let format = {};
                 let value = params[0];
-                let intl = this.get('intl');
+                let intl = Ember.get(this, 'intl');
 
                 if (hash && hash.format) {
                     format = intl.getFormat(formatType, hash.format);

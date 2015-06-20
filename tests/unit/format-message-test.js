@@ -156,7 +156,7 @@ test('intl-get handles bound computed property', function(assert) {
     var context = Ember.Object.extend({
         foo: true,
         computedMessage: computed('foo', function () {
-            return this.get('foo') ? 'foo.bar' : 'foo.baz';
+            return Ember.get(this, 'foo') ? 'foo.bar' : 'foo.baz';
         })
     }).create();
     view.set('context', context);

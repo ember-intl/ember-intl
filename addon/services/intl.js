@@ -29,7 +29,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     locales: computed({
         get() {
-          return this.get('locale');
+          return get(this, 'locale');
         },
         set(key, value) {
           Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
@@ -111,7 +111,7 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     findLanguage(locale) {
-        let result = this.get('adapter').findLanguage(locale);
+        let result = get(this, 'adapter').findLanguage(locale);
 
         return Ember.RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
@@ -125,7 +125,7 @@ export default Ember.Service.extend(Ember.Evented, {
     findTranslation(key, locale) {
         locale = locale ? makeArray(locale) : makeArray(get(this, 'locale'));
 
-        let translation = this.get('adapter').findTranslation(locale, key);
+        let translation = get(this, 'adapter').findTranslation(locale, key);
 
         if (typeof translation === 'undefined') {
             throw new Error(`translation: '${key}' on locale(s): '${locale.join(',')}' was not found.`);
