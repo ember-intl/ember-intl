@@ -9,7 +9,7 @@ function contains(selector, string) {
     var element = find(selector)[0];
 
     if (!element) {
-        return ok(false, 'can\'t find element: ' + selector);
+        return ok(false, `can't find element: ${selector}`);
     }
 
     var text = element.textContent || element.innerText;

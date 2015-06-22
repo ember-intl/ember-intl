@@ -29,12 +29,12 @@ export default Ember.Service.extend(Ember.Evented, {
 
     locales: computed({
         get() {
-          return get(this, 'locale');
+            return get(this, 'locale');
         },
         set(key, value) {
-          Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
-          this.set('locale', Ember.makeArray(value));
-          return value;
+            Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
+            this.set('locale', Ember.makeArray(value));
+            return value;
         }
     }),
 
@@ -94,7 +94,7 @@ export default Ember.Service.extend(Ember.Evented, {
         let container = instance.registry || instance.container;
 
         if (container.has(name)) {
-          container.unregister(name);
+            container.unregister(name);
         }
 
         container.register(name, modelType.extend(payload));
