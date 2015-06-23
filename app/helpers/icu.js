@@ -4,13 +4,13 @@
  */
 
 import Ember from 'ember';
-import legacyIntlGet from 'ember-intl/legacy/helpers/intl-get';
-import IntlGet from 'ember-intl/helpers/intl-get';
+import legacyICUHelper from 'ember-intl/legacy/helpers/icu';
+import ICUHelper from 'ember-intl/helpers/icu';
 
-var Helper = IntlGet;
+var Helper = ICUHelper;
 
 if (!Helper) {
-    Helper = legacyIntlGet;
+    Helper = legacyICUHelper;
 }
 
 export default Helper;
