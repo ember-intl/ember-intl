@@ -10,6 +10,7 @@ import FormatRelative from 'ember-intl/helpers/format-relative';
 import FormatNumber from 'ember-intl/helpers/format-number';
 import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
 import FormatMessage from 'ember-intl/helpers/format-message';
+import ICUHelper from 'ember-intl/helpers/icu';
 import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 import registerHelper from 'ember-intl/utils/register-helper';
 import { instanceInitializer } from '../instance-initializers/ember-intl';
@@ -24,6 +25,7 @@ export function initializer(registry, app) {
         registry.register('adapter:-intl-adapter', IntlAdapter);
     }
 
+    registerHelper('icu', ICUHelper, registry);
     registerHelper('format-date', FormatDate, registry);
     registerHelper('format-time', FormatTime, registry);
     registerHelper('format-relative', FormatRelative, registry);

@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 import Formatter from './-base';
-import IntlGetResult from '../models/intl-get-result';
+import AdapterResult from '../models/adapter-result';
 import createFormatCache from '../format-cache/memoizer';
 import { IntlMessageFormat } from '../utils/data';
 import computed from 'ember-new-computed';
@@ -25,7 +25,7 @@ var FormatMessage = Formatter.extend({
         let locale = options.locale;
         let formatter = get(this, 'formatter');
 
-        if (value instanceof IntlGetResult) {
+        if (value instanceof AdapterResult) {
             if (typeof locale === 'undefined') {
                 locale = value.locale;
             }

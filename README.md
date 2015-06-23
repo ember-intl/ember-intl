@@ -121,7 +121,7 @@ You have {numPhotos, plural,
 ```
 
 ```hbs
-{{format-message (intl-get 'product.info')
+{{format-message 'product.info'
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -137,31 +137,13 @@ You have {numPhotos, plural,
 This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
-{{format-html-message (intl-get 'product.html.info')
+{{format-html-message 'product.html.info'
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
 
-{{format-html-message '<strong>{numPhotos}</strong>'
+{{format-html-message (icu '<strong>{numPhotos}</strong>')
 	numPhotos=(format-number num)}}
-```
-
-### Intl-Get
-
-Utility helper for returning the value, or eventual value, based on a translation key.  *Should only ever be used as a subexpression, never as a standalone helper.*
-
-```hbs
-{{format-message (intl-get 'product.info')
-	product='Apple watch'
-	price=200
-	deadline=yesterday}}
-```
-
-Will return the message from the current locale, or locale explicitly passed as an argument, message object.
-
-```yaml
-product:
-  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
 ### Helper Options
@@ -186,7 +168,7 @@ This is to shim your test runner if running within phantomjs, or any browser whi
 
 ```javascript
 /**
- * unit test for testing index view which contains the helpers: `format-message` and `intl-get`
+ * unit test for testing index view which contains the helpers: `format-message` and `icu`
  *
  * unit/views/index-test.js
  */
@@ -204,7 +186,7 @@ moduleFor('view:index', 'IndexView', {
     'template:index',
     'adapter:-intl-adapter',
     'service:intl',
-    'helper:intl-get',
+    'helper:icu',
     'ember-intl@formatter:format-message',
     'translation:en',
     'translation:es'
@@ -236,18 +218,19 @@ test('index renders', function () {
   // render view
   Ember.run(view, 'appendTo', '#qunit-fixture');
 
-  equal(view.$().text().trim(), "hello Tom");
+  equal(view.$().text().trim(), 'hello Tom');
 
   Ember.run(function () {
     intl.set('locale', 'es');
   });
 
-  equal(view.$().text().trim(), "hola Tom");
+  equal(view.$().text().trim(), 'hola Tom');
 
   // destroy view
   Ember.run(view, 'destroy');
 });
 ```
+
 ## Known Gotchas
 
 > `date value is not finite in DateTimeFormat.format()`

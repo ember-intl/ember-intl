@@ -6,9 +6,11 @@
 import Ember from 'ember';
 import legacyBase from '../legacy/helpers/base';
 
+var extend = Ember.$.extend;
+
 export default function (formatType) {
     function throwError () {
-        return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
+        return new Error(`${formatType} requires a single value. {{format-${formatType} value}}`);
     }
 
     if (Ember.Helper) {
@@ -37,10 +39,9 @@ export default function (formatType) {
                     format = intl.getFormat(formatType, hash.format);
                 }
 
-                return this.formatter.format.call(
-                    this.formatter,
+                return this.formatter.format(
                     value,
-                    Ember.$.extend(Ember.getProperties(intl, 'locale'), format, hash)
+                    extend(Ember.getProperties(intl, 'locale'), format, hash)
                 );
             }
         });
