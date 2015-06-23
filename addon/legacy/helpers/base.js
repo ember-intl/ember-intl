@@ -12,6 +12,8 @@ import {
     destroyStream
 } from '../../utils/streams';
 
+var extend = Ember.$.extend;
+
 export default function (formatType, throwError) {
     return function (params, hash, seenHash, env) {
         if (!params || !params.length) {
@@ -44,10 +46,9 @@ export default function (formatType, throwError) {
                 format = intl.getFormat(formatType, seenHash.format);
             }
 
-            return formatter.format.call(
-                formatter,
+            return formatter.format(
                 read(value),
-                Ember.$.extend(Ember.getProperties(intl, 'locale'), format, seenHash)
+                extend(Ember.getProperties(intl, 'locale'), format, seenHash)
             );
         });
 

@@ -4,15 +4,14 @@
  */
 
 import Ember from 'ember';
+import ICU from '../models/icu';
 
 var Helper = null;
-var get = Ember.get;
 
 if (Ember.Helper) {
     Helper = Ember.Helper.extend({
-       intl: Ember.inject.service(),
-       compute(params, hash = {}) {
-           return get(this, 'intl').findTranslation(params[0], hash.locale);
+       compute(params) {
+           return new ICU(params[0]);
        }
     });
 }

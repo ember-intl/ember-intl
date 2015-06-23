@@ -532,7 +532,7 @@ var define, requireModule, require, requirejs;
     __exports__.IntlMessageFormat = IntlMessageFormat;
   });
 ;define("app/adapters/-intl-adapter", 
-  ["ember","ember-intl/models/intl-get-result","ember-intl/models/locale","ember-intl/adapter","exports"],
+  ["ember","ember-intl/models/adapter-result","ember-intl/models/locale","ember-intl/adapter","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"];
@@ -576,7 +576,7 @@ var define, requireModule, require, requirejs;
         }
     });
   });
-;define("ember-intl/models/intl-get-result", 
+;define("ember-intl/models/adapter-result", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -634,7 +634,7 @@ var define, requireModule, require, requirejs;
     __exports__["default"] = FormatDate;
   });
 ;define("app/formatters/format-html-message", 
-  ["ember","app/formatters/format-message","ember-intl/models/intl-get-result","exports"],
+  ["ember","app/formatters/format-message","ember-intl/models/adapter-result","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     /**
@@ -673,7 +673,7 @@ var define, requireModule, require, requirejs;
     __exports__["default"] = FormatHtmlMessage;
   });
 ;define("app/formatters/format-message", 
-  ["ember","ember-intl/formatter-base","ember-intl/models/intl-get-result","exports"],
+  ["ember","ember-intl/formatter-base","ember-intl/models/adapter-result","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     /**
@@ -1022,7 +1022,7 @@ var define, requireModule, require, requirejs;
     }
   });
 ;define("app/services/intl", 
-  ["ember","ember-intl/utils/data","ember-intl/format-cache/memoizer","ember-intl/models/intl-get-result","exports"],
+  ["ember","ember-intl/utils/data","ember-intl/format-cache/memoizer","ember-intl/models/adapter-result","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
     /**

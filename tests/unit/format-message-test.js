@@ -136,7 +136,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 
 test('intl-get returns message and format-message renders', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-message (intl-get "foo.bar")}}', { locale: 'en' });
+    view = this.intlBlock('{{format-message "foo.bar"}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), "foo bar baz");
 });
@@ -145,14 +145,14 @@ test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
     var translation = this.container.lookup('ember-intl@translation:en');
     translation.addMessage('adding', 'this works also');
-    view = this.intlBlock('{{format-message (intl-get "adding")}}', { locale: 'en' });
+    view = this.intlBlock('{{format-message "adding"}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), "this works also");
 });
 
 test('intl-get handles bound computed property', function(assert) {
     assert.expect(3);
-    view = this.intlBlock('{{format-message (intl-get computedMessage)}}', { locale: 'en' });
+    view = this.intlBlock('{{format-message computedMessage}}', { locale: 'en' });
     var context = Ember.Object.extend({
         foo: true,
         computedMessage: computed('foo', function () {
@@ -179,7 +179,7 @@ test('locale can add message to intl service and read it', function(assert) {
     Ember.run(this, function () {
         var service = self.container.lookup('service:intl');
         service.addMessage('en', 'oh', 'hai!').then(function () {
-            view = self.intlBlock('{{format-message (intl-get "oh")}}', { locale: 'en' });
+            view = self.intlBlock('{{format-message "oh"}}', { locale: 'en' });
             runAppend(view);
             assert.equal(view.$().text(), "hai!");
         });
@@ -194,7 +194,7 @@ test('locale can add messages object and intl-get can read it', function(assert)
         'bulk-add': 'bulk add works'
     });
 
-    view = this.intlBlock('{{format-message (intl-get "bulk-add")}}', { locale: 'en' });
+    view = this.intlBlock('{{format-message "bulk-add"}}', { locale: 'en' });
     runAppend(view);
     assert.equal(view.$().text(), "bulk add works");
 });
@@ -219,7 +219,7 @@ test('intl-get returns message for key that is a literal string (not an object p
     translation['string.path.works'] = 'yes it does';
 
     try {
-      view = this.intlBlock('{{format-message (intl-get "string.path.works")}}', {locale: 'en'});
+      view = this.intlBlock('{{format-message "string.path.works"}}', {locale: 'en'});
       runAppend(view);
       assert.equal(view.$().text(), "yes it does");
     } catch(ex) {
