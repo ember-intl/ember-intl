@@ -4,46 +4,51 @@
  */
 
 import Ember from 'ember';
-import { IntlRelativeFormat, IntlMessageFormat } from '../utils/data';
-import createFormatCache from '../format-cache/memoizer';
-import IntlGetResult from '../models/intl-get-result';
+import computed from 'ember-new-computed';
 
-var makeArray    = Ember.makeArray;
-var get          = Ember.get;
-var on           = Ember.on;
-var computed     = Ember.computed;
-var observer     = Ember.observer;
-var isEmpty      = Ember.isEmpty;
-var isPresent    = Ember.isPresent;
-var runOnce      = Ember.run.once;
+var makeArray = Ember.makeArray;
+var observer = Ember.observer;
+var runOnce = Ember.run.once;
+var extend = Ember.$.extend;
+var get = Ember.get;
 
-function assertIsDate (date, errMsg) {
-    Ember.assert(errMsg, isFinite(date));
+function formatterProxy (formatType) {
+    return function (value, options) {
+        var formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        if (options && typeof options.format === 'string') {
+            var format = this.getFormat(formatType, options.format);
+            options = extend(format, options);
+        }
+
+        return formatter.format.call(formatter, value, options);
+    };
 }
 
 export default Ember.Service.extend(Ember.Evented, {
-    locales:           null,
-    defaultLocale:     null,
+    locale: null,
 
-    getDateTimeFormat: null,
-    getRelativeFormat: null,
-    getMessageFormat:  null,
-    getNumberFormat:   null,
-
-    adapterType:       '-intl-adapter',
-
-    setupMemoizers: on('init', function () {
-        this.setProperties({
-            getDateTimeFormat: createFormatCache(Intl.DateTimeFormat),
-            getRelativeFormat: createFormatCache(IntlRelativeFormat),
-            getNumberFormat:   createFormatCache(Intl.NumberFormat),
-            getMessageFormat:  createFormatCache(IntlMessageFormat)
-        });
+    locales: computed({
+        get() {
+            return get(this, 'locale');
+        },
+        set(key, value) {
+            Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
+            this.set('locale', Ember.makeArray(value));
+            return value;
+        }
     }),
 
+    adapterType: '-intl-adapter',
+
+    formatRelative: formatterProxy('relative'),
+    formatMessage: formatterProxy('message'),
+    formatNumber: formatterProxy('number'),
+    formatTime: formatterProxy('time'),
+    formatDate: formatterProxy('date'),
+
     adapter: computed('adapterType', function () {
-        var adapterType = get(this, 'adapterType');
-        var app         = this.container.lookup('application:main');
+        let adapterType = get(this, 'adapterType');
+        let app = this.container.lookup('application:main');
 
         // app can be undefined unit testing
         if (app && app.IntlAdapter) {
@@ -57,149 +62,75 @@ export default Ember.Service.extend(Ember.Evented, {
         }
     }).readOnly(),
 
-    current: computed('locales', 'defaultLocale', function () {
-        var locales       = makeArray(get(this, 'locales'));
-        var defaultLocale = get(this, 'defaultLocale');
-
-        if (isPresent(defaultLocale) && locales.indexOf(defaultLocale) === -1) {
-            locales.push(defaultLocale);
-        }
-
-        return locales;
-    }).readOnly(),
-
     formats: computed(function () {
         return this.container.lookup('formats:main', {
             instantiate: false
         }) || {};
     }).readOnly(),
 
-    localeChanged: observer('current', function () {
+    localeChanged: observer('locale', function () {
         runOnce(this, this.notifyLocaleChanged);
     }),
 
-    addMessage: function (locale, key, value) {
+    addMessage(locale, key, value) {
         return this.findLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessage(key, value);
         });
     },
 
-    addMessages: function (locale, messageObject) {
+    addMessages(locale, messageObject) {
         return this.findLanguage(locale).then(function (localeInstance) {
             return localeInstance.addMessages(messageObject);
         });
     },
 
-    notifyLocaleChanged: function () {
-        this.trigger('localesChanged');
+    notifyLocaleChanged() {
+        this.trigger('localeChanged');
     },
 
-    formatMessage: function (message, values, options) {
-        // When `message` is a function, assume it's an IntlMessageFormat
-        // instance's `format()` method passed by reference, and call it. This
-        // is possible because its `this` will be pre-bound to the instance.
-        if (typeof message === 'function') {
-            return message(values);
+    createLocale(instance, locale, payload) {
+        let name = `ember-intl@translation:${locale}`;
+        let modelType = instance.container.lookupFactory('ember-intl@model:translation');
+        let container = instance.registry || instance.container;
+
+        if (container.has(name)) {
+            container.unregister(name);
         }
 
-        options = options || {};
+        container.register(name, modelType.extend(payload));
+    },
 
-        var locales = makeArray(options.locales);
-        var formats = options.formats || get(this, 'formats');
+    getFormat(formatType, format) {
+        let formats = get(this, 'formats');
 
-        if (isEmpty(locales)) {
-            locales = get(this, 'current');
+        if (formats && formatType && typeof format === 'string') {
+            return get(formats, `${formatType}.${format}`) || {};
         }
 
-        if (typeof message === 'string') {
-            message = this.getMessageFormat(message, locales, formats);
-        }
-
-        return message.format(values);
+        return {};
     },
 
-    formatTime: function (date, options) {
-        date = new Date(date);
-        assertIsDate(date, 'A date or timestamp must be provided to formatTime()');
-
-        return this._format('time', date, options);
-    },
-
-    formatRelative: function (date, options, formatOptions) {
-        date = new Date(date);
-        assertIsDate(date, 'A date or timestamp must be provided to formatRelative()');
-        return this._format('relative', date, options, formatOptions);
-    },
-
-    formatDate: function (date, options) {
-        date = new Date(date);
-        assertIsDate(date, 'A date or timestamp must be provided to formatDate()');
-
-        return this._format('date', date, options);
-    },
-
-    formatNumber: function (num, options) {
-        return this._format('number', num, options);
-    },
-
-    _format: function (type, value, options, formatOptions) {
-        options = options || {};
-
-        var locales = makeArray(options.locales);
-        var formats = get(this, 'formats');
-
-        if (isEmpty(locales)) {
-            locales = get(this, 'current');
-        }
-
-        if (options && options.format) {
-            var format;
-
-            if (typeof options.format === 'string' && formats) {
-                format = get(formats, type + '.' + options.format);
-            }
-
-            Ember.merge(options, format);
-        }
-
-        switch (type) {
-            case 'date':
-            case 'time':
-                return this.getDateTimeFormat(locales, options).format(value);
-            case 'number':
-                return this.getNumberFormat(locales, options).format(value);
-            case 'relative':
-                return this.getRelativeFormat(locales, options).format(value, formatOptions);
-            default:
-                throw new Error('Unrecognized simple format type: ' + type);
-        }
-    },
-
-    findLanguage: function (locale) {
-        var result = this.get('adapter').findLanguage(locale);
+    findLanguage(locale) {
+        let result = get(this, 'adapter').findLanguage(locale);
 
         return Ember.RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
-                throw new Error('`locale` must be a string or a locale instance');
+                throw new Error('\'locale\' must be a string or a locale instance');
             }
 
             return localeInstance;
         });
     },
 
-    findTranslation: function (key, locales) {
-        locales = locales ? makeArray(locales) : this.get('current');
+    findTranslation(key, locale) {
+        locale = locale ? makeArray(locale) : makeArray(get(this, 'locale'));
 
-        var result = this.get('adapter').findTranslation(locales, key);
+        let translation = get(this, 'adapter').findTranslation(locale, key);
 
-        return Ember.RSVP.cast(result).then(function (translation) {
-            Ember.assert('findTranslation should return an object of instance `IntlGetResult`', translation instanceof IntlGetResult);
+        if (typeof translation === 'undefined') {
+            throw new Error(`translation: '${key}' on locale(s): '${locale.join(',')}' was not found.`);
+        }
 
-            if (typeof translation === 'undefined') {
-                throw new Error('translation: `' + key + '` on locale(s): ' + locales.join(',') + ' was not found.');
-            }
-
-            return translation;
-        });
+        return translation;
     }
 });

@@ -3,6 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import formatHelper from 'ember-intl/helpers/base';
+import formatHelper from './base';
 
-export default formatHelper('format-html-message');
+export default formatHelper('html-message');

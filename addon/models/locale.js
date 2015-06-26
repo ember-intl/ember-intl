@@ -1,39 +1,8 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
 import Ember from 'ember';
+import Translation from './translation';
 
-var LocaleModel = Ember.Object.extend({
-    locale:   Ember.required(),
-    messages: {},
-
-    addMessage: function (key, value) {
-        this.set('messages.' + key, value);
-
-        return value;
-    },
-
-    addMessages: function (messageObject) {
-        var messages = this.get('messages');
-
-        // shallow merge intentional
-        for (var key in messageObject) {
-            if (messageObject.hasOwnProperty(key)) {
-                Ember.set(messages, key, messageObject[key]);
-            }
-        }
-
-        return messages;
-    },
-
-    // Exposes an accesor on the locale modules
-    // so that if you want to implement your own custom logic
-    // for example, this[key] versus Ember.get
-    getValue: function (key) {
-        return this.get(key);
+export default Translation.extend({
+    init() {
+        Ember.Logger.warn('`ember-intl/models/locale` is deprecated in favor of `ember-intl/models/translation`');
     }
 });
-
-export default LocaleModel;

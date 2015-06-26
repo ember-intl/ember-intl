@@ -8,54 +8,77 @@
 This library provides Ember Handlebar helpers and a localization service injected into views, routes, models, controllers, and components.  The
 service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
+## Ember-Intl 2.0
+
+### This README is targetting and explaining the 2.0 API which differs from previous versions and the latest stable release.  If you are looking for the 1.3.x documentation, please check [here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
+
 ## Overview
 **Ember Intl is part of [FormatJS][], the docs can be found on the website:**
 
 **<http://formatjs.io/ember/>**
 
 ## Requirements
-* Ember-cli >= 0.1.5
+* Ember-cli >= 0.2.0
 * Ember >= 1.10.x
 * HTMLBars
 
 ## Installation
-* `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3) 
+* `ember install ember-intl` (or `ember install:addon ember-intl` for ember-cli < v0.2.3)
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
 
 ```html
-<script src="/assets/intl/polyfill/Intl.complete.js"></script>
+<script src="/assets/intl/intl.min.js"></script>
+<script src="/assets/intl/locales/en-us.js"></script>
+<script src="/assets/intl/locales/fr-fr.js"></script>
+<script src="/assets/intl/locales/es-es.js"></script>
+<!--
+You can view the full list of CLDR locales which can be accessed from the `/assets/intl` folder
+of your application.  The CLDRs are automatically placed there at build time.  Typically this folder
+on your filesystem is ``<project>/dist/assets/intl`
+
+Full list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main
+-->
 ```
 
-* Add custom messages per locale in their respective ES6 locale module.
-Example of app/locales/en.js:
+Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
 
-```js
-import Locale from 'ember-intl/models/locale';
-
-export default Locale.extend({
-	messages: {
-		product: {
-			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}',
-			html: {
-				info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
-			}
-		}
-	}
-});
+```yaml
+product:
+  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
+  title: 'Hello world!'
+  html:
+    info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
 ```
 
 * Configure which locale you want to use at runtime:
-	* Open app/app.js
-	* Add a `ready` hook:
+	* Open (or create) app/routes/application.js
 
 ```js
-	var App = Ember.Application.extend({
-		ready: function () {
-			// read more: http://formatjs.io/guide/#client-side
-			var language = navigator.language || navigator.browserLanguage;
-			this.intl.set('locales', [language, 'en']);
-		}
-	});
+  // app/routes/application.js
+  export default Ember.Route.extend({
+    intl: Ember.inject.service(),
+
+    beforeModel() {
+      // define the app's runtime locale
+      // For example, here you would maybe do an API lookup to resolver
+      // which locale the user should be targeted and perhaps lazily
+      // load translations using XHR and calling intl's `addMessage`/`addMessages`
+      // method with the results of the XHR request
+      Ember.set(this, 'intl.locale', 'en-us');
+    }
+  });
+```
+
+* **A default locale is required**.  This is used as the "source of truth" to determine if any translations are missing a translation at build time.  It will offer warnings displaying with locale's are missing translations for a particular key.  The default locale is configurable within `config/environment.js`.
+
+```js
+// config/environment.js
+ENV: {
+  ...
+  intl: {
+      defaultLocale: 'en' /* default value */
+  }
+}
 ```
 
 ## Examples
@@ -108,7 +131,7 @@ You have {numPhotos, plural,
 ```
 
 ```hbs
-{{format-message (intl-get 'messages.product.info')
+{{format-message (intl-get 'product.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -124,7 +147,7 @@ You have {numPhotos, plural,
 This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
-{{format-html-message (intl-get 'messages.product.html.info')
+{{format-html-message (intl-get 'product.html.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -138,7 +161,7 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 Utility helper for returning the value, or eventual value, based on a translation key.  *Should only ever be used as a subexpression, never as a standalone helper.*
 
 ```hbs
-{{format-message (intl-get 'messages.product.info')
+{{format-message (intl-get 'product.info')
 	product='Apple watch'
 	price=200
 	deadline=yesterday}}
@@ -146,22 +169,14 @@ Utility helper for returning the value, or eventual value, based on a translatio
 
 Will return the message from the current locale, or locale explicitly passed as an argument, message object.
 
-```js
-// app/locales/en.js
-import Locale from 'ember-intl/models/locale';
-
-export default Locale.extend({
-	messages: {
-		product: {
-			info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
-		}
-	}
-});
+```yaml
+product:
+  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
 ### Helper Options
 * All helpers accept optional arguments:
-	* `locales` argument to explicitly pass/override the application locale
+	* `locale` argument to explicitly pass/override the application locale
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
 ## Writing Unit Tests
@@ -172,7 +187,7 @@ In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke
 
 **NOTE**: Add the following above all script tags in `tests/index.html`
 
-`<script src="assets/intl/polyfill/Intl.complete.js"></script>`
+`<script src="assets/intl/intl.complete.js"></script>`
 
 This is to shim your test runner if running within phantomjs, or any browser which does not natiely support the Intl API.
 
@@ -200,9 +215,9 @@ moduleFor('view:index', 'IndexView', {
     'adapter:-intl-adapter',
     'service:intl',
     'helper:intl-get',
-    'formatter:format-message',
-    'locale:en',
-    'locale:es'
+    'ember-intl@formatter:format-message',
+    'translation:en',
+    'translation:es'
   ],
   setup: function () {
     // depending on your test library, container will be hanging off `this`
@@ -213,7 +228,7 @@ moduleFor('view:index', 'IndexView', {
 
     // set the initial intl service locale to `en-us`
     var intl = container.lookup('service:intl');
-    intl.set('locales', 'en');
+    intl.set('locale', 'en');
   }
 });
 
@@ -234,7 +249,7 @@ test('index renders', function () {
   equal(view.$().text().trim(), "hello Tom");
 
   Ember.run(function () {
-    intl.set('locales', 'es');
+    intl.set('locale', 'es');
   });
 
   equal(view.$().text().trim(), "hola Tom");

@@ -1,3 +1,4 @@
+/* jshint node: true */
 /* global require, module */
 
 'use strict';
@@ -14,6 +15,12 @@ function treeGenerator (dir) {
         cleanup: function () { }
     }
 };
+
+var bindTree = new Funnel('node_modules/phantomjs-polyfill', {
+    srcDir: '/',
+    files: ['bind-polyfill.js'],
+    destDir: '/assets'
+});
 
 var templateCompilerTree = new Funnel(treeGenerator(app.bowerDirectory + '/ember'), {
     files:   ['ember-template-compiler.js'],
@@ -34,4 +41,4 @@ var templateCompilerTree = new Funnel(treeGenerator(app.bowerDirectory + '/ember
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-module.exports = mergeTrees([templateCompilerTree, app.toTree()]);
+module.exports = mergeTrees([templateCompilerTree, app.toTree([bindTree])]);

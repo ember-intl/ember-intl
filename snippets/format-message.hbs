@@ -1,10 +1,10 @@
 Reference a message key, defined in your messages module corresponding to the current locale.
 
-{{format-message (intl-get 'messages.product.info')
+{{format-message (intl-get 'product.info')
     product='Apple watch'
     price=200
     deadline=yesterday}}
-    
+
 {{format-message (intl-get computedProperty)
     product='Apple watch'
     price=200
@@ -12,13 +12,11 @@ Reference a message key, defined in your messages module corresponding to the cu
 
 Passing a static message or a message via a data-binding also works.
 
-{{format-message messages.photos
+{{format-message photos
     name='Jason'
     numPhotos=num
     takenDate=yesterday}}
-    
-Use within bind-attr
 
-<button {{bind-attr title=(format-message (intl-get 'messages.product.title'))}}>
+<button title={{format-message (intl-get 'product.title')}}>
     Hover to see title
 </button>
