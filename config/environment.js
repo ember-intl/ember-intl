@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(env, appConfig) {
-    return appConfig || {};
+module.exports = function(/* environment, appConfig */) {
+  return { };
 };

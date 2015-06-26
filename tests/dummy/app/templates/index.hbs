@@ -36,15 +36,15 @@
       takenDate=yesterday}}
 </div>
 <br />
-<button {{bind-attr title=(format-message (intl-get 'messages.product.title'))}}>
-    Use with bind-attr
+<button title={{format-message (intl-get 'product.title')}}>
+    Hover to see title
 </button>
 
 {{code-snippet name='format-message.hbs'}}
 
 <h3>Format HTML Message</h3>
 <div>
-    {{format-html-message  (intl-get 'messages.product.html.info')
+    {{format-html-message  'product.html.info'
       product='Apple watch'
       price=200
       deadline=yesterday}}
