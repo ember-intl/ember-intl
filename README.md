@@ -93,6 +93,18 @@ Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted 
 {{format-number num style='currency' currency='USD'}}
 ```
 
+Or programmatically convert a number within any Ember Object.
+
+```js
+// example
+export default Ember.Component.extend({
+    intl: Ember.inject.service(),
+    computedNumber: Ember.computed('cost', function() {
+        return this.get('intl').formatNumber(this.get('cost'));
+    })
+});
+```
+
 ### Format Date
 
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
@@ -100,6 +112,18 @@ Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted
 ```hbs
 {{format-date now weekday='long' timeZone='UTC'}}
 {{format-date now hour='numeric' minute='numeric' hour12=false}}
+```
+
+Or programmatically convert a date within any Ember Object.
+
+```js
+// example
+export default Ember.Component.extend({
+    intl: Ember.inject.service(),
+    computedNow: Ember.computed(function() {
+        return this.get('intl').formatDate(new Date());
+    })
+});
 ```
 
 ### Format Time
@@ -111,12 +135,37 @@ This is just like the `{{format-date}}` helper, except it will reference any str
 {{format-time now hour='numeric' minute='numeric' hour12=false}}
 ```
 
+Or programmatically convert a time within any Ember Object.
+
+```js
+// example
+export default Ember.Component.extend({
+    intl: Ember.inject.service(),
+    computedNow: Ember.computed(function() {
+        return this.get('intl').formatTime(new Date());
+    })
+});
+```
+
 ### Format Relative
 
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
 
 ```hbs
 {{format-relative yesterday}}
+```
+
+Or programmatically convert a relative time within any Ember Object.
+
+```js
+// example
+export default Ember.Component.extend({
+    intl: Ember.inject.service(),
+    yesterday: Ember.computed(function() {
+        var now = new Date();
+        return this.get('intl').formatRelative(now.setDate(now.getDate() - 1));
+    })
+});
 ```
 
 ### Format Message
@@ -140,6 +189,17 @@ You have {numPhotos, plural,
 	name='Jason'
 	numPhotos=num
 	takenDate=yesterday}}
+```
+Or programmatically convert a message within any Ember Object.
+
+```js
+export default Ember.Component.extend({
+    intl: Ember.inject.service(),
+    yesterday: Ember.computed(function() {
+        var now = new Date();
+        return this.get('intl').formatMessage('Hello {name}', { name: 'Jason' });
+    })
+});
 ```
 
 ### Format HTML Message
