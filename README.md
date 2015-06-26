@@ -76,7 +76,7 @@ product:
 ENV: {
   ...
   intl: {
-      defaultLocale: 'en' /* default value */
+      defaultLocale: 'en-us' /* default value */
   }
 }
 ```
