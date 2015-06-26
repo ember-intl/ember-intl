@@ -19,8 +19,8 @@ service, and helpers, provide a way to format dates, numbers, strings messages, 
 
 ## Requirements
 * Ember-cli >= 0.2.0
-* Ember >= 1.10.x
-* HTMLBars
+* Ember >= 1.10.x <= 1.13.x
+* HTMLBars (Glimmer supported)
 
 ## Installation
 * `ember install ember-intl@beta` (or `ember install:addon ember-intl@beta` for ember-cli < v0.2.3)
