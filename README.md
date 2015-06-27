@@ -65,7 +65,7 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
       // which locale the user should be targeted and perhaps lazily
       // load translations using XHR and calling intl's `addMessage`/`addMessages`
       // method with the results of the XHR request
-      Ember.set(this, 'intl.locale', 'en-us');
+      this.set('intl.locale', 'en-us');
     }
   });
 ```
@@ -77,7 +77,7 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
 ENV: {
   ...
   intl: {
-      defaultLocale: 'en-us' /* default value */
+    defaultLocale: 'en-us' /* default value */
   }
 }
 ```
@@ -99,10 +99,10 @@ Or programmatically convert a number within any Ember Object.
 ```js
 // example
 export default Ember.Component.extend({
-    intl: Ember.inject.service(),
-    computedNumber: Ember.computed('cost', function() {
-        return this.get('intl').formatNumber(this.get('cost'));
-    })
+  intl: Ember.inject.service(),
+  computedNumber: Ember.computed('cost', function() {
+    return this.get('intl').formatNumber(this.get('cost'));
+  })
 });
 ```
 
@@ -120,10 +120,10 @@ Or programmatically convert a date within any Ember Object.
 ```js
 // example
 export default Ember.Component.extend({
-    intl: Ember.inject.service(),
-    computedNow: Ember.computed(function() {
-        return this.get('intl').formatDate(new Date());
-    })
+  intl: Ember.inject.service(),
+  computedNow: Ember.computed(function() {
+    return this.get('intl').formatDate(new Date());
+  })
 });
 ```
 
@@ -141,10 +141,10 @@ Or programmatically convert a time within any Ember Object.
 ```js
 // example
 export default Ember.Component.extend({
-    intl: Ember.inject.service(),
-    computedNow: Ember.computed(function() {
-        return this.get('intl').formatTime(new Date());
-    })
+  intl: Ember.inject.service(),
+  computedNow: Ember.computed(function() {
+    return this.get('intl').formatTime(new Date());
+  })
 });
 ```
 
@@ -161,11 +161,11 @@ Or programmatically convert a relative time within any Ember Object.
 ```js
 // example
 export default Ember.Component.extend({
-    intl: Ember.inject.service(),
-    yesterday: Ember.computed(function() {
-        var now = new Date();
-        return this.get('intl').formatRelative(now.setDate(now.getDate() - 1));
-    })
+  intl: Ember.inject.service(),
+  yesterday: Ember.computed(function() {
+  var now = new Date();
+    return this.get('intl').formatRelative(now.setDate(now.getDate() - 1));
+  })
 });
 ```
 
@@ -195,11 +195,11 @@ Or programmatically convert a message within any Ember Object.
 
 ```js
 export default Ember.Component.extend({
-    intl: Ember.inject.service(),
-    yesterday: Ember.computed(function() {
-        var now = new Date();
-        return this.get('intl').formatMessage('Hello {name}', { name: 'Jason' });
-    })
+  intl: Ember.inject.service(),
+  yesterday: Ember.computed(function() {
+    var now = new Date();
+    return this.get('intl').formatMessage('Hello {name}', { name: 'Jason' });
+  })
 });
 ```
 
@@ -305,11 +305,7 @@ test('index renders', function () {
   var intl = view.get('intl');
   Ember.run(view, 'appendTo', '#qunit-fixture');
   equal(view.$().text().trim(), "hello Tom");
-
-  Ember.run(function () {
-    intl.set('locale', 'es');
-  });
-
+  Ember.run(function () { intl.set('locale', 'es'); });
   equal(view.$().text().trim(), "hola Tom");
   Ember.run(view, 'destroy');
 });
