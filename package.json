@@ -1,7 +1,7 @@
 {
   "name": "ember-intl",
   "description": "Ember toolbox for internationalization.",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -32,12 +32,13 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "broccoli-rename-files": "0.0.3",
     "broccoli-caching-writer": "^0.5.5",
     "broccoli-funnel": "^0.2.2",
     "broccoli-merge-trees": "^0.2.1",
+    "broccoli-rename-files": "0.0.3",
     "chalk": "^1.0.0",
     "ember-cli-babel": "^5.0.0",
+    "ember-new-computed": "^1.0.1",
     "extend": "^2.0.0",
     "formatjs-extract-cldr-data": "^1.1.0",
     "glob": "^5.0.3",
@@ -58,7 +59,6 @@
     "ember-code-snippet": "^1.1.0",
     "ember-disable-prototype-extensions": "^1.0.1",
     "ember-disable-proxy-controllers": "^1.0.0",
-    "ember-new-computed": "^1.0.1",
     "ember-template-compiler": "*1.9.0-alpha",
     "ember-try": "0.0.7",
     "phantomjs-polyfill": "0.0.1"
