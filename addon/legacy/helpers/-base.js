@@ -4,6 +4,7 @@
  */
 
 import Ember from 'ember';
+import extend from '../../utils/extend';
 
 import {
     Stream,
@@ -47,7 +48,7 @@ export default function (formatType, throwError) {
             return formatter.format.call(
                 formatter,
                 read(value),
-                Ember.$.extend(Ember.getProperties(intl, 'locale'), format, seenHash)
+                extend(Ember.getProperties(intl, 'locale'), format, seenHash)
             );
         });
 

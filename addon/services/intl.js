@@ -5,11 +5,11 @@
 
 import Ember from 'ember';
 import computed from 'ember-new-computed';
+import extend from '../utils/extend';
 
 var makeArray = Ember.makeArray;
 var observer = Ember.observer;
 var runOnce = Ember.run.once;
-var extend = Ember.$.extend;
 var get = Ember.get;
 
 function formatterProxy (formatType) {

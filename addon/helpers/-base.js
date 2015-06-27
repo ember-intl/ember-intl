@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import legacyBase from '../legacy/helpers/-base';
+import extend from '../utils/extend';
 
 export default function (formatType) {
     function throwError () {
@@ -37,10 +38,9 @@ export default function (formatType) {
                     format = intl.getFormat(formatType, hash.format);
                 }
 
-                return this.formatter.format.call(
-                    this.formatter,
+                return this.formatter.format(
                     value,
-                    Ember.$.extend(Ember.getProperties(intl, 'locale'), format, hash)
+                    extend(Ember.getProperties(intl, 'locale'), format, hash)
                 );
             }
         });
