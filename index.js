@@ -122,7 +122,11 @@ module.exports = {
 
     treeForPublic: function (inputTree) {
         var config = this.project.config(this.app.env);
-        var trees  = [inputTree];
+        var trees  = [];
+
+        if (inputTree) {
+            trees.push(inputTree);
+        }
 
         trees.push(lowercaseTree(new Funnel(path.join(intlPath, '/dist'), {
             files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
