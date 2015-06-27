@@ -22,7 +22,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 * HTMLBars (Glimmer supported)
 
 ## Installation
-* `ember install ember-intl@beta` (or `ember install:addon ember-intl@beta` for ember-cli < v0.2.3)
+* `ember install ember-intl@2.0.0-beta.4` (or `ember install:addon ember-intl@2.0.0-beta.4` for ember-cli < v0.2.3)
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
 
 ```html

@@ -27,6 +27,12 @@ var FormatBase = Ember.Object.extend({
     _format(value, options = {}, formatOptions = {}) {
         let formatter = get(this, 'formatter');
         let locale = options.locale;
+        if (!locale) {
+            throw new Error(`
+                No locale specified.  This is typically done application wide within routes/application.js
+                you can read how to configure it here: https://github.com/yahoo/ember-intl/blob/master/README.md#configure-application-wide-locale
+            `);
+        }
         return formatter(locale, options).format(value, formatOptions);
     }
 });
