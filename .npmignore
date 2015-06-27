@@ -9,6 +9,7 @@
 CVS
 npm-debug.log
 bower_components/
+node_modules/
 tests/
 snippets/
 public/
