@@ -4,7 +4,7 @@
  */
 
 import Ember from 'ember';
-import legacyBase from '../legacy/helpers/base';
+import legacyBase from '../legacy/helpers/-base';
 
 export default function (formatType) {
     function throwError () {

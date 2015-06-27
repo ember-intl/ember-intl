@@ -6,7 +6,7 @@
 import LocaleModel from './models/translation';
 import FormatterBase from './formatter-base';
 import createFormatCache from './format-cache/memoizer';
-import HelperBase from './helpers/base';
+import HelperBase from './helpers/-base';
 import { Stream, read } from './utils/streams';
 import { addLocaleData, IntlRelativeFormat, IntlMessageFormat } from './utils/data';
 

@@ -15,6 +15,7 @@ var get = Ember.get;
 function formatterProxy (formatType) {
     return function (value, options = {}) {
         var formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+
         if (typeof options.format === 'string') {
             var format = this.getFormat(formatType, options.format);
             options = extend(format, options);
@@ -24,7 +25,7 @@ function formatterProxy (formatType) {
             options.locale = get(this, 'locale');
         }
 
-        return formatter.format.call(formatter, value, options);
+        return formatter.format(value, options);
     };
 }
 

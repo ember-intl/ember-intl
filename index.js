@@ -58,7 +58,7 @@ module.exports = {
         var projectConfig = this.projectConfig();
 
         return Object.assign({
-            defaultLocale: 'en',
+            defaultLocale: 'en-us',
             inputPath    : 'translations',
             outputPath   : path.join(projectConfig.modulePrefix, 'translations'),
         }, projectConfig.intl);
