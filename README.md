@@ -277,8 +277,8 @@ moduleFor('view:index', 'IndexView', {
     'service:intl',
     'helper:intl-get',
     'ember-intl@formatter:format-message',
-    'translation:en',
-    'translation:es'
+    'translation:en-us',
+    'translation:es-es'
   ],
   setup: function () {
     // depending on your test library, container will be hanging off `this`
@@ -289,7 +289,7 @@ moduleFor('view:index', 'IndexView', {
 
     // set the initial intl service locale to `en-us`
     var intl = container.lookup('service:intl');
-    intl.set('locale', 'en');
+    intl.set('locale', 'en-us');
   }
 });
 
@@ -305,7 +305,7 @@ test('index renders', function () {
   var intl = view.get('intl');
   Ember.run(view, 'appendTo', '#qunit-fixture');
   equal(view.$().text().trim(), "hello Tom");
-  Ember.run(function () { intl.set('locale', 'es'); });
+  Ember.run(function () { intl.set('locale', 'es-es'); });
   equal(view.$().text().trim(), "hola Tom");
   Ember.run(view, 'destroy');
 });
