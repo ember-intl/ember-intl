@@ -12,6 +12,7 @@ var mergeTrees  = require('broccoli-merge-trees');
 var renameFiles = require('broccoli-rename-files');
 var Funnel      = require('broccoli-funnel');
 var walkSync    = require('walk-sync');
+var chalk       = require('chalk');
 var path        = require('path');
 var fs          = require('fs');
 
@@ -34,14 +35,21 @@ function lowercaseTree(tree) {
 module.exports = {
     name: 'ember-intl',
 
+    included: function (app) {
+        this._super.included.apply(this, arguments);
+        this.app = app;
+        var vendorPath = this.treePaths.vendor;
+        app.import(path.join(vendorPath, 'messageformat/intl-messageformat.js'));
+        app.import(path.join(vendorPath, 'relativeformat/intl-relativeformat.js'));
+    },
+
     setupPreprocessorRegistry: function (type, registry) {
-        var addon = this;
+        var config = this.intlConfig();
 
         registry.add('js', {
             name: 'translations',
             ext:  'js',
             toTree: function (tree) {
-                var config = addon.intlConfig();
                 var translations = new Funnel(config.inputPath, {
                     allowEmpty: true
                 });
@@ -68,23 +76,27 @@ module.exports = {
         return this.project.config(process.env.EMBER_ENV);
     },
 
-    included: function (app) {
-        this._super.included.apply(this, arguments);
-        this.app = app;
-        var vendorPath = this.treePaths.vendor;
-        app.import(path.join(vendorPath, 'messageformat/intl-messageformat.js'));
-        app.import(path.join(vendorPath, 'relativeformat/intl-relativeformat.js'));
-    },
-
     treeForApp: function (inputTree) {
-        var trees       = [inputTree];
-        var appPath     = this.treePaths.app;
-        var localesPath = path.join(this.project.root, 'translations');
+        var trees        = [inputTree];
+        var appPath      = this.treePaths.app;
+        var config       = this.intlConfig();
+        var translations = path.join(this.project.root, config.inputPath);
 
-        if (fs.existsSync(localesPath)) {
-            var locales = walkSync(localesPath).map(function (filename) {
+        if (fs.existsSync(translations)) {
+            var locales = walkSync(translations).map(function (filename) {
                 return path.basename(filename, path.extname(filename));
-            }).filter(LocaleWriter.has);
+            }).filter(function (localeName) {
+                var has = LocaleWriter.has(localeName);
+                if (!has) {
+                    console.error(
+                      chalk.red(
+                        '[ember-intl] \'' + localeName + '\' does not match a supported locale name.\n' +
+                        'List of supported locales: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main'
+                      )
+                    );
+                }
+                return has;
+            });
 
             var localeTree = new LocaleWriter(inputTree, 'cldrs', {
                 locales:        locales,
