@@ -39,6 +39,7 @@ Full list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/
 -->
 ```
 
+## Translations
 Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
 
 ```yaml
@@ -49,8 +50,9 @@ product:
     info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
 ```
 
-* Configure which locale you want to use at runtime:
-	* Open (or create) app/routes/application.js
+### Configure application-wide locale
+
+Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `intl.locale`.  Example:
 
 ```js
   // app/routes/application.js
