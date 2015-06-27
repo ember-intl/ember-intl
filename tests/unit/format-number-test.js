@@ -29,6 +29,7 @@ moduleFor('ember-intl@formatter:format-number', {
                 }
             }
         }, { instantiate: false });
+
         this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
@@ -46,6 +47,7 @@ test('exists', function(assert) {
 test('invoke the formatNumber method', function(assert) {
     assert.expect(1);
     var service = this.container.lookup('service:intl');
+    Ember.run(function() { service.set('locale', 'en-us'); });
     assert.equal(service.formatNumber(100), 100);
 });
 

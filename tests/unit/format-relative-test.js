@@ -48,6 +48,7 @@ test('exists', function(assert) {
 test('invoke the formatRelative directly', function(assert) {
     assert.expect(1);
     var service = this.container.lookup('service:intl');
+    Ember.run(function() { service.set('locale', 'en-us'); });
     assert.equal(service.formatRelative(new Date()), 'now', {});
 });
 
