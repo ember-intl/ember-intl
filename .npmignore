@@ -12,4 +12,6 @@ bower_components/
 tests/
 snippets/
 public/
+tmp/
+dist/
 testem.json
