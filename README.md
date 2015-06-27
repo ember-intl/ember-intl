@@ -5,8 +5,7 @@
 [![Build Status][travis-badge]][travis]
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
-This library provides Ember Handlebar helpers and a localization service injected into views, routes, models, controllers, and components.  The
-service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
+This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
 ## Ember-Intl 2.0
 
@@ -249,7 +248,7 @@ In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke
 
 `<script src="assets/intl/intl.complete.js"></script>`
 
-This is to shim your test runner if running within phantomjs, or any browser which does not natiely support the Intl API.
+This is to shim your test runner if running within phantomjs, or any browser which does not natively support the Intl API.
 
 =======
 ### Example unit test
@@ -302,10 +301,7 @@ test('index renders', function () {
   });
 
   var intl = view.get('intl');
-
-  // render view
   Ember.run(view, 'appendTo', '#qunit-fixture');
-
   equal(view.$().text().trim(), "hello Tom");
 
   Ember.run(function () {
@@ -313,8 +309,6 @@ test('index renders', function () {
   });
 
   equal(view.$().text().trim(), "hola Tom");
-
-  // destroy view
   Ember.run(view, 'destroy');
 });
 ```
@@ -322,7 +316,7 @@ test('index renders', function () {
 
 > `date value is not finite in DateTimeFormat.format()`
 
-Browser vendors implement datetime parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
+Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
 
 The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
 
