@@ -67,7 +67,6 @@ test('should throw if called with out a value', function(assert) {
 
 test('it should return a formatted string from a date string', function(assert) {
     assert.expect(1);
-
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
     view = this.intlBlock(`{{format-time '${dateStr}' timeZone='UTC'}}`, { locale: 'en-us' });
     runAppend(view);
@@ -76,7 +75,6 @@ test('it should return a formatted string from a date string', function(assert) 
 
 test('it should return a formatted string from a timestamp', function(assert) {
     assert.expect(1);
-
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
     view = this.intlBlock(`{{format-time ${timeStamp} timeZone='UTC'}}`, { locale: 'en-us' });
     runAppend(view);
@@ -85,7 +83,6 @@ test('it should return a formatted string from a timestamp', function(assert) {
 
 test('it should return a formatted string of just the time', function(assert) {
     assert.expect(1);
-
     view = this.intlBlock(`{{format-time ${timeStamp} hour='numeric' minute='numeric' timeZone='UTC'}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '11:00 PM');

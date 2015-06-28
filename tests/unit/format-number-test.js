@@ -160,7 +160,7 @@ test('currency - should return a string formatted to currency', function(assert)
 
 test('should function within an `each` block helper', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{#each currency in currencies}} {{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}', { locale: 'en-us' });
+    view = this.intlBlock('{{#each currencies as |currency|}} {{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}', { locale: 'en-us' });
 
     view.set('context', {
         currencies: [
