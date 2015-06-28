@@ -163,7 +163,7 @@ Or programmatically convert a relative time within any Ember Object.
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   yesterday: Ember.computed(function() {
-  var now = new Date();
+    var now = new Date();
     return this.get('intl').formatRelative(now.setDate(now.getDate() - 1));
   })
 });
