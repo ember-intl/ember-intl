@@ -18,7 +18,6 @@ moduleFor('ember-intl@formatter:format-time', {
     needs: ['service:intl'],
     beforeEach() {
         registerHelper('format-time', formatTimeHelper, this.container);
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
     afterEach() {

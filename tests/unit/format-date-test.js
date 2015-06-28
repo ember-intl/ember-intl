@@ -19,7 +19,6 @@ moduleFor('ember-intl@formatter:format-date', {
     needs: ['service:intl'],
     beforeEach() {
         registerHelper('format-date', formatDateHelper, this.container);
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
     afterEach() {

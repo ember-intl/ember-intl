@@ -32,7 +32,6 @@ moduleFor('ember-intl@formatter:format-relative', {
             instantiate: false
         });
 
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
     afterEach() {

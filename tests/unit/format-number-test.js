@@ -30,7 +30,6 @@ moduleFor('ember-intl@formatter:format-number', {
             }
         }, { instantiate: false });
 
-        this.container.injection('formatter', 'intl', 'service:intl');
         this.intlBlock = createIntlBlock(this.container);
     },
     afterEach() {
