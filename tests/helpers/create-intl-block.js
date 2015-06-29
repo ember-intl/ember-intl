@@ -15,10 +15,14 @@ function createIntlBlock (container) {
             });
         }
 
+        // suppress deprecation warnings
+        if (Ember && Ember.ENV) {
+            Ember.ENV._ENABLE_LEGACY_VIEW_SUPPORT = true;
+        }
+
         return Ember.View.create({
             template: Ember.HTMLBars.compile(template),
-            container: container,
-            context: {}
+            container: container
         });
     };
 }

@@ -122,7 +122,7 @@ test('should return a formatted string with formatted numbers and dates in a dif
 
 test('should return a formatted string with an `each` block', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{#each harvest in harvests}} {{format-message HARVEST_MSG person=harvest.person count=harvest.count }}{{/each}}', { locale: 'en-us' });
+    view = this.intlBlock('{{#each harvests as |harvest|}} {{format-message HARVEST_MSG person=harvest.person count=harvest.count }}{{/each}}', { locale: 'en-us' });
     view.set('context', {
         HARVEST_MSG : '{person} harvested {count, plural, one {# apple} other {# apples}}.',
         harvests    : [
