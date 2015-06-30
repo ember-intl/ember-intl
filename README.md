@@ -9,7 +9,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Ember-Intl 2.0
 
-### This README is targetting and explaining the 2.0 API which differs from previous versions and the latest stable release.  If you are looking for the 1.3.x documentation, please check [here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
+### This README is targeting and explaining the 2.0 API which differs from previous versions and the latest stable release.  If you are looking for the 1.3.x documentation, please check [here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
 
 ## Overview
 **Ember Intl is part of [FormatJS][], the docs can be found on the website:**
@@ -23,7 +23,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Installation
 * `ember install ember-intl@2.0.0-beta.5` (or `ember install:addon ember-intl@2.0.0-beta.5` for ember-cli < v0.2.3)
-* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
+* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into the asset distribution folder at build time.
 
 ```html
 <script src="assets/intl/intl.min.js"></script>
@@ -43,6 +43,7 @@ Full list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/
 Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
 
 ```yaml
+# en-us
 product:
   info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
   title: 'Hello world!'

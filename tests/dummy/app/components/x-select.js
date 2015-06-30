@@ -1,5 +1,5 @@
 // app/components/my-select.js
-import Ember from "ember";
+import Ember from 'ember';
 
 var get = Ember.get;
 
