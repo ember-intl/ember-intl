@@ -6,21 +6,26 @@
 import Ember from 'ember';
 
 var get = Ember.get;
+var a = Ember.A;
+var camelize = Ember.String.camelize;
 
 var FormatBase = Ember.Object.extend({
     filterFormatOptions(hash = {}) {
+        let formatOptions = this.constructor.formatOptions;
+        let camelizedKey = null;
         let match = false;
-        let options = this.constructor.formatOptions.reduce((opts, name) => {
-            if (hash.hasOwnProperty(name)) {
-                match = true;
-                opts[name] = hash[name];
-            }
+        let out = {};
 
-            return opts;
-        }, {});
+        for (var key in hash) {
+            camelizedKey = camelize(key);
+            if (formatOptions.contains(camelizedKey)) {
+                match = true;
+                out[camelizedKey] = hash[key];
+            }
+        }
 
         if (match) {
-            return options;
+            return out;
         }
     },
 
@@ -38,8 +43,8 @@ var FormatBase = Ember.Object.extend({
 });
 
 FormatBase.reopenClass({
-    formatOptions: Ember.A(['locale', 'format']),
-    concatenatedProperties: Ember.A(['formatOptions'])
+    formatOptions: a(['locale', 'format']),
+    concatenatedProperties: a(['formatOptions'])
 });
 
 export default FormatBase;
