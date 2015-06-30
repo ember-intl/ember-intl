@@ -58,7 +58,6 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
   // app/routes/application.js
   export default Ember.Route.extend({
     intl: Ember.inject.service(),
-
     beforeModel() {
       // define the app's runtime locale
       // For example, here you would maybe do an API lookup to resolver
@@ -106,6 +105,39 @@ export default Ember.Component.extend({
 });
 ```
 
+#### Format Number Options
+`localeMatcher`
+> The locale matching algorithm to use. Possible values are "lookup" and "best fit"; the default is "best fit". For information about this option, see the Intl page.
+
+`style`
+> The formatting style to use. Possible values are "decimal" for plain number formatting, "currency" for currency formatting, and "percent" for percent formatting; the default is "decimal".
+
+`currency`
+> The currency to use in currency formatting. Possible values are the ISO 4217 currency codes, such as "USD" for the US dollar, "EUR" for the euro, or "CNY" for the Chinese RMB — see the Current currency & funds code list. There is no default value; if the style is "currency", the currency property must be provided.
+
+`currencyDisplay`
+> How to display the currency in currency formatting. Possible values are "symbol" to use a localized currency symbol such as €, "code" to use the ISO currency code, "name" to use a localized currency name such as "dollar"; the default is "symbol".
+
+`useGrouping`
+> Whether to use grouping separators, such as thousands separators or thousand/lakh/crore separators. Possible values are true and false; the default is true.
+
+> The following properties fall into two groups: minimumIntegerDigits, minimumFractionDigits, and maximumFractionDigits in one group, minimumSignificantDigits and maximumSignificantDigits in the other. If at least one property from the second group is defined, then the first group is ignored.
+
+`minimumIntegerDigits`
+> The minimum number of integer digits to use. Possible values are from 1 to 21; the default is 1.
+
+`minimumFractionDigits`
+> The minimum number of fraction digits to use. Possible values are from 0 to 20; the default for plain number and percent formatting is 0; the default for currency formatting is the number of minor unit digits provided by the ISO 4217 currency code list (2 if the list doesn't provide that information).
+
+`maximumFractionDigits`
+> The maximum number of fraction digits to use. Possible values are from 0 to 20; the default for plain number formatting is the larger of minimumFractionDigits and 3; the default for currency formatting is the larger of minimumFractionDigits and the number of minor unit digits provided by the ISO 4217 currency code list (2 if the list doesn't provide that information); the default for percent formatting is the larger of minimumFractionDigits and 0.
+
+`minimumSignificantDigits`
+> The minimum number of significant digits to use. Possible values are from 1 to 21; the default is 1.
+
+`maximumSignificantDigits`
+> The maximum number of significant digits to use. Possible values are from 1 to 21; the default is minimumSignificantDigits.
+
 ### Format Date
 
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
@@ -126,6 +158,46 @@ export default Ember.Component.extend({
   })
 });
 ```
+
+#### Format Date Options
+`localeMatcher`
+> The locale matching algorithm to use. Possible values are "lookup" and "best fit"; the default is "best fit". For information about this option, see the Intl page.
+
+`timeZone`
+> The time zone to use. The only value implementations must recognize is "UTC"; the default is the runtime's default time zone. Implementations may also recognize the time zone names of the IANA time zone database, such as "Asia/Shanghai", "Asia/Kolkata", "America/New_York".
+
+`hour12`
+> Whether to use 12-hour time (as opposed to 24-hour time). Possible values are true and false; the default is locale dependent.
+
+`formatMatcher`
+> The format matching algorithm to use. Possible values are "basic" and "best fit"; the default is "best fit". See the following paragraphs for information about the use of this property.
+
+`weekday`
+> The representation of the weekday. Possible values are "narrow", "short", "long".
+
+`era`
+> The representation of the era. Possible values are "narrow", "short", "long".
+
+`year`
+> The representation of the year. Possible values are "numeric", "2-digit".
+
+`month`
+> The representation of the month. Possible values are "numeric", "2-digit", "narrow", "short", "long".
+
+`day`
+> The representation of the day. Possible values are "numeric", "2-digit".
+
+`hour`
+> The representation of the hour. Possible values are "numeric", "2-digit".
+
+`minute`
+> The representation of the minute. Possible values are "numeric", "2-digit".
+
+`second`
+> The representation of the second. Possible values are "numeric", "2-digit".
+
+`timeZoneName`
+> The representation of the time zone name. Possible values are "short", "long".
 
 ### Format Time
 
