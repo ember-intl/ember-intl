@@ -26,10 +26,10 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into your asset distribution folder, so you need to add the following to your index.html:
 
 ```html
-<script src="/assets/intl/intl.min.js"></script>
-<script src="/assets/intl/locales/en-us.js"></script>
-<script src="/assets/intl/locales/fr-fr.js"></script>
-<script src="/assets/intl/locales/es-es.js"></script>
+<script src="assets/intl/intl.min.js"></script>
+<script src="assets/intl/locales/en-us.js"></script>
+<script src="assets/intl/locales/fr-fr.js"></script>
+<script src="assets/intl/locales/es-es.js"></script>
 <!--
 You can view the full list of CLDR locales which can be accessed from the `/assets/intl` folder
 of your application.  The CLDRs are automatically placed there at build time.  Typically this folder
