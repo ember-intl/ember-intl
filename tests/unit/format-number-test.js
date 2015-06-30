@@ -87,7 +87,6 @@ test('should return a decimal as a string', function(assert) {
     assert.equal(view.$().text(), '4.004');
 });
 
-
 test('should return a formatted string with a thousand separator', function(assert) {
     assert.expect(1);
     view = this.intlBlock('{{format-number NUM}}', { locale: 'en-us' });
@@ -177,6 +176,13 @@ test('should function within an `each` block helper', function(assert) {
 test('should be able to combine hash options with format options', function(assert) {
     assert.expect(1);
     view = this.intlBlock('{{format-number 1 format="digits" minimumIntegerDigits=10}}', { locale: 'en-us' });
+    runAppend(view);
+    assert.equal(view.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
+});
+
+test('should be able to combine hash options with format options with dasherized options name', function(assert) {
+    assert.expect(1);
+    view = this.intlBlock('{{format-number 1 format="digits" minimum-integer-digits=10}}', { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
 });
