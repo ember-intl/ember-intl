@@ -9,8 +9,7 @@
 
 var serialize   = require('serialize-javascript');
 var mergeTrees  = require('broccoli-merge-trees');
-var renameFiles = require('broccoli-rename-files');
-var Funnel      = require('broccoli-funnel');
+var stew        = require('broccoli-stew');
 var walkSync    = require('walk-sync');
 var chalk       = require('chalk');
 var path        = require('path');
@@ -22,13 +21,12 @@ var TranslationBlender = require('./lib/translation-blender');
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
-
+var find               = stew.find;
+var rename             = stew.rename;
 
 function lowercaseTree(tree) {
-    return renameFiles(tree, {
-        transformFilename: function(filename) {
-            return filename.toLowerCase();
-        }
+    return rename(tree, function(filepath) {
+        return filepath.toLowerCase();
     });
 }
 
@@ -50,7 +48,7 @@ module.exports = {
             name: 'translations',
             ext:  'js',
             toTree: function (tree) {
-                var translations = new Funnel(config.inputPath, {
+                var translations = find(config.inputPath, {
                     allowEmpty: true
                 });
 
@@ -119,12 +117,12 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(new Funnel(this.treeGenerator(messageFormatPath), {
+        trees.push(find(this.treeGenerator(messageFormatPath), {
             srcDir:  '/dist',
             destDir: 'messageformat'
         }));
 
-        trees.push(new Funnel(this.treeGenerator(relativeFormatPath), {
+        trees.push(find(this.treeGenerator(relativeFormatPath), {
             srcDir:  '/dist',
             destDir: 'relativeformat'
         }));
@@ -140,14 +138,14 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(lowercaseTree(new Funnel(path.join(intlPath, '/dist'), {
+        trees.push(lowercaseTree(find(path.join(intlPath, '/dist'), {
             files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: '/assets/intl'
         })));
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
-        trees.push(lowercaseTree(new Funnel(path.join(intlPath, '/locale-data/jsonp'), {
+        trees.push(lowercaseTree(find(path.join(intlPath, '/locale-data/jsonp'), {
             destDir: '/assets/intl/locales'
         })));
 

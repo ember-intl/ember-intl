@@ -5,7 +5,7 @@
 
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 var mergeTrees = require('broccoli-merge-trees');
-var Funnel     = require('broccoli-funnel');
+var find       = require('broccoli-stew').find;
 
 var app = new EmberAddon({});
 
@@ -16,13 +16,13 @@ function treeGenerator (dir) {
     }
 };
 
-var bindTree = new Funnel('node_modules/phantomjs-polyfill', {
+var bindTree = find('node_modules/phantomjs-polyfill', {
     srcDir: '/',
     files: ['bind-polyfill.js'],
     destDir: '/assets'
 });
 
-var templateCompilerTree = new Funnel(treeGenerator(app.bowerDirectory + '/ember'), {
+var templateCompilerTree = find(treeGenerator(app.bowerDirectory + '/ember'), {
     files:   ['ember-template-compiler.js'],
     srcDir:  '/',
     destDir: '/assets/tests/'
