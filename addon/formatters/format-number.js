@@ -3,7 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
 import computed from 'ember-new-computed';
 import Formatter from './-base';
 import createFormatCache from '../format-cache/memoizer';
@@ -22,12 +21,12 @@ var FormatNumber = Formatter.extend({
 });
 
 FormatNumber.reopenClass({
-    formatOptions: Ember.A([
+    formatOptions: [
         'localeMatcher', 'style', 'currency', 'currencyDisplay',
         'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
         'maximumFractionDigits', 'minimumSignificantDigits',
         'maximumSignificantDigits'
-    ])
+    ]
 });
 
 export default FormatNumber;
