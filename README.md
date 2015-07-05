@@ -45,10 +45,10 @@ Translations are defined in `/translations`, *outside of `app`* in either JSON o
 ```yaml
 # en-us
 product:
-  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
+  info: '{product} will cost {price, number, USD} if ordered by {deadline, date, time}'
   title: 'Hello world!'
   html:
-    info: '<strong>{product}</strong> will cost <em>{price, number, EUR}</em> if ordered by {deadline, date, time}'
+    info: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
 ```
 
 ### Configure application-wide locale
