@@ -93,10 +93,16 @@ export default Ember.Service.extend(Ember.Evented, {
         this.trigger('localeChanged');
     },
 
-    createLocale(instance, locale, payload) {
+    createLocale(locale, payload) {
         let name = `ember-intl@translation:${locale}`;
-        let modelType = instance.container.lookupFactory('ember-intl@model:translation');
-        let container = instance.registry || instance.container;
+        let container = this.container;
+        let instance = container.lookup('application:main');
+
+        if (instance.registry) {
+          container = instance.registry;
+        }
+
+        let modelType = this.container.lookupFactory('ember-intl@model:translation');
 
         if (container.has(name)) {
             container.unregister(name);

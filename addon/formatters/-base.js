@@ -6,7 +6,6 @@
 import Ember from 'ember';
 
 var get = Ember.get;
-var a = Ember.A;
 var camelize = Ember.String.camelize;
 
 var FormatBase = Ember.Object.extend({
@@ -18,7 +17,7 @@ var FormatBase = Ember.Object.extend({
 
         for (var key in hash) {
             camelizedKey = camelize(key);
-            if (formatOptions.contains(camelizedKey)) {
+            if (Ember.A(formatOptions).contains(camelizedKey)) {
                 match = true;
                 out[camelizedKey] = hash[key];
             }
@@ -43,8 +42,8 @@ var FormatBase = Ember.Object.extend({
 });
 
 FormatBase.reopenClass({
-    formatOptions: a(['locale', 'format']),
-    concatenatedProperties: a(['formatOptions'])
+    formatOptions: ['locale', 'format'],
+    concatenatedProperties: ['formatOptions']
 });
 
 export default FormatBase;

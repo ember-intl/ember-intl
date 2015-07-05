@@ -45,7 +45,7 @@ var FormatMessage = Formatter.extend({
 });
 
 FormatMessage.reopenClass({
-    formatOptions: Ember.A()
+    formatOptions: []
 });
 
 export default FormatMessage;
