@@ -9,7 +9,7 @@ function normalize (fullName) {
 }
 
 export default Ember.Object.extend({
-    findLanguage(localeName) {
+    translationsFor(localeName) {
         if (localeName && localeName instanceof Translation) {
             return localeName;
         }
@@ -19,17 +19,18 @@ export default Ember.Object.extend({
         }
     },
 
-    findTranslation(locale, translationKey) {
+    findTranslationByKey(localeNames, translationKey) {
+        var locales = Ember.makeArray(localeNames);
         let i = 0;
-        let len = locale.length;
-        let _locale, translation, key;
+        let len = locales.length;
+        let translations, translation, key;
 
         for (; i < len; i++) {
-            key    = locale[i];
-            _locale = this.findLanguage(key);
+            key    = locales[i];
+            translations = this.translationsFor(key);
 
-            if (_locale) {
-                translation = _locale.getValue(translationKey);
+            if (translations) {
+                translation = translations.getValue(translationKey);
 
                 if (typeof translation !== 'undefined') {
                     return new IntlGetResult(translation, key);
