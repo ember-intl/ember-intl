@@ -40,7 +40,7 @@ export default function (value, options) {
     }
 
     function pokeStream () {
-        return Ember.RSVP.cast(intl.findTranslation(read(currentValue), hash.locale)).then(function (translation) {
+        return Ember.RSVP.cast(intl.findTranslationByKey(read(currentValue), hash.locale)).then(function (translation) {
             outStream.setValue(translation);
         });
     }

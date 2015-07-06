@@ -12,7 +12,7 @@ if (Ember.Helper) {
     Helper = Ember.Helper.extend({
        intl: Ember.inject.service(),
        compute(params, hash = {}) {
-           return get(this, 'intl').findTranslation(params[0], hash.locale);
+           return get(this, 'intl').findTranslationByKey(params[0], hash.locale);
        }
     });
 }

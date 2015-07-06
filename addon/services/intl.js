@@ -78,13 +78,13 @@ export default Ember.Service.extend(Ember.Evented, {
     }),
 
     addMessage(locale, key, value) {
-        return this.findLanguage(locale).then(function (localeInstance) {
+        return this.translationsFor(locale).then(function (localeInstance) {
             return localeInstance.addMessage(key, value);
         });
     },
 
     addMessages(locale, messageObject) {
-        return this.findLanguage(locale).then(function (localeInstance) {
+        return this.translationsFor(locale).then(function (localeInstance) {
             return localeInstance.addMessages(messageObject);
         });
     },
@@ -121,8 +121,8 @@ export default Ember.Service.extend(Ember.Evented, {
         return {};
     },
 
-    findLanguage(locale) {
-        let result = get(this, 'adapter').findLanguage(locale);
+    translationsFor(locale) {
+        let result = get(this, 'adapter').translationsFor(locale);
 
         return Ember.RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
@@ -133,10 +133,10 @@ export default Ember.Service.extend(Ember.Evented, {
         });
     },
 
-    findTranslation(key, locale) {
+    findTranslationByKey(key, locale) {
         locale = locale ? makeArray(locale) : makeArray(get(this, 'locale'));
 
-        let translation = get(this, 'adapter').findTranslation(locale, key);
+        let translation = get(this, 'adapter').findTranslationByKey(locale, key);
 
         if (typeof translation === 'undefined') {
             throw new Error(`translation: '${key}' on locale(s): '${locale.join(',')}' was not found.`);
