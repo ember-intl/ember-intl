@@ -353,7 +353,7 @@ import {
 moduleFor('view:index', 'IndexView', {
   needs: [
     'template:index',
-    'adapter:-intl-adapter',
+    'ember-intl@adapter:-intl-adapter',
     'service:intl',
     'helper:intl-get',
     'ember-intl@formatter:format-message',
