@@ -18,11 +18,10 @@ import createIntlBlock from '../helpers/create-intl-block';
 var view;
 
 moduleFor('ember-intl@formatter:format-message', {
-    needs: ['service:intl'],
+    needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
     beforeEach() {
         registerHelper('format-message', formatMessageHelper, this.container);
         this.container.register('helper:intl-get', intlGet);
-        this.container.register('adapter:-intl-adapter', IntlAdapter.extend());
         this.container.register('application:main', Ember.Application.extend());
         this.container.register('ember-intl@translation:en-us', Translation.extend({
             foo: {

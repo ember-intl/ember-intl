@@ -87,10 +87,10 @@ module.exports = {
                 var has = LocaleWriter.has(localeName);
                 if (!has) {
                     console.error(
-                      chalk.red(
-                        '[ember-intl] \'' + localeName + '\' does not match a supported locale name.\n' +
-                        'List of supported locales: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main'
-                      )
+                        chalk.red(
+                            '[ember-intl] \'' + localeName + '\' does not match a supported locale name.\n' +
+                            'List of supported locales: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main'
+                        )
                     );
                 }
                 return has;
