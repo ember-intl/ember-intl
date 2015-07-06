@@ -52,7 +52,7 @@ export default function (formatType, throwError) {
             );
         });
 
-        Ember.keys(hash).forEach((key) => {
+        Object.keys(hash).forEach((key) => {
             if (!hash[key].isStream) {
                 return;
             }
