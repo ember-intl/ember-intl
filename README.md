@@ -24,6 +24,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 ## Installation
 * `ember install ember-intl@2.0.0-beta.7` (or `ember install:addon ember-intl@2.0.0-beta.7` for ember-cli < v0.2.3)
 * If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into the asset distribution folder at build time.
+  * If your application does not support browsers which do not implement the Intl API, you can speed up your builds by [disabling the polyfill](#disable-polyfill).
 
 ```html
 <script src="assets/intl/intl.min.js"></script>
@@ -390,6 +391,7 @@ test('index renders', function () {
   Ember.run(view, 'destroy');
 });
 ```
+
 ## Known Gotchas
 
 > `date value is not finite in DateTimeFormat.format()`
@@ -407,6 +409,21 @@ The solution is the ensure that the value you are passing in is in a format whic
 
 * `ember test`
 * `ember test --server`
+
+## Disable Polyfill
+
+```js
+// config/environment.js
+module.exports = function() {
+    var ENV = {
+        // ....
+        intl: {
+            disablePolyfill: true
+        }
+    };
+    return ENV;
+};
+```
 
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
