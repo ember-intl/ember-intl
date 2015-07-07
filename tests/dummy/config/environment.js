@@ -19,6 +19,7 @@ module.exports = function(environment) {
         },
 
         intl: {
+            disablePolyfill: false,
             defaultLocale: 'en-us',
             outputPath: 'dummy/translations',
             inputPath: 'tests/dummy/translations'

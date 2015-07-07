@@ -64,9 +64,10 @@ module.exports = {
         var projectConfig = this.projectConfig();
 
         return Object.assign({
-            defaultLocale: 'en-us',
-            inputPath    : 'translations',
-            outputPath   : path.join(projectConfig.modulePrefix, 'translations'),
+            disablePolyfill: false,
+            defaultLocale  : 'en-us',
+            inputPath      : 'translations',
+            outputPath     : path.join(projectConfig.modulePrefix, 'translations'),
         }, projectConfig.intl);
     },
 
@@ -131,8 +132,13 @@ module.exports = {
     },
 
     treeForPublic: function (inputTree) {
-        var config = this.project.config(this.app.env);
-        var trees  = [];
+        var config = this.intlConfig();
+
+        if (config.disablePolyfill) {
+            return inputTree;
+        }
+
+        var trees = [];
 
         if (inputTree) {
             trees.push(inputTree);
