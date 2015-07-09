@@ -65,7 +65,7 @@ module.exports = {
             disablePolyfill: false,
             defaultLocale  : 'en-us',
             inputPath      : 'translations',
-            outputPath     : path.join(projectConfig.modulePrefix, 'translations'),
+            outputPath     : path.join(projectConfig.modulePrefix, 'translations')
         }, projectConfig.intl);
     },
 
@@ -75,7 +75,6 @@ module.exports = {
 
     treeForApp: function (inputTree) {
         var trees        = [inputTree];
-        var appPath      = this.treePaths.app;
         var config       = this.intlConfig();
         var translations = path.join(this.project.root, config.inputPath);
 
@@ -96,11 +95,11 @@ module.exports = {
             });
 
             var localeTree = new LocaleWriter(inputTree, 'cldrs', {
-                locales:        locales,
-                pluralRules:    true,
+                locales       : locales,
+                pluralRules   : true,
                 relativeFields: true,
-                prelude:        '/*jslint eqeq: true*/\n',
-                wrapEntry:      this._transformLocale
+                prelude       : '/*jslint eqeq: true*/\n',
+                wrapEntry     : this.wrapLocale
             });
 
             trees.push(localeTree);
@@ -141,7 +140,7 @@ module.exports = {
         }
 
         trees.push(lowercaseTree(find(path.join(intlPath, 'dist'), {
-            files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
+            files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: '/assets/intl'
         })));
 
@@ -154,7 +153,7 @@ module.exports = {
         return mergeTrees(trees, { overwrite: true });
     },
 
-    _transformLocale: function (result) {
+    wrapLocale: function (result) {
         return 'export default ' + serialize(result) + ';';
     }
 };
