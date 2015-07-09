@@ -35,10 +35,8 @@ module.exports = {
 
     included: function (app) {
         this._super.included.apply(this, arguments);
-        this.app = app;
-        var vendorPath = this.treePaths.vendor;
-        app.import(path.join(vendorPath, 'messageformat/intl-messageformat.js'));
-        app.import(path.join(vendorPath, 'relativeformat/intl-relativeformat.js'));
+        app.import(path.join(this.treePaths.vendor, 'intl-messageformat.js'));
+        app.import(path.join(this.treePaths.vendor, 'intl-relativeformat.js'));
     },
 
     setupPreprocessorRegistry: function (type, registry) {
@@ -118,14 +116,12 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(find(this.treeGenerator(messageFormatPath), {
-            srcDir:  '/dist',
-            destDir: 'messageformat'
+        trees.push(find(path.join(messageFormatPath, 'dist'), {
+            files: ['intl-messageformat.js', 'intl-messageformat.js.map']
         }));
 
-        trees.push(find(this.treeGenerator(relativeFormatPath), {
-            srcDir:  '/dist',
-            destDir: 'relativeformat'
+        trees.push(find(path.join(relativeFormatPath, 'dist'), {
+            files: ['intl-relativeformat.js', 'intl-relativeformat.js.map']
         }));
 
         return mergeTrees(trees);
@@ -144,14 +140,14 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(lowercaseTree(find(path.join(intlPath, '/dist'), {
+        trees.push(lowercaseTree(find(path.join(intlPath, 'dist'), {
             files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: '/assets/intl'
         })));
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
-        trees.push(lowercaseTree(find(path.join(intlPath, '/locale-data/jsonp'), {
+        trees.push(lowercaseTree(find(path.join(intlPath, 'locale-data', 'jsonp'), {
             destDir: '/assets/intl/locales'
         })));
 
