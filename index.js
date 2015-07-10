@@ -115,13 +115,13 @@ module.exports = {
 
         trees.push(lowercaseTree(find(path.join(intlPath, 'dist'), {
             files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-            destDir: '/assets/intl'
+            destDir: path.join('assets', 'intl')
         })));
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
         trees.push(lowercaseTree(find(path.join(intlPath, 'locale-data', 'jsonp'), {
-            destDir: '/assets/intl/locales'
+            destDir: path.join('assets', 'intl', 'locales')
         })));
 
         return mergeTrees(trees, { overwrite: true });
