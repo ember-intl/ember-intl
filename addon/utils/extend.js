@@ -1,3 +1,3 @@
-import Ember from 'ember';
+import { extend } from 'intl-messageformat/utils';
 
-export default Ember.$.extend;
+export default extend;
