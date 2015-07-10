@@ -8,13 +8,11 @@ import FormatterBase from './formatter-base';
 import createFormatCache from './format-cache/memoizer';
 import HelperBase from './helpers/-base';
 import { Stream, read } from './utils/streams';
-import { addLocaleData, IntlRelativeFormat, IntlMessageFormat } from './utils/data';
+import addLocaleData from './utils/add-locale-data';
 
 export {
     LocaleModel,
     addLocaleData,
-    IntlRelativeFormat,
-    IntlMessageFormat,
     Stream,
     read,
     createFormatCache,
