@@ -4,9 +4,9 @@
  */
 
 import Ember from 'ember';
+import computed from 'ember-new-computed';
 import Formatter from './-base';
 import createFormatCache from '../format-cache/memoizer';
-import computed from 'ember-new-computed';
 
 function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));

@@ -4,7 +4,7 @@
  */
 
 import ENV from '../config/environment';
-import { addLocaleData } from 'ember-intl/utils/data';
+import addLocaleData from 'ember-intl/utils/add-locale-data';
 import { filterBy } from 'ember-intl/utils/initialize';
 
 export function instanceInitializer(instance) {

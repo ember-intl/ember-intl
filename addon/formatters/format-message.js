@@ -5,10 +5,10 @@
 
 import Ember from 'ember';
 import computed from 'ember-new-computed';
+import IntlMessageFormat from 'intl-messageformat';
 import Formatter from './-base';
 import IntlGetResult from '../models/intl-get-result';
 import createFormatCache from '../format-cache/memoizer';
-import { IntlMessageFormat } from '../utils/data';
 
 var get = Ember.get;
 
