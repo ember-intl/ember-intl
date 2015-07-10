@@ -2,10 +2,10 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-
+ 
+import createFormatCache from 'intl-format-cache';
 import computed from 'ember-new-computed';
 import Formatter from './-base';
-import createFormatCache from '../format-cache/memoizer';
 
 var FormatNumber = Formatter.extend({
     formatType: 'number',
