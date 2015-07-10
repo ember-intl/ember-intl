@@ -7,19 +7,17 @@
 
 'use strict';
 
-var serialize   = require('serialize-javascript');
-var mergeTrees  = require('broccoli-merge-trees');
-var stew        = require('broccoli-stew');
-var walkSync    = require('walk-sync');
-var chalk       = require('chalk');
-var path        = require('path');
-var fs          = require('fs');
+var serialize          = require('serialize-javascript');
+var mergeTrees         = require('broccoli-merge-trees');
+var stew               = require('broccoli-stew');
+var walkSync           = require('walk-sync');
+var chalk              = require('chalk');
+var path               = require('path');
+var fs                 = require('fs');
 
 var LocaleWriter       = require('./lib/locale-writer');
 var TranslationBlender = require('./lib/translation-blender');
 
-var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
-var messageFormatPath  = path.dirname(require.resolve('intl-messageformat'));
 var intlPath           = path.dirname(require.resolve('intl'));
 var find               = stew.find;
 var rename             = stew.rename;
@@ -32,12 +30,6 @@ function lowercaseTree(tree) {
 
 module.exports = {
     name: 'ember-intl',
-
-    included: function (app) {
-        this._super.included.apply(this, arguments);
-        app.import(path.join(this.treePaths.vendor, 'intl-messageformat.js'));
-        app.import(path.join(this.treePaths.vendor, 'intl-relativeformat.js'));
-    },
 
     setupPreprocessorRegistry: function (type, registry) {
         var config = this.intlConfig();
@@ -106,24 +98,6 @@ module.exports = {
         }
 
         return mergeTrees(trees, { overwrite: true });
-    },
-
-    treeForVendor: function (inputTree) {
-        var trees = [];
-
-        if (inputTree) {
-            trees.push(inputTree);
-        }
-
-        trees.push(find(path.join(messageFormatPath, 'dist'), {
-            files: ['intl-messageformat.js', 'intl-messageformat.js.map']
-        }));
-
-        trees.push(find(path.join(relativeFormatPath, 'dist'), {
-            files: ['intl-relativeformat.js', 'intl-relativeformat.js.map']
-        }));
-
-        return mergeTrees(trees);
     },
 
     treeForPublic: function (inputTree) {

@@ -7,6 +7,8 @@ import Ember from 'ember';
 import legacyBase from '../legacy/helpers/-base';
 import extend from '../utils/extend';
 
+var observer = Ember.observer;
+
 export default function (formatType) {
     function throwError () {
         return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
@@ -21,7 +23,7 @@ export default function (formatType) {
                 this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
             },
 
-            onIntlLocaleChanged: Ember.observer('intl.locale', function() {
+            onIntlLocaleChanged: observer('intl.locale', function() {
                 this.recompute();
             }),
 

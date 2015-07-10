@@ -5,9 +5,12 @@
 
 import Ember from 'ember';
 
-var LocaleModel = Ember.Object.extend({
+var set = Ember.set;
+var get = Ember.get;
+
+var TranslationModel = Ember.Object.extend({
     addMessage(key, value) {
-        Ember.set(this, key, value);
+        set(this, key, value);
         return value;
     },
 
@@ -28,8 +31,8 @@ var LocaleModel = Ember.Object.extend({
     // so that if you want to implement your own custom logic
     // for example, this[key] versus Ember.get
     getValue(key) {
-        return Ember.get(this, key);
+        return get(this, key);
     }
 });
 
-export default LocaleModel;
+export default TranslationModel;
