@@ -35,10 +35,8 @@ module.exports = {
 
     included: function (app) {
         this._super.included.apply(this, arguments);
-        this.app = app;
-        var vendorPath = this.treePaths.vendor;
-        app.import(path.join(vendorPath, 'messageformat/intl-messageformat.js'));
-        app.import(path.join(vendorPath, 'relativeformat/intl-relativeformat.js'));
+        app.import(path.join(this.treePaths.vendor, 'intl-messageformat.js'));
+        app.import(path.join(this.treePaths.vendor, 'intl-relativeformat.js'));
     },
 
     setupPreprocessorRegistry: function (type, registry) {
@@ -67,7 +65,7 @@ module.exports = {
             disablePolyfill: false,
             defaultLocale  : 'en-us',
             inputPath      : 'translations',
-            outputPath     : path.join(projectConfig.modulePrefix, 'translations'),
+            outputPath     : path.join(projectConfig.modulePrefix, 'translations')
         }, projectConfig.intl);
     },
 
@@ -77,7 +75,6 @@ module.exports = {
 
     treeForApp: function (inputTree) {
         var trees        = [inputTree];
-        var appPath      = this.treePaths.app;
         var config       = this.intlConfig();
         var translations = path.join(this.project.root, config.inputPath);
 
@@ -98,11 +95,11 @@ module.exports = {
             });
 
             var localeTree = new LocaleWriter(inputTree, 'cldrs', {
-                locales:        locales,
-                pluralRules:    true,
+                locales       : locales,
+                pluralRules   : true,
                 relativeFields: true,
-                prelude:        '/*jslint eqeq: true*/\n',
-                wrapEntry:      this._transformLocale
+                prelude       : '/*jslint eqeq: true*/\n',
+                wrapEntry     : this.wrapLocale
             });
 
             trees.push(localeTree);
@@ -118,14 +115,12 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(find(this.treeGenerator(messageFormatPath), {
-            srcDir:  '/dist',
-            destDir: 'messageformat'
+        trees.push(find(path.join(messageFormatPath, 'dist'), {
+            files: ['intl-messageformat.js', 'intl-messageformat.js.map']
         }));
 
-        trees.push(find(this.treeGenerator(relativeFormatPath), {
-            srcDir:  '/dist',
-            destDir: 'relativeformat'
+        trees.push(find(path.join(relativeFormatPath, 'dist'), {
+            files: ['intl-relativeformat.js', 'intl-relativeformat.js.map']
         }));
 
         return mergeTrees(trees);
@@ -144,21 +139,21 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(lowercaseTree(find(path.join(intlPath, '/dist'), {
-            files:   ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
+        trees.push(lowercaseTree(find(path.join(intlPath, 'dist'), {
+            files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: '/assets/intl'
         })));
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
-        trees.push(lowercaseTree(find(path.join(intlPath, '/locale-data/jsonp'), {
+        trees.push(lowercaseTree(find(path.join(intlPath, 'locale-data', 'jsonp'), {
             destDir: '/assets/intl/locales'
         })));
 
         return mergeTrees(trees, { overwrite: true });
     },
 
-    _transformLocale: function (result) {
+    wrapLocale: function (result) {
         return 'export default ' + serialize(result) + ';';
     }
 };

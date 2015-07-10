@@ -4,7 +4,6 @@ import IntlGetResult from '../models/intl-get-result';
 
 function normalize (fullName) {
     Ember.assert('Lookup name must be a string', typeof fullName === 'string');
-
     return fullName.toLowerCase();
 }
 
@@ -26,7 +25,7 @@ export default Ember.Object.extend({
         let translations, translation, key;
 
         for (; i < len; i++) {
-            key    = locales[i];
+            key = locales[i];
             translations = this.translationsFor(key);
 
             if (translations) {
