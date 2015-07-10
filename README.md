@@ -162,8 +162,16 @@ export default Ember.Component.extend({
 
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
 
+```
+export default Ember.Component.extend({
+  timestamp: Ember.computed(function() {
+    var date = new Date();
+    date.setDate(date.getDate() - 3);
+    return date;
+  })
+})
 ```hbs
-{{format-relative yesterday}}
+{{format-relative timestamp}} -> 3 days ago
 ```
 
 Or programmatically convert a relative time within any Ember Object.
@@ -173,8 +181,8 @@ Or programmatically convert a relative time within any Ember Object.
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   yesterday: Ember.computed(function() {
-    var now = new Date();
-    return this.get('intl').formatRelative(now.setDate(now.getDate() - 1)/*, optional options hash */);
+    var date = new Date();
+    return this.get('intl').formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
   })
 });
 ```
