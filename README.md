@@ -53,7 +53,6 @@ product:
 ```
 
 ### Configure application-wide locale
-
 Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `intl.locale`.  Example:
 
 ```js
@@ -86,7 +85,6 @@ ENV: {
 ## Examples
 
 ### Format Number
-
 Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted string value.
 
 ```hbs
@@ -111,7 +109,6 @@ export default Ember.Component.extend({
 [List of supported format number options](https://github.com/yahoo/ember-intl/wiki/Format-Number-Options)
 
 ### Format Date
-
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
 
 ```hbs
@@ -135,7 +132,6 @@ export default Ember.Component.extend({
 [List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-DateTime-Options)
 
 ### Format Time
-
 This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
 
 ```hbs
@@ -159,7 +155,6 @@ export default Ember.Component.extend({
 [List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-DateTime-Options)
 
 ### Format Relative
-
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
 
 ```js
@@ -189,11 +184,9 @@ export default Ember.Component.extend({
 });
 ```
 #### Format Relative Options
-
 [List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-Relative-Options)
 
 ### Format Message
-
 Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.
 
 ```
@@ -227,7 +220,6 @@ export default Ember.Component.extend({
 ```
 
 ### Format HTML Message
-
 This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
@@ -241,7 +233,6 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 ```
 
 ### Intl-Get
-
 Utility helper for returning the value, or eventual value, based on a translation key.  *Should only ever be used as a subexpression, never as a standalone helper.*
 
 ```hbs
@@ -258,13 +249,40 @@ product:
   info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
+## Disable Polyfill
+```js
+// config/environment.js
+module.exports = function() {
+  return {
+    intl: {
+      disablePolyfill: true
+    }
+  };
+};
+```
+
+## Change output path for Polyfill and CLDR Data
+```js
+// Brocfile.js
+var app = new EmberApp({
+  outputPaths: {
+    intl: '/assets/intl' // default
+  }
+});
+```
+## Known Gotchas
+> `date value is not finite in DateTimeFormat.format()`
+
+Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
+
+The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
+
 ### Helper Options
 * All helpers accept optional arguments:
 	* `locale` argument to explicitly pass/override the application locale
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
 ## Writing Unit Tests
-
 If using the intl helpers within a components or views that is unit tested, `needs` the service, helper, and formatter into the unit test.
 
 In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke `registerIntl(container);` -- which is a utility function to setup the injection logic on the unit test container.
@@ -275,9 +293,7 @@ In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke
 
 This is to shim your test runner if running within phantomjs, or any browser which does not natively support the Intl API.
 
-=======
 ### Example unit test
-
 ```javascript
 /**
  * unit test for testing index view which contains the helpers: `format-message` and `intl-get`
@@ -334,46 +350,13 @@ test('index renders', function () {
 });
 ```
 
-## Known Gotchas
-
-> `date value is not finite in DateTimeFormat.format()`
-
-Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
-
-The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
-
 ## Running
-
 * `ember server`
 * Visit your app at http://localhost:4200.
 
 ## Running Tests
-
 * `ember test`
 * `ember test --server`
-
-## Disable Polyfill
-
-```js
-// config/environment.js
-module.exports = function() {
-  return {
-    intl: {
-      disablePolyfill: true
-    }
-  };
-};
-```
-
-## Change output path for Polyfill and CLDR Data
-```js
-// Brocfile.js
-var app = new EmberApp({
-  outputPaths: {
-    intl: '/assets/intl' // default
-  }
-});
-```
 
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
