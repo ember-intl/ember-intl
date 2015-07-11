@@ -74,12 +74,11 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
 
 ```js
 // config/environment.js
-ENV: {
-  ...
+return {
   intl: {
-    defaultLocale: 'en-us' /* default value */
+    defaultLocale: 'en-us' // default value
   }
-}
+};
 ```
 
 ## Examples
