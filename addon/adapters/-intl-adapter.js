@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Translation from '../models/translation';
-import IntlGetResult from '../models/intl-get-result';
+import TranslationLookup from '../models/translation-lookup';
 
 function normalize (fullName) {
     Ember.assert('Lookup name must be a string', typeof fullName === 'string');
@@ -32,7 +32,7 @@ export default Ember.Object.extend({
                 translation = translations.getValue(translationKey);
 
                 if (typeof translation !== 'undefined') {
-                    return new IntlGetResult(translation, key);
+                    return new TranslationLookup(translation, key);
                 }
             }
         }
