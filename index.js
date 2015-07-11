@@ -102,6 +102,12 @@ module.exports = {
 
     treeForPublic: function (inputTree) {
         var config = this.intlConfig();
+        var options = this.app.options;
+        var outputPath = path.join('assets', 'intl');
+
+        if (options.app && options.app.intl) {
+            outputPath = options.app.intl;
+        }
 
         if (config.disablePolyfill) {
             return inputTree;
@@ -115,13 +121,13 @@ module.exports = {
 
         trees.push(lowercaseTree(find(path.join(intlPath, 'dist'), {
             files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-            destDir: path.join('assets', 'intl')
+            destDir: path.join(outputPath)
         })));
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
         trees.push(lowercaseTree(find(path.join(intlPath, 'locale-data', 'jsonp'), {
-            destDir: path.join('assets', 'intl', 'locales')
+            destDir: path.join(outputPath, 'locales')
         })));
 
         return mergeTrees(trees, { overwrite: true });

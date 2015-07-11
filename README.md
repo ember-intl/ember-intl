@@ -357,14 +357,22 @@ The solution is the ensure that the value you are passing in is in a format whic
 ```js
 // config/environment.js
 module.exports = function() {
-    var ENV = {
-        // ....
-        intl: {
-            disablePolyfill: true
-        }
-    };
-    return ENV;
+  return {
+    intl: {
+      disablePolyfill: true
+    }
+  };
 };
+```
+
+## Change output path for Polyfill and CLDR Data
+```js
+// Brocfile.js
+var app = new EmberApp({
+  outputPaths: {
+    intl: '/assets/intl' // default
+  }
+});
 ```
 
 [npm]: https://www.npmjs.org/package/ember-intl
