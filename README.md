@@ -11,7 +11,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Ember-Intl 2.0
 
-### This README is targeting and explaining the 2.0 API which differs from previous versions and the latest stable release.  If you are looking for the 1.3.x documentation, please check [here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
+#### This README is targets the 2.0 API which differs from previous and the current stable versions.  If you are looking for the <= 1.3.0 documentation, [please go here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
 
 ## Overview
 **Ember Intl is part of [FormatJS][], the docs can be found on the website:**
@@ -19,14 +19,12 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 **<http://formatjs.io/ember/>**
 
 ## Requirements
-* Ember-cli >= 0.2.0
-* Ember >= 1.10.x <= 1.13.x
-* HTMLBars (Glimmer supported)
+* ember-cli >= 0.2.0
+* ember >= 1.10.x <= 1.13.x
 
 ## Installation
-* `ember install ember-intl@2.0.0-beta.12` (or `ember install:addon ember-intl@2.0.0-beta.12` for ember-cli < v0.2.3)
-* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into the asset distribution folder at build time.
-  * If your application does not support browsers which do not implement the Intl API, you can speed up your builds by [disabling the polyfill](#disable-polyfill).
+* `ember install ember-intl@2.0.0-beta.12`
+* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically added into the `/assets` folder at build time.
 
 ```html
 <script src="assets/intl/intl.min.js"></script>
