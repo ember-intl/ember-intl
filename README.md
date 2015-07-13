@@ -7,6 +7,8 @@
 
 This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
+[demo application running ember-intl](http://jasonmit.github.io/ember-intl-example/)
+
 ## Ember-Intl 2.0
 
 ### This README is targeting and explaining the 2.0 API which differs from previous versions and the latest stable release.  If you are looking for the 1.3.x documentation, please check [here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
