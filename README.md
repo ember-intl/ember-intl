@@ -248,7 +248,9 @@ product:
   info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
-## Disable Polyfill
+## Polyfill
+
+### Disabling
 ```js
 // config/environment.js
 module.exports = function() {
@@ -260,7 +262,24 @@ module.exports = function() {
 };
 ```
 
-## Change output path for Polyfill and CLDR Data
+### Cherry pick CLDR modules
+
+At build time, we copy roughly 700 files, totaling 18mb, to the asset folder.  Don't worry, this does not add weight to your app or vendor files.  The only penalty you incur is at build time with the ember-cli build pipeline.  Since most applications have a list of locales they target, you can specify the locales in `config/environment.js` to optimize only copying the files needed.
+
+```js
+module.exports = function() {
+  return {
+    intl: {
+      locales: ['en-us', 'fr-fr']
+    }
+  };
+};
+```
+
+In this case, `en-us.js` and `fr-fr.js` will be copied to `/assets/intl/locales` on build.
+
+### Change output path
+
 ```js
 // Brocfile.js
 var app = new EmberApp({
