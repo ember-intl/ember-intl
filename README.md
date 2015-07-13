@@ -292,62 +292,9 @@ In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke
 
 This is to shim your test runner if running within phantomjs, or any browser which does not natively support the Intl API.
 
-### Example unit test
-```javascript
-/**
- * unit test for testing index view which contains the helpers: `format-message` and `intl-get`
- *
- * unit/views/index-test.js
- */
-import Ember from 'ember';
-
-import { registerIntl } from '../../../initializers/ember-intl';
-
-import {
-  moduleFor,
-  test
-} from 'ember-qunit';
-
-moduleFor('view:index', 'IndexView', {
-  needs: [
-    'template:index',
-    'ember-intl@adapter:-intl-adapter',
-    'service:intl',
-    'helper:intl-get',
-    'ember-intl@formatter:format-message',
-    'translation:en-us',
-    'translation:es-es'
-  ],
-  setup: function () {
-    // depending on your test library, container will be hanging off `this`
-    // or otherwise passed in as the first argument
-    var container = this.container || arguments[0];
-    // injects the service on to all logical factory types
-    registerIntl(container);
-
-    // set the initial intl service locale to `en-us`
-    var intl = container.lookup('service:intl');
-    intl.set('locale', 'en-us');
-  }
-});
-
-test('index renders', function () {
-  expect(2);
-
-  var view = this.subject({
-    context: Ember.Object.create({
-      firstName: 'Tom'
-    })
-  });
-
-  var intl = view.get('intl');
-  Ember.run(view, 'appendTo', '#qunit-fixture');
-  equal(view.$().text().trim(), "hello Tom");
-  Ember.run(function () { intl.set('locale', 'es-es'); });
-  equal(view.$().text().trim(), "hola Tom");
-  Ember.run(view, 'destroy');
-});
-```
+### Testing with ember-intl
+* [Unit testing](https://github.com/yahoo/ember-intl/wiki/Unit-testing-with-ember-intl)
+* [Integration testing](https://github.com/yahoo/ember-intl/wiki/Integration-testing-with-ember-intl)
 
 ## Running
 * `ember server`
