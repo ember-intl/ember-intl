@@ -14,18 +14,26 @@ var walkSync           = require('walk-sync');
 var chalk              = require('chalk');
 var path               = require('path');
 var fs                 = require('fs');
+var Funnel             = require('broccoli-funnel');
 
 var LocaleWriter       = require('./lib/locale-writer');
 var TranslationBlender = require('./lib/translation-blender');
 
 var intlPath           = path.dirname(require.resolve('intl'));
-var find               = stew.find;
 var rename             = stew.rename;
 
 function lowercaseTree(tree) {
     return rename(tree, function(filepath) {
         return filepath.toLowerCase();
     });
+}
+
+function makeArray(arr) {
+    if (!Array.isArray(arr)) {
+        return [arr];
+    }
+
+    return arr;
 }
 
 module.exports = {
@@ -38,7 +46,7 @@ module.exports = {
             name: 'translations',
             ext:  'js',
             toTree: function (tree) {
-                var translations = find(config.inputPath, {
+                var translations = new Funnel(config.inputPath, {
                     allowEmpty: true
                 });
 
@@ -54,6 +62,7 @@ module.exports = {
         var projectConfig = this.projectConfig();
 
         return Object.assign({
+            locales        : undefined,
             disablePolyfill: false,
             defaultLocale  : 'en-us',
             inputPath      : 'translations',
@@ -104,6 +113,7 @@ module.exports = {
         var config = this.intlConfig();
         var options = this.app.options;
         var outputPath = path.join('assets', 'intl');
+        var include;
 
         if (options.app && options.app.intl) {
             outputPath = options.app.intl;
@@ -119,15 +129,22 @@ module.exports = {
             trees.push(inputTree);
         }
 
-        trees.push(lowercaseTree(find(path.join(intlPath, 'dist'), {
+        trees.push(lowercaseTree(new Funnel(path.join(intlPath, 'dist'), {
             files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: path.join(outputPath)
         })));
 
+        if (config.locales) {
+            include = makeArray(config.locales).map(function(locale) {
+                return new RegExp(locale, 'i');
+            });
+        }
+
         // only use these when using Intl.js, should not be used
         // with the native Intl API
-        trees.push(lowercaseTree(find(path.join(intlPath, 'locale-data', 'jsonp'), {
-            destDir: path.join(outputPath, 'locales')
+        trees.push(lowercaseTree(new Funnel(path.join(intlPath, 'locale-data', 'jsonp'), {
+            destDir: path.join(outputPath, 'locales'),
+            include: include
         })));
 
         return mergeTrees(trees, { overwrite: true });

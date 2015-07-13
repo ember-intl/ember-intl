@@ -33,6 +33,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "broccoli-caching-writer": "^0.5.5",
+    "broccoli-funnel": "^0.2.3",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-stew": "^0.3.3",
     "chalk": "^1.0.0",
@@ -66,7 +67,8 @@
     "ember-addon"
   ],
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "http://jasonmit.github.io/ember-intl-example/"
   },
   "homepage": "https://github.com/yahoo/ember-intl"
 }
