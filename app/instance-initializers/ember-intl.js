@@ -5,7 +5,12 @@
 
 import ENV from '../config/environment';
 import addLocaleData from 'ember-intl/utils/add-locale-data';
-import { filterBy } from 'ember-intl/utils/initialize';
+
+function filterBy (env, type) {
+    return Object.keys(requirejs._eak_seen).filter((key) => {
+        return key.indexOf(env.modulePrefix + '\/' + type + '\/') === 0;
+    });
+}
 
 export function instanceInitializer(instance) {
     let service = instance.container.lookup('service:intl');
@@ -22,6 +27,6 @@ export function instanceInitializer(instance) {
 }
 
 export default {
-  name: 'ember-intl',
-  initialize: instanceInitializer
+    name: 'ember-intl',
+    initialize: instanceInitializer
 }

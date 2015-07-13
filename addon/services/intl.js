@@ -6,6 +6,7 @@
 import Ember from 'ember';
 import computed from 'ember-new-computed';
 import extend from '../utils/extend';
+import Translation from '../models/translation';
 
 var makeArray = Ember.makeArray;
 var observer = Ember.observer;
@@ -82,19 +83,17 @@ export default Ember.Service.extend(Ember.Evented, {
     createLocale(locale, payload) {
         let name = `ember-intl@translation:${locale}`;
         let container = this.container;
-        let instance = container.lookup('application:main');
+        let instance = container.lookup('application:main') || {};
 
         if (instance.registry) {
-          container = instance.registry;
+            container = instance.registry;
         }
-
-        let modelType = this.container.lookupFactory('ember-intl@model:translation');
 
         if (container.has(name)) {
             container.unregister(name);
         }
 
-        container.register(name, modelType.extend(payload));
+        container.register(name, Translation.extend(payload));
     },
 
     getFormat(formatType, format) {
