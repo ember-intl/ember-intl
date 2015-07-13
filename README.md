@@ -282,10 +282,6 @@ The solution is the ensure that the value you are passing in is in a format whic
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
 ## Writing Unit Tests
-If using the intl helpers within a components or views that is unit tested, `needs` the service, helper, and formatter into the unit test.
-
-In the setup hook of `moduleFor`/`moduleForComponent` you'll want to also invoke `registerIntl(container);` -- which is a utility function to setup the injection logic on the unit test container.
-
 **NOTE**: Add the following above all script tags in `tests/index.html`
 
 `<script src="assets/intl/intl.complete.js"></script>`
