@@ -13,7 +13,7 @@ import FormatMessage from 'ember-intl/helpers/format-message';
 import registerHelper from 'ember-intl/utils/register-helper';
 import { instanceInitializer } from '../instance-initializers/ember-intl';
 
-export function initializer(registry, app) {
+export function initializer(registry, app = {}) {
     registry.optionsForType('formats', {
         singleton:   true,
         instantiate: false
