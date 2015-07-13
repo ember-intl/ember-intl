@@ -282,11 +282,13 @@ The solution is the ensure that the value you are passing in is in a format whic
 	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
 ## Writing Unit Tests
-**NOTE**: Add the following above all script tags in `tests/index.html`
 
-`<script src="assets/intl/intl.complete.js"></script>`
+Phantom does support the Intl API, so in order for for you ember-intl to work in a browser which does not support the Intl API, it needs to be polyfilled.
 
-This is to shim your test runner if running within phantomjs, or any browser which does not natively support the Intl API.
+To resolve this, add the following above all script tags in `tests/index.html`:
+```html
+<script src="assets/intl/intl.complete.js"></script>
+```
 
 ### Testing with ember-intl
 * [Unit testing](https://github.com/yahoo/ember-intl/wiki/Unit-testing-with-ember-intl)
