@@ -8,7 +8,6 @@ import computed from 'ember-new-computed';
 import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
 import Formatter from './-base';
-import TranslationLookup from '../models/translation-lookup';
 
 var get = Ember.get;
 
@@ -24,13 +23,6 @@ var FormatMessage = Formatter.extend({
     format(value, options = {}) {
         let locale = options.locale;
         let formatter = get(this, 'formatter');
-
-        if (value && value instanceof TranslationLookup) {
-            if (typeof locale === 'undefined') {
-                locale = value.locale;
-            }
-            value = value.translation;
-        }
 
         const valueType = typeof value;
 
