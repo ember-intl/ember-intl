@@ -16,3 +16,11 @@ public/
 tmp/
 dist/
 testem.json
+.bowerrc
+.editorconfig
+.ember-cli
+.travis.yml
+.npmignore
+**/.gitkeep
+bower.json
+Brocfile.js
