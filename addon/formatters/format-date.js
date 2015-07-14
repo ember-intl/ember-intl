@@ -22,7 +22,7 @@ var FormatDate = Formatter.extend({
     format(value, options = {}) {
         value = new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-date');
-        return this._format(value, this.filterFormatOptions(options));
+        return this._format(value, this.filterWhitelistedOptions(options));
     }
 });
 

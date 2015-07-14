@@ -15,7 +15,7 @@ var FormatNumber = Formatter.extend({
     }).readOnly(),
 
     format(value, options) {
-        return this._format(value, this.filterFormatOptions(options));
+        return this._format(value, this.filterWhitelistedOptions(options));
     }
 });
 

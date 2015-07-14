@@ -9,17 +9,24 @@ var get = Ember.get;
 var camelize = Ember.String.camelize;
 
 var FormatBase = Ember.Object.extend({
-    filterFormatOptions(hash = {}) {
+    /**
+    * Filters out all of the whitelisted formatter options from an Object.
+    *
+    * @method filterWhitelistedOptions
+    * @param {Object} Options object
+    * @return {Object} Options object containing just whitelisted options
+    */
+    filterWhitelistedOptions(input = {}) {
         let formatOptions = this.constructor.formatOptions;
         let camelizedKey = null;
         let match = false;
         let out = {};
 
-        for (let key in hash) {
+        for (let key in input) {
             camelizedKey = camelize(key);
             if (Ember.A(formatOptions).contains(camelizedKey)) {
                 match = true;
-                out[camelizedKey] = hash[key];
+                out[camelizedKey] = input[key];
             }
         }
 
@@ -28,6 +35,15 @@ var FormatBase = Ember.Object.extend({
         }
     },
 
+    /**
+    * Invokes the Intl formatter methods
+    *
+    * @method _format
+    * @param {value} Raw input value that needs formatting
+    * @return {Object} Formatter options hash
+    * @return {Object} Format options hash
+    * @private
+    */
     _format(value, options = {}, formatOptions = {}) {
         let formatter = get(this, 'formatter');
         let { locale } = options;

@@ -23,7 +23,7 @@ var FormatRelative = Formatter.extend({
     format(value, options = {}) {
         value = new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-relative');
-        return this._format(value, this.filterFormatOptions(options), {
+        return this._format(value, this.filterWhitelistedOptions(options), {
             now: options.now
         });
     }
