@@ -4,6 +4,7 @@
  */
 
 import Ember from 'ember';
+import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
 import registerHelper from 'ember-intl/utils/register-helper';
@@ -30,7 +31,7 @@ moduleFor('ember-intl@formatter:format-number', {
             }
         }, { instantiate: false });
 
-        this.intlBlock = createIntlBlock(this.container);
+        this.render = createIntlBlock(this.container);
     },
     afterEach() {
         runDestroy(view);
@@ -45,21 +46,21 @@ test('exists', function(assert) {
 
 test('invoke the formatNumber method', function(assert) {
     assert.expect(1);
-    var service = this.container.lookup('service:intl');
+    let service = this.container.lookup('service:intl');
     Ember.run(function() { service.set('locale', 'en-us'); });
     assert.equal(service.formatNumber(100), 100);
 });
 
 test('number is formatted correctly with default locale', function(assert) {
     assert.expect(1);
-    var view = this.intlBlock('{{format-number 1000}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 1000}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), "1,000");
 });
 
 test('number is formatted correctly with locale argument', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number 1000}}', { locale: 'fr-fr' });
+    view = this.render(hbs`{{format-number 1000}}`, { locale: 'fr-fr' });
     runAppend(view);
     // non-breaking space so we can't just compare "1 000" to "1 000"
     // since it's not a %20 space character
@@ -68,20 +69,20 @@ test('number is formatted correctly with locale argument', function(assert) {
 
 test('should throw if called with out a value', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number}}');
+    view = this.render(hbs`{{format-number}}`);
     assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-number');
 });
 
 test('should return a string', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number 4}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 4}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '4');
 });
 
 test('should return a decimal as a string', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number NUM}}`, { locale: 'en-us' });
     view.set('context', { NUM: 4.004 });
     runAppend(view);
     assert.equal(view.$().text(), '4.004');
@@ -89,7 +90,7 @@ test('should return a decimal as a string', function(assert) {
 
 test('should return a formatted string with a thousand separator', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number NUM}}`, { locale: 'en-us' });
     view.set('context', { NUM: 40000 });
     runAppend(view);
     assert.equal(view.$().text(), '40,000');
@@ -98,7 +99,7 @@ test('should return a formatted string with a thousand separator', function(asse
 
 test('should return a formatted string with a thousand separator and decimal', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number NUM}}`, { locale: 'en-us' });
     view.set('context', { NUM: 40000.004 });
     runAppend(view);
     assert.equal(view.$().text(), '40,000.004');
@@ -106,7 +107,7 @@ test('should return a formatted string with a thousand separator and decimal', f
 
 test('locale can be passed as an argument', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM locale="de-de"}}');
+    view = this.render(hbs`{{format-number NUM locale="de-de"}}`);
     view.set('context', { NUM: 4.004 });
     runAppend(view);
     assert.equal(view.$().text(), '4,004');
@@ -114,14 +115,14 @@ test('locale can be passed as an argument', function(assert) {
 
 test('in another locale - should return a string', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number 4}}', { locale: 'de-de' });
+    view = this.render(hbs`{{format-number 4}}`, { locale: 'de-de' });
     runAppend(view);
     assert.equal(view.$().text(), '4');
 });
 
 test('in another locale - should return a decimal as a string', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM}}', { locale: 'de-de' });
+    view = this.render(hbs`{{format-number NUM}}`, { locale: 'de-de' });
     view.set('context', { NUM: 4.004 });
     runAppend(view);
     assert.equal(view.$().text(), '4,004');
@@ -130,7 +131,7 @@ test('in another locale - should return a decimal as a string', function(assert)
 
 test('in another locale - should return a formatted string with a thousand separator', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM}}', { locale: 'de-de' });
+    view = this.render(hbs`{{format-number NUM}}`, { locale: 'de-de' });
     view.set('context', { NUM: 40000 });
     runAppend(view);
     assert.equal(view.$().text(), '40.000');
@@ -138,7 +139,7 @@ test('in another locale - should return a formatted string with a thousand separ
 
 test('in another locale - should return a formatted string with a thousand separator and decimal', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number NUM}}', { locale: 'de-de' });
+    view = this.render(hbs`{{format-number NUM}}`, { locale: 'de-de' });
     view.set('context', { NUM: 40000.004 });
     runAppend(view);
     assert.equal(view.$().text(), '40.000,004');
@@ -146,53 +147,57 @@ test('in another locale - should return a formatted string with a thousand separ
 
 test('currency - should return a string formatted to currency', function(assert) {
     assert.expect(3);
-    view = this.intlBlock('{{format-number 40000 format="currency" style="currency" currency="USD"}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 40000 format="currency" style="currency" currency="USD"}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '$40,000.00');
-    view = this.intlBlock('{{format-number 40000 format="currency" style="currency" currency="EUR"}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 40000 format="currency" style="currency" currency="EUR"}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '€40,000.00');
-    view = this.intlBlock('{{format-number 40000 style="currency" currency="JPY"}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 40000 style="currency" currency="JPY"}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '¥40,000');
 });
 
 test('should function within an `each` block helper', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{#each currencies as |currency|}} {{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}', { locale: 'en-us' });
+    view = this.render(
+      hbs`
+        {{#each currencies as |currency|}}{{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}
+      `, { locale: 'en-us' }
+    );
 
     view.set('context', {
-        currencies: [
+        currencies: Ember.A([
             { AMOUNT: 3, CURRENCY: 'USD'},
             { AMOUNT: 8, CURRENCY: 'EUR'},
             { AMOUNT: 10, CURRENCY: 'JPY'}
-        ]
+        ])
     });
 
     runAppend(view);
-    assert.equal(view.$().text(), ' $3.00 €8.00 ¥10.00');
+    assert.equal(view.$().text().trim(), '$3.00€8.00¥10.00');
 });
 
 test('should be able to combine hash options with format options', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number 1 format="digits" minimumIntegerDigits=10}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 1 format="digits" minimumIntegerDigits=10}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
 });
 
 test('should be able to combine hash options with format options with dasherized options name', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{format-number 1 format="digits" minimum-integer-digits=10}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 1 format="digits" minimum-integer-digits=10}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
 });
 
 test('used to format percentages', function(assert) {
     assert.expect(2);
-    view = this.intlBlock('{{format-number 400 style="percent"}}', { locale: 'en-us' });
+    view = this.render(hbs`{{format-number 400 style="percent"}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), '40,000%', 'should return a string formatted to a percent');
-    view = this.intlBlock('{{format-number 400 style="percent"}}', { locale: 'de-de' });
+    view = this.render(hbs`{{format-number 400 style="percent"}}`, { locale: 'de-de' });
     runAppend(view);
     assert.equal(escape(view.$().text()), '40.000%A0%25', 'de should return a string formatted to a percent');
 });

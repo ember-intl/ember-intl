@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
-
+import hbs from 'htmlbars-inline-precompile';
 import Translation from 'ember-intl/models/translation';
 import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
@@ -13,6 +13,7 @@ import createIntlBlock from '../helpers/create-intl-block';
 import intlGetHelper from '../../helpers/intl-get';
 import newHelperTest from '../helpers/test';
 
+var run = Ember.run;
 var view;
 
 moduleFor('helper:intl-get', {
@@ -26,7 +27,7 @@ moduleFor('helper:intl-get', {
             greeting: 'Bonjour'
         }));
 
-        this.intlBlock = createIntlBlock(this.container);
+        this.render = createIntlBlock(this.container);
     },
     afterEach() {
         runDestroy(view);
@@ -40,7 +41,7 @@ test('exists', function(assert) {
 
 test('should throw if called with out a value', function(assert) {
     assert.expect(1);
-    view = this.intlBlock('{{intl-get}}');
+    view = this.render(hbs`{{intl-get}}`);
 
     try {
         runAppend(view);
@@ -53,20 +54,20 @@ test('should throw if called with out a value', function(assert) {
 newHelperTest('should recompute on intl locale change in >= 1.13.0', function(assert) {
     assert.expect(1);
 
-    var recomputeFn = intlGetHelper.proto().recompute;
-    var triggered = 0;
-    var service = this.container.lookup('service:intl');
+    const recomputeFn = intlGetHelper.proto().recompute;
+    const service     = this.container.lookup('service:intl');
+    let triggered     = 0;
 
     intlGetHelper.reopen({
-        recompute: function() {
+        recompute() {
             triggered++;
         }
     });
 
-    view = this.intlBlock('{{intl-get "greeting"}}', { locale: 'en-us' });
+    view = this.render(hbs`{{intl-get "greeting"}}`, { locale: 'en-us' });
     runAppend(view);
 
-    Ember.run(function() {
+    run(() => {
         service.set('locale', 'fr-fr');
         service.set('locale', 'en-us');
         assert.equal(triggered, 2);
