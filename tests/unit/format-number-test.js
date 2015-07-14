@@ -145,6 +145,13 @@ test('in another locale - should return a formatted string with a thousand separ
 });
 
 test('currency - should return a string formatted to currency', function(assert) {
+    assert.expect(1);
+    view = this.intlBlock('{{format-number 40000.00 minimumFractionDigits=0 style="currency" currency="USD"}}', { locale: 'en-us' });
+    runAppend(view);
+    assert.equal(view.$().text(), '$40,000');
+});
+
+test('currency - should return a string formatted to currency', function(assert) {
     assert.expect(3);
     view = this.intlBlock('{{format-number 40000 format="currency" style="currency" currency="USD"}}', { locale: 'en-us' });
     runAppend(view);
