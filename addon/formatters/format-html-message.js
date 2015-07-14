@@ -7,7 +7,7 @@ import Ember from 'ember';
 import FormatterMessage from './format-message';
 
 var FormatHtmlMessage = FormatterMessage.extend({
-    escapeProps(options) {
+    escapeProps(options = {}) {
         let value;
 
         return Object.keys(options).reduce((result, hashKey) => {
@@ -22,7 +22,7 @@ var FormatHtmlMessage = FormatterMessage.extend({
         }, {});
     },
 
-    format(value, options) {
+    format(value, options = {}) {
         let locale = options.locale;
         options = this.escapeProps(options);
         let superResult = this._super(value, options, locale);

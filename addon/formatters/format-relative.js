@@ -20,12 +20,10 @@ var FormatRelative = Formatter.extend({
         return createFormatCache(IntlRelativeFormat);
     }).readOnly(),
 
-    format(value, options) {
+    format(value, options = {}) {
         value = new Date(value);
-        options = options || {};
         assertIsDate(value, 'A date or timestamp must be provided to format-relative');
-        let formatOptions = this.filterFormatOptions(options);
-        return this._format(value, formatOptions, {
+        return this._format(value, this.filterFormatOptions(options), {
             now: options.now
         });
     }

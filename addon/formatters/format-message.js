@@ -21,10 +21,9 @@ var FormatMessage = Formatter.extend({
     }).readOnly(),
 
     format(value, options = {}) {
-        let locale = options.locale;
+        let locale    = options.locale;
         let formatter = get(this, 'formatter');
-
-        const valueType = typeof value;
+        let valueType = typeof value;
 
         if (valueType === 'function') {
             return value(options);
@@ -35,10 +34,6 @@ var FormatMessage = Formatter.extend({
 
         return value.format(options);
     }
-});
-
-FormatMessage.reopenClass({
-    formatOptions: []
 });
 
 export default FormatMessage;

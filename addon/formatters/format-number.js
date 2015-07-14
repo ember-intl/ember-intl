@@ -2,7 +2,7 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
- 
+
 import createFormatCache from 'intl-format-cache';
 import computed from 'ember-new-computed';
 import Formatter from './-base';
@@ -15,8 +15,7 @@ var FormatNumber = Formatter.extend({
     }).readOnly(),
 
     format(value, options) {
-        var formatOptions = this.filterFormatOptions(options);
-        return this._format(value, formatOptions);
+        return this._format(value, this.filterFormatOptions(options));
     }
 });
 

@@ -19,11 +19,10 @@ var FormatDate = Formatter.extend({
         return createFormatCache(Intl.DateTimeFormat);
     }).readOnly(),
 
-    format(value, options) {
+    format(value, options = {}) {
         value = new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-date');
-        let formatOptions = this.filterFormatOptions(options);
-        return this._format(value, formatOptions);
+        return this._format(value, this.filterFormatOptions(options));
     }
 });
 
