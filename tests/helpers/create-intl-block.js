@@ -7,7 +7,7 @@ import Ember from 'ember';
 
 function createIntlBlock (container) {
     return (template, serviceContext) => {
-        var service = container.lookup('service:intl');
+        let service = container.lookup('service:intl');
 
         if (typeof serviceContext === 'object') {
             Ember.run(() => {
@@ -21,7 +21,7 @@ function createIntlBlock (container) {
         }
 
         return Ember.View.create({
-            template: Ember.HTMLBars.compile(template),
+            template: template,
             container: container
         });
     };
