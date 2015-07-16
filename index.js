@@ -9,65 +9,65 @@
 
 var serialize          = require('serialize-javascript');
 var mergeTrees         = require('broccoli-merge-trees');
-var stew               = require('broccoli-stew');
 var walkSync           = require('walk-sync');
 var chalk              = require('chalk');
 var path               = require('path');
 var fs                 = require('fs');
 var Funnel             = require('broccoli-funnel');
 
+var utils              = require('./lib/utils');
 var LocaleWriter       = require('./lib/locale-writer');
 var TranslationBlender = require('./lib/translation-blender');
 
 var intlPath           = path.dirname(require.resolve('intl'));
-var rename             = stew.rename;
-
-function lowercaseTree(tree) {
-    return rename(tree, function(filepath) {
-        return filepath.toLowerCase();
-    });
-}
-
-function makeArray(arr) {
-    if (!Array.isArray(arr)) {
-        return [arr];
-    }
-
-    return arr;
-}
 
 module.exports = {
     name: 'ember-intl',
 
-    setupPreprocessorRegistry: function (type, registry) {
-        var config = this.intlConfig();
-
-        registry.add('js', {
-            name: 'translations',
-            ext:  'js',
-            toTree: function (tree) {
-                var translations = new Funnel(config.inputPath, {
-                    allowEmpty: true
-                });
-
-                return mergeTrees([
-                    tree,
-                    TranslationBlender(translations, config)
-                ]);
-            }
-        });
+    included: function() {
+        this._super.included.apply(this, arguments);
+        this.intlOptions = this.intlOptions();
     },
 
-    intlConfig: function () {
+    intlOptions: function () {
         var projectConfig = this.projectConfig();
 
-        return Object.assign({
+        var options = Object.assign({
             locales        : undefined,
             disablePolyfill: false,
             defaultLocale  : 'en-us',
             inputPath      : 'translations',
             outputPath     : path.join(projectConfig.modulePrefix, 'translations')
         }, projectConfig.intl);
+
+        if (options.locales) {
+            options.locales = utils.makeArray(options.locales).filter(function(locale) {
+                return typeof locale === 'string';
+            }).map(function(locale) {
+                return locale.toLowerCase();
+            });
+        }
+
+        return options;
+    },
+
+    setupPreprocessorRegistry: function (type, registry) {
+        var intlOptions = this.intlOptions();
+
+        registry.add('js', {
+            name: 'translations',
+            ext:  'js',
+            toTree: function (tree) {
+                var translations = new Funnel(intlOptions.inputPath, {
+                    allowEmpty: true
+                });
+
+                return mergeTrees([
+                    tree,
+                    TranslationBlender(translations, intlOptions)
+                ]);
+            }
+        });
     },
 
     projectConfig: function () {
@@ -76,11 +76,12 @@ module.exports = {
 
     treeForApp: function (inputTree) {
         var trees        = [inputTree];
-        var config       = this.intlConfig();
-        var translations = path.join(this.project.root, config.inputPath);
+        var intlOptions  = this.intlOptions;
+        var translations = path.join(this.project.root, intlOptions.inputPath);
+        var locales      = [];
 
         if (fs.existsSync(translations)) {
-            var locales = walkSync(translations).map(function (filename) {
+            locales = walkSync(translations).map(function (filename) {
                 return path.basename(filename, path.extname(filename));
             }).filter(function (localeName) {
                 var has = LocaleWriter.has(localeName);
@@ -94,55 +95,60 @@ module.exports = {
                 }
                 return has;
             });
+        }
 
-            var localeTree = new LocaleWriter(inputTree, 'cldrs', {
-                locales       : locales,
+        if (intlOptions.locales) {
+            locales = locales.concat(intlOptions.locales);
+        }
+
+        if (locales.length) {
+            var cldrTree = new LocaleWriter(inputTree, 'cldrs', {
+                locales       : utils.uniqueByString(locales),
                 pluralRules   : true,
                 relativeFields: true,
                 prelude       : '/*jslint eqeq: true*/\n',
                 wrapEntry     : this.wrapLocale
             });
 
-            trees.push(localeTree);
+            trees.push(cldrTree);
         }
 
         return mergeTrees(trees, { overwrite: true });
     },
 
     treeForPublic: function (inputTree) {
-        var config = this.intlConfig();
-        var options = this.app.options;
-        var outputPath = path.join('assets', 'intl');
+        var intlOptions = this.intlOptions;
+        var options     = this.app.options;
+        var outputPath  = path.join('assets', 'intl');
+        var trees       = [];
         var include;
 
         if (options.app && options.app.intl) {
             outputPath = options.app.intl;
         }
 
-        if (config.disablePolyfill) {
+        if (intlOptions.disablePolyfill) {
             return inputTree;
         }
-
-        var trees = [];
 
         if (inputTree) {
             trees.push(inputTree);
         }
 
-        trees.push(lowercaseTree(new Funnel(path.join(intlPath, 'dist'), {
+        trees.push(utils.lowercaseTree(new Funnel(path.join(intlPath, 'dist'), {
             files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
             destDir: path.join(outputPath)
         })));
 
-        if (config.locales) {
-            include = makeArray(config.locales).map(function(locale) {
+        if (intlOptions.locales) {
+            include = utils.uniqueByString(intlOptions.locales).map(function(locale) {
                 return new RegExp(locale, 'i');
             });
         }
 
         // only use these when using Intl.js, should not be used
         // with the native Intl API
-        trees.push(lowercaseTree(new Funnel(path.join(intlPath, 'locale-data', 'jsonp'), {
+        trees.push(utils.lowercaseTree(new Funnel(path.join(intlPath, 'locale-data', 'jsonp'), {
             destDir: path.join(outputPath, 'locales'),
             include: include
         })));
