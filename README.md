@@ -11,7 +11,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Ember-Intl 2.0
 
-#### This README is targets the 2.0 API which differs from previous and the current stable versions.  If you are looking for the <= 1.3.0 documentation, [please go here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
+#### This README targets the 2.0 API which differs from previous and the current stable versions.  If you are looking for the <= 1.3.0 documentation, [please go here](https://github.com/yahoo/ember-intl/blob/1.3.0/README.md).
 
 ## Overview
 **Ember Intl is part of [FormatJS][], the docs can be found on the website:**
