@@ -64,15 +64,25 @@ export default Ember.Service.extend(Ember.Evented, {
         runOnce(this, this.notifyLocaleChanged);
     }),
 
-    addMessage(locale, key, value) {
+    addMessage() {
+        Ember.Logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+        return this.addTranslation(...arguments);
+    },
+
+    addMessages() {
+        Ember.Logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+        return this.addTranslations(...arguments);
+    },
+
+    addTranslation(locale, key, value) {
         return this.translationsFor(locale).then((localeInstance) => {
             return localeInstance.addMessage(key, value);
         });
     },
 
-    addMessages(locale, messageObject) {
+    addTranslations(locale, payload) {
         return this.translationsFor(locale).then((localeInstance) => {
-            return localeInstance.addMessages(messageObject);
+            return localeInstance.addMessages(payload);
         });
     },
 
