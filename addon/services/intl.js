@@ -8,17 +8,15 @@ import computed from 'ember-new-computed';
 import extend from '../utils/extend';
 import Translation from '../models/translation';
 
-var makeArray = Ember.makeArray;
-var observer = Ember.observer;
-var runOnce = Ember.run.once;
-var get = Ember.get;
+const { makeArray, observer, get, set, run, Service, Evented, Logger } = Ember;
+const runOnce = run.once;
 
 function formatterProxy (formatType) {
     return function (value, options = {}) {
-        var formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        let formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
 
         if (typeof options.format === 'string') {
-            var format = this.getFormat(formatType, options.format);
+            let format = this.getFormat(formatType, options.format);
             options = extend(format, options);
         }
 
@@ -30,16 +28,16 @@ function formatterProxy (formatType) {
     };
 }
 
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
     locale: null,
 
-    locales: computed({
+    locales: computed('locale', {
         get() {
             return get(this, 'locale');
         },
         set(key, value) {
-            Ember.Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
-            this.set('locale', makeArray(value));
+            Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
+            set(this, 'locale', makeArray(value));
             return value;
         }
     }),
@@ -50,27 +48,31 @@ export default Ember.Service.extend(Ember.Evented, {
     formatTime: formatterProxy('time'),
     formatDate: formatterProxy('date'),
 
-    adapter: computed(function () {
-        return this.container.lookup('ember-intl@adapter:-intl-adapter');
-    }).readOnly(),
+    adapter: computed({
+        get() {
+            return this.container.lookup('ember-intl@adapter:-intl-adapter');
+        }
+    }),
 
-    formats: computed(function () {
-        return this.container.lookup('formats:main', {
-            instantiate: false
-        }) || {};
-    }).readOnly(),
+    formats: computed({
+        get() {
+            return this.container.lookup('formats:main', {
+                instantiate: false
+            }) || {};
+        }
+    }),
 
     localeChanged: observer('locale', function () {
         runOnce(this, this.notifyLocaleChanged);
     }),
 
     addMessage() {
-        Ember.Logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+        Logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
         return this.addTranslation(...arguments);
     },
 
     addMessages() {
-        Ember.Logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+        Logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
         return this.addTranslations(...arguments);
     },
 

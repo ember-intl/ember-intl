@@ -248,6 +248,40 @@ product:
   info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
+## Named Formats
+
+Specifying format options (e.g.: style="currency" currency="USD") in every use of format helper can become a problem in large code bases, and isn't DRY. Instead, you can provide named formats through the use of exporting a POJO from `app/formats`. All helpers accept a `format` property which accepts a key that maps to the format option under its respected type (time, date, number, relative).
+
+For example:
+
+
+```js
+// app/formats.js
+export default {
+  date: {
+    hhmmss: {
+      hour:   'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    }
+  }
+};
+```
+
+```hbs
+{{format-date 'Thu Jan 23 2014 13:00:44' format='hhmmss'}}
+```
+
+```js
+this.get('intl').formatDate('Thu Jan 23 2014 13:00:44', {
+  format: 'hhmmss'
+})
+```
+
+Output of both the helper and the programmatic example:
+
+> 1:00:44 PM
+
 ## Polyfill
 
 ### Disabling
@@ -288,6 +322,7 @@ var app = new EmberApp({
   }
 });
 ```
+
 ## Known Gotchas
 > `date value is not finite in DateTimeFormat.format()`
 
