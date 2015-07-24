@@ -38,6 +38,7 @@
     "broccoli-stew": "^0.3.3",
     "chalk": "^1.0.0",
     "ember-cli-babel": "^5.0.0",
+    "ember-cli-version-checker": "^1.1.4",
     "ember-intl-format-cache": "0.0.0",
     "ember-intl-messageformat": "1.1.1",
     "ember-intl-relativeformat": "1.1.1",

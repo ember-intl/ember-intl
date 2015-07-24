@@ -8,20 +8,20 @@ import addLocaleData from 'ember-intl/utils/add-locale-data';
 
 function filterBy (env, type) {
     return Object.keys(requirejs._eak_seen).filter((key) => {
-        return key.indexOf(env.modulePrefix + '\/' + type + '\/') === 0;
+        return key.indexOf(`${env.modulePrefix}\/${type}\/`) === 0;
     });
 }
 
 export function instanceInitializer(instance) {
-    let service = instance.container.lookup('service:intl');
+    const service = instance.container.lookup('service:intl');
 
     filterBy(ENV, 'cldrs').forEach((key) => {
         addLocaleData(require(key, null, null, true)['default']);
     });
 
     filterBy(ENV, 'translations').forEach((key) => {
-        let localeSplit = key.split('\/');
-        let locale = localeSplit[localeSplit.length - 1];
+        const localeSplit = key.split('\/');
+        const locale = localeSplit[localeSplit.length - 1];
         service.createLocale(locale, require(key, null, null, true)['default']);
     });
 }

@@ -10,7 +10,7 @@ import {
     read,
     readHash,
     destroyStream
-} from '../../utils/streams';
+} from '../utils/streams';
 
 // Backwards compatibility for Ember < 1.13
 export default function (value, options) {

@@ -4,16 +4,20 @@
  */
 
 import Ember from 'ember';
-import extend from '../../utils/extend';
+import extend from '../utils/extend';
 
 import {
     Stream,
     read,
     readHash,
     destroyStream
-} from '../../utils/streams';
+} from 'ember-intl/utils/streams';
 
-export default function (formatType, throwError) {
+export default function (formatType) {
+    function throwError () {
+        return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
+    }
+
     return function (params, hash, seenHash, env) {
         if (!params || !params.length) {
             return throwError();
@@ -60,7 +64,7 @@ export default function (formatType, throwError) {
             let hashStream = hash[key];
             hash[key] = read(hashStream);
 
-            hashStream.subscribe(function (valueStream) {
+            hashStream.subscribe((valueStream) => {
                 seenHash[key] = read(valueStream);
                 touchStream();
             });

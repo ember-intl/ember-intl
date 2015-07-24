@@ -7,26 +7,48 @@
 
 'use strict';
 
+var VersionChecker     = require('ember-cli-version-checker');
 var serialize          = require('serialize-javascript');
 var mergeTrees         = require('broccoli-merge-trees');
+var Funnel             = require('broccoli-funnel');
+var stew               = require('broccoli-stew');
 var walkSync           = require('walk-sync');
 var chalk              = require('chalk');
 var path               = require('path');
 var fs                 = require('fs');
-var Funnel             = require('broccoli-funnel');
 
 var utils              = require('./lib/utils');
 var LocaleWriter       = require('./lib/locale-writer');
 var TranslationBlender = require('./lib/translation-blender');
 
 var intlPath           = path.dirname(require.resolve('intl'));
+var name               = 'ember-intl';
 
 module.exports = {
-    name: 'ember-intl',
+    name: name,
 
     included: function() {
         this._super.included.apply(this, arguments);
         this.intlOptions = this.intlOptions();
+    },
+
+    treeForAddon: function() {
+        var tree    = this._super.treeForAddon.apply(this, arguments);
+        var checker = new VersionChecker(this);
+        var dep     = checker.for('ember', 'bower');
+        var root    = path.join('modules', name);
+
+        if (dep.satisfies('>= 1.13.0')) {
+            tree = stew.rm(tree, path.join(root, 'helpers', 'intl-get-legacy.js'));
+            tree = stew.rm(tree, path.join(root, 'helpers', '-base-legacy.js'));
+        } else {
+            tree = stew.rm(tree, path.join(root, 'helpers', 'intl-get.js'));
+            tree = stew.mv(tree, path.join(root, 'helpers', 'intl-get-legacy.js'), path.join(root, 'helpers', 'intl-get.js'));
+            tree = stew.rm(tree, path.join(root, 'helpers', '-base.js'));
+            tree = stew.mv(tree, path.join(root, 'helpers', '-base-legacy.js'), path.join(root, 'helpers', '-base.js'));
+        }
+
+        return tree;
     },
 
     intlOptions: function () {
