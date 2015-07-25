@@ -11,7 +11,7 @@ import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 import intlGetHelper from '../../helpers/intl-get';
-import newHelperTest from '../helpers/test';
+import modernHelperTest from '../helpers/test';
 
 var run = Ember.run;
 var view;
@@ -51,7 +51,7 @@ test('should throw if called with out a value', function(assert) {
     }
 });
 
-newHelperTest('should recompute on intl locale change in >= 1.13.0', function(assert) {
+modernHelperTest('should recompute on intl locale change in >= 1.13.0', function(assert) {
     assert.expect(1);
 
     const recomputeFn = intlGetHelper.proto().recompute;
