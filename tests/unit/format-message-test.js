@@ -41,11 +41,6 @@ moduleFor('ember-intl@formatter:format-message', {
             }
         });
 
-        this.container.optionsForType('formats', {
-            singleton:   true,
-            instantiate: false
-        });
-
         this.container.injection('formatter', 'intl', 'service:intl');
         this.render = createIntlBlock(this.container);
     },

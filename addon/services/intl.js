@@ -56,9 +56,11 @@ export default Service.extend(Evented, {
 
     formats: computed({
         get() {
-            return this.container.lookup('formats:main', {
-                instantiate: false
-            }) || {};
+            const formats = this.container.lookupFactory('formats:main');
+            if (Ember.Object.detect(formats)) {
+                return formats.create();
+            }
+            return formats;
         }
     }),
 
