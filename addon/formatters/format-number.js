@@ -7,7 +7,7 @@ import createFormatCache from 'intl-format-cache';
 import computed from 'ember-new-computed';
 import Formatter from './-base';
 
-var FormatNumber = Formatter.extend({
+let FormatNumber = Formatter.extend({
     formatType: 'number',
 
     formatter: computed(() => {

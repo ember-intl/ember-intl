@@ -4,50 +4,44 @@
  */
 
 import Ember from 'ember';
-import legacyBase from '../legacy/helpers/-base';
 import extend from '../utils/extend';
 
-var observer = Ember.observer;
+const { observer } = Ember;
 
 export default function (formatType) {
     function throwError () {
         return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
     }
 
-    if (Ember.Helper) {
-        return Ember.Helper.extend({
-            intl: Ember.inject.service(),
+    return Ember.Helper.extend({
+        intl: Ember.inject.service(),
 
-            init() {
-                this._super.apply(this, arguments);
-                this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
-            },
+        init() {
+            this._super.apply(this, arguments);
+            this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        },
 
-            onIntlLocaleChanged: observer('intl.locale', function() {
-                this.recompute();
-            }),
+        onIntlLocaleChanged: observer('intl.locale', function() {
+            this.recompute();
+        }),
 
-            compute(params, hash) {
-                if (!params || !params.length) {
-                    return throwError();
-                }
-
-                let format = {};
-                let value = params[0];
-                let intl = Ember.get(this, 'intl');
-
-                if (hash && hash.format) {
-                    format = intl.getFormat(formatType, hash.format);
-                }
-
-                return this.formatter.format(
-                    value,
-                    extend(Ember.getProperties(intl, 'locale'), format, hash)
-                );
+        compute(params, hash) {
+            if (!params || !params.length) {
+                return throwError();
             }
-        });
-    }
 
-    // Backwards compatibility for < 1.13
-    return legacyBase(formatType, throwError);
+            let format = {};
+            let value = params[0];
+            let intl = Ember.get(this, 'intl');
+
+            if (hash && hash.format) {
+                format = intl.getFormat(formatType, hash.format);
+            }
+
+            return this.formatter.format(
+                value,
+                extend(Ember.getProperties(intl, 'locale'), format, hash)
+            );
+        }
+    });
 }

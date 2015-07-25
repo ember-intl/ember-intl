@@ -5,9 +5,8 @@
 
 import Ember from 'ember';
 
-var observer = Ember.observer;
-var get = Ember.get;
-var Helper = null;
+const { observer, get } = Ember;
+let Helper = null;
 
 if (Ember.Helper) {
     Helper = Ember.Helper.extend({

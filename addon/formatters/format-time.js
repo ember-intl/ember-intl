@@ -5,7 +5,7 @@
 
 import FormatDateFormatter from './format-date';
 
-var FormatTime = FormatDateFormatter.extend({
+let FormatTime = FormatDateFormatter.extend({
     formatType: 'time'
 });
 

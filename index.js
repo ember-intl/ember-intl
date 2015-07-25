@@ -7,22 +7,25 @@
 
 'use strict';
 
+var VersionChecker     = require('ember-cli-version-checker');
 var serialize          = require('serialize-javascript');
 var mergeTrees         = require('broccoli-merge-trees');
+var Funnel             = require('broccoli-funnel');
+var stew               = require('broccoli-stew');
 var walkSync           = require('walk-sync');
 var chalk              = require('chalk');
 var path               = require('path');
 var fs                 = require('fs');
-var Funnel             = require('broccoli-funnel');
 
 var utils              = require('./lib/utils');
 var LocaleWriter       = require('./lib/locale-writer');
 var TranslationBlender = require('./lib/translation-blender');
 
 var intlPath           = path.dirname(require.resolve('intl'));
+var name               = 'ember-intl';
 
 module.exports = {
-    name: 'ember-intl',
+    name: name,
 
     included: function() {
         this._super.included.apply(this, arguments);
@@ -30,7 +33,7 @@ module.exports = {
     },
 
     intlOptions: function () {
-        var projectConfig = this.projectConfig();
+        var projectConfig = this.project.config(process.env.EMBER_ENV);
 
         var options = Object.assign({
             locales        : undefined,
@@ -70,11 +73,39 @@ module.exports = {
         });
     },
 
-    projectConfig: function () {
-        return this.project.config(process.env.EMBER_ENV);
+    isModern: function() {
+        var checker = new VersionChecker(this);
+        var dep     = checker.for('ember', 'bower');
+        return dep.satisfies('>= 1.13.0');
+    },
+
+    treeForAddon: function() {
+        var tree = this._super.treeForAddon.apply(this, arguments);
+        var root = path.join('modules', name);
+
+        if (this.isModern()) {
+            tree = stew.rm(tree, path.join(root, 'helpers', 'intl-get-legacy.js'));
+            tree = stew.rm(tree, path.join(root, 'helpers', '-base-legacy.js'));
+        } else {
+            tree = stew.rm(tree, path.join(root, 'initializers', 'ember-intl.js'));
+            tree = stew.mv(tree, path.join(root, 'initializers', 'ember-intl-legacy.js'), path.join(root, 'initializers', 'ember-intl.js'));
+            tree = stew.rm(tree, path.join(root, 'helpers', 'intl-get.js'));
+            tree = stew.mv(tree, path.join(root, 'helpers', 'intl-get-legacy.js'), path.join(root, 'helpers', 'intl-get.js'));
+            tree = stew.rm(tree, path.join(root, 'helpers', '-base.js'));
+            tree = stew.mv(tree, path.join(root, 'helpers', '-base-legacy.js'), path.join(root, 'helpers', '-base.js'));
+        }
+
+        return tree;
     },
 
     treeForApp: function (inputTree) {
+        if (this.isModern()) {
+            inputTree = stew.rm(inputTree, path.join('initializers', 'ember-intl-legacy.js'));
+        } else {
+            inputTree = stew.rm(inputTree, path.join('initializers', 'ember-intl.js'));
+            inputTree = stew.mv(inputTree, path.join('initializers', 'ember-intl-legacy.js'), path.join('initializers', 'ember-intl.js'));
+        }
+
         var trees        = [inputTree];
         var intlOptions  = this.intlOptions;
         var translations = path.join(this.project.root, intlOptions.inputPath);
@@ -102,15 +133,13 @@ module.exports = {
         }
 
         if (locales.length) {
-            var cldrTree = new LocaleWriter(inputTree, 'cldrs', {
+            trees.push(new LocaleWriter(inputTree, 'cldrs', {
                 locales       : utils.uniqueByString(locales),
                 pluralRules   : true,
                 relativeFields: true,
                 prelude       : '/*jslint eqeq: true*/\n',
                 wrapEntry     : this.wrapLocale
-            });
-
-            trees.push(cldrTree);
+            }));
         }
 
         return mergeTrees(trees, { overwrite: true });

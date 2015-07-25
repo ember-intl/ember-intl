@@ -1,18 +1,17 @@
 import Ember from 'ember';
-import { module } from 'qunit';
-import test from '../helpers/test';
+import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 
-var application;
+let application;
 
 function contains(selector, string) {
-    var element = find(selector)[0];
+    const element = find(selector)[0];
 
     if (!element) {
         return ok(false, `can't find element: ${selector}`);
     }
 
-    var text = element.textContent || element.innerText;
+    let text = element.textContent || element.innerText;
     return equal(text.replace(/^\s+|\s+$/g, ''), string);
 }
 
@@ -27,34 +26,34 @@ module('Acceptance: Smoke', {
     }
 });
 
-test('format-number', function(assert) {
+test('format-number', (assert) => {
     visit('/smoke');
 
-    andThen(function() {
+    andThen(() => {
         contains('.format-number', '€1,000.00');
     });
 });
 
-test('format-date', function(assert) {
+test('format-date', (assert) => {
     visit('/smoke');
 
-    andThen(function() {
+    andThen(() => {
         contains('.format-date', '1/23/2014');
     });
 });
 
-test('format-time', function(assert) {
+test('format-time', (assert) => {
     visit('/smoke');
 
-    andThen(function() {
+    andThen(() => {
         contains('.format-time', '18:00:44');
     });
 });
 
-test('format-relative', function(assert) {
+test('format-relative', (assert) => {
     visit('/smoke');
 
-    andThen(function() {
+    andThen(() => {
         contains('.format-relative', 'yesterday');
     });
 });

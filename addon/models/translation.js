@@ -5,10 +5,9 @@
 
 import Ember from 'ember';
 
-var set = Ember.set;
-var get = Ember.get;
+const { get, set } = Ember;
 
-var TranslationModel = Ember.Object.extend({
+let TranslationModel = Ember.Object.extend({
     addMessage(key, value) {
         set(this, key, value);
         return value;

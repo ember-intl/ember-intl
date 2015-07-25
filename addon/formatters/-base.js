@@ -5,10 +5,10 @@
 
 import Ember from 'ember';
 
-var get = Ember.get;
-var camelize = Ember.String.camelize;
+const get = Ember.get;
+const camelize = Ember.String.camelize;
 
-var FormatBase = Ember.Object.extend({
+let FormatBase = Ember.Object.extend({
     /**
     * Filters out all of the whitelisted formatter options from an Object.
     *

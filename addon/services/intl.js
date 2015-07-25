@@ -9,7 +9,7 @@ import extend from '../utils/extend';
 import Translation from '../models/translation';
 
 const { makeArray, observer, get, set, run, Service, Evented, Logger } = Ember;
-const runOnce = run.once;
+const { once:runOnce } = run;
 
 function formatterProxy (formatType) {
     return function (value, options = {}) {
@@ -56,9 +56,11 @@ export default Service.extend(Evented, {
 
     formats: computed({
         get() {
-            return this.container.lookup('formats:main', {
-                instantiate: false
-            }) || {};
+            const formats = this.container.lookupFactory('formats:main');
+            if (Ember.Object.detect(formats)) {
+                return formats.create();
+            }
+            return formats;
         }
     }),
 

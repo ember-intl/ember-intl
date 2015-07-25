@@ -4,11 +4,9 @@
     </div>
     <div class="content">
         <div>
-            {{x-select
-                action=(action 'changeLocale')
-                options=locales
-                value=intl.locale
-            }}
+            <button {{action 'changeLocale' 'en-us'}}>en-us</button>
+            <button {{action 'changeLocale' 'fr-fr'}}>fr-fr</button>
+            <button {{action 'changeLocale' 'es-es'}}>fr-fr</button>
         </div>
 
         {{outlet}}

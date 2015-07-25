@@ -41,11 +41,6 @@ moduleFor('ember-intl@formatter:format-message', {
             }
         });
 
-        this.container.optionsForType('formats', {
-            singleton:   true,
-            instantiate: false
-        });
-
         this.container.injection('formatter', 'intl', 'service:intl');
         this.render = createIntlBlock(this.container);
     },
@@ -151,7 +146,7 @@ test('intl-get returns message and format-message renders', function(assert) {
 
 test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
-    let translation = this.container.lookup('ember-intl@translation:en-us');
+    const translation = this.container.lookup('ember-intl@translation:en-us');
     translation.addMessage('adding', 'this works also');
     view = this.render(hbs`{{format-message (intl-get "adding")}}`, { locale: 'en-us' });
     runAppend(view);
@@ -161,10 +156,12 @@ test('locale can add message and intl-get can read it', function(assert) {
 test('intl-get handles bound computed property', function(assert) {
     assert.expect(3);
     view = this.render(hbs`{{format-message (intl-get computedMessage)}}`, { locale: 'en-us' });
-    let context = Ember.Object.extend({
+    const context = Ember.Object.extend({
         foo: true,
-        computedMessage: computed('foo', function () {
-            return Ember.get(this, 'foo') ? 'foo.bar' : 'foo.baz';
+        computedMessage: computed('foo', {
+            get() {
+                return Ember.get(this, 'foo') ? 'foo.bar' : 'foo.baz';
+            }
         })
     }).create();
     view.set('context', context);
@@ -196,7 +193,7 @@ test('locale can add message to intl service and read it', function(assert) {
 test('locale can add messages object and intl-get can read it', function(assert) {
     assert.expect(1);
 
-    let translation = this.container.lookup('ember-intl@translation:en-us');
+    const translation = this.container.lookup('ember-intl@translation:en-us');
     translation.addMessages({
         'bulk-add': 'bulk add works'
     });
@@ -216,8 +213,8 @@ test('should respect format options for date ICU block', function(assert) {
 test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
     assert.expect(1);
 
-    let translation = this.container.lookup('ember-intl@translation:en-us');
-    let fn = translation.getValue;
+    const translation = this.container.lookup('ember-intl@translation:en-us');
+    const fn = translation.getValue;
 
     translation.getValue = function (key) {
         return this[key];
