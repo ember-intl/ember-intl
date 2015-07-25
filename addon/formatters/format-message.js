@@ -9,9 +9,9 @@ import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
 import Formatter from './-base';
 
-var get = Ember.get;
+const { get } = Ember;
 
-var FormatMessage = Formatter.extend({
+let FormatMessage = Formatter.extend({
     // TODO: move all the intl service logic out of here
     // formatters should not be coupled to the service
     intl: Ember.inject.service(),

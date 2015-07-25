@@ -18,7 +18,7 @@ export default Ember.Object.extend({
     },
 
     findTranslationByKey(localeNames, translationKey) {
-        var locales = Ember.makeArray(localeNames);
+        let locales = Ember.makeArray(localeNames);
         let i = 0;
         let len = locales.length;
         let translations, translation, key;

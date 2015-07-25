@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import extend from '../utils/extend';
 
-var observer = Ember.observer;
+const { observer } = Ember;
 
 export default function (formatType) {
     function throwError () {

@@ -13,7 +13,7 @@ function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
 }
 
-var FormatRelative = Formatter.extend({
+let FormatRelative = Formatter.extend({
     formatType: 'relative',
 
     formatter: computed(() => {

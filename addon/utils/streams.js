@@ -14,7 +14,7 @@ function read (object) {
 }
 
 export function readHash (object) {
-    var ret = {};
+    let ret = {};
 
     for (var key in object) {
         ret[key] = read(object[key]);

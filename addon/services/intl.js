@@ -9,7 +9,7 @@ import extend from '../utils/extend';
 import Translation from '../models/translation';
 
 const { makeArray, observer, get, set, run, Service, Evented, Logger } = Ember;
-const runOnce = run.once;
+const { once:runOnce } = run;
 
 function formatterProxy (formatType) {
     return function (value, options = {}) {

@@ -3,6 +3,4 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import IntlService from 'ember-intl/services/intl';
-
-export default IntlService;
+export { default } from 'ember-intl/services/intl';

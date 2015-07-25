@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import FormatterMessage from './format-message';
 
-var FormatHtmlMessage = FormatterMessage.extend({
+let FormatHtmlMessage = FormatterMessage.extend({
     escapeProps(options = {}) {
         let value;
 

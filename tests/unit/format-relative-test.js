@@ -11,7 +11,7 @@ import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-var view;
+let view;
 
 moduleFor('ember-intl@formatter:format-relative', {
     needs: ['service:intl'],
@@ -71,7 +71,6 @@ test('should return relative time in hours, not best fit', function(assert) {
     runAppend(view);
     assert.equal(view.$().text(), 'in 48 hours');
 });
-
 
 test('should return now', function(assert) {
     assert.expect(1);

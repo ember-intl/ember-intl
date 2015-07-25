@@ -12,7 +12,7 @@ function assertIsDate (date, errMsg) {
     Ember.assert(errMsg, isFinite(date));
 }
 
-var FormatDate = Formatter.extend({
+let FormatDate = Formatter.extend({
     formatType: 'date',
 
     formatter: computed(() => {
