@@ -23,14 +23,14 @@ let FormatRelative = Formatter.extend({
     format(value, options = {}) {
         value = new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-relative');
-        return this._format(value, this.filterWhitelistedOptions(options), {
+        return this._format(value, this.filterSupporedOptions(options), {
             now: options.now
         });
     }
 });
 
 FormatRelative.reopenClass({
-    formatOptions: ['style', 'units']
+    supportedOptions: ['style', 'units']
 });
 
 export default FormatRelative;

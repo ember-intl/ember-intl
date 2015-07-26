@@ -8,15 +8,16 @@ import computed from 'ember-new-computed';
 import extend from '../utils/extend';
 import Translation from '../models/translation';
 
-const { makeArray, observer, get, set, run, Service, Evented, Logger } = Ember;
+const { makeArray, observer, get, set, run, Service, Evented, Logger:emberLogger } = Ember;
 const { once:runOnce } = run;
+const { warn } = emberLogger;
 
 function formatterProxy (formatType) {
     return function (value, options = {}) {
-        let formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        const formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
 
         if (typeof options.format === 'string') {
-            let format = this.getFormat(formatType, options.format);
+            const format = this.getFormat(formatType, options.format);
             options = extend(format, options);
         }
 
@@ -36,7 +37,7 @@ export default Service.extend(Evented, {
             return get(this, 'locale');
         },
         set(key, value) {
-            Logger.warn('`intl.locales` is deprecated in favor of `intl.locale`');
+            warn('`intl.locales` is deprecated in favor of `intl.locale`');
             set(this, 'locale', makeArray(value));
             return value;
         }
@@ -69,12 +70,12 @@ export default Service.extend(Evented, {
     }),
 
     addMessage() {
-        Logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+        warn('`addMessage` is deprecated in favor of `addTranslation`');
         return this.addTranslation(...arguments);
     },
 
     addMessages() {
-        Logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+        warn('`addMessages` is deprecated in favor of `addTranslations`');
         return this.addTranslations(...arguments);
     },
 
@@ -95,9 +96,9 @@ export default Service.extend(Evented, {
     },
 
     createLocale(locale, payload) {
-        let name = `ember-intl@translation:${locale}`;
         let container = this.container;
-        let instance = container.lookup('application:main') || {};
+        const name = `ember-intl@translation:${locale}`;
+        const instance = this.container.lookup('application:main') || {};
 
         if (instance.registry) {
             container = instance.registry;
@@ -111,7 +112,7 @@ export default Service.extend(Evented, {
     },
 
     getFormat(formatType, format) {
-        let formats = get(this, 'formats');
+        const formats = get(this, 'formats');
 
         if (formats && formatType && typeof format === 'string') {
             return get(formats, `${formatType}.${format}`) || {};
@@ -121,7 +122,7 @@ export default Service.extend(Evented, {
     },
 
     translationsFor(locale) {
-        let result = get(this, 'adapter').translationsFor(locale);
+        const result = get(this, 'adapter').translationsFor(locale);
 
         return Ember.RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
@@ -134,7 +135,7 @@ export default Service.extend(Evented, {
 
     findTranslationByKey(key, locale) {
         locale = locale ? makeArray(locale) : makeArray(get(this, 'locale'));
-        let translation = get(this, 'adapter').findTranslationByKey(locale, key);
+        const translation = get(this, 'adapter').findTranslationByKey(locale, key);
 
         if (typeof translation === 'undefined') {
             throw new Error(`translation: '${key}' on locale(s): '${locale.join(',')}' was not found.`);

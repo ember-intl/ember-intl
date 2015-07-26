@@ -147,7 +147,7 @@ test('intl-get returns message and format-message renders', function(assert) {
 test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
     const translation = this.container.lookup('ember-intl@translation:en-us');
-    translation.addMessage('adding', 'this works also');
+    translation.addTranslation('adding', 'this works also');
     view = this.render(hbs`{{format-message (intl-get "adding")}}`, { locale: 'en-us' });
     runAppend(view);
     assert.equal(view.$().text(), "this works also");
@@ -182,7 +182,7 @@ test('locale can add message to intl service and read it', function(assert) {
     assert.expect(1);
     run(() => {
         let service = this.container.lookup('service:intl');
-        service.addMessage('en-us', 'oh', 'hai!').then(() => {
+        service.addTranslation('en-us', 'oh', 'hai!').then(() => {
             view = this.render(hbs`{{format-message (intl-get "oh")}}`, { locale: 'en-us' });
             runAppend(view);
             assert.equal(view.$().text(), "hai!");
@@ -194,7 +194,7 @@ test('locale can add messages object and intl-get can read it', function(assert)
     assert.expect(1);
 
     const translation = this.container.lookup('ember-intl@translation:en-us');
-    translation.addMessages({
+    translation.addTranslations({
         'bulk-add': 'bulk add works'
     });
 

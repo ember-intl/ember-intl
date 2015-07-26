@@ -21,9 +21,9 @@ let FormatMessage = Formatter.extend({
     }).readOnly(),
 
     format(value, options = {}) {
-        let locale    = options.locale;
-        let formatter = get(this, 'formatter');
-        let valueType = typeof value;
+        const locale    = options.locale;
+        const formatter = get(this, 'formatter');
+        const valueType = typeof value;
 
         if (valueType === 'function') {
             return value(options);

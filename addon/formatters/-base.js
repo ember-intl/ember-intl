@@ -4,33 +4,39 @@
  */
 
 import Ember from 'ember';
+import arrayToHash from '../utils/array-to-hash';
 
 const get = Ember.get;
 const camelize = Ember.String.camelize;
 
 let FormatBase = Ember.Object.extend({
+    init() {
+        this._super(...arguments);
+        this.options = arrayToHash(this.constructor.supportedOptions);
+    },
+
     /**
-    * Filters out all of the whitelisted formatter options from an Object.
+    * Filters out all of the whitelisted formatter options
     *
-    * @method filterWhitelistedOptions
+    * @method filterSupporedOptions
     * @param {Object} Options object
     * @return {Object} Options object containing just whitelisted options
+    * @private
     */
-    filterWhitelistedOptions(input = {}) {
-        let formatOptions = this.constructor.formatOptions;
+    filterSupporedOptions(input = {}) {
         let camelizedKey = null;
-        let match = false;
-        let out = {};
+        let foundMatch   = false;
+        const out = {};
 
         for (let key in input) {
             camelizedKey = camelize(key);
-            if (Ember.A(formatOptions).contains(camelizedKey)) {
-                match = true;
+            if (this.options[camelizedKey]) {
+                foundMatch = true;
                 out[camelizedKey] = input[key];
             }
         }
 
-        if (match) {
+        if (foundMatch) {
             return out;
         }
     },
@@ -44,24 +50,23 @@ let FormatBase = Ember.Object.extend({
     * @return {Object} Format options hash
     * @private
     */
-    _format(value, options = {}, formatOptions = {}) {
-        let formatter = get(this, 'formatter');
-        let { locale } = options;
+    _format(value, formatterOptions = {}, formatOptions = {}) {
+        const formatter  = get(this, 'formatter');
+        const { locale } = formatterOptions;
 
         if (!locale) {
-            throw new Error(`
-                No locale specified.  This is typically done application wide within routes/application.js
-                you can read how to configure it here: https://github.com/yahoo/ember-intl/blob/master/README.md#configure-application-wide-locale
-            `);
+            throw new Error(
+                `No locale specified.  This is typically done application-wide within routes/application.js. Instructions: https://github.com/yahoo/ember-intl/blob/master/README.md#configure-application-wide-locale`
+            );
         }
 
-        return formatter(locale, options).format(value, formatOptions);
+        return formatter(locale, formatterOptions).format(value, formatOptions);
     }
 });
 
 FormatBase.reopenClass({
-    formatOptions: ['locale', 'format'],
-    concatenatedProperties: ['formatOptions']
+    supportedOptions: ['locale', 'format'],
+    concatenatedProperties: ['supportedOptions']
 });
 
 export default FormatBase;

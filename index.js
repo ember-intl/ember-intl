@@ -7,7 +7,7 @@
 
 'use strict';
 
-var VersionChecker     = require('ember-cli-version-checker');
+
 var serialize          = require('serialize-javascript');
 var mergeTrees         = require('broccoli-merge-trees');
 var Funnel             = require('broccoli-funnel');
@@ -35,7 +35,7 @@ module.exports = {
     intlOptions: function () {
         var projectConfig = this.project.config(process.env.EMBER_ENV);
 
-        var options = Object.assign({
+        var options = utils.assign({
             locales        : undefined,
             disablePolyfill: false,
             defaultLocale  : 'en-us',
@@ -73,17 +73,11 @@ module.exports = {
         });
     },
 
-    isModern: function() {
-        var checker = new VersionChecker(this);
-        var dep     = checker.for('ember', 'bower');
-        return dep.satisfies('>= 1.13.0');
-    },
-
     treeForAddon: function() {
         var tree = this._super.treeForAddon.apply(this, arguments);
         var root = path.join('modules', name);
 
-        if (this.isModern()) {
+        if (utils.isModern(this)) {
             tree = stew.rm(tree, path.join(root, 'helpers', 'intl-get-legacy.js'));
             tree = stew.rm(tree, path.join(root, 'helpers', '-base-legacy.js'));
         } else {
@@ -99,7 +93,7 @@ module.exports = {
     },
 
     treeForApp: function (inputTree) {
-        if (this.isModern()) {
+        if (utils.isModern(this)) {
             inputTree = stew.rm(inputTree, path.join('initializers', 'ember-intl-legacy.js'));
         } else {
             inputTree = stew.rm(inputTree, path.join('initializers', 'ember-intl.js'));
@@ -117,7 +111,7 @@ module.exports = {
             }).filter(function (localeName) {
                 var has = LocaleWriter.has(localeName);
                 if (!has) {
-                    console.error(
+                    this.ui.writeLine(
                         chalk.red(
                             '[ember-intl] \'' + localeName + '\' does not match a supported locale name.\n' +
                             'List of supported locales: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main'
@@ -125,7 +119,7 @@ module.exports = {
                     );
                 }
                 return has;
-            });
+            }, this);
         }
 
         if (intlOptions.locales) {
@@ -138,14 +132,17 @@ module.exports = {
                 pluralRules   : true,
                 relativeFields: true,
                 prelude       : '/*jslint eqeq: true*/\n',
-                wrapEntry     : this.wrapLocale
+                wrapEntry     : function wrapEntry(result) {
+                    return 'export default ' + serialize(result) + ';';
+                }
             }));
         }
 
         return mergeTrees(trees, { overwrite: true });
     },
 
-    treeForPublic: function (inputTree) {
+    treeForPublic: function () {
+        var inputTree   = this._super.treeForPublic.apply(this, arguments);
         var intlOptions = this.intlOptions;
         var options     = this.app.options;
         var outputPath  = path.join('assets', 'intl');
@@ -183,9 +180,5 @@ module.exports = {
         })));
 
         return mergeTrees(trees, { overwrite: true });
-    },
-
-    wrapLocale: function (result) {
-        return 'export default ' + serialize(result) + ';';
     }
 };

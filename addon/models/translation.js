@@ -5,25 +5,35 @@
 
 import Ember from 'ember';
 
-const { get, set } = Ember;
+const { get, set, Logger:emberLogger } = Ember;
 
 let TranslationModel = Ember.Object.extend({
-    addMessage(key, value) {
+    addTranslation(key, value) {
         set(this, key, value);
         return value;
     },
 
-    addMessages(messageObject) {
-        let messages = this;
+    addTranslations(messageObject) {
+      let messages = this;
 
-        // shallow merge intentional
-        for (let key in messageObject) {
-            if (messageObject.hasOwnProperty(key)) {
-                messages[key] = messageObject[key];
-            }
-        }
+      // shallow merge intentional
+      for (let key in messageObject) {
+          if (messageObject.hasOwnProperty(key)) {
+              messages[key] = messageObject[key];
+          }
+      }
 
-        return messages;
+      return messages;
+    },
+
+    addMessage() {
+        emberLogger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+        return this.addTranslation(...arguments);
+    },
+
+    addMessages() {
+        emberLogger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+        return this.addTranslations(...arguments);
     },
 
     // Exposes an accesor on the locale modules

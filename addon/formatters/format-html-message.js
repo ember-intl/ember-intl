@@ -8,10 +8,8 @@ import FormatterMessage from './format-message';
 
 let FormatHtmlMessage = FormatterMessage.extend({
     escapeProps(options = {}) {
-        let value;
-
         return Object.keys(options).reduce((result, hashKey) => {
-            value = options[hashKey];
+            let value = options[hashKey];
 
             if (typeof value === 'string') {
                 value = Ember.Handlebars.Utils.escapeExpression(value);
@@ -22,10 +20,9 @@ let FormatHtmlMessage = FormatterMessage.extend({
         }, {});
     },
 
-    format(value, options = {}) {
-        let locale = options.locale;
-        options = this.escapeProps(options);
-        let superResult = this._super(value, options, locale);
+    format(value, formatOptions = {}) {
+        const options     = this.escapeProps(formatOptions);
+        const superResult = this._super(value, options, formatOptions.locale);
         return Ember.String.htmlSafe(superResult);
     }
 });
