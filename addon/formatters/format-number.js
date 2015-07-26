@@ -15,12 +15,12 @@ let FormatNumber = Formatter.extend({
     }).readOnly(),
 
     format(value, options) {
-        return this._format(value, this.filterWhitelistedOptions(options));
+        return this._format(value, this.filterSupporedOptions(options));
     }
 });
 
 FormatNumber.reopenClass({
-    formatOptions: [
+    supportedOptions: [
         'localeMatcher', 'style', 'currency', 'currencyDisplay',
         'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
         'maximumFractionDigits', 'minimumSignificantDigits',

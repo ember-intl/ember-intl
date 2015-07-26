@@ -63,7 +63,7 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
       // define the app's runtime locale
       // For example, here you would maybe do an API lookup to resolver
       // which locale the user should be targeted and perhaps lazily
-      // load translations using XHR and calling intl's `addMessage`/`addMessages`
+      // load translations using XHR and calling intl's `addTranslation`/`addTranslations`
       // method with the results of the XHR request
       this.set('intl.locale', 'en-us');
     }

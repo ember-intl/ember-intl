@@ -1,8 +1,15 @@
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 import Ember from 'ember';
 import Translation from '../models/translation';
 
+const { assert } = Ember;
+
 function normalize (fullName) {
-    Ember.assert('Lookup name must be a string', typeof fullName === 'string');
+    assert('Lookup name must be a string', typeof fullName === 'string');
     return fullName.toLowerCase();
 }
 

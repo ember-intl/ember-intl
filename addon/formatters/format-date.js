@@ -19,15 +19,15 @@ let FormatDate = Formatter.extend({
         return createFormatCache(Intl.DateTimeFormat);
     }).readOnly(),
 
-    format(value, options = {}) {
+    format(value, options) {
         value = new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-date');
-        return this._format(value, this.filterWhitelistedOptions(options));
+        return this._format(value, this.filterSupporedOptions(options));
     }
 });
 
 FormatDate.reopenClass({
-    formatOptions: [
+    supportedOptions: [
         'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
         'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
         'timeZoneName'
