@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import extend from '../utils/extend';
 
-const { observer } = Ember;
+const { observer, get, getProperties } = Ember;
 
 export default function (formatType) {
     function throwError () {
@@ -15,9 +15,10 @@ export default function (formatType) {
 
     return Ember.Helper.extend({
         intl: Ember.inject.service(),
+        formatter: null,
 
         init() {
-            this._super.apply(this, arguments);
+            this._super(...arguments);
             this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
         },
 
@@ -30,9 +31,9 @@ export default function (formatType) {
                 return throwError();
             }
 
-            let format = {};
-            let value  = params[0];
-            let intl   = Ember.get(this, 'intl');
+            const value = params[0];
+            const intl  = get(this, 'intl');
+            let format  = {};
 
             if (hash && hash.format) {
                 format = intl.getFormat(formatType, hash.format);
@@ -40,7 +41,8 @@ export default function (formatType) {
 
             return this.formatter.format(
                 value,
-                extend(Ember.getProperties(intl, 'locale'), format, hash)
+                extend(getProperties(intl, 'locale'), format, hash),
+                get(intl, 'formats')
             );
         }
     });

@@ -31,10 +31,10 @@ export default function (formatType) {
 
         seenHash = readHash(hash);
 
-        let view = env.data.view;
-        let intl = view.container.lookup('service:intl');
-        let formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
-        let value = params[0];
+        const view = env.data.view;
+        const intl = view.container.lookup('service:intl');
+        const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        const value = params[0];
 
         if (value.isStream) {
             value.subscribe(() => {
@@ -52,7 +52,8 @@ export default function (formatType) {
             return formatter.format.call(
                 formatter,
                 read(value),
-                extend(Ember.getProperties(intl, 'locale'), format, seenHash)
+                extend(Ember.getProperties(intl, 'locale'), format, seenHash),
+                Ember.get(intl, 'formats')
             );
         });
 
@@ -61,7 +62,7 @@ export default function (formatType) {
                 return;
             }
 
-            let hashStream = hash[key];
+            const hashStream = hash[key];
             hash[key] = read(hashStream);
 
             hashStream.subscribe((valueStream) => {
