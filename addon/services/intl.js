@@ -43,7 +43,7 @@ const IntlService = Service.extend(Evented, {
     formatMessage : formatterProxy('message'),
     formatNumber  : formatterProxy('number'),
     formatTime    : formatterProxy('time'),
-    formatDate: formatterProxy('date'),
+    formatDate    : formatterProxy('date'),
 
     adapter: computed({
         get() {
