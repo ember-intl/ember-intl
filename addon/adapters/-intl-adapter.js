@@ -13,7 +13,7 @@ function normalize (fullName) {
     return fullName.toLowerCase();
 }
 
-export default Ember.Object.extend({
+const DefaultIntlAdapter = Ember.Object.extend({
     translationsFor(localeName) {
         if (localeName && localeName instanceof Translation) {
             return localeName;
@@ -42,3 +42,5 @@ export default Ember.Object.extend({
         }
     }
 });
+
+export default DefaultIntlAdapter;

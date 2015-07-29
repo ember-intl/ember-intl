@@ -6,9 +6,9 @@
 import Ember from 'ember';
 import extend from '../utils/extend';
 
-const { get, getProperties } = Ember;
+const { get } = Ember;
 
-export default function (formatType) {
+const helperFactory = function (formatType) {
     function throwError () {
         return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
     }
@@ -45,9 +45,13 @@ export default function (formatType) {
 
             return this.formatter.format(
                 value,
-                extend(getProperties(intl, 'locale'), format, hash),
+                extend({
+                    locale: get(intl, '_locale')
+                }, format, hash),
                 get(intl, 'formats')
             );
         }
     });
-}
+};
+
+export default helperFactory;

@@ -8,11 +8,13 @@ import computed from 'ember-new-computed';
 import createFormatCache from 'intl-format-cache';
 import Formatter from './-base';
 
+const { assert } = Ember;
+
 function assertIsDate (date, errMsg) {
-    Ember.assert(errMsg, isFinite(date));
+    assert(errMsg, isFinite(date));
 }
 
-let FormatDate = Formatter.extend({
+const FormatDate = Formatter.extend({
     formatType: 'date',
 
     formatter: computed({

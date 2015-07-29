@@ -6,6 +6,7 @@
 import Ember from 'ember';
 
 const { get } = Ember;
+
 let Helper = null;
 
 if (Ember.Helper) {

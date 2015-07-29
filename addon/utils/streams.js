@@ -5,21 +5,25 @@
 
 import Ember from 'ember';
 
-var Stream = Ember.__loader.require('ember-metal/streams/stream')['default'];
+const {
+    __loader
+} = Ember;
+
+export const Stream = __loader.require('ember-metal/streams/stream')['default'];
 
 // The below read, readHash methods are from Ember.js
 // https://github.com/emberjs/ember.js/blob/master/packages/ember-metal/lib/streams/utils.js
 // License: https://github.com/emberjs/ember.js/blob/master/LICENSE
-function read (object) {
-    if (object && object.isStream) {
-        return object.value();
-    } else {
-        return object;
+export function read(obj) {
+    if (obj && obj.isStream) {
+        return obj.value();
     }
+
+    return obj;
 }
 
-export function readHash (object) {
-    let ret = {};
+export function readHash(object) {
+    const ret = {};
 
     for (var key in object) {
         ret[key] = read(object[key]);
@@ -28,18 +32,15 @@ export function readHash (object) {
     return ret;
 }
 
-function destroyStream (stream) {
+export function destroyStream(stream) {
     if (stream && !stream.destroyed) {
         stream.destroy();
     }
 }
 
-export var readHash = readHash;
-export var destroyStream = destroyStream;
-export var Stream = Stream;
-export var read = read;
-
 export default {
-    Stream: Stream,
-    read:   read
+    read,
+    readHash,
+    destroyStream,
+    Stream
 };

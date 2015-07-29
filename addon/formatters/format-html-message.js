@@ -6,13 +6,15 @@
 import Ember from 'ember';
 import FormatterMessage from './format-message';
 
-let FormatHtmlMessage = FormatterMessage.extend({
+const { String:emberString, Handlebars:emberHandlebars } = Ember;
+
+const FormatHtmlMessage = FormatterMessage.extend({
     escapeProps(options = {}) {
         return Object.keys(options).reduce((result, hashKey) => {
             let value = options[hashKey];
 
             if (typeof value === 'string') {
-                value = Ember.Handlebars.Utils.escapeExpression(value);
+                value = emberHandlebars.Utils.escapeExpression(value);
             }
 
             result[hashKey] = value;
@@ -23,7 +25,7 @@ let FormatHtmlMessage = FormatterMessage.extend({
     format(value, formatOptions = {}) {
         const options     = this.escapeProps(formatOptions);
         const superResult = this._super(value, options, formatOptions.locale);
-        return Ember.String.htmlSafe(superResult);
+        return emberString.htmlSafe(superResult);
     }
 });
 

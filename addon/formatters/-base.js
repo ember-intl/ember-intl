@@ -9,7 +9,7 @@ import arrayToHash from '../utils/array-to-hash';
 const get = Ember.get;
 const camelize = Ember.String.camelize;
 
-let FormatBase = Ember.Object.extend({
+const FormatBase = Ember.Object.extend({
     init() {
         this._super(...arguments);
         this.options = arrayToHash(this.constructor.supportedOptions);

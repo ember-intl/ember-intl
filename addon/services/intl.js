@@ -8,8 +8,7 @@ import computed from 'ember-new-computed';
 import extend from '../utils/extend';
 import Translation from '../models/translation';
 
-const { assert, get, set, RSVP, Service, Evented, Logger:emberLogger } = Ember;
-const { warn } = emberLogger;
+const { assert, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 
 function formatterProxy (formatType) {
     return function (value, options = {}) {
@@ -28,7 +27,7 @@ function formatterProxy (formatType) {
     };
 }
 
-export default Service.extend(Evented, {
+const IntlService = Service.extend(Evented, {
     _locale: null,
 
     locale: computed('_locale', {
@@ -41,9 +40,9 @@ export default Service.extend(Evented, {
     }),
 
     formatRelative: formatterProxy('relative'),
-    formatMessage: formatterProxy('message'),
-    formatNumber: formatterProxy('number'),
-    formatTime: formatterProxy('time'),
+    formatMessage : formatterProxy('message'),
+    formatNumber  : formatterProxy('number'),
+    formatTime    : formatterProxy('time'),
     formatDate: formatterProxy('date'),
 
     adapter: computed({
@@ -55,26 +54,28 @@ export default Service.extend(Evented, {
     formats: computed({
         get() {
             const formats = this.container.lookupFactory('formats:main');
+
             if (Ember.Object.detect(formats)) {
                 return formats.create();
             }
+
             return formats;
         }
     }),
 
     addMessage() {
-        warn('`addMessage` is deprecated in favor of `addTranslation`');
+        logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
         return this.addTranslation(...arguments);
     },
 
     addMessages() {
-        warn('`addMessages` is deprecated in favor of `addTranslations`');
+        logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
         return this.addTranslations(...arguments);
     },
 
     exists(key) {
       const locale = get(this, '_locale');
-      assert('Intl: Cannot check existance when locale is null', locale);
+      assert('ember-intl: Cannot check existance when locale is null || undefined', locale);
       return get(this, 'adapter').findTranslationByKey(locale, key);
     },
 
@@ -124,7 +125,7 @@ export default Service.extend(Evented, {
 
         return RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
-                throw new Error('\'locale\' must be a string or a locale instance');
+                throw new Error(`'locale' must be a string or a locale instance`);
             }
 
             return localeInstance;
@@ -142,3 +143,5 @@ export default Service.extend(Evented, {
         return translation;
     }
 });
+
+export default IntlService;
