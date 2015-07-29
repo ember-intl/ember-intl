@@ -65,7 +65,7 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
       // which locale the user should be targeted and perhaps lazily
       // load translations using XHR and calling intl's `addTranslation`/`addTranslations`
       // method with the results of the XHR request
-      this.set('intl.locale', 'en-us');
+      this.get('intl').setLocale('en-us');
     }
   });
 ```
@@ -190,21 +190,21 @@ Formats [ICU Message][ICU] strings with the given values supplied as the hash ar
 
 ```
 You have {numPhotos, plural,
-	=0 {no photos.}
-	=1 {one photo.}
-	other {# photos.}}
+  =0 {no photos.}
+  =1 {one photo.}
+  other {# photos.}}
 ```
 
 ```hbs
 {{format-message (intl-get 'product.info')
-	product='Apple watch'
-	price=200
-	deadline=yesterday}}
+  product='Apple watch'
+  price=200
+  deadline=yesterday}}
 
 {{format-message boundProperty
-	name='Jason'
-	numPhotos=num
-	takenDate=yesterday}}
+  name='Jason'
+  numPhotos=num
+  takenDate=yesterday}}
 ```
 Or programmatically convert a message within any Ember Object.
 
@@ -223,12 +223,12 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
 
 ```hbs
 {{format-html-message (intl-get 'product.html.info')
-	product='Apple watch'
-	price=200
-	deadline=yesterday}}
+  product='Apple watch'
+  price=200
+  deadline=yesterday}}
 
 {{format-html-message '<strong>{numPhotos}</strong>'
-	numPhotos=(format-number num)}}
+  numPhotos=(format-number num)}}
 ```
 
 ### Intl-Get
@@ -236,9 +236,9 @@ Utility helper for returning the value, or eventual value, based on a translatio
 
 ```hbs
 {{format-message (intl-get 'product.info')
-	product='Apple watch'
-	price=200
-	deadline=yesterday}}
+  product='Apple watch'
+  price=200
+  deadline=yesterday}}
 ```
 
 Will return the message from the current locale, or locale explicitly passed as an argument, message object.
@@ -332,8 +332,8 @@ The solution is the ensure that the value you are passing in is in a format whic
 
 ### Helper Options
 * All helpers accept optional arguments:
-	* `locale` argument to explicitly pass/override the application locale
-	* `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
+  * `locale` argument to explicitly pass/override the application locale
+  * `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
 ## Writing Unit Tests
 

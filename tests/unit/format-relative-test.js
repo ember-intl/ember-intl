@@ -47,7 +47,7 @@ test('exists', function(assert) {
 test('invoke the formatRelative directly', function(assert) {
     assert.expect(1);
     let service = this.container.lookup('service:intl');
-    Ember.run(() => { service.set('locale', 'en-us'); });
+    Ember.run(() => { service.setLocale('en-us'); });
     assert.equal(service.formatRelative(new Date()), 'now', {});
 });
 
@@ -59,14 +59,14 @@ test('should throw if called with out a value', function(assert) {
 
 test('can specify a `value` and `now` on the options hash', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-relative 2000 now=0}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-relative 2000 now=0}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), 'in 2 seconds');
 });
 
 test('should return relative time in hours, not best fit', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-relative date now=0 format="hours"}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-relative date now=0 format="hours"}}`, 'en-us');
     view.set('context', { date: (1000 * 60 * 60 * 24) * 2 }); // two days
     runAppend(view);
     assert.equal(view.$().text(), 'in 48 hours');
@@ -74,7 +74,7 @@ test('should return relative time in hours, not best fit', function(assert) {
 
 test('should return now', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-relative date}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-relative date}}`, 'en-us');
     view.set('context', { date: new Date().getTime() });
     runAppend(view);
     assert.equal(view.$().text(), 'now');

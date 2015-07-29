@@ -7,7 +7,7 @@ let now       = new Date();
 let yesterday = now.setDate(now.getDate() - 1);
 
 function computedNumber (number, options) {
-    return computed('intl.locale', function () {
+    return computed('intl._locale', function () {
         return get(this, 'intl').formatNumber(number, options);
     });
 }

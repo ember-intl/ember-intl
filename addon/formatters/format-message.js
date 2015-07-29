@@ -11,20 +11,17 @@ import Formatter from './-base';
 
 const { get } = Ember;
 
-let FormatMessage = Formatter.extend({
-    formatter: computed(() => {
-        return createFormatCache(IntlMessageFormat);
-    }).readOnly(),
+const FormatMessage = Formatter.extend({
+    formatter: computed({
+        get() {
+            return createFormatCache(IntlMessageFormat);
+        }
+    }),
 
     format(value, options, formats) {
         const { locale } = options;
-        const formatter = get(this, 'formatter');
-
-        if (typeof value === 'string') {
-            value = formatter(value, locale, formats);
-        }
-
-        return value.format(options);
+        const formatter  = get(this, 'formatter');
+        return formatter(value, locale, formats).format(options);
     }
 });
 

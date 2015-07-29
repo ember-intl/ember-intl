@@ -4,8 +4,8 @@
  */
 
 var broccoliCLDR = require('../../lib/locale-writer');
-var Blueprint   = require('ember-cli/lib/models/blueprint');
-var SilentError = require('ember-cli/lib/errors/silent');
+var Blueprint    = require('ember-cli/lib/models/blueprint');
+var SilentError  = require('ember-cli/lib/errors/silent');
 
 module.exports = {
     description: 'Extract CLDR data as an ES6 module for a given locale',

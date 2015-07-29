@@ -6,9 +6,9 @@
 import Ember from 'ember';
 import extend from '../utils/extend';
 
-const { observer, get, getProperties } = Ember;
+const { get } = Ember;
 
-export default function (formatType) {
+const helperFactory = function (formatType) {
     function throwError () {
         return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
     }
@@ -19,12 +19,16 @@ export default function (formatType) {
 
         init() {
             this._super(...arguments);
+            const intl = get(this, 'intl');
             this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+            intl.on('localeChanged', this, this.recompute);
         },
 
-        onIntlLocaleChanged: observer('intl.locale', function() {
-            this.recompute();
-        }),
+        destroy() {
+            const intl = get(this, 'intl');
+            intl.off('localeChanged', this, this.recompute);
+            return this._super(...arguments);
+        },
 
         compute(params, hash) {
             if (!params || !params.length) {
@@ -36,14 +40,18 @@ export default function (formatType) {
             let format  = {};
 
             if (hash && hash.format) {
-                format = intl.getFormat(formatType, hash.format);
+                format = intl.getFormat(formatType, hash.format) || {};
             }
 
             return this.formatter.format(
                 value,
-                extend(getProperties(intl, 'locale'), format, hash),
+                extend({
+                    locale: get(intl, '_locale')
+                }, format, hash),
                 get(intl, 'formats')
             );
         }
     });
-}
+};
+
+export default helperFactory;

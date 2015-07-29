@@ -6,14 +6,14 @@
 import Ember from 'ember';
 import Translation from '../models/translation';
 
-const { assert } = Ember;
+const { assert, makeArray } = Ember;
 
 function normalize (fullName) {
     assert('Lookup name must be a string', typeof fullName === 'string');
     return fullName.toLowerCase();
 }
 
-export default Ember.Object.extend({
+const DefaultIntlAdapter = Ember.Object.extend({
     translationsFor(localeName) {
         if (localeName && localeName instanceof Translation) {
             return localeName;
@@ -25,7 +25,7 @@ export default Ember.Object.extend({
     },
 
     findTranslationByKey(localeNames, translationKey) {
-        let locales = Ember.makeArray(localeNames);
+        let locales = makeArray(localeNames);
         let i = 0;
         let len = locales.length;
         let translations, translation, key;
@@ -42,3 +42,5 @@ export default Ember.Object.extend({
         }
     }
 });
+
+export default DefaultIntlAdapter;

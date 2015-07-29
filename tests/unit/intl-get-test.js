@@ -64,12 +64,12 @@ modernHelperTest('should recompute on intl locale change in >= 1.13.0', function
         }
     });
 
-    view = this.render(hbs`{{intl-get "greeting"}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{intl-get "greeting"}}`, 'en-us');
     runAppend(view);
 
     run(() => {
-        service.set('locale', 'fr-fr');
-        service.set('locale', 'en-us');
+        service.setLocale('fr-fr');
+        service.setLocale('en-us');
         assert.equal(triggered, 2);
     });
 

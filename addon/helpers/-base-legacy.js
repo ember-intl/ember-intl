@@ -13,7 +13,9 @@ import {
     destroyStream
 } from 'ember-intl/utils/streams';
 
-export default function (formatType) {
+const { get } = Ember;
+
+const helperFactory = function (formatType) {
     function throwError () {
         return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
     }
@@ -46,14 +48,16 @@ export default function (formatType) {
             let format = {};
 
             if (seenHash && seenHash.format) {
-                format = intl.getFormat(formatType, seenHash.format);
+                format = intl.getFormat(formatType, seenHash.format) || {};
             }
 
             return formatter.format.call(
                 formatter,
                 read(value),
-                extend(Ember.getProperties(intl, 'locale'), format, seenHash),
-                Ember.get(intl, 'formats')
+                extend({
+                    locale: get(intl, '_locale')
+                }, format, seenHash),
+                get(intl, 'formats')
             );
         });
 
@@ -72,11 +76,14 @@ export default function (formatType) {
         });
 
         view.one('willDestroyElement', () => {
+            intl.off('localeChanged', view, touchStream);
             destroyStream(outStream);
         });
 
-        intl.on('localeChanged', touchStream);
+        intl.on('localeChanged', view, touchStream);
 
         return outStream;
     };
-}
+};
+
+export default helperFactory;

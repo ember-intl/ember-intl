@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const { get, set, Logger:emberLogger } = Ember;
+const { get, set, Logger:logger } = Ember;
 
 let TranslationModel = Ember.Object.extend({
     addTranslation(key, value) {
@@ -14,7 +14,7 @@ let TranslationModel = Ember.Object.extend({
     },
 
     addTranslations(messageObject) {
-      let messages = this;
+      const messages = this;
 
       // shallow merge intentional
       for (let key in messageObject) {
@@ -27,12 +27,12 @@ let TranslationModel = Ember.Object.extend({
     },
 
     addMessage() {
-        emberLogger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+        logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
         return this.addTranslation(...arguments);
     },
 
     addMessages() {
-        emberLogger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+        logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
         return this.addTranslations(...arguments);
     },
 

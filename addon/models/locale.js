@@ -6,10 +6,10 @@
 import Ember from 'ember';
 import Translation from './translation';
 
-const { Logger:emberLogger } = Ember;
+const { Logger:logger } = Ember;
 
 export default Translation.extend({
     init() {
-        emberLogger.warn('`ember-intl/models/locale` is deprecated in favor of `ember-intl/models/translation`');
+        logger.warn('`ember-intl/models/locale` is deprecated in favor of `ember-intl/models/translation`');
     }
 });

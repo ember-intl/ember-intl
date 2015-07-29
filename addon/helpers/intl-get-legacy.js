@@ -12,14 +12,16 @@ import {
     destroyStream
 } from '../utils/streams';
 
+const { RSVP, assert } = Ember;
+
 // Backwards compatibility for Ember < 1.13
 export default function (value, options) {
-    Ember.assert('intl-get helper must be used as a subexpression', options.isInline === true);
+    assert('intl-get helper must be used as a subexpression', options.isInline === true);
 
-    let types = options.types;
-    let view = options.data.view;
-    let hash = readHash(options.hash);
-    let intl = view.container.lookup('service:intl');
+    const types = options.types;
+    const view = options.data.view;
+    const hash = readHash(options.hash);
+    const intl = view.container.lookup('service:intl');
 
     let currentValue = value;
     let outStreamValue = '';
@@ -40,7 +42,7 @@ export default function (value, options) {
     }
 
     function pokeStream () {
-        return Ember.RSVP.cast(intl.findTranslationByKey(read(currentValue), hash.locale)).then(function (translation) {
+        return RSVP.cast(intl.findTranslationByKey(read(currentValue), hash.locale)).then((translation) => {
             outStream.setValue(translation);
         });
     }

@@ -6,8 +6,8 @@ export default Ember.Controller.extend({
     locales: Ember.A(['en-us', 'fr-fr', 'es-es']),
 
     actions: {
-        changeLocale(localeName) {
-            this.set('intl.locale', localeName);
+        changeLocale(locale) {
+            this.get('intl').setLocale(locale);
         }
     }
 });
