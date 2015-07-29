@@ -16,9 +16,11 @@ function assertIsDate (date, errMsg) {
 let FormatRelative = Formatter.extend({
     formatType: 'relative',
 
-    formatter: computed(() => {
-        return createFormatCache(IntlRelativeFormat);
-    }).readOnly(),
+    formatter: computed({
+        get() {
+            return createFormatCache(IntlRelativeFormat);
+        }
+    }),
 
     format(value, options = {}) {
         value = new Date(value);

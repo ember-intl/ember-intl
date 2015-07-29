@@ -12,9 +12,11 @@ import Formatter from './-base';
 const { get } = Ember;
 
 let FormatMessage = Formatter.extend({
-    formatter: computed(() => {
-        return createFormatCache(IntlMessageFormat);
-    }).readOnly(),
+    formatter: computed({
+      get() {
+          return createFormatCache(IntlMessageFormat);
+      }
+    }),
 
     format(value, options, formats) {
         const { locale } = options;

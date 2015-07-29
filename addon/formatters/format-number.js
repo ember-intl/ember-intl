@@ -10,9 +10,11 @@ import Formatter from './-base';
 let FormatNumber = Formatter.extend({
     formatType: 'number',
 
-    formatter: computed(() => {
-        return createFormatCache(Intl.NumberFormat);
-    }).readOnly(),
+    formatter: computed({
+        get() {
+            return createFormatCache(Intl.NumberFormat);
+        }
+    }),
 
     format(value, options) {
         return this._format(value, this.filterSupporedOptions(options));

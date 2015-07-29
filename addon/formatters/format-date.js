@@ -15,9 +15,11 @@ function assertIsDate (date, errMsg) {
 let FormatDate = Formatter.extend({
     formatType: 'date',
 
-    formatter: computed(() => {
-        return createFormatCache(Intl.DateTimeFormat);
-    }).readOnly(),
+    formatter: computed({
+        get() {
+            return createFormatCache(Intl.DateTimeFormat);
+        }
+    }),
 
     format(value, options) {
         value = new Date(value);
