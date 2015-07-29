@@ -46,7 +46,7 @@ export default function (formatType) {
             let format = {};
 
             if (seenHash && seenHash.format) {
-                format = intl.getFormat(formatType, seenHash.format);
+                format = intl.getFormat(formatType, seenHash.format) || {};
             }
 
             return formatter.format.call(

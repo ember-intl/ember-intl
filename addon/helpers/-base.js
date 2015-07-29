@@ -36,7 +36,7 @@ export default function (formatType) {
             let format  = {};
 
             if (hash && hash.format) {
-                format = intl.getFormat(formatType, hash.format);
+                format = intl.getFormat(formatType, hash.format) || {};
             }
 
             return this.formatter.format(

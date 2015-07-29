@@ -8,7 +8,7 @@ import computed from 'ember-new-computed';
 import extend from '../utils/extend';
 import Translation from '../models/translation';
 
-const { makeArray, observer, get, set, run, Service, Evented, Logger:emberLogger } = Ember;
+const { assert, makeArray, observer, get, set, run, Service, Evented, Logger:emberLogger } = Ember;
 const { once:runOnce } = run;
 const { warn } = emberLogger;
 
@@ -79,6 +79,12 @@ export default Service.extend(Evented, {
         return this.addTranslations(...arguments);
     },
 
+    exists(key) {
+      const locale = this.get('locale');
+      assert('Intl: Cannot check existance when locale is null', locale);
+      return get(this, 'adapter').findTranslationByKey(locale, key);
+    },
+
     addTranslation(locale, key, value) {
         return this.translationsFor(locale).then((localeInstance) => {
             return localeInstance.addMessage(key, value);
@@ -115,10 +121,8 @@ export default Service.extend(Evented, {
         const formats = get(this, 'formats');
 
         if (formats && formatType && typeof format === 'string') {
-            return get(formats, `${formatType}.${format}`) || {};
+            return get(formats, `${formatType}.${format}`);
         }
-
-        return {};
     },
 
     translationsFor(locale) {
@@ -134,8 +138,8 @@ export default Service.extend(Evented, {
     },
 
     findTranslationByKey(key, locale) {
-        locale = locale ? makeArray(locale) : makeArray(get(this, 'locale'));
-        const translation = get(this, 'adapter').findTranslationByKey(locale, key);
+        const _locale = locale ? locale : get(this, 'locale');
+        const translation = get(this, 'adapter').findTranslationByKey(_locale, key);
 
         if (typeof translation === 'undefined') {
             throw new Error(`translation: '${key}' on locale(s): '${locale.join(',')}' was not found.`);

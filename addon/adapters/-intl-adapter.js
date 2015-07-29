@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import Translation from '../models/translation';
 
-const { assert } = Ember;
+const { assert, makeArray } = Ember;
 
 function normalize (fullName) {
     assert('Lookup name must be a string', typeof fullName === 'string');
@@ -25,7 +25,7 @@ export default Ember.Object.extend({
     },
 
     findTranslationByKey(localeNames, translationKey) {
-        let locales = Ember.makeArray(localeNames);
+        let locales = makeArray(localeNames);
         let i = 0;
         let len = locales.length;
         let translations, translation, key;

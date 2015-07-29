@@ -17,7 +17,8 @@ if (Ember.Helper) {
         }),
 
         compute(params, hash = {}) {
-            return get(this, 'intl').findTranslationByKey(params[0], hash.locale);
+            const intl = get(this, 'intl');
+            return intl.findTranslationByKey(params[0], hash.locale);
         }
     });
 }
