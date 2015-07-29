@@ -18,10 +18,10 @@ if (Ember.Helper) {
             intl.on('localeChanged', this, this.recompute);
         },
 
-        willDestroy() {
-            this._super(...arguments);
+        destroy() {
             const intl = get(this, 'intl');
             intl.off('localeChanged', this, this.recompute);
+            return this._super(...arguments);
         },
 
         compute(params, hash = {}) {

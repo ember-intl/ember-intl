@@ -24,9 +24,10 @@ export default function (formatType) {
             intl.on('localeChanged', this, this.recompute);
         },
 
-        willDestroy() {
+        destroy() {
             const intl = get(this, 'intl');
             intl.off('localeChanged', this, this.recompute);
+            return this._super(...arguments);
         },
 
         compute(params, hash) {
