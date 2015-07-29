@@ -5,16 +5,24 @@
 
 import Ember from 'ember';
 
-const { observer, get } = Ember;
+const { get } = Ember;
 let Helper = null;
 
 if (Ember.Helper) {
     Helper = Ember.Helper.extend({
         intl: Ember.inject.service(),
 
-        onIntlLocaleChanged: observer('intl.locale', function() {
-            this.recompute();
-        }),
+        init() {
+            this._super(...arguments);
+            const intl = get(this, 'intl');
+            intl.on('localeChanged', this, this.recompute);
+        },
+
+        willDestroy() {
+            this._super(...arguments);
+            const intl = get(this, 'intl');
+            intl.off('localeChanged', this, this.recompute);
+        },
 
         compute(params, hash = {}) {
             const intl = get(this, 'intl');

@@ -6,12 +6,12 @@
 import Ember from 'ember';
 
 function createIntlBlock (container) {
-    return (template, serviceContext) => {
-        let service = container.lookup('service:intl');
+    return (template, locale) => {
+        const service = container.lookup('service:intl');
 
-        if (typeof serviceContext === 'object') {
+        if (locale) {
             Ember.run(() => {
-                service.setProperties(serviceContext);
+                service.setLocale(locale);
             });
         }
 

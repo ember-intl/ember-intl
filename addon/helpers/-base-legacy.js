@@ -72,10 +72,11 @@ export default function (formatType) {
         });
 
         view.one('willDestroyElement', () => {
+            intl.off('localeChanged', view, touchStream);
             destroyStream(outStream);
         });
 
-        intl.on('localeChanged', touchStream);
+        intl.on('localeChanged', view, touchStream);
 
         return outStream;
     };

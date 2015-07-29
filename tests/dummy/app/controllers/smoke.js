@@ -11,8 +11,8 @@ export default Ember.Controller.extend({
   yesterday:  yesterday,
 
   actions: {
-      changeLocale(localeName) {
-          this.set('intl.locale', localeName);
+      changeLocale(locale) {
+          this.get('intl').setLocale(locale);
       }
   }
 });

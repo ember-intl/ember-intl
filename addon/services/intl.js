@@ -8,8 +8,7 @@ import computed from 'ember-new-computed';
 import extend from '../utils/extend';
 import Translation from '../models/translation';
 
-const { assert, makeArray, observer, get, set, run, Service, Evented, Logger:emberLogger } = Ember;
-const { once:runOnce } = run;
+const { assert, get, set, RSVP, Service, Evented, Logger:emberLogger } = Ember;
 const { warn } = emberLogger;
 
 function formatterProxy (formatType) {
@@ -22,7 +21,7 @@ function formatterProxy (formatType) {
         }
 
         if (!options.locale) {
-            options.locale = get(this, 'locale');
+            options.locale = get(this, '_locale');
         }
 
         return formatter.format(value, options);
@@ -30,16 +29,14 @@ function formatterProxy (formatType) {
 }
 
 export default Service.extend(Evented, {
-    locale: null,
+    _locale: null,
 
-    locales: computed('locale', {
-        get() {
-            return get(this, 'locale');
+    locale: computed('_locale', {
+        set() {
+            throw new Error('Use `setLocale` to change the application locale');
         },
-        set(key, value) {
-            warn('`intl.locales` is deprecated in favor of `intl.locale`');
-            set(this, 'locale', makeArray(value));
-            return value;
+        get() {
+            return get(this, '_locale');
         }
     }),
 
@@ -65,10 +62,6 @@ export default Service.extend(Evented, {
         }
     }),
 
-    localeChanged: observer('locale', function () {
-        runOnce(this, this.notifyLocaleChanged);
-    }),
-
     addMessage() {
         warn('`addMessage` is deprecated in favor of `addTranslation`');
         return this.addTranslation(...arguments);
@@ -80,7 +73,7 @@ export default Service.extend(Evented, {
     },
 
     exists(key) {
-      const locale = this.get('locale');
+      const locale = get(this, '_locale');
       assert('Intl: Cannot check existance when locale is null', locale);
       return get(this, 'adapter').findTranslationByKey(locale, key);
     },
@@ -97,7 +90,8 @@ export default Service.extend(Evented, {
         });
     },
 
-    notifyLocaleChanged() {
+    setLocale(locale) {
+        set(this, '_locale', locale);
         this.trigger('localeChanged');
     },
 
@@ -128,7 +122,7 @@ export default Service.extend(Evented, {
     translationsFor(locale) {
         const result = get(this, 'adapter').translationsFor(locale);
 
-        return Ember.RSVP.cast(result).then(function (localeInstance) {
+        return RSVP.cast(result).then(function (localeInstance) {
             if (typeof localeInstance === 'undefined') {
                 throw new Error('\'locale\' must be a string or a locale instance');
             }
@@ -138,11 +132,11 @@ export default Service.extend(Evented, {
     },
 
     findTranslationByKey(key, locale) {
-        const _locale = locale ? locale : get(this, 'locale');
+        const _locale = locale ? locale : get(this, '_locale');
         const translation = get(this, 'adapter').findTranslationByKey(_locale, key);
 
         if (typeof translation === 'undefined') {
-            throw new Error(`translation: '${key}' on locale(s): '${locale.join(',')}' was not found.`);
+            throw new Error(`translation: '${key}' on locale: '${_locale}' was not found.`);
         }
 
         return translation;

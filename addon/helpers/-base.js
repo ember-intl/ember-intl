@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import extend from '../utils/extend';
 
-const { observer, get, getProperties } = Ember;
+const { get, getProperties } = Ember;
 
 export default function (formatType) {
     function throwError () {
@@ -19,12 +19,15 @@ export default function (formatType) {
 
         init() {
             this._super(...arguments);
+            const intl = get(this, 'intl');
             this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+            intl.on('localeChanged', this, this.recompute);
         },
 
-        onIntlLocaleChanged: observer('intl.locale', function() {
-            this.recompute();
-        }),
+        willDestroy() {
+            const intl = get(this, 'intl');
+            intl.off('localeChanged', this, this.recompute);
+        },
 
         compute(params, hash) {
             if (!params || !params.length) {

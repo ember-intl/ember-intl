@@ -64,20 +64,20 @@ test('invoke formatMessage directly', function(assert) {
 
 test('message is formatted correctly with argument', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message "Hello {name}" name="Jason"}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message "Hello {name}" name="Jason"}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), "Hello Jason");
 });
 
 test('should throw if called with out a value', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message}}`, 'en-us');
     assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-message');
 });
 
 test('should return a formatted string', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message MSG firstName=firstName lastName=lastName}}`, {locale: 'en-us'});
+    view = this.render(hbs`{{format-message MSG firstName=firstName lastName=lastName}}`, 'en-us');
     view.set('context', {
         MSG      : 'Hi, my name is {firstName} {lastName}.',
         firstName: 'Anthony',
@@ -89,7 +89,7 @@ test('should return a formatted string', function(assert) {
 
 test('should return a formatted string with formatted numbers and dates', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}`, {locale: 'en-us'});
+    view = this.render(hbs`{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}`, 'en-us');
     view.set('context', {
         POP_MSG    : '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
         city       : 'Atlanta',
@@ -103,7 +103,7 @@ test('should return a formatted string with formatted numbers and dates', functi
 
 test('should return a formatted string with formatted numbers and dates in a different locale', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}`, {locale: 'de-de'});
+    view = this.render(hbs`{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}`, 'de-de');
     view.set('context', {
         POP_MSG    : '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
         city       : 'Atlanta',
@@ -122,7 +122,7 @@ test('should return a formatted string with an `each` block', function(assert) {
       hbs`
         {{#each harvests as |harvest|}}{{format-message HARVEST_MSG person=harvest.person count=harvest.count}}{{/each}}
       `,
-      { locale: 'en-us' }
+      'en-us'
     );
 
     view.set('context', {
@@ -139,7 +139,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 
 test('intl-get returns message and format-message renders', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message (intl-get "foo.bar")}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message (intl-get "foo.bar")}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), "foo bar baz");
 });
@@ -148,14 +148,14 @@ test('locale can add message and intl-get can read it', function(assert) {
     assert.expect(1);
     const translation = this.container.lookup('ember-intl@translation:en-us');
     translation.addTranslation('adding', 'this works also');
-    view = this.render(hbs`{{format-message (intl-get "adding")}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message (intl-get "adding")}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), "this works also");
 });
 
 test('intl-get handles bound computed property', function(assert) {
     assert.expect(3);
-    view = this.render(hbs`{{format-message (intl-get computedMessage)}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message (intl-get computedMessage)}}`, 'en-us');
     const context = Ember.Object.extend({
         foo: true,
         computedMessage: computed('foo', {
@@ -181,9 +181,9 @@ test('intl-get handles bound computed property', function(assert) {
 test('locale can add message to intl service and read it', function(assert) {
     assert.expect(1);
     run(() => {
-        let service = this.container.lookup('service:intl');
+        const service = this.container.lookup('service:intl');
         service.addTranslation('en-us', 'oh', 'hai!').then(() => {
-            view = this.render(hbs`{{format-message (intl-get "oh")}}`, { locale: 'en-us' });
+            view = this.render(hbs`{{format-message (intl-get "oh")}}`, 'en-us');
             runAppend(view);
             assert.equal(view.$().text(), "hai!");
         });
@@ -198,14 +198,14 @@ test('locale can add messages object and intl-get can read it', function(assert)
         'bulk-add': 'bulk add works'
     });
 
-    view = this.render(hbs`{{format-message (intl-get "bulk-add")}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message (intl-get "bulk-add")}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), "bulk add works");
 });
 
 test('should respect format options for date ICU block', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-message "Sale begins {day, date, shortWeekDay}" day=1390518044403}}`, { locale: 'en-us' });
+    view = this.render(hbs`{{format-message "Sale begins {day, date, shortWeekDay}" day=1390518044403}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), "Sale begins January 23, 2014");
 });
@@ -223,7 +223,7 @@ test('intl-get returns message for key that is a literal string (not an object p
     translation['string.path.works'] = 'yes it does';
 
     try {
-      view = this.render(hbs`{{format-message (intl-get "string.path.works")}}`, {locale: 'en-us'});
+      view = this.render(hbs`{{format-message (intl-get "string.path.works")}}`, 'en-us');
       runAppend(view);
       assert.equal(view.$().text(), "yes it does");
     } catch(ex) {

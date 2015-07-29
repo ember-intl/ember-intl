@@ -65,7 +65,7 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
       // which locale the user should be targeted and perhaps lazily
       // load translations using XHR and calling intl's `addTranslation`/`addTranslations`
       // method with the results of the XHR request
-      this.set('intl.locale', 'en-us');
+      this.get('intl').setLocale('en-us');
     }
   });
 ```

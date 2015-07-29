@@ -36,7 +36,7 @@
       takenDate=yesterday}}
 </div>
 <br />
-<button title={{format-message (intl-get 'product.title')}}>
+<button {{bind-attr title=(format-message (intl-get 'product.title'))}}>
     Hover to see title
 </button>
 
