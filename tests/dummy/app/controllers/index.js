@@ -1,16 +1,10 @@
 import Ember from 'ember';
 import computed from 'ember-new-computed';
 
-const { get, set, Controller, inject, on, run:emberRun } = Ember;
+const { set, Controller, inject, on, run:emberRun } = Ember;
 
 const now       = new Date();
 const yesterday = now.setDate(now.getDate() - 1);
-
-function computedNumber (number, options) {
-    return computed('intl._locale', function () {
-        return get(this, 'intl').formatNumber(number, options);
-    });
-}
 
 export default Controller.extend({
     intl:      inject.service(),

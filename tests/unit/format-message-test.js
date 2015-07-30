@@ -8,7 +8,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import Translation from 'ember-intl/models/translation';
-import IntlAdapter from 'ember-intl/adapters/-intl-adapter';
 import registerHelper from 'ember-intl/utils/register-helper';
 import computed from 'ember-new-computed';
 import intlGet from '../../helpers/intl-get';

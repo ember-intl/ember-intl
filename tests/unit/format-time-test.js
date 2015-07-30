@@ -3,7 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import registerHelper from 'ember-intl/utils/register-helper';
@@ -11,8 +10,8 @@ import formatTimeHelper from 'ember-intl/helpers/format-time';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-var date = 1390518044403;
-var view;
+const date = 1390518044403;
+let view;
 
 moduleFor('ember-intl@formatter:format-time', {
     needs: ['service:intl'],

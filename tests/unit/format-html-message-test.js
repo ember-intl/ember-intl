@@ -3,7 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
@@ -12,7 +11,7 @@ import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-var view;
+let view;
 
 moduleFor('ember-intl@formatter:format-html-message', {
     needs: ['service:intl'],
