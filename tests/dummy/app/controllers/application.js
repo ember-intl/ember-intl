@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import computed from 'ember-new-computed';
 
 export default Ember.Controller.extend({
     intl:    Ember.inject.service(),

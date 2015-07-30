@@ -7,7 +7,6 @@ import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Translation from 'ember-intl/models/translation';
-import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 import intlGetHelper from '../../helpers/intl-get';

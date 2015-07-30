@@ -28,7 +28,7 @@ module('Acceptance: Smoke', {
     }
 });
 
-test('format-number', (assert) => {
+test('format-number', () => {
     visit('/smoke');
 
     andThen(() => {
@@ -36,7 +36,7 @@ test('format-number', (assert) => {
     });
 });
 
-test('format-date', (assert) => {
+test('format-date', () => {
     visit('/smoke');
 
     andThen(() => {
@@ -44,7 +44,7 @@ test('format-date', (assert) => {
     });
 });
 
-test('format-time', (assert) => {
+test('format-time', () => {
     visit('/smoke');
 
     andThen(() => {
@@ -52,7 +52,7 @@ test('format-time', (assert) => {
     });
 });
 
-test('format-relative', (assert) => {
+test('format-relative', () => {
     visit('/smoke');
 
     andThen(() => {
