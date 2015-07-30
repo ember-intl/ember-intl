@@ -323,14 +323,7 @@ var app = new EmberApp({
 });
 ```
 
-## Known Gotchas
-> `date value is not finite in DateTimeFormat.format()`
-
-Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
-
-The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
-
-### Helper Options
+## Helper Options
 * All helpers accept optional arguments:
   * `locale` argument to explicitly pass/override the application locale
   * `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
@@ -347,6 +340,14 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 ### Testing with ember-intl
 * [Unit testing](https://github.com/yahoo/ember-intl/wiki/Unit-testing-with-ember-intl)
 * [Integration testing](https://github.com/yahoo/ember-intl/wiki/Integration-testing-with-ember-intl)
+
+## Common Errors
+
+> `date value is not finite in DateTimeFormat.format()`
+
+Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
+
+The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
 
 ## Running
 * `ember server`
