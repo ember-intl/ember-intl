@@ -2,6 +2,7 @@
 /* global require, module */
 
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+var path = require('path');
 
 /*
   This Brocfile specifes the options for the dummy test app of this
@@ -12,5 +13,7 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 */
 
 var app = new EmberAddon();
+
+app.options.snippetPaths = [path.join('tests', 'dummy', 'snippets')];
 
 module.exports = app.toTree();
