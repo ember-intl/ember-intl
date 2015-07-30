@@ -32,7 +32,7 @@ test('exists', function(assert) {
 
 test('invoke formatTime directly with format', function(assert) {
     assert.expect(1);
-    let service = this.container.lookup('service:intl');
+    const service = this.container.lookup('service:intl');
     this.container.unregister('formats:main');
     this.container.register('formats:main', {
         time: {
@@ -52,7 +52,7 @@ test('invoke formatTime directly with format', function(assert) {
 
 test('invoke formatTime directly', function(assert) {
     assert.expect(1);
-    let service = this.container.lookup('service:intl');
+    const service = this.container.lookup('service:intl');
     assert.equal(service.formatTime(date, {
         timeZone: 'UTC',
         locale: 'fr-fr'
@@ -93,7 +93,7 @@ test('it should return a formatted string of just the time', function(assert) {
 
 test('it should format the epoch timestamp', function(assert) {
     assert.expect(1);
-    let locale = 'en-us';
+    const locale = 'en-us';
     view = this.render(hbs`{{format-time 0}}`, locale);
     runAppend(view);
     assert.equal(view.$().text(), new Intl.DateTimeFormat(locale).format(0));

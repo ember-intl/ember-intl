@@ -15,7 +15,7 @@ function assertIsDate(date, errMsg) {
     assert(errMsg, isFinite(date));
 }
 
-let FormatRelative = Formatter.extend({
+const FormatRelative = Formatter.extend({
     formatType: 'relative',
 
     formatter: computed({

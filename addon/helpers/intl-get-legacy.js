@@ -19,15 +19,15 @@ export default function (value, options) {
     assert('intl-get helper must be used as a subexpression', options.isInline === true);
 
     const types = options.types;
-    const view = options.data.view;
-    const hash = readHash(options.hash);
-    const intl = view.container.lookup('service:intl');
+    const view  = options.data.view;
+    const hash  = readHash(options.hash);
+    const intl  = view.container.lookup('service:intl');
 
     let currentValue = value;
     let outStreamValue = '';
     let valueStream;
 
-    let outStream = new Stream(() => {
+    const outStream = new Stream(() => {
         return outStreamValue;
     });
 

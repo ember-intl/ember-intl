@@ -11,6 +11,8 @@ import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
+const { run:emberRun } = Ember;
+
 let view;
 
 moduleFor('ember-intl@formatter:format-relative', {
@@ -46,8 +48,8 @@ test('exists', function(assert) {
 
 test('invoke the formatRelative directly', function(assert) {
     assert.expect(1);
-    let service = this.container.lookup('service:intl');
-    Ember.run(() => { service.setLocale('en-us'); });
+    const service = this.container.lookup('service:intl');
+    emberRun(() => { service.setLocale('en-us'); });
     assert.equal(service.formatRelative(new Date()), 'now', {});
 });
 
