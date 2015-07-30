@@ -8,7 +8,7 @@ var Blueprint    = require('ember-cli/lib/models/blueprint');
 var SilentError  = require('ember-cli/lib/errors/silent');
 
 module.exports = {
-    description: 'Extract CLDR data as an ES6 module for a given locale',
+    description: 'Adds an empty translation file and locale is supported',
 
     normalizeEntityName: function (localeName) {
         entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
