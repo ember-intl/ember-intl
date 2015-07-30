@@ -12,7 +12,9 @@ import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-var view;
+const { run:emberRun } = Ember;
+
+let view;
 
 moduleFor('ember-intl@formatter:format-number', {
     needs: ['service:intl'],
@@ -46,8 +48,8 @@ test('exists', function(assert) {
 
 test('invoke the formatNumber method', function(assert) {
     assert.expect(1);
-    let service = this.container.lookup('service:intl');
-    Ember.run(function() { service.setLocale('en-us'); });
+    const service = this.container.lookup('service:intl');
+    emberRun(() => { service.setLocale('en-us'); });
     assert.equal(service.formatNumber(100), 100);
 });
 

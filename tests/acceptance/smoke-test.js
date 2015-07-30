@@ -4,6 +4,8 @@ import startApp from '../helpers/start-app';
 
 let application;
 
+const { run:emberRun } = Ember;
+
 function contains(selector, string) {
     const element = find(selector)[0];
 
@@ -11,7 +13,7 @@ function contains(selector, string) {
         return ok(false, `can't find element: ${selector}`);
     }
 
-    let text = element.textContent || element.innerText;
+    const text = element.textContent || element.innerText;
     return equal(text.replace(/^\s+|\s+$/g, ''), string);
 }
 
@@ -21,7 +23,7 @@ module('Acceptance: Smoke', {
     },
     afterEach() {
         if (application) {
-            Ember.run(application, 'destroy');
+            emberRun(application, 'destroy');
         }
     }
 });

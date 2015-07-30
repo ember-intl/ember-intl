@@ -7,7 +7,7 @@ import Ember from 'ember';
 
 const { get, set, Logger:logger } = Ember;
 
-let TranslationModel = Ember.Object.extend({
+const TranslationModel = Ember.Object.extend({
     addTranslation(key, value) {
         set(this, key, value);
         return value;

@@ -1,12 +1,14 @@
 import Ember from 'ember';
 
+const { run:emberRun } = Ember;
+
 function runAppend (view) {
-    Ember.run(view, 'appendTo', '#qunit-fixture');
+    emberRun(view, 'appendTo', '#qunit-fixture');
 }
 
 function runDestroy (destroyed) {
     if (destroyed) {
-        Ember.run(destroyed, 'destroy');
+        emberRun(destroyed, 'destroy');
     }
 }
 

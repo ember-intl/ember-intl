@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import computed from 'ember-new-computed';
 
-const { get, set, Controller, inject, on, run } = Ember;
+const { get, set, Controller, inject, on, run:emberRun } = Ember;
 
-let now       = new Date();
-let yesterday = now.setDate(now.getDate() - 1);
+const now       = new Date();
+const yesterday = now.setDate(now.getDate() - 1);
 
 function computedNumber (number, options) {
     return computed('intl._locale', function () {
@@ -32,7 +32,7 @@ export default Controller.extend({
 
     incrementTime: on('init', function() {
         setInterval(() => {
-            run(() => {
+            emberRun(() => {
                 set(this, 'now', new Date());
                 this.incrementProperty('num');
             });

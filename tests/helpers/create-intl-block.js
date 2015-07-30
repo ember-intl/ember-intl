@@ -5,12 +5,14 @@
 
 import Ember from 'ember';
 
+const { run:emberRun } = Ember;
+
 function createIntlBlock (container) {
     return (template, locale) => {
         const service = container.lookup('service:intl');
 
         if (locale) {
-            Ember.run(() => {
+            emberRun(() => {
                 service.setLocale(locale);
             });
         }

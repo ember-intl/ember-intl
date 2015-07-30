@@ -25,9 +25,10 @@ const DefaultIntlAdapter = Ember.Object.extend({
     },
 
     findTranslationByKey(localeNames, translationKey) {
-        let locales = makeArray(localeNames);
+        const locales = makeArray(localeNames);
+        const len = locales.length;
+
         let i = 0;
-        let len = locales.length;
         let translations, translation, key;
 
         for (; i < len; i++) {

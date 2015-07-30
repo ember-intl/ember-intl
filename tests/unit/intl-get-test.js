@@ -13,8 +13,8 @@ import createIntlBlock from '../helpers/create-intl-block';
 import intlGetHelper from '../../helpers/intl-get';
 import modernHelperTest from '../helpers/test';
 
-var run = Ember.run;
-var view;
+const { run:emberRun } = Ember;
+let view;
 
 moduleFor('helper:intl-get', {
     needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
@@ -67,7 +67,7 @@ modernHelperTest('should recompute on intl locale change in >= 1.13.0', function
     view = this.render(hbs`{{intl-get "greeting"}}`, 'en-us');
     runAppend(view);
 
-    run(() => {
+    emberRun(() => {
         service.setLocale('fr-fr');
         service.setLocale('en-us');
         assert.equal(triggered, 2);

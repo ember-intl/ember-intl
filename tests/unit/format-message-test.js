@@ -15,8 +15,8 @@ import intlGet from '../../helpers/intl-get';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-var run = Ember.run;
-var view;
+const { run:emberRun, get } = Ember;
+let view;
 
 moduleFor('ember-intl@formatter:format-message', {
     needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
@@ -56,7 +56,7 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
     assert.expect(1);
-    let service = this.container.lookup('service:intl');
+    const service = this.container.lookup('service:intl');
     assert.equal(service.formatMessage('hello {world}', {
         world: 'world'
     }), 'hello world');
@@ -160,19 +160,19 @@ test('intl-get handles bound computed property', function(assert) {
         foo: true,
         computedMessage: computed('foo', {
             get() {
-                return Ember.get(this, 'foo') ? 'foo.bar' : 'foo.baz';
+                return get(this, 'foo') ? 'foo.bar' : 'foo.baz';
             }
         })
     }).create();
     view.set('context', context);
     runAppend(view);
     assert.equal(view.$().text(), "foo bar baz");
-    run(() => {
+    emberRun(() => {
         view.set('context.foo', false);
     });
     assert.equal(view.$().text(), "baz baz baz");
     runDestroy(view);
-    run(() => {
+    emberRun(() => {
         context.set('foo', true);
     });
     assert.ok(context, 'Updating binding to view after view is destroyed should not raise exception.');
@@ -180,7 +180,7 @@ test('intl-get handles bound computed property', function(assert) {
 
 test('locale can add message to intl service and read it', function(assert) {
     assert.expect(1);
-    run(() => {
+    emberRun(() => {
         const service = this.container.lookup('service:intl');
         service.addTranslation('en-us', 'oh', 'hai!').then(() => {
             view = this.render(hbs`{{format-message (intl-get "oh")}}`, 'en-us');
@@ -223,13 +223,13 @@ test('intl-get returns message for key that is a literal string (not an object p
     translation['string.path.works'] = 'yes it does';
 
     try {
-      view = this.render(hbs`{{format-message (intl-get "string.path.works")}}`, 'en-us');
-      runAppend(view);
-      assert.equal(view.$().text(), "yes it does");
+        view = this.render(hbs`{{format-message (intl-get "string.path.works")}}`, 'en-us');
+        runAppend(view);
+        assert.equal(view.$().text(), "yes it does");
     } catch(ex) {
-      console.error(ex);
+        console.error(ex);
     } finally {
-      // reset the function back
-      translation.getValue = fn;
+        // reset the function back
+        translation.getValue = fn;
     }
 });
