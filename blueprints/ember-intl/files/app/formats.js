@@ -2,7 +2,7 @@ var hhmmss = {
   hour:   'numeric',
   minute: 'numeric',
   second: 'numeric'
-}
+};
 
 export default {
   time: {
