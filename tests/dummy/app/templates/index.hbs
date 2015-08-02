@@ -8,18 +8,23 @@
 {{code-snippet name='format-number.hbs'}}
 
 <h3>Format Date</h3>
-<div>{{format-date now}}</div>
+<div>{{format-date instant}}</div>
 <div>{{format-date yesterday}}</div>
 
 <h3>Format Time</h3>
-<div>{{format-time now format='hhmmss'}}</div>
-<div>{{format-time now hour='numeric' second='numeric' minute='numeric' hour12=false}}</div>
+<div>{{format-time instant format='hhmmss'}}</div>
+<div>{{format-time instant hour='numeric' second='numeric' minute='numeric' hour12=false}}</div>
 
 {{code-snippet name='format-time.hbs'}}
 
 <h3>Format Relative</h3>
 <div>{{format-relative yesterday}}</div>
-<div>{{format-relative now}}</div>
+<div>{{format-relative instant}}</div>
+<div>{{format-relative now interval=1000}}</div>
+
+<div>
+    {{code-snippet name='format-relative.hbs'}}
+</div>
 
 <h3>Format Message</h3>
 
