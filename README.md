@@ -182,6 +182,14 @@ export default Ember.Component.extend({
   })
 });
 ```
+
+#### Live Relative Timestamp
+A new feature, only available when using >= Ember 1.13, is the ability to recompute the relative timestamp on an interval by passing an `interval` argument (in milliseconds).
+
+```hbs
+{{format-relative now interval=1000}} -> now, 1 second ago, 2 seconds ago, etc. (will recompute every 1s)
+```
+
 #### Format Relative Options
 [List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-Relative-Options)
 
@@ -212,7 +220,6 @@ Or programmatically convert a message within any Ember Object.
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   yesterday: Ember.computed(function() {
-    var now = new Date();
     return this.get('intl').formatMessage('Hello {name}', { name: 'Jason' });
   })
 });

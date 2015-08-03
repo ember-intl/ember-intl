@@ -10,6 +10,7 @@ import formatRelativehelper from 'ember-intl/helpers/format-relative';
 import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
+import modernHelperTest from '../helpers/test';
 
 const { run:emberRun } = Ember;
 
@@ -64,6 +65,19 @@ test('can specify a `value` and `now` on the options hash', function(assert) {
     view = this.render(hbs`{{format-relative 2000 now=0}}`, 'en-us');
     runAppend(view);
     assert.equal(view.$().text(), 'in 2 seconds');
+});
+
+modernHelperTest('can specify a `interval` to trigger recompute', function(assert) {
+    assert.expect(2);
+    view = this.render(hbs`{{format-relative date interval=1000}}`, 'en-us');
+    view.set('context', { date: new Date() });
+    runAppend(view);
+    assert.equal(view.$().text(), 'now');
+    stop();
+    setTimeout(() => {
+        start();
+        assert.equal(view.$().text(), '1 second ago');
+    }, 1001);
 });
 
 test('should return relative time in hours, not best fit', function(assert) {
