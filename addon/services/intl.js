@@ -103,6 +103,8 @@ const IntlService = Service.extend(Evented, {
 
         if (instance.registry) {
             container = instance.registry;
+        } else if (container.registry && container.registry.register) {
+            container = container.registry;
         }
 
         if (container.has(name)) {
