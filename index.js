@@ -92,6 +92,26 @@ module.exports = {
         return tree;
     },
 
+    getLocalesByTranslationFiles: function() {
+        var intlOptions  = this.intlOptions;
+        var translations = path.join(this.project.root, intlOptions.inputPath);
+        var locales      = [];
+
+        if (fs.existsSync(translations)) {
+            locales = walkSync(translations).map(function (filename) {
+                return path.basename(filename, path.extname(filename));
+            }).filter(function(locale) {
+                return LocaleWriter.has(locale);
+            });
+        }
+
+        if (intlOptions.locales) {
+            locales = locales.concat(intlOptions.locales);
+        }
+
+        return utils.uniqueByString(locales);
+    },
+
     treeForApp: function (inputTree) {
         if (utils.isModern(this)) {
             inputTree = stew.rm(inputTree, path.join('initializers', 'ember-intl-legacy.js'));
@@ -100,35 +120,12 @@ module.exports = {
             inputTree = stew.mv(inputTree, path.join('initializers', 'ember-intl-legacy.js'), path.join('initializers', 'ember-intl.js'));
         }
 
-        var trees        = [inputTree];
-        var intlOptions  = this.intlOptions;
-        var translations = path.join(this.project.root, intlOptions.inputPath);
-        var locales      = [];
-
-        if (fs.existsSync(translations)) {
-            locales = walkSync(translations).map(function (filename) {
-                return path.basename(filename, path.extname(filename));
-            }).filter(function (localeName) {
-                var has = LocaleWriter.has(localeName);
-                if (!has) {
-                    this.ui.writeLine(
-                        chalk.red(
-                            'ember-intl: \'' + localeName + '\' does not match a supported locale name.\n' +
-                            'List of supported locales: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main'
-                        )
-                    );
-                }
-                return has;
-            }, this);
-        }
-
-        if (intlOptions.locales) {
-            locales = locales.concat(intlOptions.locales);
-        }
+        var trees   = [inputTree];
+        var locales = this.getLocalesByTranslationFiles();
 
         if (locales.length) {
             trees.push(new LocaleWriter(inputTree, 'cldrs', {
-                locales       : utils.uniqueByString(locales),
+                locales       : locales,
                 pluralRules   : true,
                 relativeFields: true,
                 prelude       : '/*jslint eqeq: true*/\n',
@@ -144,17 +141,19 @@ module.exports = {
     treeForPublic: function () {
         var inputTree   = this._super.treeForPublic.apply(this, arguments);
         var intlOptions = this.intlOptions;
+
+        if (intlOptions.disablePolyfill) {
+            return inputTree;
+        }
+
         var options     = this.app.options;
         var outputPath  = path.join('assets', 'intl');
         var trees       = [];
+        var locales     = this.getLocalesByTranslationFiles();
         var include;
 
         if (options.app && options.app.intl) {
             outputPath = options.app.intl;
-        }
-
-        if (intlOptions.disablePolyfill) {
-            return inputTree;
         }
 
         if (inputTree) {
@@ -166,8 +165,8 @@ module.exports = {
             destDir: path.join(outputPath)
         })));
 
-        if (intlOptions.locales) {
-            include = utils.uniqueByString(intlOptions.locales).map(function(locale) {
+        if (locales.length) {
+            include = locales.map(function(locale) {
                 return new RegExp(locale, 'i');
             });
         }
