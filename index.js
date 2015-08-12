@@ -88,7 +88,7 @@ module.exports = {
         // with the native Intl API
         trees.push(new Funnel(intlPath + '/locale-data/jsonp', {
             srcDir:  '/',
-            files:   ['*.js'],
+            includes:   ['*.js'],
             destDir: '/assets/intl/polyfill/locales/'
         }));
 
