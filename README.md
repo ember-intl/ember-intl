@@ -322,7 +322,7 @@ In this case, `en-us.js` and `fr-fr.js` will be copied to `/assets/intl/locales`
 ### Change output path
 
 ```js
-// Brocfile.js
+// ember-cli-build.js
 var app = new EmberApp({
   outputPaths: {
     intl: '/assets/intl' // default
