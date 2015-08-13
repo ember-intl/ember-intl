@@ -238,8 +238,8 @@ This delegates to the `{{format-message}}` helper, but will first HTML-escape al
   numPhotos=(format-number num)}}
 ```
 
-### Intl-Get
-Utility helper for returning the value, or eventual value, based on a translation key.  *Should only ever be used as a subexpression, never as a standalone helper.*
+### intl-get Subexpression
+Subexpression helper for returning a translation for a given key.  *NOTE: Should only ever be used as a subexpression, never as a standalone helper.*
 
 ```hbs
 {{format-message (intl-get 'product.info')
