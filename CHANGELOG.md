@@ -2,6 +2,19 @@
 
 See github release notes.  Will aggregate for 2.0-stable.
 
+### 1.3.2
+
+* Reduces the size of the npm package by removing folders not needed.
+
+### 1.3.1
+
+* Fixes misuse of Broccoli funnel
+
+### 1.3.0
+
+* Leveraging Ember.Service
+* Improve testability story
+
 ### 1.2.0
 
 * [ENHANCEMENT] Switching CLDR library from `node-cldr` to https://github.com/yahoo/formatjs-extract-cldr-data
