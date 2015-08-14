@@ -9,14 +9,22 @@ import formatHelper from './-base';
 let RelativeHelper = formatHelper('relative');
 
 if (Ember.Helper && Ember.Helper.detect(RelativeHelper)) {
-    const { later:runLater } = Ember.run;
+    const runBind = Ember.run.bind;
 
     RelativeHelper = RelativeHelper.extend({
         compute(value, hash) {
+            this.clearTimer();
             if (hash && hash.interval) {
-                runLater(this, this.recompute, parseInt(hash.interval, 10));
+                this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
             }
             return this._super(...arguments);
+        },
+        clearTimer() {
+            clearTimeout(this.timer);
+        },
+        destroy() {
+            this.clearTimer();
+            this._super.apply(this, arguments);
         }
     });
 }
