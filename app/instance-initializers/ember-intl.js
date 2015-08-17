@@ -13,7 +13,13 @@ function filterBy (env, type) {
 }
 
 export function instanceInitializer(instance) {
-    const service = instance.container.lookup('service:intl');
+    let service;
+
+    if (instance.lookup) {
+      service = instance.lookup('service:intl');
+    } else {
+      service = instance.container.lookup('service:intl');
+    }
 
     filterBy(ENV, 'cldrs').forEach((key) => {
         addLocaleData(require(key, null, null, true)['default']);
