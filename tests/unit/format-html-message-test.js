@@ -30,6 +30,13 @@ test('exists', function(assert) {
     assert.ok(formatHtmlHelper);
 });
 
+test('invoke the formatHTMLMessage directly', function(assert) {
+    assert.expect(1);
+    const service = this.container.lookup('service:intl');
+    assert.equal(service.formatHtmlMessage("<strong>Hello {name}</strong>", { name: "<em>Jason</em>" }),
+                 "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>");
+});
+
 test('message is formatted correctly with argument', function(assert) {
     assert.expect(1);
     view = this.render(hbs`{{format-html-message "Hello {name}" name="Jason"}}`, 'en-us');
