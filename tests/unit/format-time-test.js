@@ -11,12 +11,13 @@ import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
 const date = 1390518044403;
-let view;
+let view, registry;
 
 moduleFor('ember-intl@formatter:format-time', {
     needs: ['service:intl'],
     beforeEach() {
-        registerHelper('format-time', formatTimeHelper, this.container);
+        registry = this.registry || this.container;
+        registerHelper('format-time', formatTimeHelper, registry);
         this.render = createIntlBlock(this.container);
     },
     afterEach() {
@@ -32,8 +33,8 @@ test('exists', function(assert) {
 test('invoke formatTime directly with format', function(assert) {
     assert.expect(1);
     const service = this.container.lookup('service:intl');
-    this.container.unregister('formats:main');
-    this.container.register('formats:main', {
+    registry.unregister('formats:main');
+    registry.register('formats:main', {
         time: {
             test: {
                 timeZone: 'UTC',
@@ -46,7 +47,7 @@ test('invoke formatTime directly with format', function(assert) {
         format: 'test'
     }), '23/1/2014');
 
-    this.container.unregister('formats:main');
+    registry.unregister('formats:main');
 });
 
 test('invoke formatTime directly', function(assert) {

@@ -14,14 +14,15 @@ import modernHelperTest from '../helpers/test';
 
 const { run:emberRun } = Ember;
 
-let view;
+let view, registry;
 
 moduleFor('ember-intl@formatter:format-relative', {
     needs: ['service:intl'],
     beforeEach() {
-        registerHelper('format-relative', formatRelativehelper, this.container);
+        registry =  this.registry || this.container;
+        registerHelper('format-relative', formatRelativehelper, registry);
 
-        this.container.register('formats:main', {
+        registry.register('formats:main', {
             relative: {
                 hours: {
                     units: 'hour',
@@ -30,12 +31,12 @@ moduleFor('ember-intl@formatter:format-relative', {
             }
         });
 
-        this.container.optionsForType('formats', {
+        registry.optionsForType('formats', {
             singleton:   true,
             instantiate: false
         });
 
-        this.render = createIntlBlock(this.container);
+        this.render = createIntlBlock(registry);
     },
     afterEach() {
         runDestroy(view);

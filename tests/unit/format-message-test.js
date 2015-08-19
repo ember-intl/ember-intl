@@ -15,22 +15,26 @@ import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
 const { run:emberRun, get } = Ember;
-let view;
+let view, registry;
 
 moduleFor('ember-intl@formatter:format-message', {
     needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
     beforeEach() {
-        registerHelper('format-message', formatMessageHelper, this.container);
-        this.container.register('helper:intl-get', intlGet);
-        this.container.register('application:main', Ember.Application.extend());
-        this.container.register('ember-intl@translation:en-us', Translation.extend({
+        registry =  this.registry || this.container;
+        registry.register('view:basic', Ember.View);
+
+        registerHelper('format-message', formatMessageHelper, registry);
+
+        registry.register('helper:intl-get', intlGet);
+        registry.register('application:main', Ember.Application.extend());
+        registry.register('ember-intl@translation:en-us', Translation.extend({
             foo: {
                 bar: 'foo bar baz',
                 baz: 'baz baz baz'
             }
         }));
 
-        this.container.register('formats:main', {
+        registry.register('formats:main', {
             date: {
                 shortWeekDay: {
                     day:   'numeric',
@@ -40,8 +44,8 @@ moduleFor('ember-intl@formatter:format-message', {
             }
         });
 
-        this.container.injection('formatter', 'intl', 'service:intl');
-        this.render = createIntlBlock(this.container);
+        registry.injection('formatter', 'intl', 'service:intl');
+        this.render = createIntlBlock(registry);
     },
     afterEach() {
         runDestroy(view);

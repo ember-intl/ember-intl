@@ -13,13 +13,15 @@ import createIntlBlock from '../helpers/create-intl-block';
 
 const date = 1390518044403;
 const defaultLocale = 'en-us';
-let view;
+
+let view, registry;
 
 moduleFor('ember-intl@formatter:format-date', {
     needs: ['service:intl'],
     beforeEach() {
-        registerHelper('format-date', formatDateHelper, this.container);
-        this.render = createIntlBlock(this.container);
+        registry =  this.registry || this.container;
+        registerHelper('format-date', formatDateHelper, registry);
+        this.render = createIntlBlock(registry);
     },
     afterEach() {
         runDestroy(view);

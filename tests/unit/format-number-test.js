@@ -14,14 +14,14 @@ import createIntlBlock from '../helpers/create-intl-block';
 
 const { run:emberRun } = Ember;
 
-let view;
+let view, registry;
 
 moduleFor('ember-intl@formatter:format-number', {
     needs: ['service:intl'],
     beforeEach() {
-        registerHelper('format-number', formatNumberHelper, this.container);
-
-        this.container.register('formats:main', {
+        registry =  this.registry || this.container;
+        registerHelper('format-number', formatNumberHelper, registry);
+        registry.register('formats:main', {
             number: {
                 digits: {
                     minimumFractionDigits: 2
@@ -33,11 +33,11 @@ moduleFor('ember-intl@formatter:format-number', {
             }
         }, { instantiate: false });
 
-        this.render = createIntlBlock(this.container);
+        this.render = createIntlBlock(registry);
     },
     afterEach() {
         runDestroy(view);
-        this.container.unregister('formats:main');
+        registry.unregister('formats:main');
     }
 });
 
