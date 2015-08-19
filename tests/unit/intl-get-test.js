@@ -13,20 +13,21 @@ import intlGetHelper from '../../helpers/intl-get';
 import modernHelperTest from '../helpers/test';
 
 const { run:emberRun } = Ember;
-let view;
+let view, registry;
 
 moduleFor('helper:intl-get', {
     needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
     beforeEach() {
-        this.container.register('ember-intl@translation:en-us', Translation.extend({
+        registry = this.registry || this.container;
+        registry.register('ember-intl@translation:en-us', Translation.extend({
             greeting: 'Hello'
         }));
 
-        this.container.register('ember-intl@translation:fr-fr', Translation.extend({
+        registry.register('ember-intl@translation:fr-fr', Translation.extend({
             greeting: 'Bonjour'
         }));
 
-        this.render = createIntlBlock(this.container);
+        this.render = createIntlBlock(registry);
     },
     afterEach() {
         runDestroy(view);

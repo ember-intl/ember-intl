@@ -11,14 +11,15 @@ import registerHelper from 'ember-intl/utils/register-helper';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-let view;
+let view, registry;
 
 moduleFor('ember-intl@formatter:format-html-message', {
     needs: ['service:intl'],
     beforeEach() {
-        registerHelper('format-html-message', formatHtmlHelper, this.container);
-        this.container.injection('formatter', 'intl', 'service:intl');
-        this.render = createIntlBlock(this.container);
+        registry = this.registry || this.container;
+        registerHelper('format-html-message', formatHtmlHelper, registry);
+        registry.injection('formatter', 'intl', 'service:intl');
+        this.render = createIntlBlock(registry);
     },
     afterEach() {
         runDestroy(view);

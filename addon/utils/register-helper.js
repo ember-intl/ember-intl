@@ -5,12 +5,12 @@
 
 import Ember from 'ember';
 
-function registerHelper(name, klass, container) {
+function registerHelper(name, klass, registry) {
     if (!Ember.Helper) {
         return Ember.HTMLBars._registerHelper(name, klass);
     }
 
-    return container.register(`helper:${name}`, klass);
+    return registry.register(`helper:${name}`, klass);
 }
 
 export default registerHelper;

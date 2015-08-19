@@ -7,9 +7,9 @@ import Ember from 'ember';
 
 const { run:emberRun } = Ember;
 
-function createIntlBlock (container) {
-    return (template, locale) => {
-        const service = container.lookup('service:intl');
+function createIntlBlock () {
+    return function(template, locale) {
+        const service = this.container.lookup('service:intl');
 
         if (locale) {
             emberRun(() => {
@@ -24,7 +24,7 @@ function createIntlBlock (container) {
 
         return Ember.View.create({
             template: template,
-            container: container
+            container: this.container
         });
     };
 }
