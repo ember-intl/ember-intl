@@ -158,7 +158,7 @@ module.exports = {
         }
 
         trees.push(utils.lowercaseTree(new Funnel(path.join(intlPath, 'dist'), {
-            files  : ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
+            files  : ['Intl.complete.js', 'Intl.js', 'Intl.js.map', 'Intl.min.js'],
             destDir: path.join(outputPath)
         })));
 
