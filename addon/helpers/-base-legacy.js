@@ -20,15 +20,14 @@ function getValue(params) {
 }
 
 function helperFactory(formatType, optionalGetValue = getValue) {
-    return function (params, hash, seenHash, env) {
+    return function (params, hash, options, env) {
         let outStream;
 
         function touchStream() {
             outStream.notify();
         }
 
-        seenHash = readHash(hash);
-
+        const seenHash = readHash(hash);
         const view = env.data.view;
         const intl = view.container.lookup('service:intl');
         const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
