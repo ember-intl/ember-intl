@@ -44,7 +44,7 @@ function helperFactory(formatType, optionalGetValue) {
             let format = {};
 
             if (hash.format) {
-                format = intl.getFormat(formatType, hash.format) || {};
+                format = intl.getFormat(formatType, hash.format);
             }
 
             return formatter.format(

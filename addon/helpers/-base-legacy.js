@@ -20,7 +20,7 @@ function getValue(params) {
 }
 
 function helperFactory(formatType, optionalGetValue = getValue) {
-    return function (params, hash, options, env) {
+    return function legacyIntlHelper(params, hash, options, env) {
         let outStream;
 
         function touchStream() {
@@ -47,7 +47,7 @@ function helperFactory(formatType, optionalGetValue = getValue) {
             let format = {};
 
             if (seenHash && seenHash.format) {
-                format = intl.getFormat(formatType, seenHash.format) || {};
+                format = intl.getFormat(formatType, seenHash.format);
             }
 
             return formatter.format.call(
