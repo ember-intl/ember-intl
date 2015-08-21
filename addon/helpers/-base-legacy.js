@@ -15,19 +15,15 @@ import {
 
 const { get } = Ember;
 
-function helperFactory(formatType) {
-    function throwError() {
-        throw new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
-    }
+function getValue(params) {
+    return params[0];
+}
 
+function helperFactory(formatType, optionalGetValue = getValue) {
     return function (params, hash, seenHash, env) {
-        if (!params || !params.length) {
-            return throwError();
-        }
-
         let outStream;
 
-        function touchStream () {
+        function touchStream() {
             outStream.notify();
         }
 
@@ -36,7 +32,11 @@ function helperFactory(formatType) {
         const view = env.data.view;
         const intl = view.container.lookup('service:intl');
         const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
-        const value = params[0];
+        const value = optionalGetValue(params, hash, intl);
+
+        if (typeof value === 'undefined') {
+            throw new Error(`format-${formatType} helper requires value`);
+        }
 
         if (value.isStream) {
             value.subscribe(() => {
