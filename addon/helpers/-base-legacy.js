@@ -31,16 +31,16 @@ function helperFactory(formatType, optionalGetValue = getValue) {
         const view = env.data.view;
         const intl = view.container.lookup('service:intl');
         const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
-        const value = optionalGetValue(params, hash, intl);
+        const currentValue = optionalGetValue(params, hash, intl);
 
-        if (typeof value === 'undefined') {
+        if (typeof currentValue === 'undefined') {
             throw new Error(`format-${formatType} helper requires value`);
         }
 
-        if (value.isStream) {
-            value.subscribe(() => {
+        if (currentValue.isStream) {
+            currentValue.subscribe(() => {
                 touchStream();
-            }, value);
+            }, currentValue);
         }
 
         outStream = new Stream(() => {
@@ -52,7 +52,7 @@ function helperFactory(formatType, optionalGetValue = getValue) {
 
             return formatter.format.call(
                 formatter,
-                read(value),
+                read(currentValue),
                 extend({
                     locale: get(intl, '_locale')
                 }, format, seenHash),
@@ -61,15 +61,16 @@ function helperFactory(formatType, optionalGetValue = getValue) {
         });
 
         Object.keys(hash).forEach((key) => {
-            if (!hash[key].isStream) {
+            const value = hash[key];
+
+            if (!value || !value.isStream) {
                 return;
             }
 
-            const hashStream = hash[key];
-            hash[key] = read(hashStream);
+            hash[key] = read(value);
 
-            hashStream.subscribe((valueStream) => {
-                seenHash[key] = read(valueStream);
+            value.subscribe((currentValueStream) => {
+                seenHash[key] = read(currentValueStream);
                 touchStream();
             });
         });
