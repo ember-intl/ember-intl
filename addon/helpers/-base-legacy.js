@@ -15,8 +15,8 @@ import {
 
 const { get } = Ember;
 
-const helperFactory = function (formatType) {
-    function throwError () {
+function helperFactory(formatType) {
+    function throwError() {
         return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
     }
 
@@ -84,6 +84,6 @@ const helperFactory = function (formatType) {
 
         return outStream;
     };
-};
+}
 
 export default helperFactory;

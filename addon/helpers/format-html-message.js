@@ -3,6 +3,18 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import formatHelper from './-base';
+import Ember from 'ember';
+import factory from './-base';
+import { getValue } from './format-message';
 
-export default formatHelper('html-message');
+const { Helper } = Ember;
+
+let HtmlMessageHelper = factory('html-message');
+
+if (Helper && Helper.detect(HtmlMessageHelper)) {
+    HtmlMessageHelper = HtmlMessageHelper.extend({
+        getValue: getValue
+    });
+}
+
+export default HtmlMessageHelper;
