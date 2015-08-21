@@ -17,7 +17,7 @@ const { get } = Ember;
 
 function helperFactory(formatType) {
     function throwError() {
-        return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
+        throw new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
     }
 
     return function (params, hash, seenHash, env) {
