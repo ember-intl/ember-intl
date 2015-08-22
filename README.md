@@ -24,27 +24,14 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Installation
 * `ember install ember-intl@2.0.0-beta.18`
-* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), polyfilling this API is required.  The [Intl.JS polyfill](https://github.com/yahoo/ember-intl/wiki/Intl.js-Polyfill) is automatically included into the `/assets` folder at build time, you just need to add it to ensure it's included in your app payload.  This is usually done by adding the following script tags to your `index.html`.
+* Polyfill the Intl.js API (required for Safari/PhantomJS, and legacy browser)
+    * Instructions on loading [loading from assets directory][]
+    * Instructions on conditionally loading the [polyfill based on User-Agent][]
+    * Instructions on [disabling polyfill][]
 
-```html
-<script src="assets/intl/intl.min.js"></script>
-<script src="assets/intl/locales/en-us.js"></script>
-<script src="assets/intl/locales/fr-fr.js"></script>
-<script src="assets/intl/locales/es-es.js"></script>
-<!--
-You can view the full list of CLDR locales which can be accessed from the `/assets/intl` folder
-of your application.  The CLDRs are automatically placed there at build time.  Typically this folder
-on your filesystem is ``<project>/dist/assets/intl`
-
-Full list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main
--->
-```
-
-Another option, is to leverage http://polyfill.io polyfill-as-a-service which will conditionally load the Polyfill by matching on the `User-Agent` header.
-
-```html
-<script src="https://cdn.polyfill.io/v1/polyfill.min.js?features=Intl.~locale.en-US,Intl.~locale.fr-FR,Intl.~locale.es-ES"></script>
-```
+[loading from assets directory]: https://github.com/yahoo/ember-intl/wiki/Intl.js-Polyfill#loading-files-from-assets
+[polyfill based on User-Agent]: https://github.com/yahoo/ember-intl/wiki/Intl.js-Polyfill#polyfillio
+[disabling polyfill]: https://github.com/yahoo/ember-intl/wiki/Intl.js-Polyfill#disabling
 
 ## Translations
 Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
