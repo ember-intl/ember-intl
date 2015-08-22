@@ -291,44 +291,7 @@ Output of both the helper and the programmatic example:
 
 ## Polyfill
 
-### Disabling
-```js
-// config/environment.js
-module.exports = function() {
-  return {
-    intl: {
-      disablePolyfill: true
-    }
-  };
-};
-```
-
-### Cherry pick CLDR modules
-
-At build time, we copy roughly 700 files, totaling 18mb, to the asset folder.  Don't worry, this does not add weight to your app or vendor files.  The only penalty you incur is at build time with the ember-cli build pipeline.  Since most applications have a list of locales they target, you can specify the locales in `config/environment.js` to optimize only copying the files needed.
-
-```js
-module.exports = function() {
-  return {
-    intl: {
-      locales: ['en-us', 'fr-fr']
-    }
-  };
-};
-```
-
-In this case, `en-us.js` and `fr-fr.js` will be copied to `/assets/intl/locales` on build.
-
-### Change output path
-
-```js
-// ember-cli-build.js
-var app = new EmberApp({
-  outputPaths: {
-    intl: '/assets/intl' // default
-  }
-});
-```
+There are two options on how to load the Intl.js polyfill, either through the polyfill which ships with ember-intl or through polyfill.io.  Both of which are documented: https://github.com/yahoo/ember-intl/wiki/Intl.js-Polyfill
 
 ## Helper Options
 * All helpers accept optional arguments:
