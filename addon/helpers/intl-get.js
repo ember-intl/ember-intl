@@ -5,13 +5,13 @@
 
 import Ember from 'ember';
 
-const { get } = Ember;
+const { Helper, inject, get } = Ember;
 
-let Helper = null;
+let IntlGetHelper = null;
 
-if (Ember.Helper) {
-    Helper = Ember.Helper.extend({
-        intl: Ember.inject.service(),
+if (Helper) {
+    IntlGetHelper = Helper.extend({
+        intl: inject.service(),
 
         init() {
             this._super(...arguments);
@@ -33,4 +33,4 @@ if (Ember.Helper) {
 }
 
 
-export default Helper;
+export default IntlGetHelper;

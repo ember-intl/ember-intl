@@ -75,7 +75,11 @@ test('message is formatted correctly with argument', function(assert) {
 test('should throw if called with out a value', function(assert) {
     assert.expect(1);
     view = this.render(hbs`{{format-message}}`, 'en-us');
-    assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-message');
+    try {
+        runAppend(view);
+    } catch(ex) {
+        assert.ok(ex, 'raised error when not value is passed to format-message');
+    }
 });
 
 test('should return a formatted string', function(assert) {
@@ -138,6 +142,13 @@ test('should return a formatted string with an `each` block', function(assert) {
 
     runAppend(view);
     assert.equal(view.$().text().trim(), "Allison harvested 10 apples.Jeremy harvested 60 apples.");
+});
+
+test('can look up translations by id/key', function(assert) {
+    assert.expect(1);
+    view = this.render(hbs`{{format-message id="foo.bar"}}`, 'en-us');
+    runAppend(view);
+    assert.equal(view.$().text(), "foo bar baz");
 });
 
 test('intl-get returns message and format-message renders', function(assert) {

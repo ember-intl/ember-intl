@@ -3,6 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import formatHelper from './-base';
+import helperFactory from './-base';
+import { getValue } from './format-message';
 
-export default formatHelper('html-message');
+export default helperFactory('html-message', getValue);

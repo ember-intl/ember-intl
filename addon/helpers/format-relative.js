@@ -4,11 +4,13 @@
  */
 
 import Ember from 'ember';
-import formatHelper from './-base';
+import helperFactory from './-base';
 
-let RelativeHelper = formatHelper('relative');
+const { Helper } = Ember;
 
-if (Ember.Helper && Ember.Helper.detect(RelativeHelper)) {
+let RelativeHelper = helperFactory('relative');
+
+if (Helper && Helper.detect(RelativeHelper)) {
     const runBind = Ember.run.bind;
 
     RelativeHelper = RelativeHelper.extend({

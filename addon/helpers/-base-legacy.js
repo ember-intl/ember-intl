@@ -15,45 +15,44 @@ import {
 
 const { get } = Ember;
 
-const helperFactory = function (formatType) {
-    function throwError () {
-        return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
-    }
+function getValue(params) {
+    return params[0];
+}
 
-    return function (params, hash, seenHash, env) {
-        if (!params || !params.length) {
-            return throwError();
-        }
-
+function helperFactory(formatType, optionalGetValue = getValue) {
+    return function legacyIntlHelper(params, hash, options, env) {
         let outStream;
 
-        function touchStream () {
+        function touchStream() {
             outStream.notify();
         }
 
-        seenHash = readHash(hash);
-
+        const seenHash = readHash(hash);
         const view = env.data.view;
         const intl = view.container.lookup('service:intl');
         const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
-        const value = params[0];
+        const currentValue = optionalGetValue(params, hash, intl);
 
-        if (value.isStream) {
-            value.subscribe(() => {
+        if (typeof currentValue === 'undefined') {
+            throw new Error(`format-${formatType} helper requires value`);
+        }
+
+        if (currentValue.isStream) {
+            currentValue.subscribe(() => {
                 touchStream();
-            }, value);
+            }, currentValue);
         }
 
         outStream = new Stream(() => {
             let format = {};
 
             if (seenHash && seenHash.format) {
-                format = intl.getFormat(formatType, seenHash.format) || {};
+                format = intl.getFormat(formatType, seenHash.format);
             }
 
             return formatter.format.call(
                 formatter,
-                read(value),
+                read(currentValue),
                 extend({
                     locale: get(intl, '_locale')
                 }, format, seenHash),
@@ -62,15 +61,16 @@ const helperFactory = function (formatType) {
         });
 
         Object.keys(hash).forEach((key) => {
-            if (!hash[key].isStream) {
+            const value = hash[key];
+
+            if (!value || !value.isStream) {
                 return;
             }
 
-            const hashStream = hash[key];
-            hash[key] = read(hashStream);
+            hash[key] = read(value);
 
-            hashStream.subscribe((valueStream) => {
-                seenHash[key] = read(valueStream);
+            value.subscribe((currentValueStream) => {
+                seenHash[key] = read(currentValueStream);
                 touchStream();
             });
         });
@@ -84,6 +84,6 @@ const helperFactory = function (formatType) {
 
         return outStream;
     };
-};
+}
 
 export default helperFactory;

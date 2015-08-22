@@ -5,53 +5,63 @@
 
 import Ember from 'ember';
 import extend from '../utils/extend';
+import computed from 'ember-new-computed';
 
-const { get } = Ember;
+const { Helper, inject, get } = Ember;
 
-const helperFactory = function (formatType) {
-    function throwError () {
-        return new Error(`${formatType} requires a single unname argument. {{format-${formatType} value}}`);
-    }
+function getValue(params) {
+    return params[0];
+}
 
-    return Ember.Helper.extend({
-        intl: Ember.inject.service(),
-        formatter: null,
+function helperFactory(formatType, optionalGetValue) {
+    return Helper.extend({
+        intl: inject.service(),
+        formatType: formatType,
+
+        formatter: computed('formatType', {
+            get() {
+                return this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+            }
+        }),
 
         init() {
             this._super(...arguments);
             const intl = get(this, 'intl');
-            this.formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
             intl.on('localeChanged', this, this.recompute);
         },
 
-        destroy() {
-            const intl = get(this, 'intl');
-            intl.off('localeChanged', this, this.recompute);
-            return this._super(...arguments);
-        },
+        getValue: optionalGetValue || getValue,
 
         compute(params, hash) {
-            if (!params || !params.length) {
-                return throwError();
+            const intl = get(this, 'intl');
+            const formatter = get(this, 'formatter');
+            const value = this.getValue(params, hash, intl);
+
+            if (typeof value === 'undefined') {
+                throw new Error(`format-${formatType} helper requires value`);
             }
 
-            const value = params[0];
-            const intl  = get(this, 'intl');
-            let format  = {};
+            let format = {};
 
-            if (hash && hash.format) {
-                format = intl.getFormat(formatType, hash.format) || {};
+            if (hash.format) {
+                format = intl.getFormat(formatType, hash.format);
             }
 
-            return this.formatter.format(
+            return formatter.format(
                 value,
                 extend({
                     locale: get(intl, '_locale')
                 }, format, hash),
                 get(intl, 'formats')
             );
+        },
+
+        destroy() {
+            const intl = get(this, 'intl');
+            intl.off('localeChanged', this, this.recompute);
+            return this._super(...arguments);
         }
     });
-};
+}
 
 export default helperFactory;

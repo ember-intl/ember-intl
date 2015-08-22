@@ -3,6 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import formatHelper from './-base';
+import helperFactory from './-base';
 
-export default formatHelper('date');
+export default helperFactory('date');
