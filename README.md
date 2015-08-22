@@ -24,7 +24,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Installation
 * `ember install ember-intl@2.0.0-beta.18`
-* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), you need to load the shim.  The [Intl.JS polyfill](https://github.com/andyearnshaw/Intl.js/) is automatically included into the `/assets` folder at build time.
+* If you are targeting a browser that doesn't support the native Intl API (such as Safari or PhantomJS), polyfilling this API is required.  The [Intl.JS polyfill](https://github.com/yahoo/ember-intl/wiki/Intl.js-Polyfill) is automatically included into the `/assets` folder at build time, you just need to add it to ensure it's included in your app payload.  This is usually done by adding the following script tags to your `index.html`.
 
 ```html
 <script src="assets/intl/intl.min.js"></script>
@@ -38,6 +38,12 @@ on your filesystem is ``<project>/dist/assets/intl`
 
 Full list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main
 -->
+```
+
+Another option, is to leverage http://polyfill.io polyfill-as-a-service which will conditionally load the Polyfill by matching on the `User-Agent` header.
+
+```html
+<script src="https://cdn.polyfill.io/v1/polyfill.min.js?features=Intl.~locale.en-US,Intl.~locale.fr-FR,Intl.~locale.es-ES"></script>
 ```
 
 ## Translations
