@@ -15,8 +15,7 @@ function formatterProxy (formatType) {
         const formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
 
         if (typeof options.format === 'string') {
-            const format = this.getFormat(formatType, options.format);
-            options = extend(format, options);
+            options = extend(this.getFormat(formatType, options.format), options);
         }
 
         if (!options.locale) {
@@ -121,6 +120,8 @@ const IntlService = Service.extend(Evented, {
         if (formats && formatType && typeof format === 'string') {
             return get(formats, `${formatType}.${format}`);
         }
+
+        return {};
     },
 
     translationsFor(locale) {

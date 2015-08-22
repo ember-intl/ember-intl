@@ -72,7 +72,11 @@ test('number is formatted correctly with locale argument', function(assert) {
 test('should throw if called with out a value', function(assert) {
     assert.expect(1);
     view = this.render(hbs`{{format-number}}`);
-    assert.throws(runAppend(view), Error, 'raised error when not value is passed to format-number');
+    try {
+        runAppend(view);
+    } catch(ex) {
+        assert.ok(ex, 'raised error when not value is passed to format-number');
+    }
 });
 
 test('should return a string', function(assert) {
