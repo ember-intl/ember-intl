@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-export function initializer(registry, app = {}) {
+export function initializer(app) {
     // intentionally blank
 }
 
