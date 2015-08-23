@@ -10,7 +10,7 @@ const { assert, makeArray } = Ember;
 
 function normalize (fullName) {
     assert('Lookup name must be a string', typeof fullName === 'string');
-    return fullName.toLowerCase();
+    return fullName.toLocaleLowerCase();
 }
 
 const DefaultIntlAdapter = Ember.Object.extend({
