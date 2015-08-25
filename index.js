@@ -56,7 +56,7 @@ module.exports = {
         }
 
         this.addonOptions = generateOptions(app);
-        this.locales = this._localesByTranslations();
+        this.locales = this._discoverLocales();
 
         this.trees = {
             translations: new WatchedDir(this.addonOptions.inputPath),
@@ -70,11 +70,11 @@ module.exports = {
         } else {
             tree = stew.rm(tree, path.join('initializers', 'ember-intl.js'), path.join('helpers', 'intl-get.js'), path.join('helpers', '-base.js'));
             [
-                [path.join('initializers', 'ember-intl-legacy.js'), path.join('initializers', 'ember-intl.js')],
-                [path.join('helpers', 'intl-get-legacy.js'), path.join('helpers', 'intl-get.js')],
-                [path.join('helpers', '-base-legacy.js'), path.join('helpers', '-base.js')]
+                { from: path.join('initializers', 'ember-intl-legacy.js'), to: path.join('initializers', 'ember-intl.js') },
+                { from: path.join('helpers', 'intl-get-legacy.js'), to: path.join('helpers', 'intl-get.js') },
+                { from: path.join('helpers', '-base-legacy.js'), to: path.join('helpers', '-base.js') }
             ].forEach(function(move) {
-                tree = stew.mv(tree, move[0], move[1]);
+                tree = stew.mv(tree, move.from, move.to);
             });
         }
 
@@ -89,7 +89,7 @@ module.exports = {
             tree = stew.mv(tree, path.join('initializers', 'ember-intl-legacy.js'), path.join('initializers', 'ember-intl.js'));
         }
 
-        var trees = [tree, TranslationPreprocessor(this.trees.translations, this.addonOptions)];
+        var trees = [tree, new TranslationPreprocessor(this.trees.translations, this.addonOptions)];
 
         if (this.locales.length) {
             trees.push(new LocaleWriter(tree, 'cldrs', {
@@ -120,7 +120,6 @@ module.exports = {
         var assetPath = path.join('assets', 'intl');
         var appOptions = this.app.options;
         var trees = [];
-        var include;
 
         if (appOptions.app && appOptions.app.intl) {
             assetPath = appOptions.app.intl;
@@ -136,17 +135,18 @@ module.exports = {
             destDir: path.join(assetPath)
         })));
 
+        var localeFunnel = {
+            srcDir: path.join('locale-data', 'jsonp'),
+            destDir: path.join(assetPath, 'locales')
+        };
+
         if (this.locales.length) {
-            include = this.locales.map(function(locale) {
+            localeFunnel.include = this.locales.map(function(locale) {
                 return new RegExp(locale, 'i');
             });
         }
 
-        trees.push(lowercaseTree(new Funnel(this.trees.intl, {
-            srcDir: path.join('locale-data', 'jsonp'),
-            destDir: path.join(assetPath, 'locales'),
-            include: include
-        })));
+        trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
 
         return mergeTrees(trees, {
             overwrite: true,
@@ -154,7 +154,7 @@ module.exports = {
         });
     },
 
-    _localesByTranslations: function() {
+    _discoverLocales: function() {
         var translations = path.join(this.project.root, this.addonOptions.inputPath);
         var locales = [];
 
