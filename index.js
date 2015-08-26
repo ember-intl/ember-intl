@@ -19,7 +19,7 @@ var fs = require('fs');
 
 var utils = require('./lib/utils');
 var mergeTrees = require('./lib/broccoli/merge-trees');
-var LocaleWriter = require('./lib/broccoli/locale-writer');
+var CldrWriter = require('./lib/broccoli/cldr-writer');
 var lowercaseTree = require('./lib/broccoli/lowercase-tree');
 var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor');
 
@@ -91,8 +91,9 @@ module.exports = {
 
         var trees = [tree, new TranslationPreprocessor(this.trees.translations, this.addonOptions)];
 
-        if (this.locales.length) {
-            trees.push(new LocaleWriter(tree, 'cldrs', {
+        if (tree && this.locales.length) {
+            trees.push(new CldrWriter([tree], {
+                path: './cldrs',
                 locales: this.locales,
                 pluralRules: true,
                 relativeFields: true,
@@ -162,7 +163,7 @@ module.exports = {
             locales = walkSync(translations).map(function(filename) {
                 return path.basename(filename, path.extname(filename));
             }).filter(function(locale) {
-                return LocaleWriter.has(locale);
+                return CldrWriter.has(locale);
             });
         }
 
