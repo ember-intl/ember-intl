@@ -16,8 +16,8 @@ var stew = require('broccoli-stew');
 var walkSync = require('walk-sync');
 var path = require('path');
 var fs = require('fs');
-var utils = require('./lib/utils');
 
+var utils = require('./lib/utils');
 var mergeTrees = require('./lib/broccoli/merge-trees');
 var LocaleWriter = require('./lib/broccoli/locale-writer');
 var lowercaseTree = require('./lib/broccoli/lowercase-tree');
