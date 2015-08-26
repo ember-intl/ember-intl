@@ -19,15 +19,3 @@ install:
 - bower install
 script:
 - ember try:testall
-after_success:
-- test $(cat $TRAVIS_BUILD_DIR/package.json | grep version | awk '{print $2}' | sed
-  's/"//g' | sed 's/,//g') = $TRAVIS_TAG && export VALID_VERSION=true
-deploy:
-  provider: npm
-  email: jason.mitchell.w@gmail.com
-  api_key:
-    secure: IC1RTTrVTfmN9HyKmtn12zha9rRIrmRmZBkWPAcZw92VNdgL/0gJnAdtQD5WgU9yrvvRhXudUNeZn8tNeduzSNhLV1uyc2Blywr0mbGfUCRsXdR4ec4wfrsFW73M766TgLJ113HufKhGwIF4JXnofsKeXGYSHPGJTYn5o/d+77M=
-  on:
-    condition: "$VALID_VERSION = true"
-    tags: true
-    all_branches: true
