@@ -24,7 +24,7 @@ var lowercaseTree = require('./lib/broccoli/lowercase-tree');
 var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor');
 
 function generateOptions(app) {
-    var addonConfig = app.project.config(app)['intl'] || {};
+    var addonConfig = app.project.config(app.env)['intl'] || {};
 
     var options = utils.assign({
         locales: undefined,
