@@ -63,7 +63,7 @@ test('should render epoch date for a null value when allow empty is false', func
   assert.expect(1);
   view = this.render(hbs`{{format-date null allowEmpty=false}}`, defaultLocale);
   runAppend(view);
-  assert.equal(view.$().text(), '12/31/1969');
+  assert.equal(view.$().text(), new Intl.DateTimeFormat(defaultLocale).format(0));
 });
 
 test('it should return a formatted string from a date string', function(assert) {
