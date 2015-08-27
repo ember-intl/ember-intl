@@ -16,6 +16,7 @@ module.exports = function(environment) {
             locales: ['en-us', 'es-es', 'fr-fr', 'de-de'],
             defaultLocale: 'en-us',
             disablePolyfill: false,
+            allowEmpty: true,
             outputPath: 'translations',
             inputPath: 'tests/dummy/translations'
         }
