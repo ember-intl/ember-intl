@@ -30,9 +30,7 @@ const FormatDate = Formatter.extend({
         if(value || filteredOpts.allowEmpty === false){
           return this._format(value, filteredOpts);
         }
-        else{
-          return '';
-        }
+        return '';
     }
 });
 
