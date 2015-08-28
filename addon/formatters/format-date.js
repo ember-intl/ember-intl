@@ -24,7 +24,7 @@ const FormatDate = Formatter.extend({
     }),
 
     format(value, options) {
-        value = value == null ? null : new Date(value);
+        value = value == null || value === '' ? null : new Date(value);
         assertIsDate(value, 'A date or timestamp must be provided to format-date');
         var filteredOpts = this.filterSupporedOptions(options);
         if(value || filteredOpts.allowEmpty === false){
