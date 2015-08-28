@@ -24,9 +24,11 @@ const FormatDate = Formatter.extend({
     }),
 
     format(value, options) {
-        value = new Date(value);
-        assertIsDate(value, 'A date or timestamp must be provided to format-date');
-        return this._format(value, this.filterSupporedOptions(options));
+        let dateTime = new Date(value);
+        assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
+        let formatOptions = this.filterSupporedOptions(options);
+
+        return this._format(dateTime, formatOptions);
     }
 });
 

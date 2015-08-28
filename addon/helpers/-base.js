@@ -13,7 +13,7 @@ function getValue(params) {
     return params[0];
 }
 
-function helperFactory(formatType, optionalGetValue) {
+function helperFactory(formatType, optionalGetValue, optionalValidator) {
     return Helper.extend({
         intl: inject.service(),
         formatType: formatType,
@@ -26,16 +26,25 @@ function helperFactory(formatType, optionalGetValue) {
 
         init() {
             this._super(...arguments);
-            const intl = get(this, 'intl');
+            let intl = get(this, 'intl');
             intl.on('localeChanged', this, this.recompute);
         },
 
         getValue: optionalGetValue || getValue,
 
         compute(params, hash) {
-            const intl = get(this, 'intl');
-            const formatter = get(this, 'formatter');
-            const value = this.getValue(params, hash, intl);
+            let intl = get(this, 'intl');
+            let formatter = get(this, 'formatter');
+            let value = this.getValue(params, hash, intl);
+            let isValidValue = true;
+
+            if (optionalValidator) {
+                isValidValue = optionalValidator(value, hash);
+
+                if (!isValidValue) {
+                    return;
+                }
+            }
 
             if (typeof value === 'undefined') {
                 throw new Error(`format-${formatType} helper requires value`);
