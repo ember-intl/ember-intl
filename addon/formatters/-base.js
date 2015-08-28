@@ -65,7 +65,7 @@ const FormatBase = Ember.Object.extend({
 });
 
 FormatBase.reopenClass({
-    supportedOptions: ['locale', 'format'],
+    supportedOptions: ['locale', 'format', 'allowEmpty'],
     concatenatedProperties: ['supportedOptions']
 });
 
