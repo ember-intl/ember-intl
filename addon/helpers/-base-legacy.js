@@ -19,7 +19,11 @@ function getValue(params) {
     return params[0];
 }
 
-function helperFactory(formatType, optionalGetValue = getValue) {
+function helperFactory(formatType, optionalGetValue, optionalValidator) {
+    if (typeof optionalGetValue !== 'function') {
+        optionalGetValue = getValue;
+    }
+
     return function legacyIntlHelper(params, hash, options, env) {
         let outStream;
 
@@ -27,11 +31,20 @@ function helperFactory(formatType, optionalGetValue = getValue) {
             outStream.notify();
         }
 
-        const seenHash = readHash(hash);
-        const view = env.data.view;
-        const intl = view.container.lookup('service:intl');
-        const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
-        const currentValue = optionalGetValue(params, hash, intl);
+        let seenHash = readHash(hash);
+        let view = env.data.view;
+        let intl = view.container.lookup('service:intl');
+        let formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        let currentValue = optionalGetValue(params, hash, intl);
+        let isValidValue = true;
+
+        if (optionalValidator) {
+            isValidValue = optionalValidator(currentValue, hash);
+
+            if (!isValidValue) {
+                return;
+            }
+        }
 
         if (typeof currentValue === 'undefined') {
             throw new Error(`format-${formatType} helper requires value`);

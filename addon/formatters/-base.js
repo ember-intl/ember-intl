@@ -6,10 +6,15 @@
 import Ember from 'ember';
 import arrayToHash from '../utils/array-to-hash';
 
-const get = Ember.get;
-const camelize = Ember.String.camelize;
+const {
+    get,
+    String:emberString,
+    Object:emberObject
+} = Ember;
 
-const FormatBase = Ember.Object.extend({
+const { camelize } = emberString;
+
+const FormatBase = emberObject.extend({
     init() {
         this._super(...arguments);
         this.options = arrayToHash(this.constructor.supportedOptions);
@@ -24,8 +29,8 @@ const FormatBase = Ember.Object.extend({
     * @private
     */
     filterSupporedOptions(input = {}) {
-        let camelizedKey = null;
-        let foundMatch   = false;
+        let camelizedKey;
+        let foundMatch = false;
         const out = {};
 
         for (let key in input) {
@@ -51,7 +56,7 @@ const FormatBase = Ember.Object.extend({
     * @private
     */
     _format(value, formatterOptions = {}, formatOptions = {}) {
-        const formatter  = get(this, 'formatter');
+        const formatter = get(this, 'formatter');
         const { locale } = formatterOptions;
 
         if (!locale) {
@@ -65,7 +70,7 @@ const FormatBase = Ember.Object.extend({
 });
 
 FormatBase.reopenClass({
-    supportedOptions: ['locale', 'format', 'allowEmpty'],
+    supportedOptions: ['locale', 'format'],
     concatenatedProperties: ['supportedOptions']
 });
 

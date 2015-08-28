@@ -5,4 +5,18 @@
 
 import helperFactory from './-base';
 
-export default helperFactory('date');
+export function dateValidator(value, hash) {
+    let allowEmpty = true;
+
+    if (hash.hasOwnProperty('allowEmpty')) {
+        allowEmpty = !!hash.allowEmpty;
+    }
+
+    if (allowEmpty && (value === null || value === '')) {
+        return false;
+    }
+
+    return true;
+}
+
+export default helperFactory('date', null, dateValidator);

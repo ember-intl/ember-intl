@@ -4,5 +4,6 @@
  */
 
 import helperFactory from './-base';
+import { dateValidator } from './format-date';
 
-export default helperFactory('time');
+export default helperFactory('time', null, dateValidator);
