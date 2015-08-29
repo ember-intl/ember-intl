@@ -19,32 +19,29 @@ function getValue(params) {
     return params[0];
 }
 
-function helperFactory(formatType, optionalGetValue = getValue) {
+function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
+    if (typeof optionalGetValue !== 'function') {
+        optionalGetValue = getValue;
+    }
+
     return function legacyIntlHelper(params, hash, options, env) {
-        let outStream;
+        let view = env.data.view;
+        let intl = view.container.lookup('service:intl');
+        let formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        let value = optionalGetValue(params, hash, intl);
 
-        function touchStream() {
-            outStream.notify();
-        }
-
-        const seenHash = readHash(hash);
-        const view = env.data.view;
-        const intl = view.container.lookup('service:intl');
-        const formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
-        const currentValue = optionalGetValue(params, hash, intl);
-
-        if (typeof currentValue === 'undefined') {
+        if (typeof value === 'undefined') {
             throw new Error(`format-${formatType} helper requires value`);
         }
 
-        if (currentValue.isStream) {
-            currentValue.subscribe(() => {
-                touchStream();
-            }, currentValue);
-        }
-
-        outStream = new Stream(() => {
+        let out = new Stream(() => {
+            let seenHash = readHash(hash);
+            let seenValue = read(value);
             let format = {};
+
+            if (optionalReturnEmpty && optionalReturnEmpty(seenValue, seenHash)) {
+                return;
+            }
 
             if (seenHash && seenHash.format) {
                 format = intl.getFormat(formatType, seenHash.format);
@@ -52,7 +49,7 @@ function helperFactory(formatType, optionalGetValue = getValue) {
 
             return formatter.format.call(
                 formatter,
-                read(currentValue),
+                seenValue,
                 extend({
                     locale: get(intl, '_locale')
                 }, format, seenHash),
@@ -60,29 +57,32 @@ function helperFactory(formatType, optionalGetValue = getValue) {
             );
         });
 
-        Object.keys(hash).forEach((key) => {
+        function notify() {
+            if (out) {
+                out.notify();
+            }
+        }
+
+        Object.keys(hash).forEach(function(key) {
             const value = hash[key];
 
-            if (!value || !value.isStream) {
-                return;
+            if (value && value.isStream) {
+                value.subscribe(notify, out);
             }
-
-            hash[key] = read(value);
-
-            value.subscribe((currentValueStream) => {
-                seenHash[key] = read(currentValueStream);
-                touchStream();
-            });
         });
+
+        if (value.isStream) {
+            value.subscribe(notify, out);
+        }
 
         view.one('willDestroyElement', () => {
-            intl.off('localeChanged', view, touchStream);
-            destroyStream(outStream);
+            intl.off('localeChanged', view, notify);
+            destroyStream(out);
         });
 
-        intl.on('localeChanged', view, touchStream);
+        intl.on('localeChanged', view, notify);
 
-        return outStream;
+        return out;
     };
 }
 
