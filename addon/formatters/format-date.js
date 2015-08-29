@@ -24,9 +24,18 @@ const FormatDate = Formatter.extend({
     }),
 
     format(value, options) {
-        value = new Date(value);
-        assertIsDate(value, 'A date or timestamp must be provided to format-date');
-        return this._format(value, this.filterSupporedOptions(options));
+        // reading a stream where the value is null returns
+        // undefined.  so, we need to work around this by setting it
+        // to null.  this condition below can go away once we drop < 1.13 support
+        if (typeof value === 'undefined') {
+            value = null;
+        }
+
+        let dateTime = new Date(value);
+        assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
+        let formatOptions = this.filterSupporedOptions(options);
+
+        return this._format(dateTime, formatOptions);
     }
 });
 

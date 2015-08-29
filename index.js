@@ -30,6 +30,7 @@ function generateOptions(app) {
         locales: undefined,
         disablePolyfill: false,
         defaultLocale: 'en-us',
+        allowEmpty: true,
         inputPath: 'translations',
         outputPath: 'translations'
     }, addonConfig);

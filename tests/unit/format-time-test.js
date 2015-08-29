@@ -59,16 +59,6 @@ test('invoke formatTime directly', function(assert) {
     }), '23/1/2014');
 });
 
-test('should throw if called with out a value', function(assert) {
-    assert.expect(1);
-    view = this.render(hbs`{{format-time}}`);
-    try {
-        runAppend(view);
-    } catch(ex) {
-        assert.ok(ex, 'raised error when not value is passed to format-time');
-    }
-});
-
 test('it should return a formatted string from a date string', function(assert) {
     assert.expect(1);
     // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21

@@ -42,14 +42,32 @@ test('invoke the formatDate directly', function(assert) {
     }), '1/23/2014');
 });
 
-test('should throw if called with out a value', function(assert) {
+test('should render empty string for a null value', function(assert) {
     assert.expect(1);
-    view = this.render(hbs`{{format-date}}`);
-    try {
-        runAppend(view);
-    } catch(ex) {
-        assert.ok(ex, 'raised error when not value is passed to format-date');
-    }
+    view = this.render(hbs`{{format-date null}}`, defaultLocale);
+    runAppend(view);
+    assert.equal(view.$().text(), '');
+});
+
+test('should render empty string for an empty string value', function(assert) {
+    assert.expect(1);
+    view = this.render(hbs`{{format-date ''}}`, defaultLocale);
+    runAppend(view);
+    assert.equal(view.$().text(), '');
+});
+
+test('should render empty string for an undefined value', function(assert) {
+    assert.expect(1);
+    view = this.render(hbs`{{format-date undefined}}`, defaultLocale);
+    runAppend(view);
+    assert.equal(view.$().text(), '');
+});
+
+test('should render epoch date for a null value when allow empty is false', function(assert) {
+    assert.expect(1);
+    view = this.render(hbs`{{format-date null allowEmpty=false}}`, defaultLocale);
+    runAppend(view);
+    assert.equal(view.$().text(), new Intl.DateTimeFormat(defaultLocale).format(0));
 });
 
 test('it should return a formatted string from a date string', function(assert) {
