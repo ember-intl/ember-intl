@@ -8,25 +8,25 @@ import Ember from 'ember';
 const { run:emberRun } = Ember;
 
 function createIntlBlock () {
-    return function(template, locale) {
-        const service = this.container.lookup('service:intl');
+  return function(template, locale) {
+    const service = this.container.lookup('service:intl');
 
-        if (locale) {
-            emberRun(() => {
-                service.setLocale(locale);
-            });
-        }
+    if (locale) {
+      emberRun(() => {
+        service.setLocale(locale);
+      });
+    }
 
-        // suppress deprecation warnings
-        if (Ember && Ember.ENV) {
-            Ember.ENV._ENABLE_LEGACY_VIEW_SUPPORT = true;
-        }
+    // suppress deprecation warnings
+    if (Ember && Ember.ENV) {
+      Ember.ENV._ENABLE_LEGACY_VIEW_SUPPORT = true;
+    }
 
-        return Ember.View.create({
-            template: template,
-            container: this.container
-        });
-    };
+    return Ember.View.create({
+      template: template,
+      container: this.container
+    });
+  };
 }
 
 export default createIntlBlock;

@@ -1,51 +1,51 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-    var ENV = {
-        modulePrefix: 'dummy',
-        environment: environment,
-        baseURL: '/',
-        locationType: 'auto',
+  var ENV = {
+    modulePrefix: 'dummy',
+    environment: environment,
+    baseURL: '/',
+    locationType: 'auto',
 
-        APP: {
-          // Here you can pass flags/options to your application instance
-          // when it is created
-        },
+    APP: {
+      // Here you can pass flags/options to your application instance
+      // when it is created
+    },
 
-        intl: {
-            locales: ['en-us', 'es-es', 'fr-fr', 'de-de'],
-            defaultLocale: 'en-us',
-            disablePolyfill: false,
-            allowEmpty: true,
-            outputPath: 'translations',
-            inputPath: 'tests/dummy/translations'
-        }
-    };
-
-    if (environment === 'development') {
-        // ENV.APP.LOG_RESOLVER = true;
-        // ENV.APP.LOG_ACTIVE_GENERATION = true;
-        // ENV.APP.LOG_TRANSITIONS = true;
-        // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-        // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    intl: {
+      locales: ['en-us', 'es-es', 'fr-fr', 'de-de'],
+      defaultLocale: 'en-us',
+      disablePolyfill: false,
+      allowEmpty: true,
+      outputPath: 'translations',
+      inputPath: 'tests/dummy/translations'
     }
+  };
 
-    if (environment === 'test') {
-        // Testem prefers this...
-        ENV.baseURL = '/';
-        ENV.locationType = 'none';
+  if (environment === 'development') {
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+  }
 
-        // keep test console output quieter
-        ENV.APP.LOG_ACTIVE_GENERATION = false;
-        ENV.APP.LOG_VIEW_LOOKUPS = false;
+  if (environment === 'test') {
+    // Testem prefers this...
+    ENV.baseURL = '/';
+    ENV.locationType = 'none';
 
-        ENV.APP.rootElement = '#ember-testing';
+    // keep test console output quieter
+    ENV.APP.LOG_ACTIVE_GENERATION = false;
+    ENV.APP.LOG_VIEW_LOOKUPS = false;
 
-    }
+    ENV.APP.rootElement = '#ember-testing';
 
-    if (environment === 'production') {
+  }
 
-    }
+  if (environment === 'production') {
 
-    return ENV;
+  }
+
+  return ENV;
 };

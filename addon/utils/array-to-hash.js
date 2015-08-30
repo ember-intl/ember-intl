@@ -4,16 +4,16 @@
  */
 
 function arrayToHash(array) {
-    const len = array.length;
-    const out = Object.create(null);
-    let i = 0;
+  const len = array.length;
+  const out = Object.create(null);
+  let i = 0;
 
-    for(;i < len; i++) {
-        const key = array[i];
-        out[key] = key;
-    }
+  for(;i < len; i++) {
+    const key = array[i];
+    out[key] = key;
+  }
 
-    return out;
+  return out;
 }
 
 export default arrayToHash;

@@ -6,13 +6,13 @@
 import helperFactory from './-base';
 
 export function getValue(params, hash, intl) {
-    if (params.length) {
-        return params[0];
-    }
+  if (params.length) {
+    return params[0];
+  }
 
-    if (hash && hash.hasOwnProperty('id')) {
-        return intl.findTranslationByKey(hash.id, hash.locale);
-    }
+  if (hash && hash.hasOwnProperty('id')) {
+    return intl.findTranslationByKey(hash.id, hash.locale);
+  }
 }
 
 export default helperFactory('message', getValue);

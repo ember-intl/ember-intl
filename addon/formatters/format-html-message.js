@@ -9,24 +9,24 @@ import FormatterMessage from './format-message';
 const { String:emberString, Handlebars:emberHandlebars } = Ember;
 
 const FormatHtmlMessage = FormatterMessage.extend({
-    escapeProps(options = {}) {
-        return Object.keys(options).reduce((result, hashKey) => {
-            let value = options[hashKey];
+  escapeProps(options = {}) {
+    return Object.keys(options).reduce((result, hashKey) => {
+      let value = options[hashKey];
 
-            if (typeof value === 'string') {
-                value = emberHandlebars.Utils.escapeExpression(value);
-            }
+      if (typeof value === 'string') {
+        value = emberHandlebars.Utils.escapeExpression(value);
+      }
 
-            result[hashKey] = value;
-            return result;
-        }, {});
-    },
+      result[hashKey] = value;
+      return result;
+    }, {});
+  },
 
-    format(value, formatOptions = {}) {
-        const options     = this.escapeProps(formatOptions);
-        const superResult = this._super(value, options, formatOptions.locale);
-        return emberString.htmlSafe(superResult);
-    }
+  format(value, formatOptions = {}) {
+    const options = this.escapeProps(formatOptions);
+    const superResult = this._super(value, options, formatOptions.locale);
+    return emberString.htmlSafe(superResult);
+  }
 });
 
 export default FormatHtmlMessage;

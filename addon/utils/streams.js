@@ -6,7 +6,7 @@
 import Ember from 'ember';
 
 const {
-    __loader
+  __loader
 } = Ember;
 
 export const Stream = __loader.require('ember-metal/streams/stream')['default'];
@@ -15,32 +15,32 @@ export const Stream = __loader.require('ember-metal/streams/stream')['default'];
 // https://github.com/emberjs/ember.js/blob/master/packages/ember-metal/lib/streams/utils.js
 // License: https://github.com/emberjs/ember.js/blob/master/LICENSE
 export function read(obj) {
-    if (obj && obj.isStream) {
-        return obj.value();
-    }
+  if (obj && obj.isStream) {
+    return obj.value();
+  }
 
-    return obj;
+  return obj;
 }
 
 export function readHash(object) {
-    const ret = {};
+  const ret = {};
 
-    for (var key in object) {
-        ret[key] = read(object[key]);
-    }
+  for (var key in object) {
+    ret[key] = read(object[key]);
+  }
 
-    return ret;
+  return ret;
 }
 
 export function destroyStream(stream) {
-    if (stream && !stream.destroyed) {
-        stream.destroy();
-    }
+  if (stream && !stream.destroyed) {
+    stream.destroy();
+  }
 }
 
 export default {
-    read,
-    readHash,
-    destroyStream,
-    Stream
+  read,
+  readHash,
+  destroyStream,
+  Stream
 };

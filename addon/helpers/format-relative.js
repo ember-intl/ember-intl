@@ -19,14 +19,14 @@ if (Helper && Helper.detect(RelativeHelper)) {
             if (hash && hash.interval) {
                 this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
             }
-            return this._super(...arguments);
+            return this._super(value, hash);
         },
         clearTimer() {
             clearTimeout(this.timer);
         },
-        destroy() {
+        destroy(...args) {
             this.clearTimer();
-            this._super.apply(this, arguments);
+            this._super(...args);
         }
     });
 }

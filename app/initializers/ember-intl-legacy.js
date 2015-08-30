@@ -16,24 +16,24 @@ import { instanceInitializer } from '../instance-initializers/ember-intl';
 // any new functionality for >= 1.13.0 should go in a new initializer
 // because it is programmatically removed on build within `index.js`
 export function initializer(registry, app = {}) {
-    registerHelper('format-date', FormatDate, registry);
-    registerHelper('format-time', FormatTime, registry);
-    registerHelper('format-relative', FormatRelative, registry);
-    registerHelper('format-number', FormatNumber, registry);
-    registerHelper('format-html-message', FormatHtmlMessage, registry);
-    registerHelper('format-message', FormatMessage, registry);
+  registerHelper('format-date', FormatDate, registry);
+  registerHelper('format-time', FormatTime, registry);
+  registerHelper('format-relative', FormatRelative, registry);
+  registerHelper('format-number', FormatNumber, registry);
+  registerHelper('format-html-message', FormatHtmlMessage, registry);
+  registerHelper('format-message', FormatMessage, registry);
 
-    if (app.instanceInitializer) {
-        return;
-    }
+  if (app.instanceInitializer) {
+    return;
+  }
 
-    // for backwards compatability < 1.12
-    instanceInitializer({
-        container: registry
-    });
+  // for backwards compatability < 1.12
+  instanceInitializer({
+    container: registry
+  });
 }
 
 export default {
-    name: 'ember-intl',
-    initialize: initializer
+  name: 'ember-intl',
+  initialize: initializer
 };
