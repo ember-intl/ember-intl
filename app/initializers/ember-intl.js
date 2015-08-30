@@ -4,10 +4,10 @@
  */
 
 export function initializer(app) {
-    // intentionally blank
+  // intentionally blank
 }
 
 export default {
-    name: 'ember-intl',
-    initialize: initializer
+  name: 'ember-intl',
+  initialize: initializer
 };

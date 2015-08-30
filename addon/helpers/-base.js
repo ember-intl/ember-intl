@@ -24,8 +24,8 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
             }
         }),
 
-        init() {
-            this._super(...arguments);
+        init(...args) {
+            this._super(...args);
             let intl = get(this, 'intl');
             intl.on('localeChanged', this, this.recompute);
         },
@@ -60,10 +60,10 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
             );
         },
 
-        destroy() {
+        destroy(...args) {
             const intl = get(this, 'intl');
             intl.off('localeChanged', this, this.recompute);
-            return this._super(...arguments);
+            this._super(...args);
         }
     });
 }

@@ -6,7 +6,7 @@
 import FormatDateFormatter from './format-date';
 
 const FormatTime = FormatDateFormatter.extend({
-    formatType: 'time'
+  formatType: 'time'
 });
 
 export default FormatTime;

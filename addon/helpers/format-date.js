@@ -7,13 +7,13 @@ import Ember from 'ember';
 import helperFactory from './-base';
 
 export function shouldReturnEmptyString(value, hash) {
-    if (Ember.isEmpty(value)) {
-        if (!hash.hasOwnProperty('allowEmpty') || hash.allowEmpty) {
-            return true;
-        }
+  if (Ember.isEmpty(value)) {
+    if (!hash.hasOwnProperty('allowEmpty') || hash.allowEmpty) {
+      return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
 export default helperFactory('date', null, shouldReturnEmptyString);

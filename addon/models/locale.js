@@ -9,7 +9,7 @@ import Translation from './translation';
 const { Logger:logger } = Ember;
 
 export default Translation.extend({
-    init() {
-        logger.warn('`ember-intl/models/locale` is deprecated in favor of `ember-intl/models/translation`');
-    }
+  init() {
+    logger.warn('`ember-intl/models/locale` is deprecated in favor of `ember-intl/models/translation`');
+  }
 });

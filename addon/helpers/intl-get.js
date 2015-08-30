@@ -13,16 +13,16 @@ if (Helper) {
     IntlGetHelper = Helper.extend({
         intl: inject.service(),
 
-        init() {
-            this._super(...arguments);
+        init(...args) {
+            this._super(...args);
             const intl = get(this, 'intl');
             intl.on('localeChanged', this, this.recompute);
         },
 
-        destroy() {
+        destroy(...args) {
             const intl = get(this, 'intl');
             intl.off('localeChanged', this, this.recompute);
-            return this._super(...arguments);
+            this._super(...args);
         },
 
         compute(params, hash = {}) {
