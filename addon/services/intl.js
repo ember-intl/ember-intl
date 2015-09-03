@@ -101,13 +101,16 @@ const IntlService = Service.extend(Evented, {
     const name = `ember-intl@translation:${locale}`;
     const instance = this.container.lookup('application:main') || {};
 
-    if (instance.registry) {
+    if (instance.hasRegistration) {
+      container = instance;
+    } else if (instance.registry) {
       container = instance.registry;
     } else if (container.registry && container.registry.register) {
       container = container.registry;
     }
 
-    if (container.has(name)) {
+    const has = container.hasRegistration || container.has;
+    if (has.call(container, name)) {
       container.unregister(name);
     }
 
