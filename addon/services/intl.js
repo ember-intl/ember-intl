@@ -11,7 +11,7 @@ import Translation from '../models/translation';
 const { assert, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 
 function formatterProxy (formatType) {
-  return function (value, options = {}) {
+  return function (value, options = {}, formats = null) {
     const formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
 
     if (typeof options.format === 'string') {
@@ -22,7 +22,11 @@ function formatterProxy (formatType) {
       options.locale = get(this, '_locale');
     }
 
-    return formatter.format(value, options);
+    if (!formats) {
+      formats = get(this, 'formats');
+    }
+
+    return formatter.format(value, options, formats);
   };
 }
 

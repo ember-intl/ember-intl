@@ -65,6 +65,15 @@ test('invoke formatMessage directly', function(assert) {
   }), 'hello world');
 });
 
+test('invoke formatMessage directly with formats', function(assert) {
+  assert.expect(1);
+  const service = this.container.lookup('service:intl');
+  assert.equal(service.formatMessage("Sale begins {day, date, shortWeekDay}", {
+    day: 1390518044403,
+    locale: 'en-us'
+  }), "Sale begins January 23, 2014");
+});
+
 test('message is formatted correctly with argument', function(assert) {
   assert.expect(1);
   view = this.render(hbs`{{format-message "Hello {name}" name="Jason"}}`, 'en-us');
