@@ -3,17 +3,16 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var broccoliCLDR = require('../../lib/locale-writer');
+var isSupportedLocale = require('../../lib/utils/is-supported-locale');
 var Blueprint = require('ember-cli/lib/models/blueprint');
-var SilentError = require('ember-cli/lib/errors/silent');
+var SilentError = require('silent-error');
 
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
 
   normalizeEntityName: function (localeName) {
     entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
-
-    if (!broccoliCLDR.has(localeName)) {
+    if (!isSupportedLocale(localeName)) {
       throw new SilentError('Aborting. `' + localeName + '` is not a know locale');
     }
 

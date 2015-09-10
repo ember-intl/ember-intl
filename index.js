@@ -163,9 +163,7 @@ module.exports = {
     if (existsSync(translations)) {
       locales = walkSync(translations).map(function(filename) {
         return path.basename(filename, path.extname(filename));
-      }).filter(function(locale) {
-        return CldrWriter.has(locale);
-      });
+      }).filter(utils.isSupportedLocale);
     }
 
     if (this.addonOptions.locales) {
