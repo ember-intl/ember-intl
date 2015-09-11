@@ -45,6 +45,8 @@ product:
     info: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
 ```
 
+If you wish, you can organize your translations into subdirectories such as `/translations/login-page/en-us.yaml` and `translations/purchase-page/en-us.yaml`.
+
 ### Configure application-wide locale
 Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `intl.locale`.  Example:
 

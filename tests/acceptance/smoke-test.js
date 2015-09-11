@@ -59,3 +59,11 @@ test('format-relative', () => {
     contains('.format-relative', 'yesterday');
   });
 });
+
+test('translation-subdirectory', () => {
+  visit('/smoke');
+
+  andThen(() => {
+    contains('.translation-subdirectory', 'translation subdirectories loaded');
+  });
+});
