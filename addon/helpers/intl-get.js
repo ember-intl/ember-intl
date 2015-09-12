@@ -5,31 +5,34 @@
 
 import Ember from 'ember';
 
-const { Helper, inject, get } = Ember;
+const { Helper, inject, get, Logger:logger } = Ember;
 
 let IntlGetHelper = null;
 
 if (Helper) {
-    IntlGetHelper = Helper.extend({
-        intl: inject.service(),
+  IntlGetHelper = Helper.extend({
+    intl: inject.service(),
 
-        init(...args) {
-            this._super(...args);
-            const intl = get(this, 'intl');
-            intl.on('localeChanged', this, this.recompute);
-        },
+    init(...args) {
+      this._super(...args);
 
-        destroy(...args) {
-            const intl = get(this, 'intl');
-            intl.off('localeChanged', this, this.recompute);
-            this._super(...args);
-        },
+      logger.warn(`intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`);
 
-        compute(params, hash = {}) {
-            const intl = get(this, 'intl');
-            return intl.findTranslationByKey(params[0], hash.locale);
-        }
-    });
+      const intl = get(this, 'intl');
+      intl.on('localeChanged', this, this.recompute);
+    },
+
+    destroy(...args) {
+      const intl = get(this, 'intl');
+      intl.off('localeChanged', this, this.recompute);
+      this._super(...args);
+    },
+
+    compute(params, hash = {}) {
+      const intl = get(this, 'intl');
+      return intl.findTranslationByKey(params[0], hash.locale);
+    }
+  });
 }
 
 
