@@ -22,6 +22,7 @@ export function initializer(registry, app = {}) {
   registerHelper('format-number', FormatNumber, registry);
   registerHelper('format-html-message', FormatHtmlMessage, registry);
   registerHelper('format-message', FormatMessage, registry);
+  registerHelper('t', FormatMessage, registry);
 
   if (app.instanceInitializer) {
     return;
