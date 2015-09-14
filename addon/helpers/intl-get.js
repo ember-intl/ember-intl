@@ -4,6 +4,7 @@
  */
 
 import Ember from 'ember';
+import { LiteralWrapper } from './l';
 
 const { Helper, inject, get, Logger:logger } = Ember;
 
@@ -30,7 +31,7 @@ if (Helper) {
 
     compute(params, hash = {}) {
       const intl = get(this, 'intl');
-      return intl.findTranslationByKey(params[0], hash.locale);
+      return new LiteralWrapper(intl.findTranslationByKey(params[0], hash.locale));
     }
   });
 }

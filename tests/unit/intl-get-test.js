@@ -39,18 +39,6 @@ test('exists', function(assert) {
   assert.ok(intlGetHelper);
 });
 
-test('should throw if called with out a value', function(assert) {
-  assert.expect(1);
-  view = this.render(hbs`{{intl-get}}`);
-
-  try {
-    runAppend(view);
-  }
-  catch (ex) {
-    assert.ok(ex);
-  }
-});
-
 modernHelperTest('should recompute on intl locale change in >= 1.13.0', function(assert) {
   assert.expect(1);
 
