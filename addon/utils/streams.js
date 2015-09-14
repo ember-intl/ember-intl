@@ -33,7 +33,7 @@ export function readHash(object) {
 }
 
 export function destroyStream(stream) {
-  if (stream && !stream.destroyed) {
+  if (stream && stream.isStream && !stream.destroyed) {
     stream.destroy();
   }
 }

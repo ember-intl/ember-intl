@@ -6,7 +6,7 @@
 import ENV from '../config/environment';
 import addLocaleData from 'ember-intl/utils/add-locale-data';
 
-function filterBy (env, type) {
+function filterBy(env, type) {
   return Object.keys(requirejs._eak_seen).filter((key) => {
     return key.indexOf(`${env.modulePrefix}\/${type}\/`) === 0;
   });

@@ -23,39 +23,39 @@
 <div>{{format-relative now interval=1000}}</div>
 
 <div>
-    {{code-snippet name='format-relative.hbs'}}
+  {{code-snippet name='format-relative.hbs'}}
 </div>
 
 <h3>Format Message</h3>
 
 <div>
-    {{format-message (intl-get computedMessage)
-      product='Apple watch'
-      price=200
-      deadline=yesterday}}
+  {{t cp
+    product='Apple watch'
+    price=200
+    deadline=yesterday}}
 </div>
 <div>
-    {{format-message messages.photos
-      name='Jason'
-      numPhotos=num
-      takenDate=yesterday}}
+  {{t (l messages.photos)
+    name='Jason'
+    numPhotos=num
+    takenDate=yesterday}}
 </div>
 <br />
-<button {{bind-attr title=(format-message (intl-get 'product.title'))}}>
-    Hover to see title
+<button {{bind-attr title=(t 'product.title')}}>
+  Hover to see title
 </button>
 
 {{code-snippet name='format-message.hbs'}}
 
 <h3>Format HTML Message</h3>
 <div>
-    {{format-html-message  (intl-get 'product.html.info')
-      product='Apple watch'
-      price=200
-      deadline=yesterday}}
+  {{format-html-message 'product.html.info'
+    product='Apple watch'
+    price=200
+    deadline=yesterday}}
 </div>
 <div>
-    {{format-html-message '<strong>{product}</strong>' product='Apple watch'}}
+  {{format-html-message (l '<strong>{product}</strong>') product='Apple watch'}}
 </div>
 
 {{code-snippet name='format-html-message.hbs'}}

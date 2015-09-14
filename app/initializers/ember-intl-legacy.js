@@ -9,6 +9,7 @@ import FormatRelative from 'ember-intl/helpers/format-relative';
 import FormatNumber from 'ember-intl/helpers/format-number';
 import FormatHtmlMessage from 'ember-intl/helpers/format-html-message';
 import FormatMessage from 'ember-intl/helpers/format-message';
+import LiteralHelper from 'ember-intl/helpers/l';
 import registerHelper from 'ember-intl/utils/register-helper';
 import { instanceInitializer } from '../instance-initializers/ember-intl';
 
@@ -23,6 +24,7 @@ export function initializer(registry, app = {}) {
   registerHelper('format-html-message', FormatHtmlMessage, registry);
   registerHelper('format-message', FormatMessage, registry);
   registerHelper('t', FormatMessage, registry);
+  registerHelper('l', LiteralHelper, registry);
 
   if (app.instanceInitializer) {
     return;

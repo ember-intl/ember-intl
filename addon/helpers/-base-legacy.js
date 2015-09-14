@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import extend from '../utils/extend';
+import { LiteralWrapper } from './l';
 
 import {
   Stream,
@@ -27,17 +28,22 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
   return function legacyIntlHelper(params, hash, options, env) {
     let view = env.data.view;
     let intl = view.container.lookup('service:intl');
-    let formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
     let value = optionalGetValue(params, hash, intl);
 
     if (typeof value === 'undefined') {
       throw new Error(`format-${formatType} helper requires value`);
     }
 
+    let formatter = view.container.lookup(`ember-intl@formatter:format-${formatType}`);
+
     let out = new Stream(() => {
       let seenHash = readHash(hash);
       let seenValue = read(value);
       let format = {};
+
+      if (seenValue && seenValue instanceof LiteralWrapper) {
+        seenValue = seenValue.value;
+      }
 
       if (optionalReturnEmpty && optionalReturnEmpty(seenValue, seenHash)) {
         return;
@@ -63,11 +69,15 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
       }
     }
 
-    Object.keys(hash).forEach(function(key) {
-      const value = hash[key];
+    if (value && value.isStream && read(value) instanceof LiteralWrapper) {
+      value.subscribe(notify, out);
+    }
 
-      if (value && value.isStream) {
-        value.subscribe(notify, out);
+    Object.keys(hash).forEach(function(key) {
+      let hashValue = hash[key];
+
+      if (hashValue && hashValue.isStream) {
+        hashValue.subscribe(notify, out);
       }
     });
 
@@ -77,6 +87,7 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
 
     view.one('willDestroyElement', () => {
       intl.off('localeChanged', view, notify);
+      destroyStream(value);
       destroyStream(out);
     });
 

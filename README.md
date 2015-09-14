@@ -189,7 +189,7 @@ A new feature, only available when using >= Ember 1.13, is the ability to recomp
 [List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-Relative-Options)
 
 ### Format Message
-Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.
+Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.  A short-hand form of the `{{format-message}}` is `{{t}}`.
 
 ```
 You have {numPhotos, plural,
@@ -199,12 +199,12 @@ You have {numPhotos, plural,
 ```
 
 ```hbs
-{{format-message (intl-get 'product.info')
+{{t 'product.info'
   product='Apple watch'
   price=200
   deadline=yesterday}}
 
-{{format-message boundProperty
+{{t boundProperty
   name='Jason'
   numPhotos=num
   takenDate=yesterday}}
@@ -220,34 +220,28 @@ export default Ember.Component.extend({
 });
 ```
 
+#### Passing a string literal to Format Message
+
+This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This is useful for computed properties where you are programmatically constructing a translation string.
+
+```hbs
+{{t (l '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}')
+    name='Jason'
+    numPhotos=num
+    takenDate=yesterday}}
+```
+
 ### Format HTML Message
-This delegates to the `{{format-message}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
+This delegates to the `{{t}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
-{{format-html-message (intl-get 'product.html.info')
+{{format-html-message 'product.html.info'
   product='Apple watch'
   price=200
   deadline=yesterday}}
 
-{{format-html-message '<strong>{numPhotos}</strong>'
+{{format-html-message (l '<strong>{numPhotos}</strong>')
   numPhotos=(format-number num)}}
-```
-
-### intl-get Subexpression
-Subexpression helper for returning a translation for a given key.  *NOTE: Should only ever be used as a subexpression, never as a standalone helper.*
-
-```hbs
-{{format-message (intl-get 'product.info')
-  product='Apple watch'
-  price=200
-  deadline=yesterday}}
-```
-
-Will return the message from the current locale, or locale explicitly passed as an argument, message object.
-
-```yaml
-product:
-  info: '{product} will cost {price, number, EUR} if ordered by {deadline, date, time}'
 ```
 
 ## Named Formats
