@@ -1,3 +1,5 @@
+/* global requirejs */
+
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -9,6 +11,7 @@ import extend from '../utils/extend';
 import Translation from '../models/translation';
 
 const { assert, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
+const matchKey = '/translations/(.+)$';
 
 function formatterProxy (formatType) {
   return function (value, options = {}, formats = null) {
@@ -81,6 +84,18 @@ const IntlService = Service.extend(Evented, {
     const locale = get(this, '_locale');
     assert('ember-intl: Cannot check existance when locale is null || undefined', locale);
     return get(this, 'adapter').findTranslationByKey(locale, key);
+  },
+
+  getLocalesByTranslations() {
+    return Object.keys(requirejs.entries).reduce((translations, module) => {
+      var match = module.match(matchKey);
+
+      if (match) {
+        translations.addObject(match[1]);
+      }
+
+      return translations;
+    }, Ember.A());
   },
 
   addTranslation(locale, key, value) {

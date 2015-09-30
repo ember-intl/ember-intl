@@ -228,16 +228,24 @@ test('locale can add message to intl service and read it', function(assert) {
 });
 
 test('locale can add messages object and can read it', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
+  const service = this.container.lookup('service:intl');
   const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({
-    'bulk-add': 'bulk add works'
-  });
+  translation.addTranslations({ 'bulk-add': 'bulk add works' });
 
   view = this.render(hbs`{{format-message "bulk-add"}}`, 'en-us');
   runAppend(view);
   assert.equal(view.$().text(), "bulk add works");
+  assert.ok(service.exists('bulk-add'));
+});
+
+
+test('able to discover all register translations', function(assert) {
+  assert.expect(1);
+
+  const service = this.container.lookup('service:intl');
+  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr');
 });
 
 test('should respect format options for date ICU block', function(assert) {

@@ -41,6 +41,10 @@ const TranslationModel = Ember.Object.extend({
   // for example, this[key] versus Ember.get
   getValue(key) {
     return get(this, key);
+  },
+
+  has(key) {
+    return this.hasOwnProperty(key);
   }
 });
 
