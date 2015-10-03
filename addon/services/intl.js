@@ -117,6 +117,9 @@ const IntlService = Service.extend(Evented, {
 
   createLocale(locale, payload) {
     let container = this.container;
+
+    // the backflips to access the registry across the various
+    // implementations of the container/registry for different Ember versions..
     const name = `ember-intl@translation:${locale}`;
     const instance = this.container.lookup('application:main') || {};
 
@@ -126,9 +129,12 @@ const IntlService = Service.extend(Evented, {
       container = instance.registry;
     } else if (container.registry && container.registry.register) {
       container = container.registry;
+    } else if (container._registry) {
+      container = container._registry;
     }
 
     const has = container.hasRegistration || container.has;
+
     if (has.call(container, name)) {
       container.unregister(name);
     }
