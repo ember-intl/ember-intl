@@ -22,7 +22,7 @@
   "author": "jason.mitchell.w@gmail.com",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "broccoli-caching-writer": "1.1.0",
+    "broccoli-caching-writer": "^2.0.0",
     "broccoli-funnel": "^0.2.3",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-source": "^1.1.0",
