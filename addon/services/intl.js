@@ -72,18 +72,25 @@ const IntlService = Service.extend(Evented, {
 
   addMessage(...args) {
     logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+
     return this.addTranslation(...args);
   },
 
   addMessages(...args) {
     logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+
     return this.addTranslations(...args);
   },
 
-  exists(key) {
-    const locale = get(this, '_locale');
-    assert('ember-intl: Cannot check existance when locale is null || undefined', locale);
-    return get(this, 'adapter').has(locale, key);
+  exists(optionalLocale, key) {
+    if (arguments.length === 1) {
+      key = optionalLocale;
+      optionalLocale = get(this, '_locale');
+    }
+
+    assert('ember-intl: Cannot check existance when locale is unset', optionalLocale);
+
+    return get(this, 'adapter').has(optionalLocale, key);
   },
 
   getLocalesByTranslations() {
