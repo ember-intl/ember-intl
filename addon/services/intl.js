@@ -88,7 +88,7 @@ const IntlService = Service.extend(Evented, {
       optionalLocale = get(this, '_locale');
     }
 
-    assert('ember-intl: Cannot check existance when locale is unset', optionalLocale);
+    assert(`ember-intl: locale is unset, cannot confirm '${key}' exists`, optionalLocale);
 
     return get(this, 'adapter').has(optionalLocale, key);
   },
