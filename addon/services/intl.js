@@ -83,7 +83,7 @@ const IntlService = Service.extend(Evented, {
   exists(key) {
     const locale = get(this, '_locale');
     assert('ember-intl: Cannot check existance when locale is null || undefined', locale);
-    return get(this, 'adapter').findTranslationByKey(locale, key);
+    return get(this, 'adapter').has(locale, key);
   },
 
   getLocalesByTranslations() {

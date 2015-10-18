@@ -228,22 +228,39 @@ test('locale can add message to intl service and read it', function(assert) {
 });
 
 test('locale can add messages object and can read it', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
-  const service = this.container.lookup('service:intl');
   const translation = this.container.lookup('ember-intl@translation:en-us');
   translation.addTranslations({ 'bulk-add': 'bulk add works' });
 
   view = this.render(hbs`{{format-message "bulk-add"}}`, 'en-us');
   runAppend(view);
+
   assert.equal(view.$().text(), "bulk add works");
-  assert.ok(service.exists('bulk-add'));
 });
 
+test('exists returns false when key not found', function(assert) {
+  assert.expect(1);
+
+  const service = this.container.lookup('service:intl');
+  service.setLocale('en-us');
+  const translation = this.container.lookup('ember-intl@translation:en-us');
+  translation.addTranslation('foo', 'foo');
+  assert.equal(service.exists('bar'), false);
+});
+
+test('exists returns true when key found', function(assert) {
+  assert.expect(1);
+
+  const service = this.container.lookup('service:intl');
+  const translation = this.container.lookup('ember-intl@translation:en-us');
+  translation.addTranslation('hello', 'world');
+  service.setLocale('en-us');
+  assert.equal(service.exists('hello'), true);
+});
 
 test('able to discover all register translations', function(assert) {
   assert.expect(1);
-
   const service = this.container.lookup('service:intl');
   assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr');
 });
