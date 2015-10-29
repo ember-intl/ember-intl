@@ -18,9 +18,10 @@ const FormatMessage = Formatter.extend({
     }
   }),
 
-  format(value, options, formats) {
-    const { locale } = options;
-    const formatter = get(this, 'formatter');
+  format(value, options = {}, formats = {}) {
+    let { locale } = options;
+    let formatter = get(this, 'formatter');
+
     return formatter(value, locale, formats).format(options);
   }
 });

@@ -16,7 +16,7 @@ import { instanceInitializer } from '../instance-initializers/ember-intl';
 // This is solely for the purpose of supporting < 1.13.0
 // any new functionality for >= 1.13.0 should go in a new initializer
 // because it is programmatically removed on build within `index.js`
-export function initializer(registry, app = {}) {
+export function initialize(registry, app = {}) {
   registerHelper('format-date', FormatDate, registry);
   registerHelper('format-time', FormatTime, registry);
   registerHelper('format-relative', FormatRelative, registry);
@@ -38,5 +38,5 @@ export function initializer(registry, app = {}) {
 
 export default {
   name: 'ember-intl',
-  initialize: initializer
+  initialize
 };

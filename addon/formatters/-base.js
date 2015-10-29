@@ -56,8 +56,8 @@ const FormatBase = EmberObject.extend({
   * @private
   */
   _format(value, formatterOptions = {}, formatOptions = {}) {
-    const formatter = get(this, 'formatter');
-    const { locale } = formatterOptions;
+    let formatter = get(this, 'formatter');
+    let { locale } = formatterOptions;
 
     if (!locale) {
       throw new Error(

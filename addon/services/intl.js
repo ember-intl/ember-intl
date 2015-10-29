@@ -13,9 +13,9 @@ import Translation from '../models/translation';
 const { assert, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 const matchKey = '/translations/(.+)$';
 
-function formatterProxy (formatType) {
+function formatterProxy(formatType) {
   return function (value, options = {}, formats = null) {
-    const formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+    let formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
 
     if (typeof options.format === 'string') {
       options = extend(this.getFormat(formatType, options.format), options);
@@ -45,18 +45,6 @@ const IntlService = Service.extend(Evented, {
     }
   }),
 
-  formatRelative: formatterProxy('relative'),
-  formatMessage: formatterProxy('message'),
-  formatHtmlMessage: formatterProxy('html-message'),
-  formatNumber: formatterProxy('number'),
-  formatTime: formatterProxy('time'),
-  formatDate: formatterProxy('date'),
-
-  t(key, options, formats) {
-    const translation = this.findTranslationByKey(key, options && options.locale);
-    return this.formatMessage(translation, options, formats);
-  },
-
   adapter: computed({
     get() {
       return this.container.lookup('ember-intl@adapter:-intl-adapter');
@@ -74,6 +62,19 @@ const IntlService = Service.extend(Evented, {
       return formats;
     }
   }),
+
+  formatRelative: formatterProxy('relative'),
+  formatMessage: formatterProxy('message'),
+  formatHtmlMessage: formatterProxy('html-message'),
+  formatNumber: formatterProxy('number'),
+  formatTime: formatterProxy('time'),
+  formatDate: formatterProxy('date'),
+
+  t(key, options, formats) {
+    let translation = this.findTranslationByKey(key, options && options.locale);
+
+    return this.formatMessage(translation, options, formats);
+  },
 
   addMessage(...args) {
     logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
@@ -100,7 +101,7 @@ const IntlService = Service.extend(Evented, {
 
   getLocalesByTranslations() {
     return Object.keys(requirejs.entries).reduce((translations, module) => {
-      var match = module.match(matchKey);
+      let match = module.match(matchKey);
 
       if (match) {
         translations.addObject(match[1]);

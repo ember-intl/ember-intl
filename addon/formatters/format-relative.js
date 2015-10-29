@@ -25,8 +25,10 @@ const FormatRelative = Formatter.extend({
   }),
 
   format(value, options = {}) {
-    const dateValue = new Date(value);
+    let dateValue = new Date(value);
+
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
+
     return this._format(dateValue, this.filterSupporedOptions(options), {
       now: options.now
     });

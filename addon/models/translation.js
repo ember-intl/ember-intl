@@ -10,6 +10,7 @@ const { get, set, Logger:logger } = Ember;
 const TranslationModel = Ember.Object.extend({
   addTranslation(key, value) {
     set(this, key, value);
+
     return value;
   },
 
@@ -28,11 +29,13 @@ const TranslationModel = Ember.Object.extend({
 
   addMessage(...args) {
     logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
+
     return this.addTranslation(...args);
   },
 
   addMessages(...args) {
     logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
+
     return this.addTranslations(...args);
   },
 

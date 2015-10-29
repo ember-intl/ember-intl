@@ -31,6 +31,7 @@ if (Helper) {
 
     compute(params, hash = {}) {
       const intl = get(this, 'intl');
+
       return new LiteralWrapper(intl.findTranslationByKey(params[0], hash.locale));
     }
   });
