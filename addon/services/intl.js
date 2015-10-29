@@ -52,6 +52,11 @@ const IntlService = Service.extend(Evented, {
   formatTime: formatterProxy('time'),
   formatDate: formatterProxy('date'),
 
+  t(key, options, formats) {
+    const translation = this.findTranslationByKey(key, options && options.locale);
+    return this.formatMessage(translation, options, formats);
+  },
+
   adapter: computed({
     get() {
       return this.container.lookup('ember-intl@adapter:-intl-adapter');

@@ -33,6 +33,7 @@
   "devDependencies": {
     "ember-qunit": "0.4.9",
     "ember-qunit-notifications": "0.0.7",
-    "qunit": "~1.18.0"
+    "qunit": "~1.18.0",
+    "sinonjs": "~1.17.1"
   }
 }
