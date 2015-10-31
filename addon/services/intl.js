@@ -88,15 +88,16 @@ const IntlService = Service.extend(Evented, {
     return this.addTranslations(...args);
   },
 
-  exists(optionalLocale, key) {
-    if (arguments.length === 1) {
-      key = optionalLocale;
-      optionalLocale = get(this, '_locale');
+  exists(key, optionalLocale) {
+    let locale = optionalLocale;
+
+    if (!optionalLocale) {
+      locale = this.get('_locale');
     }
 
-    assert(`ember-intl: locale is unset, cannot confirm '${key}' exists`, optionalLocale);
+    assert(`ember-intl: locale is unset, cannot confirm '${key}' exists`, locale);
 
-    return get(this, 'adapter').has(optionalLocale, key);
+    return get(this, 'adapter').has(locale, key);
   },
 
   getLocalesByTranslations() {
