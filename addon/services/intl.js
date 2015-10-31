@@ -182,7 +182,7 @@ const IntlService = Service.extend(Evented, {
     const translation = get(this, 'adapter').findTranslationByKey(_locale, key);
 
     if (typeof translation === 'undefined') {
-      throw new Error(`translation: '${key}' on locale: '${_locale}' was not found.`);
+      Ember.Logger.warn(`translation: '${key}' on locale: '${_locale}' was not found.`);
     }
 
     return translation;
