@@ -39,15 +39,18 @@ const TranslationModel = Ember.Object.extend({
     return this.addTranslations(...args);
   },
 
-  // Exposes an accesor on the locale modules
-  // so that if you want to implement your own custom logic
-  // for example, this[key] versus Ember.get
+  /**
+   * Custom accessor hook that can be overridden.
+   * This would enable consumers that have dot notated strings
+   * to implement this function as `return this[key];`
+   * @public
+   */
   getValue(key) {
     return get(this, key);
   },
 
   has(key) {
-    return this.hasOwnProperty(key);
+    return typeof this.getValue(key) === 'string';
   }
 });
 

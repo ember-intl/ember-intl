@@ -244,8 +244,6 @@ test('exists returns false when key not found', function(assert) {
 
   const service = this.container.lookup('service:intl');
   service.setLocale('en-us');
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslation('foo', 'foo');
   assert.equal(service.exists('bar'), false);
 });
 
