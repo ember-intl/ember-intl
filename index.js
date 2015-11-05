@@ -131,9 +131,15 @@ module.exports = {
       trees.push(publicTree);
     }
 
+    trees.push(new Funnel(this.trees.intl, {
+      srcDir: 'dist',
+      files: ['Intl.js.map'],
+      destDir: path.join(assetPath)
+    }));
+
     trees.push(lowercaseTree(new Funnel(this.trees.intl, {
       srcDir: 'dist',
-      files: ['Intl.complete.js', 'Intl.js', 'Intl.js.map', 'Intl.min.js'],
+      files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
       destDir: path.join(assetPath)
     })));
 
