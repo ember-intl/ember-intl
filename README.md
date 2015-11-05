@@ -297,8 +297,8 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 ```
 
 ### Testing with ember-intl
-* [Unit testing](https://github.com/yahoo/ember-intl/wiki/Unit-testing-with-ember-intl)
-* [Integration testing](https://github.com/yahoo/ember-intl/wiki/Integration-testing-with-ember-intl)
+* [Unit testing](https://github.com/yahoo/ember-intl/wiki/Testing---Unit)
+* [Integration testing](https://github.com/yahoo/ember-intl/wiki/Testing---Integration)
 
 ## Common Errors
 
