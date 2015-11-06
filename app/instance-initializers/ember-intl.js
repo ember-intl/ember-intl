@@ -3,8 +3,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import ENV from '../config/environment';
 import addLocaleData from 'ember-intl/utils/add-locale-data';
+import ENV from '../config/environment';
 
 function filterBy(env, type) {
   return Object.keys(requirejs._eak_seen).filter((key) => {
