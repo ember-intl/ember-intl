@@ -31,7 +31,6 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
       intl.on('localeChanged', this, this.recompute);
     },
 
-
     compute(params, hash) {
       let intl = get(this, 'intl');
       let formatter = get(this, 'formatter');

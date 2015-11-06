@@ -9,10 +9,6 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 [demo of ember-intl](http://jasonmit.github.io/ember-intl-example/)
 
-## Ember-Intl 2.0
-
-#### This README targets the 2.0 API which differs from previous and the current stable versions.  If you are looking for 1.x documentation, [please go here](https://github.com/yahoo/ember-intl/blob/1.3.x-stable/README.md).
-
 ## Overview
 **Ember Intl is part of [FormatJS][], the docs can be found on the website:**
 
@@ -20,7 +16,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 ## Requirements
 * ember-cli >= 0.2.0
-* ember >= 1.10.x <= 1.13.x
+* ember > 1.13.0
 
 ## Installation
 * `ember install ember-intl@beta`
@@ -179,7 +175,8 @@ export default Ember.Component.extend({
 ```
 
 #### Live Relative Timestamp
-A new feature, only available when using >= Ember 1.13, is the ability to recompute the relative timestamp on an interval by passing an `interval` argument (in milliseconds).
+
+Recompute the relative timestamp on an interval by passing an `interval` argument (in milliseconds).
 
 ```hbs
 {{format-relative now interval=1000}} -> now, 1 second ago, 2 seconds ago, etc. (will recompute every 1s)

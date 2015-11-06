@@ -10,7 +10,6 @@ import Translation from 'ember-intl/models/translation';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 import intlGetHelper from '../../helpers/intl-get';
-import modernHelperTest from '../helpers/test';
 
 const { run:emberRun } = Ember;
 let view, registry;
@@ -39,7 +38,7 @@ test('exists', function(assert) {
   assert.ok(intlGetHelper);
 });
 
-modernHelperTest('should recompute on intl locale change in >= 1.13.0', function(assert) {
+test('should recompute on intl locale change in', function(assert) {
   assert.expect(1);
 
   const recomputeFn = intlGetHelper.proto().recompute;
