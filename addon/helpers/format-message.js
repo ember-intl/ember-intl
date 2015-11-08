@@ -4,8 +4,6 @@
  */
 
 import helperFactory from './-base';
-import { read } from '../utils/streams';
-import { IntlGetStream } from '../utils/intl-get-stream';
 import { LiteralWrapper } from './l';
 
 export function getValue(params, hash, intl) {
@@ -13,15 +11,6 @@ export function getValue(params, hash, intl) {
 
   if (params.length) {
     key = params[0];
-  }
-
-  // NOTE: once we drop < 1.13 support this can be removed
-  if (key.isStream) {
-    if (key instanceof IntlGetStream) {
-      return key;
-    } else {
-      key = read(key);
-    }
   }
 
   if (key instanceof LiteralWrapper) {

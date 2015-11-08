@@ -65,31 +65,7 @@ module.exports = {
     };
   },
 
-  treeForAddon: function(tree) {
-    if (utils.isModern(this)) {
-      tree = stew.rm(tree, path.join('helpers', 'intl-get-legacy.js'), path.join('helpers', '-base-legacy.js'));
-    } else {
-      tree = stew.rm(tree, path.join('initializers', 'ember-intl.js'), path.join('helpers', 'intl-get.js'), path.join('helpers', '-base.js'));
-      [
-        { from: path.join('initializers', 'ember-intl-legacy.js'), to: path.join('initializers', 'ember-intl.js') },
-        { from: path.join('helpers', 'intl-get-legacy.js'), to: path.join('helpers', 'intl-get.js') },
-        { from: path.join('helpers', '-base-legacy.js'), to: path.join('helpers', '-base.js') }
-      ].forEach(function(move) {
-        tree = stew.mv(tree, move.from, move.to);
-      });
-    }
-
-    return this._super.treeForAddon.call(this, tree);
-  },
-
   treeForApp: function(tree) {
-    if (utils.isModern(this)) {
-      tree = stew.rm(tree, path.join('initializers', 'ember-intl-legacy.js'));
-    } else {
-      tree = stew.rm(tree, path.join('initializers', 'ember-intl.js'));
-      tree = stew.mv(tree, path.join('initializers', 'ember-intl-legacy.js'), path.join('initializers', 'ember-intl.js'));
-    }
-
     var trees = [tree, new TranslationPreprocessor(this.trees.translations, this.addonOptions)];
 
     if (tree && this.locales.length) {
