@@ -1,4 +1,7 @@
+'use strict';
+
 /* global require, module */
+
 var EmberApp = require('ember-cli/lib/broccoli/ember-addon');
 var path = require('path');
 
@@ -7,7 +10,7 @@ module.exports = function(defaults) {
     // Add options here
   });
 
-  app.options.snippetPaths = [path.join('tests', 'dummy', 'snippets')];
+  app.options.snippetPaths = ['tests/dummy/snippets'];
 
   /*
     This build file specifes the options for the dummy test app of this

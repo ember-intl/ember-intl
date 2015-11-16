@@ -95,7 +95,7 @@ module.exports = {
     }
 
     var intlPath = path.dirname(require.resolve('intl'));
-    var assetPath = path.join('assets', 'intl');
+    var assetPath = 'assets/intl';
     var appOptions = this.app.options;
     var trees = [];
 
@@ -110,18 +110,18 @@ module.exports = {
     trees.push(new Funnel(this.trees.intl, {
       srcDir: 'dist',
       files: ['Intl.js.map'],
-      destDir: path.join(assetPath)
+      destDir: assetPath
     }));
 
     trees.push(lowercaseTree(new Funnel(this.trees.intl, {
       srcDir: 'dist',
       files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-      destDir: path.join(assetPath)
+      destDir: assetPath
     })));
 
     var localeFunnel = {
-      srcDir: path.join('locale-data', 'jsonp'),
-      destDir: path.join(assetPath, 'locales')
+      srcDir: 'locale-data/jsonp',
+      destDir: assetPath + '/locales'
     };
 
     if (this.locales.length) {
@@ -139,7 +139,7 @@ module.exports = {
   },
 
   _discoverLocales: function() {
-    var translations = path.join(this.project.root, this.addonOptions.inputPath);
+    var translations = this.project.root + '/' + this.addonOptions.inputPath;
     var locales = [];
 
     if (existsSync(translations)) {
