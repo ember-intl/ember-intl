@@ -51,7 +51,7 @@
     "ember-cli-htmlbars-inline-precompile": "0.2.0",
     "ember-cli-inject-live-reload": "^1.3.0",
     "ember-cli-qunit": "1.0.1",
-    "ember-code-snippet": "jasonmit/ember-code-snippet#patch-1",
+    "ember-code-snippet": "jasonmit/ember-code-snippet#patch-2",
     "ember-disable-prototype-extensions": "^1.0.1",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-legacy-views": "^0.2.0",
