@@ -28,7 +28,7 @@
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^1.0.0",
     "chalk": "^1.0.0",
-    "ember-cli-babel": "^5.0.0",
+    "ember-cli-babel": "^5.1.0",
     "ember-intl-format-cache": "^2.2.0",
     "ember-intl-messageformat": "^2.0.0",
     "ember-intl-relativeformat": "^2.0.0",
