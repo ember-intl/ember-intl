@@ -4,6 +4,8 @@
  */
 
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
+
 import extend from '../utils/extend';
 
 const { Helper, inject, get, computed } = Ember;
@@ -20,7 +22,7 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
 
     formatter: computed('formatType', {
       get() {
-        return this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+        return getOwner(this).lookup(`ember-intl@formatter:format-${formatType}`);
       }
     }),
 

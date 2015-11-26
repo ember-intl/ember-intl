@@ -4,6 +4,8 @@
  */
 
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
+
 import Translation from '../models/translation';
 
 const { assert, makeArray } = Ember;
@@ -19,8 +21,10 @@ const DefaultIntlAdapter = Ember.Object.extend({
       return localeName;
     }
 
+    const owner = getOwner(this);
+
     if (typeof localeName === 'string') {
-      return this.container.lookup('ember-intl@translation:' + normalize(localeName));
+      return owner.lookup('ember-intl@translation:' + normalize(localeName));
     }
   },
 

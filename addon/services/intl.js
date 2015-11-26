@@ -6,6 +6,7 @@
  */
 
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
 import extend from '../utils/extend';
 import Translation from '../models/translation';
@@ -15,7 +16,8 @@ const matchKey = '/translations/(.+)$';
 
 function formatterProxy(formatType) {
   return function (value, options = {}, formats = null) {
-    let formatter = this.container.lookup(`ember-intl@formatter:format-${formatType}`);
+    const owner = getOwner(this);
+    const formatter = owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
     if (typeof options.format === 'string') {
       options = extend(this.getFormat(formatType, options.format), options);
@@ -47,13 +49,13 @@ const IntlService = Service.extend(Evented, {
 
   adapter: computed({
     get() {
-      return this.container.lookup('ember-intl@adapter:-intl-adapter');
+      return getOwner(this).lookup('ember-intl@adapter:-intl-adapter');
     }
   }),
 
   formats: computed({
     get() {
-      const formats = this.container.lookupFactory('formats:main');
+      const formats = getOwner(this).resolveRegistration('formats:main');
 
       if (Ember.Object.detect(formats)) {
         return formats.create();
@@ -130,30 +132,14 @@ const IntlService = Service.extend(Evented, {
   },
 
   createLocale(locale, payload) {
-    let container = this.container;
-
-    // the backflips to access the registry across the various
-    // implementations of the container/registry for different Ember versions..
+    const owner = getOwner(this);
     const name = `ember-intl@translation:${locale}`;
-    const instance = this.container.lookup('application:main') || {};
 
-    if (instance.hasRegistration) {
-      container = instance;
-    } else if (instance.registry) {
-      container = instance.registry;
-    } else if (container.registry && container.registry.register) {
-      container = container.registry;
-    } else if (container._registry) {
-      container = container._registry;
+    if (owner.hasRegistration(name)) {
+      owner.unregister(name);
     }
 
-    const has = container.hasRegistration || container.has;
-
-    if (has.call(container, name)) {
-      container.unregister(name);
-    }
-
-    container.register(name, Translation.extend(payload));
+    owner.register(name, Translation.extend(payload));
   },
 
   getFormat(formatType, format) {
