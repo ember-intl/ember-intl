@@ -5,9 +5,8 @@
 
 import Ember from 'ember';
 import extend from '../utils/extend';
-import computed from 'ember-new-computed';
 
-const { Helper, inject, get } = Ember;
+const { Helper, inject, get, computed } = Ember;
 
 function getValue(params) {
     return params[0];

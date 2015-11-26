@@ -4,12 +4,12 @@
  */
 
 import Ember from 'ember';
-import computed from 'ember-new-computed';
 import IntlRelativeFormat from 'intl-relativeformat';
 import createFormatCache from 'intl-format-cache';
+
 import Formatter from './-base';
 
-const { assert } = Ember;
+const { assert, computed } = Ember;
 
 function assertIsDate(date, errMsg) {
   assert(errMsg, isFinite(date));

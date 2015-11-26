@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import computed from 'ember-new-computed';
 
-const { set, Controller, inject, on, run:emberRun } = Ember;
+const { set, computed, Controller, inject, on, run:emberRun } = Ember;
 
 const date = new Date();
 const yesterday = date.setDate(date.getDate() - 1);

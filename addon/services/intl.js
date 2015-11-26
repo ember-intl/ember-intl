@@ -6,11 +6,11 @@
  */
 
 import Ember from 'ember';
-import computed from 'ember-new-computed';
+
 import extend from '../utils/extend';
 import Translation from '../models/translation';
 
-const { assert, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
+const { assert, computed, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 const matchKey = '/translations/(.+)$';
 
 function formatterProxy(formatType) {

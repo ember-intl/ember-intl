@@ -4,12 +4,12 @@
  */
 
 import Ember from 'ember';
-import computed from 'ember-new-computed';
 import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
+
 import Formatter from './-base';
 
-const { get } = Ember;
+const { get, computed } = Ember;
 
 const FormatMessage = Formatter.extend({
   formatter: computed({

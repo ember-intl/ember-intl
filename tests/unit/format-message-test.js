@@ -5,18 +5,18 @@
 
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import computed from 'ember-new-computed';
 import { moduleFor, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import tHelper from 'ember-intl/helpers/t';
 import lHelper from 'ember-intl/helpers/l';
 import Translation from 'ember-intl/models/translation';
 import registerHelper from 'ember-intl/utils/register-helper';
+
 import intlGet from '../../helpers/intl-get';
 import { runAppend, runDestroy } from '../helpers/run-append';
 import createIntlBlock from '../helpers/create-intl-block';
 
-const { run:emberRun, get } = Ember;
+const { run:emberRun, get, computed } = Ember;
 let view, registry;
 
 moduleFor('ember-intl@formatter:format-message', {

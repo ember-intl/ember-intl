@@ -32,7 +32,6 @@
     "ember-intl-format-cache": "^2.2.0",
     "ember-intl-messageformat": "^2.0.0",
     "ember-intl-relativeformat": "^2.0.0",
-    "ember-new-computed": "^1.0.1",
     "exists-sync": "0.0.3",
     "extend": "^3.0.0",
     "formatjs-extract-cldr-data": "^1.1.0",
