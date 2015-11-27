@@ -6,22 +6,19 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatDateHelper from 'ember-intl/helpers/format-date';
-import registerHelper from 'ember-intl/utils/register-helper';
 
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
+import { runAppend, runDestroy } from '../../helpers/run-append';
+import createRenderer from '../../helpers/create-intl-block';
 
 const date = 1390518044403;
 const defaultLocale = 'en-us';
 
-let view, registry;
+let view;
 
 moduleFor('ember-intl@formatter:format-date', {
-  needs: ['service:intl'],
+  needs: ['service:intl', 'helper:format-date'],
   beforeEach() {
-    registry =  this.registry || this.container;
-    registerHelper('format-date', formatDateHelper, registry);
-    this.render = createIntlBlock(registry);
+    this.render = createRenderer.call(this, undefined);
   },
   afterEach() {
     runDestroy(view);

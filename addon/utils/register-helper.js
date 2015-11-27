@@ -4,7 +4,7 @@
  */
 
 function registerHelper(name, klass, registry) {
-  return registry.register(`helper:${name}`, klass);
+  return registry.register.call(registry, `helper:${name}`, klass);
 }
 
 export default registerHelper;
