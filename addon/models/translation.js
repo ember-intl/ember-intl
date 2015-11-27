@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const { get, set, Logger:logger } = Ember;
+const { get, set } = Ember;
 
 const TranslationModel = Ember.Object.extend({
   addTranslation(key, value) {
@@ -25,18 +25,6 @@ const TranslationModel = Ember.Object.extend({
     }
 
     return messages;
-  },
-
-  addMessage(...args) {
-    logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
-
-    return this.addTranslation(...args);
-  },
-
-  addMessages(...args) {
-    logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
-
-    return this.addTranslations(...args);
   },
 
   /**

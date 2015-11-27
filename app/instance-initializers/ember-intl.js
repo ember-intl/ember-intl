@@ -23,7 +23,7 @@ export function instanceInitializer(instance) {
   filterBy(ENV, 'translations').forEach((key) => {
     const localeSplit = key.split('\/');
     const locale = localeSplit[localeSplit.length - 1];
-    service.createLocale(locale, require(key, null, null, true)['default']);
+    service.addTranslations(locale, require(key, null, null, true)['default']);
   });
 }
 

@@ -21,11 +21,18 @@ const DefaultIntlAdapter = Ember.Object.extend({
       return localeName;
     }
 
-    const owner = getOwner(this);
-
-    if (typeof localeName === 'string') {
-      return owner.lookup('ember-intl@translation:' + normalize(localeName));
+    if (typeof localeName !== 'string') {
+      throw new Error('locale name required for translation lookup');
     }
+
+    const owner = getOwner(this);
+    const lookupName = 'ember-intl@translation:' + normalize(localeName);
+
+    if (!owner.hasRegistration(lookupName)) {
+      owner.register(lookupName, Translation.extend({}));
+    }
+
+    return owner.lookup(lookupName);
   },
 
   has(localeName, translationKey) {
