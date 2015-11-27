@@ -7,19 +7,17 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
-import registerHelper from 'ember-intl/utils/register-helper';
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
+import { runAppend, runDestroy } from '../../helpers/run-append';
+import createRenderer from '../../helpers/create-intl-block';
 
 const { run:emberRun } = Ember;
 
 let view, registry;
 
 moduleFor('ember-intl@formatter:format-relative', {
-  needs: ['service:intl'],
+  needs: ['service:intl', 'helper:format-relative'],
   beforeEach() {
     registry =  this.registry || this.container;
-    registerHelper('format-relative', formatRelativehelper, registry);
 
     registry.register('formats:main', {
       relative: {
@@ -35,7 +33,7 @@ moduleFor('ember-intl@formatter:format-relative', {
       instantiate: false
     });
 
-    this.render = createIntlBlock(registry);
+    this.render = createRenderer.call(this, undefined);
   },
   afterEach() {
     runDestroy(view);

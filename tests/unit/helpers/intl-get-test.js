@@ -7,17 +7,18 @@ import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Translation from 'ember-intl/models/translation';
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
-import intlGetHelper from '../../helpers/intl-get';
+import intlGetHelper from 'ember-intl/helpers/intl-get';
+import { runAppend, runDestroy } from '../../helpers/run-append';
+import createRenderer from '../../helpers/create-intl-block';
 
 const { run:emberRun } = Ember;
-let view, registry;
+let view;
 
 moduleFor('helper:intl-get', {
   needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
   beforeEach() {
-    registry = this.registry || this.container;
+    let registry = this.registry || this.container;
+
     registry.register('ember-intl@translation:en-us', Translation.extend({
       greeting: 'Hello'
     }));
@@ -26,7 +27,7 @@ moduleFor('helper:intl-get', {
       greeting: 'Bonjour'
     }));
 
-    this.render = createIntlBlock(registry);
+    this.render = createRenderer.call(this, undefined);
   },
   afterEach() {
     runDestroy(view);

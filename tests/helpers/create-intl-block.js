@@ -4,12 +4,22 @@
  */
 
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
-const { run:emberRun } = Ember;
+const { run:emberRun, setOwner } = Ember;
 
-function createIntlBlock () {
+function createRenderer() {
+  // suppress deprecation warnings
+  if (Ember && Ember.ENV) {
+    Ember.ENV._ENABLE_LEGACY_VIEW_SUPPORT = true;
+  }
+
+  const { registry, container } = this;
+  registry.register('view:-blank', Ember.View.extend());
+
   return function(template, locale) {
-    const service = this.container.lookup('service:intl');
+    const owner = getOwner(this);
+    const service = owner.lookup('service:intl');
 
     if (locale) {
       emberRun(() => {
@@ -17,16 +27,18 @@ function createIntlBlock () {
       });
     }
 
-    // suppress deprecation warnings
-    if (Ember && Ember.ENV) {
-      Ember.ENV._ENABLE_LEGACY_VIEW_SUPPORT = true;
+    const createOptions = {
+      template: template
+    };
+
+    if (setOwner) {
+      setOwner(createOptions, owner);
+    } else {
+      createOptions.container = container;
     }
 
-    return Ember.View.create({
-      template: template,
-      container: this.container
-    });
+    return owner._lookupFactory('view:-blank').create(createOptions);
   };
 }
 
-export default createIntlBlock;
+export default createRenderer;

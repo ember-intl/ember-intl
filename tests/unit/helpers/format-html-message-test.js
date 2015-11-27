@@ -6,21 +6,22 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
-import registerHelper from 'ember-intl/utils/register-helper';
 import Translation from 'ember-intl/models/translation';
-import lHelper from 'ember-intl/helpers/l';
 
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
+import { runAppend, runDestroy } from '../../helpers/run-append';
+import createRenderer from '../../helpers/create-intl-block';
 
 let view, registry;
 
 moduleFor('ember-intl@formatter:format-html-message', {
-  needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
+  needs: [
+    'service:intl',
+    'helper:format-html-message',
+    'helper:l',
+    'ember-intl@adapter:-intl-adapter'
+  ],
   beforeEach() {
     registry = this.registry || this.container;
-    registerHelper('format-html-message', formatHtmlHelper, registry);
-    registerHelper('l', lHelper, registry);
     registry.injection('formatter', 'intl', 'service:intl');
     registry.register('ember-intl@translation:en-us', Translation.extend({
       foo: {
@@ -29,7 +30,7 @@ moduleFor('ember-intl@formatter:format-html-message', {
       }
     }));
 
-    this.render = createIntlBlock(registry);
+    this.render = createRenderer.call(this, undefined);
   },
   afterEach() {
     runDestroy(view);

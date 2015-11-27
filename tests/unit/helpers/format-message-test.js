@@ -7,30 +7,26 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
-import tHelper from 'ember-intl/helpers/t';
-import lHelper from 'ember-intl/helpers/l';
 import Translation from 'ember-intl/models/translation';
-import registerHelper from 'ember-intl/utils/register-helper';
 
-import intlGet from '../../helpers/intl-get';
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
+import { runAppend, runDestroy } from '../../helpers/run-append';
+import createRenderer from '../../helpers/create-intl-block';
 
 const { run:emberRun, get, computed } = Ember;
 let view, registry;
 
 moduleFor('ember-intl@formatter:format-message', {
-  needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
+  needs: [
+    'service:intl',
+    'helper:l',
+    'helper:t',
+    'helper:format-message',
+    'helper:intl-get',
+    'ember-intl@adapter:-intl-adapter'
+  ],
   beforeEach() {
-    registry =  this.registry || this.container;
-    registry.register('view:basic', Ember.View);
+    registry = this.registry || this.container;
 
-    registerHelper('format-message', formatMessageHelper, registry);
-    registry.register('helper:intl-get', intlGet);
-    registerHelper('t', tHelper, registry);
-    registerHelper('l', lHelper, registry);
-
-    registry.register('application:main', Ember.Application.extend());
     registry.register('ember-intl@translation:en-us', Translation.extend({
       foo: {
         bar: 'foo bar baz',
@@ -49,7 +45,8 @@ moduleFor('ember-intl@formatter:format-message', {
     });
 
     registry.injection('formatter', 'intl', 'service:intl');
-    this.render = createIntlBlock(registry);
+
+    this.render = createRenderer.call(this, undefined);
   },
   afterEach() {
     runDestroy(view);

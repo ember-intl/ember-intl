@@ -5,20 +5,18 @@
 
 import hbs from 'htmlbars-inline-precompile';
 import { moduleFor, test } from 'ember-qunit';
-import registerHelper from 'ember-intl/utils/register-helper';
 import formatTimeHelper from 'ember-intl/helpers/format-time';
-import { runAppend, runDestroy } from '../helpers/run-append';
-import createIntlBlock from '../helpers/create-intl-block';
+import { runAppend, runDestroy } from '../../helpers/run-append';
+import createRenderer from '../../helpers/create-intl-block';
 
 const date = 1390518044403;
 let view, registry;
 
 moduleFor('ember-intl@formatter:format-time', {
-  needs: ['service:intl'],
+  needs: ['service:intl', 'helper:format-time'],
   beforeEach() {
     registry = this.registry || this.container;
-    registerHelper('format-time', formatTimeHelper, registry);
-    this.render = createIntlBlock(this.container);
+    this.render = createRenderer.call(this, undefined);
   },
   afterEach() {
     runDestroy(view);
