@@ -9,7 +9,6 @@ import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
 
 import extend from '../utils/extend';
-import Translation from '../models/translation';
 
 const { assert, computed, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 const matchKey = '/translations/(.+)$';
@@ -78,18 +77,6 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, options, formats);
   },
 
-  addMessage(...args) {
-    logger.warn('`addMessage` is deprecated in favor of `addTranslation`');
-
-    return this.addTranslation(...args);
-  },
-
-  addMessages(...args) {
-    logger.warn('`addMessages` is deprecated in favor of `addTranslations`');
-
-    return this.addTranslations(...args);
-  },
-
   exists(key, optionalLocale) {
     let locale = optionalLocale;
 
@@ -116,30 +103,25 @@ const IntlService = Service.extend(Evented, {
 
   addTranslation(locale, key, value) {
     return this.translationsFor(locale).then((localeInstance) => {
-      return localeInstance.addMessage(key, value);
+      return localeInstance.addTranslation(key, value);
     });
   },
 
   addTranslations(locale, payload) {
     return this.translationsFor(locale).then((localeInstance) => {
-      return localeInstance.addMessages(payload);
+      return localeInstance.addTranslations(payload);
     });
+  },
+
+  createLocale(locale, payload) {
+    logger.warn('`createLocale` is deprecated, use `addTranslations`');
+
+    return this.addTranslations(locale, payload);
   },
 
   setLocale(locale) {
     set(this, '_locale', locale);
     this.trigger('localeChanged');
-  },
-
-  createLocale(locale, payload) {
-    const owner = getOwner(this);
-    const name = `ember-intl@translation:${locale}`;
-
-    if (owner.hasRegistration(name)) {
-      owner.unregister(name);
-    }
-
-    owner.register(name, Translation.extend(payload));
   },
 
   getFormat(formatType, format) {
