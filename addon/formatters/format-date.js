@@ -21,7 +21,7 @@ const FormatDate = Formatter.extend({
     get() {
       return createFormatCache(Intl.DateTimeFormat);
     }
-  }),
+  }).readOnly(),
 
   format(value, options) {
     let dateTime = new Date(value);

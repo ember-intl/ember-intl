@@ -10,7 +10,7 @@ export function LiteralWrapper(value) {
 }
 
 export default Ember.Helper.extend({
-  compute(params) {
-    return new LiteralWrapper(params[0]);
+  compute([translation]) {
+    return new LiteralWrapper(translation);
   }
 });

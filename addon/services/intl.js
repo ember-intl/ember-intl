@@ -153,7 +153,7 @@ const IntlService = Service.extend(Evented, {
   translationsFor(locale) {
     const result = get(this, 'adapter').translationsFor(locale);
 
-    return RSVP.cast(result).then(function (localeInstance) {
+    return RSVP.cast(result).then((localeInstance) => {
       if (typeof localeInstance === 'undefined') {
         throw new Error(`'locale' must be a string or a locale instance`);
       }

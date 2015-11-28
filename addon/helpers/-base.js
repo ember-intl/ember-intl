@@ -24,7 +24,7 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
       get() {
         return getOwner(this).lookup(`ember-intl@formatter:format-${formatType}`);
       }
-    }),
+    }).readOnly(),
 
     init(...args) {
       this._super(...args);

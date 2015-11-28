@@ -6,13 +6,7 @@
 import helperFactory from './-base';
 import { LiteralWrapper } from './l';
 
-export function getValue(params, hash, intl) {
-  let key;
-
-  if (params.length) {
-    key = params[0];
-  }
-
+export function getValue([key], hash, intl) {
   if (key && key instanceof LiteralWrapper) {
     return key.value;
   }

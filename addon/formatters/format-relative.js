@@ -22,7 +22,7 @@ const FormatRelative = Formatter.extend({
     get() {
       return createFormatCache(IntlRelativeFormat);
     }
-  }),
+  }).readOnly(),
 
   format(value, options = {}) {
     let dateValue = new Date(value);

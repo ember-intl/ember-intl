@@ -17,7 +17,7 @@ const FormatNumber = Formatter.extend({
     get() {
       return createFormatCache(Intl.NumberFormat);
     }
-  }),
+  }).readOnly(),
 
   format(value, options) {
     return this._format(value, this.filterSupporedOptions(options));

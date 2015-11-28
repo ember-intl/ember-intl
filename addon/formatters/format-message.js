@@ -16,7 +16,7 @@ const FormatMessage = Formatter.extend({
     get() {
       return createFormatCache(IntlMessageFormat);
     }
-  }),
+  }).readOnly(),
 
   format(value, options = {}, formats = {}) {
     let { locale } = options;
