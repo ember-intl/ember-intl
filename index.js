@@ -1,11 +1,11 @@
 /* jshint node: true */
 
+'use strict';
+
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-
-'use strict';
 
 var serialize = require('serialize-javascript');
 var Funnel = require('broccoli-funnel');
