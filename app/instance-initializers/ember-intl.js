@@ -3,7 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import addLocaleData from 'ember-intl/utils/add-locale-data';
 import ENV from '../config/environment';
 
 function filterBy(env, type) {
@@ -17,13 +16,13 @@ export function instanceInitializer(instance) {
   const service = container.lookup('service:intl');
 
   filterBy(ENV, 'cldrs').forEach((key) => {
-    addLocaleData(require(key, null, null, true)['default']);
+    service.addLocaleData(require(key, null, null, true)['default']);
   });
 
   filterBy(ENV, 'translations').forEach((key) => {
     const localeSplit = key.split('\/');
-    const locale = localeSplit[localeSplit.length - 1];
-    service.addTranslations(locale, require(key, null, null, true)['default']);
+    const localeName = localeSplit[localeSplit.length - 1];
+    service.addTranslations(localeName, require(key, null, null, true)['default']);
   });
 }
 

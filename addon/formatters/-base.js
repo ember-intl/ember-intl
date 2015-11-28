@@ -29,9 +29,9 @@ const FormatBase = EmberObject.extend({
   * @private
   */
   filterSupporedOptions(input = {}) {
-    let camelizedKey;
     let foundMatch = false;
     let out = {};
+    let camelizedKey;
 
     for (let key in input) {
       camelizedKey = camelize(key);
