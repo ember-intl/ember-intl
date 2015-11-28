@@ -4,38 +4,32 @@
  */
 
 import Ember from 'ember';
+
 import { LiteralWrapper } from './l';
 
 const { Helper, inject, get, Logger:logger } = Ember;
 
-let IntlGetHelper = null;
 
-if (Helper) {
-  IntlGetHelper = Helper.extend({
-    intl: inject.service(),
+const IntlGetHelper = Helper.extend({
+  intl: inject.service(),
 
-    init(...args) {
-      this._super(...args);
+  init(...args) {
+    this._super(...args);
 
-      logger.warn(`intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`);
+    logger.warn(`intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`);
 
-      const intl = get(this, 'intl');
-      intl.on('localeChanged', this, this.recompute);
-    },
+    get(this, 'intl').on('localeChanged', this, this.recompute);
+  },
 
-    destroy(...args) {
-      const intl = get(this, 'intl');
-      intl.off('localeChanged', this, this.recompute);
-      this._super(...args);
-    },
+  compute(params, hash = {}) {
+    return new LiteralWrapper(get(this, 'intl').findTranslationByKey(params[0], hash.locale));
+  },
 
-    compute(params, hash = {}) {
-      const intl = get(this, 'intl');
+  destroy(...args) {
+    this._super(...args);
 
-      return new LiteralWrapper(intl.findTranslationByKey(params[0], hash.locale));
-    }
-  });
-}
-
+    get(this, 'intl').off('localeChanged', this, this.recompute);
+  }
+});
 
 export default IntlGetHelper;
