@@ -13,7 +13,7 @@ export function getValue(params, hash, intl) {
     key = params[0];
   }
 
-  if (key instanceof LiteralWrapper) {
+  if (key && key instanceof LiteralWrapper) {
     return key.value;
   }
 

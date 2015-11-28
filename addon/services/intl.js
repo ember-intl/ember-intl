@@ -13,7 +13,7 @@ import IntlRelativeFormat from 'intl-relativeformat';
 import extend from '../utils/extend';
 
 const { assert, computed, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
-const matchKey = '/translations/(.+)$';
+const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 
 function formatterProxy(formatType) {
   return function (value, options = {}, formats = null) {
@@ -93,7 +93,7 @@ const IntlService = Service.extend(Evented, {
 
   getLocalesByTranslations() {
     return Object.keys(requirejs.entries).reduce((translations, module) => {
-      let match = module.match(matchKey);
+      let match = module.match(TRANSLATION_PATH_CAPTURE);
 
       if (match) {
         translations.addObject(match[1]);
@@ -167,7 +167,7 @@ const IntlService = Service.extend(Evented, {
     const translation = get(this, 'adapter').findTranslationByKey(_locale, key);
 
     if (typeof translation === 'undefined') {
-      Ember.Logger.warn(`translation: '${key}' on locale: '${_locale}' was not found.`);
+      logger.warn(`translation: '${key}' on locale: '${_locale}' was not found.`);
     }
 
     return translation;

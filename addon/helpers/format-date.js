@@ -6,11 +6,11 @@
 import Ember from 'ember';
 import helperFactory from './-base';
 
+const { isEmpty } = Ember;
+
 export function shouldReturnEmptyString(value, hash) {
-  if (Ember.isEmpty(value)) {
-    if (!hash.hasOwnProperty('allowEmpty') || hash.allowEmpty) {
-      return true;
-    }
+  if (isEmpty(value) && (!hash.hasOwnProperty('allowEmpty') || hash.allowEmpty)) {
+    return true;
   }
 
   return false;

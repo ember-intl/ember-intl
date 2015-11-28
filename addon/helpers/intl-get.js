@@ -9,7 +9,6 @@ import { LiteralWrapper } from './l';
 
 const { Helper, inject, get, Logger:logger } = Ember;
 
-
 const IntlGetHelper = Helper.extend({
   intl: inject.service(),
 

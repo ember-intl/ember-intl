@@ -15,16 +15,12 @@ const TranslationModel = Ember.Object.extend({
   },
 
   addTranslations(messageObject) {
-    const messages = this;
-
     // shallow merge intentional
     for (let key in messageObject) {
-      if (messageObject.hasOwnProperty(key)) {
-        messages[key] = messageObject[key];
+      if (messageObject.hasOwnProperty(key) && typeof this[key] !== 'function') {
+        this[key] = messageObject[key];
       }
     }
-
-    return messages;
   },
 
   /**
