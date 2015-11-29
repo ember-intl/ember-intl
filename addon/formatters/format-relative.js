@@ -25,7 +25,7 @@ const FormatRelative = Formatter.extend({
   }).readOnly(),
 
   format(value, options = {}) {
-    let dateValue = new Date(value);
+    const dateValue = new Date(value);
 
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
 

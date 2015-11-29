@@ -3,6 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import helperFactory from './-base';
+import factory from './-format-base';
 
-export default helperFactory('number');
+export default factory('number');

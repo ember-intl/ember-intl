@@ -17,6 +17,7 @@ const { camelize } = emberString;
 const FormatBase = EmberObject.extend({
   init(...args) {
     this._super(...args);
+
     this.options = arrayToHash(this.constructor.supportedOptions);
   },
 
@@ -29,8 +30,9 @@ const FormatBase = EmberObject.extend({
   * @private
   */
   filterSupporedOptions(input = {}) {
+    const out = {};
+
     let foundMatch = false;
-    let out = {};
     let camelizedKey;
 
     for (let key in input) {
@@ -46,6 +48,10 @@ const FormatBase = EmberObject.extend({
     }
   },
 
+  format() {
+    throw new Error('not implemented');
+  },
+
   /**
   * Invokes the Intl formatter methods
   *
@@ -56,8 +62,8 @@ const FormatBase = EmberObject.extend({
   * @private
   */
   _format(value, formatterOptions = {}, formatOptions = {}) {
-    let formatter = get(this, 'formatter');
-    let { locale } = formatterOptions;
+    const formatter = get(this, 'formatter');
+    const { locale } = formatterOptions;
 
     if (!locale) {
       throw new Error(

@@ -4,7 +4,7 @@
  */
 
 import Ember from 'ember';
-import helperFactory from './-base';
+import factory from './-format-base';
 
 const { isEmpty } = Ember;
 
@@ -16,4 +16,4 @@ export function shouldReturnEmptyString(value, hash) {
   return false;
 }
 
-export default helperFactory('date', null, shouldReturnEmptyString);
+export default factory('date', shouldReturnEmptyString);

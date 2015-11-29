@@ -4,13 +4,11 @@
  */
 
 import Ember from 'ember';
-import helperFactory from './-base';
-
-let RelativeHelper = helperFactory('relative');
+import factory from './-format-base';
 
 const runBind = Ember.run.bind;
 
-export default RelativeHelper.extend({
+export default factory('relative').extend({
   compute(value, hash) {
     this.clearTimer();
 
@@ -26,7 +24,8 @@ export default RelativeHelper.extend({
   },
 
   destroy(...args) {
-    this.clearTimer();
     this._super(...args);
+
+    this.clearTimer();
   }
 });

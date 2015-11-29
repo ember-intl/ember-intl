@@ -3,7 +3,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import helperFactory from './-base';
+import factory from './-format-base';
 import { getValue } from './format-message';
 
-export default helperFactory('html-message', getValue);
+export default factory('html-message').extend({
+  getValue
+});

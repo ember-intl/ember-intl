@@ -83,7 +83,7 @@ const IntlService = Service.extend(Evented, {
     let locales = optionalLocales;
 
     if (!optionalLocales) {
-      locales = this.get('_locale');
+      locales = get(this, '_locale');
     }
 
     assert(`ember-intl: locale is unset, cannot lookup '${key}'`, locales);

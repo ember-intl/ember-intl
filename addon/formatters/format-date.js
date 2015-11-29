@@ -10,7 +10,7 @@ import Formatter from './-base';
 
 const { assert, computed } = Ember;
 
-function assertIsDate (date, errMsg) {
+function assertIsDate(date, errMsg) {
   assert(errMsg, isFinite(date));
 }
 
@@ -24,9 +24,10 @@ const FormatDate = Formatter.extend({
   }).readOnly(),
 
   format(value, options) {
-    let dateTime = new Date(value);
+    const dateTime = new Date(value);
     assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
-    let formatOptions = this.filterSupporedOptions(options);
+
+    const formatOptions = this.filterSupporedOptions(options);
 
     return this._format(dateTime, formatOptions);
   }

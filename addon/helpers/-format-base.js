@@ -10,15 +10,10 @@ import extend from '../utils/extend';
 
 const { Helper, inject, get, computed } = Ember;
 
-function getValue(params) {
-    return params[0];
-}
-
-function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
+function helperFactory(formatType, optionalReturnEmpty) {
   return Helper.extend({
     intl: inject.service(),
     formatType: formatType,
-    getValue: optionalGetValue || getValue,
 
     formatter: computed('formatType', {
       get() {
@@ -28,13 +23,16 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
 
     init(...args) {
       this._super(...args);
+
       get(this, 'intl').on('localeChanged', this, this.recompute);
     },
 
+    getValue([value]) {
+      return value;
+    },
+
     compute(params, hash) {
-      const intl = get(this, 'intl');
-      const formatter = get(this, 'formatter');
-      const value = this.getValue(params, hash, intl);
+      const value = this.getValue(params, hash);
 
       if (optionalReturnEmpty && optionalReturnEmpty(value, hash)) {
         return;
@@ -44,6 +42,7 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
         throw new Error(`format-${formatType} helper requires value`);
       }
 
+      const intl = get(this, 'intl');
       let locale = get(intl, '_locale');
 
       if (Array.isArray(locale)) {
@@ -56,19 +55,17 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
         format = intl.getFormat(formatType, hash.format);
       }
 
-      return formatter.format(
+      return get(this, 'formatter').format(
         value,
-        extend({
-          locale: locale
-        }, format, hash),
+        extend({ locale }, format, hash),
         get(intl, 'formats')
       );
     },
 
     destroy(...args) {
-      const intl = get(this, 'intl');
-      intl.off('localeChanged', this, this.recompute);
       this._super(...args);
+
+      get(this, 'intl').off('localeChanged', this, this.recompute);
     }
   });
 }

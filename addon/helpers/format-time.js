@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import helperFactory from './-base';
+import factory from './-format-base';
 import { shouldReturnEmptyString } from './format-date';
 
-export default helperFactory('time', null, shouldReturnEmptyString);
+export default factory('time', shouldReturnEmptyString);

@@ -3,15 +3,21 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import helperFactory from './-base';
+import Ember from 'ember';
+
+import factory from './-format-base';
 import { LiteralWrapper } from './l';
 
-export function getValue([key], hash, intl) {
+const { get } = Ember;
+
+export function getValue([key], hash) {
   if (key && key instanceof LiteralWrapper) {
     return key.value;
   }
 
-  return intl.findTranslationByKey(key, hash.locale);
+  return get(this, 'intl').findTranslationByKey(key, hash.locale);
 }
 
-export default helperFactory('message', getValue);
+export default factory('message').extend({
+  getValue
+});
