@@ -22,7 +22,7 @@ moduleFor('ember-intl@formatter:format-message', {
     'helper:t',
     'helper:format-message',
     'helper:intl-get',
-    'ember-intl@adapter:-intl-adapter'
+    'ember-intl@adapter:default'
   ],
   beforeEach() {
     registry = this.registry || this.container;

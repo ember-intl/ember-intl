@@ -18,7 +18,7 @@ moduleFor('ember-intl@formatter:format-html-message', {
     'service:intl',
     'helper:format-html-message',
     'helper:l',
-    'ember-intl@adapter:-intl-adapter'
+    'ember-intl@adapter:default'
   ],
   beforeEach() {
     registry = this.registry || this.container;

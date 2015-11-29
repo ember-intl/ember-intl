@@ -50,7 +50,7 @@ const IntlService = Service.extend(Evented, {
 
   adapter: computed({
     get() {
-      return getOwner(this).lookup('ember-intl@adapter:-intl-adapter');
+      return getOwner(this).lookup('ember-intl@adapter:default');
     }
   }),
 

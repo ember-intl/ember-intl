@@ -15,7 +15,7 @@ const { run:emberRun } = Ember;
 let view;
 
 moduleFor('helper:intl-get', {
-  needs: ['service:intl', 'ember-intl@adapter:-intl-adapter'],
+  needs: ['service:intl', 'ember-intl@adapter:default'],
   beforeEach() {
     let registry = this.registry || this.container;
 
