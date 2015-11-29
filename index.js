@@ -18,7 +18,7 @@ var path = require('path');
 var fs = require('fs');
 
 var utils = require('./lib/utils');
-var mergeTrees = require('./lib/broccoli/merge-trees');
+var mergeTrees = require('broccoli-merge-trees');
 var CldrWriter = require('./lib/broccoli/cldr-writer');
 var lowercaseTree = require('./lib/broccoli/lowercase-tree');
 var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor');
@@ -86,10 +86,7 @@ module.exports = {
       }));
     }
 
-    return mergeTrees(trees, {
-      overwrite: true,
-      annotation: 'TreeMerger (CLDR)'
-    });
+    return mergeTrees(trees, { overwrite: true });
   },
 
   treeForPublic: function() {
@@ -137,10 +134,7 @@ module.exports = {
 
     trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
 
-    return mergeTrees(trees, {
-      overwrite: true,
-      annotation: 'TreeMerger (Intl.js)'
-    });
+    return mergeTrees(trees, { overwrite: true });
   },
 
   _discoverLocales: function() {
