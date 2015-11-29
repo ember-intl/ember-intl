@@ -57,6 +57,7 @@ module.exports = {
     }
 
     this.addonOptions = generateOptions(app);
+    this.hasTranslationDir = existsSync(this.project.root + '/' + this.addonOptions.inputPath);
     this.locales = this._discoverLocales();
 
     this.trees = {
@@ -66,7 +67,11 @@ module.exports = {
   },
 
   treeForApp: function(tree) {
-    var trees = [tree, new TranslationPreprocessor(this.trees.translations, this.addonOptions)];
+    var trees = [tree];
+
+    if (this.hasTranslationDir) {
+      trees.push(new TranslationPreprocessor(this.trees.translations, this.addonOptions));
+    }
 
     if (tree && this.locales.length) {
       trees.push(new CldrWriter([tree], {
@@ -139,11 +144,10 @@ module.exports = {
   },
 
   _discoverLocales: function() {
-    var translations = this.project.root + '/' + this.addonOptions.inputPath;
     var locales = [];
 
-    if (existsSync(translations)) {
-      locales = walkSync(translations).map(function(filename) {
+    if (this.hasTranslationDir) {
+      locales = walkSync(this.project.root + '/' + this.addonOptions.inputPath).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }).filter(utils.isSupportedLocale);
     }
