@@ -12,7 +12,7 @@ import IntlRelativeFormat from 'intl-relativeformat';
 
 import extend from '../utils/extend';
 
-const { assert, computed, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
+const { assert, computed, makeArray, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 
 function formatterProxy(formatType) {
@@ -79,16 +79,18 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, options, formats);
   },
 
-  exists(key, optionalLocale) {
-    let locale = optionalLocale;
+  exists(key, optionalLocales) {
+    let locales = optionalLocales;
 
-    if (!optionalLocale) {
-      locale = this.get('_locale');
+    if (!optionalLocales) {
+      locales = this.get('_locale');
     }
 
-    assert(`ember-intl: locale is unset, cannot confirm '${key}' exists`, locale);
+    assert(`ember-intl: locale is unset, cannot lookup '${key}'`, locales);
 
-    return get(this, 'adapter').has(locale, key);
+    return makeArray(locales).some((locale) => {
+      return get(this, 'adapter').has(locale, key);
+    });
   },
 
   getLocalesByTranslations() {
@@ -135,8 +137,8 @@ const IntlService = Service.extend(Evented, {
     return this.addTranslations(locale, payload);
   },
 
-  setLocale(locale) {
-    set(this, '_locale', locale);
+  setLocale(locales) {
+    set(this, '_locale', makeArray(locales));
     this.trigger('localeChanged');
   },
 
@@ -162,12 +164,14 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  findTranslationByKey(key, locale) {
-    const _locale = locale ? locale : get(this, '_locale');
-    const translation = get(this, 'adapter').findTranslationByKey(_locale, key);
+  findTranslationByKey(key, locales) {
+    locales = locales || get(this, '_locale');
+
+    let translation = get(this, 'adapter').findTranslationByKey(makeArray(locales), key);
 
     if (typeof translation === 'undefined') {
-      logger.warn(`translation: '${key}' on locale: '${_locale}' was not found.`);
+      const missingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
+      translation = missingMessage.call(this, key, locales);
     }
 
     return translation;

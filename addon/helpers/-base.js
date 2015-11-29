@@ -28,14 +28,13 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
 
     init(...args) {
       this._super(...args);
-      let intl = get(this, 'intl');
-      intl.on('localeChanged', this, this.recompute);
+      get(this, 'intl').on('localeChanged', this, this.recompute);
     },
 
     compute(params, hash) {
-      let intl = get(this, 'intl');
-      let formatter = get(this, 'formatter');
-      let value = this.getValue(params, hash, intl);
+      const intl = get(this, 'intl');
+      const formatter = get(this, 'formatter');
+      const value = this.getValue(params, hash, intl);
 
       if (optionalReturnEmpty && optionalReturnEmpty(value, hash)) {
         return;
@@ -43,6 +42,12 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
 
       if (typeof value === 'undefined') {
         throw new Error(`format-${formatType} helper requires value`);
+      }
+
+      let locale = get(intl, '_locale');
+
+      if (Array.isArray(locale)) {
+        locale = locale[0];
       }
 
       let format = {};
@@ -54,7 +59,7 @@ function helperFactory(formatType, optionalGetValue, optionalReturnEmpty) {
       return formatter.format(
         value,
         extend({
-          locale: get(intl, '_locale')
+          locale: locale
         }, format, hash),
         get(intl, 'formats')
       );

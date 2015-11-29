@@ -28,9 +28,9 @@ function generateOptions(app) {
 
   var options = utils.assign({
     locales: undefined,
-    disablePolyfill: false,
-    defaultLocale: 'en-us',
+    defaultLocale: undefined,
     allowEmpty: true,
+    disablePolyfill: false,
     inputPath: 'translations',
     outputPath: 'translations'
   }, addonConfig);

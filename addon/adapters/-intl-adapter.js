@@ -8,7 +8,7 @@ import getOwner from 'ember-getowner-polyfill';
 
 import Translation from '../models/translation';
 
-const { assert, makeArray } = Ember;
+const { assert } = Ember;
 
 function normalize (fullName) {
   assert('Lookup name must be a string', typeof fullName === 'string');
@@ -27,7 +27,7 @@ const DefaultIntlAdapter = Ember.Object.extend({
     }
 
     const owner = getOwner(this);
-    const lookupName = 'ember-intl@translation:' + normalize(localeName);
+    const lookupName = `ember-intl@translation:${normalize(localeName)}`;
 
     if (!owner.hasRegistration(lookupName)) {
       owner.register(lookupName, Translation.extend({}));
@@ -46,23 +46,16 @@ const DefaultIntlAdapter = Ember.Object.extend({
     return false;
   },
 
-  findTranslationByKey(localeNames, translationKey) {
-    const locales = makeArray(localeNames);
+  findTranslationByKey(locales, translationKey) {
     const len = locales.length;
-
     let i = 0;
-    let translations, translation, key;
 
     for (; i < len; i++) {
-      key = locales[i];
-      translations = this.translationsFor(key);
+      const locale = locales[i];
+      const translations = this.translationsFor(locale);
 
-      if (translations) {
-        translation = translations.getValue(translationKey);
-
-        if (translation) {
-          return translation;
-        }
+      if (translations && translations.has(translationKey)) {
+        return translations.getValue(translationKey);
       }
     }
   }

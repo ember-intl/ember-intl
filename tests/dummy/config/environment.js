@@ -13,7 +13,7 @@ module.exports = function(environment) {
     },
 
     intl: {
-      locales: ['en-us', 'es-es', 'fr-fr', 'de-de'],
+      locales: ['en-us', 'es-es', 'fr-fr', 'de-de', 'aa-dj'],
       defaultLocale: 'en-us',
       disablePolyfill: false,
       allowEmpty: true,
