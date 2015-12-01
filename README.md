@@ -150,7 +150,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Time Options
-[List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-DateTime-Options)
+[List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-Date-&-Time-Options)
 
 ### Format Relative
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
