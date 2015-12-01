@@ -127,7 +127,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Date Options
-[List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-DateTime-Options)
+[List of supported format date options](https://github.com/yahoo/ember-intl/wiki/Format-Date-&-Time-Options)
 
 ### Format Time
 This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
