@@ -1,6 +1,5 @@
 # ember-intl
 
-[![Join the chat at https://gitter.im/yahoo/ember-intl](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yahoo/ember-intl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm Version][npm-badge]][npm]
 [![Build Status][travis-badge]][travis]
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
