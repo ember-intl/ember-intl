@@ -31,7 +31,7 @@
     "ember-load-initializers": "ember-cli/ember-load-initializers#0.1.6"
   },
   "devDependencies": {
-    "ember-qunit": "0.4.16",
+    "ember-qunit": "0.4.17",
     "ember-qunit-notifications": "0.0.7",
     "qunit": "~1.18.0",
     "sinonjs": "~1.17.1"
