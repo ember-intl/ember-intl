@@ -18,7 +18,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 * ember > 1.13.0
 
 ## Installation
-* `ember install ember-intl@beta`
+* `ember install ember-intl`
 * Polyfill the Intl.js API (required for Safari/PhantomJS, and legacy browser)
     * Instructions on [loading from assets directory][]
     * Instructions on [conditionally loading the polyfill based on User-Agent][]
