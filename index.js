@@ -96,7 +96,6 @@ module.exports = {
       return publicTree;
     }
 
-    var intlPath = path.dirname(require.resolve('intl'));
     var assetPath = 'assets/intl';
     var appOptions = this.app.options;
     var trees = [];
