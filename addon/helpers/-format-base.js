@@ -8,9 +8,9 @@ import getOwner from 'ember-getowner-polyfill';
 
 import extend from '../utils/extend';
 
-const { Helper, inject, get, computed } = Ember;
+const { Helper, inject, get, computed, isEmpty, getWithDefault } = Ember;
 
-function helperFactory(formatType, optionalReturnEmpty) {
+function helperFactory(formatType, helperOptions = {}) {
   return Helper.extend({
     intl: inject.service(),
     formatType: formatType,
@@ -31,12 +31,11 @@ function helperFactory(formatType, optionalReturnEmpty) {
       return value;
     },
 
-    compute(params, hash) {
+    compute(params, hash = {}) {
       const value = this.getValue(params, hash);
+      const allowEmpty = getWithDefault(hash, 'allowEmpty', helperOptions.allowEmpty);
 
-      if (optionalReturnEmpty && optionalReturnEmpty(value, hash)) {
-        return;
-      }
+      if (isEmpty(value) && allowEmpty) { return; }
 
       if (typeof value === 'undefined') {
         throw new Error(`format-${formatType} helper requires value`);

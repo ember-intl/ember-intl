@@ -84,6 +84,13 @@ test('should return a string', function(assert) {
   assert.equal(view.$().text(), '4');
 });
 
+test('should handle undefined value when allowEmpty is true', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-number allowEmpty=true}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), '');
+});
+
 test('should return a decimal as a string', function(assert) {
   assert.expect(1);
   view = this.render(hbs`{{format-number NUM}}`, 'en-us');
