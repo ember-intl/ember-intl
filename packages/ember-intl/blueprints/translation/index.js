@@ -12,8 +12,9 @@ module.exports = {
 
   normalizeEntityName: function (localeName) {
     entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
+
     if (!isSupportedLocale(localeName)) {
-      throw new SilentError('Aborting. `' + localeName + '` is not a know locale');
+      throw new SilentError('Aborting. `' + localeName + '` is an unknown locale code');
     }
 
     return localeName;
