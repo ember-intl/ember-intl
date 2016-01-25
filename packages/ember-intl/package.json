@@ -1,7 +1,7 @@
 {
   "name": "ember-intl",
   "description": "Ember toolbox for internationalization.",
-  "version": "2.0.1",
+  "version": "2.2.0",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -12,10 +12,8 @@
     "test": "ember test",
     "testall": "ember try:testall"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/yahoo/ember-intl.git"
-  },
+  "repository": "https://github.com/yahoo/ember-intl/tree/master/packages/ember-intl",
+  "homepage": "https://github.com/yahoo/ember-intl",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -70,6 +68,5 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "demoURL": "http://jasonmit.github.io/ember-intl-example/"
-  },
-  "homepage": "https://github.com/yahoo/ember-intl"
+  }
 }

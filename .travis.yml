@@ -7,7 +7,11 @@ sudo: false
 
 cache:
   directories:
-    - node_modules
+    - packages/ember-intl/node_modules
+    - packages/ember-intl-format-cache/node_modules
+    - packages/ember-intl-messageformat/node_modules
+    - packages/ember-intl-messageformat-parser/node_modules
+    - packages/ember-intl-relativeformat/node_modules
 
 env:
   - EMBER_TRY_SCENARIO=default
@@ -26,8 +30,15 @@ before_install:
 
 install:
   - npm install -g bower
-  - npm install
-  - bower install
+  - cd packages/ember-intl && npm install && bower install && cd -
+  - cd packages/ember-intl-format-cache && npm install && bower install && cd -
+  - cd packages/ember-intl-messageformat && npm install && bower install && cd -
+  - cd packages/ember-intl-messageformat-parser && npm install && bower install && cd -
+  - cd packages/ember-intl-relativeformat && npm install && bower install && cd -
 
 script:
-  - ember try $EMBER_TRY_SCENARIO test
+  - cd packages/ember-intl && ember try $EMBER_TRY_SCENARIO test && cd -
+  - cd packages/ember-intl-format-cache && ember try $EMBER_TRY_SCENARIO test && cd -
+  - cd packages/ember-intl-messageformat && ember try $EMBER_TRY_SCENARIO test && cd -
+  - cd packages/ember-intl-messageformat-parser && ember try $EMBER_TRY_SCENARIO test && cd -
+  - cd packages/ember-intl-relativeformat && ember try $EMBER_TRY_SCENARIO test && cd -
