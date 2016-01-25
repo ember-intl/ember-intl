@@ -1,0 +1,50 @@
+{
+  "name": "ember-intl-format-cache",
+  "version": "2.2.0",
+  "description": "A tiny addon wrapper around intl-format-cache to allow for importing of intl-format-cache.",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "ember server",
+    "build": "ember build",
+    "test": "ember try:testall"
+  },
+  "repository": "https://github.com/jasonmit/ember-intl-format-cache",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "broccoli-asset-rev": "^2.0.2",
+    "ember-cli": "1.13.6",
+    "ember-cli-app-version": "0.4.0",
+    "ember-cli-content-security-policy": "0.4.0",
+    "ember-cli-dependency-checker": "^1.0.0",
+    "ember-cli-htmlbars": "0.7.9",
+    "ember-cli-htmlbars-inline-precompile": "^0.1.1",
+    "ember-cli-inject-live-reload": "^1.3.0",
+    "ember-cli-qunit": "0.3.18",
+    "ember-cli-release": "0.2.3",
+    "ember-cli-sri": "^1.0.1",
+    "ember-cli-uglify": "^1.0.1",
+    "ember-disable-proxy-controllers": "^1.0.0",
+    "ember-export-application-global": "^1.0.3",
+    "ember-disable-prototype-extensions": "^1.0.0",
+    "ember-try": "0.0.6"
+  },
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "broccoli-funnel": "^1.0.0",
+    "broccoli-merge-trees": "^1.0.0",
+    "ember-cli-babel": "^5.1.6",
+    "intl-format-cache": "^2.0.5"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  }
+}

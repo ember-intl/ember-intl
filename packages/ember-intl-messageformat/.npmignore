@@ -23,4 +23,3 @@ testem.json
 **/.gitkeep
 bower.json
 Brocfile.js
-packages/
