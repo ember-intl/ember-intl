@@ -1,8 +1,8 @@
 # ember-intl
-
 [![npm Version][npm-badge]][npm]
 [![Build Status][travis-badge]][travis]
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
+[![Ember badge][ember-badge]][embadge]
 
 This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
@@ -328,6 +328,8 @@ The solution is the ensure that the value you are passing in is in a format whic
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
 [travis]: https://travis-ci.org/yahoo/ember-intl
 [travis-badge]: https://img.shields.io/travis/yahoo/ember-intl/master.svg?style=flat-square
+[embadge]: http://embadge.io/
+[ember-badge]: http://embadge.io/v1/badge.svg?start=1.13.0
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
 [Intl-MF]: https://github.com/yahoo/intl-messageformat
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
