@@ -1,6 +1,6 @@
 {
   "name": "ember-intl-relativeformat",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A small wrapper around intl-relativeformat to support ES6 modules of intl-relativeformat.",
   "directories": {
     "doc": "doc",
@@ -44,7 +44,7 @@
     "broccoli-funnel": "^1.0.0",
     "broccoli-merge-trees": "^1.0.0",
     "ember-cli-babel": "^5.0.0",
-    "ember-intl-messageformat": "^2.2.0",
+    "ember-intl-messageformat": "^2.2.1",
     "intl-relativeformat": "^1.2.0"
   },
   "ember-addon": {
