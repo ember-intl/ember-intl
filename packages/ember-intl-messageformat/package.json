@@ -1,6 +1,6 @@
 {
   "name": "ember-intl-messageformat",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A tiny wrapper around intl-messageformat to allow for ES6 importing intl-messageformat.",
   "directories": {
     "doc": "doc",

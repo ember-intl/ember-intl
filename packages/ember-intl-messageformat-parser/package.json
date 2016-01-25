@@ -1,6 +1,6 @@
 {
   "name": "ember-intl-messageformat-parser",
-  "version": "1.3.0",
+  "version": "2.2.0",
   "description": "ember-cli addon wrapper around intl-messageformat-parser",
   "directories": {
     "doc": "doc",
