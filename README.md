@@ -42,8 +42,23 @@ product:
 
 If you wish, you can organize your translations into subdirectories such as `/translations/login-page/en-us.yaml` and `translations/purchase-page/en-us.yaml`.
 
-### Configure application-wide locale
-Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `intl.locale`.  Example:
+
+### Translation Compilation
+
+At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `defaultLocale` config property.  If translations keys are found on the default locale but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the default locale as a filler.
+
+```js
+// config/environment.js
+return {
+  intl: {
+    defaultLocale: 'en-us' // default build-time locale
+  }
+};
+```
+
+## Setting runtime locale
+
+Open, or create, `app/routes/application.js` and within `beforeModel` invoke `intl.setLocale`.  Example:
 
 ```js
   // app/routes/application.js
@@ -68,18 +83,7 @@ Open, or create, `app/routes/application.js` and in the `beforeModel` hook set `
   });
 ```
 
-* This is used as the "source of truth" to determine if any translations are missing a translation at build time.  It will offer warnings displaying with locale's are missing translations for a particular key.  The default locale is configurable within `config/environment.js`.
-
-```js
-// config/environment.js
-return {
-  intl: {
-    defaultLocale: 'en-us' // default value
-  }
-};
-```
-
-## Examples
+## Helper Examples
 
 ### Format Number
 Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted string value.
