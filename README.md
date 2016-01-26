@@ -13,10 +13,6 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 **<http://formatjs.io/ember/>**
 
-## Requirements
-* ember-cli >= 0.2.0
-* ember > 1.13.0
-
 ## Installation
 * `ember install ember-intl`
 * Polyfill the Intl.js API (required for Safari/PhantomJS, and legacy browser)
