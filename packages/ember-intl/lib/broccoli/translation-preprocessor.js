@@ -129,18 +129,18 @@ TranslationPreprocessor.prototype.build = function() {
 
   mkdirp.sync(outputPath);
 
-  if (this.options.defaultLocale) {
-    var defaultTranslationPath = glob.sync(inputPath + '/' + this.options.defaultLocale + '\.@(json|yaml|yml)', {
+  if (this.options.baseLocale) {
+    var defaultTranslationPath = glob.sync(inputPath + '/' + this.options.baseLocale + '\.@(json|yaml|yml)', {
       nosort: true,
       silent: true
     })[0];
 
     if (!defaultTranslationPath) {
-      console.log(chalk.yellow('ember-intl: "' + this.options.defaultLocale + '" default locale missing `translations` folder'));
+      console.log(chalk.yellow('ember-intl: "' + this.options.baseLocale + '" default locale missing `translations` folder'));
       return;
     }
 
-    defaultTranslation = translations[this.options.defaultLocale];
+    defaultTranslation = translations[this.options.baseLocale];
     defaultTranslationKeys = propKeys(defaultTranslation);
   }
 
@@ -148,7 +148,7 @@ TranslationPreprocessor.prototype.build = function() {
     if (translations.hasOwnProperty(key)) {
       translation = translations[key];
 
-      if (this.options.defaultLocale) {
+      if (this.options.baseLocale) {
         missedKeys(translation, defaultTranslationKeys, key);
       }
 
