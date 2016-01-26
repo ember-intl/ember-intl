@@ -34,13 +34,13 @@ If you wish, you can organize your translations into subdirectories such as `/tr
 
 ### Translation Compilation
 
-At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `defaultLocale` config property.  If translations keys are found on the default locale but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the default locale as a filler.
+At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `baseLocale` config property.  If translations keys are found on the default locale but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the default locale as a filler.
 
 ```js
 // config/environment.js
 return {
   intl: {
-    defaultLocale: 'en-us' // default build-time locale
+    baseLocale: 'en-us' // default build-time locale
   }
 };
 ```
@@ -64,7 +64,7 @@ Open, or create, `app/routes/application.js` and within `beforeModel` invoke `in
       // OR for those that sideload, an array is accepted to handle fallback lookups
 
       // en-ca is the primary locale, en-us is the fallback.
-      // this is optional, and likely unnecessary if you define defaultLocale (see below)
+      // this is optional, and likely unnecessary if you define baseLocale (see below)
       // The primary usecase is if you side load all translations
       //
       // return this.get('intl').setLocale(['en-ca', 'en-us']);
