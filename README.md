@@ -34,7 +34,7 @@ If you wish, you can organize your translations into subdirectories such as `/tr
 
 ### Translation Compilation
 
-At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `baseLocale` config property.  If translations keys are found on the default locale but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the default locale as a filler.
+At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `baseLocale` config property.  If translations keys are found on the base but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the base locale as a filler.
 
 ```js
 // config/environment.js
