@@ -26,11 +26,19 @@ var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor')
 function generateOptions(app) {
   var addonConfig = app.project.config(app.env)['intl'] || {};
 
+  if (addonConfig.defaultLocale) {
+    console.warn('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
+    console.warn('[ember-intl] Please update config/environment.js')
+
+    addonConfig.baseLocale = addonConfig.defaultLocale;
+  }
+
   var options = utils.assign({
     locales: undefined,
-    defaultLocale: undefined,
+    baseLocale: undefined,
     allowEmpty: true,
     disablePolyfill: false,
+    publicOnly: false,
     inputPath: 'translations',
     outputPath: 'translations'
   }, addonConfig);
@@ -56,12 +64,12 @@ module.exports = {
       this.app = app;
     }
 
-    this.addonOptions = generateOptions(app);
-    this.hasTranslationDir = existsSync(this.project.root + '/' + this.addonOptions.inputPath);
-    this.locales = this._discoverLocales();
+    this.opts = generateOptions(app);
+    this.hasTranslationDir = existsSync(this.project.root + '/' + this.opts.inputPath);
+    this.locales = this.knownLocales(this.opts);
 
     this.trees = {
-      translations: new WatchedDir(this.addonOptions.inputPath),
+      translations: new WatchedDir(this.opts.inputPath),
       intl: new UnwatchedDir(path.dirname(require.resolve('intl')))
     };
   },
@@ -69,8 +77,8 @@ module.exports = {
   treeForApp: function(tree) {
     var trees = [tree];
 
-    if (this.hasTranslationDir) {
-      trees.push(new TranslationPreprocessor(this.trees.translations, this.addonOptions));
+    if (this.hasTranslationDir && !this.opts.publicOnly) {
+      trees.push(new TranslationPreprocessor(this.trees.translations, this.opts));
     }
 
     if (tree && this.locales.length) {
@@ -92,61 +100,64 @@ module.exports = {
   treeForPublic: function() {
     var publicTree = this._super.treeForPublic.apply(this, arguments);
 
-    if (this.addonOptions.disablePolyfill) {
-      return publicTree;
-    }
-
-    var assetPath = 'assets/intl';
-    var appOptions = this.app.options;
     var trees = [];
-
-    if (appOptions.app && appOptions.app.intl) {
-      assetPath = appOptions.app.intl;
-    }
 
     if (publicTree) {
       trees.push(publicTree);
     }
 
-    trees.push(new Funnel(this.trees.intl, {
-      srcDir: 'dist',
-      files: ['Intl.js.map'],
-      destDir: assetPath
-    }));
+    if (!this.opts.disablePolyfill) {
+      var assetPath = 'assets/intl';
+      var appOptions = this.app.options;
 
-    trees.push(lowercaseTree(new Funnel(this.trees.intl, {
-      srcDir: 'dist',
-      files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-      destDir: assetPath
-    })));
+      if (appOptions.app && appOptions.app.intl) {
+        assetPath = appOptions.app.intl;
+      }
 
-    var localeFunnel = {
-      srcDir: 'locale-data/jsonp',
-      destDir: assetPath + '/locales'
-    };
+      trees.push(new Funnel(this.trees.intl, {
+        srcDir: 'dist',
+        files: ['Intl.js.map'],
+        destDir: assetPath
+      }));
 
-    if (this.locales.length) {
-      localeFunnel.include = this.locales.map(function(locale) {
-        return new RegExp(locale, 'i');
-      });
+      trees.push(lowercaseTree(new Funnel(this.trees.intl, {
+        srcDir: 'dist',
+        files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
+        destDir: assetPath
+      })));
+
+      var localeFunnel = {
+        srcDir: 'locale-data/jsonp',
+        destDir: assetPath + '/locales'
+      };
+
+      if (this.locales.length) {
+        localeFunnel.include = this.locales.map(function(locale) {
+          return new RegExp(locale, 'i');
+        });
+      }
+
+      trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
     }
 
-    trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
+    if (this.hasTranslationDir && this.opts.publicOnly) {
+      trees.push(new TranslationPreprocessor(this.trees.translations, this.opts));
+    }
 
     return mergeTrees(trees, { overwrite: true });
   },
 
-  _discoverLocales: function() {
+  knownLocales: function(options) {
     var locales = [];
 
     if (this.hasTranslationDir) {
-      locales = walkSync(this.project.root + '/' + this.addonOptions.inputPath).map(function(filename) {
+      locales = walkSync(this.project.root + '/' + options.inputPath).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }).filter(utils.isSupportedLocale);
     }
 
-    if (this.addonOptions.locales) {
-      locales = locales.concat(this.addonOptions.locales);
+    if (options.locales) {
+      locales = locales.concat(options.locales);
     }
 
     return utils.uniqueByString(locales);

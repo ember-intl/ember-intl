@@ -14,7 +14,8 @@ module.exports = function(environment) {
 
     intl: {
       locales: ['en-us', 'es-es', 'fr-fr', 'de-de', 'aa-dj'],
-      defaultLocale: 'en-us',
+      baseLocale: 'en-us',
+      publicOnly: false,
       disablePolyfill: false,
       allowEmpty: true,
       outputPath: 'translations',
