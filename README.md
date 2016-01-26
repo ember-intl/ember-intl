@@ -8,11 +8,6 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 
 [demo of ember-intl](http://jasonmit.github.io/ember-intl-example/)
 
-## Overview
-**Ember Intl is part of [FormatJS][], the docs can be found on the website:**
-
-**<http://formatjs.io/ember/>**
-
 ## Installation
 * `ember install ember-intl`
 * Polyfill the Intl.js API (required for Safari/PhantomJS, and legacy browser)
