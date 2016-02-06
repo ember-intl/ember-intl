@@ -11,8 +11,7 @@ module.exports = {
   afterInstall: function() {
     this.ui.writeLine(
       'ember-intl: Don\'t forget to setup your application-wide locale.  ' +
-      'The value of this is typically based on a user preference.  ' +
-      'Documentation: https://github.com/yahoo/ember-intl#configure-application-wide-locale'
+      'Documentation: https://github.com/yahoo/ember-intl#setting-runtime-locale'
     );
   }
 };
