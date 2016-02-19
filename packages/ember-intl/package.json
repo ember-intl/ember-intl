@@ -56,7 +56,7 @@
     "ember-legacy-views": "^0.2.0",
     "ember-sinon": "0.3.0",
     "ember-sinon-qunit": "1.0.0",
-    "ember-try": "0.0.8"
+    "ember-try": "^0.1.3"
   },
   "keywords": [
     "ember-addon",
