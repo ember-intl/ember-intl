@@ -15,7 +15,11 @@ cache:
 
 env:
   - EMBER_TRY_SCENARIO=default
-  - EMBER_TRY_SCENARIO=ember-1.13.1
+  - EMBER_TRY_SCENARIO=ember-1-13-1
+  - EMBER_TRY_SCENARIO=ember-2-0
+  - EMBER_TRY_SCENARIO=ember-2-1
+  - EMBER_TRY_SCENARIO=ember-2-2
+  - EMBER_TRY_SCENARIO=ember-2-3
   - EMBER_TRY_SCENARIO=ember-release
   - EMBER_TRY_SCENARIO=ember-beta
   - EMBER_TRY_SCENARIO=ember-canary
@@ -30,15 +34,15 @@ before_install:
 
 install:
   - npm install -g bower
-  - cd packages/ember-intl && npm install && bower install && cd -
-  - cd packages/ember-intl-format-cache && npm install && bower install && cd -
-  - cd packages/ember-intl-messageformat && npm install && bower install && cd -
-  - cd packages/ember-intl-messageformat-parser && npm install && bower install && cd -
-  - cd packages/ember-intl-relativeformat && npm install && bower install && cd -
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl && npm install && bower install
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-format-cache && npm install && bower install
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat && npm install && bower install
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat-parser && npm install && bower install
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-relativeformat && npm install && bower install
 
 script:
-  - cd packages/ember-intl && ember try $EMBER_TRY_SCENARIO test && cd -
-  - cd packages/ember-intl-format-cache && ember try $EMBER_TRY_SCENARIO test && cd -
-  - cd packages/ember-intl-messageformat && ember try $EMBER_TRY_SCENARIO test && cd -
-  - cd packages/ember-intl-messageformat-parser && ember try $EMBER_TRY_SCENARIO test && cd -
-  - cd packages/ember-intl-relativeformat && ember try $EMBER_TRY_SCENARIO test && cd -
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl && ember try $EMBER_TRY_SCENARIO test
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-format-cache && ember try $EMBER_TRY_SCENARIO test
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat && ember try $EMBER_TRY_SCENARIO test
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat-parser && ember try $EMBER_TRY_SCENARIO test
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-relativeformat && ember try $EMBER_TRY_SCENARIO test
