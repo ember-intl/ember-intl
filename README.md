@@ -293,9 +293,10 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 <script src="assets/intl/intl.complete.js"></script>
 ```
 
-## Lazy-loading translations
+## Asynchronously loading translations
 
-Lazy-loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.  https://github.com/yahoo/ember-intl/wiki/Lazily-loading-translations
+Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.  
+https://github.com/yahoo/ember-intl/wiki/Asynchronously-loading-translations
 
 ### Testing with ember-intl
 * [Unit testing](https://github.com/yahoo/ember-intl/wiki/Testing---Unit)
