@@ -4,10 +4,9 @@
 
 var fs = require('fs');
 var path = require('path');
+var cldr = require('cldr-core/availableLocales');
 
-var dataPath = path.join(require.resolve('formatjs-extract-cldr-data'), '..', 'data', 'main');
-
-var availableLocales = fs.readdirSync(dataPath).map(function(localeFile) {
+var availableLocales = cldr.availableLocales.modern.map(function(localeFile) {
   return localeFile.toLowerCase();
 });
 
