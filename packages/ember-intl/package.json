@@ -33,7 +33,7 @@
     "ember-intl-relativeformat": "^2.2.1",
     "exists-sync": "0.0.3",
     "extend": "^3.0.0",
-    "formatjs-extract-cldr-data": "^2.0.0",
+    "formatjs-extract-cldr-data": "^1.1.0",
     "glob": "^5.0.3",
     "intl": "^1.0.0",
     "js-yaml": "^3.3.1",
