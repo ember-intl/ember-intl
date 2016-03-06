@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import arrayToHash from '../utils/array-to-hash';
+import links from '../utils/links';
 
 const {
   get,
@@ -67,7 +68,7 @@ const FormatBase = EmberObject.extend({
 
     if (!locale) {
       throw new Error(
-        `No locale specified.  This is typically done application-wide within routes/application.js. Instructions: https://github.com/yahoo/ember-intl/blob/master/README.md#configure-application-wide-locale`
+        `No locale specified.  This is typically done application-wide within routes/application.js. Documentation: ${links.unsetLocale}`
       );
     }
 
