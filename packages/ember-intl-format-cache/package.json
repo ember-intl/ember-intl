@@ -1,6 +1,6 @@
 {
   "name": "ember-intl-format-cache",
-  "version": "2.2.1",
+  "version": "2.4.0",
   "description": "A tiny addon wrapper around intl-format-cache to allow for importing of intl-format-cache.",
   "directories": {
     "doc": "doc",
