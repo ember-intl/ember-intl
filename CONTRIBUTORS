@@ -2,18 +2,25 @@ This file has been automatically created using
 git log | grep Author: | sort | uniq | sed -e "s+Author: ++g" > CONTRIBUTORS
 Manual annotations in braces. Email addresses might or might not be proper email addresses.
 
+Adam Lister <adam.lister@gmail.com>
+Christian <me@rndm.de>
+Drew Clauson <drewclauson@users.noreply.github.com>
 Gabor Babicz <gabor.babicz@gmail.com>
 Hanastaroth <gael.delbos@gmail.com>
 Jason Mitchell <jason.mitchell.w@gmail.com>
+jelhan <jeldrik@systemli.org>
 Jordan Hawker <hawker.jordan@gmail.com>
 Joshua Cope <jcope2010@gmail.com>
 Julien Lecomte <julien.lecomte@gmail.com>
 Justin Brown <justinbrown.work@gmail.com>
+Justin Giancola <justin.giancola@gmail.com>
 Michael de Hoog <michael.dehoog@gmail.com>
 Michelle Bu <michellebu@berkeley.edu>
 null null null <null@revolution.cheap>
 Richard Livsey <richard@livsey.org>
 Sam Mueller <sjmueller@gmail.com>
 Stefan Penner <stefan.penner@gmail.com>
+The Gitter Badger <badger@gitter.im>
 Timur Gabdrakipov <gtimti@gmail.com>
+Tomster <tomster@emberjs.com>
 Travis Hoover <thoov7@gmail.com>
