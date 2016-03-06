@@ -1,0 +1,6 @@
+'use strict';
+
+var fs = require('fs-extra');
+var path = require('path');
+
+fs.copySync(path.join(__dirname, '..', '..', '..', 'README.md'), path.join(__dirname, '..', 'README.md'));
