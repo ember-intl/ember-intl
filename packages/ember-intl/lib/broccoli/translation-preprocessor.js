@@ -65,41 +65,8 @@ function readAsObject(filepath) {
   }
 }
 
-function missedKeys(target, defaultTranslationKeys, locale) {
-  var targetProps = propKeys(target);
-
-  defaultTranslationKeys.forEach(function (property) {
-    if (targetProps.indexOf(property) === -1) {
-      console.log(chalk.yellow('ember-intl: \'' + property + '\' missing from ' + locale));
-    }
-  });
-}
-
 function exporter(obj) {
   return 'export default ' + stringify(obj) + ';';
-}
-
-function gatherTranslations(inputPath) {
-  return walkSync(inputPath).reduce(function (translations, file) {
-    var fullPath = inputPath + '/' + file;
-
-    if (fs.statSync(fullPath).isDirectory()) {
-      return translations;
-    } else {
-      var translation = readAsObject(inputPath + '/' + file);
-
-      if (!translation) {
-        console.log(chalk.yellow('ember-intl: cannot read path "' + fullPath + '"'));
-        return translations;
-      }
-
-      var basename = path.basename(file).split('.')[0];
-      var keyedTranslation = {};
-      keyedTranslation[basename] = translation;
-
-      return extend(true, translations, keyedTranslation);
-    }
-  }, {});
 }
 
 function TranslationPreprocessor(inputNode, options) {
@@ -121,10 +88,47 @@ function TranslationPreprocessor(inputNode, options) {
 TranslationPreprocessor.prototype = Object.create(CachingWriter.prototype);
 TranslationPreprocessor.prototype.constructor = TranslationPreprocessor;
 
+TranslationPreprocessor.prototype.missedKeys = function(target, defaultTranslationKeys, locale) {
+  var targetProps = propKeys(target);
+  var ui = this.options.ui;
+
+  defaultTranslationKeys.forEach(function (property) {
+    if (targetProps.indexOf(property) === -1) {
+      ui.writeLine(chalk.yellow('ember-intl: \'' + property + '\' missing from ' + locale));
+    }
+  });
+};
+
+TranslationPreprocessor.prototype.gatherTranslations = function(inputPath) {
+  var ui = this.options.ui;
+
+  return walkSync(inputPath).reduce(function (translations, file) {
+    var fullPath = inputPath + '/' + file;
+
+    if (fs.statSync(fullPath).isDirectory()) {
+      return translations;
+    } else {
+      var translation = readAsObject(inputPath + '/' + file);
+
+      if (!translation) {
+        ui.writeLine(chalk.yellow('ember-intl: cannot read path "' + fullPath + '"'));
+        return translations;
+      }
+
+      var basename = path.basename(file).split('.')[0];
+      var keyedTranslation = {};
+      keyedTranslation[basename] = translation;
+
+      return extend(true, translations, keyedTranslation);
+    }
+  }, {});
+};
+
 TranslationPreprocessor.prototype.build = function() {
+  var ui = this.options.ui;
   var inputPath = this.inputPaths[0];
   var outputPath = this.outputPath + '/' + this.options.outputPath;
-  var translations = gatherTranslations(inputPath);
+  var translations = this.gatherTranslations(inputPath);
   var defaultTranslationKeys, defaultTranslation, translation;
 
   mkdirp.sync(outputPath);
@@ -136,7 +140,7 @@ TranslationPreprocessor.prototype.build = function() {
     })[0];
 
     if (!defaultTranslationPath) {
-      console.log(chalk.yellow('ember-intl: "' + this.options.baseLocale + '" default locale missing `translations` folder'));
+      ui.writeLine(chalk.yellow('ember-intl: "' + this.options.baseLocale + '" default locale missing `translations` folder'));
       return;
     }
 
@@ -149,7 +153,7 @@ TranslationPreprocessor.prototype.build = function() {
       translation = translations[key];
 
       if (this.options.baseLocale) {
-        missedKeys(translation, defaultTranslationKeys, key);
+        this.missedKeys(translation, defaultTranslationKeys, key);
       }
 
       translation = extend(true, {}, defaultTranslation, translation);

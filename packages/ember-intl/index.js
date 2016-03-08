@@ -23,12 +23,12 @@ var CldrWriter = require('./lib/broccoli/cldr-writer');
 var lowercaseTree = require('./lib/broccoli/lowercase-tree');
 var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor');
 
-function generateOptions(app) {
+function generateOptions(app, ui) {
   var addonConfig = app.project.config(app.env)['intl'] || {};
 
   if (addonConfig.defaultLocale) {
-    console.warn('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
-    console.warn('[ember-intl] Please update config/environment.js')
+    ui.writeLine('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
+    ui.writeLine('[ember-intl] Please update config/environment.js');
 
     addonConfig.baseLocale = addonConfig.defaultLocale;
   }
@@ -40,7 +40,8 @@ function generateOptions(app) {
     disablePolyfill: false,
     publicOnly: false,
     inputPath: 'translations',
-    outputPath: 'translations'
+    outputPath: 'translations',
+    ui: ui
   }, addonConfig);
 
   if (options.locales) {
@@ -64,7 +65,7 @@ module.exports = {
       this.app = app;
     }
 
-    this.opts = generateOptions(app);
+    this.opts = generateOptions(app, this.ui);
     this.hasTranslationDir = existsSync(this.project.root + '/' + this.opts.inputPath);
     this.locales = this.knownLocales(this.opts);
 
