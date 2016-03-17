@@ -23,63 +23,39 @@ var CldrWriter = require('./lib/broccoli/cldr-writer');
 var lowercaseTree = require('./lib/broccoli/lowercase-tree');
 var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor');
 
-function generateOptions(app, ui) {
-  var addonConfig = app.project.config(app.env)['intl'] || {};
-
-  if (addonConfig.defaultLocale) {
-    ui.writeLine('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
-    ui.writeLine('[ember-intl] Please update config/environment.js');
-
-    addonConfig.baseLocale = addonConfig.defaultLocale;
-  }
-
-  var options = utils.assign({
-    locales: undefined,
-    baseLocale: undefined,
-    allowEmpty: true,
-    disablePolyfill: false,
-    publicOnly: false,
-    inputPath: 'translations',
-    outputPath: 'translations',
-    ui: ui
-  }, addonConfig);
-
-  if (options.locales) {
-    options.locales = utils.makeArray(options.locales).filter(function(locale) {
-      return typeof locale === 'string';
-    }).map(function(locale) {
-      return locale.toLocaleLowerCase();
-    });
-  }
-
-  return options;
-};
-
 module.exports = {
   name: 'ember-intl',
+  _intlConfig: null,
 
   included: function(app) {
     this._super.included.apply(this, arguments);
 
-    if (!this.app) {
-      this.app = app;
+    // see: https://github.com/ember-cli/ember-cli/issues/3718
+    if (typeof app.import !== 'function' && app.app) {
+      app = app.app;
     }
 
-    this.opts = generateOptions(app, this.ui);
-    this.hasTranslationDir = existsSync(this.project.root + '/' + this.opts.inputPath);
-    this.locales = this.knownLocales(this.opts);
+    this.app = app;
+
+    this._intlConfig = this.intlConfig(app.env);
+    this.hasTranslationDir = existsSync(this.project.root + '/' + this._intlConfig.inputPath);
+    this.locales = this.knownLocales();
 
     this.trees = {
-      translations: new WatchedDir(this.opts.inputPath),
+      translations: new WatchedDir(this._intlConfig.inputPath),
       intl: new UnwatchedDir(path.dirname(require.resolve('intl')))
     };
+
+    return app;
   },
 
   treeForApp: function(tree) {
     var trees = [tree];
 
-    if (this.hasTranslationDir && !this.opts.publicOnly) {
-      trees.push(new TranslationPreprocessor(this.trees.translations, this.opts));
+    if (this.hasTranslationDir && !this._intlConfig.publicOnly) {
+      trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
+        ui: this.ui
+      }, this._intlConfig)));
     }
 
     if (tree && this.locales.length) {
@@ -98,6 +74,37 @@ module.exports = {
     return mergeTrees(trees, { overwrite: true });
   },
 
+  intlConfig: function(environment) {
+    var addonConfig = this.app.project.config(environment)['intl'] || {};
+
+    if (addonConfig.defaultLocale) {
+      this.ui.writeLine('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
+      this.ui.writeLine('[ember-intl] Please update config/environment.js');
+
+      addonConfig.baseLocale = addonConfig.defaultLocale;
+    }
+
+    var options = utils.assign({
+      locales: undefined,
+      baseLocale: undefined,
+      allowEmpty: true,
+      disablePolyfill: false,
+      publicOnly: false,
+      inputPath: 'translations',
+      outputPath: 'translations'
+    }, addonConfig);
+
+    if (options.locales) {
+      options.locales = utils.makeArray(options.locales).filter(function(locale) {
+        return typeof locale === 'string';
+      }).map(function(locale) {
+        return locale.toLocaleLowerCase();
+      });
+    }
+
+    return options;
+  },
+
   treeForPublic: function() {
     var publicTree = this._super.treeForPublic.apply(this, arguments);
 
@@ -107,7 +114,7 @@ module.exports = {
       trees.push(publicTree);
     }
 
-    if (!this.opts.disablePolyfill) {
+    if (!this._intlConfig.disablePolyfill) {
       var assetPath = 'assets/intl';
       var appOptions = this.app.options;
 
@@ -141,24 +148,26 @@ module.exports = {
       trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
     }
 
-    if (this.hasTranslationDir && this.opts.publicOnly) {
-      trees.push(new TranslationPreprocessor(this.trees.translations, this.opts));
+    if (this.hasTranslationDir && this._intlConfig.publicOnly) {
+      trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
+        ui: this.ui
+      }, this._intlConfig)));
     }
 
     return mergeTrees(trees, { overwrite: true });
   },
 
-  knownLocales: function(options) {
+  knownLocales: function() {
     var locales = [];
 
     if (this.hasTranslationDir) {
-      locales = walkSync(this.project.root + '/' + options.inputPath).map(function(filename) {
+      locales = walkSync(this.project.root + '/' + this._intlConfig.inputPath).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }).filter(utils.isSupportedLocale);
     }
 
-    if (options.locales) {
-      locales = locales.concat(options.locales);
+    if (this._intlConfig.locales) {
+      locales = locales.concat(this._intlConfig.locales);
     }
 
     return utils.uniqueByString(locales);
