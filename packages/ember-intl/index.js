@@ -39,7 +39,7 @@ module.exports = {
 
     this._intlConfig = this.intlConfig(app.env);
     this.hasTranslationDir = existsSync(this.project.root + '/' + this._intlConfig.inputPath);
-    this.locales = this.knownLocales();
+    this.locales = this.discoverLocales();
 
     this.trees = {
       translations: new WatchedDir(this._intlConfig.inputPath),
@@ -47,31 +47,6 @@ module.exports = {
     };
 
     return app;
-  },
-
-  treeForApp: function(tree) {
-    var trees = [tree];
-
-    if (this.hasTranslationDir && !this._intlConfig.publicOnly) {
-      trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
-        ui: this.ui
-      }, this._intlConfig)));
-    }
-
-    if (tree && this.locales.length) {
-      trees.push(new CldrWriter([tree], {
-        path: './cldrs',
-        locales: this.locales,
-        pluralRules: true,
-        relativeFields: true,
-        prelude: '/*jslint eqeq: true*/\n',
-        wrapEntry: function wrapEntry(result) {
-          return 'export default ' + serialize(result) + ';';
-        }
-      }));
-    }
-
-    return mergeTrees(trees, { overwrite: true });
   },
 
   intlConfig: function(environment) {
@@ -103,6 +78,47 @@ module.exports = {
     }
 
     return options;
+  },
+
+  discoverLocales: function() {
+    var locales = [];
+
+    if (this.hasTranslationDir) {
+      locales = walkSync(this.project.root + '/' + this._intlConfig.inputPath).map(function(filename) {
+        return path.basename(filename, path.extname(filename));
+      }).filter(utils.isSupportedLocale);
+    }
+
+    if (this._intlConfig.locales) {
+      locales = locales.concat(this._intlConfig.locales);
+    }
+
+    return utils.uniqueByString(locales);
+  },
+
+  treeForApp: function(tree) {
+    var trees = [tree];
+
+    if (this.hasTranslationDir && !this._intlConfig.publicOnly) {
+      trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
+        ui: this.ui
+      }, this._intlConfig)));
+    }
+
+    if (tree && this.locales.length) {
+      trees.push(new CldrWriter([tree], {
+        path: './cldrs',
+        locales: this.locales,
+        pluralRules: true,
+        relativeFields: true,
+        prelude: '/*jslint eqeq: true*/\n',
+        wrapEntry: function wrapEntry(result) {
+          return 'export default ' + serialize(result) + ';';
+        }
+      }));
+    }
+
+    return mergeTrees(trees, { overwrite: true });
   },
 
   treeForPublic: function() {
@@ -155,21 +171,5 @@ module.exports = {
     }
 
     return mergeTrees(trees, { overwrite: true });
-  },
-
-  knownLocales: function() {
-    var locales = [];
-
-    if (this.hasTranslationDir) {
-      locales = walkSync(this.project.root + '/' + this._intlConfig.inputPath).map(function(filename) {
-        return path.basename(filename, path.extname(filename));
-      }).filter(utils.isSupportedLocale);
-    }
-
-    if (this._intlConfig.locales) {
-      locales = locales.concat(this._intlConfig.locales);
-    }
-
-    return utils.uniqueByString(locales);
   }
 };
