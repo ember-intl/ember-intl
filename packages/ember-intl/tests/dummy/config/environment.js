@@ -10,16 +10,6 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    },
-
-    intl: {
-      locales: ['en-us', 'es-es', 'fr-fr', 'de-de', 'aa-dj'],
-      baseLocale: 'en-us',
-      publicOnly: false,
-      disablePolyfill: false,
-      allowEmpty: true,
-      outputPath: 'translations',
-      inputPath: 'tests/dummy/translations'
     }
   };
 
