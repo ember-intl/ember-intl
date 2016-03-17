@@ -49,35 +49,52 @@ module.exports = {
     return app;
   },
 
+  readConfig: function(environment) {
+    var project = this.app.project;
+    var configPath = path.join(project.root, project.configPath(), '..', 'ember-intl.js');
+
+    if (fs.existsSync(configPath)) {
+      return require(configPath)(environment);
+    }
+
+    return {};
+  },
+
   intlConfig: function(environment) {
-    var addonConfig = this.app.project.config(environment)['intl'] || {};
+    var deprecatedConfig = this.app.project.config(environment)['intl'];
+    var addonConfig = utils.assign(this.readConfig(), deprecatedConfig || {});
+
+    if (deprecatedConfig) {
+      this.ui.writeLine('[ember-intl] DEPRECATION: intl configuration should be moved into config/ember-intl.js');
+      this.ui.writeLine('[ember-intl] Run `ember g ember-intl-config` to create a default config');
+    }
+
+    var defaults = {
+      locales: null,
+      baseLocale: null,
+      publicOnly: false,
+      disablePolyfill: false,
+      inputPath: 'translations',
+      outputPath: 'translations'
+    };
 
     if (addonConfig.defaultLocale) {
       this.ui.writeLine('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
-      this.ui.writeLine('[ember-intl] Please update config/environment.js');
-
+      this.ui.writeLine('[ember-intl] Please update config/ember-intl.js or config/environment.js');
       addonConfig.baseLocale = addonConfig.defaultLocale;
     }
 
-    var options = utils.assign({
-      locales: undefined,
-      baseLocale: undefined,
-      allowEmpty: true,
-      disablePolyfill: false,
-      publicOnly: false,
-      inputPath: 'translations',
-      outputPath: 'translations'
-    }, addonConfig);
+    addonConfig = utils.assign(defaults, addonConfig);
 
-    if (options.locales) {
-      options.locales = utils.makeArray(options.locales).filter(function(locale) {
+    if (addonConfig.locales) {
+      addonConfig.locales = utils.makeArray(addonConfig.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
         return locale.toLocaleLowerCase();
       });
     }
 
-    return options;
+    return addonConfig;
   },
 
   discoverLocales: function() {
