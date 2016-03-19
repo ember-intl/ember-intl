@@ -8,9 +8,10 @@
  */
 
 var serialize = require('serialize-javascript');
-var Funnel = require('broccoli-funnel');
-var WatchedDir = require('broccoli-source').WatchedDir;
+var stringify = require('json-stable-stringify');
 var UnwatchedDir = require('broccoli-source').UnwatchedDir;
+var WatchedDir = require('broccoli-source').WatchedDir;
+var Funnel = require('broccoli-funnel');
 var existsSync = require('exists-sync');
 var stew = require('broccoli-stew');
 var walkSync = require('walk-sync');
@@ -118,7 +119,13 @@ module.exports = {
 
     if (this.hasTranslationDir && !this._intlConfig.publicOnly) {
       trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
-        ui: this.ui
+        ui: this.ui,
+        filename: function filename(key) {
+          return key + '.js';
+        },
+        wrapEntry: function wrapEntry(obj) {
+          return 'export default ' + stringify(obj) + ';';
+        }
       }, this._intlConfig)));
     }
 
@@ -140,7 +147,6 @@ module.exports = {
 
   treeForPublic: function() {
     var publicTree = this._super.treeForPublic.apply(this, arguments);
-
     var trees = [];
 
     if (publicTree) {

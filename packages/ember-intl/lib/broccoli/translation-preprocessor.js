@@ -65,10 +65,6 @@ function readAsObject(filepath) {
   }
 }
 
-function exporter(obj) {
-  return 'export default ' + stringify(obj) + ';';
-}
-
 function TranslationPreprocessor(inputNode, options) {
   options = options || {};
 
@@ -81,14 +77,13 @@ function TranslationPreprocessor(inputNode, options) {
   }
 
   CachingWriter.call(this, inputNode, { annotation: options.annotation });
-
   this.options = options;
 }
 
 TranslationPreprocessor.prototype = Object.create(CachingWriter.prototype);
 TranslationPreprocessor.prototype.constructor = TranslationPreprocessor;
 
-TranslationPreprocessor.prototype.missedKeys = function(target, defaultTranslationKeys, locale) {
+TranslationPreprocessor.prototype.findMissingKeys = function(target, defaultTranslationKeys, locale) {
   var targetProps = propKeys(target);
   var ui = this.options.ui;
 
@@ -124,6 +119,22 @@ TranslationPreprocessor.prototype.gatherTranslations = function(inputPath) {
   }, {});
 };
 
+TranslationPreprocessor.prototype.filename = function(key) {
+  if (typeof this.options.filename === 'function') {
+    return this.options.filename(key);
+  }
+
+  return key + '.json';
+}
+
+TranslationPreprocessor.prototype.wrapEntry = function(obj) {
+  if (typeof this.options.wrapEntry === 'function') {
+    return this.options.wrapEntry(obj);
+  }
+
+  return stringify(obj);
+}
+
 TranslationPreprocessor.prototype.build = function() {
   var ui = this.options.ui;
   var inputPath = this.inputPaths[0];
@@ -153,15 +164,12 @@ TranslationPreprocessor.prototype.build = function() {
       translation = translations[key];
 
       if (this.options.baseLocale) {
-        this.missedKeys(translation, defaultTranslationKeys, key);
+        this.findMissingKeys(translation, defaultTranslationKeys, key);
       }
 
       translation = extend(true, {}, defaultTranslation, translation);
 
-      fs.writeFileSync(
-        outputPath + '/' + key + '.js',
-        exporter(translation), { encoding: 'utf8' }
-      );
+      fs.writeFileSync(outputPath + '/' + this.filename(key), this.wrapEntry(translation), { encoding: 'utf8' });
     }
   }
 };
