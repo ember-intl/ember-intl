@@ -80,7 +80,7 @@ module.exports = {
     };
 
     if (addonConfig.defaultLocale) {
-      this.ui.writeLine('[ember-intl] DEPRECATION: intl.defaultLocale is deprecated in favor of intl.baseLocale');
+      this.ui.writeLine('[ember-intl] DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
       this.ui.writeLine('[ember-intl] Please update config/ember-intl.js or config/environment.js');
       addonConfig.baseLocale = addonConfig.defaultLocale;
     }
