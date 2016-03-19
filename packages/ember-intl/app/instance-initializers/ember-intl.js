@@ -1,9 +1,12 @@
+/* globals requirejs */
+
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
 import ENV from '../config/environment';
+import getOwner from 'ember-getowner-polyfill';
 
 function filterBy(type) {
   return Object.keys(requirejs._eak_seen).filter((key) => {
@@ -12,8 +15,7 @@ function filterBy(type) {
 }
 
 export function instanceInitializer(instance) {
-  const container = instance.lookup ? instance : instance.container;
-  const service = container.lookup('service:intl');
+  const service = getOwner(instance).lookup('service:intl');
 
   filterBy('cldrs').forEach((key) => {
     service.addLocaleData(require(key, null, null, true)['default']);
