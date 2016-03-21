@@ -6,7 +6,6 @@
  */
 
 import ENV from '../config/environment';
-import getOwner from 'ember-getowner-polyfill';
 
 function filterBy(type) {
   return Object.keys(requirejs._eak_seen).filter((key) => {
@@ -15,7 +14,13 @@ function filterBy(type) {
 }
 
 export function instanceInitializer(instance) {
-  const service = getOwner(instance).lookup('service:intl');
+  let service;
+
+  if (typeof instance.lookup === 'function') {
+    service = instance.lookup('service:intl');
+  } else {
+    service = instance.container.lookup('service:intl');
+  }
 
   filterBy('cldrs').forEach((key) => {
     service.addLocaleData(require(key, null, null, true)['default']);

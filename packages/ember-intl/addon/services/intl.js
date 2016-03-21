@@ -74,13 +74,14 @@ const IntlService = Service.extend(Evented, {
   formatDate: formatterProxy('date'),
 
   t(key, options, formats) {
-    let translation = this.findTranslationByKey(key, options && options.locale);
+    const translation = this.findTranslationByKey(key, options && options.locale);
 
     return this.formatMessage(translation, options, formats);
   },
 
   exists(key, optionalLocales) {
     let locales = optionalLocales;
+    const adapter = get(this, 'adapter');
 
     if (!optionalLocales) {
       locales = get(this, '_locale');
@@ -89,13 +90,13 @@ const IntlService = Service.extend(Evented, {
     assert(`ember-intl: locale is unset, cannot lookup '${key}'`, locales);
 
     return makeArray(locales).some((locale) => {
-      return get(this, 'adapter').has(locale, key);
+      return adapter.has(locale, key);
     });
   },
 
   getLocalesByTranslations() {
     return Object.keys(requirejs.entries).reduce((translations, module) => {
-      let match = module.match(TRANSLATION_PATH_CAPTURE);
+      const match = module.match(TRANSLATION_PATH_CAPTURE);
 
       if (match) {
         translations.addObject(match[1]);
@@ -167,11 +168,12 @@ const IntlService = Service.extend(Evented, {
   findTranslationByKey(key, locales) {
     locales = locales || get(this, '_locale');
 
-    let translation = get(this, 'adapter').findTranslationByKey(makeArray(locales), key);
+    const translation = get(this, 'adapter').findTranslationByKey(makeArray(locales), key);
 
     if (typeof translation === 'undefined') {
       const missingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
-      translation = missingMessage.call(this, key, locales);
+
+      return missingMessage.call(this, key, locales);
     }
 
     return translation;
