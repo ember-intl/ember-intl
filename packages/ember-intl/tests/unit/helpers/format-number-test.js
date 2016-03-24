@@ -91,6 +91,20 @@ test('should handle undefined value when allowEmpty is true', function(assert) {
   assert.equal(view.$().text(), '');
 });
 
+test('should display the fallback if called with no value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-number fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});
+
+test('should display the fallback if called with an undefined value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-number undefined fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});
+
 test('should return a decimal as a string', function(assert) {
   assert.expect(1);
   view = this.render(hbs`{{format-number NUM}}`, 'en-us');

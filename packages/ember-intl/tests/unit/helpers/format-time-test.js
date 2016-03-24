@@ -90,3 +90,17 @@ test('it should format the epoch timestamp', function(assert) {
   runAppend(view);
   assert.equal(view.$().text(), new Intl.DateTimeFormat(locale).format(0));
 });
+
+test('it should display the fallback if called with no value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-time fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});
+
+test('it should display the fallback if called with an undefined value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-time undefined fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});

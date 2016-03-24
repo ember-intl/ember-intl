@@ -35,10 +35,14 @@ function helperFactory(formatType, helperOptions = {}) {
       const value = this.getValue(params, hash);
       const allowEmpty = getWithDefault(hash, 'allowEmpty', helperOptions.allowEmpty);
 
-      if (isEmpty(value) && allowEmpty) { return; }
-
-      if (typeof value === 'undefined') {
-        throw new Error(`format-${formatType} helper requires value`);
+      if (isEmpty(value)) {
+        if ('fallback' in hash) {
+          return hash.fallback;
+        } else if (allowEmpty) {
+          return;
+        } else if (typeof value === 'undefined') {
+          throw new Error(`format-${formatType} helper requires value`);
+        }
       }
 
       const intl = get(this, 'intl');
