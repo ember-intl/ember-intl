@@ -97,3 +97,17 @@ test('should return now', function(assert) {
   runAppend(view);
   assert.equal(view.$().text(), 'now');
 });
+
+test('should display the fallback if called with no value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-relative fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});
+
+test('should display the fallback if called with an undefined value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-relative undefined fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});

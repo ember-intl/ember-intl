@@ -60,6 +60,20 @@ test('should render empty string for an undefined value', function(assert) {
   assert.equal(view.$().text(), '');
 });
 
+test('should display the fallback if called with no value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-date fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});
+
+test('should display the fallback if called with an undefined value', function(assert) {
+  assert.expect(1);
+  view = this.render(hbs`{{format-date undefined fallback="fallback value"}}`, 'en-us');
+  runAppend(view);
+  assert.equal(view.$().text(), 'fallback value');
+});
+
 test('should render epoch date for a null value when allow empty is false', function(assert) {
   assert.expect(1);
   view = this.render(hbs`{{format-date null allowEmpty=false}}`, locale);
