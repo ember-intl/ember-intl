@@ -37,6 +37,7 @@ moduleFor('ember-intl@formatter:format-message', {
     registry.register('formats:main', {
       date: {
         shortWeekDay: {
+          timeZone: 'UTC',
           day: 'numeric',
           month: 'long',
           year: 'numeric'
