@@ -2,14 +2,10 @@
 
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var cldr = require('cldr-core/availableLocales');
-
-var availableLocales = cldr.availableLocales.modern.map(function(localeFile) {
-  return localeFile.toLowerCase();
-});
-
 module.exports = function(locale) {
-  return availableLocales.indexOf(locale.toLowerCase()) > -1
+  if (!/^[a-zA-Z0-9-]+$/.test(locale)) {
+    return false;
+  }
+
+  return true;
 }

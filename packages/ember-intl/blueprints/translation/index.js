@@ -13,21 +13,21 @@ var isSupportedLocale = require('../../lib/utils/is-supported-locale');
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
 
-  normalizeEntityName: function (localeName) {
-    entityName = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
+  normalizeEntityName: function (locale) {
+    locale = Blueprint.prototype.normalizeEntityName.apply(this, arguments);
 
-    if (!isSupportedLocale(localeName)) {
-      throw new SilentError('Aborting. `' + localeName + '` is an unknown locale code');
+    if (!isSupportedLocale(locale)) {
+      throw new SilentError(locale + '` is not a valid locale code');
     }
 
-    return localeName;
+    return locale;
   },
 
   locals: function (options) {
-    var localeName = options.args[1];
+    var locale = options.args[1];
 
     return {
-      locale: localeName
+      locale: locale
     }
   }
 };
