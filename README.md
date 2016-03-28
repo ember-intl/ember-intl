@@ -6,6 +6,13 @@
 
 This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
+## Notable Features
+* Addon support (addons can provide translations up to the project application)
+* Built on top of native standards ([Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and ICU message syntax)
+* Translations are able to be lazily loaded (not bundled with the app code)
+* Formatting for relative time, datetime, and numbers
+* Handlebar helpers and a utility service
+
 ## Installation
 * `ember install ember-intl`
 * Polyfill the Intl.js API (required for Safari/PhantomJS, and legacy browser)
