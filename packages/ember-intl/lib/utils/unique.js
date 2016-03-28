@@ -7,13 +7,13 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var makeArray = require('./make-array');
+var _ = require('lodash');
 
-function uniqueByString(array) {
+function unique(array) {
   var found = Object.create(null);
   var out = [];
 
-  makeArray(array).forEach(function(item) {
+  _.castArray(array).forEach(function(item) {
     if (typeof item !== 'string' || found[item.toLocaleLowerCase()]) {
       return;
     }
@@ -23,6 +23,6 @@ function uniqueByString(array) {
   });
 
   return out;
-}
+};
 
-module.exports = uniqueByString;
+module.exports = unique;

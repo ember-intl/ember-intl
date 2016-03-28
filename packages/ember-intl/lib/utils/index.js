@@ -8,8 +8,6 @@
  */
 
  module.exports = {
-  makeArray: require('./make-array'),
-  uniqueByString: require('./unique-by-string'),
-  assign: require('./assign'),
+  unique: require('./unique'),
   isSupportedLocale: require('./is-supported-locale')
-}
+};

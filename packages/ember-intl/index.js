@@ -16,17 +16,22 @@ var existsSync = require('exists-sync');
 var stew = require('broccoli-stew');
 var walkSync = require('walk-sync');
 var path = require('path');
+var _ = require('lodash');
 var fs = require('fs');
 
 var utils = require('./lib/utils');
 var mergeTrees = require('broccoli-merge-trees');
 var CldrWriter = require('./lib/broccoli/cldr-writer');
 var lowercaseTree = require('./lib/broccoli/lowercase-tree');
-var TranslationPreprocessor = require('./lib/broccoli/translation-preprocessor');
+var TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
   name: 'ember-intl',
   _intlConfig: null,
+
+  isDevelopingAddon: function() {
+    return true;
+  },
 
   included: function(app) {
     this._super.included.apply(this, arguments);
@@ -37,17 +42,30 @@ module.exports = {
     }
 
     this.app = app;
+    this._intlConfig = this.intlConfig(this.app.env);
 
-    this._intlConfig = this.intlConfig(app.env);
-    this.hasTranslationDir = existsSync(this.project.root + '/' + this._intlConfig.inputPath);
-    this.locales = this.discoverLocales();
+    var translationFolder = this._intlConfig.inputPath;
+    this.hasTranslationDir = existsSync(path.join(this.project.root, translationFolder));
+    this.projectLocales = this.findLocales();
 
-    this.trees = {
-      translations: new WatchedDir(this._intlConfig.inputPath),
-      intl: new UnwatchedDir(path.dirname(require.resolve('intl')))
-    };
+    this.trees = this.trees || {};
+    this.trees.intl = new UnwatchedDir(path.dirname(require.resolve('intl')));
+    this.trees.projectTranslations = new WatchedDir(translationFolder);
 
-    return app;
+    this.trees.addonTranslations = this.findIntlAddons().map(function(addon) {
+      return new Funnel(addon.path, {
+        srcDir: addon.translationPath,
+        destDir:  path.join('__addon__', addon.name)
+      });
+    }, this);
+
+    this.trees.translationTree = this.createTranslationTree();
+
+    return this.app;
+  },
+
+  log: function(msg) {
+    this.ui.writeLine('[ember-intl] ' + msg);
   },
 
   readConfig: function(environment) {
@@ -61,13 +79,9 @@ module.exports = {
     return {};
   },
 
-  log: function(msg) {
-    this.ui.writeLine('[ember-intl] ' + msg);
-  },
-
   intlConfig: function(environment) {
     var deprecatedConfig = this.app.project.config(environment)['intl'];
-    var addonConfig = utils.assign(this.readConfig(), deprecatedConfig || {});
+    var addonConfig = _.assign(this.readConfig(), deprecatedConfig || {});
 
     if (deprecatedConfig) {
       this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
@@ -89,10 +103,10 @@ module.exports = {
       addonConfig.baseLocale = addonConfig.defaultLocale;
     }
 
-    addonConfig = utils.assign(defaults, addonConfig);
+    addonConfig = _.assign(defaults, addonConfig);
 
     if (addonConfig.locales) {
-      addonConfig.locales = utils.makeArray(addonConfig.locales).filter(function(locale) {
+      addonConfig.locales = _.castArray(addonConfig.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
         return locale.toLocaleLowerCase();
@@ -102,11 +116,11 @@ module.exports = {
     return addonConfig;
   },
 
-  discoverLocales: function() {
+  findLocales: function() {
     var locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(this.project.root + '/' + this._intlConfig.inputPath).map(function(filename) {
+      locales = locales.concat(walkSync(path.join(this.project.root, this._intlConfig.inputPath)).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }));
     }
@@ -121,31 +135,68 @@ module.exports = {
       }
 
       this.log('\'' + locale + '\' is not a valid locale name');
+
       return false;
     }, this));
 
-    return utils.uniqueByString(locales);
+    return utils.unique(locales);
+  },
+
+  findIntlAddons: function(tree) {
+    var addons = this.project.addonPackages;
+
+    return Object.keys(addons).map(function(key) {
+      var addon = addons[key];
+      var pkg = require(path.join(addon.path, 'package.json'));
+
+      return {
+        name: key,
+        translationPath: pkg['ember-addon'].translationPath || 'translations',
+        path: addon.path
+      };
+    }).filter(function(addon) {
+      return fs.existsSync(path.join(addon.path, addon.translationPath));
+    })
+  },
+
+  createTranslationTree: function() {
+    var trees = [];
+
+    trees.push(this.trees.projectTranslations);
+
+    if (this.trees.addonTranslations) {
+      trees = trees.concat(this.trees.addonTranslations);
+    }
+
+    return mergeTrees(trees);
+  },
+
+  reduceTranslations: function(opts) {
+    if (!opts) { opts = {}; }
+
+    return new TranslationReducer(this.trees.translationTree, _.assign({}, this._intlConfig, opts, {
+      log: this.log
+    }));
   },
 
   treeForApp: function(tree) {
     var trees = [tree];
 
     if (this.hasTranslationDir && !this._intlConfig.publicOnly) {
-      trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
-        ui: this.ui,
+      trees.push(this.reduceTranslations({
         filename: function filename(key) {
           return key + '.js';
         },
         wrapEntry: function wrapEntry(obj) {
           return 'export default ' + stringify(obj) + ';';
         }
-      }, this._intlConfig)));
+      }));
     }
 
-    if (tree && this.locales.length) {
+    if (tree && this.projectLocales.length) {
       trees.push(new CldrWriter([tree], {
         path: './cldrs',
-        locales: this.locales,
+        locales: this.projectLocales,
         pluralRules: true,
         relativeFields: true,
         prelude: '/*jslint eqeq: true*/\n',
@@ -168,9 +219,9 @@ module.exports = {
 
     if (!this._intlConfig.disablePolyfill) {
       var assetPath = 'assets/intl';
-      var appOptions = this.app.options;
+      var appOptions = this.app.options || {};
 
-      if (appOptions.app && appOptions.app.intl) {
+      if (_.get(appOptions, 'app.intl')) {
         assetPath = appOptions.app.intl;
       }
 
@@ -191,8 +242,8 @@ module.exports = {
         destDir: assetPath + '/locales'
       };
 
-      if (this.locales.length) {
-        localeFunnel.include = this.locales.map(function(locale) {
+      if (this.projectLocales.length) {
+        localeFunnel.include = this.projectLocales.map(function(locale) {
           return new RegExp(locale, 'i');
         });
       }
@@ -201,9 +252,7 @@ module.exports = {
     }
 
     if (this.hasTranslationDir && this._intlConfig.publicOnly) {
-      trees.push(new TranslationPreprocessor(this.trees.translations, utils.assign({
-        ui: this.ui
-      }, this._intlConfig)));
+      trees.push(this.reduceTranslations());
     }
 
     return mergeTrees(trees, { overwrite: true });
