@@ -61,13 +61,17 @@ module.exports = {
     return {};
   },
 
+  log: function(msg) {
+    this.ui.writeLine('[ember-intl] ' + msg);
+  },
+
   intlConfig: function(environment) {
     var deprecatedConfig = this.app.project.config(environment)['intl'];
     var addonConfig = utils.assign(this.readConfig(), deprecatedConfig || {});
 
     if (deprecatedConfig) {
-      this.ui.writeLine('[ember-intl] DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.ui.writeLine('[ember-intl] Run `ember g ember-intl-config` to create a default config');
+      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
+      this.log('Run `ember g ember-intl-config` to create a default config');
     }
 
     var defaults = {
@@ -80,8 +84,8 @@ module.exports = {
     };
 
     if (addonConfig.defaultLocale) {
-      this.ui.writeLine('[ember-intl] DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
-      this.ui.writeLine('[ember-intl] Please update config/ember-intl.js or config/environment.js');
+      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
+      this.log('Please update config/ember-intl.js or config/environment.js');
       addonConfig.baseLocale = addonConfig.defaultLocale;
     }
 
@@ -102,14 +106,23 @@ module.exports = {
     var locales = [];
 
     if (this.hasTranslationDir) {
-      locales = walkSync(this.project.root + '/' + this._intlConfig.inputPath).map(function(filename) {
+      locales = locales.concat(walkSync(this.project.root + '/' + this._intlConfig.inputPath).map(function(filename) {
         return path.basename(filename, path.extname(filename));
-      }).filter(utils.isSupportedLocale);
+      }));
     }
 
     if (this._intlConfig.locales) {
       locales = locales.concat(this._intlConfig.locales);
     }
+
+    locales = locales.concat(locales.filter(function(locale) {
+      if (utils.isSupportedLocale(locale)) {
+        return true;
+      }
+
+      this.log('\'' + locale + '\' is not a valid locale name');
+      return false;
+    }, this));
 
     return utils.uniqueByString(locales);
   },
