@@ -9,10 +9,9 @@
 
 var CachingWriter = require('broccoli-caching-writer');
 var extract = require('formatjs-extract-cldr-data');
+var assign = require('lodash/assign');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
-
-var assign = require('../utils/assign');
 
 Plugin.prototype = Object.create(CachingWriter.prototype);
 Plugin.prototype.constructor = Plugin;
@@ -44,14 +43,14 @@ Plugin.prototype.build = function() {
 
   mkdirp.sync(destPath);
 
-  Object.keys(localesData).forEach(function(localeKey) {
-    var result = localesData[localeKey];
+  Object.keys(localesData).forEach(function(locale) {
+    var result = localesData[locale];
 
     if (typeof wrapEntry === 'function') {
       result = wrapEntry(result);
     }
 
-    var outFile = destPath + '/' + localeKey.toLocaleLowerCase() + '.js';
+    var outFile = destPath + '/' + locale.toLocaleLowerCase() + '.js';
     var data = options.prelude + result;
 
     fs.writeFileSync(outFile, data, { encoding: 'utf8' });

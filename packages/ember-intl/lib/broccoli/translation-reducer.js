@@ -65,61 +65,77 @@ function readAsObject(filepath) {
   }
 }
 
-function TranslationPreprocessor(inputNode, options) {
+function TranslationReducer(inputNode, options) {
   options = options || {};
 
-  if (!(this instanceof TranslationPreprocessor)) {
-    return new TranslationPreprocessor(inputNode, options);
+  if (!(this instanceof TranslationReducer)) {
+    return new TranslationReducer(inputNode, options);
   }
 
   if (!Array.isArray(inputNode)) {
     inputNode = [inputNode];
   }
 
-  CachingWriter.call(this, inputNode, { annotation: options.annotation });
+  CachingWriter.call(this, inputNode, { annotation: 'Translation Reducer' });
+
+  if (typeof options.log !== 'undefined') {
+    options.log = function() {}
+  }
+
   this.options = options;
 }
 
-TranslationPreprocessor.prototype = Object.create(CachingWriter.prototype);
-TranslationPreprocessor.prototype.constructor = TranslationPreprocessor;
+TranslationReducer.prototype = Object.create(CachingWriter.prototype);
+TranslationReducer.prototype.constructor = TranslationReducer;
 
-TranslationPreprocessor.prototype.findMissingKeys = function(target, defaultTranslationKeys, locale) {
+TranslationReducer.prototype.findMissingKeys = function(target, defaultTranslationKeys, locale) {
   var targetProps = propKeys(target);
-  var ui = this.options.ui;
+  var log = this.options.log;
 
   defaultTranslationKeys.forEach(function (property) {
     if (targetProps.indexOf(property) === -1) {
-      ui.writeLine(chalk.yellow('ember-intl: \'' + property + '\' missing from ' + locale));
+      log(property + '\' missing from ' + locale);
     }
   });
 };
 
-TranslationPreprocessor.prototype.gatherTranslations = function(inputPath) {
-  var ui = this.options.ui;
+TranslationReducer.prototype.readDirectory = function(inputPath) {
+  var log = this.options.log;
 
-  return walkSync(inputPath).reduce(function (translations, file) {
+  // sorted so that any translation path starts with `__addon__/`
+  // move to the head of the array.  this ensures the application's translations
+  // take presidence over addon translations.
+  var sortedPaths = walkSync(inputPath).sort(function(a, b) {
+    if (a.indexOf('__addon__/') === 0) {
+      return -1;
+    }
+
+    return 1;
+  });
+
+  return sortedPaths.reduce(function (translations, file) {
     var fullPath = inputPath + '/' + file;
 
     if (fs.statSync(fullPath).isDirectory()) {
       return translations;
-    } else {
-      var translation = readAsObject(inputPath + '/' + file);
-
-      if (!translation) {
-        ui.writeLine(chalk.yellow('ember-intl: cannot read path "' + fullPath + '"'));
-        return translations;
-      }
-
-      var basename = path.basename(file).split('.')[0];
-      var keyedTranslation = {};
-      keyedTranslation[basename] = translation;
-
-      return extend(true, translations, keyedTranslation);
     }
+
+    var translation = readAsObject(inputPath + '/' + file);
+
+    if (!translation) {
+      log('cannot read path "' + fullPath + '"');
+      return translations;
+    }
+
+    var basename = path.basename(file).split('.')[0];
+    var keyedTranslation = {};
+    keyedTranslation[basename] = translation;
+
+    return extend(true, translations, keyedTranslation);
   }, {});
 };
 
-TranslationPreprocessor.prototype.filename = function(key) {
+TranslationReducer.prototype.filename = function(key) {
   if (typeof this.options.filename === 'function') {
     return this.options.filename(key);
   }
@@ -127,7 +143,7 @@ TranslationPreprocessor.prototype.filename = function(key) {
   return key + '.json';
 }
 
-TranslationPreprocessor.prototype.wrapEntry = function(obj) {
+TranslationReducer.prototype.wrapEntry = function(obj) {
   if (typeof this.options.wrapEntry === 'function') {
     return this.options.wrapEntry(obj);
   }
@@ -135,11 +151,11 @@ TranslationPreprocessor.prototype.wrapEntry = function(obj) {
   return stringify(obj);
 }
 
-TranslationPreprocessor.prototype.build = function() {
-  var ui = this.options.ui;
+TranslationReducer.prototype.build = function() {
+  var log = this.options.log;
   var inputPath = this.inputPaths[0];
   var outputPath = this.outputPath + '/' + this.options.outputPath;
-  var translations = this.gatherTranslations(inputPath);
+  var translations = this.readDirectory(inputPath);
   var defaultTranslationKeys, defaultTranslation, translation;
 
   mkdirp.sync(outputPath);
@@ -151,7 +167,7 @@ TranslationPreprocessor.prototype.build = function() {
     })[0];
 
     if (!defaultTranslationPath) {
-      ui.writeLine(chalk.yellow('ember-intl: "' + this.options.baseLocale + '" default locale missing `translations` folder'));
+      log(this.options.baseLocale + '" default locale missing `translations` folder');
       return;
     }
 
@@ -174,4 +190,4 @@ TranslationPreprocessor.prototype.build = function() {
   }
 };
 
-module.exports = TranslationPreprocessor;
+module.exports = TranslationReducer;

@@ -8,4 +8,4 @@ module.exports = function(locale) {
   }
 
   return true;
-}
+};
