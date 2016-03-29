@@ -11,7 +11,7 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 * Built on top of native standards ([Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and ICU message syntax)
 * Translations are able to be lazily loaded (not bundled with the app code)
 * Formatting for relative time, datetime, and numbers
-* Handlebar helpers and a service
+* Handlebar helpers and service API
 
 ## Installation
 * `ember install ember-intl`
