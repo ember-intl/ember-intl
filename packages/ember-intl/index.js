@@ -55,7 +55,7 @@ module.exports = {
     this.trees.addonTranslations = this.findIntlAddons().map(function(addon) {
       return new Funnel(addon.path, {
         srcDir: addon.translationPath,
-        destDir:  path.join('__addon__', addon.name)
+        destDir: '__addon__' + addon.name
       });
     }, this);
 
