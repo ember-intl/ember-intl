@@ -102,11 +102,11 @@ TranslationReducer.prototype.findMissingKeys = function(target, defaultTranslati
 TranslationReducer.prototype.readDirectory = function(inputPath) {
   var log = this.options.log;
 
-  // sorted so that any translation path starts with `__addon__/`
+  // sorted so that any translation path starts with `__addon__`
   // move to the head of the array.  this ensures the application's translations
   // take presidence over addon translations.
   var sortedPaths = walkSync(inputPath).sort(function(a, b) {
-    if (a.indexOf('__addon__/') === 0) {
+    if (a.indexOf('__addon__') === 0) {
       return -1;
     }
 
