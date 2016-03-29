@@ -78,7 +78,7 @@ function TranslationReducer(inputNode, options) {
 
   CachingWriter.call(this, inputNode, { annotation: 'Translation Reducer' });
 
-  if (typeof options.log !== 'undefined') {
+  if (typeof options.log === 'undefined') {
     options.log = function() {}
   }
 

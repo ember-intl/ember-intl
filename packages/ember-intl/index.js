@@ -174,8 +174,12 @@ module.exports = {
   reduceTranslations: function(opts) {
     if (!opts) { opts = {}; }
 
+    var addon = this;
+
     return new TranslationReducer(this.trees.translationTree, _.assign({}, this._intlConfig, opts, {
-      log: this.log
+      log: function() {
+        return addon.log.apply(addon, arguments);
+      }
     }));
   },
 
