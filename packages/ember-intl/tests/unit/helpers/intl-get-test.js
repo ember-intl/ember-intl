@@ -19,13 +19,16 @@ moduleFor('helper:intl-get', {
   beforeEach() {
     let registry = this.registry || this.container;
 
-    registry.register('ember-intl@translation:en-us', Translation.extend({
-      greeting: 'Hello'
-    }));
+    registry.register('ember-intl@translation:en-us', Translation.extend());
+    registry.register('ember-intl@translation:fr-fr', Translation.extend());
 
-    registry.register('ember-intl@translation:fr-fr', Translation.extend({
+    this.container.lookup('ember-intl@translation:en-us').addTranslations({
+      greeting: 'Hello'
+    });
+
+    this.container.lookup('ember-intl@translation:fr-fr').addTranslations({
       greeting: 'Bonjour'
-    }));
+    });
 
     this.render = createRenderer.call(this, undefined);
   },

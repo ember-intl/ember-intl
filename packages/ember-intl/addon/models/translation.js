@@ -5,25 +5,31 @@
 
 import Ember from 'ember';
 
-const { get, set } = Ember;
+const { get, set, computed } = Ember;
 
 const TranslationModel = Ember.Object.extend({
+  init() {
+    this._super(...arguments);
+
+    if (!this.translations) {
+      this.translations = {};
+    }
+  },
+
   /**
    * Add a single translation
    */
   addTranslation(key, value) {
-    if (typeof this[key] !== 'function') {
-      set(this, key, value);
-    }
+    set(this.translations, key, value);
   },
 
   /**
    * Adds a translation hash
    */
-  addTranslations(messageObject) {
-    for (let key in messageObject) {
-      if (messageObject.hasOwnProperty(key)) {
-        this.addTranslation(key, messageObject[key]);
+  addTranslations(translationsObject) {
+    for (let key in translationsObject) {
+      if (translationsObject.hasOwnProperty(key)) {
+        this.addTranslation(key, translationsObject[key]);
       }
     }
   },
@@ -34,7 +40,18 @@ const TranslationModel = Ember.Object.extend({
    * to implement this function as `return this[key];`
    */
   getValue(key) {
-    return get(this, key);
+    let translation = get(this.translations, key);
+
+    if (typeof translation === 'string') {
+      return translation;
+    }
+
+    translation = get(this, key);
+
+    if (typeof translation === 'string') {
+      logger.warn('DEPRECATION: [ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.');
+      return translation;
+    }
   },
 
   /**

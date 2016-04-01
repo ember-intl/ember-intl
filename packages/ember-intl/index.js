@@ -27,7 +27,7 @@ var TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
   name: 'ember-intl',
-  _intlConfig: null,
+  opts: null,
 
   isDevelopingAddon: function() {
     return true;
@@ -42,10 +42,10 @@ module.exports = {
     }
 
     this.app = app;
-    this._intlConfig = this.intlConfig(this.app.env);
+    this.opts = this.intlConfig(this.app.env);
 
-    var translationFolder = this._intlConfig.inputPath;
-    this.hasTranslationDir = existsSync(path.join(this.project.root, translationFolder));
+    var translationFolder = this.opts.inputPath;
+    this.hasTranslationDir = existsSync(path.join(app.project.root, translationFolder));
     this.projectLocales = this.findLocales();
 
     this.trees = this.trees || {};
@@ -62,6 +62,85 @@ module.exports = {
     this.trees.translationTree = this.createTranslationTree();
 
     return this.app;
+  },
+
+  treeForApp: function(tree) {
+    var trees = [tree];
+
+    if (this.hasTranslationDir && !this.opts.publicOnly) {
+      trees.push(this.reduceTranslations({
+        filename: function filename(key) {
+          return key + '.js';
+        },
+        wrapEntry: function wrapEntry(obj) {
+          return 'export default ' + stringify(obj) + ';';
+        }
+      }));
+    }
+
+    if (tree && this.projectLocales.length) {
+      trees.push(new CldrWriter([tree], {
+        path: './cldrs',
+        locales: this.projectLocales,
+        pluralRules: true,
+        relativeFields: true,
+        prelude: '/*jslint eqeq: true*/\n',
+        wrapEntry: function wrapEntry(result) {
+          return 'export default ' + serialize(result) + ';';
+        }
+      }));
+    }
+
+    return mergeTrees(trees, { overwrite: true });
+  },
+
+  treeForPublic: function() {
+    var publicTree = this._super.treeForPublic.apply(this, arguments);
+    var trees = [];
+
+    if (publicTree) {
+      trees.push(publicTree);
+    }
+
+    if (!this.opts.disablePolyfill) {
+      var assetPath = 'assets/intl';
+      var appOptions = this.app.options || {};
+
+      if (_.get(appOptions, 'app.intl')) {
+        assetPath = appOptions.app.intl;
+      }
+
+      trees.push(new Funnel(this.trees.intl, {
+        srcDir: 'dist',
+        files: ['Intl.js.map'],
+        destDir: assetPath
+      }));
+
+      trees.push(lowercaseTree(new Funnel(this.trees.intl, {
+        srcDir: 'dist',
+        files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
+        destDir: assetPath
+      })));
+
+      var localeFunnel = {
+        srcDir: 'locale-data/jsonp',
+        destDir: assetPath + '/locales'
+      };
+
+      if (this.projectLocales.length) {
+        localeFunnel.include = this.projectLocales.map(function(locale) {
+          return new RegExp(locale, 'i');
+        });
+      }
+
+      trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
+    }
+
+    if (this.hasTranslationDir && this.opts.publicOnly) {
+      trees.push(this.reduceTranslations());
+    }
+
+    return mergeTrees(trees, { overwrite: true });
   },
 
   log: function(msg) {
@@ -120,13 +199,13 @@ module.exports = {
     var locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.project.root, this._intlConfig.inputPath)).map(function(filename) {
+      locales = locales.concat(walkSync(path.join(this.app.project.root, this.opts.inputPath)).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }));
     }
 
-    if (this._intlConfig.locales) {
-      locales = locales.concat(this._intlConfig.locales);
+    if (this.opts.locales) {
+      locales = locales.concat(this.opts.locales);
     }
 
     locales = locales.concat(locales.filter(function(locale) {
@@ -143,7 +222,7 @@ module.exports = {
   },
 
   findIntlAddons: function(tree) {
-    var addons = this.project.addonPackages;
+    var addons = this.app.project.addonPackages;
 
     return Object.keys(addons).map(function(key) {
       var addon = addons[key];
@@ -156,7 +235,7 @@ module.exports = {
       };
     }).filter(function(addon) {
       return fs.existsSync(path.join(addon.path, addon.translationPath));
-    })
+    });
   },
 
   createTranslationTree: function() {
@@ -176,89 +255,10 @@ module.exports = {
 
     var addon = this;
 
-    return new TranslationReducer(this.trees.translationTree, _.assign({}, this._intlConfig, opts, {
+    return new TranslationReducer(this.trees.translationTree, _.assign({}, this.opts, opts, {
       log: function() {
         return addon.log.apply(addon, arguments);
       }
     }));
-  },
-
-  treeForApp: function(tree) {
-    var trees = [tree];
-
-    if (this.hasTranslationDir && !this._intlConfig.publicOnly) {
-      trees.push(this.reduceTranslations({
-        filename: function filename(key) {
-          return key + '.js';
-        },
-        wrapEntry: function wrapEntry(obj) {
-          return 'export default ' + stringify(obj) + ';';
-        }
-      }));
-    }
-
-    if (tree && this.projectLocales.length) {
-      trees.push(new CldrWriter([tree], {
-        path: './cldrs',
-        locales: this.projectLocales,
-        pluralRules: true,
-        relativeFields: true,
-        prelude: '/*jslint eqeq: true*/\n',
-        wrapEntry: function wrapEntry(result) {
-          return 'export default ' + serialize(result) + ';';
-        }
-      }));
-    }
-
-    return mergeTrees(trees, { overwrite: true });
-  },
-
-  treeForPublic: function() {
-    var publicTree = this._super.treeForPublic.apply(this, arguments);
-    var trees = [];
-
-    if (publicTree) {
-      trees.push(publicTree);
-    }
-
-    if (!this._intlConfig.disablePolyfill) {
-      var assetPath = 'assets/intl';
-      var appOptions = this.app.options || {};
-
-      if (_.get(appOptions, 'app.intl')) {
-        assetPath = appOptions.app.intl;
-      }
-
-      trees.push(new Funnel(this.trees.intl, {
-        srcDir: 'dist',
-        files: ['Intl.js.map'],
-        destDir: assetPath
-      }));
-
-      trees.push(lowercaseTree(new Funnel(this.trees.intl, {
-        srcDir: 'dist',
-        files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-        destDir: assetPath
-      })));
-
-      var localeFunnel = {
-        srcDir: 'locale-data/jsonp',
-        destDir: assetPath + '/locales'
-      };
-
-      if (this.projectLocales.length) {
-        localeFunnel.include = this.projectLocales.map(function(locale) {
-          return new RegExp(locale, 'i');
-        });
-      }
-
-      trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
-    }
-
-    if (this.hasTranslationDir && this._intlConfig.publicOnly) {
-      trees.push(this.reduceTranslations());
-    }
-
-    return mergeTrees(trees, { overwrite: true });
   }
 };

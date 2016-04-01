@@ -26,13 +26,14 @@ moduleFor('ember-intl@formatter:format-message', {
   ],
   beforeEach() {
     registry = this.registry || this.container;
+    registry.register('ember-intl@translation:en-us', Translation.extend());
 
-    registry.register('ember-intl@translation:en-us', Translation.extend({
+    this.container.lookup('ember-intl@translation:en-us').addTranslations({
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
       }
-    }));
+    });
 
     registry.register('formats:main', {
       date: {
