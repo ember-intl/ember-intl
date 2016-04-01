@@ -129,7 +129,7 @@ module.exports = {
 
       if (this.projectLocales.length) {
         localeFunnel.include = this.projectLocales.map(function(locale) {
-          return new RegExp(locale, 'i');
+          return new RegExp('^' + locale + '.js$', 'i');
         });
       }
 
