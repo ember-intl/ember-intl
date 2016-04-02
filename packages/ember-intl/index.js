@@ -9,7 +9,6 @@
 
 var serialize = require('serialize-javascript');
 var stringify = require('json-stable-stringify');
-var UnwatchedDir = require('broccoli-source').UnwatchedDir;
 var WatchedDir = require('broccoli-source').WatchedDir;
 var Funnel = require('broccoli-funnel');
 var existsSync = require('exists-sync');
@@ -22,7 +21,6 @@ var fs = require('fs');
 var utils = require('./lib/utils');
 var mergeTrees = require('broccoli-merge-trees');
 var CldrWriter = require('./lib/broccoli/cldr-writer');
-var lowercaseTree = require('./lib/broccoli/lowercase-tree');
 var TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
@@ -49,7 +47,6 @@ module.exports = {
     this.projectLocales = this.findLocales();
 
     this.trees = this.trees || {};
-    this.trees.intl = new UnwatchedDir(path.dirname(require.resolve('intl')));
     this.trees.projectTranslations = new WatchedDir(translationFolder);
 
     this.trees.addonTranslations = this.findIntlAddons().map(function(addon) {
@@ -80,7 +77,7 @@ module.exports = {
 
     if (tree && this.projectLocales.length) {
       var cldrTree = new CldrWriter([tree], {
-        path: './cldrs',
+        destDir: 'cldrs',
         locales: this.projectLocales,
         prelude: '/*jslint eqeq: true*/\n',
         wrapEntry: function wrapEntry(result) {
@@ -103,37 +100,12 @@ module.exports = {
     }
 
     if (!this.opts.disablePolyfill) {
-      var assetPath = 'assets/intl';
       var appOptions = this.app.options || {};
 
-      if (_.get(appOptions, 'app.intl')) {
-        assetPath = appOptions.app.intl;
-      }
-
-      trees.push(new Funnel(this.trees.intl, {
-        srcDir: 'dist',
-        files: ['Intl.js.map'],
-        destDir: assetPath
+      trees.push(require('./lib/broccoli/intl-polyfill')({
+        locales: this.projectLocales,
+        destDir: _.get(appOptions, 'app.intl') || 'assets/intl'
       }));
-
-      trees.push(lowercaseTree(new Funnel(this.trees.intl, {
-        srcDir: 'dist',
-        files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
-        destDir: assetPath
-      })));
-
-      var localeFunnel = {
-        srcDir: 'locale-data/jsonp',
-        destDir: assetPath + '/locales'
-      };
-
-      if (this.projectLocales.length) {
-        localeFunnel.include = this.projectLocales.map(function(locale) {
-          return new RegExp('^' + locale + '.js$', 'i');
-        });
-      }
-
-      trees.push(lowercaseTree(new Funnel(this.trees.intl, localeFunnel)));
     }
 
     if (this.hasTranslationDir && this.opts.publicOnly) {

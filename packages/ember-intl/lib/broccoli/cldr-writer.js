@@ -149,6 +149,9 @@ function Plugin(inputNodes, options) {
     annotation: options.annotation
   });
 
+  this.destDir = options.destDir;
+  delete options.destDir;
+
   this.options = assign({
     locales: null,
     pluralRules: true,
@@ -156,15 +159,11 @@ function Plugin(inputNodes, options) {
     prelude: '',
     wrapEntry: undefined
   }, options);
-
-  this.path = this.options.path;
-  delete this.options.path;
 }
 
 Plugin.prototype.build = function() {
   var options = this.options;
-  var destPath = this.outputPath + '/' + this.path;
-  var wrapEntry = options.wrapEntry;
+  var destPath = this.outputPath + '/' + this.destDir;
   var cldrData = extractCLDRData(options);
 
   var cldrDataByLocale = new Map(Object.keys(cldrData).map(function (locale) {
@@ -186,14 +185,13 @@ Plugin.prototype.build = function() {
   mkdirp.sync(destPath);
 
   cldrDataByLang.forEach(function(cldrData, lang) {
-    if (typeof wrapEntry === 'function') {
-      cldrData = wrapEntry(cldrData);
+    if (typeof options.wrapEntry === 'function') {
+      cldrData = options.wrapEntry(cldrData);
     }
 
     var outFile = destPath + '/' + lang.toLocaleLowerCase() + '.js';
-    var data = options.prelude + cldrData;
 
-    fs.writeFileSync(outFile, data, { encoding: 'utf8' });
+    fs.writeFileSync(outFile, options.prelude.concat(cldrData), { encoding: 'utf8' });
   });
 }
 
