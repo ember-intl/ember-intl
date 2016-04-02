@@ -3,7 +3,7 @@
 /dist
 /bin
 /tests
-/node-tests
+/tests-node
 /tmp
 **/.gitkeep
 .bowerrc

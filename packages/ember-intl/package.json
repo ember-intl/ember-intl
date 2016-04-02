@@ -9,9 +9,9 @@
   "scripts": {
     "start": "ember server",
     "build": "ember build",
-    "node-tests": "./node_modules/mocha/bin/mocha node-tests/**/*.*",
-    "test": "npm run node-tests && ember test",
-    "testall": "npm run node-tests && ember try:testall",
+    "tests-node": "./node_modules/mocha/bin/mocha tests-node/**/*.*",
+    "test": "npm run tests-node && ember test",
+    "testall": "npm run tests-node && ember try:testall",
     "prepublish": "node ./bin/prepublish"
   },
   "repository": "https://github.com/yahoo/ember-intl/tree/master/packages/ember-intl",

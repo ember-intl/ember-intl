@@ -41,6 +41,7 @@ install:
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-relativeformat && npm install && bower install
 
 script:
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl && npm run tests-node
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl && ember try $EMBER_TRY_SCENARIO test
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-format-cache && ember try $EMBER_TRY_SCENARIO test
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat && ember try $EMBER_TRY_SCENARIO test

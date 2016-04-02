@@ -22,9 +22,9 @@ export function instanceInitializer(instance) {
     service = instance.container.lookup('service:intl');
   }
 
-  filterBy('cldrs').forEach((key) => {
-    service.addLocaleData(require(key, null, null, true)['default']);
-  });
+  filterBy('cldrs')
+    .map((cldr) => require(cldr, null, null, true)['default'])
+    .forEach((lang) => lang.forEach(service.addLocaleData));
 
   filterBy('translations').forEach((key) => {
     const localeSplit = key.split('\/');

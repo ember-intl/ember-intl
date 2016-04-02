@@ -79,16 +79,16 @@ module.exports = {
     }
 
     if (tree && this.projectLocales.length) {
-      trees.push(new CldrWriter([tree], {
+      var cldrTree = new CldrWriter([tree], {
         path: './cldrs',
         locales: this.projectLocales,
-        pluralRules: true,
-        relativeFields: true,
         prelude: '/*jslint eqeq: true*/\n',
         wrapEntry: function wrapEntry(result) {
           return 'export default ' + serialize(result) + ';';
         }
-      }));
+      });
+
+      trees.push(cldrTree);
     }
 
     return mergeTrees(trees, { overwrite: true });
@@ -218,7 +218,9 @@ module.exports = {
       return false;
     }, this));
 
-    return utils.unique(locales);
+    return utils.unique(locales).filter(function(locale) {
+      return locale !== 'subdirectory'
+    });
   },
 
   findIntlAddons: function(tree) {
