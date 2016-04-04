@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const { get, set, computed } = Ember;
+const { get, set, Logger:logger } = Ember;
 
 const TranslationModel = Ember.Object.extend({
   init() {
