@@ -96,7 +96,6 @@ Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted 
 Or programmatically convert a number within any Ember Object.
 
 ```js
-// example
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   computedNumber: Ember.computed('cost', function() {
@@ -120,7 +119,6 @@ Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted
 Or programmatically convert a date within any Ember Object.
 
 ```js
-// example
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   computedNow: Ember.computed(function() {
@@ -177,7 +175,6 @@ export default Ember.Component.extend({
 Or programmatically convert a relative time within any Ember Object.
 
 ```js
-// example
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   yesterday: Ember.computed(function() {
