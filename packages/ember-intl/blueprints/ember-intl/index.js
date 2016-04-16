@@ -13,7 +13,7 @@ module.exports = {
   afterInstall: function() {
     this.ui.writeLine(
       'ember-intl: Don\'t forget to setup your application-wide locale.  ' +
-      'Documentation: https://github.com/yahoo/ember-intl#setting-runtime-locale'
+      'Documentation: https://github.com/jasonmit/ember-intl#setting-runtime-locale'
     );
   }
 };

@@ -1,3 +1,3 @@
 export default {
-	unsetLocale: 'https://github.com/yahoo/ember-intl#setting-runtime-locale'
+	unsetLocale: 'https://github.com/jasonmit/ember-intl#setting-runtime-locale'
 };

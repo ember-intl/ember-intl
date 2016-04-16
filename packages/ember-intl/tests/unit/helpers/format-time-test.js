@@ -59,7 +59,7 @@ test('invoke formatTime directly', function(assert) {
 
 test('it should return a formatted string from a date string', function(assert) {
   assert.expect(1);
-  // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+  // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
   view = this.render(hbs`{{format-time dateString timeZone='UTC'}}`, 'en-us');
   view.set('context', { dateString: 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)' });
   runAppend(view);
@@ -68,7 +68,7 @@ test('it should return a formatted string from a date string', function(assert) 
 
 test('it should return a formatted string from a timestamp', function(assert) {
   assert.expect(1);
-  // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+  // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
   view = this.render(hbs`{{format-time date timeZone='UTC'}}`, 'en-us');
   view.set('context', { date: date });
   runAppend(view);

@@ -83,7 +83,7 @@ test('should render epoch date for a null value when allow empty is false', func
 
 test('it should return a formatted string from a date string', function(assert) {
   assert.expect(1);
-  // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+  // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
   view = this.render(hbs`{{format-date date timeZone='UTC'}}`, locale);
   view.set('context', { date: date });
   runAppend(view);
@@ -92,7 +92,7 @@ test('it should return a formatted string from a date string', function(assert) 
 
 test('it should return a formatted string from a timestamp', function(assert) {
   assert.expect(1);
-  // Must provide `timeZone` because: https://github.com/yahoo/ember-intl/issues/21
+  // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
   view = this.render(hbs`{{format-date date timeZone='UTC'}}`, locale);
   view.set('context', { date: date });
   runAppend(view);

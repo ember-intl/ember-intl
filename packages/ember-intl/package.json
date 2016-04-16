@@ -14,8 +14,8 @@
     "testall": "npm run tests-node && ember try:testall",
     "prepublish": "node ./bin/prepublish"
   },
-  "repository": "https://github.com/yahoo/ember-intl/tree/master/packages/ember-intl",
-  "homepage": "https://github.com/yahoo/ember-intl",
+  "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl",
+  "homepage": "https://github.com/jasonmit/ember-intl",
   "engines": {
     "node": ">= 0.10.0"
   },
