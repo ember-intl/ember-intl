@@ -1,25 +1,17 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
 import hbs from 'htmlbars-inline-precompile';
-import { moduleFor, test } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import formatTimeHelper from 'ember-intl/helpers/format-time';
-import { runAppend, runDestroy } from '../../helpers/run-append';
-import createRenderer from '../../helpers/create-intl-block';
 
 const date = 1390518044403;
-let view, registry;
+const locale = 'en-us';
+let service, registry;
 
-moduleFor('ember-intl@formatter:format-time', {
-  needs: ['service:intl', 'helper:format-time'],
+moduleForComponent('format-time', {
+  integration: true,
   beforeEach() {
     registry = this.registry || this.container;
-    this.render = createRenderer.call(this, undefined);
-  },
-  afterEach() {
-    runDestroy(view);
+    service = this.container.lookup('service:intl');
+    service.setLocale(locale);
   }
 });
 
@@ -28,10 +20,17 @@ test('exists', function(assert) {
   assert.ok(formatTimeHelper);
 });
 
+test('invoke formatTime directly', function(assert) {
+  assert.expect(1);
+  assert.equal(service.formatTime(date, {
+    timeZone: 'UTC',
+    locale: 'fr-fr'
+  }), '23/1/2014');
+});
+
 test('invoke formatTime directly with format', function(assert) {
   assert.expect(1);
-  const service = this.container.lookup('service:intl');
-  registry.unregister('formats:main');
+
   registry.register('formats:main', {
     time: {
       test: {
@@ -44,63 +43,47 @@ test('invoke formatTime directly with format', function(assert) {
   assert.equal(service.formatTime(date, {
     format: 'test'
   }), '23/1/2014');
-
-  registry.unregister('formats:main');
-});
-
-test('invoke formatTime directly', function(assert) {
-  assert.expect(1);
-  const service = this.container.lookup('service:intl');
-  assert.equal(service.formatTime(date, {
-    timeZone: 'UTC',
-    locale: 'fr-fr'
-  }), '23/1/2014');
 });
 
 test('it should return a formatted string from a date string', function(assert) {
   assert.expect(1);
+  this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
+
   // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
-  view = this.render(hbs`{{format-time dateString timeZone='UTC'}}`, 'en-us');
-  view.set('context', { dateString: 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)' });
-  runAppend(view);
-  assert.equal(view.$().text(), '1/23/2014');
+  this.render(hbs`{{format-time dateString timeZone='UTC'}}`);
+  assert.equal(this.$().text(), '1/23/2014');
 });
 
 test('it should return a formatted string from a timestamp', function(assert) {
   assert.expect(1);
+  this.set('date', date);
+
   // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
-  view = this.render(hbs`{{format-time date timeZone='UTC'}}`, 'en-us');
-  view.set('context', { date: date });
-  runAppend(view);
-  assert.equal(view.$().text(), '1/23/2014');
+  this.render(hbs`{{format-time date timeZone='UTC'}}`);
+  assert.equal(this.$().text(), '1/23/2014');
 });
 
 test('it should return a formatted string of just the time', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-time date hour='numeric' minute='numeric' timeZone='UTC'}}`, 'en-us');
-  view.set('context', { date: date });
-  runAppend(view);
-  assert.equal(view.$().text(), '11:00 PM');
+  this.set('date', date);
+  this.render(hbs`{{format-time date hour='numeric' minute='numeric' timeZone='UTC'}}`);
+  assert.equal(this.$().text(), '11:00 PM');
 });
 
 test('it should format the epoch timestamp', function(assert) {
   assert.expect(1);
-  const locale = 'en-us';
-  view = this.render(hbs`{{format-time 0}}`, locale);
-  runAppend(view);
-  assert.equal(view.$().text(), new Intl.DateTimeFormat(locale).format(0));
+  this.render(hbs`{{format-time 0}}`);
+  assert.equal(this.$().text(), new Intl.DateTimeFormat(locale).format(0));
 });
 
 test('it should display the fallback if called with no value', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-time fallback="fallback value"}}`, 'en-us');
-  runAppend(view);
-  assert.equal(view.$().text(), 'fallback value');
+  this.render(hbs`{{format-time fallback="fallback value"}}`);
+  assert.equal(this.$().text(), 'fallback value');
 });
 
 test('it should display the fallback if called with an undefined value', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-time undefined fallback="fallback value"}}`, 'en-us');
-  runAppend(view);
-  assert.equal(view.$().text(), 'fallback value');
+  this.render(hbs`{{format-time undefined fallback="fallback value"}}`);
+  assert.equal(this.$().text(), 'fallback value');
 });

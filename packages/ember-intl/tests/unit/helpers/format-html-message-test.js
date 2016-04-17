@@ -1,28 +1,19 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
 import hbs from 'htmlbars-inline-precompile';
-import { moduleFor, test } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 import Translation from 'ember-intl/models/translation';
 
-import { runAppend, runDestroy } from '../../helpers/run-append';
-import createRenderer from '../../helpers/create-intl-block';
+const locale = 'en-us';
+let service, registry;
 
-let view, registry;
-
-moduleFor('ember-intl@formatter:format-html-message', {
-  needs: [
-    'service:intl',
-    'helper:format-html-message',
-    'helper:l',
-    'ember-intl@adapter:default'
-  ],
+moduleForComponent('format-html-message', {
+  integration: true,
   beforeEach() {
     registry = this.registry || this.container;
+    service = this.container.lookup('service:intl');
+
     registry.injection('formatter', 'intl', 'service:intl');
+
     registry.register('ember-intl@translation:en-us', Translation.extend({
       foo: {
         bar: 'foo bar baz',
@@ -30,10 +21,7 @@ moduleFor('ember-intl@formatter:format-html-message', {
       }
     }));
 
-    this.render = createRenderer.call(this, undefined);
-  },
-  afterEach() {
-    runDestroy(view);
+    service.setLocale(locale);
   }
 });
 
@@ -44,7 +32,6 @@ test('exists', function(assert) {
 
 test('invoke the formatHTMLMessage directly', function(assert) {
   assert.expect(1);
-  const service = this.container.lookup('service:intl');
   assert.equal(
     service.formatHtmlMessage("<strong>Hello {name}</strong>", { name: "<em>Jason</em>" }),
     "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>"
@@ -53,16 +40,15 @@ test('invoke the formatHTMLMessage directly', function(assert) {
 
 test('message is formatted correctly with argument', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-html-message (l "Hello {name}") name="Jason"}}`, 'en-us');
-  runAppend(view);
-  assert.equal(view.$().text(), "Hello Jason");
+  this.render(hbs`{{format-html-message (l "Hello {name}") name="Jason"}}`);
+  assert.equal(this.$().text(), "Hello Jason");
 });
 
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-html-message}}`);
+
   try {
-    runAppend(view);
+    this.render(hbs`{{format-html-message}}`);
   } catch(ex) {
     assert.ok(ex, 'raised error when not value is passed to format-html-message');
   }
@@ -70,21 +56,18 @@ test('should throw if called with out a value', function(assert) {
 
 test('should allow for inlined html in the value', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="Jason"}}`, 'en-us');
-  runAppend(view);
-  assert.equal(view.$().html(), "<strong>Hello Jason</strong>");
+  this.render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="Jason"}}`);
+  assert.equal(this.$().html(), "<strong>Hello Jason</strong>");
 });
 
 test('should escape arguments', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-html-message (l "{foo}") foo="<em>BAR</em>"}}`, 'en-us');
-  runAppend(view);
-  assert.equal(view.$().html(), "&lt;em&gt;BAR&lt;/em&gt;");
+  this.render(hbs`{{format-html-message (l "{foo}") foo="<em>BAR</em>"}}`);
+  assert.equal(this.$().html(), "&lt;em&gt;BAR&lt;/em&gt;");
 });
 
 test('should allow for inlined html in the value but escape arguments', function(assert) {
   assert.expect(1);
-  view = this.render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="<em>Jason</em>"}}`, 'en-us');
-  runAppend(view);
-  assert.equal(view.$().html(), "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>");
+  this.render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="<em>Jason</em>"}}`);
+  assert.equal(this.$().html(), "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>");
 });
