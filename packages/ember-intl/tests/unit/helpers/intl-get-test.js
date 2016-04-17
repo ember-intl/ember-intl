@@ -1,23 +1,17 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
 import Ember from 'ember';
-import { moduleFor, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Translation from 'ember-intl/models/translation';
+import { moduleForComponent, test } from 'ember-qunit';
 import intlGetHelper from 'ember-intl/helpers/intl-get';
-import { runAppend, runDestroy } from '../../helpers/run-append';
-import createRenderer from '../../helpers/create-intl-block';
+import Translation from 'ember-intl/models/translation';
 
-const { run:emberRun } = Ember;
-let view;
+const locale = 'en-us';
+let service, registry;
 
-moduleFor('helper:intl-get', {
-  needs: ['service:intl', 'ember-intl@adapter:default'],
+moduleForComponent('intl-get', {
+  integration: true,
   beforeEach() {
-    let registry = this.registry || this.container;
+    registry = this.registry || this.container;
+    service = this.container.lookup('service:intl');
 
     registry.register('ember-intl@translation:en-us', Translation.extend());
     registry.register('ember-intl@translation:fr-fr', Translation.extend());
@@ -30,10 +24,7 @@ moduleFor('helper:intl-get', {
       greeting: 'Bonjour'
     });
 
-    this.render = createRenderer.call(this, undefined);
-  },
-  afterEach() {
-    runDestroy(view);
+    service.setLocale(locale);
   }
 });
 
@@ -46,7 +37,6 @@ test('should recompute on intl locale change in', function(assert) {
   assert.expect(1);
 
   const recomputeFn = intlGetHelper.proto().recompute;
-  const service = this.container.lookup('service:intl');
   let triggered = 0;
 
   intlGetHelper.reopen({
@@ -55,10 +45,9 @@ test('should recompute on intl locale change in', function(assert) {
     }
   });
 
-  view = this.render(hbs`{{intl-get "greeting"}}`, 'en-us');
-  runAppend(view);
+  this.render(hbs`{{intl-get "greeting"}}`);
 
-  emberRun(() => {
+  Ember.run(() => {
     service.setLocale('fr-fr');
     service.setLocale('en-us');
     assert.equal(triggered, 2);
