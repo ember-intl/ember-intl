@@ -11,6 +11,7 @@ import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
 import extend from '../utils/extend';
+import isArrayEqual from '../utils/is-equal';
 
 const { assert, computed, makeArray, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
@@ -139,8 +140,17 @@ const IntlService = Service.extend(Evented, {
   },
 
   setLocale(locales) {
-    set(this, '_locale', makeArray(locales));
-    this.trigger('localeChanged');
+    if (!locales) { return; }
+
+    const proposed = makeArray(locales);
+    const current = get(this, '_locale');
+
+    if (!isArrayEqual(proposed, current)) {
+      this.propertyWillChange('locale');
+      set(this, '_locale', proposed);
+      this.propertyDidChange('locale');
+      this.trigger('localeChanged');
+    }
   },
 
   getFormat(formatType, format) {
