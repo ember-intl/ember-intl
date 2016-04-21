@@ -25,15 +25,15 @@ function formatterProxy(formatType) {
       options = assign(this.getFormat(formatType, options.format), options);
     }
 
-    if (!options.locale) {
-      options.locale = get(this, '_locale');
-    }
 
     if (!formats) {
       formats = get(this, 'formats');
     }
 
-    return formatter.format(value, options, { formats });
+    return formatter.format(value, options, {
+      formats: formats,
+      locale: options.locale || get(this, '_locale')
+    });
   };
 }
 

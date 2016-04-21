@@ -24,14 +24,14 @@ const FormatRelative = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options = {}) {
+  format(value, options = {}, ctx = {}) {
     const dateValue = new Date(value);
 
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
 
     return this._format(dateValue, this.filterSupporedOptions(options), {
       now: options.now
-    });
+    }, ctx);
   }
 });
 
