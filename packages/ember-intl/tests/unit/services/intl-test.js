@@ -3,6 +3,7 @@ import { moduleFor, test } from 'ember-qunit';
 let service;
 
 moduleFor('service:intl', 'Unit | Service | intl', {
+  integration: true,
   setup() {
     service = this.subject();
   }
@@ -21,4 +22,11 @@ test('triggers notifyPropertyChange only when locale changes', function(assert) 
   assert.equal(count, 2);
   assert.equal(service.get('locale'), 'fr');
   service.removeObserver('locale', service, handler);
+});
+
+test('it does not mutate t options hash', function(assert) {
+  service.setLocale('en');
+  let obj = { bar: 'bar' };
+  service.t('foo', obj);
+  assert.ok(typeof obj.locale === 'undefined');
 });
