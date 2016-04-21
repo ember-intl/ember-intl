@@ -6,9 +6,8 @@
 import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
 
-import extend from '../utils/extend';
-
 const { Helper, inject, get, computed, isEmpty, getWithDefault } = Ember;
+const assign = Ember.assign || Ember.merge;
 
 function helperFactory(formatType, helperOptions = {}) {
   return Helper.extend({
@@ -60,7 +59,7 @@ function helperFactory(formatType, helperOptions = {}) {
 
       return get(this, 'formatter').format(
         value,
-        extend({ locale }, format, hash),
+        assign({ locale }, format, hash),
         {
           formats: get(intl, 'formats')
         }
