@@ -10,11 +10,11 @@ import getOwner from 'ember-getowner-polyfill';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
-import extend from '../utils/extend';
 import isArrayEqual from '../utils/is-equal';
 
 const { assert, computed, makeArray, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
+const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(formatType) {
   return function (value, options = {}, formats = null) {
@@ -22,18 +22,18 @@ function formatterProxy(formatType) {
     const formatter = owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
     if (typeof options.format === 'string') {
-      options = extend(this.getFormat(formatType, options.format), options);
+      options = assign(this.getFormat(formatType, options.format), options);
     }
 
-    if (!options.locale) {
-      options.locale = get(this, '_locale');
-    }
 
     if (!formats) {
       formats = get(this, 'formats');
     }
 
-    return formatter.format(value, options, formats);
+    return formatter.format(value, options, {
+      formats: formats,
+      locale: options.locale || get(this, '_locale')
+    });
   };
 }
 
