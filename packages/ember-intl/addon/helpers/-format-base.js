@@ -61,7 +61,9 @@ function helperFactory(formatType, helperOptions = {}) {
       return get(this, 'formatter').format(
         value,
         extend({ locale }, format, hash),
-        get(intl, 'formats')
+        {
+          formats: get(intl, 'formats')
+        }
       );
     },
 

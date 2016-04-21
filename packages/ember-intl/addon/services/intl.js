@@ -33,7 +33,7 @@ function formatterProxy(formatType) {
       formats = get(this, 'formats');
     }
 
-    return formatter.format(value, options, formats);
+    return formatter.format(value, options, { formats });
   };
 }
 
