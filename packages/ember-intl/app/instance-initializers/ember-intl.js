@@ -1,11 +1,15 @@
-/* globals requirejs */
+/* globals requirejs, Intl */
 
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import Ember from 'ember';
 import ENV from '../config/environment';
+import links from 'ember-intl/utils/links';
+
+const { warn } = Ember;
 
 function filterBy(type) {
   return Object.keys(requirejs._eak_seen).filter((key) => {
@@ -22,14 +26,25 @@ export function instanceInitializer(instance) {
     service = instance.container.lookup('service:intl');
   }
 
-  filterBy('cldrs')
-    .map((cldr) => require(cldr, null, null, true)['default'])
-    .forEach((lang) => lang.forEach(service.addLocaleData));
+  if (!Intl) {
+    warn('[ember-intl] Intl API is unavailable in this environment.');
+    warn(`See: ${links.polyfill}`);
+  }
 
-  filterBy('translations').forEach((key) => {
-    const localeSplit = key.split('\/');
+  const cldrs = filterBy('cldrs');
+
+  if (!cldrs.length) {
+    warn('[ember-intl] project is missing CLDR data.');
+    warn(`If you are asynchronously loading translation, see: ${links.asyncTranslations}`);
+  } else {
+    cldrs.map((moduleName) => requirejs(moduleName, null, null, true)['default'])
+      .forEach((locale) => locale.forEach(service.addLocaleData));
+  }
+
+  filterBy('translations').forEach((moduleName) => {
+    const localeSplit = moduleName.split('\/');
     const localeName = localeSplit[localeSplit.length - 1];
-    service.addTranslations(localeName, require(key, null, null, true)['default']);
+    service.addTranslations(localeName, requirejs(moduleName, null, null, true)['default']);
   });
 }
 
