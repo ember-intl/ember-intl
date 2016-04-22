@@ -1,12 +1,15 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
+import { instanceInitializer } from '../../../instance-initializers/ember-intl';
 
 let service, registry;
 
 moduleForComponent('format-relative', {
   integration: true,
   beforeEach() {
+    instanceInitializer(this);
+
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
     service.setLocale('en-us');
@@ -21,7 +24,7 @@ moduleForComponent('format-relative', {
     });
 
     registry.optionsForType('formats', {
-      singleton:   true,
+      singleton: true,
       instantiate: false
     });
   }
@@ -34,7 +37,7 @@ test('exists', function(assert) {
 
 test('invoke the formatRelative directly', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatRelative(new Date()), 'now', {});
+  assert.equal(service.formatRelative(new Date()), 'now');
 });
 
 test('should throw if called with out a value', function(assert) {
@@ -90,4 +93,16 @@ test('should display the fallback if called with an undefined value', function(a
   assert.expect(1);
   this.render(hbs`{{format-relative undefined fallback="fallback value"}}`);
   assert.equal(this.$().text(), 'fallback value');
+});
+
+test('should return now when an array is supplied as the locale', function(assert) {
+  assert.expect(1);
+  this.set('date', new Date().getTime());
+
+  // This adds tests to validate locale resolution
+  // here we are providing the first two locales as invalid locales (unregistered)
+  // so it should resolve to the locale IntlRelativeFormat has data for, de-de
+  this.set('locale', ['foo', 'bar', 'de-de']);
+  this.render(hbs`{{format-relative date locale=locale}}`);
+  assert.equal(this.$().text(), 'jetzt');
 });
