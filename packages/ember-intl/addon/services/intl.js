@@ -12,12 +12,20 @@ import IntlRelativeFormat from 'intl-relativeformat';
 
 import isArrayEqual from '../utils/is-equal';
 
-const { assert, computed, makeArray, get, set, RSVP, Service, Evented, Logger:logger } = Ember;
+const { assert, computed, makeArray, get, set, RSVP, Service, Evented, warn } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(formatType) {
-  return function (value, options = {}, formats = null) {
+  return function (value, options, formats) {
+    if (!options) {
+      if (arguments.length > 1) {
+        warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`);
+      }
+
+      options = {};
+    }
+
     const owner = getOwner(this);
     const formatter = owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
@@ -88,7 +96,7 @@ const IntlService = Service.extend(Evented, {
       locales = get(this, '_locale');
     }
 
-    assert(`ember-intl: locale is unset, cannot lookup '${key}'`, locales);
+    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, locales);
 
     return makeArray(locales).some((locale) => {
       return adapter.has(locale, key);
@@ -134,8 +142,7 @@ const IntlService = Service.extend(Evented, {
   },
 
   createLocale(locale, payload) {
-    logger.warn('`createLocale` is deprecated, use `addTranslations`');
-
+    warn('[ember-intl] `createLocale` is deprecated, use `addTranslations`');
     return this.addTranslations(locale, payload);
   },
 
