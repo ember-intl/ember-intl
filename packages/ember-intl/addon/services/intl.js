@@ -19,8 +19,8 @@ const assign = Ember.assign || Ember.merge;
 function formatterProxy(formatType) {
   return function (value, options, formats) {
     if (!options) {
-      if (options === null) {
-        warn(`[ember-intl] option was passed to ember-intl ${formatType} but was null`);
+      if (arguments.length > 1) {
+        warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`);
       }
 
       options = {};
@@ -96,7 +96,7 @@ const IntlService = Service.extend(Evented, {
       locales = get(this, '_locale');
     }
 
-    assert(`ember-intl: locale is unset, cannot lookup '${key}'`, locales);
+    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, locales);
 
     return makeArray(locales).some((locale) => {
       return adapter.has(locale, key);

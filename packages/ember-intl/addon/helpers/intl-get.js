@@ -7,7 +7,7 @@ import Ember from 'ember';
 
 import { LiteralWrapper } from './l';
 
-const { Helper, inject, get, Logger:logger } = Ember;
+const { Helper, inject, get, deprecate } = Ember;
 
 const IntlGetHelper = Helper.extend({
   intl: inject.service(),
@@ -15,7 +15,7 @@ const IntlGetHelper = Helper.extend({
   init(...args) {
     this._super(...args);
 
-    logger.warn(`intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`);
+    deprecate(`[ember-int] intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`, false);
 
     get(this, 'intl').on('localeChanged', this, this.recompute);
   },

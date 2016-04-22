@@ -33,6 +33,6 @@ test('it does not mutate t options hash', function(assert) {
 
 test('`t` can be passed a null options hash', function(assert) {
   service.setLocale('en');
-  service.t('foo', null);
+  service.t('foo', undefined);
   assert.ok(true, 'Exception was not raised');
 });

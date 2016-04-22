@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const { get, set, Logger:logger } = Ember;
+const { get, set, deprecate } = Ember;
 
 const TranslationModel = Ember.Object.extend({
   init() {
@@ -49,7 +49,7 @@ const TranslationModel = Ember.Object.extend({
     translation = get(this, key);
 
     if (typeof translation === 'string') {
-      logger.warn('DEPRECATION: [ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.');
+      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', true);
       return translation;
     }
   },
