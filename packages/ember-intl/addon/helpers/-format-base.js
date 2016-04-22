@@ -45,16 +45,6 @@ function helperFactory(formatType, helperOptions = {}) {
       }
 
       const intl = get(this, 'intl');
-      let locale = hash.locale;
-
-      if (!locale) {
-        locale = get(intl, '_locale');
-
-        if (Array.isArray(locale)) {
-          locale = locale[0];
-        }
-      }
-
       let format = {};
 
       if (hash.format) {
@@ -66,7 +56,7 @@ function helperFactory(formatType, helperOptions = {}) {
         assign(assign({}, format), hash),
         {
           formats: get(intl, 'formats'),
-          locale: locale
+          locale: hash.locale || get(intl, '_locale')
         }
       );
     },
