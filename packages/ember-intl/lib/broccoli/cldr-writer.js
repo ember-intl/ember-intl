@@ -166,31 +166,25 @@ Plugin.prototype.build = function() {
   var destPath = this.outputPath + '/' + this.destDir;
   var cldrData = extractCLDRData(options);
 
-  var cldrDataByLocale = new Map(Object.keys(cldrData).map(function (locale) {
-    return [locale, cldrData[locale]];
-  }));
+  var cldrDataByLang = Object.keys(cldrData).reduce(function(map, locale) {
+    var data = cldrData[locale];
+    var lang = locale.split('-')[0];
+    var langData = map[lang] || [];
+    map[lang] = langData.concat(data);
 
-  var cldrDataByLang = [].concat(toConsumeableArray(cldrDataByLocale)).reduce(function (map, _ref) {
-    var _ref2 = sliceToArray(_ref, 2);
-    var locale = _ref2[0];
-    var data = _ref2[1];
-    var _locale$split = locale.split('-');
-    var _locale$split2 = sliceToArray(_locale$split, 1);
-    var lang = _locale$split2[0];
-    var langData = map.get(lang) || [];
-
-    return map.set(lang, langData.concat(data));
-  }, new Map());
+    return map;
+  }, {});
 
   mkdirp.sync(destPath);
 
-  cldrDataByLang.forEach(function(cldrData, lang) {
+  Object.keys(cldrDataByLang).forEach(function(lang) {
+    var cldrData = cldrDataByLang[lang];
+
     if (typeof options.wrapEntry === 'function') {
       cldrData = options.wrapEntry(cldrData);
     }
 
     var outFile = destPath + '/' + lang.toLocaleLowerCase() + '.js';
-
     fs.writeFileSync(outFile, options.prelude.concat(cldrData), { encoding: 'utf8' });
   });
 }
