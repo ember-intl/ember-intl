@@ -191,21 +191,31 @@ module.exports = {
     });
   },
 
-  findIntlAddons: function(tree) {
-    var addons = this.app.project.addonPackages;
+  findIntlAddons: function() {
+    var addons = this.app.project.addons;
+    var hash = {};
+    var find = function (list, addon) {
+      // Only handle each addon once
+      if (hash[addon.name]) {
+        return list;
+      }
 
-    return Object.keys(addons).map(function(key) {
-      var addon = addons[key];
-      var pkg = require(path.join(addon.path, 'package.json'));
+      var translationPath = addon.pkg['ember-addon'].translationPath || 'translations';
 
-      return {
-        name: key,
-        translationPath: pkg['ember-addon'].translationPath || 'translations',
-        path: addon.path
-      };
-    }).filter(function(addon) {
-      return fs.existsSync(path.join(addon.path, addon.translationPath));
-    });
+      if (fs.existsSync(path.join(addon.root, translationPath))) {
+        list.push({
+          name: addon.name,
+          translationPath: translationPath,
+          path: addon.root
+        });
+        hash[addon.name] = true;
+      }
+      
+      // Recursively load all child addons
+      return addon.addons.reduce(find, list);
+    };
+
+    return addons.reduce(find, []);
   },
 
   createTranslationTree: function() {
