@@ -57,6 +57,32 @@ module.exports = {
     return this.app;
   },
 
+  outputPaths: function() {
+    var assetPath = 'assets/intl';
+    var appOptions = this.app.options;
+
+    if (appOptions.app && appOptions.app.intl) {
+      assetPath = appOptions.app.intl;
+    }
+
+    return assetPath;
+  },
+
+  contentFor: function(name) {
+    if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
+      var assetPath = this.outputPaths();
+      var locales = this.findLocales();
+
+      var localeScripts = locales.map(function(locale) {
+        return '<script src=\"' + assetPath + '/locales/' + locale + '.js\"></script>';
+      });
+
+      return ['<script src=\"' + assetPath + '/intl.min.js\"></script>']
+        .concat(localeScripts)
+        .join('\n');
+    }
+  },
+
   treeForApp: function(tree) {
     var trees = [tree];
 
@@ -140,6 +166,7 @@ module.exports = {
       baseLocale: null,
       publicOnly: false,
       disablePolyfill: false,
+      autoPolyfill: false,
       inputPath: 'translations',
       outputPath: 'translations'
     };

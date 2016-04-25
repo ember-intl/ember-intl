@@ -29,6 +29,16 @@ module.exports = function(environment) {
     baseLocale: 'en-us',
 
     /**
+    * autoPolyfill, when true will automatically inject the IntlJS polyfill
+    * into index.html
+    *
+    * @property autoPolyfill
+    * @type {Boolean}
+    * @default "false"
+    */
+    autoPolyfill: true,
+
+    /**
     * disablePolyfill prevents the polyfill from being bundled in the asset folder of the build
     *
     * @property disablePolyfill
