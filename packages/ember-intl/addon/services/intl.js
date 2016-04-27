@@ -20,7 +20,7 @@ function formatterProxy(formatType) {
   return function (value, options, formats) {
     if (!options) {
       if (arguments.length > 1) {
-        warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`);
+        Ember.warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`);
       }
 
       options = {};
@@ -82,10 +82,11 @@ const IntlService = Service.extend(Evented, {
   formatTime: formatterProxy('time'),
   formatDate: formatterProxy('date'),
 
-  t(key, options, formats) {
+  t(key, ...args) {
+    const [ options ] = args;
     const translation = this.findTranslationByKey(key, options && options.locale);
 
-    return this.formatMessage(translation, options, formats);
+    return this.formatMessage(translation, ...args);
   },
 
   exists(key, optionalLocales) {
