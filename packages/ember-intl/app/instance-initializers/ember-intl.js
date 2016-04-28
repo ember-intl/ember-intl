@@ -27,15 +27,17 @@ export function instanceInitializer(instance) {
   }
 
   if (!Intl) {
-    warn('[ember-intl] Intl API is unavailable in this environment.');
-    warn(`See: ${links.polyfill}`);
+    warn('[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}', false, {
+      id: 'ember-intl-undefined-intljs'
+    });
   }
 
   const cldrs = filterBy('cldrs');
 
   if (!cldrs.length) {
-    warn('[ember-intl] project is missing CLDR data.');
-    warn(`If you are asynchronously loading translation, see: ${links.asyncTranslations}`);
+    warn('[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.', false, {
+      id: 'ember-intl-missing-cldr-data'
+    });
   } else {
     cldrs.map((moduleName) => requirejs(moduleName, null, null, true)['default'])
       .forEach((locale) => locale.forEach(service.addLocaleData));

@@ -49,7 +49,10 @@ const TranslationModel = Ember.Object.extend({
     translation = get(this, key);
 
     if (typeof translation === 'string') {
-      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', true);
+      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', false, {
+        id: 'ember-intl-add-translation'
+      });
+
       return translation;
     }
   },

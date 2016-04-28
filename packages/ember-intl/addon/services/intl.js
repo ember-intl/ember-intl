@@ -12,7 +12,7 @@ import IntlRelativeFormat from 'intl-relativeformat';
 
 import isArrayEqual from '../utils/is-equal';
 
-const { assert, computed, makeArray, get, set, RSVP, Service, Evented, warn } = Ember;
+const { assert, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 const assign = Ember.assign || Ember.merge;
 
@@ -20,7 +20,9 @@ function formatterProxy(formatType) {
   return function (value, options, formats) {
     if (!options) {
       if (arguments.length > 1) {
-        Ember.warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`);
+        Ember.warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`, false, {
+          id: 'ember-intl-missing-formatter-args'
+        });
       }
 
       options = {};
@@ -143,7 +145,10 @@ const IntlService = Service.extend(Evented, {
   },
 
   createLocale(locale, payload) {
-    warn('[ember-intl] `createLocale` is deprecated, use `addTranslations`');
+    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
+      id: 'ember-intl-create-locale'
+    });
+
     return this.addTranslations(locale, payload);
   },
 
