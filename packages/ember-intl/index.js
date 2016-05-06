@@ -26,6 +26,7 @@ var TranslationReducer = require('./lib/broccoli/translation-reducer');
 module.exports = {
   name: 'ember-intl',
   opts: null,
+  isLocalizationFramework: true,
 
   included: function(app) {
     this._super.included.apply(this, arguments);
