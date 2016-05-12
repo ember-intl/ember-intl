@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "2.10.1",
+  "version": "2.11.0",
   "description": "Ember toolbox for internationalization.",
   "directories": {
     "doc": "doc",
