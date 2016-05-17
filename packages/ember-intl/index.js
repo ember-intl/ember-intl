@@ -37,14 +37,16 @@ module.exports = {
     }
 
     this.app = app;
-    this.opts = this.intlConfig(this.app.env);
 
-    var translationFolder = this.opts.inputPath;
-    this.hasTranslationDir = existsSync(path.join(app.project.root, translationFolder));
+    var appConfig = this.app.project.config(this.app.env) || {};
+    this.addonConfig = appConfig && appConfig.intl || {};
+    this.hasTranslationDir = existsSync(path.join(app.project.root, this.addonConfig.inputPath));
     this.projectLocales = this.findLocales();
-
     this.trees = this.trees || {};
-    this.trees.projectTranslations = new WatchedDir(translationFolder);
+
+    if (this.hasTranslationDir) {
+      this.trees.projectTranslations = new WatchedDir(this.addonConfig.inputPath);
+    }
 
     this.trees.addonTranslations = this.findIntlAddons().map(function(addon) {
       return new Funnel(addon.path, {
@@ -54,23 +56,10 @@ module.exports = {
     }, this);
 
     this.trees.translationTree = this.createTranslationTree();
-
-    return this.app;
-  },
-
-  outputPaths: function() {
-    var assetPath = 'assets/intl';
-    var appOptions = this.app.options;
-
-    if (appOptions.app && appOptions.app.intl) {
-      assetPath = appOptions.app.intl;
-    }
-
-    return assetPath;
   },
 
   contentFor: function(name) {
-    if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
+    if (name === 'head' && !this.addonConfig.disablePolyfill && this.addonConfig.autoPolyfill) {
       var assetPath = this.outputPaths();
       var locales = this.findLocales();
 
@@ -84,10 +73,55 @@ module.exports = {
     }
   },
 
+  config: function(env, baseConfig) {
+    var configPath = path.join(this.root, this.app.project.configPath() + '.js');
+    var addonConfigPath = path.join(configPath, '..', 'ember-intl.js');
+    var config = {};
+
+    if (existsSync(configPath)) {
+      config = require(configPath)(env, baseConfig);
+    }
+
+    if (typeof config.intl === 'object') {
+      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
+      this.log('Run `ember g ember-intl-config` to create a default config');
+    }
+
+    if (existsSync(addonConfigPath)) {
+      config.intl = require(addonConfigPath)(env);
+    }
+
+    if (config.intl && config.intl.defaultLocale) {
+      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
+      this.log('Please update config/ember-intl.js or config/environment.js');
+      config.intl.baseLocale = config.intl.defaultLocale;
+    }
+
+    config.intl = _.assign({
+      locales: null,
+      baseLocale: null,
+      publicOnly: false,
+      disablePolyfill: false,
+      autoPolyfill: false,
+      inputPath: 'translations',
+      outputPath: 'translations'
+    }, config.intl);
+
+    if (config.intl.locales) {
+      config.intl.locales = _.castArray(config.intl.locales).filter(function(locale) {
+        return typeof locale === 'string';
+      }).map(function(locale) {
+        return locale.toLocaleLowerCase();
+      });
+    }
+
+    return config;
+  },
+
   treeForApp: function(tree) {
     var trees = [tree];
 
-    if (this.hasTranslationDir && !this.opts.publicOnly) {
+    if (this.hasTranslationDir && !this.addonConfig.publicOnly) {
       trees.push(this.reduceTranslations({
         filename: function filename(key) {
           return key + '.js';
@@ -122,7 +156,7 @@ module.exports = {
       trees.push(publicTree);
     }
 
-    if (!this.opts.disablePolyfill) {
+    if (!this.addonConfig.disablePolyfill) {
       var appOptions = this.app.options || {};
 
       trees.push(require('./lib/broccoli/intl-polyfill')({
@@ -131,77 +165,39 @@ module.exports = {
       }));
     }
 
-    if (this.hasTranslationDir && this.opts.publicOnly) {
+    if (this.hasTranslationDir && this.addonConfig.publicOnly) {
       trees.push(this.reduceTranslations());
     }
 
     return mergeTrees(trees, { overwrite: true });
   },
 
+  outputPaths: function() {
+    var assetPath = 'assets/intl';
+    var appOptions = this.app.options;
+
+    if (appOptions.app && appOptions.app.intl) {
+      assetPath = appOptions.app.intl;
+    }
+
+    return assetPath;
+  },
+
   log: function(msg) {
     this.ui.writeLine('[ember-intl] ' + msg);
-  },
-
-  readConfig: function(environment) {
-    var project = this.app.project;
-    var configPath = path.join(project.root, project.configPath(), '..', 'ember-intl.js');
-
-    if (fs.existsSync(configPath)) {
-      return require(configPath)(environment);
-    }
-
-    return {};
-  },
-
-  intlConfig: function(environment) {
-    var deprecatedConfig = this.app.project.config(environment)['intl'];
-    var addonConfig = _.assign(this.readConfig(), deprecatedConfig || {});
-
-    if (deprecatedConfig) {
-      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.log('Run `ember g ember-intl-config` to create a default config');
-    }
-
-    var defaults = {
-      locales: null,
-      baseLocale: null,
-      publicOnly: false,
-      disablePolyfill: false,
-      autoPolyfill: false,
-      inputPath: 'translations',
-      outputPath: 'translations'
-    };
-
-    if (addonConfig.defaultLocale) {
-      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
-      this.log('Please update config/ember-intl.js or config/environment.js');
-      addonConfig.baseLocale = addonConfig.defaultLocale;
-    }
-
-    addonConfig = _.assign(defaults, addonConfig);
-
-    if (addonConfig.locales) {
-      addonConfig.locales = _.castArray(addonConfig.locales).filter(function(locale) {
-        return typeof locale === 'string';
-      }).map(function(locale) {
-        return locale.toLocaleLowerCase();
-      });
-    }
-
-    return addonConfig;
   },
 
   findLocales: function() {
     var locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.opts.inputPath)).map(function(filename) {
+      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonConfig.inputPath)).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }));
     }
 
-    if (this.opts.locales) {
-      locales = locales.concat(this.opts.locales);
+    if (this.addonConfig.locales) {
+      locales = locales.concat(this.addonConfig.locales);
     }
 
     locales = locales.concat(locales.filter(function(locale) {
@@ -238,7 +234,7 @@ module.exports = {
         });
         hash[addon.name] = true;
       }
-      
+
       // Recursively load all child addons
       return addon.addons.reduce(find, list);
     };
@@ -249,7 +245,9 @@ module.exports = {
   createTranslationTree: function() {
     var trees = [];
 
-    trees.push(this.trees.projectTranslations);
+    if (this.trees.projectTranslations) {
+      trees.push(this.trees.projectTranslations);
+    }
 
     if (this.trees.addonTranslations) {
       trees = trees.concat(this.trees.addonTranslations);
@@ -263,7 +261,7 @@ module.exports = {
 
     var addon = this;
 
-    return new TranslationReducer(this.trees.translationTree, _.assign({}, this.opts, opts, {
+    return new TranslationReducer(this.trees.translationTree, _.assign({}, this.addonConfig, opts, {
       log: function() {
         return addon.log.apply(addon, arguments);
       }
