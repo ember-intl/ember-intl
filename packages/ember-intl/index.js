@@ -76,28 +76,25 @@ module.exports = {
   config: function(env, baseConfig) {
     var configPath = path.join(this.root, this.app.project.configPath() + '.js');
     var addonConfigPath = path.join(configPath, '..', 'ember-intl.js');
-    var config = {};
 
     if (existsSync(configPath)) {
-      config = require(configPath)(env, baseConfig);
+      var appConfig = require(configPath)(env, baseConfig);
+
+      if (typeof appConfig.intl === 'object') {
+        this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
+        this.log('Run `ember g ember-intl-config` to create a default config');
+      }
     }
 
-    if (typeof config.intl === 'object') {
-      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.log('Run `ember g ember-intl-config` to create a default config');
-    }
+    var config = existsSync(addonConfigPath) ? require(addonConfigPath)(env) : {};
 
-    if (existsSync(addonConfigPath)) {
-      config.intl = require(addonConfigPath)(env);
-    }
-
-    if (config.intl && config.intl.defaultLocale) {
+    if (config && config.defaultLocale) {
       this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
       this.log('Please update config/ember-intl.js or config/environment.js');
-      config.intl.baseLocale = config.intl.defaultLocale;
+      config.baseLocale = config.defaultLocale;
     }
 
-    config.intl = _.assign({
+    config = _.assign({
       locales: null,
       baseLocale: null,
       publicOnly: false,
@@ -105,17 +102,19 @@ module.exports = {
       autoPolyfill: false,
       inputPath: 'translations',
       outputPath: 'translations'
-    }, config.intl);
+    }, config);
 
-    if (config.intl.locales) {
-      config.intl.locales = _.castArray(config.intl.locales).filter(function(locale) {
+    if (config.locales) {
+      config.locales = _.castArray(config.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
         return locale.toLocaleLowerCase();
       });
     }
 
-    return config;
+    return {
+      intl: config
+    };
   },
 
   treeForApp: function(tree) {
