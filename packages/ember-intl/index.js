@@ -32,7 +32,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     // see: https://github.com/ember-cli/ember-cli/issues/3718
-    if (typeof app.import !== 'function' && app.app) {
+    while (typeof app.import !== 'function' && app.app) {
       app = app.app;
     }
 
@@ -56,6 +56,19 @@ module.exports = {
     }, this);
 
     this.trees.translationTree = this.createTranslationTree();
+
+    return app;
+  },
+
+  outputPaths: function() {
+    var assetPath = 'assets/intl';
+    var appOptions = this.app.options;
+
+    if (appOptions.app && appOptions.app.intl) {
+      assetPath = appOptions.app.intl;
+    }
+
+    return assetPath;
   },
 
   contentFor: function(name) {
