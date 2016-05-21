@@ -32,7 +32,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     // see: https://github.com/ember-cli/ember-cli/issues/3718
-    if (typeof app.import !== 'function' && app.app) {
+    while (typeof app.import !== 'function' && app.app) {
       app = app.app;
     }
 
@@ -55,7 +55,7 @@ module.exports = {
 
     this.trees.translationTree = this.createTranslationTree();
 
-    return this.app;
+    return app;
   },
 
   outputPaths: function() {
@@ -238,7 +238,7 @@ module.exports = {
         });
         hash[addon.name] = true;
       }
-      
+
       // Recursively load all child addons
       return addon.addons.reduce(find, list);
     };
