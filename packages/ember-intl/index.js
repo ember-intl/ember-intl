@@ -108,14 +108,16 @@ module.exports = {
         this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
         this.log('Run `ember g ember-intl-config` to create a default config');
 
-        return wrapDefaults(appConfig.intl);
+        return {
+          intl: wrapDefaults(appConfig.intl)
+        };
       }
     }
 
     var addonConfigPath = path.join(configPath, '..', 'ember-intl.js');
     var config = existsSync(addonConfigPath) ? require(addonConfigPath)(env) : {};
 
-    if (config && config.defaultLocale) {
+    if (config.defaultLocale) {
       this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
       this.log('Please update config/ember-intl.js or config/environment.js');
       config.baseLocale = config.defaultLocale;
