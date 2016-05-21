@@ -38,7 +38,7 @@ module.exports = {
 
     this.app = app;
 
-    var appConfig = this.app.project.config(this.app.env) || {};
+    var appConfig = this.project.config(app.env) || {};
     this.addonConfig = appConfig && appConfig.intl || {};
     this.hasTranslationDir = existsSync(path.join(app.project.root, this.addonConfig.inputPath));
     this.projectLocales = this.findLocales();
@@ -73,28 +73,8 @@ module.exports = {
     }
   },
 
-  config: function(env, baseConfig) {
-    var configPath = path.join(this.root, this.app.project.configPath() + '.js');
-    var addonConfigPath = path.join(configPath, '..', 'ember-intl.js');
-
-    if (existsSync(configPath)) {
-      var appConfig = require(configPath)(env, baseConfig);
-
-      if (typeof appConfig.intl === 'object') {
-        this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-        this.log('Run `ember g ember-intl-config` to create a default config');
-      }
-    }
-
-    var config = existsSync(addonConfigPath) ? require(addonConfigPath)(env) : {};
-
-    if (config && config.defaultLocale) {
-      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
-      this.log('Please update config/ember-intl.js or config/environment.js');
-      config.baseLocale = config.defaultLocale;
-    }
-
-    config = _.assign({
+  wrapDefaults(config) {
+    return _.assign({
       locales: null,
       baseLocale: null,
       publicOnly: false,
@@ -103,6 +83,30 @@ module.exports = {
       inputPath: 'translations',
       outputPath: 'translations'
     }, config);
+  },
+
+  config: function(env, baseConfig) {
+    var configPath = path.join(this.root, this.project.configPath() + '.js');
+
+    if (existsSync(configPath)) {
+      var appConfig = require(configPath)(env, baseConfig);
+
+      if (typeof appConfig.intl === 'object') {
+        this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
+        this.log('Run `ember g ember-intl-config` to create a default config');
+
+        return wrapDefaults(appConfig.intl);
+      }
+    }
+
+    var addonConfigPath = path.join(configPath, '..', 'ember-intl.js');
+    var config = existsSync(addonConfigPath) ? require(addonConfigPath)(env) : {};
+
+    if (config && config.defaultLocale) {
+      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
+      this.log('Please update config/ember-intl.js or config/environment.js');
+      config.baseLocale = config.defaultLocale;
+    }
 
     if (config.locales) {
       config.locales = _.castArray(config.locales).filter(function(locale) {
@@ -113,7 +117,7 @@ module.exports = {
     }
 
     return {
-      intl: config
+      intl: this.wrapDefaults(config)
     };
   },
 
@@ -189,8 +193,10 @@ module.exports = {
   findLocales: function() {
     var locales = [];
 
+    console.log(this.project.root);
+
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonConfig.inputPath)).map(function(filename) {
+      locales = locales.concat(walkSync(path.join(this.project.root, this.addonConfig.inputPath)).map(function(filename) {
         return path.basename(filename, path.extname(filename));
       }));
     }
@@ -215,7 +221,7 @@ module.exports = {
   },
 
   findIntlAddons: function() {
-    var addons = this.app.project.addons;
+    var addons = this.project.addons;
     var hash = {};
     var find = function (list, addon) {
       // Only handle each addon once
