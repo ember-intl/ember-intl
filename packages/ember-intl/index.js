@@ -86,7 +86,7 @@ module.exports = {
     }
   },
 
-  wrapDefaults(config) {
+  wrapDefaults: function(config) {
     return _.assign({
       locales: null,
       baseLocale: null,
@@ -188,17 +188,6 @@ module.exports = {
     }
 
     return mergeTrees(trees, { overwrite: true });
-  },
-
-  outputPaths: function() {
-    var assetPath = 'assets/intl';
-    var appOptions = this.app.options;
-
-    if (appOptions.app && appOptions.app.intl) {
-      assetPath = appOptions.app.intl;
-    }
-
-    return assetPath;
   },
 
   log: function(msg) {
