@@ -25,7 +25,6 @@ var TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
   name: 'ember-intl',
-  opts: null,
   isLocalizationFramework: true,
 
   included: function(app) {
@@ -40,7 +39,7 @@ module.exports = {
 
     var appConfig = this.project.config(app.env) || {};
     this.addonConfig = appConfig && appConfig.intl || {};
-    this.hasTranslationDir = existsSync(path.join(app.project.root, this.addonConfig.inputPath));
+    this.hasTranslationDir = existsSync(path.join(this.project.root, this.addonConfig.inputPath));
     this.projectLocales = this.findLocales();
     this.trees = this.trees || {};
 
@@ -56,8 +55,6 @@ module.exports = {
     }, this);
 
     this.trees.translationTree = this.createTranslationTree();
-
-    return app;
   },
 
   outputPaths: function() {
@@ -99,7 +96,7 @@ module.exports = {
   },
 
   config: function(env, baseConfig) {
-    var configPath = path.join(this.root, this.project.configPath() + '.js');
+    var configPath = path.join(this.project.root, this.project.configPath() + '.js');
 
     if (existsSync(configPath)) {
       var appConfig = require(configPath)(env, baseConfig);
@@ -197,8 +194,6 @@ module.exports = {
   findLocales: function() {
     var locales = [];
 
-    console.log(this.project.root);
-
     if (this.hasTranslationDir) {
       locales = locales.concat(walkSync(path.join(this.project.root, this.addonConfig.inputPath)).map(function(filename) {
         return path.basename(filename, path.extname(filename));
@@ -227,6 +222,7 @@ module.exports = {
   findIntlAddons: function() {
     var addons = this.project.addons;
     var hash = {};
+
     var find = function (list, addon) {
       // Only handle each addon once
       if (hash[addon.name]) {
@@ -241,6 +237,7 @@ module.exports = {
           translationPath: translationPath,
           path: addon.root
         });
+
         hash[addon.name] = true;
       }
 
