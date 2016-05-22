@@ -27,6 +27,10 @@ module.exports = {
   name: 'ember-intl',
   isLocalizationFramework: true,
 
+  isDevelopingAddon: function() {
+    return false;
+  },
+
   included: function(app) {
     this._super.included.apply(this, arguments);
 
