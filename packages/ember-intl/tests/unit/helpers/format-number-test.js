@@ -73,6 +73,13 @@ test('should handle undefined value when allowEmpty is true', function(assert) {
   assert.equal(this.$().text(), '');
 });
 
+test('should handle null value when allowEmpty is true', function(assert) {
+  assert.expect(1);
+  this.set('somethingNull', null);
+  this.render(hbs`{{format-number somethingNull allowEmpty=true}}`);
+  assert.equal(this.$().text(), '');
+});
+
 test('should display the fallback if called with no value', function(assert) {
   assert.expect(1);
   this.render(hbs`{{format-number fallback="fallback value"}}`);
