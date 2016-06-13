@@ -224,6 +224,7 @@ module.exports = {
   },
 
   findIntlAddons: function() {
+    var projectName = this.app.project.name();
     var addons = this.app.project.addons;
     var hash = {};
     var find = function (list, addon) {
@@ -234,7 +235,7 @@ module.exports = {
 
       var translationPath = addon.pkg['ember-addon'].translationPath || 'translations';
 
-      if (fs.existsSync(path.join(addon.root, translationPath))) {
+      if (projectName !== addon.name && fs.existsSync(path.join(addon.root, translationPath))) {
         list.push({
           name: addon.name,
           translationPath: translationPath,
