@@ -46,11 +46,11 @@ Translation keys containing periods, i.e., `foo.bar`, conflicts with internal ac
 At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `baseLocale` config property.  If translations keys are found on the base but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the base locale as a filler.
 
 ```js
-// config/environment.js
-return {
-  intl: {
+// config/ember-intl.js
+module.exports = function(environment) {
+  return {
     baseLocale: 'en-us' // default build-time locale
-  }
+  };
 };
 ```
 
