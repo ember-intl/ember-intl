@@ -8,6 +8,7 @@
  */
 
  module.exports = {
+  castArray: require('./cast-array'),
   unique: require('./unique'),
   isSupportedLocale: require('./is-supported-locale')
 };
