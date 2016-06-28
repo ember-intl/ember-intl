@@ -8,12 +8,13 @@
  */
 
 var _ = require('lodash');
+var castArray = require('./cast-array');
 
 function unique(array) {
   var found = Object.create(null);
   var out = [];
 
-  _.castArray(array).forEach(function(item) {
+  castArray(array).forEach(function(item) {
     if (typeof item !== 'string' || found[item.toLocaleLowerCase()]) {
       return;
     }

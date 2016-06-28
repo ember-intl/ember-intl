@@ -15,7 +15,7 @@ var existsSync = require('exists-sync');
 var stew = require('broccoli-stew');
 var walkSync = require('walk-sync');
 var path = require('path');
-var _ = require('lodash');
+var _ = require('ember-cli-lodash-subset');
 var fs = require('fs');
 
 var utils = require('./lib/utils');
@@ -127,7 +127,7 @@ module.exports = {
 
       trees.push(require('./lib/broccoli/intl-polyfill')({
         locales: this.projectLocales,
-        destDir: _.get(appOptions, 'app.intl') || 'assets/intl'
+        destDir: appOptions.app && appOptions.app.intl || 'assets/intl'
       }));
     }
 
@@ -185,7 +185,7 @@ module.exports = {
     addonConfig = _.assign(defaults, addonConfig);
 
     if (addonConfig.locales) {
-      addonConfig.locales = _.castArray(addonConfig.locales).filter(function(locale) {
+      addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
         return locale.toLocaleLowerCase();
@@ -241,6 +241,7 @@ module.exports = {
           translationPath: translationPath,
           path: addon.root
         });
+
         hash[addon.name] = true;
       }
 
