@@ -26,7 +26,7 @@ export function instanceInitializer(instance) {
     service = instance.container.lookup('service:intl');
   }
 
-  if (!Intl) {
+  if (typeof Intl === 'undefined') {
     warn('[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}', false, {
       id: 'ember-intl-undefined-intljs'
     });
