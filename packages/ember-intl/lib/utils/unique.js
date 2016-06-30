@@ -7,7 +7,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var _ = require('lodash');
 var castArray = require('./cast-array');
 
 function unique(array) {
