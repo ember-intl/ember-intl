@@ -9,7 +9,7 @@
 
 var extractCLDRData = require('formatjs-extract-cldr-data');
 var CachingWriter = require('broccoli-caching-writer');
-var assign = require('lodash/assign');
+var _ = require('ember-cli-lodash-subset');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
 
@@ -26,7 +26,7 @@ function Plugin(inputNodes, options) {
   this.destDir = options.destDir;
   delete options.destDir;
 
-  this.options = assign({
+  this.options = _.assign({
     locales: null,
     pluralRules: true,
     relativeFields: true,
