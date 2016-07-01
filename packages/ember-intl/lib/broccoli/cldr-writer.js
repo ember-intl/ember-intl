@@ -9,7 +9,7 @@
 
 var extractCLDRData = require('formatjs-extract-cldr-data');
 var CachingWriter = require('broccoli-caching-writer');
-var assign = require('lodash/assign');
+var assign = require('ember-cli-lodash-subset').assign;
 var mkdirp = require('mkdirp');
 var fs = require('fs');
 
@@ -61,6 +61,6 @@ Plugin.prototype.build = function() {
     var outFile = destPath + '/' + lang.toLocaleLowerCase() + '.js';
     fs.writeFileSync(outFile, options.prelude.concat(cldrData), { encoding: 'utf8' });
   });
-}
+};
 
 module.exports = Plugin;
