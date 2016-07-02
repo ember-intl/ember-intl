@@ -145,10 +145,14 @@ module.exports = {
   readConfig: function(environment) {
     var project = this.app.project;
 
-    // NOTE: needed for >= ember-cli 2.6.0-beta.3
-    // since the configPath now returns prefixed with `project.root`
-    var configPath = path.join(project.configPath().replace(new RegExp('^' + project.root), ''), '..');
-    var config = path.join(project.root, configPath, 'ember-intl.js');
+    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
+    // while older ember-cli versions return path relative to project root
+    var configPath = path.dirname(project.configPath());
+    var config = path.join(configPath, 'ember-intl.js');
+
+    if (!path.isAbsolute(config)) {
+      config = path.join(project.root, config);
+    }
 
     if (fs.existsSync(config)) {
       return require(config)(environment);
