@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "2.12.2",
+  "version": "2.12.3",
   "description": "Ember toolbox for internationalization.",
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "tests-node": "./node_modules/mocha/bin/mocha tests-node/**/*.*",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:testall",
-    "prepublish": "node ./bin/prepublish"
+    "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json && node ./bin/prepublish"
   },
   "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl",
   "homepage": "https://github.com/jasonmit/ember-intl",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "chai": "^3.5.0",
+    "dependency-check": "^2.5.1",
     "ember-cli": "2.5.0",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
