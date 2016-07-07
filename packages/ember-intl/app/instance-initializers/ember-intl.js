@@ -27,7 +27,7 @@ export function instanceInitializer(instance) {
   }
 
   if (typeof Intl === 'undefined') {
-    warn('[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}', false, {
+    warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
       id: 'ember-intl-undefined-intljs'
     });
   }
