@@ -163,7 +163,7 @@ module.exports = {
 
   intlConfig: function(environment) {
     var deprecatedConfig = this.app.project.config(environment)['intl'];
-    var addonConfig = _.assign(this.readConfig(), deprecatedConfig || {});
+    var addonConfig = _.assign(this.readConfig(environment), deprecatedConfig || {});
 
     if (deprecatedConfig) {
       this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
