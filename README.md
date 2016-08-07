@@ -300,7 +300,7 @@ Phantom does support the Intl API, so in order for for you ember-intl to work in
 
 To resolve this, add the following above all script tags in `tests/index.html`:
 ```html
-<script src="assets/intl/intl.complete.js"></script>
+<script src="{{rootURL}}assets/intl/intl.complete.js"></script>
 ```
 
 ## Asynchronously loading translations
