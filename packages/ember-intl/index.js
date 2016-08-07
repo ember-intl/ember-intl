@@ -69,16 +69,20 @@ module.exports = {
     return assetPath;
   },
 
-  contentFor: function(name) {
+  contentFor: function(name, config) {
     if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
       var assetPath = this.outputPaths();
       var locales = this.findLocales();
+      var prefix = '';
+
+      if (config.rootURL) { prefix += config.rootURL; }
+      if (assetPath) { prefix += assetPath; }
 
       var localeScripts = locales.map(function(locale) {
-        return '<script src=\"' + assetPath + '/locales/' + locale + '.js\"></script>';
+        return '<script src=\"' + prefix + '/locales/' + locale + '.js\"></script>';
       });
 
-      return ['<script src=\"' + assetPath + '/intl.min.js\"></script>']
+      return ['<script src=\"'  + prefix + '/intl.min.js\"></script>']
         .concat(localeScripts)
         .join('\n');
     }
