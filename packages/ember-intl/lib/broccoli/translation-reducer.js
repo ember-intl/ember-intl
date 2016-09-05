@@ -88,18 +88,27 @@ function TranslationReducer(inputNode, options) {
 TranslationReducer.prototype = Object.create(CachingWriter.prototype);
 TranslationReducer.prototype.constructor = TranslationReducer;
 
+TranslationReducer.prototype.normalizeLocale = function(locale) {
+  if (typeof locale === 'string') {
+    return locale.toLowerCase();
+  }
+
+  return locale;
+}
+
 TranslationReducer.prototype.findMissingKeys = function(target, defaultTranslationKeys, locale) {
   var targetProps = propKeys(target);
   var log = this.options.log;
 
   defaultTranslationKeys.forEach(function (property) {
     if (targetProps.indexOf(property) === -1) {
-      log(property + '\' missing from ' + locale);
+      log(property + ' missing from ' + locale);
     }
   });
 };
 
 TranslationReducer.prototype.readDirectory = function(inputPath) {
+  var plugin = this;
   var log = this.options.log;
 
   // sorted so that any translation path starts with `__addon__`
@@ -129,7 +138,7 @@ TranslationReducer.prototype.readDirectory = function(inputPath) {
 
     var basename = path.basename(file).split('.')[0];
     var keyedTranslation = {};
-    keyedTranslation[basename] = translation;
+    keyedTranslation[plugin.normalizeLocale(basename)] = translation;
 
     return extend(true, translations, keyedTranslation);
   }, {});
@@ -167,11 +176,11 @@ TranslationReducer.prototype.build = function() {
     })[0];
 
     if (!defaultTranslationPath) {
-      log(this.options.baseLocale + '" default locale missing `translations` folder');
+      log(this.options.baseLocale + ' default locale missing `translations` folder');
       return;
     }
 
-    defaultTranslation = translations[this.options.baseLocale];
+    defaultTranslation = translations[this.normalizeLocale(this.options.baseLocale)];
     defaultTranslationKeys = propKeys(defaultTranslation);
   }
 
