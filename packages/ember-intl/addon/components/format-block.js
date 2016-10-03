@@ -28,6 +28,5 @@ export default Ember.Component.extend({
 
     let str = this.get('intl').findTranslationByKey(key, locale);
     this.set('segments', str.split('{yield}'));
-    console.log(this.get('segments'));
   })
 });
