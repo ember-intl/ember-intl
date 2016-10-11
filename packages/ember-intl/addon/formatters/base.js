@@ -4,8 +4,9 @@
  */
 
 import Ember from 'ember';
-import arrayToHash from '../utils/array-to-hash';
+
 import links from '../utils/links';
+import arrayToHash from '../utils/array-to-hash';
 
 const {
   get,
@@ -38,6 +39,7 @@ const FormatBase = EmberObject.extend({
 
     for (let key in input) {
       camelizedKey = camelize(key);
+
       if (this.options[camelizedKey]) {
         foundMatch = true;
         out[camelizedKey] = input[key];

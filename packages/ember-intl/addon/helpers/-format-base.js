@@ -16,7 +16,15 @@ function helperFactory(formatType, helperOptions = {}) {
 
     formatter: computed('formatType', {
       get() {
-        return getOwner(this).lookup(`ember-intl@formatter:format-${formatType}`);
+        const owner = getOwner(this);
+        const lookupName = `formatter:format-${formatType}`;
+
+        // allow for the application to implement custom formatters
+        if (owner.hasRegistration(lookupName)) {
+          return owner.looukp(lookupName);
+        }
+
+        return owner.lookup(`ember-intl@${lookupName}`);
       }
     }).readOnly(),
 
