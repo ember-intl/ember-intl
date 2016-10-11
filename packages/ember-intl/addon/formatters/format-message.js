@@ -7,7 +7,7 @@ import Ember from 'ember';
 import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
 
-import Formatter from './-base';
+import Formatter from './base';
 
 const { get, computed } = Ember;
 

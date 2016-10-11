@@ -7,7 +7,7 @@ import Ember from 'ember';
 import IntlRelativeFormat from 'intl-relativeformat';
 import createFormatCache from 'intl-format-cache';
 
-import Formatter from './-base';
+import Formatter from './base';
 
 const { assert, computed } = Ember;
 
