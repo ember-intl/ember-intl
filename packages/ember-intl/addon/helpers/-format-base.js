@@ -4,7 +4,6 @@
  */
 
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
 const { Helper, inject, get, computed, isEmpty, getWithDefault } = Ember;
 const assign = Ember.assign || Ember.merge;
@@ -16,15 +15,9 @@ function helperFactory(formatType, helperOptions = {}) {
 
     formatter: computed('formatType', {
       get() {
-        const owner = getOwner(this);
-        const lookupName = `formatter:format-${formatType}`;
+        const intl = get(this, 'intl');
 
-        // allow for the application to implement custom formatters
-        if (owner.hasRegistration(lookupName)) {
-          return owner.looukp(lookupName);
-        }
-
-        return owner.lookup(`ember-intl@${lookupName}`);
+        return intl.lookupFormatter(formatType);
       }
     }).readOnly(),
 
@@ -59,7 +52,7 @@ function helperFactory(formatType, helperOptions = {}) {
         format = intl.getFormat(formatType, hash.format);
       }
 
-      return get(this, 'formatter').format(
+      return get(this, 'formatter').compute(
         value,
         assign(assign({}, format), hash),
         {

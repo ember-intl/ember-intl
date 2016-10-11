@@ -7,7 +7,7 @@ import Ember from 'ember';
 import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
 
-import Formatter from './base';
+import Formatter from './-formatter';
 
 const { get, computed } = Ember;
 
@@ -18,12 +18,16 @@ const FormatMessage = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options = {}, ctx = {}) {
+  compute(value, options = {}, ctx = {}) {
     const { formats, locale } = ctx;
     const formatter = get(this, 'formatter');
 
     return formatter(value, locale, formats).format(options);
   }
+});
+
+FormatMessage.reopenClass({
+  supportedOptions: ['format']
 });
 
 export default FormatMessage;

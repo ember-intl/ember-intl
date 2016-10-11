@@ -28,19 +28,17 @@ function formatterProxy(formatType) {
       options = {};
     }
 
-    const owner = getOwner(this);
-    const formatter = owner.lookup(`ember-intl@formatter:format-${formatType}`);
+    const formatter = this.lookupFormatter(formatType);
 
     if (typeof options.format === 'string') {
       options = assign(this.getFormat(formatType, options.format), options);
     }
 
-
     if (!formats) {
       formats = get(this, 'formats');
     }
 
-    return formatter.format(value, options, {
+    return formatter.compute(value, options, {
       formats: formats,
       locale: options.locale || get(this, '_locale')
     });
@@ -58,6 +56,17 @@ const IntlService = Service.extend(Evented, {
       return get(this, '_locale');
     }
   }),
+
+  lookupFormatter(formatType) {
+    const owner = getOwner(this);
+    const lookupName = `formatter:format-${formatType}`;
+
+    if (owner.hasRegistration(lookupName)) {
+      return owner.lookup(lookupName);
+    }
+
+    return owner.lookup(`ember-intl@${lookupName}`);
+  },
 
   adapter: computed({
     get() {

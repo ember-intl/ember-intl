@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import createFormatCache from 'intl-format-cache';
 
-import Formatter from './base';
+import Formatter from './-formatter';
 
 const { computed } = Ember;
 
@@ -19,7 +19,7 @@ const FormatNumber = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options, ctx = {}) {
+  compute(value, options, ctx = {}) {
     return this._format(value, this.filterSupporedOptions(options), null, ctx);
   }
 });
@@ -29,7 +29,7 @@ FormatNumber.reopenClass({
     'localeMatcher', 'style', 'currency', 'currencyDisplay',
     'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',
     'maximumFractionDigits', 'minimumSignificantDigits',
-    'maximumSignificantDigits'
+    'maximumSignificantDigits', 'format'
   ]
 });
 
