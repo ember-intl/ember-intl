@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 import createFormatCache from 'intl-format-cache';
-import IntlMessageFormat from 'intl-messageformat';
+import IntlMessageFormat from 'ember-intl-icu-bundle/messageformat';
 
 import Formatter from 'ember-intl/formatters/-formatter';
 

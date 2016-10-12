@@ -1,6 +1,4 @@
-# ember-intl-relativeformat
-
-A thin wrapper around [intl-relativeformat](https://github.com/yahoo/intl-relativeformat) that allows for `import IntlRelativeFormat from 'intl-relativeformat';` from within your ember application.
+# ember-intl-icu-bundle
 
 ## Installation
 
