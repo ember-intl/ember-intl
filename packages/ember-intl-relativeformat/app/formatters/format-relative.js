@@ -4,10 +4,10 @@
  */
 
 import Ember from 'ember';
-import IntlRelativeFormat from 'intl-relativeformat';
 import createFormatCache from 'intl-format-cache';
+import IntlRelativeFormat from 'intl-relativeformat';
 
-import Formatter from './-formatter';
+import Formatter from 'ember-intl/formatters/-formatter';
 
 const { assert, computed } = Ember;
 
