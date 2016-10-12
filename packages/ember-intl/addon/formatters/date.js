@@ -19,6 +19,12 @@ const FormatDate = Formatter.extend({
 
   formatter: computed({
     get() {
+      assert('Intl.DateTimeFormat missing. IntlJS polyfill required.', typeof Intl === 'object' && typeof Intl.DateTimeFormat === 'function');
+
+      if (!Intl.DateTimeFormat) {
+        throw new Error('Intl.DateTimeFormat not found, Intl.JS polyfill required.');
+      }
+
       return createFormatCache(Intl.DateTimeFormat);
     }
   }).readOnly(),

@@ -60,7 +60,7 @@ module.exports = {
 
   // See: https://ember-cli.com/api/files/lib_models_addon-discovery.js.html
   shouldIncludeChildAddon: function(addon) {
-    if (addon && (~['ember-intl-messageformat', 'ember-intl-relativeformat'].indexOf(addon.name)) {
+    if (addon && ~['ember-intl-messageformat', 'ember-intl-relativeformat'].indexOf(addon.name)) {
       // figure out if you need to exclude them
       return true;
     }
