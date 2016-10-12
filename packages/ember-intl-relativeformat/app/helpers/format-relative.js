@@ -4,7 +4,7 @@
  */
 
 import Ember from 'ember';
-import factory from './-format-base';
+import factory from 'ember-intl/helpers/-format-base';
 
 const runBind = Ember.run.bind;
 
