@@ -47,6 +47,7 @@
     "broccoli-merge-trees": "^1.0.0",
     "ember-cli-babel": "^5.1.5",
     "ember-intl-messageformat": "^2.4.0",
+    "ember-intl-format-cache": "^2.4.0",
     "intl-relativeformat": "^1.2.0"
   },
   "ember-addon": {

@@ -8,13 +8,15 @@ import createFormatCache from 'intl-format-cache';
 
 import Formatter from './-formatter';
 
-const { computed } = Ember;
+const { assert, computed } = Ember;
 
 const FormatNumber = Formatter.extend({
   formatType: 'number',
 
   formatter: computed({
     get() {
+      assert('Intl.NumberFormat missing. IntlJS polyfill required.', typeof Intl === 'object' && typeof Intl.NumberFormat === 'function');
+
       return createFormatCache(Intl.NumberFormat);
     }
   }).readOnly(),
