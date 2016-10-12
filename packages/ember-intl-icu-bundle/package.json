@@ -1,7 +1,7 @@
 {
-  "name": "ember-intl-relativeformat",
+  "name": "ember-intl-messageformat",
   "version": "2.4.0",
-  "description": "A small wrapper around intl-relativeformat to support ES6 modules of intl-relativeformat.",
+  "description": "A tiny wrapper around intl-messageformat to allow for ES6 importing intl-messageformat.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl-relativeformat",
+  "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl-messageformat",
   "homepage": "https://github.com/jasonmit/ember-intl",
   "engines": {
     "node": ">= 0.10.0"
@@ -45,12 +45,15 @@
   "dependencies": {
     "broccoli-funnel": "^1.0.0",
     "broccoli-merge-trees": "^1.0.0",
+    "broccoli-string-replace": "^0.1.1",
     "ember-cli-babel": "^5.1.5",
-    "ember-intl-messageformat": "^2.4.0",
     "ember-intl-format-cache": "^2.4.0",
+    "ember-intl-messageformat-parser": "^1.2.0",
+    "intl-messageformat": "^1.2.0",
     "intl-relativeformat": "^1.2.0"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "after": "ember-intl"
   }
 }

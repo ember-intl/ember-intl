@@ -9,9 +9,8 @@ cache:
   directories:
     - packages/ember-intl/node_modules
     - packages/ember-intl-format-cache/node_modules
-    - packages/ember-intl-messageformat/node_modules
     - packages/ember-intl-messageformat-parser/node_modules
-    - packages/ember-intl-relativeformat/node_modules
+    - packages/ember-intl-icu-bundle/node_modules
 
 env:
   - EMBER_TRY_SCENARIO=default
@@ -34,14 +33,12 @@ install:
   - npm install -g bower
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl && npm install && bower install
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-format-cache && npm install && bower install
-  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat && npm install && bower install
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat-parser && npm install && bower install
-  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-relativeformat && npm install && bower install
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-icu-bundle && npm install && bower install
 
 script:
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl && npm run tests-node
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl && ember try $EMBER_TRY_SCENARIO test
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-format-cache && ember try $EMBER_TRY_SCENARIO test
-  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat && ember try $EMBER_TRY_SCENARIO test
   - cd $TRAVIS_BUILD_DIR/packages/ember-intl-messageformat-parser && ember try $EMBER_TRY_SCENARIO test
-  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-relativeformat && ember try $EMBER_TRY_SCENARIO test
+  - cd $TRAVIS_BUILD_DIR/packages/ember-intl-icu-bundle && ember try $EMBER_TRY_SCENARIO test
