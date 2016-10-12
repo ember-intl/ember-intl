@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import createFormatCache from 'intl-format-cache';
 
-import Formatter from './base';
+import Formatter from './-formatter';
 
 const { assert, computed } = Ember;
 
@@ -23,7 +23,7 @@ const FormatDate = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options, ctx = {}) {
+  compute(value, options, ctx = {}) {
     const dateTime = new Date(value);
     assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
 
@@ -37,7 +37,7 @@ FormatDate.reopenClass({
   supportedOptions: [
     'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
     'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
-    'timeZoneName'
+    'timeZoneName', 'format'
   ]
 });
 

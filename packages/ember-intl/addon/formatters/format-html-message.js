@@ -23,7 +23,7 @@ const FormatHtmlMessage = FormatterMessage.extend({
     }, {});
   },
 
-  format(value, formatOptions = {}) {
+  compute(value, formatOptions = {}) {
     const options = this.escapeProps(formatOptions);
     const superResult = this._super(value, options, formatOptions.locale);
 
