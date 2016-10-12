@@ -28,7 +28,7 @@ export function instanceInitializer(instance) {
   const cldrs = filterBy('cldrs');
 
   if (!cldrs.length) {
-    warn('[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.', false, {
+    warn(`[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: https:///github.com/jasonmit/ember-intl/wiki/Asynchronously-loading-translations#asynchronous-loading-of-translations`, false, {
       id: 'ember-intl-missing-cldr-data'
     });
   } else {
