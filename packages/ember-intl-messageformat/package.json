@@ -46,6 +46,7 @@
     "broccoli-funnel": "^1.0.0",
     "broccoli-merge-trees": "^1.0.0",
     "ember-cli-babel": "^5.1.5",
+    "ember-intl-format-cache": "^2.4.0",
     "ember-intl-messageformat-parser": "^1.2.0",
     "intl-messageformat": "^1.2.0"
   },
