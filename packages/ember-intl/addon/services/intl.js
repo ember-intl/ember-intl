@@ -8,11 +8,11 @@
 import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
 
+import assign from '../utils/assign';
 import isArrayEqual from '../utils/is-equal';
 
 const { assert, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
-const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(formatType) {
   return function (value, options, formats) {
@@ -29,7 +29,7 @@ function formatterProxy(formatType) {
     const formatter = this.lookupFormatter(formatType);
 
     if (typeof options.format === 'string') {
-      options = assign(this.getFormat(formatType, options.format), options);
+      options = assign({}, this.getFormat(formatType, options.format), options);
     }
 
     if (!formats) {
@@ -54,17 +54,6 @@ const IntlService = Service.extend(Evented, {
       return get(this, '_locale');
     }
   }),
-
-  lookupFormatter(formatType) {
-    const owner = getOwner(this);
-    const lookupName = `intl-formatter:${formatType}`;
-
-    if (owner.hasRegistration(lookupName)) {
-      return owner.lookup(lookupName);
-    }
-
-    return owner.lookup(`ember-intl@formatter:${formatType}`);
-  },
 
   adapter: computed({
     get() {
@@ -193,6 +182,17 @@ const IntlService = Service.extend(Evented, {
     }
 
     return translation;
+  },
+
+  lookupFormatter(formatType) {
+    const owner = getOwner(this);
+    const lookupName = `intl-formatter:${formatType}`;
+
+    if (owner.hasRegistration(lookupName)) {
+      return owner.lookup(lookupName);
+    }
+
+    return owner.lookup(`ember-intl@formatter:${formatType}`);
   }
 });
 

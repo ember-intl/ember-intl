@@ -4,9 +4,9 @@
  */
 
 import Ember from 'ember';
+import assign from '../utils/assign';
 
 const { Helper, inject, get, computed, isEmpty, getWithDefault } = Ember;
-const assign = Ember.assign || Ember.merge;
 
 function helperFactory(formatType, helperOptions = {}) {
   return Helper.extend({
@@ -38,9 +38,13 @@ function helperFactory(formatType, helperOptions = {}) {
       if (isEmpty(value)) {
         if ('fallback' in hash) {
           return hash.fallback;
-        } else if (allowEmpty) {
+        }
+
+        if (allowEmpty) {
           return;
-        } else if (typeof value === 'undefined') {
+        }
+
+        if (typeof value === 'undefined') {
           throw new Error(`format-${formatType} helper requires value`);
         }
       }
@@ -52,14 +56,10 @@ function helperFactory(formatType, helperOptions = {}) {
         format = intl.getFormat(formatType, hash.format);
       }
 
-      return get(this, 'formatter').compute(
-        value,
-        assign(assign({}, format), hash),
-        {
-          formats: get(intl, 'formats'),
-          locale: hash.locale || get(intl, '_locale')
-        }
-      );
+      return get(this, 'formatter').compute(value, assign({}, format, hash), {
+        formats: get(intl, 'formats'),
+        locale: hash.locale || get(intl, '_locale')
+      });
     },
 
     destroy(...args) {
