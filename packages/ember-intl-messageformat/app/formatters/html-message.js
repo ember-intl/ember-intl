@@ -4,7 +4,7 @@
  */
 
 import Ember from 'ember';
-import FormatterMessage from './format-message';
+import FormatterMessage from './message';
 
 const { String:emberString, Handlebars:emberHandlebars } = Ember;
 

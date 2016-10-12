@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import FormatDateFormatter from './format-date';
+import FormatDateFormatter from './date';
 
 const FormatTime = FormatDateFormatter.extend({
   formatType: 'time'
