@@ -57,13 +57,13 @@ const IntlService = Service.extend(Evented, {
 
   lookupFormatter(formatType) {
     const owner = getOwner(this);
-    const lookupName = `formatter:${formatType}`;
+    const lookupName = `intl-formatter:${formatType}`;
 
     if (owner.hasRegistration(lookupName)) {
       return owner.lookup(lookupName);
     }
 
-    return owner.lookup(`ember-intl@${lookupName}`);
+    return owner.lookup(`ember-intl@formatter:${formatType}`);
   },
 
   adapter: computed({
