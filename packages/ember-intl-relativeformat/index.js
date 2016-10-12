@@ -2,8 +2,8 @@
 'use strict';
 
 var path = require('path');
-var mergeTrees = require('broccoli-merge-trees');
 var Funnel = require('broccoli-funnel');
+var mergeTrees = require('broccoli-merge-trees');
 
 var relativeFormatPath = path.dirname(require.resolve('intl-relativeformat'));
 

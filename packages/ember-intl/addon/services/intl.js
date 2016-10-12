@@ -7,8 +7,6 @@
 
 import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
-import IntlMessageFormat from 'intl-messageformat';
-import IntlRelativeFormat from 'intl-relativeformat';
 
 import isArrayEqual from '../utils/is-equal';
 
@@ -125,20 +123,6 @@ const IntlService = Service.extend(Evented, {
 
       return translations;
     }, Ember.A());
-  },
-
-  /**
-  * A utility method for registering CLDR data for
-  * intl-messageformat and intl-relativeformat.  This data is derived
-  * from formatjs-extract-cldr-data
-  *
-  * @method addLocaleData
-  * @param {Object} locale data
-  * @public
-  */
-  addLocaleData(data) {
-    IntlMessageFormat.__addLocaleData(data);
-    IntlRelativeFormat.__addLocaleData(data);
   },
 
   addTranslation(locale, key, value) {
