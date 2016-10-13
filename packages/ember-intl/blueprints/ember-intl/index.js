@@ -15,5 +15,7 @@ module.exports = {
       '[ember-intl] Don\'t forget to setup your application-wide locale.  ' +
       'Documentation: https://github.com/jasonmit/ember-intl#setting-runtime-locale'
     );
+
+    return this.addAddonToProject('ember-intl-icu-bundle', '3.0.0-alpha.1');
   }
 };
