@@ -16,6 +16,14 @@ const TranslationModel = Ember.Object.extend({
     }
   },
 
+  add(key, value) {
+    if (typeof key === 'object') {
+      return this.addTranslations(key);
+    }
+
+    return this.addTranslation(key, value);
+  },
+
   /**
    * Add a single translation
    */

@@ -9,28 +9,27 @@ import Translation from '../models/translation';
 
 const { assert } = Ember;
 
-function normalize (fullName) {
+function normalize(fullName) {
   assert('Lookup name must be a string', typeof fullName === 'string');
 
   return fullName.toLocaleLowerCase();
 }
 
 const DefaultIntlAdapter = Ember.Object.extend({
-  translationsFor(localeName) {
+  translationsFor(localeName, createIfMissing = false) {
     if (typeof localeName !== 'string') {
       throw new Error('locale name required for translation lookup');
     }
 
     const owner = getOwner(this);
     const lookupName = `ember-intl@translation:${normalize(localeName)}`;
-    const Type = owner._lookupFactory('model:ember-intl-translation') || Translation;
 
-    if (localeName && localeName instanceof Type) {
+    if (localeName && localeName instanceof Translation) {
       return localeName;
     }
 
-    if (!owner.hasRegistration(lookupName)) {
-      owner.register(lookupName, Type.extend({}));
+    if (createIfMissing && !owner.hasRegistration(lookupName)) {
+      owner.register(lookupName, Translation);
     }
 
     return owner.lookup(lookupName);
