@@ -1,7 +1,7 @@
 {
-  "name": "ember-intl-messageformat",
-  "version": "2.4.0",
-  "description": "A tiny wrapper around intl-messageformat to allow for ES6 importing intl-messageformat.",
+  "name": "ember-intl-icu-bundle",
+  "version": "3.0.0-alpha.1",
+  "description": "An extension for ember-intl to enable ICU message syntax and relative time support",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl-messageformat",
+  "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl-icu-bundle",
   "homepage": "https://github.com/jasonmit/ember-intl",
   "engines": {
     "node": ">= 0.10.0"

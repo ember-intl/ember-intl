@@ -11,10 +11,10 @@ import getOwner from 'ember-getowner-polyfill';
 import assign from '../utils/assign';
 import isArrayEqual from '../utils/is-equal';
 
-const { assert, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
+const { assert, computed, makeArray, get, set, Service, Evented } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 
-function formatterProxy(formatType) {
+export function formatterProxy(formatType) {
   return function (value, options, formats) {
     if (!options) {
       if (arguments.length > 1) {
@@ -74,7 +74,6 @@ const IntlService = Service.extend(Evented, {
   }),
 
   formatHtmlMessage: formatterProxy('html-message'),
-  formatRelative: formatterProxy('relative'),
   formatMessage: formatterProxy('message'),
   formatNumber: formatterProxy('number'),
   formatTime: formatterProxy('time'),
@@ -97,41 +96,19 @@ const IntlService = Service.extend(Evented, {
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, locales);
 
-    return makeArray(locales).some((locale) => {
-      return adapter.has(locale, key);
-    });
-  },
-
-  getLocalesByTranslations() {
-    return Object.keys(requirejs.entries).reduce((translations, module) => {
-      const match = module.match(TRANSLATION_PATH_CAPTURE);
-
-      if (match) {
-        translations.addObject(match[1]);
-      }
-
-      return translations;
-    }, Ember.A());
+    return makeArray(locales).some((locale) => adapter.has(locale, key));
   },
 
   addTranslation(locale, key, value) {
-    return this.translationsFor(locale).then((localeInstance) => {
-      return localeInstance.addTranslation(key, value);
-    });
+    const translations = this.translationsFor(locale, true);
+
+    return translations.add(key, value);
   },
 
-  addTranslations(locale, payload) {
-    return this.translationsFor(locale).then((localeInstance) => {
-      return localeInstance.addTranslations(payload);
-    });
-  },
+  addTranslations(locale, hash) {
+    const translations = this.translationsFor(locale, true);
 
-  createLocale(locale, payload) {
-    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
-      id: 'ember-intl-create-locale'
-    });
-
-    return this.addTranslations(locale, payload);
+    return translations.add(hash);
   },
 
   setLocale(locales) {
@@ -158,16 +135,14 @@ const IntlService = Service.extend(Evented, {
     return {};
   },
 
-  translationsFor(locale) {
-    const result = get(this, 'adapter').translationsFor(locale);
+  translationsFor(locale, createIfMissing) {
+    const translations = get(this, 'adapter').translationsFor(locale, createIfMissing);
 
-    return RSVP.cast(result).then(function(localeInstance) {
-      if (typeof localeInstance === 'undefined') {
-        throw new Error(`'locale' must be a string or a locale instance`);
-      }
+    if (typeof translations === 'undefined') {
+      throw new Error(`'locale' must be a string or a locale instance`);
+    }
 
-      return localeInstance;
-    });
+    return translations;
   },
 
   findTranslationByKey(key, locales) {
@@ -182,6 +157,18 @@ const IntlService = Service.extend(Evented, {
     }
 
     return translation;
+  },
+
+  getLocalesByTranslations() {
+    return Object.keys(requirejs.entries).reduce((translations, module) => {
+      const match = module.match(TRANSLATION_PATH_CAPTURE);
+
+      if (match) {
+        translations.addObject(match[1]);
+      }
+
+      return translations;
+    }, Ember.A());
   },
 
   lookupFormatter(formatType) {
