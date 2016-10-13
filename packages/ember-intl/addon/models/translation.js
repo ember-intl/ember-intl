@@ -11,8 +11,8 @@ const TranslationModel = Ember.Object.extend({
   init() {
     this._super(...arguments);
 
-    if (!this.translations) {
-      this.translations = {};
+    if (!this.content) {
+      this.content = Object.create(null);
     }
   },
 
@@ -21,23 +21,27 @@ const TranslationModel = Ember.Object.extend({
       return this.addTranslations(key);
     }
 
-    return this.addTranslation(key, value);
+    this.addTranslation(key, value);
+  },
+  
+  remove(key) {
+    delete this.content[key];
   },
 
   /**
    * Add a single translation
    */
-  addTranslation(key, value) {
-    set(this.translations, key, value);
+  addTranslation(key, translation) {
+    set(this.content, key, translation);
   },
 
   /**
    * Adds a translation hash
    */
-  addTranslations(translationsObject) {
-    for (let key in translationsObject) {
-      if (translationsObject.hasOwnProperty(key)) {
-        this.addTranslation(key, translationsObject[key]);
+  addTranslations(hash) {
+    for (let key in hash) {
+      if (hash.hasOwnProperty(key)) {
+        this.addTranslation(key, hash[key]);
       }
     }
   },
@@ -48,7 +52,7 @@ const TranslationModel = Ember.Object.extend({
    * to implement this function as `return this[key];`
    */
   getValue(key) {
-    let translation = get(this.translations, key);
+    let translation = get(this.content, key);
 
     if (typeof translation === 'string') {
       return translation;
