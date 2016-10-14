@@ -10,17 +10,17 @@
 var serialize = require('serialize-javascript');
 var stringify = require('json-stable-stringify');
 var WatchedDir = require('broccoli-source').WatchedDir;
+var extract = require('broccoli-cldr-data');
+var _ = require('ember-cli-lodash-subset');
 var Funnel = require('broccoli-funnel');
 var existsSync = require('exists-sync');
 var stew = require('broccoli-stew');
 var walkSync = require('walk-sync');
 var path = require('path');
-var _ = require('ember-cli-lodash-subset');
 var fs = require('fs');
 
 var utils = require('./lib/utils');
 var mergeTrees = require('broccoli-merge-trees');
-var CldrWriter = require('./lib/broccoli/cldr-writer');
 var TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
@@ -103,13 +103,11 @@ module.exports = {
     }
 
     if (tree && this.projectLocales.length) {
-      var cldrTree = new CldrWriter([tree], {
-        destDir: 'cldrs',
+      var cldrTree = extract([tree], {
         locales: this.projectLocales,
+        destDir: 'cldrs',
         prelude: '/*jslint eqeq: true*/\n',
-        wrapEntry: function wrapEntry(result) {
-          return 'export default ' + serialize(result) + ';';
-        }
+        moduleType: 'es6'
       });
 
       trees.push(cldrTree);
