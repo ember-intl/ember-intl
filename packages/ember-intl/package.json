@@ -47,14 +47,6 @@
     "loader.js": "^4.0.1",
     "mocha": "^2.4.5"
   },
-  "keywords": [
-    "ember-addon",
-    "i18n",
-    "ember-intl",
-    "ember-i18n",
-    "ember",
-    "internationalization"
-  ],
   "dependencies": {
     "broccoli-caching-writer": "^2.2.1",
     "broccoli-funnel": "^1.0.1",
@@ -66,8 +58,7 @@
     "ember-cli-lodash-subset": "^1.0.7",
     "ember-getowner-polyfill": "^1.0.0",
     "ember-intl-format-cache": "^2.4.0",
-    "ember-intl-messageformat": "^2.4.0",
-    "ember-intl-relativeformat": "^2.4.0",
+    "ember-intl-icu-bundle": "^3.0.0-alpha.1",
     "exists-sync": "0.0.3",
     "extend": "^3.0.0",
     "formatjs-extract-cldr-data": "^2.0.0",
@@ -83,5 +74,13 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "demoURL": "http://jasonmit.github.io/ember-intl-example/"
-  }
+  },
+  "keywords": [
+    "ember-addon",
+    "i18n",
+    "ember-intl",
+    "ember-i18n",
+    "ember",
+    "internationalization"
+  ]
 }

@@ -1,6 +1,6 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
-import formatRelativehelper from 'ember-intl/helpers/format-relative';
+import formatRelativehelper from '../../../helpers/format-relative';
 import { instanceInitializer } from '../../../instance-initializers/ember-intl';
 
 let service, registry;

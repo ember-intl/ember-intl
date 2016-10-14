@@ -1,0 +1,10 @@
+product:
+  info: '{{product}} will cost {{price}} if ordered by {{deadline}}'
+  title: 'Hello world!'
+  html:
+    info: '<strong>{{product}}</strong> will cost <em>{{price}}</em> if ordered by {{deadline}}'
+
+# pluralization example
+widget:
+  one: 'a widget'
+  other: '{{count}} widgets'

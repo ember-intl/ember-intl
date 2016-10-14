@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  description: 'Setup ember-intl',
+  description: 'Setup ember-i18n core functionality within ember-intl',
 
   normalizeEntityName: function () {},
 
@@ -16,6 +16,6 @@ module.exports = {
       'Documentation: https://github.com/jasonmit/ember-intl#setting-runtime-locale'
     );
 
-    return this.addAddonToProject('ember-intl-icu-bundle', '3.0.0-alpha.1');
+    return this.removePackageFromProject('ember-intl-icu-bundle');
   }
 };
