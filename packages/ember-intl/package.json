@@ -57,7 +57,7 @@
   ],
   "dependencies": {
     "broccoli-caching-writer": "^2.2.1",
-    "broccoli-cldr-data": "^0.2.2",
+    "broccoli-cldr-data": "^0.4.2",
     "broccoli-funnel": "^1.0.1",
     "broccoli-merge-trees": "^1.1.1",
     "broccoli-source": "^1.1.0",

@@ -103,8 +103,9 @@ module.exports = {
     }
 
     if (tree && this.projectLocales.length) {
-      var cldrTree = extract([tree], {
+      var cldrTree = extract(tree, {
         locales: this.projectLocales,
+        relativeFields: true,
         destDir: 'cldrs',
         prelude: '/*jslint eqeq: true*/\n',
         moduleType: 'es6'
