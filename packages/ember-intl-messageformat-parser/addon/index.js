@@ -1,3 +1,1 @@
-import parser from './parser';
-
-export default parser;
+export { default } from './parser';
