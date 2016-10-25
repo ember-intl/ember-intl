@@ -96,15 +96,22 @@ TranslationReducer.prototype.normalizeLocale = function(locale) {
   return locale;
 }
 
+TranslationReducer.prototype.log = function(msg) {
+  if (this.options.log) {
+    return this.options.log.apply(undefined, arguments);
+  }
+
+  console.log(msg);
+}
+
 TranslationReducer.prototype.findMissingKeys = function(target, defaultTranslationKeys, locale) {
   var targetProps = propKeys(target);
-  var log = this.options.log;
 
-  defaultTranslationKeys.forEach(function (property) {
+  defaultTranslationKeys.forEach(function(property) {
     if (targetProps.indexOf(property) === -1) {
-      log(property + ' missing from ' + locale);
+      this.log(property + ' missing from ' + locale);
     }
-  });
+  }, this);
 };
 
 TranslationReducer.prototype.readDirectory = function(inputPath) {
@@ -132,7 +139,7 @@ TranslationReducer.prototype.readDirectory = function(inputPath) {
     var translation = readAsObject(inputPath + '/' + file);
 
     if (!translation) {
-      log('cannot read path "' + fullPath + '"');
+      plugin.log('cannot read path "' + fullPath + '"');
       return translations;
     }
 
@@ -161,7 +168,7 @@ TranslationReducer.prototype.wrapEntry = function(obj) {
 }
 
 TranslationReducer.prototype.build = function() {
-  var log = this.options.log;
+  var plugin = this;
   var inputPath = this.inputPaths[0];
   var outputPath = this.outputPath + '/' + this.options.outputPath;
   var translations = this.readDirectory(inputPath);
@@ -176,7 +183,7 @@ TranslationReducer.prototype.build = function() {
     })[0];
 
     if (!defaultTranslationPath) {
-      log(this.options.baseLocale + ' default locale missing `translations` folder');
+      plugin.log(this.options.baseLocale + ' default locale missing `translations` folder');
       return;
     }
 
