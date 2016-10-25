@@ -142,6 +142,10 @@ module.exports = {
   },
 
   log: function(msg) {
+    if (this.app.options && this.app.options.intl && this.app.options.intl.silent) {
+      return;
+    }
+
     this.ui.writeLine('[ember-intl] ' + msg);
   },
 
@@ -233,7 +237,8 @@ module.exports = {
   findIntlAddons: function() {
     var projectName = this.app.project.name();
     var addons = this.app.project.addons;
-    var hash = {};
+    var hash = Object.create(null);
+
     var find = function (list, addon) {
       // Only handle each addon once
       if (hash[addon.name]) {
