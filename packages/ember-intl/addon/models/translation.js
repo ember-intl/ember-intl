@@ -12,7 +12,7 @@ const TranslationModel = Ember.Object.extend({
     this._super(...arguments);
 
     if (!this.translations) {
-      this.translations = {};
+      this.translations = Object.create(null);
     }
   },
 
@@ -28,7 +28,7 @@ const TranslationModel = Ember.Object.extend({
    */
   addTranslations(translationsObject) {
     for (let key in translationsObject) {
-      if (translationsObject.hasOwnProperty(key)) {
+      if (typeof translationsObject[key] === 'string') {
         this.addTranslation(key, translationsObject[key]);
       }
     }
