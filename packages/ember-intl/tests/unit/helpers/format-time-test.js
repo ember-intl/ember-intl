@@ -22,10 +22,14 @@ test('exists', function(assert) {
 
 test('invoke formatTime directly', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatTime(date, {
+
+  const output = service.formatTime(date, {
     timeZone: 'UTC',
     locale: 'fr-fr'
-  }), '23/1/2014');
+  });
+
+  // Try both for browser Intl data inconsistencies
+  assert.ok(output === '23/1/2014' || output === '23/01/2014');
 });
 
 test('invoke formatTime directly with format', function(assert) {
@@ -40,9 +44,10 @@ test('invoke formatTime directly with format', function(assert) {
     }
   }, { instantiate: false });
 
-  assert.equal(service.formatTime(date, {
-    format: 'test'
-  }), '23/1/2014');
+  const output = service.formatTime(date, { format: 'test' });
+
+  // Try both for browser Intl data inconsistencies
+  assert.ok(output === '23/1/2014' || output === '23/01/2014');
 });
 
 test('it should return a formatted string from a date string', function(assert) {
