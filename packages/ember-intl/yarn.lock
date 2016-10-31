@@ -194,8 +194,8 @@ astw@^2.0.0:
     acorn "^1.0.3"
 
 async-disk-cache@^1.0.0:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/async-disk-cache/-/async-disk-cache-1.0.8.tgz#f0b0013ad84abbac10389c60e7bac493502fb91e"
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/async-disk-cache/-/async-disk-cache-1.0.9.tgz#23bafb823184f463407e474e8d5f87899f72ca63"
   dependencies:
     debug "^2.1.3"
     istextorbinary "2.1.0"
@@ -2095,6 +2095,10 @@ esprima@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.0.0.tgz#53cf247acda77313e551c3aa2e73342d3fb4f7d9"
 
+esprima@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.0.tgz#ea6aec30615034b0e8097ab2297ed2d5c887e3c3"
+
 esrefactor@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/esrefactor/-/esrefactor-0.1.0.tgz#d142795a282339ab81e936b5b7a21b11bf197b13"
@@ -3371,8 +3375,8 @@ lodash@^3.10.0, lodash@^3.9.3:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
 lodash@^4.14.0, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.16.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
+  version "4.16.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.5.tgz#77d88feac548009b1a5c4ca7b49ac431ce346ae8"
 
 lodash@~2.4.1:
   version "2.4.2"
@@ -4345,11 +4349,11 @@ recast@^0.10.0, recast@^0.10.10:
     source-map "~0.5.0"
 
 recast@^0.11.3:
-  version "0.11.14"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.11.14.tgz#3ba11420f9403c66e397c045ce4fe951a56eecb1"
+  version "0.11.15"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.11.15.tgz#3d03ee4f74b2ef4aa2f6ea2059d92db843d1316c"
   dependencies:
     ast-types "0.9.0"
-    esprima "~3.0.0"
+    esprima "~3.1.0"
     private "~0.1.5"
     source-map "~0.5.0"
 
