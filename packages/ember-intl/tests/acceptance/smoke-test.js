@@ -6,15 +6,15 @@ let application;
 
 const { run:emberRun } = Ember;
 
-function contains(selector, string) {
+function contains(assert, selector, string) {
   const element = find(selector)[0];
 
   if (!element) {
-    return ok(false, `can't find element: ${selector}`);
+    return assert.ok(false, `can't find element: ${selector}`);
   }
 
   const text = element.textContent || element.innerText;
-  return equal(text.replace(/^\s+|\s+$/g, ''), string);
+  return assert.equal(text.replace(/^\s+|\s+$/g, ''), string);
 }
 
 module('Acceptance: Smoke', {
@@ -28,42 +28,42 @@ module('Acceptance: Smoke', {
   }
 });
 
-test('format-number', () => {
+test('format-number', (assert) => {
   visit('/smoke');
 
   andThen(() => {
-    contains('.format-number', '€1,000.00');
+    contains(assert, '.format-number', '€1,000.00');
   });
 });
 
-test('format-date', () => {
+test('format-date', (assert) => {
   visit('/smoke');
 
   andThen(() => {
-    contains('.format-date', '1/23/2014');
+    contains(assert, '.format-date', '1/23/2014');
   });
 });
 
-test('format-time', () => {
+test('format-time', (assert) => {
   visit('/smoke');
 
   andThen(() => {
-    contains('.format-time', '18:00:44');
+    contains(assert, '.format-time', '18:00:44');
   });
 });
 
-test('format-relative', () => {
+test('format-relative', (assert) => {
   visit('/smoke');
 
   andThen(() => {
-    contains('.format-relative', 'yesterday');
+    contains(assert, '.format-relative', 'yesterday');
   });
 });
 
-test('translation-subdirectory', () => {
+test('translation-subdirectory', (assert) => {
   visit('/smoke');
 
   andThen(() => {
-    contains('.translation-subdirectory', 'translation subdirectories loaded');
+    contains(assert, '.translation-subdirectory', 'translation subdirectories loaded');
   });
 });

@@ -1,7 +1,7 @@
 ---
 language: node_js
 node_js:
-  - "0.12"
+  - "4"
 
 sudo: false
 
@@ -14,8 +14,9 @@ cache:
     - packages/ember-intl-relativeformat/node_modules
 
 env:
-  - EMBER_TRY_SCENARIO=default
+  # we recommend testing LTS's and latest stable release (bonus points to beta/canary)
   - EMBER_TRY_SCENARIO=ember-1.13
+  - EMBER_TRY_SCENARIO=ember-lts-2.4
   - EMBER_TRY_SCENARIO=ember-release
   - EMBER_TRY_SCENARIO=ember-beta
   - EMBER_TRY_SCENARIO=ember-canary
