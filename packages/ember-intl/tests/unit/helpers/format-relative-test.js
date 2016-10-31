@@ -58,14 +58,15 @@ test('can specify a `value` and `now` on the options hash', function(assert) {
 
 test('can specify a `interval` to trigger recompute', function(assert) {
   assert.expect(2);
+  const done = assert.async();
 
   this.set('date', new Date());
   this.render(hbs`{{format-relative date interval=1000}}`);
   assert.equal(this.$().text(), 'now');
-  stop();
+
   setTimeout(() => {
-    start();
     assert.equal(this.$().text(), '1 second ago');
+    done();
   }, 1001);
 });
 

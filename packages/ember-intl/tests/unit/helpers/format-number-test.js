@@ -181,7 +181,9 @@ test('used to format percentages', function(assert) {
   Ember.run(() => {
     service.setLocale('de-de');
     this.render(hbs`{{format-number 400 style="percent"}}`);
-    assert.equal(escape(this.$().text()), '40%2C000%25', 'de should return a string formatted to a percent');
+
+    const value = escape(this.$().text());
+    assert.ok(['40%2C000%25', '40.000%A0%25'].indexOf(value) > -1, 'de should return a string formatted to a percent');
   });
 });
 
