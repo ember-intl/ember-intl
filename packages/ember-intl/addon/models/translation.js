@@ -28,9 +28,7 @@ const TranslationModel = Ember.Object.extend({
    */
   addTranslations(translationsObject) {
     for (let key in translationsObject) {
-      if (typeof translationsObject[key] === 'string') {
-        this.addTranslation(key, translationsObject[key]);
-      }
+      this.addTranslation(key, translationsObject[key]);
     }
   },
 
