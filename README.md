@@ -24,6 +24,10 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 [conditionally loading the polyfill based on User-Agent]: https://github.com/jasonmit/ember-intl/wiki/Intl.js-Polyfill#polyfillio
 [disabling polyfill]: https://github.com/jasonmit/ember-intl/wiki/Intl.js-Polyfill#disabling
 
+## Documentation
+
+Documentation is now a series of markdown files hosted within the repository.  [Read more](https://github.com/jasonmit/ember-intl/tree/master/docs)
+
 ## Translations
 Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
 
