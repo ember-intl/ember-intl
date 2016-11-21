@@ -19,7 +19,7 @@ module.exports = function(environment) {
 
     /**
     * baseLocale is used to determine if translation keys are missing from other locales.
-    * This is property is optional, and if you rely on sideloading translations then
+    * This property is optional, and if you rely on sideloading translations then
     * this should be null
     *
     * @property baseLocale
