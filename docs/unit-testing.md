@@ -25,8 +25,8 @@ moduleForComponent('x-product', 'XProductComponent', {
     'ember-intl@formatter:format-number', // optional
     'ember-intl@formatter:format-relative', // optional
     'helper:intl-get', // optional
-    'helper:format-message', // optional
-    'helper:format-html-message', // optional
+    'helper:t', // optional, if used then be sure to include the format-message formatter above
+    'helper:t-html', // optional, if used then be sure to include the format-html-message formatter above
     'helper:format-date', // optional
     'helper:format-time', // optional
     'helper:format-relative', // optional
@@ -34,8 +34,7 @@ moduleForComponent('x-product', 'XProductComponent', {
   ],
   setup() {
     instanceInitializer.initialize(this);
-    const intl = this.container.lookup('service:intl');
-    intl.set('locale', 'en-us');
+    this.container.lookup('service:intl').setLocale('en-us');
   }
 });
 

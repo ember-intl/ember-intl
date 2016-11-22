@@ -246,12 +246,12 @@ This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This
 This delegates to the `{{t}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
 
 ```hbs
-{{format-html-message 'product.html.info'
+{{t-html 'product.html.info'
   product='Apple watch'
   price=200
   deadline=yesterday}}
 
-{{format-html-message (l '<strong>{numPhotos}</strong>')
+{{t-html (l '<strong>{numPhotos}</strong>')
   numPhotos=(format-number num)}}
 ```
 
