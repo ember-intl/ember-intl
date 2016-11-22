@@ -28,16 +28,12 @@ module.exports = {
   opts: null,
   isLocalizationFramework: true,
 
-  included: function(app) {
+  included: function() {
     this._super.included.apply(this, arguments);
 
-    // see: https://github.com/ember-cli/ember-cli/issues/3718
-    while (typeof app.import !== 'function' && app.app) {
-      app = app.app;
-    }
-
+    var app = this._findHost();
+    this.opts = this.intlConfig(app.env);
     this.app = app;
-    this.opts = this.intlConfig(this.app.env);
 
     var translationFolder = this.opts.inputPath;
     this.hasTranslationDir = existsSync(path.join(app.project.root, translationFolder));
@@ -54,8 +50,6 @@ module.exports = {
     }, this);
 
     this.trees.translationTree = this.createTranslationTree();
-
-    return app;
   },
 
   outputPaths: function() {

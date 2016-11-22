@@ -62,6 +62,7 @@
     "broccoli-stew": "^1.2.0",
     "chalk": "^1.0.0",
     "ember-cli-babel": "^5.1.7",
+    "ember-cli-import-polyfill": "^0.2.0",
     "ember-cli-lodash-subset": "^1.0.7",
     "ember-getowner-polyfill": "^1.0.0",
     "ember-intl-format-cache": "^2.4.0",
