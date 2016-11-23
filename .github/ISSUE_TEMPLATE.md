@@ -6,7 +6,7 @@
   If not, please try and fulfil these first.
 -->
 
-- [ ] I am on the [latest](https://github.com/jasonmit/ember-intl/releases/latest) Hyper.app version
+- [ ] I am on the [latest](https://github.com/jasonmit/ember-intl/releases/latest) ember-intl version
 - [ ] I have searched the [issues](https://github.com/jasonmit/ember-intl/issues) of this repo and believe that this is not a duplicate
 
 <!-- 
