@@ -20,9 +20,9 @@ This library provides Ember Handlebar helpers and a localization service.  The s
     * Instructions on [conditionally loading the polyfill based on User-Agent][]
     * Instructions on [disabling polyfill][]
 
-[loading from assets directory]: https://github.com/jasonmit/ember-intl/wiki/Intl.js-Polyfill#loading-files-from-assets
-[conditionally loading the polyfill based on User-Agent]: https://github.com/jasonmit/ember-intl/wiki/Intl.js-Polyfill#polyfillio
-[disabling polyfill]: https://github.com/jasonmit/ember-intl/wiki/Intl.js-Polyfill#disabling
+[loading from assets directory]: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md#loading-files-from-assets
+[conditionally loading the polyfill based on User-Agent]: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md#polyfillio
+[disabling polyfill]: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md#disabling
 
 ## Documentation
 
@@ -109,7 +109,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Number Options
-[List of supported format number options](https://github.com/jasonmit/ember-intl/wiki/Format-Number-Options)
+[List of supported format number options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-number-options.md)
 
 ### Format Date
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
@@ -132,7 +132,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Date Options
-[List of supported format date options](https://github.com/jasonmit/ember-intl/wiki/Format-Date-&-Time-Options)
+[List of supported format date options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Time
 This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
@@ -156,7 +156,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Time Options
-[List of supported format date options](https://github.com/jasonmit/ember-intl/wiki/Format-Date-&-Time-Options)
+[List of supported format date options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Relative
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
@@ -197,7 +197,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 ```
 
 #### Format Relative Options
-[List of supported format date options](https://github.com/jasonmit/ember-intl/wiki/Format-Relative-Options)
+[List of supported format date options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-relative-options.md)
 
 ### Format Message
 Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.  A short-hand form of the `{{format-message}}` is `{{t}}`.
@@ -291,7 +291,7 @@ Output of both the helper and the programmatic example:
 
 ## Polyfill
 
-There are two options on how to load the Intl.js polyfill, either through the polyfill which ships with ember-intl or through polyfill.io.  Both of which are documented: https://github.com/jasonmit/ember-intl/wiki/Intl.js-Polyfill
+There are two options on how to load the Intl.js polyfill, either through the polyfill which ships with ember-intl or through polyfill.io.  Both of which are documented: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md
 
 ## Helper Options
 * All helpers accept optional arguments:
@@ -310,11 +310,11 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 ## Asynchronously loading translations
 
 Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.  
-https://github.com/jasonmit/ember-intl/wiki/Asynchronously-loading-translations
+https://github.com/jasonmit/ember-intl/blob/master/docs/asynchronously-loading-translations.md
 
 ### Testing with ember-intl
-* [Unit testing](https://github.com/jasonmit/ember-intl/wiki/Testing---Unit)
-* [Integration testing](https://github.com/jasonmit/ember-intl/wiki/Testing---Integration)
+* [Unit testing](https://github.com/jasonmit/ember-intl/blob/master/docs/unit-testing.md)
+* [Integration testing](https://github.com/jasonmit/ember-intl/blob/master/docs/integration-testing.md)
 
 ## Common Errors
 

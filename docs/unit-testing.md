@@ -1,5 +1,5 @@
 
-Integration Testing
+Unit Testing
 ==============================================================================
 
 Unlike integration tests, dependencies are not registered on the container by

@@ -52,7 +52,7 @@ module.exports = function(/* env */) {
     * This enables asynchronously loading the translations for the active locale
     * by fetching them from the asset folder of the build.
     *
-    * See: https://github.com/jasonmit/ember-intl/wiki/Asynchronously-loading-translations
+    * See: https://github.com/jasonmit/ember-intl/blob/master/docs/asynchronously-loading-translations.md
     *
     * @property publicOnly
     * @type {Boolean}
