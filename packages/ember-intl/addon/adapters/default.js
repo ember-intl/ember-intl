@@ -50,12 +50,19 @@ const DefaultIntlAdapter = Ember.Object.extend({
     const len = locales.length;
     let i = 0;
 
+    const chosenLocale = locales[0];
+
     for (; i < len; i++) {
       const locale = locales[i];
       const translations = this.translationsFor(locale);
 
       if (translations && translations.has(translationKey)) {
-        return translations.getValue(translationKey);
+        if (locale !== chosenLocale /* && ENV.environment !== 'production' */) {
+          // marker for fallback translations
+          return '^*' + translations.getValue(translationKey) + '*^';
+        } else {
+          return translations.getValue(translationKey);
+        }
       }
     }
   }
