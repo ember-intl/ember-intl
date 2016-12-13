@@ -4,10 +4,9 @@
  */
 
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 import Translation from '../models/translation';
 
-const { assert } = Ember;
+const { assert, getOwner } = Ember;
 
 function normalize (fullName) {
   assert('Lookup name must be a string', typeof fullName === 'string');
