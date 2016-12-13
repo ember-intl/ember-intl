@@ -6,13 +6,12 @@
  */
 
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
 import isArrayEqual from '../utils/is-equal';
 
-const { assert, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
+const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 const assign = Ember.assign || Ember.merge;
 

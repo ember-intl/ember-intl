@@ -7,14 +7,13 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var serialize = require('serialize-javascript');
+require('./lib/polyfills/object-assign');
+
 var stringify = require('json-stable-stringify');
 var WatchedDir = require('broccoli-source').WatchedDir;
 var extract = require('broccoli-cldr-data');
-var _ = require('ember-cli-lodash-subset');
 var Funnel = require('broccoli-funnel');
 var existsSync = require('exists-sync');
-var stew = require('broccoli-stew');
 var walkSync = require('walk-sync');
 var path = require('path');
 var fs = require('fs');
@@ -164,7 +163,7 @@ module.exports = {
 
   intlConfig: function(environment) {
     var deprecatedConfig = this.app.project.config(environment)['intl'];
-    var addonConfig = _.assign(this.readConfig(environment), deprecatedConfig || {});
+    var addonConfig = Object.assign(this.readConfig(environment), deprecatedConfig || {});
 
     if (deprecatedConfig) {
       this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
@@ -187,7 +186,7 @@ module.exports = {
       addonConfig.baseLocale = addonConfig.defaultLocale;
     }
 
-    addonConfig = _.assign(defaults, addonConfig);
+    addonConfig = Object.assign(defaults, addonConfig);
 
     if (addonConfig.locales) {
       addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
@@ -275,7 +274,7 @@ module.exports = {
 
     var addon = this;
 
-    return new TranslationReducer(this.trees.translationTree, _.assign({}, this.opts, opts, {
+    return new TranslationReducer(this.trees.translationTree, Object.assign({}, this.opts, opts, {
       log: function() {
         return addon.log.apply(addon, arguments);
       }

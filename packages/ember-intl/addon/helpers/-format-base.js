@@ -4,9 +4,8 @@
  */
 
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
-const { Helper, inject, get, computed, isEmpty, getWithDefault } = Ember;
+const { Helper, getOwner, inject, get, computed, isEmpty, getWithDefault } = Ember;
 const assign = Ember.assign || Ember.merge;
 
 function helperFactory(formatType, helperOptions = {}) {
