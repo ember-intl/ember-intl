@@ -83,23 +83,36 @@ domain, which routes traffic through [Fastly](http://www.fastly.com/), which
 makes it available with global high availability and superb performance no
 matter where your users are.
 
-To use the Intl polyfill thru the [Polyfill service][] just add one script
-tag in your page before you load or parse your own JavaScript:
-
-```html
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
-```
+To use the Intl polyfill thru the [Polyfill service][], you can install
+[`ember-cli-polyfill-io`][] which will add the appropriate `<script>` tag to
+your Ember app.
 
 When specifying the `features` to use thru the polyfill service, you have to
-specify what locale, or locales to load along with the Intl polyfill for the
-page to function, in the example above we are specifying `Intl.~locale.en`,
-which means only `en`, but you could do something like this:
+specify what locale, or locales, to load along with the Intl polyfill for the
+page to function:
 
-```html
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en-US,Intl.~locale.fr-FR,Intl.~locale.es-ES"></script>
+```javascript
+// config/environment.js
+
+module.exports = function(environment) {
+  var ENV = {
+    // ...
+    'polyfill-io': {
+      features: [
+        'Intl.~locale.en-US',
+        'Intl.~locale.fr-FR',
+        'Intl.~locale.es-ES'
+      ]
+    }
+  };
+
+  // ...
+
+  return ENV;
+};
 ```
 
-_Note: the example above will load the polyfill with two locale data set,
+_Note: the example above will load the polyfill with three locale data set,
 `fr-FR`, `en-US`, and `es-ES`._
 
 This is by far the best option to use the Intl polyfill since it will only
@@ -108,3 +121,4 @@ needed (e.g.: safari will get the code and patch the runtime while chrome
 will get an empty script tag).
 
 [Polyfill service]: https://cdn.polyfill.io/v2/docs/
+[ember-cli-polyfill-io]: https://github.com/alexlafroscia/ember-cli-polyfill-io
