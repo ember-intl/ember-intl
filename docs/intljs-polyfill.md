@@ -76,15 +76,15 @@ module.exports = function() {
 
 ## Polyfill.io
 
-Intl.js polyfill was recently added to the [Polyfill service][], which is
+Intl.js polyfill was recently added to the [Polyfill.io service][Polyfill service], which is
 developed and maintained by a community of contributors led by a team at the
 [Financial Times](http://www.ft.com/). It is available thru `cdn.polyfill.io`
 domain, which routes traffic through [Fastly](http://www.fastly.com/), which
 makes it available with global high availability and superb performance no
 matter where your users are.
 
-To use the Intl polyfill thru the [Polyfill service][], you can install
-[`ember-cli-polyfill-io`][] which will add the appropriate `<script>` tag to
+To use the Intl polyfill thru the [Polyfill.io service][Polyfill service], you can install
+[`ember-cli-polyfill-io`][ember-cli-polyfill-io] which will add the appropriate `<script>` tag to
 your Ember app.
 
 When specifying the `features` to use thru the polyfill service, you have to
