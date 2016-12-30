@@ -31,8 +31,8 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     var app = this._findHost();
-    this.opts = this.intlConfig(app.env);
     this.app = app;
+    this.opts = this.intlConfig(app.env);
 
     var translationFolder = this.opts.inputPath;
     this.hasTranslationDir = existsSync(path.join(app.project.root, translationFolder));
