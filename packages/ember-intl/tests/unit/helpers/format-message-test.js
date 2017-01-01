@@ -158,6 +158,12 @@ test('locale can add messages object and can read it', function(assert) {
   assert.equal(this.$().text(), "bulk add works");
 });
 
+test('can inline locale for missing locale', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{t 'foo.bar' locale='xx-xx'}}`);
+  assert.equal(this.$().text(), `Missing translation: foo.bar`);
+});
+
 test('exists returns false when key not found', function(assert) {
   assert.expect(1);
   assert.equal(service.exists('bar'), false);

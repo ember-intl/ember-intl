@@ -187,10 +187,9 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  findTranslationByKey(key, locales) {
-    locales = locales || get(this, '_locale');
-
-    const translation = get(this, 'adapter').findTranslationByKey(makeArray(locales), key);
+  findTranslationByKey(key, locale) {
+    const locales = makeArray(locale || get(this, '_locale'));
+    const translation = get(this, 'adapter').findTranslationByKey(locales, key);
 
     if (typeof translation === 'undefined') {
       const missingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
