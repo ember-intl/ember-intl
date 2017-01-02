@@ -1,5 +1,7 @@
 import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
 import { moduleFor, test } from 'ember-qunit';
+import instanceInitializer from '../../../instance-initializers/ember-intl';
 
 let service;
 
@@ -11,18 +13,31 @@ moduleFor('service:intl', 'Unit | Service | intl', {
 });
 
 test('triggers notifyPropertyChange only when locale changes', function(assert) {
-  var count = 0;
-  function handler() {
+  let count = 0;
+
+  function increment() {
     ++count;
   }
-  service.addObserver('locale', service, handler);
+
+  service.addObserver('locale', service, increment);
   service.setLocale('en');
   service.setLocale('en');
   service.setLocale(['en']);
   service.setLocale('fr');
   assert.equal(count, 2);
   assert.equal(service.get('locale'), 'fr');
-  service.removeObserver('locale', service, handler);
+  service.removeObserver('locale', service, increment);
+});
+
+test('waits for translations to load', function(assert) {
+  assert.expect(1);
+  instanceInitializer.initialize(this);
+
+  return wait().then(() => {
+    assert.equal(service.t('product.title', {
+      locale: 'en-us'
+    }), 'Hello world!');
+  });
 });
 
 test('it does not mutate t options hash', function(assert) {
