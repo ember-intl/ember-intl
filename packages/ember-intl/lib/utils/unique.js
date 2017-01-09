@@ -7,11 +7,11 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var castArray = require('./cast-array');
+let castArray = require('./cast-array');
 
 function unique(array) {
-  var found = Object.create(null);
-  var out = [];
+  let found = Object.create(null);
+  let out = [];
 
   castArray(array).forEach(function(item) {
     if (typeof item !== 'string' || found[item.toLocaleLowerCase()]) {

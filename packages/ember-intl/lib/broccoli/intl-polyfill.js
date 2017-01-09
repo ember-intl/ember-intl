@@ -2,11 +2,11 @@
 
 'use strict';
 
-var path = require('path');
-var Funnel = require('broccoli-funnel');
-var mergeTrees = require('broccoli-merge-trees');
-var renameTree = require('broccoli-stew').rename;
-var UnwatchedDir = require('broccoli-source').UnwatchedDir;
+let path = require('path');
+let Funnel = require('broccoli-funnel');
+let mergeTrees = require('broccoli-merge-trees');
+let renameTree = require('broccoli-stew').rename;
+let UnwatchedDir = require('broccoli-source').UnwatchedDir;
 
 function lowercaseTree(tree) {
   return renameTree(tree, function(filepath) {
@@ -14,9 +14,9 @@ function lowercaseTree(tree) {
   });
 }
 
-module.exports = function(opts) {
-  var tree = new UnwatchedDir(path.dirname(require.resolve('intl')));
-  var trees = [];
+module.exports = function intlPolyfill(opts) {
+  let tree = new UnwatchedDir(path.dirname(require.resolve('intl')));
+  let trees = [];
 
   trees.push(new Funnel(tree, {
     srcDir: 'dist',
@@ -24,13 +24,13 @@ module.exports = function(opts) {
     destDir: opts.destDir
   }));
 
-  var polyfillTree = new Funnel(tree, {
+  let polyfillTree = new Funnel(tree, {
     srcDir: 'dist',
     files: ['Intl.complete.js', 'Intl.js', 'Intl.min.js'],
     destDir: opts.destDir
   });
 
-  var localeFunnel = {
+  let localeFunnel = {
     srcDir: 'locale-data/jsonp',
     destDir: opts.destDir + '/locales'
   };
@@ -41,7 +41,7 @@ module.exports = function(opts) {
     });
   }
 
-  var localesTree = new Funnel(tree, localeFunnel);
+  let localesTree = new Funnel(tree, localeFunnel);
 
   trees.push(lowercaseTree(mergeTrees([polyfillTree, localesTree])));
 

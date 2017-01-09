@@ -7,16 +7,16 @@
 * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
 */
 
-var CachingWriter = require('broccoli-caching-writer');
-var stringify = require('json-stable-stringify');
-var walkSync = require('walk-sync');
-var mkdirp = require('mkdirp');
-var extend = require('extend');
-var yaml = require('js-yaml');
-var chalk = require('chalk');
-var glob = require('glob');
-var path = require('path');
-var fs = require('fs');
+let CachingWriter = require('broccoli-caching-writer');
+let stringify = require('json-stable-stringify');
+let walkSync = require('walk-sync');
+let mkdirp = require('mkdirp');
+let extend = require('extend');
+let yaml = require('js-yaml');
+let chalk = require('chalk');
+let glob = require('glob');
+let path = require('path');
+let fs = require('fs');
 
 /**
 * Turns an object into a single dimensional array of strings
@@ -32,10 +32,10 @@ var fs = require('fs');
 * @private
 */
 function propKeys(object) {
-  var result = [];
-  var escaped;
+  let result = [];
+  let escaped;
 
-  for (var key in object) {
+  for (let key in object) {
     escaped = key.replace(/\./g, '\\.');
 
     if (object.hasOwnProperty(key)) {
@@ -53,8 +53,8 @@ function propKeys(object) {
 }
 
 function readAsObject(filepath) {
-  var data = fs.readFileSync(filepath);
-  var ext = path.extname(filepath);
+  let data = fs.readFileSync(filepath);
+  let ext = path.extname(filepath);
 
   switch (ext) {
     case '.json':
@@ -65,145 +65,137 @@ function readAsObject(filepath) {
   }
 }
 
-function TranslationReducer(inputNode, options) {
-  options = options || {};
-
-  if (!(this instanceof TranslationReducer)) {
-    return new TranslationReducer(inputNode, options);
-  }
-
-  if (!Array.isArray(inputNode)) {
-    inputNode = [inputNode];
-  }
-
-  CachingWriter.call(this, inputNode, { annotation: 'Translation Reducer' });
-
-  if (typeof options.log === 'undefined') {
-    options.log = function() {}
-  }
-
-  this.options = options;
-}
-
-TranslationReducer.prototype = Object.create(CachingWriter.prototype);
-TranslationReducer.prototype.constructor = TranslationReducer;
-
-TranslationReducer.prototype.normalizeLocale = function(locale) {
-  if (typeof locale === 'string') {
-    return locale.toLowerCase();
-  }
-
-  return locale;
-}
-
-TranslationReducer.prototype.log = function(msg) {
-  if (this.options.log) {
-    return this.options.log.apply(undefined, arguments);
-  }
-
-  console.log(msg);
-}
-
-TranslationReducer.prototype.findMissingKeys = function(target, defaultTranslationKeys, locale) {
-  var targetProps = propKeys(target);
-
-  defaultTranslationKeys.forEach(function(property) {
-    if (targetProps.indexOf(property) === -1) {
-      this.log(property + ' missing from ' + locale);
-    }
-  }, this);
-};
-
-TranslationReducer.prototype.readDirectory = function(inputPath) {
-  var plugin = this;
-  var log = this.options.log;
-
-  // sorted so that any translation path starts with `__addon__`
-  // move to the head of the array.  this ensures the application's translations
-  // take presidence over addon translations.
-  var sortedPaths = walkSync(inputPath).sort(function(a, b) {
-    if (a.indexOf('__addon__') === 0) {
-      return -1;
+class TranslationReducer extends CachingWriter {
+  constructor(inputNode, options) {
+    if (!Array.isArray(inputNode)) {
+      inputNode = [inputNode];
     }
 
-    return 1;
-  });
+    super(inputNode, {
+      annotation: 'Translation Reducer'
+    });
 
-  return sortedPaths.reduce(function (translations, file) {
-    var fullPath = inputPath + '/' + file;
-
-    if (fs.statSync(fullPath).isDirectory()) {
-      return translations;
-    }
-
-    var translation = readAsObject(inputPath + '/' + file);
-
-    if (!translation) {
-      plugin.log('cannot read path "' + fullPath + '"');
-      return translations;
-    }
-
-    var basename = path.basename(file).split('.')[0];
-    var keyedTranslation = {};
-    keyedTranslation[plugin.normalizeLocale(basename)] = translation;
-
-    return extend(true, translations, keyedTranslation);
-  }, {});
-};
-
-TranslationReducer.prototype.filename = function(key) {
-  if (typeof this.options.filename === 'function') {
-    return this.options.filename(key);
+    this.options = Object.assign({
+      log() {}
+    }, options);
   }
 
-  return key + '.json';
-}
-
-TranslationReducer.prototype.wrapEntry = function(obj) {
-  if (typeof this.options.wrapEntry === 'function') {
-    return this.options.wrapEntry(obj);
-  }
-
-  return stringify(obj);
-}
-
-TranslationReducer.prototype.build = function() {
-  var plugin = this;
-  var inputPath = this.inputPaths[0];
-  var outputPath = this.outputPath + '/' + this.options.outputPath;
-  var translations = this.readDirectory(inputPath);
-  var defaultTranslationKeys, defaultTranslation, translation;
-
-  mkdirp.sync(outputPath);
-
-  if (this.options.baseLocale) {
-    var defaultTranslationPath = glob.sync(inputPath + '/' + this.options.baseLocale + '\.@(json|yaml|yml)', {
-      nosort: true,
-      silent: true
-    })[0];
-
-    if (!defaultTranslationPath) {
-      plugin.log(this.options.baseLocale + ' default locale missing `translations` folder');
-      return;
+  normalizeLocale(locale) {
+    if (typeof locale === 'string') {
+      return locale.toLowerCase();
     }
 
-    defaultTranslation = translations[this.normalizeLocale(this.options.baseLocale)];
-    defaultTranslationKeys = propKeys(defaultTranslation);
+    return locale;
   }
 
-  for (var key in translations) {
-    if (translations.hasOwnProperty(key)) {
-      translation = translations[key];
+  _log(msg) {
+    if (this.options.log) {
+      return this.options.log.apply(undefined, arguments);
+    }
 
-      if (this.options.baseLocale) {
-        this.findMissingKeys(translation, defaultTranslationKeys, key);
+    console.log(msg);
+  }
+
+  findMissingKeys(target, defaultTranslationKeys, locale) {
+    let targetProps = propKeys(target);
+
+    defaultTranslationKeys.forEach(function(property) {
+      if (targetProps.indexOf(property) === -1) {
+        this._log(property + ' missing from ' + locale);
+      }
+    }, this);
+  }
+
+  readDirectory(inputPath) {
+    let plugin = this;
+
+    // sorted so that any translation path starts with `__addon__`
+    // move to the head of the array.  this ensures the application's translations
+    // take presidence over addon translations.
+    let sortedPaths = walkSync(inputPath).sort(function(a, b) {
+      if (a.indexOf('__addon__') === 0) {
+        return -1;
       }
 
-      translation = extend(true, {}, defaultTranslation, translation);
+      return 1;
+    });
 
-      fs.writeFileSync(outputPath + '/' + this.filename(key), this.wrapEntry(translation), { encoding: 'utf8' });
+    return sortedPaths.reduce(function (translations, file) {
+      let fullPath = inputPath + '/' + file;
+
+      if (fs.statSync(fullPath).isDirectory()) {
+        return translations;
+      }
+
+      let translation = readAsObject(inputPath + '/' + file);
+
+      if (!translation) {
+        plugin._log('cannot read path "' + fullPath + '"');
+        return translations;
+      }
+
+      let basename = path.basename(file).split('.')[0];
+      let keyedTranslation = {};
+      keyedTranslation[plugin.normalizeLocale(basename)] = translation;
+
+      return extend(true, translations, keyedTranslation);
+    }, {});
+  }
+
+  filename(key) {
+    if (typeof this.options.filename === 'function') {
+      return this.options.filename(key);
+    }
+
+    return key + '.json';
+  }
+
+  wrapEntry(obj) {
+    if (typeof this.options.wrapEntry === 'function') {
+      return this.options.wrapEntry(obj);
+    }
+
+    return stringify(obj);
+  }
+
+  build() {
+    let plugin = this;
+    let inputPath = this.inputPaths[0];
+    let outputPath = this.outputPath + '/' + this.options.outputPath;
+    let translations = this.readDirectory(inputPath);
+    let defaultTranslationKeys, defaultTranslation, translation;
+
+    mkdirp.sync(outputPath);
+
+    if (this.options.baseLocale) {
+      let defaultTranslationPath = glob.sync(inputPath + '/' + this.options.baseLocale + '\.@(json|yaml|yml)', {
+        nosort: true,
+        silent: true
+      })[0];
+
+      if (!defaultTranslationPath) {
+        plugin._log(this.options.baseLocale + ' default locale missing `translations` folder');
+        return;
+      }
+
+      defaultTranslation = translations[this.normalizeLocale(this.options.baseLocale)];
+      defaultTranslationKeys = propKeys(defaultTranslation);
+    }
+
+    for (let key in translations) {
+      if (translations.hasOwnProperty(key)) {
+        translation = translations[key];
+
+        if (this.options.baseLocale) {
+          this.findMissingKeys(translation, defaultTranslationKeys, key);
+        }
+
+        translation = extend(true, {}, defaultTranslation, translation);
+
+        fs.writeFileSync(outputPath + '/' + this.filename(key), this.wrapEntry(translation), { encoding: 'utf8' });
+      }
     }
   }
-};
+}
 
 module.exports = TranslationReducer;
