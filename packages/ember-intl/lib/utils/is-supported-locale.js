@@ -2,10 +2,12 @@
 
 'use strict';
 
-module.exports = function(locale) {
+function isSupportedLocale(locale) {
   if (!/^[a-zA-Z0-9-]+$/.test(locale)) {
     return false;
   }
 
   return true;
-};
+}
+
+module.exports = isSupportedLocale;

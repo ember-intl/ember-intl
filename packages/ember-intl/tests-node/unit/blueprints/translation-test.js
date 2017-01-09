@@ -1,9 +1,9 @@
 'use strict';
 
-var mocha = require('mocha');
-var expect = require('chai').expect;
+let mocha = require('mocha');
+let expect = require('chai').expect;
 
-var subject = require('../../../blueprints/translation');
+let subject = require('../../../blueprints/translation');
 
 describe('translations', function() {
   it('normalizes the locale arg', function() {
@@ -19,14 +19,14 @@ describe('translations', function() {
   });
 
   it('throws when invalid formatted locale is provided', function() {
-    var fn = function() {
+    function triggerBeforeInstall() {
       subject.beforeInstall({
         entity: {
           name: 'INVALID.LOCALE'
         }
-      })
+      });
     }
 
-    expect(fn).to.throw(Error);
+    expect(triggerBeforeInstall).to.throw(Error);
   });
 });

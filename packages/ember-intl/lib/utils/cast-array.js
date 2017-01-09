@@ -1,9 +1,11 @@
 'use strict';
 
-module.exports = function(obj) {
+function castArray(obj) {
   if (typeof obj === 'undefined') {
     return [];
   }
 
   return Array.isArray(obj) ? obj : [obj];
-};
+}
+
+module.exports = castArray;
