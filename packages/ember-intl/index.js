@@ -242,7 +242,7 @@ module.exports = {
     let addons = this.app.project.addons;
     let registered = new Set();
 
-    let find = function (list, addon) {
+    let find = function(list, addon) {
       // Only handle each addon once
       if (registered.has(addon.name)) {
         return list;

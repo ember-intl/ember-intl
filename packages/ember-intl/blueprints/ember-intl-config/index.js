@@ -8,5 +8,5 @@
 module.exports = {
   description: 'Create a new boilerplate configuration file',
 
-  normalizeEntityName: function () {}
+  normalizeEntityName() {}
 };

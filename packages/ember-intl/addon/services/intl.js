@@ -1,5 +1,3 @@
-/* global requirejs */
-
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -12,11 +10,10 @@ import IntlRelativeFormat from 'intl-relativeformat';
 import isArrayEqual from '../utils/is-equal';
 
 const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
-const TRANSLATION_PATH_CAPTURE = /\/translations\/(.+)$/;
 const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(formatType) {
-  return function (value, options, formats) {
+  return function(value, options, formats) {
     if (!options) {
       if (arguments.length > 1) {
         Ember.warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`, false, {
@@ -57,6 +54,16 @@ const IntlService = Service.extend(Evented, {
       return get(this, '_locale');
     }
   }),
+
+  /**
+   * Returns an array of registered locale names
+   *
+   * @property locales
+   * @public
+   */
+  locales: computed('adapter.seen.[]', function() {
+    return get(this, 'adapter.seen').map(l => l.localeName);
+  }).readOnly(),
 
   adapter: computed({
     get() {
@@ -106,15 +113,11 @@ const IntlService = Service.extend(Evented, {
   },
 
   getLocalesByTranslations() {
-    return Object.keys(requirejs.entries).reduce((translations, module) => {
-      const match = module.match(TRANSLATION_PATH_CAPTURE);
+    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
+      id: 'ember-intl-locales-cp'
+    });
 
-      if (match) {
-        translations.addObject(match[1]);
-      }
-
-      return translations;
-    }, Ember.A());
+    return get(this, 'locales');
   },
 
   /**
