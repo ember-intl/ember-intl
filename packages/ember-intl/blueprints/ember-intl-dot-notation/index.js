@@ -8,5 +8,5 @@
 module.exports = {
   description: 'Used to support dot notated translation keys',
 
-  normalizeEntityName: function () {}
+  normalizeEntityName() {}
 };

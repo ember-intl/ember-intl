@@ -40,7 +40,7 @@ function propKeys(object) {
 
     if (object.hasOwnProperty(key)) {
       if (typeof object[key] === 'object') {
-        result = result.concat(propKeys(object[key]).map(function (_key) {
+        result = result.concat(propKeys(object[key]).map(function(_key) {
           return escaped + '.' + _key;
         }));
       } else {
@@ -120,7 +120,7 @@ class TranslationReducer extends CachingWriter {
       return 1;
     });
 
-    return sortedPaths.reduce(function (translations, file) {
+    return sortedPaths.reduce(function(translations, file) {
       let fullPath = inputPath + '/' + file;
 
       if (fs.statSync(fullPath).isDirectory()) {

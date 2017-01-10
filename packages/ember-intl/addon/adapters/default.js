@@ -8,31 +8,57 @@ import Translation from '../models/translation';
 
 const { assert, getOwner } = Ember;
 
-function normalize (fullName) {
+function normalize(fullName) {
   assert('Lookup name must be a string', typeof fullName === 'string');
 
   return fullName.toLocaleLowerCase();
 }
 
 const DefaultIntlAdapter = Ember.Object.extend({
+  seen: null,
+  owner: null,
+
+  init() {
+    this._super(...arguments);
+
+    this.seen = Ember.A();
+    this.owner = getOwner(this);
+  },
+
   translationsFor(localeName) {
     if (typeof localeName !== 'string') {
       throw new Error('locale name required for translation lookup');
     }
 
-    const owner = getOwner(this);
-    const lookupName = `ember-intl@translation:${normalize(localeName)}`;
-    const Type = owner._lookupFactory('model:ember-intl-translation') || Translation;
+    const Type = this.owner._lookupFactory('model:ember-intl-translation') || Translation;
 
     if (localeName && localeName instanceof Type) {
       return localeName;
     }
 
-    if (!owner.hasRegistration(lookupName)) {
-      owner.register(lookupName, Type.extend({}));
+    const normalizedLocale = normalize(localeName);
+    const lookupName = `ember-intl@translation:${normalizedLocale}`;
+    const exists = this.owner.hasRegistration(lookupName);
+
+    if (!exists) {
+      const ModelType = Type.extend();
+
+      Object.defineProperty(ModelType.proto(), 'localeName', {
+        writable: false,
+        enumerable: true,
+        value: normalizedLocale
+      });
+
+      this.owner.register(lookupName, ModelType);
     }
 
-    return owner.lookup(lookupName);
+    const model = this.owner.lookup(lookupName);
+
+    if (!exists) {
+      this.seen.pushObject(model);
+    }
+
+    return model;
   },
 
   has(localeName, translationKey) {
@@ -45,16 +71,16 @@ const DefaultIntlAdapter = Ember.Object.extend({
     return false;
   },
 
-  findTranslationByKey(locales, translationKey) {
-    const len = locales.length;
+  findTranslationByKey(localeNames, translationKey) {
+    const len = localeNames.length;
     let i = 0;
 
     for (; i < len; i++) {
-      const locale = locales[i];
-      const translations = this.translationsFor(locale);
+      const locale = localeNames[i];
+      const model = this.translationsFor(locale);
 
-      if (translations && translations.has(translationKey)) {
-        return translations.getValue(translationKey);
+      if (model && model.has(translationKey)) {
+        return model.getValue(translationKey);
       }
     }
   }

@@ -13,7 +13,7 @@ var isSupportedLocale = require('../../lib/utils/is-supported-locale');
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
 
-  normalizeEntityName: function(locale) {
+  normalizeEntityName(locale) {
     if (!locale) {
       throw new SilentError('[ember-intl] no locale argument provided. Usage: `ember g translation en-us`');
     }
@@ -21,7 +21,7 @@ module.exports = {
     return locale.toLowerCase();
   },
 
-  beforeInstall: function(options) {
+  beforeInstall(options) {
     var locale = options.entity.name;
 
     if (!isSupportedLocale(locale.toLowerCase())) {
@@ -30,9 +30,9 @@ module.exports = {
     }
   },
 
-  fileMapTokens: function() {
+  fileMapTokens() {
     return {
-      __name__: function(options) {
+      __name__(options) {
         return options.dasherizedModuleName
       }
     }

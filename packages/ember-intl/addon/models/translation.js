@@ -8,6 +8,8 @@ import Ember from 'ember';
 const { get, set, deprecate } = Ember;
 
 const TranslationModel = Ember.Object.extend({
+  localeName: null,
+
   init() {
     this._super(...arguments);
 

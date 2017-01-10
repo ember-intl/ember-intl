@@ -2,7 +2,9 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
-import Translation from 'ember-intl/models/translation';
+import instanceInitializer from '../../../instance-initializers/ember-intl';
+
+const { get, set, computed, run, A:emberArray, Object:EmberObject } = Ember;
 
 const locale = 'en-us';
 let service, registry;
@@ -12,8 +14,10 @@ moduleForComponent('format-message', {
   beforeEach() {
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
-    registry.register('ember-intl@translation:en-us', Translation.extend());
-    this.container.lookup('ember-intl@translation:en-us').addTranslations({
+
+    instanceInitializer.initialize(this);
+
+    service.addTranslations('en-us', {
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
@@ -32,7 +36,6 @@ moduleForComponent('format-message', {
     });
 
     registry.injection('formatter', 'intl', 'service:intl');
-
     service.setLocale(locale);
   }
 });
@@ -122,7 +125,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 
   this.setProperties({
     HARVEST_MSG: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
-    harvests: Ember.A([
+    harvests: emberArray([
       { person: 'Allison', count: 10 },
       { person: 'Jeremy', count: 60 }
     ])
@@ -139,7 +142,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 test('locale can add message to intl service and read it', function(assert) {
   assert.expect(1);
 
-  Ember.run(() => {
+  run(() => {
     service.addTranslation('en-us', 'oh', 'hai!').then(() => {
       this.render(hbs`{{format-message 'oh'}}`);
       assert.equal(this.$().text(), 'hai!');
@@ -177,8 +180,9 @@ test('exists returns true when key found', function(assert) {
 });
 
 test('able to discover all register translations', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr');
+  assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr');
 });
 
 test('should respect format options for date ICU block', function(assert) {
@@ -193,7 +197,7 @@ test('intl-get returns message for key that is a literal string (not an object p
   const translation = this.container.lookup('ember-intl@translation:en-us');
   const fn = translation.getValue;
 
-  translation.getValue = function (key) {
+  translation.getValue = function getValue(key) {
     return this[key];
   };
 
@@ -215,22 +219,22 @@ test('l helper handles bound computed property', function(assert) {
   const done = assert.async();
   assert.expect(2);
 
-  const context = Ember.Object.extend({
+  const context = EmberObject.extend({
     foo: true,
-    cp: Ember.computed('foo', {
+    cp: computed('foo', {
       get() {
-        return Ember.get(this, 'foo') ? 'foo foo' : 'bar bar';
+        return get(this, 'foo') ? 'foo foo' : 'bar bar';
       }
     })
   }).create();
 
-  this.set('context', context);
+  set(this, 'context', context);
   this.render(hbs`{{format-message (l context.cp)}}`);
   assert.equal(this.$().text(), 'foo foo');
 
-  Ember.run(() => {
+  run(() => {
     context.set('foo', false);
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(this.$().text(), 'bar bar');
       done();
     });
@@ -240,28 +244,28 @@ test('l helper handles bound computed property', function(assert) {
 test('intl-get handles bound computed property', function(assert) {
   assert.expect(3);
 
-  const context = Ember.Object.extend({
+  const context = EmberObject.extend({
     foo: true,
-    cp: Ember.computed('foo', {
+    cp: computed('foo', {
       get() {
-        return Ember.get(this, 'foo') ? 'foo.bar' : 'foo.baz';
+        return get(this, 'foo') ? 'foo.bar' : 'foo.baz';
       }
     })
   }).create();
 
-  this.set('context', context);
+  set(this, 'context', context);
 
   this.render(hbs`{{format-message (intl-get context.cp)}}`);
 
   assert.equal(this.$().text(), 'foo bar baz');
 
-  Ember.run(() => {
-    this.set('context.foo', false);
+  run(() => {
+    set(this, 'context.foo', false);
   });
 
   assert.equal(this.$().text(), 'baz baz baz');
 
-  Ember.run(() => {
+  run(() => {
     context.set('foo', true);
   });
 
