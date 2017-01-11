@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import Translation from '../models/translation';
 
-const { assert, getOwner } = Ember;
+const { assert, A:emberArray, getOwner } = Ember;
 
 function normalize(fullName) {
   assert('Lookup name must be a string', typeof fullName === 'string');
@@ -21,7 +21,7 @@ const DefaultIntlAdapter = Ember.Object.extend({
   init() {
     this._super(...arguments);
 
-    this.seen = Ember.A();
+    this.seen = emberArray();
     this.owner = getOwner(this);
   },
 
@@ -30,26 +30,21 @@ const DefaultIntlAdapter = Ember.Object.extend({
       throw new Error('locale name required for translation lookup');
     }
 
-    const Type = this.owner._lookupFactory('model:ember-intl-translation') || Translation;
-
-    if (localeName && localeName instanceof Type) {
-      return localeName;
-    }
-
     const normalizedLocale = normalize(localeName);
+    const Klass = this.owner._lookupFactory('model:ember-intl-translation') || Translation;
     const lookupName = `ember-intl@translation:${normalizedLocale}`;
     const exists = this.owner.hasRegistration(lookupName);
 
     if (!exists) {
-      const ModelType = Type.extend();
+      const ModelKlass = Klass.extend();
 
-      Object.defineProperty(ModelType.proto(), 'localeName', {
+      Object.defineProperty(ModelKlass.proto(), 'localeName', {
         writable: false,
         enumerable: true,
         value: normalizedLocale
       });
 
-      this.owner.register(lookupName, ModelType);
+      this.owner.register(lookupName, ModelKlass);
     }
 
     const model = this.owner.lookup(lookupName);
@@ -62,13 +57,9 @@ const DefaultIntlAdapter = Ember.Object.extend({
   },
 
   has(localeName, translationKey) {
-    const translations = this.translationsFor(localeName);
+    const model = this.translationsFor(localeName);
 
-    if (translations) {
-      return translations.has(translationKey);
-    }
-
-    return false;
+    return model && model.has(translationKey);
   },
 
   findTranslationByKey(localeNames, translationKey) {
