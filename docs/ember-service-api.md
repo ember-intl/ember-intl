@@ -23,6 +23,15 @@ Access the service from within the instance via: `this.get('intl')`
 The current locale associated with the application.  To set this property,
 use the `setLocale` method.
 
+**locales** _readOnly_
+
+Returns an array of locales that have translations assigned to them.  This works
+with both bundled translations and lazy-loaded translations.
+
+```js
+intl.get('locales') => ['en-us', 'en-ca', 'fr-fr'];
+```
+
 ## Methods
 
 **t** _(translationKey:String, optionalOptions:Object, optionalFormats:Object)_
