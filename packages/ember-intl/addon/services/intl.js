@@ -8,6 +8,7 @@ import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
 import isArrayEqual from '../utils/is-equal';
+import normalizeLocale from '../utils/normalize-locale';
 
 const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const assign = Ember.assign || Ember.merge;
@@ -38,7 +39,7 @@ function formatterProxy(formatType) {
 
     return formatter.format(value, options, {
       formats: formats,
-      locale: options.locale || get(this, '_locale')
+      locale: normalizeLocale(options.locale) || get(this, '_locale')
     });
   };
 }
@@ -162,7 +163,7 @@ const IntlService = Service.extend(Evented, {
   setLocale(locales) {
     if (!locales) { return; }
 
-    const proposed = makeArray(locales);
+    const proposed = makeArray(locales).map(normalizeLocale);
     const current = get(this, '_locale');
 
     if (!isArrayEqual(proposed, current)) {

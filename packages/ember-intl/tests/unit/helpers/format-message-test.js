@@ -56,7 +56,7 @@ test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
   assert.equal(service.formatMessage('Sale begins {day, date, shortWeekDay}', {
     day: 1390518044403,
-    locale: 'en-us'
+    locale: 'en_us'
   }), 'Sale begins January 23, 2014');
 });
 
@@ -181,9 +181,10 @@ test('exists returns true when key found', function(assert) {
 
 test('able to discover all register translations', function(assert) {
   assert.expect(2);
+  service.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
   service.exists('test', 'fr-ca');
-  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr');
-  assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr');
+  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
+  assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
 });
 
 test('should respect format options for date ICU block', function(assert) {

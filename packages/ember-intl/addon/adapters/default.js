@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import Translation from '../models/translation';
+import normalizeLocale from '../utils/normalize-locale';
 
 const { assert, A:emberArray, getOwner } = Ember;
 
@@ -19,7 +20,7 @@ const DefaultIntlAdapter = Ember.Object.extend({
   normalizeLocaleName(localeName) {
     assert('Locale name must be a string', typeof localeName === 'string');
 
-    return localeName.toLocaleLowerCase();
+    return normalizeLocale(localeName);
   },
 
   lookupLocale(localeName) {

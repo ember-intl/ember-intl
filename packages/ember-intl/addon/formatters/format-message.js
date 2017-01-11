@@ -22,6 +22,7 @@ const FormatMessage = Formatter.extend({
     const { formats, locale } = ctx;
     const formatter = get(this, 'formatter');
 
+    /* locale can be a locale string or an array of locale strings */
     return formatter(value, locale, formats).format(options);
   }
 });
