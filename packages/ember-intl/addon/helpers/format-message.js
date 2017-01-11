@@ -8,14 +8,16 @@ import Ember from 'ember';
 import factory from './-format-base';
 import { LiteralWrapper } from './l';
 
-const { get } = Ember;
+const { get, assert } = Ember;
 
-export function getValue([key], hash) {
+export function getValue([key], { locale:optionalLocale }) {
   if (key && key instanceof LiteralWrapper) {
     return key.value;
   }
 
-  return get(this, 'intl').findTranslationByKey(key, hash.locale);
+  assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
+
+  return get(this, 'intl').lookup(key, optionalLocale);
 }
 
 export default factory('message').extend({

@@ -181,6 +181,7 @@ test('exists returns true when key found', function(assert) {
 
 test('able to discover all register translations', function(assert) {
   assert.expect(2);
+  service.exists('test', 'fr-ca');
   assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr');
   assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr');
 });
