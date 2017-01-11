@@ -55,16 +55,6 @@ const IntlService = Service.extend(Evented, {
     }
   }),
 
-  /**
-   * Returns an array of registered locale names
-   *
-   * @property locales
-   * @public
-   */
-  locales: computed('adapter.seen.[]', function() {
-    return get(this, 'adapter.seen').map(l => l.localeName);
-  }).readOnly(),
-
   adapter: computed({
     get() {
       return getOwner(this).lookup('ember-intl@adapter:default');
@@ -90,9 +80,32 @@ const IntlService = Service.extend(Evented, {
   formatTime: formatterProxy('time'),
   formatDate: formatterProxy('date'),
 
+  /**
+   * Returns an array of registered locale names
+   *
+   * @property locales
+   * @public
+   */
+  locales: computed('adapter.seen.[]', function() {
+    return get(this, 'adapter.seen').map(l => l.localeName);
+  }).readOnly(),
+
+  lookup(key, localeName) {
+    const localeNames = makeArray(localeName || get(this, '_locale'));
+    const translation = get(this, 'adapter').lookup(localeNames, key);
+
+    if (!translation) {
+      const missingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
+
+      return missingMessage.call(this, key, localeNames);
+    }
+
+    return translation;
+  },
+
   t(key, ...args) {
     const [ options ] = args;
-    const translation = this.findTranslationByKey(key, options && options.locale);
+    const translation = this.lookup(key, options && options.locale);
 
     return this.formatMessage(translation, ...args);
   },
@@ -135,23 +148,15 @@ const IntlService = Service.extend(Evented, {
   },
 
   addTranslation(locale, key, value) {
-    return this.translationsFor(locale).then((localeInstance) => {
+    return this.localeFactory(locale).then((localeInstance) => {
       return localeInstance.addTranslation(key, value);
     });
   },
 
   addTranslations(locale, payload) {
-    return this.translationsFor(locale).then((localeInstance) => {
+    return this.localeFactory(locale).then((localeInstance) => {
       return localeInstance.addTranslations(payload);
     });
-  },
-
-  createLocale(locale, payload) {
-    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
-      id: 'ember-intl-create-locale'
-    });
-
-    return this.addTranslations(locale, payload);
   },
 
   setLocale(locales) {
@@ -178,29 +183,28 @@ const IntlService = Service.extend(Evented, {
     return {};
   },
 
-  translationsFor(locale) {
-    const result = get(this, 'adapter').translationsFor(locale);
+  localeFactory(locale) {
+    const result = get(this, 'adapter').localeFactory(locale, true);
 
     return RSVP.cast(result).then(function(localeInstance) {
-      if (typeof localeInstance === 'undefined') {
-        throw new Error(`'locale' must be a string or a locale instance`);
-      }
-
       return localeInstance;
     });
   },
 
-  findTranslationByKey(key, locale) {
-    const locales = makeArray(locale || get(this, '_locale'));
-    const translation = get(this, 'adapter').findTranslationByKey(locales, key);
+  createLocale(locale, payload) {
+    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
+      id: 'ember-intl-create-locale'
+    });
 
-    if (typeof translation === 'undefined') {
-      const missingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
+    return this.addTranslations(locale, payload);
+  },
 
-      return missingMessage.call(this, key, locales);
-    }
+  findTranslationByKey() {
+    return this.lookup(...arguments);
+  },
 
-    return translation;
+  translationsFor() {
+    return this.localeFactory(...arguments);
   }
 });
 

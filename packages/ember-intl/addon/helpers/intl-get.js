@@ -23,7 +23,7 @@ const IntlGetHelper = Helper.extend({
   },
 
   compute(params, hash = {}) {
-    return new LiteralWrapper(get(this, 'intl').findTranslationByKey(params[0], hash.locale));
+    return new LiteralWrapper(get(this, 'intl').lookup(params[0], hash.locale));
   },
 
   destroy(...args) {
