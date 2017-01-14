@@ -1,15 +1,12 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
-import { instanceInitializer } from '../../../instance-initializers/ember-intl';
 
 let service, registry;
 
 moduleForComponent('format-relative', {
   integration: true,
   beforeEach() {
-    instanceInitializer(this);
-
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
     service.setLocale('en-us');

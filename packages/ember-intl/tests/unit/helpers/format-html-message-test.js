@@ -1,9 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
-import Translation from 'ember-intl/models/translation';
 
-const locale = 'en-us';
 let service, registry;
 
 moduleForComponent('format-html-message', {
@@ -14,14 +12,14 @@ moduleForComponent('format-html-message', {
 
     registry.injection('formatter', 'intl', 'service:intl');
 
-    registry.register('ember-intl@translation:en-us', Translation.extend({
+    service.addTranslations('en-us', {
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
       }
-    }));
+    });
 
-    service.setLocale(locale);
+    service.setLocale('en-us');
   }
 });
 

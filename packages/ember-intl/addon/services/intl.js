@@ -1,3 +1,5 @@
+/* globals requirejs, Intl */
+
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -7,11 +9,18 @@ import Ember from 'ember';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
+import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 
 const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const assign = Ember.assign || Ember.merge;
+
+function filterBy(type, ENV, _requirejs) {
+  return Object.keys(_requirejs._eak_seen).filter((key) => {
+    return key.indexOf(`${ENV.modulePrefix}\/${type}\/`) === 0;
+  });
+}
 
 function formatterProxy(formatType) {
   return function(value, options, formats) {
@@ -45,6 +54,18 @@ function formatterProxy(formatType) {
 }
 
 const IntlService = Service.extend(Evented, {
+  init() {
+    this._super(...arguments);
+
+    if (typeof Intl === 'undefined') {
+      Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
+        id: 'ember-intl-undefined-intljs'
+      });
+    }
+
+    this._hydrate();
+  },
+
   _locale: null,
 
   locale: computed('_locale', {
@@ -80,6 +101,7 @@ const IntlService = Service.extend(Evented, {
   formatNumber: formatterProxy('number'),
   formatTime: formatterProxy('time'),
   formatDate: formatterProxy('date'),
+  requirejs: requirejs,
 
   /**
    * Returns an array of registered locale names
@@ -90,6 +112,33 @@ const IntlService = Service.extend(Evented, {
   locales: computed('adapter.seen.[]', function() {
     return get(this, 'adapter.seen').map(l => l.localeName);
   }).readOnly(),
+
+  /**
+   * Peeks into the requirejs map and registers all locale data objects found.
+   * This is also very likely to be removed soon.
+   *
+   * @private
+   */
+  _hydrate() {
+    const owner = getOwner(this);
+    const ENV = owner.resolveRegistration('config:environment');
+    const cldrs = filterBy('cldrs', ENV, this.requirejs);
+
+    if (!cldrs.length) {
+      Ember.warn('[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.', false, {
+        id: 'ember-intl-missing-cldr-data'
+      });
+    } else {
+      cldrs.map((name) => this.requirejs(name, null, null, true)['default'])
+        .forEach((data) => data.forEach(this.addLocaleData));
+    }
+
+    filterBy('translations', ENV, this.requirejs).forEach((moduleName) => {
+      const splitModuleName = moduleName.split('\/');
+      const localeName = splitModuleName[splitModuleName.length - 1];
+      this.addTranslations(localeName, this.requirejs(moduleName, null, null, true)['default']);
+    });
+  },
 
   lookup(key, localeName) {
     const localeNames = makeArray(localeName || get(this, '_locale'));
