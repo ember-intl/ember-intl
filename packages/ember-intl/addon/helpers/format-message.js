@@ -5,10 +5,10 @@
 
 import Ember from 'ember';
 
-import factory from './-format-base';
 import { LiteralWrapper } from './l';
+import BaseHelper from './-format-base';
 
-const { get, assert } = Ember;
+const { get, assert, computed } = Ember;
 
 export function getValue([key], { locale:optionalLocale }) {
   if (key && key instanceof LiteralWrapper) {
@@ -20,6 +20,8 @@ export function getValue([key], { locale:optionalLocale }) {
   return get(this, 'intl').lookup(key, optionalLocale);
 }
 
-export default factory('message').extend({
-  getValue
+export default BaseHelper.extend({
+  getValue,
+  formatType: 'message',
+  formatter: computed.alias('intl.formatMessage')
 });
