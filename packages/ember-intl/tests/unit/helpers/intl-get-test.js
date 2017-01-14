@@ -2,29 +2,23 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import intlGetHelper from 'ember-intl/helpers/intl-get';
-import Translation from 'ember-intl/models/translation';
 
-const locale = 'en-us';
-let service, registry;
+let service;
 
 moduleForComponent('intl-get', {
   integration: true,
   beforeEach() {
-    registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
 
-    registry.register('ember-intl@translation:en-us', Translation.extend());
-    registry.register('ember-intl@translation:fr-fr', Translation.extend());
-
-    this.container.lookup('ember-intl@translation:en-us').addTranslations({
+    service.addTranslations('en-us', {
       greeting: 'Hello'
     });
 
-    this.container.lookup('ember-intl@translation:fr-fr').addTranslations({
+    service.addTranslations('fr-fr', {
       greeting: 'Bonjour'
     });
 
-    service.setLocale(locale);
+    service.setLocale('en-us');
   }
 });
 

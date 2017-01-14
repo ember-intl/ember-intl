@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 import { moduleFor, test } from 'ember-qunit';
-import instanceInitializer from '../../../instance-initializers/ember-intl';
 
 let service;
 
@@ -31,7 +30,6 @@ test('triggers notifyPropertyChange only when locale changes', function(assert) 
 
 test('waits for translations to load', function(assert) {
   assert.expect(1);
-  instanceInitializer.initialize(this);
 
   return wait().then(() => {
     assert.equal(service.t('product.title', {

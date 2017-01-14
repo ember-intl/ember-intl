@@ -11,7 +11,6 @@ out [ember-intl-example](https://github.com/jasonmit/ember-intl-example/tree/mas
 
 ```js
 import { moduleForComponent, test } from 'ember-qunit';
-import instanceInitializer from '../../instance-initializers/ember-intl';
 
 moduleForComponent('x-product', 'XProductComponent', {
   unit: true,
@@ -33,8 +32,8 @@ moduleForComponent('x-product', 'XProductComponent', {
     'helper:format-number' // optional
   ],
   setup() {
-    instanceInitializer.initialize(this);
-    this.container.lookup('service:intl').setLocale('en-us');
+    let service = this.container.lookup('service:intl');
+    service.setLocale('en-us');
   }
 });
 

@@ -2,7 +2,6 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
-import instanceInitializer from '../../../instance-initializers/ember-intl';
 
 const { get, set, computed, run, A:emberArray, Object:EmberObject } = Ember;
 
@@ -14,8 +13,6 @@ moduleForComponent('format-message', {
   beforeEach() {
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
-
-    instanceInitializer.initialize(this);
 
     service.addTranslations('en-us', {
       foo: {
