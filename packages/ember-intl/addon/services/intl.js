@@ -16,12 +16,6 @@ import normalizeLocale from '../utils/normalize-locale';
 const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const assign = Ember.assign || Ember.merge;
 
-function filterBy(type, config, _requirejs) {
-  return Object.keys(_requirejs._eak_seen).filter((key) => {
-    return key.indexOf(`${config.modulePrefix}\/${type}\/`) === 0;
-  });
-}
-
 function formatterProxy(formatType) {
   return function(value, options, formats) {
     if (!options) {
@@ -122,21 +116,28 @@ const IntlService = Service.extend(Evented, {
    */
   _hydrate() {
     const config = this.owner.resolveRegistration('config:environment');
-    const cldrs = filterBy('cldrs', config, this.requirejs);
+    const cldrs = this._lookupByFactoryType('cldrs', config.modulePrefix);
+    const translations = this._lookupByFactoryType('translations', config.modulePrefix);
 
     if (!cldrs.length) {
       Ember.warn('[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.', false, {
         id: 'ember-intl-missing-cldr-data'
       });
-    } else {
-      cldrs.map((name) => this.requirejs(name, null, null, true)['default'])
-        .forEach((data) => data.forEach(this.addLocaleData));
     }
 
-    filterBy('translations', config, this.requirejs).forEach((moduleName) => {
+    cldrs.map((name) => this.requirejs(name, null, null, true)['default'])
+      .forEach((data) => data.forEach(this.addLocaleData));
+
+    translations.forEach((moduleName) => {
       const splitModuleName = moduleName.split('\/');
       const localeName = splitModuleName[splitModuleName.length - 1];
       this.addTranslations(localeName, this.requirejs(moduleName, null, null, true)['default']);
+    });
+  },
+
+  _lookupByFactoryType(type, modulePrefix) {
+    return Object.keys(this.requirejs._eak_seen).filter((key) => {
+      return key.indexOf(`${modulePrefix}\/${type}\/`) === 0;
     });
   },
 
