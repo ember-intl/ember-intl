@@ -16,9 +16,9 @@ import normalizeLocale from '../utils/normalize-locale';
 const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 const assign = Ember.assign || Ember.merge;
 
-function filterBy(type, ENV, _requirejs) {
+function filterBy(type, config, _requirejs) {
   return Object.keys(_requirejs._eak_seen).filter((key) => {
-    return key.indexOf(`${ENV.modulePrefix}\/${type}\/`) === 0;
+    return key.indexOf(`${config.modulePrefix}\/${type}\/`) === 0;
   });
 }
 
@@ -34,8 +34,7 @@ function formatterProxy(formatType) {
       options = {};
     }
 
-    const owner = getOwner(this);
-    const formatter = owner.lookup(`ember-intl@formatter:format-${formatType}`);
+    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
     if (typeof options.format === 'string') {
       options = assign(this.getFormat(formatType, options.format), options);
@@ -56,6 +55,8 @@ function formatterProxy(formatType) {
 const IntlService = Service.extend(Evented, {
   init() {
     this._super(...arguments);
+
+    this.owner = getOwner(this);
 
     if (typeof Intl === 'undefined') {
       Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
@@ -79,13 +80,13 @@ const IntlService = Service.extend(Evented, {
 
   adapter: computed({
     get() {
-      return getOwner(this).lookup('ember-intl@adapter:default');
+      return this.owner.lookup('ember-intl@adapter:default');
     }
   }),
 
   formats: computed({
     get() {
-      const formats = getOwner(this).resolveRegistration('formats:main');
+      const formats = this.owner.resolveRegistration('formats:main');
 
       if (Ember.Object.detect(formats)) {
         return formats.create();
@@ -120,9 +121,8 @@ const IntlService = Service.extend(Evented, {
    * @private
    */
   _hydrate() {
-    const owner = getOwner(this);
-    const ENV = owner.resolveRegistration('config:environment');
-    const cldrs = filterBy('cldrs', ENV, this.requirejs);
+    const config = this.owner.resolveRegistration('config:environment');
+    const cldrs = filterBy('cldrs', config, this.requirejs);
 
     if (!cldrs.length) {
       Ember.warn('[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.', false, {
@@ -133,7 +133,7 @@ const IntlService = Service.extend(Evented, {
         .forEach((data) => data.forEach(this.addLocaleData));
     }
 
-    filterBy('translations', ENV, this.requirejs).forEach((moduleName) => {
+    filterBy('translations', config, this.requirejs).forEach((moduleName) => {
       const splitModuleName = moduleName.split('\/');
       const localeName = splitModuleName[splitModuleName.length - 1];
       this.addTranslations(localeName, this.requirejs(moduleName, null, null, true)['default']);
@@ -145,7 +145,7 @@ const IntlService = Service.extend(Evented, {
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
     if (!translation) {
-      const missingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
+      const missingMessage = this.owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames);
     }
