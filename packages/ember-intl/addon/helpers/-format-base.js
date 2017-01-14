@@ -5,67 +5,48 @@
 
 import Ember from 'ember';
 
-const { Helper, getOwner, inject, get, computed, isEmpty, getWithDefault } = Ember;
-const assign = Ember.assign || Ember.merge;
+const { Helper, inject, get, isEmpty, getWithDefault } = Ember;
 
-function helperFactory(formatType, helperOptions = {}) {
-  return Helper.extend({
-    intl: inject.service(),
-    formatType: formatType,
+export default Helper.extend({
+  intl: inject.service(),
+  formatType: null,
 
-    formatter: computed('formatType', {
-      get() {
-        return getOwner(this).lookup(`ember-intl@formatter:format-${formatType}`);
-      }
-    }).readOnly(),
+  init() {
+    this._super(...arguments);
 
-    init(...args) {
-      this._super(...args);
+    get(this, 'intl').on('localeChanged', this, this.recompute);
+  },
 
-      get(this, 'intl').on('localeChanged', this, this.recompute);
-    },
+  getValue([value]) {
+    return value;
+  },
 
-    getValue([value]) {
-      return value;
-    },
+  compute(params, options) {
+    const value = this.getValue(params, options);
+    const allowEmpty = getWithDefault(options, 'allowEmpty', this.allowEmpty);
 
-    compute(params, hash = {}) {
-      const value = this.getValue(params, hash);
-      const allowEmpty = getWithDefault(hash, 'allowEmpty', helperOptions.allowEmpty);
-
-      if (isEmpty(value)) {
-        if ('fallback' in hash) {
-          return hash.fallback;
-        } else if (allowEmpty) {
-          return;
-        } else if (typeof value === 'undefined') {
-          throw new Error(`format-${formatType} helper requires value`);
-        }
+    if (isEmpty(value)) {
+      if ('fallback' in options) {
+        return options.fallback;
       }
 
-      const intl = get(this, 'intl');
-      let format = {};
-
-      if (hash.format) {
-        format = intl.getFormat(formatType, hash.format);
+      if (allowEmpty) {
+        return;
       }
 
-      return get(this, 'formatter').format(
-        value,
-        assign(assign({}, format), hash),
-        {
-          formats: get(intl, 'formats'),
-          locale: hash.locale || get(intl, '_locale')
-        }
-      );
-    },
-
-    destroy(...args) {
-      this._super(...args);
-
-      get(this, 'intl').off('localeChanged', this, this.recompute);
+      if (typeof value === 'undefined') {
+        throw new Error(`format-${this.formatType} helper requires value`);
+      }
     }
-  });
-}
 
-export default helperFactory;
+    const intl = get(this, 'intl');
+
+    return get(this, 'formatter').call(intl, value, options);
+  },
+
+  destroy() {
+    this._super(...arguments);
+
+    get(this, 'intl').off('localeChanged', this, this.recompute);
+  }
+});

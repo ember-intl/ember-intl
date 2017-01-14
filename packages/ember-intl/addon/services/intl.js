@@ -13,7 +13,18 @@ import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 
-const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
+const {
+  assert,
+  getOwner,
+  computed,
+  makeArray,
+  get,
+  set,
+  RSVP,
+  Service,
+  Evented,
+  deprecate
+} = Ember;
 const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(formatType) {
@@ -28,20 +39,20 @@ function formatterProxy(formatType) {
       options = {};
     }
 
-    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
-
     if (typeof options.format === 'string') {
       options = assign(assign({}, this.getFormat(formatType, options.format)), options);
     }
-
 
     if (!formats) {
       formats = get(this, 'formats');
     }
 
+    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
+    const locale = makeArray(options.locale || get(this, '_locale')).map(normalizeLocale);
+
     return formatter.format(value, options, {
-      formats: formats,
-      locale: normalizeLocale(options.locale) || get(this, '_locale')
+      formats,
+      locale
     });
   };
 }
@@ -81,10 +92,6 @@ const IntlService = Service.extend(Evented, {
   formats: computed({
     get() {
       const formats = this.owner.resolveRegistration('formats:main');
-
-      if (Ember.Object.detect(formats)) {
-        return formats.create();
-      }
 
       return formats;
     }
@@ -163,7 +170,6 @@ const IntlService = Service.extend(Evented, {
 
   exists(key, optionalLocales) {
     let locales = optionalLocales;
-    const adapter = get(this, 'adapter');
 
     if (!optionalLocales) {
       locales = get(this, '_locale');
@@ -172,7 +178,7 @@ const IntlService = Service.extend(Evented, {
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, locales);
 
     return makeArray(locales).some((locale) => {
-      return adapter.has(locale, key);
+      return get(this, 'adapter').has(locale, key);
     });
   },
 

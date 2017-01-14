@@ -3,6 +3,10 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import factory from './-format-base';
+import Ember from 'ember';
+import BaseHelper from './-format-base';
 
-export default factory('number');
+export default BaseHelper.extend({
+  formatType: 'number',
+  formatter: Ember.computed.alias('intl.formatNumber')
+});

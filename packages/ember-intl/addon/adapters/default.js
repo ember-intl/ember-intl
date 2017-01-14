@@ -9,7 +9,7 @@ import normalizeLocale from '../utils/normalize-locale';
 
 const { assert, A:emberArray, getOwner } = Ember;
 
-const DefaultIntlAdapter = Ember.Object.extend({
+const DefaultTranslationAdapter = Ember.Object.extend({
   seen: null,
 
   init() {
@@ -79,4 +79,4 @@ const DefaultIntlAdapter = Ember.Object.extend({
   }
 });
 
-export default DefaultIntlAdapter;
+export default DefaultTranslationAdapter;

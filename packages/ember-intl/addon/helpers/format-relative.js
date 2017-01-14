@@ -4,11 +4,14 @@
  */
 
 import Ember from 'ember';
-import factory from './-format-base';
+import BaseHelper from './-format-base';
 
 const runBind = Ember.run.bind;
 
-export default factory('relative').extend({
+export default BaseHelper.extend({
+  formatType: 'relative',
+  formatter: Ember.computed.alias('intl.formatRelative'),
+
   compute(value, hash) {
     this.clearTimer();
 
