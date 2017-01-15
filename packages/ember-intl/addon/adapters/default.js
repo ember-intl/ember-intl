@@ -4,7 +4,6 @@
  */
 
 import Ember from 'ember';
-import Translation from '../models/translation';
 import normalizeLocale from '../utils/normalize-locale';
 
 const { assert, A:emberArray, getOwner } = Ember;
@@ -37,7 +36,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
       return model;
     }
 
-    const Klass = owner._lookupFactory('model:ember-intl-translation') || Translation;
+    const Klass = owner._lookupFactory('model:ember-intl-translation') || owner._lookupFactory('ember-intl@model:translation');
     const ModelKlass = Klass.extend();
 
     Object.defineProperty(ModelKlass.proto(), 'localeName', {
