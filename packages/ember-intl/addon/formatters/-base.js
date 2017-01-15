@@ -16,6 +16,8 @@ const {
 const { camelize } = emberString;
 
 const FormatBase = EmberObject.extend({
+  options: null,
+
   init(...args) {
     this._super(...args);
 
