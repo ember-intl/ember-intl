@@ -63,7 +63,6 @@ const FormatBase = EmberObject.extend({
   * @private
   */
   _format(value, formatterOptions = {}, formatOptions = {}, ctx = {}) {
-    const formatter = get(this, 'formatter');
     const { locale } = ctx;
 
     if (!locale) {
@@ -72,7 +71,7 @@ const FormatBase = EmberObject.extend({
       );
     }
 
-    return formatter(locale, formatterOptions).format(value, formatOptions);
+    return get(this, 'formatter')(locale, formatterOptions).format(value, formatOptions);
   }
 });
 
