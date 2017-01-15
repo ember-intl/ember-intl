@@ -219,20 +219,12 @@ const IntlService = Service.extend(Evented, {
     IntlRelativeFormat.__addLocaleData(data);
   },
 
-  addTranslationSync(localeName, key, value) {
+  addTranslation(localeName, key, value) {
     return this.localeFactory(localeName).addTranslation(key, value);
   },
 
-  addTranslationsSync(localeName, payload) {
+  addTranslations(localeName, payload) {
     return this.localeFactory(localeName).addTranslations(payload);
-  },
-
-  addTranslation() {
-    return RSVP.resolve(this.addTranslationSync(...arguments));
-  },
-
-  addTranslations() {
-    return RSVP.resolve(this.addTranslationsSync(...arguments));
   },
 
   setLocale(locales) {

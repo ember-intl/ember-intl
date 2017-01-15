@@ -140,10 +140,9 @@ test('locale can add message to intl service and read it', function(assert) {
   assert.expect(1);
 
   run(() => {
-    service.addTranslation('en-us', 'oh', 'hai!').then(() => {
-      this.render(hbs`{{format-message 'oh'}}`);
-      assert.equal(this.$().text(), 'hai!');
-    });
+    service.addTranslation('en-us', 'oh', 'hai!');
+    this.render(hbs`{{format-message 'oh'}}`);
+    assert.equal(this.$().text(), 'hai!');
   });
 });
 
