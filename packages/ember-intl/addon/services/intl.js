@@ -58,20 +58,6 @@ function formatterProxy(formatType) {
 }
 
 const IntlService = Service.extend(Evented, {
-  init() {
-    this._super(...arguments);
-
-    this.owner = getOwner(this);
-
-    if (typeof Intl === 'undefined') {
-      Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
-        id: 'ember-intl-undefined-intljs'
-      });
-    }
-
-    this._hydrate();
-  },
-
   _locale: null,
 
   locale: computed('_locale', {
@@ -91,9 +77,7 @@ const IntlService = Service.extend(Evented, {
 
   formats: computed({
     get() {
-      const formats = this.owner.resolveRegistration('formats:main');
-
-      return formats;
+      return this.owner.resolveRegistration('formats:main');
     }
   }),
 
@@ -104,6 +88,20 @@ const IntlService = Service.extend(Evented, {
   formatTime: formatterProxy('time'),
   formatDate: formatterProxy('date'),
   requirejs: requirejs,
+
+  init() {
+    this._super(...arguments);
+
+    this.owner = getOwner(this);
+
+    if (typeof Intl === 'undefined') {
+      Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
+        id: 'ember-intl-undefined-intljs'
+      });
+    }
+
+    this._hydrate();
+  },
 
   /**
    * Returns an array of registered locale names
@@ -132,13 +130,15 @@ const IntlService = Service.extend(Evented, {
       });
     }
 
-    cldrs.map((name) => this.requirejs(name, null, null, true)['default'])
+    cldrs.map((moduleName) => {
+      return this.owner.resolveRegistration('cldr:' + moduleName.split('\/').pop());
+    })
       .forEach((data) => data.forEach(this.addLocaleData));
 
     translations.forEach((moduleName) => {
-      const splitModuleName = moduleName.split('\/');
-      const localeName = splitModuleName[splitModuleName.length - 1];
-      this.addTranslations(localeName, this.requirejs(moduleName, null, null, true)['default']);
+      const localeName = moduleName.split('\/').pop();
+
+      this.addTranslations(localeName, this.owner.resolveRegistration('translation:' + localeName));
     });
   },
 
@@ -168,17 +168,18 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, ...args);
   },
 
-  exists(key, optionalLocales) {
-    let locales = optionalLocales;
+  exists(key, optionalLocaleNames) {
+    let localeNames = optionalLocaleNames;
+    let adapter = get(this, 'adapter');
 
-    if (!optionalLocales) {
-      locales = get(this, '_locale');
+    if (!optionalLocaleNames) {
+      localeNames = get(this, '_locale');
     }
 
-    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, locales);
+    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, localeNames);
 
-    return makeArray(locales).some((locale) => {
-      return get(this, 'adapter').has(locale, key);
+    return makeArray(localeNames).some((localeName) => {
+      return adapter.has(localeName, key);
     });
   },
 
@@ -204,15 +205,15 @@ const IntlService = Service.extend(Evented, {
     IntlRelativeFormat.__addLocaleData(data);
   },
 
-  addTranslation(locale, key, value) {
-    return this.localeFactory(locale).then((localeInstance) => {
-      return localeInstance.addTranslation(key, value);
+  addTranslation(localeName, key, value) {
+    return this.localeFactory(localeName).then((locale) => {
+      return locale.addTranslation(key, value);
     });
   },
 
-  addTranslations(locale, payload) {
-    return this.localeFactory(locale).then((localeInstance) => {
-      return localeInstance.addTranslations(payload);
+  addTranslations(localeName, payload) {
+    return this.localeFactory(localeName).then((locale) => {
+      return locale.addTranslations(payload);
     });
   },
 
