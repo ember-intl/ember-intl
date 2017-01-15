@@ -9,13 +9,15 @@ import BaseHelper from './-format-base';
 const runBind = Ember.run.bind;
 
 export default BaseHelper.extend({
-  formatType: 'relative',
-  formatter: Ember.computed.alias('intl.formatRelative'),
+  format(value, options) {
+    return this.intl.formatRelative(value, options);
+  },
 
   compute(value, hash) {
     this.clearTimer();
 
     if (hash && typeof hash.interval !== 'undefined') {
+      /* setTimeout versus Ember.run.later so tests will not wait infinitely */
       this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
     }
 

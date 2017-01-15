@@ -8,7 +8,7 @@ import Ember from 'ember';
 import { LiteralWrapper } from './l';
 import BaseHelper from './-format-base';
 
-const { get, assert, computed } = Ember;
+const { assert } = Ember;
 
 export function getValue([key], { allowEmpty, locale:optionalLocale }) {
   if (key && key instanceof LiteralWrapper) {
@@ -17,13 +17,15 @@ export function getValue([key], { allowEmpty, locale:optionalLocale }) {
 
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
-  return get(this, 'intl').lookup(key, optionalLocale, {
+  return this.intl.lookup(key, optionalLocale, {
     resilient: allowEmpty
   });
 }
 
 export default BaseHelper.extend({
   getValue,
-  formatType: 'message',
-  formatter: computed.alias('intl.formatMessage')
+
+  format(value, options) {
+    return this.intl.formatMessage(value, options);
+  }
 });
