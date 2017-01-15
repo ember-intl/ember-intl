@@ -40,7 +40,7 @@ function formatterProxy(formatType) {
     }
 
     if (typeof options.format === 'string') {
-      options = assign(this.getFormat(formatType, options.format), options);
+      options = assign({}, this.getFormat(formatType, options.format), options);
     }
 
     let formatter = this._owner.lookup(`ember-intl@formatter:format-${formatType}`);
