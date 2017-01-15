@@ -68,14 +68,6 @@ const DefaultTranslationAdapter = Ember.Object.extend({
         return model.getValue(translationKey);
       }
     }
-  },
-
-  translationsFor() {
-    return this.localeFactory(...arguments);
-  },
-
-  findTranslationByKey() {
-    return this.lookup(...arguments);
   }
 });
 
