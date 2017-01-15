@@ -20,7 +20,6 @@ const {
   makeArray,
   get,
   set,
-  RSVP,
   Service,
   Evented,
   deprecate
@@ -253,10 +252,6 @@ const IntlService = Service.extend(Evented, {
     });
 
     return this.locales();
-  },
-
-  translationsFor() {
-    return RSVP.resolve(this.localeFactory(...arguments));
   }
 });
 
