@@ -180,7 +180,7 @@ test('able to discover all register translations', function(assert) {
   service.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
   service.exists('test', 'fr-ca');
   assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-mx');
-  assert.equal(get(service, 'locales').join('; '), 'en-us; es-mx');
+  assert.equal(service.locales().join('; '), 'en-us; es-mx');
 });
 
 test('should respect format options for date ICU block', function(assert) {

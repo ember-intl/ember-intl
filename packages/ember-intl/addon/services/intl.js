@@ -91,16 +91,6 @@ const IntlService = Service.extend(Evented, {
   formatTime: formatterProxy('time'),
   formatDate: formatterProxy('date'),
 
-  /**
-   * Returns an array of registered locale names
-   *
-   * @property locales
-   * @public
-   */
-  locales: computed('adapter.seen.[]', function() {
-    return get(this, 'adapter.seen').map(l => l.localeName);
-  }).readOnly(),
-
   init() {
     this._super(...arguments);
 
@@ -112,6 +102,10 @@ const IntlService = Service.extend(Evented, {
         id: 'ember-intl-undefined-intljs'
       });
     }
+  },
+
+  locales() {
+    return get(this, 'adapter').locales();
   },
 
   _registerLocale(localeName) {
@@ -197,14 +191,6 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  getLocalesByTranslations() {
-    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
-      id: 'ember-intl-locales-cp'
-    });
-
-    return get(this, 'locales');
-  },
-
   /**
   * A utility method for registering CLDR data for
   * intl-messageformat and intl-relativeformat.  This data is derived
@@ -258,6 +244,15 @@ const IntlService = Service.extend(Evented, {
 
   findTranslationByKey() {
     return this.lookup(...arguments);
+  },
+
+  /* DEPRECATIONS BELOW */
+  getLocalesByTranslations() {
+    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales`', false, {
+      id: 'ember-intl-locales-cp'
+    });
+
+    return this.locales();
   },
 
   translationsFor() {

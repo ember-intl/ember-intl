@@ -10,11 +10,11 @@ import normalizeLocale from '../utils/normalize-locale';
 const { assert, A:emberArray, getOwner } = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
-  seen: null,
+  _seen: null,
 
   init() {
     this._super(...arguments);
-    this.seen = emberArray();
+    this._seen = emberArray();
   },
 
   normalizeLocaleName(localeName) {
@@ -24,7 +24,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
   },
 
   lookupLocale(localeName) {
-    return this.seen.findBy('localeName', this.normalizeLocaleName(localeName));
+    return this._seen.findBy('localeName', this.normalizeLocaleName(localeName));
   },
 
   localeFactory(localeName) {
@@ -48,9 +48,13 @@ const DefaultTranslationAdapter = Ember.Object.extend({
 
     owner.register(lookupName, ModelKlass);
     model = owner.lookup(lookupName);
-    this.seen.pushObject(model);
+    this._seen.pushObject(model);
 
     return model;
+  },
+
+  locales() {
+    return this._seen.map(l => l.localeName);
   },
 
   has(localeName, translationKey) {
