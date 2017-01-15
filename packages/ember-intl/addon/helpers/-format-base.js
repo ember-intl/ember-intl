@@ -5,20 +5,28 @@
 
 import Ember from 'ember';
 
-const { Helper, inject, get, isEmpty, getWithDefault } = Ember;
+const { Helper, getOwner, isEmpty, getWithDefault } = Ember;
 
-export default Helper.extend({
-  intl: inject.service(),
-  formatType: null,
+const AbstractHelper = Helper.extend({
+  intl: null,
 
   init() {
+    if (this.constructor === AbstractHelper) {
+      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+    }
+
     this._super(...arguments);
 
-    get(this, 'intl').on('localeChanged', this, this.recompute);
+    this.intl = getOwner(this).lookup('service:intl');
+    this.intl.on('localeChanged', this, this.recompute);
   },
 
   getValue([value]) {
     return value;
+  },
+
+  format() {
+    throw new Error('not implemented');
   },
 
   compute(params, options) {
@@ -35,18 +43,18 @@ export default Helper.extend({
       }
 
       if (typeof value === 'undefined') {
-        throw new Error(`format-${this.formatType} helper requires value`);
+        throw new Error(`${this} helper requires value attribute.`);
       }
     }
 
-    const intl = get(this, 'intl');
-
-    return get(this, 'formatter').call(intl, value, options);
+    return this.format(value, options);
   },
 
   destroy() {
     this._super(...arguments);
 
-    get(this, 'intl').off('localeChanged', this, this.recompute);
+    this.intl.off('localeChanged', this, this.recompute);
   }
 });
+
+export default AbstractHelper;

@@ -3,12 +3,12 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
-
 import BaseHelper from './-format-base';
 
 export default BaseHelper.extend({
-  formatType: 'date',
-  formatter: Ember.computed.alias('intl.formatDate'),
-  allowEmpty: true
+  allowEmpty: true,
+
+  format(value, options) {
+    return this.intl.formatDate(value, options);
+  }
 });
