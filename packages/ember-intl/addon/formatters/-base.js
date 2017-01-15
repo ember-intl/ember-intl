@@ -22,7 +22,7 @@ const FormatterBase = EmberObject.extend({
     this._super(...args);
 
     if (this.constructor === FormatterBase) {
-      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+      throw new Error('Formatter is an abstract class, can not be instantiated directly.');
     }
 
     this.options = arrayToHash(this.constructor.supportedOptions);
