@@ -141,11 +141,11 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  lookup(key, localeName) {
+  lookup(key, localeName, options = {}) {
     const localeNames = makeArray(localeName || get(this, '_locale'));
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
-    if (!translation) {
+    if (!options.resilient && !translation) {
       const missingMessage = this.owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames);

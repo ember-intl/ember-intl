@@ -73,6 +73,12 @@ test('should throw if called with out a value', function(assert) {
   }
 });
 
+test('should throw if called with out a value', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{t 'does.not.exist' allowEmpty=true}}`);
+  assert.equal(this.$().text(), '');
+});
+
 test('should return a formatted string', function(assert) {
   assert.expect(1);
 

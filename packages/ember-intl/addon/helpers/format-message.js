@@ -10,14 +10,16 @@ import { LiteralWrapper } from './l';
 
 const { get, assert } = Ember;
 
-export function getValue([key], { locale:optionalLocale }) {
+export function getValue([key], { allowEmpty, locale:optionalLocale }) {
   if (key && key instanceof LiteralWrapper) {
     return key.value;
   }
 
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
-  return get(this, 'intl').lookup(key, optionalLocale);
+  return get(this, 'intl').lookup(key, optionalLocale, {
+    resilient: allowEmpty
+  });
 }
 
 export default factory('message').extend({
