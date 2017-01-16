@@ -43,16 +43,11 @@ function formatterProxy(formatType) {
       options = assign(assign({}, this.getFormat(formatType, options.format)), options);
     }
 
-    if (!formats) {
-      formats = get(this, 'formats');
-    }
-
     const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
-    const locale = makeArray(options.locale || get(this, '_locale')).map(normalizeLocale);
 
     return formatter.format(value, options, {
-      formats,
-      locale
+      formats: formats || get(this, 'formats'),
+      locale: this._localeWithDefault(options.locale)
     });
   };
 }
@@ -146,8 +141,22 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
+  _localeWithDefault(localeName) {
+    if (!localeName) {
+      return get(this, '_locale');
+    }
+
+    if (typeof localeName === 'string') {
+      return makeArray(localeName).map(normalizeLocale);
+    }
+
+    if (Array.isArray(localeName)) {
+      return localeName.map(normalizeLocale);
+    }
+  },
+
   lookup(key, localeName, options = {}) {
-    const localeNames = makeArray(localeName || get(this, '_locale'));
+    const localeNames = this._localeWithDefault(localeName);
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
     if (!options.resilient && !translation) {
@@ -166,17 +175,13 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, ...args);
   },
 
-  exists(key, optionalLocaleNames) {
-    let localeNames = optionalLocaleNames;
-    let adapter = get(this, 'adapter');
+  exists(key, localeName) {
+    const localeNames = this._localeWithDefault(localeName);
+    const adapter = get(this, 'adapter');
 
-    if (!optionalLocaleNames) {
-      localeNames = get(this, '_locale');
-    }
+    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, localeNames);
-
-    return makeArray(localeNames).some((localeName) => {
+    return localeNames.some((localeName) => {
       return adapter.has(localeName, key);
     });
   },
@@ -215,10 +220,10 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  setLocale(locales) {
-    if (!locales) { return; }
+  setLocale(localeName) {
+    if (!localeName) { return; }
 
-    const proposed = makeArray(locales).map(normalizeLocale);
+    const proposed = makeArray(localeName).map(normalizeLocale);
     const current = get(this, '_locale');
 
     if (!isArrayEqual(proposed, current)) {
@@ -239,20 +244,20 @@ const IntlService = Service.extend(Evented, {
     return {};
   },
 
-  localeFactory(locale) {
-    const result = get(this, 'adapter').localeFactory(locale, true);
+  localeFactory(localeName) {
+    const result = get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
 
     return RSVP.cast(result).then(function(localeInstance) {
       return localeInstance;
     });
   },
 
-  createLocale(locale, payload) {
+  createLocale(localeName, payload) {
     deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
       id: 'ember-intl-create-locale'
     });
 
-    return this.addTranslations(locale, payload);
+    return this.addTranslations(localeName, payload);
   },
 
   findTranslationByKey() {

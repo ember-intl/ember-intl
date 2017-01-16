@@ -5,9 +5,8 @@
 
 import Ember from 'ember';
 import Translation from '../models/translation';
-import normalizeLocale from '../utils/normalize-locale';
 
-const { assert, computed, get, A:emberArray, getOwner } = Ember;
+const { computed, get, A:emberArray, getOwner } = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
   _seen: null,
@@ -21,20 +20,13 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     this._seen = emberArray();
   },
 
-  normalizeLocaleName(localeName) {
-    assert('Locale name must be a string', typeof localeName === 'string');
-
-    return normalizeLocale(localeName);
-  },
-
   lookupLocale(localeName) {
-    return this._seen.findBy('localeName', this.normalizeLocaleName(localeName));
+    return this._seen.findBy('localeName', localeName);
   },
 
   localeFactory(localeName) {
     const owner = getOwner(this);
-    const normalizedLocale = this.normalizeLocaleName(localeName);
-    const lookupName = `ember-intl@translation:${normalizedLocale}`;
+    const lookupName = `ember-intl@translation:${localeName}`;
     let model = owner.lookup(lookupName);
 
     if (model) {
@@ -47,7 +39,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     Object.defineProperty(ModelKlass.proto(), 'localeName', {
       writable: false,
       enumerable: true,
-      value: normalizedLocale
+      value: localeName
     });
 
     owner.register(lookupName, ModelKlass);
