@@ -31,7 +31,7 @@ function formatterProxy(formatType) {
     const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
     if (typeof options.format === 'string') {
-      options = assign(this.getFormat(formatType, options.format), options);
+      options = assign(assign({}, this.getFormat(formatType, options.format)), options);
     }
 
 
