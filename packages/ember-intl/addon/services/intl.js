@@ -109,9 +109,7 @@ const IntlService = Service.extend(Evented, {
    * @property locales
    * @public
    */
-  locales: computed('adapter.seen.[]', function() {
-    return get(this, 'adapter.seen').map(l => l.localeName);
-  }).readOnly(),
+  locales: computed.readOnly('adapter.locales'),
 
   /**
    * Peeks into the requirejs map and registers all locale data objects found.

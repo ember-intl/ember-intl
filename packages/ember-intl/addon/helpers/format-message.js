@@ -10,16 +10,27 @@ import BaseHelper from './-format-base';
 
 const { assert } = Ember;
 
-export function getValue([key], { allowEmpty, locale:optionalLocale }) {
+export function getValue([key], options) {
   if (key && key instanceof LiteralWrapper) {
     return key.value;
   }
 
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
-  return this.intl.lookup(key, optionalLocale, {
-    resilient: allowEmpty
+  const {
+    fallback,
+    allowEmpty,
+    defaultMessage,
+    locale:optionalLocale
+  } = options;
+
+  const fallbackTranslation = defaultMessage || fallback;
+
+  const translation = this.intl.lookup(key, optionalLocale, {
+    resilient: allowEmpty || typeof fallbackTranslation === 'string'
   });
+
+  return translation || fallbackTranslation;
 }
 
 export default BaseHelper.extend({
