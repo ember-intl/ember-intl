@@ -15,9 +15,15 @@ const {
 
 const { camelize } = emberString;
 
-const FormatBase = EmberObject.extend({
-  init(...args) {
-    this._super(...args);
+const FormatterBase = EmberObject.extend({
+  options: null,
+
+  init() {
+    this._super(...arguments);
+
+    if (this.constructor === FormatterBase) {
+      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+    }
 
     this.options = arrayToHash(this.constructor.supportedOptions);
   },
@@ -63,7 +69,6 @@ const FormatBase = EmberObject.extend({
   * @private
   */
   _format(value, formatterOptions = {}, formatOptions = {}, ctx = {}) {
-    const formatter = get(this, 'formatter');
     const { locale } = ctx;
 
     if (!locale) {
@@ -72,13 +77,13 @@ const FormatBase = EmberObject.extend({
       );
     }
 
-    return formatter(locale, formatterOptions).format(value, formatOptions);
+    return get(this, 'formatter')(locale, formatterOptions).format(value, formatOptions);
   }
 });
 
-FormatBase.reopenClass({
+FormatterBase.reopenClass({
   supportedOptions: ['locale', 'format'],
   concatenatedProperties: ['supportedOptions']
 });
 
-export default FormatBase;
+export default FormatterBase;

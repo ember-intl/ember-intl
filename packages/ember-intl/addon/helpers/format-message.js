@@ -5,23 +5,38 @@
 
 import Ember from 'ember';
 
-import factory from './-format-base';
 import { LiteralWrapper } from './l';
+import BaseHelper from './-format-base';
 
-const { get, assert } = Ember;
+const { assert } = Ember;
 
-export function getValue([key], { allowEmpty, locale:optionalLocale }) {
+export function getValue([key], options) {
   if (key && key instanceof LiteralWrapper) {
     return key.value;
   }
 
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
-  return get(this, 'intl').lookup(key, optionalLocale, {
-    resilient: allowEmpty
+  const {
+    fallback,
+    allowEmpty,
+    defaultMessage,
+    locale:optionalLocale
+  } = options;
+
+  const fallbackTranslation = defaultMessage || fallback;
+
+  const translation = this.intl.lookup(key, optionalLocale, {
+    resilient: allowEmpty || typeof fallbackTranslation === 'string'
   });
+
+  return translation || fallbackTranslation;
 }
 
-export default factory('message').extend({
-  getValue
+export default BaseHelper.extend({
+  getValue,
+
+  format(value, options) {
+    return this.intl.formatMessage(value, options);
+  }
 });

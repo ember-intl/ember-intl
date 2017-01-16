@@ -13,7 +13,18 @@ import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 
-const { assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
+const {
+  assert,
+  getOwner,
+  computed,
+  makeArray,
+  get,
+  set,
+  RSVP,
+  Service,
+  Evented,
+  deprecate
+} = Ember;
 const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(formatType) {
@@ -28,39 +39,25 @@ function formatterProxy(formatType) {
       options = {};
     }
 
-    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
-
     if (typeof options.format === 'string') {
       options = assign(assign({}, this.getFormat(formatType, options.format)), options);
     }
-
 
     if (!formats) {
       formats = get(this, 'formats');
     }
 
+    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
+    const locale = makeArray(options.locale || get(this, '_locale')).map(normalizeLocale);
+
     return formatter.format(value, options, {
-      formats: formats,
-      locale: normalizeLocale(options.locale) || get(this, '_locale')
+      formats,
+      locale
     });
   };
 }
 
 const IntlService = Service.extend(Evented, {
-  init() {
-    this._super(...arguments);
-
-    this.owner = getOwner(this);
-
-    if (typeof Intl === 'undefined') {
-      Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
-        id: 'ember-intl-undefined-intljs'
-      });
-    }
-
-    this._hydrate();
-  },
-
   _locale: null,
 
   locale: computed('_locale', {
@@ -80,13 +77,7 @@ const IntlService = Service.extend(Evented, {
 
   formats: computed({
     get() {
-      const formats = this.owner.resolveRegistration('formats:main');
-
-      if (Ember.Object.detect(formats)) {
-        return formats.create();
-      }
-
-      return formats;
+      return this.owner.resolveRegistration('formats:main');
     }
   }),
 
@@ -98,15 +89,27 @@ const IntlService = Service.extend(Evented, {
   formatDate: formatterProxy('date'),
   requirejs: requirejs,
 
+  init() {
+    this._super(...arguments);
+
+    this.owner = getOwner(this);
+
+    if (typeof Intl === 'undefined') {
+      Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
+        id: 'ember-intl-undefined-intljs'
+      });
+    }
+
+    this._hydrate();
+  },
+
   /**
    * Returns an array of registered locale names
    *
    * @property locales
    * @public
    */
-  locales: computed('adapter.seen.[]', function() {
-    return get(this, 'adapter.seen').map(l => l.localeName);
-  }).readOnly(),
+  locales: computed.readOnly('adapter.locales'),
 
   /**
    * Peeks into the requirejs map and registers all locale data objects found.
@@ -125,13 +128,15 @@ const IntlService = Service.extend(Evented, {
       });
     }
 
-    cldrs.map((name) => this.requirejs(name, null, null, true)['default'])
+    cldrs.map((moduleName) => {
+      return this.owner.resolveRegistration('cldr:' + moduleName.split('\/').pop());
+    })
       .forEach((data) => data.forEach(this.addLocaleData));
 
     translations.forEach((moduleName) => {
-      const splitModuleName = moduleName.split('\/');
-      const localeName = splitModuleName[splitModuleName.length - 1];
-      this.addTranslations(localeName, this.requirejs(moduleName, null, null, true)['default']);
+      const localeName = moduleName.split('\/').pop();
+
+      this.addTranslations(localeName, this.owner.resolveRegistration('translation:' + localeName));
     });
   },
 
@@ -161,18 +166,18 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, ...args);
   },
 
-  exists(key, optionalLocales) {
-    let locales = optionalLocales;
-    const adapter = get(this, 'adapter');
+  exists(key, optionalLocaleNames) {
+    let localeNames = optionalLocaleNames;
+    let adapter = get(this, 'adapter');
 
-    if (!optionalLocales) {
-      locales = get(this, '_locale');
+    if (!optionalLocaleNames) {
+      localeNames = get(this, '_locale');
     }
 
-    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, locales);
+    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, localeNames);
 
-    return makeArray(locales).some((locale) => {
-      return adapter.has(locale, key);
+    return makeArray(localeNames).some((localeName) => {
+      return adapter.has(localeName, key);
     });
   },
 
@@ -198,15 +203,15 @@ const IntlService = Service.extend(Evented, {
     IntlRelativeFormat.__addLocaleData(data);
   },
 
-  addTranslation(locale, key, value) {
-    return this.localeFactory(locale).then((localeInstance) => {
-      return localeInstance.addTranslation(key, value);
+  addTranslation(localeName, key, value) {
+    return this.localeFactory(localeName).then((locale) => {
+      return locale.addTranslation(key, value);
     });
   },
 
-  addTranslations(locale, payload) {
-    return this.localeFactory(locale).then((localeInstance) => {
-      return localeInstance.addTranslations(payload);
+  addTranslations(localeName, payload) {
+    return this.localeFactory(localeName).then((locale) => {
+      return locale.addTranslations(payload);
     });
   },
 

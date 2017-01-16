@@ -4,15 +4,20 @@
  */
 
 import Ember from 'ember';
-import factory from './-format-base';
+import BaseHelper from './-format-base';
 
 const runBind = Ember.run.bind;
 
-export default factory('relative').extend({
+export default BaseHelper.extend({
+  format(value, options) {
+    return this.intl.formatRelative(value, options);
+  },
+
   compute(value, hash) {
     this.clearTimer();
 
     if (hash && typeof hash.interval !== 'undefined') {
+      /* setTimeout versus Ember.run.later so tests will not wait infinitely */
       this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
     }
 

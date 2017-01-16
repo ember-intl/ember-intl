@@ -3,9 +3,13 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import factory from './-format-base';
+import BaseHelper from './-format-base';
 import { getValue } from './format-message';
 
-export default factory('html-message').extend({
-  getValue
+export default BaseHelper.extend({
+  getValue,
+
+  format(value, options) {
+    return this.intl.formatHtmlMessage(value, options);
+  }
 });
