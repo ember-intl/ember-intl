@@ -149,7 +149,7 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  lookup(key, localeName, resilient = false) {
+  lookup(key, localeName, options = {}) {
     let locales;
     if (localeName) {
       locales = makeArray(localeName).map(normalizeLocale);
@@ -160,7 +160,7 @@ const IntlService = Service.extend(Evented, {
 
     let translation = get(this, 'adapter').lookup(locales, key);
 
-    if (!translation && !resilient) {
+    if (!translation && !options.resilient) {
       let missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, locales);
