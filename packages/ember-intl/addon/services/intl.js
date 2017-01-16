@@ -114,7 +114,6 @@ const IntlService = Service.extend(Evented, {
     }
 
     const cache = this._registered[localeName];
-
     if (cache.cldr && cache.translation) {
       return;
     }
@@ -150,7 +149,7 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  lookup(key, localeName) {
+  lookup(key, localeName, resilient = false) {
     let locales;
     if (localeName) {
       locales = makeArray(localeName).map(normalizeLocale);
@@ -160,7 +159,8 @@ const IntlService = Service.extend(Evented, {
     }
 
     let translation = get(this, 'adapter').lookup(locales, key);
-    if (!translation) {
+
+    if (!translation && !resilient) {
       let missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, locales);

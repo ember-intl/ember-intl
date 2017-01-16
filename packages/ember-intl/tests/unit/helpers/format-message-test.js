@@ -149,9 +149,7 @@ test('locale can add message to intl service and read it', function(assert) {
 test('locale can add messages object and can read it', function(assert) {
   assert.expect(1);
 
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({ 'bulk-add': 'bulk add works' });
-
+  service.addTranslations('en-us', { 'bulk-add': 'bulk add works' });
   this.render(hbs`{{format-message "bulk-add"}}`);
 
   assert.equal(this.$().text(), "bulk add works");
@@ -170,8 +168,7 @@ test('exists returns false when key not found', function(assert) {
 
 test('exists returns true when key found', function(assert) {
   assert.expect(1);
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslation('hello', 'world');
+  service.addTranslation('en-us', 'hello', 'world');
   assert.equal(service.exists('hello'), true);
 });
 
@@ -186,6 +183,18 @@ test('able to discover all register translations', function(assert) {
 test('should respect format options for date ICU block', function(assert) {
   assert.expect(1);
   this.render(hbs`{{format-message (l 'Sale begins {day, date, shortWeekDay}') day=1390518044403}}`);
+  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
+});
+
+test('should fallback to with defaultMessage when key not found', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{format-message 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
+});
+
+test('should fallback to with fallback when key not found', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{format-message 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
