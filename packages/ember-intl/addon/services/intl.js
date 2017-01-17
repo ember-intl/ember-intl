@@ -245,11 +245,7 @@ const IntlService = Service.extend(Evented, {
   },
 
   localeFactory(localeName) {
-    const result = get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
-
-    return RSVP.cast(result).then(function(localeInstance) {
-      return localeInstance;
-    });
+    return RSVP.cast(get(this, 'adapter').localeFactory(normalizeLocale(localeName), true));
   },
 
   createLocale(localeName, payload) {
