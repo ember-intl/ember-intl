@@ -18,8 +18,12 @@ const { camelize } = emberString;
 const FormatterBase = EmberObject.extend({
   options: null,
 
-  init(...args) {
-    this._super(...args);
+  init() {
+    this._super(...arguments);
+
+    if (this.constructor === FormatterBase) {
+      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+    }
 
     if (this.constructor === FormatterBase) {
       throw new Error('Formatter is an abstract class, can not be instantiated directly.');

@@ -42,6 +42,11 @@ test('exists', function(assert) {
   assert.ok(formatMessageHelper);
 });
 
+test('exists test on locale it has not seen yet', function(assert) {
+  assert.expect(1);
+  assert.ok(service.exists('product.info', 'fr-fr'));
+});
+
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
   assert.equal(service.formatMessage('hello {world}', {
@@ -189,6 +194,18 @@ test('able to discover all register translations', function(assert) {
 test('should respect format options for date ICU block', function(assert) {
   assert.expect(1);
   this.render(hbs`{{format-message (l 'Sale begins {day, date, shortWeekDay}') day=1390518044403}}`);
+  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
+});
+
+test('should fallback to with defaultMessage when key not found', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{format-message 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
+});
+
+test('should fallback to with fallback when key not found', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{format-message 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 

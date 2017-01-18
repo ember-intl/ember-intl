@@ -43,19 +43,11 @@ function formatterProxy(formatType) {
       options = assign(assign({}, this.getFormat(formatType, options.format)), options);
     }
 
-    let formatter = this._owner.lookup(`ember-intl@formatter:format-${formatType}`);
-    let locale;
-
-    if (options.locale) {
-      locale = makeArray(options.locale).map(normalizeLocale);
-      locale.forEach(this._registerLocale, this);
-    } else {
-      locale = get(this, '_locale');
-    }
+    const formatter = this._owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
     return formatter.format(value, options, {
       formats: formats || get(this, 'formats'),
-      locale: locale
+      locale: this._localeWithDefault(options.locale)
     });
   };
 }
@@ -113,30 +105,30 @@ const IntlService = Service.extend(Evented, {
       this._registered[localeName] = Object.create(null);
     }
 
-    const cache = this._registered[localeName];
-    if (cache.cldr && cache.translation) {
+    const localeMeta = this._registered[localeName];
+    if (localeMeta.cldr && localeMeta.translation) {
       return;
     }
 
-    if (!cache.cldr) {
-      cache.cldr = true;
-      this._hydrateCLDR(localeName);
+    if (!localeMeta.cldr) {
+      localeMeta.cldr = true;
+      this._hydrateBundledCLDR(localeName);
     }
 
-    if (!cache.translation) {
-      cache.translation = true;
-      this._hydateTranslations(localeName);
+    if (!localeMeta.translation) {
+      localeMeta.translation = true;
+      this._hydateBundledTranslations(localeName);
     }
   },
 
-  _hydateTranslations(localeName) {
-    const translations = this._owner.resolveRegistration('translation:' + localeName);
+  _hydateBundledTranslations(localeName) {
+    const translations = this._owner.resolveRegistration(`translation:${localeName}`);
     if (translations) {
       this.addTranslations(localeName, translations);
     }
   },
 
-  _hydrateCLDR(localeName) {
+  _hydrateBundledCLDR(localeName) {
     const lang = localeName.split('-')[0];
     const cldr = this._owner.resolveRegistration(`cldr:${lang}`);
 
@@ -149,21 +141,30 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  lookup(key, localeName, options = {}) {
-    let locales;
-    if (localeName) {
-      locales = makeArray(localeName).map(normalizeLocale);
-      locales.forEach(this._registerLocale, this);
-    } else {
-      locales = get(this, '_locale');
+  _localeWithDefault(localeName) {
+    if (!localeName) {
+      return get(this, '_locale');
     }
 
-    let translation = get(this, 'adapter').lookup(locales, key);
+    if (typeof localeName === 'string') {
+      localeName = makeArray(localeName).map(normalizeLocale);
+    }
+
+    if (Array.isArray(localeName)) {
+      localeName.forEach(this._registerLocale, this);
+    }
+
+    return localeName;
+  },
+
+  lookup(key, localeName, options = {}) {
+    const localeNames = this._localeWithDefault(localeName);
+    const translation = get(this, 'adapter').lookup(localeNames, key);
 
     if (!translation && !options.resilient) {
-      let missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
+      const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
-      return missingMessage.call(this, key, locales);
+      return missingMessage.call(this, key, localeNames);
     }
 
     return translation;
@@ -176,17 +177,13 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, ...args);
   },
 
-  exists(key, optionalLocaleNames) {
-    let localeNames = optionalLocaleNames;
-    let adapter = get(this, 'adapter');
+  exists(key, localeName) {
+    const localeNames = this._localeWithDefault(localeName);
+    const adapter = get(this, 'adapter');
 
-    if (!optionalLocaleNames) {
-      localeNames = get(this, '_locale');
-    }
+    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, localeNames);
-
-    return makeArray(localeNames).some((localeName) => {
+    return localeNames.some((localeName) => {
       return adapter.has(localeName, key);
     });
   },
@@ -213,10 +210,10 @@ const IntlService = Service.extend(Evented, {
     return this.localeFactory(localeName).addTranslations(payload);
   },
 
-  setLocale(locales) {
-    if (!locales) { return; }
+  setLocale(localeName) {
+    if (!localeName) { return; }
 
-    const proposed = makeArray(locales).map(normalizeLocale);
+    const proposed = makeArray(localeName).map(normalizeLocale);
     const current = get(this, '_locale');
 
     if (!isArrayEqual(proposed, current)) {
@@ -239,7 +236,7 @@ const IntlService = Service.extend(Evented, {
   },
 
   localeFactory(locale) {
-    return get(this, 'adapter').localeFactory(locale, true);
+    return get(this, 'adapter').localeFactory(normalizeLocale(locale), true);
   },
 
   findTranslationByKey() {
