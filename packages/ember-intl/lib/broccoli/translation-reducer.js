@@ -9,11 +9,9 @@
 
 let CachingWriter = require('broccoli-caching-writer');
 let stringify = require('json-stable-stringify');
-let walkSync = require('walk-sync');
 let mkdirp = require('mkdirp');
 let extend = require('extend');
 let yaml = require('js-yaml');
-let chalk = require('chalk');
 let glob = require('glob');
 let path = require('path');
 let fs = require('fs');
@@ -104,13 +102,13 @@ class TranslationReducer extends CachingWriter {
     }, this);
   }
 
-  readDirectory(inputPath) {
+  readDirectory(inputPath, listFiles) {
     let plugin = this;
 
     // sorted so that any translation path starts with `__addon__`
     // move to the head of the array.  this ensures the application's translations
     // take presidence over addon translations.
-    let sortedPaths = walkSync(inputPath).sort(function(a, b) {
+    let sortedPaths = listFiles.sort(function(a, b) {
       if (a.indexOf('__addon__') === 0) {
         return -1;
       }
@@ -118,21 +116,19 @@ class TranslationReducer extends CachingWriter {
       return 1;
     });
 
-    return sortedPaths.reduce(function(translations, file) {
-      let fullPath = inputPath + '/' + file;
-
-      if (fs.statSync(fullPath).isDirectory()) {
+    return sortedPaths.reduce(function(translations, translationPath) {
+      if (fs.statSync(translationPath).isDirectory()) {
         return translations;
       }
 
-      let translation = readAsObject(inputPath + '/' + file);
+      let translation = readAsObject(translationPath);
 
       if (!translation) {
-        plugin._log('cannot read path "' + fullPath + '"');
+        plugin._log('cannot read path "' + translationPath + '"');
         return translations;
       }
 
-      let basename = path.basename(file).split('.')[0];
+      let basename = path.basename(translationPath).split('.')[0];
       let keyedTranslation = {};
       keyedTranslation[plugin.normalizeLocale(basename)] = translation;
 
@@ -161,7 +157,7 @@ class TranslationReducer extends CachingWriter {
     let inputPath = this.inputPaths[0];
     let outputPath = this.outputPath + '/' + this.options.outputPath;
     let baseLocale = this.options.baseLocale;
-    let translations = this.readDirectory(inputPath);
+    let translations = this.readDirectory(inputPath, this.listFiles());
     let defaultTranslationKeys, defaultTranslation, translation;
 
     mkdirp.sync(outputPath);
