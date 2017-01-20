@@ -283,7 +283,6 @@ module.exports = {
     let addon = this;
 
     return new TranslationReducer([this.translationTree], Object.assign({}, this.opts, opts, {
-      verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
       log() {
         return addon.log.apply(addon, arguments);
       }
