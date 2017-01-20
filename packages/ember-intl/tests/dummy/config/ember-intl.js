@@ -18,17 +18,6 @@ module.exports = function(environment) {
     locales: ['en-us', 'es-es', 'fr-fr', 'de-de', 'aa-dj'],
 
     /**
-    * baseLocale is used to determine if translation keys are missing from other locales.
-    * This property is optional, and if you rely on sideloading translations then
-    * this should be null
-    *
-    * @property baseLocale
-    * @type {String?}
-    * @default "null"
-    */
-    baseLocale: 'en-us',
-
-    /**
     * autoPolyfill, when true will automatically inject the IntlJS polyfill
     * into index.html
     *

@@ -44,20 +44,6 @@ If you wish, you can organize your translations into subdirectories such as `/tr
 
 Translation keys containing periods, i.e., `foo.bar`, conflicts with internal accessors  -- which assumes nested objects and therefor triggers errors like: `Error: Property set failed: object in path "foo" could not be found or was destroyed`.  However, this is supported as of 2.5.x and to enable run `ember g ember-intl-dot-notation`.
 
-
-### Translation Compilation
-
-At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `baseLocale` config property.  If translations keys are found on the base but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the base locale as a filler.
-
-```js
-// config/ember-intl.js
-module.exports = function(environment) {
-  return {
-    baseLocale: 'en-us' // default build-time locale
-  };
-};
-```
-
 ## Setting runtime locale
 
 Open, or create, `app/routes/application.js` and within `beforeModel` invoke `intl.setLocale`.  Example:
@@ -77,9 +63,6 @@ Open, or create, `app/routes/application.js` and within `beforeModel` invoke `in
       // OR for those that sideload, an array is accepted to handle fallback lookups
 
       // en-ca is the primary locale, en-us is the fallback.
-      // this is optional, and likely unnecessary if you define baseLocale (see below)
-      // The primary usecase is if you side load all translations
-      //
       // return this.get('intl').setLocale(['en-ca', 'en-us']);
     }
   });
