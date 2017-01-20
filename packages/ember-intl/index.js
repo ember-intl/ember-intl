@@ -174,32 +174,24 @@ module.exports = {
   },
 
   intlConfig(environment) {
-    let deprecatedConfig = this.app.project.config(environment)['intl'];
-    let addonConfig = Object.assign(this.readConfig(environment), deprecatedConfig || {});
-
-    if (deprecatedConfig) {
-      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.log('Run `ember g ember-intl-config` to create a default config');
-    }
-
-    addonConfig = Object.assign({
+    let config = Object.assign({
       locales: null,
       publicOnly: false,
       disablePolyfill: false,
       autoPolyfill: false,
       inputPath: 'translations',
       outputPath: 'translations'
-    }, addonConfig);
+    }, this.readConfig(environment));
 
-    if (addonConfig.locales) {
-      addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
+    if (config.locales) {
+      config.locales = utils.castArray(config.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
-        return locale.toLocaleLowerCase();
+        return locale.toLocaleLowerCase().replace(/_/g, '-');
       });
     }
 
-    return addonConfig;
+    return config;
   },
 
   findLocales() {
