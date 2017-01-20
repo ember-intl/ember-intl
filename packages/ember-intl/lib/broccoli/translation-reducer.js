@@ -92,8 +92,6 @@ class TranslationReducer extends CachingWriter {
     if (this.options.log) {
       return this.options.log.apply(undefined, arguments);
     }
-
-    console.log(msg);
   }
 
   findMissingKeys(target, defaultTranslationKeys, locale) {
@@ -162,31 +160,35 @@ class TranslationReducer extends CachingWriter {
     let plugin = this;
     let inputPath = this.inputPaths[0];
     let outputPath = this.outputPath + '/' + this.options.outputPath;
+    let baseLocale = this.options.baseLocale;
     let translations = this.readDirectory(inputPath);
     let defaultTranslationKeys, defaultTranslation, translation;
 
     mkdirp.sync(outputPath);
 
-    if (this.options.baseLocale) {
-      let defaultTranslationPath = glob.sync(inputPath + '/' + this.options.baseLocale + '\.@(json|yaml|yml)', {
+    if (baseLocale) {
+      let defaultTranslationPath = glob.sync(inputPath + '/' + baseLocale + '\.@(json|yaml|yml)', {
         nosort: true,
         silent: true
       })[0];
 
       if (!defaultTranslationPath) {
-        plugin._log(this.options.baseLocale + ' default locale missing `translations` folder');
+        plugin._log(baseLocale + ' default locale missing `translations` folder');
         return;
       }
 
-      defaultTranslation = translations[this.normalizeLocale(this.options.baseLocale)];
-      defaultTranslationKeys = propKeys(defaultTranslation);
+      defaultTranslation = translations[this.normalizeLocale(baseLocale)];
+
+      if (this.options.verbose) {
+        defaultTranslationKeys = propKeys(defaultTranslation);
+      }
     }
 
     for (let key in translations) {
       if (translations.hasOwnProperty(key)) {
         translation = translations[key];
 
-        if (this.options.baseLocale) {
+        if (this.options.verbose && baseLocale && defaultTranslationKeys) {
           this.findMissingKeys(translation, defaultTranslationKeys, key);
         }
 
