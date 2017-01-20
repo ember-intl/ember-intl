@@ -47,7 +47,7 @@ Translation keys containing periods, i.e., `foo.bar`, conflicts with internal ac
 
 ### Translation Compilation
 
-At build time, ember-intl walks all of the translations within the project and attempts to locate missing translations keys.  This is done through the `baseLocale` config property.  If translations keys are found on the base but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the base locale as a filler.
+At build time, ember-intl walks all of the translations within the project and attempts to locate missing translation keys.  This is done through the `baseLocale` config property.  If translations keys are found on the base but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the base locale as a filler.
 
 ```js
 // config/ember-intl.js
@@ -300,7 +300,7 @@ There are two options on how to load the Intl.js polyfill, either through the po
 
 ## Writing Unit Tests
 
-Phantom does support the Intl API, so in order for for you ember-intl to work in a browser which does not support the Intl API, it needs to be polyfilled.
+Phantom does support the Intl API, so in order for ember-intl to work in a browser which does not support the Intl API, it needs to be polyfilled.
 
 To resolve this, add the following above all script tags in `tests/index.html`:
 ```html
