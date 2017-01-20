@@ -109,7 +109,7 @@ class TranslationReducer extends CachingWriter {
     // move to the head of the array.  this ensures the application's translations
     // take presidence over addon translations.
     let sortedPaths = listFiles.sort(function(a, b) {
-      if (a.indexOf('__addon__') === 0) {
+      if (path.relative(inputPath, a).indexOf('__addon__') === 0) {
         return -1;
       }
 
