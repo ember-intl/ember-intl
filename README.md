@@ -283,7 +283,7 @@ There are two options on how to load the Intl.js polyfill, either through the po
 
 ## Writing Unit Tests
 
-Phantom does support the Intl API, so in order for for you ember-intl to work in a browser which does not support the Intl API, it needs to be polyfilled.
+Phantom does support the Intl API, so in order for ember-intl to work in a browser which does not support the Intl API, it needs to be polyfilled.
 
 To resolve this, add the following above all script tags in `tests/index.html`:
 ```html
