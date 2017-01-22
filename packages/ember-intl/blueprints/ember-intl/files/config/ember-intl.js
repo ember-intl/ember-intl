@@ -12,10 +12,10 @@ module.exports = function(/* env */) {
     * list out the locales. i.e: ['en-us', 'en-gb', 'fr-fr']
     *
     * @property locales
-    * @type {Array?}
-    * @default "null"
+    * @type {Array}
+    * @default []
     */
-    locales: null,
+    locales: [],
 
     /**
     * autoPolyfill, when true will automatically inject the IntlJS polyfill
@@ -23,7 +23,7 @@ module.exports = function(/* env */) {
     *
     * @property autoPolyfill
     * @type {Boolean}
-    * @default "false"
+    * @default false
     */
     autoPolyfill: false,
 
@@ -32,7 +32,7 @@ module.exports = function(/* env */) {
     *
     * @property disablePolyfill
     * @type {Boolean}
-    * @default "false"
+    * @default false
     */
     disablePolyfill: false,
 
@@ -45,7 +45,7 @@ module.exports = function(/* env */) {
     *
     * @property publicOnly
     * @type {Boolean}
-    * @default "false"
+    * @default false
     */
     publicOnly: false,
 
