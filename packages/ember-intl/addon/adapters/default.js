@@ -5,47 +5,38 @@
 
 import Ember from 'ember';
 
-const { A:emberArray, getOwner } = Ember;
+const { A:emberArray, get, computed, getOwner } = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
   _seen: null,
+  _locales: computed.mapBy('_seen', 'localeName'),
 
   init() {
     this._super(...arguments);
+
+    const owner = getOwner(this);
     this._seen = emberArray();
+    this._map = Object.create(null);
+    this.Model = owner._lookupFactory('model:ember-intl-translation') || owner._lookupFactory('ember-intl@model:translation');
   },
 
   lookupLocale(localeName) {
-    return this._seen.findBy('localeName', localeName);
+    return this._map[localeName];
   },
 
   localeFactory(localeName) {
-    const owner = getOwner(this);
-    const lookupName = `ember-intl@translation:${localeName}`;
-    let model = owner.lookup(lookupName);
+    let model = this.lookupLocale(localeName);
 
-    if (model) {
-      return model;
+    if (!model) {
+      model = this._map[localeName] = this.Model.create({ localeName });
+      this._seen.pushObject(model);
     }
-
-    const Klass = owner._lookupFactory('model:ember-intl-translation') || owner._lookupFactory('ember-intl@model:translation');
-    const ModelKlass = Klass.extend();
-
-    Object.defineProperty(ModelKlass.proto(), 'localeName', {
-      writable: false,
-      enumerable: true,
-      value: localeName
-    });
-
-    owner.register(lookupName, ModelKlass);
-    model = owner.lookup(lookupName);
-    this._seen.pushObject(model);
 
     return model;
   },
 
   locales() {
-    return this._seen.map(l => l.localeName);
+    return get(this, '_locales');
   },
 
   has(localeName, translationKey) {

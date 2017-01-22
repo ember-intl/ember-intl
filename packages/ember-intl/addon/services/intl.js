@@ -202,6 +202,10 @@ const IntlService = Service.extend(Evented, {
     IntlRelativeFormat.__addLocaleData(data);
   },
 
+  localeFactory(locale) {
+    return get(this, 'adapter').localeFactory(normalizeLocale(locale), true);
+  },
+
   addTranslation(localeName, key, value) {
     return this.localeFactory(localeName).addTranslation(key, value);
   },
@@ -233,10 +237,6 @@ const IntlService = Service.extend(Evented, {
     }
 
     return {};
-  },
-
-  localeFactory(locale) {
-    return get(this, 'adapter').localeFactory(normalizeLocale(locale), true);
   },
 
   findTranslationByKey() {
