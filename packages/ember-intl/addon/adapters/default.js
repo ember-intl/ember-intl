@@ -17,7 +17,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     const owner = getOwner(this);
     this._seen = emberArray();
     this._map = Object.create(null);
-    this.Model = owner._lookupFactory('model:ember-intl-translation') || owner._lookupFactory('ember-intl@model:translation');
+    this.Model = owner.factoryFor('model:ember-intl-translation') || owner.factoryFor('ember-intl@model:translation');
   },
 
   lookupLocale(localeName) {
