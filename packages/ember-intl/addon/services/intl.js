@@ -118,7 +118,7 @@ const IntlService = Service.extend(Evented, {
     const translations = this._lookupByFactoryType('translations', config.modulePrefix);
 
     if (!cldrs.length) {
-      Ember.warn('[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.', false, {
+      Ember.warn(`[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.`, false, {
         id: 'ember-intl-missing-cldr-data'
       });
     }
