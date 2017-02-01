@@ -33,9 +33,14 @@ const DefaultTranslationAdapter = Ember.Object.extend({
       return model;
     }
 
-    const Klass = owner.factoryFor('model:ember-intl-translation') || Translation;
-    const ModelKlass = Klass.extend();
+    let Klass;
+    if (owner.hasRegistration('model:ember-intl-translation')) {
+      Klass = owner.factoryFor('model:ember-intl-translation').class;
+    } else {
+      Klass = Translation;
+    }
 
+    const ModelKlass = Klass.extend();
     Object.defineProperty(ModelKlass.proto(), 'localeName', {
       writable: false,
       enumerable: true,
