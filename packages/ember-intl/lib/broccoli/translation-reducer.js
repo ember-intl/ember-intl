@@ -152,11 +152,9 @@ class TranslationReducer extends CachingWriter {
   }
 
   build() {
-    let plugin = this;
-    let inputPath = this.inputPaths[0];
     let outputPath = this.outputPath + '/' + this.options.outputPath;
     let baseLocale = this.options.baseLocale;
-    let translations = this.readDirectory(inputPath, this.listFiles());
+    let translations = this.readDirectory(this.inputPaths[0], this.listFiles());
     let defaultTranslationKeys, defaultTranslation, translation;
     mkdirp.sync(outputPath);
 
