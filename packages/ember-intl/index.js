@@ -7,8 +7,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-let stringify = require('json-stable-stringify');
 let WatchedDir = require('broccoli-source').WatchedDir;
+let stringify = require('json-stable-stringify');
+let mergeTrees = require('broccoli-merge-trees');
 let extract = require('broccoli-cldr-data');
 let Funnel = require('broccoli-funnel');
 let existsSync = require('exists-sync');
@@ -16,7 +17,6 @@ let walkSync = require('walk-sync');
 let path = require('path');
 
 let utils = require('./lib/utils');
-let mergeTrees = require('broccoli-merge-trees');
 let TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
