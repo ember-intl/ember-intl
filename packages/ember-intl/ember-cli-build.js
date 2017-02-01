@@ -5,12 +5,7 @@
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
-    // Add options here
-    intl: {
-      silent: true
-    }
-  });
+  var app = new EmberAddon(defaults, {});
 
   app.options.snippetPaths = ['tests/dummy/snippets'];
 

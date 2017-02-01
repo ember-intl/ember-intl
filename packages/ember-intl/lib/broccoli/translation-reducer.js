@@ -12,7 +12,6 @@ let stringify = require('json-stable-stringify');
 let mkdirp = require('mkdirp');
 let extend = require('extend');
 let yaml = require('js-yaml');
-let glob = require('glob');
 let path = require('path');
 let fs = require('fs');
 
@@ -80,7 +79,7 @@ class TranslationReducer extends CachingWriter {
 
   normalizeLocale(locale) {
     if (typeof locale === 'string') {
-      return locale.toLowerCase();
+      return locale.replace(/_/g, '-').toLowerCase();
     }
 
     return locale;
@@ -159,20 +158,9 @@ class TranslationReducer extends CachingWriter {
     let baseLocale = this.options.baseLocale;
     let translations = this.readDirectory(inputPath, this.listFiles());
     let defaultTranslationKeys, defaultTranslation, translation;
-
     mkdirp.sync(outputPath);
 
     if (baseLocale) {
-      let defaultTranslationPath = glob.sync(inputPath + '/' + baseLocale + '\.@(json|yaml|yml)', {
-        nosort: true,
-        silent: true
-      })[0];
-
-      if (!defaultTranslationPath) {
-        plugin._log(baseLocale + ' default locale missing `translations` folder');
-        return;
-      }
-
       defaultTranslation = translations[this.normalizeLocale(baseLocale)];
 
       if (this.options.verbose) {
@@ -188,7 +176,9 @@ class TranslationReducer extends CachingWriter {
           this.findMissingKeys(translation, defaultTranslationKeys, key);
         }
 
-        translation = extend(true, {}, defaultTranslation, translation);
+        if (defaultTranslation) {
+          translation = extend(true, {}, defaultTranslation, translation);
+        }
 
         fs.writeFileSync(outputPath + '/' + this.filename(key), this.wrapEntry(translation), { encoding: 'utf8' });
       }

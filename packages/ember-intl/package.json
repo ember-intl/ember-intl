@@ -68,7 +68,6 @@
     "ember-intl-relativeformat": "^2.4.0",
     "exists-sync": "0.0.3",
     "extend": "^3.0.0",
-    "glob": "^5.0.3",
     "intl": "1.0.1",
     "js-yaml": "^3.3.1",
     "json-stable-stringify": "^1.0.0",

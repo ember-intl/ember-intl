@@ -60,7 +60,15 @@ module.exports = function(/* env */) {
     */
     publicOnly: false,
 
-    inputPath: 'translations',
-    outputPath: 'translations'
+    /**
+    * Path where translations are kept.  This is relative to the project root.
+    * For example, if your translations are an npm dependency, set this to:
+    *`'./node_modules/path/to/translations'`
+    *
+    * @property inputPath
+    * @type {String}
+    * @default "translations"
+     */
+    inputPath: 'translations'
   };
 };

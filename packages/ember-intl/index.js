@@ -21,16 +21,16 @@ let TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
   name: 'ember-intl',
-  opts: null,
+  addonOptions: null,
   isLocalizationFramework: true,
 
   included() {
     this._super.included.apply(this, arguments);
 
     let app = this.app = this._findParentApp();
-    this.opts = this.intlConfig(app.env);
+    this.addonOptions = this.intlConfig(app.env);
 
-    let inputPath = this.opts.inputPath;
+    let inputPath = this.addonOptions.inputPath || 'translations';
     this.hasTranslationDir = existsSync(path.join(app.project.root, inputPath));
     this.projectLocales = this.findLocales();
 
@@ -75,7 +75,7 @@ module.exports = {
   },
 
   contentFor(name, config) {
-    if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
+    if (name === 'head' && !this.addonOptions.disablePolyfill && this.addonOptions.autoPolyfill) {
       let assetPath = this.outputPaths();
       let locales = this.findLocales();
       let prefix = '';
@@ -96,7 +96,7 @@ module.exports = {
   treeForApp(tree) {
     let trees = [tree];
 
-    if (this.hasTranslationDir && !this.opts.publicOnly) {
+    if (this.hasTranslationDir && !this.addonOptions.publicOnly) {
       trees.push(this.reduceTranslations({
         filename(key) {
           return key + '.js';
@@ -130,7 +130,7 @@ module.exports = {
       trees.push(publicTree);
     }
 
-    if (!this.opts.disablePolyfill) {
+    if (!this.addonOptions.disablePolyfill) {
       let appOptions = this.app.options || {};
 
       trees.push(require('./lib/broccoli/intl-polyfill')({
@@ -139,7 +139,7 @@ module.exports = {
       }));
     }
 
-    if (this.hasTranslationDir && this.opts.publicOnly) {
+    if (this.hasTranslationDir && this.addonOptions.publicOnly) {
       trees.push(this.reduceTranslations());
     }
 
@@ -213,13 +213,15 @@ module.exports = {
     let locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.opts.inputPath)).map(function(filename) {
-        return path.basename(filename, path.extname(filename));
+      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonOptions.inputPath), {
+        directories: false
+      }).map(function(filename) {
+        return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
       }));
     }
 
-    if (this.opts.locales) {
-      locales = locales.concat(this.opts.locales);
+    if (this.addonOptions.locales) {
+      locales = locales.concat(this.addonOptions.locales);
     }
 
     locales = locales.concat(locales.filter(function(locale) {
@@ -232,9 +234,7 @@ module.exports = {
       return false;
     }, this));
 
-    return utils.unique(locales).filter(function(locale) {
-      return locale !== 'subdirectory'
-    });
+    return utils.unique(locales);
   },
 
   findIntlAddons() {
@@ -282,7 +282,7 @@ module.exports = {
     if (!opts) { opts = {}; }
     let addon = this;
 
-    return new TranslationReducer([this.translationTree], Object.assign({}, this.opts, opts, {
+    return new TranslationReducer([this.translationTree], Object.assign({}, this.addonOptions, opts, {
       verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
       log() {
         return addon.log.apply(addon, arguments);
