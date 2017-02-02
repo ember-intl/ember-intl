@@ -7,8 +7,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-let stringify = require('json-stable-stringify');
 let WatchedDir = require('broccoli-source').WatchedDir;
+let stringify = require('json-stable-stringify');
+let mergeTrees = require('broccoli-merge-trees');
 let extract = require('broccoli-cldr-data');
 let Funnel = require('broccoli-funnel');
 let existsSync = require('exists-sync');
@@ -16,12 +17,11 @@ let walkSync = require('walk-sync');
 let path = require('path');
 
 let utils = require('./lib/utils');
-let mergeTrees = require('broccoli-merge-trees');
 let TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
   name: 'ember-intl',
-  opts: null,
+  addonOptions: null,
   isLocalizationFramework: true,
 
   included() {
@@ -206,8 +206,10 @@ module.exports = {
     let locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonOptions.inputPath)).map(function(filename) {
-        return path.basename(filename, path.extname(filename));
+      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonOptions.inputPath), {
+        directories: false
+      }).map(function(filename) {
+        return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
       }));
     }
 
@@ -215,9 +217,7 @@ module.exports = {
       locales = locales.concat(this.addonOptions.locales);
     }
 
-    return utils.unique(locales).filter(function(locale) {
-      return locale !== 'subdirectory'
-    });
+    return utils.unique(locales);
   },
 
   discoverEmberIntlAddons() {

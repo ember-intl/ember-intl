@@ -45,7 +45,7 @@ class TranslationReducer extends CachingWriter {
 
   normalizeLocale(locale) {
     if (typeof locale === 'string') {
-      return locale.toLowerCase();
+      return locale.replace(/_/g, '-').toLowerCase();
     }
 
     return locale;
@@ -111,7 +111,6 @@ class TranslationReducer extends CachingWriter {
     let inputPath = this.inputPaths[0];
     let outputPath = this.outputPath + '/' + this.options.outputPath;
     let translations = this.readDirectory(inputPath, this.listFiles());
-
     mkdirp.sync(outputPath);
 
     for (let key in translations) {
