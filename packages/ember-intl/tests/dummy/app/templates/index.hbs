@@ -59,3 +59,10 @@
 </div>
 
 {{code-snippet name='format-html-message.hbs'}}
+
+<h3>Format Block</h3>
+<div>
+  {{#format-block t='product.block'}}
+    {{join people ', '}}
+  {{/format-block}}
+</div>
