@@ -174,6 +174,15 @@ const IntlService = Service.extend(Evented, {
 
     return this.formatMessage(translation, ...args);
   },
+  
+  
+  tH(key, ...args) {
+    const [ options ] = args;
+    const translation = this.findTranslationByKey(key, options && options.locale);
+
+    return this.formatHtmlMessage(translation, ...args);
+  },
+
 
   exists(key, localeName) {
     const localeNames = this._localeWithDefault(localeName);
