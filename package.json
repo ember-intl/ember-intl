@@ -12,9 +12,12 @@
     "tests-node": "./node_modules/mocha/bin/mocha tests-node/**/*.*",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:testall",
-    "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json && node ./bin/prepublish"
+    "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json"
   },
-  "repository": "https://github.com/jasonmit/ember-intl/tree/master/packages/ember-intl",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jasonmit/ember-intl.git"
+  },
   "homepage": "https://github.com/jasonmit/ember-intl",
   "engines": {
     "node": ">= 4.0.0"
