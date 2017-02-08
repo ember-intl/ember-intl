@@ -15,7 +15,7 @@ module.exports = function(environment) {
     * @type {Array?}
     * @default "null"
     */
-    locales: ['en-us', 'es-es', 'fr-fr', 'de-de', 'aa-dj'],
+    locales: ['en-us', 'es-es', 'fr-fr', 'de-de'],
 
     /**
     * baseLocale is used to determine if translation keys are missing from other locales.
