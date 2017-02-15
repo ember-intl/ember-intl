@@ -15,7 +15,7 @@ const AbstractHelper = Helper.extend({
       throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
     }
 
-    this._super(...arguments);
+    this._super();
 
     this.intl = getOwner(this).lookup('service:intl');
     this.intl.on('localeChanged', this, this.recompute);
@@ -50,8 +50,8 @@ const AbstractHelper = Helper.extend({
     return this.format(value, options);
   },
 
-  destroy() {
-    this._super(...arguments);
+  willDestroy() {
+    this._super();
 
     this.intl.off('localeChanged', this, this.recompute);
   }

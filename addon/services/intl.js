@@ -85,7 +85,7 @@ const IntlService = Service.extend(Evented, {
   requirejs: requirejs,
 
   init() {
-    this._super(...arguments);
+    this._super();
 
     this.owner = getOwner(this);
 
@@ -256,12 +256,12 @@ const IntlService = Service.extend(Evented, {
     return this.addTranslations(localeName, payload);
   },
 
-  findTranslationByKey() {
-    return this.lookup(...arguments);
+  findTranslationByKey(key, localeName, options) {
+    return this.lookup(key, localeName, options);
   },
 
-  translationsFor() {
-    return this.localeFactory(...arguments);
+  translationsFor(localeName) {
+    return this.localeFactory(localeName);
   }
 });
 

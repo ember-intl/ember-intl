@@ -16,7 +16,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
   }).readOnly(),
 
   init() {
-    this._super(...arguments);
+    this._super();
     this._seen = emberArray();
   },
 
@@ -71,12 +71,12 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     }
   },
 
-  translationsFor() {
-    return this.localeFactory(...arguments);
+  translationsFor(localeName) {
+    return this.localeFactory(localeName);
   },
 
-  findTranslationByKey() {
-    return this.lookup(...arguments);
+  findTranslationByKey(localeNames, translationKey) {
+    return this.lookup(localeNames, translationKey);
   }
 });
 
