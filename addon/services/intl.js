@@ -84,7 +84,7 @@ const IntlService = Service.extend(Evented, {
   formatDate: formatterProxy('date'),
 
   init() {
-    this._super(...arguments);
+    this._super();
 
     this._owner = getOwner(this);
     this._registered = Object.create(null);
@@ -239,8 +239,8 @@ const IntlService = Service.extend(Evented, {
     return {};
   },
 
-  findTranslationByKey() {
-    return this.lookup(...arguments);
+  findTranslationByKey(key, localeName, options) {
+    return this.lookup(key, localeName, options);
   },
 
   /* DEPRECATIONS BELOW */

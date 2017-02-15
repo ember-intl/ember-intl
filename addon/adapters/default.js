@@ -12,7 +12,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
   _locales: computed.mapBy('_seen', 'localeName'),
 
   init() {
-    this._super(...arguments);
+    this._super();
 
     const owner = getOwner(this);
     this._seen = emberArray();

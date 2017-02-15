@@ -12,8 +12,8 @@ const { Helper, inject, get, deprecate } = Ember;
 const IntlGetHelper = Helper.extend({
   intl: inject.service(),
 
-  init(...args) {
-    this._super(...args);
+  init() {
+    this._super();
 
     deprecate(`[ember-int] intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`, false, {
       id: 'ember-intl-t-helper'
@@ -26,8 +26,8 @@ const IntlGetHelper = Helper.extend({
     return new LiteralWrapper(get(this, 'intl').lookup(params[0], hash.locale));
   },
 
-  destroy(...args) {
-    this._super(...args);
+  willDestroy() {
+    this._super();
 
     get(this, 'intl').off('localeChanged', this, this.recompute);
   }

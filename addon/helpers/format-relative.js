@@ -9,11 +9,11 @@ import BaseHelper from './-format-base';
 const runBind = Ember.run.bind;
 
 export default BaseHelper.extend({
-  format(value, options) {
-    return this.intl.formatRelative(value, options);
+  format(params, hash) {
+    return this.intl.formatRelative(params, hash);
   },
 
-  compute(value, hash) {
+  compute(params, hash) {
     this.clearTimer();
 
     if (hash && typeof hash.interval !== 'undefined') {
@@ -21,15 +21,15 @@ export default BaseHelper.extend({
       this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
     }
 
-    return this._super(...arguments);
+    return this._super(params, hash);
   },
 
   clearTimer() {
     clearTimeout(this.timer);
   },
 
-  destroy(...args) {
-    this._super(...args);
+  willDestroy() {
+    this._super();
 
     this.clearTimer();
   }
