@@ -16,9 +16,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/jasonmit/ember-intl.git"
+    "url": "http://github.com/ember-intl/ember-intl.git"
   },
-  "homepage": "https://github.com/jasonmit/ember-intl",
+  "homepage": "https://github.com/ember-intl/ember-intl",
   "engines": {
     "node": ">= 4.0.0"
   },
