@@ -4,8 +4,8 @@
  */
 
 import Ember from 'ember';
-import arrayToHash from '../utils/array-to-hash';
-import links from '../utils/links';
+import arrayToHash from './utils/array-to-hash';
+import links from './utils/links';
 
 const {
   get,

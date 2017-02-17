@@ -6,7 +6,7 @@
 import Ember from 'ember';
 
 import { LiteralWrapper } from './l';
-import BaseHelper from './-format-base';
+import BaseHelper from '../helper';
 
 const { assert } = Ember;
 

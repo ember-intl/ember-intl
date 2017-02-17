@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import BaseHelper from './-format-base';
+import BaseHelper from '../helper';
 import { getValue } from './format-message';
 
 export default BaseHelper.extend({
