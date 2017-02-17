@@ -51,7 +51,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
       const model = this.lookupLocale(localeName);
 
       if (model && model.has(translationKey)) {
-        return model.getValue(translationKey);
+        return model.lookup(translationKey);
       }
     }
   }
