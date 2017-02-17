@@ -42,6 +42,11 @@ test('exists', function(assert) {
   assert.ok(formatMessageHelper);
 });
 
+test('exists test on locale it has not seen yet', function(assert) {
+  assert.expect(1);
+  assert.ok(service.exists('product.info', 'fr-fr'));
+});
+
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
   assert.equal(service.formatMessage('hello {world}', {
@@ -146,19 +151,16 @@ test('locale can add message to intl service and read it', function(assert) {
   assert.expect(1);
 
   run(() => {
-    service.addTranslation('en-us', 'oh', 'hai!').then(() => {
-      this.render(hbs`{{format-message 'oh'}}`);
-      assert.equal(this.$().text(), 'hai!');
-    });
+    service.addTranslation('en-us', 'oh', 'hai!');
+    this.render(hbs`{{format-message 'oh'}}`);
+    assert.equal(this.$().text(), 'hai!');
   });
 });
 
 test('locale can add messages object and can read it', function(assert) {
   assert.expect(1);
 
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({ 'bulk-add': 'bulk add works' });
-
+  service.addTranslations('en-us', { 'bulk-add': 'bulk add works' });
   this.render(hbs`{{format-message "bulk-add"}}`);
 
   assert.equal(this.$().text(), "bulk add works");
@@ -177,8 +179,7 @@ test('exists returns false when key not found', function(assert) {
 
 test('exists returns true when key found', function(assert) {
   assert.expect(1);
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslation('hello', 'world');
+  service.addTranslation('en-us', 'hello', 'world');
   assert.equal(service.exists('hello'), true);
 });
 
@@ -186,8 +187,8 @@ test('able to discover all register translations', function(assert) {
   assert.expect(2);
   service.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
   service.exists('test', 'fr-ca');
-  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
-  assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
+  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-mx');
+  assert.equal(service.locales().join('; '), 'en-us; es-mx');
 });
 
 test('should respect format options for date ICU block', function(assert) {
@@ -196,28 +197,16 @@ test('should respect format options for date ICU block', function(assert) {
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
-test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
+test('should fallback to with defaultMessage when key not found', function(assert) {
   assert.expect(1);
+  this.render(hbs`{{format-message 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
+});
 
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  const fn = translation.getValue;
-
-  translation.getValue = function getValue(key) {
-    return this[key];
-  };
-
-  translation['string.path.works'] = 'yes it does';
-
-  try {
-    this.render(hbs`{{format-message (intl-get 'string.path.works')}}`);
-
-    assert.equal(this.$().text(), 'yes it does');
-  } catch(ex) {
-    console.error(ex);
-  } finally {
-    // reset the function back
-    translation.getValue = fn;
-  }
+test('should fallback to with fallback when key not found', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{format-message 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
 test('should fallback to with defaultMessage when key not found', function(assert) {
@@ -256,35 +245,4 @@ test('l helper handles bound computed property', function(assert) {
       done();
     });
   });
-});
-
-test('intl-get handles bound computed property', function(assert) {
-  assert.expect(3);
-
-  const context = EmberObject.extend({
-    foo: true,
-    cp: computed('foo', {
-      get() {
-        return get(this, 'foo') ? 'foo.bar' : 'foo.baz';
-      }
-    })
-  }).create();
-
-  set(this, 'context', context);
-
-  this.render(hbs`{{format-message (intl-get context.cp)}}`);
-
-  assert.equal(this.$().text(), 'foo bar baz');
-
-  run(() => {
-    set(this, 'context.foo', false);
-  });
-
-  assert.equal(this.$().text(), 'baz baz baz');
-
-  run(() => {
-    context.set('foo', true);
-  });
-
-  assert.ok(context, 'Updating binding to view after view is destroyed should not raise exception.');
 });

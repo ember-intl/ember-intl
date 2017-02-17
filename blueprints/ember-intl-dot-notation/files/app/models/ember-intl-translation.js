@@ -1,11 +1,14 @@
+import Ember from 'ember';
 import TranslationModel from 'ember-intl/models/translation';
+
+const { get, set } = Ember;
 
 export default TranslationModel.extend({
   addTranslation(key, value) {
-    this.translations[key] = value;
+    set(this.content, key, value);
   },
 
-  getValue(key) {
-    return this.translations[key];
+  lookup(key) {
+    return get(this.content, key);
   }
 });

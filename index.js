@@ -28,22 +28,18 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     let app = this.app = this._findParentApp();
-    this.addonOptions = this.intlConfig(app.env);
+    let config = app.project.config(app.env) || {};
+    this.addonOptions = config.intl || {};
+    this.hasTranslationDir = existsSync(path.join(app.project.root, this.addonOptions.inputPath));
 
-    let inputPath = this.addonOptions.inputPath || 'translations';
-    this.hasTranslationDir = existsSync(path.join(app.project.root, inputPath));
-    this.projectLocales = this.findLocales();
-
-    let projectTranslations = new WatchedDir(inputPath);
-
-    let addonTranslations = this.findIntlAddons().map(function(addon) {
+    let addonTranslationTrees = this.discoverEmberIntlAddons().map(function(addon) {
       return new Funnel(addon.path, {
         srcDir: addon.translationPath,
         destDir: '__addon__' + addon.name
       });
     }, this);
 
-    this.translationTree = this.mergeTranslationTrees(projectTranslations, addonTranslations);
+    this.translationTree = this.mergeTranslationTrees(new WatchedDir(this.addonOptions.inputPath), addonTranslationTrees);
   },
 
   _findParentApp() {
@@ -75,13 +71,20 @@ module.exports = {
   },
 
   contentFor(name, config) {
-    if (name === 'head' && !this.addonOptions.disablePolyfill && this.addonOptions.autoPolyfill) {
+    const options = config.intl || {};
+
+    if (name === 'head' && !options.disablePolyfill && options.autoPolyfill) {
       let assetPath = this.outputPaths();
-      let locales = this.findLocales();
+      let locales = config.intl.locales || [];
       let prefix = '';
 
-      if (config.rootURL) { prefix += config.rootURL; }
-      if (assetPath) { prefix += assetPath; }
+      if (config.rootURL) {
+        prefix += config.rootURL;
+      }
+
+      if (assetPath) {
+        prefix += assetPath;
+      }
 
       let localeScripts = locales.map(function(locale) {
         return '<script src=\"' + prefix + '/locales/' + locale + '.js\"></script>';
@@ -107,9 +110,9 @@ module.exports = {
       }));
     }
 
-    if (tree && this.projectLocales.length) {
+    if (tree && this.addonOptions.locales.length) {
       let cldrTree = extract(tree, {
-        locales: this.projectLocales,
+        locales: this.addonOptions.locales,
         relativeFields: true,
         destDir: 'cldrs',
         prelude: '/*jslint eqeq: true*/\n',
@@ -134,7 +137,7 @@ module.exports = {
       let appOptions = this.app.options || {};
 
       trees.push(require('./lib/broccoli/intl-polyfill')({
-        locales: this.projectLocales,
+        locales: this.addonOptions.locales,
         destDir: appOptions.app && appOptions.app.intl || 'assets/intl'
       }));
     }
@@ -154,59 +157,49 @@ module.exports = {
     this.ui.writeLine('[ember-intl] ' + msg);
   },
 
-  readConfig(environment) {
-    let project = this.app.project;
-
+  config(env) {
     // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
     // while older ember-cli versions return path relative to project root
-    let configPath = path.dirname(project.configPath());
-    let config = path.join(configPath, 'ember-intl.js');
+    let project = this.app ? this.app.project : this.project;
+    let emberIntlConfig = {};
+    let configPath = path.join(path.dirname(project.configPath()), 'ember-intl.js');
 
-    if (!path.isAbsolute(config)) {
-      config = path.join(project.root, config);
+    if (!path.isAbsolute(configPath)) {
+      configPath = path.join(project.root, configPath);
     }
 
-    if (existsSync(config)) {
-      return require(config)(environment);
+    if (existsSync(configPath)) {
+      emberIntlConfig = require(configPath)(env);
     }
 
-    return {};
-  },
-
-  intlConfig(environment) {
-    let deprecatedConfig = this.app.project.config(environment)['intl'];
-    let addonConfig = Object.assign(this.readConfig(environment), deprecatedConfig || {});
-
-    if (deprecatedConfig) {
-      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.log('Run `ember g ember-intl-config` to create a default config');
-    }
-
-    if (addonConfig.defaultLocale) {
-      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
-      this.log('Please update config/ember-intl.js or config/environment.js');
-      addonConfig.baseLocale = addonConfig.defaultLocale;
-    }
-
-    addonConfig = Object.assign({
-      locales: null,
-      baseLocale: null,
+    let options = Object.assign({
+      locales: [],
       publicOnly: false,
-      disablePolyfill: false,
       autoPolyfill: false,
+      disablePolyfill: false,
       inputPath: 'translations',
       outputPath: 'translations'
-    }, addonConfig);
+    }, emberIntlConfig);
 
-    if (addonConfig.locales) {
-      addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
-        return typeof locale === 'string';
-      }).map(function(locale) {
-        return locale.toLocaleLowerCase();
-      });
+    if (!options.locales || (options.locales && !options.locales.length)) {
+      options.locales = this.findLocales()
     }
 
-    return addonConfig;
+    options.locales = options.locales.filter(function(locale) {
+      if (utils.isSupportedLocale(locale)) {
+        return true;
+      }
+
+      this.log('\'' + locale + '\' is not a valid locale name');
+
+      return false;
+    }, this).map(function(locale) {
+      return locale.toLocaleLowerCase().replace(/_/g, '-');
+    });
+
+    return {
+      intl: options
+    }
   },
 
   findLocales() {
@@ -224,20 +217,10 @@ module.exports = {
       locales = locales.concat(this.addonOptions.locales);
     }
 
-    locales = locales.concat(locales.filter(function(locale) {
-      if (utils.isSupportedLocale(locale)) {
-        return true;
-      }
-
-      this.log('\'' + locale + '\' is not a valid locale name');
-
-      return false;
-    }, this));
-
     return utils.unique(locales);
   },
 
-  findIntlAddons() {
+  discoverEmberIntlAddons() {
     let projectName = this.app.project.name();
     let addons = this.app.project.addons;
     let registered = new Set();
@@ -267,23 +250,21 @@ module.exports = {
     return addons.reduce(find, []);
   },
 
-  mergeTranslationTrees(projectTranslations, addonTranslations) {
+  mergeTranslationTrees(projectTranslations, addonTranslationTrees) {
     let trees = [];
     trees.push(projectTranslations);
 
-    if (addonTranslations && addonTranslations.length) {
-      trees = trees.concat(addonTranslations);
+    if (addonTranslationTrees && addonTranslationTrees.length) {
+      trees = trees.concat(addonTranslationTrees);
     }
 
     return mergeTrees(trees);
   },
 
-  reduceTranslations(opts) {
-    if (!opts) { opts = {}; }
+  reduceTranslations(reduceOptions) {
     let addon = this;
 
-    return new TranslationReducer([this.translationTree], Object.assign({}, this.addonOptions, opts, {
-      verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
+    return new TranslationReducer([this.translationTree], Object.assign({}, this.addonOptions, reduceOptions, {
       log() {
         return addon.log.apply(addon, arguments);
       }

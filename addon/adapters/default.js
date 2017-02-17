@@ -4,54 +4,39 @@
  */
 
 import Ember from 'ember';
-import Translation from '../models/translation';
 
-const { computed, get, A:emberArray, getOwner } = Ember;
+const { A:emberArray, get, computed, getOwner } = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
   _seen: null,
-
-  locales: computed('_seen.[]', function() {
-    return get(this, '_seen').map(l => l.localeName);
-  }).readOnly(),
+  _locales: computed.mapBy('_seen', 'localeName'),
 
   init() {
     this._super();
+
+    const owner = getOwner(this);
     this._seen = emberArray();
+    this._map = Object.create(null);
+    this.Model = owner.factoryFor('model:ember-intl-translation') || owner.factoryFor('ember-intl@model:translation');
   },
 
   lookupLocale(localeName) {
-    return this._seen.findBy('localeName', localeName);
+    return this._map[localeName];
   },
 
   localeFactory(localeName) {
-    const owner = getOwner(this);
-    const lookupName = `ember-intl@translation:${localeName}`;
-    let model = owner.lookup(lookupName);
+    let model = this.lookupLocale(localeName);
 
-    if (model) {
-      return model;
+    if (!model) {
+      model = this._map[localeName] = this.Model.create({ localeName });
+      this._seen.pushObject(model);
     }
-
-    let Klass;
-    if (owner.hasRegistration('model:ember-intl-translation')) {
-      Klass = owner.factoryFor('model:ember-intl-translation').class;
-    } else {
-      Klass = Translation;
-    }
-
-    const ModelKlass = Klass.extend();
-    Object.defineProperty(ModelKlass.proto(), 'localeName', {
-      writable: false,
-      enumerable: true,
-      value: localeName
-    });
-
-    owner.register(lookupName, ModelKlass);
-    model = owner.lookup(lookupName);
-    this._seen.pushObject(model);
 
     return model;
+  },
+
+  locales() {
+    return get(this, '_locales');
   },
 
   has(localeName, translationKey) {
@@ -66,17 +51,9 @@ const DefaultTranslationAdapter = Ember.Object.extend({
       const model = this.lookupLocale(localeName);
 
       if (model && model.has(translationKey)) {
-        return model.getValue(translationKey);
+        return model.lookup(translationKey);
       }
     }
-  },
-
-  translationsFor(localeName) {
-    return this.localeFactory(localeName);
-  },
-
-  findTranslationByKey(localeNames, translationKey) {
-    return this.lookup(localeNames, translationKey);
   }
 });
 

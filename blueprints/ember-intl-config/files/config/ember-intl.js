@@ -12,21 +12,10 @@ module.exports = function(environment) {
     * list out the locales. i.e: ['en-us', 'en-gb', 'fr-fr']
     *
     * @property locales
-    * @type {Array?}
-    * @default "null"
+    * @type {Array}
+    * @default []
     */
-    locales: null,
-
-    /**
-    * baseLocale is used to determine if translation keys are missing from other locales.
-    * This property is optional, and if you rely on sideloading translations then
-    * this should be null
-    *
-    * @property baseLocale
-    * @type {String?}
-    * @default "null"
-    */
-    baseLocale: null,
+    locales: [],
 
     /**
     * autoPolyfill, when true will automatically inject the IntlJS polyfill
@@ -34,7 +23,7 @@ module.exports = function(environment) {
     *
     * @property autoPolyfill
     * @type {Boolean}
-    * @default "false"
+    * @default false
     */
     autoPolyfill: false,
 
@@ -43,7 +32,7 @@ module.exports = function(environment) {
     *
     * @property disablePolyfill
     * @type {Boolean}
-    * @default "false"
+    * @default false
     */
     disablePolyfill: false,
 
@@ -56,7 +45,7 @@ module.exports = function(environment) {
     *
     * @property publicOnly
     * @type {Boolean}
-    * @default "false"
+    * @default false
     */
     publicOnly: false
   };

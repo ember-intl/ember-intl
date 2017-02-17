@@ -12,7 +12,7 @@ const AbstractHelper = Helper.extend({
 
   init() {
     if (this.constructor === AbstractHelper) {
-      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+      throw new Error('Helper is an abstract class, can not be instantiated directly.');
     }
 
     this._super();

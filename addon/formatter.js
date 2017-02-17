@@ -4,8 +4,8 @@
  */
 
 import Ember from 'ember';
-import arrayToHash from '../utils/array-to-hash';
-import links from '../utils/links';
+import arrayToHash from './utils/array-to-hash';
+import links from './utils/links';
 
 const {
   get,
@@ -23,6 +23,10 @@ const FormatterBase = EmberObject.extend({
 
     if (this.constructor === FormatterBase) {
       throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+    }
+
+    if (this.constructor === FormatterBase) {
+      throw new Error('Formatter is an abstract class, can not be instantiated directly.');
     }
 
     this.options = arrayToHash(this.constructor.supportedOptions);

@@ -6,7 +6,7 @@
 import Ember from 'ember';
 
 import { LiteralWrapper } from './l';
-import BaseHelper from './-format-base';
+import BaseHelper from '../helper';
 
 const { assert } = Ember;
 
@@ -16,7 +16,6 @@ export function getValue([key], options) {
   }
 
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
-
   const {
     fallback,
     allowEmpty,

@@ -5,63 +5,35 @@
 
 import Ember from 'ember';
 
-const { get, set, deprecate } = Ember;
+const { get, set } = Ember;
 
-const TranslationModel = Ember.Object.extend({
+const TranslationModel = Ember.ObjectProxy.extend({
   localeName: null,
 
   init() {
     this._super();
 
-    if (!this.translations) {
-      this.translations = Object.create(null);
+    if (!this.content) {
+      this.content = Object.create(null);
     }
   },
 
-  /**
-   * Add a single translation
-   */
   addTranslation(key, value) {
-    set(this.translations, key, value);
+    set(this.content, key, value);
   },
 
-  /**
-   * Adds a translation hash
-   */
   addTranslations(translationsObject) {
     for (let key in translationsObject) {
       this.addTranslation(key, translationsObject[key]);
     }
   },
 
-  /**
-   * Custom accessor hook that can be overridden.
-   * This would enable consumers that have dot notated strings
-   * to implement this function as `return this[key];`
-   */
-  getValue(key) {
-    let translation = get(this.translations, key);
-
-    if (typeof translation === 'string') {
-      return translation;
-    }
-
-    translation = get(this, key);
-
-    if (typeof translation === 'string') {
-      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', false, {
-        id: 'ember-intl-add-translation'
-      });
-
-      return translation;
-    }
+  lookup(key) {
+    return get(this.content, key);
   },
 
-  /**
-   * Determines if the translation model contains a key
-   */
   has(key) {
-    return typeof this.getValue(key) === 'string';
+    return typeof this.lookup(key) === 'string';
   }
 });
 
