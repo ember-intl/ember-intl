@@ -20,13 +20,13 @@ This library provides Ember Handlebar helpers and a localization service.  The s
     * Instructions on [conditionally loading the polyfill based on User-Agent][]
     * Instructions on [disabling polyfill][]
 
-[loading from assets directory]: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md#loading-files-from-assets
-[conditionally loading the polyfill based on User-Agent]: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md#polyfillio
-[disabling polyfill]: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md#disabling
+[loading from assets directory]: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md#loading-files-from-assets
+[conditionally loading the polyfill based on User-Agent]: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md#polyfillio
+[disabling polyfill]: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md#disabling
 
 ## Documentation
 
-Documentation is now a series of markdown files hosted within the repository.  [Read more](https://github.com/jasonmit/ember-intl/tree/master/docs)
+Documentation is now a series of markdown files hosted within the repository.  [Read more](https://github.com/ember-intl/ember-intl/tree/master/docs)
 
 ## Translations
 Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
@@ -109,7 +109,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Number Options
-[List of supported format number options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-number-options.md)
+[List of supported format number options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-number-options.md)
 
 ### Format Date
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
@@ -132,7 +132,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Date Options
-[List of supported format date options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Time
 This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
@@ -156,7 +156,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Time Options
-[List of supported format date options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Relative
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
@@ -197,7 +197,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 ```
 
 #### Format Relative Options
-[List of supported format date options](https://github.com/jasonmit/ember-intl/blob/master/docs/format-relative-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
 
 ### Format Message
 Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.  A short-hand form of the `{{format-message}}` is `{{t}}`.
@@ -291,7 +291,7 @@ Output of both the helper and the programmatic example:
 
 ## Polyfill
 
-There are two options on how to load the Intl.js polyfill, either through the polyfill which ships with ember-intl or through polyfill.io.  Both of which are documented: https://github.com/jasonmit/ember-intl/blob/master/docs/intljs-polyfill.md
+There are two options on how to load the Intl.js polyfill, either through the polyfill which ships with ember-intl or through polyfill.io.  Both of which are documented: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md
 
 ## Helper Options
 * All helpers accept optional arguments:
@@ -310,11 +310,11 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 ## Asynchronously loading translations
 
 Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.  
-https://github.com/jasonmit/ember-intl/blob/master/docs/asynchronously-loading-translations.md
+https://github.com/ember-intl/ember-intl/blob/master/docs/asynchronously-loading-translations.md
 
 ### Testing with ember-intl
-* [Unit testing](https://github.com/jasonmit/ember-intl/blob/master/docs/unit-testing.md)
-* [Integration testing](https://github.com/jasonmit/ember-intl/blob/master/docs/integration-testing.md)
+* [Unit testing](https://github.com/ember-intl/ember-intl/blob/master/docs/unit-testing.md)
+* [Integration testing](https://github.com/ember-intl/ember-intl/blob/master/docs/integration-testing.md)
 
 ## Common Errors
 
@@ -334,8 +334,8 @@ The solution is the ensure that the value you are passing in is in a format whic
 
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
-[travis]: https://travis-ci.org/jasonmit/ember-intl
-[travis-badge]: https://img.shields.io/travis/jasonmit/ember-intl/master.svg?style=flat-square
+[travis]: https://travis-ci.org/ember-intl/ember-intl
+[travis-badge]: https://img.shields.io/travis/ember-intl/ember-intl/master.svg?style=flat-square
 [embadge]: http://embadge.io/
 [ember-badge]: http://embadge.io/v1/badge.svg?start=1.13.0
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
