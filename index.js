@@ -146,12 +146,16 @@ module.exports = {
     return mergeTrees(trees, { overwrite: true });
   },
 
-  log(msg) {
+  log(msg, options) {
     if (this.app.options && this.app.options.intl && this.app.options.intl.silent) {
       return;
     }
 
-    this.ui.writeLine(`[ember-intl] ${msg}`);
+    if (options && options.warning && this.ui.writeWarnLine) {
+      this.ui.writeWarnLine(`[ember-intl] ${msg}`);
+    } else {
+      this.ui.writeLine(`[ember-intl] ${msg}`);
+    }
   },
 
   readConfig(environment) {
