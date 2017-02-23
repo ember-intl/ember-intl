@@ -39,7 +39,7 @@ module.exports = {
     let addonTranslations = this.findIntlAddons().map(function(addon) {
       return new Funnel(addon.path, {
         srcDir: addon.translationPath,
-        destDir: '__addon__' + addon.name
+        destDir: `__addon__${addon.name}`
       });
     }, this);
 
@@ -84,10 +84,10 @@ module.exports = {
       if (assetPath) { prefix += assetPath; }
 
       let localeScripts = locales.map(function(locale) {
-        return '<script src=\"' + prefix + '/locales/' + locale + '.js\"></script>';
+        return `<script src="${prefix}/locales/${locale}.js"></script>`;
       });
 
-      return ['<script src=\"'  + prefix + '/intl.min.js\"></script>']
+      return [`<script src="${prefix}/intl.min.js"></script>`]
         .concat(localeScripts)
         .join('\n');
     }
@@ -99,10 +99,10 @@ module.exports = {
     if (this.hasTranslationDir && !this.addonOptions.publicOnly) {
       trees.push(this.reduceTranslations({
         filename(key) {
-          return key + '.js';
+          return `${key}.js`;
         },
         wrapEntry(obj) {
-          return 'export default ' + stringify(obj) + ';';
+          return `export default ${stringify(obj)};`;
         }
       }));
     }
@@ -151,7 +151,7 @@ module.exports = {
       return;
     }
 
-    this.ui.writeLine('[ember-intl] ' + msg);
+    this.ui.writeLine(`[ember-intl] ${msg}`);
   },
 
   readConfig(environment) {
@@ -229,7 +229,7 @@ module.exports = {
         return true;
       }
 
-      this.log('\'' + locale + '\' is not a valid locale name');
+      this.log(`'${locale}' is not a valid locale name`);
 
       return false;
     }, this));
