@@ -54,8 +54,8 @@ describe('validateMessage', function() {
     error: 'Unknown plural category: zero',
   }, {
     locale: 'de-de',
-    message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`,
-    error: 'Unknown plural categories: null, eins, andere',
+    message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} other {# photos}} on {takenDate, date, long}.`,
+    error: 'Unknown plural categories: null, eins',
   }, {
     locale: 'en-us',
     message: `It's my cat's {year, selectordinal,
@@ -79,6 +79,17 @@ describe('validateMessage', function() {
   unknownCategory.forEach(item => {
     it(`throws unknown category error for "${item.message}" with locale "${item.locale}"`, function() {
       expect(() => validateMessage(item.message, item.locale)).to.throw(item.error);
+    });
+  });
+
+  let missingOther = [
+    `{ gender, select, male {He avoids bugs} female {She avoids bugs} }`,
+    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`,
+  ];
+
+  missingOther.forEach(message => {
+    it(`throws missing other error for "${message}"`, function() {
+      expect(() => validateMessage(message)).to.throw('Missing selector: other');
     });
   });
 });
