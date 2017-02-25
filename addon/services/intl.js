@@ -124,14 +124,14 @@ const IntlService = Service.extend(Evented, {
     }
 
     cldrs.map((moduleName) => {
-      return this.owner.resolveRegistration('cldr:' + moduleName.split('\/').pop());
+      return this.owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
     })
       .forEach((data) => data.forEach(this.addLocaleData));
 
     translations.forEach((moduleName) => {
       const localeName = moduleName.split('\/').pop();
 
-      this.addTranslations(localeName, this.owner.resolveRegistration('translation:' + localeName));
+      this.addTranslations(localeName, this.owner.resolveRegistration(`translation:${localeName}`));
     });
   },
 

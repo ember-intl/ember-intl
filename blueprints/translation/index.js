@@ -26,7 +26,7 @@ module.exports = {
 
     if (!isSupportedLocale(locale.toLowerCase())) {
       this.ui.writeLine('Full list of supported locales: https://github.com/jasonmit/ember-intl/blob/master/docs/list-of-supported-locales.md');
-      throw new SilentError('[ember-intl] Invalid locale: ' + locale);
+      throw new SilentError(`[ember-intl] Invalid locale: ${locale}`);
     }
   },
 
