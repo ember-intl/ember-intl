@@ -3,37 +3,30 @@ import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 
-const { get, set, computed, run, A:emberArray, Object:EmberObject } = Ember;
+const {
+  get,
+  set,
+  computed,
+  run,
+  A:emberArray,
+  Object:EmberObject
+} = Ember;
 
-const locale = 'en-us';
-let service, registry;
+const DEFAULT_LOCALE = 'en-us';
 
 moduleForComponent('format-message', {
   integration: true,
   beforeEach() {
-    registry = this.registry || this.container;
-    service = this.container.lookup('service:intl');
+    this.inject.service('intl');
 
-    service.addTranslations('en-us', {
+    this.intl.addTranslations('en-us', {
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
       }
     });
 
-    registry.register('formats:main', {
-      date: {
-        shortWeekDay: {
-          timeZone: 'UTC',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        }
-      }
-    });
-
-    registry.injection('formatter', 'intl', 'service:intl');
-    service.setLocale(locale);
+    this.intl.setLocale(DEFAULT_LOCALE);
   }
 });
 
@@ -44,16 +37,16 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatMessage('hello {world}', {
+  assert.equal(this.intl.formatMessage('hello {world}', {
     world: 'world'
   }), 'hello world');
 });
 
 test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatMessage('Sale begins {day, date, shortWeekDay}', {
+  assert.equal(this.intl.formatMessage('Sale begins {day, date, shortWeekDay}', {
     day: 1390518044403,
-    locale: 'en_us'
+    locale: DEFAULT_LOCALE
   }), 'Sale begins January 23, 2014');
 });
 
@@ -110,7 +103,7 @@ test('should return a formatted string with formatted numbers and dates', functi
 
 test('should return a formatted string with formatted numbers and dates in a different locale', function(assert) {
   assert.expect(1);
-  service.setLocale('de-de');
+  this.intl.setLocale('de-de');
   this.setProperties({
     POP_MSG: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
     city: 'Atlanta',
@@ -146,22 +139,23 @@ test('locale can add message to intl service and read it', function(assert) {
   assert.expect(1);
 
   run(() => {
-    service.addTranslation('en-us', 'oh', 'hai!').then(() => {
-      this.render(hbs`{{format-message 'oh'}}`);
-      assert.equal(this.$().text(), 'hai!');
-    });
+    this.intl.addTranslation('en-us', 'oh', 'hai!');
+    this.render(hbs`{{format-message 'oh'}}`);
+    assert.equal(this.$().text(), 'hai!');
   });
 });
 
 test('locale can add messages object and can read it', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({ 'bulk-add': 'bulk add works' });
+  const translations = {
+    inbox_empty: 'Congrats, your inbox is empty!'
+  };
 
-  this.render(hbs`{{format-message "bulk-add"}}`);
-
-  assert.equal(this.$().text(), "bulk add works");
+  this.intl.addTranslations(DEFAULT_LOCALE, translations);
+  this.render(hbs`{{format-message 'inbox_empty'}}`);
+  assert.equal(typeof translations.inbox_empty, 'string');
+  assert.equal(this.$().text(), translations.inbox_empty);
 });
 
 test('can inline locale for missing locale', function(assert) {
@@ -172,22 +166,21 @@ test('can inline locale for missing locale', function(assert) {
 
 test('exists returns false when key not found', function(assert) {
   assert.expect(1);
-  assert.equal(service.exists('bar'), false);
+  assert.equal(this.intl.exists('bar'), false);
 });
 
 test('exists returns true when key found', function(assert) {
   assert.expect(1);
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslation('hello', 'world');
-  assert.equal(service.exists('hello'), true);
+  this.intl.addTranslation(DEFAULT_LOCALE, 'hello', 'world');
+  assert.equal(this.intl.exists('hello'), true);
 });
 
 test('able to discover all register translations', function(assert) {
   assert.expect(2);
-  service.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
-  service.exists('test', 'fr-ca');
-  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
-  assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
+  this.intl.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
+  this.intl.exists('test', 'fr-ca');
+  assert.equal(this.intl.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
+  assert.equal(this.intl.get('locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
 });
 
 test('should respect format options for date ICU block', function(assert) {

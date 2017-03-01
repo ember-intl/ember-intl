@@ -20,7 +20,6 @@ const {
   makeArray,
   get,
   set,
-  RSVP,
   Service,
   Evented,
   deprecate
@@ -209,15 +208,11 @@ const IntlService = Service.extend(Evented, {
   },
 
   addTranslation(localeName, key, value) {
-    return this.localeFactory(localeName).then((locale) => {
-      return locale.addTranslation(key, value);
-    });
+    this.localeFactory(localeName).addTranslation(key, value);
   },
 
-  addTranslations(localeName, payload) {
-    return this.localeFactory(localeName).then((locale) => {
-      return locale.addTranslations(payload);
-    });
+  addTranslations(localeName, hash) {
+    this.localeFactory(localeName).addTranslations(hash);
   },
 
   setLocale(localeName) {
@@ -245,7 +240,7 @@ const IntlService = Service.extend(Evented, {
   },
 
   localeFactory(localeName) {
-    return RSVP.cast(get(this, 'adapter').localeFactory(normalizeLocale(localeName), true));
+    return get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
   },
 
   createLocale(localeName, payload) {

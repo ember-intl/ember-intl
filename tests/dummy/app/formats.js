@@ -6,7 +6,13 @@ const hhmmss = {
 
 export default {
   date: {
-    hhmmss: hhmmss
+    hhmmss: hhmmss,
+    shortWeekDay: {
+      timeZone: 'UTC',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }
   },
   time: {
     hhmmss: hhmmss
