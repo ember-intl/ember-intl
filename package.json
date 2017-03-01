@@ -72,10 +72,12 @@
     "ember-intl-relativeformat": "^2.4.0",
     "exists-sync": "0.0.3",
     "extend": "^3.0.0",
+    "has-unicode": "^2.0.1",
     "intl": "1.0.1",
     "intl-messageformat-parser": "^1.2.0",
     "js-yaml": "^3.3.1",
     "json-stable-stringify": "^1.0.0",
+    "locale-emoji": "^0.1.0",
     "mkdirp": "^0.5.0",
     "silent-error": "^1.0.0",
     "walk-sync": "^0.2.6"
