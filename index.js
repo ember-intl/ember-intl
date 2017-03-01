@@ -11,7 +11,7 @@ let WatchedDir = require('broccoli-source').WatchedDir;
 let stringify = require('json-stable-stringify');
 let mergeTrees = require('broccoli-merge-trees');
 let extract = require('broccoli-cldr-data');
-let Funnel = require('broccoli-funnel');
+let funnel = require('broccoli-funnel');
 let existsSync = require('exists-sync');
 let walkSync = require('walk-sync');
 let path = require('path');
@@ -37,7 +37,7 @@ module.exports = {
     let projectTranslations = new WatchedDir(inputPath);
 
     let addonTranslations = this.findIntlAddons().map(function(addon) {
-      return new Funnel(addon.path, {
+      return funnel(addon.path, {
         srcDir: addon.translationPath,
         destDir: `__addon__${addon.name}`
       });
@@ -279,7 +279,9 @@ module.exports = {
       trees = trees.concat(addonTranslations);
     }
 
-    return mergeTrees(trees);
+    return funnel(mergeTrees(trees), {
+      include: ['**/*.yaml', '**/*.yml', '**/*.json']
+    });
   },
 
   reduceTranslations(opts) {
