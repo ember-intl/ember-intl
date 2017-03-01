@@ -23,7 +23,6 @@ moduleForComponent('x-product', 'XProductComponent', {
     'ember-intl@formatter:format-time', // optional
     'ember-intl@formatter:format-number', // optional
     'ember-intl@formatter:format-relative', // optional
-    'helper:intl-get', // optional
     'helper:t', // optional, if used then be sure to include the format-message formatter above
     'helper:t-html', // optional, if used then be sure to include the format-html-message formatter above
     'helper:format-date', // optional

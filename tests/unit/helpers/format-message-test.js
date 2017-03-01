@@ -196,30 +196,6 @@ test('should respect format options for date ICU block', function(assert) {
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
-test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
-  assert.expect(1);
-
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  const fn = translation.getValue;
-
-  translation.getValue = function getValue(key) {
-    return this[key];
-  };
-
-  translation['string.path.works'] = 'yes it does';
-
-  try {
-    this.render(hbs`{{format-message (intl-get 'string.path.works')}}`);
-
-    assert.equal(this.$().text(), 'yes it does');
-  } catch(ex) {
-    console.error(ex);
-  } finally {
-    // reset the function back
-    translation.getValue = fn;
-  }
-});
-
 test('should fallback to with defaultMessage when key not found', function(assert) {
   assert.expect(1);
   this.render(hbs`{{format-message 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
@@ -256,35 +232,4 @@ test('l helper handles bound computed property', function(assert) {
       done();
     });
   });
-});
-
-test('intl-get handles bound computed property', function(assert) {
-  assert.expect(3);
-
-  const context = EmberObject.extend({
-    foo: true,
-    cp: computed('foo', {
-      get() {
-        return get(this, 'foo') ? 'foo.bar' : 'foo.baz';
-      }
-    })
-  }).create();
-
-  set(this, 'context', context);
-
-  this.render(hbs`{{format-message (intl-get context.cp)}}`);
-
-  assert.equal(this.$().text(), 'foo bar baz');
-
-  run(() => {
-    set(this, 'context.foo', false);
-  });
-
-  assert.equal(this.$().text(), 'baz baz baz');
-
-  run(() => {
-    context.set('foo', true);
-  });
-
-  assert.ok(context, 'Updating binding to view after view is destroyed should not raise exception.');
 });
