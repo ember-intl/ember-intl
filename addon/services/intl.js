@@ -21,8 +21,7 @@ const {
   get,
   set,
   Service,
-  Evented,
-  deprecate
+  Evented
 } = Ember;
 const assign = Ember.assign || Ember.merge;
 
@@ -183,14 +182,6 @@ const IntlService = Service.extend(Evented, {
     return localeNames.some((localeName) => {
       return adapter.has(localeName, key);
     });
-  },
-
-  getLocalesByTranslations() {
-    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
-      id: 'ember-intl-locales-cp'
-    });
-
-    return get(this, 'locales');
   },
 
   /**

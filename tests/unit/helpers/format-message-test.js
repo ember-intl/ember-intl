@@ -176,10 +176,9 @@ test('exists returns true when key found', function(assert) {
 });
 
 test('able to discover all register translations', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
   this.intl.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
   this.intl.exists('test', 'fr-ca');
-  assert.equal(this.intl.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
   assert.equal(this.intl.get('locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
 });
 
