@@ -39,7 +39,7 @@ const TranslationModel = Ember.Object.extend({
    * This would enable consumers that have dot notated strings
    * to implement this function as `return this[key];`
    */
-  getValue(key) {
+  lookup(key) {
     return get(this.translations, key);
   },
 
@@ -47,7 +47,7 @@ const TranslationModel = Ember.Object.extend({
    * Determines if the translation model contains a key
    */
   has(key) {
-    return typeof this.getValue(key) === 'string';
+    return typeof this.lookup(key) === 'string';
   }
 });
 

@@ -5,7 +5,7 @@ export default TranslationModel.extend({
     this.translations[key] = value;
   },
 
-  getValue(key) {
+  lookup(key) {
     return this.translations[key];
   }
 });

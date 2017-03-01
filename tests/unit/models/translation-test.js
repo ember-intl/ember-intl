@@ -16,7 +16,7 @@ test('can handle deeply nested object passed into addTranslations', function(ass
     }
   });
 
-  assert.equal(this.model.getValue('foo.bar.baz'), 'BAZ WORKZ');
+  assert.equal(this.model.lookup('foo.bar.baz'), 'BAZ WORKZ');
 });
 
 test('can handle flat object shape passed into addTranslations', function(assert) {
@@ -24,5 +24,5 @@ test('can handle flat object shape passed into addTranslations', function(assert
     baz: 'BAZZZ'
   });
 
-  assert.equal(this.model.getValue('baz'), 'BAZZZ');
+  assert.equal(this.model.lookup('baz'), 'BAZZZ');
 });
