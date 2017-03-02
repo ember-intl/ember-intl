@@ -5,9 +5,8 @@
 
 import Ember from 'ember';
 import IntlRelativeFormat from 'intl-relativeformat';
-import createFormatCache from 'intl-format-cache';
 
-import Formatter from './-base';
+import Formatter from '../formatter';
 
 const { assert, computed } = Ember;
 
@@ -16,17 +15,14 @@ function assertIsDate(date, errMsg) {
 }
 
 const FormatRelative = Formatter.extend({
-  formatType: 'relative',
-
   formatter: computed({
     get() {
-      return createFormatCache(IntlRelativeFormat);
+      return this.memoizer(IntlRelativeFormat);
     }
   }).readOnly(),
 
   format(value, options = {}, ctx = {}) {
     const dateValue = new Date(value);
-
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
 
     return this._format(dateValue, this.filterSupporedOptions(options), {

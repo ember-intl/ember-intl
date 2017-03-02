@@ -1,4 +1,4 @@
-/* globals requirejs, Intl */
+/* globals Intl */
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -23,9 +23,10 @@ const {
   Service,
   Evented
 } = Ember;
+
 const assign = Ember.assign || Ember.merge;
 
-function formatterProxy(formatType) {
+function aliasFormatter(formatType) {
   return function(value, options, formats) {
     if (!options) {
       if (arguments.length > 1) {
@@ -37,128 +38,120 @@ function formatterProxy(formatType) {
       options = {};
     }
 
-    if (typeof options.format === 'string') {
-      options = assign(assign({}, this.getFormat(formatType, options.format)), options);
+    if (options.format) {
+      let formatterOptions = this.lookupFormat(formatType, options.format);
+      if (formatterOptions) {
+        options = assign({}, formatterOptions, options);
+      }
     }
 
-    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
+    let formatter = this._owner.lookup(`ember-intl@formatter:format-${formatType}`);
 
     return formatter.format(value, options, {
       formats: formats || get(this, 'formats'),
-      locale: this._localeWithDefault(options.locale)
+      locale: this.localeWithDefault(options.locale)
     });
   };
 }
 
+function hydateBundledTranslations(service, localeName) {
+  let translations = service._owner.resolveRegistration(`translation:${localeName}`);
+
+  if (translations) {
+    service.addTranslations(localeName, translations);
+  }
+}
+
+function hydrateBundledCLDR(service, localeName) {
+  let lang = localeName.split('-')[0];
+  let cldr = service._owner.resolveRegistration(`cldr:${lang}`);
+
+  if (cldr) {
+    if (Array.isArray(cldr)) {
+      cldr.forEach(service.addLocaleData);
+    } else {
+      service.addLocaleData(cldr);
+    }
+  }
+}
+
 const IntlService = Service.extend(Evented, {
+  /* @private */
   _locale: null,
 
+  /* @public */
   locale: computed('_locale', {
     set() {
-      throw new Error('Use `setLocale` to change the application locale');
+      throw new Error('[ember-intl] use `intl.setLocale(localeName)` to change the application locale');
     },
     get() {
       return get(this, '_locale');
     }
   }),
 
+  /* @private */
   adapter: computed({
     get() {
-      return this.owner.lookup('ember-intl@adapter:default');
+      let applicationAdapter = this._owner.lookup('adapter:ember-intl');
+
+      if (applicationAdapter) {
+        return applicationAdapter;
+      }
+
+      return this._owner.lookup('ember-intl@adapter:default');
     }
   }),
 
+  /* @private */
   formats: computed({
     get() {
-      return this.owner.resolveRegistration('formats:main');
+      return this._owner.resolveRegistration('formats:main');
     }
   }),
-
-  formatHtmlMessage: formatterProxy('html-message'),
-  formatRelative: formatterProxy('relative'),
-  formatMessage: formatterProxy('message'),
-  formatNumber: formatterProxy('number'),
-  formatTime: formatterProxy('time'),
-  formatDate: formatterProxy('date'),
-  requirejs: requirejs,
 
   init() {
     this._super();
 
-    this.owner = getOwner(this);
+    this._owner = getOwner(this);
+    this._registered = Object.create(null);
 
     if (typeof Intl === 'undefined') {
       Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
         id: 'ember-intl-undefined-intljs'
       });
     }
-
-    this._hydrate();
   },
 
-  /**
-   * Returns an array of registered locale names
-   *
-   * @property locales
-   * @public
-   */
-  locales: computed.readOnly('adapter.locales'),
+  /* @public */
+  formatHtmlMessage: aliasFormatter('html-message'),
 
-  /**
-   * Peeks into the requirejs map and registers all locale data objects found.
-   * This is also very likely to be removed soon.
-   *
-   * @private
-   */
-  _hydrate() {
-    const config = this.owner.resolveRegistration('config:environment');
-    const cldrs = this._lookupByFactoryType('cldrs', config.modulePrefix);
-    const translations = this._lookupByFactoryType('translations', config.modulePrefix);
+  /* @public */
+  formatRelative: aliasFormatter('relative'),
 
-    if (!cldrs.length) {
-      Ember.warn(`[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.`, false, {
-        id: 'ember-intl-missing-cldr-data'
-      });
-    }
+  /* @public */
+  formatMessage: aliasFormatter('message'),
 
-    cldrs.map((moduleName) => {
-      return this.owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
-    })
-      .forEach((data) => data.forEach(this.addLocaleData));
+  /* @public */
+  formatNumber: aliasFormatter('number'),
 
-    translations.forEach((moduleName) => {
-      const localeName = moduleName.split('\/').pop();
+  /* @public */
+  formatTime: aliasFormatter('time'),
 
-      this.addTranslations(localeName, this.owner.resolveRegistration(`translation:${localeName}`));
-    });
+  /* @public */
+  formatDate: aliasFormatter('date'),
+
+  /* @public */
+  locales() {
+    return get(this, 'adapter').locales();
   },
 
-  _lookupByFactoryType(type, modulePrefix) {
-    return Object.keys(this.requirejs._eak_seen).filter((key) => {
-      return key.indexOf(`${modulePrefix}\/${type}\/`) === 0;
-    });
-  },
-
-  _localeWithDefault(localeName) {
-    if (!localeName) {
-      return get(this, '_locale');
-    }
-
-    if (typeof localeName === 'string') {
-      return makeArray(localeName).map(normalizeLocale);
-    }
-
-    if (Array.isArray(localeName)) {
-      return localeName.map(normalizeLocale);
-    }
-  },
-
+  /* @public */
   lookup(key, localeName, options = {}) {
-    const localeNames = this._localeWithDefault(localeName);
-    const translation = get(this, 'adapter').lookup(localeNames, key);
+    let localeNames = this.localeWithDefault(localeName);
+    let translation = get(this, 'adapter').lookup(localeNames, key);
 
     if (!options.resilient && !translation) {
-      const missingMessage = this.owner.resolveRegistration('util:intl/missing-message');
+      let missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames);
     }
@@ -166,53 +159,49 @@ const IntlService = Service.extend(Evented, {
     return translation;
   },
 
+  /* @public */
   t(key, ...args) {
-    const [ options ] = args;
-    const translation = this.lookup(key, options && options.locale);
+    let [ options ] = args;
+    let translation = this.lookup(key, options && options.locale);
 
     return this.formatMessage(translation, ...args);
   },
 
+  /* @public */
   exists(key, localeName) {
-    const localeNames = this._localeWithDefault(localeName);
-    const adapter = get(this, 'adapter');
-
+    let localeNames = this.localeWithDefault(localeName);
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    return localeNames.some((localeName) => {
-      return adapter.has(localeName, key);
-    });
+    let adapter = get(this, 'adapter');
+
+    return localeNames.some(localeName => adapter.has(localeName, key));
   },
 
-  /**
-  * A utility method for registering CLDR data for
-  * intl-messageformat and intl-relativeformat.  This data is derived
-  * from formatjs-extract-cldr-data
-  *
-  * @method addLocaleData
-  * @param {Object} locale data
-  * @public
-  */
+  /* @public */
   addLocaleData(data) {
     IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
   },
 
+  /* @public */
   addTranslation(localeName, key, value) {
     return this.localeFactory(localeName).addTranslation(key, value);
   },
 
+  /* @public */
   addTranslations(localeName, hash) {
     return this.localeFactory(localeName).addTranslations(hash);
   },
 
+  /* @public */
   setLocale(localeName) {
     if (!localeName) { return; }
 
-    const proposed = makeArray(localeName).map(normalizeLocale);
-    const current = get(this, '_locale');
+    let proposed = makeArray(localeName).map(normalizeLocale);
+    let current = get(this, '_locale');
 
     if (!isArrayEqual(proposed, current)) {
+      proposed.forEach(this.registerLocale, this);
       this.propertyWillChange('locale');
       set(this, '_locale', proposed);
       this.propertyDidChange('locale');
@@ -220,22 +209,55 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  getFormat(formatType, format) {
-    const formats = get(this, 'formats');
+  /* @private */
+  lookupFormat(formatType, format) {
+    let formats = get(this, 'formats');
 
     if (formats && formatType && typeof format === 'string') {
       return get(formats, `${formatType}.${format}`);
     }
-
-    return {};
   },
 
+  /* @private */
   localeFactory(localeName) {
     return get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
   },
 
-  findTranslationByKey(key, localeName, options) {
-    return this.lookup(key, localeName, options);
+  /* @private */
+  registerLocale(localeName) {
+    if (!this._registered[localeName]) {
+      this._registered[localeName] = Object.create(null);
+    }
+
+    let localeMeta = this._registered[localeName];
+    if (localeMeta.cldr && localeMeta.translation) {
+      return;
+    }
+
+    if (!localeMeta.cldr) {
+      localeMeta.cldr = true;
+      hydrateBundledCLDR(this, localeName);
+    }
+
+    if (!localeMeta.translation) {
+      localeMeta.translation = true;
+      hydateBundledTranslations(this, localeName);
+    }
+  },
+
+  /* @private */
+  localeWithDefault(localeName) {
+    if (!localeName) {
+      return get(this, '_locale');
+    }
+
+    if (typeof localeName === 'string') {
+      localeName = makeArray(localeName).map(normalizeLocale);
+    }
+
+    localeName.forEach(this.registerLocale, this);
+
+    return localeName;
   }
 });
 

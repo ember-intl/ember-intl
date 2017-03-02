@@ -4,9 +4,8 @@
  */
 
 import Ember from 'ember';
-import createFormatCache from 'intl-format-cache';
 
-import Formatter from './-base';
+import Formatter from '../formatter';
 
 const { assert, computed } = Ember;
 
@@ -15,11 +14,9 @@ function assertIsDate(date, errMsg) {
 }
 
 const FormatDate = Formatter.extend({
-  formatType: 'date',
-
   formatter: computed({
     get() {
-      return createFormatCache(Intl.DateTimeFormat);
+      return this.memoizer(Intl.DateTimeFormat);
     }
   }).readOnly(),
 

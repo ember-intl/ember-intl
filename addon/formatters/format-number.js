@@ -4,18 +4,15 @@
  */
 
 import Ember from 'ember';
-import createFormatCache from 'intl-format-cache';
 
-import Formatter from './-base';
+import Formatter from '../formatter';
 
 const { computed } = Ember;
 
 const FormatNumber = Formatter.extend({
-  formatType: 'number',
-
   formatter: computed({
     get() {
-      return createFormatCache(Intl.NumberFormat);
+      return this.memoizer(Intl.NumberFormat);
     }
   }).readOnly(),
 

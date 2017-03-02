@@ -4,62 +4,55 @@
  */
 
 import Ember from 'ember';
-import Translation from '../models/translation';
 
 const { computed, get, A:emberArray, getOwner } = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
+  /* private */
   _seen: null,
 
-  locales: computed('_seen.[]', function() {
-    return get(this, '_seen').map(l => l.localeName);
-  }).readOnly(),
+  /* private */
+  _locales: computed.mapBy('_seen', 'localeName'),
 
   init() {
     this._super();
-    this._seen = emberArray();
-  },
 
-  lookupLocale(localeName) {
-    return this._seen.findBy('localeName', localeName);
-  },
-
-  localeFactory(localeName) {
     const owner = getOwner(this);
-    const lookupName = `ember-intl@translation:${localeName}`;
-    let model = owner.lookup(lookupName);
+    this._seen = emberArray();
+    this._map = Object.create(null);
+    this._modelFactory = owner.factoryFor('model:ember-intl-translation') || owner.factoryFor('ember-intl@model:translation');
+  },
 
-    if (model) {
-      return model;
+  /* private */
+  localeFactory(localeName) {
+    let model = this.lookupLocale(localeName);
+
+    if (!model) {
+      model = this._map[localeName] = this._modelFactory.create({ localeName });
+      this._seen.pushObject(model);
     }
-
-    let Klass;
-    if (owner.hasRegistration('model:ember-intl-translation')) {
-      Klass = owner.factoryFor('model:ember-intl-translation').class;
-    } else {
-      Klass = Translation;
-    }
-
-    const ModelKlass = Klass.extend();
-    Object.defineProperty(ModelKlass.proto(), 'localeName', {
-      writable: false,
-      enumerable: true,
-      value: localeName
-    });
-
-    owner.register(lookupName, ModelKlass);
-    model = owner.lookup(lookupName);
-    this._seen.pushObject(model);
 
     return model;
   },
 
+  /* private */
+  locales() {
+    return get(this, '_locales');
+  },
+
+  /* private */
   has(localeName, translationKey) {
     const model = this.lookupLocale(localeName);
 
     return model && model.has(translationKey);
   },
 
+  /* private */
+  lookupLocale(localeName) {
+    return this._map[localeName];
+  },
+
+  /* private */
   lookup(localeNames, translationKey) {
     for (let i=0; i<localeNames.length; i++) {
       const localeName = localeNames[i];
@@ -73,10 +66,6 @@ const DefaultTranslationAdapter = Ember.Object.extend({
         }
       }
     }
-  },
-
-  findTranslationByKey(localeNames, translationKey) {
-    return this.lookup(localeNames, translationKey);
   }
 });
 
