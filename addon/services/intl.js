@@ -199,11 +199,11 @@ const IntlService = Service.extend(Evented, {
   },
 
   addTranslation(localeName, key, value) {
-    this.localeFactory(localeName).addTranslation(key, value);
+    return this.localeFactory(localeName).addTranslation(key, value);
   },
 
   addTranslations(localeName, hash) {
-    this.localeFactory(localeName).addTranslations(hash);
+    return this.localeFactory(localeName).addTranslations(hash);
   },
 
   setLocale(localeName) {

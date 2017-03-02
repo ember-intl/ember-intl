@@ -40,13 +40,10 @@ export default Ember.Route.extend({
     const intl = this.get('intl');
 
     return fetch('/custom-api/translations/?loc[0]=en-ca&loc[1]=en-us').then((hash) => {
-      return Ember.RSVP.all([
-        intl.addTranslations('en-us', hash['en-us']),
-        intl.addTranslations('en-ca', hash['en-ca'])
-      ]).then(() => {
-        // en-ca is primary, en-us is fallback
-        intl.setLocale(['en-ca', 'en-us']);
-      });
+      intl.addTranslations('en-us', hash['en-us']);
+      intl.addTranslations('en-ca', hash['en-ca']);
+      // en-ca is primary, en-us is fallback
+      intl.setLocale(['en-ca', 'en-us']);
     });
   }
 });
