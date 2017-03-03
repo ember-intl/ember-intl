@@ -79,7 +79,7 @@ const IntlService = Service.extend(Evented, {
   /* @private */
   _locale: null,
 
-  /* @public */
+  /** @public **/
   locale: computed('_locale', {
     set() {
       throw new Error('[ember-intl] use `intl.setLocale(localeName)` to change the application locale');
@@ -122,30 +122,30 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  /* @public */
+  /** @public **/
   formatHtmlMessage: aliasFormatter('html-message'),
 
-  /* @public */
+  /** @public **/
   formatRelative: aliasFormatter('relative'),
 
-  /* @public */
+  /** @public **/
   formatMessage: aliasFormatter('message'),
 
-  /* @public */
+  /** @public **/
   formatNumber: aliasFormatter('number'),
 
-  /* @public */
+  /** @public **/
   formatTime: aliasFormatter('time'),
 
-  /* @public */
+  /** @public **/
   formatDate: aliasFormatter('date'),
 
-  /* @public */
+  /** @public **/
   locales() {
     return get(this, 'adapter').locales();
   },
 
-  /* @public */
+  /** @public **/
   lookup(key, localeName, options = {}) {
     let localeNames = this.localeWithDefault(localeName);
     let translation = get(this, 'adapter').lookup(localeNames, key);
@@ -159,7 +159,7 @@ const IntlService = Service.extend(Evented, {
     return translation;
   },
 
-  /* @public */
+  /** @public **/
   t(key, ...args) {
     let [ options ] = args;
     let translation = this.lookup(key, options && options.locale);
@@ -167,7 +167,7 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, ...args);
   },
 
-  /* @public */
+  /** @public **/
   exists(key, localeName) {
     let localeNames = this.localeWithDefault(localeName);
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
@@ -177,23 +177,23 @@ const IntlService = Service.extend(Evented, {
     return localeNames.some(localeName => adapter.has(localeName, key));
   },
 
-  /* @public */
+  /** @public **/
   addLocaleData(data) {
     IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
   },
 
-  /* @public */
+  /** @public **/
   addTranslation(localeName, key, value) {
     return this.localeFactory(localeName).addTranslation(key, value);
   },
 
-  /* @public */
+  /** @public **/
   addTranslations(localeName, hash) {
     return this.localeFactory(localeName).addTranslations(hash);
   },
 
-  /* @public */
+  /** @public **/
   setLocale(localeName) {
     if (!localeName) { return; }
 
