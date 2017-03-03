@@ -76,7 +76,7 @@ function hydrateBundledCLDR(service, localeName) {
 }
 
 const IntlService = Service.extend(Evented, {
-  /* @private */
+  /** @private **/
   _locale: null,
 
   /** @public **/
@@ -89,7 +89,7 @@ const IntlService = Service.extend(Evented, {
     }
   }),
 
-  /* @private */
+  /** @private **/
   adapter: computed({
     get() {
       let applicationAdapter = this._owner.lookup('adapter:ember-intl');
@@ -102,7 +102,7 @@ const IntlService = Service.extend(Evented, {
     }
   }),
 
-  /* @private */
+  /** @private **/
   formats: computed({
     get() {
       return this._owner.resolveRegistration('formats:main');
@@ -209,7 +209,7 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  /* @private */
+  /** @private **/
   lookupFormat(formatType, format) {
     let formats = get(this, 'formats');
 
@@ -218,12 +218,12 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  /* @private */
+  /** @private **/
   localeFactory(localeName) {
     return get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
   },
 
-  /* @private */
+  /** @private **/
   registerLocale(localeName) {
     if (!this._registered[localeName]) {
       this._registered[localeName] = Object.create(null);
@@ -245,7 +245,7 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  /* @private */
+  /** @private **/
   localeWithDefault(localeName) {
     if (!localeName) {
       return get(this, '_locale');
