@@ -8,10 +8,10 @@ import Ember from 'ember';
 const { computed, get, A:emberArray, getOwner } = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
-  /* private */
+  /** @private **/
   _seen: null,
 
-  /* private */
+  /** @private **/
   _locales: computed.mapBy('_seen', 'localeName'),
 
   init() {
@@ -23,7 +23,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     this._modelFactory = owner.factoryFor('model:ember-intl-translation') || owner.factoryFor('ember-intl@model:translation');
   },
 
-  /* private */
+  /** @private **/
   localeFactory(localeName) {
     let model = this.lookupLocale(localeName);
 
@@ -35,24 +35,24 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     return model;
   },
 
-  /* private */
+  /** @private **/
   locales() {
     return get(this, '_locales');
   },
 
-  /* private */
+  /** @private **/
   has(localeName, translationKey) {
     const model = this.lookupLocale(localeName);
 
     return model && model.has(translationKey);
   },
 
-  /* private */
+  /** @private **/
   lookupLocale(localeName) {
     return this._map[localeName];
   },
 
-  /* private */
+  /** @private **/
   lookup(localeNames, translationKey) {
     for (let i=0; i<localeNames.length; i++) {
       const localeName = localeNames[i];
