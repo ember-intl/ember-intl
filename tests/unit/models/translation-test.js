@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('ember-intl@model:translation', 'Unit | Model | translation', {
+moduleFor('ember-intl@model:locale', 'Unit | Model | locale', {
   integration: true,
   beforeEach() {
     this.model = this.subject();
