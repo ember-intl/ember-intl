@@ -60,7 +60,7 @@
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-cldr-data": "^0.4.2",
     "broccoli-funnel": "^1.0.1",
-    "broccoli-merge-trees": "^1.1.1",
+    "broccoli-merge-trees": "^2.0.0",
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^1.2.0",
     "chalk": "^1.0.0",
