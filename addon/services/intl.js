@@ -14,6 +14,7 @@ import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 
 const {
+  assign,
   assert,
   getOwner,
   computed,
@@ -23,8 +24,6 @@ const {
   Service,
   Evented
 } = Ember;
-
-const assign = Ember.assign || Ember.merge;
 
 function aliasFormatter(formatType) {
   return function(value, options, formats) {
