@@ -28,10 +28,11 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     let app = this.app = this._findHost();
-    this.addonOptions = this.app.project.config(app.env)['intl'] || {};
+    this.addonOptions = this.project.config(app.env)['intl'] || {};
 
     let inputPath = this.addonOptions.inputPath || 'translations';
-    this.hasTranslationDir = existsSync(path.join(app.project.root, inputPath));
+    this.translationPath = path.join(this.project.root, inputPath);
+    this.hasTranslationDir = existsSync(this.translationPath);
     this.projectLocales = this.findLocales();
 
     let projectTranslations = new WatchedDir(inputPath);
@@ -142,12 +143,11 @@ module.exports = {
   },
 
   config(environment) {
-    let project = this.project ? this.project : this.app.project;
-    let configPath = path.join(path.dirname(project.configPath()), 'ember-intl.js');
+    let configPath = path.join(path.dirname(this.project.configPath()), 'ember-intl.js');
     let addonConfig;
 
     if (!path.isAbsolute(configPath)) {
-      configPath = path.join(project.root, configPath);
+      configPath = path.join(this.project.root, configPath);
     }
 
     if (existsSync(configPath)) {
@@ -185,7 +185,7 @@ module.exports = {
     let locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonOptions.inputPath), {
+      locales = locales.concat(walkSync(this.translationPath, {
         directories: false
       }).map(function(filename) {
         return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
@@ -210,8 +210,8 @@ module.exports = {
   },
 
   findIntlAddons() {
-    let projectName = this.app.project.name();
-    let addons = this.app.project.addons;
+    let projectName = this.project.name();
+    let addons = this.project.addons;
     let registered = new Set();
 
     let find = function(list, addon) {
