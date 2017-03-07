@@ -13,6 +13,7 @@ const FormatHtmlMessage = FormatterMessage.extend({
     return Object.keys(options).reduce((result, hashKey) => {
       let value = options[hashKey];
 
+      /* escape all attributes */
       if (typeof value === 'string') {
         value = emberHandlebars.Utils.escapeExpression(value);
       }
@@ -23,9 +24,9 @@ const FormatHtmlMessage = FormatterMessage.extend({
     }, {});
   },
 
-  format(value, formatOptions = {}) {
-    const options = this.escapeProps(formatOptions);
-    const superResult = this._super(value, options, formatOptions.locale);
+  format(value, hash = {}) {
+    const options = this.escapeProps(hash);
+    const superResult = this._super(value, options, hash.locale);
 
     return emberString.htmlSafe(superResult);
   }

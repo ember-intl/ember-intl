@@ -4,17 +4,16 @@
  */
 
 import Ember from 'ember';
-import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
 
-import Formatter from './-base';
+import Formatter from '../formatter';
 
 const { get, computed } = Ember;
 
 const FormatMessage = Formatter.extend({
   formatter: computed({
     get() {
-      return createFormatCache(IntlMessageFormat);
+      return this.memoizer(IntlMessageFormat);
     }
   }).readOnly(),
 

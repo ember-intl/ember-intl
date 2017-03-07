@@ -4,8 +4,9 @@
  */
 
 import Ember from 'ember';
-import arrayToHash from '../utils/array-to-hash';
-import links from '../utils/links';
+import createFormatCache from 'intl-format-cache';
+import arrayToHash from './utils/array-to-hash';
+import links from './utils/links';
 
 const {
   get,
@@ -17,6 +18,7 @@ const { camelize } = emberString;
 
 const FormatterBase = EmberObject.extend({
   options: null,
+  memoizer: createFormatCache,
 
   init() {
     this._super();

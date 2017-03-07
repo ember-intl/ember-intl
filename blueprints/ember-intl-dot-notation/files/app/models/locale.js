@@ -1,4 +1,4 @@
-import TranslationModel from 'ember-intl/models/translation';
+import TranslationModel from 'ember-intl/models/locale';
 
 export default TranslationModel.extend({
   addTranslation(key, value) {

@@ -19,6 +19,19 @@ let path = require('path');
 let utils = require('./lib/utils');
 let TranslationReducer = require('./lib/broccoli/translation-reducer');
 
+function findHost(app, parent) {
+  while (parent.parent) {
+    if (parent.app) {
+      app = parent.app;
+      break;
+    }
+
+    parent = parent.parent;
+  }
+
+  return app;
+}
+
 module.exports = {
   name: 'ember-intl',
   addonOptions: null,
@@ -26,12 +39,12 @@ module.exports = {
 
   included() {
     this._super.included.apply(this, arguments);
-
-    let app = this.app = this._findParentApp();
-    this.addonOptions = this.intlConfig(app.env);
+    let app = this.app = findHost(this.app, this.parent);
+    this.addonOptions = this.project.config(app.env)['intl'] || {};
 
     let inputPath = this.addonOptions.inputPath || 'translations';
-    this.hasTranslationDir = existsSync(path.join(app.project.root, inputPath));
+    this.translationPath = path.join(this.project.root, inputPath);
+    this.hasTranslationDir = existsSync(this.translationPath);
     this.projectLocales = this.findLocales();
 
     let projectTranslations = new WatchedDir(inputPath);
@@ -44,23 +57,6 @@ module.exports = {
     }, this);
 
     this.translationTree = this.mergeTranslationTrees(projectTranslations, addonTranslations);
-  },
-
-  _findParentApp() {
-    if (typeof this._findHost === 'function') {
-      return this._findHost();
-    }
-
-    let current = this;
-    let app;
-
-    // Keep iterating upward until we don't have a grandparent.
-    // Has to do this grandparent check because at some point we hit the project.
-    do {
-      app = current.app || app;
-    } while (current.parent.parent && (current = current.parent));
-
-    return app;
   },
 
   outputPaths() {
@@ -77,13 +73,12 @@ module.exports = {
   contentFor(name, config) {
     if (name === 'head' && !this.addonOptions.disablePolyfill && this.addonOptions.autoPolyfill) {
       let assetPath = this.outputPaths();
-      let locales = this.findLocales();
       let prefix = '';
 
       if (config.rootURL) { prefix += config.rootURL; }
       if (assetPath) { prefix += assetPath; }
 
-      let localeScripts = locales.map(function(locale) {
+      let localeScripts = this.projectLocales.map(function(locale) {
         return `<script src="${prefix}/locales/${locale}.js"></script>`;
       });
 
@@ -119,7 +114,7 @@ module.exports = {
       trees.push(cldrTree);
     }
 
-    return mergeTrees(trees, { overwrite: true });
+    return mergeTrees(trees);
   },
 
   treeForPublic() {
@@ -158,27 +153,19 @@ module.exports = {
     }
   },
 
-  readConfig(environment) {
-    let project = this.app.project;
+  config(environment) {
+    let configPath = path.join(path.dirname(this.project.configPath()), 'ember-intl.js');
+    let addonConfig;
 
-    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
-    // while older ember-cli versions return path relative to project root
-    let configPath = path.dirname(project.configPath());
-    let config = path.join(configPath, 'ember-intl.js');
-
-    if (!path.isAbsolute(config)) {
-      config = path.join(project.root, config);
+    if (!path.isAbsolute(configPath)) {
+      configPath = path.join(this.project.root, configPath);
     }
 
-    if (existsSync(config)) {
-      return require(config)(environment);
+    if (existsSync(configPath)) {
+      addonConfig = require(configPath)(environment);
     }
 
-    return {};
-  },
-
-  intlConfig(environment) {
-    let addonConfig = Object.assign({
+    let options = Object.assign({
       locales: null,
       baseLocale: null,
       publicOnly: false,
@@ -186,24 +173,30 @@ module.exports = {
       autoPolyfill: false,
       inputPath: 'translations',
       outputPath: 'translations'
-    }, this.readConfig(environment));
+    }, addonConfig);
 
-    if (addonConfig.locales) {
-      addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
+    if (!options.locales && this.projectLocales) {
+      options.locales = this.projectLocales;
+    }
+
+    if (options.locales) {
+      options.locales = utils.castArray(options.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
         return locale.toLocaleLowerCase();
       });
     }
 
-    return addonConfig;
+    return {
+      intl: options
+    };
   },
 
   findLocales() {
     let locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonOptions.inputPath), {
+      locales = locales.concat(walkSync(this.translationPath, {
         directories: false
       }).map(function(filename) {
         return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
@@ -228,8 +221,8 @@ module.exports = {
   },
 
   findIntlAddons() {
-    let projectName = this.app.project.name();
-    let addons = this.app.project.addons;
+    let projectName = this.project.name();
+    let addons = this.project.addons;
     let registered = new Set();
 
     let find = function(list, addon) {

@@ -29,7 +29,7 @@ Returns an array of locales that have translations assigned to them.  This works
 with both bundled translations and lazy-loaded translations.
 
 ```js
-intl.get('locales') => ['en-us', 'en-ca', 'fr-fr'];
+intl.locales() => ['en-us', 'en-ca', 'fr-fr'];
 ```
 
 ## Methods
@@ -140,12 +140,12 @@ Documentation missing
 
 Documentation missing
 
-**findTranslationByKey** _(translationKey:String, optionalLocale:String)_
+**lookup** _(translationKey:String, optionalLocale:String)_
 
 Given a translation key, will return the translation for either the active
 locale, or the locale specified as the second argument.  If not translation
 is found, `undefined` is returned.
 
 ```js
-var title = this.get('intl').findTranslationByKey('shared.confirmMessage');
+var title = this.get('intl').lookup('shared.confirmMessage');
 ```
