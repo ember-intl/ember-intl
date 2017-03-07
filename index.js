@@ -19,6 +19,19 @@ let path = require('path');
 let utils = require('./lib/utils');
 let TranslationReducer = require('./lib/broccoli/translation-reducer');
 
+function findHost(app, parent) {
+  while (parent.parent) {
+    if (parent.app) {
+      app = parent.app;
+      break;
+    }
+
+    parent = parent.parent;
+  }
+
+  return app;
+}
+
 module.exports = {
   name: 'ember-intl',
   addonOptions: null,
@@ -26,8 +39,7 @@ module.exports = {
 
   included() {
     this._super.included.apply(this, arguments);
-
-    let app = this.app = this._findHost();
+    let app = this.app = findHost(this.app, this.parent);
     this.addonOptions = this.project.config(app.env)['intl'] || {};
 
     let inputPath = this.addonOptions.inputPath || 'translations';
@@ -61,13 +73,12 @@ module.exports = {
   contentFor(name, config) {
     if (name === 'head' && !this.addonOptions.disablePolyfill && this.addonOptions.autoPolyfill) {
       let assetPath = this.outputPaths();
-      let locales = this.findLocales();
       let prefix = '';
 
       if (config.rootURL) { prefix += config.rootURL; }
       if (assetPath) { prefix += assetPath; }
 
-      let localeScripts = locales.map(function(locale) {
+      let localeScripts = this.projectLocales.map(function(locale) {
         return `<script src="${prefix}/locales/${locale}.js"></script>`;
       });
 
