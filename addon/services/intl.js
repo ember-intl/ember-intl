@@ -14,6 +14,7 @@ import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 
 const {
+  A:emberArray,
   assign,
   assert,
   getOwner,
@@ -141,7 +142,14 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   locales() {
-    return get(this, 'adapter').locales();
+    let config = this._owner.resolveRegistration('config:environment')['intl'] || {};
+    let adapterLocales = emberArray(get(this, 'adapter').locales());
+
+    if (Array.isArray(config.locales)) {
+      return emberArray(emberArray(config.locales).concat(adapterLocales)).uniq();
+    }
+
+    return adapterLocales;
   },
 
   /** @public **/

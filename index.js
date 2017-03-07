@@ -28,7 +28,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     let app = this.app = this._findParentApp();
-    this.addonOptions = this.intlConfig(app.env);
+    this.addonOptions = this.app.project.config(app.env)['intl'] || {};
 
     let inputPath = this.addonOptions.inputPath || 'translations';
     this.hasTranslationDir = existsSync(path.join(app.project.root, inputPath));
@@ -119,7 +119,7 @@ module.exports = {
       trees.push(cldrTree);
     }
 
-    return mergeTrees(trees, { overwrite: true });
+    return mergeTrees(trees);
   },
 
   treeForPublic() {
@@ -158,27 +158,20 @@ module.exports = {
     }
   },
 
-  readConfig(environment) {
-    let project = this.app.project;
+  config(environment) {
+    let project = this.project ? this.project : this.app.project;
+    let configPath = path.join(path.dirname(project.configPath()), 'ember-intl.js');
+    let addonConfig;
 
-    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
-    // while older ember-cli versions return path relative to project root
-    let configPath = path.dirname(project.configPath());
-    let config = path.join(configPath, 'ember-intl.js');
-
-    if (!path.isAbsolute(config)) {
-      config = path.join(project.root, config);
+    if (!path.isAbsolute(configPath)) {
+      configPath = path.join(project.root, configPath);
     }
 
-    if (existsSync(config)) {
-      return require(config)(environment);
+    if (existsSync(configPath)) {
+      addonConfig = require(configPath)(environment);
     }
 
-    return {};
-  },
-
-  intlConfig(environment) {
-    let addonConfig = Object.assign({
+    let options = Object.assign({
       locales: null,
       baseLocale: null,
       publicOnly: false,
@@ -186,17 +179,23 @@ module.exports = {
       autoPolyfill: false,
       inputPath: 'translations',
       outputPath: 'translations'
-    }, this.readConfig(environment));
+    }, addonConfig);
 
-    if (addonConfig.locales) {
-      addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
+    if (!options.locales && this.projectLocales) {
+      options.locales = this.projectLocales;
+    }
+
+    if (options.locales) {
+      options.locales = utils.castArray(options.locales).filter(function(locale) {
         return typeof locale === 'string';
       }).map(function(locale) {
         return locale.toLocaleLowerCase();
       });
     }
 
-    return addonConfig;
+    return {
+      intl: options
+    };
   },
 
   findLocales() {
