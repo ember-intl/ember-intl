@@ -90,9 +90,12 @@ const IntlService = Service.extend(Evented, {
   }),
 
   /** @private **/
-  adapter: computed({
+  adapterName: 'ember-intl',
+
+  /** @private **/
+  adapter: computed('adapterName', {
     get() {
-      let applicationAdapter = this._owner.lookup('adapter:ember-intl');
+      let applicationAdapter = this._owner.lookup(`adapter:${get(this, 'adapterName')}`);
 
       if (applicationAdapter) {
         return applicationAdapter;
@@ -143,13 +146,13 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   locales() {
     let config = this._owner.resolveRegistration('config:environment')['intl'] || {};
-    let adapterLocales = emberArray(get(this, 'adapter').locales());
+    let seenLocales = emberArray(get(this, 'adapter').locales());
 
     if (Array.isArray(config.locales)) {
-      return emberArray(emberArray(config.locales).concat(adapterLocales)).uniq();
+      return emberArray(emberArray(config.locales).concat(seenLocales)).uniq();
     }
 
-    return adapterLocales;
+    return seenLocales;
   },
 
   /** @public **/
