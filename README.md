@@ -104,7 +104,7 @@ Or programmatically convert a number within any Ember Object.
 ```js
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  computedNumber: Ember.computed('cost', function() {
+  computedNumber: Ember.computed('intl.locale', 'cost', function() {
     return this.get('intl').formatNumber(this.get('cost')/*, optional options hash */);
   })
 });
@@ -127,7 +127,7 @@ Or programmatically convert a date within any Ember Object.
 ```js
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  computedNow: Ember.computed(function() {
+  computedNow: Ember.computed('intl.locale', function() {
     return this.get('intl').formatDate(new Date()/*, optional options hash */);
   })
 });
@@ -151,7 +151,7 @@ Or programmatically convert a time within any Ember Object.
 // example
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  computedNow: Ember.computed(function() {
+  computedNow: Ember.computed('intl.locale', function() {
     return this.get('intl').formatTime(new Date()/*, optional options hash */);
   })
 });
@@ -183,7 +183,7 @@ Or programmatically convert a relative time within any Ember Object.
 ```js
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  yesterday: Ember.computed(function() {
+  yesterday: Ember.computed('intl.locale', function() {
     var date = new Date();
     return this.get('intl').formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
   })
@@ -227,7 +227,7 @@ Or programmatically convert a message within any Ember Object.
 ```js
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  yesterday: Ember.computed(function() {
+  yesterday: Ember.computed('intl.locale', function() {
     return this.get('intl').formatMessage('Hello {name}', { name: 'Jason' });
   })
 });
