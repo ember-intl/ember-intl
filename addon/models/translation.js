@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const { get, set, deprecate } = Ember;
+const { get, set } = Ember;
 
 const TranslationModel = Ember.Object.extend({
   localeName: null,
@@ -39,29 +39,15 @@ const TranslationModel = Ember.Object.extend({
    * This would enable consumers that have dot notated strings
    * to implement this function as `return this[key];`
    */
-  getValue(key) {
-    let translation = get(this.translations, key);
-
-    if (typeof translation === 'string') {
-      return translation;
-    }
-
-    translation = get(this, key);
-
-    if (typeof translation === 'string') {
-      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', false, {
-        id: 'ember-intl-add-translation'
-      });
-
-      return translation;
-    }
+  lookup(key) {
+    return get(this.translations, key);
   },
 
   /**
    * Determines if the translation model contains a key
    */
   has(key) {
-    return typeof this.getValue(key) === 'string';
+    return typeof this.lookup(key) === 'string';
   }
 });
 

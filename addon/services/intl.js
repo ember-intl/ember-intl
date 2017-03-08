@@ -20,10 +20,8 @@ const {
   makeArray,
   get,
   set,
-  RSVP,
   Service,
-  Evented,
-  deprecate
+  Evented
 } = Ember;
 const assign = Ember.assign || Ember.merge;
 
@@ -186,14 +184,6 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  getLocalesByTranslations() {
-    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
-      id: 'ember-intl-locales-cp'
-    });
-
-    return get(this, 'locales');
-  },
-
   /**
   * A utility method for registering CLDR data for
   * intl-messageformat and intl-relativeformat.  This data is derived
@@ -209,15 +199,11 @@ const IntlService = Service.extend(Evented, {
   },
 
   addTranslation(localeName, key, value) {
-    return this.localeFactory(localeName).then((locale) => {
-      return locale.addTranslation(key, value);
-    });
+    return this.localeFactory(localeName).addTranslation(key, value);
   },
 
-  addTranslations(localeName, payload) {
-    return this.localeFactory(localeName).then((locale) => {
-      return locale.addTranslations(payload);
-    });
+  addTranslations(localeName, hash) {
+    return this.localeFactory(localeName).addTranslations(hash);
   },
 
   setLocale(localeName) {
@@ -245,23 +231,11 @@ const IntlService = Service.extend(Evented, {
   },
 
   localeFactory(localeName) {
-    return RSVP.cast(get(this, 'adapter').localeFactory(normalizeLocale(localeName), true));
-  },
-
-  createLocale(localeName, payload) {
-    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
-      id: 'ember-intl-create-locale'
-    });
-
-    return this.addTranslations(localeName, payload);
+    return get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
   },
 
   findTranslationByKey(key, localeName, options) {
     return this.lookup(key, localeName, options);
-  },
-
-  translationsFor(localeName) {
-    return this.localeFactory(localeName);
   }
 });
 

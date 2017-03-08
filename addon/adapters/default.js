@@ -65,14 +65,14 @@ const DefaultTranslationAdapter = Ember.Object.extend({
       const localeName = localeNames[i];
       const model = this.lookupLocale(localeName);
 
-      if (model && model.has(translationKey)) {
-        return model.getValue(translationKey);
+      if (model) {
+        const translation = model.lookup(translationKey);
+
+        if (translation) {
+          return translation;
+        }
       }
     }
-  },
-
-  translationsFor(localeName) {
-    return this.localeFactory(localeName);
   },
 
   findTranslationByKey(localeNames, translationKey) {
