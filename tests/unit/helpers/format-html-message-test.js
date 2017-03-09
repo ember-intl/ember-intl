@@ -12,14 +12,14 @@ moduleForComponent('format-html-message', {
 
     registry.injection('formatter', 'intl', 'service:intl');
 
-    service.addTranslations('en-us', {
+    service.addTranslations('en', {
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
       }
     });
 
-    service.setLocale('en-us');
+    service.setLocale('en');
   }
 });
 
@@ -31,8 +31,8 @@ test('exists', function(assert) {
 test('invoke the formatHTMLMessage directly', function(assert) {
   assert.expect(1);
   assert.equal(
-    service.formatHtmlMessage("<strong>Hello {name}</strong>", { name: "<em>Jason</em>" }),
-    "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>"
+    service.formatHtmlMessage("<strong>Hello {name} {count, number}</strong>", { name: "<em>Jason</em>", count: 42000}).string,
+    "<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>"
   );
 });
 
