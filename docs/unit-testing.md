@@ -15,21 +15,30 @@ import { moduleForComponent, test } from 'ember-qunit';
 moduleForComponent('x-product', 'XProductComponent', {
   unit: true,
   needs: [
+    'config:environment',
     'service:intl', // required
     'ember-intl@adapter:default', // required with format-message
-    'ember-intl@formatter:format-message', // optional
-    'ember-intl@formatter:format-html-message', // optional
-    'ember-intl@formatter:format-date', // optional
-    'ember-intl@formatter:format-time', // optional
-    'ember-intl@formatter:format-number', // optional
-    'ember-intl@formatter:format-relative', // optional
-    'helper:intl-get', // optional
-    'helper:t', // optional, if used then be sure to include the format-message formatter above
-    'helper:t-html', // optional, if used then be sure to include the format-html-message formatter above
-    'helper:format-date', // optional
-    'helper:format-time', // optional
-    'helper:format-relative', // optional
-    'helper:format-number' // optional
+    `cldr:en`, // required (or language(s) of the locale(s) you plan to test against)
+    `translation:en-us`, // required (or language(s) of the locale(s) you plan to test against)
+    'util:intl/missing-message', // required
+
+    /*
+     * Below are optional.  You only need to include to formatters and helpers
+     * that are utilized within your test.
+     */
+    'ember-intl@formatter:format-message',
+    'ember-intl@formatter:format-html-message',
+    'ember-intl@formatter:format-date',
+    'ember-intl@formatter:format-time',
+    'ember-intl@formatter:format-number',
+    'ember-intl@formatter:format-relative',
+    'helper:intl-get',
+    'helper:t',
+    'helper:t-html',
+    'helper:format-date',
+    'helper:format-time',
+    'helper:format-relative',
+    'helper:format-number'
   ],
   setup() {
     let service = this.container.lookup('service:intl');
