@@ -45,7 +45,7 @@
     "ember-load-initializers": "^0.6.3",
     "ember-resolver": "^2.0.3",
     "fs-extra": "^2.0.0",
-    "loader.js": "^4.0.10",
+    "loader.js": "^4.2.3",
     "mocha": "^3.2.0"
   },
   "keywords": [
