@@ -2,6 +2,7 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
+import expectError from '../../helpers/expect-error';
 
 let service, registry;
 
@@ -54,11 +55,7 @@ test('number is formatted correctly with locale argument', function(assert) {
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  try {
-    this.render(hbs`{{format-number}}`);
-  } catch(ex) {
-    assert.ok(ex, 'raised error when not value is passed to format-number');
-  }
+  expectError(() => this.render(hbs`{{format-number}}`), (ex) => assert.ok(ex));
 });
 
 test('should return a string', function(assert) {

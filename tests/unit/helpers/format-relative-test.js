@@ -1,6 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
+import expectError from '../../helpers/expect-error';
 
 let service, registry;
 
@@ -40,11 +41,7 @@ test('invoke the formatRelative directly', function(assert) {
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  try {
-    this.render(hbs`{{format-relative}}`);
-  } catch(ex) {
-    assert.ok(ex, 'raised error when not value is passed to format-relative');
-  }
+  expectError(() => this.render(hbs`{{format-relative}}`), (ex) => assert.ok(ex));
 });
 
 test('can specify a `value` and `now` on the options hash', function(assert) {

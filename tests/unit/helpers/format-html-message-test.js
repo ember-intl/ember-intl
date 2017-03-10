@@ -1,6 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
+import expectError from '../../helpers/expect-error';
 
 let service, registry;
 
@@ -45,11 +46,9 @@ test('message is formatted correctly with argument', function(assert) {
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  try {
-    this.render(hbs`{{format-html-message}}`);
-  } catch(ex) {
-    assert.ok(ex, 'raised error when not value is passed to format-html-message');
-  }
+  expectError(() => this.render(hbs`{{format-html-message}}`), (ex) => {
+    assert.ok(ex.message.match(/Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./));
+  });
 });
 
 test('should allow for inlined html in the value', function(assert) {
