@@ -2,6 +2,7 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
+import expectError from '../../helpers/expect-error';
 
 const { get, set, computed, run, A:emberArray, Object:EmberObject } = Ember;
 
@@ -66,11 +67,9 @@ test('message is formatted correctly with argument', function(assert) {
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  try {
-    this.render(hbs`{{format-message}}`);
-  } catch(ex) {
-    assert.ok(ex, 'raised error when not value is passed to format-message');
-  }
+  expectError(() => this.render(hbs`{{format-message}}`), (ex) => {
+    assert.ok(ex.message.match(/Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./));
+  });
 });
 
 test('should return nothing if key does not exist and allowEmpty is set to true', function(assert) {
