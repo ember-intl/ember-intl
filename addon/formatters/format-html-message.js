@@ -23,9 +23,9 @@ const FormatHtmlMessage = FormatterMessage.extend({
     }, {});
   },
 
-  format(value, formatOptions = {}) {
-    const options = this.escapeProps(formatOptions);
-    const superResult = this._super(value, options, formatOptions.locale);
+  format(value, options = {}, ctx = {}) {
+    let escapedProps = this.escapeProps(options);
+    let superResult = this._super(value, escapedProps, ctx);
 
     return emberString.htmlSafe(superResult);
   }

@@ -32,8 +32,26 @@ test('exists', function(assert) {
 test('invoke the formatHTMLMessage directly', function(assert) {
   assert.expect(1);
   assert.equal(
-    service.formatHtmlMessage("<strong>Hello {name}</strong>", { name: "<em>Jason</em>" }),
-    "<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>"
+    service.formatHtmlMessage("<strong>Hello {name} {count, number}</strong>", {
+      name: "<em>Jason</em>",
+      count: 42000
+    }).string,
+    "<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>"
+  );
+});
+
+test('invoke the formatHTMLMessage directly with inlined locale', function(assert) {
+  assert.expect(1);
+
+  let output = service.formatHtmlMessage("<strong>Hello {name} {count, number}</strong>", {
+    name: "<em>Jason</em>",
+    count: 42000,
+    locale: 'fr'
+  }).string;
+
+  assert.equal(
+    escape(output),
+    "%3Cstrong%3EHello%20%26lt%3Bem%26gt%3BJason%26lt%3B/em%26gt%3B%2042%A0000%3C/strong%3E"
   );
 });
 
