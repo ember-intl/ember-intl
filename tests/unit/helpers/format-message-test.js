@@ -33,7 +33,6 @@ moduleForComponent('format-message', {
       }
     });
 
-    registry.injection('formatter', 'intl', 'service:intl');
     service.setLocale(locale);
   }
 });

@@ -11,8 +11,6 @@ moduleForComponent('format-html-message', {
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
 
-    registry.injection('formatter', 'intl', 'service:intl');
-
     service.addTranslations('en-us', {
       foo: {
         bar: 'foo bar baz',
