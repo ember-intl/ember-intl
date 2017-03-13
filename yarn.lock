@@ -1947,12 +1947,12 @@ ember-qunit@^1.0.0-beta.1:
   dependencies:
     ember-test-helpers "^0.5.32"
 
-ember-resolver@^2.0.3:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-2.1.0.tgz#e6d249d3b5806468c0ba2c67ccecf7aa24b754bf"
+ember-resolver@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-3.0.0.tgz#d5e5d4547a2981d0756523b52076d41778390add"
   dependencies:
-    ember-cli-babel "^5.1.3"
-    ember-cli-version-checker "^1.1.4"
+    ember-cli-babel "^5.1.6"
+    ember-cli-version-checker "^1.1.6"
 
 ember-router-generator@^1.0.0:
   version "1.2.2"
@@ -3321,9 +3321,9 @@ livereload-js@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.2.2.tgz#6c87257e648ab475bc24ea257457edcc1f8d0bc2"
 
-loader.js@^4.0.10:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/loader.js/-/loader.js-4.1.0.tgz#1d0897a62f8b7375d3d9cd1ae6acf798c36c1ffe"
+loader.js@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/loader.js/-/loader.js-4.2.3.tgz#845228877aa5317209e41f6c00d9bab36a6a4808"
 
 locale-emoji@^0.2.0:
   version "0.2.0"

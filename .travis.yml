@@ -33,7 +33,7 @@ script:
   - ember try $EMBER_TRY_SCENARIO test
 
 before_deploy:
-  - npm run build
+  - npm run build -- --environment=production
 
 deploy:
   provider: pages
