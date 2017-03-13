@@ -46,7 +46,7 @@ test('invoke the formatHTMLMessage directly with inlined locale', function(asser
   let output = service.formatHtmlMessage("<strong>Hello {name} {count, number}</strong>", {
     name: "<em>Jason</em>",
     count: 42000,
-    locale: 'fr'
+    locale: 'fr-fr'
   }).string;
 
   assert.equal(
