@@ -32,6 +32,7 @@ const {
   Evented,
   deprecate
 } = Ember;
+
 const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(ctr) {
