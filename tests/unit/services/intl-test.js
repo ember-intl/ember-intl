@@ -69,22 +69,3 @@ test('`t` can be passed a no options argument and no warning should be emitted',
     done();
   });
 });
-
-test('`t` can not pass options as undefined with a warning being emitted', function(assert) {
-  const done = assert.async();
-  service.setLocale('en');
-
-  let invokedWarn = false;
-  const originalWarn = Ember.warn;
-
-  Ember.warn = function() {
-    invokedWarn = true;
-  };
-
-  service.addTranslation('en', 'foo', 'FOO').then(function() {
-    service.t('foo', null);
-    assert.ok(invokedWarn, 'Warning was raised');
-    Ember.warn = originalWarn;
-    done();
-  });
-});

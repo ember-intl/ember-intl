@@ -18,12 +18,8 @@ const FormatMessage = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options = {}, ctx = {}) {
-    const { formats, locale } = ctx;
-    const formatter = get(this, 'formatter');
-
-    /* locale can be a locale string or an array of locale strings */
-    return formatter(value, locale, formats).format(options);
+  format(value, options, { formats, locale }) {
+    return get(this, 'formatter')(value, locale, formats).format(options);
   }
 });
 
