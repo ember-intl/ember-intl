@@ -32,21 +32,12 @@ const {
   Evented,
   deprecate
 } = Ember;
+
 const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
-    if (!options) {
-      if (arguments.length > 1) {
-        Ember.warn(`[ember-intl] expected object for formatter ${ctr.formatType} but received ${typeof options}`, false, {
-          id: 'ember-intl-missing-formatter-args'
-        });
-      }
-
-      options = {};
-    }
-
-    if (typeof options.format === 'string') {
+    if (options && typeof options.format === 'string') {
       options = assign(assign({}, this.getFormat(ctr.formatType, options.format)), options);
     }
 
@@ -58,7 +49,7 @@ function formatterProxy(ctr) {
 
     return formatter.format(value, options, {
       formats: formats || get(this, 'formats'),
-      locale: this._localeWithDefault(options.locale)
+      locale: this._localeWithDefault(options && options.locale)
     });
   };
 }
