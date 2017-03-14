@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { moduleFor, test } from 'ember-qunit';
+import {moduleFor, test} from 'ember-qunit';
 
 moduleFor('ember-intl@adapter:default', 'Unit | Adapter | default', {
   beforeEach() {

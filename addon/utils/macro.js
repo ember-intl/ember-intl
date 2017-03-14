@@ -4,11 +4,11 @@
  */
 import Ember from 'ember';
 
-const { get, assert, computed } = Ember;
+const {get, assert, computed} = Ember;
 const keys = Object.keys;
 
 function values(object) {
-  return keys(object).map((key) => object[key]);
+  return keys(object).map(key => object[key]);
 }
 
 function mapPropertiesByHash(object, hash) {
@@ -27,7 +27,10 @@ export default function createTranslatedComputedProperty(key, options) {
 
   return computed(...dependentKeys, function() {
     const intl = get(this, 'intl');
-    assert(`Cannot translate "${key}".\n${this} does not have an intl property set. Try: intl: Ember.inject.service()`, intl);
+    assert(
+      `Cannot translate "${key}".\n${this} does not have an intl property set. Try: intl: Ember.inject.service()`,
+      intl
+    );
 
     return intl.t(key, mapPropertiesByHash(this, hash));
   }).readOnly();

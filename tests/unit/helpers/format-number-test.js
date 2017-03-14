@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import { moduleForComponent, test } from 'ember-qunit';
+import {moduleForComponent, test} from 'ember-qunit';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
 import expectError from '../../helpers/expect-error';
 
@@ -13,17 +13,21 @@ moduleForComponent('format-number', {
     service = this.container.lookup('service:intl');
     service.setLocale('en-us');
 
-    registry.register('formats:main', {
-      number: {
-        digits: {
-          minimumFractionDigits: 2
-        },
-        currency: {
-          style: 'currency',
-          minimumFractionDigits: 2
+    registry.register(
+      'formats:main',
+      {
+        number: {
+          digits: {
+            minimumFractionDigits: 2
+          },
+          currency: {
+            style: 'currency',
+            minimumFractionDigits: 2
+          }
         }
-      }
-    }, { instantiate: false });
+      },
+      {instantiate: false}
+    );
   }
 });
 
@@ -40,7 +44,7 @@ test('invoke the formatNumber method', function(assert) {
 test('number is formatted correctly with default locale', function(assert) {
   assert.expect(1);
   this.render(hbs`{{format-number 1000}}`);
-  assert.equal(this.$().text(), "1,000");
+  assert.equal(this.$().text(), '1,000');
 });
 
 test('number is formatted correctly with locale argument', function(assert) {
@@ -49,13 +53,13 @@ test('number is formatted correctly with locale argument', function(assert) {
   this.render(hbs`{{format-number 1000}}`);
   // non-breaking space so we can't just compare "1 000" to "1 000"
   // since it's not a %20 space character
-  assert.equal(escape(this.$().text()), "1%A0000");
+  assert.equal(escape(this.$().text()), '1%A0000');
 });
 
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  expectError(() => this.render(hbs`{{format-number}}`), (ex) => assert.ok(ex));
+  expectError(() => this.render(hbs`{{format-number}}`), ex => assert.ok(ex));
 });
 
 test('should return a string', function(assert) {
@@ -187,11 +191,10 @@ test('used to format percentages', function(assert) {
 test('should function within an `each` block helper', function(assert) {
   assert.expect(1);
 
-  this.set('currencies', Ember.A([
-    { AMOUNT: 3, CURRENCY: 'USD'},
-    { AMOUNT: 8, CURRENCY: 'EUR'},
-    { AMOUNT: 10, CURRENCY: 'JPY'}
-  ]));
+  this.set(
+    'currencies',
+    Ember.A([{AMOUNT: 3, CURRENCY: 'USD'}, {AMOUNT: 8, CURRENCY: 'EUR'}, {AMOUNT: 10, CURRENCY: 'JPY'}])
+  );
 
   this.render(
     hbs`

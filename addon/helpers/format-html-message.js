@@ -4,7 +4,7 @@
  */
 
 import BaseHelper from './-format-base';
-import { getValue } from './format-message';
+import {getValue} from './format-message';
 
 export default BaseHelper.extend({
   getValue,

@@ -1,1 +1,1 @@
-export { default } from './format-message';
+export {default} from './format-message';

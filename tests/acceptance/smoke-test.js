@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 let application;
 
-const { run:emberRun } = Ember;
+const {run: emberRun} = Ember;
 
 function contains(assert, selector, string) {
   const element = find(selector)[0];
@@ -28,7 +28,7 @@ module('Acceptance: Smoke', {
   }
 });
 
-test('format-number', (assert) => {
+test('format-number', assert => {
   visit('/smoke');
 
   andThen(() => {
@@ -36,7 +36,7 @@ test('format-number', (assert) => {
   });
 });
 
-test('format-date', (assert) => {
+test('format-date', assert => {
   visit('/smoke');
 
   andThen(() => {
@@ -44,7 +44,7 @@ test('format-date', (assert) => {
   });
 });
 
-test('format-time', (assert) => {
+test('format-time', assert => {
   visit('/smoke');
 
   andThen(() => {
@@ -52,7 +52,7 @@ test('format-time', (assert) => {
   });
 });
 
-test('format-relative', (assert) => {
+test('format-relative', assert => {
   visit('/smoke');
 
   andThen(() => {
@@ -60,7 +60,7 @@ test('format-relative', (assert) => {
   });
 });
 
-test('translation-subdirectory', (assert) => {
+test('translation-subdirectory', assert => {
   visit('/smoke');
 
   andThen(() => {

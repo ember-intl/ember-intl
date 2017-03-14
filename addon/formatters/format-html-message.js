@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import FormatterMessage from './format-message';
 
-const { String:emberString, Handlebars:emberHandlebars } = Ember;
+const {String: emberString, Handlebars: emberHandlebars} = Ember;
 
 const FormatHtmlMessage = FormatterMessage.extend({
   escapeProps(options) {
@@ -14,17 +14,20 @@ const FormatHtmlMessage = FormatterMessage.extend({
       return;
     }
 
-    return Object.keys(options).reduce((result, hashKey) => {
-      let value = options[hashKey];
+    return Object.keys(options).reduce(
+      (result, hashKey) => {
+        let value = options[hashKey];
 
-      if (typeof value === 'string') {
-        value = emberHandlebars.Utils.escapeExpression(value);
-      }
+        if (typeof value === 'string') {
+          value = emberHandlebars.Utils.escapeExpression(value);
+        }
 
-      result[hashKey] = value;
+        result[hashKey] = value;
 
-      return result;
-    }, {});
+        return result;
+      },
+      {}
+    );
   },
 
   format(value, options, ctx) {

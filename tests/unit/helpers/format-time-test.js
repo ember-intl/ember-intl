@@ -1,5 +1,5 @@
 import hbs from 'htmlbars-inline-precompile';
-import { moduleForComponent, test } from 'ember-qunit';
+import {moduleForComponent, test} from 'ember-qunit';
 import formatTimeHelper from 'ember-intl/helpers/format-time';
 
 const date = 1390518044403;
@@ -35,16 +35,20 @@ test('invoke formatTime directly', function(assert) {
 test('invoke formatTime directly with format', function(assert) {
   assert.expect(1);
 
-  registry.register('formats:main', {
-    time: {
-      test: {
-        timeZone: 'UTC',
-        locale: 'fr-fr'
+  registry.register(
+    'formats:main',
+    {
+      time: {
+        test: {
+          timeZone: 'UTC',
+          locale: 'fr-fr'
+        }
       }
-    }
-  }, { instantiate: false });
+    },
+    {instantiate: false}
+  );
 
-  const output = service.formatTime(date, { format: 'test' });
+  const output = service.formatTime(date, {format: 'test'});
 
   // Try both for browser Intl data inconsistencies
   assert.ok(output === '23/1/2014' || output === '23/01/2014');

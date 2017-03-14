@@ -1,5 +1,5 @@
 import hbs from 'htmlbars-inline-precompile';
-import { moduleForComponent, test } from 'ember-qunit';
+import {moduleForComponent, test} from 'ember-qunit';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
 import expectError from '../../helpers/expect-error';
 
@@ -41,7 +41,7 @@ test('invoke the formatRelative directly', function(assert) {
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  expectError(() => this.render(hbs`{{format-relative}}`), (ex) => assert.ok(ex));
+  expectError(() => this.render(hbs`{{format-relative}}`), ex => assert.ok(ex));
 });
 
 test('can specify a `value` and `now` on the options hash', function(assert) {
@@ -58,15 +58,18 @@ test('can specify a `interval` to trigger recompute', function(assert) {
   this.render(hbs`{{format-relative date interval=1000}}`);
   assert.equal(this.$().text(), 'now');
 
-  setTimeout(() => {
-    assert.equal(this.$().text(), '1 second ago');
-    done();
-  }, 1001);
+  setTimeout(
+    () => {
+      assert.equal(this.$().text(), '1 second ago');
+      done();
+    },
+    1001
+  );
 });
 
 test('should return relative time in hours, not best fit', function(assert) {
   assert.expect(1);
-  this.set('date', (1000 * 60 * 60 * 24) * 2); // two days
+  this.set('date', 1000 * 60 * 60 * 24 * 2); // two days
   this.render(hbs`{{format-relative date now=0 format="hours"}}`);
   assert.equal(this.$().text(), 'in 48 hours');
 });

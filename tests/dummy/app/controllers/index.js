@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { set, computed, Controller, inject, on, run:emberRun } = Ember;
+const {set, computed, Controller, inject, on, run: emberRun} = Ember;
 
 const date = new Date();
 const yesterday = date.setDate(date.getDate() - 1);
@@ -25,11 +25,14 @@ export default Controller.extend({
   }),
 
   incrementTime: on('init', function() {
-    setInterval(() => {
-      emberRun(() => {
-        set(this, 'instant', new Date());
-        this.incrementProperty('num');
-      });
-    }, 200);
+    setInterval(
+      () => {
+        emberRun(() => {
+          set(this, 'instant', new Date());
+          this.incrementProperty('num');
+        });
+      },
+      200
+    );
   })
 });
