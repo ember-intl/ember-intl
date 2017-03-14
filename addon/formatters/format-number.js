@@ -18,7 +18,7 @@ const FormatNumber = Formatter.extend({
   }).readOnly(),
 
   format(value, options, ctx) {
-    return this._format(value, this.filterSupporedOptions(options), null, ctx);
+    return this._format(value, this.filterSupporedOptions(options), undefined, ctx);
   }
 });
 

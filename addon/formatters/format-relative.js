@@ -4,8 +4,8 @@
  */
 
 import Ember from 'ember';
-import IntlRelativeFormat from 'intl-relativeformat';
 import createFormatCache from 'intl-format-cache';
+import IntlRelativeFormat from 'intl-relativeformat';
 
 import Formatter from './-base';
 
@@ -23,14 +23,19 @@ const FormatRelative = Formatter.extend({
   }).readOnly(),
 
   format(value, options, ctx) {
-    const dateValue = new Date(value);
+    let dateValue = new Date(value);
+    let formatOptions;
 
-    /* TODO: remove assertion in 3.0, Intl.DateTimeFormat accepts no arguments */
+    /* TODO: remove assertion in 3.0, new Intl.DateTimeFormat().format() accepts no arguments */
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
 
-    return this._format(dateValue, this.filterSupporedOptions(options), {
-      now: options && options.now
-    }, ctx);
+    if (options && typeof options.now !== 'undefined') {
+      formatOptions = {
+        now: options.now
+      };
+    }
+
+    return this._format(dateValue, this.filterSupporedOptions(options), formatOptions, ctx);
   }
 });
 

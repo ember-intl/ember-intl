@@ -27,7 +27,7 @@ const FormatDate = Formatter.extend({
 
     const formatOptions = this.filterSupporedOptions(options);
 
-    return this._format(dateTime, formatOptions, null, ctx);
+    return this._format(dateTime, formatOptions, undefined, ctx);
   }
 });
 
