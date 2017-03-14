@@ -13,6 +13,13 @@ import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 
+import FormatDate from '../formatters/format-date';
+import FormatTime from '../formatters/format-time';
+import FormatNumber from '../formatters/format-number';
+import FormatMessage from '../formatters/format-message';
+import FormatRelative from '../formatters/format-relative';
+import FormatHtmlMessage from '../formatters/format-html-message';
+
 const {
   assert,
   getOwner,
@@ -27,11 +34,11 @@ const {
 } = Ember;
 const assign = Ember.assign || Ember.merge;
 
-function formatterProxy(formatType) {
+function formatterProxy(ctr) {
   return function(value, options, formats) {
     if (!options) {
       if (arguments.length > 1) {
-        Ember.warn(`[ember-intl] expected object for formatter ${formatType} but received ${typeof options}`, false, {
+        Ember.warn(`[ember-intl] expected object for formatter ${ctr.formatType} but received ${typeof options}`, false, {
           id: 'ember-intl-missing-formatter-args'
         });
       }
@@ -40,10 +47,14 @@ function formatterProxy(formatType) {
     }
 
     if (typeof options.format === 'string') {
-      options = assign(assign({}, this.getFormat(formatType, options.format)), options);
+      options = assign(assign({}, this.getFormat(ctr.formatType, options.format)), options);
     }
 
-    const formatter = this.owner.lookup(`ember-intl@formatter:format-${formatType}`);
+    if (!this._formatters[ctr.formatType]) {
+      this._formatters[ctr.formatType] = ctr.create();
+    }
+
+    let formatter = this._formatters[ctr.formatType];
 
     return formatter.format(value, options, {
       formats: formats || get(this, 'formats'),
@@ -66,28 +77,29 @@ const IntlService = Service.extend(Evented, {
 
   adapter: computed({
     get() {
-      return this.owner.lookup('ember-intl@adapter:default');
+      return this._owner.lookup('ember-intl@adapter:default');
     }
   }),
 
   formats: computed({
     get() {
-      return this.owner.resolveRegistration('formats:main');
+      return this._owner.resolveRegistration('formats:main');
     }
   }),
 
-  formatHtmlMessage: formatterProxy('html-message'),
-  formatRelative: formatterProxy('relative'),
-  formatMessage: formatterProxy('message'),
-  formatNumber: formatterProxy('number'),
-  formatTime: formatterProxy('time'),
-  formatDate: formatterProxy('date'),
+  formatHtmlMessage: formatterProxy(FormatHtmlMessage),
+  formatRelative: formatterProxy(FormatRelative),
+  formatMessage: formatterProxy(FormatMessage),
+  formatNumber: formatterProxy(FormatNumber),
+  formatTime: formatterProxy(FormatTime),
+  formatDate: formatterProxy(FormatDate),
   requirejs: requirejs,
 
   init() {
     this._super();
 
-    this.owner = getOwner(this);
+    this._owner = getOwner(this);
+    this._formatters = Object.create(null);
 
     if (typeof Intl === 'undefined') {
       Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
@@ -113,7 +125,7 @@ const IntlService = Service.extend(Evented, {
    * @private
    */
   _hydrate() {
-    const config = this.owner.resolveRegistration('config:environment');
+    const config = this._owner.resolveRegistration('config:environment');
     const cldrs = this._lookupByFactoryType('cldrs', config.modulePrefix);
     const translations = this._lookupByFactoryType('translations', config.modulePrefix);
 
@@ -124,14 +136,14 @@ const IntlService = Service.extend(Evented, {
     }
 
     cldrs.map((moduleName) => {
-      return this.owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
+      return this._owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
     })
       .forEach((data) => data.forEach(this.addLocaleData));
 
     translations.forEach((moduleName) => {
       const localeName = moduleName.split('\/').pop();
 
-      this.addTranslations(localeName, this.owner.resolveRegistration(`translation:${localeName}`));
+      this.addTranslations(localeName, this._owner.resolveRegistration(`translation:${localeName}`));
     });
   },
 
@@ -160,7 +172,7 @@ const IntlService = Service.extend(Evented, {
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
     if (!options.resilient && !translation) {
-      const missingMessage = this.owner.resolveRegistration('util:intl/missing-message');
+      const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames);
     }

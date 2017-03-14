@@ -26,12 +26,6 @@ moduleForComponent('x-product', 'XProductComponent', {
      * Below are optional.  You only need to include to formatters and helpers
      * that are utilized within your test.
      */
-    'ember-intl@formatter:format-message',
-    'ember-intl@formatter:format-html-message',
-    'ember-intl@formatter:format-date',
-    'ember-intl@formatter:format-time',
-    'ember-intl@formatter:format-number',
-    'ember-intl@formatter:format-relative',
     'helper:intl-get',
     'helper:t',
     'helper:t-html',

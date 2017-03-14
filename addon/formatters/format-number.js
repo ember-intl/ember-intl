@@ -11,8 +11,6 @@ import Formatter from './-base';
 const { computed } = Ember;
 
 const FormatNumber = Formatter.extend({
-  formatType: 'number',
-
   formatter: computed({
     get() {
       return createFormatCache(Intl.NumberFormat);
@@ -25,6 +23,7 @@ const FormatNumber = Formatter.extend({
 });
 
 FormatNumber.reopenClass({
+  formatType: 'number',
   supportedOptions: [
     'localeMatcher', 'style', 'currency', 'currencyDisplay',
     'useGrouping', 'minimumIntegerDigits', 'minimumFractionDigits',

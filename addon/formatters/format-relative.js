@@ -16,8 +16,6 @@ function assertIsDate(date, errMsg) {
 }
 
 const FormatRelative = Formatter.extend({
-  formatType: 'relative',
-
   formatter: computed({
     get() {
       return createFormatCache(IntlRelativeFormat);
@@ -36,6 +34,7 @@ const FormatRelative = Formatter.extend({
 });
 
 FormatRelative.reopenClass({
+  formatType: 'relative',
   supportedOptions: ['style', 'units']
 });
 
