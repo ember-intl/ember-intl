@@ -31,4 +31,8 @@ const FormatHtmlMessage = FormatterMessage.extend({
   }
 });
 
+FormatHtmlMessage.reopenClass({
+  formatType: 'html-message'
+});
+
 export default FormatHtmlMessage;

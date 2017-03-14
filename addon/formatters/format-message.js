@@ -27,4 +27,8 @@ const FormatMessage = Formatter.extend({
   }
 });
 
+FormatMessage.reopenClass({
+  formatType: 'message'
+});
+
 export default FormatMessage;

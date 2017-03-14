@@ -15,8 +15,6 @@ function assertIsDate(date, errMsg) {
 }
 
 const FormatDate = Formatter.extend({
-  formatType: 'date',
-
   formatter: computed({
     get() {
       return createFormatCache(Intl.DateTimeFormat);
@@ -34,6 +32,7 @@ const FormatDate = Formatter.extend({
 });
 
 FormatDate.reopenClass({
+  formatType: 'date',
   supportedOptions: [
     'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
     'era', 'year', 'month', 'day', 'hour', 'minute', 'second',

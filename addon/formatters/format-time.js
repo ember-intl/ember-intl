@@ -5,7 +5,9 @@
 
 import FormatDateFormatter from './format-date';
 
-const FormatTime = FormatDateFormatter.extend({
+const FormatTime = FormatDateFormatter.extend();
+
+FormatTime.reopenClass({
   formatType: 'time'
 });
 
