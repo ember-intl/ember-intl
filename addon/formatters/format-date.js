@@ -21,7 +21,7 @@ const FormatDate = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options, ctx={}) {
+  format(value, options, ctx) {
     const dateTime = new Date(value);
     assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
 

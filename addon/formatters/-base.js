@@ -36,25 +36,25 @@ const FormatterBase = EmberObject.extend({
   * @return {Object} Options object containing just whitelisted options
   * @private
   */
-  filterSupporedOptions(input) {
-    if (!input) {
+  filterSupporedOptions(options) {
+    if (!options) {
       return {};
     }
 
-    let out = {};
+    let supportedOptions = {};
     let foundMatch = false;
     let camelizedKey;
 
-    for (let key in input) {
+    for (let key in options) {
       camelizedKey = camelize(key);
       if (this.options[camelizedKey]) {
         foundMatch = true;
-        out[camelizedKey] = input[key];
+        supportedOptions[camelizedKey] = options[key];
       }
     }
 
     if (foundMatch) {
-      return out;
+      return supportedOptions;
     }
   },
 
@@ -71,12 +71,10 @@ const FormatterBase = EmberObject.extend({
   * @return {Object} Format options hash
   * @private
   */
-  _format(value, formatterOptions = {}, formatOptions = {}, ctx = {}) {
-    const { locale } = ctx;
-
+  _format(value, formatterOptions, formatOptions, { locale }) {
     if (!locale) {
       throw new Error(
-        `No locale specified.  This is typically done application-wide within routes/application.js. Documentation: ${links.unsetLocale}`
+        `No locale specified.  This is typically handled within routes/application.js. Documentation: ${links.unsetLocale}`
       );
     }
 

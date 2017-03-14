@@ -9,7 +9,11 @@ import FormatterMessage from './format-message';
 const { String:emberString, Handlebars:emberHandlebars } = Ember;
 
 const FormatHtmlMessage = FormatterMessage.extend({
-  escapeProps(options = {}) {
+  escapeProps(options) {
+    if (!options) {
+      return;
+    }
+
     return Object.keys(options).reduce((result, hashKey) => {
       let value = options[hashKey];
 
@@ -23,9 +27,9 @@ const FormatHtmlMessage = FormatterMessage.extend({
     }, {});
   },
 
-  format(value, options = {}, ctx = {}) {
-    let escapedProps = this.escapeProps(options);
-    let superResult = this._super(value, escapedProps, ctx);
+  format(value, options, ctx) {
+    let escapedOptions = this.escapeProps(options);
+    let superResult = this._super(value, escapedOptions, ctx);
 
     return emberString.htmlSafe(superResult);
   }

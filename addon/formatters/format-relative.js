@@ -22,13 +22,14 @@ const FormatRelative = Formatter.extend({
     }
   }).readOnly(),
 
-  format(value, options = {}, ctx = {}) {
+  format(value, options, ctx) {
     const dateValue = new Date(value);
 
+    /* TODO: remove assertion in 3.0, Intl.DateTimeFormat accepts no arguments */
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
 
     return this._format(dateValue, this.filterSupporedOptions(options), {
-      now: options.now
+      now: options && options.now
     }, ctx);
   }
 });
