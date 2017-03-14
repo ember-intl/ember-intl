@@ -36,9 +36,12 @@ const FormatterBase = EmberObject.extend({
   * @return {Object} Options object containing just whitelisted options
   * @private
   */
-  filterSupporedOptions(input = {}) {
-    const out = {};
+  filterSupporedOptions(input) {
+    if (!input) {
+      return {};
+    }
 
+    let out = {};
     let foundMatch = false;
     let camelizedKey;
 
