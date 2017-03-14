@@ -1,4 +1,4 @@
-import { moduleFor, test } from 'ember-qunit';
+import {moduleFor, test} from 'ember-qunit';
 
 moduleFor('ember-intl@model:translation', 'Unit | Model | translation', {
   integration: true,

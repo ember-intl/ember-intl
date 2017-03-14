@@ -120,17 +120,22 @@ const IntlService = Service.extend(Evented, {
     const translations = this._lookupByFactoryType('translations', config.modulePrefix);
 
     if (!cldrs.length) {
-      Ember.warn(`[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.`, false, {
-        id: 'ember-intl-missing-cldr-data'
-      });
+      Ember.warn(
+        `[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.`,
+        false,
+        {
+          id: 'ember-intl-missing-cldr-data'
+        }
+      );
     }
 
-    cldrs.map((moduleName) => {
-      return this._owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
-    })
-      .forEach((data) => data.forEach(this.addLocaleData));
+    cldrs
+      .map(moduleName => {
+        return this._owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
+      })
+      .forEach(data => data.forEach(this.addLocaleData));
 
-    translations.forEach((moduleName) => {
+    translations.forEach(moduleName => {
       const localeName = moduleName.split('\/').pop();
 
       this.addTranslations(localeName, this._owner.resolveRegistration(`translation:${localeName}`));
@@ -138,7 +143,7 @@ const IntlService = Service.extend(Evented, {
   },
 
   _lookupByFactoryType(type, modulePrefix) {
-    return Object.keys(this.requirejs._eak_seen).filter((key) => {
+    return Object.keys(this.requirejs._eak_seen).filter(key => {
       return key.indexOf(`${modulePrefix}\/${type}\/`) === 0;
     });
   },
@@ -171,7 +176,7 @@ const IntlService = Service.extend(Evented, {
   },
 
   t(key, ...args) {
-    const [ options ] = args;
+    const [options] = args;
     const translation = this.lookup(key, options && options.locale);
 
     return this.formatMessage(translation, ...args);
@@ -183,7 +188,7 @@ const IntlService = Service.extend(Evented, {
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    return localeNames.some((localeName) => {
+    return localeNames.some(localeName => {
       return adapter.has(localeName, key);
     });
   },
@@ -211,19 +216,21 @@ const IntlService = Service.extend(Evented, {
   },
 
   addTranslation(localeName, key, value) {
-    return this.localeFactory(localeName).then((locale) => {
+    return this.localeFactory(localeName).then(locale => {
       return locale.addTranslation(key, value);
     });
   },
 
   addTranslations(localeName, payload) {
-    return this.localeFactory(localeName).then((locale) => {
+    return this.localeFactory(localeName).then(locale => {
       return locale.addTranslations(payload);
     });
   },
 
   setLocale(localeName) {
-    if (!localeName) { return; }
+    if (!localeName) {
+      return;
+    }
 
     const proposed = makeArray(localeName).map(normalizeLocale);
     const current = get(this, '_locale');

@@ -9,11 +9,11 @@ import links from '../utils/links';
 
 const {
   get,
-  String:emberString,
-  Object:EmberObject
+  String: emberString,
+  Object: EmberObject
 } = Ember;
 
-const { camelize } = emberString;
+const {camelize} = emberString;
 
 const FormatterBase = EmberObject.extend({
   options: null,
@@ -71,7 +71,7 @@ const FormatterBase = EmberObject.extend({
   * @return {Object} Format options hash
   * @private
   */
-  _format(value, formatterOptions, formatOptions, { locale }) {
+  _format(value, formatterOptions, formatOptions, {locale}) {
     if (!locale) {
       throw new Error(
         `No locale specified.  This is typically handled within routes/application.js. Documentation: ${links.unsetLocale}`

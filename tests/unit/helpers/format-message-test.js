@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import { moduleForComponent, test } from 'ember-qunit';
+import {moduleForComponent, test} from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import expectError from '../../helpers/expect-error';
 
-const { get, set, computed, run, A:emberArray, Object:EmberObject } = Ember;
+const {get, set, computed, run, A: emberArray, Object: EmberObject} = Ember;
 
 const locale = 'en-us';
 let service, registry;
@@ -44,17 +44,23 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatMessage('hello {world}', {
-    world: 'world'
-  }), 'hello world');
+  assert.equal(
+    service.formatMessage('hello {world}', {
+      world: 'world'
+    }),
+    'hello world'
+  );
 });
 
 test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatMessage('Sale begins {day, date, shortWeekDay}', {
-    day: 1390518044403,
-    locale: 'en_us'
-  }), 'Sale begins January 23, 2014');
+  assert.equal(
+    service.formatMessage('Sale begins {day, date, shortWeekDay}', {
+      day: 1390518044403,
+      locale: 'en_us'
+    }),
+    'Sale begins January 23, 2014'
+  );
 });
 
 test('message is formatted correctly with argument', function(assert) {
@@ -66,9 +72,16 @@ test('message is formatted correctly with argument', function(assert) {
 test('should throw if called with out a value', function(assert) {
   assert.expect(1);
 
-  expectError(() => this.render(hbs`{{format-message}}`), (ex) => {
-    assert.ok(ex.message.match(/Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./));
-  });
+  expectError(
+    () => this.render(hbs`{{format-message}}`),
+    ex => {
+      assert.ok(
+        ex.message.match(
+          /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
+        )
+      );
+    }
+  );
 });
 
 test('should return nothing if key does not exist and allowEmpty is set to true', function(assert) {
@@ -98,11 +111,13 @@ test('should return a formatted string with formatted numbers and dates', functi
     POP_MSG: '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
     city: 'Atlanta',
     population: 5475213,
-    census_date: (new Date('1/1/2010')).getTime(),
+    census_date: new Date('1/1/2010').getTime(),
     timeZone: 'UTC'
   });
 
-  this.render(hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`);
+  this.render(
+    hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`
+  );
   assert.equal(this.$().text(), 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
 });
 
@@ -113,11 +128,13 @@ test('should return a formatted string with formatted numbers and dates in a dif
     POP_MSG: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
     city: 'Atlanta',
     population: 5475213,
-    census_date: (new Date('1/1/2010')),
+    census_date: new Date('1/1/2010'),
     timeZone: 'UTC'
   });
 
-  this.render(hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`);
+  this.render(
+    hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`
+  );
   assert.equal(this.$().text(), 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
 });
 
@@ -126,16 +143,14 @@ test('should return a formatted string with an `each` block', function(assert) {
 
   this.setProperties({
     HARVEST_MSG: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
-    harvests: emberArray([
-      { person: 'Allison', count: 10 },
-      { person: 'Jeremy', count: 60 }
-    ])
+    harvests: emberArray([{person: 'Allison', count: 10}, {person: 'Jeremy', count: 60}])
   });
 
   this.render(
     hbs`
     {{#each harvests as |harvest|}}{{format-message (l HARVEST_MSG) person=harvest.person count=harvest.count}}{{/each}}
-    `);
+    `
+  );
 
   assert.equal(this.$().text().trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
 });
@@ -155,11 +170,11 @@ test('locale can add messages object and can read it', function(assert) {
   assert.expect(1);
 
   const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({ 'bulk-add': 'bulk add works' });
+  translation.addTranslations({'bulk-add': 'bulk add works'});
 
   this.render(hbs`{{format-message "bulk-add"}}`);
 
-  assert.equal(this.$().text(), "bulk add works");
+  assert.equal(this.$().text(), 'bulk add works');
 });
 
 test('can inline locale for missing locale', function(assert) {
@@ -210,7 +225,7 @@ test('intl-get returns message for key that is a literal string (not an object p
     this.render(hbs`{{format-message (intl-get 'string.path.works')}}`);
 
     assert.equal(this.$().text(), 'yes it does');
-  } catch(ex) {
+  } catch (ex) {
     console.error(ex);
   } finally {
     // reset the function back
@@ -220,13 +235,17 @@ test('intl-get returns message for key that is a literal string (not an object p
 
 test('should fallback to with defaultMessage when key not found', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  this.render(
+    hbs`{{format-message 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`
+  );
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
 test('should fallback to with fallback when key not found', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  this.render(
+    hbs`{{format-message 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`
+  );
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 

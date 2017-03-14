@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const { get, set, deprecate } = Ember;
+const {get, set, deprecate} = Ember;
 
 const TranslationModel = Ember.Object.extend({
   localeName: null,

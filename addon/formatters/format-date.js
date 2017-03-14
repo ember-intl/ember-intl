@@ -8,7 +8,7 @@ import createFormatCache from 'intl-format-cache';
 
 import Formatter from './-base';
 
-const { assert, computed } = Ember;
+const {assert, computed} = Ember;
 
 function assertIsDate(date, errMsg) {
   assert(errMsg, isFinite(date));
@@ -34,8 +34,18 @@ const FormatDate = Formatter.extend({
 FormatDate.reopenClass({
   formatType: 'date',
   supportedOptions: [
-    'localeMatcher', 'timeZone', 'hour12', 'formatMatcher', 'weekday',
-    'era', 'year', 'month', 'day', 'hour', 'minute', 'second',
+    'localeMatcher',
+    'timeZone',
+    'hour12',
+    'formatMatcher',
+    'weekday',
+    'era',
+    'year',
+    'month',
+    'day',
+    'hour',
+    'minute',
+    'second',
     'timeZoneName'
   ]
 });

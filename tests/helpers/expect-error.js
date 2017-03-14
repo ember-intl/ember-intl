@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { assert, Test, run } = Ember;
+const {assert, Test, run} = Ember;
 
 export default function expectError(fn, handler) {
   assert('Error handler must be provided to expectError', typeof handler === 'function');
@@ -16,7 +16,9 @@ export default function expectError(fn, handler) {
 
   run(() => Test.adapter = TestAdapter.create());
 
-  try { fn(); } catch(error) {
+  try {
+    fn();
+  } catch (error) {
     lastError = error;
   }
 

@@ -8,7 +8,7 @@ function arrayToHash(array) {
   const out = Object.create(null);
   let i = 0;
 
-  for(;i < len; i++) {
+  for (; i < len; i++) {
     const key = array[i];
     out[key] = key;
   }

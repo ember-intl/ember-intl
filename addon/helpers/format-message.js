@@ -5,10 +5,10 @@
 
 import Ember from 'ember';
 
-import { LiteralWrapper } from './l';
+import {LiteralWrapper} from './l';
 import BaseHelper from './-format-base';
 
-const { assert } = Ember;
+const {assert} = Ember;
 
 export function getValue([key], options) {
   if (key && key instanceof LiteralWrapper) {
@@ -21,7 +21,7 @@ export function getValue([key], options) {
     fallback,
     allowEmpty,
     defaultMessage,
-    locale:optionalLocale
+    locale: optionalLocale
   } = options;
 
   const fallbackTranslation = defaultMessage || fallback;

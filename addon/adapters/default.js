@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import Translation from '../models/translation';
 
-const { computed, get, A:emberArray, getOwner } = Ember;
+const {computed, get, A: emberArray, getOwner} = Ember;
 
 const DefaultTranslationAdapter = Ember.Object.extend({
   _seen: null,
@@ -61,7 +61,7 @@ const DefaultTranslationAdapter = Ember.Object.extend({
   },
 
   lookup(localeNames, translationKey) {
-    for (let i=0; i<localeNames.length; i++) {
+    for (let i = 0; i < localeNames.length; i++) {
       const localeName = localeNames[i];
       const model = this.lookupLocale(localeName);
 

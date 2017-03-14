@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const now = new Date();
-const yesterday  = new Date(now).setDate(now.getDate() - 1);
+const yesterday = new Date(now).setDate(now.getDate() - 1);
 
 export default Ember.Controller.extend({
   intl: Ember.inject.service(),

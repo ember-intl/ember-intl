@@ -12,7 +12,8 @@
     "tests-node": "./node_modules/mocha/bin/mocha tests-node/**/*.*",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:testall",
-    "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json"
+    "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json",
+    "prettier": "prettier --write --no-bracket-spacing --single-quote --print-width 120 \"{lib/**/*.js,tests/**/*.js,apps/**/*.js,addon/**/*.js}\""
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,8 @@
     "ember-resolver": "^3.0.0",
     "fs-extra": "^2.0.0",
     "loader.js": "^4.2.3",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "prettier": "^0.22.0"
   },
   "keywords": [
     "ember-addon",

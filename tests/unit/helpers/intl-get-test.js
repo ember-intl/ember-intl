@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import { moduleForComponent, test } from 'ember-qunit';
+import {moduleForComponent, test} from 'ember-qunit';
 import intlGetHelper from 'ember-intl/helpers/intl-get';
 
 let service;
@@ -48,5 +48,5 @@ test('should recompute on intl locale change in', function(assert) {
   });
 
   // restore original function
-  intlGetHelper.reopen({ recompute: recomputeFn });
+  intlGetHelper.reopen({recompute: recomputeFn});
 });

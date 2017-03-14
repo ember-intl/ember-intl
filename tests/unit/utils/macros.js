@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import { moduleFor, test } from 'ember-qunit';
-import { translationMacro as t } from 'ember-intl';
+import {moduleFor, test} from 'ember-qunit';
+import {translationMacro as t} from 'ember-intl';
 
 let service;
 
@@ -11,12 +11,14 @@ moduleFor('service:intl', 'Unit | Macrol', {
     intl.setLocale('en');
     service = intl;
 
-    this.object = Ember.Object.extend({
-      intl: intl,
-      numberClicks: 9,
-      tMacroProperty1: t('no.interpolations'),
-      tMacroProperty2: t('with.interpolations', { clicks: 'numberClicks' }),
-    }).create();
+    this.object = Ember.Object
+      .extend({
+        intl: intl,
+        numberClicks: 9,
+        tMacroProperty1: t('no.interpolations'),
+        tMacroProperty2: t('with.interpolations', {clicks: 'numberClicks'})
+      })
+      .create();
   }
 });
 
