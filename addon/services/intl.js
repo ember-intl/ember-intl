@@ -21,6 +21,7 @@ import FormatRelative from '../formatters/format-relative';
 import FormatHtmlMessage from '../formatters/format-html-message';
 
 const {
+  assign,
   assert,
   getOwner,
   computed,
@@ -32,12 +33,11 @@ const {
   Evented,
   deprecate
 } = Ember;
-const assign = Ember.assign || Ember.merge;
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
     if (options && typeof options.format === 'string') {
-      options = assign(assign({}, this.getFormat(ctr.formatType, options.format)), options);
+      options = assign({}, this.getFormat(ctr.formatType, options.format), options);
     }
 
     if (!this._formatters[ctr.formatType]) {

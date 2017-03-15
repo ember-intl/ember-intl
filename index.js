@@ -27,7 +27,7 @@ module.exports = {
   included() {
     this._super.included.apply(this, arguments);
 
-    let app = this.app = this._findParentApp();
+    let app = this.app = this._findHost();
     this.addonOptions = this.intlConfig(app.env);
 
     let inputPath = this.addonOptions.inputPath || 'translations';
@@ -44,23 +44,6 @@ module.exports = {
     }, this);
 
     this.translationTree = this.mergeTranslationTrees(projectTranslations, addonTranslations);
-  },
-
-  _findParentApp() {
-    if (typeof this._findHost === 'function') {
-      return this._findHost();
-    }
-
-    let current = this;
-    let app;
-
-    // Keep iterating upward until we don't have a grandparent.
-    // Has to do this grandparent check because at some point we hit the project.
-    do {
-      app = current.app || app;
-    } while (current.parent.parent && (current = current.parent));
-
-    return app;
   },
 
   outputPaths() {
