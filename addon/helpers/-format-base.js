@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-const {Helper, getOwner, isEmpty, getWithDefault} = Ember;
+const { Helper, getOwner, isEmpty, getWithDefault } = Ember;
 
 const AbstractHelper = Helper.extend({
   intl: null,

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import {moduleFor, test} from 'ember-qunit';
+import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('ember-intl@adapter:default', 'Unit | Adapter | default', {
   beforeEach() {
@@ -8,7 +8,7 @@ moduleFor('ember-intl@adapter:default', 'Unit | Adapter | default', {
 });
 
 test('localeFactory can instantiate custom translation models', function(assert) {
-  const klass = Ember.Object.extend({customType: true});
+  const klass = Ember.Object.extend({ customType: true });
 
   this.register('model:ember-intl-translation', klass);
   let model = this.adapter.localeFactory('en-us');

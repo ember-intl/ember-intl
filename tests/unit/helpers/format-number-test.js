@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import {moduleForComponent, test} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
 import expectError from '../../helpers/expect-error';
 
@@ -15,8 +15,8 @@ moduleForComponent('format-number', {
 
     registry.register(
       'formats:main',
-      {number: {digits: {minimumFractionDigits: 2}, currency: {style: 'currency', minimumFractionDigits: 2}}},
-      {instantiate: false}
+      { number: { digits: { minimumFractionDigits: 2 }, currency: { style: 'currency', minimumFractionDigits: 2 } } },
+      { instantiate: false }
     );
   }
 });
@@ -183,7 +183,7 @@ test('should function within an `each` block helper', function(assert) {
 
   this.set(
     'currencies',
-    Ember.A([{AMOUNT: 3, CURRENCY: 'USD'}, {AMOUNT: 8, CURRENCY: 'EUR'}, {AMOUNT: 10, CURRENCY: 'JPY'}])
+    Ember.A([{ AMOUNT: 3, CURRENCY: 'USD' }, { AMOUNT: 8, CURRENCY: 'EUR' }, { AMOUNT: 10, CURRENCY: 'JPY' }])
   );
 
   this.render(

@@ -6,7 +6,7 @@
 import Ember from 'ember';
 import FormatterMessage from './format-message';
 
-const {String: emberString, Handlebars: emberHandlebars} = Ember;
+const { String: emberString, Handlebars: emberHandlebars } = Ember;
 
 const FormatHtmlMessage = FormatterMessage.extend({
   escapeProps(options) {

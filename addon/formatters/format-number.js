@@ -8,7 +8,7 @@ import createFormatCache from 'intl-format-cache';
 
 import Formatter from './-base';
 
-const {computed} = Ember;
+const { computed } = Ember;
 
 const FormatNumber = Formatter.extend({
   formatter: computed({
