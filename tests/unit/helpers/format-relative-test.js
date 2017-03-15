@@ -1,5 +1,5 @@
 import hbs from 'htmlbars-inline-precompile';
-import {moduleForComponent, test} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
 import expectError from '../../helpers/expect-error';
 
@@ -12,9 +12,9 @@ moduleForComponent('format-relative', {
     service = this.container.lookup('service:intl');
     service.setLocale('en-us');
 
-    registry.register('formats:main', {relative: {hours: {units: 'hour', style: 'numeric'}}});
+    registry.register('formats:main', { relative: { hours: { units: 'hour', style: 'numeric' } } });
 
-    registry.optionsForType('formats', {singleton: true, instantiate: false});
+    registry.optionsForType('formats', { singleton: true, instantiate: false });
   }
 });
 

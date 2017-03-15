@@ -5,9 +5,9 @@
 
 import Ember from 'ember';
 
-import {LiteralWrapper} from './l';
+import { LiteralWrapper } from './l';
 
-const {Helper, inject, get, deprecate} = Ember;
+const { Helper, inject, get, deprecate } = Ember;
 
 const IntlGetHelper = Helper.extend({
   intl: inject.service(),

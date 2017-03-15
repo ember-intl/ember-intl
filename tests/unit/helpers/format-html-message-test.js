@@ -1,18 +1,15 @@
 import hbs from 'htmlbars-inline-precompile';
-import {moduleForComponent, test} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 import expectError from '../../helpers/expect-error';
 
-let service, registry;
+let service;
 
 moduleForComponent('format-html-message', {
   integration: true,
   beforeEach() {
-    registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
-
-    service.addTranslations('en-us', {foo: {bar: 'foo bar baz', baz: 'baz baz baz'}});
-
+    service.addTranslations('en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
     service.setLocale('en-us');
   }
 });

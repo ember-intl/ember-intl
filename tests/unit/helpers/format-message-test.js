@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
-import {moduleForComponent, test} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import expectError from '../../helpers/expect-error';
 
-const {get, set, computed, run, A: emberArray, Object: EmberObject} = Ember;
+const { get, set, computed, run, A: emberArray, Object: EmberObject } = Ember;
 
 const locale = 'en-us';
 let service, registry;
@@ -15,10 +15,10 @@ moduleForComponent('format-message', {
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
 
-    service.addTranslations('en-us', {foo: {bar: 'foo bar baz', baz: 'baz baz baz'}});
+    service.addTranslations('en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
 
     registry.register('formats:main', {
-      date: {shortWeekDay: {timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric'}}
+      date: { shortWeekDay: { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' } }
     });
 
     service.setLocale(locale);
@@ -32,13 +32,13 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatMessage('hello {world}', {world: 'world'}), 'hello world');
+  assert.equal(service.formatMessage('hello {world}', { world: 'world' }), 'hello world');
 });
 
 test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
   assert.equal(
-    service.formatMessage('Sale begins {day, date, shortWeekDay}', {day: 1390518044403, locale: 'en_us'}),
+    service.formatMessage('Sale begins {day, date, shortWeekDay}', { day: 1390518044403, locale: 'en_us' }),
     'Sale begins January 23, 2014'
   );
 });
@@ -73,7 +73,7 @@ test('should return nothing if key does not exist and allowEmpty is set to true'
 test('should return a formatted string', function(assert) {
   assert.expect(1);
 
-  this.setProperties({MSG: 'Hi, my name is {firstName} {lastName}.', firstName: 'Anthony', lastName: 'Pipkin'});
+  this.setProperties({ MSG: 'Hi, my name is {firstName} {lastName}.', firstName: 'Anthony', lastName: 'Pipkin' });
 
   this.render(hbs`{{format-message (l MSG) firstName=firstName lastName=lastName}}`);
 
@@ -119,7 +119,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 
   this.setProperties({
     HARVEST_MSG: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
-    harvests: emberArray([{person: 'Allison', count: 10}, {person: 'Jeremy', count: 60}])
+    harvests: emberArray([{ person: 'Allison', count: 10 }, { person: 'Jeremy', count: 60 }])
   });
 
   this.render(
@@ -146,7 +146,7 @@ test('locale can add messages object and can read it', function(assert) {
   assert.expect(1);
 
   const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({'bulk-add': 'bulk add works'});
+  translation.addTranslations({ 'bulk-add': 'bulk add works' });
 
   this.render(hbs`{{format-message "bulk-add"}}`);
 
@@ -203,6 +203,7 @@ test('intl-get returns message for key that is a literal string (not an object p
 
     assert.equal(this.$().text(), 'yes it does');
   } catch (ex) {
+    // eslint-disable-next-line no-console
     console.error(ex);
   } finally {
     // reset the function back

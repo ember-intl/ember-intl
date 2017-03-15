@@ -3,4 +3,4 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-export {default} from 'ember-intl/helpers/format-number';
+export { default } from 'ember-intl/helpers/format-number';

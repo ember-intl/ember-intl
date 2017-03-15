@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import links from 'ember-intl/utils/links';
 
-const {warn} = Ember;
+const { warn } = Ember;
 
 export default function missingMessage(key, locales) {
   if (!locales) {

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
-import {moduleFor, test} from 'ember-qunit';
+import { moduleFor, test } from 'ember-qunit';
 
 let service;
 
@@ -32,13 +32,13 @@ test('waits for translations to load', function(assert) {
   assert.expect(1);
 
   return wait().then(() => {
-    assert.equal(service.t('product.title', {locale: 'en-us'}), 'Hello world!');
+    assert.equal(service.t('product.title', { locale: 'en-us' }), 'Hello world!');
   });
 });
 
 test('it does not mutate t options hash', function(assert) {
   service.setLocale('en');
-  const obj = {bar: 'bar'};
+  const obj = { bar: 'bar' };
   service.t('foo', obj);
   assert.ok(typeof obj.locale === 'undefined');
 });

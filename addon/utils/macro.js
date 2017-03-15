@@ -4,7 +4,7 @@
  */
 import Ember from 'ember';
 
-const {get, assert, computed} = Ember;
+const { get, assert, computed } = Ember;
 const keys = Object.keys;
 
 function values(object) {

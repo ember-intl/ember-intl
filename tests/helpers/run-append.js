@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {run: emberRun} = Ember;
+const { run: emberRun } = Ember;
 
 function runAppend(view) {
   emberRun(view, 'appendTo', '#qunit-fixture');
@@ -12,4 +12,4 @@ function runDestroy(destroyed) {
   }
 }
 
-export {runAppend, runDestroy};
+export { runAppend, runDestroy };
