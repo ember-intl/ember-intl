@@ -16,7 +16,6 @@ module.exports = function(environment) {
     * @default "null"
     */
     locales: ['en-us', 'es-es', 'fr-fr', 'de-de'],
-
     /**
     * baseLocale is used to determine if translation keys are missing from other locales.
     * This property is optional, and if you rely on sideloading translations then
@@ -27,7 +26,6 @@ module.exports = function(environment) {
     * @default "null"
     */
     baseLocale: 'en-us',
-
     /**
     * autoPolyfill, when true will automatically inject the IntlJS polyfill
     * into index.html
@@ -37,7 +35,6 @@ module.exports = function(environment) {
     * @default "false"
     */
     autoPolyfill: true,
-
     /**
     * disablePolyfill prevents the polyfill from being bundled in the asset folder of the build
     *
@@ -46,7 +43,6 @@ module.exports = function(environment) {
     * @default "false"
     */
     disablePolyfill: false,
-
     /**
     * prevents the translations from being bundled with the application code.
     * This enables asynchronously loading the translations for the active locale
@@ -59,7 +55,6 @@ module.exports = function(environment) {
     * @default "false"
     */
     publicOnly: false,
-
     /**
     * Path where translations are kept.  This is relative to the project root.
     * For example, if your translations are an npm dependency, set this to:

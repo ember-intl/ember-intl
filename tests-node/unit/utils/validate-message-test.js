@@ -27,7 +27,7 @@ describe('validateMessage', function() {
         two {#nd}
         few {#rd}
         other {#th}
-    } birthday!`,
+    } birthday!`
   ];
 
   valid.forEach(message => {
@@ -48,33 +48,38 @@ describe('validateMessage', function() {
     });
   });
 
-  let unknownCategory = [{
-    locale: 'en-us',
-    message: `{name} took {numPhotos, plural, zero {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
-    error: 'Unknown plural category: zero',
-  }, {
-    locale: 'de-de',
-    message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} other {# photos}} on {takenDate, date, long}.`,
-    error: 'Unknown plural categories: null, eins',
-  }, {
-    locale: 'en-us',
-    message: `It's my cat's {year, selectordinal,
+  let unknownCategory = [
+    {
+      locale: 'en-us',
+      message: `{name} took {numPhotos, plural, zero {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
+      error: 'Unknown plural category: zero'
+    },
+    {
+      locale: 'de-de',
+      message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} other {# photos}} on {takenDate, date, long}.`,
+      error: 'Unknown plural categories: null, eins'
+    },
+    {
+      locale: 'en-us',
+      message: `It's my cat's {year, selectordinal,
         one {#st}
         two {#nd}
         many {#rd}
         other {#th}
     } birthday!`,
-    error: 'Unknown ordinal category: many',
-  }, {
-    locale: 'de-de',
-    message: `It's my cat's {year, selectordinal,
+      error: 'Unknown ordinal category: many'
+    },
+    {
+      locale: 'de-de',
+      message: `It's my cat's {year, selectordinal,
         one {#st}
         two {#nd}
         many {#rd}
         other {#th}
     } birthday!`,
-    error: 'Unknown ordinal categories: one, two, many',
-  }];
+      error: 'Unknown ordinal categories: one, two, many'
+    }
+  ];
 
   unknownCategory.forEach(item => {
     it(`throws unknown category error for "${item.message}" with locale "${item.locale}"`, function() {
@@ -84,7 +89,7 @@ describe('validateMessage', function() {
 
   let missingOther = [
     `{ gender, select, male {He avoids bugs} female {She avoids bugs} }`,
-    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`,
+    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`
   ];
 
   missingOther.forEach(message => {

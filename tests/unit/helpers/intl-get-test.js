@@ -10,13 +10,9 @@ moduleForComponent('intl-get', {
   beforeEach() {
     service = this.container.lookup('service:intl');
 
-    service.addTranslations('en-us', {
-      greeting: 'Hello'
-    });
+    service.addTranslations('en-us', {greeting: 'Hello'});
 
-    service.addTranslations('fr-fr', {
-      greeting: 'Bonjour'
-    });
+    service.addTranslations('fr-fr', {greeting: 'Bonjour'});
 
     service.setLocale('en-us');
   }

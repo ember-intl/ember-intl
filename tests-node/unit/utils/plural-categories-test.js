@@ -15,7 +15,7 @@ describe('pluralCategories', function() {
     de: ['one', 'other'],
     en: ['one', 'other'],
     hsb: ['one', 'two', 'few', 'other'],
-    vi: ['other'],
+    vi: ['other']
   };
 
   Object.keys(expectations).forEach(language => {

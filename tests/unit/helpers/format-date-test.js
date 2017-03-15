@@ -20,13 +20,7 @@ test('exists', function(assert) {
 test('invoke the formatDate directly', function(assert) {
   assert.expect(1);
   const service = this.container.lookup('service:intl');
-  assert.equal(
-    service.formatDate(date, {
-      timeZone: 'UTC',
-      locale
-    }),
-    '1/23/2014'
-  );
+  assert.equal(service.formatDate(date, {timeZone: 'UTC', locale}), '1/23/2014');
 });
 
 test('should render empty string for a null value', function(assert) {

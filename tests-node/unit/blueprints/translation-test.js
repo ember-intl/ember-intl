@@ -11,11 +11,13 @@ describe('translations', function() {
   });
 
   it('returns undefined on valid formatted locale', function() {
-    expect(subject.beforeInstall({
-      entity: {
-        name: 'fr-fr'
-      }
-    })).to.be.an('undefined');
+    expect(
+      subject.beforeInstall({
+        entity: {
+          name: 'fr-fr'
+        }
+      })
+    ).to.be.an('undefined');
   });
 
   it('throws when invalid formatted locale is provided', function() {

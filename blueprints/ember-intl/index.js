@@ -12,8 +12,8 @@ module.exports = {
 
   afterInstall() {
     this.ui.writeLine(
-      '[ember-intl] Don\'t forget to setup your application-wide locale.  ' +
-      'Documentation: https://github.com/jasonmit/ember-intl#setting-runtime-locale'
+      "[ember-intl] Don't forget to setup your application-wide locale.  " +
+        'Documentation: https://github.com/jasonmit/ember-intl#setting-runtime-locale'
     );
   }
 };

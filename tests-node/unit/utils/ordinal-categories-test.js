@@ -15,7 +15,7 @@ describe('ordinalCategories', function() {
     de: ['other'],
     en: ['one', 'two', 'few', 'other'],
     hsb: ['other'],
-    vi: ['one', 'other'],
+    vi: ['one', 'other']
   };
 
   Object.keys(expectations).forEach(language => {

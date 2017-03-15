@@ -12,19 +12,9 @@ moduleForComponent('format-relative', {
     service = this.container.lookup('service:intl');
     service.setLocale('en-us');
 
-    registry.register('formats:main', {
-      relative: {
-        hours: {
-          units: 'hour',
-          style: 'numeric'
-        }
-      }
-    });
+    registry.register('formats:main', {relative: {hours: {units: 'hour', style: 'numeric'}}});
 
-    registry.optionsForType('formats', {
-      singleton: true,
-      instantiate: false
-    });
+    registry.optionsForType('formats', {singleton: true, instantiate: false});
   }
 });
 
@@ -69,7 +59,8 @@ test('can specify a `interval` to trigger recompute', function(assert) {
 
 test('should return relative time in hours, not best fit', function(assert) {
   assert.expect(1);
-  this.set('date', 1000 * 60 * 60 * 24 * 2); // two days
+  this.set('date', 1000 * 60 * 60 * 24 * 2);
+  // two days
   this.render(hbs`{{format-relative date now=0 format="hours"}}`);
   assert.equal(this.$().text(), 'in 48 hours');
 });

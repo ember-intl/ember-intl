@@ -32,12 +32,7 @@ test('waits for translations to load', function(assert) {
   assert.expect(1);
 
   return wait().then(() => {
-    assert.equal(
-      service.t('product.title', {
-        locale: 'en-us'
-      }),
-      'Hello world!'
-    );
+    assert.equal(service.t('product.title', {locale: 'en-us'}), 'Hello world!');
   });
 });
 

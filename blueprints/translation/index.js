@@ -25,7 +25,9 @@ module.exports = {
     var locale = options.entity.name;
 
     if (!isSupportedLocale(locale.toLowerCase())) {
-      this.ui.writeLine('Full list of supported locales: https://github.com/jasonmit/ember-intl/blob/master/docs/list-of-supported-locales.md');
+      this.ui.writeLine(
+        'Full list of supported locales: https://github.com/jasonmit/ember-intl/blob/master/docs/list-of-supported-locales.md'
+      );
       throw new SilentError(`[ember-intl] Invalid locale: ${locale}`);
     }
   },
@@ -33,8 +35,8 @@ module.exports = {
   fileMapTokens() {
     return {
       __name__(options) {
-        return options.dasherizedModuleName
+        return options.dasherizedModuleName;
       }
-    }
+    };
   }
 };

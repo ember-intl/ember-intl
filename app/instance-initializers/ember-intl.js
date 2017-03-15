@@ -14,4 +14,4 @@ export function instanceInitializer(instance) {
 export default {
   name: 'ember-intl',
   initialize() {}
-}
+};

@@ -15,17 +15,7 @@ moduleForComponent('format-number', {
 
     registry.register(
       'formats:main',
-      {
-        number: {
-          digits: {
-            minimumFractionDigits: 2
-          },
-          currency: {
-            style: 'currency',
-            minimumFractionDigits: 2
-          }
-        }
-      },
+      {number: {digits: {minimumFractionDigits: 2}, currency: {style: 'currency', minimumFractionDigits: 2}}},
       {instantiate: false}
     );
   }

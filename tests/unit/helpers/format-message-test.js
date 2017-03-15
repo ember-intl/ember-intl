@@ -15,22 +15,10 @@ moduleForComponent('format-message', {
     registry = this.registry || this.container;
     service = this.container.lookup('service:intl');
 
-    service.addTranslations('en-us', {
-      foo: {
-        bar: 'foo bar baz',
-        baz: 'baz baz baz'
-      }
-    });
+    service.addTranslations('en-us', {foo: {bar: 'foo bar baz', baz: 'baz baz baz'}});
 
     registry.register('formats:main', {
-      date: {
-        shortWeekDay: {
-          timeZone: 'UTC',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        }
-      }
+      date: {shortWeekDay: {timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric'}}
     });
 
     service.setLocale(locale);
@@ -44,21 +32,13 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
-  assert.equal(
-    service.formatMessage('hello {world}', {
-      world: 'world'
-    }),
-    'hello world'
-  );
+  assert.equal(service.formatMessage('hello {world}', {world: 'world'}), 'hello world');
 });
 
 test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
   assert.equal(
-    service.formatMessage('Sale begins {day, date, shortWeekDay}', {
-      day: 1390518044403,
-      locale: 'en_us'
-    }),
+    service.formatMessage('Sale begins {day, date, shortWeekDay}', {day: 1390518044403, locale: 'en_us'}),
     'Sale begins January 23, 2014'
   );
 });
@@ -93,11 +73,7 @@ test('should return nothing if key does not exist and allowEmpty is set to true'
 test('should return a formatted string', function(assert) {
   assert.expect(1);
 
-  this.setProperties({
-    MSG: 'Hi, my name is {firstName} {lastName}.',
-    firstName: 'Anthony',
-    lastName: 'Pipkin'
-  });
+  this.setProperties({MSG: 'Hi, my name is {firstName} {lastName}.', firstName: 'Anthony', lastName: 'Pipkin'});
 
   this.render(hbs`{{format-message (l MSG) firstName=firstName lastName=lastName}}`);
 
@@ -197,7 +173,8 @@ test('exists returns true when key found', function(assert) {
 
 test('able to discover all register translations', function(assert) {
   assert.expect(2);
-  service.addTranslation('es_MX', 'foo', 'bar'); /* tests that the locale name becomes normalized to es-mx */
+  service.addTranslation('es_MX', 'foo', 'bar');
+  /* tests that the locale name becomes normalized to es-mx */
   service.exists('test', 'fr-ca');
   assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
   assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');

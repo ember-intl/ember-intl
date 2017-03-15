@@ -23,10 +23,7 @@ test('exists', function(assert) {
 test('invoke formatTime directly', function(assert) {
   assert.expect(1);
 
-  const output = service.formatTime(date, {
-    timeZone: 'UTC',
-    locale: 'fr-fr'
-  });
+  const output = service.formatTime(date, {timeZone: 'UTC', locale: 'fr-fr'});
 
   // Try both for browser Intl data inconsistencies
   assert.ok(output === '23/1/2014' || output === '23/01/2014');
@@ -35,18 +32,7 @@ test('invoke formatTime directly', function(assert) {
 test('invoke formatTime directly with format', function(assert) {
   assert.expect(1);
 
-  registry.register(
-    'formats:main',
-    {
-      time: {
-        test: {
-          timeZone: 'UTC',
-          locale: 'fr-fr'
-        }
-      }
-    },
-    {instantiate: false}
-  );
+  registry.register('formats:main', {time: {test: {timeZone: 'UTC', locale: 'fr-fr'}}}, {instantiate: false});
 
   const output = service.formatTime(date, {format: 'test'});
 

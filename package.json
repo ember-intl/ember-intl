@@ -13,7 +13,7 @@
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:testall",
     "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json",
-    "prettier": "prettier --write --no-bracket-spacing --single-quote --print-width 120 \"{lib/**/*.js,tests/**/*.js,apps/**/*.js,addon/**/*.js}\""
+    "prettier": "prettier --no-bracket-spacing --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,tests,tests-node}/**/*.js\""
   },
   "repository": {
     "type": "git",
