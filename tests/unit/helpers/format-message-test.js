@@ -6,22 +6,34 @@ import expectError from '../../helpers/expect-error';
 
 const { get, set, computed, run, A: emberArray, Object: EmberObject } = Ember;
 
-const locale = 'en-us';
-let service, registry;
+const DEFAULT_LOCALE_NAME = 'en-us';
 
 moduleForComponent('format-message', {
   integration: true,
   beforeEach() {
-    registry = this.registry || this.container;
-    service = this.container.lookup('service:intl');
+    let registry = this.registry || this.container;
 
-    service.addTranslations('en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
+    this.inject.service('intl');
 
-    registry.register('formats:main', {
-      date: { shortWeekDay: { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' } }
+    this.intl.addTranslations(DEFAULT_LOCALE_NAME, {
+      foo: {
+        bar: 'foo bar baz',
+        baz: 'baz baz baz'
+      }
     });
 
-    service.setLocale(locale);
+    registry.register('formats:main', {
+      date: {
+        shortWeekDay: {
+          timeZone: 'UTC',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }
+      }
+    });
+
+    this.intl.setLocale(DEFAULT_LOCALE_NAME);
   }
 });
 
@@ -32,20 +44,23 @@ test('exists', function(assert) {
 
 test('invoke formatMessage directly', function(assert) {
   assert.expect(1);
-  assert.equal(service.formatMessage('hello {world}', { world: 'world' }), 'hello world');
+  assert.equal(this.intl.formatMessage('hello {world}', { world: 'world' }), 'hello world');
 });
 
 test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
   assert.equal(
-    service.formatMessage('Sale begins {day, date, shortWeekDay}', { day: 1390518044403, locale: 'en_us' }),
+    this.intl.formatMessage('Sale begins {day, date, shortWeekDay}', {
+      day: 1390518044403,
+      locale: 'en_us'
+    }),
     'Sale begins January 23, 2014'
   );
 });
 
 test('message is formatted correctly with argument', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message (l "Hello {name}") name="Jason"}}`);
+  this.render(hbs`{{format-message (l 'Hello {name}') name='Jason'}}`);
   assert.equal(this.$().text(), 'Hello Jason');
 });
 
@@ -73,7 +88,11 @@ test('should return nothing if key does not exist and allowEmpty is set to true'
 test('should return a formatted string', function(assert) {
   assert.expect(1);
 
-  this.setProperties({ MSG: 'Hi, my name is {firstName} {lastName}.', firstName: 'Anthony', lastName: 'Pipkin' });
+  this.setProperties({
+    MSG: 'Hi, my name is {firstName} {lastName}.',
+    firstName: 'Anthony',
+    lastName: 'Pipkin'
+  });
 
   this.render(hbs`{{format-message (l MSG) firstName=firstName lastName=lastName}}`);
 
@@ -99,7 +118,7 @@ test('should return a formatted string with formatted numbers and dates', functi
 
 test('should return a formatted string with formatted numbers and dates in a different locale', function(assert) {
   assert.expect(1);
-  service.setLocale('de-de');
+  this.intl.setLocale('de-de');
   this.setProperties({
     POP_MSG: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
     city: 'Atlanta',
@@ -135,7 +154,7 @@ test('locale can add message to intl service and read it', function(assert) {
   assert.expect(1);
 
   run(() => {
-    service.addTranslation('en-us', 'oh', 'hai!').then(() => {
+    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'oh', 'hai!').then(() => {
       this.render(hbs`{{format-message 'oh'}}`);
       assert.equal(this.$().text(), 'hai!');
     });
@@ -145,12 +164,14 @@ test('locale can add message to intl service and read it', function(assert) {
 test('locale can add messages object and can read it', function(assert) {
   assert.expect(1);
 
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslations({ 'bulk-add': 'bulk add works' });
-
-  this.render(hbs`{{format-message "bulk-add"}}`);
-
-  assert.equal(this.$().text(), 'bulk add works');
+  return this.intl
+    .addTranslations(DEFAULT_LOCALE_NAME, {
+      'bulk-add': 'bulk add works'
+    })
+    .then(() => {
+      this.render(hbs`{{format-message 'bulk-add'}}`);
+      assert.equal(this.$().text(), 'bulk add works');
+    });
 });
 
 test('can inline locale for missing locale', function(assert) {
@@ -161,23 +182,32 @@ test('can inline locale for missing locale', function(assert) {
 
 test('exists returns false when key not found', function(assert) {
   assert.expect(1);
-  assert.equal(service.exists('bar'), false);
+  assert.equal(this.intl.exists('bar'), false);
 });
 
 test('exists returns true when key found', function(assert) {
   assert.expect(1);
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  translation.addTranslation('hello', 'world');
-  assert.equal(service.exists('hello'), true);
+
+  return this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'hello', 'world').then(() => {
+    assert.equal(this.intl.exists('hello'), true);
+  });
+});
+
+test('translations that are empty strings are valid', function(assert) {
+  assert.expect(1);
+
+  return this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_string', '').then(() => {
+    assert.equal(this.intl.t('empty_string'), '');
+  });
 });
 
 test('able to discover all register translations', function(assert) {
   assert.expect(2);
-  service.addTranslation('es_MX', 'foo', 'bar');
+  this.intl.addTranslation('es_MX', 'foo', 'bar');
   /* tests that the locale name becomes normalized to es-mx */
-  service.exists('test', 'fr-ca');
-  assert.equal(service.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
-  assert.equal(get(service, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
+  this.intl.exists('test', 'fr-ca');
+  assert.equal(this.intl.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
+  assert.equal(get(this.intl, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
 });
 
 test('should respect format options for date ICU block', function(assert) {
