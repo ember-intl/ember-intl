@@ -15,6 +15,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 moduleForComponent('x-product', 'XProductComponent', {
   unit: true,
   needs: [
+    'formats:main',
     'config:environment',
     'service:intl', // required
     'ember-intl@adapter:default', // required with format-message
