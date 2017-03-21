@@ -166,7 +166,7 @@ const IntlService = Service.extend(Evented, {
     const localeNames = this._localeWithDefault(localeName);
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
-    if (!options.resilient && !translation) {
+    if (!options.resilient && translation === undefined) {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames);
