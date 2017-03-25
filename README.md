@@ -44,7 +44,7 @@ product:
 
 If you wish, you can organize your translations into subdirectories such as `/translations/login-page/en-us.yaml` and `translations/purchase-page/en-us.yaml`.
 
-Translation keys containing periods, i.e., `foo.bar`, conflicts with internal accessors  -- which assumes nested objects and therefor triggers errors like: `Error: Property set failed: object in path "foo" could not be found or was destroyed`.  However, this is supported as of 2.5.x and to enable run `ember g ember-intl-dot-notation`.
+Translation keys containing periods, i.e., `foo.bar`, conflicts with internal accessors  -- which assumes nested objects and therefore triggers errors like: `Error: Property set failed: object in path "foo" could not be found or was destroyed`.  However, this is supported as of 2.5.x and to enable run `ember g ember-intl-dot-notation`.
 
 
 ### Translation Compilation
