@@ -43,7 +43,7 @@
     "ember-code-snippet": "^1.2.0",
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^2.0.0",
-    "ember-load-initializers": "^0.6.3",
+    "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^3.0.0",
     "eslint-plugin-prettier": "^2.0.1",
     "fs-extra": "^2.0.0",
