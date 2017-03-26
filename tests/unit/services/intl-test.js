@@ -11,6 +11,11 @@ moduleFor('service:intl', 'Unit | Service | intl', {
   }
 });
 
+test('can access formatMessage without a locale set', function(assert) {
+  service.t('does.not.exist');
+  assert.ok(true, 'Exception was not raised');
+});
+
 test('triggers notifyPropertyChange only when locale changes', function(assert) {
   let count = 0;
 
