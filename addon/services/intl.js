@@ -150,7 +150,7 @@ const IntlService = Service.extend(Evented, {
 
   _localeWithDefault(localeName) {
     if (!localeName) {
-      return get(this, '_locale');
+      return get(this, '_locale') || [];
     }
 
     if (typeof localeName === 'string') {
