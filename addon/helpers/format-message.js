@@ -30,7 +30,7 @@ export function getValue([key], options) {
     resilient: allowEmpty || typeof fallbackTranslation === 'string'
   });
 
-  return translation || fallbackTranslation;
+  return typeof translation === 'string' ? translation : fallbackTranslation;
 }
 
 export default BaseHelper.extend({
