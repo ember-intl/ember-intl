@@ -5,9 +5,12 @@
 
 import Ember from 'ember';
 
+const { deprecate } = Ember;
+
 export function instanceInitializer(instance) {
-  Ember.deprecate('[ember-intl] instance initializer is deprecated, no longer necessary to call in testing.', false, {
-    id: 'ember-intl-instance-initalizer'
+  deprecate('[ember-intl] instance initializer is deprecated, no longer necessary to call in testing.', false, {
+    id: 'ember-intl-instance-initalizer',
+    until: '3.0.0'
   });
 }
 

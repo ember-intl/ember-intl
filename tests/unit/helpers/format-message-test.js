@@ -79,12 +79,6 @@ test('should throw if called with out a value', function(assert) {
   );
 });
 
-test('should return nothing if key does not exist and allowEmpty is set to true', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{t 'does.not.exist' allowEmpty=true}}`);
-  assert.equal(this.$().text(), '');
-});
-
 test('should return a formatted string', function(assert) {
   assert.expect(1);
 
@@ -150,68 +144,6 @@ test('should return a formatted string with an `each` block', function(assert) {
   assert.equal(this.$().text().trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
 });
 
-test('locale can add message to intl service and read it', function(assert) {
-  assert.expect(1);
-
-  run(() => {
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'oh', 'hai!').then(() => {
-      this.render(hbs`{{t 'oh'}}`);
-      assert.equal(this.$().text(), 'hai!');
-    });
-  });
-});
-
-test('translation value can be an empty string', function(assert) {
-  assert.expect(1);
-
-  run(() => {
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_translation', '').then(() => {
-      this.render(hbs`{{t 'empty_translation'}}`);
-      assert.equal(this.$().text(), '');
-    });
-  });
-});
-
-test('locale can add messages object and can read it', function(assert) {
-  assert.expect(1);
-
-  return this.intl
-    .addTranslations(DEFAULT_LOCALE_NAME, {
-      'bulk-add': 'bulk add works'
-    })
-    .then(() => {
-      this.render(hbs`{{t 'bulk-add'}}`);
-      assert.equal(this.$().text(), 'bulk add works');
-    });
-});
-
-test('can inline locale for missing locale', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{t 'foo.bar' locale='xx-xx'}}`);
-  assert.equal(this.$().text(), `Missing translation: foo.bar`);
-});
-
-test('exists returns false when key not found', function(assert) {
-  assert.expect(1);
-  assert.equal(this.intl.exists('bar'), false);
-});
-
-test('exists returns true when key found', function(assert) {
-  assert.expect(1);
-
-  return this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'hello', 'world').then(() => {
-    assert.equal(this.intl.exists('hello'), true);
-  });
-});
-
-test('translations that are empty strings are valid', function(assert) {
-  assert.expect(1);
-
-  return this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_string', '').then(() => {
-    assert.equal(this.intl.t('empty_string'), '');
-  });
-});
-
 test('able to discover all register translations', function(assert) {
   assert.expect(2);
   this.intl.addTranslation('es_MX', 'foo', 'bar');
@@ -250,18 +182,6 @@ test('intl-get returns message for key that is a literal string (not an object p
     // reset the function back
     translation.getValue = fn;
   }
-});
-
-test('should fallback to with defaultMessage when key not found', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{t 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
-  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
-});
-
-test('should fallback to with fallback when key not found', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{t 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
-  assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
 test('l helper handles bound computed property', function(assert) {

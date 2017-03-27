@@ -29,7 +29,8 @@ moduleForComponent('x-product', 'XProductComponent', {
      */
     'helper:intl-get',
     'helper:t',
-    'helper:t-html',
+    'helper:format-message',
+    'helper:format-html-message',
     'helper:format-date',
     'helper:format-time',
     'helper:format-relative',
