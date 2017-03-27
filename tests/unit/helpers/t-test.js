@@ -15,6 +15,9 @@ moduleForComponent('t', {
     this.inject.service('intl');
 
     this.intl.addTranslations(DEFAULT_LOCALE_NAME, {
+      html: {
+        greeting: '<strong>Hello {name} {count, number}</strong>'
+      },
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
@@ -45,6 +48,19 @@ test('should return nothing if key does not exist and allowEmpty is set to true'
   assert.expect(1);
   this.render(hbs`{{t 'does.not.exist' allowEmpty=true}}`);
   assert.equal(this.$().text(), '');
+});
+
+test('should escape attributes but not the translation string', function(assert) {
+  assert.expect(2);
+  this.render(hbs`{{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}`);
+  assert.equal(this.$()[0].childNodes[0].nodeType, 1);
+  assert.equal(this.$().html(), `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`);
+});
+
+test('should render a TextNode', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{t 'html.greeting' name="<em>Jason</em>" count=42000}}`);
+  assert.equal(this.$()[0].childNodes[0].nodeType, 3);
 });
 
 test('locale can add message to intl service and read it', function(assert) {
