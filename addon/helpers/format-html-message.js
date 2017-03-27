@@ -8,6 +8,7 @@ import { getValue } from './format-message';
 
 export default BaseHelper.extend({
   getValue,
+  helperType: 'format-html-message',
 
   format(value, options) {
     return this.intl.formatHtmlMessage(value, options);

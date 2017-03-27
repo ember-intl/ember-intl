@@ -202,7 +202,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 [List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
 
 ### Format Message
-Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.  A short-hand form of the `{{format-message}}` is `{{t}}`.
+Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.
 
 ```
 You have {numPhotos, plural,
@@ -238,23 +238,23 @@ export default Ember.Component.extend({
 This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This is useful for computed properties where you are programmatically constructing a translation string.
 
 ```hbs
-{{t (l '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}')
+{{format-message (l '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}')
     name='Jason'
     numPhotos=num
     takenDate=yesterday}}
 ```
 
 ### Format HTML Message
-This delegates to the `{{t}}` helper, but will first HTML-escape all of the hash argument values. This allows the `message` string to contain HTML and it will be considered safe since it's part of the template and not user-supplied data.
+Escapes all hash arguments and returns as an htmlSafe String which renders an ElementNode.  To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `t` helper.
 
 ```hbs
-{{t-html 'product.html.info'
+{{t 'product.html.info'
+  htmlSafe=true
   product='Apple watch'
   price=200
   deadline=yesterday}}
 
-{{t-html (l '<strong>{numPhotos}</strong>')
-  numPhotos=(format-number num)}}
+{{format-html-message (l '<strong>{numPhotos}</strong>') numPhotos=(format-number num)}}
 ```
 
 ## Named Formats

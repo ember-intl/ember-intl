@@ -15,13 +15,10 @@ const IntlGetHelper = Helper.extend({
   init() {
     this._super();
 
-    deprecate(
-      `[ember-int] intl-get is deprecated, use {{t 'translation.key'}} or {{format-message 'translation.key'}}`,
-      false,
-      {
-        id: 'ember-intl-t-helper'
-      }
-    );
+    deprecate(`[ember-int] intl-get is deprecated, use {{t 'translation.key'}}`, false, {
+      id: 'ember-intl-t-helper',
+      until: '3.0.0'
+    });
 
     get(this, 'intl').on('localeChanged', this, this.recompute);
   },

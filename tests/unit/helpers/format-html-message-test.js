@@ -3,14 +3,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
 import expectError from '../../helpers/expect-error';
 
-let service;
-
 moduleForComponent('format-html-message', {
   integration: true,
   beforeEach() {
-    service = this.container.lookup('service:intl');
-    service.addTranslations('en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
-    service.setLocale('en-us');
+    this.inject.service('intl');
+    this.intl.addTranslations('en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
+    this.intl.setLocale('en-us');
   }
 });
 
@@ -22,7 +20,7 @@ test('exists', function(assert) {
 test('invoke the formatHTMLMessage directly', function(assert) {
   assert.expect(1);
   assert.equal(
-    service.formatHtmlMessage('<strong>Hello {name} {count, number}</strong>', {
+    this.intl.formatHtmlMessage('<strong>Hello {name} {count, number}</strong>', {
       name: '<em>Jason</em>',
       count: 42000
     }).string,
@@ -33,7 +31,7 @@ test('invoke the formatHTMLMessage directly', function(assert) {
 test('invoke the formatHTMLMessage directly with inlined locale', function(assert) {
   assert.expect(1);
 
-  let output = service.formatHtmlMessage('<strong>Hello {name} {count, number}</strong>', {
+  let output = this.intl.formatHtmlMessage('<strong>Hello {name} {count, number}</strong>', {
     name: '<em>Jason</em>',
     count: 42000,
     locale: 'fr-fr'

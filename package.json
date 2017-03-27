@@ -89,7 +89,7 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "http://jasonmit.github.io/ember-intl-example/"
+    "demoURL": "https://ember-intl.github.io/"
   },
   "greenkeeper": {
     "ignore": [
