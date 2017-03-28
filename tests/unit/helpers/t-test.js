@@ -51,16 +51,18 @@ test('should return nothing if key does not exist and allowEmpty is set to true'
 });
 
 test('should escape attributes but not the translation string', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   this.render(hbs`{{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}`);
-  assert.equal(this.$()[0].childNodes[0].nodeType, 1);
+  assert.equal(this.$().children('strong').length, 1);
+  assert.equal(this.$().children('em').length, 0);
   assert.equal(this.$().html(), `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`);
 });
 
 test('should render a TextNode', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   this.render(hbs`{{t 'html.greeting' name="<em>Jason</em>" count=42000}}`);
-  assert.equal(this.$()[0].childNodes[0].nodeType, 3);
+  assert.equal(this.$().children('em').length, 0);
+  assert.equal(this.$().children('strong').length, 0);
 });
 
 test('locale can add message to intl service and read it', function(assert) {
