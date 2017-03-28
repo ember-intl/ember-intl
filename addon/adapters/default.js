@@ -11,19 +11,23 @@ const { computed, get, A: emberArray, getOwner } = Ember;
 const DefaultTranslationAdapter = Ember.Object.extend({
   _seen: null,
 
+  /** @private **/
   locales: computed('_seen.[]', function() {
     return get(this, '_seen').map(l => l.localeName);
   }).readOnly(),
 
+  /** @private **/
   init() {
     this._super();
     this._seen = emberArray();
   },
 
+  /** @private **/
   lookupLocale(localeName) {
     return this._seen.findBy('localeName', localeName);
   },
 
+  /** @private **/
   localeFactory(localeName) {
     const owner = getOwner(this);
     const lookupName = `ember-intl@translation:${localeName}`;
@@ -54,12 +58,14 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     return model;
   },
 
+  /** @private **/
   has(localeName, translationKey) {
     const model = this.lookupLocale(localeName);
 
     return model && model.has(translationKey);
   },
 
+  /** @private **/
   lookup(localeNames, translationKey) {
     for (let i = 0; i < localeNames.length; i++) {
       const localeName = localeNames[i];
@@ -71,10 +77,12 @@ const DefaultTranslationAdapter = Ember.Object.extend({
     }
   },
 
+  /** @private **/
   translationsFor(localeName) {
     return this.localeFactory(localeName);
   },
 
+  /** @private **/
   findTranslationByKey(localeNames, translationKey) {
     return this.lookup(localeNames, translationKey);
   }

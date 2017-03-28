@@ -36,8 +36,10 @@ const {
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
+    let formatOptions = options;
+
     if (options && typeof options.format === 'string') {
-      options = assign({}, this.getFormat(ctr.formatType, options.format), options);
+      formatOptions = assign({}, this.getFormat(ctr.formatType, formatOptions.format), formatOptions);
     }
 
     if (!this._formatters[ctr.formatType]) {
@@ -46,9 +48,9 @@ function formatterProxy(ctr) {
 
     let formatter = this._formatters[ctr.formatType];
 
-    return formatter.format(value, options, {
+    return formatter.format(value, formatOptions, {
       formats: formats || get(this, 'formats'),
-      locale: this._localeWithDefault(options && options.locale)
+      locale: this._localeWithDefault(formatOptions && formatOptions.locale)
     });
   };
 }
@@ -56,6 +58,7 @@ function formatterProxy(ctr) {
 const IntlService = Service.extend(Evented, {
   _locale: null,
 
+  /** @public **/
   locale: computed('_locale', {
     set() {
       throw new Error('Use `setLocale` to change the application locale');
@@ -65,26 +68,42 @@ const IntlService = Service.extend(Evented, {
     }
   }),
 
+  /** @private **/
   adapter: computed({
     get() {
       return this._owner.lookup('ember-intl@adapter:default');
     }
   }),
 
+  /** @public **/
   formats: computed({
     get() {
       return this._owner.resolveRegistration('formats:main');
     }
   }),
 
+  /** @public **/
   formatHtmlMessage: formatterProxy(FormatHtmlMessage),
+
+  /** @public **/
   formatRelative: formatterProxy(FormatRelative),
+
+  /** @public **/
   formatMessage: formatterProxy(FormatMessage),
+
+  /** @public **/
   formatNumber: formatterProxy(FormatNumber),
+
+  /** @public **/
   formatTime: formatterProxy(FormatTime),
+
+  /** @public **/
   formatDate: formatterProxy(FormatDate),
+
+  /** @private **/
   requirejs: requirejs,
 
+  /** @public **/
   init() {
     this._super();
 
@@ -142,12 +161,14 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
+  /** @private **/
   _lookupByFactoryType(type, modulePrefix) {
     return Object.keys(this.requirejs._eak_seen).filter(key => {
       return key.indexOf(`${modulePrefix}\/${type}\/`) === 0;
     });
   },
 
+  /** @private **/
   _localeWithDefault(localeName) {
     if (!localeName) {
       return get(this, '_locale') || [];
@@ -162,6 +183,7 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
+  /** @public **/
   lookup(key, localeName, options = {}) {
     const localeNames = this._localeWithDefault(localeName);
     const translation = get(this, 'adapter').lookup(localeNames, key);
@@ -175,6 +197,7 @@ const IntlService = Service.extend(Evented, {
     return translation;
   },
 
+  /** @public **/
   t(key, ...args) {
     const [options] = args;
     const translation = this.lookup(key, options && options.locale);
@@ -182,6 +205,7 @@ const IntlService = Service.extend(Evented, {
     return this.formatMessage(translation, ...args);
   },
 
+  /** @public **/
   exists(key, localeName) {
     const localeNames = this._localeWithDefault(localeName);
     const adapter = get(this, 'adapter');
@@ -193,6 +217,7 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
+  /** @public **/
   getLocalesByTranslations() {
     deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
       id: 'ember-intl-locales-cp',
@@ -216,18 +241,21 @@ const IntlService = Service.extend(Evented, {
     IntlRelativeFormat.__addLocaleData(data);
   },
 
+  /** @public **/
   addTranslation(localeName, key, value) {
     return this.localeFactory(localeName).then(locale => {
       return locale.addTranslation(key, value);
     });
   },
 
+  /** @public **/
   addTranslations(localeName, payload) {
     return this.localeFactory(localeName).then(locale => {
       return locale.addTranslations(payload);
     });
   },
 
+  /** @public **/
   setLocale(localeName) {
     if (!localeName) {
       return;
@@ -244,20 +272,21 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
+  /** @private **/
   getFormat(formatType, format) {
     const formats = get(this, 'formats');
 
     if (formats && formatType && typeof format === 'string') {
       return get(formats, `${formatType}.${format}`);
     }
-
-    return {};
   },
 
+  /** @public **/
   localeFactory(localeName) {
     return RSVP.cast(get(this, 'adapter').localeFactory(normalizeLocale(localeName), true));
   },
 
+  /** @public **/
   createLocale(localeName, payload) {
     deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
       id: 'ember-intl-create-locale',
@@ -267,10 +296,12 @@ const IntlService = Service.extend(Evented, {
     return this.addTranslations(localeName, payload);
   },
 
+  /** @public **/
   findTranslationByKey(key, localeName, options) {
     return this.lookup(key, localeName, options);
   },
 
+  /** @public **/
   translationsFor(localeName) {
     return this.localeFactory(localeName);
   }
