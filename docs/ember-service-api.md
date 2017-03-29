@@ -68,6 +68,12 @@ Outputs:
 
 > watch will cost $300
 
+By default, ember-intl's `t` method and `formatMessage` will return a String literal.  If your translations contain HTML markup and you want to use the output in a template, you'll want to escape all user input and wrap the output in an `Ember.String.htmlSafe()`.  This is all built into ember-intl in both the `t` and `formatHtmlMessage` methods.  For the `t` method, you'll want to supply `htmlSafe: true` in the second argument options hash.
+
+```js
+this.intl.t('title.header', { htmlSafe: true });
+```
+
 **formatMessage** _(translation:String, optionalOptions:Object, optionalFormats:Object)_
 
 `formatMessage` formats a translation string. Unlike the `t` method, it
