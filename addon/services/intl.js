@@ -202,6 +202,10 @@ const IntlService = Service.extend(Evented, {
     const [options] = args;
     const translation = this.lookup(key, options && options.locale);
 
+    if (options && options.htmlSafe) {
+      return this.formatHtmlMessage(translation, ...args);
+    }
+
     return this.formatMessage(translation, ...args);
   },
 

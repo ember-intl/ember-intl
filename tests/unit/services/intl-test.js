@@ -3,6 +3,7 @@ import wait from 'ember-test-helpers/wait';
 import { moduleFor, test } from 'ember-qunit';
 
 const DEFAULT_LOCALE_NAME = 'en';
+const { String: emberString } = Ember;
 
 moduleFor('service:intl', 'Unit | Service | intl', {
   integration: true,
@@ -80,6 +81,46 @@ test('translations that are empty strings are valid', function(assert) {
   return this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_string', '').then(() => {
     assert.equal(this.intl.t('empty_string'), '');
   });
+});
+
+test('should return safestring when htmlSafe attribute passed to `t`', function(assert) {
+  assert.expect(1);
+
+  return this.intl
+    .addTranslation(
+      DEFAULT_LOCALE_NAME,
+      'html_safe_translation',
+      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
+    )
+    .then(() => {
+      const out = this.intl.t('html_safe_translation', {
+        htmlSafe: true,
+        name: '<em>Jason</em>',
+        count: 42000
+      });
+
+      assert.ok(emberString.isHTMLSafe(out));
+    });
+});
+
+test('should return regular string when htmlSafe is falsey', function(assert) {
+  assert.expect(1);
+
+  return this.intl
+    .addTranslation(
+      DEFAULT_LOCALE_NAME,
+      'html_safe_translation',
+      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
+    )
+    .then(() => {
+      const out = this.intl.t('html_safe_translation', {
+        htmlSafe: false,
+        name: '<em>Jason</em>',
+        count: 42000
+      });
+
+      assert.ok(!emberString.isHTMLSafe(out));
+    });
 });
 
 test('exists returns true when key found', function(assert) {
