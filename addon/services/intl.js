@@ -177,9 +177,13 @@ const IntlService = Service.extend(Evented, {
 
   t(key, ...args) {
     const [options] = args;
-    const translation = this.lookup(key, options && options.locale);
+    const translation = this.lookup(key, options && options.locale, {
+      resilient: options && typeof options.fallback === 'string'
+    });
 
-    return this.formatMessage(translation, ...args);
+    const value = typeof translation === 'string' ? translation : options.fallback;
+
+    return this.formatMessage(value, ...args);
   },
 
   exists(key, localeName) {
