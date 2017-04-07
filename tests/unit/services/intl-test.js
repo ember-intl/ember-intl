@@ -17,6 +17,10 @@ test('can access formatMessage without a locale set', function(assert) {
   assert.ok(true, 'Exception was not raised');
 });
 
+test('`t` can be passed options fallback', function(assert) {
+  assert.equal(this.intl.t('does.not.exist', { fallback: 'It does not exists' }), 'It does not exists');
+});
+
 test('triggers notifyPropertyChange only when locale changes', function(assert) {
   let count = 0;
 
