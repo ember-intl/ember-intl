@@ -1124,9 +1124,9 @@ broccoli-caching-writer@^3.0.3:
     rsvp "^3.0.17"
     walk-sync "^0.3.0"
 
-broccoli-cldr-data@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-0.4.2.tgz#7ccdc07b7275d2272c216e56d8bdb6cd5fffda1a"
+broccoli-cldr-data@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.0.tgz#20770e87e6fcad61c3d9494920660669f9c23b6c"
   dependencies:
     broccoli-caching-writer "^3.0.3"
     formatjs-extract-cldr-data "^2.0.0"
@@ -2781,7 +2781,7 @@ eslint-plugin-prettier@^2.0.1:
   dependencies:
     requireindex "~1.1.0"
 
-eslint@^3.0.0:
+eslint@^3.0.0, eslint@^3.13.1:
   version "3.17.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.17.1.tgz#b80ae12d9c406d858406fccda627afce33ea10ea"
   dependencies:

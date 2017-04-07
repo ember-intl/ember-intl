@@ -200,13 +200,17 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   t(key, ...args) {
     const [options] = args;
-    const translation = this.lookup(key, options && options.locale);
+    const translation = this.lookup(key, options && options.locale, {
+      resilient: options && typeof options.fallback === 'string'
+    });
+
+    const value = typeof translation === 'string' ? translation : options.fallback;
 
     if (options && options.htmlSafe) {
-      return this.formatHtmlMessage(translation, ...args);
+      return this.formatHtmlMessage(value, ...args);
     }
 
-    return this.formatMessage(translation, ...args);
+    return this.formatMessage(value, ...args);
   },
 
   /** @public **/

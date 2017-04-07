@@ -46,6 +46,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.1.0",
     "ember-string-ishtmlsafe-polyfill": "1.1.0",
+    "eslint": "^3.13.1",
     "eslint-plugin-prettier": "^2.0.1",
     "fs-extra": "^2.0.0",
     "loader.js": "^4.2.3",
