@@ -71,7 +71,7 @@
     "chalk": "^1.0.0",
     "cldr-core": "28.0.0",
     "ember-assign-polyfill": "^2.0.1",
-    "ember-cli-babel": "^5.1.7",
+    "ember-cli-babel": "^6.1.0",
     "ember-cli-import-polyfill": "^0.2.0",
     "ember-getowner-polyfill": "1.2.2",
     "ember-intl-format-cache": "^2.4.0",
