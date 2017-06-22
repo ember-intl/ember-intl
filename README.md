@@ -1,6 +1,5 @@
 # ember-intl
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ember-intl/ember-intl.svg)](https://greenkeeper.io/)
 [![npm Version][npm-badge]][npm]
 [![Build Status][travis-badge]][travis]
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
