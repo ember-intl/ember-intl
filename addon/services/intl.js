@@ -1,4 +1,4 @@
-/* globals Intl */
+/* globals requirejs, Intl */
 
 /**
  * Copyright 2015, Yahoo! Inc.
