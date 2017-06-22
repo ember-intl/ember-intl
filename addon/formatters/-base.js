@@ -7,11 +7,7 @@ import Ember from 'ember';
 import arrayToHash from '../utils/array-to-hash';
 import links from '../utils/links';
 
-const {
-  get,
-  String: emberString,
-  Object: EmberObject
-} = Ember;
+const { get, String: emberString, Object: EmberObject } = Ember;
 
 const { camelize } = emberString;
 

@@ -14,7 +14,8 @@ export default Controller.extend({
   instant: new Date(),
   now: new Date(),
   messages: {
-    photos: '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}.\n'
+    photos:
+      '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}.\n'
   },
   cp: computed({
     get() {
@@ -22,14 +23,11 @@ export default Controller.extend({
     }
   }),
   incrementTime: on('init', function() {
-    setInterval(
-      () => {
-        emberRun(() => {
-          set(this, 'instant', new Date());
-          this.incrementProperty('num');
-        });
-      },
-      200
-    );
+    setInterval(() => {
+      emberRun(() => {
+        set(this, 'instant', new Date());
+        this.incrementProperty('num');
+      });
+    }, 200);
   })
 });

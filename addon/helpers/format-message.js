@@ -18,7 +18,8 @@ export function getValue([key], options) {
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
   deprecate(
-    `[ember-intl] {{${this.helperType}}} only accepts translation strings as the first parameter.  You likely want to use the {{t}} helper instead.`,
+    `[ember-intl] {{${this
+      .helperType}}} only accepts translation strings as the first parameter.  You likely want to use the {{t}} helper instead.`,
     false,
     {
       id: `ember-intl-${this.helperType}-string-literals-only`,
@@ -26,12 +27,7 @@ export function getValue([key], options) {
     }
   );
 
-  const {
-    fallback,
-    allowEmpty,
-    defaultMessage,
-    locale: optionalLocale
-  } = options;
+  const { fallback, allowEmpty, defaultMessage, locale: optionalLocale } = options;
 
   const fallbackTranslation = defaultMessage || fallback;
 

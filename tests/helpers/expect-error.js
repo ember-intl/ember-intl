@@ -14,7 +14,7 @@ export default function expectError(fn, handler) {
     }
   });
 
-  run(() => Test.adapter = TestAdapter.create());
+  run(() => (Test.adapter = TestAdapter.create()));
 
   try {
     fn();
