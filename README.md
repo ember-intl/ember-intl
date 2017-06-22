@@ -79,7 +79,7 @@ Open, or create, `app/routes/application.js` and within `beforeModel` invoke `in
       // OR for those that sideload, an array is accepted to handle fallback lookups
 
       // en-ca is the primary locale, en-us is the fallback.
-      // this is optional, and likely unnecessary if you define baseLocale (see below)
+      // this is optional, and likely unnecessary if you define baseLocale (see above)
       // The primary usecase is if you side load all translations
       //
       // return this.get('intl').setLocale(['en-ca', 'en-us']);
