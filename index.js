@@ -1,23 +1,21 @@
-/* jshint node: true */
-
-'use strict';
+/* eslint-env node */
 
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-let WatchedDir = require('broccoli-source').WatchedDir;
-let stringify = require('json-stable-stringify');
-let mergeTrees = require('broccoli-merge-trees');
-let extract = require('broccoli-cldr-data');
-let funnel = require('broccoli-funnel');
-let existsSync = require('exists-sync');
-let walkSync = require('walk-sync');
-let path = require('path');
+const WatchedDir = require('broccoli-source').WatchedDir;
+const stringify = require('json-stable-stringify');
+const mergeTrees = require('broccoli-merge-trees');
+const extract = require('broccoli-cldr-data');
+const funnel = require('broccoli-funnel');
+const existsSync = require('exists-sync');
+const walkSync = require('walk-sync');
+const path = require('path');
 
-let utils = require('./lib/utils');
-let TranslationReducer = require('./lib/broccoli/translation-reducer');
+const utils = require('./lib/utils');
+const TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
   name: 'ember-intl',

@@ -48,13 +48,10 @@ test('can specify a `interval` to trigger recompute', function(assert) {
   this.render(hbs`{{format-relative date interval=1000}}`);
   assert.equal(this.$().text(), 'now');
 
-  setTimeout(
-    () => {
-      assert.equal(this.$().text(), '1 second ago');
-      done();
-    },
-    1001
-  );
+  setTimeout(() => {
+    assert.equal(this.$().text(), '1 second ago');
+    done();
+  }, 1001);
 });
 
 test('should return relative time in hours, not best fit', function(assert) {

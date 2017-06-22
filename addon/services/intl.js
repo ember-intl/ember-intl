@@ -20,19 +20,7 @@ import FormatMessage from '../formatters/format-message';
 import FormatRelative from '../formatters/format-relative';
 import FormatHtmlMessage from '../formatters/format-html-message';
 
-const {
-  assign,
-  assert,
-  getOwner,
-  computed,
-  makeArray,
-  get,
-  set,
-  RSVP,
-  Service,
-  Evented,
-  deprecate
-} = Ember;
+const { assign, assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
@@ -129,7 +117,6 @@ const IntlService = Service.extend(Evented, {
 
   /**
    * Peeks into the requirejs map and registers all locale data objects found.
-   * This is also very likely to be removed soon.
    *
    * @private
    */
@@ -150,12 +137,12 @@ const IntlService = Service.extend(Evented, {
 
     cldrs
       .map(moduleName => {
-        return this._owner.resolveRegistration(`cldr:${moduleName.split('\/').pop()}`);
+        return this._owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`);
       })
       .forEach(data => data.forEach(this.addLocaleData));
 
     translations.forEach(moduleName => {
-      const localeName = moduleName.split('\/').pop();
+      const localeName = moduleName.split('/').pop();
 
       this.addTranslations(localeName, this._owner.resolveRegistration(`translation:${localeName}`));
     });
@@ -163,8 +150,8 @@ const IntlService = Service.extend(Evented, {
 
   /** @private **/
   _lookupByFactoryType(type, modulePrefix) {
-    return Object.keys(this.requirejs._eak_seen).filter(key => {
-      return key.indexOf(`${modulePrefix}\/${type}\/`) === 0;
+    return Object.keys(this.requirejs.entries).filter(key => {
+      return key.indexOf(`${modulePrefix}/${type}/`) === 0;
     });
   },
 

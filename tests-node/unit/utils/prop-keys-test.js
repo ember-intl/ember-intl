@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 /* globals describe, it */
 
 'use strict';
@@ -12,7 +12,7 @@ describe('propKeys', function() {
     expect(propKeys({ a: true, b: { c: true } })).to.deep.equal(['a', 'b.c']);
   });
 
-  it('propKeys({ "a.a": true, b: { c: true }}) => ["a\.a", "b.c"]', function() {
+  it('propKeys({ "a.a": true, b: { c: true }}) => ["a.a", "b.c"]', function() {
     expect(propKeys({ 'a.a': true, b: { c: true } })).to.deep.equal(['a\\.a', 'b.c']);
   });
 });
