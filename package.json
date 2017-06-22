@@ -49,7 +49,7 @@
     "extend": "^3.0.0",
     "has-unicode": "^2.0.1",
     "intl": "1.0.1",
-    "intl-messageformat-parser": "^1.2.0",
+    "intl-messageformat-parser": "1.2.0",
     "js-yaml": "^3.3.1",
     "json-stable-stringify": "^1.0.1",
     "locale-emoji": "^0.2.0",
@@ -58,7 +58,7 @@
     "walk-sync": "^0.3.2"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
+    "chai": "^3.5.0",
     "dependency-check": "^2.9.1",
     "ember": "^1.0.3",
     "ember-cli": "2.13.2",

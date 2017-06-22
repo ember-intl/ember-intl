@@ -1,4 +1,4 @@
-/* eslint-env node */
+/* jshint node: true */
 /* globals describe, it */
 
 'use strict';
