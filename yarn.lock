@@ -2503,12 +2503,13 @@ ember-getowner-polyfill@^1.2.3:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
-ember-intl-format-cache@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/ember-intl-format-cache/-/ember-intl-format-cache-2.4.1.tgz#0b5a58cc72da41b72f5d10fc4489bf54f772bef7"
+ember-intl-format-cache@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/ember-intl-format-cache/-/ember-intl-format-cache-2.4.2.tgz#dde6274df0ebf6353d766f3efb54cc11ad0226fb"
   dependencies:
     broccoli-funnel "^1.0.0"
     broccoli-merge-trees "^1.0.0"
+    broccoli-source "^1.1.0"
     ember-cli-babel "^5.1.7"
     intl-format-cache "^2.0.5"
 
@@ -2521,22 +2522,24 @@ ember-intl-messageformat-parser@^1.2.0:
     ember-cli-babel "^5.1.0"
     intl-messageformat-parser "^1.2.0"
 
-ember-intl-messageformat@^2.4.0, ember-intl-messageformat@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/ember-intl-messageformat/-/ember-intl-messageformat-2.4.1.tgz#7136e33458038b69ad660ef8e22662b6b81b252c"
+ember-intl-messageformat@^2.4.0, ember-intl-messageformat@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/ember-intl-messageformat/-/ember-intl-messageformat-2.5.0.tgz#41e4feedbc8d816f1e5390797108fe828a9c0e9f"
   dependencies:
     broccoli-funnel "^1.0.0"
     broccoli-merge-trees "^1.0.0"
+    broccoli-source "^1.1.0"
     ember-cli-babel "^5.1.7"
     ember-intl-messageformat-parser "^1.2.0"
     intl-messageformat "^1.2.0"
 
-ember-intl-relativeformat@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/ember-intl-relativeformat/-/ember-intl-relativeformat-2.4.1.tgz#9acfb27b57ff4be7381d366e7433b6ead0333777"
+ember-intl-relativeformat@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/ember-intl-relativeformat/-/ember-intl-relativeformat-2.4.2.tgz#b74f4579273584cab9ac657a0528ebdd9cb1a229"
   dependencies:
     broccoli-funnel "^1.0.0"
     broccoli-merge-trees "^1.0.0"
+    broccoli-source "^1.1.0"
     ember-cli-babel "^5.1.7"
     ember-intl-messageformat "^2.4.0"
     intl-relativeformat "^1.2.0"
