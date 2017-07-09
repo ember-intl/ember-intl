@@ -159,6 +159,13 @@ test('should respect format options for date ICU block', function(assert) {
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
+test('should return 0 instead of nothing', function(assert) {
+  assert.expect(1);
+  this.set('count', 0);
+  this.render(hbs`{{format-message (l '{count}') count=count}}`);
+  assert.equal(this.$().text(), '0');
+});
+
 test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
   assert.expect(1);
 
