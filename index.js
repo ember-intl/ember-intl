@@ -25,7 +25,7 @@ module.exports = {
   included() {
     this._super.included.apply(this, arguments);
 
-    let app = this.app = this._findHost();
+    let app = (this.app = this._findHost());
     this.addonOptions = this.intlConfig(app.env);
 
     let inputPath = this.addonOptions.inputPath || 'translations';
@@ -61,16 +61,18 @@ module.exports = {
       let locales = this.findLocales();
       let prefix = '';
 
-      if (config.rootURL) { prefix += config.rootURL; }
-      if (assetPath) { prefix += assetPath; }
+      if (config.rootURL) {
+        prefix += config.rootURL;
+      }
+      if (assetPath) {
+        prefix += assetPath;
+      }
 
       let localeScripts = locales.map(function(locale) {
         return `<script src="${prefix}/locales/${locale}.js"></script>`;
       });
 
-      return [`<script src="${prefix}/intl.min.js"></script>`]
-        .concat(localeScripts)
-        .join('\n');
+      return [`<script src="${prefix}/intl.min.js"></script>`].concat(localeScripts).join('\n');
     }
   },
 
@@ -78,14 +80,16 @@ module.exports = {
     let trees = [tree];
 
     if (this.hasTranslationDir && !this.addonOptions.publicOnly) {
-      trees.push(this.reduceTranslations({
-        filename(key) {
-          return `${key}.js`;
-        },
-        wrapEntry(obj) {
-          return `export default ${stringify(obj)};`;
-        }
-      }));
+      trees.push(
+        this.reduceTranslations({
+          filename(key) {
+            return `${key}.js`;
+          },
+          wrapEntry(obj) {
+            return `export default ${stringify(obj)};`;
+          }
+        })
+      );
     }
 
     if (tree && this.projectLocales.length) {
@@ -114,10 +118,12 @@ module.exports = {
     if (!this.addonOptions.disablePolyfill) {
       let appOptions = this.app.options || {};
 
-      trees.push(require('./lib/broccoli/intl-polyfill')({
-        locales: this.projectLocales,
-        destDir: appOptions.app && appOptions.app.intl || 'assets/intl'
-      }));
+      trees.push(
+        require('./lib/broccoli/intl-polyfill')({
+          locales: this.projectLocales,
+          destDir: (appOptions.app && appOptions.app.intl) || 'assets/intl'
+        })
+      );
     }
 
     if (this.hasTranslationDir && this.addonOptions.publicOnly) {
@@ -173,22 +179,28 @@ module.exports = {
       addonConfig.baseLocale = addonConfig.defaultLocale;
     }
 
-    addonConfig = Object.assign({
-      locales: null,
-      baseLocale: null,
-      publicOnly: false,
-      disablePolyfill: false,
-      autoPolyfill: false,
-      inputPath: 'translations',
-      outputPath: 'translations'
-    }, addonConfig);
+    addonConfig = Object.assign(
+      {
+        locales: null,
+        baseLocale: null,
+        publicOnly: false,
+        disablePolyfill: false,
+        autoPolyfill: false,
+        inputPath: 'translations',
+        outputPath: 'translations'
+      },
+      addonConfig
+    );
 
     if (addonConfig.locales) {
-      addonConfig.locales = utils.castArray(addonConfig.locales).filter(function(locale) {
-        return typeof locale === 'string';
-      }).map(function(locale) {
-        return locale.toLocaleLowerCase();
-      });
+      addonConfig.locales = utils
+        .castArray(addonConfig.locales)
+        .filter(function(locale) {
+          return typeof locale === 'string';
+        })
+        .map(function(locale) {
+          return locale.toLocaleLowerCase();
+        });
     }
 
     return addonConfig;
@@ -198,26 +210,30 @@ module.exports = {
     let locales = [];
 
     if (this.hasTranslationDir) {
-      locales = locales.concat(walkSync(path.join(this.app.project.root, this.addonOptions.inputPath), {
-        directories: false
-      }).map(function(filename) {
-        return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
-      }));
+      locales = locales.concat(
+        walkSync(path.join(this.app.project.root, this.addonOptions.inputPath), {
+          directories: false
+        }).map(function(filename) {
+          return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
+        })
+      );
     }
 
     if (this.addonOptions.locales) {
       locales = locales.concat(this.addonOptions.locales);
     }
 
-    locales = locales.concat(locales.filter(function(locale) {
-      if (utils.isSupportedLocale(locale)) {
-        return true;
-      }
+    locales = locales.concat(
+      locales.filter(function(locale) {
+        if (utils.isSupportedLocale(locale)) {
+          return true;
+        }
 
-      this.log(`'${locale}' is not a valid locale name`);
+        this.log(`'${locale}' is not a valid locale name`);
 
-      return false;
-    }, this));
+        return false;
+      }, this)
+    );
 
     return utils.unique(locales);
   },
@@ -266,14 +282,19 @@ module.exports = {
   },
 
   reduceTranslations(opts) {
-    if (!opts) { opts = {}; }
+    if (!opts) {
+      opts = {};
+    }
     let addon = this;
 
-    return new TranslationReducer([this.translationTree], Object.assign({}, this.addonOptions, opts, {
-      verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
-      log() {
-        return addon.log.apply(addon, arguments);
-      }
-    }));
+    return new TranslationReducer(
+      [this.translationTree],
+      Object.assign({}, this.addonOptions, opts, {
+        verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
+        log() {
+          return addon.log.apply(addon, arguments);
+        }
+      })
+    );
   }
 };
