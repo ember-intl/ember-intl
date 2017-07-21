@@ -8,6 +8,7 @@
 This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
 ## Notable Features
+
 * Display numbers with separators.
 * Display dates and times correctly.
 * Display dates relative to "now".
@@ -18,13 +19,13 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 * Addon support (addon translations are bundled with the host app).
 
 ## Installation
+
 * `ember install ember-intl`
 
 Depending on your projects targeted browsers, the Intl.JS polyfill may be necessary.  [Read more about the polyfill installation methods in the wiki page](https://github.com/ember-intl/ember-intl/blob/2.x/docs/intljs-polyfill.md).
 
-## Useful Getting Started Material
+## Documentation
 
-### Documentation
 Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs) folder.
 
 ## Translations
@@ -78,9 +79,11 @@ export default Ember.Component.extend({
 ```
 
 #### Format Number Options
+
 [List of supported format number options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-number-options.md)
 
 ### Format Date
+
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
 
 ```hbs
@@ -101,9 +104,11 @@ export default Ember.Component.extend({
 ```
 
 #### Format Date Options
+
 [List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Time
+
 This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
 
 ```hbs
@@ -128,6 +133,7 @@ export default Ember.Component.extend({
 [List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Relative
+
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
 
 ```js
@@ -166,9 +172,11 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 ```
 
 #### Format Relative Options
+
 [List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
 
 ### Format Message
+
 Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.
 
 ```
@@ -212,6 +220,7 @@ This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This
 ```
 
 ### Format HTML Message
+
 Escapes all hash arguments and returns as an htmlSafe String which renders an ElementNode.  To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `t` helper.
 
 ```hbs
@@ -259,6 +268,7 @@ Output of both the helper and the programmatic example:
 > 1:00:44 PM
 
 ## Helper Options
+
 * All helpers accept optional arguments:
   * `locale` argument to explicitly pass/override the application locale
   * `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
@@ -278,6 +288,7 @@ Asynchronously loading translations instead of bundling translations within `app
 https://github.com/ember-intl/ember-intl/blob/master/docs/asynchronously-loading-translations.md
 
 ### Testing with ember-intl
+
 * [Unit testing](https://github.com/ember-intl/ember-intl/blob/master/docs/unit-testing.md)
 * [Integration testing](https://github.com/ember-intl/ember-intl/blob/master/docs/integration-testing.md)
 
@@ -290,10 +301,12 @@ Browser vendors implement date/time parsing differently.  For example, the follo
 The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
 
 ## Running
+
 * `ember server`
 * Visit your app at http://localhost:4200.
 
 ## Running Tests
+
 * `ember test`
 * `ember test --server`
 
