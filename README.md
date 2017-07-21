@@ -8,56 +8,32 @@
 This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
 ## Notable Features
-* Addon support (addons can provide translations up to the project application)
-* Built on top of native standards ([Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and ICU message syntax)
-* Translations are able to be lazily loaded (not bundled with the app code)
-* Formatting for relative time, datetime, and numbers
-* Handlebar helpers and service API
+* Formatters for relative time, datetime, and numbers via an Ember Service API and template helpers
+* Addon support (addon translations are bundled with the host app)
+* Built using standards: [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and [ICU message syntax](http://userguide.icu-project.org/formatparse/messages)
+* Translations can be lazily loaded instead of bundled with the application bundle (optional)
 
 ## Installation
 * `ember install ember-intl`
-* Polyfill the Intl.js API (required for Safari/PhantomJS, and legacy browser)
-    * Instructions on [loading from assets directory][]
-    * Instructions on [conditionally loading the polyfill based on User-Agent][]
-    * Instructions on [disabling polyfill][]
 
-[loading from assets directory]: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md#loading-files-from-assets
-[conditionally loading the polyfill based on User-Agent]: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md#polyfillio
-[disabling polyfill]: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md#disabling
+Depending on your projects targeted browsers, the Intl.JS polyfill may be necessary.  [Read more about the polyfill installation methods in the wiki page](https://github.com/ember-intl/ember-intl/blob/2.x/docs/intljs-polyfill.md).
 
-## Documentation
+## Useful Getting Started Material
 
-Documentation is now a series of markdown files hosted within the repository.  [Read more](https://github.com/ember-intl/ember-intl/tree/master/docs)
+### Documentation
+Documentation is hosted within the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs).
 
 ## Translations
-Translations are defined in `/translations`, *outside of `app`* in either JSON or YAML format.  Example of `/translations/en-us.yaml`:
+Translations care defined in `<project_root>/translations` in either JSON or YAML format.  Nested directories and nested objects within your json or yaml are fully supported.
+
+Example of `/translations/en-us.yaml`:
 
 ```yaml
-# en-us
-product:
-  info: '{product} will cost {price, number, USD} if ordered by {deadline, date, time}'
-  title: 'Hello world!'
-  html:
-    info: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
+home_page:
+  hero_banner: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
 ```
 
-If you wish, you can organize your translations into subdirectories such as `/translations/login-page/en-us.yaml` and `translations/purchase-page/en-us.yaml`.
-
-Translation keys containing periods, i.e., `foo.bar`, conflicts with internal accessors  -- which assumes nested objects and therefore triggers errors like: `Error: Property set failed: object in path "foo" could not be found or was destroyed`.  However, this is supported as of 2.5.x and to enable run `ember g ember-intl-dot-notation`.
-
-
-### Translation Compilation
-
-At build time, ember-intl walks all of the translations within the project and attempts to locate missing translation keys.  This is done through the `baseLocale` config property.  If translations keys are found on the base but not on other locales, a warning is written to the console and ember-intl will automatically use the value from the base locale as a filler.
-
-```js
-// config/ember-intl.js
-module.exports = function(environment) {
-  return {
-    baseLocale: 'en-us' // default build-time locale
-  };
-};
-```
+If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` install the addon `ember-intl-dot-notation`.
 
 ## Setting runtime locale
 
@@ -68,20 +44,8 @@ Open, or create, `app/routes/application.js` and within `beforeModel` invoke `in
   export default Ember.Route.extend({
     intl: Ember.inject.service(),
     beforeModel() {
-      // define the app's runtime locale
-      // For example, here you would maybe do an API lookup to resolver
-      // which locale the user should be targeted and perhaps lazily
-      // load translations using XHR and calling intl's `addTranslation`/`addTranslations`
-      // method with the results of the XHR request
-      return this.get('intl').setLocale('en-us');
-
-      // OR for those that sideload, an array is accepted to handle fallback lookups
-
-      // en-ca is the primary locale, en-us is the fallback.
-      // this is optional, and likely unnecessary if you define baseLocale (see above)
-      // The primary usecase is if you side load all translations
-      //
-      // return this.get('intl').setLocale(['en-ca', 'en-us']);
+      /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
+      return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
     }
   });
 ```
@@ -289,10 +253,6 @@ this.get('intl').formatDate('Thu Jan 23 2014 13:00:44', {
 Output of both the helper and the programmatic example:
 
 > 1:00:44 PM
-
-## Polyfill
-
-There are two options on how to load the Intl.js polyfill, either through the polyfill which ships with ember-intl or through polyfill.io.  Both of which are documented: https://github.com/ember-intl/ember-intl/blob/master/docs/intljs-polyfill.md
 
 ## Helper Options
 * All helpers accept optional arguments:
