@@ -12,7 +12,7 @@
 * Display dates relative to "now".
 * Pluralize labels in strings.
 * Support for 150+ languages.
-* Built on standards using [ICU message syntax](http://userguide.icu-project.org/formatparse/messages) and the browser's native [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* Built on standards using [ICU message syntax][ICU] and the browser's native [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * Extensive Ember Service API and template helpers for formatting and translating.
 * Addon support (addon translations are bundled with the host app).
 
@@ -27,7 +27,7 @@ Depending on your projects targeted browsers, the Intl.JS polyfill may be necess
 Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs) folder.
 
 ## Translations
-Translations are defined in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
+Translations are defined in [ICU message syntax][ICU] and store in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
 
 Example basic translation file `/translations/homepage/en-us.yaml`:
 
@@ -175,46 +175,72 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 
 ### Format Message
 
-Formats [ICU Message][ICU] strings with the given values supplied as the hash arguments.
+Formats [ICU message syntax][ICU] strings with the provided values passed as arguments to the helper/method.
+
+**Template Helper**
 
 ```
-You have {numPhotos, plural,
-  =0 {no photos.}
-  =1 {one photo.}
-  other {# photos.}}
+# en-us.yml
+banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}"
 ```
 
 ```hbs
-{{t 'product.info'
-  product='Apple watch'
-  price=200
-  deadline=yesterday}}
-
-{{t boundProperty
-  name='Jason'
-  numPhotos=num
-  takenDate=yesterday}}
+{{t 'banner' numPhotos=3}}
 ```
-Or programmatically convert a message within any Ember Object.
+
+**Service API**
 
 ```js
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  yesterday: Ember.computed('intl.locale', function() {
-    return this.get('intl').formatMessage('Hello {name}', { name: 'Jason' });
-  })
+  count: 0,
+  label: Ember.computed('intl.locale', 'count', function() {
+    let { count, intl } = this.getProperties('intl', 'count');
+
+    return intl.t('banner', { numPhotos: count });
+  }).readOnly()
 });
 ```
 
-#### Passing a string literal to Format Message
+#### Formatting a raw ICU message
 
 This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This is useful for computed properties where you are programmatically constructing a translation string.
 
+**Template Helper**
+
 ```hbs
-{{format-message (l '{name} took {numPhotos, plural,\n  =0 {no photos}\n  =1 {one photo}\n  other {# photos}\n} on {takenDate, date, long}')
-    name='Jason'
-    numPhotos=num
-    takenDate=yesterday}}
+{{format-message
+  (l "{name} took {numPhotos, plural,
+      =0 {no photos}
+      =1 {one photo}
+      other {# photos}
+    } on {timestamp, date, long}"
+  )
+  name=user.username
+  numPhotos=num
+  timestamp=yesterday
+}}
+```
+
+**Service API**
+
+```js
+export default Ember.Component.extend({
+  intl: Ember.inject.service(),
+  count: 0,
+  label: Ember.computed('intl.locale', 'count', function() {
+    let { count, intl } = this.getProperties('intl', 'count');
+
+    return intl.formatMessage(`
+      You took {numPhotos, plural,
+        =0 {no photos}
+        =1 {one photo}
+        other {# photos}
+      `, {
+      numPhotos: count
+     });
+  }).readOnly()
+});
 ```
 
 ### Format HTML Message
@@ -224,9 +250,10 @@ Escapes all hash arguments and returns as an htmlSafe String which renders an El
 ```hbs
 {{t 'product.html.info'
   htmlSafe=true
-  product='Apple watch'
-  price=200
-  deadline=yesterday}}
+  price=model.price
+  product=model.name
+  deadline=model.saleEndsOn
+}}
 
 {{format-html-message (l '<strong>{numPhotos}</strong>') numPhotos=(format-number num)}}
 ```
@@ -319,7 +346,7 @@ The solution is the ensure that the value you are passing in is in a format whic
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
 [Intl-NF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
 [Intl-DTF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
-[ICU]: http://userguide.icu-project.org/formatparse/messages
+[ICU]: https://formatjs.io/guides/message-syntax/
 [CLDR]: http://cldr.unicode.org/
 [Intl.js]: https://github.com/andyearnshaw/Intl.js
 [LICENSE]: https://github.com/yahoo/yahoo-intl/blob/master/LICENSE
