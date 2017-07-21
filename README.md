@@ -8,10 +8,14 @@
 This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
 
 ## Notable Features
-* Formatters for relative time, datetime, and numbers via an Ember Service API and template helpers
+* Display numbers with separators.
+* Display dates and times correctly.
+* Display dates relative to "now".
+* Pluralize labels in strings.
+* Support for 150+ languages.
+* Built on standards:  [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and [ICU message syntax](http://userguide.icu-project.org/formatparse/messages)
+* Extensive Ember Service API and template helpers for formatting and translating
 * Addon support (addon translations are bundled with the host app)
-* Built using standards: [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and [ICU message syntax](http://userguide.icu-project.org/formatparse/messages)
-* Translations can be lazily loaded instead of bundled with the application bundle (optional)
 
 ## Installation
 * `ember install ember-intl`
@@ -129,7 +133,7 @@ Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and retur
 ```js
 export default Ember.Component.extend({
   timestamp: Ember.computed(function() {
-    var date = new Date();
+    let date = new Date();
     date.setDate(date.getDate() - 3);
     return date;
   })
@@ -147,7 +151,7 @@ Or programmatically convert a relative time within any Ember Object.
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   yesterday: Ember.computed('intl.locale', function() {
-    var date = new Date();
+    let date = new Date();
     return this.get('intl').formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
   })
 });
