@@ -21,23 +21,23 @@ Depending on your projects targeted browsers, the Intl.JS polyfill may be necess
 ## Useful Getting Started Material
 
 ### Documentation
-Documentation is hosted within the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs).
+Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs) folder.
 
 ## Translations
-Translations care defined in `<project_root>/translations` in either JSON or YAML format.  Nested directories and nested objects within your json or yaml are fully supported.
+Translations are defined in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
 
-Example of `/translations/en-us.yaml`:
+Example basic translation file `/translations/homepage/en-us.yaml`:
 
 ```yaml
-home_page:
-  hero_banner: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
+homepage:
+  banner: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
 ```
 
 If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` install the addon `ember-intl-dot-notation`.
 
 ## Setting runtime locale
 
-Open, or create, `app/routes/application.js` and within `beforeModel` invoke `intl.setLocale`.  Example:
+This is can be done at any point within your app boot process.  Typically this is within your application route's beforeModel hook using the `intl.setLocale` [Ember service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
 
 ```js
   // app/routes/application.js
