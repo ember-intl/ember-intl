@@ -13,9 +13,9 @@ This library provides Ember Handlebar helpers and a localization service.  The s
 * Display dates relative to "now".
 * Pluralize labels in strings.
 * Support for 150+ languages.
-* Built on standards:  [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) and [ICU message syntax](http://userguide.icu-project.org/formatparse/messages)
-* Extensive Ember Service API and template helpers for formatting and translating
-* Addon support (addon translations are bundled with the host app)
+* Built on standards using [ICU message syntax](http://userguide.icu-project.org/formatparse/messages) and the browser's native [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* Extensive Ember Service API and template helpers for formatting and translating.
+* Addon support (addon translations are bundled with the host app).
 
 ## Installation
 * `ember install ember-intl`
