@@ -5,8 +5,6 @@
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 [![Ember badge][ember-badge]][embadge]
 
-This library provides Ember Handlebar helpers and a localization service.  The service, and helpers, provide a way to format dates, numbers, strings messages, including pluralization.
-
 ## Notable Features
 
 * Display numbers with separators.
