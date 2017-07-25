@@ -42,25 +42,37 @@ module.exports = {
     if (this._isHost) {
       this._options = this.intlConfig(host.env);
       this._hostsLocales = this.findLocales();
-      this._translationTree = this.getTranslationTree();
+      this._translationTree = this.buildTranslationTree();
     }
   },
 
   /*
-   * @method getTranslationTree
+   * @method buildTranslationTree
    * @private
    */
-  getTranslationTree() {
-    let nodes = [];
+  buildTranslationTree() {
+    let registry = this.app.registry;
+    let addonNodes = [];
+    this.processAddons(this.project.addons, addonNodes);
+
+    let nodes = [...addonNodes];
     let projectTranslationPath = path.join(this.app.project.root, this._options.inputPath);
-    this.processAddons(this.project.addons, nodes);
 
     if (existsSync(projectTranslationPath)) {
       let projectTranslationTree = this.treeGenerator(projectTranslationPath);
       nodes.push(projectTranslationTree);
     }
 
-    return mergeTrees(nodes, { overwrite: true });
+    let translationNodes = mergeTrees(nodes, { overwrite: true });
+    let plugins = [...registry.registeredForType('intl'), ...registry.registeredForType('i18n')];
+
+    if (plugins.length > 0) {
+      plugins.forEach(preprocessor => {
+        translationNodes = preprocessor.toTree.call(preprocessor, translationNodes);
+      });
+    }
+
+    return translationNodes;
   },
 
   /*
@@ -92,23 +104,20 @@ module.exports = {
     if (addon.treeForTranslations) {
       let addonAdditionalTranslations = addon.treeForTranslations(translationTree);
       if (addonAdditionalTranslations) {
-        nodes.push(
-          funnel(addonAdditionalTranslations, {
-            destDir: addon.name,
-            srcDir: '.'
-          })
-        );
+        nodes.push(this.namespaceAddonTree(addonAdditionalTranslations, addon));
       }
     } else if (translationTree) {
-      nodes.push(
-        funnel(translationTree, {
-          destDir: addon.name,
-          srcDir: '.'
-        })
-      );
+      nodes.push(this.namespaceAddonTree(translationTree, addon));
     }
 
     this.processAddons(addon.addons, nodes);
+  },
+
+  namespaceAddonTree(tree, addon) {
+    return funnel(tree, {
+      destDir: `/addons/${addon.name}`,
+      srcDir: '.'
+    });
   },
 
   outputPaths() {
@@ -170,7 +179,7 @@ module.exports = {
 
     if (!this._options.publicOnly && this._translationTree) {
       trees.push(
-        this.reduceTranslations(this._translationTree, {
+        this.processTranslationTree(this._translationTree, {
           filename: key => `${key}.js`,
           wrapEntry: obj => `export default ${stringify(obj)};`
         })
@@ -204,7 +213,7 @@ module.exports = {
     }
 
     if (this._options.publicOnly && this._translationTree) {
-      trees.push(this.reduceTranslations(this._translationTree));
+      trees.push(this.processTranslationTree(this._translationTree));
     }
 
     return mergeTrees(trees, { overwrite: true });
@@ -280,12 +289,8 @@ module.exports = {
     if (addonConfig.locales) {
       addonConfig.locales = utils
         .castArray(addonConfig.locales)
-        .filter(locale => {
-          return typeof locale === 'string';
-        })
-        .map(locale => {
-          return locale.toLocaleLowerCase();
-        });
+        .filter(locale => typeof locale === 'string')
+        .map(locale => locale.toLocaleLowerCase());
     }
 
     return addonConfig;
@@ -337,7 +342,7 @@ module.exports = {
     });
   },
 
-  reduceTranslations(node, opts = {}) {
+  processTranslationTree(node, opts = {}) {
     let addon = this;
 
     return new TranslationReducer(
