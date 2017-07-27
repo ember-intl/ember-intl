@@ -181,7 +181,7 @@ Formats [ICU message syntax][ICU] strings with the provided values passed as arg
 
 ```
 # en-us.yml
-banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}"
+banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"
 ```
 
 ```hbs
@@ -236,7 +236,7 @@ export default Ember.Component.extend({
         =0 {no photos}
         =1 {one photo}
         other {# photos}
-      `, {
+      }`, {
       numPhotos: count
      });
   }).readOnly()
