@@ -1,8 +1,10 @@
-import { run as emberRun } from '@ember/runloop';
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 
 let application;
+
+const { run: emberRun } = Ember;
 
 function contains(assert, selector, string) {
   const element = find(selector)[0];

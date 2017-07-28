@@ -1,8 +1,6 @@
-import { assert } from '@ember/debug';
-import { run } from '@ember/runloop';
 import Ember from 'ember';
 
-const { Test } = Ember;
+const { assert, Test, run } = Ember;
 
 export default function expectError(fn, handler) {
   assert('Error handler must be provided to expectError', typeof handler === 'function');

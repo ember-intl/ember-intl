@@ -1,4 +1,4 @@
-import { run } from '@ember/runloop';
+import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import intlGetHelper from 'ember-intl/helpers/intl-get';
@@ -37,7 +37,7 @@ test('should recompute on intl locale change in', function(assert) {
 
   this.render(hbs`{{intl-get "greeting"}}`);
 
-  run(() => {
+  Ember.run(() => {
     service.setLocale('fr-fr');
     service.setLocale('en-us');
     assert.equal(triggered, 2);

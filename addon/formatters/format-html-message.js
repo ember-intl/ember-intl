@@ -3,11 +3,10 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { htmlSafe } from '@ember/string';
 import Ember from 'ember';
 import FormatterMessage from './format-message';
 
-const { Handlebars } = Ember;
+const { String: emberString, Handlebars: emberHandlebars } = Ember;
 
 const FormatHtmlMessage = FormatterMessage.extend({
   escapeProps(options) {
@@ -19,7 +18,7 @@ const FormatHtmlMessage = FormatterMessage.extend({
       let value = options[hashKey];
 
       if (typeof value === 'string') {
-        value = Handlebars.Utils.escapeExpression(value);
+        value = emberHandlebars.Utils.escapeExpression(value);
       }
 
       result[hashKey] = value;
@@ -32,7 +31,7 @@ const FormatHtmlMessage = FormatterMessage.extend({
     let escapedOptions = this.escapeProps(options);
     let superResult = this._super(value, escapedOptions, ctx);
 
-    return htmlSafe(superResult);
+    return emberString.htmlSafe(superResult);
   }
 });
 

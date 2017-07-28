@@ -3,10 +3,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Helper from '@ember/component/helper';
-import { getOwner } from '@ember/application';
-import { isEmpty } from '@ember/utils';
-import { getWithDefault } from '@ember/object';
+import Ember from 'ember';
+
+const { Helper, getOwner, isEmpty, getWithDefault } = Ember;
 
 const AbstractHelper = Helper.extend({
   intl: null,
