@@ -1,10 +1,10 @@
-import { run } from '@ember/runloop';
-import { A as emberArray } from '@ember/array';
-import EmberObject, { computed, set, get } from '@ember/object';
+import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import expectError from '../../helpers/expect-error';
+
+const { get, set, computed, run, A: emberArray, Object: EmberObject } = Ember;
 
 const DEFAULT_LOCALE_NAME = 'en-us';
 

@@ -5,16 +5,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { assign } from '@ember/polyfills';
-
-import { assert, warn } from '@ember/debug';
-import { getOwner } from '@ember/application';
-import { makeArray } from '@ember/array';
-import { set, get, computed } from '@ember/object';
-import RSVP from 'rsvp';
-import Service from '@ember/service';
-import Evented from '@ember/object/evented';
-import { deprecate } from '@ember/application/deprecations';
+import Ember from 'ember';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
@@ -28,6 +19,8 @@ import FormatNumber from '../formatters/format-number';
 import FormatMessage from '../formatters/format-message';
 import FormatRelative from '../formatters/format-relative';
 import FormatHtmlMessage from '../formatters/format-html-message';
+
+const { assign, assert, getOwner, computed, makeArray, get, set, RSVP, Service, Evented, deprecate } = Ember;
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
@@ -106,7 +99,7 @@ const IntlService = Service.extend(Evented, {
     this._formatters = Object.create(null);
 
     if (typeof Intl === 'undefined') {
-      warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
+      Ember.warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
         id: 'ember-intl-undefined-intljs'
       });
     }
@@ -133,7 +126,7 @@ const IntlService = Service.extend(Evented, {
     const translations = this._lookupByFactoryType('translations', config.modulePrefix);
 
     if (!cldrs.length) {
-      warn(
+      Ember.warn(
         `[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.`,
         false,
         {

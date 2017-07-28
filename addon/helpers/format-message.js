@@ -3,11 +3,12 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { assert } from '@ember/debug';
-import { deprecate } from '@ember/application/deprecations';
+import Ember from 'ember';
 
 import { LiteralWrapper } from './l';
 import BaseHelper from './-format-base';
+
+const { assert, deprecate } = Ember;
 
 export function getValue([key], options) {
   if (key && key instanceof LiteralWrapper) {

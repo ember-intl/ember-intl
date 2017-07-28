@@ -3,11 +3,10 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { bind } from '@ember/runloop';
-
+import Ember from 'ember';
 import BaseHelper from './-format-base';
 
-const runBind = bind;
+const runBind = Ember.run.bind;
 
 export default BaseHelper.extend({
   format(params, hash) {
