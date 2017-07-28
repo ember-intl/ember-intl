@@ -2,9 +2,9 @@
  * <3 ember-i18n <3
  * https://github.com/jamesarosen/ember-i18n/blob/master/addon/utils/macro.js
  */
-import Ember from 'ember';
+import { assert } from '@ember/debug';
 
-const { get, assert, computed } = Ember;
+import { computed, get } from '@ember/object';
 const keys = Object.keys;
 
 function values(object) {

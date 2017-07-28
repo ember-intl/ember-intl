@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import tHelper from 'ember-intl/helpers/t';
-
-const { run } = Ember;
 
 const DEFAULT_LOCALE_NAME = 'en-us';
 
