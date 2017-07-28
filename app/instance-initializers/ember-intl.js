@@ -3,9 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
-
-const { deprecate } = Ember;
+import { deprecate } from '@ember/application/deprecations';
 
 export function instanceInitializer() {
   deprecate('[ember-intl] instance initializer is deprecated, no longer necessary to call in testing.', false, {

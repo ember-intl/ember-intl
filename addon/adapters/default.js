@@ -3,12 +3,12 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
+import EmberObject, { get, computed } from '@ember/object';
+import { A as emberArray } from '@ember/array';
+import { getOwner } from '@ember/application';
 import Translation from '../models/translation';
 
-const { computed, get, A: emberArray, getOwner } = Ember;
-
-const DefaultTranslationAdapter = Ember.Object.extend({
+const DefaultTranslationAdapter = EmberObject.extend({
   _seen: null,
 
   /** @private **/
