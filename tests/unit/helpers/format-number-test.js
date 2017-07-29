@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
@@ -169,7 +170,7 @@ test('used to format percentages', function(assert) {
   this.render(hbs`{{format-number 400 style="percent"}}`);
   assert.equal(this.$().text(), '40,000%', 'should return a string formatted to a percent');
 
-  Ember.run(() => {
+  run(() => {
     service.setLocale('de-de');
     this.render(hbs`{{format-number 400 style="percent"}}`);
 
@@ -183,7 +184,7 @@ test('should function within an `each` block helper', function(assert) {
 
   this.set(
     'currencies',
-    Ember.A([{ AMOUNT: 3, CURRENCY: 'USD' }, { AMOUNT: 8, CURRENCY: 'EUR' }, { AMOUNT: 10, CURRENCY: 'JPY' }])
+    A([{ AMOUNT: 3, CURRENCY: 'USD' }, { AMOUNT: 8, CURRENCY: 'EUR' }, { AMOUNT: 10, CURRENCY: 'JPY' }])
   );
 
   this.render(

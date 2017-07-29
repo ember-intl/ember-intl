@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { isArray } from '@ember/array';
 
 export default function(a, b) {
-  if (!Ember.isArray(a) || !Ember.isArray(b)) {
+  if (!isArray(a) || !isArray(b)) {
     return false;
   }
   if (a === b) {

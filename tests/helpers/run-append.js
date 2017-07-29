@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { run: emberRun } = Ember;
+import { run as emberRun } from '@ember/runloop';
 
 function runAppend(view) {
   emberRun(view, 'appendTo', '#qunit-fixture');
