@@ -50,6 +50,7 @@ module.exports = {
       }
     },
     {
+      allowedToFail: true,
       name: 'ember-beta',
       bower: {
         dependencies: {
@@ -66,6 +67,7 @@ module.exports = {
       }
     },
     {
+      allowedToFail: true,
       name: 'ember-canary',
       bower: {
         dependencies: {
