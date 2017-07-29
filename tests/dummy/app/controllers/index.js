@@ -1,12 +1,14 @@
-import Ember from 'ember';
-
-const { set, computed, Controller, inject, on, run: emberRun } = Ember;
+import { inject as service } from '@ember/service';
+import { computed, set } from '@ember/object';
+import Controller from '@ember/controller';
+import { on } from '@ember/object/evented';
+import { run as emberRun } from '@ember/runloop';
 
 const date = new Date();
 const yesterday = date.setDate(date.getDate() - 1);
 
 export default Controller.extend({
-  intl: inject.service(),
+  intl: service(),
   numType: 'currency',
   num: 1000,
   yesterday: yesterday,

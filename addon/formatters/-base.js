@@ -3,13 +3,11 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
+import { camelize } from '@ember/string';
+import EmberObject, { get } from '@ember/object';
+
 import arrayToHash from '../utils/array-to-hash';
 import links from '../utils/links';
-
-const { get, String: emberString, Object: EmberObject } = Ember;
-
-const { camelize } = emberString;
 
 const FormatterBase = EmberObject.extend({
   options: null,

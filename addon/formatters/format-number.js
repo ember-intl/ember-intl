@@ -3,12 +3,10 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import createFormatCache from 'intl-format-cache';
 
 import Formatter from './-base';
-
-const { computed } = Ember;
 
 const FormatNumber = Formatter.extend({
   formatter: computed({

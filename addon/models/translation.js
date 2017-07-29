@@ -3,11 +3,11 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
+import EmberObject, { set, get } from '@ember/object';
 
-const { get, set, deprecate } = Ember;
+import { deprecate } from '@ember/application/deprecations';
 
-const TranslationModel = Ember.Object.extend({
+const TranslationModel = EmberObject.extend({
   localeName: null,
 
   init() {

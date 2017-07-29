@@ -1,9 +1,9 @@
 import Ember from 'ember';
+import { isHTMLSafe } from '@ember/string';
 import wait from 'ember-test-helpers/wait';
 import { moduleFor, test } from 'ember-qunit';
 
 const DEFAULT_LOCALE_NAME = 'en';
-const { String: emberString } = Ember;
 
 moduleFor('service:intl', 'Unit | Service | intl', {
   integration: true,
@@ -103,7 +103,7 @@ test('should return safestring when htmlSafe attribute passed to `t`', function(
         count: 42000
       });
 
-      assert.ok(emberString.isHTMLSafe(out));
+      assert.ok(isHTMLSafe(out));
     });
 });
 
@@ -123,7 +123,7 @@ test('should return regular string when htmlSafe is falsey', function(assert) {
         count: 42000
       });
 
-      assert.ok(!emberString.isHTMLSafe(out));
+      assert.ok(!isHTMLSafe(out));
     });
 });
 
