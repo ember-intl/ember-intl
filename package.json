@@ -49,9 +49,9 @@
     "exists-sync": "^0.0.4",
     "extend": "^3.0.0",
     "has-unicode": "^2.0.1",
-    "intl": "1.0.1",
+    "intl": "^1.2.5",
     "intl-messageformat-parser": "^1.2.0",
-    "js-yaml": "^3.3.1",
+    "js-yaml": "^3.9.0",
     "json-stable-stringify": "^1.0.1",
     "locale-emoji": "^0.2.0",
     "mkdirp": "^0.5.1",
@@ -84,7 +84,7 @@
     "fs-extra": "^3.0.1",
     "loader.js": "^4.2.3",
     "mocha": "^3.4.2",
-    "prettier": "^1.4.4"
+    "prettier": "^1.5.3"
   },
   "engines": {
     "node": ">= 4"
