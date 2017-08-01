@@ -75,7 +75,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
-    "ember-open-browser": "^0.4.0",
+    "ember-open-browser": "^0.5.1",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.13.0",
     "ember-string-ishtmlsafe-polyfill": "^1.1.0",
