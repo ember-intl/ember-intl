@@ -3,14 +3,15 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Helper from '@ember/component/helper';
+import { get } from '@ember/object';
+import { deprecate } from '@ember/application/deprecations';
 
 import { LiteralWrapper } from './l';
 
-const { Helper, inject, get, deprecate } = Ember;
-
 const IntlGetHelper = Helper.extend({
-  intl: inject.service(),
+  intl: service(),
 
   init() {
     this._super();
