@@ -5,23 +5,23 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { assign } from '@ember/polyfills';
-
-import { assert, warn } from '@ember/debug';
-import { getOwner } from '@ember/application';
-import { makeArray } from '@ember/array';
-import { set, get, computed } from '@ember/object';
 import RSVP from 'rsvp';
 import Service from '@ember/service';
+import { makeArray } from '@ember/array';
+import { assign } from '@ember/polyfills';
 import Evented from '@ember/object/evented';
+import { assert, warn } from '@ember/debug';
+import { getOwner } from '@ember/application';
+import { set, get, computed } from '@ember/object';
 import { deprecate } from '@ember/application/deprecations';
+
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
+import EmptyObject from 'ember-intl/utils/empty-object';
 
 import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
-
 import FormatDate from '../formatters/format-date';
 import FormatTime from '../formatters/format-time';
 import FormatNumber from '../formatters/format-number';
@@ -73,7 +73,7 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   formats: computed({
     get() {
-      return this._owner.resolveRegistration('formats:main');
+      return this._owner.resolveRegistration('formats:main') || {};
     }
   }),
 
@@ -98,12 +98,20 @@ const IntlService = Service.extend(Evented, {
   /** @private **/
   requirejs: requirejs,
 
+  /**
+   * Returns an array of registered locale names
+   *
+   * @property locales
+   * @public
+   */
+  locales: computed.readOnly('adapter.locales'),
+
   /** @public **/
   init() {
     this._super();
 
     this._owner = getOwner(this);
-    this._formatters = Object.create(null);
+    this._formatters = new EmptyObject();
 
     if (typeof Intl === 'undefined') {
       warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
@@ -113,14 +121,6 @@ const IntlService = Service.extend(Evented, {
 
     this._hydrate();
   },
-
-  /**
-   * Returns an array of registered locale names
-   *
-   * @property locales
-   * @public
-   */
-  locales: computed.readOnly('adapter.locales'),
 
   /**
    * Peeks into the requirejs map and registers all locale data objects found.
