@@ -101,7 +101,14 @@ test('locale can add messages object and can read it', function(assert) {
 test('can inline locale for missing locale', function(assert) {
   assert.expect(1);
   this.render(hbs`{{t 'foo.bar' locale='xx-xx'}}`);
-  assert.equal(this.$().text(), `Missing translation: foo.bar`);
+  assert.equal(this.$().text(), `Missing translation "foo.bar" for locale "xx-xx"`);
+});
+
+test('warns when no locale has been set', function(assert) {
+  assert.expect(1);
+  this.intl.setLocale();
+  this.render(hbs`{{t 'foo.bar'}}`);
+  assert.equal(this.$().text(), `No locale defined.  Unable to resolve translation: "foo.bar"`);
 });
 
 test('should fallback to with defaultMessage when key not found', function(assert) {

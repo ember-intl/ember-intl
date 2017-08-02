@@ -11,7 +11,6 @@ export function getValue([translationKey], options) {
   assert('[ember-intl] translation lookup attempted but no translation key was provided.', translationKey);
 
   const { fallback, allowEmpty, defaultMessage, locale: optionalLocale } = options;
-
   const fallbackTranslation = defaultMessage || fallback;
 
   const translation = this.intl.lookup(translationKey, optionalLocale, {

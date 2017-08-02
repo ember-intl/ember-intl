@@ -3,8 +3,9 @@
  * https://github.com/jamesarosen/ember-i18n/blob/master/addon/utils/macro.js
  */
 import { assert } from '@ember/debug';
-
 import { computed, get } from '@ember/object';
+import EmptyObject from 'ember-intl/utils/empty-object';
+
 const keys = Object.keys;
 
 function values(object) {
@@ -22,7 +23,7 @@ function mapPropertiesByHash(object, hash) {
 }
 
 export default function createTranslatedComputedProperty(key, options) {
-  const hash = options || Object.create(null);
+  const hash = options || new EmptyObject();
   const dependentKeys = ['intl.locale'].concat(values(hash));
 
   return computed(...dependentKeys, function() {
