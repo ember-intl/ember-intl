@@ -259,10 +259,6 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   setLocale(localeName) {
-    if (!localeName) {
-      return;
-    }
-
     const proposed = makeArray(localeName).map(normalizeLocale);
     const current = get(this, '_locale');
 
