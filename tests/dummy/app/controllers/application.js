@@ -1,13 +1,32 @@
-import { A } from '@ember/array';
-import { inject as service } from '@ember/service';
+import config from '../config/environment';
 import Controller from '@ember/controller';
+import { computed, get } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
   intl: service(),
-  locales: A(['en-us', 'fr-fr', 'es-es']),
+  activeLocale: computed.readOnly('intl.locale'),
+
+  locales: computed(function() {
+    return get(this, 'intl')
+      ._lookupByFactoryType('translations', config.modulePrefix)
+      .map(moduleName => moduleName.split('/').pop());
+  }).readOnly(),
+
+  selections: computed('locales.[]', 'activeLocale', function() {
+    let active = get(this, 'activeLocale');
+
+    return get(this, 'locales').map(locale => {
+      return {
+        locale: locale,
+        active: active.indexOf(locale) > -1
+      };
+    });
+  }).readOnly(),
+
   actions: {
     changeLocale(locale) {
-      this.get('intl').setLocale(locale);
+      return get(this, 'intl').setLocale(locale);
     }
   }
 });
