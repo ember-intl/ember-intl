@@ -44,8 +44,32 @@ module.exports = {
     if (this._isHost) {
       this._options = this.intlConfig(host.env);
       this._hostsLocales = this.findLocales();
+
+      this._plugins = this.registerPlugins(this.project.addons, {
+        locales: this._hostsLocales.slice(0),
+        polyfill: {
+          enabled: !this._options.disablePolyfill,
+          insertScripts: this._options.autoPolyfill
+        }
+      });
+
       this._translationTree = this.buildTranslationTree();
     }
+  },
+
+  registerPlugins(addons, initialState, plugins = []) {
+    addons.forEach(addon => this.registerPlugin(addon, initialState, plugins));
+
+    return plugins;
+  },
+
+  registerPlugin(addon, initialState, plugins) {
+    if (addon['ember-intl-ext'] && addon.onRegisterPlugin) {
+      addon.onRegisterPlugin(Object.assign({}, initialState));
+      plugins.push(addon);
+    }
+
+    this.registerPlugins(addon.addons, initialState, plugins);
   },
 
   /*
@@ -122,40 +146,6 @@ module.exports = {
     });
   },
 
-  outputPaths() {
-    let assetPath = 'assets/intl';
-    let { options } = this.app;
-
-    if (options.app && options.app.intl) {
-      assetPath = options.app.intl;
-    }
-
-    return assetPath;
-  },
-
-  contentFor(name, config) {
-    if (!this._isHost) {
-      return;
-    }
-
-    if (name === 'head' && !this._options.disablePolyfill && this._options.autoPolyfill) {
-      let assetPath = this.outputPaths();
-      let locales = this.findLocales();
-      let prefix = '';
-
-      if (config.rootURL) {
-        prefix += config.rootURL;
-      }
-      if (assetPath) {
-        prefix += assetPath;
-      }
-
-      let scripts = locales.map(locale => `<script src="${prefix}/locales/${locale}.js"></script>`);
-
-      return [`<script src="${prefix}/intl.min.js"></script>`].concat(scripts).join('\n');
-    }
-  },
-
   treeForApp(appTree) {
     if (!this._isHost) {
       return appTree;
@@ -196,29 +186,9 @@ module.exports = {
       return;
     }
 
-    let publicTree = this._super.treeForPublic.apply(this, arguments);
-    let trees = [];
-
-    if (publicTree) {
-      trees.push(publicTree);
-    }
-
-    if (!this._options.disablePolyfill) {
-      let appOptions = this.app.options || {};
-
-      trees.push(
-        require('./lib/broccoli/intl-polyfill')({
-          locales: this._hostsLocales,
-          destDir: (appOptions.app && appOptions.app.intl) || 'assets/intl'
-        })
-      );
-    }
-
     if (this._options.publicOnly && this._translationTree) {
-      trees.push(this.processTranslationTree(this._translationTree));
+      return this.processTranslationTree(this._translationTree);
     }
-
-    return mergeTrees(trees, { overwrite: true });
   },
 
   translationPathForAddon(addon) {

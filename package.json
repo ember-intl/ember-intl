@@ -31,6 +31,7 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
+    "@ember-intl/polyfill": "^0.0.1",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-cldr-data": "^1.1.0",
     "broccoli-funnel": "^1.2.0",
