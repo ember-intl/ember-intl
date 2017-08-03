@@ -2,8 +2,8 @@
 Intl.js Polyfill
 ==============================================================================
 
-Ember Intl automatically pushes the [Intl.js polyfill][] to your `/assets`
-folder.  Using the polyfill is not required if targeting a modern set of
+ember-intl automatically writes the [Intl.js polyfill][] to `/assets/intl`.
+Using the polyfill is not required if targeting a modern set of
 browsers which natively implement the Intl API.
 
 [Intl.js polyfill]: https://github.com/andyearnshaw/Intl.js/
@@ -34,7 +34,7 @@ At build time, we copy roughly 700 files, totaling 18mb, to the asset folder.
 Don't worry, this does not add weight to your app or vendor files. The only
 penalty you incur is at build time with the ember-cli build pipeline. Since
 most applications support only a subset of the locales we support, you can
-specify the locales in `config/environment.js` to optimize only copying the
+specify the locales in `config/ember-intl.js` to optimize only copying the
 files needed.
 
 ```js

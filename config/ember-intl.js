@@ -1,6 +1,6 @@
 /*jshint node:true*/
 
-module.exports = function(environment) {
+module.exports = function(/* environment */) {
   return {
     /**
     * The locales that are application supports.
