@@ -1,12 +1,16 @@
 <div class="main">
-    <div class="header">
-        <h1 id="title">ember-intl</h1>
+    <div class="hero">
+      <div class="header">
+          <h1 id="title">ember-intl</h1>
+      </div>
     </div>
     <div class="content">
         <div>
-            <button {{action 'changeLocale' 'en-us'}}>en-us</button>
-            <button {{action 'changeLocale' 'fr-fr'}}>fr-fr</button>
-            <button {{action 'changeLocale' 'es-es'}}>es-es</button>
+            {{#each selections as |model|}}
+              <button class={{if model.active 'active'}} {{action 'changeLocale' model.locale}}>
+                {{model.locale}}
+              </button>
+            {{/each}}
         </div>
         {{outlet}}
     </div>
