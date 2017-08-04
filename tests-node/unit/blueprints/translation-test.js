@@ -1,8 +1,6 @@
 'use strict';
 
-let mocha = require('mocha');
 let expect = require('chai').expect;
-
 let subject = require('../../../blueprints/translation');
 
 describe('translations', function() {
