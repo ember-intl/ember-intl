@@ -106,12 +106,7 @@ module.exports = {
   },
 
   treeForPublic() {
-    let publicTree = this._super.treeForPublic.apply(this, arguments);
     let trees = [];
-
-    if (publicTree) {
-      trees.push(publicTree);
-    }
 
     if (!this.addonOptions.disablePolyfill) {
       let appOptions = this.app.options || {};
