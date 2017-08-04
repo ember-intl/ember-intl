@@ -31,15 +31,15 @@
     ember-cli-babel "^6.7.1"
     intl-messageformat "^2.0.0"
 
-"@ember-intl/polyfill@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@ember-intl/polyfill/-/polyfill-0.0.1.tgz#02edde41c1a8c1c60fe74a5b96d3e516c88febad"
+"@ember-intl/polyfill@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ember-intl/polyfill/-/polyfill-0.0.3.tgz#db020cc38af5e9805a0a50b0746802acb1555120"
   dependencies:
     broccoli-funnel "^1.2.0"
     broccoli-merge-trees "^2.0.0"
     broccoli-source "^1.1.0"
     ember-cli-babel "^6.3.0"
-    intl "1.0.1"
+    intl "^1.2.5"
     lodash.get "^4.4.2"
 
 "@ember-intl/relativeformat-shim@^4.0.1":
@@ -3877,9 +3877,9 @@ intl-relativeformat@^2.0.0:
   dependencies:
     intl-messageformat "^2.0.0"
 
-intl@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/intl/-/intl-1.0.1.tgz#a6a566aa5ee3738c9c17b44bfa12fa4ec2623f78"
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
 
 invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.2"
