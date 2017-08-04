@@ -31,10 +31,10 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
-    "@ember-intl/format-cache-shim": "^2.4.2",
-    "@ember-intl/messageformat-shim": "^3.0.0",
+    "@ember-intl/format-cache-shim": "^3.0.0",
+    "@ember-intl/messageformat-shim": "^4.0.1",
     "@ember-intl/polyfill": "^0.0.1",
-    "@ember-intl/relativeformat-shim": "^3.1.0",
+    "@ember-intl/relativeformat-shim": "^4.0.1",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-cldr-data": "^1.1.0",
     "broccoli-funnel": "^1.2.0",
