@@ -25,6 +25,7 @@
     "start": "ember server",
     "build": "ember build",
     "tests-node": "./node_modules/mocha/bin/mocha tests-node/**/*.*",
+    "tests-node:dev": "npm run tests-node -- --inspect-brk --watch",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
     "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json",
