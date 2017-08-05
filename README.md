@@ -24,7 +24,7 @@ Depending on your projects targeted browsers, the Intl.JS polyfill may be necess
 
 ## Documentation
 
-Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs) folder.
+Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/2.x/docs) folder.
 
 ## Translations
 Translations are defined in [ICU message syntax][ICU] and store in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
@@ -78,7 +78,7 @@ export default Ember.Component.extend({
 
 #### Format Number Options
 
-[List of supported format number options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-number-options.md)
+[List of supported format number options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-number-options.md)
 
 ### Format Date
 
@@ -103,7 +103,7 @@ export default Ember.Component.extend({
 
 #### Format Date Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-date-time-options.md)
 
 ### Format Time
 
@@ -128,7 +128,7 @@ export default Ember.Component.extend({
 ```
 
 #### Format Time Options
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-date-time-options.md)
 
 ### Format Relative
 
@@ -171,7 +171,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 
 #### Format Relative Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-relative-options.md)
 
 ### Format Message
 
@@ -310,12 +310,12 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 ## Asynchronously loading translations
 
 Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.  
-https://github.com/ember-intl/ember-intl/blob/master/docs/asynchronously-loading-translations.md
+https://github.com/ember-intl/ember-intl/blob/2.x/docs/asynchronously-loading-translations.md
 
 ### Testing with ember-intl
 
-* [Unit testing](https://github.com/ember-intl/ember-intl/blob/master/docs/unit-testing.md)
-* [Integration testing](https://github.com/ember-intl/ember-intl/blob/master/docs/integration-testing.md)
+* [Unit testing](https://github.com/ember-intl/ember-intl/blob/2.x/docs/unit-testing.md)
+* [Integration testing](https://github.com/ember-intl/ember-intl/blob/2.x/docs/integration-testing.md)
 
 ## Common Errors
 
@@ -338,7 +338,7 @@ The solution is the ensure that the value you are passing in is in a format whic
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
 [travis]: https://travis-ci.org/ember-intl/ember-intl
-[travis-badge]: https://img.shields.io/travis/ember-intl/ember-intl/master.svg?style=flat-square
+[travis-badge]: https://img.shields.io/travis/ember-intl/ember-intl/2.x.svg?style=flat-square
 [embadge]: http://embadge.io/
 [ember-badge]: http://embadge.io/v1/badge.svg?start=1.13.0
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
