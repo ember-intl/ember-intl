@@ -2,6 +2,15 @@
 # yarn lockfile v1
 
 
+"@ember-intl/broccoli-cldr-data@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/broccoli-cldr-data/-/broccoli-cldr-data-2.0.0.tgz#40ecfb8464a78891bf3f08fed8c6dbb60da75cf3"
+  dependencies:
+    "@ember-intl/formatjs-extract-cldr-data" "^4.0.0"
+    broccoli-caching-writer "^3.0.3"
+    mkdirp "^0.5.1"
+    serialize-javascript "^1.3.0"
+
 "@ember-intl/format-cache-shim@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@ember-intl/format-cache-shim/-/format-cache-shim-3.0.0.tgz#7bc3ff5d0525f9bc5fa8519ef660a46f3f20310f"
@@ -10,6 +19,17 @@
     broccoli-source "^1.1.0"
     ember-cli-babel "^6.7.1"
     intl-format-cache "^2.0.5"
+
+"@ember-intl/formatjs-extract-cldr-data@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-4.0.0.tgz#7c3caf61f6160c38a2c58fc1a3d01d1a0a0b5b9f"
+  dependencies:
+    cldr-core "^31.0.1"
+    cldr-dates-full "^31.0.1"
+    cldr-numbers-full "^31.0.1"
+    glob "^5.0.1"
+    make-plural "^2.1.3"
+    uglify-js "^2.6.2"
 
 "@ember-intl/messageformat-parser-shim@^3.0.0":
   version "3.0.0"
@@ -1251,15 +1271,6 @@ broccoli-caching-writer@^3.0.3:
     rsvp "^3.0.17"
     walk-sync "^0.3.0"
 
-broccoli-cldr-data@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.0.tgz#20770e87e6fcad61c3d9494920660669f9c23b6c"
-  dependencies:
-    broccoli-caching-writer "^3.0.3"
-    formatjs-extract-cldr-data "^2.0.0"
-    mkdirp "^0.5.1"
-    serialize-javascript "^1.3.0"
-
 broccoli-clean-css@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/broccoli-clean-css/-/broccoli-clean-css-1.1.0.tgz#9db143d9af7e0ae79c26e3ac5a9bb2d720ea19fa"
@@ -1763,21 +1774,17 @@ circular-json@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.1.tgz#be8b36aefccde8b3ca7aa2d6afc07a37242c0d2d"
 
-cldr-core@28.0.0:
-  version "28.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-28.0.0.tgz#46db6208292da7fe9f03b7b79f8ca90ceb84c6ad"
-
 cldr-core@^31.0.1:
   version "31.0.1"
   resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-31.0.1.tgz#24b3d59359ef890595665e5a8ca29e53901c6d54"
 
-cldr-dates-full@28.0.0:
-  version "28.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-28.0.0.tgz#a46e52cc9221c68ea58b66664a8b98ae6ba8d962"
+cldr-dates-full@^31.0.1:
+  version "31.0.1"
+  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-31.0.1.tgz#c49a4740250646148cfb55e02f20d7ae2c917f89"
 
-cldr-numbers-full@28.0.0:
-  version "28.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-28.0.0.tgz#491334c2188a2d11761758a7572c3f52e1f77f7a"
+cldr-numbers-full@^31.0.1:
+  version "31.0.1"
+  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-31.0.1.tgz#a78774e1544fbf9616d8f6812a312b10f4aaafbe"
 
 clean-base-url@^1.0.0:
   version "1.0.0"
@@ -2147,13 +2154,6 @@ deep-extend@~0.4.0:
 deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
-
-define-properties@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/define-properties/-/define-properties-1.1.2.tgz#83a73f2fea569898fb737193c8f873caf6d45c94"
-  dependencies:
-    foreach "^2.0.5"
-    object-keys "^1.0.8"
 
 defined@^1.0.0:
   version "1.0.0"
@@ -3274,10 +3274,6 @@ for-own@^0.1.4:
   dependencies:
     for-in "^1.0.1"
 
-foreach@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/foreach/-/foreach-2.0.5.tgz#0bee005018aeb260d0a3af3ae658dd0136ec1b99"
-
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
@@ -3289,18 +3285,6 @@ form-data@~2.1.1:
     asynckit "^0.4.0"
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
-
-formatjs-extract-cldr-data@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-2.0.0.tgz#34f970fa58e9f4b4c2bb1bcf36202e39fd100afb"
-  dependencies:
-    cldr-core "28.0.0"
-    cldr-dates-full "28.0.0"
-    cldr-numbers-full "28.0.0"
-    glob "^5.0.1"
-    make-plural "^2.1.3"
-    object.assign "^4.0.3"
-    uglify-js "^2.6.2"
 
 forwarded@~0.1.0:
   version "0.1.0"
@@ -3414,10 +3398,6 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2:
     inherits "~2.0.0"
     mkdirp ">=0.5 0"
     rimraf "2"
-
-function-bind@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -4845,21 +4825,9 @@ object-component@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/object-component/-/object-component-0.0.3.tgz#f0c69aa50efc95b866c186f400a33769cb2f1291"
 
-object-keys@^1.0.10, object-keys@^1.0.8:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
-
 object-keys@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-0.4.0.tgz#28a6aae7428dd2c3a92f3d95f21335dd204e0336"
-
-object.assign@^4.0.3:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.0.4.tgz#b1c9cc044ef1b9fe63606fc141abbb32e14730cc"
-  dependencies:
-    define-properties "^1.1.2"
-    function-bind "^1.1.0"
-    object-keys "^1.0.10"
 
 object.omit@^2.0.0:
   version "2.0.1"
@@ -5598,8 +5566,8 @@ send@0.15.3:
     statuses "~1.3.1"
 
 serialize-javascript@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.3.0.tgz#86a4f3752f5c7e47295449b0bbb63d64ba533f05"
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.4.0.tgz#7c958514db6ac2443a8abc062dc9f7886a7f6005"
 
 serve-static@1.12.3:
   version "1.12.3"

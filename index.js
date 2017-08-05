@@ -8,9 +8,9 @@
 'use strict';
 
 const { WatchedDir, UnwatchedDir } = require('broccoli-source');
+const extract = require('@ember-intl/broccoli-cldr-data');
 const stringify = require('json-stable-stringify');
 const mergeTrees = require('broccoli-merge-trees');
-const extract = require('broccoli-cldr-data');
 const funnel = require('broccoli-funnel');
 const existsSync = require('exists-sync');
 const walkSync = require('walk-sync');

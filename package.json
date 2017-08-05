@@ -32,12 +32,12 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
+    "@ember-intl/broccoli-cldr-data": "^2.0.0",
     "@ember-intl/format-cache-shim": "^3.0.0",
     "@ember-intl/messageformat-shim": "^4.0.1",
     "@ember-intl/polyfill": "^0.0.3",
     "@ember-intl/relativeformat-shim": "^4.0.1",
     "broccoli-caching-writer": "^3.0.3",
-    "broccoli-cldr-data": "^1.1.0",
     "broccoli-funnel": "^1.2.0",
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-source": "^1.1.0",
