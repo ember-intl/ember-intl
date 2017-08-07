@@ -82,15 +82,22 @@ module.exports = {
     this.processAddons(this.project.addons, addonNodes);
 
     let nodes = [...addonNodes];
-    let projectTranslationPath = path.join(this.app.project.root, this._options.inputPath);
+    let extensionAddon = this.project.addons.find(addon => addon['ember-intl-ext']);
 
-    if (existsSync(projectTranslationPath)) {
-      let projectTranslationTree = this.treeGenerator(projectTranslationPath);
+    if (extensionAddon && extensionAddon.generateTranslationTree) {
+      let projectTranslationTree = extensionAddon.generateTranslationTree(this.app, this._options.inputPath);
       nodes.push(projectTranslationTree);
+    } else {
+      let projectTranslationPath = path.join(this.app.project.root, this._options.inputPath);
+
+      if (existsSync(projectTranslationPath)) {
+        let projectTranslationTree = this.treeGenerator(projectTranslationPath);
+        nodes.push(projectTranslationTree);
+      }
     }
 
     let translationNodes = mergeTrees(nodes, { overwrite: true });
-    let plugins = [...registry.registeredForType('intl'), ...registry.registeredForType('i18n')];
+    let plugins = registry.registeredForType('intl');
 
     if (plugins.length > 0) {
       plugins.forEach(preprocessor => {
@@ -310,7 +317,7 @@ module.exports = {
     }
 
     return funnel(mergeTrees(trees), {
-      include: ['**/*.yaml', '**/*.yml', '**/*.json']
+      include: ['**/*.{yaml,yml,json}']
     });
   },
 
