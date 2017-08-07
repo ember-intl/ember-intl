@@ -44,32 +44,32 @@ module.exports = {
     if (this._isHost) {
       this._options = this.intlConfig(host.env);
       this._hostsLocales = this.findLocales();
-
-      this._plugins = this.registerPlugins(this.project.addons, {
-        locales: this._hostsLocales.slice(0),
-        polyfill: {
-          enabled: !this._options.disablePolyfill,
-          insertScripts: this._options.autoPolyfill
-        }
+      this._plugins = this.lookupPlugins(this.project.addons);
+      this._plugins.forEach(plugin => {
+        plugin.initializePlugin &&
+          plugin.initializePlugin(
+            Object.assign(
+              {},
+              {
+                locales: this._hostsLocales.slice(0),
+                polyfill: {
+                  enabled: !this._options.disablePolyfill,
+                  insertScripts: this._options.autoPolyfill
+                }
+              }
+            )
+          );
       });
-
       this._translationTree = this.buildTranslationTree();
     }
   },
 
-  registerPlugins(addons, initialState, plugins = []) {
-    addons.forEach(addon => this.registerPlugin(addon, initialState, plugins));
+  lookupPlugins(addons, registry = []) {
+    let plugins = addons.filter(addon => addon.intlPlugin);
+    let newRegistry = registry.concat(plugins);
+    plugins.forEach(addon => this.lookupPlugins(addon.addons, newRegistry));
 
-    return plugins;
-  },
-
-  registerPlugin(addon, initialState, plugins) {
-    if (addon['ember-intl-ext'] && addon.onRegisterPlugin) {
-      addon.onRegisterPlugin(Object.assign({}, initialState));
-      plugins.push(addon);
-    }
-
-    this.registerPlugins(addon.addons, initialState, plugins);
+    return newRegistry;
   },
 
   /*
