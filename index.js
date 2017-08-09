@@ -19,6 +19,12 @@ const path = require('path');
 const utils = require('./lib/utils');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 
+function tryInvoke(obj, methodName, args) {
+  if (obj && typeof obj[methodName] === 'function') {
+    return obj[methodName].apply(obj, args);
+  }
+}
+
 module.exports = {
   name: 'ember-intl',
   isLocalizationFramework: true,
@@ -35,6 +41,13 @@ module.exports = {
   /** @private **/
   _hostsLocales: null,
 
+  /** @private **/
+  _pluginsInitialized: false,
+
+  isDevelopingAddon() {
+    return true;
+  },
+
   included(app) {
     this._super.included.apply(this, arguments);
 
@@ -44,56 +57,63 @@ module.exports = {
     if (this._isHost) {
       this._options = this.intlConfig(host.env);
       this._hostsLocales = this.findLocales();
-      this._plugins = this.lookupPlugins(this.project.addons);
-      this._plugins.forEach(plugin => {
-        plugin.initializePlugin &&
-          plugin.initializePlugin(
-            Object.assign(
-              {},
-              {
-                locales: this._hostsLocales.slice(0),
-                polyfill: {
-                  enabled: !this._options.disablePolyfill,
-                  insertScripts: this._options.autoPolyfill
-                }
-              }
-            )
-          );
-      });
-      this._translationTree = this.buildTranslationTree();
+      this._plugins = this.lookupIntlPlugins(this.project.addons);
+      this.initializePlugins();
+      this._translationTree = this.buildTranslationNode();
     }
   },
 
-  lookupPlugins(addons, registry = []) {
+  initializePlugins() {
+    if (this._pluginsInitialized) {
+      return;
+    }
+
+    this._pluginsInitialized = true;
+    let pluginOptions = {
+      locales: this._hostsLocales.slice(0),
+      polyfill: {
+        enabled: !this._options.disablePolyfill,
+        insertScripts: this._options.autoPolyfill
+      }
+    };
+
+    this._plugins.forEach(plugin => tryInvoke(plugin, 'initializePlugin', pluginOptions));
+  },
+
+  lookupIntlPlugins(addons, registry = []) {
     let plugins = addons.filter(addon => addon.intlPlugin);
     let newRegistry = registry.concat(plugins);
-    plugins.forEach(addon => this.lookupPlugins(addon.addons, newRegistry));
+    plugins.forEach(addon => this.lookupIntlPlugins(addon.addons, newRegistry));
 
     return newRegistry;
   },
 
   /*
-   * @method buildTranslationTree
+   * @method buildTranslationNode
    * @private
    */
-  buildTranslationTree() {
+  buildTranslationNode() {
     let registry = this.app.registry;
     let addonNodes = [];
     this.processAddons(this.project.addons, addonNodes);
 
     let nodes = [...addonNodes];
-    let projectTranslationPath = path.join(this.app.project.root, this._options.inputPath);
+    let hostTranslationPath = path.join(this.app.project.root, this._options.inputPath);
+    /* TODO: support multiple buildTranslationNode extensions */
+    let buildExtension = this._plugins.find(plugin => typeof plugin.buildTranslationNode === 'function');
 
-    if (existsSync(projectTranslationPath)) {
-      let projectTranslationTree = this.treeGenerator(projectTranslationPath);
+    if (buildExtension) {
+      nodes.push(buildExtension.buildTranslationNode(this.app, hostTranslationPath));
+    } else if (existsSync(hostTranslationPath)) {
+      let projectTranslationTree = this.treeGenerator(hostTranslationPath);
       nodes.push(projectTranslationTree);
     }
 
     let translationNodes = mergeTrees(nodes, { overwrite: true });
-    let plugins = [...registry.registeredForType('intl'), ...registry.registeredForType('i18n')];
+    let preprocessors = registry.registeredForType('intl');
 
-    if (plugins.length > 0) {
-      plugins.forEach(preprocessor => {
+    if (preprocessors.length > 0) {
+      preprocessors.forEach(preprocessor => {
         translationNodes = preprocessor.toTree.call(preprocessor, translationNodes);
       });
     }
@@ -104,7 +124,7 @@ module.exports = {
   /*
    * @method processAddons
    * @param {array} array of addon models
-   * @param {array} array of broccoli node/tree/directories
+   * @param {array} array of broccoli node
    * @private
    */
   processAddons(addons, nodes) {
@@ -114,7 +134,7 @@ module.exports = {
   /*
   * @method processAddon
   * @param {object} addon model
-  * @param {array} array of broccoli node/tree/directories
+  * @param {array} array of broccoli node
   * @private
   */
   processAddon(addon, nodes) {
@@ -122,8 +142,7 @@ module.exports = {
     let translationTree;
 
     if (existsSync(addonTranslationPath)) {
-      let shouldWatch = addon.isDevelopingAddon && addon.isDevelopingAddon();
-      let MaybeWatchDir = shouldWatch ? WatchedDir : UnwatchedDir;
+      let MaybeWatchDir = addon.isDevelopingAddon() ? WatchedDir : UnwatchedDir;
       translationTree = new MaybeWatchDir(addonTranslationPath);
     }
 
