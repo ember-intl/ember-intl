@@ -19,27 +19,18 @@ const path = require('path');
 const utils = require('./lib/utils');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 
-function tryInvoke(obj, methodName, args) {
-  if (obj && typeof obj[methodName] === 'function') {
-    return obj[methodName].apply(obj, args);
-  }
-}
-
 module.exports = {
   name: 'ember-intl',
   isLocalizationFramework: true,
 
   /** @private **/
-  _options: null,
+  addonConfig: null,
 
   /** @private **/
   _isHost: false,
 
   /** @private **/
   _translationTree: null,
-
-  /** @private **/
-  _hostsLocales: null,
 
   /** @private **/
   _pluginsInitialized: false,
@@ -55,8 +46,7 @@ module.exports = {
     this._isHost = app === host;
 
     if (this._isHost) {
-      this._options = this.intlConfig(host.env);
-      this._hostsLocales = this.findLocales();
+      this.addonConfig = this.intlConfig(host.env);
       this._plugins = this.lookupIntlPlugins(this.project.addons);
       this.initializePlugins();
       this._translationTree = this.buildTranslationNode();
@@ -69,15 +59,7 @@ module.exports = {
     }
 
     this._pluginsInitialized = true;
-    let pluginOptions = {
-      locales: this._hostsLocales.slice(0),
-      polyfill: {
-        enabled: !this._options.disablePolyfill,
-        insertScripts: this._options.autoPolyfill
-      }
-    };
-
-    this._plugins.forEach(plugin => tryInvoke(plugin, 'initializePlugin', pluginOptions));
+    this._plugins.forEach(plugin => utils.tryInvoke(plugin, 'initializePlugin', this.addonConfig));
   },
 
   lookupIntlPlugins(addons, registry = []) {
@@ -98,7 +80,7 @@ module.exports = {
     this.processAddons(this.project.addons, addonNodes);
 
     let nodes = [...addonNodes];
-    let hostTranslationPath = path.join(this.app.project.root, this._options.inputPath);
+    let hostTranslationPath = path.join(this.app.project.root, this.addonConfig.inputPath);
     /* TODO: support multiple buildTranslationNode extensions */
     let buildExtension = this._plugins.find(plugin => typeof plugin.buildTranslationNode === 'function');
 
@@ -175,10 +157,10 @@ module.exports = {
     if (appTree) {
       trees.push(appTree);
 
-      if (this._hostsLocales.length) {
+      if (this.addonConfig.locales.length) {
         trees.push(
           extract(appTree, {
-            locales: this._hostsLocales,
+            locales: this.addonConfig.locales,
             relativeFields: true,
             destDir: 'cldrs',
             prelude: '/*jslint eqeq: true*/\n',
@@ -188,7 +170,7 @@ module.exports = {
       }
     }
 
-    if (!this._options.publicOnly && this._translationTree) {
+    if (!this.addonConfig.publicOnly && this._translationTree) {
       trees.push(
         this.processTranslationTree(this._translationTree, {
           filename: key => `${key}.js`,
@@ -205,7 +187,7 @@ module.exports = {
       return;
     }
 
-    if (this._options.publicOnly && this._translationTree) {
+    if (this.addonConfig.publicOnly && this._translationTree) {
       return this.processTranslationTree(this._translationTree);
     }
   },
@@ -249,24 +231,10 @@ module.exports = {
     return {};
   },
 
-  intlConfig(environment) {
-    let deprecatedConfig = this.app.project.config(environment)['intl'];
-    let addonConfig = Object.assign(this.readConfig(environment), deprecatedConfig || {});
-
-    if (deprecatedConfig) {
-      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.log('Run `ember g ember-intl-config` to create a default config');
-    }
-
-    if (addonConfig.defaultLocale) {
-      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
-      this.log('Please update config/ember-intl.js or config/environment.js');
-      addonConfig.baseLocale = addonConfig.defaultLocale;
-    }
-
-    addonConfig = Object.assign(
+  intlConfig(env) {
+    let addonConfig = Object.assign(
       {
-        locales: null,
+        locales: [],
         baseLocale: null,
         publicOnly: false,
         disablePolyfill: false,
@@ -274,39 +242,15 @@ module.exports = {
         inputPath: 'translations',
         outputPath: 'translations'
       },
-      addonConfig
+      this.readConfig(env)
     );
 
-    if (addonConfig.locales) {
-      addonConfig.locales = utils
-        .castArray(addonConfig.locales)
-        .filter(locale => typeof locale === 'string')
-        .map(locale => locale.toLocaleLowerCase());
+    if (!addonConfig.locales) {
+      addonConfig.locales = [];
     }
 
-    return addonConfig;
-  },
-
-  findLocales() {
-    let locales = [];
-    let projectTranslationPath = path.join(this.app.project.root, this._options.inputPath);
-
-    if (existsSync(projectTranslationPath)) {
-      locales = locales.concat(
-        walkSync(projectTranslationPath, {
-          directories: false
-        }).map(filename => {
-          return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
-        })
-      );
-    }
-
-    if (this._options.locales) {
-      locales = locales.concat(this._options.locales);
-    }
-
-    locales = locales.concat(
-      locales.filter(locale => {
+    addonConfig.locales = utils.unique(
+      addonConfig.locales.concat(this.discoverLocales(addonConfig.inputPath)).filter(locale => {
         if (utils.isSupportedLocale(locale)) {
           return true;
         }
@@ -317,7 +261,26 @@ module.exports = {
       })
     );
 
-    return utils.unique(locales);
+    addonConfig.locales = utils
+      .castArray(addonConfig.locales)
+      .filter(locale => typeof locale === 'string')
+      .map(locale => locale.toLocaleLowerCase());
+
+    return addonConfig;
+  },
+
+  discoverLocales(inputPath) {
+    let projectTranslationPath = path.join(this.app.project.root, inputPath);
+
+    if (existsSync(projectTranslationPath)) {
+      return walkSync(projectTranslationPath, {
+        directories: false
+      }).map(filename => {
+        return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
+      });
+    }
+
+    return [];
   },
 
   mergeTranslationTrees(projectTranslations, addonTranslations) {
@@ -338,7 +301,7 @@ module.exports = {
 
     return new TranslationReducer(
       node,
-      Object.assign({}, this._options, opts, {
+      Object.assign({}, this.addonConfig, opts, {
         verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
         log() {
           return addon.log.apply(addon, arguments);

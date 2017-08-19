@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-module.exports = function(environment) {
+module.exports = function(/* env */) {
   return {
     /**
     * The locales that are application supports.
@@ -29,25 +29,6 @@ module.exports = function(environment) {
     baseLocale: null,
 
     /**
-    * autoPolyfill, when true will automatically inject the IntlJS polyfill
-    * into index.html
-    *
-    * @property autoPolyfill
-    * @type {Boolean}
-    * @default "false"
-    */
-    autoPolyfill: false,
-
-    /**
-    * disablePolyfill prevents the polyfill from being bundled in the asset folder of the build
-    *
-    * @property disablePolyfill
-    * @type {Boolean}
-    * @default "false"
-    */
-    disablePolyfill: false,
-
-    /**
     * prevents the translations from being bundled with the application code.
     * This enables asynchronously loading the translations for the active locale
     * by fetching them from the asset folder of the build.
@@ -58,6 +39,17 @@ module.exports = function(environment) {
     * @type {Boolean}
     * @default "false"
     */
-    publicOnly: false
+    publicOnly: false,
+
+    /**
+    * Path where translations are kept.  This is relative to the project root.
+    * For example, if your translations are an npm dependency, set this to:
+    *`'./node_modules/path/to/translations'`
+    *
+    * @property inputPath
+    * @type {String}
+    * @default "translations"
+     */
+    inputPath: 'translations'
   };
 };
