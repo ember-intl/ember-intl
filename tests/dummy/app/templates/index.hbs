@@ -37,18 +37,14 @@
 <section>
   <h3>Format Message</h3>
   <div class="introduction">Formats <a href="https://formatjs.io/guides/message-syntax/">ICU message syntax</a> strings with the provided values passed as arguments to the helper/method.</div>
-  <div>
-    {{t 'product.info' product='Widget' price=100 deadline=tomorrow}}
-    {{format-message 'Hello {name}' name=model.firstName}}
-  </div>
+  <div>{{t 'product.info' product='Widget' price=100 deadline=tomorrow}}</div>
+  <div>{{format-message 'Hello {name}' name=model.firstName}}</div>
   {{code-snippet name='format-message.hbs'}}
 </section>
 
 <section>
   <h3>Format HTML Message</h3>
-  <div>
-    {{t 'product.html.info' htmlSafe=true product='Widget' price=100 deadline=tomorrow}}
-    {{format-message '<strong>Hello {name}</strong>' htmlSafe=true name=model.firstName}}
-  </div>
+  <div>{{t 'product.html.info' htmlSafe=true product='Widget' price=100 deadline=tomorrow}}</div>
+  <div>{{format-message '<strong>Hello {name}</strong>' htmlSafe=true name=model.firstName}}</div>
   {{code-snippet name='format-message-html.hbs'}}
 </section>
