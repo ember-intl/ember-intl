@@ -3,7 +3,4 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import initializer, { instanceInitializer } from 'ember-intl/initializer';
-
-export { instanceInitializer };
-export default initializer;
+export { default } from 'ember-intl/-private/initializer';

@@ -17,16 +17,9 @@ import { deprecate } from '@ember/application/deprecations';
 
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
-import EmptyObject from 'ember-intl/utils/empty-object';
 
-import links from '../utils/links';
-import isArrayEqual from '../utils/is-equal';
-import normalizeLocale from '../utils/normalize-locale';
-import FormatDate from '../formatters/format-date';
-import FormatTime from '../formatters/format-time';
-import FormatNumber from '../formatters/format-number';
-import FormatMessage from '../formatters/format-message';
-import FormatRelative from '../formatters/format-relative';
+import { links, isArrayEqual, EmptyObject, normalizeLocale } from '../-private/utils';
+import { FormatDate, FormatTime, FormatNumber, FormatMessage, FormatRelative } from '../-private/formatters';
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {

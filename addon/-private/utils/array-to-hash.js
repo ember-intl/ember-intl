@@ -1,4 +1,4 @@
-import EmptyObject from 'ember-intl/utils/empty-object';
+import EmptyObject from './empty-object';
 
 /**
  * Copyright 2015, Yahoo! Inc.

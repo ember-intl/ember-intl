@@ -1,6 +1,6 @@
 import { isEmpty } from '@ember/utils';
 import { warn } from '@ember/debug';
-import links from './links';
+import links from '../-private/utils/links';
 
 export default function missingMessage(key, locales) {
   if (isEmpty(locales)) {

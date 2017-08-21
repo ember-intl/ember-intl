@@ -3,15 +3,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { deprecate } from '@ember/application/deprecations';
-
-export function instanceInitializer() {
-  deprecate('[ember-intl] instance initializer is deprecated, no longer necessary to call in testing.', false, {
-    id: 'ember-intl-instance-initalizer',
-    until: '3.0.0'
-  });
-}
-
 export default {
   name: 'ember-intl',
   initialize(instance) {
