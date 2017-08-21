@@ -277,16 +277,6 @@ const IntlService = Service.extend(Evented, {
   },
 
   /** @public **/
-  createLocale(localeName, payload) {
-    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
-      id: 'ember-intl-create-locale',
-      until: '3.0.0'
-    });
-
-    return this.addTranslations(localeName, payload);
-  },
-
-  /** @public **/
   findTranslationByKey(key, localeName, options) {
     return this.lookup(key, localeName, options);
   },
