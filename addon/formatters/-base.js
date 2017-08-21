@@ -4,7 +4,7 @@
  */
 
 import { camelize } from '@ember/string';
-import EmberObject, { get } from '@ember/object';
+import EmberObject from '@ember/object';
 
 import arrayToHash from '../utils/array-to-hash';
 import links from '../utils/links';
@@ -72,7 +72,7 @@ const FormatterBase = EmberObject.extend({
       );
     }
 
-    return get(this, 'formatter')(locale, formatterOptions).format(value, formatOptions);
+    return this.formatter(locale, formatterOptions).format(value, formatOptions);
   }
 });
 

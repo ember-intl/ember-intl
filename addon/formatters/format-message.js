@@ -5,7 +5,6 @@
 
 import Ember from 'ember';
 import { htmlSafe } from '@ember/string';
-import { computed, get } from '@ember/object';
 import createFormatCache from 'intl-format-cache';
 import IntlMessageFormat from 'intl-messageformat';
 
@@ -14,11 +13,7 @@ import Formatter from './-base';
 const { Handlebars } = Ember;
 
 const FormatMessage = Formatter.extend({
-  formatter: computed({
-    get() {
-      return createFormatCache(IntlMessageFormat);
-    }
-  }).readOnly(),
+  formatter: createFormatCache(IntlMessageFormat),
 
   escapeProps(options) {
     if (!options) {
@@ -41,7 +36,7 @@ const FormatMessage = Formatter.extend({
   format(value, options, { formats, locale }) {
     let isHTMLSafe = options && options.htmlSafe;
     let _options = isHTMLSafe ? this.escapeProps(options) : options;
-    let result = get(this, 'formatter')(value, locale, formats).format(_options);
+    let result = this.formatter(value, locale, formats).format(_options);
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }

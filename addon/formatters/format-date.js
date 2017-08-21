@@ -4,7 +4,6 @@
  */
 
 import { assert } from '@ember/debug';
-import { computed } from '@ember/object';
 import createFormatCache from 'intl-format-cache';
 
 import Formatter from './-base';
@@ -14,19 +13,15 @@ function assertIsDate(date, errMsg) {
 }
 
 const FormatDate = Formatter.extend({
-  formatter: computed({
-    get() {
-      return createFormatCache(Intl.DateTimeFormat);
-    }
-  }).readOnly(),
+  formatter: createFormatCache(Intl.DateTimeFormat),
 
   format(value, options, ctx) {
     const dateTime = new Date(value);
     assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
 
-    const formatOptions = this.filterSupporedOptions(options);
+    const _options = this.filterSupporedOptions(options);
 
-    return this._format(dateTime, formatOptions, undefined, ctx);
+    return this._format(dateTime, _options, undefined, ctx);
   }
 });
 

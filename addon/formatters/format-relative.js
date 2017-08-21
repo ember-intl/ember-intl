@@ -4,7 +4,6 @@
  */
 
 import { assert } from '@ember/debug';
-import { computed } from '@ember/object';
 import createFormatCache from 'intl-format-cache';
 import IntlRelativeFormat from 'intl-relativeformat';
 
@@ -15,11 +14,7 @@ function assertIsDate(date, errMsg) {
 }
 
 const FormatRelative = Formatter.extend({
-  formatter: computed({
-    get() {
-      return createFormatCache(IntlRelativeFormat);
-    }
-  }).readOnly(),
+  formatter: createFormatCache(IntlRelativeFormat),
 
   format(value, options, ctx) {
     let dateValue = new Date(value);
