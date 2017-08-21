@@ -24,10 +24,6 @@ export default BaseHelper.extend({
   getValue,
 
   format(value, options) {
-    if (options && options.htmlSafe === true) {
-      return this.intl.formatHtmlMessage(value, options);
-    }
-
     return this.intl.formatMessage(value, options);
   }
 });

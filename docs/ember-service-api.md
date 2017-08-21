@@ -68,10 +68,27 @@ Outputs:
 
 > watch will cost $300
 
-By default, ember-intl's `t` method and `formatMessage` will return a String literal.  If your translations contain HTML markup and you want to use the output in a template, you'll want to escape all user input and wrap the output in an `Ember.String.htmlSafe()`.  This is all built into ember-intl in both the `t` and `formatHtmlMessage` methods.  For the `t` method, you'll want to supply `htmlSafe: true` in the second argument options hash.
+By default, ember-intl's `t` method and `formatMessage` will return a String literal.  If your translations contain HTML markup and you want to use the output in a template, you'll want to escape all user input and wrap the output in an `Ember.String.htmlSafe()`.
+
+To mark the ICU message string as html-safe supply the `htmlSafe` attribute to the either the helper or service API.
+
+```hbs
+{{t 'title.header' htmlSafe=true}}
+```
 
 ```js
 this.intl.t('title.header', { htmlSafe: true });
+```
+
+```js
+this.intl.formatMessage('<strong>hello {name}</strong>', {
+  name: model.firstName,
+  htmlSafe: true
+});
+```
+
+```hbs
+{{format-message '<strong>hello {name}</strong>' htmlSafe=true}}
 ```
 
 **formatMessage** _(translation:String, optionalOptions:Object, optionalFormats:Object)_
@@ -89,25 +106,6 @@ this.get('intl').formatMessage('{name} will cost {price, number, USD}', {
 Outputs:
 
 > watch will cost $300
-
-**formatHtmlMessage** _(value:String, optionalOptions:Object, optionalFormats:Object)_
-
-`formatHtmlMessage` formats a translation string and returns an
-`Handlebars.SafeString`.  This is useful for rendering translations containing
-HTML markup.  Since options can contain unsafe markup, all attribute hash
-values are escaped.
-
-```js
-this.get('intl').formatHtmlMessage('<strong>{firstName}</strong> {lastName}', {
-  firstName: 'John',
-  lastName: '<em>Doe</em>'
-});
-```
-
-Outputs:
-> **John** \<em\>Doe\</em\>
-
-Note, the Doe is escaped and does not return markup.
 
 **formatNumber** _(value:Number, optionalOptions:Object)_
 

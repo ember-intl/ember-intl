@@ -1,9 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
-import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
-import expectError from '../../helpers/expect-error';
 
-moduleForComponent('format-html-message', {
+moduleForComponent('format-message', {
   integration: true,
   beforeEach() {
     this.inject.service('intl');
@@ -12,15 +10,11 @@ moduleForComponent('format-html-message', {
   }
 });
 
-test('exists', function(assert) {
-  assert.expect(1);
-  assert.ok(formatHtmlHelper);
-});
-
-test('invoke the formatHTMLMessage directly', function(assert) {
+test('invoke the formatMessage directly', function(assert) {
   assert.expect(1);
   assert.equal(
-    this.intl.formatHtmlMessage('<strong>Hello {name} {count, number}</strong>', {
+    this.intl.formatMessage('<strong>Hello {name} {count, number}</strong>', {
+      htmlSafe: true,
       name: '<em>Jason</em>',
       count: 42000
     }).string,
@@ -28,10 +22,11 @@ test('invoke the formatHTMLMessage directly', function(assert) {
   );
 });
 
-test('invoke the formatHTMLMessage directly with inlined locale', function(assert) {
+test('invoke the formatMessage directly with inlined locale', function(assert) {
   assert.expect(1);
 
-  let output = this.intl.formatHtmlMessage('<strong>Hello {name} {count, number}</strong>', {
+  let output = this.intl.formatMessage('<strong>Hello {name} {count, number}</strong>', {
+    htmlSafe: true,
     name: '<em>Jason</em>',
     count: 42000,
     locale: 'fr-fr'
@@ -45,37 +40,24 @@ test('invoke the formatHTMLMessage directly with inlined locale', function(asser
 
 test('message is formatted correctly with argument', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message 'Hello {name}' name="Jason"}}`);
+  this.render(hbs`{{format-message 'Hello {name}' name="Jason" htmlSafe=true}}`);
   assert.equal(this.$().text(), 'Hello Jason');
-});
-
-test('should throw if called with out a value', function(assert) {
-  assert.expect(1);
-
-  expectError(
-    () => this.render(hbs`{{format-html-message}}`),
-    ex => {
-      assert.ok(
-        ex.message.match(/Assertion Failed: \[ember-intl\] no translation string provided to format-html-message\./)
-      );
-    }
-  );
 });
 
 test('should allow for inlined html in the value', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message '<strong>Hello {name}</strong>' name='Jason'}}`);
+  this.render(hbs`{{format-message '<strong>Hello {name}</strong>' name='Jason' htmlSafe=true}}`);
   assert.equal(this.$().html(), '<strong>Hello Jason</strong>');
 });
 
 test('should escape arguments', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message '{foo}' foo="<em>BAR</em>"}}`);
+  this.render(hbs`{{format-message '{foo}' foo="<em>BAR</em>"}}`);
   assert.equal(this.$().html(), '&lt;em&gt;BAR&lt;/em&gt;');
 });
 
 test('should allow for inlined html in the value but escape arguments', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message '<strong>Hello {name}</strong>' name='<em>Jason</em>'}}`);
+  this.render(hbs`{{format-message '<strong>Hello {name}</strong>' name='<em>Jason</em>' htmlSafe=true}}`);
   assert.equal(this.$().html(), '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
 });

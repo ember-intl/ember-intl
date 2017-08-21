@@ -27,7 +27,6 @@ import FormatTime from '../formatters/format-time';
 import FormatNumber from '../formatters/format-number';
 import FormatMessage from '../formatters/format-message';
 import FormatRelative from '../formatters/format-relative';
-import FormatHtmlMessage from '../formatters/format-html-message';
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
@@ -76,9 +75,6 @@ const IntlService = Service.extend(Evented, {
       return this._owner.resolveRegistration('formats:main') || {};
     }
   }),
-
-  /** @public **/
-  formatHtmlMessage: formatterProxy(FormatHtmlMessage),
 
   /** @public **/
   formatRelative: formatterProxy(FormatRelative),
@@ -199,10 +195,6 @@ const IntlService = Service.extend(Evented, {
     });
 
     const value = typeof translation === 'string' ? translation : options.fallback;
-
-    if (options && options.htmlSafe) {
-      return this.formatHtmlMessage(value, ...args);
-    }
 
     return this.formatMessage(value, ...args);
   },
