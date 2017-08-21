@@ -60,7 +60,7 @@ test('invoke formatMessage directly with formats', function(assert) {
 
 test('message is formatted correctly with argument', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message (l 'Hello {name}') name='Jason'}}`);
+  this.render(hbs`{{format-message 'Hello {name}' name='Jason'}}`);
   assert.equal(this.$().text(), 'Hello Jason');
 });
 
@@ -71,9 +71,7 @@ test('should throw if called with out a value', function(assert) {
     () => this.render(hbs`{{format-message}}`),
     ex => {
       assert.ok(
-        ex.message.match(
-          /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
-        )
+        ex.message.match(/Assertion Failed: \[ember-intl\] no translation string provided to format-message\./)
       );
     }
   );
@@ -88,7 +86,7 @@ test('should return a formatted string', function(assert) {
     lastName: 'Pipkin'
   });
 
-  this.render(hbs`{{format-message (l MSG) firstName=firstName lastName=lastName}}`);
+  this.render(hbs`{{format-message MSG firstName=firstName lastName=lastName}}`);
 
   assert.equal(this.$().text(), 'Hi, my name is Anthony Pipkin.');
 });
@@ -105,7 +103,7 @@ test('should return a formatted string with formatted numbers and dates', functi
   });
 
   this.render(
-    hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`
+    hbs`{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}`
   );
   assert.equal(this.$().text(), 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
 });
@@ -122,7 +120,7 @@ test('should return a formatted string with formatted numbers and dates in a dif
   });
 
   this.render(
-    hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`
+    hbs`{{format-message POP_MSG city=city population=population census_date=census_date timeZone=timeZone}}`
   );
   assert.equal(this.$().text(), 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
 });
@@ -137,7 +135,7 @@ test('should return a formatted string with an `each` block', function(assert) {
 
   this.render(
     hbs`
-    {{#each harvests as |harvest|}}{{format-message (l HARVEST_MSG) person=harvest.person count=harvest.count}}{{/each}}
+    {{#each harvests as |harvest|}}{{format-message HARVEST_MSG person=harvest.person count=harvest.count}}{{/each}}
     `
   );
 
@@ -155,40 +153,15 @@ test('able to discover all register translations', function(assert) {
 
 test('should respect format options for date ICU block', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message (l 'Sale begins {day, date, shortWeekDay}') day=1390518044403}}`);
+  this.render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
 test('should return 0 instead of nothing', function(assert) {
   assert.expect(1);
   this.set('count', 0);
-  this.render(hbs`{{format-message (l '{count}') count=count}}`);
+  this.render(hbs`{{format-message '{count}' count=count}}`);
   assert.equal(this.$().text(), '0');
-});
-
-test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
-  assert.expect(1);
-
-  const translation = this.container.lookup('ember-intl@translation:en-us');
-  const fn = translation.getValue;
-
-  translation.getValue = function getValue(key) {
-    return this[key];
-  };
-
-  translation['string.path.works'] = 'yes it does';
-
-  try {
-    this.render(hbs`{{format-message (intl-get 'string.path.works')}}`);
-
-    assert.equal(this.$().text(), 'yes it does');
-  } catch (ex) {
-    // eslint-disable-next-line no-console
-    console.error(ex);
-  } finally {
-    // reset the function back
-    translation.getValue = fn;
-  }
 });
 
 test('l helper handles bound computed property', function(assert) {
@@ -205,7 +178,7 @@ test('l helper handles bound computed property', function(assert) {
   }).create();
 
   set(this, 'context', context);
-  this.render(hbs`{{format-message (l context.cp)}}`);
+  this.render(hbs`{{format-message context.cp}}`);
   assert.equal(this.$().text(), 'foo foo');
 
   run(() => {
@@ -215,35 +188,4 @@ test('l helper handles bound computed property', function(assert) {
       done();
     });
   });
-});
-
-test('intl-get handles bound computed property', function(assert) {
-  assert.expect(3);
-
-  const context = EmberObject.extend({
-    foo: true,
-    cp: computed('foo', {
-      get() {
-        return get(this, 'foo') ? 'foo.bar' : 'foo.baz';
-      }
-    })
-  }).create();
-
-  set(this, 'context', context);
-
-  this.render(hbs`{{format-message (intl-get context.cp)}}`);
-
-  assert.equal(this.$().text(), 'foo bar baz');
-
-  run(() => {
-    set(this, 'context.foo', false);
-  });
-
-  assert.equal(this.$().text(), 'baz baz baz');
-
-  run(() => {
-    context.set('foo', true);
-  });
-
-  assert.ok(context, 'Updating binding to view after view is destroyed should not raise exception.');
 });

@@ -3,8 +3,14 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import { assert } from '@ember/debug';
 import BaseHelper from './-format-base';
-import { getValue } from './format-message';
+
+export function getValue([translations]) {
+  assert('[ember-intl] no translation string provided to format-html-message.', translations);
+
+  return translations;
+}
 
 export default BaseHelper.extend({
   getValue,

@@ -202,20 +202,16 @@ export default Ember.Component.extend({
 });
 ```
 
-#### Formatting a raw ICU message
-
-This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This is useful for computed properties where you are programmatically constructing a translation string.
+#### Formatting raw ICU message string
 
 **Template Helper**
 
 ```hbs
-{{format-message
-  (l "{name} took {numPhotos, plural,
-      =0 {no photos}
-      =1 {one photo}
-      other {# photos}
-    } on {timestamp, date, long}"
-  )
+{{format-message "{name} took {numPhotos, plural,
+    =0 {no photos}
+    =1 {one photo}
+    other {# photos}
+  } on {timestamp, date, long}"
   name=user.username
   numPhotos=num
   timestamp=yesterday
@@ -255,7 +251,7 @@ Escapes all hash arguments and returns as an htmlSafe String which renders an El
   deadline=model.saleEndsOn
 }}
 
-{{format-html-message (l '<strong>{numPhotos}</strong>') numPhotos=(format-number num)}}
+{{format-html-message '<strong>{numPhotos}</strong>' numPhotos=(format-number num)}}
 ```
 
 ## Named Formats

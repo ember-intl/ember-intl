@@ -4,37 +4,12 @@
  */
 
 import { assert } from '@ember/debug';
-import { deprecate } from '@ember/application/deprecations';
-
-import { LiteralWrapper } from './l';
 import BaseHelper from './-format-base';
 
-export function getValue([key], options) {
-  if (key && key instanceof LiteralWrapper) {
-    return key.value;
-  }
+export function getValue([translations]) {
+  assert('[ember-intl] no translation string provided to format-message.', translations);
 
-  assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
-
-  deprecate(
-    `[ember-intl] {{${this
-      .helperType}}} only accepts translation strings as the first parameter.  You likely want to use the {{t}} helper instead.`,
-    false,
-    {
-      id: `ember-intl-${this.helperType}-string-literals-only`,
-      until: '3.0.0'
-    }
-  );
-
-  const { fallback, allowEmpty, defaultMessage, locale: optionalLocale } = options;
-
-  const fallbackTranslation = defaultMessage || fallback;
-
-  const translation = this.intl.lookup(key, optionalLocale, {
-    resilient: allowEmpty || typeof fallbackTranslation === 'string'
-  });
-
-  return typeof translation === 'string' ? translation : fallbackTranslation;
+  return translations;
 }
 
 export default BaseHelper.extend({

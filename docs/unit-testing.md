@@ -27,7 +27,6 @@ moduleForComponent('x-product', 'XProductComponent', {
      * Below are optional.  You only need to include to formatters and helpers
      * that are utilized within your test.
      */
-    'helper:intl-get',
     'helper:t',
     'helper:format-message',
     'helper:format-html-message',

@@ -45,7 +45,7 @@ test('invoke the formatHTMLMessage directly with inlined locale', function(asser
 
 test('message is formatted correctly with argument', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message (l "Hello {name}") name="Jason"}}`);
+  this.render(hbs`{{format-html-message 'Hello {name}' name="Jason"}}`);
   assert.equal(this.$().text(), 'Hello Jason');
 });
 
@@ -56,9 +56,7 @@ test('should throw if called with out a value', function(assert) {
     () => this.render(hbs`{{format-html-message}}`),
     ex => {
       assert.ok(
-        ex.message.match(
-          /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
-        )
+        ex.message.match(/Assertion Failed: \[ember-intl\] no translation string provided to format-html-message\./)
       );
     }
   );
@@ -66,18 +64,18 @@ test('should throw if called with out a value', function(assert) {
 
 test('should allow for inlined html in the value', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="Jason"}}`);
+  this.render(hbs`{{format-html-message '<strong>Hello {name}</strong>' name='Jason'}}`);
   assert.equal(this.$().html(), '<strong>Hello Jason</strong>');
 });
 
 test('should escape arguments', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message (l "{foo}") foo="<em>BAR</em>"}}`);
+  this.render(hbs`{{format-html-message '{foo}' foo="<em>BAR</em>"}}`);
   assert.equal(this.$().html(), '&lt;em&gt;BAR&lt;/em&gt;');
 });
 
 test('should allow for inlined html in the value but escape arguments', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="<em>Jason</em>"}}`);
+  this.render(hbs`{{format-html-message '<strong>Hello {name}</strong>' name='<em>Jason</em>'}}`);
   assert.equal(this.$().html(), '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
 });
