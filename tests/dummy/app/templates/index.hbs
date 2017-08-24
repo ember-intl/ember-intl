@@ -11,18 +11,13 @@
 </section>
 
 <section>
-  <h3>Format Date</h3>
-  <div class="introduction">Formats dates using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat"><code>Intl.DateTimeFormat</code></a>, and returns the formatted string value.</div>
-  <div>{{format-date instant}}</div>
-  <div>{{format-date yesterday}}</div>
-</section>
-
-<section>
   <h3>Format Time</h3>
-  <div class="introduction">This is just like the <code>{{format-date}}</code> helper, except it will reference any string-named format from formats.time.</div>
-  <div>{{format-time instant format='hhmmss'}}</div>
-  <div>{{format-time instant hour='numeric' second='numeric' minute='numeric' hour12=false}}</div>
-  {{code-snippet name='format-time.hbs'}}
+  <div class="introduction">Formats datetimes using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat"><code>Intl.DateTimeFormat</code></a>, and returns the formatted string value.</div>
+  <div>{{format-datetimeinstant}}</div>
+  <div>{{format-datetimeyesterday}}</div>
+  <div>{{format-datetime instant format='hhmmss'}}</div>
+  <div>{{format-datetime instant hour='numeric' second='numeric' minute='numeric' hour12=false}}</div>
+  {{code-snippet name='format-datetime.hbs'}}
 </section>
 
 <section>

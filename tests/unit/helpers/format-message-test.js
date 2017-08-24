@@ -23,7 +23,7 @@ moduleForComponent('format-message', {
     });
 
     registry.register('formats:main', {
-      date: {
+      datetime: {
         shortWeekDay: {
           timeZone: 'UTC',
           day: 'numeric',
@@ -50,7 +50,7 @@ test('invoke formatMessage directly', function(assert) {
 test('invoke formatMessage directly with formats', function(assert) {
   assert.expect(1);
   assert.equal(
-    this.intl.formatMessage('Sale begins {day, date, shortWeekDay}', {
+    this.intl.formatMessage('Sale begins {day, datetime, shortWeekDay}', {
       day: 1390518044403,
       locale: 'en_us'
     }),
@@ -153,7 +153,7 @@ test('able to discover all register translations', function(assert) {
 
 test('should respect format options for date ICU block', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  this.render(hbs`{{format-message 'Sale begins {day, datetime, shortWeekDay}' day=1390518044403}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 

@@ -111,11 +111,7 @@ Outputs:
 
 Documentation missing
 
-**formatDate** _(value:Date/Number/String, optionalOptions:Object)_
-
-Documentation missing
-
-**formatTime** _(value:Date/Number/String, optionalOptions:Object)_
+**formatDateTime** _(value:Date/Number/String, optionalOptions:Object)_
 
 Documentation missing
 

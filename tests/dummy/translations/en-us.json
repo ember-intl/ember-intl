@@ -1,9 +1,9 @@
 {
   "product": {
-    "info": "{product} will cost {price, number, USD} if ordered by {deadline, date, time}",
+    "info": "{product} will cost {price, number, USD} if ordered by {deadline, time, time}",
     "title": "Hello world!",
     "html": {
-      "info": "<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}"
+      "info": "<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, time, time}"
     }
   }
 }

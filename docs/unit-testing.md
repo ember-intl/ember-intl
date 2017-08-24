@@ -29,8 +29,7 @@ moduleForComponent('x-product', 'XProductComponent', {
      */
     'helper:t',
     'helper:format-message',
-    'helper:format-date',
-    'helper:format-time',
+    'helper:format-datetime',
     'helper:format-relative',
     'helper:format-number'
   ],

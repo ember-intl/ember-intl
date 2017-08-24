@@ -33,7 +33,7 @@ Example basic translation file `/translations/homepage/en-us.yaml`:
 
 ```yaml
 homepage:
-  banner: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
+  banner: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, time, long}'
 ```
 
 If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` install the addon `ember-intl-dot-notation`.
@@ -85,9 +85,12 @@ export default Ember.Component.extend({
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
 
 ```hbs
-{{format-date now weekday='long' timeZone='UTC'}}
-{{format-date now hour='numeric' minute='numeric' hour12=false}}
-{{format-date undefined fallback=(t 'unknown_start_date')}
+{{format-datetime now weekday='long' timeZone='UTC'}}
+{{format-datetime now hour='numeric' minute='numeric' hour12=false}}
+{{format-datetime undefined fallback=(t 'unknown_start_date')}
+{{format-datetime now format='hhmmss'}}
+{{format-datetime now hour='numeric' minute='numeric' hour12=false}}
+{{format-datetime undefined fallback=(t 'unknown_start_time')}}
 ```
 
 Or programmatically convert a date within any Ember Object.
@@ -96,39 +99,14 @@ Or programmatically convert a date within any Ember Object.
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   computedNow: Ember.computed('intl.locale', function() {
-    return this.get('intl').formatDate(new Date()/*, optional options hash */);
+    return this.get('intl').formatDateTime(new Date()/*, optional options hash */);
   })
 });
 ```
 
-#### Format Date Options
+#### Format DateTime Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
-
-### Format Time
-
-This is just like the `{{format-date}}` helper, except it will reference any string-named `format` from [`formats.time`](#dataintlformats).
-
-```hbs
-{{format-time now format='hhmmss'}}
-{{format-time now hour='numeric' minute='numeric' hour12=false}}
-{{format-time undefined fallback=(t 'unknown_start_time')}}
-```
-
-Or programmatically convert a time within any Ember Object.
-
-```js
-// example
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
-  computedNow: Ember.computed('intl.locale', function() {
-    return this.get('intl').formatTime(new Date()/*, optional options hash */);
-  })
-});
-```
-
-#### Format Time Options
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-datetime-options.md)
 
 ### Format Relative
 
@@ -211,7 +189,7 @@ export default Ember.Component.extend({
     =0 {no photos}
     =1 {one photo}
     other {# photos}
-  } on {timestamp, date, long}"
+  } on {timestamp, time, long}"
   name=user.username
   numPhotos=num
   timestamp=yesterday
@@ -256,7 +234,7 @@ Escapes all hash arguments and returns as an htmlSafe String which renders an El
 
 ## Named Formats
 
-Specifying format options (e.g.: style="currency" currency="USD") in every use of format helper can become a problem in large code bases, and isn't DRY. Instead, you can provide named formats through the use of exporting a POJO from `app/formats`. All helpers accept a `format` property which accepts a key that maps to the format option under its respected type (time, date, number, relative).
+Specifying format options (e.g.: style="currency" currency="USD") in every use of format helper can become a problem in large code bases, and isn't DRY. Instead, you can provide named formats through the use of exporting a POJO from `app/formats`. All helpers accept a `format` property which accepts a key that maps to the format option under its respected type (time, time, number, relative).
 
 For example:
 
@@ -264,7 +242,7 @@ For example:
 ```js
 // app/formats.js
 export default {
-  date: {
+  datetime: {
     hhmmss: {
       hour:   'numeric',
       minute: 'numeric',
@@ -275,11 +253,11 @@ export default {
 ```
 
 ```hbs
-{{format-date 'Thu Jan 23 2014 13:00:44' format='hhmmss'}}
+{{format-datetime Thu Jan 23 2014 13:00:44' format='hhmmss'}}
 ```
 
 ```js
-this.get('intl').formatDate('Thu Jan 23 2014 13:00:44', {
+this.get('intl').formatDateTime('Thu Jan 23 2014 13:00:44', {
   format: 'hhmmss'
 })
 ```

@@ -17,7 +17,7 @@ const FormatDate = Formatter.extend({
 
   format(value, options, ctx) {
     const dateTime = new Date(value);
-    assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
+    assertIsDate(dateTime, 'A date or timestamp must be provided to format-datetime');
 
     const _options = this.filterSupporedOptions(options);
 
@@ -26,7 +26,7 @@ const FormatDate = Formatter.extend({
 });
 
 FormatDate.reopenClass({
-  formatType: 'date',
+  formatType: 'datetime',
   supportedOptions: [
     'localeMatcher',
     'timeZone',

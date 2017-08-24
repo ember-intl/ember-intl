@@ -19,7 +19,7 @@ import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
 import { links, isArrayEqual, EmptyObject, normalizeLocale } from '../-private/utils';
-import { FormatDate, FormatTime, FormatNumber, FormatMessage, FormatRelative } from '../-private/formatters';
+import { FormatDateTime, FormatNumber, FormatMessage, FormatRelative } from '../-private/formatters';
 
 function formatterProxy(ctr) {
   return function(value, options, formats) {
@@ -79,10 +79,7 @@ const IntlService = Service.extend(Evented, {
   formatNumber: formatterProxy(FormatNumber),
 
   /** @public **/
-  formatTime: formatterProxy(FormatTime),
-
-  /** @public **/
-  formatDate: formatterProxy(FormatDate),
+  formatDateTime: formatterProxy(FormatDateTime),
 
   /** @private **/
   requirejs: requirejs,

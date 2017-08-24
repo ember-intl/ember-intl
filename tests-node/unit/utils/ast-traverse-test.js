@@ -4,7 +4,7 @@
 'use strict';
 
 let expect = require('chai').expect;
-let messageParser = require('intl-messageformat-parser');
+let messageParser = require('@ember-intl/intl-messageformat-parser');
 
 let traverse = require('../../../lib/utils/ast-traverse');
 
@@ -41,8 +41,8 @@ describe('traverse', function() {
     });
   });
 
-  it('{product} will cost {price, number, USD} if ordered by {deadline, date, time}', function() {
-    let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, date, time}`);
+  it('{product} will cost {price, number, USD} if ordered by {deadline, time, time}', function() {
+    let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, time, time}`);
 
     expect(count(ast)).to.deep.equal({
       messageFormatPattern: 1,
@@ -57,9 +57,9 @@ describe('traverse', function() {
     });
   });
 
-  it('{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.', function() {
+  it('{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, time, long}.', function() {
     let ast = messageParser.parse(
-      `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`
+      `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, time, long}.`
     );
 
     expect(count(ast)).to.deep.equal({

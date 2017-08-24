@@ -1,5 +1,5 @@
 
-Format Date & Time Options
+Format Time Options
 ==============================================================================
 
 `localeMatcher`

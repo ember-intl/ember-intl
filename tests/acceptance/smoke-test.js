@@ -34,19 +34,12 @@ test('format-number', assert => {
   });
 });
 
-test('format-date', assert => {
+test('format-datetime', assert => {
   visit('/smoke');
 
   andThen(() => {
     contains(assert, '.format-date', '1/23/2014');
-  });
-});
-
-test('format-time', assert => {
-  visit('/smoke');
-
-  andThen(() => {
-    contains(assert, '.format-time', '18:00:44');
+    contains(assert, '.format-datetime', '18:00:44');
   });
 });
 

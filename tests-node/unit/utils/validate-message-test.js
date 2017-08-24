@@ -12,9 +12,9 @@ describe('validateMessage', function() {
     'hello world',
     `hello world!`,
     `hello {name}!`,
-    `{product} will cost {price, number, USD} if ordered by {deadline, date, time}`,
-    `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`,
-    `{name} took {numPhotos, plural, =0 {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
+    `{product} will cost {price, number, USD} if ordered by {deadline, time, time}`,
+    `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, time, long}.`,
+    `{name} took {numPhotos, plural, =0 {no photos} one {one photo} other {# photos}} on {takenDate, time, long}.`,
     `{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`,
     `{ trainers, plural, offset:1
          =0 {The gym is empty}
@@ -38,8 +38,8 @@ describe('validateMessage', function() {
 
   let invalidSyntax = [
     'hello {world!',
-    `{product} will cost {price, number, USD} if ordered by {deadline, date, time, foo}`,
-    `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`
+    `{product} will cost {price, number, USD} if ordered by {deadline, time, time, foo}`,
+    `{name} took {numPhotos, plural, # photos} on {takenDate, time, long}.`
   ];
 
   invalidSyntax.forEach(message => {
@@ -59,12 +59,12 @@ describe('validateMessage', function() {
   let unknownCategory = [
     {
       locale: 'en-us',
-      message: `{name} took {numPhotos, plural, zero {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
+      message: `{name} took {numPhotos, plural, zero {no photos} one {one photo} other {# photos}} on {takenDate, time, long}.`,
       error: 'Unknown plural category: zero'
     },
     {
       locale: 'de-de',
-      message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} other {# photos}} on {takenDate, date, long}.`,
+      message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} other {# photos}} on {takenDate, time, long}.`,
       error: 'Unknown plural categories: null, eins'
     },
     {
@@ -97,7 +97,7 @@ describe('validateMessage', function() {
 
   let missingOther = [
     `{ gender, select, male {He avoids bugs} female {She avoids bugs} }`,
-    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`
+    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, time, long}.`
   ];
 
   missingOther.forEach(message => {

@@ -23,7 +23,7 @@ moduleForComponent('t', {
     });
 
     registry.register('formats:main', {
-      date: {
+      time: {
         shortWeekDay: {
           timeZone: 'UTC',
           day: 'numeric',
@@ -113,12 +113,12 @@ test('warns when no locale has been set', function(assert) {
 
 test('should fallback to with defaultMessage when key not found', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{t 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  this.render(hbs`{{t 'app.sale_begins' defaultMessage='Sale begins {day, time, shortWeekDay}' day=1390518044403}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
 test('should fallback to with fallback when key not found', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{t 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=1390518044403}}`);
+  this.render(hbs`{{t 'app.sale_begins' fallback='Sale begins {day, time, shortWeekDay}' day=1390518044403}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
