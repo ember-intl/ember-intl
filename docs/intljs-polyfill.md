@@ -2,77 +2,19 @@
 Intl.js Polyfill
 ==============================================================================
 
-ember-intl automatically writes the [Intl.js polyfill][] to `/assets/intl`.
-Using the polyfill is not required if targeting a modern set of
-browsers which natively implement the Intl API.
+## @ember-intl/polyfill
 
-[Intl.js polyfill]: https://github.com/andyearnshaw/Intl.js/
+By default, ember-intl does not ship with the [Intl polyfill](https://github.com/andyearnshaw/Intl.js/).
+Depending on the browsers you target, your project may  not need to polyfill.
+All evergreen browsers currently support the Intl API (NOTE: Safari supports the Intl API as of Safari 10).
 
-## Loading files from assets
+If you need to support legacy browsers, or want consistency across all the browsers (since the locale data may vary), then
+you can install [`@ember-intl/polyfill`](https://github.com/ember-intl/polyfill).
 
-Add the following tags to your index.html, or any mechanism in which you serve
-your your application payload.  Note: these script tags should be set above
-the application's script tag.
+### Installation
 
-```html
-<script src="{{rootURL}}assets/intl/intl.min.js"></script>
-<script src="{{rootURL}}assets/intl/locales/en-us.js"></script>
-<script src="{{rootURL}}assets/intl/locales/fr-fr.js"></script>
-<script src="{{rootURL}}assets/intl/locales/es-es.js"></script>
-<!--
-You can view the full list of CLDR locales which can be accessed from the `/assets/intl` folder
-of your application.  The CLDRs are automatically placed there at build time.  Typically this folder
-on your filesystem is ``<project>/dist/assets/intl`
-
-Full list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main
--->
-```
-
-### Cherry pick CLDR modules
-
-At build time, we copy roughly 700 files, totaling 18mb, to the asset folder.
-Don't worry, this does not add weight to your app or vendor files. The only
-penalty you incur is at build time with the ember-cli build pipeline. Since
-most applications support only a subset of the locales we support, you can
-specify the locales in `config/ember-intl.js` to optimize only copying the
-files needed.
-
-```js
-module.exports = function() {
-  return {
-    intl: {
-      locales: ['en-us', 'fr-fr']
-    }
-  };
-};
-```
-
-In this case, `en-us.js` and `fr-fr.js` will be copied to
-`/assets/intl/locales` on build.
-
-### Change output path
-
-```js
-// ember-cli-build.js
-var app = new EmberApp({
-  app: {
-    intl: '/assets/intl' // default
-  }
-});
-```
-
-### Disabling
-
-```js
-// config/environment.js
-module.exports = function() {
-  return {
-    intl: {
-      disablePolyfill: true
-    }
-  };
-};
-```
+* `ember install @ember-intl/polyfill`
+* Configure `config/ember-intl.js` by with a [strategy](https://github.com/ember-intl/polyfill#options)
 
 ## Polyfill.io
 

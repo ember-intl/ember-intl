@@ -1,5 +1,1 @@
-product:
-  info: '{product} will cost {price, number, USD} if ordered by {deadline, time, long}'
-  title: 'Hello world!'
-  html:
-    info: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, time, long}'
+product_info: '{product} will cost {price, number, USD} if ordered by {deadline, datetime, long}'

@@ -80,7 +80,7 @@ export default Ember.Component.extend({
 
 [List of supported format number options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-number-options.md)
 
-### Format Date
+### Format DateTime
 
 Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted string value.
 

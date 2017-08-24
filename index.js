@@ -237,8 +237,6 @@ module.exports = {
         locales: [],
         baseLocale: null,
         publicOnly: false,
-        disablePolyfill: false,
-        autoPolyfill: false,
         inputPath: 'translations',
         outputPath: 'translations'
       },
