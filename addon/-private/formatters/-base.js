@@ -3,17 +3,17 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { camelize } from '@ember/string';
 import EmberObject from '@ember/object';
-
 import arrayToHash from '../utils/array-to-hash';
 import links from '../utils/links';
+
+const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 const FormatterBase = EmberObject.extend({
   options: null,
 
   init() {
-    this._super();
+    this._super(...arguments);
 
     if (this.constructor === FormatterBase) {
       throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
@@ -25,54 +25,39 @@ const FormatterBase = EmberObject.extend({
   /**
   * Filters out all of the whitelisted formatter options
   *
-  * @method filterSupporedOptions
+  * @method filterOptions
   * @param {Object} Options object
   * @return {Object} Options object containing just whitelisted options
   * @private
   */
-  filterSupporedOptions(options) {
-    if (!options) {
-      return {};
+  filterOptions(hash) {
+    if (!hash) {
+      return;
     }
 
     let supportedOptions = {};
-    let foundMatch = false;
-    let camelizedKey;
+    let match = false;
 
-    for (let key in options) {
-      camelizedKey = camelize(key);
-      if (this.options[camelizedKey]) {
-        foundMatch = true;
-        supportedOptions[camelizedKey] = options[key];
+    for (let key in hash) {
+      if (hasOwnProperty.call(this.options, key)) {
+        match = true;
+        supportedOptions[key] = hash[key];
       }
     }
 
-    if (foundMatch) {
+    if (match) {
       return supportedOptions;
     }
   },
 
-  format() {
-    throw new Error('not implemented');
-  },
-
-  /**
-  * Invokes the Intl formatter methods
-  *
-  * @method _format
-  * @param {value} Raw input value that needs formatting
-  * @return {Object} Formatter options hash
-  * @return {Object} Format options hash
-  * @private
-  */
-  _format(value, formatterOptions, formatOptions, { locale }) {
+  format(value, formatterOptions, formatOptions, { locale }) {
     if (!locale) {
       throw new Error(
         `No locale specified.  This is typically handled within routes/application.js. Documentation: ${links.unsetLocale}`
       );
     }
 
-    return this.formatter(locale, formatterOptions).format(value, formatOptions);
+    return this.formatCache(locale, formatterOptions).format(value, formatOptions);
   }
 });
 

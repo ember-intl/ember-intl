@@ -3,25 +3,18 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { assert } from '@ember/debug';
 import createFormatCache from 'intl-format-cache';
-
+import assertIsDate from '../utils/assert-is-date';
 import Formatter from './-base';
 
-function assertIsDate(date, errMsg) {
-  assert(errMsg, isFinite(date));
-}
-
 const FormatDate = Formatter.extend({
-  formatter: createFormatCache(Intl.DateTimeFormat),
+  formatCache: createFormatCache(Intl.DateTimeFormat),
 
-  format(value, options, ctx) {
-    const dateTime = new Date(value);
-    assertIsDate(dateTime, 'A date or timestamp must be provided to format-datetime');
+  format(value, options, context) {
+    const date = new Date(value);
+    assertIsDate(date, 'A date or timestamp must be provided to format-datetime');
 
-    const _options = this.filterSupporedOptions(options);
-
-    return this._format(dateTime, _options, undefined, ctx);
+    return this._super(date, this.filterOptions(options), null, context);
   }
 });
 

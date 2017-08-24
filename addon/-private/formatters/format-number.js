@@ -7,10 +7,10 @@ import createFormatCache from 'intl-format-cache';
 import Formatter from './-base';
 
 const FormatNumber = Formatter.extend({
-  formatter: createFormatCache(Intl.NumberFormat),
+  formatCache: createFormatCache(Intl.NumberFormat),
 
-  format(value, options, ctx) {
-    return this._format(value, this.filterSupporedOptions(options), undefined, ctx);
+  format(value, options, context) {
+    return this._super(value, this.filterOptions(options), null, context);
   }
 });
 

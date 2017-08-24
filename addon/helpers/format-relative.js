@@ -30,7 +30,7 @@ export default BaseHelper.extend({
   },
 
   willDestroy() {
-    this._super();
+    this._super(...arguments);
     this.clearTimer();
   }
 });

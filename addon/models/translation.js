@@ -10,7 +10,7 @@ const TranslationModel = EmberObject.extend({
   localeName: null,
 
   init() {
-    this._super();
+    this._super(...arguments);
 
     if (!this.translations) {
       this.translations = new EmptyObject();

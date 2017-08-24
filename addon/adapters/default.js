@@ -8,6 +8,8 @@ import { A as emberArray } from '@ember/array';
 import EmberObject, { get, computed } from '@ember/object';
 import Translation from '../models/translation';
 
+const LOOKUP_NAME = 'model:ember-intl-translation';
+
 const DefaultTranslationAdapter = EmberObject.extend({
   _seen: null,
 
@@ -18,7 +20,7 @@ const DefaultTranslationAdapter = EmberObject.extend({
 
   /** @private **/
   init() {
-    this._super();
+    this._super(...arguments);
     this._seen = emberArray();
   },
 
@@ -38,8 +40,8 @@ const DefaultTranslationAdapter = EmberObject.extend({
     }
 
     let Klass;
-    if (owner.hasRegistration('model:ember-intl-translation')) {
-      Klass = owner.factoryFor('model:ember-intl-translation').class;
+    if (owner.hasRegistration(LOOKUP_NAME)) {
+      Klass = owner.factoryFor(LOOKUP_NAME).class;
     } else {
       Klass = Translation;
     }

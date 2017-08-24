@@ -17,22 +17,22 @@ export default {
    * See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters
    */
   date: {
-    'short': {
+    short: {
       month: 'numeric',
       day: 'numeric',
       year: '2-digit'
     },
-    'medium': {
+    medium: {
       month: 'short',
       day: 'numeric',
       year: 'numeric'
     },
-    'long': {
+    long: {
       month: 'long',
       day: 'numeric',
       year: 'numeric'
     },
-    'full': {
+    full: {
       weekday: 'long',
       month: 'long',
       day: 'numeric',
@@ -40,22 +40,22 @@ export default {
     }
   },
   time: {
-    'short': {
+    short: {
       hour: 'numeric',
       minute: 'numeric'
     },
-    'medium': {
+    medium: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric'
     },
-    'long': {
+    long: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
       timeZoneName: 'short'
     },
-    'full': {
+    full: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
@@ -63,14 +63,14 @@ export default {
     }
   },
   datetime: {
-    'short': {
+    short: {
       hour: 'numeric',
       minute: 'numeric',
       month: 'numeric',
       day: 'numeric',
       year: '2-digit'
     },
-    'medium': {
+    medium: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
@@ -78,7 +78,7 @@ export default {
       day: 'numeric',
       year: 'numeric'
     },
-    'long': {
+    long: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
@@ -87,7 +87,7 @@ export default {
       day: 'numeric',
       year: 'numeric'
     },
-    'full': {
+    full: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',

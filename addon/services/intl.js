@@ -19,11 +19,11 @@ import { links, isArrayEqual, EmptyObject, normalizeLocale } from '../-private/u
 import { FormatDateTime, FormatNumber, FormatMessage, FormatRelative } from '../-private/formatters';
 
 function formatterProxy(ctr) {
-  return function(value, options, formats) {
-    let formatOptions = options;
+  return function(value, opts, formats) {
+    let formatOpts = opts;
 
-    if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.lookupFormat(ctr.formatType, formatOptions.format), formatOptions);
+    if (opts && typeof opts.format === 'string') {
+      formatOpts = assign({}, this.lookupFormat(ctr.formatType, formatOpts.format), formatOpts);
     }
 
     if (!this._formatters[ctr.formatType]) {
@@ -32,9 +32,9 @@ function formatterProxy(ctr) {
 
     let formatter = this._formatters[ctr.formatType];
 
-    return formatter.format(value, formatOptions, {
+    return formatter.format(value, formatOpts, {
       formats: formats || get(this, 'formats'),
-      locale: this._localeWithDefault(formatOptions && formatOptions.locale)
+      locale: this._localeWithDefault(formatOpts && formatOpts.locale)
     });
   };
 }
@@ -62,7 +62,7 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   formats: computed({
     get() {
-      return this._owner.resolveRegistration('formats:main') || {};
+      return this._owner.resolveRegistration('formats:main') || new EmptyObject();
     }
   }).readOnly(),
 
@@ -91,10 +91,7 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   init() {
-    this._super();
-
-    this._owner = getOwner(this);
-    this._formatters = new EmptyObject();
+    this._super(...arguments);
 
     if (typeof Intl === 'undefined') {
       warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
@@ -102,6 +99,8 @@ const IntlService = Service.extend(Evented, {
       });
     }
 
+    this._owner = getOwner(this);
+    this._formatters = new EmptyObject();
     this._hydrate();
   },
 
@@ -161,11 +160,11 @@ const IntlService = Service.extend(Evented, {
   },
 
   /** @public **/
-  lookup(key, localeName, options = {}) {
+  lookup(key, localeName, opts) {
     const localeNames = this._localeWithDefault(localeName);
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
-    if (!options.resilient && translation === undefined) {
+    if (opts && !opts.resilient && translation === undefined) {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames);
@@ -176,12 +175,12 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   t(key, ...args) {
-    const [options] = args;
-    const translation = this.lookup(key, options && options.locale, {
-      resilient: options && typeof options.fallback === 'string'
+    const [opts] = args;
+    const translation = this.lookup(key, opts && opts.locale, {
+      resilient: opts && typeof opts.fallback === 'string'
     });
 
-    const value = typeof translation === 'string' ? translation : options.fallback;
+    const value = typeof translation === 'string' ? translation : opts.fallback;
 
     return this.formatMessage(value, ...args);
   },
@@ -254,8 +253,8 @@ const IntlService = Service.extend(Evented, {
   },
 
   /** @public **/
-  findTranslationByKey(key, localeName, options) {
-    return this.lookup(key, localeName, options);
+  findTranslationByKey(key, localeName, opts) {
+    return this.lookup(key, localeName, opts);
   },
 
   /** @public **/

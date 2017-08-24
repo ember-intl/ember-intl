@@ -50,7 +50,7 @@ const AbstractHelper = Helper.extend({
   },
 
   willDestroy() {
-    this._super();
+    this._super(...arguments);
     get(this, 'intl').off('localeChanged', this, this.recompute);
   }
 });

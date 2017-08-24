@@ -13,9 +13,9 @@ import Formatter from './-base';
 const { Handlebars } = Ember;
 
 const FormatMessage = Formatter.extend({
-  formatter: createFormatCache(IntlMessageFormat),
+  formatCache: createFormatCache(IntlMessageFormat),
 
-  escapeProps(options) {
+  escape(options) {
     if (!options) {
       return;
     }
@@ -35,8 +35,8 @@ const FormatMessage = Formatter.extend({
 
   format(value, options, { formats, locale }) {
     let isHTMLSafe = options && options.htmlSafe;
-    let _options = isHTMLSafe ? this.escapeProps(options) : options;
-    let result = this.formatter(value, locale, formats).format(_options);
+    let values = isHTMLSafe ? this.escape(options) : options;
+    let result = this.formatCache(value, locale, formats).format(values);
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }

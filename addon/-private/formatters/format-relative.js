@@ -3,24 +3,18 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { assert } from '@ember/debug';
 import createFormatCache from 'intl-format-cache';
 import IntlRelativeFormat from 'intl-relativeformat';
+import assertIsDate from '../utils/assert-is-date';
 
 import Formatter from './-base';
 
-function assertIsDate(date, errMsg) {
-  assert(errMsg, isFinite(date));
-}
-
 const FormatRelative = Formatter.extend({
-  formatter: createFormatCache(IntlRelativeFormat),
+  formatCache: createFormatCache(IntlRelativeFormat),
 
-  format(value, options, ctx) {
+  format(value, options, context) {
     let dateValue = new Date(value);
-    let formatOptions;
-
-    /* TODO: remove assertion in 3.0, new Intl.DateTimeFormat().format() accepts no arguments */
+    let formatOptions = null;
     assertIsDate(dateValue, 'A date or timestamp must be provided to format-relative');
 
     if (options && typeof options.now !== 'undefined') {
@@ -29,7 +23,7 @@ const FormatRelative = Formatter.extend({
       };
     }
 
-    return this._format(dateValue, this.filterSupporedOptions(options), formatOptions, ctx);
+    return this._super(dateValue, this.filterOptions(options), formatOptions, context);
   }
 });
 

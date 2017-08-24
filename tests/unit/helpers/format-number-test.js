@@ -159,12 +159,6 @@ test('should be able to combine hash options with format options', function(asse
   assert.equal(this.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
 });
 
-test('should be able to combine hash options with format options with dasherized options name', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{format-number 1 format="digits" minimum-integer-digits=10}}`);
-  assert.equal(this.$().text(), '0,000,000,001.00', 'should return a string formatted to a percent');
-});
-
 test('used to format percentages', function(assert) {
   assert.expect(2);
   this.render(hbs`{{format-number 400 style="percent"}}`);
