@@ -16,6 +16,7 @@ describe('traverse', function() {
       messageFormatPattern: 1,
       messageTextElement: 1,
       argumentElement: 0,
+      datetimeFormat: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
@@ -32,6 +33,7 @@ describe('traverse', function() {
       messageFormatPattern: 1,
       messageTextElement: 2,
       argumentElement: 1,
+      datetimeFormat: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
@@ -41,13 +43,31 @@ describe('traverse', function() {
     });
   });
 
-  it('{product} will cost {price, number, USD} if ordered by {deadline, time, time}', function() {
-    let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, time, time}`);
+  it('{product} will cost {price, number, USD} if ordered by {deadline, datetime, long}', function() {
+    let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, datetime, long}`);
 
     expect(count(ast)).to.deep.equal({
       messageFormatPattern: 1,
       messageTextElement: 2,
       argumentElement: 3,
+      datetimeFormat: 1,
+      numberFormat: 1,
+      dateFormat: 0,
+      timeFormat: 0,
+      pluralFormat: 0,
+      selectFormat: 0,
+      optionalFormatPattern: 0
+    });
+  });
+
+  it('{product} will cost {price, number, USD} if ordered by {deadline, date, long}', function() {
+    let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, date, long}`);
+
+    expect(count(ast)).to.deep.equal({
+      messageFormatPattern: 1,
+      messageTextElement: 2,
+      argumentElement: 3,
+      datetimeFormat: 0,
       numberFormat: 1,
       dateFormat: 1,
       timeFormat: 0,
@@ -57,15 +77,16 @@ describe('traverse', function() {
     });
   });
 
-  it('{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, time, long}.', function() {
+  it('{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.', function() {
     let ast = messageParser.parse(
-      `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, time, long}.`
+      `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`
     );
 
     expect(count(ast)).to.deep.equal({
       messageFormatPattern: 4,
       messageTextElement: 6,
       argumentElement: 3,
+      datetimeFormat: 0,
       numberFormat: 0,
       dateFormat: 1,
       timeFormat: 0,
@@ -84,6 +105,7 @@ describe('traverse', function() {
       messageFormatPattern: 4,
       messageTextElement: 3,
       argumentElement: 1,
+      datetimeFormat: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
@@ -107,6 +129,7 @@ describe('traverse', function() {
       messageFormatPattern: 5,
       messageTextElement: 4,
       argumentElement: 1,
+      datetimeFormat: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
@@ -130,6 +153,7 @@ describe('traverse', function() {
       messageFormatPattern: 5,
       messageTextElement: 6,
       argumentElement: 1,
+      datetimeFormat: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
@@ -145,6 +169,7 @@ function count(ast) {
     messageFormatPattern: 0,
     messageTextElement: 0,
     argumentElement: 0,
+    datetimeFormat: 0,
     numberFormat: 0,
     dateFormat: 0,
     timeFormat: 0,
@@ -168,6 +193,9 @@ function count(ast) {
     },
     dateFormat() {
       result.dateFormat++;
+    },
+    datetimeFormat() {
+      result.datetimeFormat++;
     },
     timeFormat() {
       result.timeFormat++;
