@@ -4,7 +4,6 @@
  */
 
 import EmberObject, { set, get } from '@ember/object';
-import { deprecate } from '@ember/application/deprecations';
 import EmptyObject from '../-private/utils/empty-object';
 
 const TranslationModel = EmberObject.extend({
@@ -46,16 +45,7 @@ const TranslationModel = EmberObject.extend({
       return translation;
     }
 
-    translation = get(this, key);
-
-    if (typeof translation === 'string') {
-      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', false, {
-        id: 'ember-intl-add-translation',
-        until: '3.0.0'
-      });
-
-      return translation;
-    }
+    return get(this, key);
   },
 
   /**

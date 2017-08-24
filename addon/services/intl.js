@@ -13,11 +13,8 @@ import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { set, get, computed } from '@ember/object';
-import { deprecate } from '@ember/application/deprecations';
-
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
-
 import { links, isArrayEqual, EmptyObject, normalizeLocale } from '../-private/utils';
 import { FormatDateTime, FormatNumber, FormatMessage, FormatRelative } from '../-private/formatters';
 
@@ -26,7 +23,7 @@ function formatterProxy(ctr) {
     let formatOptions = options;
 
     if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(ctr.formatType, formatOptions.format), formatOptions);
+      formatOptions = assign({}, this.lookupFormat(ctr.formatType, formatOptions.format), formatOptions);
     }
 
     if (!this._formatters[ctr.formatType]) {
@@ -60,14 +57,14 @@ const IntlService = Service.extend(Evented, {
     get() {
       return this._owner.lookup('ember-intl@adapter:default');
     }
-  }),
+  }).readOnly(),
 
   /** @public **/
   formats: computed({
     get() {
       return this._owner.resolveRegistration('formats:main') || {};
     }
-  }),
+  }).readOnly(),
 
   /** @public **/
   formatRelative: formatterProxy(FormatRelative),
@@ -201,16 +198,6 @@ const IntlService = Service.extend(Evented, {
     });
   },
 
-  /** @public **/
-  getLocalesByTranslations() {
-    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
-      id: 'ember-intl-locales-cp',
-      until: '3.0.0'
-    });
-
-    return get(this, 'locales');
-  },
-
   /**
   * A utility method for registering CLDR data for
   * intl-messageformat and intl-relativeformat.  This data is derived
@@ -253,12 +240,12 @@ const IntlService = Service.extend(Evented, {
   },
 
   /** @private **/
-  getFormat(formatType, format) {
-    const formats = get(this, 'formats');
-
-    if (formats && formatType && typeof format === 'string') {
-      return get(formats, `${formatType}.${format}`);
+  lookupFormat(formatType, name) {
+    if (typeof formatType !== 'string' || typeof name !== 'string') {
+      return;
     }
+
+    return get(this, `formats.${formatType}.${name}`);
   },
 
   /** @public **/
