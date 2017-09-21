@@ -42,6 +42,7 @@
     "ember-assign-polyfill": "^2.0.2",
     "ember-cli-babel": "^6.7.1",
     "ember-cli-import-polyfill": "^0.2.0",
+    "ember-get-config": "^0.2.3",
     "ember-getowner-polyfill": "^2.0.1",
     "ember-intl-format-cache": "^2.6.0",
     "ember-intl-messageformat": "^3.2.0",
