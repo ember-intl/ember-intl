@@ -141,7 +141,12 @@ test('should return a formatted string with an `each` block', function(assert) {
     `
   );
 
-  assert.equal(this.$().text().trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
+  assert.equal(
+    this.$()
+      .text()
+      .trim(),
+    'Allison harvested 10 apples.Jeremy harvested 60 apples.'
+  );
 });
 
 test('able to discover all register translations', function(assert) {
