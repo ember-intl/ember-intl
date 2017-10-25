@@ -4262,9 +4262,9 @@ loader.js@^4.2.3:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/loader.js/-/loader.js-4.5.0.tgz#fa4369702f176410c810605999f79dd590ff3308"
 
-locale-emoji@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/locale-emoji/-/locale-emoji-0.2.0.tgz#bc9847a688ad01639fc7afd895774fccaa7859b2"
+locale-emoji@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/locale-emoji/-/locale-emoji-0.3.0.tgz#7f38262f7c877bd27659725570335b263f88742a"
 
 locate-path@^2.0.0:
   version "2.0.0"
