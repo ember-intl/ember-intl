@@ -3,7 +3,7 @@
 module.exports = function(environment) {
   return {
     /**
-    * The locales that are application supports.
+    * The locales that our application supports.
     *
     * This is optional and is automatically set if project stores translations
     * where ember-intl is able to look them up (<project root>/translations/).
