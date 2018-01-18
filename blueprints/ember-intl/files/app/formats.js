@@ -1,30 +1,65 @@
 export default {
-  time: {
-    hhmmss: {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    }
-  },
-  date: {
-    hhmmss: {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    }
-  },
+  /**
+   * `number` configurations should reference `Intl.NumberFormat` params
+   * See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
+   */
   number: {
-    EUR: {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+    currency: {
+      style: 'currency'
     },
-    USD: {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+    percent: {
+      style: 'percent'
+    }
+  },
+
+  /**
+   * `date` & `time` configurations should reference `Intl.DateTimeFormat` params
+   * See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#Parameters
+   */
+  date: {
+    short: {
+      month: 'numeric',
+      day: 'numeric',
+      year: '2-digit'
+    },
+    medium: {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    },
+    long: {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    },
+    full: {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    }
+  },
+  time: {
+    short: {
+      hour: 'numeric',
+      minute: 'numeric'
+    },
+    medium: {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    },
+    long: {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short'
+    },
+    full: {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short'
     }
   }
 };

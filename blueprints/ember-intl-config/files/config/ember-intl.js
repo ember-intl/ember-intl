@@ -1,6 +1,6 @@
-/*jshint node:true*/
+/* eslint-env node */
 
-module.exports = function(environment) {
+module.exports = function(/* env */) {
   return {
     /**
     * The locales that our application supports.
@@ -58,6 +58,17 @@ module.exports = function(environment) {
     * @type {Boolean}
     * @default "false"
     */
-    publicOnly: false
+    publicOnly: false,
+
+    /**
+    * Path where translations are kept.  This is relative to the project root.
+    * For example, if your translations are an npm dependency, set this to:
+    *`'./node_modules/path/to/translations'`
+    *
+    * @property inputPath
+    * @type {String}
+    * @default "translations"
+     */
+    inputPath: 'translations'
   };
 };

@@ -174,18 +174,18 @@ test('should return 0 instead of nothing', function(assert) {
 test('intl-get returns message for key that is a literal string (not an object path)', function(assert) {
   assert.expect(1);
 
-  const translation = this.container.lookup('ember-intl@translation:en-us');
+  const adapter = this.container.lookup('ember-intl@adapter:default');
+  const translation = adapter._cache['en-us'];
   const fn = translation.getValue;
 
   translation.getValue = function getValue(key) {
-    return this[key];
+    return translation[key];
   };
 
   translation['string.path.works'] = 'yes it does';
 
   try {
     this.render(hbs`{{format-message (intl-get 'string.path.works')}}`);
-
     assert.equal(this.$().text(), 'yes it does');
   } catch (ex) {
     // eslint-disable-next-line no-console

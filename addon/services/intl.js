@@ -6,7 +6,9 @@
  */
 
 import RSVP from 'rsvp';
+import require from 'require';
 import Service from '@ember/service';
+import config from 'ember-get-config';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 import Evented from '@ember/object/evented';
@@ -24,6 +26,7 @@ import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
 import FormatDate from '../formatters/format-date';
 import FormatTime from '../formatters/format-time';
+import missingMessage from '../utils/missing-message';
 import FormatNumber from '../formatters/format-number';
 import FormatMessage from '../formatters/format-message';
 import FormatRelative from '../formatters/format-relative';
@@ -66,6 +69,15 @@ const IntlService = Service.extend(Evented, {
   /** @private **/
   adapter: computed({
     get() {
+      /*
+       * NOTE: RFC is still evolving... "How do addons and apps declare their collection and type exports?"
+       * When that question is answered this should change vs. hanging off the "global" adapter collection
+       * https://github.com/emberjs/rfcs/blob/master/text/0143-module-unification.md#how-should-configuration-declarations-be-made-in-the-main-module
+       */
+      if (this._owner.hasRegistration('adapter:-intl')) {
+        return this._owner.lookup('adapter:-intl');
+      }
+
       return this._owner.lookup('ember-intl@adapter:default');
     }
   }),
@@ -73,6 +85,10 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   formats: computed({
     get() {
+      if (this._owner.hasRegistration('model:intl-formats')) {
+        return this._owner.resolveRegistration('model:intl-formats');
+      }
+
       return this._owner.resolveRegistration('formats:main') || {};
     }
   }),
@@ -98,6 +114,9 @@ const IntlService = Service.extend(Evented, {
   /** @private **/
   requirejs: requirejs,
 
+  /** @private **/
+  missingMessage: missingMessage,
+
   /**
    * Returns an array of registered locale names
    *
@@ -109,7 +128,6 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   init() {
     this._super();
-
     this._owner = getOwner(this);
     this._formatters = new EmptyObject();
 
@@ -117,6 +135,15 @@ const IntlService = Service.extend(Evented, {
       warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
         id: 'ember-intl-undefined-intljs'
       });
+    }
+
+    try {
+      /* current module unification spec around the utils collection is unclear, allow this to fail. */
+      if (this._owner.hasRegistration('util:intl/missing-message')) {
+        this.missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
+      }
+    } catch (_) {
+      /* do nothing */
     }
 
     this._hydrate();
@@ -128,9 +155,8 @@ const IntlService = Service.extend(Evented, {
    * @private
    */
   _hydrate() {
-    const config = this._owner.resolveRegistration('config:environment');
-    const cldrs = this._lookupByFactoryType('cldrs', config.modulePrefix);
-    const translations = this._lookupByFactoryType('translations', config.modulePrefix);
+    const cldrs = this._findModulesForType('cldrs');
+    const translations = this._findModulesForType('translations');
 
     if (!cldrs.length) {
       warn(
@@ -142,24 +168,18 @@ const IntlService = Service.extend(Evented, {
       );
     }
 
-    cldrs
-      .map(moduleName => {
-        return this._owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`);
-      })
-      .forEach(data => data.forEach(this.addLocaleData));
+    cldrs.map(moduleName => require(moduleName).default).forEach(data => data.forEach(this.addLocaleData));
 
     translations.forEach(moduleName => {
-      const localeName = moduleName.split('/').pop();
-
-      this.addTranslations(localeName, this._owner.resolveRegistration(`translation:${localeName}`));
+      this.addTranslations(moduleName.split('/').pop(), require(moduleName).default);
     });
   },
 
   /** @private **/
-  _lookupByFactoryType(type, modulePrefix) {
-    return Object.keys(this.requirejs.entries).filter(key => {
-      return key.indexOf(`${modulePrefix}/${type}/`) === 0;
-    });
+  _findModulesForType(type) {
+    let { modulePrefix } = config;
+
+    return Object.keys(this.requirejs.entries).filter(key => key.indexOf(`${modulePrefix}/${type}/`) === 0);
   },
 
   /** @private **/
@@ -183,9 +203,7 @@ const IntlService = Service.extend(Evented, {
     const translation = get(this, 'adapter').lookup(localeNames, key);
 
     if (!options.resilient && translation === undefined) {
-      const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
-
-      return missingMessage.call(this, key, localeNames);
+      return this.missingMessage.call(this, key, localeNames);
     }
 
     return translation;

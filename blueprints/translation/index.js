@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 'use strict';
 
 /**
@@ -5,10 +7,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-var SilentError = require('silent-error');
-var Blueprint = require('ember-cli/lib/models/blueprint');
-
-var isSupportedLocale = require('../../lib/utils/is-supported-locale');
+const SilentError = require('silent-error');
+const isSupportedLocale = require('../../lib/utils/is-supported-locale');
 
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   beforeInstall(options) {
-    var locale = options.entity.name;
+    let locale = options.entity.name;
 
     if (!isSupportedLocale(locale.toLowerCase())) {
       this.ui.writeLine(

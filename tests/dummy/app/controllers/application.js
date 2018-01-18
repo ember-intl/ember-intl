@@ -9,7 +9,7 @@ export default Controller.extend({
 
   locales: computed(function() {
     return get(this, 'intl')
-      ._lookupByFactoryType('translations', config.modulePrefix)
+      ._findModulesForType('translations', config.modulePrefix)
       .map(moduleName => moduleName.split('/').pop());
   }).readOnly(),
 

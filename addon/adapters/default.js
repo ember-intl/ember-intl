@@ -3,56 +3,56 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import EmberObject, { get, computed } from '@ember/object';
-import { A as emberArray } from '@ember/array';
 import { getOwner } from '@ember/application';
+import { A as emberArray } from '@ember/array';
 import Translation from '../models/translation';
+import EmberObject, { computed } from '@ember/object';
+import EmptyObject from '../utils/empty-object';
 
 const DefaultTranslationAdapter = EmberObject.extend({
-  _seen: null,
-
-  /** @private **/
-  locales: computed('_seen.[]', function() {
-    return get(this, '_seen').map(l => l.localeName);
-  }).readOnly(),
-
-  /** @private **/
   init() {
-    this._super();
+    this._super(...arguments);
     this._seen = emberArray();
+    this._owner = getOwner(this);
+    this._cache = new EmptyObject();
+    this._Factory = this._owner.factoryFor('model:ember-intl-translation');
   },
 
   /** @private **/
+  _seen: null,
+
+  /** @private **/
+  _cache: null,
+
+  /** @private **/
+  _Factory: null,
+
+  /** @private **/
+  _owner: null,
+
+  /** @private **/
+  locales: computed('_seen.[]', function() {
+    return this._seen.map(l => l.localeName);
+  }).readOnly(),
+
+  /** @private **/
   lookupLocale(localeName) {
-    return this._seen.findBy('localeName', localeName);
+    return this._cache[localeName];
   },
 
   /** @private **/
   localeFactory(localeName) {
-    const owner = getOwner(this);
-    const lookupName = `ember-intl@translation:${localeName}`;
-    let model = owner.lookup(lookupName);
-
+    let model = this.lookupLocale(localeName);
     if (model) {
       return model;
     }
 
-    let Klass;
-    if (owner.hasRegistration('model:ember-intl-translation')) {
-      Klass = owner.factoryFor('model:ember-intl-translation').class;
-    } else {
-      Klass = Translation;
-    }
+    return this.create(localeName);
+  },
 
-    const ModelKlass = Klass.extend();
-    Object.defineProperty(ModelKlass.proto(), 'localeName', {
-      writable: false,
-      enumerable: true,
-      value: localeName
-    });
-
-    owner.register(lookupName, ModelKlass);
-    model = owner.lookup(lookupName);
+  create(localeName) {
+    let model = (this._Factory || Translation).create({ localeName });
+    this._cache[localeName] = model;
     this._seen.pushObject(model);
 
     return model;
@@ -60,7 +60,7 @@ const DefaultTranslationAdapter = EmberObject.extend({
 
   /** @private **/
   has(localeName, translationKey) {
-    const model = this.lookupLocale(localeName);
+    let model = this.lookupLocale(localeName);
 
     return model && model.has(translationKey);
   },
@@ -68,8 +68,8 @@ const DefaultTranslationAdapter = EmberObject.extend({
   /** @private **/
   lookup(localeNames, translationKey) {
     for (let i = 0; i < localeNames.length; i++) {
-      const localeName = localeNames[i];
-      const model = this.lookupLocale(localeName);
+      let localeName = localeNames[i];
+      let model = this.lookupLocale(localeName);
 
       if (model && model.has(translationKey)) {
         return model.getValue(translationKey);
