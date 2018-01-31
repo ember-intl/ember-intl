@@ -160,7 +160,8 @@ test('able to discover all register translations', function(assert) {
 
 test('should respect format options for date ICU block', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message (l 'Sale begins {day, date, shortWeekDay}') day=1390518044403}}`);
+  this.day = 1390518044403;
+  this.render(hbs`{{format-message (l 'Sale begins {day, date, shortWeekDay}') day=day}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 
