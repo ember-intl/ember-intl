@@ -134,7 +134,8 @@ const IntlService = Service.extend(Evented, {
 
     if (!cldrs.length) {
       warn(
-        `[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation, see: ${links.asyncTranslations}.`,
+        `[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation,
+        see: ${links.asyncTranslations}.`,
         false,
         {
           id: 'ember-intl-missing-cldr-data'
@@ -230,14 +231,14 @@ const IntlService = Service.extend(Evented, {
   },
 
   /**
-  * A utility method for registering CLDR data for
-  * intl-messageformat and intl-relativeformat.  This data is derived
-  * from formatjs-extract-cldr-data
-  *
-  * @method addLocaleData
-  * @param {Object} locale data
-  * @public
-  */
+   * A utility method for registering CLDR data for
+   * intl-messageformat and intl-relativeformat.  This data is derived
+   * from formatjs-extract-cldr-data
+   *
+   * @method addLocaleData
+   * @param {Object} locale data
+   * @public
+   */
   addLocaleData(data) {
     IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
