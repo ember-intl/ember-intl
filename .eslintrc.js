@@ -19,7 +19,8 @@ module.exports = {
     'prettier/prettier': ['error', {
       'singleQuote': true,
       'printWidth': 120
-    }]
+    }],
+    'ember/avoid-leaking-state-in-ember-objects': 0
   },
   overrides: [
     // node files
