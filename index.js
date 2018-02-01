@@ -35,10 +35,6 @@ module.exports = {
   /** @private **/
   _pluginsInitialized: false,
 
-  isDevelopingAddon() {
-    return true;
-  },
-
   included(app) {
     this._super.included.apply(this, arguments);
 
