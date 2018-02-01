@@ -5,7 +5,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-// import RSVP from 'rsvp';
 import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { makeArray } from '@ember/array';
