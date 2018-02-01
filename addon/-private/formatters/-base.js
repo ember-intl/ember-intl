@@ -23,13 +23,13 @@ const FormatterBase = EmberObject.extend({
   },
 
   /**
-  * Filters out all of the whitelisted formatter options
-  *
-  * @method filterOptions
-  * @param {Object} Options object
-  * @return {Object} Options object containing just whitelisted options
-  * @private
-  */
+   * Filters out all of the whitelisted formatter options
+   *
+   * @method filterOptions
+   * @param {Object} Options object
+   * @return {Object} Options object containing just whitelisted options
+   * @private
+   */
   filterOptions(hash) {
     if (!hash) {
       return;
@@ -53,7 +53,8 @@ const FormatterBase = EmberObject.extend({
   format(value, formatterOptions, formatOptions, { locale }) {
     if (!locale) {
       throw new Error(
-        `No locale specified.  This is typically handled within routes/application.js. Documentation: ${links.unsetLocale}`
+        `No locale specified.  This is typically handled within routes/application.js.
+        Documentation: ${links.unsetLocale}`
       );
     }
 

@@ -274,7 +274,10 @@ module.exports = {
       return walkSync(projectTranslationPath, {
         directories: false
       }).map(filename => {
-        return path.basename(filename, path.extname(filename)).toLowerCase().replace(/_/g, '-');
+        return path
+          .basename(filename, path.extname(filename))
+          .toLowerCase()
+          .replace(/_/g, '-');
       });
     }
 

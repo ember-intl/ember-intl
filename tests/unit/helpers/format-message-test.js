@@ -139,7 +139,12 @@ test('should return a formatted string with an `each` block', function(assert) {
     `
   );
 
-  assert.equal(this.$().text().trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
+  assert.equal(
+    this.$()
+      .text()
+      .trim(),
+    'Allison harvested 10 apples.Jeremy harvested 60 apples.'
+  );
 });
 
 test('able to discover all register translations', function(assert) {
@@ -152,7 +157,8 @@ test('able to discover all register translations', function(assert) {
 
 test('should respect format options for date ICU block', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{format-message 'Sale begins {day, datetime, shortWeekDay}' day=1390518044403}}`);
+  this.day = 1390518044403;
+  this.render(hbs`{{format-message 'Sale begins {day, datetime, shortWeekDay}' day=day}}`);
   assert.equal(this.$().text(), 'Sale begins January 23, 2014');
 });
 

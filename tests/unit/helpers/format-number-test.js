@@ -187,5 +187,10 @@ test('should function within an `each` block helper', function(assert) {
     `
   );
 
-  assert.equal(this.$().text().trim(), '$3.00€8.00¥10.00');
+  assert.equal(
+    this.$()
+      .text()
+      .trim(),
+    '$3.00€8.00¥10.00'
+  );
 });

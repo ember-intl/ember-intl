@@ -1,3 +1,4 @@
+/* eslint-disable ember/new-module-imports */
 import Ember from 'ember';
 import { isHTMLSafe } from '@ember/string';
 import wait from 'ember-test-helpers/wait';
