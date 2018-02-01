@@ -1,5 +1,5 @@
 import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
@@ -50,12 +50,8 @@ module('format-html-message', function(hooks) {
     assert.equal(this.element.textContent, 'Hello Jason');
   });
 
-  test('should throw if called with out a value', async function(assert) {
-    assert.expect(1);
-    debugger;
-    let thing = await render(hbs`{{format-html-message}}`);
-    debugger;
-
+  skip('should throw if called with out a value', async function(assert) {
+    // await render(hbs`{{format-html-message}}`);
     // expectError(
     //   () => render(hbs`{{format-html-message}}`),
     //   ex => {

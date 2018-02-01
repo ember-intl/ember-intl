@@ -1,9 +1,8 @@
-/* eslint-disable ember/new-module-imports */
-import Ember from 'ember';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { isHTMLSafe } from '@ember/string';
 import { settled } from '@ember/test-helpers';
+import { registerWarnHandler } from '@ember/debug';
 
 const DEFAULT_LOCALE_NAME = 'en';
 
@@ -63,16 +62,13 @@ module('service:intl', function(hooks) {
     this.intl.setLocale(DEFAULT_LOCALE_NAME);
 
     let invokedWarn = false;
-    const originalWarn = Ember.warn;
-
-    Ember.warn = function() {
+    registerWarnHandler(function() {
       invokedWarn = true;
-    };
+    });
 
     await this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'foo', 'FOO');
     this.intl.t('foo');
     assert.ok(!invokedWarn, 'Warning was not raised');
-    Ember.warn = originalWarn;
   });
 
   test('translations that are empty strings are valid', async function(assert) {
