@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
-import expectError from '../../helpers/expect-error';
 
 module('format-html-message', function(hooks) {
   setupRenderingTest(hooks);
@@ -51,19 +50,22 @@ module('format-html-message', function(hooks) {
     assert.equal(this.element.textContent, 'Hello Jason');
   });
 
-  test('should throw if called with out a value', function(assert) {
+  test('should throw if called with out a value', async function(assert) {
     assert.expect(1);
+    debugger;
+    let thing = await render(hbs`{{format-html-message}}`);
+    debugger;
 
-    expectError(
-      () => this.render(hbs`{{format-html-message}}`),
-      ex => {
-        assert.ok(
-          ex.message.match(
-            /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
-          )
-        );
-      }
-    );
+    // expectError(
+    //   () => render(hbs`{{format-html-message}}`),
+    //   ex => {
+    //     assert.ok(
+    //       ex.message.match(
+    //         /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
+    //       )
+    //     );
+    //   }
+    // );
   });
 
   test('should allow for inlined html in the value', async function(assert) {

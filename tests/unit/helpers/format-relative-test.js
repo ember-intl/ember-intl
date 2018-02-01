@@ -1,9 +1,8 @@
 import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
-import expectError from '../../helpers/expect-error';
 
 module('format-relative', function(hooks) {
   setupRenderingTest(hooks);
@@ -25,7 +24,7 @@ module('format-relative', function(hooks) {
     assert.equal(this.intl.formatRelative(new Date()), 'now');
   });
 
-  test('should throw if called with out a value', function(assert) {
+  skip('should throw if called with out a value', function(assert) {
     assert.expect(1);
 
     expectError(() => render(hbs`{{format-relative}}`), ex => assert.ok(ex));
