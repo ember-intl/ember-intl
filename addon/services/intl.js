@@ -265,9 +265,8 @@ const IntlService = Service.extend(Evented, {
     const current = get(this, '_locale');
 
     if (!isArrayEqual(proposed, current)) {
-      this.propertyWillChange('locale');
       set(this, '_locale', proposed);
-      this.propertyDidChange('locale');
+      this.notifyPropertyChange('locale');
       this.trigger('localeChanged');
     }
   },
