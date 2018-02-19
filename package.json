@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "2.32.1",
+  "version": "2.33.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon",
