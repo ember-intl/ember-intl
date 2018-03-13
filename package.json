@@ -1,7 +1,7 @@
 {
   "name": "ember-intl",
   "version": "2.33.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "A internationalization toolbox for ambitious applications.",
   "keywords": [
     "ember-addon",
     "i18n",
