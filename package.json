@@ -62,6 +62,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "dependency-check": "^2.9.1",
+    "ember-ajax": "^3.1.0",
     "ember-cli": "^2.18.1",
     "ember-cli-addon-docs": "^0.2.2",
     "ember-cli-addon-docs-yuidoc": "^0.1.1",
