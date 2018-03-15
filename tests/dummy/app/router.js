@@ -8,6 +8,12 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('smoke');
+
+  this.route('docs', function() {
+    this.route('api', function() {
+      this.route('item', { path: '/*path' });
+    });
+  });
 });
 
 export default Router;
