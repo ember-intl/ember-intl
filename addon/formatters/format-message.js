@@ -9,6 +9,9 @@ import IntlMessageFormat from 'intl-messageformat';
 
 import Formatter from './-base';
 
+/**
+ * @class FormatMessageFormatter
+ */
 const FormatMessage = Formatter.extend({
   formatter: computed({
     get() {

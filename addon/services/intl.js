@@ -50,6 +50,9 @@ function formatterProxy(ctr) {
   };
 }
 
+/**
+ * @class IntlService
+ */
 const IntlService = Service.extend(Evented, {
   _locale: null,
 

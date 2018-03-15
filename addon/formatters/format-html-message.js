@@ -9,6 +9,9 @@ import FormatterMessage from './format-message';
 
 const { Handlebars } = Ember;
 
+/**
+ * @class FormatHtmlMessageFormatter
+ */
 const FormatHtmlMessage = FormatterMessage.extend({
   escapeProps(options) {
     if (!options) {

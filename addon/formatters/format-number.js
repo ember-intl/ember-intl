@@ -8,6 +8,9 @@ import createFormatCache from 'intl-format-cache';
 
 import Formatter from './-base';
 
+/**
+ * @class FormatNumberFormatter
+ */
 const FormatNumber = Formatter.extend({
   formatter: computed({
     get() {

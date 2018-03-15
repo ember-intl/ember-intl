@@ -37,6 +37,9 @@ export function getValue([key], options) {
   return typeof translation === 'string' ? translation : fallbackTranslation;
 }
 
+/**
+ * @class FormatMessageHelper
+ */
 export default BaseHelper.extend({
   getValue,
   helperType: 'format-message',

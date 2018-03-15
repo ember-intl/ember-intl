@@ -9,6 +9,10 @@ import EmberObject, { get } from '@ember/object';
 import arrayToHash from '../utils/array-to-hash';
 import links from '../utils/links';
 
+/**
+ * @class BaseFormatter
+ * @private
+ */
 const FormatterBase = EmberObject.extend({
   options: null,
 

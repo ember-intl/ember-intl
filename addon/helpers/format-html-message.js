@@ -6,6 +6,9 @@
 import BaseHelper from './-format-base';
 import { getValue } from './format-message';
 
+/**
+ * @class FormatHtmlMessageHelper
+ */
 export default BaseHelper.extend({
   getValue,
   helperType: 'format-html-message',

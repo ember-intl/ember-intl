@@ -4,6 +4,9 @@
  */
 import BaseHelper from './-format-base';
 
+/**
+ * @class FormatTimeHelper
+ */
 export default BaseHelper.extend({
   format(value, options) {
     return this.intl.formatTime(value, options);

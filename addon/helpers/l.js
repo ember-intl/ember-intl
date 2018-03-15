@@ -9,6 +9,9 @@ export function LiteralWrapper(value) {
   this.value = value;
 }
 
+/**
+ * @class LHelper
+ */
 export default Helper.extend({
   compute([translation]) {
     return new LiteralWrapper(translation);

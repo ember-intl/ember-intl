@@ -10,6 +10,9 @@ import { deprecate } from '@ember/application/deprecations';
 
 import { LiteralWrapper } from './l';
 
+/**
+ * @class IntlGetHelper
+ */
 const IntlGetHelper = Helper.extend({
   intl: service(),
 

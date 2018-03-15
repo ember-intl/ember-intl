@@ -5,6 +5,9 @@
 
 import FormatDateFormatter from './format-date';
 
+/**
+ * @class FormatTimeFormatter
+ */
 const FormatTime = FormatDateFormatter.extend();
 
 FormatTime.reopenClass({

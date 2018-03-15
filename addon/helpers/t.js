@@ -20,6 +20,9 @@ export function getValue([translationKey], options) {
   return typeof translation === 'string' ? translation : fallbackTranslation;
 }
 
+/**
+ * @class THelper
+ */
 export default BaseHelper.extend({
   getValue,
 

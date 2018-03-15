@@ -8,6 +8,10 @@ import { A as emberArray } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Translation from '../models/translation';
 
+/**
+ * @class DefaultTranslationAdapter
+ * @private
+ */
 const DefaultTranslationAdapter = EmberObject.extend({
   _seen: null,
 

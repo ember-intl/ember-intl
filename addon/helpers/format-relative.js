@@ -9,6 +9,9 @@ import BaseHelper from './-format-base';
 
 const runBind = bind;
 
+/**
+ * @class FormatRelativeHelper
+ */
 export default BaseHelper.extend({
   format(params, hash) {
     return this.intl.formatRelative(params, hash);
