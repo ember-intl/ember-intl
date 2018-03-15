@@ -83,6 +83,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-open-browser": "^0.5.1",
     "ember-resolver": "^4.0.0",
+    "ember-router-scroll": "^0.5.0",
     "ember-source": "~2.18.0",
     "ember-string-ishtmlsafe-polyfill": "^1.1.0",
     "eslint-plugin-ember": "^5.0.0",

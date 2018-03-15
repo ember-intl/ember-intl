@@ -3570,6 +3570,14 @@ ember-router-scroll@^0.4.0:
     ember-cli-babel "^6.6.0"
     ember-getowner-polyfill "^2.0.1"
 
+ember-router-scroll@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ember-router-scroll/-/ember-router-scroll-0.5.0.tgz#fae739634d9d8171a7805c83b063b862c7a30ff9"
+  dependencies:
+    ember-app-scheduler "^0.2.0"
+    ember-cli-babel "^6.6.0"
+    ember-getowner-polyfill "^2.0.1"
+
 ember-router-service-polyfill@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ember-router-service-polyfill/-/ember-router-service-polyfill-1.0.2.tgz#6e5565f196fa7045cbe06a6fab861f9e766fe62a"
