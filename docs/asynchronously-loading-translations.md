@@ -36,18 +36,10 @@ module.exports = function() {
 // app/routes/application.js
 export default Ember.Route.extend({
   intl: Ember.inject.service(),
-  beforeModel() {
-    const intl = this.get('intl');
-
-    return fetch('/custom-api/translations/?loc[0]=en-ca&loc[1]=en-us').then((hash) => {
-      return Ember.RSVP.all([
-        intl.addTranslations('en-us', hash['en-us']),
-        intl.addTranslations('en-ca', hash['en-ca'])
-      ]).then(() => {
-        // en-ca is primary, en-us is fallback
-        intl.setLocale(['en-ca', 'en-us']);
-      });
-    });
+  async beforeModel() {
+    let translations = await fetch('/api/translations.json');
+    this.get('intl').addTranslations('en-us', translations);
+    this.get('intl').setLocale('en-us');
   }
 });
 ```
