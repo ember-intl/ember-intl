@@ -2,13 +2,11 @@
 Missing translations
 ==============================================================================
 
-When a translation lookup is called with a nonexistent key, it returns the
-result of calling `util:intl/missing-message` with the `key` and the `locale`
-as arguments. The default behavior is to return
-`"Missing translation: [key]"`, but you can customize this by exporting a
-function from `app/utils/intl/missing-message.js`.
+When a translation key does not resolve to a translation, ember-intl invokes the function from `app/utils/intl/missing-message.js` with a `key` and `locales` as arguments.
 
-The default implementation:
+The default implementation is to return `"Missing translation: [key]"`, but you can overridden by exporting a function from `app/utils/intl/missing-message.js`.
+
+The following is a custom implementation that throws an error instead of returns a `String`.
 
 ```js
 // app/utils/intl/missing-message.js:
@@ -20,7 +18,7 @@ const { Logger:logger } = Ember;
 export default function missingMessage(key, locales) {
   logger.warn(`translation: '${key}' on locale: '${locales.join(', ')}' was not found.`);
 
-  return `Missing translation: ${key}`;
+  throw new Error(`[ember-intl] Missing translation: ${key}`);
 }
 ```
 
