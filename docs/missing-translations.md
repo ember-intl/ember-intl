@@ -13,12 +13,8 @@ The following is a custom implementation that throws an error instead of returns
 
 import Ember from 'ember';
 
-const { Logger:logger } = Ember;
-
 export default function missingMessage(key, locales) {
-  logger.warn(`translation: '${key}' on locale: '${locales.join(', ')}' was not found.`);
-
-  throw new Error(`[ember-intl] Missing translation: ${key}`);
+  throw new Error(`[ember-intl] Missing translation for key: "${key}" for locales: "${locales}"`);
 }
 ```
 
