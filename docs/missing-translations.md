@@ -11,8 +11,6 @@ The following is a custom implementation that throws an error instead of returns
 ```js
 // app/utils/intl/missing-message.js:
 
-import Ember from 'ember';
-
 export default function missingMessage(key, locales) {
   throw new Error(`[ember-intl] Missing translation for key: "${key}" for locales: "${locales}"`);
 }
