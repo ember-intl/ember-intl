@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
@@ -8,6 +8,10 @@ import { A as emberArray } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Translation from '../models/translation';
 
+/**
+ * @class DefaultTranslationAdapter
+ * @private
+ */
 const DefaultTranslationAdapter = EmberObject.extend({
   _seen: null,
 

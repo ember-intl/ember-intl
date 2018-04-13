@@ -5,7 +5,8 @@ module.exports = function(environment) {
     modulePrefix: 'dummy',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'router-scroll',
+    historySupportMiddleware: true,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -44,6 +45,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    // Allow ember-cli-addon-docs to update the rootURL in compiled assets
+    ENV.rootURL = 'ADDON_DOCS_ROOT_URL';
     // here you can enable a production-specific feature
   }
 

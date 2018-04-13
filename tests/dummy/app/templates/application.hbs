@@ -1,17 +1,3 @@
-<div class="main">
-    <div class="hero">
-      <div class="header">
-          <h1 id="title">ember-intl</h1>
-      </div>
-    </div>
-    <div class="content">
-        <div>
-            {{#each selections as |model|}}
-              <button class={{if model.active 'active'}} {{action 'changeLocale' model.locale}}>
-                {{model.locale}}
-              </button>
-            {{/each}}
-        </div>
-        {{outlet}}
-    </div>
-</div>
+{{outlet}}
+
+{{docs-keyboard-shortcuts}}

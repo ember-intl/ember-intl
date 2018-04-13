@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
@@ -13,6 +13,9 @@ function assertIsDate(date, errMsg) {
   assert(errMsg, isFinite(date));
 }
 
+/**
+ * @class FormatDateFormatter
+ */
 const FormatDate = Formatter.extend({
   formatter: computed({
     get() {

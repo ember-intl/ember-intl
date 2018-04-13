@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
@@ -8,6 +8,9 @@ import { getOwner } from '@ember/application';
 import { isEmpty } from '@ember/utils';
 import { getWithDefault } from '@ember/object';
 
+/**
+ * @class AbstractFormatHelper
+ */
 const AbstractHelper = Helper.extend({
   intl: null,
 

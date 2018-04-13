@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
@@ -20,6 +20,9 @@ export function getValue([translationKey], options) {
   return typeof translation === 'string' ? translation : fallbackTranslation;
 }
 
+/**
+ * @class THelper
+ */
 export default BaseHelper.extend({
   getValue,
 
