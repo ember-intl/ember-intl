@@ -29,7 +29,7 @@
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
     "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json",
-    "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,tests,tests-node}/**/*.js\""
+    "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
     "broccoli-caching-writer": "^3.0.3",

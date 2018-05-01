@@ -4,39 +4,26 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
-  plugins: [
-    'prettier',
-    'ember'
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended'
-  ],
+  plugins: ['prettier', 'ember'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended'],
   env: {
     browser: true
   },
   rules: {
-    'prettier/prettier': ['error', {
-      'singleQuote': true,
-      'printWidth': 120
-    }],
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        printWidth: 120
+      }
+    ],
     'ember/avoid-leaking-state-in-ember-objects': 0
   },
   overrides: [
     // node files
     {
-      files: [
-        'index.js',
-        'testem.js',
-        'ember-cli-build.js',
-        'config/**/*.js',
-        'tests/dummy/config/**/*.js'
-      ],
-      excludedFiles: [
-        'app/**',
-        'addon/**',
-        'tests/dummy/app/**'
-      ],
+      files: ['index.js', 'testem.js', 'ember-cli-build.js', 'config/**/*.js', 'tests/dummy/config/**/*.js'],
+      excludedFiles: ['app/**', 'addon-test-support/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
         ecmaVersion: 2015
