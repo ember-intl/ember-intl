@@ -67,7 +67,7 @@
     "ember-cli-htmlbars": "^2.0.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-qunit": "^4.1.1",
+    "ember-cli-qunit": "^4.3.0",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
@@ -76,6 +76,8 @@
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
+    "ember-maybe-import-regenerator-for-testing": "^1.0.0",
+    "ember-native-dom-event-dispatcher": "^0.6.4",
     "ember-open-browser": "^0.5.1",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.18.0",
@@ -86,7 +88,8 @@
     "fs-extra": "^3.0.1",
     "loader.js": "^4.2.3",
     "mocha": "^3.4.2",
-    "prettier": "^1.5.3"
+    "prettier": "^1.5.3",
+    "qunit-dom": "^0.4.0"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
