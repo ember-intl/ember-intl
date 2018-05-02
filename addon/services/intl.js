@@ -12,7 +12,6 @@ import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { set, get, computed } from '@ember/object';
-import { deprecate } from '@ember/application/deprecations';
 
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
@@ -274,16 +273,6 @@ const IntlService = Service.extend(Evented, {
   /** @private **/
   localeFactory(localeName) {
     return this._adapter.localeFactory(normalizeLocale(localeName));
-  },
-
-  /** @public **/
-  createLocale(localeName, payload) {
-    deprecate('[ember-intl] `createLocale` is deprecated, use `addTranslations`', false, {
-      id: 'ember-intl-create-locale',
-      until: '3.0.0'
-    });
-
-    return this.addTranslations(localeName, payload);
   },
 
   /** @public **/
