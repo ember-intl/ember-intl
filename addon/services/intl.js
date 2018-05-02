@@ -47,6 +47,7 @@ function formatter(name) {
 
 const IntlService = Service.extend(Evented, {
   _locale: null,
+  _adapter: null,
 
   /** @public **/
   locale: computed('_locale', {
@@ -55,13 +56,6 @@ const IntlService = Service.extend(Evented, {
     },
     get() {
       return get(this, '_locale');
-    }
-  }),
-
-  /** @private **/
-  adapter: computed({
-    get() {
-      return this._owner.lookup('ember-intl@adapter:default');
     }
   }),
 
@@ -96,7 +90,7 @@ const IntlService = Service.extend(Evented, {
    * @property locales
    * @public
    */
-  locales: computed.readOnly('adapter.locales'),
+  locales: computed.readOnly('_adapter.locales'),
 
   /** @public **/
   init() {
@@ -109,6 +103,7 @@ const IntlService = Service.extend(Evented, {
     }
 
     this._owner = getOwner(this);
+    this._adapter = this._owner.lookup('ember-intl@adapter:default');
 
     this._formatters = {
       'html-message': new FormatHtmlMessage(),
@@ -181,7 +176,7 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   lookup(key, localeName, options = {}) {
     const localeNames = this._localeWithDefault(localeName);
-    const translation = get(this, 'adapter').lookup(localeNames, key);
+    const translation = this._adapter.lookup(localeNames, key);
 
     if (!options.resilient && translation === undefined) {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
@@ -211,13 +206,10 @@ const IntlService = Service.extend(Evented, {
   /** @public **/
   exists(key, localeName) {
     const localeNames = this._localeWithDefault(localeName);
-    const adapter = get(this, 'adapter');
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    return localeNames.some(localeName => {
-      return adapter.has(localeName, key);
-    });
+    return localeNames.some(localeName => this._adapter.has(localeName, key));
   },
 
   /** @public **/
@@ -279,9 +271,9 @@ const IntlService = Service.extend(Evented, {
     }
   },
 
-  /** @public **/
+  /** @private **/
   localeFactory(localeName) {
-    return get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
+    return this._adapter.localeFactory(normalizeLocale(localeName));
   },
 
   /** @public **/
