@@ -16,13 +16,15 @@ const FormatNumber = Formatter.extend({
   }).readOnly(),
 
   format(value, options, ctx) {
-    return this._format(value, this.filterSupporedOptions(options), undefined, ctx);
+    return this._format(value, this.readOptions(options), undefined, ctx);
   }
 });
 
 FormatNumber.reopenClass({
   formatType: 'number',
-  supportedOptions: [
+  options: new Set([
+    'locale',
+    'format',
     'localeMatcher',
     'style',
     'currency',
@@ -33,7 +35,7 @@ FormatNumber.reopenClass({
     'maximumFractionDigits',
     'minimumSignificantDigits',
     'maximumSignificantDigits'
-  ]
+  ])
 });
 
 export default FormatNumber;

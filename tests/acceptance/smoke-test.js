@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit } from '@ember/test-helpers';
+import { t } from 'ember-intl/test-support';
 
 module('Acceptance: Smoke', function(hooks) {
   setupApplicationTest(hooks);
@@ -27,6 +28,7 @@ module('Acceptance: Smoke', function(hooks) {
 
   test('translation-subdirectory', async function(assert) {
     await visit('/smoke');
-    assert.dom('.translation-subdirectory').includesText('translation subdirectories loaded');
+    assert.ok(t('smoke.subdirectory'));
+    assert.dom('.translation-subdirectory').includesText(t('smoke.subdirectory'));
   });
 });

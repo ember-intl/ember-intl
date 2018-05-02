@@ -34,13 +34,13 @@ const FormatRelative = Formatter.extend({
       };
     }
 
-    return this._format(dateValue, this.filterSupporedOptions(options), formatOptions, ctx);
+    return this._format(dateValue, this.readOptions(options), formatOptions, ctx);
   }
 });
 
 FormatRelative.reopenClass({
   formatType: 'relative',
-  supportedOptions: ['style', 'units']
+  options: new Set(['locale', 'format', 'style', 'units'])
 });
 
 export default FormatRelative;

@@ -6,50 +6,43 @@
 import { camelize } from '@ember/string';
 import EmberObject, { get } from '@ember/object';
 
-import arrayToHash from '../utils/array-to-hash';
 import links from '../utils/links';
 
-const FormatterBase = EmberObject.extend({
-  options: null,
+const EMPTY_OBJECT = {};
 
+const FormatterBase = EmberObject.extend({
   init() {
     this._super();
 
     if (this.constructor === FormatterBase) {
       throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
     }
-
-    this.options = arrayToHash(this.constructor.supportedOptions);
   },
 
   /**
    * Filters out all of the whitelisted formatter options
    *
-   * @method filterSupporedOptions
+   * @method readOptions
    * @param {Object} Options object
    * @return {Object} Options object containing just whitelisted options
    * @private
    */
-  filterSupporedOptions(options) {
+  readOptions(options) {
     if (!options) {
-      return {};
+      return EMPTY_OBJECT;
     }
 
-    let supportedOptions = {};
-    let foundMatch = false;
-    let camelizedKey;
+    let found = {};
 
     for (let key in options) {
-      camelizedKey = camelize(key);
-      if (this.options[camelizedKey]) {
-        foundMatch = true;
-        supportedOptions[camelizedKey] = options[key];
+      let normalized = camelize(key);
+
+      if (this.constructor.options.has(normalized)) {
+        found[normalized] = options[key];
       }
     }
 
-    if (foundMatch) {
-      return supportedOptions;
-    }
+    return found;
   },
 
   format() {
@@ -78,8 +71,7 @@ const FormatterBase = EmberObject.extend({
 });
 
 FormatterBase.reopenClass({
-  supportedOptions: ['locale', 'format'],
-  concatenatedProperties: ['supportedOptions']
+  options: new Set(['locale', 'format'])
 });
 
 export default FormatterBase;

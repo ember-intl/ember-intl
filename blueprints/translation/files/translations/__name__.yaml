@@ -1,1 +1,14 @@
-hello: 'world'
+#
+# ember-intl supports both yaml and json translation formats.
+#
+# Examples
+#
+# YAML:
+#
+# translation_key: hello world!
+#
+# JSON:
+#
+# {
+#   "translation_key": "hello world!"
+# }

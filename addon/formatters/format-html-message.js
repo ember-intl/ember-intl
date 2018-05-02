@@ -3,8 +3,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { htmlSafe } from '@ember/string';
 import Ember from 'ember';
+import { htmlSafe } from '@ember/string';
 import FormatterMessage from './format-message';
 
 const { Handlebars } = Ember;

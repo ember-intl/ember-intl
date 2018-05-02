@@ -24,7 +24,7 @@ const FormatDate = Formatter.extend({
     const dateTime = new Date(value);
     assertIsDate(dateTime, 'A date or timestamp must be provided to format-date');
 
-    const formatOptions = this.filterSupporedOptions(options);
+    const formatOptions = this.readOptions(options);
 
     return this._format(dateTime, formatOptions, undefined, ctx);
   }
@@ -32,7 +32,9 @@ const FormatDate = Formatter.extend({
 
 FormatDate.reopenClass({
   formatType: 'date',
-  supportedOptions: [
+  options: new Set([
+    'locale',
+    'format',
     'localeMatcher',
     'timeZone',
     'hour12',
@@ -46,7 +48,7 @@ FormatDate.reopenClass({
     'minute',
     'second',
     'timeZoneName'
-  ]
+  ])
 });
 
 export default FormatDate;
