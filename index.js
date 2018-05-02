@@ -85,6 +85,7 @@ module.exports = {
     if (this.hasTranslationDir && !this.addonOptions.publicOnly) {
       trees.push(
         this.reduceTranslations({
+          outputPath: 'translations',
           filename(key) {
             return `${key}.js`;
           },
@@ -278,9 +279,6 @@ module.exports = {
   },
 
   reduceTranslations(opts) {
-    if (!opts) {
-      opts = {};
-    }
     let addon = this;
 
     return new TranslationReducer(
