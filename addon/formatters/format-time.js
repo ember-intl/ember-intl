@@ -5,10 +5,4 @@
 
 import FormatDateFormatter from './format-date';
 
-const FormatTime = FormatDateFormatter.extend();
-
-FormatTime.reopenClass({
-  formatType: 'time'
-});
-
-export default FormatTime;
+export default class FormatTime extends FormatDateFormatter {}

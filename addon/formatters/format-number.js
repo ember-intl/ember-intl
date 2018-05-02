@@ -3,39 +3,35 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { computed } from '@ember/object';
 import createFormatCache from 'intl-format-cache';
+import { A as emberArray } from '@ember/array';
 
 import Formatter from './-base';
 
-const FormatNumber = Formatter.extend({
-  formatter: computed({
-    get() {
-      return createFormatCache(Intl.NumberFormat);
-    }
-  }).readOnly(),
+export default class FormatNumber extends Formatter {
+  get options() {
+    return emberArray([
+      'locale',
+      'format',
+      'localeMatcher',
+      'style',
+      'currency',
+      'currencyDisplay',
+      'useGrouping',
+      'minimumIntegerDigits',
+      'minimumFractionDigits',
+      'maximumFractionDigits',
+      'minimumSignificantDigits',
+      'maximumSignificantDigits'
+    ]);
+  }
+
+  constructor() {
+    super();
+    this.formatter = createFormatCache(Intl.NumberFormat);
+  }
 
   format(value, options, ctx) {
     return this._format(value, this.readOptions(options), undefined, ctx);
   }
-});
-
-FormatNumber.reopenClass({
-  formatType: 'number',
-  options: new Set([
-    'locale',
-    'format',
-    'localeMatcher',
-    'style',
-    'currency',
-    'currencyDisplay',
-    'useGrouping',
-    'minimumIntegerDigits',
-    'minimumFractionDigits',
-    'maximumFractionDigits',
-    'minimumSignificantDigits',
-    'maximumSignificantDigits'
-  ])
-});
-
-export default FormatNumber;
+}

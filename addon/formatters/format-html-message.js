@@ -9,7 +9,7 @@ import FormatterMessage from './format-message';
 
 const { Handlebars } = Ember;
 
-const FormatHtmlMessage = FormatterMessage.extend({
+export default class FormatHtmlMessage extends FormatterMessage {
   escapeProps(options) {
     if (!options) {
       return;
@@ -26,18 +26,12 @@ const FormatHtmlMessage = FormatterMessage.extend({
 
       return result;
     }, {});
-  },
+  }
 
   format(value, options, ctx) {
     let escapedOptions = this.escapeProps(options);
-    let superResult = this._super(value, escapedOptions, ctx);
+    let superResult = super.format(value, escapedOptions, ctx);
 
     return htmlSafe(superResult);
   }
-});
-
-FormatHtmlMessage.reopenClass({
-  formatType: 'html-message'
-});
-
-export default FormatHtmlMessage;
+}

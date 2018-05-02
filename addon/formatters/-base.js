@@ -4,20 +4,16 @@
  */
 
 import { camelize } from '@ember/string';
-import EmberObject, { get } from '@ember/object';
+import { A as emberArray } from '@ember/array';
 
 import links from '../utils/links';
 
 const EMPTY_OBJECT = {};
 
-const FormatterBase = EmberObject.extend({
-  init() {
-    this._super();
-
-    if (this.constructor === FormatterBase) {
-      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
-    }
-  },
+export default class FormatterBase {
+  get options() {
+    return emberArray();
+  }
 
   /**
    * Filters out all of the whitelisted formatter options
@@ -37,17 +33,17 @@ const FormatterBase = EmberObject.extend({
     for (let key in options) {
       let normalized = camelize(key);
 
-      if (this.constructor.options.has(normalized)) {
+      if (this.options.includes(normalized)) {
         found[normalized] = options[key];
       }
     }
 
     return found;
-  },
+  }
 
   format() {
     throw new Error('not implemented');
-  },
+  }
 
   /**
    * Invokes the Intl formatter methods
@@ -66,12 +62,6 @@ const FormatterBase = EmberObject.extend({
       );
     }
 
-    return get(this, 'formatter')(locale, formatterOptions).format(value, formatOptions);
+    return this.formatter(locale, formatterOptions).format(value, formatOptions);
   }
-});
-
-FormatterBase.reopenClass({
-  options: new Set(['locale', 'format'])
-});
-
-export default FormatterBase;
+}

@@ -17,7 +17,6 @@ import { deprecate } from '@ember/application/deprecations';
 
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
-import EmptyObject from 'ember-intl/utils/empty-object';
 
 import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
@@ -29,21 +28,15 @@ import FormatMessage from '../formatters/format-message';
 import FormatRelative from '../formatters/format-relative';
 import FormatHtmlMessage from '../formatters/format-html-message';
 
-function formatterProxy(ctr) {
+function formatter(name) {
   return function(value, options, formats) {
     let formatOptions = options;
 
     if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(ctr.formatType, formatOptions.format), formatOptions);
+      formatOptions = assign({}, this.getFormat(name, formatOptions.format), formatOptions);
     }
 
-    if (!this._formatters[ctr.formatType]) {
-      this._formatters[ctr.formatType] = ctr.create();
-    }
-
-    let formatter = this._formatters[ctr.formatType];
-
-    return formatter.format(value, formatOptions, {
+    return this._formatters[name].format(value, formatOptions, {
       formats: formats || get(this, 'formats'),
       locale: this._localeWithDefault(formatOptions && formatOptions.locale)
     });
@@ -78,25 +71,22 @@ const IntlService = Service.extend(Evented, {
   }),
 
   /** @public **/
-  formatHtmlMessage: formatterProxy(FormatHtmlMessage),
+  formatHtmlMessage: formatter('html-message'),
 
   /** @public **/
-  formatRelative: formatterProxy(FormatRelative),
+  formatRelative: formatter('relative'),
 
   /** @public **/
-  formatMessage: formatterProxy(FormatMessage),
+  formatMessage: formatter('message'),
 
   /** @public **/
-  formatNumber: formatterProxy(FormatNumber),
+  formatNumber: formatter('number'),
 
   /** @public **/
-  formatTime: formatterProxy(FormatTime),
+  formatTime: formatter('time'),
 
   /** @public **/
-  formatDate: formatterProxy(FormatDate),
-
-  /** @private **/
-  requirejs: requirejs,
+  formatDate: formatter('date'),
 
   /**
    * Returns an array of registered locale names
@@ -110,14 +100,22 @@ const IntlService = Service.extend(Evented, {
   init() {
     this._super();
 
-    this._owner = getOwner(this);
-    this._formatters = new EmptyObject();
-
     if (typeof Intl === 'undefined') {
-      warn(`[ember-intl] Intl API is unavailable in this environment.\nSee: ${links.polyfill}`, false, {
+      warn(`[ember-intl] Intl API was not found.\nSee: ${links.polyfill}`, false, {
         id: 'ember-intl-undefined-intljs'
       });
     }
+
+    this._owner = getOwner(this);
+
+    this._formatters = {
+      'html-message': new FormatHtmlMessage(),
+      message: new FormatMessage(),
+      relative: new FormatRelative(),
+      number: new FormatNumber(),
+      time: new FormatTime(),
+      date: new FormatDate()
+    };
 
     this._hydrate();
   },
@@ -158,7 +156,7 @@ const IntlService = Service.extend(Evented, {
 
   /** @private **/
   _lookupByFactoryType(type, modulePrefix) {
-    return Object.keys(this.requirejs.entries).filter(key => {
+    return Object.keys(requirejs.entries).filter(key => {
       return key.indexOf(`${modulePrefix}/${type}/`) === 0;
     });
   },
