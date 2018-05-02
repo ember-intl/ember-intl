@@ -4,7 +4,7 @@
  */
 
 import EmberObject, { set, get } from '@ember/object';
-import EmptyObject from 'ember-intl/utils/empty-object';
+import EmptyObject from 'ember-intl/-private/empty-object';
 import { deprecate } from '@ember/application/deprecations';
 
 const TranslationModel = EmberObject.extend({

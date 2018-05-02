@@ -4,7 +4,7 @@
  */
 import { assert } from '@ember/debug';
 import { computed, get } from '@ember/object';
-import EmptyObject from 'ember-intl/utils/empty-object';
+import EmptyObject from 'ember-intl/-private/empty-object';
 
 const keys = Object.keys;
 

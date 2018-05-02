@@ -1,4 +1,4 @@
 import Service from './services/intl';
-import translationMacro from './utils/macro';
+import translationMacro from './macro';
 
 export { Service, translationMacro };

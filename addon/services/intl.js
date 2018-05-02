@@ -28,8 +28,8 @@ import {
 } from '../-private/formatters';
 
 import links from '../utils/links';
-import isArrayEqual from '../utils/is-equal';
-import normalizeLocale from '../utils/normalize-locale';
+import isArrayEqual from '../-private/is-array-equal';
+import normalizeLocale from '../-private/normalize-locale';
 
 function formatter(name) {
   return function(value, options, formats) {
