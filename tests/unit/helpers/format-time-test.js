@@ -1,84 +1,90 @@
 import hbs from 'htmlbars-inline-precompile';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import formatTimeHelper from 'ember-intl/helpers/format-time';
 
 const date = 1390518044403;
-const locale = 'en-us';
-let service, registry;
 
-moduleForComponent('format-time', {
-  integration: true,
-  beforeEach() {
-    registry = this.registry || this.container;
-    service = this.container.lookup('service:intl');
-    service.setLocale(locale);
-  }
-});
+module('format-time-test', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('exists', function(assert) {
-  assert.expect(1);
-  assert.ok(formatTimeHelper);
-});
+  hooks.beforeEach(function() {
+    this.intl = this.owner.lookup('service:intl');
+    this.intl.setLocale('en-us');
+    this.owner.register('formats:main', { relative: { hours: { units: 'hour', style: 'numeric' } } });
+    this.owner.registerOptionsForType('formats', { singleton: true, instantiate: false });
+  });
 
-test('invoke formatTime directly', function(assert) {
-  assert.expect(1);
+  test('exists', function(assert) {
+    assert.expect(1);
+    assert.ok(formatTimeHelper);
+  });
 
-  const output = service.formatTime(date, { timeZone: 'UTC', locale: 'fr-fr' });
+  test('invoke formatTime directly', function(assert) {
+    assert.expect(1);
 
-  // Try both for browser Intl data inconsistencies
-  assert.ok(output === '23/1/2014' || output === '23/01/2014');
-});
+    const output = this.intl.formatTime(date, { timeZone: 'UTC', locale: 'fr-fr' });
 
-test('invoke formatTime directly with format', function(assert) {
-  assert.expect(1);
+    // Try both for browser Intl data inconsistencies
+    assert.ok(output === '23/1/2014' || output === '23/01/2014');
+  });
 
-  registry.register('formats:main', { time: { test: { timeZone: 'UTC', locale: 'fr-fr' } } }, { instantiate: false });
+  test('invoke formatTime directly with format', function(assert) {
+    assert.expect(1);
 
-  const output = service.formatTime(date, { format: 'test' });
+    this.owner.register(
+      'formats:main',
+      { time: { test: { timeZone: 'UTC', locale: 'fr-fr' } } },
+      { instantiate: false }
+    );
 
-  // Try both for browser Intl data inconsistencies
-  assert.ok(output === '23/1/2014' || output === '23/01/2014');
-});
+    const output = this.intl.formatTime(date, { format: 'test' });
 
-test('it should return a formatted string from a date string', function(assert) {
-  assert.expect(1);
-  this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
+    // Try both for browser Intl data inconsistencies
+    assert.ok(output === '23/1/2014' || output === '23/01/2014');
+  });
 
-  // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
-  this.render(hbs`{{format-time dateString timeZone='UTC'}}`);
-  assert.equal(this.$().text(), '1/23/2014');
-});
+  test('it should return a formatted string from a date string', async function(assert) {
+    assert.expect(1);
+    this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
-test('it should return a formatted string from a timestamp', function(assert) {
-  assert.expect(1);
-  this.set('date', date);
+    // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
+    await render(hbs`{{format-time dateString timeZone='UTC'}}`);
+    assert.equal(this.element.textContent, '1/23/2014');
+  });
 
-  // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
-  this.render(hbs`{{format-time date timeZone='UTC'}}`);
-  assert.equal(this.$().text(), '1/23/2014');
-});
+  test('it should return a formatted string from a timestamp', async function(assert) {
+    assert.expect(1);
+    this.set('date', date);
 
-test('it should return a formatted string of just the time', function(assert) {
-  assert.expect(1);
-  this.set('date', date);
-  this.render(hbs`{{format-time date hour='numeric' minute='numeric' timeZone='UTC'}}`);
-  assert.equal(this.$().text(), '11:00 PM');
-});
+    // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
+    await render(hbs`{{format-time date timeZone='UTC'}}`);
+    assert.equal(this.element.textContent, '1/23/2014');
+  });
 
-test('it should format the epoch timestamp', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{format-time 0}}`);
-  assert.equal(this.$().text(), new Intl.DateTimeFormat(locale).format(0));
-});
+  test('it should return a formatted string of just the time', async function(assert) {
+    assert.expect(1);
+    this.set('date', date);
+    await render(hbs`{{format-time date hour='numeric' minute='numeric' timeZone='UTC'}}`);
+    assert.equal(this.element.textContent, '11:00 PM');
+  });
 
-test('it should display the fallback if called with no value', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{format-time fallback="fallback value"}}`);
-  assert.equal(this.$().text(), 'fallback value');
-});
+  test('it should format the epoch timestamp', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-time 0}}`);
+    assert.equal(this.element.textContent, new Intl.DateTimeFormat('en-us').format(0));
+  });
 
-test('it should display the fallback if called with an undefined value', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{format-time undefined fallback="fallback value"}}`);
-  assert.equal(this.$().text(), 'fallback value');
+  test('it should display the fallback if called with no value', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-time fallback="fallback value"}}`);
+    assert.equal(this.element.textContent, 'fallback value');
+  });
+
+  test('it should display the fallback if called with an undefined value', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-time undefined fallback="fallback value"}}`);
+    assert.equal(this.element.textContent, 'fallback value');
+  });
 });
