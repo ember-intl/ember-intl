@@ -18,15 +18,18 @@ import { deprecate } from '@ember/application/deprecations';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 
+import {
+  FormatDate,
+  FormatTime,
+  FormatMessage,
+  FormatNumber,
+  FormatRelative,
+  FormatHtmlMessage
+} from '../-private/formatters';
+
 import links from '../utils/links';
 import isArrayEqual from '../utils/is-equal';
 import normalizeLocale from '../utils/normalize-locale';
-import FormatDate from '../formatters/format-date';
-import FormatTime from '../formatters/format-time';
-import FormatNumber from '../formatters/format-number';
-import FormatMessage from '../formatters/format-message';
-import FormatRelative from '../formatters/format-relative';
-import FormatHtmlMessage from '../formatters/format-html-message';
 
 function formatter(name) {
   return function(value, options, formats) {

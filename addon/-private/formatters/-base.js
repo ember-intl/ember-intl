@@ -6,7 +6,7 @@
 import { camelize } from '@ember/string';
 import { A as emberArray } from '@ember/array';
 
-import links from '../utils/links';
+import links from '../../utils/links';
 
 const EMPTY_OBJECT = {};
 
