@@ -50,7 +50,7 @@ module('format-html-message', function(hooks) {
     assert.equal(this.element.textContent, 'Hello Jason');
   });
 
-  skip('should throw if called with out a value', async function(assert) {
+  skip('should throw if called with out a value', async function(/*assert*/) {
     // await render(hbs`{{format-html-message}}`);
     // expectError(
     //   () => render(hbs`{{format-html-message}}`),

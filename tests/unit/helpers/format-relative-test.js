@@ -24,10 +24,9 @@ module('format-relative', function(hooks) {
     assert.equal(this.intl.formatRelative(new Date()), 'now');
   });
 
-  skip('should throw if called with out a value', function(assert) {
-    assert.expect(1);
-
-    expectError(() => render(hbs`{{format-relative}}`), ex => assert.ok(ex));
+  skip('should throw if called with out a value', function(/*assert*/) {
+    // assert.expect(1);
+    // expectError(() => render(hbs`{{format-relative}}`), ex => assert.ok(ex));
   });
 
   test('can specify a `value` and `now` on the options hash', async function(assert) {

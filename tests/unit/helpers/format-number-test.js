@@ -45,10 +45,9 @@ module('format-number', function(hooks) {
     assert.equal(escape(this.element.textContent), '1%A0000');
   });
 
-  skip('should throw if called with out a value', function(assert) {
-    assert.expect(1);
-
-    expectError(() => render(hbs`{{format-number}}`), ex => assert.ok(ex));
+  skip('should throw if called with out a value', function(/*assert*/) {
+    // assert.expect(1);
+    // expectError(() => render(hbs`{{format-number}}`), ex => assert.ok(ex));
   });
 
   test('should return a string', async function(assert) {

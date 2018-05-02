@@ -63,19 +63,18 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent, 'Hello Jason');
   });
 
-  skip('should throw if called with out a value', async function(assert) {
-    assert.expect(1);
-
-    expectError(
-      () => render(hbs`{{format-message}}`),
-      ex => {
-        assert.ok(
-          ex.message.match(
-            /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
-          )
-        );
-      }
-    );
+  skip('should throw if called with out a value', async function(/*assert*/) {
+    // assert.expect(1);
+    // expectError(
+    //   () => render(hbs`{{format-message}}`),
+    //   ex => {
+    //     assert.ok(
+    //       ex.message.match(
+    //         /Assertion Failed: \[ember-intl\] translation lookup attempted but no translation key was provided\./
+    //       )
+    //     );
+    //   }
+    // );
   });
 
   test('should return a formatted string', async function(assert) {
