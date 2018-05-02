@@ -63,7 +63,8 @@ module('t', function(hooks) {
 
   test('locale can add message to intl service and read it', async function(assert) {
     assert.expect(1);
-    await this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'oh', 'hai!');
+
+    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'oh', 'hai!');
     await render(hbs`{{t 'oh'}}`);
     assert.equal(this.element.textContent, 'hai!');
   });
@@ -71,7 +72,7 @@ module('t', function(hooks) {
   test('translation value can be an empty string', async function(assert) {
     assert.expect(1);
 
-    await this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_translation', '');
+    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_translation', '');
     await render(hbs`{{t 'empty_translation'}}`);
     assert.equal(this.element.textContent, '');
   });
@@ -79,7 +80,7 @@ module('t', function(hooks) {
   test('locale can add messages object and can read it', async function(assert) {
     assert.expect(1);
 
-    await this.intl.addTranslations(DEFAULT_LOCALE_NAME, { 'bulk-add': 'bulk add works' });
+    this.intl.addTranslations(DEFAULT_LOCALE_NAME, { 'bulk-add': 'bulk add works' });
     await render(hbs`{{t 'bulk-add'}}`);
     assert.equal(this.element.textContent, 'bulk add works');
   });

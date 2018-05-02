@@ -5,7 +5,6 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
@@ -247,16 +246,16 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   addTranslation(localeName, key, value) {
-    return this.localeFactory(localeName).then(locale => {
-      return locale.addTranslation(key, value);
-    });
+    const locale = this.localeFactory(localeName);
+
+    return locale.addTranslation(key, value);
   },
 
   /** @public **/
   addTranslations(localeName, payload) {
-    return this.localeFactory(localeName).then(locale => {
-      return locale.addTranslations(payload);
-    });
+    const locale = this.localeFactory(localeName);
+
+    return locale.addTranslations(payload);
   },
 
   /** @public **/
@@ -282,7 +281,7 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   localeFactory(localeName) {
-    return resolve(get(this, 'adapter').localeFactory(normalizeLocale(localeName), true));
+    return get(this, 'adapter').localeFactory(normalizeLocale(localeName), true);
   },
 
   /** @public **/

@@ -66,7 +66,7 @@ module('service:intl', function(hooks) {
       invokedWarn = true;
     });
 
-    await this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'foo', 'FOO');
+    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'foo', 'FOO');
     this.intl.t('foo');
     assert.ok(!invokedWarn, 'Warning was not raised');
   });
@@ -74,14 +74,14 @@ module('service:intl', function(hooks) {
   test('translations that are empty strings are valid', async function(assert) {
     assert.expect(1);
 
-    await this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_string', '');
+    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_string', '');
     assert.equal(this.intl.t('empty_string'), '');
   });
 
   test('should return safestring when htmlSafe attribute passed to `t`', async function(assert) {
     assert.expect(1);
 
-    await this.intl.addTranslation(
+    this.intl.addTranslation(
       DEFAULT_LOCALE_NAME,
       'html_safe_translation',
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
@@ -98,7 +98,7 @@ module('service:intl', function(hooks) {
   test('should return regular string when htmlSafe is falsey', async function(assert) {
     assert.expect(1);
 
-    await this.intl.addTranslation(
+    this.intl.addTranslation(
       DEFAULT_LOCALE_NAME,
       'html_safe_translation',
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
@@ -115,7 +115,7 @@ module('service:intl', function(hooks) {
   test('exists returns true when key found', async function(assert) {
     assert.expect(1);
 
-    await this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'hello', 'world');
+    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'hello', 'world');
     assert.equal(this.intl.exists('hello'), true);
   });
 
