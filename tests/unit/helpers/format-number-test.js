@@ -12,12 +12,9 @@ module('format-number', function(hooks) {
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
     this.intl.setLocale('en-us');
-
-    this.owner.register(
-      'formats:main',
-      { number: { digits: { minimumFractionDigits: 2 }, currency: { style: 'currency', minimumFractionDigits: 2 } } },
-      { instantiate: false }
-    );
+    this.intl.set('formats', {
+      number: { digits: { minimumFractionDigits: 2 }, currency: { style: 'currency', minimumFractionDigits: 2 } }
+    });
   });
 
   test('exists', function(assert) {

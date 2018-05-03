@@ -10,8 +10,7 @@ module('format-relative', function(hooks) {
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
     this.intl.setLocale('en-us');
-    this.owner.register('formats:main', { relative: { hours: { units: 'hour', style: 'numeric' } } });
-    this.owner.registerOptionsForType('formats', { singleton: true, instantiate: false });
+    this.intl.set('formats', { relative: { hours: { units: 'hour', style: 'numeric' } } });
   });
 
   test('exists', function(assert) {

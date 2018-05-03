@@ -12,8 +12,7 @@ module('format-time-test', function(hooks) {
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
     this.intl.setLocale('en-us');
-    this.owner.register('formats:main', { relative: { hours: { units: 'hour', style: 'numeric' } } });
-    this.owner.registerOptionsForType('formats', { singleton: true, instantiate: false });
+    this.intl.set('formats', { relative: { hours: { units: 'hour', style: 'numeric' } } });
   });
 
   test('exists', function(assert) {
@@ -33,11 +32,7 @@ module('format-time-test', function(hooks) {
   test('invoke formatTime directly with format', function(assert) {
     assert.expect(1);
 
-    this.owner.register(
-      'formats:main',
-      { time: { test: { timeZone: 'UTC', locale: 'fr-fr' } } },
-      { instantiate: false }
-    );
+    this.intl.set('formats', { time: { test: { timeZone: 'UTC', locale: 'fr-fr' } } });
 
     const output = this.intl.formatTime(date, { format: 'test' });
 

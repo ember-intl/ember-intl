@@ -38,7 +38,7 @@ function formatter(name) {
     }
 
     return this._formatters[name].format(value, formatOptions, {
-      formats: formats || get(this, 'formats'),
+      formats: formats || this.formats,
       locale: this._localeWithDefault(formatOptions && formatOptions.locale)
     });
   };
@@ -49,19 +49,15 @@ const IntlService = Service.extend(Evented, {
   _adapter: null,
 
   /** @public **/
+  formats: null,
+
+  /** @public **/
   locale: computed('_locale', {
     set() {
       throw new Error('Use `setLocale` to change the application locale');
     },
     get() {
       return get(this, '_locale');
-    }
-  }),
-
-  /** @public **/
-  formats: computed({
-    get() {
-      return this._owner.resolveRegistration('formats:main') || {};
     }
   }),
 
@@ -112,6 +108,10 @@ const IntlService = Service.extend(Evented, {
       time: new FormatTime(),
       date: new FormatDate()
     };
+
+    if (!this.formats) {
+      this.formats = this._owner.resolveRegistration('formats:main') || {};
+    }
 
     this._hydrate();
   },

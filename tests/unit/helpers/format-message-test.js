@@ -22,7 +22,7 @@ module('format-message', function(hooks) {
       }
     });
 
-    this.owner.register('formats:main', {
+    this.intl.set('formats', {
       date: {
         shortWeekDay: {
           timeZone: 'UTC',

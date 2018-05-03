@@ -11,6 +11,7 @@ module('t', function(hooks) {
 
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
+
     this.intl.addTranslations(DEFAULT_LOCALE_NAME, {
       html: {
         greeting: '<strong>Hello {name} {count, number}</strong>'
@@ -21,7 +22,7 @@ module('t', function(hooks) {
       }
     });
 
-    this.owner.register('formats:main', {
+    this.intl.set('formats', {
       date: {
         shortWeekDay: {
           timeZone: 'UTC',
