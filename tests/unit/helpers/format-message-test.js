@@ -1,11 +1,11 @@
-import { run } from '@ember/runloop';
 import { A as emberArray } from '@ember/array';
-import EmberObject, { computed, set, get } from '@ember/object';
-import hbs from 'htmlbars-inline-precompile';
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import EmberObject, { computed, get, set } from '@ember/object';
+import { run } from '@ember/runloop';
 import { render } from '@ember/test-helpers';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
+import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import { module, skip, test } from 'qunit';
 
 const DEFAULT_LOCALE_NAME = 'en-us';
 
@@ -143,11 +143,10 @@ module('format-message', function(hooks) {
   });
 
   test('able to discover all register translations', function(assert) {
-    assert.expect(2);
+    assert.expect(1);
     this.intl.addTranslation('es_MX', 'foo', 'bar');
     /* tests that the locale name becomes normalized to es-mx */
     this.intl.exists('test', 'fr-ca');
-    assert.equal(this.intl.getLocalesByTranslations().join('; '), 'en-us; es-es; fr-fr; es-mx');
     assert.equal(get(this.intl, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
   });
 

@@ -5,29 +5,26 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Service from '@ember/service';
-import { makeArray } from '@ember/array';
-import { assign } from '@ember/polyfills';
-import Evented from '@ember/object/evented';
-import { assert, warn } from '@ember/debug';
 import { getOwner } from '@ember/application';
-import { set, get, computed } from '@ember/object';
-
+import { makeArray } from '@ember/array';
+import { assert, warn } from '@ember/debug';
+import { computed, get, set } from '@ember/object';
+import Evented from '@ember/object/evented';
+import { assign } from '@ember/polyfills';
+import Service from '@ember/service';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
-
 import {
   FormatDate,
-  FormatTime,
+  FormatHtmlMessage,
   FormatMessage,
   FormatNumber,
   FormatRelative,
-  FormatHtmlMessage
+  FormatTime
 } from '../-private/formatters';
-
-import links from '../utils/links';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
+import links from '../utils/links';
 
 function formatter(name) {
   return function(value, options, formats) {
@@ -209,16 +206,6 @@ const IntlService = Service.extend(Evented, {
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
     return localeNames.some(localeName => this._adapter.has(localeName, key));
-  },
-
-  /** @public **/
-  getLocalesByTranslations() {
-    deprecate('[ember-intl] `getLocalesByTranslations` is deprecated, use `locales` computed property', false, {
-      id: 'ember-intl-locales-cp',
-      until: '3.0.0'
-    });
-
-    return get(this, 'locales');
   },
 
   /**
