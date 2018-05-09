@@ -17,7 +17,7 @@
 
 ## Installation
 
-* `ember install ember-intl`
+* `ember i ember-intl@beta`
 
 Depending on your projects targeted browsers, the Intl.JS polyfill may be necessary.  [Read more about the polyfill installation methods](https://github.com/ember-intl/ember-intl/blob/2.x/docs/intljs-polyfill.md).
 
