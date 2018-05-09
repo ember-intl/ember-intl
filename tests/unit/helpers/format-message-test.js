@@ -59,8 +59,8 @@ module('format-message', function(hooks) {
 
   test('message is formatted correctly with argument', async function(assert) {
     assert.expect(1);
-    await render(hbs`{{format-message (l 'Hello {name}') name='Jason'}}`);
-    assert.equal(this.element.textContent, 'Hello Jason');
+    await render(hbs`{{format-message 'Hello {name}' name='Tom Dale'}}`);
+    assert.equal(this.element.textContent, 'Hello Tom Dale');
   });
 
   skip('should throw if called with out a value', async function(/*assert*/) {
@@ -81,21 +81,21 @@ module('format-message', function(hooks) {
     assert.expect(1);
 
     this.setProperties({
-      MSG: 'Hi, my name is {firstName} {lastName}.',
-      firstName: 'Anthony',
-      lastName: 'Pipkin'
+      translation: 'Hi, my name is {firstName} {lastName}.',
+      firstName: 'Tom',
+      lastName: 'Dale'
     });
 
-    await render(hbs`{{format-message (l MSG) firstName=firstName lastName=lastName}}`);
+    await render(hbs`{{format-message translation firstName=firstName lastName=lastName}}`);
 
-    assert.equal(this.element.textContent, 'Hi, my name is Anthony Pipkin.');
+    assert.equal(this.element.textContent, 'Hi, my name is Tom Dale.');
   });
 
   test('should return a formatted string with formatted numbers and dates', async function(assert) {
     assert.expect(1);
 
     this.setProperties({
-      POP_MSG: '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
+      translation: '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
       city: 'Atlanta',
       population: 5475213,
       census_date: new Date('1/1/2010').getTime(),
@@ -103,7 +103,7 @@ module('format-message', function(hooks) {
     });
 
     await render(
-      hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`
+      hbs`{{format-message translation city=city population=population census_date=census_date timeZone=timeZone}}`
     );
     assert.equal(this.element.textContent, 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
   });
@@ -112,7 +112,7 @@ module('format-message', function(hooks) {
     assert.expect(1);
     this.intl.setLocale('de-de');
     this.setProperties({
-      POP_MSG: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
+      translation: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
       city: 'Atlanta',
       population: 5475213,
       census_date: new Date('1/1/2010'),
@@ -120,7 +120,7 @@ module('format-message', function(hooks) {
     });
 
     await render(
-      hbs`{{format-message (l POP_MSG) city=city population=population census_date=census_date timeZone=timeZone}}`
+      hbs`{{format-message translation city=city population=population census_date=census_date timeZone=timeZone}}`
     );
     assert.equal(this.element.textContent, 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
   });
@@ -129,13 +129,13 @@ module('format-message', function(hooks) {
     assert.expect(1);
 
     this.setProperties({
-      HARVEST_MSG: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
+      translation: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
       harvests: emberArray([{ person: 'Allison', count: 10 }, { person: 'Jeremy', count: 60 }])
     });
 
     await render(
       hbs`
-      {{#each harvests as |harvest|}}{{format-message (l HARVEST_MSG) person=harvest.person count=harvest.count}}{{/each}}
+      {{#each harvests as |harvest|}}{{format-message translation person=harvest.person count=harvest.count}}{{/each}}
       `
     );
 
@@ -153,14 +153,14 @@ module('format-message', function(hooks) {
   test('should respect format options for date ICU block', async function(assert) {
     assert.expect(1);
     this.day = 1390518044403;
-    await render(hbs`{{format-message (l 'Sale begins {day, date, shortWeekDay}') day=day}}`);
+    await render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=day}}`);
     assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
   });
 
   test('should return 0 instead of nothing', async function(assert) {
     assert.expect(1);
     this.set('count', 0);
-    await render(hbs`{{format-message (l '{count}') count=count}}`);
+    await render(hbs`{{format-message '{count}' count=count}}`);
     assert.equal(this.element.textContent, '0');
   });
 
@@ -170,7 +170,7 @@ module('format-message', function(hooks) {
 
     const context = EmberObject.extend({
       foo: true,
-      cp: computed('foo', {
+      translation: computed('foo', {
         get() {
           return get(this, 'foo') ? 'foo foo' : 'bar bar';
         }
@@ -178,7 +178,7 @@ module('format-message', function(hooks) {
     }).create();
 
     set(this, 'context', context);
-    await render(hbs`{{format-message (l context.cp)}}`);
+    await render(hbs`{{format-message context.translation}}`);
     assert.equal(this.element.textContent, 'foo foo');
 
     run(() => {

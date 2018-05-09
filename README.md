@@ -184,7 +184,7 @@ banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# p
 ```
 
 ```hbs
-{{t 'banner' numPhotos=3}}
+{{t 'banner' numPhotos=model.photos.length}}
 ```
 
 **Service API**
@@ -192,12 +192,12 @@ banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# p
 ```js
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
-  count: 0,
-  label: Ember.computed('intl.locale', 'count', function() {
-    let { count, intl } = this.getProperties('intl', 'count');
 
-    return intl.t('banner', { numPhotos: count });
-  }).readOnly()
+  bannerText: Ember.computed('intl.locale', 'model.photos.length', function() {
+    return this.get('intl').t('banner', {
+      photos: this.get('model.photos.length') || 0
+    });
+  })
 });
 ```
 
@@ -208,13 +208,7 @@ This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This
 **Template Helper**
 
 ```hbs
-{{format-message
-  (l "{name} took {numPhotos, plural,
-      =0 {no photos}
-      =1 {one photo}
-      other {# photos}
-    } on {timestamp, date, long}"
-  )
+{{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
   name=user.username
   numPhotos=num
   timestamp=yesterday
@@ -227,17 +221,17 @@ This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This
 export default Ember.Component.extend({
   intl: Ember.inject.service(),
   count: 0,
-  label: Ember.computed('intl.locale', 'count', function() {
-    let { count, intl } = this.getProperties('intl', 'count');
-
-    return intl.formatMessage(`
+  label: Ember.computed('intl.locale', 'model.photos.length', function() {
+    return this.get('intl').formatMessage(`
       You took {numPhotos, plural,
         =0 {no photos}
         =1 {one photo}
         other {# photos}
-      }`, {
-      numPhotos: count
-     });
+      }
+    `,
+    {
+      numPhotos: this.get('model.photos.length') || 0
+    });
   }).readOnly()
 });
 ```
@@ -254,7 +248,7 @@ Escapes all hash arguments and returns as an htmlSafe String which renders an El
   deadline=model.saleEndsOn
 }}
 
-{{format-html-message (l '<strong>{numPhotos}</strong>') numPhotos=(format-number num)}}
+{{format-html-message '<strong>{photos, number}</strong>' photos=models.photos.length}}
 ```
 
 ## Named Formats

@@ -1,8 +1,8 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatHtmlHelper from 'ember-intl/helpers/format-html-message';
+import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import { module, skip, test } from 'qunit';
 
 module('format-html-message', function(hooks) {
   setupRenderingTest(hooks);
@@ -46,7 +46,7 @@ module('format-html-message', function(hooks) {
 
   test('message is formatted correctly with argument', async function(assert) {
     assert.expect(1);
-    await render(hbs`{{format-html-message (l "Hello {name}") name="Jason"}}`);
+    await render(hbs`{{format-html-message "Hello {name}" name="Jason"}}`);
     assert.equal(this.element.textContent, 'Hello Jason');
   });
 
@@ -66,19 +66,19 @@ module('format-html-message', function(hooks) {
 
   test('should allow for inlined html in the value', async function(assert) {
     assert.expect(1);
-    await render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="Jason"}}`);
+    await render(hbs`{{format-html-message "<strong>Hello {name}</strong>" name="Jason"}}`);
     assert.equal(this.element.innerHTML, '<strong>Hello Jason</strong>');
   });
 
   test('should escape arguments', async function(assert) {
     assert.expect(1);
-    await render(hbs`{{format-html-message (l "{foo}") foo="<em>BAR</em>"}}`);
+    await render(hbs`{{format-html-message "{foo}" foo="<em>BAR</em>"}}`);
     assert.equal(this.element.innerHTML, '&lt;em&gt;BAR&lt;/em&gt;');
   });
 
   test('should allow for inlined html in the value but escape arguments', async function(assert) {
     assert.expect(1);
-    await render(hbs`{{format-html-message (l "<strong>Hello {name}</strong>") name="<em>Jason</em>"}}`);
+    await render(hbs`{{format-html-message "<strong>Hello {name}</strong>" name="<em>Jason</em>"}}`);
     assert.equal(this.element.innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
   });
 });
