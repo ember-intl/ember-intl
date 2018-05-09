@@ -164,31 +164,6 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent, '0');
   });
 
-  test('intl-get returns message for key that is a literal string (not an object path)', async function(assert) {
-    assert.expect(1);
-
-    const translation = this.owner.lookup('ember-intl@translation:en-us');
-    const fn = translation.getValue;
-
-    translation.getValue = function getValue(key) {
-      return this[key];
-    };
-
-    translation['string.path.works'] = 'yes it does';
-
-    try {
-      await render(hbs`{{format-message (intl-get 'string.path.works')}}`);
-
-      assert.equal(this.element.textContent, 'yes it does');
-    } catch (ex) {
-      // eslint-disable-next-line no-console
-      console.error(ex);
-    } finally {
-      // reset the function back
-      translation.getValue = fn;
-    }
-  });
-
   test('l helper handles bound computed property', async function(assert) {
     const done = assert.async();
     assert.expect(2);
@@ -213,36 +188,5 @@ module('format-message', function(hooks) {
         done();
       });
     });
-  });
-
-  test('intl-get handles bound computed property', async function(assert) {
-    assert.expect(3);
-
-    const context = EmberObject.extend({
-      foo: true,
-      cp: computed('foo', {
-        get() {
-          return get(this, 'foo') ? 'foo.bar' : 'foo.baz';
-        }
-      })
-    }).create();
-
-    set(this, 'context', context);
-
-    await render(hbs`{{format-message (intl-get context.cp)}}`);
-
-    assert.equal(this.element.textContent, 'foo bar baz');
-
-    run(() => {
-      set(this, 'context.foo', false);
-    });
-
-    assert.equal(this.element.textContent, 'baz baz baz');
-
-    run(() => {
-      context.set('foo', true);
-    });
-
-    assert.ok(context, 'Updating binding to view after view is destroyed should not raise exception.');
   });
 });
