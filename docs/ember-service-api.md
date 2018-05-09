@@ -68,10 +68,14 @@ Outputs:
 
 > watch will cost $300
 
-By default, ember-intl's `t` method and `formatMessage` will return a String literal.  If your translations contain HTML markup and you want to use the output in a template, you'll want to escape all user input and wrap the output in an `Ember.String.htmlSafe()`.  This is all built into ember-intl in both the `t` and `formatHtmlMessage` methods.  For the `t` method, you'll want to supply `htmlSafe: true` in the second argument options hash.
+By default, ember-intl's `t` method and `formatMessage` will return a String literal.  If your translations contain HTML markup and you want to use render HTML from your translations to the document then pass `htmlSafe=true` to either `t` & `format-message` helpers or `{ htmlSafe: true }` to `intl.t()` or `intl.formatMessage()`.
 
 ```js
 this.intl.t('title.header', { htmlSafe: true });
+```
+
+```hbs
+{{t 'title.header' htmlSafe=true}}
 ```
 
 **formatMessage** _(translation:String, optionalOptions:Object, optionalFormats:Object)_
@@ -90,17 +94,18 @@ Outputs:
 
 > watch will cost $300
 
-**formatHtmlMessage** _(value:String, optionalOptions:Object, optionalFormats:Object)_
+**formatMessage (html)** _(value:String, optionalOptions:Object, optionalFormats:Object)_
 
-`formatHtmlMessage` formats a translation string and returns an
+`formatMessage`, when provided the `htmlSafe` options, formats a translation string and returns an
 `Handlebars.SafeString`.  This is useful for rendering translations containing
 HTML markup.  Since options can contain unsafe markup, all attribute hash
 values are escaped.
 
 ```js
-this.get('intl').formatHtmlMessage('<strong>{firstName}</strong> {lastName}', {
+this.get('intl').formatMessage('<strong>{firstName}</strong> {lastName}', {
   firstName: 'John',
-  lastName: '<em>Doe</em>'
+  lastName: '<em>Doe</em>',
+  htmlSafe: true
 });
 ```
 

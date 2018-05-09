@@ -14,14 +14,7 @@ import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
-import {
-  FormatDate,
-  FormatHtmlMessage,
-  FormatMessage,
-  FormatNumber,
-  FormatRelative,
-  FormatTime
-} from '../-private/formatters';
+import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
 import links from '../utils/links';
@@ -57,9 +50,6 @@ const IntlService = Service.extend(Evented, {
       return get(this, '_locale');
     }
   }),
-
-  /** @public **/
-  formatHtmlMessage: formatter('html-message'),
 
   /** @public **/
   formatRelative: formatter('relative'),
@@ -98,7 +88,6 @@ const IntlService = Service.extend(Evented, {
     this._adapter = this._owner.lookup('ember-intl@adapter:default');
 
     this._formatters = {
-      'html-message': new FormatHtmlMessage(),
       message: new FormatMessage(),
       relative: new FormatRelative(),
       number: new FormatNumber(),
@@ -191,10 +180,6 @@ const IntlService = Service.extend(Evented, {
     });
 
     const value = typeof translation === 'string' ? translation : options.fallback;
-
-    if (options && options.htmlSafe) {
-      return this.formatHtmlMessage(value, ...args);
-    }
 
     return this.formatMessage(value, ...args);
   },
