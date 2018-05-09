@@ -28,7 +28,6 @@
     "tests-node": "./node_modules/mocha/bin/mocha tests-node/**/*.*",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
-    "prepublish": "node ./node_modules/dependency-check/cli.js ./package.json",
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
@@ -60,7 +59,6 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "dependency-check": "^2.9.1",
     "ember-cli": "^2.18.1",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars": "^2.0.1",
