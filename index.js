@@ -172,16 +172,9 @@ module.exports = {
       this.log('Run `ember g ember-intl` to create a default config');
     }
 
-    if (addonConfig.defaultLocale) {
-      this.log('DEPRECATION: defaultLocale is deprecated in favor of baseLocale');
-      this.log('Please update config/ember-intl.js or config/environment.js');
-      addonConfig.baseLocale = addonConfig.defaultLocale;
-    }
-
     addonConfig = Object.assign(
       {
         locales: null,
-        baseLocale: null,
         publicOnly: false,
         disablePolyfill: false,
         autoPolyfill: false,
