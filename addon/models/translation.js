@@ -3,9 +3,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import EmberObject, { set, get } from '@ember/object';
+import EmberObject, { get, set } from '@ember/object';
 import EmptyObject from 'ember-intl/-private/empty-object';
-import { deprecate } from '@ember/application/deprecations';
 
 const TranslationModel = EmberObject.extend({
   localeName: null,
@@ -40,22 +39,7 @@ const TranslationModel = EmberObject.extend({
    * to implement this function as `return this[key];`
    */
   getValue(key) {
-    let translation = get(this.translations, key);
-
-    if (typeof translation === 'string') {
-      return translation;
-    }
-
-    translation = get(this, key);
-
-    if (typeof translation === 'string') {
-      deprecate('[ember-intl] translations should be added via the `addTranslations`/`addTranslation` API.', false, {
-        id: 'ember-intl-add-translation',
-        until: '3.0.0'
-      });
-
-      return translation;
-    }
+    return get(this.translations, key);
   },
 
   /**

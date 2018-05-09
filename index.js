@@ -164,15 +164,7 @@ module.exports = {
   },
 
   intlConfig(environment) {
-    let deprecatedConfig = this.app.project.config(environment)['intl'];
-    let addonConfig = Object.assign(this.readConfig(environment), deprecatedConfig || {});
-
-    if (deprecatedConfig) {
-      this.log('DEPRECATION: intl configuration should be moved into config/ember-intl.js');
-      this.log('Run `ember g ember-intl` to create a default config');
-    }
-
-    addonConfig = Object.assign(
+    let addonConfig = Object.assign(
       {
         locales: null,
         publicOnly: false,
@@ -181,7 +173,7 @@ module.exports = {
         inputPath: 'translations',
         outputPath: 'translations'
       },
-      addonConfig
+      this.readConfig(environment)
     );
 
     if (addonConfig.locales) {
