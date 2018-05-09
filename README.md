@@ -248,7 +248,7 @@ Escapes all hash arguments and returns as an htmlSafe String which renders an El
   deadline=model.saleEndsOn
 }}
 
-{{format-html-message '<strong>{photos, number}</strong>' photos=models.photos.length}}
+{{format-message '<strong>{photos, number}</strong>' photos=models.photos.length htmlSafe=true}}
 ```
 
 ## Named Formats
