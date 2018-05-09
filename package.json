@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "2.33.2",
+  "version": "3.0.0-beta.1",
   "description": "A internationalization toolbox for ambitious applications.",
   "keywords": [
     "ember-addon",
@@ -47,7 +47,6 @@
     "ember-intl-format-cache": "^2.6.0",
     "ember-intl-messageformat": "^3.2.0",
     "ember-intl-relativeformat": "^3.3.0",
-    "exists-sync": "^0.0.4",
     "extend": "^3.0.1",
     "has-unicode": "^2.0.1",
     "intl": "^1.2.5",

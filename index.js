@@ -12,9 +12,9 @@ const stringify = require('json-stable-stringify');
 const mergeTrees = require('broccoli-merge-trees');
 const extract = require('broccoli-cldr-data');
 const funnel = require('broccoli-funnel');
-const existsSync = require('exists-sync');
 const walkSync = require('walk-sync');
 const path = require('path');
+const fs = require('fs');
 
 const utils = require('./lib/utils');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
@@ -32,7 +32,7 @@ module.exports = {
     this.addonOptions = this.intlConfig(app.env);
 
     let inputPath = this.addonOptions.inputPath || 'translations';
-    this.hasTranslationDir = existsSync(path.join(app.project.root, inputPath));
+    this.hasTranslationDir = fs.existsSync(path.join(app.project.root, inputPath));
     this.projectLocales = this.findLocales();
 
     let projectTranslations = new WatchedDir(inputPath);
@@ -156,7 +156,7 @@ module.exports = {
       config = path.join(project.root, config);
     }
 
-    if (existsSync(config)) {
+    if (fs.existsSync(config)) {
       return require(config)(environment);
     }
 
@@ -233,7 +233,7 @@ module.exports = {
 
       let translationPath = addon.pkg['ember-addon'].translationPath || 'translations';
 
-      if (projectName !== addon.name && existsSync(path.join(addon.root, translationPath))) {
+      if (projectName !== addon.name && fs.existsSync(path.join(addon.root, translationPath))) {
         list.push({
           name: addon.name,
           translationPath: translationPath,
