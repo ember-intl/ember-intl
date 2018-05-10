@@ -35,7 +35,7 @@ homepage:
   banner: '<strong>{product}</strong> will cost <em>{price, number, USD}</em> if ordered by {deadline, date, time}'
 ```
 
-If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` install the addon `ember-intl-dot-notation`.
+If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` run the generator command `ember g ember-intl-dot-notation`.
 
 ## Setting runtime locale
 
