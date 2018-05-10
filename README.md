@@ -201,9 +201,7 @@ export default Ember.Component.extend({
 });
 ```
 
-#### Formatting a raw ICU message
-
-This is done by using the `{{l}}` (lowercase L) helper as a subexpression.  This is useful for computed properties where you are programmatically constructing a translation string.
+#### Formatting a string literal ICU messages
 
 **Template Helper**
 
