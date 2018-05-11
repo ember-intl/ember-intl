@@ -147,12 +147,15 @@ attribute.
 
 Adds a translations to a given locale.  Useful for registering translations at runtime.
 
-**findTranslationByKey** _(translationKey:String, optionalLocale:String)_
+**lookup** _(translationKey:String, optionalLocale:String | Array<String>, optionalOptions:Object)_
 
 Given a translation key, will return the translation for either the active
-locale, or the locale specified as the second argument.  If not translation
-is found, `undefined` is returned.
+locale, or the locale specified as the second argument. 
 
 ```js
-var title = this.get('intl').findTranslationByKey('shared.confirmMessage');
+this.get('intl').lookup('shared.confirmMessage', 'en-us', {
+  resilient: true
+});
 ```
+
+Returns `undefined` if you pass `{ resilient: true }`.  If ommitted, will return a missing translation message.

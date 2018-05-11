@@ -247,11 +247,6 @@ const IntlService = Service.extend(Evented, {
   },
 
   /** @public **/
-  findTranslationByKey(key, localeName, options) {
-    return this.lookup(key, localeName, options);
-  },
-
-  /** @public **/
   translationsFor(localeName) {
     return this.localeFactory(localeName);
   }
