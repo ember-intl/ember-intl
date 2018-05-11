@@ -325,7 +325,7 @@ The solution is the ensure that the value you are passing in is in a format whic
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
 [travis]: https://travis-ci.org/ember-intl/ember-intl
-[travis-badge]: https://travis-ci.org/ember-intl/ember-intl.svg?branch=2.x
+[travis-badge]: https://travis-ci.org/ember-intl/ember-intl.svg?branch=master
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
 [Intl-MF]: https://github.com/yahoo/intl-messageformat
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
