@@ -15,6 +15,7 @@ import Service from '@ember/service';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
+import hydrate from '../-private/hydrate';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
 import links from '../utils/links';
@@ -34,7 +35,7 @@ function formatter(name) {
   };
 }
 
-const IntlService = Service.extend(Evented, {
+export default Service.extend(Evented, {
   _locale: null,
   _adapter: null,
 
@@ -99,41 +100,7 @@ const IntlService = Service.extend(Evented, {
       this.formats = this._owner.resolveRegistration('formats:main') || {};
     }
 
-    this._hydrate();
-  },
-
-  /**
-   * Peeks into the requirejs map and registers all locale data objects found.
-   *
-   * @private
-   */
-  _hydrate() {
-    const config = this._owner.resolveRegistration('config:environment');
-    const cldrs = this._lookupByFactoryType('cldrs', config.modulePrefix);
-    const translations = this._lookupByFactoryType('translations', config.modulePrefix);
-
-    if (!cldrs.length) {
-      warn(
-        `[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation,
-        see: ${links.asyncTranslations}.`,
-        false,
-        {
-          id: 'ember-intl-missing-cldr-data'
-        }
-      );
-    }
-
-    cldrs
-      .map(moduleName => {
-        return this._owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`);
-      })
-      .forEach(data => data.forEach(this.addLocaleData));
-
-    translations.forEach(moduleName => {
-      const localeName = moduleName.split('/').pop();
-
-      this.addTranslations(localeName, this._owner.resolveRegistration(`translation:${localeName}`));
-    });
+    hydrate(this, this._owner);
   },
 
   /** @private **/
@@ -246,5 +213,3 @@ const IntlService = Service.extend(Evented, {
     return this._adapter.localeFactory(normalizeLocale(localeName));
   }
 });
-
-export default IntlService;
