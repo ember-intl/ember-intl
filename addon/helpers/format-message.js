@@ -14,7 +14,6 @@ export function getValue([translations]) {
 
 export default BaseHelper.extend({
   getValue,
-  helperType: 'format-message',
 
   format(value, options) {
     return this.intl.formatMessage(value, options);

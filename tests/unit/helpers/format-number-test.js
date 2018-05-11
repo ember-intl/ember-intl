@@ -66,18 +66,6 @@ module('format-number', function(hooks) {
     assert.equal(this.element.textContent, '');
   });
 
-  test('should display the fallback if called with no value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-number fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
-  test('should display the fallback if called with an undefined value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-number undefined fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
   test('should return a decimal as a string', async function(assert) {
     assert.expect(1);
     this.set('NUM', 4.004);

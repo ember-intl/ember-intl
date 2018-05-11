@@ -39,18 +39,6 @@ module('format-date', function(hooks) {
     assert.equal(this.element.textContent, '');
   });
 
-  test('should display the fallback if called with no value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-date fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
-  test('should display the fallback if called with an undefined value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-date undefined fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
   test('should render epoch date for a null value when allow empty is false', async function(assert) {
     assert.expect(1);
     await render(hbs`{{format-date null allowEmpty=false}}`);

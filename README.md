@@ -61,7 +61,6 @@ Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted 
 {{format-number num}}
 {{format-number num format='EUR'}}
 {{format-number num style='currency' currency='USD'}}
-{{format-number undefined fallback=(t 'unknown_number')}}
 ```
 
 Or programmatically convert a number within any Ember Object.
@@ -86,7 +85,6 @@ Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted
 ```hbs
 {{format-date now weekday='long' timeZone='UTC'}}
 {{format-date now hour='numeric' minute='numeric' hour12=false}}
-{{format-date undefined fallback=(t 'unknown_start_date')}
 ```
 
 Or programmatically convert a date within any Ember Object.
@@ -111,7 +109,6 @@ This is just like the `{{format-date}}` helper, except it will reference any str
 ```hbs
 {{format-time now format='hhmmss'}}
 {{format-time now hour='numeric' minute='numeric' hour12=false}}
-{{format-time undefined fallback=(t 'unknown_start_time')}}
 ```
 
 Or programmatically convert a time within any Ember Object.
@@ -145,7 +142,6 @@ export default Ember.Component.extend({
 
 ```hbs
 {{format-relative timestamp}} -> 3 days ago
-{{format-relative undefined fallback=(t 'unknown_created_on')}} -> unknown
 ```
 
 Or programmatically convert a relative time within any Ember Object.

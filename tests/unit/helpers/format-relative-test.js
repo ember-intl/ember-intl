@@ -63,18 +63,6 @@ module('format-relative', function(hooks) {
     assert.equal(this.element.textContent, 'now');
   });
 
-  test('should display the fallback if called with no value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-relative fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
-  test('should display the fallback if called with an undefined value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-relative undefined fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
   test('should return now when an array is supplied as the locale', async function(assert) {
     assert.expect(1);
     this.set('date', new Date().getTime());

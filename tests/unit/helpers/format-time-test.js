@@ -70,16 +70,4 @@ module('format-time-test', function(hooks) {
     await render(hbs`{{format-time 0}}`);
     assert.equal(this.element.textContent, new Intl.DateTimeFormat('en-us').format(0));
   });
-
-  test('it should display the fallback if called with no value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-time fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
-
-  test('it should display the fallback if called with an undefined value', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{format-time undefined fallback="fallback value"}}`);
-    assert.equal(this.element.textContent, 'fallback value');
-  });
 });
