@@ -75,11 +75,6 @@ const DefaultTranslationAdapter = EmberObject.extend({
         return model.getValue(translationKey);
       }
     }
-  },
-
-  /** @private **/
-  translationsFor(localeName) {
-    return this.localeFactory(localeName);
   }
 });
 
