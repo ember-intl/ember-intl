@@ -214,13 +214,6 @@ const IntlService = Service.extend(Evented, {
   },
 
   /** @public **/
-  addTranslation(localeName, key, value) {
-    const locale = this.localeFactory(localeName);
-
-    return locale.addTranslation(key, value);
-  },
-
-  /** @public **/
   addTranslations(localeName, payload) {
     const locale = this.localeFactory(localeName);
 
