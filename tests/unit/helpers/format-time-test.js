@@ -40,6 +40,12 @@ module('format-time-test', function(hooks) {
     assert.ok(output === '23/1/2014' || output === '23/01/2014');
   });
 
+  test('should support allowEmpty', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-time allowEmpty=true}}`);
+    assert.equal(this.element.textContent, '');
+  });
+
   test('it should return a formatted string from a date string', async function(assert) {
     assert.expect(1);
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');

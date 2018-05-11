@@ -6,23 +6,10 @@
 import { assert } from '@ember/debug';
 import BaseHelper from './-format-base';
 
-export function getValue([translationKey], options) {
-  assert('[ember-intl] translation lookup attempted but no translation key was provided.', translationKey);
-
-  const { fallback, allowEmpty, defaultMessage, locale: optionalLocale } = options;
-  const fallbackTranslation = defaultMessage || fallback;
-
-  const translation = this.intl.lookup(translationKey, optionalLocale, {
-    resilient: allowEmpty || typeof fallbackTranslation === 'string'
-  });
-
-  return typeof translation === 'string' ? translation : fallbackTranslation;
-}
-
 export default BaseHelper.extend({
-  getValue,
-
   format(value, options) {
-    return this.intl.formatMessage(value, options);
+    assert('[ember-intl] translation lookup attempted but no translation key was provided.', value);
+
+    return this.intl.t(value, options);
   }
 });

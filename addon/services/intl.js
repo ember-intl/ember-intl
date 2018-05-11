@@ -174,13 +174,20 @@ const IntlService = Service.extend(Evented, {
 
   /** @public **/
   t(key, options = {}) {
-    const translation = this.lookup(key, options.locale, {
-      resilient: typeof options.fallback === 'string'
-    });
+    let defaults = [key];
+    let msg;
 
-    const value = typeof translation === 'string' ? translation : options.fallback;
+    if (options.default) {
+      defaults = defaults.concat(options.default);
+    }
 
-    return this.formatMessage(value, options);
+    while (!msg && defaults.length) {
+      msg = this.lookup(defaults.shift(), options.locale, {
+        resilient: defaults.length
+      });
+    }
+
+    return this.formatMessage(msg, options);
   },
 
   /** @public **/
