@@ -43,8 +43,8 @@ This is can be done at any point within your app boot process.  Typically this i
 
 ```js
   // app/routes/application.js
-  export default Ember.Route.extend({
-    intl: Ember.inject.service(),
+  export default Route.extend({
+    intl: service(),
     beforeModel() {
       /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
       return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
@@ -53,6 +53,36 @@ This is can be done at any point within your app boot process.  Typically this i
 ```
 
 ## Helper Examples
+
+### Format Message
+
+Compiles a [ICU message syntax][ICU] strings with its hash values passed.
+
+```
+# en-us.yml
+photos:
+  banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"
+```
+
+**Template Helper**
+
+```hbs
+{{t 'photos.banner' numPhotos=model.photos.length}}
+```
+
+**Service API**
+
+```js
+export default Component.extend({
+  intl: service(),
+
+  banner: computed('intl.locale', 'model.photos.length', function() {
+    return this.get('intl').t('photos.banner', {
+      photos: this.get('model.photos.length')
+    });
+  })
+});
+```
 
 ### Format Number
 Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted string value.
@@ -66,9 +96,9 @@ Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted 
 Or programmatically convert a number within any Ember Object.
 
 ```js
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
-  computedNumber: Ember.computed('intl.locale', 'cost', function() {
+export default Component.extend({
+  intl: service(),
+  computedNumber: computed('intl.locale', 'cost', function() {
     return this.get('intl').formatNumber(this.get('cost')/*, optional options hash */);
   })
 });
@@ -90,9 +120,9 @@ Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted
 Or programmatically convert a date within any Ember Object.
 
 ```js
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
-  computedNow: Ember.computed('intl.locale', function() {
+export default Component.extend({
+  intl: service(),
+  computedNow: computed('intl.locale', function() {
     return this.get('intl').formatDate(new Date()/*, optional options hash */);
   })
 });
@@ -115,9 +145,9 @@ Or programmatically convert a time within any Ember Object.
 
 ```js
 // example
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
-  computedNow: Ember.computed('intl.locale', function() {
+export default Component.extend({
+  intl: service(),
+  computedNow: computed('intl.locale', function() {
     return this.get('intl').formatTime(new Date()/*, optional options hash */);
   })
 });
@@ -131,8 +161,8 @@ export default Ember.Component.extend({
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
 
 ```js
-export default Ember.Component.extend({
-  timestamp: Ember.computed(function() {
+export default Component.extend({
+  timestamp: computed(function() {
     let date = new Date();
     date.setDate(date.getDate() - 3);
     return date;
@@ -147,9 +177,9 @@ export default Ember.Component.extend({
 Or programmatically convert a relative time within any Ember Object.
 
 ```js
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
-  yesterday: Ember.computed('intl.locale', function() {
+export default Component.extend({
+  intl: service(),
+  yesterday: computed('intl.locale', function() {
     let date = new Date();
     return this.get('intl').formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
   })
@@ -168,35 +198,6 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 
 [List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-relative-options.md)
 
-### Format Message
-
-Formats [ICU message syntax][ICU] strings with the provided values passed as arguments to the helper/method.
-
-**Template Helper**
-
-```
-# en-us.yml
-banner: "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"
-```
-
-```hbs
-{{t 'banner' numPhotos=model.photos.length}}
-```
-
-**Service API**
-
-```js
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
-
-  bannerText: Ember.computed('intl.locale', 'model.photos.length', function() {
-    return this.get('intl').t('banner', {
-      photos: this.get('model.photos.length') || 0
-    });
-  })
-});
-```
-
 #### Formatting a string literal ICU messages
 
 **Template Helper**
@@ -212,10 +213,10 @@ export default Ember.Component.extend({
 **Service API**
 
 ```js
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
+export default Component.extend({
+  intl: service(),
   count: 0,
-  label: Ember.computed('intl.locale', 'model.photos.length', function() {
+  label: computed('intl.locale', 'model.photos.length', function() {
     return this.get('intl').formatMessage(`
       You took {numPhotos, plural,
         =0 {no photos}
@@ -224,7 +225,7 @@ export default Ember.Component.extend({
       }
     `,
     {
-      numPhotos: this.get('model.photos.length') || 0
+      numPhotos: this.get('model.photos.length')
     });
   }).readOnly()
 });
