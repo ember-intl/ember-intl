@@ -22,24 +22,13 @@ const AbstractHelper = Helper.extend({
     this.intl.on('localeChanged', this, this.recompute);
   },
 
-  getValue([value]) {
-    return value;
-  },
-
   format() {
     throw new Error('not implemented');
   },
 
-  compute(params, options) {
-    const value = this.getValue(params, options);
-    const allowEmpty = getWithDefault(options, 'allowEmpty', this.allowEmpty);
-
+  compute([value], options) {
     if (isEmpty(value)) {
-      if ('fallback' in options) {
-        return options.fallback;
-      }
-
-      if (allowEmpty) {
+      if (getWithDefault(options, 'allowEmpty', this.allowEmpty)) {
         return;
       }
 

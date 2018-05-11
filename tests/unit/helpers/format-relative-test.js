@@ -28,6 +28,12 @@ module('format-relative', function(hooks) {
     // expectError(() => render(hbs`{{format-relative}}`), ex => assert.ok(ex));
   });
 
+  test('should support allowEmpty', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-relative allowEmpty=true}}`);
+    assert.equal(this.element.textContent, '');
+  });
+
   test('can specify a `value` and `now` on the options hash', async function(assert) {
     assert.expect(1);
     await render(hbs`{{format-relative 2000 now=0}}`);

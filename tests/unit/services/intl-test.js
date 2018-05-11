@@ -4,13 +4,14 @@ import { isHTMLSafe } from '@ember/string';
 import { settled } from '@ember/test-helpers';
 import { registerWarnHandler } from '@ember/debug';
 
-const DEFAULT_LOCALE_NAME = 'en';
+const LOCALE = 'en';
 
 module('service:intl', function(hooks) {
   setupTest(hooks);
+
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.setLocale(DEFAULT_LOCALE_NAME);
+    this.intl.setLocale(LOCALE);
   });
 
   test('can access formatMessage without a locale set', function(assert) {
@@ -18,8 +19,25 @@ module('service:intl', function(hooks) {
     assert.ok(true, 'Exception was not raised');
   });
 
-  test('`t` can be passed options fallback', function(assert) {
-    assert.equal(this.intl.t('does.not.exist', { fallback: 'It does not exists' }), 'It does not exists');
+  test('`t` should cascade translation lookup', function(assert) {
+    this.intl.addTranslation(LOCALE, 'should_exist', 'I do exist!');
+    this.intl.addTranslation(LOCALE, 'should_also_exist', 'I do also exist!');
+
+    assert.equal(
+      this.intl.t('does.not.exist', {
+        default: ['also.does.not.exist', 'should_exist', 'should_also_exist']
+      }),
+      'I do exist!'
+    );
+  });
+
+  test('`t` should display last missing translation key when using default', function(assert) {
+    assert.equal(
+      this.intl.t('does.not.exist', {
+        default: ['also.does.not.exist', 'should_also_exist']
+      }),
+      `Missing translation "should_also_exist" for locale "en"`
+    );
   });
 
   test('triggers notifyPropertyChange only when locale changes', function(assert) {
@@ -46,27 +64,27 @@ module('service:intl', function(hooks) {
   });
 
   test('it does not mutate t options hash', function(assert) {
-    this.intl.setLocale(DEFAULT_LOCALE_NAME);
+    this.intl.setLocale(LOCALE);
     const obj = { bar: 'bar' };
     this.intl.t('foo', obj);
     assert.ok(typeof obj.locale === 'undefined');
   });
 
   test('`t` can be passed a null options hash', function(assert) {
-    this.intl.setLocale(DEFAULT_LOCALE_NAME);
+    this.intl.setLocale(LOCALE);
     this.intl.t('foo', undefined);
     assert.ok(true, 'Exception was not raised');
   });
 
   test('`t` can be passed a no options argument and no warning should be emitted', async function(assert) {
-    this.intl.setLocale(DEFAULT_LOCALE_NAME);
+    this.intl.setLocale(LOCALE);
 
     let invokedWarn = false;
     registerWarnHandler(function() {
       invokedWarn = true;
     });
 
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'foo', 'FOO');
+    this.intl.addTranslation(LOCALE, 'foo', 'FOO');
     this.intl.t('foo');
     assert.ok(!invokedWarn, 'Warning was not raised');
   });
@@ -74,7 +92,7 @@ module('service:intl', function(hooks) {
   test('translations that are empty strings are valid', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_string', '');
+    this.intl.addTranslation(LOCALE, 'empty_string', '');
     assert.equal(this.intl.t('empty_string'), '');
   });
 
@@ -82,7 +100,7 @@ module('service:intl', function(hooks) {
     assert.expect(1);
 
     this.intl.addTranslation(
-      DEFAULT_LOCALE_NAME,
+      LOCALE,
       'html_safe_translation',
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
     );
@@ -99,7 +117,7 @@ module('service:intl', function(hooks) {
     assert.expect(1);
 
     this.intl.addTranslation(
-      DEFAULT_LOCALE_NAME,
+      LOCALE,
       'html_safe_translation',
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
     );
@@ -115,7 +133,7 @@ module('service:intl', function(hooks) {
   test('exists returns true when key found', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'hello', 'world');
+    this.intl.addTranslation(LOCALE, 'hello', 'world');
     assert.equal(this.intl.exists('hello'), true);
   });
 

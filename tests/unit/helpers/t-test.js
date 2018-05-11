@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import tHelper from 'ember-intl/helpers/t';
 
-const DEFAULT_LOCALE_NAME = 'en-us';
+const LOCALE = 'en-us';
 
 module('t', function(hooks) {
   setupRenderingTest(hooks);
@@ -12,7 +12,7 @@ module('t', function(hooks) {
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
 
-    this.intl.addTranslations(DEFAULT_LOCALE_NAME, {
+    this.intl.addTranslations(LOCALE, {
       html: {
         greeting: '<strong>Hello {name} {count, number}</strong>'
       },
@@ -33,7 +33,7 @@ module('t', function(hooks) {
       }
     });
 
-    this.intl.setLocale(DEFAULT_LOCALE_NAME);
+    this.intl.setLocale(LOCALE);
   });
 
   test('exists', function(assert) {
@@ -43,7 +43,8 @@ module('t', function(hooks) {
 
   test('should return nothing if key does not exist and allowEmpty is set to true', async function(assert) {
     assert.expect(1);
-    await render(hbs`{{t 'does.not.exist' allowEmpty=true}}`);
+    this.intl.addTranslation(LOCALE, 'empty', '');
+    await render(hbs`{{t 'does.not.exist' default='empty'}}`);
     assert.equal(this.element.textContent, '');
   });
 
@@ -62,10 +63,16 @@ module('t', function(hooks) {
     assert.equal(this.element.querySelectorAll('strong').length, 0);
   });
 
+  test('should support allowEmpty', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{t allowEmpty=true}}`);
+    assert.equal(this.element.textContent, '');
+  });
+
   test('locale can add message to intl service and read it', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'oh', 'hai!');
+    this.intl.addTranslation(LOCALE, 'oh', 'hai!');
     await render(hbs`{{t 'oh'}}`);
     assert.equal(this.element.textContent, 'hai!');
   });
@@ -73,7 +80,7 @@ module('t', function(hooks) {
   test('translation value can be an empty string', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(DEFAULT_LOCALE_NAME, 'empty_translation', '');
+    this.intl.addTranslation(LOCALE, 'empty_translation', '');
     await render(hbs`{{t 'empty_translation'}}`);
     assert.equal(this.element.textContent, '');
   });
@@ -81,7 +88,7 @@ module('t', function(hooks) {
   test('locale can add messages object and can read it', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslations(DEFAULT_LOCALE_NAME, { 'bulk-add': 'bulk add works' });
+    this.intl.addTranslations(LOCALE, { 'bulk-add': 'bulk add works' });
     await render(hbs`{{t 'bulk-add'}}`);
     assert.equal(this.element.textContent, 'bulk add works');
   });
@@ -99,17 +106,10 @@ module('t', function(hooks) {
     assert.equal(this.element.textContent, `No locale defined.  Unable to resolve translation: "foo.bar"`);
   });
 
-  test('should fallback to with defaultMessage when key not found', async function(assert) {
+  test('should cascade translation keys', async function(assert) {
     assert.expect(1);
-    this.day = 1390518044403;
-    await render(hbs`{{t 'app.sale_begins' defaultMessage='Sale begins {day, date, shortWeekDay}' day=day}}`);
-    assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
-  });
-
-  test('should fallback to with fallback when key not found', async function(assert) {
-    assert.expect(1);
-    this.day = 1390518044403;
-    await render(hbs`{{t 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=day}}`);
-    assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
+    this.intl.addTranslation('en-us', 'happy_birthday', 'You are {age, number} years old!');
+    await render(hbs`{{t 'does.not.exist' default='happy_birthday' age=10}}`);
+    assert.equal(this.element.textContent, 'You are 10 years old!');
   });
 });

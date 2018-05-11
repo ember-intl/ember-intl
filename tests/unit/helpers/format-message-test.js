@@ -157,6 +157,12 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
   });
 
+  test('should support allowEmpty', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-message allowEmpty=true}}`);
+    assert.equal(this.element.textContent, '');
+  });
+
   test('should return 0 instead of nothing', async function(assert) {
     assert.expect(1);
     this.set('count', 0);

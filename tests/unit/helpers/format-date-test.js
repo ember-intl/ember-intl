@@ -45,6 +45,12 @@ module('format-date', function(hooks) {
     assert.equal(this.element.textContent, new Intl.DateTimeFormat(locale).format(0));
   });
 
+  test('should support allowEmpty', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{format-date allowEmpty=true}}`);
+    assert.equal(this.element.textContent, '');
+  });
+
   test('it should return a formatted string from a date string', async function(assert) {
     assert.expect(1);
     // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
