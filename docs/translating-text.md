@@ -20,6 +20,19 @@ Translating Text
 {{input value=email placeholder=(t 'hello.world')}}
 ```
 
+### Fallback Translations
+
+The `t` helper, as of 3.0.0, supports a fallback lookup if the primary translation key is missing.  In the below example, the translation key `"actual_key"` would be used in place of the primary key, `"missing_key"`, if translation missing for key.
+
+```hbs
+{{t 'missing_key' default='actual_key'}}
+```
+
+```js
+this.intl.t('missing_key', {
+  default: ['does_not_exist', 'does_exist'] /* default can also be an Array */
+});
+```
 ## Computed Property Macro
 
 `translationMacro` defines a computed property macro that makes it easy to
