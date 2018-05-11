@@ -143,13 +143,9 @@ Setter for setting the application's active locale.  Setting this value will
 trigger a rerender of all helpers that do not specify a locale as an
 attribute.
 
-**addTranslation** _(locale:String, key:String, value:String)_
-
-Documentation missing
-
 **addTranslations** _(locale:String, payload:Object)_
 
-Documentation missing
+Adds a translations to a given locale.  Useful for registering translations at runtime.
 
 **findTranslationByKey** _(translationKey:String, optionalLocale:String)_
 
