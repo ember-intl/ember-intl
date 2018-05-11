@@ -144,7 +144,7 @@ module('format-message', function(hooks) {
 
   test('able to discover all register translations', function(assert) {
     assert.expect(1);
-    this.intl.addTranslation('es_MX', 'foo', 'bar');
+    this.intl.addTranslations('es_MX', { foo: 'bar' });
     /* tests that the locale name becomes normalized to es-mx */
     this.intl.exists('test', 'fr-ca');
     assert.equal(get(this.intl, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');

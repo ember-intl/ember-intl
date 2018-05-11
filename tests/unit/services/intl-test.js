@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { registerWarnHandler } from '@ember/debug';
 import { isHTMLSafe } from '@ember/string';
 import { settled } from '@ember/test-helpers';
-import { registerWarnHandler } from '@ember/debug';
+import { setupTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 const LOCALE = 'en';
 
@@ -20,8 +20,10 @@ module('service:intl', function(hooks) {
   });
 
   test('`t` should cascade translation lookup', function(assert) {
-    this.intl.addTranslation(LOCALE, 'should_exist', 'I do exist!');
-    this.intl.addTranslation(LOCALE, 'should_also_exist', 'I do also exist!');
+    this.intl.addTranslations(LOCALE, {
+      should_exist: 'I do exist!',
+      should_also_exist: 'I do also exist!'
+    });
 
     assert.equal(
       this.intl.t('does.not.exist', {
@@ -84,7 +86,7 @@ module('service:intl', function(hooks) {
       invokedWarn = true;
     });
 
-    this.intl.addTranslation(LOCALE, 'foo', 'FOO');
+    this.intl.addTranslations(LOCALE, { foo: 'FOO' });
     this.intl.t('foo');
     assert.ok(!invokedWarn, 'Warning was not raised');
   });
@@ -92,18 +94,17 @@ module('service:intl', function(hooks) {
   test('translations that are empty strings are valid', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(LOCALE, 'empty_string', '');
+    this.intl.addTranslations(LOCALE, { empty_string: '' });
     assert.equal(this.intl.t('empty_string'), '');
   });
 
   test('should return safestring when htmlSafe attribute passed to `t`', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(
-      LOCALE,
-      'html_safe_translation',
-      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
-    );
+    this.intl.addTranslations(LOCALE, {
+      html_safe_translation: '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
+    });
+
     const out = this.intl.t('html_safe_translation', {
       htmlSafe: true,
       name: '<em>Jason</em>',
@@ -116,11 +117,9 @@ module('service:intl', function(hooks) {
   test('should return regular string when htmlSafe is falsey', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(
-      LOCALE,
-      'html_safe_translation',
-      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
-    );
+    this.intl.addTranslations(LOCALE, {
+      html_safe_translation: '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
+    });
     const out = this.intl.t('html_safe_translation', {
       htmlSafe: false,
       name: '<em>Jason</em>',
@@ -133,7 +132,7 @@ module('service:intl', function(hooks) {
   test('exists returns true when key found', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(LOCALE, 'hello', 'world');
+    this.intl.addTranslations(LOCALE, { hello: 'world' });
     assert.equal(this.intl.exists('hello'), true);
   });
 

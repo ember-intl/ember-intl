@@ -1,8 +1,8 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import tHelper from 'ember-intl/helpers/t';
+import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import { module, test } from 'qunit';
 
 const LOCALE = 'en-us';
 
@@ -43,7 +43,7 @@ module('t', function(hooks) {
 
   test('should return nothing if key does not exist and allowEmpty is set to true', async function(assert) {
     assert.expect(1);
-    this.intl.addTranslation(LOCALE, 'empty', '');
+    this.intl.addTranslations(LOCALE, { empty: '' });
     await render(hbs`{{t 'does.not.exist' default='empty'}}`);
     assert.equal(this.element.textContent, '');
   });
@@ -72,7 +72,7 @@ module('t', function(hooks) {
   test('locale can add message to intl service and read it', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(LOCALE, 'oh', 'hai!');
+    this.intl.addTranslations(LOCALE, { oh: 'hai!' });
     await render(hbs`{{t 'oh'}}`);
     assert.equal(this.element.textContent, 'hai!');
   });
@@ -80,7 +80,7 @@ module('t', function(hooks) {
   test('translation value can be an empty string', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslation(LOCALE, 'empty_translation', '');
+    this.intl.addTranslations(LOCALE, { empty_translation: '' });
     await render(hbs`{{t 'empty_translation'}}`);
     assert.equal(this.element.textContent, '');
   });
@@ -88,8 +88,8 @@ module('t', function(hooks) {
   test('locale can add messages object and can read it', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslations(LOCALE, { 'bulk-add': 'bulk add works' });
-    await render(hbs`{{t 'bulk-add'}}`);
+    this.intl.addTranslations(LOCALE, { bulk_add: 'bulk add works' });
+    await render(hbs`{{t 'bulk_add'}}`);
     assert.equal(this.element.textContent, 'bulk add works');
   });
 
@@ -108,7 +108,7 @@ module('t', function(hooks) {
 
   test('should cascade translation keys', async function(assert) {
     assert.expect(1);
-    this.intl.addTranslation('en-us', 'happy_birthday', 'You are {age, number} years old!');
+    this.intl.addTranslations('en-us', { happy_birthday: 'You are {age, number} years old!' });
     await render(hbs`{{t 'does.not.exist' default='happy_birthday' age=10}}`);
     assert.equal(this.element.textContent, 'You are 10 years old!');
   });
