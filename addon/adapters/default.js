@@ -3,9 +3,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import EmberObject, { get, computed } from '@ember/object';
-import { A as emberArray } from '@ember/array';
 import { getOwner } from '@ember/application';
+import { A as emberArray } from '@ember/array';
+import EmberObject, { computed, get } from '@ember/object';
 import Translation from '../models/translation';
 
 const DefaultTranslationAdapter = EmberObject.extend({
@@ -75,16 +75,6 @@ const DefaultTranslationAdapter = EmberObject.extend({
         return model.getValue(translationKey);
       }
     }
-  },
-
-  /** @private **/
-  translationsFor(localeName) {
-    return this.localeFactory(localeName);
-  },
-
-  /** @private **/
-  findTranslationByKey(localeNames, translationKey) {
-    return this.lookup(localeNames, translationKey);
   }
 });
 
