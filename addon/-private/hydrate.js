@@ -23,9 +23,7 @@ export default function(service, owner) {
   }
 
   cldrs
-    .map(moduleName => {
-      return owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`);
-    })
+    .map(moduleName => owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`))
     .forEach(data => data.forEach(service.addLocaleData));
 
   translations.forEach(moduleName => {

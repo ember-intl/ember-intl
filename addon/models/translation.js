@@ -3,8 +3,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import EmberObject, { get, set } from '@ember/object';
+import EmberObject, { get } from '@ember/object';
 import EmptyObject from 'ember-intl/-private/empty-object';
+import merge from 'ember-intl/utils/merge';
 
 const TranslationModel = EmberObject.extend({
   localeName: null,
@@ -18,19 +19,10 @@ const TranslationModel = EmberObject.extend({
   },
 
   /**
-   * Add a single translation
-   */
-  addTranslation(key, value) {
-    set(this.translations, key, value);
-  },
-
-  /**
    * Adds a translation hash
    */
-  addTranslations(translationsObject) {
-    for (let key in translationsObject) {
-      this.addTranslation(key, translationsObject[key]);
-    }
+  addTranslations(translations) {
+    merge(this.translations, translations);
   },
 
   /**

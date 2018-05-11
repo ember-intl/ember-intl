@@ -33,6 +33,56 @@ module('service:intl', function(hooks) {
     );
   });
 
+  test('should deepMerge addTranslations', function(assert) {
+    this.intl.addTranslations(LOCALE, {
+      foo: {
+        bar: {
+          baz: {
+            a: 'a'
+          }
+        }
+      }
+    });
+
+    this.intl.addTranslations(LOCALE, {
+      foo: {
+        bar: {
+          baz: {
+            b: 'b'
+          },
+          c: {
+            d: {
+              e: {}
+            }
+          }
+        }
+      }
+    });
+
+    assert.equal(this.intl.t('foo.bar.baz.a'), 'a');
+    assert.equal(this.intl.t('foo.bar.baz.b'), 'b');
+  });
+
+  test('should overwrite translations', function(assert) {
+    this.intl.addTranslations(LOCALE, {
+      foo: {
+        bar: {
+          baz: 'baz'
+        }
+      }
+    });
+
+    this.intl.addTranslations(LOCALE, {
+      foo: {
+        bar: {
+          baz: 'baz!'
+        }
+      }
+    });
+
+    assert.equal(this.intl.t('foo.bar.baz'), 'baz!');
+  });
+
   test('`t` should display last missing translation key when using default', function(assert) {
     assert.equal(
       this.intl.t('does.not.exist', {
@@ -120,6 +170,7 @@ module('service:intl', function(hooks) {
     this.intl.addTranslations(LOCALE, {
       html_safe_translation: '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
     });
+
     const out = this.intl.t('html_safe_translation', {
       htmlSafe: false,
       name: '<em>Jason</em>',

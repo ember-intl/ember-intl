@@ -8,7 +8,7 @@ import { A as emberArray } from '@ember/array';
 import EmberObject, { computed, get } from '@ember/object';
 import Translation from '../models/translation';
 
-const DefaultTranslationAdapter = EmberObject.extend({
+export default EmberObject.extend({
   _seen: null,
 
   /** @private **/
@@ -77,5 +77,3 @@ const DefaultTranslationAdapter = EmberObject.extend({
     }
   }
 });
-
-export default DefaultTranslationAdapter;
