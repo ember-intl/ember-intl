@@ -2,15 +2,16 @@ import config from '../config/environment';
 import Controller from '@ember/controller';
 import { computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { lookupByFactoryType } from 'ember-intl/hydrate';
+
+const { modulePrefix } = config;
 
 export default Controller.extend({
   intl: service(),
   activeLocale: computed.readOnly('intl.locale'),
 
   locales: computed(function() {
-    return get(this, 'intl')
-      ._lookupByFactoryType('translations', config.modulePrefix)
-      .map(moduleName => moduleName.split('/').pop());
+    return lookupByFactoryType('translations', modulePrefix).map(moduleName => moduleName.split('/').pop());
   }).readOnly(),
 
   selections: computed('locales.[]', 'activeLocale', function() {
@@ -26,7 +27,7 @@ export default Controller.extend({
 
   actions: {
     changeLocale(locale) {
-      return get(this, 'intl').setLocale(locale);
+      return get(this, 'intl').set('locale', locale);
     }
   }
 });

@@ -33,7 +33,7 @@ module('t', function(hooks) {
       }
     });
 
-    this.intl.setLocale(LOCALE);
+    this.intl.set('locale', LOCALE);
   });
 
   test('exists', function(assert) {
@@ -101,7 +101,7 @@ module('t', function(hooks) {
 
   test('warns when no locale has been set', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale();
+    this.intl.set('locale', null);
     await render(hbs`{{t 'foo.bar'}}`);
     assert.equal(this.element.textContent, `No locale defined.  Unable to resolve translation: "foo.bar"`);
   });

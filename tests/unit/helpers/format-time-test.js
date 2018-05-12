@@ -11,7 +11,7 @@ module('format-time-test', function(hooks) {
 
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.setLocale('en-us');
+    this.intl.set('locale', 'en-us');
     this.intl.set('formats', { relative: { hours: { units: 'hour', style: 'numeric' } } });
   });
 

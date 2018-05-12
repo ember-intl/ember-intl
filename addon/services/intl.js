@@ -1,4 +1,4 @@
-/* globals requirejs, Intl */
+/* globals Intl */
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -8,47 +8,42 @@
 import { getOwner } from '@ember/application';
 import { makeArray } from '@ember/array';
 import { assert, warn } from '@ember/debug';
-import { computed, get, set } from '@ember/object';
+import { computed, get } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
 import IntlMessageFormat from 'intl-messageformat';
 import IntlRelativeFormat from 'intl-relativeformat';
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
-import hydrate from '../-private/hydrate';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
 import links from '../utils/links';
-
-function formatter(name) {
-  return function(value, options, formats) {
-    let formatOptions = options;
-
-    if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(name, formatOptions.format), formatOptions);
-    }
-
-    return this._formatters[name].format(value, formatOptions, {
-      formats: formats || this.formats,
-      locale: this._localeWithDefault(formatOptions && formatOptions.locale)
-    });
-  };
-}
+import hydrate from '../hydrate';
 
 export default Service.extend(Evented, {
+  /** @private **/
   _locale: null,
+
+  /** @private **/
   _adapter: null,
 
   /** @public **/
   formats: null,
 
   /** @public **/
-  locale: computed('_locale', {
-    set() {
-      throw new Error('Use `setLocale` to change the application locale');
+  locale: computed({
+    set(_, localeName) {
+      const proposed = makeArray(localeName).map(normalizeLocale);
+
+      if (!isArrayEqual(proposed, this._locale)) {
+        this._locale = proposed;
+        this.trigger('localeChanged');
+
+        return this._locale;
+      }
     },
     get() {
-      return get(this, '_locale');
+      return this._locale;
     }
   }),
 
@@ -103,31 +98,9 @@ export default Service.extend(Evented, {
     hydrate(this, this._owner);
   },
 
-  /** @private **/
-  _lookupByFactoryType(type, modulePrefix) {
-    return Object.keys(requirejs.entries).filter(key => {
-      return key.indexOf(`${modulePrefix}/${type}/`) === 0;
-    });
-  },
-
-  /** @private **/
-  _localeWithDefault(localeName) {
-    if (!localeName) {
-      return get(this, '_locale') || [];
-    }
-
-    if (typeof localeName === 'string') {
-      return makeArray(localeName).map(normalizeLocale);
-    }
-
-    if (Array.isArray(localeName)) {
-      return localeName.map(normalizeLocale);
-    }
-  },
-
   /** @public **/
   lookup(key, localeName, options = {}) {
-    const localeNames = this._localeWithDefault(localeName);
+    const localeNames = this.localeWithDefault(localeName);
     const translation = this._adapter.lookup(localeNames, key);
 
     if (!options.resilient && translation === undefined) {
@@ -159,7 +132,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   exists(key, localeName) {
-    const localeNames = this._localeWithDefault(localeName);
+    const localeNames = this.localeWithDefault(localeName);
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
@@ -188,15 +161,8 @@ export default Service.extend(Evented, {
   },
 
   /** @public **/
-  setLocale(localeName) {
-    const proposed = makeArray(localeName).map(normalizeLocale);
-    const current = get(this, '_locale');
-
-    if (!isArrayEqual(proposed, current)) {
-      set(this, '_locale', proposed);
-      this.notifyPropertyChange('locale');
-      this.trigger('localeChanged');
-    }
+  translationsFor(localeName) {
+    return this._adapter.localeFactory(normalizeLocale(localeName));
   },
 
   /** @private **/
@@ -208,8 +174,33 @@ export default Service.extend(Evented, {
     }
   },
 
-  /** @public **/
-  translationsFor(localeName) {
-    return this._adapter.localeFactory(normalizeLocale(localeName));
+  /** @private **/
+  localeWithDefault(localeName) {
+    if (!localeName) {
+      return this._locale || [];
+    }
+
+    if (typeof localeName === 'string') {
+      return makeArray(localeName).map(normalizeLocale);
+    }
+
+    if (Array.isArray(localeName)) {
+      return localeName.map(normalizeLocale);
+    }
   }
 });
+
+function formatter(name) {
+  return function(value, options, formats) {
+    let formatOptions = options;
+
+    if (options && typeof options.format === 'string') {
+      formatOptions = assign({}, this.getFormat(name, formatOptions.format), formatOptions);
+    }
+
+    return this._formatters[name].format(value, formatOptions, {
+      formats: formats || this.formats,
+      locale: this.localeWithDefault(formatOptions && formatOptions.locale)
+    });
+  };
+}

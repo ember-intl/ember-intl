@@ -11,7 +11,7 @@ module('service:intl', function(hooks) {
 
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.setLocale(LOCALE);
+    this.intl.set('locale', LOCALE);
   });
 
   test('can access formatMessage without a locale set', function(assert) {
@@ -100,10 +100,8 @@ module('service:intl', function(hooks) {
     }
 
     this.intl.addObserver('locale', this.intl, increment);
-    this.intl.setLocale('es');
-    this.intl.setLocale('es');
-    this.intl.setLocale(['es']);
-    this.intl.setLocale('fr');
+    this.intl.set('locale', 'es');
+    this.intl.set('locale', 'fr');
     assert.equal(count, 2);
     assert.equal(this.intl.get('locale'), 'fr');
     this.intl.removeObserver('locale', this.intl, increment);
@@ -116,20 +114,20 @@ module('service:intl', function(hooks) {
   });
 
   test('it does not mutate t options hash', function(assert) {
-    this.intl.setLocale(LOCALE);
+    this.intl.set('locale', LOCALE);
     const obj = { bar: 'bar' };
     this.intl.t('foo', obj);
     assert.ok(typeof obj.locale === 'undefined');
   });
 
   test('`t` can be passed a null options hash', function(assert) {
-    this.intl.setLocale(LOCALE);
+    this.intl.set('locale', LOCALE);
     this.intl.t('foo', undefined);
     assert.ok(true, 'Exception was not raised');
   });
 
   test('`t` can be passed a no options argument and no warning should be emitted', async function(assert) {
-    this.intl.setLocale(LOCALE);
+    this.intl.set('locale', LOCALE);
 
     let invokedWarn = false;
     registerWarnHandler(function() {
