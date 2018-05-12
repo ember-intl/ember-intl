@@ -36,7 +36,7 @@ moduleForComponent('x-product', 'XProductComponent', {
   ],
   setup() {
     let service = this.container.lookup('service:intl');
-    service.setLocale('en-us');
+    service.set('locale'. 'en-us');
   }
 });
 

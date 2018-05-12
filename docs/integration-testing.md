@@ -13,7 +13,7 @@ moduleForComponent('x-product', 'XProductComponent', {
   integration: true,
   setup() {
     service = this.container.lookup('service:intl');
-    service.setLocale('en-us');
+    service.set('locale', 'en-us');
   }
 });
 

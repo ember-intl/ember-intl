@@ -33,7 +33,7 @@ module('format-message', function(hooks) {
       }
     });
 
-    this.intl.setLocale(DEFAULT_LOCALE_NAME);
+    this.intl.set('locale', DEFAULT_LOCALE_NAME);
   });
 
   test('exists', function(assert) {
@@ -110,7 +110,7 @@ module('format-message', function(hooks) {
 
   test('should return a formatted string with formatted numbers and dates in a different locale', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale('de-de');
+    this.intl.set('locale', 'de-de');
     this.setProperties({
       translation: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
       city: 'Atlanta',

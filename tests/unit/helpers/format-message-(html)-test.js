@@ -9,7 +9,7 @@ module('format-message (html)', function(hooks) {
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
     this.intl.addTranslations('en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
-    this.intl.setLocale('en-us');
+    this.intl.set('locale', 'en-us');
   });
 
   test('invoke the formatMessage directly', function(assert) {

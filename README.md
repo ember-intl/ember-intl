@@ -47,7 +47,7 @@ This is can be done at any point within your app boot process.  Typically this i
     intl: service(),
     beforeModel() {
       /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
-      return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
+      return this.get('intl').set('locale', ['fr-fr', 'en-us']); /* array optional */
     }
   });
 ```

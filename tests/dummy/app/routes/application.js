@@ -4,6 +4,6 @@ import Route from '@ember/routing/route';
 export default Route.extend({
   intl: service(),
   beforeModel() {
-    this.get('intl').setLocale(['en-us']);
+    this.get('intl').set('locale', ['en-us']);
   }
 });

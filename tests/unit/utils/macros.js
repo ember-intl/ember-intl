@@ -7,7 +7,7 @@ moduleFor('service:intl', 'Unit | Macrol', {
   integration: true,
   beforeEach() {
     const intl = this.subject();
-    intl.setLocale('en');
+    intl.set('locale', 'en');
 
     this.object = EmberObject.extend({
       intl: intl,

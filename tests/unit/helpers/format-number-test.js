@@ -11,7 +11,7 @@ module('format-number', function(hooks) {
 
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.setLocale('en-us');
+    this.intl.set('locale', 'en-us');
     this.intl.set('formats', {
       number: { digits: { minimumFractionDigits: 2 }, currency: { style: 'currency', minimumFractionDigits: 2 } }
     });
@@ -35,7 +35,7 @@ module('format-number', function(hooks) {
 
   test('number is formatted correctly with locale argument', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale('fr-fr');
+    this.intl.set('locale', 'fr-fr');
     await render(hbs`{{format-number 1000}}`);
     // non-breaking space so we can't just compare "1 000" to "1 000"
     // since it's not a %20 space character
@@ -96,14 +96,14 @@ module('format-number', function(hooks) {
 
   test('in another locale - should return a string', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale('de-de');
+    this.intl.set('locale', 'de-de');
     await render(hbs`{{format-number 4}}`);
     assert.equal(this.element.textContent, '4');
   });
 
   test('in another locale - should return a decimal as a string', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale('de-de');
+    this.intl.set('locale', 'de-de');
     this.set('NUM', 4.004);
     await render(hbs`{{format-number NUM}}`);
     assert.equal(this.element.textContent, '4,004');
@@ -111,7 +111,7 @@ module('format-number', function(hooks) {
 
   test('in another locale - should return a formatted string with a thousand separator', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale('de-de');
+    this.intl.set('locale', 'de-de');
     this.set('NUM', 40000);
     await render(hbs`{{format-number NUM}}`);
     assert.equal(this.element.textContent, '40.000');
@@ -119,7 +119,7 @@ module('format-number', function(hooks) {
 
   test('in another locale - should return a formatted string with a thousand separator and decimal', async function(assert) {
     assert.expect(1);
-    this.intl.setLocale('de-de');
+    this.intl.set('locale', 'de-de');
     this.set('NUM', 40000.004);
     await render(hbs`{{format-number NUM}}`);
     assert.equal(this.element.textContent, '40.000,004');
@@ -152,7 +152,7 @@ module('format-number', function(hooks) {
     await render(hbs`{{format-number 400 style="percent"}}`);
     assert.equal(this.element.textContent, '40,000%', 'should return a string formatted to a percent');
 
-    run(() => this.intl.setLocale('de-de'));
+    run(() => this.intl.set('locale', 'de-de'));
     await render(hbs`{{format-number 400 style="percent"}}`);
 
     const value = escape(this.element.textContent);
