@@ -18,10 +18,9 @@ Access the service from within the instance via: `this.get('intl')`
 
 ## Properties
 
-**locale** _readOnly_
+**locale**
 
-The current locale associated with the application.  To set this property,
-use the `setLocale` method.
+Set/get the current locale for your application.  The value can either be a String or an Array of Strings.  When providing an array, the `t` helper and `t` method will attempted to try all the locales in order when resolving a translation key.  This is useful if you want to always fallback to another locale when a translation may be missing.
 
 **locales** _readOnly_
 
@@ -136,12 +135,6 @@ This method always returns a Boolean.
 this.get('intl').exists('foo.bar', 'en-us');
 // => true
 ```
-
-**setLocale** _(localeName:String)_
-
-Setter for setting the application's active locale.  Setting this value will
-trigger a rerender of all helpers that do not specify a locale as an
-attribute.
 
 **addTranslations** _(locale:String, payload:Object)_
 

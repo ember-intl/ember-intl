@@ -37,9 +37,9 @@ homepage:
 
 If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` run the generator command `ember g ember-intl-dot-notation`.
 
-## Setting runtime locale
+## Setting Locale
 
-This is can be done at any point within your app boot process.  Typically this is within your application route's beforeModel hook using the `intl.setLocale` [Ember service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
+This is can be done at any point within your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.set('locale', 'en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
 
 ```js
   // app/routes/application.js

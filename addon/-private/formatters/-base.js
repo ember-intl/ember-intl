@@ -3,6 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import { warn } from '@ember/debug';
 import { camelize } from '@ember/string';
 import { A as emberArray } from '@ember/array';
 
@@ -56,10 +57,9 @@ export default class FormatterBase {
    */
   _format(value, formatterOptions, formatOptions, { locale }) {
     if (!locale) {
-      throw new Error(
-        `No locale specified.  This is typically handled within routes/application.js.
-        Documentation: ${links.unsetLocale}`
-      );
+      warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
+        id: 'ember-intl-no-locale-set'
+      });
     }
 
     return this.formatter(locale, formatterOptions).format(value, formatOptions);
