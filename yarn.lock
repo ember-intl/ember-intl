@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@ember-intl/formatjs-extract-cldr-data@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-5.0.0.tgz#f15cb1e370fe71b38f21193616323d66698a38df"
+"@ember-intl/formatjs-extract-cldr-data@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-3.1.0.tgz#04eefd54240d6c08f8d9ded4f70405d2cf6f9f47"
   dependencies:
-    cldr-core "^31.0.1"
-    cldr-dates-full "^31.0.1"
-    cldr-numbers-full "^31.0.1"
+    cldr-core "^29.0.0"
+    cldr-dates-full "^29.0.0"
+    cldr-numbers-full "^29.0.0"
     glob "^5.0.1"
     make-plural "^2.1.3"
     uglify-js "^2.6.2"
@@ -1306,11 +1306,11 @@ broccoli-caching-writer@^3.0.3:
     rsvp "^3.0.17"
     walk-sync "^0.3.0"
 
-broccoli-cldr-data@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.1.tgz#f1d82a18c3b1c0482d2f7a7f5bf5cc361a049949"
+broccoli-cldr-data@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.2.tgz#ff5604604ff37eef5d634c2eb52a554b896e3ed1"
   dependencies:
-    "@ember-intl/formatjs-extract-cldr-data" "^5.0.0"
+    "@ember-intl/formatjs-extract-cldr-data" "^3.1.0"
     broccoli-caching-writer "^3.0.3"
     mkdirp "^0.5.1"
     serialize-javascript "^1.3.0"
@@ -1955,17 +1955,17 @@ cldr-core@28.0.0:
   version "28.0.0"
   resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-28.0.0.tgz#46db6208292da7fe9f03b7b79f8ca90ceb84c6ad"
 
-cldr-core@^31.0.1:
-  version "31.0.1"
-  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-31.0.1.tgz#24b3d59359ef890595665e5a8ca29e53901c6d54"
+cldr-core@^29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-29.0.0.tgz#fe983898c52b6bebcd1558c03063e9e9eb3c9cdd"
 
-cldr-dates-full@^31.0.1:
-  version "31.0.1"
-  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-31.0.1.tgz#c49a4740250646148cfb55e02f20d7ae2c917f89"
+cldr-dates-full@^29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-29.0.0.tgz#6350acf88998bf0f9d80535ba7f8a80669f6bb08"
 
-cldr-numbers-full@^31.0.1:
-  version "31.0.1"
-  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-31.0.1.tgz#a78774e1544fbf9616d8f6812a312b10f4aaafbe"
+cldr-numbers-full@^29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-29.0.0.tgz#798b080f6248d672a8850764be9295a49a97fac6"
 
 clean-base-url@^1.0.0:
   version "1.0.0"
