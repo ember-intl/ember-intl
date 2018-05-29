@@ -7,13 +7,12 @@ import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import { moduleForComponent, test } from 'ember-qunit';
 
-let service;
+let intl;
 
 moduleForComponent('x-product', 'XProductComponent', {
   integration: true,
   setup() {
-    service = this.container.lookup('service:intl');
-    service.set('locale', 'en-us');
+    intl = this.container.lookup('service:intl');
   }
 });
 
@@ -31,7 +30,7 @@ test('it translates', function(assert) {
 
   /* waits for async behavior (loading translations on app boot) to settle */
   return wait().then(() => {
-    assert.equal(service.t('some.key'), 'Hello world');
+    assert.equal(intl.t('some.key'), 'Hello world');
   });
 });
 ```

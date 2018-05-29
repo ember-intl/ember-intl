@@ -39,7 +39,6 @@ export default Ember.Route.extend({
   async beforeModel() {
     let translations = await fetch('/api/translations.json');
     this.get('intl').addTranslations('en-us', translations);
-    this.get('intl').set('locale', 'en-us');
   }
 });
 ```

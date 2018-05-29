@@ -5,15 +5,16 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import IntlRelativeFormat from 'intl-relativeformat';
+import IntlMessageFormat from 'intl-messageformat';
 import { getOwner } from '@ember/application';
-import { makeArray } from '@ember/array';
-import { assert, warn } from '@ember/debug';
-import { computed, get } from '@ember/object';
+import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
+import { assert, warn } from '@ember/debug';
+import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
-import IntlMessageFormat from 'intl-messageformat';
-import IntlRelativeFormat from 'intl-relativeformat';
+
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
@@ -22,7 +23,7 @@ import hydrate from '../hydrate';
 
 export default Service.extend(Evented, {
   /** @private **/
-  _locale: null,
+  _locale: 'en-us',
 
   /** @private **/
   _adapter: null,
@@ -137,6 +138,11 @@ export default Service.extend(Evented, {
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
     return localeNames.some(localeName => this._adapter.has(localeName, key));
+  },
+
+  /** @public */
+  setLocale(locale) {
+    set(this, 'locale', locale);
   },
 
   /**
