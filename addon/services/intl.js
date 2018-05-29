@@ -12,7 +12,6 @@ import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
-import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
@@ -201,7 +200,7 @@ function formatter(name) {
     let formatOptions = options;
 
     if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(name, formatOptions.format), formatOptions);
+      formatOptions = Object.assign({}, this.getFormat(name, formatOptions.format), formatOptions);
     }
 
     return this._formatters[name].format(value, formatOptions, {
