@@ -3,34 +3,34 @@ Integration Testing
 ==============================================================================
 
 ```js
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { find, render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
-import { moduleForComponent, test } from 'ember-qunit';
 
-let intl;
+module('Integration | Component | x-product', function(hooks) {
+  setupRenderingTest(hooks);
 
-moduleForComponent('x-product', 'XProductComponent', {
-  integration: true,
-  setup() {
-    intl = this.container.lookup('service:intl');
-  }
-});
+  hooks.beforeEach(function() {
+     this.intl = this.owner.lookup('service:intl');
+     this.intl.setLocale('en-us');
+  });
 
-test('it renders', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{x-product price=price deadline=deadline}}`);
-  this.set('price', 1000);
-  this.set('deadline', new Date());
-  let output = this.$().text();
-  assert.ok(output);
-});
+  test('it renders', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{x-product price=price deadline=deadline}}`);
+    this.set('price', 1000);
+    this.set('deadline', new Date());
+    let output = this.$().text();
+    assert.ok(output);
+  });
 
-test('it translates', function(assert) {
-  assert.expect(1);
+  test('it translates', async function(assert) {
+    assert.expect(1);
 
-  /* waits for async behavior (loading translations on app boot) to settle */
-  return wait().then(() => {
-    assert.equal(intl.t('some.key'), 'Hello world');
+    /* waits for async behavior (loading translations on app boot) to settle */
+    await settled();
+    assert.equal(this.intl.t('some.key'), 'Hello world');
   });
 });
 ```
