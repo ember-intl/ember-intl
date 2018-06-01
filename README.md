@@ -39,7 +39,7 @@ If your translation keys contain periods, i.e., `"foo.bar.baz": 'hello world!'` 
 
 ## Setting Locale
 
-This is can be done at any point within your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.set('locale', 'en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
+This is can be done at any point within your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
 
 ```js
   // app/routes/application.js
@@ -47,7 +47,7 @@ This is can be done at any point within your app boots.  This is typically done 
     intl: service(),
     beforeModel() {
       /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
-      return this.get('intl').set('locale', ['fr-fr', 'en-us']); /* array optional */
+      return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
     }
   });
 ```
@@ -297,7 +297,7 @@ To resolve this, add the following above all script tags in `tests/index.html`:
 
 ## Asynchronously loading translations
 
-Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.  
+Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.
 https://github.com/ember-intl/ember-intl/blob/2.x/docs/asynchronously-loading-translations.md
 
 ### Testing with ember-intl
@@ -312,6 +312,11 @@ https://github.com/ember-intl/ember-intl/blob/2.x/docs/asynchronously-loading-tr
 Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: `new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');`
 
 The solution is the ensure that the value you are passing in is in a format which is valid for the `Date` constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.
+
+## Migrating from ember-i18n
+
+* Simple migration tool to convert your translations files and application code to this addon.  Feel free to report any issues with the migration tool [here](https://github.com/DockYard/ember-i18n-to-intl-migrator/issues).
+- https://github.com/DockYard/ember-i18n-to-intl-migrator
 
 ## Running
 
