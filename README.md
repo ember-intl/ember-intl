@@ -6,10 +6,10 @@
 
 ## Notable Features
 
-* Display numbers with separators.
-* Display dates and times correctly.
-* Display dates relative to "now".
-* Pluralize labels in strings.
+* Locale-aware numbers. Formatting of currencies, decimals, and percentages.
+* Locale-aware dates and times formatting
+* Locale-aware display of relative time. I.e, `"now"`, `"yesterday"`, `"2 mo. ago"`
+* ICU Message Syntax. Pluralization and formatted segments (numbers, datetime, etc.).
 * Support for 150+ languages.
 * Built on standards using [ICU message syntax][ICU] and native [Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * Extensive Ember Service API and template helpers for formatting and translating.
