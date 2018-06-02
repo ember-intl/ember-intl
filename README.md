@@ -17,7 +17,9 @@
 
 ## Installation
 
-* `ember i ember-intl@beta`
+`ember i ember-intl@beta`
+
+/NOTE/: master is current in beta.  If you're looking for latest stable docs, see the [2.x branch](https://github.com/ember-intl/ember-intl/tree/2.x).
 
 Depending on your projects targeted browsers, the Intl.JS polyfill may be necessary.  [Read more about the polyfill installation methods](https://github.com/ember-intl/ember-intl/blob/2.x/docs/intljs-polyfill.md).
 
