@@ -33,7 +33,7 @@ module.exports = {
   },
 
   _buildTranslationTree() {
-    const projectTranslations = path.join(this.project.root, this.opts.inputPath || 'translations');
+    const projectTranslations = path.join(this.project.root, this.opts.inputPath);
     const translationTrees = [];
 
     this._processAddons(this.project.addons, translationTrees);
@@ -223,14 +223,16 @@ module.exports = {
     let locales = [];
     let joinedPath = path.join(this.app.project.root, this.opts.inputPath);
 
-    locales = locales.concat(
-      walkSync(joinedPath, { directories: false }).map(function(filename) {
-        return path
-          .basename(filename, path.extname(filename))
-          .toLowerCase()
-          .replace(/_/g, '-');
-      })
-    );
+    if (fs.existsSync(joinedPath)) {
+      locales = locales.concat(
+        walkSync(joinedPath, { directories: false }).map(function(filename) {
+          return path
+            .basename(filename, path.extname(filename))
+            .toLowerCase()
+            .replace(/_/g, '-');
+        })
+      );
+    }
 
     if (this.opts.locales) {
       locales = locales.concat(this.opts.locales);
