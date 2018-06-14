@@ -22,7 +22,7 @@ import hydrate from '../hydrate';
 
 export default Service.extend(Evented, {
   /** @private **/
-  _locale: 'en-us',
+  _locale: ['en-us'],
 
   /** @private **/
   _adapter: null,
@@ -41,6 +41,8 @@ export default Service.extend(Evented, {
 
         return this._locale;
       }
+
+      return this._locale;
     },
     get() {
       return this._locale;

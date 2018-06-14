@@ -32,8 +32,6 @@ module('format-message', function(hooks) {
         }
       }
     });
-
-    this.intl.set('locale', DEFAULT_LOCALE_NAME);
   });
 
   test('exists', function(assert) {
