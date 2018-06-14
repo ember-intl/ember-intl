@@ -2,24 +2,33 @@
 Addon support
 ==============================================================================
 
-As of 2.8.0, translations can be bundled with addons.  Addon's define their
-translations similar to an application, but creating a folder in the addon
-root `/translations` (not `/app/translations` or `/addon/translations`).
+By default, all addons are supported out of the box.  They simply need to implement a `/translations` folder at the root of your project (NOTE: a sibling to `app` not a child) then the contents of that folder will be bundled with the translations of your host application.
 
-If you need to change the default path, you can do so within `package.json` by
-setting a translationPath property within `ember-addon`.
+## Advanced Usage (treeForTranslations)
+
+As of 3.0.0, a new hook called `treeForTranslations` was introduced for better addon support.
+
+The behavior is that every addon that implements a `treeForTranslations` hook will be invoked at build time.  If an addon does not implement a `treeForTranslations` but instead has a `/translations` folder then the contents of the folder will be used.
+
+An example use-case of this hook would be programmatically fetching translations at build time from a third-party service.  If you create a broccoli plugin that you think will be useful for others, submit a PR to add to the documentation!
 
 ```js
-// package.json
-{
-  // ...
-  "ember-addon": {
-    "translationPath": "./node_modules/company-translations/"
+// index.js
+module.exports = {
+  name: 'an-ember-addon',
+
+  /**
+   * NOTE: addon's translation tree provided as an arg.
+   * No need to return it if you are reimplementing behavior.
+   * If you want to programmatically modify the translation node,
+   * then feel free to mutate the passed in tree and return it.
+   */
+  treeForTranslations(/*tree*/) {
+     return new BroccoliTranslationPlugin();
   }
 }
 ```
 
-At build time, the translations are reduced with the application's
-translations.  In the event that an addon translation key collides with one
-defined on the application already, the application's translation wins out
-in that scenario.
+## Overriding Translations
+
+The host application can always override addon translations.  If the application implements a key that collides with an addon, then the application wins when bundling the translations.  This is intended to allow host applications to override translations w/o having to modify an addon.

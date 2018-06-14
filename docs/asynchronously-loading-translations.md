@@ -30,14 +30,16 @@ module.exports = function() {
 };
 ```
 
-### Pushing translations into ember-intl
+## Pushing translations into ember-intl
 
 ```js
 // app/routes/application.js
 export default Ember.Route.extend({
   intl: Ember.inject.service(),
+  
   async beforeModel() {
-    let translations = await fetch('/api/translations.json');
+    const translations = await fetch('/api/translations.json');
+    
     this.get('intl').addTranslations('en-us', translations);
   }
 });
