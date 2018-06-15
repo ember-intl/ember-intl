@@ -2,7 +2,7 @@
 Addon support
 ==============================================================================
 
-By default, all addons are supported out of the box.  They simply need to implement a `/translations` folder at the root of your project (NOTE: a sibling to `app` not a child) then the contents of that folder will be bundled with the translations of your host application.
+By default, addons are supported out of the box.  They simply need to implement a `/translations` folder at the root of your project (NOTE: a sibling to `app` _not_ a child) then the contents of the translation folder will be bundled with the translations of your host app.
 
 ## Advanced Usage (treeForTranslations)
 
