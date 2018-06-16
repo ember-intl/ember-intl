@@ -3,9 +3,35 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import EmberObject, { get } from '@ember/object';
+import EmberObject from '@ember/object';
 import EmptyObject from 'ember-intl/-private/empty-object';
-import merge from 'ember-intl/utils/merge';
+
+const { assign } = Object;
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function flatten(src) {
+  const result = new EmptyObject();
+
+  for (const key in src) {
+    if (!hasOwnProperty.call(src, key)) {
+      continue;
+    }
+
+    const value = src[key];
+
+    if (typeof value === 'object' && value) {
+      const hash = flatten(value);
+
+      for (const suffix in hash) {
+        result[`${key}.${suffix}`] = hash[suffix];
+      }
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
 
 const TranslationModel = EmberObject.extend({
   localeName: null,
@@ -22,7 +48,7 @@ const TranslationModel = EmberObject.extend({
    * Adds a translation hash
    */
   addTranslations(translations) {
-    merge(this.translations, translations);
+    assign(this.translations, flatten(translations));
   },
 
   /**
@@ -31,14 +57,14 @@ const TranslationModel = EmberObject.extend({
    * to implement this function as `return this[key];`
    */
   getValue(key) {
-    return get(this.translations, key);
+    return this.translations[key];
   },
 
   /**
    * Determines if the translation model contains a key
    */
   has(key) {
-    return typeof this.getValue(key) === 'string';
+    return hasOwnProperty.call(this.translations, key);
   }
 });
 
