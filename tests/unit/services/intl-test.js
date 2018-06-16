@@ -146,6 +146,26 @@ module('service:intl', function(hooks) {
     assert.equal(this.intl.t('empty_string'), '');
   });
 
+  test('translations keys can contain periods within the key', async function(assert) {
+    assert.expect(2);
+
+    this.intl.addTranslations(LOCALE, {
+      a: {
+        b: {
+          c: {
+            'd.d': {
+              'e.e': 'Periods within a key work are now valid.'
+            }
+          }
+        }
+      },
+      'b.b': 'Root key with double period.'
+    });
+
+    assert.equal(this.intl.t('a.b.c.d.d.e.e'), 'Periods within a key work are now valid.');
+    assert.equal(this.intl.t('b.b'), 'Root key with double period.');
+  });
+
   test('should return safestring when htmlSafe attribute passed to `t`', async function(assert) {
     assert.expect(1);
 
