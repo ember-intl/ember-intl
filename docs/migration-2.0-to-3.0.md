@@ -2,7 +2,7 @@
 
 * `baseLocale` was removed from `config/ember-intl.js`
 
-* `format-html-message` is now `format-message` with `htmlSafe=true` attribute passed.
+* `format-html-message` was removed in favor of passing `htmlSafe=true` into the `t` & `format-message` API.
 
 ```hbs
 {{t 'sale_begins' day=day htmlSafe=true}}`
