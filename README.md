@@ -13,7 +13,7 @@
 * 🌐 Support for 150+ languages.
 * 📜 Built largely on standards. [ICU message syntax][ICU] & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating.
-* [Advanced addon support](https://github.com/ember-intl/ember-intl/blob/master/docs/addon-support.md) to provide translations to the host app
+* 🎉 [Advanced addon support](https://github.com/ember-intl/ember-intl/blob/master/docs/addon-support.md) to provide translations to the host app
 
 ## Installation
 
