@@ -13,6 +13,7 @@
 * 🌐 Support for 150+ languages.
 * 📜 Built largely on standards. [ICU message syntax][ICU] & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating.
+* [Advanced addon support](https://github.com/ember-intl/ember-intl/blob/master/docs/addon-support.md) to provide translations to the host app
 
 ## Installation
 
@@ -21,6 +22,10 @@
 _NOTE_: master is currently in beta.  If you're looking for latest stable docs, see the [2.x branch](https://github.com/ember-intl/ember-intl/tree/2.x).
 
 Depending on your projects targeted browsers, the Intl.JS polyfill may be necessary.  [Read more about the polyfill installation methods](https://github.com/ember-intl/ember-intl/blob/2.x/docs/intljs-polyfill.md).
+
+## Migrating from 2.0?
+
+[Here is a light touch migration guide to help you get started](https://github.com/ember-intl/ember-intl/blob/master/docs/migration-2.0-to-3.0.md).  If you uncover any gaps, submit a PR to update the migration doc or open an issue.
 
 ## Documentation
 
