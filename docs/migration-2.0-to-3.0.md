@@ -13,8 +13,6 @@
 
 * `intl.addTranslation` was removed in favor of using `intl.addTranslations`.  `addTranslations` takes a locale as the first argument and a object as the second.
 
-Also not, `addTranslations` is no longer async.
-
 Example:
 
 ```js
