@@ -1,2 +1,3 @@
 product:
-  title: Hola mundo
+  title: Hola {name}
+  info: La {product} cuesta {price, number, USD}

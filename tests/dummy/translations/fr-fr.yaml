@@ -1,0 +1,3 @@
+product:
+  title: Bonjour le monde
+  info: Le {product} coûtent {price, number, USD}
