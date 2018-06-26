@@ -240,14 +240,8 @@ export default Component.extend({
 Escapes all hash arguments and returns as an htmlSafe String which renders an ElementNode.  To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `t` helper.
 
 ```hbs
-{{t 'product.html.info'
-  htmlSafe=true
-  price=model.price
-  product=model.name
-  deadline=model.saleEndsOn
-}}
-
-{{format-message '<strong>{photos, number}</strong>' photos=models.photos.length htmlSafe=true}}
+{{t 'a.translation' htmlSafe=true}}
+{{format-message '<em>{photos, number}</em>' photos=models.photos.length htmlSafe=true}}
 ```
 
 ## Named Formats
