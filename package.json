@@ -78,7 +78,7 @@
     "eslint": "^4.19.1",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-prettier": "^2.1.2",
+    "eslint-plugin-prettier": "2.6.0",
     "fs-extra": "^3.0.1",
     "loader.js": "^4.2.3",
     "mocha": "^3.4.2",
