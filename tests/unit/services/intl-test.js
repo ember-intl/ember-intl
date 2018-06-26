@@ -92,6 +92,16 @@ module('service:intl', function(hooks) {
     );
   });
 
+  test('`t` should return empty string, if `resilient: true`', function(assert) {
+    assert.strictEqual(
+      this.intl.t('does.not.exist', {
+        default: ['also.does.not.exist', 'should_also_exist'],
+        resilient: true
+      }),
+      ''
+    );
+  });
+
   test('triggers notifyPropertyChange only when locale changes', function(assert) {
     let count = 0;
 
