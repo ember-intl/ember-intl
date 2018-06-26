@@ -7,15 +7,15 @@
 
 'use strict';
 
-const stringify = require('json-stable-stringify');
-const mergeTrees = require('broccoli-merge-trees');
-const extract = require('broccoli-cldr-data');
-const funnel = require('broccoli-funnel');
-const walkSync = require('walk-sync');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
+const walkSync = require('walk-sync');
+const extract = require('broccoli-cldr-data');
+const mergeTrees = require('broccoli-merge-trees');
+const stringify = require('json-stable-stringify');
 
 const utils = require('./lib/utils');
+const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 
 module.exports = {
@@ -27,74 +27,39 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     this.app = this._findHost();
-    this.opts = this.getOptions(this.app.env);
-    this.locales = this.findLocales();
-    this.translationTree = this._buildTranslationTree();
+    this.opts = this.createOptions(this.app.env);
+    this.isSilent = this.app.options.intl && this.app.options.intl.silent;
+    this.locales = this.findAvailableLocales();
   },
 
-  _buildTranslationTree() {
-    const projectTranslations = path.join(this.project.root, this.opts.inputPath);
-    const translationTrees = [];
+  generateTranslationTree(bundlerOptions) {
+    const translationTree = buildTree(this.project, this.opts.inputPath, this.treeGenerator.bind(this));
+    const _bundlerOptions = bundlerOptions || {};
+    const addon = this;
 
-    this._processAddons(this.project.addons, translationTrees);
-
-    if (fs.existsSync(projectTranslations)) {
-      translationTrees.push(this.treeGenerator(projectTranslations));
-    }
-
-    return funnel(
-      mergeTrees(translationTrees, {
-        overwrite: true
-      }),
-      {
-        include: ['**/*.yaml', '**/*.yml', '**/*.json']
+    return new TranslationReducer(translationTree, {
+      verbose: !this.isSilent,
+      outputPath: this.opts.outputPath,
+      filename: _bundlerOptions.filename,
+      wrapEntry: _bundlerOptions.wrapEntry,
+      log() {
+        return addon.log.apply(addon, arguments);
       }
-    );
+    });
   },
 
-  _processAddons(addons, translationTrees) {
-    addons.forEach(addon => this._processAddon(addon, translationTrees));
-  },
-
-  /**
-   * NOTE: `_processAddon` was heavily adapted off the work of ember-cli-fastboot implementation.
-   */
-  _processAddon(addon, translationTrees) {
-    const addonTranslationPath = path.join(addon.root, 'translations');
-    let addonGeneratedTree;
-
-    if (fs.existsSync(addonTranslationPath)) {
-      addonGeneratedTree = this.treeGenerator(addonTranslationPath);
-    }
-
-    if (addon.treeForTranslations) {
-      let additionalTranslationTree = addon.treeForTranslations(addonGeneratedTree);
-
-      if (additionalTranslationTree) {
-        translationTrees.push(funnel(additionalTranslationTree, { destDir: addon.name }));
-      }
-    } else if (addonGeneratedTree !== undefined) {
-      translationTrees.push(funnel(addonGeneratedTree, { destDir: addon.name }));
-    }
-
-    this._processAddons(addon.addons, translationTrees);
-  },
-
-  outputPaths() {
-    let assetPath = 'assets/intl';
-    let appOptions = this.app.options;
-
+  findAssetPath(appOptions) {
     if (appOptions.app && appOptions.app.intl) {
-      assetPath = appOptions.app.intl;
+      return appOptions.app.intl;
     }
 
-    return assetPath;
+    return 'assets/intl';
   },
 
   contentFor(name, config) {
     if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
-      let assetPath = this.outputPaths();
-      let locales = this.findLocales();
+      let assetPath = this.findAssetPath(this.app.options);
+      let locales = this.locales;
       let prefix = '';
 
       if (config.rootURL) {
@@ -117,7 +82,7 @@ module.exports = {
 
     if (!this.opts.publicOnly) {
       trees.push(
-        this.bundleTranslations({
+        this.generateTranslationTree({
           outputPath: 'translations',
           filename(key) {
             return `${key}.js`;
@@ -159,14 +124,14 @@ module.exports = {
     }
 
     if (this.opts.publicOnly) {
-      trees.push(this.bundleTranslations());
+      trees.push(this.generateTranslationTree());
     }
 
     return mergeTrees(trees, { overwrite: true });
   },
 
   log(msg, options) {
-    if (this.app.options && this.app.options.intl && this.app.options.intl.silent) {
+    if (this.isSilent) {
       return;
     }
 
@@ -196,7 +161,7 @@ module.exports = {
     return {};
   },
 
-  getOptions(environment) {
+  createOptions(environment) {
     let addonConfig = Object.assign(
       {
         locales: null,
@@ -219,7 +184,7 @@ module.exports = {
     return addonConfig;
   },
 
-  findLocales() {
+  findAvailableLocales() {
     let locales = [];
     let joinedPath = path.join(this.app.project.root, this.opts.inputPath);
 
@@ -251,19 +216,5 @@ module.exports = {
     );
 
     return utils.unique(locales);
-  },
-
-  bundleTranslations(opts) {
-    let addon = this;
-
-    return new TranslationReducer(
-      [this.translationTree],
-      Object.assign({}, this.opts, opts, {
-        verbose: !(this.app.options && this.app.options.intl && this.app.options.intl.silent),
-        log() {
-          return addon.log.apply(addon, arguments);
-        }
-      })
-    );
   }
 };
