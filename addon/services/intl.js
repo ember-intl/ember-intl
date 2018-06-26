@@ -13,6 +13,7 @@ import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
 import Service from '@ember/service';
+import { assign } from '@ember/polyfills';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import isArrayEqual from '../-private/is-array-equal';
@@ -105,10 +106,12 @@ export default Service.extend(Evented, {
     const localeNames = this.localeWithDefault(localeName);
     const translation = this._adapter.lookup(localeNames, key);
 
-    if (!options.resilient && translation === undefined) {
+    if (typeof translation === 'undefined') {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
+      // make sure to always pass an array to `missingMessage`
+      const defaults = options.default ? [].concat(options.default) : [];
 
-      return missingMessage.call(this, key, localeNames);
+      return missingMessage.call(this, key, localeNames, assign({}, options, { default: defaults }));
     }
 
     return translation;
@@ -124,9 +127,13 @@ export default Service.extend(Evented, {
     }
 
     while (!msg && defaults.length) {
-      msg = this.lookup(defaults.shift(), options.locale, {
-        resilient: defaults.length
-      });
+      msg = this.lookup(
+        defaults.shift(),
+        options.locale,
+        assign({}, options, {
+          default: defaults
+        })
+      );
     }
 
     return this.formatMessage(msg, options);
