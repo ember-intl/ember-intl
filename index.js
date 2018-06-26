@@ -44,7 +44,9 @@ module.exports = {
       wrapEntry: _bundlerOptions.wrapEntry,
       log() {
         return addon.log.apply(addon, arguments);
-      }
+      },
+      requiresTranslation: this.opts.requiresTranslation,
+      throwMissingTranslations: this.opts.throwMissingTranslations
     });
   },
 
@@ -169,7 +171,9 @@ module.exports = {
         disablePolyfill: false,
         autoPolyfill: false,
         inputPath: 'translations',
-        outputPath: 'translations'
+        outputPath: 'translations',
+        throwMissingTranslations: false,
+        requiresTranslation: (/* key, locale */) => true
       },
       this.readConfig(environment)
     );

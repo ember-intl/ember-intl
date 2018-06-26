@@ -58,6 +58,28 @@ module.exports = function(/* env */) {
      * @type {String}
      * @default "translations"
      */
-    inputPath: 'translations'
+    inputPath: 'translations',
+
+    /**
+     * cause a build error if missing translations are detected.
+     *
+     * See https://github.com/jasonmit/ember-intl/blob/master/docs/missing-translations.md#throwing-a-build-error-on-missing-required-translation
+     *
+     * @property throwMissingTranslations
+     * @type {Boolean}
+     * @default "false"
+     */
+    throwMissingTranslations: false,
+
+    /**
+     * filter missing translations to ignore expected missing translations.
+     *
+     * See https://github.com/jasonmit/ember-intl/blob/master/docs/missing-translations.md#requiring-translations
+     *
+     * @property requiresTranslation
+     * @type {Function?}
+     * @default "function(){return true}"
+     */
+    requiresTranslation: undefined
   };
 };
