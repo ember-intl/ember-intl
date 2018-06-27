@@ -1,8 +1,4 @@
-import { getContext } from '@ember/test-helpers';
-import _t from './-private/t';
-
-export function t(...args) {
-  let { owner } = getContext();
-
-  return _t(owner, ...args);
-}
+export { default as t } from './t';
+export { default as setLocale } from './set-locale';
+export { default as addTranslations } from './add-translations';
+export { default as setupIntl } from './setup-intl';
