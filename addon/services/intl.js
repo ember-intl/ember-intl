@@ -12,6 +12,7 @@ import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
+import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
@@ -108,7 +109,7 @@ export default Service.extend(Evented, {
     if (!options.resilient && translation === undefined) {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
-      return missingMessage.call(this, key, localeNames);
+      return missingMessage.call(this, key, localeNames, options);
     }
 
     return translation;
@@ -124,9 +125,7 @@ export default Service.extend(Evented, {
     }
 
     while (!msg && defaults.length) {
-      msg = this.lookup(defaults.shift(), options.locale, {
-        resilient: defaults.length
-      });
+      msg = this.lookup(defaults.shift(), options.locale, assign({}, options, { resilient: defaults.length > 0 }));
     }
 
     return this.formatMessage(msg, options);
