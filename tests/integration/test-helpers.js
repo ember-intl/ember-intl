@@ -9,11 +9,11 @@ module('Integration | Test Helpers', function(hooks) {
     setupIntl(hooks);
 
     test('hooks were properly executed and helpers work', async function(assert) {
-      assert.strictEqual(this.intl, this.owner.resolve('service:intl'), '`this.intl` shorthand is available');
+      assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.strictEqual(
         this.intl.t('some.translation'),
-        't:some.translation',
+        't:some.translation:()',
         '`t` method serializes translation without variables'
       );
       assert.strictEqual(

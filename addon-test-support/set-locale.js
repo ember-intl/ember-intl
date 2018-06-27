@@ -3,7 +3,7 @@ import makeIntlHelper from './-private/make-intl-helper';
 /**
  * Invokes the `setLocale` method of the `intl` service.
  *
- * @function
+ * @function setLocale
  * @param {string|string[]} locale
  */
-export const setLocale = makeIntlHelper('setLocale');
+export default makeIntlHelper('setLocale');

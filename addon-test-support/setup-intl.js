@@ -16,7 +16,7 @@ import { missingMessage } from './-private/serialize-translation';
  * @param {string} [locale]
  * @param {object} [translations]
  */
-export function setupIntl(hooks, locale, translations) {
+export default function setupIntl(hooks, locale, translations) {
   if (typeof localeName === 'object' && !Array.isArray(locale)) {
     translations = locale;
     locale = null;
@@ -25,8 +25,6 @@ export function setupIntl(hooks, locale, translations) {
   hooks.beforeEach(function() {
     this.owner.register('util:intl/missing-message', missingMessage);
     this.intl = this.owner.lookup('service:intl');
-
-    this.addTranslations(translations);
   });
 
   if (locale) {

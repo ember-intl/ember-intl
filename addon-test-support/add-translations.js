@@ -9,11 +9,11 @@ import pickLastLocale from './-private/pick-last-locale';
  * just translations, they will be added to the last locale and all other
  * locales will be tried before.
  *
- * @function
+ * @function addTranslations
  * @param {string} [localeName]
  * @param {object} translations
  */
-export const addTranslations = makeIntlHelper((intl, localeName, translations) => {
+export default makeIntlHelper((intl, localeName, translations) => {
   if (typeof localeName === 'object') {
     translations = localeName;
     localeName = pickLastLocale(get(intl, 'locales'));

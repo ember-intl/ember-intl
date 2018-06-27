@@ -40,7 +40,8 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @param {object} options
  * @return {string}
  */
-const stringifyOptions = options => replaceInterpolators(stringifyDeterministically(omit(options, INTERNAL_OPTIONS)));
+const stringifyOptions = (options = {}) =>
+  replaceInterpolators(stringifyDeterministically(omit(options, INTERNAL_OPTIONS)));
 
 /**
  * Serializes a translation invocation deterministically.
@@ -51,7 +52,7 @@ const stringifyOptions = options => replaceInterpolators(stringifyDeterministica
  * @param {object} [options] options and variables passed along
  * @return {string}
  */
-export const serializeTranslation = (key, options) => (options ? `t:${key}:${stringifyOptions(options)}` : `t:${key}`);
+export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptions(options)}`;
 
 /**
  * Used to overwrite the default `intl/missing-message` implementation in order
