@@ -4,6 +4,9 @@ import { settled } from '@ember/test-helpers';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
+// TODO: remove this and find out why tests are not loaded
+import '../../integration/test-helpers';
+
 const LOCALE = 'en';
 
 module('service:intl', function(hooks) {
