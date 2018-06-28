@@ -19,9 +19,9 @@ It can be invoked in four different ways.
 
 #### `setupIntl(hooks)`
 
-Just injects `intl` into the context and enabled deterministic serialization of
-missing translations. Also take a look at the `t` helper further down, that
-makes asserting agains these translations a breeze.
+Just injects `intl` into the context and enables deterministic serialization of
+missing translations. Also take a look at the [`t` helper](#tkey-options)
+further down, that makes asserting against these translations a breeze.
 
 ```js
 import { module, test } from 'qunit';
@@ -46,7 +46,7 @@ module('setupIntl demo', function(hooks) {
 #### `setupIntl(hooks, locale)`
 
 Does what `setupIntl(hooks)` does and also sets the locale. You can also use
-`setLocale(locale)` for that.
+[`setLocale(locale)`](#setlocalelocale) for that.
 
 ```js
 import { module, test } from 'qunit';
@@ -67,8 +67,9 @@ module('setupIntl demo', function(hooks) {
 
 #### `setupIntl(hooks, translations)`
 
-Does what `setupIntl(hooks)` does and also adds some translations to the active
-locale. You can also use `addTranslations([locale], translations)` for that.
+Does what `setupIntl(hooks)` does and adds translations to the active locale.
+You can also use [`addTranslations([locale], translations)`](#addtranslationslocale-translations)
+for that.
 
 ```js
 import { module, test } from 'qunit';
@@ -103,8 +104,9 @@ module('setupIntl demo', function(hooks) {
 #### `setupIntl(hooks, locale, translations)`
 
 Combination of the previous two. Sets the locale and also adds the translations.
-You can also use `setLocale(locale)` and
-`addTranslations([locale], translations)` for that.
+You can also use [`setLocale(locale)`](#setlocalelocale) and
+[`addTranslations([locale], translations)`](#addtranslationslocale-translations)
+for that.
 
 ```js
 import { module, test } from 'qunit';
@@ -210,7 +212,7 @@ module('addTranslations demo', function(hooks) {
 ### `t(key, [options])`
 
 The `t` helper is a shortcut for accessing the `t` method on the `intl` service.
-In combination with the fallback serialization behavior of `setupInt(hooks)`,
+In combination with the fallback serialization behavior of `setupIntl(hooks)`,
 it becomes especially useful, because you now don't need to worry about how to
 provide translations or mock them for tests.
 
