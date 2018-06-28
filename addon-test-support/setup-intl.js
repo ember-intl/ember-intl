@@ -17,7 +17,7 @@ import { missingMessage } from './-private/serialize-translation';
  * @param {object} [translations]
  */
 export default function setupIntl(hooks, locale, translations) {
-  if (typeof localeName === 'object' && !Array.isArray(locale)) {
+  if (typeof locale === 'object' && !Array.isArray(locale)) {
     translations = locale;
     locale = null;
   }

@@ -16,7 +16,7 @@ import pickLastLocale from './-private/pick-last-locale';
 export default makeIntlHelper((intl, localeName, translations) => {
   if (typeof localeName === 'object') {
     translations = localeName;
-    localeName = pickLastLocale(get(intl, 'locales'));
+    localeName = pickLastLocale(get(intl, 'locale'));
   }
 
   return intl.addTranslations(localeName, translations);

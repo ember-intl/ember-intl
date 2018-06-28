@@ -7,7 +7,7 @@ import last from 'lodash.last';
  *
  * @private
  * @function
- * @param {string|string[]} locales
+ * @param {string|string[]} locale
  * @return {string}
  */
-export default locales => last(castArray(locales));
+export default locale => last(castArray(locale));
