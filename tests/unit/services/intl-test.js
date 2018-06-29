@@ -92,6 +92,27 @@ module('service:intl', function(hooks) {
     );
   });
 
+  test('`t` should pass `key`, `locales`, `options` through to `missing-message` util', function(assert) {
+    assert.expect(3);
+
+    this.owner.register('util:intl/missing-message', (key, locales, options) => {
+      assert.strictEqual(key, 'should_also_not_exist');
+      assert.deepEqual(locales, [LOCALE]);
+      assert.deepEqual(options, {
+        default: ['also.does.not.exist', 'should_also_not_exist'],
+        resilient: false,
+        someVariable: 'hello'
+      });
+
+      return '';
+    });
+
+    this.intl.t('does.not.exist', {
+      default: ['also.does.not.exist', 'should_also_not_exist'],
+      someVariable: 'hello'
+    });
+  });
+
   test('triggers notifyPropertyChange only when locale changes', function(assert) {
     let count = 0;
 

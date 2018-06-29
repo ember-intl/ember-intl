@@ -2,7 +2,7 @@ import { isEmpty } from '@ember/utils';
 import { warn } from '@ember/debug';
 import links from './links';
 
-export default function missingMessage(key, locales) {
+export default function missingMessage(key, locales /*, options */) {
   if (isEmpty(locales)) {
     warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
       id: 'ember-intl-no-locale-set'
