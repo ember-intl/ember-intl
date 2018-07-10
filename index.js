@@ -18,6 +18,17 @@ const utils = require('./lib/utils');
 const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 
+const defaultConfig = {
+  locales: null,
+  publicOnly: false,
+  disablePolyfill: false,
+  autoPolyfill: false,
+  inputPath: 'translations',
+  outputPath: 'translations',
+  throwMissingTranslations: false,
+  requiresTranslation: (/* key, locale */) => true
+};
+
 module.exports = {
   name: 'ember-intl',
   opts: null,
@@ -164,19 +175,12 @@ module.exports = {
   },
 
   createOptions(environment) {
-    let addonConfig = Object.assign(
-      {
-        locales: null,
-        publicOnly: false,
-        disablePolyfill: false,
-        autoPolyfill: false,
-        inputPath: 'translations',
-        outputPath: 'translations',
-        throwMissingTranslations: false,
-        requiresTranslation: (/* key, locale */) => true
-      },
-      this.readConfig(environment)
-    );
+    let addonConfig = Object.assign({}, defaultConfig, this.readConfig(environment));
+
+    if (typeof addonConfig.requiresTranslation !== 'function') {
+      this.log('Configured `requiresTranslation` is not a function. Using default implementation.');
+      addonConfig.requiresTranslation = defaultConfig.requiresTranslation;
+    }
 
     if (addonConfig.locales) {
       addonConfig.locales = utils
