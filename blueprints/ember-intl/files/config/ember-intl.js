@@ -78,8 +78,8 @@ module.exports = function(/* env */) {
      *
      * @property requiresTranslation
      * @type {Function?}
-     * @default "function(){return true}"
+     * @default "function() { return true; }"
      */
-    requiresTranslation: undefined
+    // requiresTranslation: (key, locale) => true
   };
 };
