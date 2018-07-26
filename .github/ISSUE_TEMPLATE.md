@@ -3,11 +3,11 @@
 
   Before you submit this; let's make sure of a few things. 
   Please make sure the following boxes are ticked if they are correct.
-  If not, please try and fulfil these first.
+  If not, please try and fulfill these first.
 -->
 
-- [ ] I am on the [latest](https://github.com/jasonmit/ember-intl/releases/latest) ember-intl version
-- [ ] I have searched the [issues](https://github.com/jasonmit/ember-intl/issues) of this repo and believe that this is not a duplicate
+- [ ] I am on the [latest](https://github.com/ember-intl/ember-intl/releases/latest) ember-intl version
+- [ ] I have searched the [issues](https://github.com/ember-intl/ember-intl/issues) of this repo and believe that this is not a duplicate
 
 <!-- 
   Once those are done, if you're able to fill in the following list with your information,
