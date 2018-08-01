@@ -25,7 +25,7 @@
     "start": "ember serve",
     "build": "ember build",
     "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests",
-    "tests-node": "mocha tests-node/**/*.*",
+    "tests-node": "mocha \"tests-node/**/*.*\"",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""

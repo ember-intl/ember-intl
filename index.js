@@ -198,12 +198,14 @@ module.exports = {
 
     if (fs.existsSync(joinedPath)) {
       locales = locales.concat(
-        walkSync(joinedPath, { directories: false }).map(function(filename) {
-          return path
-            .basename(filename, path.extname(filename))
-            .toLowerCase()
-            .replace(/_/g, '-');
-        })
+        walkSync(joinedPath, { directories: false })
+          .filter(utils.validLocaleFile)
+          .map(function(filename) {
+            return path
+              .basename(filename, path.extname(filename))
+              .toLowerCase()
+              .replace(/_/g, '-');
+          })
       );
     }
 
