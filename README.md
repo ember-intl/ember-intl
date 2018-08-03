@@ -2,6 +2,7 @@
 
 [![npm Version][npm-badge]][npm]
 [![Build Status][travis-badge]][travis]
+[![npm](https://img.shields.io/npm/dm/ember-intl.svg)](https://www.npmjs.com/package/ember-intl)
 [![Download count all time](https://img.shields.io/npm/dt/ember-intl.svg)](https://www.npmjs.com/package/ember-intl)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
