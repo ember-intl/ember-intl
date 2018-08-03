@@ -5,8 +5,8 @@
 
 import EmberObject from '@ember/object';
 import EmptyObject from 'ember-intl/-private/empty-object';
+import { assign } from '@ember/polyfills';
 
-const { assign } = Object;
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function flatten(src) {
