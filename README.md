@@ -18,7 +18,7 @@
 
 ## Installation
 
-`ember i ember-intl@beta`
+`ember i ember-intl`
 
 _NOTE_: master is currently in beta.  If you're looking for latest stable docs, see the [2.x branch](https://github.com/ember-intl/ember-intl/tree/2.x).
 
