@@ -20,9 +20,11 @@
 
 `ember i ember-intl`
 
-3.x (current) docs:  [/ember-intl/ember-intl/tree/master/docs](https://github.com/ember-intl/ember-intl/tree/master/docs)
+## Documentation
 
-2.x docs:  [/ember-intl/ember-intl/tree/2.x/docs](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
+[3.0 (current)](https://github.com/ember-intl/ember-intl/tree/master/docs)
+
+[2.0 docs](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
 
 ## Migrating from 2.0?
 
