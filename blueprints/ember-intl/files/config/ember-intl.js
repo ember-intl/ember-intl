@@ -69,7 +69,7 @@ module.exports = function(/* env */) {
      * @type {Boolean}
      * @default "false"
      */
-    throwMissingTranslations: false,
+    throwMissingTranslations: false
 
     /**
      * filter missing translations to ignore expected missing translations.

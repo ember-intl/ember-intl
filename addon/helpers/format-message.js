@@ -3,10 +3,13 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import { get } from '@ember/object';
 import BaseHelper from './-format-base';
 
-export default BaseHelper.extend({
+class MessageHelper extends BaseHelper {
   format(value, options) {
-    return this.intl.formatMessage(value, options);
+    return get(this, 'intl').formatMessage(value, options);
   }
-});
+}
+
+export default MessageHelper;
