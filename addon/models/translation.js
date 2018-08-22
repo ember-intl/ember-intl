@@ -33,23 +33,23 @@ function flatten(src) {
   return result;
 }
 
-const TranslationModel = EmberObject.extend({
-  localeName: null,
+class TranslationModel extends EmberObject {
+  localeName = null;
 
-  init() {
-    this._super();
+  constructor() {
+    super(...arguments);
 
     if (!this.translations) {
       this.translations = new EmptyObject();
     }
-  },
+  }
 
   /**
    * Adds a translation hash
    */
   addTranslations(translations) {
     assign(this.translations, flatten(translations));
-  },
+  }
 
   /**
    * Custom accessor hook that can be overridden.
@@ -58,7 +58,7 @@ const TranslationModel = EmberObject.extend({
    */
   getValue(key) {
     return this.translations[key];
-  },
+  }
 
   /**
    * Determines if the translation model contains a key
@@ -66,6 +66,6 @@ const TranslationModel = EmberObject.extend({
   has(key) {
     return hasOwnProperty.call(this.translations, key);
   }
-});
+}
 
 export default TranslationModel;

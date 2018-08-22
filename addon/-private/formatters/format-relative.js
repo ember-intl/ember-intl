@@ -11,7 +11,7 @@ import Formatter from './-base';
 
 export default class FormatRelative extends Formatter {
   constructor() {
-    super();
+    super(...arguments);
     this.formatter = createFormatCache(IntlRelativeFormat);
   }
 

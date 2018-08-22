@@ -3,18 +3,18 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import { get } from '@ember/object';
 import { bind } from '@ember/runloop';
-
 import BaseHelper from './-format-base';
 
 const runBind = bind;
 
-export default BaseHelper.extend({
-  format(params, hash) {
-    return this.intl.formatRelative(params, hash);
-  },
+class RelativeHelper extends BaseHelper {
+  format(/* params, hash */) {
+    return get(this, 'intl').formatRelative(...arguments);
+  }
 
-  compute(params, hash) {
+  compute(_, hash) {
     this.clearTimer();
 
     if (hash && typeof hash.interval !== 'undefined') {
@@ -22,16 +22,18 @@ export default BaseHelper.extend({
       this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
     }
 
-    return this._super(params, hash);
-  },
+    return super.compute(...arguments);
+  }
 
   clearTimer() {
     clearTimeout(this.timer);
-  },
+  }
 
   willDestroy() {
-    this._super();
+    super.willDestroy(...arguments);
 
     this.clearTimer();
   }
-});
+}
+
+export default RelativeHelper;

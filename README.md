@@ -49,14 +49,16 @@ homepage:
 This is can be done at any point within your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
 
 ```js
-  // app/routes/application.js
-  export default Route.extend({
-    intl: service(),
-    beforeModel() {
-      /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
-      return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
-    }
-  });
+// app/routes/application.js
+class ApplicationRoute extends Route {
+  @service
+  intl;
+
+  beforeModel() {
+    /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
+    return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
+  }
+}
 ```
 
 ## Helper Examples
@@ -80,15 +82,17 @@ photos:
 **Service API**
 
 ```js
-export default Component.extend({
-  intl: service(),
+class PhotoComponent extends Component {
+  @service
+  intl;
 
-  banner: computed('intl.locale', 'model.photos.length', function() {
+  @computed('intl.locale', 'model.photos.[]')
+  get banner() {
     return this.get('intl').t('photos.banner', {
       photos: this.get('model.photos.length')
     });
-  })
-});
+  }
+}
 ```
 
 ### Format Number
@@ -103,12 +107,15 @@ Formats numbers using [`Intl.NumberFormat`][Intl-NF], and returns the formatted 
 Or programmatically convert a number within any Ember Object.
 
 ```js
-export default Component.extend({
-  intl: service(),
-  computedNumber: computed('intl.locale', 'cost', function() {
-    return this.get('intl').formatNumber(this.get('cost')/*, optional options hash */);
-  })
-});
+class CostComponent extends Component {
+  @service
+  intl;
+  
+  @computed('intl.locale', 'cost')
+  get computedNumber() {
+    return this.get('intl').formatNumber(this.get('cost') /*, optional options hash */);
+  }
+}
 ```
 
 #### Format Number Options
@@ -127,12 +134,15 @@ Formats dates using [`Intl.DateTimeFormat`][Intl-DTF], and returns the formatted
 Or programmatically convert a date within any Ember Object.
 
 ```js
-export default Component.extend({
-  intl: service(),
-  computedNow: computed('intl.locale', function() {
+class DateComponent extends Component {
+  @service
+  intl;
+  
+  @computed('intl.locale')
+  get currentDate() {
     return this.get('intl').formatDate(new Date()/*, optional options hash */);
-  })
-});
+  }
+}
 ```
 
 #### Format Date Options
@@ -152,12 +162,15 @@ Or programmatically convert a time within any Ember Object.
 
 ```js
 // example
-export default Component.extend({
-  intl: service(),
-  computedNow: computed('intl.locale', function() {
+class TimeComponent extends Component {
+  @service
+  intl;
+  
+  @computed('intl.locale')
+  get computedNow() {
     return this.get('intl').formatTime(new Date()/*, optional options hash */);
-  })
-});
+  }
+}
 ```
 
 #### Format Time Options
@@ -168,13 +181,14 @@ export default Component.extend({
 Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
 
 ```js
-export default Component.extend({
-  timestamp: computed(function() {
+class RelativeExampleContainer extends Component {
+  get timestamp() {
     let date = new Date();
     date.setDate(date.getDate() - 3);
+    
     return date;
   })
-});
+}
 ```
 
 ```hbs
@@ -184,13 +198,21 @@ export default Component.extend({
 Or programmatically convert a relative time within any Ember Object.
 
 ```js
-export default Component.extend({
-  intl: service(),
-  yesterday: computed('intl.locale', function() {
+class RelativeExampleContainer extends Component {
+  @service
+  intl;
+
+  @computed('intl.locale')
+  get yesterdayTimestamp() {
     let date = new Date();
-    return this.get('intl').formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
-  })
-});
+    
+    return this.get('intl')
+      .formatRelative(
+        date.setDate(date.getDate() - 1)
+        /*, optional options hash */
+      );
+  }
+}
 ```
 
 #### Live Relative Timestamp
@@ -220,22 +242,25 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 **Service API**
 
 ```js
-export default Component.extend({
-  intl: service(),
-  count: 0,
-  label: computed('intl.locale', 'model.photos.length', function() {
+class PhotoExampleContainer extends Component {
+  @service
+  intl;
+
+  count = 10;
+
+  @computed('intl.locale', 'count')
+  get label() {
     return this.get('intl').formatMessage(`
-      You took {numPhotos, plural,
+      You took {photos, plural,
         =0 {no photos}
         =1 {one photo}
         other {# photos}
       }
-    `,
-    {
-      numPhotos: this.get('model.photos.length')
+    `, {
+      photos: this.count
     });
-  }).readOnly()
-});
+  }
+}
 ```
 
 ### Format HTML Message

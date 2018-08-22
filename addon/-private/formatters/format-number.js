@@ -27,7 +27,7 @@ export default class FormatNumber extends Formatter {
   }
 
   constructor() {
-    super();
+    super(...arguments);
     this.formatter = createFormatCache(Intl.NumberFormat);
   }
 
