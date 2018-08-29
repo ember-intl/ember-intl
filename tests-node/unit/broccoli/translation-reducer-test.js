@@ -1,9 +1,9 @@
 'use strict';
 
-let mocha = require('mocha');
-let expect = require('chai').expect;
+const mocha = require('mocha');
+const expect = require('chai').expect;
 
-let subject = require('../../../lib/broccoli/translation-reducer');
+const subject = require('../../../lib/broccoli/translation-reducer');
 
 describe('translation-reducer', function() {
   beforeEach(function() {
