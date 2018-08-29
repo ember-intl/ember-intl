@@ -1,9 +1,9 @@
 'use strict';
 
-let mocha = require('mocha');
-let expect = require('chai').expect;
+const mocha = require('mocha');
+const expect = require('chai').expect;
 
-let subject = require('../../index');
+const subject = require('../../index');
 
 describe('index', function() {
   it('createOptions ensures that requiresTranslation is a function.', function() {

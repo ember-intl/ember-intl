@@ -1,9 +1,9 @@
 'use strict';
 
-let mocha = require('mocha');
-let expect = require('chai').expect;
+const mocha = require('mocha');
+const expect = require('chai').expect;
 
-let subject = require('../../../blueprints/translation');
+const subject = require('../../../blueprints/translation');
 
 describe('translations', function() {
   it('normalizes the locale arg', function() {
