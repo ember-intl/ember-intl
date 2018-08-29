@@ -6,12 +6,11 @@
  */
 
 import IntlRelativeFormat from 'intl-relativeformat';
-import { computed } from '@ember-decorators/object';
 import IntlMessageFormat from 'intl-messageformat';
 import { getOwner } from '@ember/application';
+import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
-import { get, set } from '@ember/object';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
@@ -22,49 +21,49 @@ import normalizeLocale from '../-private/normalize-locale';
 import links from '../utils/links';
 import hydrate from '../hydrate';
 
-class IntlService extends Service.extend(Evented) {
+export default Service.extend(Evented, {
   /** @private **/
-  _locale = ['en-us'];
+  _locale: ['en-us'],
 
   /** @private **/
-  _adapter = null;
+  _adapter: null,
 
   /** @public **/
-  formats = null;
+  formats: null,
 
   /** @public **/
-  @computed
-  set locale(localeName) {
-    const proposed = makeArray(localeName).map(normalizeLocale);
+  locale: computed({
+    set(_, localeName) {
+      const proposed = makeArray(localeName).map(normalizeLocale);
 
-    if (!isArrayEqual(proposed, this._locale)) {
-      this._locale = proposed;
-      this.trigger('localeChanged');
+      if (!isArrayEqual(proposed, this._locale)) {
+        this._locale = proposed;
+        this.trigger('localeChanged');
+
+        return this._locale;
+      }
 
       return this._locale;
+    },
+    get() {
+      return this._locale;
     }
-
-    return this._locale;
-  }
-
-  get locale() {
-    return this._locale;
-  }
+  }),
 
   /** @public **/
-  formatRelative = formatter('relative');
+  formatRelative: formatter('relative'),
 
   /** @public **/
-  formatMessage = formatter('message');
+  formatMessage: formatter('message'),
 
   /** @public **/
-  formatNumber = formatter('number');
+  formatNumber: formatter('number'),
 
   /** @public **/
-  formatTime = formatter('time');
+  formatTime: formatter('time'),
 
   /** @public **/
-  formatDate = formatter('date');
+  formatDate: formatter('date'),
 
   /**
    * Returns an array of registered locale names
@@ -72,14 +71,11 @@ class IntlService extends Service.extend(Evented) {
    * @property locales
    * @public
    */
-  @computed('_adapter.locales')
-  get locales() {
-    return get(this, '_adapter.locales');
-  }
+  locales: computed.readOnly('_adapter.locales'),
 
   /** @public **/
-  constructor() {
-    super(...arguments);
+  init() {
+    this._super();
 
     if (typeof Intl === 'undefined') {
       warn(`[ember-intl] Intl API was not found.\nSee: ${links.polyfill}`, false, {
@@ -103,7 +99,7 @@ class IntlService extends Service.extend(Evented) {
     }
 
     hydrate(this, this._owner);
-  }
+  },
 
   /** @public **/
   lookup(key, localeName, options = {}) {
@@ -117,7 +113,7 @@ class IntlService extends Service.extend(Evented) {
     }
 
     return translation;
-  }
+  },
 
   /** @public **/
   t(key, options = {}) {
@@ -133,7 +129,7 @@ class IntlService extends Service.extend(Evented) {
     }
 
     return this.formatMessage(msg, options);
-  }
+  },
 
   /** @public **/
   exists(key, localeName) {
@@ -142,12 +138,12 @@ class IntlService extends Service.extend(Evented) {
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
     return localeNames.some(localeName => this._adapter.has(localeName, key));
-  }
+  },
 
   /** @public */
   setLocale(locale) {
     set(this, 'locale', locale);
-  }
+  },
 
   /**
    * A utility method for registering CLDR data for
@@ -161,19 +157,19 @@ class IntlService extends Service.extend(Evented) {
   addLocaleData(data) {
     IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
-  }
+  },
 
   /** @public **/
   addTranslations(localeName, payload) {
     const locale = this.translationsFor(localeName);
 
     return locale.addTranslations(payload);
-  }
+  },
 
   /** @public **/
   translationsFor(localeName) {
     return this._adapter.localeFactory(normalizeLocale(localeName));
-  }
+  },
 
   /** @private **/
   getFormat(formatType, format) {
@@ -182,7 +178,7 @@ class IntlService extends Service.extend(Evented) {
     if (formats && formatType && typeof format === 'string') {
       return get(formats, `${formatType}.${format}`);
     }
-  }
+  },
 
   /** @private **/
   localeWithDefault(localeName) {
@@ -198,7 +194,7 @@ class IntlService extends Service.extend(Evented) {
       return localeName.map(normalizeLocale);
     }
   }
-}
+});
 
 function formatter(name) {
   return function(value, options, formats) {
@@ -214,5 +210,3 @@ function formatter(name) {
     });
   };
 }
-
-export default IntlService;
