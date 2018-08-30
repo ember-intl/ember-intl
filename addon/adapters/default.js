@@ -11,9 +11,6 @@ import { computed } from '@ember-decorators/object';
 
 class DefaultAdapter extends EmberObject {
   /** @private **/
-  _seen = null;
-
-  /** @private **/
   @computed('_seen.[]')
   get locales() {
     return get(this, '_seen').map(l => l.localeName);
