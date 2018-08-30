@@ -5,27 +5,27 @@
 
 import { getOwner } from '@ember/application';
 import { A as emberArray } from '@ember/array';
+import EmberObject, { computed, get } from '@ember/object';
 import Translation from '../models/translation';
-import EmberObject, { get } from '@ember/object';
-import { computed } from '@ember-decorators/object';
 
-class DefaultAdapter extends EmberObject {
+export default EmberObject.extend({
+  _seen: null,
+
   /** @private **/
-  @computed('_seen.[]')
-  get locales() {
+  locales: computed('_seen.[]', function() {
     return get(this, '_seen').map(l => l.localeName);
-  }
+  }).readOnly(),
 
   /** @private **/
-  constructor() {
-    super(...arguments);
+  init() {
+    this._super();
     this._seen = emberArray();
-  }
+  },
 
   /** @private **/
   lookupLocale(localeName) {
     return this._seen.findBy('localeName', localeName);
-  }
+  },
 
   /** @private **/
   localeFactory(localeName) {
@@ -44,23 +44,26 @@ class DefaultAdapter extends EmberObject {
       Klass = Translation;
     }
 
-    class ExtendedTranslation extends Klass {
-      localeName = localeName;
-    }
+    const ModelKlass = Klass.extend();
+    Object.defineProperty(ModelKlass.proto(), 'localeName', {
+      writable: false,
+      enumerable: true,
+      value: localeName
+    });
 
-    owner.register(lookupName, ExtendedTranslation);
+    owner.register(lookupName, ModelKlass);
     model = owner.lookup(lookupName);
     this._seen.pushObject(model);
 
     return model;
-  }
+  },
 
   /** @private **/
   has(localeName, translationKey) {
     const model = this.lookupLocale(localeName);
 
     return model && model.has(translationKey);
-  }
+  },
 
   /** @private **/
   lookup(localeNames, translationKey) {
@@ -73,6 +76,4 @@ class DefaultAdapter extends EmberObject {
       }
     }
   }
-}
-
-export default DefaultAdapter;
+});
