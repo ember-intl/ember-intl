@@ -3,24 +3,28 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { isEmpty } from '@ember/utils';
 import Helper from '@ember/component/helper';
-import { get, getWithDefault } from '@ember/object';
-import { service } from '@ember-decorators/service';
+import { getOwner } from '@ember/application';
+import { isEmpty } from '@ember/utils';
+import { getWithDefault } from '@ember/object';
 
-class BaseHelper extends Helper {
-  @service
-  intl;
+const AbstractHelper = Helper.extend({
+  intl: null,
 
-  constructor() {
-    super(...arguments);
+  init() {
+    if (this.constructor === AbstractHelper) {
+      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+    }
 
-    get(this, 'intl').on('localeChanged', this, this.recompute);
-  }
+    this._super();
+
+    this.intl = getOwner(this).lookup('service:intl');
+    this.intl.on('localeChanged', this, this.recompute);
+  },
 
   format() {
     throw new Error('not implemented');
-  }
+  },
 
   compute([value], options) {
     if (isEmpty(value)) {
@@ -34,13 +38,13 @@ class BaseHelper extends Helper {
     }
 
     return this.format(value, options);
-  }
+  },
 
   willDestroy() {
     this._super();
 
-    get(this, 'intl').off('localeChanged', this, this.recompute);
+    this.intl.off('localeChanged', this, this.recompute);
   }
-}
+});
 
-export default BaseHelper;
+export default AbstractHelper;

@@ -31,9 +31,6 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
-    "@ember-decorators/argument": "^0.8.18",
-    "@ember-decorators/babel-transforms": "^2.0.2",
-    "@ember-decorators/service": "^2.4.1",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-cldr-data": "^1.1.2",
     "broccoli-funnel": "^2.0.1",
@@ -59,12 +56,12 @@
     "lodash.omit": "^4.5.0",
     "mkdirp": "^0.5.1",
     "silent-error": "^1.1.0",
-    "walk-sync": "^0.3.3"
+    "walk-sync": "^0.3.2"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
     "chai": "^3.5.0",
-    "ember-cli": "^3.3.0",
+    "ember-cli": "^2.18.0",
+    "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars": "^2.0.3",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.7.2",
@@ -77,9 +74,7 @@
     "ember-maybe-import-regenerator-for-testing": "^1.0.0",
     "ember-open-browser": "^1.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-source": "~3.3.1",
-    "ember-source-channel-url": "^1.1.0",
-    "ember-try": "^0.2.23",
+    "ember-source": "~2.18.0",
     "eslint": "^4.19.1",
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^5.2.1",
@@ -90,7 +85,7 @@
     "qunit-dom": "^0.7.1"
   },
   "engines": {
-    "node": "6.* || >= 7.*"
+    "node": "^4.5 || 6.* || >= 7.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

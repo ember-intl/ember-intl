@@ -9,7 +9,7 @@ import Formatter from './-base';
 
 export default class FormatDate extends Formatter {
   constructor() {
-    super(...arguments);
+    super();
     this.formatter = createFormatCache(Intl.DateTimeFormat);
   }
 

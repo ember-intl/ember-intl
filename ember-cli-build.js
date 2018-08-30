@@ -3,19 +3,13 @@
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  const project = defaults.project;
-  const options = {
-    vendorFiles: { 'app-shims.js': null },
-    'ember-cli-babel': {
-      includePolyfill: true
-    }
-  };
+  let project = defaults.project;
+  let options = { vendorFiles: { 'app-shims.js': null } };
 
   if (project.findAddonByName('ember-native-dom-event-dispatcher')) {
     options.vendorFiles['jquery.js'] = null;
   }
-
-  const app = new EmberAddon(defaults, options);
+  let app = new EmberAddon(defaults, options);
 
   app.options.snippetPaths = ['tests/dummy/snippets'];
 

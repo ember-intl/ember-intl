@@ -28,7 +28,6 @@ export default function createTranslatedComputedProperty(key, options) {
 
   return computed(...dependentKeys, function() {
     const intl = get(this, 'intl');
-
     assert(
       `Cannot translate "${key}".\n${this} does not have an intl property set. Try: intl: Ember.inject.service()`,
       intl

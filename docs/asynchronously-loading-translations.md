@@ -34,14 +34,13 @@ module.exports = function() {
 
 ```js
 // app/routes/application.js
-export default class ApplicationRoute extends Route {
-  @service
-  intl;
+export default Ember.Route.extend({
+  intl: Ember.inject.service(),
   
   async beforeModel() {
     const translations = await fetch('/api/translations.json');
     
     this.get('intl').addTranslations('en-us', translations);
   }
-};
+});
 ```

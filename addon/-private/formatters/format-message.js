@@ -13,7 +13,7 @@ const { Handlebars } = Ember;
 
 export default class FormatMessage extends Formatter {
   constructor() {
-    super(...arguments);
+    super();
     this.formatter = createFormatCache(IntlMessageFormat);
   }
 

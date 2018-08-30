@@ -11,7 +11,7 @@ import links from '../../utils/links';
 
 const EMPTY_OBJECT = {};
 
-class FormatterBase {
+export default class FormatterBase {
   get options() {
     return emberArray();
   }
@@ -65,5 +65,3 @@ class FormatterBase {
     return this.formatter(locale, formatterOptions).format(value, formatOptions);
   }
 }
-
-export default FormatterBase;
