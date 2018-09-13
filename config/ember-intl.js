@@ -69,6 +69,22 @@ module.exports = function(/* environment */) {
      * @type {Function?}
      * @default "function(){return true}"
      */
-    requiresTranslation: undefined
+    requiresTranslation: undefined,
+
+    /**
+     * translations output file name
+     * @property filename
+     * @type {Function?}
+     */
+    filename: undefined,
+
+    /**
+     * creates output file based on generated json with translations,
+     * can be used for final manipulation before writing to file
+     * @property wrapEntry
+     * @type {Function?}
+     * @default "function(){return `export default ${stringify(obj)};`}"
+     */
+    wrapEntry: undefined
   };
 };
