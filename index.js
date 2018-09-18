@@ -44,7 +44,7 @@ module.exports = {
   },
 
   generateTranslationTree(bundlerOptions) {
-    const translationTree = buildTree(this.project, this.opts.inputPath, this.treeGenerator.bind(this));
+    const translationTree = buildTree(this.project, this.opts.inputPath, this.treeGenerator);
     const _bundlerOptions = bundlerOptions || {};
     const addon = this;
 
