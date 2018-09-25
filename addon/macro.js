@@ -37,7 +37,7 @@ export default function createTranslatedComputedProperty(key, options) {
       );
 
       intl = owner.lookup('service:intl');
-      
+
       assert(
         `Cannot translate "${key}".\n${this} does not have an 'intl' property set and there is no 'intl' service registered with the owner.`,
         intl
