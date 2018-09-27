@@ -52,7 +52,7 @@ module.exports = {
       verbose: !this.isSilent,
       outputPath: this.opts.outputPath,
       filename: _bundlerOptions.filename,
-      wrapEntry: _bundlerOptions.wrapEntry,
+      wrapEntry: this.opts.wrapEntry,
       log() {
         return addon.log.apply(addon, arguments);
       },
@@ -97,11 +97,8 @@ module.exports = {
       trees.push(
         this.generateTranslationTree({
           outputPath: 'translations',
-          filename(key) {
+          filename: this.opts.filename || function filename(key) {
             return `${key}.js`;
-          },
-          wrapEntry(obj) {
-            return `export default ${stringify(obj)};`;
           }
         })
       );
@@ -137,7 +134,11 @@ module.exports = {
     }
 
     if (this.opts.publicOnly) {
-      trees.push(this.generateTranslationTree());
+      trees.push(this.generateTranslationTree({
+        filename: this.opts.filename || function filename(key) {
+          return `${key}.json`;
+        }
+      }));
     }
 
     return mergeTrees(trees, { overwrite: true });
