@@ -4,6 +4,7 @@
  */
 import { assert } from '@ember/debug';
 import { computed, get } from '@ember/object';
+import { getOwner } from '@ember/application';
 import EmptyObject from 'ember-intl/-private/empty-object';
 
 const keys = Object.keys;
@@ -27,11 +28,21 @@ export default function createTranslatedComputedProperty(key, options) {
   const dependentKeys = ['intl.locale'].concat(values(hash));
 
   return computed(...dependentKeys, function() {
-    const intl = get(this, 'intl');
-    assert(
-      `Cannot translate "${key}".\n${this} does not have an intl property set. Try: intl: Ember.inject.service()`,
-      intl
-    );
+    let intl = get(this, 'intl');
+    if (!intl) {
+      const owner = getOwner(this);
+      assert(
+        `Cannot translate "${key}".\n${this} does not have an 'intl' property set or an owner to look up the service from.`,
+        owner
+      );
+
+      intl = owner.lookup('service:intl');
+
+      assert(
+        `Cannot translate "${key}".\n${this} does not have an 'intl' property set and there is no 'intl' service registered with the owner.`,
+        intl
+      );
+    }
 
     return intl.t(key, mapPropertiesByHash(this, hash));
   }).readOnly();
