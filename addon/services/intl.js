@@ -104,7 +104,15 @@ export default Service.extend(Evented, {
   /** @public **/
   lookup(key, localeName, options = {}) {
     const localeNames = this.localeWithDefault(localeName);
-    const translation = this._adapter.lookup(localeNames, key);
+    let translation;
+
+    for (let i = 0; i < localeNames.length; i++) {
+      translation = this._adapter.lookup(localeNames[i], key);
+
+      if (translation !== undefined) {
+        break;
+      }
+    }
 
     if (!options.resilient && translation === undefined) {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');

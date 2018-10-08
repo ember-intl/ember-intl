@@ -66,14 +66,11 @@ export default EmberObject.extend({
   },
 
   /** @private **/
-  lookup(localeNames, translationKey) {
-    for (let i = 0; i < localeNames.length; i++) {
-      const localeName = localeNames[i];
-      const model = this.lookupLocale(localeName);
+  lookup(localeName, translationKey) {
+    const model = this.lookupLocale(localeName);
 
-      if (model && model.has(translationKey)) {
-        return model.getValue(translationKey);
-      }
+    if (model && model.has(translationKey)) {
+      return model.getValue(translationKey);
     }
   }
 });
