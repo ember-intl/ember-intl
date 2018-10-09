@@ -7,7 +7,7 @@ import { computed, get } from '@ember/object';
 import { getOwner } from '@ember/application';
 import EmptyObject from 'ember-intl/-private/empty-object';
 
-const keys = Object.keys;
+const { keys } = Object;
 
 function values(object) {
   return keys(object).map(key => object[key]);

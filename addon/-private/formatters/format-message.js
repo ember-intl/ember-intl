@@ -6,15 +6,17 @@
 import Ember from 'ember';
 import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
+import { assign } from '@ember/polyfills';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import Formatter from './-base';
+
+const { keys } = Object;
 
 const {
   Handlebars: {
     Utils: { escapeExpression }
   }
 } = Ember;
-const { assign, keys } = Object;
 
 function escape(hash) {
   if (!hash) {
