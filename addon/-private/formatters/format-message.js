@@ -3,42 +3,47 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { htmlSafe } from '@ember/string';
 import Ember from 'ember';
-import createFormatCache from 'intl-format-cache';
+import memoize from 'fast-memoize';
+import { htmlSafe } from '@ember/string';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import Formatter from './-base';
 
-const { Handlebars } = Ember;
+const {
+  Handlebars: {
+    Utils: { escapeExpression }
+  }
+} = Ember;
+const { assign, keys } = Object;
+
+function escape(hash) {
+  if (!hash) {
+    return;
+  }
+
+  return keys(hash).reduce((accum, key) => {
+    if (typeof hash[key] === 'string') {
+      accum[key] = escapeExpression(hash[key]);
+    }
+
+    return accum;
+  }, assign({}, hash));
+}
 
 export default class FormatMessage extends Formatter {
   constructor() {
     super();
-    this.formatter = createFormatCache(IntlMessageFormat);
+
+    this.createNativeFormatter = memoize((message, locales, formats) => {
+      return new IntlMessageFormat(message, locales, formats);
+    });
   }
 
-  escape(options) {
-    if (!options) {
-      return;
-    }
-
-    return Object.keys(options).reduce((result, hashKey) => {
-      let value = options[hashKey];
-
-      if (typeof value === 'string') {
-        value = Handlebars.Utils.escapeExpression(value);
-      }
-
-      result[hashKey] = value;
-
-      return result;
-    }, {});
-  }
-
-  format(value, options, { formats, locale }) {
-    let isHTMLSafe = options && options.htmlSafe;
-    let safeOptions = isHTMLSafe ? this.escape(options) : options;
-    let result = this.formatter(value, locale, formats).format(safeOptions);
+  format(message, options, { formats, locale }) {
+    const isHTMLSafe = options && options.htmlSafe;
+    const formatter = this.createNativeFormatter(message, locale, formats);
+    const escapedOptions = isHTMLSafe ? escape(options) : options;
+    const result = formatter.format(escapedOptions);
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }

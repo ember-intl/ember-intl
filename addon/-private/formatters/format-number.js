@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import createFormatCache from 'intl-format-cache';
+import memoize from 'fast-memoize';
 import { A as emberArray } from '@ember/array';
 
 import Formatter from './-base';
@@ -28,7 +28,10 @@ export default class FormatNumber extends Formatter {
 
   constructor() {
     super();
-    this.formatter = createFormatCache(Intl.NumberFormat);
+
+    this.createNativeFormatter = memoize((locales, options) => {
+      return new Intl.NumberFormat(locales, options);
+    });
   }
 
   format(value, options, ctx) {

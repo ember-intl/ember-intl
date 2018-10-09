@@ -4,13 +4,16 @@
  */
 
 import { A as emberArray } from '@ember/array';
-import createFormatCache from 'intl-format-cache';
+import memoize from 'fast-memoize';
 import Formatter from './-base';
 
 export default class FormatDate extends Formatter {
   constructor() {
     super();
-    this.formatter = createFormatCache(Intl.DateTimeFormat);
+
+    this.createNativeFormatter = memoize((locales, options) => {
+      return new Intl.DateTimeFormat(locales, options);
+    });
   }
 
   get options() {

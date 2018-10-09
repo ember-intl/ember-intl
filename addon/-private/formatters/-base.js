@@ -62,6 +62,8 @@ export default class FormatterBase {
       });
     }
 
-    return this.formatter(locale, formatterOptions).format(value, formatOptions);
+    const formatter = this.createNativeFormatter(locale, formatterOptions);
+
+    return formatter.format(value, formatOptions);
   }
 }
