@@ -5,8 +5,7 @@
 
 import { A as emberArray } from '@ember/array';
 import createFormatCache from 'intl-format-cache';
-import IntlRelativeFormat from 'intl-relativeformat';
-
+import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import Formatter from './-base';
 
 export default class FormatRelative extends Formatter {

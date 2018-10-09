@@ -5,8 +5,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import IntlRelativeFormat from 'intl-relativeformat';
-import IntlMessageFormat from 'intl-messageformat';
+import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
+import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';

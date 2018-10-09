@@ -4,7 +4,7 @@
 'use strict';
 
 let expect = require('chai').expect;
-let messageParser = require('intl-messageformat-parser');
+let messageParser = require('@ember-intl/intl-messageformat-parser');
 
 let traverse = require('../../../lib/utils/ast-traverse');
 

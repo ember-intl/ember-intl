@@ -6,7 +6,7 @@
 import { htmlSafe } from '@ember/string';
 import Ember from 'ember';
 import createFormatCache from 'intl-format-cache';
-import IntlMessageFormat from 'intl-messageformat';
+import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import Formatter from './-base';
 
 const { Handlebars } = Ember;
