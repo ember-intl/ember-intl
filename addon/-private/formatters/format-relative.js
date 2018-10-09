@@ -3,15 +3,18 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import memoize from 'fast-memoize';
 import { A as emberArray } from '@ember/array';
-import createFormatCache from 'intl-format-cache';
 import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import Formatter from './-base';
 
 export default class FormatRelative extends Formatter {
   constructor() {
     super();
-    this.formatter = createFormatCache(IntlRelativeFormat);
+
+    this.createNativeFormatter = memoize((locales, options) => {
+      return new IntlRelativeFormat(locales, options);
+    });
   }
 
   get options() {
