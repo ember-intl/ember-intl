@@ -52,7 +52,7 @@ module('t', function(hooks) {
   test('should return a number string if translation is a number', async function(assert) {
     await render(hbs`{{t 'number'}}`);
     assert.equal(this.element.textContent, '2');
-  })
+  });
 
   test('should escape attributes but not the translation string', async function(assert) {
     assert.expect(3);
