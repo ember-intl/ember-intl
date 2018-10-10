@@ -16,6 +16,7 @@ module('t', function(hooks) {
       html: {
         greeting: '<strong>Hello {name} {count, number}</strong>'
       },
+      number: 2,
       foo: {
         bar: 'foo bar baz',
         baz: 'baz baz baz'
@@ -47,6 +48,11 @@ module('t', function(hooks) {
     await render(hbs`{{t 'does.not.exist' default='empty'}}`);
     assert.equal(this.element.textContent, '');
   });
+
+  test('should return a number string if translation is a number', async function(assert) {
+    await render(hbs`{{t 'number'}}`);
+    assert.equal(this.element.textContent, '2');
+  })
 
   test('should escape attributes but not the translation string', async function(assert) {
     assert.expect(3);

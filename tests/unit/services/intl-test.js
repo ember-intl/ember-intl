@@ -19,6 +19,14 @@ module('service:intl', function(hooks) {
     assert.ok(true, 'Exception was not raised');
   });
 
+  test('should return a number if the translation is a number', function(assert) {
+    this.intl.addTranslations(LOCALE, {
+      a_number: 2
+    });
+
+    assert.equal(this.intl.t('a_number'), 2);
+  });
+
   test('`t` should cascade translation lookup', function(assert) {
     this.intl.addTranslations(LOCALE, {
       should_exist: 'I do exist!',
