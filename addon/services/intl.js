@@ -136,7 +136,12 @@ export default Service.extend(Evented, {
       msg = this.lookup(defaults.shift(), options.locale, assign({}, options, { resilient: defaults.length > 0 }));
     }
 
-    return this.formatMessage(msg, options);
+    /* Avoids passing msg to intl-messageformat if it is not a string */
+    if (typeof msg === 'string') {
+      return this.formatMessage(msg, options);
+    }
+
+    return msg;
   },
 
   /** @public **/
