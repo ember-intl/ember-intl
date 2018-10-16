@@ -70,3 +70,30 @@ injection, the macro will lookup the `intl` service via the owner of the host
 object.
 
 _This feature is based on ember-i18n's `translationMacro`._
+
+## Computed Property Decorator
+
+If you are using ES6 class syntax, you can't easily use computed property macros.
+This is why ember-intl also provides the exact same functionality as a decorator.
+
+```js
+import Component from '@ember/component':
+import { service } from '@ember-decorators/service';
+import { translationDecorator as t } from 'ember-intl';
+
+export default class ExampleComponent extends Component {
+  // Injecting the service is optional
+  @service intl;
+
+  // A simple translation.
+  @t('user.edit.title') title;
+
+  followersCount = 1;
+
+  // A translation with interpolations. This computed property
+  // depends on `count` and will send `{ count: this.followersCount }`
+  // in to the translation.
+  @t('user.followers.title', { count: 'followersCount' })
+  followersTitle;
+}
+```
