@@ -31,6 +31,7 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
+    "@ember-decorators/object": "^2.5.2",
     "@ember-intl/intl-messageformat": "^2.2.0",
     "@ember-intl/intl-messageformat-parser": "^1.4.0",
     "@ember-intl/intl-relativeformat": "^2.1.0",
