@@ -1,4 +1,2 @@
-import Service from './services/intl';
-import translationMacro from './macro';
-
-export { Service, translationMacro };
+export { default as Service } from './services/intl';
+export { default as translationMacro, raw } from './macro';
