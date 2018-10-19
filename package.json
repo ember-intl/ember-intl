@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "chai": "^3.5.0",
+    "chai": "^4.2.0",
     "ember-cli": "^3.3.0",
     "ember-cli-htmlbars": "^2.0.3",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
