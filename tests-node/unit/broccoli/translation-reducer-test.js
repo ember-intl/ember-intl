@@ -1,6 +1,5 @@
 'use strict';
 
-const mocha = require('mocha');
 const expect = require('chai').expect;
 
 const subject = require('../../../lib/broccoli/translation-reducer');

@@ -24,7 +24,7 @@
   "scripts": {
     "start": "ember serve",
     "build": "ember build",
-    "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests",
+    "lint:js": "eslint .",
     "tests-node": "mocha \"tests-node/**/*.*\"",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
@@ -59,7 +59,7 @@
     "walk-sync": "^0.3.3"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
+    "babel-eslint": "^10.0.1",
     "chai": "^3.5.0",
     "ember-cli": "^3.3.0",
     "ember-cli-htmlbars": "^2.0.3",
@@ -77,13 +77,14 @@
     "ember-source": "~3.3.1",
     "ember-source-channel-url": "^1.1.0",
     "ember-try": "^0.2.23",
-    "eslint": "^4.19.1",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-ember": "^5.2.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-prettier": "^3.0.0",
     "loader.js": "^4.7.0",
     "mocha": "^5.2.0",
-    "prettier": "^1.14.2",
+    "prettier": "^1.14.3",
     "qunit-dom": "^0.8.0"
   },
   "engines": {

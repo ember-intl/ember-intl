@@ -1,6 +1,3 @@
-/* eslint-env node */
-/* globals describe, it */
-
 'use strict';
 
 let expect = require('chai').expect;
@@ -96,11 +93,11 @@ describe('traverse', function() {
   it('{ trainers, plural, offset:1 ... }', function() {
     let ast = messageParser.parse(
       `{ trainers, plural, offset:1
-         =0 {The gym is empty}
-         =1 {You are alone here}
-        one {You and # trainer}
-      other {You and # trainers}
-    }`
+        =0 {The gym is empty}
+        =1 {You are alone here}
+        one {You and # trainer}
+        other {You and # trainers}
+      }`
     );
 
     expect(count(ast)).to.deep.equal({
