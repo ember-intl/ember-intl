@@ -4,13 +4,14 @@ import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { setupIntl, addTranslations } from 'ember-intl/test-support';
-import { translationMacro as t } from 'ember-intl';
+import { translationMacro as t, raw } from 'ember-intl';
 
 module('Unit | translationMacro', function(hooks) {
   setupTest(hooks);
   setupIntl(hooks, {
     'no.interpolations': 'text with no interpolations',
-    'with.interpolations': 'Clicks: {clicks}'
+    'with.interpolations': 'Clicks: {clicks}',
+    'with.two.interpolations': 'Coordinates: {x}, {y}'
   });
 
   hooks.beforeEach(function() {
@@ -45,6 +46,17 @@ module('Unit | translationMacro', function(hooks) {
     assert.equal(this.object.get('tMacroProperty1'), 'text with no interpolations');
     run(() => this.intl.setLocale('es'));
     assert.equal(this.object.get('tMacroProperty1'), 'texto sin interpolaciones');
+  });
+
+  test('defines a computed property that accepts static and dynamic values', function(assert) {
+    const object = EmberObject.extend({
+      intl: this.intl,
+      yCoord: 4,
+      macroProperty: t('with.two.interpolations', { x: raw(10), y: 'yCoord' })
+    }).create();
+    assert.equal(object.get('macroProperty'), 'Coordinates: 10, 4');
+    run(object, 'set', 'yCoord', 13);
+    assert.equal(object.get('macroProperty'), 'Coordinates: 10, 13');
   });
 
   test('looks up the intl service through the owner, if it not injected', function(assert) {
