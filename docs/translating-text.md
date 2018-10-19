@@ -36,6 +36,8 @@ this.intl.t('missing_key', {
 
 ## Computed Property Macro
 
+_This feature is based on ember-i18n's `translationMacro`._
+
 `translationMacro` defines a computed property macro that makes it easy to
 define translated computed properties. For example,
 
@@ -69,4 +71,27 @@ macro expects it to be the `intl` service. If there is no such service
 injection, the macro will lookup the `intl` service via the owner of the host
 object.
 
-_This feature is based on ember-i18n's `translationMacro`._
+If you want to pass static values instead of paths to dynamic value, you can use
+the [`raw` function](https://github.com/kellyselden/ember-macro-helpers#raw)
+like in [`ember-awesome-macros`](https://github.com/kellyselden/ember-awesome-macros)
+/ [`ember-macro-helpers`](https://github.com/kellyselden/ember-macro-helpers).
+
+```js
+import Component from '@ember/component':
+import { inject as service } from '@ember/service';
+import { translationMacro as t, raw } from 'ember-intl';
+
+export default Component.extend({
+  // Injecting the service is optional
+  intl: service(),
+
+  userName: 'Tom',
+
+  // A translation with dynamic and static values
+  title: t('user.edit.title', { name: 'userName', brand: raw('Ember') })
+});
+```
+
+Note: Even though `raw` is _named_ the same as in `ember-awesome-macros` /
+`ember-macro-helpers`, they _are not_ the same. Be sure to always use the
+correct `raw` with `ember-intl` and `ember-awesome-macros` / `ember-macro-helpers`.
