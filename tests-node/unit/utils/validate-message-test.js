@@ -1,6 +1,3 @@
-/* jshint node: true */
-/* globals describe, it */
-
 'use strict';
 
 let expect = require('chai').expect;
@@ -17,11 +14,11 @@ describe('validateMessage', function() {
     `{name} took {numPhotos, plural, =0 {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
     `{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`,
     `{ trainers, plural, offset:1
-         =0 {The gym is empty}
-         =1 {You are alone here}
-        one {You and # trainer}
-      other {You and # trainers}
-    }`,
+        =0 {The gym is empty}
+        =1 {You are alone here}
+        one {You and # trainer}
+        other {You and # trainers}
+      }`,
     `It's my cat's {year, selectordinal,
         one {#st}
         two {#nd}
