@@ -24,7 +24,7 @@
   "scripts": {
     "start": "ember serve",
     "build": "ember build",
-    "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests",
+    "lint:js": "eslint .",
     "tests-node": "mocha \"tests-node/**/*.*\"",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
@@ -78,6 +78,7 @@
     "ember-source-channel-url": "^1.1.0",
     "ember-try": "^0.2.23",
     "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-prettier": "^3.0.0",

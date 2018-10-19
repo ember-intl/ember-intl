@@ -3722,6 +3722,13 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.0, escape-string-regexp@^1
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
+eslint-config-prettier@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.1.0.tgz#2c26d2cdcfa3a05f0642cd7e6e4ef3316cdabfa2"
+  integrity sha512-QYGfmzuc4q4J6XIhlp8vRKdI/fI0tQfQPy1dME3UOLprE+v4ssH/3W9LM2Q7h5qBcy5m0ehCrBDU2YF8q6OY8w==
+  dependencies:
+    get-stdin "^6.0.0"
+
 eslint-plugin-ember@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-5.2.0.tgz#fa436e0497dfc01d1d38608229cd616e7c5b6067"
@@ -4540,6 +4547,11 @@ get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
   integrity sha1-uWjGsKBDhDJJAui/Gl3zJXmkUP4=
+
+get-stdin@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
+  integrity sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
 
 get-stream@3.0.0, get-stream@^3.0.0:
   version "3.0.0"
