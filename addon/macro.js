@@ -3,7 +3,8 @@
  * https://github.com/jamesarosen/ember-i18n/blob/master/addon/utils/macro.js
  */
 import { assert } from '@ember/debug';
-import { computed, get, getProperties } from '@ember/object';
+import { computed, get } from '@ember/object';
+import { assign } from '@ember/polyfills';
 import { getOwner } from '@ember/application';
 import EmptyObject from 'ember-intl/-private/empty-object';
 
@@ -14,7 +15,7 @@ function partitionDynamicValuesAndStaticValues(options) {
   Object.keys(options).forEach(key => {
     const value = options[key];
     if (value instanceof Raw) {
-      staticValues[key] = value;
+      staticValues[key] = value.valueOf();
     } else {
       dynamicValues[key] = value;
     }
@@ -87,6 +88,6 @@ export default function createTranslatedComputedProperty(key, options) {
       );
     }
 
-    return intl.t(key, Object.assign({}, staticValues, mapPropertiesByHash(this, dynamicValues)));
+    return intl.t(key, assign({}, staticValues, mapPropertiesByHash(this, dynamicValues)));
   }).readOnly();
 }
