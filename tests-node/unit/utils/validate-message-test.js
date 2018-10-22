@@ -41,7 +41,16 @@ describe('validateMessage', function() {
 
   invalidSyntax.forEach(message => {
     it(`throws SyntaxError for "${message}"`, function() {
-      expect(() => validateMessage(message)).to.throw('SyntaxError');
+      try {
+        validateMessage(message);
+      } catch (e) {
+        /* SyntaxError is subclassed within with peg, so we cannot assert err.constructor === SyntaxError */
+        expect(e.toString()).to.include('SyntaxError');
+
+        return;
+      }
+
+      expect(false).to.be.true; /* should never be reached */
     });
   });
 
