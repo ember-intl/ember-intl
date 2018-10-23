@@ -9,7 +9,7 @@ import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
-import Evented from '@ember/object/evented';
+import Evented, { on } from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
@@ -21,6 +21,7 @@ import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
 import links from '../utils/links';
 import hydrate from '../hydrate';
+import getDOM from '../utils/get-dom';
 
 export default Service.extend(Evented, {
   /** @private **/
@@ -215,7 +216,17 @@ export default Service.extend(Evented, {
     if (Array.isArray(localeName)) {
       return localeName.map(normalizeLocale);
     }
-  }
+  },
+
+  /** @private **/
+  updateDocumentLanguage: on('localeChanged', function() {
+    const dom = getDOM(this);
+    if (dom) {
+      const [primaryLocale] = get(this, 'locale');
+      const html = dom.documentElement;
+      html.setAttribute('lang', primaryLocale);
+    }
+  })
 });
 
 function formatter(name) {

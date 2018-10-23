@@ -252,4 +252,16 @@ module('service:intl', function(hooks) {
 
     this.intl.setLocale(newLocale);
   });
+
+  test('updates document `lang` attribute on locale change', async function(assert) {
+    assert.expect(2);
+
+    this.intl.setLocale('de');
+    await settled();
+    assert.equal(document.documentElement.getAttribute('lang'), 'de');
+
+    this.intl.setLocale(['es', 'fr']);
+    await settled();
+    assert.equal(document.documentElement.getAttribute('lang'), 'es');
+  });
 });
