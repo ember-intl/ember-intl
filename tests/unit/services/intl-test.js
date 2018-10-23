@@ -3,6 +3,8 @@ import { isHTMLSafe } from '@ember/string';
 import { settled } from '@ember/test-helpers';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { get } from '@ember/object';
+import { addListener } from '@ember/object/events';
 
 const LOCALE = 'en';
 
@@ -237,5 +239,15 @@ module('service:intl', function(hooks) {
   test('exists returns false when key not found', function(assert) {
     assert.expect(1);
     assert.equal(this.intl.exists('bar'), false);
+  });
+
+  test('changing the locale emits the `localeChanged` event and the new locale is available', async function(assert) {
+    const newLocale = ['de', 'en-us'];
+
+    addListener(this.intl, 'localeChanged', () => {
+      assert.deepEqual(get(this.intl, 'locale'), newLocale);
+    });
+
+    this.intl.setLocale(newLocale);
   });
 });
