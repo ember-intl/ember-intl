@@ -242,6 +242,8 @@ module('service:intl', function(hooks) {
   });
 
   test('changing the locale emits the `localeChanged` event and the new locale is available', async function(assert) {
+    assert.expect(1);
+    
     const newLocale = ['de', 'en-us'];
 
     addListener(this.intl, 'localeChanged', () => {
