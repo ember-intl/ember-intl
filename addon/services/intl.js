@@ -9,7 +9,7 @@ import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
-import Evented, { on } from '@ember/object/evented';
+import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
