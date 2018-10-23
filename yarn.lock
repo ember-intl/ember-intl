@@ -2844,10 +2844,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-cldr-core@28.0.0:
-  version "28.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-28.0.0.tgz#46db6208292da7fe9f03b7b79f8ca90ceb84c6ad"
-  integrity sha1-RttiCCktp/6fA7e3n4ypDOuExq0=
+cldr-core@34.0.0:
+  version "34.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-34.0.0.tgz#2e9d1f9909868e93e70c4813a74f331af028d66c"
+  integrity sha512-PFHHn2SlqRdqD1ZC8Ddw5ZOSwJdqsmTY6fnOVsX5iMfOShqXs7QhpkIo4eOvz7rFdEivp/IrMDPs47Z4z1rD3g==
 
 cldr-core@^29.0.0:
   version "29.0.0"
