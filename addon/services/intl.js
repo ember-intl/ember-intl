@@ -227,7 +227,7 @@ export default Service.extend(Evented, {
       const html = dom.documentElement;
       html.setAttribute('lang', primaryLocale);
     }
-  })
+  }
 });
 
 function formatter(name) {
