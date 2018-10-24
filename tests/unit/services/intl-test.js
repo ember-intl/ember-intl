@@ -1,10 +1,10 @@
+import { addListener } from '@ember/object/events';
 import { registerWarnHandler } from '@ember/debug';
-import { isHTMLSafe } from '@ember/string';
 import { settled } from '@ember/test-helpers';
+import { isHTMLSafe } from '@ember/string';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 import { get } from '@ember/object';
-import { addListener } from '@ember/object/events';
 
 const LOCALE = 'en';
 
