@@ -21,6 +21,7 @@ import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
 import links from '../utils/links';
 import hydrate from '../hydrate';
+import getDOM from '../utils/get-dom';
 
 export default Service.extend(Evented, {
   /** @private **/
@@ -43,6 +44,7 @@ export default Service.extend(Evented, {
         this._locale = proposed;
         cancel(this._timer);
         this._timer = next(() => this.trigger('localeChanged'));
+        this.updateDocumentLanguage(this._locale);
 
         return this._locale;
       }
@@ -214,6 +216,17 @@ export default Service.extend(Evented, {
 
     if (Array.isArray(localeName)) {
       return localeName.map(normalizeLocale);
+    }
+  },
+
+  /** @private **/
+  updateDocumentLanguage(locales) {
+    const dom = getDOM(this);
+
+    if (dom) {
+      const [primaryLocale] = locales;
+      const html = dom.documentElement;
+      html.setAttribute('lang', primaryLocale);
     }
   }
 });
