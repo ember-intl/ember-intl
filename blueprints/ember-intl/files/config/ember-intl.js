@@ -69,7 +69,7 @@ module.exports = function(/* env */) {
      * @type {Boolean}
      * @default "false"
      */
-    throwMissingTranslations: false
+    throwMissingTranslations: false,
 
     /**
      * filter missing translations to ignore expected missing translations.
@@ -80,6 +80,15 @@ module.exports = function(/* env */) {
      * @type {Function?}
      * @default "function() { return true; }"
      */
-    // requiresTranslation: (key, locale) => true
+    // requiresTranslation: (key, locale) => true,
+
+    /**
+     * removes empty translations from the build output.
+     *
+     * @property stripEmptyTranslations
+     * @type {Boolean}
+     * @default false
+     */
+    stripEmptyTranslations: false
   };
 };

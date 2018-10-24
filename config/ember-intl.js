@@ -69,6 +69,15 @@ module.exports = function(/* environment */) {
      * @type {Function?}
      * @default "function(){return true}"
      */
-    requiresTranslation: undefined
+    requiresTranslation: undefined,
+
+    /**
+     * removes empty translations from the build output.
+     *
+     * @property stripEmptyTranslations
+     * @type {Boolean}
+     * @default false
+     */
+    stripEmptyTranslations: false
   };
 };

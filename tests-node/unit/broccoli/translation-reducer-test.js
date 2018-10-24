@@ -1,6 +1,7 @@
 'use strict';
 
 const expect = require('chai').expect;
+const path = require('path');
 
 const subject = require('../../../lib/broccoli/translation-reducer');
 
@@ -98,5 +99,31 @@ describe('translation-reducer', function() {
       ['io', ['de', 'it']],
       ['nested.translation.lock', ['de', 'en', 'it']]
     ]);
+  });
+
+  describe('readDirectory', function() {
+    const testDirectory = path.join(__dirname, '../../fixtures/strip-nested-nulls');
+    const listFiles = ['de-de.yml', 'en-us.yml'].map(file => path.join(testDirectory, file));
+
+    it('strips empty translations if enabled', function() {
+      const reducer = new subject('src', { stripEmptyTranslations: true });
+      const translations = reducer.readDirectory(testDirectory, listFiles);
+
+      expect(translations).to.deep.equal({
+        'de-de': { sample_translation: { translation_1: 'Lorem ipsum' } },
+        'en-us': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: 'dolor sit amet' } }
+      });
+    });
+
+    it("doesn't strip empty translations by default", function() {
+      const reducer = new subject('src');
+
+      const translations = reducer.readDirectory(testDirectory, listFiles);
+
+      expect(translations).to.deep.equal({
+        'de-de': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: null } },
+        'en-us': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: 'dolor sit amet' } }
+      });
+    });
   });
 });
