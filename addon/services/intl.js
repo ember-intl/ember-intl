@@ -14,7 +14,7 @@ import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
-import { next } from '@ember/runloop';
+import { next, cancel } from '@ember/runloop';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import isArrayEqual from '../-private/is-array-equal';
@@ -31,6 +31,8 @@ export default Service.extend(Evented, {
 
   /** @public **/
   formats: null,
+  
+  _timer: null,
 
   /** @public **/
   locale: computed({
@@ -39,7 +41,8 @@ export default Service.extend(Evented, {
 
       if (!isArrayEqual(proposed, this._locale)) {
         this._locale = proposed;
-        next(() => this.trigger('localeChanged'));
+        cancel(this._timer);
+        this._timer = next(() => this.trigger('localeChanged'));
 
         return this._locale;
       }
@@ -100,6 +103,11 @@ export default Service.extend(Evented, {
     }
 
     hydrate(this, this._owner);
+  },
+  
+  willDestroy() {
+    this._super(...arguments);
+    cancel(this._timer);
   },
 
   /** @public **/
