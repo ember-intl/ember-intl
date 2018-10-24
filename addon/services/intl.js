@@ -31,7 +31,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   formats: null,
-  
+
   _timer: null,
 
   /** @public **/
@@ -104,7 +104,7 @@ export default Service.extend(Evented, {
 
     hydrate(this, this._owner);
   },
-  
+
   willDestroy() {
     this._super(...arguments);
     cancel(this._timer);
