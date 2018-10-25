@@ -3459,9 +3459,9 @@ ember-assign-polyfill@~2.4.0:
     ember-cli-version-checker "^2.0.0"
 
 ember-auto-import@^1.2.13:
-  version "1.2.13"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.13.tgz#8f6f5d1c64e173f9093dd0c5031dc1d446b7cff1"
-  integrity sha512-2E90zz+14ccCV9/WbVSV+wOLsXe3pvRV/bYvXqBykTcOik1iy44mv21uQen9xjlsvmVflXvihq9/Mg/03D1RzQ==
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.15.tgz#3da74f83704f4c095dc1affec25a68f396ed5728"
+  integrity sha512-L9eyO5b135BXdzNMexhoxkPETBUQCkwp3lp4O2uu+hVEDUe2Z9m+/X8TdTRcuavkeFbQk5bgoXAGPzv4yaPjIg==
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-syntax-dynamic-import "^6.18.0"
@@ -3479,7 +3479,6 @@ ember-auto-import@^1.2.13:
     lodash "^4.17.10"
     mkdirp "^0.5.1"
     pkg-up "^2.0.0"
-    quick-temp "^0.1.8"
     resolve "^1.7.1"
     rimraf "^2.6.2"
     symlink-or-copy "^1.2.0"
