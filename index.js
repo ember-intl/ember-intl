@@ -57,7 +57,8 @@ module.exports = {
         return addon.log.apply(addon, arguments);
       },
       requiresTranslation: this.opts.requiresTranslation,
-      throwMissingTranslations: this.opts.throwMissingTranslations
+      throwMissingTranslations: this.opts.throwMissingTranslations,
+      stripEmptyTranslations: this.opts.stripEmptyTranslations
     });
   },
 
