@@ -54,7 +54,7 @@ This is can be done at any point within your app boots.  This is typically done 
     intl: service(),
     beforeModel() {
       /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
-      return this.get('intl').setLocale(['fr-fr', 'en-us']); /* array optional */
+      return this.intl.setLocale(['fr-fr', 'en-us']); /* array optional */
     }
   });
 ```
@@ -84,7 +84,7 @@ export default Component.extend({
   intl: service(),
 
   banner: computed('intl.locale', 'model.photos.length', function() {
-    return this.get('intl').t('photos.banner', {
+    return this.intl.t('photos.banner', {
       photos: this.get('model.photos.length')
     });
   })
@@ -106,7 +106,7 @@ Or programmatically convert a number within any Ember Object.
 export default Component.extend({
   intl: service(),
   computedNumber: computed('intl.locale', 'cost', function() {
-    return this.get('intl').formatNumber(this.get('cost')/*, optional options hash */);
+    return this.intl.formatNumber(this.cost/*, optional options hash */);
   })
 });
 ```
@@ -130,7 +130,7 @@ Or programmatically convert a date within any Ember Object.
 export default Component.extend({
   intl: service(),
   computedNow: computed('intl.locale', function() {
-    return this.get('intl').formatDate(new Date()/*, optional options hash */);
+    return this.intl.formatDate(new Date()/*, optional options hash */);
   })
 });
 ```
@@ -155,7 +155,7 @@ Or programmatically convert a time within any Ember Object.
 export default Component.extend({
   intl: service(),
   computedNow: computed('intl.locale', function() {
-    return this.get('intl').formatTime(new Date()/*, optional options hash */);
+    return this.intl.formatTime(new Date()/*, optional options hash */);
   })
 });
 ```
@@ -188,7 +188,7 @@ export default Component.extend({
   intl: service(),
   yesterday: computed('intl.locale', function() {
     let date = new Date();
-    return this.get('intl').formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
+    return this.intl.formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
   })
 });
 ```
@@ -224,7 +224,7 @@ export default Component.extend({
   intl: service(),
   count: 0,
   label: computed('intl.locale', 'model.photos.length', function() {
-    return this.get('intl').formatMessage(`
+    return this.intl.formatMessage(`
       You took {numPhotos, plural,
         =0 {no photos}
         =1 {one photo}
@@ -272,7 +272,7 @@ export default {
 ```
 
 ```js
-this.get('intl').formatDate('Thu Jan 23 2014 13:00:44', {
+this.intl.formatDate('Thu Jan 23 2014 13:00:44', {
   format: 'hhmmss'
 })
 ```
