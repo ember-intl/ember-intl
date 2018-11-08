@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 const walkSync = require('walk-sync');
-const extract = require('broccoli-cldr-data');
+const extract = require('@ember-intl/broccoli-cldr-data');
 const mergeTrees = require('broccoli-merge-trees');
 const stringify = require('json-stable-stringify');
 
