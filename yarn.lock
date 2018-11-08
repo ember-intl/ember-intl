@@ -591,14 +591,24 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@ember-intl/formatjs-extract-cldr-data@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-3.1.0.tgz#04eefd54240d6c08f8d9ded4f70405d2cf6f9f47"
-  integrity sha512-8TGdxV2xU2Tx97uUr7gx/mT3bZzDPqXXDfbH2WbLGGwq4QjFIy/ac+Omjay46S0QGgrTbQfe1lqGOfcKsZndGQ==
+"@ember-intl/broccoli-cldr-data@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/broccoli-cldr-data/-/broccoli-cldr-data-3.0.0.tgz#5542a2e44ce118d6633af6988cf18cdb65bc826f"
+  integrity sha512-xPvDyQz/8h4etcNL+Nvet01KpfpsCSkO8RfTqWTh2D++BbNRWcQmgtcmc1A4WumzdYG3Hw8Lt8WooGFpm4d79A==
   dependencies:
-    cldr-core "^29.0.0"
-    cldr-dates-full "^29.0.0"
-    cldr-numbers-full "^29.0.0"
+    "@ember-intl/formatjs-extract-cldr-data" "~6.0.0"
+    broccoli-caching-writer "^3.0.3"
+    mkdirp "^0.5.1"
+    serialize-javascript "^1.3.0"
+
+"@ember-intl/formatjs-extract-cldr-data@~6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-6.0.0.tgz#31466f93dc10ec24ecdcc42c288beb25ee63a235"
+  integrity sha512-w2q3kkxNDspZFcJs8JYqtOoAyPTD/ceJfGF3VtCzjOkO2C8Rr/vFkIvQ1ubG3giAH8fKGSXJJFcYf8y8sJPZVQ==
+  dependencies:
+    cldr-core "^34.0.0"
+    cldr-dates-full "^34.0.0"
+    cldr-numbers-full "^34.0.0"
     glob "^5.0.1"
     make-plural "^2.1.3"
     uglify-js "^2.6.2"
@@ -2011,16 +2021,6 @@ broccoli-caching-writer@^3.0.3:
     rsvp "^3.0.17"
     walk-sync "^0.3.0"
 
-broccoli-cldr-data@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.2.tgz#ff5604604ff37eef5d634c2eb52a554b896e3ed1"
-  integrity sha512-zmE31kXqo7WVl4mFlaowXnZk6Bh0no8w/2IKY90rEIkhE6JpmT5/zfWFPqRd6/ZWfwZhxjql+RGtlpWdhYgsmA==
-  dependencies:
-    "@ember-intl/formatjs-extract-cldr-data" "^3.1.0"
-    broccoli-caching-writer "^3.0.3"
-    mkdirp "^0.5.1"
-    serialize-javascript "^1.3.0"
-
 broccoli-clean-css@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/broccoli-clean-css/-/broccoli-clean-css-1.1.0.tgz#9db143d9af7e0ae79c26e3ac5a9bb2d720ea19fa"
@@ -2775,20 +2775,20 @@ cldr-core@28.0.0:
   resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-28.0.0.tgz#46db6208292da7fe9f03b7b79f8ca90ceb84c6ad"
   integrity sha1-RttiCCktp/6fA7e3n4ypDOuExq0=
 
-cldr-core@^29.0.0:
-  version "29.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-29.0.0.tgz#fe983898c52b6bebcd1558c03063e9e9eb3c9cdd"
-  integrity sha1-/pg4mMUra+vNFVjAMGPp6es8nN0=
+cldr-core@^34.0.0:
+  version "34.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-34.0.0.tgz#2e9d1f9909868e93e70c4813a74f331af028d66c"
+  integrity sha512-PFHHn2SlqRdqD1ZC8Ddw5ZOSwJdqsmTY6fnOVsX5iMfOShqXs7QhpkIo4eOvz7rFdEivp/IrMDPs47Z4z1rD3g==
 
-cldr-dates-full@^29.0.0:
-  version "29.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-29.0.0.tgz#6350acf88998bf0f9d80535ba7f8a80669f6bb08"
-  integrity sha1-Y1Cs+ImYvw+dgFNbp/ioBmn2uwg=
+cldr-dates-full@^34.0.0:
+  version "34.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-34.0.0.tgz#e2f9c254ab7d6b0a5d28481737138530eebb3be6"
+  integrity sha512-mKGQF16YAEeMOlTA1oT8vWOnm2VuCE1yGQQN7CbnKirVhXigoa0uUiOwjajCZSVpLMyTwWi8AvlY1pjNlX6uRw==
 
-cldr-numbers-full@^29.0.0:
-  version "29.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-29.0.0.tgz#798b080f6248d672a8850764be9295a49a97fac6"
-  integrity sha1-eYsID2JI1nKohQdkvpKVpJqX+sY=
+cldr-numbers-full@^34.0.0:
+  version "34.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-34.0.0.tgz#f9e62bd4dda1fb4e17c7a3e4b170da2263f43dac"
+  integrity sha512-+Bqxnym5Fv81u/iBoZvy2dUfPQdAc4KbX4QDptq9PLx846iQkRN0UKo3t5xZu97rUlRw2fFGaRt+KO6iMPo+RA==
 
 clean-base-url@^1.0.0:
   version "1.0.0"
