@@ -26,6 +26,7 @@ const defaultConfig = {
   inputPath: 'translations',
   outputPath: 'translations',
   errorOnMissingTranslations: false,
+  errorOnNamedArgumentMismatch: false,
   requiresTranslation: (/* key, locale */) => true
 };
 
@@ -61,6 +62,7 @@ module.exports = {
       wrapEntry: _bundlerOptions.wrapEntry,
       requiresTranslation: this.opts.requiresTranslation,
       errorOnMissingTranslations: this.opts.throwMissingTranslations || this.opts.errorOnMissingTranslations,
+      errorOnNamedArgumentMismatch: this.opts.errorOnNamedArgumentMismatch,
       stripEmptyTranslations: this.opts.stripEmptyTranslations,
       log() {
         return addon.log.apply(addon, arguments);
