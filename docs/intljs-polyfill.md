@@ -64,12 +64,10 @@ var app = new EmberApp({
 ### Disabling
 
 ```js
-// config/environment.js
+// config/ember-intl.js
 module.exports = function() {
   return {
-    intl: {
-      disablePolyfill: true
-    }
+    disablePolyfill: true
   };
 };
 ```
