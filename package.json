@@ -31,16 +31,16 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
+    "@ember-intl/broccoli-cldr-data": "^3.0.0",
     "@ember-intl/intl-messageformat": "^2.2.0",
     "@ember-intl/intl-messageformat-parser": "^1.5.0",
     "@ember-intl/intl-relativeformat": "^2.1.0",
     "broccoli-caching-writer": "^3.0.3",
-    "broccoli-cldr-data": "^1.1.2",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.1",
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^2.0.0",
-    "cldr-core": "28.0.0",
+    "cldr-core": "^34.0.0",
     "ember-auto-import": "^1.2.13",
     "ember-cli-babel": "^7.1.2",
     "extend": "^3.0.2",
