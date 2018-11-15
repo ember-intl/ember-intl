@@ -32,7 +32,7 @@
 
 ## Documentation
 
-Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/2.x/docs) folder.
+Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs) folder.
 
 ## Translations
 Translations are defined in [ICU message syntax][ICU] and store in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
@@ -46,7 +46,7 @@ homepage:
 
 ## Setting Locale
 
-This is can be done at any point within your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/2.x/docs/ember-service-api.md).
+This is can be done at any point within your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/master/docs/ember-service-api.md).
 
 ```js
   // app/routes/application.js
@@ -113,7 +113,7 @@ export default Component.extend({
 
 #### Format Number Options
 
-[List of supported format number options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-number-options.md)
+[List of supported format number options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-number-options.md)
 
 ### Format Date
 
@@ -137,7 +137,7 @@ export default Component.extend({
 
 #### Format Date Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Time
 
@@ -161,7 +161,7 @@ export default Component.extend({
 ```
 
 #### Format Time Options
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-date-time-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
 
 ### Format Relative
 
@@ -203,7 +203,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 
 #### Format Relative Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/2.x/docs/format-relative-options.md)
+[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
 
 #### Formatting a string literal ICU messages
 
@@ -290,11 +290,11 @@ Output of both the helper and the programmatic example:
 ## Asynchronously loading translations
 
 Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.
-https://github.com/ember-intl/ember-intl/blob/2.x/docs/asynchronously-loading-translations.md
+https://github.com/ember-intl/ember-intl/blob/master/docs/asynchronously-loading-translations.md
 
 ## Testing with ember-intl
 
-ember-intl ships with a number of helpers for assist with writing tests.  [Documentation](https://github.com/ember-intl/ember-intl/blob/master/docs/integration-testing.md)
+ember-intl ships with a number of helpers for assist with writing tests.  [Documentation](https://github.com/ember-intl/ember-intl/blob/master/docs/testing.md)
 
 
 ## Common Errors
