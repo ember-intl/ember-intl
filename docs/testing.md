@@ -1,5 +1,4 @@
-
-Integration Testing
+Testing
 ==============================================================================
 
 ember-intl provides some convenience test helpers for easy mocking of
