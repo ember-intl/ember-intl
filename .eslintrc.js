@@ -19,6 +19,7 @@ module.exports = {
         printWidth: 120
       }
     ],
+    'ember/no-restricted-resolver-tests': 'off',
     'ember/avoid-leaking-state-in-ember-objects': 0
   },
   overrides: [
