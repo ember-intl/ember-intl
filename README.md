@@ -287,24 +287,15 @@ Output of both the helper and the programmatic example:
   * `locale` argument to explicitly pass/override the application locale
   * `format` argument which you pass in a key corresponding to a format configuration in `app/formats.js`
 
-## Writing Unit Tests
-
-Phantom does support the Intl API, so in order for ember-intl to work in a browser which does not support the Intl API, it needs to be polyfilled.
-
-To resolve this, add the following above all script tags in `tests/index.html`:
-```html
-<script src="{{rootURL}}assets/intl/intl.complete.js"></script>
-```
-
 ## Asynchronously loading translations
 
 Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.
 https://github.com/ember-intl/ember-intl/blob/2.x/docs/asynchronously-loading-translations.md
 
-### Testing with ember-intl
+## Testing with ember-intl
 
-* [Unit testing](https://github.com/ember-intl/ember-intl/blob/2.x/docs/unit-testing.md)
-* [Integration testing](https://github.com/ember-intl/ember-intl/blob/2.x/docs/integration-testing.md)
+ember-intl ships with a number of helpers for assist with writing tests.  [Documentation](https://github.com/ember-intl/ember-intl/blob/master/docs/integration-testing.md)
+
 
 ## Common Errors
 
@@ -318,16 +309,6 @@ The solution is the ensure that the value you are passing in is in a format whic
 
 * Simple migration tool to convert your translations files and application code to this addon.  Feel free to report any issues with the migration tool [here](https://github.com/DockYard/ember-i18n-to-intl-migrator/issues).
 - https://github.com/DockYard/ember-i18n-to-intl-migrator
-
-## Running
-
-* `ember server`
-* Visit your app at http://localhost:4200.
-
-## Running Tests
-
-* `ember test`
-* `ember test --server`
 
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
