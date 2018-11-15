@@ -68,10 +68,10 @@ describe('translation-reducer', function() {
     ]);
   });
 
-  it('handleMissingTranslations throws if throwMissingTranslations is set', function() {
+  it('handleMissingTranslations throws if errorOnMissingTranslations is set', function() {
     const logs = [];
     const reducer = new subject('src');
-    reducer.options.throwMissingTranslations = true;
+    reducer.options.errorOnMissingTranslations = true;
 
     reducer._log = msg => logs.push(msg);
 

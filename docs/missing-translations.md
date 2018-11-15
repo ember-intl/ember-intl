@@ -23,7 +23,7 @@ The feature, and the documentation, is based entirely off ember-i18n's. The `opt
 
 Ember Intl automatically detects missing translations when building the app.
 
-You can control the detection behavior by configuring the `throwMissingTranslations` and `requiresTranslation` options in your `config/ember-intl.js`.
+You can control the detection behavior by configuring the `errorOnMissingTranslations` and `requiresTranslation` options in your `config/ember-intl.js`.
 
 ### Requiring translations
 
@@ -77,7 +77,7 @@ page:
 
 ### Throwing a build error on missing, required translation
 
-Setting `throwMissingTranslations` to `true` will cause ember-intl to throw a build error if missing, required translations were detected.
+Setting `errorOnMissingTranslations` to `true` will cause ember-intl to throw a build error if missing, required translations were detected.
 This changes the default behavior where missing translations are only logged as build warnings.
 
 Given the following configuration, any missing translation in any locale will cause a build error to be thrown.
@@ -86,7 +86,7 @@ Given the following configuration, any missing translation in any locale will ca
 // config/ember-intl.js
 module.exports = function(/* environment */) {
   return {
-    throwMissingTranslations: true,
+    errorOnMissingTranslations: true,
   };
 };
 ```

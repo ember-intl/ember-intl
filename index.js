@@ -25,7 +25,7 @@ const defaultConfig = {
   autoPolyfill: false,
   inputPath: 'translations',
   outputPath: 'translations',
-  throwMissingTranslations: false,
+  errorOnMissingTranslations: false,
   requiresTranslation: (/* key, locale */) => true
 };
 
@@ -48,17 +48,23 @@ module.exports = {
     const _bundlerOptions = bundlerOptions || {};
     const addon = this;
 
+    if ('throwMissingTranslations' in this.opts) {
+      this.log('DEPRECIATION: `throwMissingTranslations` has been renamed to `errorOnMissingTranslations`', {
+        warning: true
+      });
+    }
+
     return new TranslationReducer(translationTree, {
       verbose: !this.isSilent,
       outputPath: this.opts.outputPath,
       filename: _bundlerOptions.filename,
       wrapEntry: _bundlerOptions.wrapEntry,
+      requiresTranslation: this.opts.requiresTranslation,
+      errorOnMissingTranslations: this.opts.throwMissingTranslations || this.opts.errorOnMissingTranslations,
+      stripEmptyTranslations: this.opts.stripEmptyTranslations,
       log() {
         return addon.log.apply(addon, arguments);
-      },
-      requiresTranslation: this.opts.requiresTranslation,
-      throwMissingTranslations: this.opts.throwMissingTranslations,
-      stripEmptyTranslations: this.opts.stripEmptyTranslations
+      }
     });
   },
 
