@@ -7,6 +7,20 @@ const subject = require('../../../lib/broccoli/translation-reducer');
 
 describe('translation-reducer', function() {
   beforeEach(function() {
+    this.icuFixture = {
+      de: {
+        foo: 'Hallo {who}',
+        sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}',
+        missingArg: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
+        deep: { nested: { ok: 'ok {reason}' } }
+      },
+      en: {
+        foo: 'Hello {whos}',
+        sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
+        missingArg: 'You have photos'
+      }
+    };
+
     this.fixture = {
       de: {
         foo: 'FOO',
@@ -35,9 +49,10 @@ describe('translation-reducer', function() {
       it: {}
     };
   });
-  it('findMissingTranslations returns list of missing translations', function() {
+
+  it('lintTranslations returns list of missing translations', function() {
     const reducer = new subject('src');
-    const missing = reducer.findMissingTranslations(this.fixture);
+    const { missingTranslations: missing } = reducer.lintTranslations(this.fixture);
 
     expect(missing).to.deep.equal([
       ['foo', ['it']],
@@ -49,6 +64,17 @@ describe('translation-reducer', function() {
     ]);
   });
 
+  it('lintTranslations returns list of icu argument mismatch', function() {
+    const reducer = new subject('src');
+    const { icuMismatch } = reducer.lintTranslations(this.icuFixture);
+
+    expect(icuMismatch).to.deep.equal([
+      ['foo', [['de', ['whos']], ['en', ['who']]]],
+      ['missingArg', [['en', ['numPhotos']]]],
+      ['deep.nested.ok', [['en', ['reason']]]]
+    ]);
+  });
+
   it('_handleMissingTranslations logs translation if verbose', function() {
     const logs = [];
     const reducer = new subject('src');
@@ -56,27 +82,28 @@ describe('translation-reducer', function() {
 
     reducer._log = msg => logs.push(msg);
 
-    reducer.handleMissingTranslations(reducer.findMissingTranslations(this.fixture));
+    reducer.handleLintResult(reducer.lintTranslations(this.fixture));
 
-    expect(logs).to.deep.equal([
-      '"foo" was not found in "it"',
-      '"bar" was not found in "en", "fr", "it"',
-      '"nested.translation.key" was not found in "en", "fr", "it"',
-      '"io" was not found in "de", "it"',
-      '"baz" was not found in "de", "en", "it"',
-      '"nested.translation.lock" was not found in "de", "en", "it"'
-    ]);
+    expect(logs).to.satisfy(string =>
+      [
+        '"foo" was not found in "it"',
+        '"bar" was not found in "en", "fr", "it"',
+        '"nested.translation.key" was not found in "en", "fr", "it"',
+        '"io" was not found in "de", "it"',
+        '"baz" was not found in "de", "en", "it"',
+        '"nested.translation.lock" was not found in "de", "en", "it"'
+      ].every(bit => string.includes(bit))
+    );
   });
 
-  it('handleMissingTranslations throws if errorOnMissingTranslations is set', function() {
+  it('handleLintResult throws if errorOnMissingTranslations is set', function() {
     const logs = [];
     const reducer = new subject('src');
     reducer.options.errorOnMissingTranslations = true;
 
     reducer._log = msg => logs.push(msg);
 
-    expect(() => reducer.handleMissingTranslations(reducer.findMissingTranslations(this.fixture)))
-      .throws(`Missing translations:
+    expect(() => reducer.handleLintResult(reducer.lintTranslations(this.fixture))).throws(`Missing translations:
 - "foo" was not found in "it"
 - "bar" was not found in "en", "fr", "it"
 - "nested.translation.key" was not found in "en", "fr", "it"
@@ -85,12 +112,25 @@ describe('translation-reducer', function() {
 - "nested.translation.lock" was not found in "de", "en", "it"`);
   });
 
+  it('handleLintResult throws if errorOnNamedArgumentMismatch is set', function() {
+    const logs = [];
+    const reducer = new subject('src');
+    reducer.options.errorOnNamedArgumentMismatch = true;
+
+    reducer._log = msg => logs.push(msg);
+
+    expect(() => reducer.handleLintResult(reducer.lintTranslations(this.icuFixture))).throws(`ICU arguments mismatch:
+- "foo" ICU argument missing: "de": "whos", "en": "who"
+- "missingArg" ICU argument missing: "en": "numPhotos"
+- "deep.nested.ok" ICU argument missing: "en": "reason"`);
+  });
+
   it('requiresTranslation allows to ignore missing translations', function() {
     const reducer = new subject('src');
     reducer.options.requiresTranslation = (key, locale) =>
       !((key === 'nested.translation.key' && locale === 'fr') || key === 'baz');
 
-    const missing = reducer.findMissingTranslations(this.fixture);
+    const { missingTranslations: missing } = reducer.lintTranslations(this.fixture);
 
     expect(missing).to.deep.equal([
       ['foo', ['it']],
