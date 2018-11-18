@@ -618,9 +618,9 @@
   resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat-parser/-/intl-messageformat-parser-1.5.0.tgz#21361c912b66023a538cb3a75ebbe7853c5dea3c"
   integrity sha512-RGvJPeZ+6N3kknYZdN/D/CC1ZpTYK9g6TRwJzPMxKKL3iaVy/K5MXWdMzA0iA061VdqGJwjajf0FeIoCA9VaTA==
 
-"@ember-intl/intl-messageformat@^2.0.0", "@ember-intl/intl-messageformat@git+ssh://git@github.com:snewcomer/intl-messageformat.git#sn/update-intl-parser":
+"@ember-intl/intl-messageformat@^2.0.0", "@ember-intl/intl-messageformat@git+ssh://git@github.com:snewcomer/intl-messageformat#sn/update-intl-parser":
   version "2.2.0"
-  resolved "git+ssh://git@github.com:snewcomer/intl-messageformat.git#5103f0329201affcee2d86bcbe6f2c6f9303b51f"
+  resolved "git+ssh://git@github.com:snewcomer/intl-messageformat#68121f45df87e3c3c98d61bafc3e03adcee60b4b"
   dependencies:
     "@ember-intl/intl-messageformat-parser" "1.5.0"
 
