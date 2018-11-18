@@ -526,17 +526,19 @@
     to-fast-properties "^2.0.0"
 
 "@ember-intl/broccoli-cldr-data@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@ember-intl/broccoli-cldr-data/-/broccoli-cldr-data-3.0.0.tgz#5542a2e44ce118d6633af6988cf18cdb65bc826f"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/broccoli-cldr-data/-/broccoli-cldr-data-3.1.0.tgz#119fa9230657c471b08ff6950baff2838ce31ce3"
+  integrity sha512-jLXW/BNfrum0VrZC/gj1v2uaaGJa3RJRrmZ20JdY4TVIQNt3N/rwwokp4mMGYML44mb2wqO3/MJpkfZQdaRHGw==
   dependencies:
-    "@ember-intl/formatjs-extract-cldr-data" "~6.0.0"
+    "@ember-intl/formatjs-extract-cldr-data" "~6.1.0"
     broccoli-caching-writer "^3.0.3"
     mkdirp "^0.5.1"
     serialize-javascript "^1.3.0"
 
-"@ember-intl/formatjs-extract-cldr-data@~6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-6.0.0.tgz#31466f93dc10ec24ecdcc42c288beb25ee63a235"
+"@ember-intl/formatjs-extract-cldr-data@~6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-6.1.0.tgz#6317a44df2405b69417d152116be3b8213433db6"
+  integrity sha512-1Q7ZCpCZ63Dc8hUax+KAEAvGV8Y0LOLKbtrnrXRvPLYfGMqNKkJtW7DHKR9jq18rtk8g1o1BeGo4JZlU2TaHJg==
   dependencies:
     cldr-core "^34.0.0"
     cldr-dates-full "^34.0.0"
