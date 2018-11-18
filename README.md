@@ -181,6 +181,12 @@ export default Component.extend({
 {{format-relative timestamp}} -> 3 days ago
 ```
 
+```hbs
+{{format-relative timestamp units='day'}} -> 3 days ago
+```
+
+`units` is optional, by default will default to `best-fit`.  [A full list of supported unit options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
+
 Or programmatically convert a relative time within any Ember Object.
 
 ```js
@@ -203,7 +209,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 
 #### Format Relative Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
+[List of supported format relative options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
 
 #### Formatting a string literal ICU messages
 
