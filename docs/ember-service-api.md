@@ -20,7 +20,7 @@ Access the service from within the instance via: `this.get('intl')`
 
 **locale**
 
-Set/get the current locale for your application.  The value can either be a String or an Array of Strings.  When providing an array, the `t` helper and `t` method will attempted to try all the locales in order when resolving a translation key.  This is useful if you want to always fallback to another locale when a translation may be missing.
+Set/get the current locale for your application.  The value can either be a String or an Array of Strings.  When providing an array, the `t` helper and `t` method will attempt to try all the locales in order when resolving a translation key.  This is useful if you want to always fallback to another locale when a translation may be missing.
 
 **locales** _readOnly_
 
