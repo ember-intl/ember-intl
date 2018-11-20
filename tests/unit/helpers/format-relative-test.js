@@ -79,4 +79,25 @@ module('format-relative', function(hooks) {
     await render(hbs`{{format-relative date locale=locale}}`);
     assert.equal(this.element.textContent, 'jetzt');
   });
+
+  test('should handle short units', async function(assert) {
+    const testCases = [
+      ['second-short', new Date(Date.now() - 1000), '1 sec. ago'],
+      ['minute-short', new Date(Date.now() - 60 * 1000), '1 min. ago'],
+      ['hour-short', new Date(Date.now() - 60 * 60 * 1000), '1 hr. ago'],
+      ['year-short', new Date(Date.now() - 24 * 60 * 60 * 1000 * 365 * 2), '2 yr. ago'],
+      ['month-short', new Date(), 'this mo.']
+    ];
+
+    assert.expect(testCases.length);
+
+    this.set('date', null);
+
+    await render(hbs`{{format-relative date units=units}}`);
+
+    testCases.forEach(([units, date, expected]) => {
+      this.setProperties({ units, date });
+      assert.equal(this.element.textContent, expected);
+    });
+  });
 });
