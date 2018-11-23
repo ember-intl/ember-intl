@@ -53,7 +53,7 @@ module('format-date', function(hooks) {
 
   test('it should return a formatted string from a date string', async function(assert) {
     assert.expect(1);
-    // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
+    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-date date timeZone='UTC'}}`);
     this.set('date', date);
     assert.equal(this.element.textContent, '1/23/2014');
@@ -61,7 +61,7 @@ module('format-date', function(hooks) {
 
   test('it should return a formatted string from a timestamp', async function(assert) {
     assert.expect(1);
-    // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
+    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-date date timeZone='UTC'}}`);
     this.set('date', date);
     assert.equal(this.element.textContent, '1/23/2014');

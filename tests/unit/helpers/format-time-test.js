@@ -49,7 +49,7 @@ module('format-time-test', function(hooks) {
     assert.expect(1);
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
-    // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
+    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-time dateString timeZone='UTC'}}`);
     assert.equal(this.element.textContent, '1/23/2014');
   });
@@ -58,7 +58,7 @@ module('format-time-test', function(hooks) {
     assert.expect(1);
     this.set('date', date);
 
-    // Must provide `timeZone` because: https://github.com/jasonmit/ember-intl/issues/21
+    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-time date timeZone='UTC'}}`);
     assert.equal(this.element.textContent, '1/23/2014');
   });
