@@ -6,7 +6,7 @@
  */
 
 const SilentError = require('silent-error');
-const isSupportedLocale = require('../../lib/utils/is-supported-locale');
+const isValidLocaleFormat = require('../../lib/utils/is-supported-locale');
 
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
@@ -20,18 +20,29 @@ module.exports = {
   },
 
   beforeInstall(options) {
-    var locale = options.entity.name;
+    let locale = options.entity.name;
 
-    if (!isSupportedLocale(locale.toLowerCase())) {
+    if (!isValidLocaleFormat(locale)) {
       this.ui.writeLine(
         'Full list of supported locales: https://github.com/ember-intl/ember-intl/blob/master/docs/list-of-supported-locales.md'
       );
-      throw new SilentError(`[ember-intl] Invalid locale: ${locale}`);
+
+      throw new SilentError(`[ember-intl] Invalid locale format: "${locale}"`);
     }
   },
 
   fileMapTokens() {
+    let intlAddon = this.project.findAddonByName('ember-intl');
+    let config = intlAddon.readConfig('development', this.project);
+
     return {
+      __prefix__() {
+        if (config.inputPath) {
+          return config.inputPath;
+        }
+
+        return 'translations';
+      },
       __name__(options) {
         return options.dasherizedModuleName;
       }
