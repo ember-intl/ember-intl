@@ -39,7 +39,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     this.app = this._findHost();
-    this.opts = this.createOptions(this.app.env);
+    this.opts = this.createOptions(this.app.env, this.app.project);
     this.isSilent = this.app.options.intl && this.app.options.intl.silent;
     this.locales = this.findAvailableLocales();
   },
@@ -164,9 +164,7 @@ module.exports = {
     }
   },
 
-  readConfig(environment) {
-    let project = this.app.project;
-
+  readConfig(environment, project) {
     // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
     // while older ember-cli versions return path relative to project root
     let configPath = path.dirname(project.configPath());
@@ -183,8 +181,8 @@ module.exports = {
     return {};
   },
 
-  createOptions(environment) {
-    let addonConfig = Object.assign({}, defaultConfig, this.readConfig(environment));
+  createOptions(environment, project) {
+    let addonConfig = Object.assign({}, defaultConfig, this.readConfig(environment, project));
 
     if (typeof addonConfig.requiresTranslation !== 'function') {
       this.log('Configured `requiresTranslation` is not a function. Using default implementation.');
