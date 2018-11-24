@@ -5,7 +5,7 @@
 
 let expect = require('chai').expect;
 
-let stripNestedNulls = require('../../../lib/utils/strip-nested-nulls');
+let stripNestedNulls = require('../../../../lib/broccoli/translation-reducer/utils/strip-nested-nulls');
 
 describe('stripNestedNulls', function() {
   [

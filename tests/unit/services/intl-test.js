@@ -141,7 +141,7 @@ module('service:intl', function(hooks) {
   test('waits for translations to load', async function(assert) {
     assert.expect(1);
     await settled();
-    assert.equal(this.intl.t('product.title', { locale: 'en-us' }), 'Hello world!');
+    assert.equal(this.intl.t('product.title', { locale: 'en-us' }), 'Hello');
   });
 
   test('it does not mutate t options hash', function(assert) {

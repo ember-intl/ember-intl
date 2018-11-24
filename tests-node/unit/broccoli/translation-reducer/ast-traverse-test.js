@@ -3,7 +3,7 @@
 let expect = require('chai').expect;
 let messageParser = require('@ember-intl/intl-messageformat-parser');
 
-let traverse = require('../../../lib/utils/ast-traverse');
+let traverse = require('../../../../lib/broccoli/translation-reducer/utils/ast-traverse');
 
 describe('traverse', function() {
   it('hello world!', function() {

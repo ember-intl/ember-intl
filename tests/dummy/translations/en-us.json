@@ -1,6 +1,6 @@
 {
   "product": {
-    "title": "Hello world!",
+    "title": "Hello",
     "info": "The {product} costs {price, number, USD}"
   }
 }
