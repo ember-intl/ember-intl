@@ -1,13 +1,18 @@
 'use strict';
 
 const path = require('path');
-const { expect } = require('chai');
-const { Promise } = require('rsvp');
+const Rsvp = require('rsvp');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const { createBuilder, createTempDir } = require('broccoli-test-helper');
 const TranslationReducer = require('../../../../lib/broccoli/translation-reducer');
 
+const { expect } = chai;
+
+chai.use(chaiAsPromised);
+
 function build(output, callback) {
-  return new Promise(resolve => resolve(output.build()))
+  return new Rsvp.Promise(resolve => resolve(output.build()))
     .then(() => callback(output.read()))
     .finally(() => output.dispose());
 }
@@ -58,6 +63,20 @@ describe('translation-reducer', function() {
   });
 
   describe('fallbackLocale', function() {
+    it('should emit missing translations', function() {
+      let subject = new TranslationReducer(this.input.path(), {
+        fallbackLocale: 'en-us',
+        errorOnMissingTranslations: true
+      });
+
+      this.input.write({
+        'de-de.json': `{}`,
+        'en-us.json': `{ "greet": "hello" }`
+      });
+
+      return expect(build(createBuilder(subject))).to.eventually.rejectedWith(/"greet" was not found in "de-de"/);
+    });
+
     it('should not not overwrite translations', function() {
       let subject = new TranslationReducer(this.input.path(), {
         fallbackLocale: 'en-us'
