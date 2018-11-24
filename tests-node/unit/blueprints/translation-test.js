@@ -5,10 +5,6 @@ const expect = require('chai').expect;
 const subject = require('../../../blueprints/translation');
 
 describe('translations', function() {
-  it('normalizes the locale arg', function() {
-    expect(subject.normalizeEntityName('FR-FR')).to.equal('fr-fr');
-  });
-
   it('returns undefined on valid formatted locale', function() {
     expect(
       subject.beforeInstall({

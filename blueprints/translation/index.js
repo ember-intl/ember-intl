@@ -6,7 +6,7 @@
  */
 
 const SilentError = require('silent-error');
-const isValidLocaleFormat = require('../../lib/utils/is-supported-locale');
+const isValidLocaleFormat = require('../../lib/utils/is-valid-locale-format');
 
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
@@ -16,7 +16,7 @@ module.exports = {
       throw new SilentError('[ember-intl] no locale provided. Usage: `ember g translation en-us`');
     }
 
-    return locale.toLowerCase();
+    return locale;
   },
 
   beforeInstall(options) {

@@ -14,9 +14,9 @@ const mergeTrees = require('broccoli-merge-trees');
 const stringify = require('json-stable-stringify');
 const extract = require('@ember-intl/broccoli-cldr-data');
 
-const utils = require('./lib/utils');
 const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
+const isValidLocaleFormat = require('./lib/utils/is-valid-locale-format');
 
 const DEFAULT_CONFIG = {
   locales: null,
@@ -186,56 +186,54 @@ module.exports = {
   },
 
   createOptions(environment, project) {
-    let addonConfig = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, project));
+    let config = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, project));
 
-    if (typeof addonConfig.requiresTranslation !== 'function') {
+    if (typeof config.requiresTranslation !== 'function') {
       this.log('Configured `requiresTranslation` is not a function. Using default implementation.');
-      addonConfig.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
+      config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
     }
 
-    if (addonConfig.locales) {
-      addonConfig.locales = utils
-        .castArray(addonConfig.locales)
-        .filter(locale => typeof locale === 'string')
-        .map(locale => locale.toLocaleLowerCase());
+    if (config.locales && !Array.isArray(config.locales)) {
+      config.locales = [config.locales];
     }
 
-    return addonConfig;
+    return config;
   },
 
   findAvailableLocales() {
     let locales = [];
-    let joinedPath = path.join(this.app.project.root, this.opts.inputPath);
+    let projectInputPath = path.join(this.app.project.root, this.opts.inputPath);
 
-    if (fs.existsSync(joinedPath)) {
-      locales = locales.concat(
-        walkSync(joinedPath, { directories: false })
-          .filter(utils.validLocaleFile)
-          .map(function(filename) {
-            return path
-              .basename(filename, path.extname(filename))
-              .toLowerCase()
-              .replace(/_/g, '-');
-          })
+    if (fs.existsSync(projectInputPath)) {
+      locales.push(
+        ...walkSync(projectInputPath, {
+          globs: ['**/*.{yml,yaml,json}'],
+          directories: false
+        }).map(function(filename) {
+          return path.basename(filename, path.extname(filename));
+        })
       );
     }
 
-    if (this.opts.locales) {
-      locales = locales.concat(this.opts.locales);
+    if (Array.isArray(this.opts.locales)) {
+      locales.push(...this.opts.locales);
     }
 
-    locales = locales.concat(
-      locales.filter(locale => {
-        if (utils.isSupportedLocale(locale)) {
-          return true;
-        }
+    let normalizedLocales = locales.map(locale => {
+      return locale
+        .trim()
+        .toLowerCase()
+        .replace(/_/g, '-');
+    });
 
-        this.log(`'${locale}' is not a valid locale name`);
+    return [...new Set(normalizedLocales).values()].filter(locale => {
+      if (isValidLocaleFormat(locale)) {
+        return true;
+      }
 
-        return false;
-      })
-    );
+      this.log(`'${locale}' is not a valid locale name`);
 
-    return utils.unique(locales);
+      return false;
+    });
   }
 };
