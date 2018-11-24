@@ -5,7 +5,7 @@
 
 let expect = require('chai').expect;
 
-let findMissingTranslations = require('../../../lib/utils/find-missing-translations');
+let findMissingTranslations = require('../../../../lib/broccoli/translation-reducer/utils/find-missing-translations');
 const isTrue = () => true;
 
 describe('findMissingTranslations', function() {

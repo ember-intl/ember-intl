@@ -5,7 +5,7 @@
 
 let expect = require('chai').expect;
 
-let findMissingICUArguments = require('../../../lib/utils/find-missing-icu-arguments');
+let findMissingICUArguments = require('../../../../lib/broccoli/translation-reducer/utils/find-missing-icu-arguments');
 
 describe('findMissingICUArguments', function() {
   it('finds nothing if nothing is missing', function() {

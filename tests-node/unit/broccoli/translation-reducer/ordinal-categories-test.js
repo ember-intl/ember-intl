@@ -5,7 +5,7 @@
 
 let expect = require('chai').expect;
 
-let ordinalCategories = require('../../../lib/utils/ordinal-categories');
+let ordinalCategories = require('../../../../lib/broccoli/translation-reducer/utils/ordinal-categories');
 
 describe('ordinalCategories', function() {
   let expectations = {

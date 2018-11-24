@@ -10,24 +10,27 @@
 const fs = require('fs');
 const path = require('path');
 const walkSync = require('walk-sync');
-const extract = require('@ember-intl/broccoli-cldr-data');
 const mergeTrees = require('broccoli-merge-trees');
 const stringify = require('json-stable-stringify');
+const extract = require('@ember-intl/broccoli-cldr-data');
 
 const utils = require('./lib/utils');
 const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 
-const defaultConfig = {
+const DEFAULT_CONFIG = {
   locales: null,
   publicOnly: false,
-  disablePolyfill: false,
+  fallbackLocale: null,
   autoPolyfill: false,
+  disablePolyfill: false,
   inputPath: 'translations',
   outputPath: 'translations',
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
-  requiresTranslation: (/* key, locale */) => true
+  requiresTranslation(/* key, locale */) {
+    return true;
+  }
 };
 
 module.exports = {
@@ -58,6 +61,7 @@ module.exports = {
     return new TranslationReducer(translationTree, {
       verbose: !this.isSilent,
       outputPath: this.opts.outputPath,
+      fallbackLocale: this.opts.fallbackLocale,
       filename: _bundlerOptions.filename,
       wrapEntry: _bundlerOptions.wrapEntry,
       requiresTranslation: this.opts.requiresTranslation,
@@ -182,11 +186,11 @@ module.exports = {
   },
 
   createOptions(environment, project) {
-    let addonConfig = Object.assign({}, defaultConfig, this.readConfig(environment, project));
+    let addonConfig = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, project));
 
     if (typeof addonConfig.requiresTranslation !== 'function') {
       this.log('Configured `requiresTranslation` is not a function. Using default implementation.');
-      addonConfig.requiresTranslation = defaultConfig.requiresTranslation;
+      addonConfig.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
     }
 
     if (addonConfig.locales) {
@@ -221,7 +225,7 @@ module.exports = {
     }
 
     locales = locales.concat(
-      locales.filter(function(locale) {
+      locales.filter(locale => {
         if (utils.isSupportedLocale(locale)) {
           return true;
         }
@@ -229,7 +233,7 @@ module.exports = {
         this.log(`'${locale}' is not a valid locale name`);
 
         return false;
-      }, this)
+      })
     );
 
     return utils.unique(locales);

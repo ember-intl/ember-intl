@@ -2,7 +2,7 @@
 
 let expect = require('chai').expect;
 
-let validateMessage = require('../../../lib/utils/validate-message');
+let validateMessage = require('../../../../lib/broccoli/translation-reducer/utils/validate-message');
 
 describe('validateMessage', function() {
   let valid = [
