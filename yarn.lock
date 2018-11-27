@@ -553,9 +553,9 @@
   integrity sha512-RGvJPeZ+6N3kknYZdN/D/CC1ZpTYK9g6TRwJzPMxKKL3iaVy/K5MXWdMzA0iA061VdqGJwjajf0FeIoCA9VaTA==
 
 "@ember-intl/intl-messageformat@^2.0.0", "@ember-intl/intl-messageformat@^2.2.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat/-/intl-messageformat-2.3.0.tgz#69cd83e47be0f2a32e8f2d3ebd38ac375167be79"
-  integrity sha512-xwROAZ4tL5dQsp4dspZJmZZP1POQ94SpqDW3ohZwmQLAS3P0E0HrKuanJ6TKH/rj1WyLUxzN9U2BUyMYOJARAw==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat/-/intl-messageformat-2.4.0.tgz#0b818add02dab052f91a4bc50979c94396435e65"
+  integrity sha512-AVjuOJaK21XehThsVrWaYQOql+qw/LK8yAMIev1ONtmURlts1wUJdXKdtZ8jeQ8UbUduJVf1nsG3o2eWSNvyjw==
   dependencies:
     "@ember-intl/intl-messageformat-parser" "1.5.0"
 
