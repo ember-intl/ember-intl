@@ -3,9 +3,10 @@
  * https://github.com/jamesarosen/ember-i18n/blob/master/addon/utils/macro.js
  */
 import { assert } from '@ember/debug';
-import { computed, get } from '@ember/object';
+import { get, defineProperty } from '@ember/object';
+import ComputedProperty from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { assign } from '@ember/polyfills';
-import { getOwner } from '@ember/application';
 import EmptyObject from 'ember-intl/-private/empty-object';
 
 function partitionDynamicValuesAndStaticValues(options) {
@@ -66,28 +67,38 @@ export function raw(value) {
   return new Raw(value);
 }
 
-export default function createTranslatedComputedProperty(key, options) {
-  const hash = options || new EmptyObject();
-  const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
-  const dependentKeys = ['intl.locale'].concat(Object.values(dynamicValues));
+class TranslationMacro extends ComputedProperty {
+  constructor(translationKey, options) {
+    const hash = options || new EmptyObject();
+    const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
+    const dependentKeys = ['intl.locale'].concat(Object.values(dynamicValues));
 
-  return computed(...dependentKeys, function() {
-    let intl = get(this, 'intl');
-    if (!intl) {
-      const owner = getOwner(this);
-      assert(
-        `Cannot translate "${key}".\n${this} does not have an 'intl' property set or an owner to look up the service from.`,
-        owner
-      );
-
-      intl = owner.lookup('service:intl');
+    super(function(propertyKey) {
+      let intl = get(this, 'intl');
 
       assert(
-        `Cannot translate "${key}".\n${this} does not have an 'intl' property set and there is no 'intl' service registered with the owner.`,
+        `Cannot translate "${translationKey}" as "${propertyKey}".\n${this} does not have an 'intl' property set and there is no 'intl' service registered with the owner.`,
         intl
       );
-    }
 
-    return intl.t(key, assign({}, staticValues, mapPropertiesByHash(this, dynamicValues)));
-  }).readOnly();
+      return intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(this, dynamicValues)));
+    });
+
+    this.property(...dependentKeys);
+    this.readOnly();
+  }
+
+  setup(proto) {
+    super.setup(...arguments);
+
+    if (!proto.intl) {
+      // Implicitly inject the `intl` service, if it is not already injected.
+      // This allows the computed property to depend on `intl.locale`.
+      defineProperty(proto, 'intl', service('intl'));
+    }
+  }
+}
+
+export default function createTranslatedComputedProperty(key, options) {
+  return new TranslationMacro(key, options);
 }
