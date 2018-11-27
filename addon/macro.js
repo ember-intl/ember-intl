@@ -89,7 +89,9 @@ class TranslationMacro extends ComputedProperty {
   }
 
   setup(proto) {
-    super.setup(...arguments);
+    if (super.setup) {
+      super.setup(...arguments);
+    }
 
     if (!proto.intl) {
       // Implicitly inject the `intl` service, if it is not already injected.
