@@ -59,18 +59,26 @@ module('Unit | translationMacro', function(hooks) {
     assert.equal(object.get('macroProperty'), 'Coordinates: 10, 13');
   });
 
-  test('looks up the intl service through the owner, if it not injected', function(assert) {
+  test('looks up the intl service through the owner, if it is not injected, and still watches locale changes', function(assert) {
+    addTranslations('es', {
+      'no.interpolations': 'texto sin interpolaciones'
+    });
+
     const object = EmberObject.extend({
       macroProperty: t('no.interpolations')
     }).create();
 
     setOwner(object, {
       lookup: name => {
-        assert.strictEqual(name, 'service:intl');
+        assert.strictEqual(name, 'service:intl', 'looks up the service through the owner');
         return this.intl;
       }
     });
 
-    assert.strictEqual(object.get('macroProperty'), 'text with no interpolations');
+    assert.strictEqual(object.get('macroProperty'), 'text with no interpolations', 'translates the text');
+
+    run(() => this.intl.setLocale('es'));
+
+    assert.strictEqual(object.get('macroProperty'), 'texto sin interpolaciones', 'updates, when the locale changes');
   });
 });
