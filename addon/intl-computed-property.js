@@ -4,13 +4,16 @@ import { inject as service } from '@ember/service';
 import { assert } from '@ember/debug';
 
 export default class IntlComputedProperty extends ComputedProperty {
-  constructor(fn, ...dependentKeys) {
+  constructor(...dependentKeysAndGetterFn) {
+    const getterFn = dependentKeysAndGetterFn.pop();
+    const dependentKeys = dependentKeysAndGetterFn;
+
     super(function(propertyKey) {
       let intl = get(this, 'intl');
 
       assert(`ember-intl: Could not look up 'intl' service for the property '${propertyKey}' on '${this}'.`, intl);
 
-      return fn.call(this, intl, propertyKey, this);
+      return getterFn.call(this, intl, propertyKey, this);
     });
 
     this.property('intl.locale', ...dependentKeys);

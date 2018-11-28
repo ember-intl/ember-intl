@@ -94,9 +94,8 @@ module('Unit | IntlComputedProperty', function(hooks) {
       dependencyA: 1,
       dependencyB: 2,
       dependencyC: 3,
-      property: new IntlComputedProperty(
-        (intl, propertyKey, ctx) => getProperties(ctx, ...dependencyKeys),
-        ...dependencyKeys
+      property: new IntlComputedProperty(...dependencyKeys, (intl, propertyKey, ctx) =>
+        getProperties(ctx, ...dependencyKeys)
       )
     }).create();
 

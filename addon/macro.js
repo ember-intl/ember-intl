@@ -71,10 +71,8 @@ class TranslationMacro extends IntlComputedProperty {
     const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
     const dependentKeys = Object.values(dynamicValues);
 
-    super(
-      (intl, propertyKey, ctx) =>
-        intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues))),
-      ...dependentKeys
+    super(...dependentKeys, (intl, propertyKey, ctx) =>
+      intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues)))
     );
   }
 }
