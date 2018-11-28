@@ -8,10 +8,7 @@ export default class IntlComputedProperty extends ComputedProperty {
     super(function(propertyKey) {
       let intl = get(this, 'intl');
 
-      assert(
-        `ember-intl: Could not look up 'intl' service for the property '${propertyKey}' on '${this}'.`,
-        intl
-      );
+      assert(`ember-intl: Could not look up 'intl' service for the property '${propertyKey}' on '${this}'.`, intl);
 
       return fn.call(this, intl, propertyKey, this);
     });

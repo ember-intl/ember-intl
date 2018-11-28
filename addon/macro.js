@@ -2,10 +2,7 @@
  * <3 ember-i18n <3
  * https://github.com/jamesarosen/ember-i18n/blob/master/addon/utils/macro.js
  */
-import { assert } from '@ember/debug';
-import { get, defineProperty } from '@ember/object';
-import ComputedProperty from '@ember/object/computed';
-import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/empty-object';
 import IntlComputedProperty from 'ember-intl/intl-computed-property';
@@ -71,17 +68,12 @@ export function raw(value) {
 class TranslationMacro extends IntlComputedProperty {
   constructor(translationKey, options) {
     const hash = options || new EmptyObject();
-    const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(
-      hash
-    );
+    const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
     const dependentKeys = Object.values(dynamicValues);
 
     super(
       (intl, propertyKey, ctx) =>
-        intl.t(
-          translationKey,
-          assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues))
-        ),
+        intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues))),
       ...dependentKeys
     );
   }
