@@ -2,12 +2,10 @@
  * <3 ember-i18n <3
  * https://github.com/jamesarosen/ember-i18n/blob/master/addon/utils/macro.js
  */
-import { assert } from '@ember/debug';
-import { get, defineProperty } from '@ember/object';
-import ComputedProperty from '@ember/object/computed';
-import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/empty-object';
+import IntlComputedProperty from 'ember-intl/intl-computed-property';
 
 function partitionDynamicValuesAndStaticValues(options) {
   const dynamicValues = new EmptyObject();
@@ -67,37 +65,15 @@ export function raw(value) {
   return new Raw(value);
 }
 
-class TranslationMacro extends ComputedProperty {
+class TranslationMacro extends IntlComputedProperty {
   constructor(translationKey, options) {
     const hash = options || new EmptyObject();
     const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
-    const dependentKeys = ['intl.locale'].concat(Object.values(dynamicValues));
+    const dependentKeys = Object.values(dynamicValues);
 
-    super(function(propertyKey) {
-      let intl = get(this, 'intl');
-
-      assert(
-        `Cannot translate "${translationKey}" as "${propertyKey}".\n${this} does not have an 'intl' property set and there is no 'intl' service registered with the owner.`,
-        intl
-      );
-
-      return intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(this, dynamicValues)));
-    });
-
-    this.property(...dependentKeys);
-    this.readOnly();
-  }
-
-  setup(proto) {
-    if (super.setup) {
-      super.setup(...arguments);
-    }
-
-    if (!proto.intl) {
-      // Implicitly inject the `intl` service, if it is not already injected.
-      // This allows the computed property to depend on `intl.locale`.
-      defineProperty(proto, 'intl', service('intl'));
-    }
+    super(...dependentKeys, (intl, propertyKey, ctx) =>
+      intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues)))
+    );
   }
 }
 

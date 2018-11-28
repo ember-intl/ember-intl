@@ -12,13 +12,7 @@ module.exports = {
     browser: true
   },
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        printWidth: 120
-      }
-    ],
+    'prettier/prettier': 'error',
     'ember/no-restricted-resolver-tests': 'off',
     'ember/avoid-leaking-state-in-ember-objects': 0
   },
