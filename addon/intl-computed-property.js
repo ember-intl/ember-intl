@@ -25,7 +25,7 @@ export default class IntlComputedProperty extends ComputedProperty {
       super.setup(...arguments);
     }
 
-    if (!proto.intl) {
+    if (!('intl' in proto)) {
       // Implicitly inject the `intl` service, if it is not already injected.
       // This allows the computed property to depend on `intl.locale`.
       defineProperty(proto, 'intl', service('intl'));

@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import EmberObject, { get, getProperties, set } from '@ember/object';
 import { run } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import { setupIntl } from 'ember-intl/test-support';
 import { IntlComputedProperty } from 'ember-intl';
 
@@ -35,11 +36,9 @@ module('Unit | IntlComputedProperty', function(hooks) {
   test('uses the pre-existing intl injection, if it already exists', function(assert) {
     assert.expect(1);
 
-    const IDENTITY = {};
-
     const object = this.ContainerObject.extend({
-      intl: IDENTITY,
-      property: new IntlComputedProperty(intl => assert.strictEqual(intl, IDENTITY))
+      intl: service('intl'),
+      property: new IntlComputedProperty(intl => assert.strictEqual(intl, this.intl))
     }).create();
 
     get(object, 'property');
