@@ -3181,11 +3181,13 @@ ember-assign-polyfill@~2.4.0:
     ember-cli-version-checker "^2.0.0"
 
 ember-auto-import@^1.2.15:
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.16.tgz#3a94fef045e95a0161c420b121fbaccbdaee5977"
-  integrity sha512-2YXYYpeSPuXymwrwTrnDBmXpIarOKlchn5VwkWiy+dZAJAHP4tQ17MGDABYD43gojJzEmcj/Eq26YPYnbrWOtQ==
+  version "1.2.18"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.18.tgz#0a2bb3e7ee7d6b7c43b103b7b765f9e6a429dd68"
+  integrity sha512-XcrFDHKEG/eaOLVn7ZJoJqQvY2a3S3HR6aqzvdbCbpvqBDEqImctcXzpm7NIrkA5zNRDWX0OrepPFWR/Utb2Tg==
   dependencies:
     "@babel/core" "^7.1.6"
+    "@babel/traverse" "^7.1.6"
+    "@babel/types" "^7.1.6"
     babel-core "^6.26.3"
     babel-plugin-syntax-dynamic-import "^6.18.0"
     babel-template "^6.26.0"
@@ -3205,7 +3207,7 @@ ember-auto-import@^1.2.15:
     resolve "^1.7.1"
     rimraf "^2.6.2"
     symlink-or-copy "^1.2.0"
-    walk-sync "^0.3.2"
+    walk-sync "^0.3.3"
     webpack "^4.12.0"
 
 ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
