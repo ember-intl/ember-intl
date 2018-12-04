@@ -8531,7 +8531,7 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-walk-sync@0.3.2, walk-sync@^0.3.0, walk-sync@^0.3.1, walk-sync@^0.3.2:
+walk-sync@0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-0.3.2.tgz#4827280afc42d0e035367c4a4e31eeac0d136f75"
   dependencies:
@@ -8545,9 +8545,17 @@ walk-sync@^0.2.7:
     ensure-posix-path "^1.0.0"
     matcher-collection "^1.0.0"
 
-walk-sync@^0.3.3:
+walk-sync@^0.3.0, walk-sync@^0.3.1, walk-sync@^0.3.2, walk-sync@^0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-0.3.3.tgz#1e9f12cd4fe6e0e6d4a0715b5cc7e30711d43cd1"
+  dependencies:
+    ensure-posix-path "^1.0.0"
+    matcher-collection "^1.0.0"
+
+walk-sync@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-1.0.0.tgz#8cb4474b72853adbb06d0968db48e3bbe82aff94"
+  integrity sha512-zoCwhIeT78due6JD7Ge8NCyR5mbPw5dGSEJCINVXQHgDt4851Po8cT5uob5dluFuMBSAZtpqvsm811PHnCkBOw==
   dependencies:
     ensure-posix-path "^1.0.0"
     matcher-collection "^1.0.0"
