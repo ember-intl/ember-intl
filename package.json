@@ -56,7 +56,7 @@
     "lodash.omit": "^4.5.0",
     "mkdirp": "^0.5.1",
     "silent-error": "^1.1.1",
-    "walk-sync": "^0.3.3"
+    "walk-sync": "^1.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
