@@ -7039,9 +7039,9 @@ quick-temp@^0.1.0, quick-temp@^0.1.2, quick-temp@^0.1.3, quick-temp@^0.1.5, quic
     underscore.string "~3.3.4"
 
 qunit-dom@^0.8.1:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/qunit-dom/-/qunit-dom-0.8.2.tgz#d1a2e49268dfd9ecab2c14a8e39717942dd6bfde"
-  integrity sha512-VVYyhcThvksgttTpF66+pSrBO92WBZ1s/clqa3Cp4syutLk0EqDvF4C4+wzPvZBd0CO333Ns0OIqQ/KpNmv5dg==
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/qunit-dom/-/qunit-dom-0.8.3.tgz#0ea673e6c7c99f5f0fc547f30be38ea7141160f4"
+  integrity sha512-Qmj6bw+Fym17hadUypMK9VqNIqR+5zDzAJAmSnQWwlg/ujUfd5zVPdkhiOXY0bz20/AAKaz4GjRrFTYIOo7Hqg==
   dependencies:
     broccoli-funnel "^2.0.0"
     broccoli-merge-trees "^3.0.1"
