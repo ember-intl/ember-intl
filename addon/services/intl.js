@@ -33,6 +33,7 @@ export default Service.extend(Evented, {
   /** @public **/
   formats: null,
 
+  /** @private **/
   _timer: null,
 
   /** @public **/
@@ -55,6 +56,17 @@ export default Service.extend(Evented, {
       return this._locale;
     }
   }),
+
+  /**
+   * Returns the first locale of the currently
+   * active locales
+   *
+   * @property primaryLocale
+   * @public
+   */
+  primaryLocale: computed('locale', function() {
+    return this.get('locale')[0];
+  }).readOnly(),
 
   /** @public **/
   formatRelative: formatter('relative'),
