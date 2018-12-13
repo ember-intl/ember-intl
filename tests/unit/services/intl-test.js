@@ -268,9 +268,9 @@ module('service:intl', function(hooks) {
   test('primaryLocale returns the first locale of the currently active locales', async function(assert) {
     assert.expect(2);
 
-    assert.equal(this.intl.primaryLocale, LOCALE);
+    assert.equal(this.intl.get('primaryLocale'), LOCALE);
 
     this.intl.setLocale('de');
-    assert.equal(this.intl.primaryLocale, 'de');
+    assert.equal(this.intl.get('primaryLocale'), 'de');
   });
 });
