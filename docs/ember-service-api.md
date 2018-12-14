@@ -14,13 +14,15 @@ Ember.Object.extend({
 });
 ```
 
-Access the service from within the instance via: `this.get('intl')` or `this.intl`
+Access the service from within the instance via: `this.get('intl')` or just `this.intl`, if you have [ES5 getters enabled](https://www.emberjs.com/blog/2018/04/13/ember-3-1-released.html#toc_es5-getters-for-computed-properties-2-of-4).
 
 ## Properties
 
 **locale**
 
-Set/get the current locale for your application.  The value is an Array of Strings.  When providing an array, the `t` helper and `t` method will attempt to try all the locales in order when resolving a translation key.  This is useful if you want to always fallback to another locale when a translation may be missing.
+Set/get the current locale for your application. The value you set it to can either be a string or an array of strings. When providing an array, the `t` helper and `t` method will attempt to try all the locales in order when resolving a translation key. This is useful if you want to always fallback to another locale when a translation may be missing.
+
+When you get this property, it will always return an array of strings, even if you have set it to be just one single locale. If you are only interested in retrieving the single (or first) locale, use **`primaryLocale`**.
 
 **primaryLocale** _readOnly_
 
