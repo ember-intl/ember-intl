@@ -264,4 +264,13 @@ module('service:intl', function(hooks) {
     await settled();
     assert.equal(document.documentElement.getAttribute('lang'), 'es');
   });
+
+  test('primaryLocale returns the first locale of the currently active locales', async function(assert) {
+    assert.expect(2);
+
+    assert.equal(this.intl.get('primaryLocale'), LOCALE);
+
+    this.intl.setLocale('de');
+    assert.equal(this.intl.get('primaryLocale'), 'de');
+  });
 });
