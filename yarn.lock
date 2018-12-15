@@ -3752,9 +3752,9 @@ eslint-config-prettier@^3.3.0:
     get-stdin "^6.0.0"
 
 eslint-plugin-ember@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.0.1.tgz#0d10a1c4d0f148005d8b2c2eec80a12ea236c792"
-  integrity sha512-FFKNgouGNwLXsn2SQFScCYvudHDn/lf/U1fRkiSmqsJ7Djq45pFgkSfM9wpuhfOxceK8AbeVTpNUSPsHmveDVg==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.1.0.tgz#dc48e342daca632b628766df08b634d5a5a970e6"
+  integrity sha512-eBOuSoMpBB8Mitn2U3D0LYkqU9IhOaL/Au2PkCx4Zw7lLTb12hEEQPfOxK0KAVyClgGNnfcTW5lxVy02wwvdgw==
   dependencies:
     ember-rfc176-data "^0.3.5"
     snake-case "^2.1.0"
