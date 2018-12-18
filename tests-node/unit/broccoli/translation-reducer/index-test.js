@@ -203,6 +203,23 @@ describe('translation-reducer', function() {
       ]);
     });
 
+    it('lintTranslations returns list of icu argument mismatch without those that are required', function () {
+      let subject = new TranslationReducer(this.input.path(), { fallbackLocale: 'en'});
+
+      subject.options.requiresTranslation = (_, locale) => locale === 'en';
+
+      let icuFixtureWithFallback = this.icuFixture;
+      
+      delete icuFixtureWithFallback['de'].foo;
+
+      let { icuMismatch } = subject.lintTranslations(icuFixtureWithFallback);
+
+      expect(icuMismatch).to.deep.equal([
+        ['missingArg', [['en', ['numPhotos']]]],
+        ['deep.nested.ok', [['en', ['reason']]]]
+      ]);
+    });
+
     it('_handleMissingTranslations logs translation if verbose', function() {
       let logs = [];
       let subject = new TranslationReducer(this.input.path());
