@@ -3351,14 +3351,7 @@ ember-cli-test-loader@^2.2.0:
   dependencies:
     ember-cli-babel "^6.8.1"
 
-ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-2.1.0.tgz#fc79a56032f3717cf844ada7cbdec1a06fedb604"
-  dependencies:
-    resolve "^1.3.3"
-    semver "^5.3.0"
-
-ember-cli-version-checker@^2.1.2:
+ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.0, ember-cli-version-checker@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-2.1.2.tgz#305ce102390c66e4e0f1432dea9dc5c7c19fed98"
   dependencies:
@@ -3554,13 +3547,13 @@ ember-source-channel-url@^1.0.1, ember-source-channel-url@^1.1.0:
   dependencies:
     got "^8.0.1"
 
-ember-source@~3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.6.1.tgz#61a286e4a954e2e514a25df6d97bfe5a380c1cfd"
-  integrity sha512-hkUvGz4XBLhmac1iCZBjGZGDY3y1ke6fMyfzxP6QutlGUtlQOaQsKOk0HuP3DR7pNggLzQfK8Qxjr5/bNQ1lPw==
+ember-source@~3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.7.0.tgz#99d8d306daf05a7a8063adcb944b04a9c9c94be7"
+  integrity sha512-4Ne361XAwLV0hYfFSbZP8NJUzD1IZLWHO1ON9Hb67K9B67H+3CF6SdbE+3+V+WiIom1n93/M35A72sNmh9CTjg==
   dependencies:
     broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^2.0.0"
+    broccoli-merge-trees "^3.0.2"
     chalk "^2.3.0"
     ember-cli-babel "^7.1.3"
     ember-cli-get-component-path-option "^1.0.0"
