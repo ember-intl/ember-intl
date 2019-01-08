@@ -7,9 +7,9 @@ import { assert } from '@ember/debug';
 import BaseHelper from './-format-base';
 
 export default BaseHelper.extend({
-  format(value, options) {
-    assert('[ember-intl] translation lookup attempted but no translation key was provided.', value);
+  format(key, options) {
+    assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
-    return this.intl.t(value, options);
+    return this.intl.t(key, options);
   }
 });
