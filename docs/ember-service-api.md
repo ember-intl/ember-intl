@@ -43,7 +43,7 @@ intl.get('locales') => ['en-us', 'en-ca', 'fr-fr'];
 
 ## Methods
 
-**t** _(translationKey:String, optionalOptions:Object, optionalFormats:Object)_
+**t** _(translationKey:String, optionalOptions:Object)_
 
 Unlike `formatMessage`, the `t` method accepts a translation key instead of a
 translation string.  This method returns a translated string.  To provide
@@ -54,23 +54,23 @@ product: '{name} will cost {price, number, USD}'
 ```
 
 ```js
-// Formats are typically defined in `app/format.js` and will be used if
-// the format object is omitted. However, this example covers the most
-// complex use of the method and explicitly passes a formats hash
-const formats = {
+// app/formats.js
+export default {
   number: {
-    USD: { style: 'currency', currency: 'USD' },
-    currency: {
+    USD: {
       style: 'currency',
+      currency: 'USD',
       minimumFractionDigits: 2
     }
   }
 };
+```
 
+```js
 this.get('intl').t('product', {
-  product: 'watch',
+  name: 'watch',
   price: 300
-}, formats);
+});
 ```
 
 Outputs:
@@ -87,14 +87,14 @@ this.intl.t('title.header', { htmlSafe: true });
 {{t 'title.header' htmlSafe=true}}
 ```
 
-**formatMessage** _(translation:String, optionalOptions:Object, optionalFormats:Object)_
+**formatMessage** _(translation:String, optionalOptions:Object)_
 
 `formatMessage` formats a translation string. Unlike the `t` method, it
 accepts a translation string instead of a translation key.
 
 ```js
 this.get('intl').formatMessage('{name} will cost {price, number, USD}', {
-  product: 'watch',
+  name: 'watch',
   price: 300
 });
 ```
@@ -103,7 +103,7 @@ Outputs:
 
 > watch will cost $300
 
-**formatMessage (html)** _(value:String, optionalOptions:Object, optionalFormats:Object)_
+**formatMessage (html)** _(value:String, optionalOptions:Object)_
 
 `formatMessage`, when provided the `htmlSafe` options, formats a translation string and returns an
 `Handlebars.SafeString`.  This is useful for rendering translations containing
