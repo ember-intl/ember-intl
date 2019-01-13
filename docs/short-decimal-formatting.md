@@ -66,6 +66,8 @@ export default {
 product: 'The product has {reviews, shortNumber, zeroDigits} reviews'
 ```
 
+Zero Significant Digits
+
 ```js
 this.get('intl').t('product', {
   reviews: 19634
@@ -85,6 +87,7 @@ Spanish
 > The product has 19 mil reviews
 
 
+One Significant Digits in Financial Format
 
 ```yaml
 product: 'This investment product has {trades, shortNumber, financialFormat} trades'
