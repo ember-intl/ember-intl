@@ -124,6 +124,7 @@ module.exports = {
       let cldrTree = extract(tree, {
         locales: this.locales,
         relativeFields: true,
+        numberFields: true,
         destDir: 'cldrs',
         prelude: '/*jslint eqeq: true*/\n',
         moduleType: 'es6'
