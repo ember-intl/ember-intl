@@ -5,8 +5,8 @@ Compact Decimal Formatting API
 ember-intl ships with the ability to short format a number.  For example, `123,000` can be
 converted to `123K` in English or `12万` in Japanese.
 
-This ability depends on data from [cldr-numbers-full](https://github.com/unicode-cldr/cldr-numbers-full) and the functionality
-extracted to [cldr-compact-number](https://github.com/snewcomer/cldr-compact-number).  API formatting options can be found [here](https://github.com/snewcomer/cldr-compact-number#usage).
+This functionality depends on data from [cldr-numbers-full](https://github.com/unicode-cldr/cldr-numbers-full) and has been extracted
+to [cldr-compact-number](https://github.com/snewcomer/cldr-compact-number).  API formatting options can be found [here](https://github.com/snewcomer/cldr-compact-number#usage).
 
 ## How to short format a number
 
@@ -54,8 +54,9 @@ export default {
     oneDigit: {
       significantDigits: 1
     },
-    twoDigits: {
-      significantDigits: 2
+    financialFormat: {
+      significantDigits: 1,
+      financialFormat: true
     }
   }
 };
@@ -84,23 +85,24 @@ Spanish
 > The product has 19 mil reviews
 
 
+
 ```yaml
-product: 'The product has {reviews, shortNumber, twoDigits} reviews'
+product: 'This investment product has {trades, shortNumber, financialFormat} trades'
 ```
 ```js
 this.get('intl').t('product', {
-  reviews: 19634
+  reviews: 101000
 });
 ```
 
 English
 
-> The product has 19.64K reviews
+> This investment product has 0.1M trades
 
 Japanese
 
-> The product has 1.96万 reviews
+> This investment product has 10.1万 trades
 
 Spanish
 
-> The product has 19,64 mil reviews
+> This investment product has 0,1M trades
