@@ -617,17 +617,18 @@
     make-plural "^2.1.3"
     uglify-js "^2.6.2"
 
-"@ember-intl/intl-messageformat-parser@1.5.0", "@ember-intl/intl-messageformat-parser@^1.5.0":
+"@ember-intl/intl-messageformat-parser@^1.5.0", "@ember-intl/intl-messageformat-parser@~1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat-parser/-/intl-messageformat-parser-1.5.0.tgz#21361c912b66023a538cb3a75ebbe7853c5dea3c"
   integrity sha512-RGvJPeZ+6N3kknYZdN/D/CC1ZpTYK9g6TRwJzPMxKKL3iaVy/K5MXWdMzA0iA061VdqGJwjajf0FeIoCA9VaTA==
 
 "@ember-intl/intl-messageformat@^2.0.0", "@ember-intl/intl-messageformat@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat/-/intl-messageformat-2.4.0.tgz#0b818add02dab052f91a4bc50979c94396435e65"
-  integrity sha512-AVjuOJaK21XehThsVrWaYQOql+qw/LK8yAMIev1ONtmURlts1wUJdXKdtZ8jeQ8UbUduJVf1nsG3o2eWSNvyjw==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat/-/intl-messageformat-2.5.0.tgz#de2d3fa867a229df3a515f46634ac18ba3479134"
+  integrity sha512-F5hz02ul4BI6Ay/doGZwEBOn58dP8f/pzx9/prL9eVPY7516nJ4OBIrrCp9khDyn/O/SJdJapLv7oQrm3USGjQ==
   dependencies:
-    "@ember-intl/intl-messageformat-parser" "1.5.0"
+    "@ember-intl/intl-messageformat-parser" "~1.5.0"
+    cldr-compact-number "~0.2.2"
 
 "@ember-intl/intl-relativeformat@^2.1.0":
   version "2.1.0"
@@ -2525,6 +2526,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+cldr-compact-number@~0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/cldr-compact-number/-/cldr-compact-number-0.2.2.tgz#57008baa2f2ddb45348e2becb3aa053d8a344494"
+  integrity sha512-ZFoI6bUhft5uDe7QOvo1howSXixVsrLx/8nvSiXfGSbKnH1OGlXOU1HZNu9pXPYY5Zbu/tPTylpRTwZ6I7QnoQ==
 
 cldr-core@^34.0.0:
   version "34.0.0"
