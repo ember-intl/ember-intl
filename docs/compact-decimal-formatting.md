@@ -61,7 +61,7 @@ export default {
 };
 ```
 
-#### Zero Significant Digits
+- Zero Significant Digits
 
 ```yaml
 product: 'The product has {reviews, shortNumber, zeroDigits} reviews'
@@ -86,7 +86,7 @@ Spanish
 > The product has 19 mil reviews
 
 
-#### One Significant Digit in Financial Format
+- One Significant Digit in Financial Format
 
 ```yaml
 product: 'This investment product has {trades, shortNumber, financialFormat} trades'
