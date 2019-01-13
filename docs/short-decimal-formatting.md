@@ -6,7 +6,7 @@ ember-intl ships with the ability to short format a number.  For example, `123,0
 converted to `123K` in English or `12万` in Japanese.
 
 This ability depends on data from [cldr-numbers-full](https://github.com/unicode-cldr/cldr-numbers-full) and the functionality
-extracted to [cldr-compact-number](https://github.com/snewcomer/cldr-compact-number).
+extracted to [cldr-compact-number](https://github.com/snewcomer/cldr-compact-number).  API formatting options can be found [here](https://github.com/snewcomer/cldr-compact-number#usage).
 
 ## How to short format a number
 
@@ -29,20 +29,20 @@ this.get('intl').t('product', {
 });
 ```
 
-Outputs:
+English
 
 > The product has 19.6K reviews
 
-In Japanese the output would be
+Japanese
 
 > The product has 2万 reviews
 
-In Spanish the output would be
+Spanish
 
 > The product has 19,6 mil reviews
 
 
-Or you can specify multiple output formats:
+### Multiple output formats
 
 ```js
 // app/formats.js
@@ -71,15 +71,15 @@ this.get('intl').t('product', {
 });
 ```
 
-Outputs:
+English
 
 > The product has 19K reviews
 
-In Japanese the output would be
+Japanese
 
 > The product has 2万 reviews
 
-In Spanish the output would be
+Spanish
 
 > The product has 19 mil reviews
 
@@ -93,14 +93,14 @@ this.get('intl').t('product', {
 });
 ```
 
-Outputs:
+English
 
 > The product has 19.64K reviews
 
-In Japanese the output would be
+Japanese
 
 > The product has 1.96万 reviews
 
-In Spanish the output would be
+Spanish
 
 > The product has 19,64 mil reviews
