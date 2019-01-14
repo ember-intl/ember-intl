@@ -118,4 +118,11 @@ module('t', function(hooks) {
     await render(hbs`{{t 'does.not.exist' default='happy_birthday' age=10}}`);
     assert.equal(this.element.textContent, 'You are 10 years old!');
   });
+
+  test('should short format numbers', async function(assert) {
+    assert.expect(1);
+    this.intl.addTranslations('en-us', { cheese: 'Swiss cheese has {holes, shortNumber} holes in it!' });
+    await render(hbs`{{t 'cheese' holes=10000}}`);
+    assert.equal(this.element.textContent, 'Swiss cheese has 10K holes in it!');
+  });
 });

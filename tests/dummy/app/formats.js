@@ -8,5 +8,16 @@ export default {
     USD: { style: 'currency', currency: 'USD' },
     JPY: { style: 'currency', currency: 'JPY' },
     currency: { style: 'currency', minimumFractionDigits: 2 }
+  },
+  shortNumber: {
+    zeroSignificantDigits: {
+      significantDigits: 0
+    },
+    oneSignificantDigit: {
+      significantDigits: 1
+    },
+    twoSignificantDigits: {
+      significantDigits: 2
+    }
   }
 };

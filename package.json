@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@ember-intl/broccoli-cldr-data": "^3.1.0",
-    "@ember-intl/intl-messageformat": "^2.4.0",
+    "@ember-intl/intl-messageformat": "^2.5.0",
     "@ember-intl/intl-messageformat-parser": "^1.5.0",
     "@ember-intl/intl-relativeformat": "^2.1.0",
     "broccoli-caching-writer": "^3.0.3",

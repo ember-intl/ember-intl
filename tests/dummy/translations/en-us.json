@@ -1,6 +1,8 @@
 {
   "product": {
     "title": "Hello",
-    "info": "The {product} costs {price, number, USD}"
+    "info": "The {product} costs {price, number, USD}",
+    "customers": "The {product} has {numCustomers, shortNumber} customers",
+    "customers.oneDigit": "The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers"
   }
 }
