@@ -13,6 +13,7 @@ const walkSync = require('walk-sync');
 const mergeTrees = require('broccoli-merge-trees');
 const stringify = require('json-stable-stringify');
 const extract = require('@ember-intl/broccoli-cldr-data');
+const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
@@ -37,6 +38,10 @@ module.exports = {
   name: 'ember-intl',
   opts: null,
   isLocalizationFramework: true,
+
+  cacheKeyForTree(treeType) {
+    return calculateCacheKeyForTree(treeType, this);
+  },
 
   included() {
     this._super.included.apply(this, arguments);
