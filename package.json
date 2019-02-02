@@ -40,6 +40,7 @@
     "broccoli-merge-trees": "^3.0.2",
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^2.0.1",
+    "calculate-cache-key-for-tree": "^1.1.0",
     "cldr-core": "^34.0.0",
     "ember-auto-import": "^1.2.19",
     "ember-cli-babel": "^7.2.0",
