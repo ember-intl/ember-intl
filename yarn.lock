@@ -3904,10 +3904,10 @@ enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.0:
     memory-fs "^0.4.0"
     tapable "^1.0.0"
 
-ensure-posix-path@^1.0.0, ensure-posix-path@^1.0.1, ensure-posix-path@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ensure-posix-path/-/ensure-posix-path-1.0.2.tgz#a65b3e42d0b71cfc585eb774f9943c8d9b91b0c2"
-  integrity sha1-pls+QtC3HPxYXrd0+ZQ8jZuRsMI=
+ensure-posix-path@^1.0.0, ensure-posix-path@^1.0.1, ensure-posix-path@^1.0.2, ensure-posix-path@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ensure-posix-path/-/ensure-posix-path-1.1.0.tgz#37ca0033ddc5ef77d22ffa65f7dbd623fa8e705e"
+  integrity sha512-cAVlp/ml5OjtSOvTmX5hzogfajdOwq9zDgxcZpxu6tAzNFA+5yFDL9In2qCskcSIaniZJLNZfuySPkDEc0fYZg==
 
 entities@~1.1.1:
   version "1.1.2"
@@ -6388,10 +6388,10 @@ markdown-it@^8.3.1, markdown-it@^8.4.2:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-matcher-collection@^1.0.0, matcher-collection@^1.0.4:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/matcher-collection/-/matcher-collection-1.0.5.tgz#2ee095438372cb8884f058234138c05c644ec339"
-  integrity sha512-nUCmzKipcJEwYsBVAFh5P+d7JBuhJaW1xs85Hara9xuMLqtCVUrW6DSC0JVIkluxEH2W45nPBM/wjHtBXa/tYA==
+matcher-collection@^1.0.0, matcher-collection@^1.0.4, matcher-collection@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/matcher-collection/-/matcher-collection-1.1.1.tgz#82219d7d3b43e0776a4619310be8abce2369cbd9"
+  integrity sha512-Xo34uPQ9KdAtvNxeD4PsXhpUj3Cv39iontP6j1Bej5arPnCPt8hXFPtrxK0t8yKdgs5SS+hLVNPkQm/C8SKhbw==
   dependencies:
     minimatch "^3.0.2"
 
@@ -9159,12 +9159,12 @@ walk-sync@^0.3.0, walk-sync@^0.3.1, walk-sync@^0.3.2, walk-sync@^0.3.3:
     matcher-collection "^1.0.0"
 
 walk-sync@^1.0.0, walk-sync@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-1.0.1.tgz#6f38270392e297e5fd7b51eec9241be4242557c8"
-  integrity sha512-4Fyvn+KDGOF90ugcpErAMsNEF7r9ogk4SCNHZFkvmP+kr1rMSjpLbq9aYbEnYsL4dvVduLBm95TIz8WmqRAAgg==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-1.1.2.tgz#ff60e05c1fdb5476f5249d4d687c31748dac4837"
+  integrity sha512-knTsymGzqJ4d5wW8Dtm2y0CU2LczY+Gy6MIq1QaxFxtEfL33xc+fjI8QBy+OAMkM+APQHFgEFI1bBhRB+Sp36A==
   dependencies:
-    ensure-posix-path "^1.0.0"
-    matcher-collection "^1.0.0"
+    ensure-posix-path "^1.1.0"
+    matcher-collection "^1.1.1"
 
 walker@~1.0.5:
   version "1.0.7"
