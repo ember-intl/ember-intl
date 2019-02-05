@@ -30,12 +30,12 @@ module('format-message (html)', function(hooks) {
       htmlSafe: true,
       name: '<em>Jason</em>',
       count: 42000,
-      locale: 'fr-fr'
+      locale: 'pt-br'
     }).string;
 
     assert.equal(
       escape(output),
-      '%3Cstrong%3EHello%20%26lt%3Bem%26gt%3BJason%26lt%3B/em%26gt%3B%2042%A0000%3C/strong%3E'
+      '%3Cstrong%3EHello%20%26lt%3Bem%26gt%3BJason%26lt%3B/em%26gt%3B%2042.000%3C/strong%3E'
     );
   });
 
