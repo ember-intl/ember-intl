@@ -26,19 +26,17 @@ module('format-number', function(hooks) {
     assert.equal(this.intl.formatNumber(100), 100);
   });
 
-  test('number is formatted correctly with default locale', async function(assert) {
+  test('number is formats unset locale (en-US)', async function(assert) {
     assert.expect(1);
     await render(hbs`{{format-number 1000}}`);
     assert.equal(this.element.textContent, '1,000');
   });
 
-  test('number is formatted correctly with locale argument', async function(assert) {
+  test('number is formatted correctly with active service locale', async function(assert) {
     assert.expect(1);
-    this.intl.set('locale', 'fr-fr');
+    this.intl.setLocale('pt-br');
     await render(hbs`{{format-number 1000}}`);
-    // non-breaking space so we can't just compare "1 000" to "1 000"
-    // since it's not a %20 space character
-    assert.equal(escape(this.element.textContent), '1%A0000');
+    assert.equal(this.element.textContent, '1.000');
   });
 
   skip('should throw if called with out a value', function(/*assert*/) {
