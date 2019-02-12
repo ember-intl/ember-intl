@@ -1930,12 +1930,13 @@ broccoli-babel-transpiler@^6.5.0:
     rsvp "^4.8.2"
     workerpool "^2.3.0"
 
-broccoli-babel-transpiler@^7.1.0, broccoli-babel-transpiler@^7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-7.1.1.tgz#4202cd0653845083ee744fb4eaa4a2b50292f03f"
-  integrity sha512-iZE6yxDcEe4XSMEyqyyS+wtkNAsPUGJNleJoVu26Vt2Al8/GqRI5+wc7qquPb71I1W7AtqbkaqsgDFDqBoIYKw==
+broccoli-babel-transpiler@^7.1.1, broccoli-babel-transpiler@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-7.1.2.tgz#fb5d6f8b9a805627ac3f2914ac9d86e82ca2413b"
+  integrity sha512-rljx86xgZJ2BjWt+xCSVfvyt3ONpCdMMXzMpeeVpAGdBHj3bqQICdPHZDAbzn1vKY/LIPsJZftvdxql1jiLGzw==
   dependencies:
     "@babel/core" "^7.0.0"
+    "@babel/polyfill" "^7.0.0"
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.0"
     broccoli-persistent-filter "^1.4.3"
@@ -3438,9 +3439,9 @@ ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0,
     semver "^5.5.0"
 
 ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.2.0:
-  version "7.4.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.4.1.tgz#9892f5883f5a6b1f0f86fb1331fc491338f372ad"
-  integrity sha512-h6qZKHyULm5SYhvjNOeXvLl3kHaBdh37g5QqTTiC/vMiWP/xnyNp2bMoq52qq+SLm/bE8+5UcVTKjrNl0+IqXA==
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.4.2.tgz#9d7daa165b509e41f6dc3bb443ae32072f766aa2"
+  integrity sha512-5PJOkQ3B3Cvef2nQVPuZSPA6ckwiED3qF4cqzu7jcKhZ0Fy2TwPqABVbiPBJ46NujAsMZrjverVRST74Q25GqQ==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-transform-modules-amd" "^7.0.0"
@@ -3452,7 +3453,7 @@ ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.2.0:
     babel-plugin-debug-macros "^0.2.0-beta.6"
     babel-plugin-ember-modules-api-polyfill "^2.6.0"
     babel-plugin-module-resolver "^3.1.1"
-    broccoli-babel-transpiler "^7.1.0"
+    broccoli-babel-transpiler "^7.1.2"
     broccoli-debug "^0.6.4"
     broccoli-funnel "^2.0.1"
     broccoli-source "^1.1.0"
