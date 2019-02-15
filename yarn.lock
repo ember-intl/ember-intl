@@ -3390,9 +3390,9 @@ ember-assign-polyfill@~2.4.0:
     ember-cli-version-checker "^2.0.0"
 
 ember-auto-import@^1.2.19:
-  version "1.2.19"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.19.tgz#69a2da0d2c16ab88989c51381c415214e85d1af3"
-  integrity sha512-OT7I3zrIAv/rbbYJFZNqfJi/2HpAscjOWOaBPPUj8VkUnY26HlLO6mSzDIkoUOaTAEWiy2GzjenHGj6b9rivxw==
+  version "1.2.20"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.20.tgz#c90675e1e32bd99ce70e696326813c6c55bdac19"
+  integrity sha512-HZ9ZC5VMPF0KtpTII4US1QYtq8qHxlYgwWOMaxwWG9c9v12UpH8paVuUs2MjUEJCbas6sXOkMb6gY41xASGrWA==
   dependencies:
     "@babel/core" "^7.1.6"
     "@babel/traverse" "^7.1.6"
@@ -3407,8 +3407,8 @@ ember-auto-import@^1.2.19:
     ember-cli-babel "^6.6.0"
     enhanced-resolve "^4.0.0"
     fs-extra "^6.0.1"
-    fs-tree-diff "^0.5.7"
-    handlebars "^4.0.11"
+    fs-tree-diff "^1.0.0"
+    handlebars "~4.0.13"
     js-string-escape "^1.0.1"
     lodash "^4.17.10"
     mkdirp "^0.5.1"
@@ -4974,6 +4974,17 @@ handlebars@^4.0.11, handlebars@^4.0.4:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
   integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
+  dependencies:
+    async "^2.5.0"
+    optimist "^0.6.1"
+    source-map "^0.6.1"
+  optionalDependencies:
+    uglify-js "^3.1.4"
+
+handlebars@~4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.0.13.tgz#89fc17bf26f46fd7f6f99d341d92efaae64f997d"
+  integrity sha512-uydY0jy4Z3wy/iGXsi64UtLD4t1fFJe16c/NFxsYE4WdQis8ZCzOXUZaPQNG0e5bgtLQV41QTfqBindhEjnpyQ==
   dependencies:
     async "^2.5.0"
     optimist "^0.6.1"
