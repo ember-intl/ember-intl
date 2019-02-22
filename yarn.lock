@@ -3411,9 +3411,9 @@ ember-assign-polyfill@~2.4.0:
     ember-cli-version-checker "^2.0.0"
 
 ember-auto-import@^1.2.19:
-  version "1.2.20"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.20.tgz#c90675e1e32bd99ce70e696326813c6c55bdac19"
-  integrity sha512-HZ9ZC5VMPF0KtpTII4US1QYtq8qHxlYgwWOMaxwWG9c9v12UpH8paVuUs2MjUEJCbas6sXOkMb6gY41xASGrWA==
+  version "1.2.21"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.21.tgz#e02ded183844faba66c3f2af97028ef35175b837"
+  integrity sha512-coHnqO3mRnlj/JAQSQBEqzX2wL8rH5YrfEJMzk1102X9MdSX1CWeaUYBcyjvI/pG8fHUhv+4VsD6rQuhTUyZUQ==
   dependencies:
     "@babel/core" "^7.1.6"
     "@babel/traverse" "^7.1.6"
@@ -3438,7 +3438,7 @@ ember-auto-import@^1.2.19:
     rimraf "^2.6.2"
     symlink-or-copy "^1.2.0"
     walk-sync "^0.3.3"
-    webpack "^4.12.0"
+    webpack "~4.28"
 
 ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
   version "6.18.0"
@@ -9378,7 +9378,7 @@ webpack-sources@^1.1.0, webpack-sources@^1.3.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.12.0:
+webpack@~4.28:
   version "4.28.4"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.28.4.tgz#1ddae6c89887d7efb752adf0c3cd32b9b07eacd0"
   integrity sha512-NxjD61WsK/a3JIdwWjtIpimmvE6UrRi3yG54/74Hk9rwNj5FPkA4DJCf1z4ByDWLkvZhTZE+P3C/eh6UD5lDcw==
