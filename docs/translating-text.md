@@ -1,6 +1,4 @@
-
-Translating Text
-==============================================================================
+# Translating Text
 
 ## Translate
 
@@ -22,7 +20,7 @@ Translating Text
 
 ### Fallback Translations
 
-The `t` helper, as of 3.0.0, supports a fallback lookup if the primary translation key is missing.  In the below example, the translation key `"actual_key"` would be used in place of the primary key, `"missing_key"`, if translation missing for key.
+The `t` helper, as of 3.0.0, supports a fallback lookup if the primary translation key is missing. In the below example, the translation key `"actual_key"` would be used in place of the primary key, `"missing_key"`, if translation missing for key.
 
 ```hbs
 {{t 'missing_key' default='actual_key'}}
@@ -34,21 +32,20 @@ this.intl.t('missing_key', {
 });
 ```
 
-## Computed Property Macro
+## Computed Property Macros
 
-_This feature is based on ember-i18n's `translationMacro`._
+### t
 
-`translationMacro` defines a computed property macro that makes it easy to
-define translated computed properties. For example,
+`t` is a computed property macro that makes it easy to define translated
+computed properties. For example:
 
 ```js
 import Component from '@ember/component':
-import { inject as service } from '@ember/service';
-import { translationMacro as t } from 'ember-intl';
+import { t } from 'ember-intl';
 
 export default Component.extend({
-  // Injecting the service is optional
-  intl: service(),
+  // Injecting the service is not required for `t` to work.
+  // intl: service(),
 
   // A simple translation.
   title: t('user.edit.title'),
@@ -66,25 +63,15 @@ The first argument is the translation key. The second is a hash where the keys
 are interpolations in the translation and the values are paths to the values
 relative to this.
 
-If `intl` is available on the host object (the component in this case), the
-macro expects it to be the `intl` service. If there is no such service
-injection, the macro will lookup the `intl` service via the owner of the host
-object.
-
 If you want to pass static values instead of paths to dynamic value, you can use
-the [`raw` function](https://github.com/kellyselden/ember-macro-helpers#raw)
-like in [`ember-awesome-macros`](https://github.com/kellyselden/ember-awesome-macros)
-/ [`ember-macro-helpers`](https://github.com/kellyselden/ember-macro-helpers).
+the `raw` function like in
+[`ember-macro-helpers`](https://github.com/kellyselden/ember-macro-helpers#raw).
 
 ```js
 import Component from '@ember/component':
-import { inject as service } from '@ember/service';
-import { translationMacro as t, raw } from 'ember-intl';
+import { t, raw } from 'ember-intl';
 
 export default Component.extend({
-  // Injecting the service is optional
-  intl: service(),
-
   userName: 'Tom',
 
   // A translation with dynamic and static values
@@ -95,3 +82,38 @@ export default Component.extend({
 Note: Even though `raw` is _named_ the same as in `ember-awesome-macros` /
 `ember-macro-helpers`, they _are not_ the same. Be sure to always use the
 correct `raw` with `ember-intl` and `ember-awesome-macros` / `ember-macro-helpers`.
+
+### intl
+
+`intl` is the underlying computed property macro for `t` and you can use it
+directly to access other methods from the `intl` service. It looks like this:
+
+```js
+import Component from '@ember/component':
+import { intl } from 'ember-intl';
+
+export default Component.extend({
+  now: new Date(),
+  dateFormat: 'hhmmss',
+
+  nowFormatted: intl('now', 'dateFormat', function(intl /* , propertyKey, instance */) {
+    return intl.formatDate(this.now, { format: this.format });
+  })
+});
+```
+
+`intl` expects a list of dependent keys, which may be empty, and the computed
+property getter method as the last argument. The getter method receives three
+arguments:
+
+- `intl`: The `intl` service.
+- `propertyKey`: The name of the computed property. In the above example it
+  would be `nowFormatted`.
+- `instance`: The class instance the computed property is installed on. This is
+  equivalent to `this` in the above example. The reason `instance` is also
+  passed to the getter method is to allow terser arrow function syntax instead
+  of the `function` keyword:
+
+  ```js
+  intl('now', (intl, key, instance) => intl.formatDate(instance.now, { format: 'hhmmss' }));
+  ```
