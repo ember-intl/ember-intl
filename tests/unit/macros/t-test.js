@@ -4,7 +4,7 @@ import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { setupIntl, addTranslations } from 'ember-intl/test-support';
-import { translationMacro as t, raw } from 'ember-intl';
+import { t, raw } from 'ember-intl';
 
 module('Unit | Macros | t', function(hooks) {
   setupTest(hooks);
