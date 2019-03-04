@@ -5,6 +5,7 @@ import EmberObject, { get, getProperties, set } from '@ember/object';
 import { run } from '@ember/runloop';
 import { setupIntl } from 'ember-intl/test-support';
 import { intl } from 'ember-intl';
+import { __intlInjectionName } from 'ember-intl/macros/intl';
 
 module('Unit | Macros | intl', function(hooks) {
   setupTest(hooks);
@@ -31,9 +32,8 @@ module('Unit | Macros | intl', function(hooks) {
 
     get(object, 'property');
 
-    const hasIntl = k => k.startsWith('intl');
-    assert.ok(Object.getOwnPropertyNames(object).some(hasIntl), 'service is injected');
-    assert.notOk(Object.keys(object).some(hasIntl), 'service is non-enumerable');
+    assert.ok(Object.getOwnPropertyNames(object).includes(__intlInjectionName), 'service is injected');
+    assert.notOk(Object.keys(object).includes(__intlInjectionName), 'service is non-enumerable');
   });
 
   test('does not use or clobber the pre-existing intl injection', function(assert) {
