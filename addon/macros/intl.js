@@ -1,5 +1,5 @@
 import { computed, get, defineProperty } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { getOwner } from '@ember/application';
 
 export const __intlInjectionName = `intl-${Date.now().toString(36)}`;
 
@@ -9,12 +9,10 @@ export default function intl(...dependentKeysAndGetterFn) {
 
   return computed(function(propertyKey) {
     if (!get(this, __intlInjectionName)) {
-      defineProperty(this, __intlInjectionName, service('intl'));
-      Object.defineProperty(
-        this,
-        __intlInjectionName,
-        Object.assign(Object.getOwnPropertyDescriptor(this, __intlInjectionName), { enumerable: false })
-      );
+      defineProperty(this, __intlInjectionName, {
+        value: getOwner(this).lookup('service:intl'),
+        enumerable: false
+      });
     }
     const intl = get(this, __intlInjectionName);
     return getterFn.call(this, intl, propertyKey, this);
