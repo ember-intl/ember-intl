@@ -35,6 +35,14 @@ module.exports = function() {
           }
         },
         {
+          name: 'ember-lts-3.4',
+          npm: {
+            devDependencies: {
+              'ember-source': '~3.4.0'
+            }
+          }
+        },
+        {
           name: 'ember-release',
           npm: {
             devDependencies: {
@@ -56,6 +64,16 @@ module.exports = function() {
             devDependencies: {
               'ember-source': urls[2]
             }
+          }
+        },
+        // The default `.travis.yml` runs this scenario via `npm test`,
+        // not via `ember try`. It's still included here so that running
+        // `ember try:each` manually or from a customized CI config will run it
+        // along with all the other scenarios.
+        {
+          name: 'ember-default',
+          npm: {
+            devDependencies: {}
           }
         }
       ]
