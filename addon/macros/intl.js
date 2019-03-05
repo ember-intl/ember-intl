@@ -7,7 +7,7 @@ export default function intl(...dependentKeysAndGetterFn) {
   const getterFn = dependentKeysAndGetterFn.pop();
   const dependentKeys = dependentKeysAndGetterFn;
 
-  return computed(function(propertyKey) {
+  return computed(`${__intlInjectionName}.locale`, ...dependentKeys, function(propertyKey) {
     if (!get(this, __intlInjectionName)) {
       defineProperty(this, __intlInjectionName, {
         value: getOwner(this).lookup('service:intl'),
@@ -16,7 +16,5 @@ export default function intl(...dependentKeysAndGetterFn) {
     }
     const intl = get(this, __intlInjectionName);
     return getterFn.call(this, intl, propertyKey, this);
-  })
-    .readOnly()
-    .property(`${__intlInjectionName}.locale`, ...dependentKeys);
+  }).readOnly();
 }
