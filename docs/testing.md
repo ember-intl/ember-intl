@@ -141,7 +141,7 @@ module('setupIntl demo', function(hooks) {
 
 ### `setLocale(locale)`
 
-Baheaves as if you called `setLocale(locale)` on the `intl` service.
+Behaves as if you called `setLocale(locale)` on the `intl` service.
 
 ```js
 import { module, test } from 'qunit';
@@ -166,7 +166,7 @@ module('setLocale demo', function(hooks) {
 
 ### `addTranslations([locale], translations)`
 
-Baheaves as if you called `addTranslations(locale, translations)` on the `intl`
+Behaves as if you called `addTranslations(locale, translations)` on the `intl`
 service. For your convenience you can omit the `locale` parameter and it will
 default to the last currently active locale, meaning that if your current
 locales were `['en-ca', 'en-gb', 'en-us']`, the translations would be added to
