@@ -41,7 +41,7 @@
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^2.0.1",
     "calculate-cache-key-for-tree": "^1.1.0",
-    "cldr-core": "^34.0.0",
+    "cldr-core": "^35.0.0",
     "ember-auto-import": "^1.2.21",
     "ember-cli-babel": "^7.5.0",
     "extend": "^3.0.2",
