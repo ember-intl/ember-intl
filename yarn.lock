@@ -3532,9 +3532,9 @@ ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0,
     semver "^5.5.0"
 
 ember-cli-babel@^7.0.0, ember-cli-babel@^7.2.0, ember-cli-babel@^7.5.0:
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.7.2.tgz#620fd714e038d0e26425a03ee54e1e4cd55cc958"
-  integrity sha512-8iKcosP9yqb2ER1mEmOTtSiWcsCmcG9FnbOqK6eOgZpijSR27Joe90rVhPTLz6+TQMMaq4GikDAJ+XPdfXf5gQ==
+  version "7.7.3"
+  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.7.3.tgz#f94709f6727583d18685ca6773a995877b87b8a0"
+  integrity sha512-/LWwyKIoSlZQ7k52P+6agC7AhcOBqPJ5C2u27qXHVVxKvCtg6ahNuRk/KmfZmV4zkuw4EjTZxfJE1PzpFyHkXg==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-proposal-class-properties" "^7.3.4"
