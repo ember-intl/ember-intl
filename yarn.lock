@@ -2599,9 +2599,9 @@ cacheable-request@^2.1.1:
     responselike "1.0.2"
 
 calculate-cache-key-for-tree@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/calculate-cache-key-for-tree/-/calculate-cache-key-for-tree-1.2.0.tgz#2ab1e5e30052cf2afe6eacdda60bc3992143acdc"
-  integrity sha512-Wdb6PNUUP5T0mhw2Jr0SE6MFLgZDIvN4BV8kfbradHZdsKDM30lC91OLEsCtrk4S60b+CZvgdOsLeezI6L1GdQ==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/calculate-cache-key-for-tree/-/calculate-cache-key-for-tree-1.2.2.tgz#c488a599d10804ee6604b604107e6b7f368ba23b"
+  integrity sha512-AGTWIgcORPZipWv9pP9baEqFJXhD1YFhfwWVEWE5gJe25T3Fqt1It/3ZU6mjCIKOY6/y0/r4uNd0UtVO1nPArQ==
   dependencies:
     json-stable-stringify "^1.0.1"
 
