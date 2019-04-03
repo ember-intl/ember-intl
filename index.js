@@ -18,6 +18,7 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const isValidLocaleFormat = require('./lib/utils/is-valid-locale-format');
+const findEngine = require('./lib/utils/find-engine');
 
 const DEFAULT_CONFIG = {
   locales: null,
@@ -40,20 +41,25 @@ module.exports = {
   isLocalizationFramework: true,
 
   cacheKeyForTree(treeType) {
-    return calculateCacheKeyForTree(treeType, this);
+    return calculateCacheKeyForTree(treeType, this, this.package.root);
   },
 
-  included() {
+  included(parent) {
     this._super.included.apply(this, arguments);
 
-    this.app = this._findHost();
-    this.opts = this.createOptions(this.app.env, this.app.project);
-    this.isSilent = this.app.options.intl && this.app.options.intl.silent;
+    const host = this._findHost();
+    const engine = findEngine(parent);
+
+    this.package = engine || this.project;
+
+    this.appOptions = (engine || host).options || {};
+    this.opts = this.createOptions(host.env);
+    this.isSilent = host.options.intl && host.options.intl.silent;
     this.locales = this.findAvailableLocales();
   },
 
   generateTranslationTree(bundlerOptions) {
-    const translationTree = buildTree(this.project, this.opts.inputPath, this.treeGenerator);
+    const translationTree = buildTree(this.package, this.opts.inputPath, this.treeGenerator);
     const _bundlerOptions = bundlerOptions || {};
     const addon = this;
 
@@ -89,7 +95,7 @@ module.exports = {
 
   contentFor(name, config) {
     if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
-      let assetPath = this.findAssetPath(this.app.options);
+      let assetPath = this.findAssetPath(this.appOptions);
       let locales = this.locales;
       let prefix = '';
 
@@ -145,12 +151,10 @@ module.exports = {
     let trees = [];
 
     if (!this.opts.disablePolyfill) {
-      let appOptions = this.app.options || {};
-
       trees.push(
         require('./lib/broccoli/intl-polyfill')({
           locales: this.locales,
-          destDir: (appOptions.app && appOptions.app.intl) || 'assets/intl'
+          destDir: this.findAssetPath(this.appOptions)
         })
       );
     }
@@ -175,11 +179,11 @@ module.exports = {
   },
 
   readConfig(environment, project) {
-    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
-    // while older ember-cli versions return path relative to project root
-    let configPath = path.dirname(project.configPath());
+    let configPath = project.configPath ? path.dirname(project.configPath()) : path.join(project.root, 'config');
     let config = path.join(configPath, 'ember-intl.js');
 
+    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
+    // while older ember-cli versions return path relative to project root
     if (!path.isAbsolute(config)) {
       config = path.join(project.root, config);
     }
@@ -191,8 +195,8 @@ module.exports = {
     return {};
   },
 
-  createOptions(environment, project) {
-    let config = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, project));
+  createOptions(environment) {
+    let config = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, this.package));
 
     if (typeof config.requiresTranslation !== 'function') {
       this.log('Configured `requiresTranslation` is not a function. Using default implementation.');
@@ -208,11 +212,11 @@ module.exports = {
 
   findAvailableLocales() {
     let locales = [];
-    let projectInputPath = path.join(this.app.project.root, this.opts.inputPath);
+    let inputPath = path.join(this.package.root, this.opts.inputPath);
 
-    if (fs.existsSync(projectInputPath)) {
+    if (fs.existsSync(inputPath)) {
       locales.push(
-        ...walkSync(projectInputPath, {
+        ...walkSync(inputPath, {
           globs: ['**/*.{yml,yaml,json}'],
           directories: false
         }).map(function(filename) {
