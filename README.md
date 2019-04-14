@@ -53,6 +53,7 @@ This can be done at any point after your app boots.  This is typically done with
   export default Route.extend({
     intl: service(),
     beforeModel() {
+      this._super(...arguments)
       /* NOTE: if you lazily load translations, here is also where you would load them via `intl.addTranslations` */
       return this.intl.setLocale(['fr-fr', 'en-us']); /* array optional */
     }
