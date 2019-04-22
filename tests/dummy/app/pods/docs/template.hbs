@@ -1,0 +1,40 @@
+{{#docs-viewer as |viewer|}}
+  {{#viewer.nav as |nav|}}
+    {{nav.section 'Getting Started'}}
+    {{nav.item 'Overview' 'docs.getting-started.index'}}
+    {{nav.item 'Installation' 'docs.getting-started.installation'}}
+    {{nav.item 'Quickstart' 'docs.getting-started.quickstart'}}
+
+    {{nav.section 'Guide'}}
+    {{nav.item 'Translating text' 'docs.guide.translating-text'}}
+    {{nav.item 'Loading translations asynchronously' 'docs.guide.asynchronously-loading-translations'}}
+    {{nav.item 'Compact decimal formatting' 'docs.guide.compact-decimal-formatting'}}
+    {{nav.item 'Ember service API' 'docs.guide.ember-service-api'}}
+    {{nav.item 'intljs polyfill' 'docs.guide.intljs-polyfill'}}
+    {{nav.item 'Missing translations' 'docs.guide.missing-translations'}}
+    {{nav.item 'Supported pluging' 'docs.guide.supported-plugins'}}
+    {{nav.item 'Testing' 'docs.guide.testing'}}
+
+
+    {{nav.section 'Template helpers'}}
+    {{nav.item 'The t helper' 'docs.helpers.t'}}
+    {{nav.item 'format-date' 'docs.helpers.format-date'}}
+    {{nav.item 'format-message' 'docs.helpers.format-message'}}
+    {{nav.item 'format-number' 'docs.helpers.format-number'}}
+    {{nav.item 'format-relative' 'docs.helpers.format-relative'}}
+    {{nav.item 'format-time' 'docs.helpers.format-time'}}
+
+    {{nav.section 'Cookbook'}}
+    {{nav.item 'Migration from 2.0 to 3.0' 'docs.cookbook.migration-2-0-to-3-0'}}
+    {{nav.item 'Migration from 3.0 to 4.0' 'docs.cookbook.migration-3-0-to-4-0'}}
+
+    {{nav.section 'Advanced'}}
+    {{nav.item 'Addon support' 'docs.advanced.addon-support'}}
+    {{nav.item 'ember-cp-validation' 'docs.advanced.ember-cp-validation'}}
+  {{/viewer.nav}}
+
+  {{#viewer.main}}
+    {{outlet}}
+  {{/viewer.main}}
+{{/docs-viewer}}
+

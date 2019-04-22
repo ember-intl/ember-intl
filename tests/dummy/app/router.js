@@ -8,7 +8,37 @@ const Router = AddonDocsRouter.extend({
 
 Router.map(function() {
   docsRoute(this, function() {
-    this.route('usage')
+    this.route('getting-started', { path: '/' }, function() {
+      this.route('overview');
+      this.route('installation');
+      this.route('quickstart');
+    });
+    this.route('guide', function() {
+      this.route('asynchronously-loading-translations');
+      this.route('compact-decimal-formatting');
+      this.route('ember-service-api');
+      this.route('intljs-polyfill');
+      this.route('missing-translations');
+      this.route('supported-plugins');
+      this.route('testing');
+      this.route('translating-text');
+    });
+    this.route('helpers', function() {
+      this.route('t');
+      this.route('format-date');
+      this.route('format-message');
+      this.route('format-number');
+      this.route('format-relative');
+      this.route('format-time');
+    });
+    this.route('cookbook', function() {
+      this.route('migration-2-0-to-3-0');
+      this.route('migration-3-0-to-4-0');
+    });
+    this.route('advanced', function() {
+      this.route('addon-support');
+      this.route('ember-cp-validation');
+    });
   });
   this.route('smoke');
 });
