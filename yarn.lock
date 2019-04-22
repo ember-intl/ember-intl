@@ -4571,10 +4571,10 @@ ember-cli-addon-docs-esdoc@^0.2.1:
     tmp "^0.0.33"
     walk-sync "^0.3.2"
 
-ember-cli-addon-docs@^0.6.8:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/ember-cli-addon-docs/-/ember-cli-addon-docs-0.6.8.tgz#ec3ebee8ef2a4f78109a28ce3c63a0623480016d"
-  integrity sha512-Lf7luk36PX4ljAQhbRJidcYWB4/Mf/2EWmMTt8gyRx8con39dVjMI/gzBtRGayVeyN2ZFJw9uqfud0p+d28Ntw==
+ember-cli-addon-docs@^0.6.10:
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/ember-cli-addon-docs/-/ember-cli-addon-docs-0.6.10.tgz#8a69607e96586826e46e69f6f9878def9af5a07e"
+  integrity sha512-IJSBx/yXHQQ6tmQjKnM7DLbThOoGOTBgzQogGD8kmHh+dZXdkI350uSGqYo1/sD2OJg89vdEY9eW30kOYZUflQ==
   dependencies:
     "@glimmer/syntax" "^0.36.4"
     broccoli-bridge "^1.0.0"
@@ -4587,6 +4587,7 @@ ember-cli-addon-docs@^0.6.8:
     broccoli-plugin "^1.3.1"
     broccoli-source "^1.1.0"
     broccoli-stew "^2.0.0"
+    chalk "^2.4.2"
     ember-auto-import "^1.2.19"
     ember-cli-autoprefixer "^0.8.1"
     ember-cli-babel "^6.16.0"
@@ -4595,6 +4596,7 @@ ember-cli-addon-docs@^0.6.8:
     ember-cli-htmlbars-inline-precompile "^1.0.3"
     ember-cli-sass "10.0.0"
     ember-cli-string-helpers "^1.9.0"
+    ember-cli-string-utils "^1.1.0"
     ember-cli-tailwind "^0.6.2"
     ember-code-snippet "^2.4.0"
     ember-component-css "^0.6.7"
@@ -4606,6 +4608,7 @@ ember-cli-addon-docs@^0.6.8:
     ember-keyboard "^4.0.0"
     ember-modal-dialog "3.0.0-beta.3"
     ember-responsive "^3.0.0-beta.1"
+    ember-router-generator "^1.2.3"
     ember-router-scroll "^1.0.0"
     ember-svg-jar "^1.2.2"
     ember-tether "^1.0.0-beta.2"
@@ -4624,6 +4627,7 @@ ember-cli-addon-docs@^0.6.8:
     lodash "^4.17.11"
     lunr "^2.3.3"
     marked "^0.5.0"
+    pad-start "^1.0.2"
     parse-git-config "^2.0.3"
     quick-temp "^0.1.8"
     resolve "^1.8.1"
@@ -9490,6 +9494,11 @@ package-json@^4.0.1:
     registry-auth-token "^3.0.1"
     registry-url "^3.0.3"
     semver "^5.1.0"
+
+pad-start@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pad-start/-/pad-start-1.0.2.tgz#23e5bab3e96446b62816cff6f150975f040d1b14"
+  integrity sha1-I+W6s+lkRrYoFs/28VCXXwQNGxQ=
 
 pako@~1.0.5:
   version "1.0.7"
