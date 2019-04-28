@@ -2818,9 +2818,9 @@ cldr-core@^34.0.0:
   integrity sha512-PFHHn2SlqRdqD1ZC8Ddw5ZOSwJdqsmTY6fnOVsX5iMfOShqXs7QhpkIo4eOvz7rFdEivp/IrMDPs47Z4z1rD3g==
 
 cldr-core@^35.0.0:
-  version "35.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-35.0.0.tgz#a8bebdc8be9015481f46356eaa68fd72b96725cf"
-  integrity sha512-1vVvcsouHzRWlfRUywcmdt1vi7WBVLaImoYBGl9CqZfFgyZ0LfLXPe/bGo26YMjntZFqkb//Pui+XL2KhiFWYQ==
+  version "35.1.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-35.1.0.tgz#2b53b22fa49e549298ea72e2ff9d3dc7b3378dd2"
+  integrity sha512-fTexZlDx+dbjaRNOEzRMqgg9/NxxtPtdIz6CClUNA8rTXBC2RgmP7iag3Z1WCVXqjlIEvWqUvN71c0onhficIA==
 
 cldr-dates-full@^34.0.0:
   version "34.0.0"
