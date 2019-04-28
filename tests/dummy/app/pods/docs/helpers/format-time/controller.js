@@ -3,6 +3,6 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-  instant: new Date(),
+  instant: new Date()
 });
 // END-SNIPPET

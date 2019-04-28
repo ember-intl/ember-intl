@@ -38,6 +38,7 @@ Router.map(function() {
     this.route('advanced', function() {
       this.route('addon-support');
       this.route('ember-cp-validation');
+      this.route('engine-support');
     });
     this.route('legacy', function() {
       this.route('migration-2-0-to-3-0');
