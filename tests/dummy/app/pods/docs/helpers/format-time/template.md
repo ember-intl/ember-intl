@@ -1,3 +1,4 @@
+{{locale-switcher}}
 # Format Time
 
 This is just like the `{{format-date}}` helper, except it will reference any string-named format from `formats.time`.

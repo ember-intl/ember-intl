@@ -1,3 +1,4 @@
+{{locale-switcher}}
 # Format Number
 
 Formats numbers using [<code>Intl.NumberFormat</code>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat), and returns the formatted string value.

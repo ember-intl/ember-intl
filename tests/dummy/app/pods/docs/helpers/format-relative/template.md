@@ -1,3 +1,4 @@
+{{locale-switcher}}
 # Format Relative
 
 Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://github.com/yahoo/intl-relativeformat), and returns the formatted string value.

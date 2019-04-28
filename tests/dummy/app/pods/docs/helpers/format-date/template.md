@@ -1,3 +1,4 @@
+{{locale-switcher}}
 # Format Date
 
 Formats dates using [<code>Intl.DateTimeFormat</code>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat), and returns the formatted string value.

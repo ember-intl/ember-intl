@@ -1,3 +1,4 @@
+{{locale-switcher}}
 # The `t` helper
 
 The `t` helper accepts a translation key and returns a translated string.

@@ -1,3 +1,4 @@
+{{locale-switcher}}
 # Format Message
 
 Formats [ICU message syntax](https://formatjs.io/guides/message-syntax/) strings with the provided values passed as arguments to the helper/method.
