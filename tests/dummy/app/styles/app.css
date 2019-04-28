@@ -40,3 +40,37 @@ body {
 .home__cta-link {
   color: #22292f;
 }
+
+.intl-tools {
+  display: flex;
+  list-style: none;
+  padding: 0 25px 0 0;
+  max-width: fit-content;
+  position: fixed;
+  right: 220px;
+  top: 85px;
+  z-index: 300;
+}
+
+.intl-tools li + li {
+  margin-left: 10px;
+}
+.intl-tools button {
+  background-color: var(--brand-primary);
+  color: #fff;
+  padding: 10px;
+  width: 80px;
+}
+@media (max-width: 768px) {
+  .intl-tools {
+    left: 0;
+  }
+}
+
+.btn {
+  color: #fff;
+  background-color: var(--brand-primary);
+  margin-bottom: 2px;
+  margin-left: 4px;
+  padding: 10px;
+}

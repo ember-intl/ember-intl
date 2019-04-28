@@ -1,4 +1,35 @@
-# Format Relative Options
+# Format Relative
+
+Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://github.com/yahoo/intl-relativeformat), and returns the formatted string value.
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name='docs-helpers-format-relative-01-template.hbs'}}
+    {{format-relative yesterday}}
+  {{/demo.example}}
+
+  {{demo.snippet 'docs-helpers-format-relative-01-template.hbs'}}
+  {{demo.snippet 'docs-helpers-format-relative-controller.js'}}
+{{/docs-demo}}
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name='docs-helpers-format-relative-02-template.hbs'}}
+    {{format-relative instant}}
+  {{/demo.example}}
+
+  {{demo.snippet 'docs-helpers-format-relative-02-template.hbs'}}
+  {{demo.snippet 'docs-helpers-format-relative-controller.js'}}
+{{/docs-demo}}
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name='docs-helpers-format-relative-03-template.hbs'}}
+    {{format-relative now interval=1000}}
+  {{/demo.example}}
+
+  {{demo.snippet 'docs-helpers-format-relative-03-template.hbs'}}
+  {{demo.snippet 'docs-helpers-format-relative-controller.js'}}
+{{/docs-demo}}
+
+## Format Relative Options
 
 `style`
 

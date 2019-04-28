@@ -1,5 +1,9 @@
 # Translating Text
 
+## Translations
+Translations are defined in [ICU message syntax](https://formatjs.io/guides/message-syntax/) and stored in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
+
+
 ## Translate
 
 ```hbs

@@ -22,7 +22,7 @@ export default {
 ```
 
 ```js
-this.get('intl').t('product', {
+this.intl.t('product', {
   reviews: 19634
 });
 ```
@@ -66,7 +66,7 @@ product: 'The product has {reviews, shortNumber, zeroDigits} reviews'
 ```
 
 ```js
-this.get('intl').t('product', {
+this.intl.t('product', {
   reviews: 19634
 });
 ```
@@ -90,7 +90,7 @@ product: 'This investment product has {trades, shortNumber, financialFormat} tra
 ```
 
 ```js
-this.get('intl').t('product', {
+this.intl.t('product', {
   reviews: 101000
 });
 ```

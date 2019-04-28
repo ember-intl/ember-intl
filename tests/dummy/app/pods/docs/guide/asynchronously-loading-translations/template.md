@@ -29,3 +29,18 @@ module.exports = function() {
 ```
 
 ## Pushing translations into ember-intl
+
+```js
+// app/routes/application.js
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+
+export default Route.extend({
+  intl: service(),
+  
+  async beforeModel() {
+    const translations = await fetch('/translations/en-us.json');
+    this.intl.addTranslations('en-us', await translations.json());
+  }
+});
+```

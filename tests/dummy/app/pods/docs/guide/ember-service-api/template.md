@@ -16,13 +16,13 @@ Access the service from within the instance via: `this.get('intl')` or just `thi
 
 ## Properties
 
-**locale**
+### locale
 
 Set/get the current locale for your application. The value you set it to can either be a string or an array of strings. When providing an array, the `t` helper and `t` method will attempt to try all the locales in order when resolving a translation key. This is useful if you want to always fallback to another locale when a translation may be missing.
 
 When you get this property, it will always return an array of strings, even if you have set it to be just one single locale. If you are only interested in retrieving the single (or first) locale, use **`primaryLocale`**.
 
-**primaryLocale** _readOnly_
+### primaryLocale _readOnly_
 
 Returns the first locale of the currently active locales, i.e. the first object of the `locale` property.
 
@@ -30,7 +30,7 @@ Returns the first locale of the currently active locales, i.e. the first object 
 intl.get('primaryLocale') => 'en-us'
 ```
 
-**locales** _readOnly_
+### locales _readOnly_
 
 Returns an array of locales that have translations assigned to them. This works
 with both bundled translations and lazy-loaded translations.
@@ -41,7 +41,7 @@ intl.get('locales') => ['en-us', 'en-ca', 'fr-fr'];
 
 ## Methods
 
-**t** _(translationKey:String, optionalOptions:Object)_
+### t _(translationKey:String, optionalOptions:Object)_
 
 Unlike `formatMessage`, the `t` method accepts a translation key instead of a
 translation string. This method returns a translated string. To provide
@@ -65,7 +65,7 @@ export default {
 ```
 
 ```js
-this.get('intl').t('product', {
+this.intl.t('product', {
   name: 'watch',
   price: 300
 });
@@ -85,13 +85,13 @@ this.intl.t('title.header', { htmlSafe: true });
 {{t 'title.header' htmlSafe=true}}
 ```
 
-**formatMessage** _(translation:String, optionalOptions:Object)_
+### formatMessage _(translation:String, optionalOptions:Object)_
 
 `formatMessage` formats a translation string. Unlike the `t` method, it
 accepts a translation string instead of a translation key.
 
 ```js
-this.get('intl').formatMessage('{name} will cost {price, number, USD}', {
+this.intl.formatMessage('{name} will cost {price, number, USD}', {
   name: 'watch',
   price: 300
 });
@@ -101,7 +101,7 @@ Outputs:
 
 > watch will cost \$300
 
-**formatMessage (html)** _(value:String, optionalOptions:Object)_
+### formatMessage (html) _(value:String, optionalOptions:Object)_
 
 `formatMessage`, when provided the `htmlSafe` options, formats a translation string and returns an
 `Handlebars.SafeString`. This is useful for rendering translations containing
@@ -109,7 +109,7 @@ HTML markup. Since options can contain unsafe markup, all attribute hash
 values are escaped.
 
 ```js
-this.get('intl').formatMessage('<strong>{firstName}</strong> {lastName}', {
+this.intl.formatMessage('<strong>{firstName}</strong> {lastName}', {
   firstName: 'John',
   lastName: '<em>Doe</em>',
   htmlSafe: true
@@ -122,19 +122,19 @@ Outputs:
 
 Note, the Doe is escaped and does not return markup.
 
-**formatNumber** _(value:Number, optionalOptions:Object)_
+### formatNumber _(value:Number, optionalOptions:Object)_
 
 Documentation missing
 
-**formatDate** _(value:Date/Number/String, optionalOptions:Object)_
+### formatDate _(value:Date/Number/String, optionalOptions:Object)_
 
 Documentation missing
 
-**formatTime** _(value:Date/Number/String, optionalOptions:Object)_
+### formatTime _(value:Date/Number/String, optionalOptions:Object)_
 
 Documentation missing
 
-**exists** _(translationKey:String, optionalLocale:String)_
+### exists _(translationKey:String, optionalLocale:String)_
 
 Returns a boolean indicating whether the translation exists. Locale is
 optional. If omitted, the current/active locale is used in it's place.
@@ -145,17 +145,17 @@ this.get('intl').exists('foo.bar', 'en-us');
 // => true
 ```
 
-**addTranslations** _(locale:String, payload:Object)_
+### addTranslations _(locale:String, payload:Object)_
 
 Adds a translations to a given locale. Useful for registering translations at runtime.
 
-**lookup** _(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)_
+### lookup _(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)_
 
 Given a translation key, will return the translation for either the active
 locale, or the locale specified as the second argument.
 
 ```js
-this.get('intl').lookup('shared.confirmMessage', 'en-us', {
+this.intl.lookup('shared.confirmMessage', 'en-us', {
   resilient: true
 });
 ```

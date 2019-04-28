@@ -12,9 +12,9 @@ Ember-intl is based on the native [ECMAScript Internationalization API](https://
 * 🕑 Locale-aware display of relative time. I.e, `"now"`, `"yesterday"`, `"2 mo. ago"`
 * 💬 ICU Message Syntax. Pluralization and formatted segments (numbers, datetime, etc.).
 * 🌐 Support for 150+ languages.
-* 📜 Built largely on standards. [ICU message syntax][ICU] & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* 📜 Built largely on standards. [ICU message syntax](https://formatjs.io/guides/message-syntax/) & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating.
-* 🎉 [Advanced addon support](https://github.com/ember-intl/ember-intl/blob/master/docs/addon-support.md) to provide translations to the host app
+* 🎉 {{docs-link 'Advanced addon support' 'docs.advanced.addon-support'}} to provide translations to the host app
 
 ## Online Community Chat
 Join the `topic-i18n` channel [here](https://discordapp.com/invite/zT3asNS) to ask questions and chat with community members in real-time.

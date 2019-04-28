@@ -1,5 +1,28 @@
-# Format Number Options
+# Format Number
 
+Formats numbers using [<code>Intl.NumberFormat</code>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat), and returns the formatted string value.
+
+### Basic Numbers
+{{#docs-demo as |demo|}}
+  {{#demo.example name='docs-helpers-format-number-01-template.hbs'}}
+    {{format-number num}}
+  {{/demo.example}}
+
+  {{demo.snippet 'docs-helpers-format-number-01-template.hbs'}}
+  {{demo.snippet 'docs-helpers-format-number-controller.js'}}
+{{/docs-demo}}
+
+### Currency
+{{#docs-demo as |demo|}}
+  {{#demo.example name='docs-helpers-format-number-02-template.hbs'}}
+    {{format-number num style='currency' currency='USD'}}
+  {{/demo.example}}
+
+  {{demo.snippet 'docs-helpers-format-number-02-template.hbs'}}
+  {{demo.snippet 'docs-helpers-format-number-controller.js'}}
+{{/docs-demo}}
+
+## Format Number Options
 `localeMatcher`
 
 > The locale matching algorithm to use. Possible values are "lookup" and
