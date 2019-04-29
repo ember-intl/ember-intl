@@ -59,18 +59,3 @@ install:
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
-
-before_deploy:
-  - yarn build -- --environment=production
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist
-  repo: "ember-intl/ember-intl.github.io"
-  project_name: ember-intl
-  target_branch: master
-  on:
-    branch: master
-    condition: "$EMBER_TRY_SCENARIO = ember-release"
