@@ -7,6 +7,10 @@ import { A as emberArray } from '@ember/array';
 import memoize from 'fast-memoize';
 import Formatter from './-base';
 
+/**
+ * @private
+ * @hide
+ */
 export default class FormatDate extends Formatter {
   constructor() {
     super();

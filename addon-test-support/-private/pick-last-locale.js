@@ -9,5 +9,6 @@ import last from 'lodash.last';
  * @function
  * @param {string|string[]} locale
  * @return {string}
+ * @hide
  */
 export default locale => last(castArray(locale));

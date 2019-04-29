@@ -1,6 +1,10 @@
 import { computed, get, defineProperty } from '@ember/object';
 import { getOwner } from '@ember/application';
 
+/**
+ * @private
+ * @hide
+ */
 export const __intlInjectionName = `intl-${Date.now().toString(36)}`;
 
 export default function intl(...dependentKeysAndGetterFn) {

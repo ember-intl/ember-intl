@@ -9,4 +9,8 @@ const proto = Object.create(null, {
 function EmptyObject() {}
 EmptyObject.prototype = proto;
 
+/**
+ * @private
+ * @hide
+ */
 export default EmptyObject;

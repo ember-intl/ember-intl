@@ -8,6 +8,10 @@ import { A as emberArray } from '@ember/array';
 
 import Formatter from './-base';
 
+/**
+ * @private
+ * @hide
+ */
 export default class FormatNumber extends Formatter {
   get options() {
     return emberArray([
