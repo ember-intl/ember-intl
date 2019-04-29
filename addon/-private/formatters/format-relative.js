@@ -8,6 +8,10 @@ import { A as emberArray } from '@ember/array';
 import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import Formatter from './-base';
 
+/**
+ * @private
+ * @hide
+ */
 export default class FormatRelative extends Formatter {
   constructor() {
     super();

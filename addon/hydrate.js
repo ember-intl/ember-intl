@@ -3,7 +3,10 @@
 import { warn } from '@ember/debug';
 import links from './utils/links';
 
-/** @private **/
+/**
+ * @private
+ * @hide
+ */
 export function lookupByFactoryType(type, modulePrefix) {
   return Object.keys(requirejs.entries).filter(key => {
     return key.indexOf(`${modulePrefix}/${type}/`) === 0;
@@ -14,6 +17,7 @@ export function lookupByFactoryType(type, modulePrefix) {
  * Peeks into the requirejs map and registers all locale data (CLDR & Translations) found.
  *
  * @private
+ * @hide
  */
 export default function(service, owner) {
   const config = owner.resolveRegistration('config:environment');

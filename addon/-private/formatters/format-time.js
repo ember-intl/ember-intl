@@ -5,4 +5,8 @@
 
 import FormatDateFormatter from './format-date';
 
+/**
+ * @private
+ * @hide
+ */
 export default class FormatTime extends FormatDateFormatter {}

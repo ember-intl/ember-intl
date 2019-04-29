@@ -32,6 +32,10 @@ function escape(hash) {
   }, assign({}, hash));
 }
 
+/**
+ * @private
+ * @hide
+ */
 export default class FormatMessage extends Formatter {
   constructor() {
     super();

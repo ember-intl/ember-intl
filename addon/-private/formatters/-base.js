@@ -11,6 +11,10 @@ import links from '../../utils/links';
 
 const EMPTY_OBJECT = {};
 
+/**
+ * @private
+ * @hide
+ */
 export default class FormatterBase {
   get options() {
     return emberArray();

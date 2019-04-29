@@ -51,6 +51,7 @@ const stringifyOptions = (options = {}) =>
  * @param {string} key translation key
  * @param {object} [options] options and variables passed along
  * @return {string}
+ * @hide
  */
 export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptions(options)}`;
 
@@ -65,5 +66,6 @@ export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptio
  * @param {string[]} locales list of locales to search through
  * @param {object} [options] options and variables passed along
  * @return {string}
+ * @hide
  */
 export const missingMessage = (key, locales, options) => serializeTranslation(key, options);

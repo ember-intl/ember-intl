@@ -8,6 +8,7 @@ import { getContext } from '@ember/test-helpers';
  * @function
  * @param {function} fn
  * @return {function}
+ * @hide
  */
 export default fn => (...args) => {
   const { owner } = getContext();
