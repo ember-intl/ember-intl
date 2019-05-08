@@ -8,8 +8,8 @@
   "v4.0.0": {
     "path": "versions/v4.0.0",
     "name": "v4.0.0",
-    "sha": "c8c93db34d7e7a8cea59d627ea3b24aa11c04c2f",
-    "tag": "v4.0.0"
+    "sha": "f2039ca20857d1489a9628ea855882538deb7fcd",
+    "tag": null
   },
   "-latest": {
     "path": "",
