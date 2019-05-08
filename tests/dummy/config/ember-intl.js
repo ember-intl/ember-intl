@@ -63,7 +63,7 @@ module.exports = function(/* environment */) {
      * This enables asynchronously loading the translations for the active locale
      * by fetching them from the asset folder of the build.
      *
-     * See: https://github.com/ember-intl/ember-intl/blob/master/docs/asynchronously-loading-translations.md
+     * See: https://ember-intl.github.io/ember-intl/docs/guide/asynchronously-loading-translations
      *
      * @property publicOnly
      * @type {Boolean}
@@ -83,7 +83,7 @@ module.exports = function(/* environment */) {
     /**
      * Cause a build error if missing translations are detected.
      *
-     * See https://github.com/ember-intl/ember-intl/blob/master/docs/missing-translations.md#throwing-a-build-error-on-missing-required-translation
+     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#throwing-a-build-error-on-missing-required-translation
      *
      * @property errorOnMissingTranslations
      * @type {Boolean}
@@ -103,7 +103,7 @@ module.exports = function(/* environment */) {
     /**
      * Filter missing translations to ignore expected missing translations.
      *
-     * See https://github.com/ember-intl/ember-intl/blob/master/docs/missing-translations.md#requiring-translations
+     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#requiring-translations
      *
      * @property requiresTranslation
      * @type {Function}

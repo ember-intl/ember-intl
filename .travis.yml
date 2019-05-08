@@ -49,9 +49,9 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-canary
 
     - stage: deploy
-        if: (branch = master OR tag IS present) AND type = push
-        env: NAME=deploy
-        script: node_modules/.bin/ember deploy production
+      if: (branch = master OR tag IS present) AND type = push
+      env: NAME=deploy
+      script: node_modules/.bin/ember deploy production
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash

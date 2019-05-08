@@ -24,7 +24,7 @@ module.exports = {
 
     if (!isValidLocaleFormat(locale)) {
       this.ui.writeLine(
-        'Full list of supported locales: https://github.com/ember-intl/ember-intl/blob/master/docs/list-of-supported-locales.md'
+        'Full list of supported locales: https://ember-intl.github.io/ember-intl/docs/guide/supported-locales'
       );
 
       throw new SilentError(`[ember-intl] Invalid locale format: "${locale}"`);

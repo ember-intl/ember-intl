@@ -14,7 +14,7 @@
 * 🌐 Support for 150+ languages.
 * 📜 Built largely on standards. [ICU message syntax][ICU] & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating.
-* 🎉 [Advanced addon support](https://github.com/ember-intl/ember-intl/blob/master/docs/addon-support.md) to provide translations to the host app
+* 🎉 [Advanced addon support](https://ember-intl.github.io/ember-intl/docs/advanced/addon-support) to provide translations to the host app
 
 ## Installation
 
@@ -22,13 +22,15 @@
 
 ## Documentation
 
-[3.0 (current)](https://github.com/ember-intl/ember-intl/tree/master/docs)
+[4.0.0-beta (current)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
+
+[3.0](https://github.com/ember-intl/ember-intl/tree/3.x/docs)
 
 [2.0 docs](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
 
 ## Migrating from 2.0?
 
-[Here is a light touch migration guide to help you get started](https://github.com/ember-intl/ember-intl/blob/master/docs/migration-2.0-to-3.0.md).  If you uncover any gaps, submit a PR to update the migration doc or open an issue.
+[Here is a light touch migration guide to help you get started](https://ember-intl.github.io/ember-intl/docs/legacy/migration-2-0-to-3-0).  If you uncover any gaps, submit a PR to update the migration doc or open an issue.
 
 ## Documentation
 
@@ -46,7 +48,7 @@ homepage:
 
 ## Setting Locale
 
-This can be done at any point after your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')` [Read more about the Service API](https://github.com/ember-intl/ember-intl/blob/master/docs/ember-service-api.md).
+This can be done at any point after your app boots.  This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')` [Read more about the Service API](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/guide/ember-service-api).
 
 ```js
   // app/routes/application.js
@@ -114,7 +116,7 @@ export default Component.extend({
 
 #### Format Number Options
 
-[List of supported format number options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-number-options.md)
+[List of supported format number options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-number#format-number-options)
 
 ### Format Date
 
@@ -138,7 +140,7 @@ export default Component.extend({
 
 #### Format Date Options
 
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-date#format-date-time-options)
 
 ### Format Time
 
@@ -162,7 +164,7 @@ export default Component.extend({
 ```
 
 #### Format Time Options
-[List of supported format date options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-date-time-options.md)
+[List of supported format date options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-date#format-date-time-options)
 
 ### Format Relative
 
@@ -186,7 +188,7 @@ export default Component.extend({
 {{format-relative timestamp units='day'}} -> 3 days ago
 ```
 
-`units` is optional, by default will default to `best-fit`.  [A full list of supported unit options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
+`units` is optional, by default will default to `best-fit`.  [A full list of supported unit options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options)
 
 Or programmatically convert a relative time within any Ember Object.
 
@@ -210,7 +212,7 @@ Recompute the relative timestamp on an interval by passing an `interval` argumen
 
 #### Format Relative Options
 
-[List of supported format relative options](https://github.com/ember-intl/ember-intl/blob/master/docs/format-relative-options.md)
+[List of supported format relative options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options)
 
 #### Formatting a string literal ICU messages
 
@@ -297,11 +299,11 @@ Output of both the helper and the programmatic example:
 ## Asynchronously loading translations
 
 Asynchronously loading translations instead of bundling translations within `app.js` are fully-supported as of 2.x.
-https://github.com/ember-intl/ember-intl/blob/master/docs/asynchronously-loading-translations.md
+https://ember-intl.github.io/ember-intl/docs/guide/asynchronously-loading-translations
 
 ## Testing with ember-intl
 
-ember-intl ships with a number of helpers for assist with writing tests.  [Documentation](https://github.com/ember-intl/ember-intl/blob/master/docs/testing.md)
+ember-intl ships with a number of helpers for assist with writing tests.  [Documentation](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/guide/testing)
 
 
 ## Common Errors
