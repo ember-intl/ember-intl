@@ -79,8 +79,7 @@ module('Unit | Macros | intl', function(hooks) {
 
   test('listens for locale changes', function(assert) {
     assert.expect(2);
-
-    this.intl.setLocale('en-us');
+    this.intl.setLocale(['en-us']);
 
     const object = this.ContainerObject.extend({
       property: intl(intl => get(intl, 'locale'))
@@ -88,7 +87,7 @@ module('Unit | Macros | intl', function(hooks) {
 
     assert.deepEqual(get(object, 'property'), ['en-us']);
 
-    run(() => this.intl.setLocale('de-de'));
+    run(() => this.intl.setLocale(['de-de']));
     assert.deepEqual(get(object, 'property'), ['de-de']);
   });
 

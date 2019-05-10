@@ -12,7 +12,7 @@ export default Controller.extend({
   yesterday: yesterday,
   actions: {
     changeLocale(locale) {
-      this.get('intl').set('locale', locale);
+      this.get('intl').setLocale(locale);
     }
   }
 });

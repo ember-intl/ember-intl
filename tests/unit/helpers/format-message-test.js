@@ -108,7 +108,7 @@ module('format-message', function(hooks) {
 
   test('should return a formatted string with formatted numbers and dates in a different locale', async function(assert) {
     assert.expect(1);
-    this.intl.set('locale', 'de-de');
+    this.intl.setLocale(['de-de']);
     this.setProperties({
       translation: '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
       city: 'Atlanta',

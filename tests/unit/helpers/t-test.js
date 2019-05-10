@@ -4,15 +4,15 @@ import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 
-const LOCALE = 'en-us';
+const DEFAULT_LOCALE = 'en-us';
 
 module('t', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
-
-    this.intl.addTranslations(LOCALE, {
+    this.intl.setLocale([DEFAULT_LOCALE]);
+    this.intl.addTranslations(DEFAULT_LOCALE, {
       html: {
         greeting: '<strong>Hello {name} {count, number}</strong>'
       },
@@ -33,8 +33,6 @@ module('t', function(hooks) {
         }
       }
     });
-
-    this.intl.set('locale', LOCALE);
   });
 
   test('exists', function(assert) {
@@ -44,7 +42,7 @@ module('t', function(hooks) {
 
   test('should return nothing if key does not exist and allowEmpty is set to true', async function(assert) {
     assert.expect(1);
-    this.intl.addTranslations(LOCALE, { empty: '' });
+    this.intl.addTranslations(DEFAULT_LOCALE, { empty: '' });
     await render(hbs`{{t 'does.not.exist' default='empty'}}`);
     assert.equal(this.element.textContent, '');
   });
@@ -78,7 +76,7 @@ module('t', function(hooks) {
   test('locale can add message to intl service and read it', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslations(LOCALE, { oh: 'hai!' });
+    this.intl.addTranslations(DEFAULT_LOCALE, { oh: 'hai!' });
     await render(hbs`{{t 'oh'}}`);
     assert.equal(this.element.textContent, 'hai!');
   });
@@ -86,7 +84,7 @@ module('t', function(hooks) {
   test('translation value can be an empty string', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslations(LOCALE, { empty_translation: '' });
+    this.intl.addTranslations(DEFAULT_LOCALE, { empty_translation: '' });
     await render(hbs`{{t 'empty_translation'}}`);
     assert.equal(this.element.textContent, '');
   });
@@ -94,7 +92,7 @@ module('t', function(hooks) {
   test('locale can add messages object and can read it', async function(assert) {
     assert.expect(1);
 
-    this.intl.addTranslations(LOCALE, { bulk_add: 'bulk add works' });
+    this.intl.addTranslations(DEFAULT_LOCALE, { bulk_add: 'bulk add works' });
     await render(hbs`{{t 'bulk_add'}}`);
     assert.equal(this.element.textContent, 'bulk add works');
   });
@@ -107,7 +105,7 @@ module('t', function(hooks) {
 
   test('warns when no locale has been set', async function(assert) {
     assert.expect(1);
-    this.intl.set('locale', null);
+    this.intl.setLocale(null);
     await render(hbs`{{t 'foo.bar'}}`);
     assert.equal(this.element.textContent, `No locale defined.  Unable to resolve translation: "foo.bar"`);
   });

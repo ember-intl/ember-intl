@@ -2,18 +2,31 @@ import { addListener } from '@ember/object/events';
 import { registerWarnHandler } from '@ember/debug';
 import { settled } from '@ember/test-helpers';
 import { isHTMLSafe } from '@ember/string';
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import { get } from '@ember/object';
+import td from 'testdouble';
 
-const LOCALE = 'en';
+const LOCALE = 'en-us';
+
+module('service:init initialization', function(hooks) {
+  setupTest(hooks);
+
+  test('it calls `setLocale` on init', function(assert) {
+    const setLocale = td.func();
+    const Intl = this.owner.factoryFor('service:intl');
+
+    Intl.create({ setLocale });
+    assert.verify(setLocale([LOCALE]));
+  });
+});
 
 module('service:intl', function(hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function() {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.set('locale', LOCALE);
+    this.intl.setLocale([LOCALE]);
   });
 
   test('can access formatMessage without a locale set', function(assert) {
@@ -95,10 +108,10 @@ module('service:intl', function(hooks) {
 
   test('`t` should display last missing translation key when using default', function(assert) {
     assert.equal(
-      this.intl.t('does.not.exist', {
-        default: ['also.does.not.exist', 'should_also_exist']
+      this.intl.t('x', {
+        default: ['y', 'z']
       }),
-      `Missing translation "should_also_exist" for locale "en"`
+      `Missing translation "z" for locale "en-us"`
     );
   });
 
@@ -131,8 +144,8 @@ module('service:intl', function(hooks) {
     }
 
     this.intl.addObserver('locale', this.intl, increment);
-    this.intl.set('locale', 'es');
-    this.intl.set('locale', 'fr');
+    this.intl.setLocale(['es']);
+    this.intl.setLocale(['fr']);
     assert.equal(count, 2);
     assert.equal(this.intl.get('locale'), 'fr');
     this.intl.removeObserver('locale', this.intl, increment);
@@ -145,20 +158,20 @@ module('service:intl', function(hooks) {
   });
 
   test('it does not mutate t options hash', function(assert) {
-    this.intl.set('locale', LOCALE);
+    this.intl.setLocale(LOCALE);
     const obj = { bar: 'bar' };
     this.intl.t('foo', obj);
     assert.ok(typeof obj.locale === 'undefined');
   });
 
   test('`t` can be passed a null options hash', function(assert) {
-    this.intl.set('locale', LOCALE);
+    this.intl.setLocale(LOCALE);
     this.intl.t('foo', undefined);
     assert.ok(true, 'Exception was not raised');
   });
 
   test('`t` can be passed a no options argument and no warning should be emitted', async function(assert) {
-    this.intl.set('locale', LOCALE);
+    this.intl.setLocale(LOCALE);
 
     let invokedWarn = false;
     registerWarnHandler(function() {
@@ -256,7 +269,7 @@ module('service:intl', function(hooks) {
   test('updates document `lang` attribute on locale change', async function(assert) {
     assert.expect(2);
 
-    this.intl.setLocale('de');
+    this.intl.setLocale(['de']);
     await settled();
     assert.equal(document.documentElement.getAttribute('lang'), 'de');
 
@@ -270,7 +283,7 @@ module('service:intl', function(hooks) {
 
     assert.equal(this.intl.get('primaryLocale'), LOCALE);
 
-    this.intl.setLocale('de');
+    this.intl.setLocale(['de']);
     assert.equal(this.intl.get('primaryLocale'), 'de');
   });
 });
