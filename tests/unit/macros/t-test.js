@@ -51,7 +51,7 @@ module('Unit | Macros | t', function(hooks) {
     });
 
     assert.equal(this.object.get('tMacroProperty1'), 'text with no interpolations');
-    run(() => this.intl.setLocale('es'));
+    run(() => this.intl.setLocale(['es']));
     assert.equal(this.object.get('tMacroProperty1'), 'texto sin interpolaciones');
   });
 
@@ -83,7 +83,7 @@ module('Unit | Macros | t', function(hooks) {
 
     assert.strictEqual(object.get('macroProperty'), 'text with no interpolations', 'translates the text');
 
-    run(() => this.intl.setLocale('es'));
+    run(() => this.intl.setLocale(['es']));
 
     assert.strictEqual(object.get('macroProperty'), 'texto sin interpolaciones', 'updates, when the locale changes');
   });

@@ -45,7 +45,7 @@ hello:
 
 **Setup your application-wide locale**
 
-You will need to define what locale your app will use by default. This can be done at any point after your app boots. This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale('en-us')`.
+You will need to define what locale your app will use by default. This can be done at any point after your app boots. This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale(['en-us'])`.
 
 ```js
 // app/routes/application.js
@@ -56,7 +56,7 @@ export default Route.extend({
   intl: service(),
   beforeModel() {
     this._super(...arguments);
-    return this.intl.setLocale('en-us');
+    return this.intl.setLocale(['en-us']);
   }
 });
 ```

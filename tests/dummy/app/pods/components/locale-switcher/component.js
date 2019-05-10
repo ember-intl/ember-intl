@@ -5,7 +5,7 @@ export default Component.extend({
   intl: service(),
   actions: {
     changeLocale(locale) {
-      return this.intl.set('locale', locale);
+      return this.intl.setLocale(locale);
     }
   }
 });

@@ -75,7 +75,7 @@ module('format-relative', function(hooks) {
     // This adds tests to validate locale resolution
     // here we are providing the first two locales as invalid locales (unregistered)
     // so it should resolve to the locale IntlRelativeFormat has data for, de-de
-    this.set('locale', ['foo', 'bar', 'de-de']);
+    this.intl.setLocale(['foo', 'bar', 'de-de']);
     await render(hbs`{{format-relative date locale=locale}}`);
     assert.equal(this.element.textContent, 'jetzt');
   });

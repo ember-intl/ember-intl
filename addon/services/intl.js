@@ -25,7 +25,7 @@ import getDOM from '../utils/get-dom';
 
 export default Service.extend(Evented, {
   /** @private **/
-  _locale: ['en-us'],
+  _locale: null,
 
   /** @private **/
   _adapter: null,
@@ -46,8 +46,6 @@ export default Service.extend(Evented, {
         cancel(this._timer);
         this._timer = next(() => this.trigger('localeChanged'));
         this.updateDocumentLanguage(this._locale);
-
-        return this._locale;
       }
 
       return this._locale;
@@ -58,15 +56,12 @@ export default Service.extend(Evented, {
   }),
 
   /**
-   * Returns the first locale of the currently
-   * active locales
+   * Returns the first locale of the currently active locales
    *
    * @property primaryLocale
    * @public
    */
-  primaryLocale: computed('locale', function() {
-    return this.get('locale')[0];
-  }).readOnly(),
+  primaryLocale: computed.readOnly('locale.0'),
 
   /** @public **/
   formatRelative: formatter('relative'),
@@ -93,7 +88,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   init() {
-    this._super();
+    this._super(...arguments);
 
     if (typeof Intl === 'undefined') {
       warn(`[ember-intl] Intl API was not found.\nSee: ${links.polyfill}`, false, {
@@ -101,6 +96,9 @@ export default Service.extend(Evented, {
       });
     }
 
+    const initialLocale = get(this, 'locale') || ['en-us'];
+
+    this.setLocale(initialLocale);
     this._owner = getOwner(this);
     this._adapter = this._owner.lookup('ember-intl@adapter:default');
 
@@ -182,9 +180,8 @@ export default Service.extend(Evented, {
   },
 
   /**
-   * A utility method for registering CLDR data for
-   * intl-messageformat and intl-relativeformat.  This data is derived
-   * from formatjs-extract-cldr-data
+   * A utility method for registering CLDR data against
+   * intl-messageformat and intl-relativeformat.
    *
    * @method addLocaleData
    * @param {Object} locale data
