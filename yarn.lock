@@ -2906,9 +2906,9 @@ broccoli-source@^1.1.0:
   integrity sha1-VPDoLItz9GWAy7xPV48LMvyo+Ak=
 
 broccoli-source@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/broccoli-source/-/broccoli-source-2.0.0.tgz#02d3f369fd0ef1b25c0b1646cc3c87d4c7f76cc0"
-  integrity sha512-2rRtM8WGvZFwLY+HdBflnri/r44ldx5Kc5QPlW5rRREzGt61iP22WnJzM4KY509KtDvQCeb+QDlRgxE+RkjE7A==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/broccoli-source/-/broccoli-source-2.1.1.tgz#5395704518c3cfb73ce7586590ef804332e55fe0"
+  integrity sha512-yMWSaBHza7iwLD5wy7329CeLN3h2668DB2Ky5goi2E/NBsB9YLrr9Tt29ZiNWa3r2P1XiIelV7TuTK4SzesnOA==
 
 broccoli-static-compiler@^0.1.4:
   version "0.1.4"
