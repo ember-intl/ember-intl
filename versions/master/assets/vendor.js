@@ -89273,6 +89273,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       // removes the internal model from the array and Ember arrays will always
       // `objectAt(0)` and `objectAt(len -1)` to check whether `firstObject` or
       // `lastObject` have changed.  When this happens we don't want those
+      // models to rematerialize their records.
       return this._isDematerializing || this.hasScheduledDestroy() || this.isDestroyed || this.currentState.stateName === 'root.deleted.saved' || this.isEmpty();
     };
 
@@ -95093,6 +95094,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       var newRecordDatas = this.currentState.filter( // only add new internalModels which are not yet in the canonical state of this
       // relationship (a new internalModel can be in the canonical state if it has
       // been 'acknowleged' to be in the relationship via a store.push)
+      //TODO Igor deal with this
       function (recordData) {
         return recordData.isNew() && toSet.indexOf(recordData) === -1;
       });
@@ -113501,6 +113503,7 @@ define("ember-resolver/features", [], function () {
     init: function init() {
       var _this = this;
 
+      this._super.apply(this, arguments);
       var owner = Ember.getOwner(this);
       var breakpoints = Ember.getOwner(this).lookup('breakpoints:main');
       if (breakpoints) {
