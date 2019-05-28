@@ -215,7 +215,7 @@ it becomes especially useful, because you now don't need to worry about how to
 provide translations or mock them for tests.
 
 Your case can now focus on testing what you actually want to test: that the
-correct translation is rendered with the corect variables. And not that the
+correct translation is rendered with the correct variables. And not that the
 translation messages are there and correctly interpolated by ember-intl.
 
 ```js
