@@ -39,6 +39,16 @@ module.exports = {
   opts: null,
   isLocalizationFramework: true,
 
+  options: {
+    autoImport:{
+      webpack: {
+        node: {
+          global: true
+        }
+      }
+    }
+  },
+
   cacheKeyForTree(treeType) {
     return calculateCacheKeyForTree(treeType, this);
   },
