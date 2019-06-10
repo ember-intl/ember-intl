@@ -40,7 +40,7 @@ module.exports = {
   isLocalizationFramework: true,
 
   options: {
-    autoImport:{
+    autoImport: {
       webpack: {
         node: {
           global: true
