@@ -75653,17 +75653,18 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
   }
 });
-;define('ember-cli-addon-docs/adapters/-addon-docs', ['exports', 'ember-data', 'dummy/config/environment'], function (exports, _emberData, _environment) {
-  'use strict';
+;define("ember-cli-addon-docs/adapters/-addon-docs", ["exports", "ember-data", "dummy/config/environment"], function (_exports, _emberData, _environment) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _emberData.default.Adapter.extend({
-    defaultSerializer: '-addon-docs',
-    namespace: _environment.default.rootURL.replace(/\/$/, '') + '/docs',
-    docsFetch: Ember.inject.service(),
+  _exports.default = void 0;
 
+  var _default = _emberData.default.Adapter.extend({
+    defaultSerializer: '-addon-docs',
+    namespace: "".concat(_environment.default.rootURL.replace(/\/$/, ''), "/docs"),
+    docsFetch: Ember.inject.service(),
     shouldBackgroundReloadAll: function shouldBackgroundReloadAll() {
       return false;
     },
@@ -75672,110 +75673,135 @@ lunr.QueryParser.parseBoost = function (parser) {
     },
     findRecord: function findRecord(store, modelClass, id, snapshot) {
       if (modelClass.modelName === 'project') {
-        return this.get('docsFetch').fetch({ url: this.namespace + '/' + id + '.json' }).json();
+        return this.get('docsFetch').fetch({
+          url: "".concat(this.namespace, "/").concat(id, ".json")
+        }).json();
       } else {
         return store.peekRecord(modelClass.modelName, id);
       }
     }
   });
-});
-;define('ember-cli-addon-docs/adapters/class', ['exports', 'ember-cli-addon-docs/adapters/-addon-docs'], function (exports, _addonDocs) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = _addonDocs.default.extend();
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/adapters/component', ['exports', 'ember-cli-addon-docs/adapters/-addon-docs'], function (exports, _addonDocs) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = _addonDocs.default.extend();
-});
-;define('ember-cli-addon-docs/adapters/module', ['exports', 'ember-cli-addon-docs/adapters/-addon-docs'], function (exports, _addonDocs) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = _addonDocs.default.extend();
-});
-;define('ember-cli-addon-docs/adapters/project', ['exports', 'ember-cli-addon-docs/adapters/-addon-docs'], function (exports, _addonDocs) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = _addonDocs.default.extend();
-});
-;define("ember-cli-addon-docs/addon-files", ["exports"], function (exports) {
+;define("ember-cli-addon-docs/adapters/class", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = ["-private/empty-object.js", "-private/formatters/-base.js", "-private/formatters/format-date.js", "-private/formatters/format-message.js", "-private/formatters/format-number.js", "-private/formatters/format-relative.js", "-private/formatters/format-time.js", "-private/formatters/index.js", "-private/is-array-equal.js", "-private/normalize-locale.js", "adapters/default.js", "helpers/-format-base.js", "helpers/format-date.js", "helpers/format-message.js", "helpers/format-number.js", "helpers/format-relative.js", "helpers/format-time.js", "helpers/t.js", "hydrate.js", "index.js", "macros/index.js", "macros/intl.js", "macros/t.js", "models/translation.js", "services/intl.js", "utils/get-dom.js", "utils/links.js", "utils/missing-message.js"];
+  _exports.default = void 0;
+
+  var _default = _addonDocs.default.extend();
+
+  _exports.default = _default;
 });
-;define("ember-cli-addon-docs/app-files", ["exports"], function (exports) {
+;define("ember-cli-addon-docs/adapters/component", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = ["app.js", "formats.js", "index.html", "pods/application/template.hbs", "pods/components/locale-switcher/component.js", "pods/components/locale-switcher/template.hbs", "pods/docs/advanced/addon-support/template.md", "pods/docs/advanced/ember-cp-validation/template.md", "pods/docs/advanced/engine-support/template.md", "pods/docs/cookbook/common-errors/template.md", "pods/docs/cookbook/migration-3-0-to-4-0/template.md", "pods/docs/getting-started/index/template.md", "pods/docs/getting-started/installation/template.md", "pods/docs/getting-started/quickstart/template.md", "pods/docs/guide/asynchronously-loading-translations/template.md", "pods/docs/guide/compact-decimal-formatting/template.md", "pods/docs/guide/ember-service-api/template.md", "pods/docs/guide/intljs-polyfill/template.md", "pods/docs/guide/list-of-supported-locales/template.md", "pods/docs/guide/missing-translations/template.md", "pods/docs/guide/supported-locales/template.md", "pods/docs/guide/testing/template.md", "pods/docs/guide/translating-text/template.md", "pods/docs/helpers/format-date/controller.js", "pods/docs/helpers/format-date/template.md", "pods/docs/helpers/format-message/controller.js", "pods/docs/helpers/format-message/template.md", "pods/docs/helpers/format-number/controller.js", "pods/docs/helpers/format-number/template.md", "pods/docs/helpers/format-relative/controller.js", "pods/docs/helpers/format-relative/template.md", "pods/docs/helpers/format-time/controller.js", "pods/docs/helpers/format-time/template.md", "pods/docs/helpers/index/template.md", "pods/docs/helpers/t/controller.js", "pods/docs/helpers/t/template.md", "pods/docs/legacy/migration-2-0-to-3-0/template.md", "pods/docs/legacy/v2/template.md", "pods/docs/template.hbs", "pods/index/template.hbs", "pods/smoke/controller.js", "pods/smoke/template.hbs", "resolver.js", "router.js", "routes/application.js", "styles/app.css"];
-});
-;define('ember-cli-addon-docs/breakpoints', ['exports'], function (exports) {
-  'use strict';
+  _exports.default = void 0;
 
-  Object.defineProperty(exports, "__esModule", {
+  var _default = _addonDocs.default.extend();
+
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/adapters/module", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  var _default = _addonDocs.default.extend();
+
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/adapters/project", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = _addonDocs.default.extend();
+
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/addon-files", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = ["-private/empty-object.js", "-private/formatters/-base.js", "-private/formatters/format-date.js", "-private/formatters/format-message.js", "-private/formatters/format-number.js", "-private/formatters/format-relative.js", "-private/formatters/format-time.js", "-private/formatters/index.js", "-private/is-array-equal.js", "-private/normalize-locale.js", "adapters/default.js", "helpers/-format-base.js", "helpers/format-date.js", "helpers/format-message.js", "helpers/format-number.js", "helpers/format-relative.js", "helpers/format-time.js", "helpers/t.js", "hydrate.js", "index.js", "macros/index.js", "macros/intl.js", "macros/t.js", "models/translation.js", "services/intl.js", "utils/get-dom.js", "utils/links.js", "utils/missing-message.js"];
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/app-files", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = ["app.js", "formats.js", "index.html", "pods/application/template.hbs", "pods/components/locale-switcher/component.js", "pods/components/locale-switcher/template.hbs", "pods/docs/advanced/addon-support/template.md", "pods/docs/advanced/ember-cp-validation/template.md", "pods/docs/advanced/engine-support/template.md", "pods/docs/cookbook/common-errors/template.md", "pods/docs/cookbook/migration-3-0-to-4-0/template.md", "pods/docs/getting-started/index/template.md", "pods/docs/getting-started/installation/template.md", "pods/docs/getting-started/quickstart/template.md", "pods/docs/guide/asynchronously-loading-translations/template.md", "pods/docs/guide/compact-decimal-formatting/template.md", "pods/docs/guide/ember-service-api/template.md", "pods/docs/guide/intljs-polyfill/template.md", "pods/docs/guide/list-of-supported-locales/template.md", "pods/docs/guide/missing-translations/template.md", "pods/docs/guide/supported-locales/template.md", "pods/docs/guide/testing/template.md", "pods/docs/guide/translating-text/template.md", "pods/docs/helpers/format-date/controller.js", "pods/docs/helpers/format-date/template.md", "pods/docs/helpers/format-message/controller.js", "pods/docs/helpers/format-message/template.md", "pods/docs/helpers/format-number/controller.js", "pods/docs/helpers/format-number/template.md", "pods/docs/helpers/format-relative/controller.js", "pods/docs/helpers/format-relative/template.md", "pods/docs/helpers/format-time/controller.js", "pods/docs/helpers/format-time/template.md", "pods/docs/helpers/index/template.md", "pods/docs/helpers/t/controller.js", "pods/docs/helpers/t/template.md", "pods/docs/legacy/migration-2-0-to-3-0/template.md", "pods/docs/legacy/v2/template.md", "pods/docs/template.hbs", "pods/index/template.hbs", "pods/smoke/controller.js", "pods/smoke/template.hbs", "resolver.js", "router.js", "routes/application.js", "styles/app.css"];
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/breakpoints", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
     mobile: '(max-width: 767px)',
     tablet: '(min-width: 768px) and (max-width: 991px)',
     desktop: '(min-width: 992px) and (max-width: 1200px)'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/api/x-class/component', ['exports', 'ember-cli-addon-docs/utils/computed', 'ember-cli-addon-docs/components/api/x-class/template'], function (exports, _computed, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/api/x-class/component", ["exports", "ember-cli-addon-docs/utils/computed", "dummy/config/environment", "ember-cli-addon-docs/components/api/x-class/template"], function (_exports, _computed, _environment, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+  var showImportPaths = _environment.default['ember-cli-addon-docs'].showImportPaths;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
+    showImportPaths: showImportPaths,
     showInherited: false,
     showProtected: false,
     showPrivate: false,
     showDeprecated: false,
-
     accessors: (0, _computed.memberFilter)('class', 'accessors'),
     methods: (0, _computed.memberFilter)('class', 'methods'),
     fields: (0, _computed.memberFilter)('class', 'fields'),
-
     hasToggles: Ember.computed.or('component.hasInherited', 'component.hasProtected', 'component.hasPrivate', 'component.hasDeprecated'),
-
     hasContents: Ember.computed('class', {
       get: function get() {
         var klass = this.get('class');
-
         return klass.get('allFields.length') > 0 || klass.get('allAccessors.length') > 0 || klass.get('allMethods.length') > 0;
       }
     }),
-
     actions: {
       updateFilter: function updateFilter(filter, _ref) {
         var checked = _ref.target.checked;
-
-        this.set('show' + Ember.String.capitalize(filter), checked);
+        this.set("show".concat(Ember.String.capitalize(filter)), checked);
       }
     }
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/api/x-class/template", ["exports"], function (_exports) {
   "use strict";
@@ -75786,8 +75812,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "gcPp0QNQ",
-    "block": "{\"symbols\":[\"panel\"],\"statements\":[[7,\"h1\"],[11,\"class\",\"docs-h1\"],[11,\"data-test-class-name\",\"\"],[9],[1,[25,[\"class\",\"name\"]],false],[10],[0,\"\\n\\n\"],[7,\"div\"],[11,\"data-test-class-description\",\"\"],[9],[1,[25,[\"class\",\"description\"]],true],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[25,[\"class\",\"exportType\"]],[25,[\"hasToggles\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[25,[\"class\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L9:C9) \"],null]],null,{\"statements\":[[0,\"        Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[1,[29,\"api/x-import-path\",null,[[\"item\"],[[25,[\"class\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L17:C9) \"],null]],null,{\"statements\":[[0,\"        Show\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[0,\"        \"],[1,[29,\"api/x-toggles\",null,[[\"toggles\"],[[29,\"hash\",null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[29,\"if\",[[25,[\"class\",\"hasInherited\"]],[25,[\"showInherited\"]]],null],[29,\"if\",[[25,[\"class\",\"hasProtected\"]],[25,[\"showProtected\"]]],null],[29,\"if\",[[25,[\"class\",\"hasPrivate\"]],[25,[\"showPrivate\"]]],null],[29,\"if\",[[25,[\"class\",\"hasDeprecated\"]],[25,[\"showDeprecated\"]]],null]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasContents\"]]],null,{\"statements\":[[0,\"  \"],[1,[29,\"api/x-sections\",null,[[\"sections\"],[[29,\"hash\",null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[25,[\"class\",\"constructors\"]],[25,[\"class\",\"fields\"]],[25,[\"class\",\"accessors\"]],[25,[\"class\",\"methods\"]]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "YepyHnQU",
+    "block": "{\"symbols\":[\"panel\"],\"statements\":[[7,\"h1\"],[11,\"class\",\"docs-h1\"],[11,\"data-test-class-name\",\"\"],[9],[1,[25,[\"class\",\"name\"]],false],[10],[0,\"\\n\\n\"],[7,\"div\"],[11,\"data-test-class-description\",\"\"],[9],[1,[25,[\"class\",\"description\"]],true],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[29,\"and\",[[25,[\"class\",\"exportType\"]],[25,[\"showImportPaths\"]]],null],[25,[\"hasToggles\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[25,[\"class\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L9:C9) \"],null]],null,{\"statements\":[[0,\"        Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[1,[29,\"api/x-import-path\",null,[[\"item\"],[[25,[\"class\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L17:C9) \"],null]],null,{\"statements\":[[0,\"        Show\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[0,\"        \"],[1,[29,\"api/x-toggles\",null,[[\"toggles\"],[[29,\"hash\",null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[29,\"if\",[[25,[\"class\",\"hasInherited\"]],[25,[\"showInherited\"]]],null],[29,\"if\",[[25,[\"class\",\"hasProtected\"]],[25,[\"showProtected\"]]],null],[29,\"if\",[[25,[\"class\",\"hasPrivate\"]],[25,[\"showPrivate\"]]],null],[29,\"if\",[[25,[\"class\",\"hasDeprecated\"]],[25,[\"showDeprecated\"]]],null]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasContents\"]]],null,{\"statements\":[[0,\"  \"],[1,[29,\"api/x-sections\",null,[[\"sections\"],[[29,\"hash\",null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[25,[\"class\",\"constructors\"]],[25,[\"class\",\"fields\"]],[25,[\"class\",\"accessors\"]],[25,[\"class\",\"methods\"]]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-class/template.hbs"
     }
@@ -75795,47 +75821,43 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/api/x-component/component', ['exports', 'ember-cli-addon-docs/utils/computed', 'ember-cli-addon-docs/components/api/x-component/template'], function (exports, _computed, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/api/x-component/component", ["exports", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/components/api/x-component/template"], function (_exports, _computed, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
     showInherited: false,
     showInternal: false,
     showProtected: false,
     showPrivate: false,
     showDeprecated: false,
-
     yields: Ember.computed.alias('component.overloadedYields'),
-
     arguments: (0, _computed.memberFilter)('component', 'arguments'),
     accessors: (0, _computed.memberFilter)('component', 'accessors'),
     methods: (0, _computed.memberFilter)('component', 'methods'),
     fields: (0, _computed.memberFilter)('component', 'fields'),
-
     hasToggles: Ember.computed.or('component.hasInherited', 'component.hasInternal', 'component.hasProtected', 'component.hasPrivate', 'component.hasDeprecated'),
-
     hasContents: Ember.computed('component', {
       get: function get() {
         var component = this.get('component');
-
         return component.get('overloadedYields.length') > 0 || component.get('arguments.length') > 0 || component.get('fields.length') > 0 || component.get('accessors.length') > 0 || component.get('methods.length') > 0;
       }
     }),
-
     actions: {
       updateFilter: function updateFilter(filter, _ref) {
         var checked = _ref.target.checked;
-
-        this.set('show' + Ember.String.capitalize(filter), checked);
+        this.set("show".concat(Ember.String.capitalize(filter)), checked);
       }
     }
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/api/x-component/template", ["exports"], function (_exports) {
   "use strict";
@@ -75855,13 +75877,15 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/api/x-import-path/component', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/components/api/x-import-path/component", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
       "id": "5XS89d6P",
@@ -75869,14 +75893,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       "meta": {}
     })
   });
-});
-;define('ember-cli-addon-docs/components/api/x-meta-panel/component', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/api/x-meta-panel/component", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
       "id": "WJArn20f",
@@ -75884,14 +75912,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       "meta": {}
     })
   });
-});
-;define('ember-cli-addon-docs/components/api/x-meta-panel/header/component', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/api/x-meta-panel/header/component", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
       "id": "hPd2YWF0",
@@ -75899,17 +75931,23 @@ lunr.QueryParser.parseBoost = function (parser) {
       "meta": {}
     })
   });
-});
-;define('ember-cli-addon-docs/components/api/x-module/component', ['exports', 'ember-cli-addon-docs/components/api/x-module/template'], function (exports, _template) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/api/x-module/component", ["exports", "ember-cli-addon-docs/components/api/x-module/template"], function (_exports, _template) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: ''
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/api/x-module/template", ["exports"], function (_exports) {
   "use strict";
@@ -75929,15 +75967,23 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/api/x-section/component', ['exports', 'ember-cli-addon-docs/components/api/x-section/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/api/x-section/component", ["exports", "ember-cli-addon-docs/components/api/x-section/template", "dummy/config/environment"], function (_exports, _template, _environment) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+  var showImportPaths = _environment.default['ember-cli-addon-docs'].showImportPaths;
+  /**
+    @class Api/XSection
+    @hide
+  */
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
+    showImportPaths: showImportPaths,
 
     /**
      * Params shouldn't be displayed when there are no descriptions and no subparams,
@@ -75948,12 +75994,13 @@ lunr.QueryParser.parseBoost = function (parser) {
      */
     shouldDisplayParams: Ember.computed('item.params.[]', function () {
       var params = this.get('item.params') || [];
-
       return params.some(function (p) {
         return p.description || p.name.includes('.');
       });
     })
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/api/x-section/template", ["exports"], function (_exports) {
   "use strict";
@@ -75964,8 +76011,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "g57gLvPV",
-    "block": "{\"symbols\":[\"panel\",\"param\"],\"statements\":[[7,\"div\"],[11,\"data-test-item\",\"\"],[11,\"class\",\"docs-pb-8\"],[9],[0,\"\\n  \"],[7,\"h3\"],[12,\"id\",[25,[\"item\",\"name\"]]],[12,\"data-text\",[30,[[25,[\"item\",\"name\"]]]]],[11,\"data-test-item-header\",\"\"],[11,\"class\",\"docs-h3 docs-font-mono docs-font-normal\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"eq\",[[25,[\"item\",\"exportType\"]],\"default\"],null]],null,{\"statements\":[[0,\"      \"],[7,\"span\"],[11,\"class\",\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[9],[0,\"\\n        Default\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[29,\"or\",[[25,[\"item\",\"isClass\"]],[25,[\"item\",\"isComponent\"]]],null]],null,{\"statements\":[[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"hover:underline\",\"docs.api.item\",[29,\"concat\",[\"modules/\",[25,[\"item\",\"id\"]]],null]]],{\"statements\":[[0,\"        \"],[7,\"strong\"],[9],[1,[25,[\"item\",\"name\"]],false],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"a\"],[12,\"href\",[30,[\"#\",[25,[\"item\",\"name\"]]]]],[11,\"class\",\"heading-anchor\"],[9],[0,\"\\n        \"],[1,[29,\"type-signature\",[[25,[\"item\"]]],null],false],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[10],[0,\"\\n\\n  \"],[7,\"p\"],[11,\"data-test-item-description\",\"\"],[9],[0,\"\\n    \"],[1,[25,[\"item\",\"description\"]],true],[0,\"\\n  \"],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[25,[\"item\",\"exportType\"]],[25,[\"shouldDisplayParams\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[25,[\"item\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L32:C11) \"],null]],null,{\"statements\":[[0,\"          Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[1,[29,\"api/x-import-path\",null,[[\"item\"],[[25,[\"item\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"shouldDisplayParams\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L40:C11) \"],null]],null,{\"statements\":[[0,\"          Params\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[7,\"table\"],[11,\"class\",\"docs-mb-6\"],[11,\"data-test-item-params\",\"\"],[9],[0,\"\\n          \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[25,[\"item\",\"params\"]]],null,{\"statements\":[[0,\"              \"],[7,\"tr\"],[11,\"data-test-item-param\",\"\"],[9],[0,\"\\n                \"],[7,\"td\"],[9],[7,\"span\"],[11,\"class\",\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[9],[1,[24,2,[\"name\"]],false],[10],[10],[0,\"\\n                \"],[7,\"td\"],[9],[7,\"span\"],[11,\"class\",\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[9],[1,[24,2,[\"type\"]],false],[10],[10],[0,\"\\n                \"],[7,\"td\"],[11,\"class\",\"docs-pl-2\"],[9],[1,[24,2,[\"description\"]],false],[10],[0,\"\\n              \"],[10],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "ApCSXm6q",
+    "block": "{\"symbols\":[\"panel\",\"param\"],\"statements\":[[7,\"div\"],[11,\"data-test-item\",\"\"],[11,\"class\",\"docs-pb-8\"],[9],[0,\"\\n  \"],[7,\"h3\"],[12,\"id\",[25,[\"item\",\"name\"]]],[12,\"data-text\",[30,[[25,[\"item\",\"name\"]]]]],[11,\"data-test-item-header\",\"\"],[11,\"class\",\"docs-h3 docs-font-mono docs-font-normal\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"eq\",[[25,[\"item\",\"exportType\"]],\"default\"],null]],null,{\"statements\":[[0,\"      \"],[7,\"span\"],[11,\"class\",\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[9],[0,\"\\n        Default\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[29,\"or\",[[25,[\"item\",\"isClass\"]],[25,[\"item\",\"isComponent\"]]],null]],null,{\"statements\":[[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"hover:underline\",\"docs.api.item\",[29,\"concat\",[\"modules/\",[25,[\"item\",\"id\"]]],null]]],{\"statements\":[[0,\"        \"],[7,\"strong\"],[9],[1,[25,[\"item\",\"name\"]],false],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"a\"],[12,\"href\",[30,[\"#\",[25,[\"item\",\"name\"]]]]],[11,\"class\",\"heading-anchor\"],[9],[0,\"\\n        \"],[1,[29,\"type-signature\",[[25,[\"item\"]]],null],false],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[10],[0,\"\\n\\n  \"],[7,\"p\"],[11,\"data-test-item-description\",\"\"],[9],[0,\"\\n    \"],[1,[25,[\"item\",\"description\"]],true],[0,\"\\n  \"],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[29,\"and\",[[25,[\"item\",\"exportType\"]],[25,[\"showImportPaths\"]]],null],[25,[\"shouldDisplayParams\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[25,[\"item\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L32:C11) \"],null]],null,{\"statements\":[[0,\"          Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[1,[29,\"api/x-import-path\",null,[[\"item\"],[[25,[\"item\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"shouldDisplayParams\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L40:C11) \"],null]],null,{\"statements\":[[0,\"          Params\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[7,\"table\"],[11,\"class\",\"docs-mb-6\"],[11,\"data-test-item-params\",\"\"],[9],[0,\"\\n          \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[25,[\"item\",\"params\"]]],null,{\"statements\":[[0,\"              \"],[7,\"tr\"],[11,\"data-test-item-param\",\"\"],[9],[0,\"\\n                \"],[7,\"td\"],[9],[7,\"span\"],[11,\"class\",\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[9],[1,[24,2,[\"name\"]],false],[10],[10],[0,\"\\n                \"],[7,\"td\"],[9],[7,\"span\"],[11,\"class\",\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[9],[1,[24,2,[\"type\"]],false],[10],[10],[0,\"\\n                \"],[7,\"td\"],[11,\"class\",\"docs-pl-2\"],[9],[1,[24,2,[\"description\"]],false],[10],[0,\"\\n              \"],[10],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[10],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-section/template.hbs"
     }
@@ -75973,13 +76020,15 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/api/x-sections/component', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/components/api/x-sections/component", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
       "id": "FTK7NNF+",
@@ -75987,17 +76036,23 @@ lunr.QueryParser.parseBoost = function (parser) {
       "meta": {}
     })
   });
-});
-;define('ember-cli-addon-docs/components/api/x-toggles/component', ['exports', 'ember-cli-addon-docs/components/api/x-toggles/template'], function (exports, _template) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/api/x-toggles/component", ["exports", "ember-cli-addon-docs/components/api/x-toggles/template"], function (_exports, _template) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: ''
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/api/x-toggles/template", ["exports"], function (_exports) {
   "use strict";
@@ -76017,22 +76072,46 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-demo/component', ['exports', 'ember-cli-addon-docs/components/docs-demo/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-demo/component", ["exports", "ember-cli-addon-docs/components/docs-demo/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  /**
+    A demo component that can be used to demonstrate code samples. Comes
+    with built in snippet handling, so you don't have to write code twice!
+  
+    ```hbs
+    {{#docs-demo as |demo|}}
+      {{#demo.example name='docs-demo-basic.hbs'}}
+        <p>I am a <strong>handlebars</strong> template!</p>
+        <p>The value is: {{val}}</p>
+        <div>
+          {{input value=val}}
+        </div>
+      {{/demo.example}}
+  
+      {{demo.snippet 'docs-demo-basic.hbs'}}
+    {{/docs-demo}}
+    ```
+  
+    @class DocsDemo
+    @yield {Hash} demo
+    @yield {Component} demo.example
+    @yield {Component} demo.snippet
+    @yield {Component} demo.liveExample
+  */
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
     init: function init() {
       this._super.apply(this, arguments);
 
       this.set('snippetRegistrations', Ember.A());
     },
-
 
     /**
       The snippets registered with this demo component
@@ -76053,13 +76132,13 @@ lunr.QueryParser.parseBoost = function (parser) {
       var _this = this;
 
       var activeSnippet = this.get('activeSnippet');
-
       return this.get('snippetRegistrations').map(function (_ref) {
         var name = _ref.name,
             label = _ref.label,
             language = _ref.language;
 
         var defaults = _this.defaultsFromName(name);
+
         return {
           name: name,
           isActive: activeSnippet === name,
@@ -76076,35 +76155,40 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {Object}
     */
     defaultsFromName: function defaultsFromName(name) {
-      var label = void 0,
-          language = void 0;
+      var label, language;
+
       switch (name.split('.').pop()) {
         case 'js':
           label = 'controller.js';
           language = 'javascript';
           break;
+
         case 'css':
           label = 'styles.css';
           language = 'css';
           break;
+
         case 'scss':
           label = 'styles.scss';
           language = 'sass';
           break;
+
         case 'hbs':
         case 'md':
           label = 'template.hbs';
           language = 'htmlbars';
           break;
+
         default:
           label = 'script.js';
           break;
       }
 
-      return { label: label, language: language };
+      return {
+        label: label,
+        language: language
+      };
     },
-
-
     actions: {
       /**
         Registers snippets with the demo component and sets it to the active
@@ -76120,7 +76204,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       },
 
-
       /**
         Sets the active snippet
          @action selectSnippet
@@ -76131,6 +76214,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-demo/template", ["exports"], function (_exports) {
   "use strict";
@@ -76150,22 +76235,25 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-demo/x-example/component', ['exports', 'ember-cli-addon-docs/components/docs-demo/x-example/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-demo/x-example/component", ["exports", "ember-cli-addon-docs/components/docs-demo/x-example/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
-
     classNames: 'docs-p-4',
-
     init: function init() {
       this._super.apply(this, arguments);
+
       this.set('elementId', 'example-' + this.get('name'));
     }
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-demo/x-example/template", ["exports"], function (_exports) {
   "use strict";
@@ -76185,13 +76273,15 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-demo/x-snippet/component', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-demo/x-snippet/component", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     init: function init() {
       var _this = this;
 
@@ -76202,37 +76292,54 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }
   }).reopenClass({
-
     positionalParams: ['name']
-
   });
-});
-;define('ember-cli-addon-docs/components/docs-header/component', ['exports', 'ember-cli-addon-docs/components/docs-header/template', 'dummy/config/environment', 'ember-cli-addon-docs/utils/computed'], function (exports, _template, _environment, _computed) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/docs-header/component", ["exports", "ember-cli-addon-docs/components/docs-header/template", "dummy/config/environment", "ember-cli-addon-docs/utils/computed"], function (_exports, _template, _environment, _computed) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
   var _config$emberCliAdd = _environment.default['ember-cli-addon-docs'],
       projectName = _config$emberCliAdd.projectName,
       projectHref = _config$emberCliAdd.projectHref,
       latestVersionName = _config$emberCliAdd.latestVersionName;
-  exports.default = Ember.Component.extend({
+  /**
+    Render a header showing a link to your documentation, your project logo, a
+    search bar, and a link to your repo on GitHub.
+  
+    Yields a `link` contextual component which can be used to add additional
+    header links.
+  
+    ```hbs
+    {{#docs-header as |header|}}
+      {{#header.link 'sandbox'}}
+        Sandbox
+      {{/header.link}}
+    {{/docs-header}}
+    ```
+  
+    @class DocsHeader
+    @public
+    @yield {Hash} header
+    @yield {Component} header.link
+  */
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
     projectVersion: Ember.inject.service(),
-
     projectHref: projectHref,
     latestVersionName: latestVersionName,
-
     didInsertElement: function didInsertElement() {
       this._super.apply(this, arguments);
 
       this.get('projectVersion').loadAvailableVersions();
     },
-
-
     logo: Ember.String.classify((0, _computed.addonLogo)(projectName)),
 
     /**
@@ -76260,12 +76367,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       name = name.replace('ember-data-', '');
       name = name.replace('ember-cli-', '');
       name = name.replace('ember-', '');
-
       return Ember.String.classify(name);
     }),
-
     currentVersion: Ember.computed.reads('projectVersion.currentVersion'),
-
     actions: {
       didVisitPage: function didVisitPage() {
         this.set('query', null);
@@ -76273,31 +76377,31 @@ lunr.QueryParser.parseBoost = function (parser) {
         search.blur();
       }
     }
-
   });
-});
-;define('ember-cli-addon-docs/components/docs-header/link/component', ['exports', 'ember-cli-addon-docs/components/docs-header/link/template'], function (exports, _template) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/docs-header/link/component", ["exports", "ember-cli-addon-docs/components/docs-header/link/template"], function (_exports, _template) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
     router: Ember.inject.service(),
-
     isActive: Ember.computed('router.currentRouteName', 'route', function () {
       // Naive isActive check. Replace with router service when updated.
       return this.get('router.currentRouteName').indexOf(this.get('route')) === 0;
     })
-
   }).reopenClass({
-
     positionalParams: ['route']
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-header/link/template", ["exports"], function (_exports) {
   "use strict";
@@ -76317,38 +76421,34 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-header/search-box/component', ['exports', 'ember-cli-addon-docs/components/docs-header/search-box/template', 'ember-keyboard', 'ember-concurrency', 'dummy/config/environment', 'ember-cli-addon-docs/keyboard-config'], function (exports, _template, _emberKeyboard, _emberConcurrency, _environment, _keyboardConfig) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-header/search-box/component", ["exports", "ember-cli-addon-docs/components/docs-header/search-box/template", "ember-keyboard", "ember-concurrency", "dummy/config/environment", "ember-cli-addon-docs/keyboard-config"], function (_exports, _template, _emberKeyboard, _emberConcurrency, _environment, _keyboardConfig) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var projectName = _environment.default['ember-cli-addon-docs'].projectName;
 
-  exports.default = Ember.Component.extend(_emberKeyboard.EKMixin, {
+  var _default = Ember.Component.extend(_emberKeyboard.EKMixin, {
     layout: _template.default,
     store: Ember.inject.service(),
-
     classNames: 'docs-ml-auto',
-
     query: null,
-
     didInsertElement: function didInsertElement() {
       this._super();
 
       this.set('keyboardActivated', true);
       this.get('fetchProject').perform();
     },
-
-
     // TODO: The searchbox doesn't work without the project being fetched.
     // We should move this logic (and everywhere else in the code that's fetching
     // the project) within a new addonDocs service that wires all that up together.
     // I think it's fine if our Docs-* components assume there is a single global
     // project.
-    fetchProject: (0, _emberConcurrency.task)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    fetchProject: (0, _emberConcurrency.task)(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee() {
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -76357,23 +76457,23 @@ lunr.QueryParser.parseBoost = function (parser) {
               return this.get('store').findRecord('project', projectName);
 
             case 2:
-            case 'end':
+            case "end":
               return _context.stop();
           }
         }
       }, _callee, this);
     })),
-
     focusSearch: Ember.on((0, _emberKeyboard.keyUp)('Slash'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         this.element.querySelector('input').focus();
       }
     }),
-
     unfocusSearch: Ember.on((0, _emberKeyboard.keyUp)('Escape'), function () {
       this.get('on-input')(null);
     })
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-header/search-box/template", ["exports"], function (_exports) {
   "use strict";
@@ -76384,8 +76484,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "WEjueEhk",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\"],[11,\"class\",\"docs-relative docs-text-grey-darkest\"],[11,\"data-search-box\",\"\"],[9],[0,\"\\n  \"],[1,[29,\"svg-jar\",[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-pin-t docs-h-full docs-ml-1\"]]],false],[0,\"\\n\\n\"],[0,\"  \"],[7,\"input\"],[12,\"oninput\",[29,\"action\",[[24,0,[]],[25,[\"on-input\"]]],[[\"value\"],[\"target.value\"]]]],[12,\"value\",[23,\"query\"]],[12,\"disabled\",[25,[\"fetchProject\",\"isRunning\"]]],[11,\"placeholder\",\"SEARCH\"],[11,\"class\",\"docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter outline-none\"],[11,\"data-search-box-input\",\"\"],[11,\"data-test-search-box-input\",\"\"],[11,\"type\",\"text\"],[9],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "0lcTskuj",
+    "block": "{\"symbols\":[],\"statements\":[[7,\"div\"],[11,\"class\",\"docs-relative docs-text-grey-darkest\"],[11,\"data-search-box\",\"\"],[9],[0,\"\\n  \"],[1,[29,\"svg-jar\",[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-pin-t docs-h-full docs-ml-1\"]]],false],[0,\"\\n\\n\"],[0,\"  \"],[7,\"input\"],[12,\"oninput\",[29,\"action\",[[24,0,[]],[25,[\"on-input\"]]],[[\"value\"],[\"target.value\"]]]],[12,\"value\",[23,\"query\"]],[12,\"disabled\",[25,[\"fetchProject\",\"isRunning\"]]],[11,\"placeholder\",\"SEARCH\"],[11,\"class\",\"docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter outline-none\"],[11,\"data-search-box-input\",\"\"],[11,\"data-test-search-box-input\",\"\"],[11,\"aria-label\",\"search\"],[11,\"type\",\"text\"],[9],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/search-box/template.hbs"
     }
@@ -76393,62 +76493,31 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-header/search-result/component', ['exports', 'ember-cli-addon-docs/components/docs-header/search-result/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-header/search-result/component", ["exports", "ember-cli-addon-docs/components/docs-header/search-result/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
-
-  exports.default = Ember.Component.extend({
+  var _default = Ember.Component.extend({
     layout: _template.default,
-
     result: null,
     'on-click': function onClick() {},
     'on-mouse-enter': function onMouseEnter() {},
-
-
     linkArgs: Ember.computed('result.document', function () {
       var args = [];
       var type = this.get('result.document.type');
+
       if (type === 'template') {
         args = [this.get('result.document.route')];
       } else {
@@ -76457,15 +76526,12 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       return args;
     }),
-
     click: function click() {
       this.get('on-click')();
     },
     mouseEnter: function mouseEnter() {
       this.get('on-mouse-enter')();
     },
-
-
     icon: Ember.computed(function () {
       if (this.get('result.document.type') === 'template') {
         return 'guide';
@@ -76473,25 +76539,25 @@ lunr.QueryParser.parseBoost = function (parser) {
         return 'api-item';
       }
     }),
-
     matches: Ember.computed(function () {
       var _this = this;
 
       var metadata = this.get('result.resultInfo.matchData.metadata');
-
       return Object.keys(metadata).reduce(function (matches, term) {
         var match = metadata[term];
+
         var query = _this.get('query');
+
         var normalizedQuery = query.toLowerCase();
         Object.keys(match).forEach(function (key) {
           if (key === 'text') {
             var text = _this.get('result.document.text');
+
             var spaceIndices = text.split("").map(function (char, index) {
               return char === ' ' ? index : null;
             }).filter(function (val) {
               return val > 0;
             });
-
             match.text.position.forEach(function (_ref) {
               var _ref2 = _slicedToArray(_ref, 2),
                   wordStart = _ref2[0],
@@ -76506,13 +76572,14 @@ lunr.QueryParser.parseBoost = function (parser) {
               var indexOfEndingSpace = indexOfSpaceAfterWord + 3 < spaceIndices.length ? indexOfSpaceAfterWord + 3 : spaceIndices.length;
               var matchingText = text.slice(spaceIndices[indexOfStartingSpace], spaceIndices[indexOfEndingSpace]);
               matchingText = _this._highlight(matchingText, matchingText.indexOf(query), query.length);
-
               matches.push(matchingText);
             });
           } else {
             var normalizedTerm = term.toLowerCase();
+
             _this.get('result.document.keywords').forEach(function (keyword) {
               var normalizedKeyword = keyword.toLowerCase();
+
               if (keyword.toLowerCase().indexOf(normalizedTerm) !== -1) {
                 var index = normalizedKeyword.indexOf(normalizedQuery);
                 matches.push(_this._highlight(keyword, index, normalizedQuery.length));
@@ -76520,16 +76587,13 @@ lunr.QueryParser.parseBoost = function (parser) {
             });
           }
         });
-
         return matches;
       }, []);
     }),
-
     bestMatch: Ember.computed('matches.[]', function () {
       // Right now this is arbitrarily returning the first match. Needs more work to find the "best" match on the page.
       return this.matches[0];
     }),
-
     highlightedTitle: Ember.computed('result.document.title', 'query', function () {
       var title = this.result.document.title || '';
       var match = title.match(new RegExp(this.query, 'i'));
@@ -76537,20 +76601,17 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (match) {
         var start = match.index;
         var length = this.query.length;
-
-        return title.slice(0, start) + '<span class=\'docs-border-b-2 docs-border-brand\'>' + title.slice(start, start + length) + '</span>' + title.slice(start + length);
+        return "".concat(title.slice(0, start), "<span class='docs-border-b-2 docs-border-brand'>").concat(title.slice(start, start + length), "</span>").concat(title.slice(start + length));
       }
     }),
-
     titleMatchesQuery: Ember.computed.bool('highlightedTitle'),
-
     _highlight: function _highlight(text, start, length) {
-      return text.slice(0, start) + '<span class=\'docs-border-b-2 docs-border-brand\'>' + text.slice(start, start + length) + '</span>' + text.slice(start + length);
+      return "".concat(text.slice(0, start), "<span class='docs-border-b-2 docs-border-brand'>").concat(text.slice(start, start + length), "</span>").concat(text.slice(start + length));
     },
-
-
     'data-test-search-result': true
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-header/search-result/template", ["exports"], function (_exports) {
   "use strict";
@@ -76570,32 +76631,28 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-header/search-results/component', ['exports', 'ember-cli-addon-docs/components/docs-header/search-results/template', 'ember-keyboard', 'ember-concurrency', 'dummy/config/environment'], function (exports, _template, _emberKeyboard, _emberConcurrency, _environment) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-header/search-results/component", ["exports", "ember-cli-addon-docs/components/docs-header/search-results/template", "ember-keyboard", "ember-concurrency", "dummy/config/environment"], function (_exports, _template, _emberKeyboard, _emberConcurrency, _environment) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var projectName = _environment.default['ember-cli-addon-docs'].projectName;
 
-  exports.default = Ember.Component.extend(_emberKeyboard.EKMixin, {
+  var _default = Ember.Component.extend(_emberKeyboard.EKMixin, {
     layout: _template.default,
-
     docsSearch: Ember.inject.service(),
     router: Ember.inject.service(),
     store: Ember.inject.service(),
-
-    query: null, // passed in
+    query: null,
+    // passed in
     selectedIndex: null,
-
     didInsertElement: function didInsertElement() {
       this._super();
 
-      this.set('keyboardActivated', true);
+      this.set('keyboardActivated', true); // Start downloading the search index immediately
 
-      // Start downloading the search index immediately
       this.get('docsSearch').loadSearchIndex();
     },
     didReceiveAttrs: function didReceiveAttrs() {
@@ -76603,48 +76660,42 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       this.get('search').perform();
     },
-
-
     project: Ember.computed(function () {
       return this.get('store').peekRecord('project', projectName);
     }),
-
     trimmedQuery: Ember.computed('query', function () {
       return this.get('query').trim();
     }),
-
-    search: (0, _emberConcurrency.task)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    search: (0, _emberConcurrency.task)(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee() {
       var results;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              results = void 0;
-
               if (!this.get('trimmedQuery')) {
-                _context.next = 5;
+                _context.next = 4;
                 break;
               }
 
-              _context.next = 4;
+              _context.next = 3;
               return this.get('docsSearch').search(this.get('trimmedQuery'));
 
-            case 4:
+            case 3:
               results = _context.sent;
 
-            case 5:
-
+            case 4:
               this.set('selectedIndex', results.length ? 0 : null);
               this.set('rawSearchResults', results);
 
-            case 7:
-            case 'end':
+            case 6:
+            case "end":
               return _context.stop();
           }
         }
       }, _callee, this);
     })).restartable(),
-
     searchResults: Ember.computed('rawSearchResults.[]', function () {
       var _this = this;
 
@@ -76653,29 +76704,22 @@ lunr.QueryParser.parseBoost = function (parser) {
       var routerMicrolib = router._router._routerMicrolib || router._router.router;
 
       if (rawSearchResults) {
-        return this.get('rawSearchResults')
-        // If the doc has a route, ensure it exists
+        return this.get('rawSearchResults') // If the doc has a route, ensure it exists
         .filter(function (_ref) {
           var document = _ref.document;
 
           if (document.route) {
             var routeExists = routerMicrolib.recognizer.names[document.route];
-
             return routeExists && document.route !== 'not-found' && document.route !== 'application';
           } else {
             return true;
           }
-        })
-
-        // Filter out the templates of the API items' pages, since we handle them separately
+        }) // Filter out the templates of the API items' pages, since we handle them separately
         .filter(function (_ref2) {
           var document = _ref2.document;
-
           var isApiItemTemplate = document.route === 'docs.api.item' && document.type === 'template';
           return !isApiItemTemplate;
-        })
-
-        // Filter out modules that are not in the navigationIndex
+        }) // Filter out modules that are not in the navigationIndex
         .filter(function (_ref3) {
           var document = _ref3.document;
 
@@ -76683,22 +76727,21 @@ lunr.QueryParser.parseBoost = function (parser) {
             var navigableModules = _this.get('project.navigationIndex').find(function (section) {
               return section.type === 'modules';
             });
+
             var navigableModuleIds = navigableModules ? navigableModules.items.map(function (item) {
               return item.id;
             }) : [];
-
             return navigableModuleIds.includes(document.title);
           } else {
             return true;
           }
-        })
-
-        // Add a reference to the Ember Data model to each API item search result
+        }) // Add a reference to the Ember Data model to each API item search result
         .map(function (searchResult) {
           var document = searchResult.document;
 
           if (document.type !== 'template') {
             var store = _this.get('store');
+
             searchResult.model = store.peekRecord(document.type, document.item.id);
           }
 
@@ -76706,10 +76749,10 @@ lunr.QueryParser.parseBoost = function (parser) {
         });
       }
     }),
-
     gotoSelectedItem: Ember.on((0, _emberKeyboard.keyUp)('Enter'), function () {
       if (this.get('selectedIndex') !== null) {
         var selectedResult = this.get('searchResults')[this.get('selectedIndex')];
+
         if (selectedResult.document.type === 'template') {
           this.get('router').transitionTo(selectedResult.document.route);
         } else {
@@ -76719,7 +76762,6 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       this.get('on-visit')();
     }),
-
     nextSearchResult: Ember.on((0, _emberKeyboard.keyDown)('ctrl+KeyN'), (0, _emberKeyboard.keyDown)('ArrowDown'), function () {
       var hasSearchResults = this.get('searchResults.length');
       var lastResultIsSelected = this.get('selectedIndex') + 1 === this.get('searchResults.length');
@@ -76728,7 +76770,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         this.incrementProperty('selectedIndex');
       }
     }),
-
     previousSearchResult: Ember.on((0, _emberKeyboard.keyDown)('ctrl+KeyP'), (0, _emberKeyboard.keyDown)('ArrowUp'), function () {
       var hasSearchResults = this.get('searchResults.length');
       var firstResultIsSelected = this.get('selectedIndex') === 0;
@@ -76737,12 +76778,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         this.decrementProperty('selectedIndex');
       }
     }),
-
     clearSearch: function clearSearch() {
       this.set('query', null);
     },
-
-
     actions: {
       selectResult: function selectResult(index) {
         this.set('selectedIndex', index);
@@ -76751,8 +76789,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         this.clearSearch();
       }
     }
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-header/search-results/template", ["exports"], function (_exports) {
   "use strict";
@@ -76790,46 +76829,37 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-header/version-selector/component', ['exports', 'ember-cli-addon-docs/components/docs-header/version-selector/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-header/version-selector/component", ["exports", "ember-cli-addon-docs/components/docs-header/version-selector/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  exports.default = Ember.Component.extend({
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+  // const { latestVersionName, primaryBranch } = config['ember-cli-addon-docs'];
+  //
+  var _default = Ember.Component.extend({
     layout: _template.default,
-
     latestVersionName: Ember.computed(function () {
       var config = Ember.getOwner(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-
       return config.latestVersionName;
     }),
-
     primaryBranch: Ember.computed(function () {
       var config = Ember.getOwner(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-
       return config.primaryBranch;
     }),
-
     projectVersion: Ember.inject.service(),
     'on-close': function onClose() {},
-
-
     currentVersion: Ember.computed.reads('projectVersion.currentVersion'),
-
     sortedVersions: Ember.computed('projectVersion.versions', 'latestVersionName', 'primaryBranch', function () {
       var latestVersionName = this.get('latestVersionName');
       var primaryBranch = this.get('primaryBranch');
@@ -76845,24 +76875,24 @@ lunr.QueryParser.parseBoost = function (parser) {
         if (keyA > keyB) {
           return -1;
         }
+
         if (keyA < keyB) {
           return 1;
-        }
+        } // names must be equal
 
-        // names must be equal
+
         return 0;
       });
-
       return [latest, primary].concat(_toConsumableArray(otherTags)).filter(Boolean);
     }),
-
     actions: {
       changeVersion: function changeVersion(version) {
         this.get('projectVersion').redirectTo(version);
       }
     }
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-header/version-selector/template", ["exports"], function (_exports) {
   "use strict";
@@ -76882,16 +76912,31 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-hero/component', ['exports', 'ember-cli-addon-docs/components/docs-hero/template', 'ember-cli-addon-docs/utils/computed', 'dummy/config/environment'], function (exports, _template, _computed, _environment) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-hero/component", ["exports", "ember-cli-addon-docs/components/docs-hero/template", "ember-cli-addon-docs/utils/computed", "dummy/config/environment"], function (_exports, _template, _computed, _environment) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
   var _config$emberCliAdd = _environment.default['ember-cli-addon-docs'],
       projectName = _config$emberCliAdd.projectName,
       projectDescription = _config$emberCliAdd.projectDescription;
-  exports.default = Ember.Component.extend({
+  /**
+    A component that renders a hero banner. Useful for your docs site's homepage.
+  
+    ```hbs
+    {{docs-hero
+      prefix='Ember'
+      heading='SuperAddon'
+      byline='The best addon ever. Now playing in theaters.'}}
+    ```
+  
+    @class DocsHero
+    @public
+  */
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
 
@@ -76923,6 +76968,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     class: null
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-hero/template", ["exports"], function (_exports) {
   "use strict";
@@ -76942,23 +76989,27 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-keyboard-shortcuts/component', ['exports', 'ember-cli-addon-docs/components/docs-keyboard-shortcuts/template', 'ember-keyboard', 'ember-cli-addon-docs/keyboard-config'], function (exports, _template, _emberKeyboard, _keyboardConfig) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-keyboard-shortcuts/component", ["exports", "ember-cli-addon-docs/components/docs-keyboard-shortcuts/template", "ember-keyboard", "ember-cli-addon-docs/keyboard-config"], function (_exports, _template, _emberKeyboard, _keyboardConfig) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend(_emberKeyboard.EKMixin, {
+  _exports.default = void 0;
+
+  /**
+    A component that enables keyboard shortcuts. Press '?' to toggle the keyboard shortcuts dialog.
+  
+    @class DocsKeyboardShortcuts
+    @public
+  */
+  var _default = Ember.Component.extend(_emberKeyboard.EKMixin, {
     layout: _template.default,
-
     router: Ember.inject.service(),
-
     isShowingKeyboardShortcuts: false,
-
     activateKeyboard: Ember.on('init', function () {
       this.set('keyboardActivated', true);
     }),
-
     goto: Ember.on((0, _emberKeyboard.keyUp)('KeyG'), function () {
       var _this = this;
 
@@ -76969,7 +77020,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }, 500);
       }
     }),
-
     gotoDocs: Ember.on((0, _emberKeyboard.keyUp)('KeyD'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         if (this.get('isGoingTo')) {
@@ -76977,7 +77027,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
     }),
-
     gotoHome: Ember.on((0, _emberKeyboard.keyUp)('KeyH'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         if (this.get('isGoingTo')) {
@@ -76985,19 +77034,19 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
     }),
-
     toggleKeyboardShortcuts: Ember.on((0, _emberKeyboard.keyUp)('shift+Slash'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         this.toggleProperty('isShowingKeyboardShortcuts');
       }
     }),
-
     actions: {
       toggleKeyboardShortcuts: function toggleKeyboardShortcuts() {
         this.toggleProperty('isShowingKeyboardShortcuts');
       }
     }
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-keyboard-shortcuts/template", ["exports"], function (_exports) {
   "use strict";
@@ -77017,25 +77066,45 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-link/component', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-link/component", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.LinkComponent.extend({
+  _exports.default = void 0;
 
+  /**
+    Just a styled subclass of LinkComponent. Comes in handy when rending links in Markdown templates:
+  
+    ```md
+    Here I am, telling you about {{docs-link 'another page' 'docs.x-foo'}}
+    ```
+  
+    @class DocsLink
+    @public
+  */
+  var _default = Ember.LinkComponent.extend({
     classNames: 'docs-md__a'
-
   });
-});
-;define('ember-cli-addon-docs/components/docs-logo/component', ['exports', 'ember-cli-addon-docs/components/docs-logo/template'], function (exports, _template) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/docs-logo/component", ["exports", "ember-cli-addon-docs/components/docs-logo/template"], function (_exports, _template) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  /**
+    A simple component to render an Ember, Ember CLI or Ember Data logo.
+  
+    @class DocsLogo
+    @public
+  */
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
 
@@ -77050,20 +77119,19 @@ lunr.QueryParser.parseBoost = function (parser) {
       @type String
     */
     logo: 'ember',
-
     didReceiveAttrs: function didReceiveAttrs() {
       this._super.apply(this, arguments);
 
       var logo = this.get('logo');
       var validLogos = ['ember', 'ember-cli', 'ember-data'];
-      (false && !(validLogos.includes(logo)) && Ember.assert('You passed "' + logo + '" to the docs-logo component, but the only valid options are [' + validLogos + '].', validLogos.includes(logo)));
+      (false && !(validLogos.includes(logo)) && Ember.assert("You passed \"".concat(logo, "\" to the docs-logo component, but the only valid options are [").concat(validLogos, "]."), validLogos.includes(logo)));
     },
-
-
     showEmber: Ember.computed.equal('logo', 'ember'),
     showEmberCli: Ember.computed.equal('logo', 'ember-cli'),
     showEmberData: Ember.computed.equal('logo', 'ember-data')
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-logo/template", ["exports"], function (_exports) {
   "use strict";
@@ -77083,13 +77151,25 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-snippet/component', ['exports', 'ember-cli-addon-docs/components/docs-snippet/template', 'dummy/snippets'], function (exports, _template, _snippets) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-snippet/component", ["exports", "ember-cli-addon-docs/components/docs-snippet/template", "dummy/snippets"], function (_exports, _template, _snippets) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  /**
+    A snippet component for demonstrating some code
+  
+    ```hbs
+    {{docs-snippet name=snippet.name unindent=true language=snippet.language}}
+    ```
+  
+    @class DocsSnippet
+    @public
+  */
+  var _default = Ember.Component.extend({
     tagName: '',
     layout: _template.default,
 
@@ -77127,30 +77207,34 @@ lunr.QueryParser.parseBoost = function (parser) {
       @type Boolean
     */
     unindent: false,
-
     _unindent: function _unindent(src) {
       if (!this.get('unindent')) {
         return src;
       }
+
       var match,
           min,
           lines = src.split("\n").filter(function (l) {
         return l !== '';
       });
+
       for (var i = 0; i < lines.length; i++) {
         match = /^[ \t]*/.exec(lines[i]);
+
         if (match && (typeof min === 'undefined' || min > match[0].length)) {
           min = match[0].length;
         }
       }
+
       if (typeof min !== 'undefined' && min > 0) {
         src = src.replace(new RegExp("^[ \t]{" + min + "}", 'gm'), "");
       }
+
       return src;
     },
-
     snippetText: Ember.computed('name', function () {
       var name = this.get('name');
+
       if (!/\..+/.test(name)) {
         name += '.hbs';
       }
@@ -77158,6 +77242,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this._unindent((_snippets.default[name] || "").replace(/^(\s*\n)*/, '').replace(/\s*$/, ''));
     })
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-snippet/template", ["exports"], function (_exports) {
   "use strict";
@@ -77177,13 +77263,21 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-svg-icon/component', ['exports', 'ember-cli-addon-docs/components/docs-svg-icon/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-svg-icon/component", ["exports", "ember-cli-addon-docs/components/docs-svg-icon/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  /**
+    The standard icon class used in AddonDocs
+  
+    @class DocsSvgIcon
+    @public
+  */
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
 
@@ -77206,10 +77300,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     width: 16
   }).reopenClass({
-
     positionalParams: ['icon']
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-svg-icon/template", ["exports"], function (_exports) {
   "use strict";
@@ -77229,32 +77323,53 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/template', 'ember-keyboard', 'ember-cli-addon-docs/keyboard-config'], function (exports, _template, _emberKeyboard, _keyboardConfig) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/template", "ember-keyboard", "ember-cli-addon-docs/keyboard-config"], function (_exports, _template, _emberKeyboard, _keyboardConfig) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  exports.default = Ember.Component.extend(_emberKeyboard.EKMixin, {
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+  /**
+    The main docs viewer component for EmberCLI AddonDocs. This component must be placed
+  
+  
+    ```hbs
+    {{#docs-viewer as |viewer|}}
+      {{#viewer.nav as |nav|}}
+        {{nav.item 'Introduction' 'docs.index'}}
+  
+        {{#nav.subnav as |nav|}}
+          {{nav.item 'Subitem' 'docs.items.subitem'}}
+        {{/nav.subnav}}
+      {{/viewer.nav}}
+  
+      {{#viewer.main}}
+        {{outlet}}
+      {{/viewer.main}}
+    {{/docs-viewer}}
+    ```
+  
+    @class DocsViewer
+    @yield {Hash} viewer
+    @yield {Component} viewer.nav
+    @yield {Component} viewer.main
+    @public
+  */
+  var _default = Ember.Component.extend(_emberKeyboard.EKMixin, {
     layout: _template.default,
     docsRoutes: Ember.inject.service(),
     router: Ember.inject.service(),
-
     classNames: 'docs-viewer docs-flex docs-flex-1',
-
     init: function init() {
       this._super();
 
@@ -77265,29 +77380,27 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       this.get('docsRoutes').resetState();
     },
-
-
     nextPage: Ember.on((0, _emberKeyboard.keyDown)('KeyJ'), (0, _emberKeyboard.keyDown)('ArrowRight'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         if (this.get('docsRoutes.next')) {
-          var _get;
+          var _this$get;
 
-          (_get = this.get('router')).transitionTo.apply(_get, _toConsumableArray(this.get('docsRoutes.next.route')));
+          (_this$get = this.get('router')).transitionTo.apply(_this$get, _toConsumableArray(this.get('docsRoutes.next.route')));
         }
       }
     }),
-
     previousPage: Ember.on((0, _emberKeyboard.keyDown)('KeyK'), (0, _emberKeyboard.keyDown)('ArrowLeft'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         if (this.get('docsRoutes.previous')) {
-          var _get2;
+          var _this$get2;
 
-          (_get2 = this.get('router')).transitionTo.apply(_get2, _toConsumableArray(this.get('docsRoutes.previous.route')));
+          (_this$get2 = this.get('router')).transitionTo.apply(_this$get2, _toConsumableArray(this.get('docsRoutes.previous.route')));
         }
       }
     })
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/template", ["exports"], function (_exports) {
   "use strict";
@@ -77307,17 +77420,18 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/template', 'lodash'], function (exports, _template, _lodash) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/template", "lodash"], function (_exports, _template, _lodash) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
     store: Ember.inject.service(),
-
     sections: Ember.computed.readOnly('project.navigationIndex'),
 
     /*
@@ -77369,7 +77483,6 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       if (modulesSection) {
         var modules = modulesSection.items;
-
         /*
         Intermediate data structure:
          ```
@@ -77384,6 +77497,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         };
         ```
         */
+
         var index = {};
         modules.forEach(function (module) {
           var parts = module.id.split('/');
@@ -77395,11 +77509,12 @@ lunr.QueryParser.parseBoost = function (parser) {
             var node = {
               name: key
             };
-            var children = transform(obj[key], id ? id + '/' + key : key);
+            var children = transform(obj[key], id ? "".concat(id, "/").concat(key) : key);
+
             if (children.length) {
               node.children = children;
             } else {
-              node.id = id + '/' + key;
+              node.id = "".concat(id, "/").concat(key);
             }
 
             return node;
@@ -77409,19 +77524,27 @@ lunr.QueryParser.parseBoost = function (parser) {
         return transform(index)[0];
       }
     })
-
   });
-});
-;define('ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/template'], function (exports, _template) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/template"], function (_exports, _template) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  /*
+    A component used to recursively render a nested structure of module nodes.
+  */
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: ''
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/template", ["exports"], function (_exports) {
   "use strict";
@@ -77459,19 +77582,20 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/x-current-page-index/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/x-current-page-index/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/x-current-page-index/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/x-current-page-index/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
 
+  var _default = Ember.Component.extend({
     layout: _template.default,
-
     tagName: ''
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/x-current-page-index/template", ["exports"], function (_exports) {
   "use strict";
@@ -77491,36 +77615,46 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/x-main/component', ['exports', 'ember-cli-addon-docs/app-files', 'ember-cli-addon-docs/addon-files', 'dummy/config/environment', 'ember-cli-addon-docs/components/docs-viewer/x-main/template'], function (exports, _appFiles, _addonFiles, _environment, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/x-main/component", ["exports", "ember-cli-addon-docs/app-files", "ember-cli-addon-docs/addon-files", "dummy/config/environment", "ember-cli-addon-docs/components/docs-viewer/x-main/template"], function (_exports, _appFiles, _addonFiles, _environment, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
+  var tagToSize = {
+    H2: 'xxs',
+    H3: 'xxs'
+  };
+  var tagToIndent = {
+    H2: '0',
+    H3: '4'
+  };
+  var tagToMarginTop = {
+    H2: '2',
+    H3: '2'
+  };
+  var tagToMarginBottom = {
+    H2: '0',
+    H3: '0'
+  };
 
-
-  var tagToSize = { H2: 'xxs', H3: 'xxs' };
-  var tagToIndent = { H2: '0', H3: '4' };
-  var tagToMarginTop = { H2: '2', H3: '2' };
-  var tagToMarginBottom = { H2: '0', H3: '0' };
-
-  exports.default = Ember.Component.extend({
+  var _default = Ember.Component.extend({
     layout: _template.default,
-
     router: Ember.inject.service(),
     docsRoutes: Ember.inject.service(),
-
     tagName: 'main',
     classNames: ['docs-px-4', 'md:docs-px-8', 'lg:docs-px-20', 'docs-mx-auto', 'md:docs-mx-0', 'docs-mt-6', 'md:docs-mt-12', 'md:docs-min-w-0', 'md:docs-flex-1'],
-
     didInsertElement: function didInsertElement() {
       this._super.apply(this, arguments);
 
       var target = this.element.querySelector('[data-current-page-index-target]');
-
       this._mutationObserver = new MutationObserver(Ember.run.bind(this, this.reindex, target));
 
-      this._mutationObserver.observe(target, { subtree: true, childList: true });
+      this._mutationObserver.observe(target, {
+        subtree: true,
+        childList: true
+      });
 
       this.reindex(target);
     },
@@ -77531,7 +77665,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     },
     reindex: function reindex(target) {
       var headers = Array.from(target.querySelectorAll('.docs-h2, .docs-h3, .docs-md__h2, .docs-md__h3'));
-
       this.get('onReindex')(headers.map(function (header) {
         return {
           id: header.id,
@@ -77543,24 +77676,21 @@ lunr.QueryParser.parseBoost = function (parser) {
         };
       }));
     },
-
-
     editCurrentPageUrl: Ember.computed('router.currentRouteName', function () {
       var path = this.get('router.currentRouteName');
+
       if (!path) {
         // `router` doesn't exist for old ember versions via ember-try
         return;
       }
 
       path = path.replace(/\./g, '/');
-
       var _config$emberCliAdd = _environment.default['ember-cli-addon-docs'],
           projectHref = _config$emberCliAdd.projectHref,
           projectPathInRepo = _config$emberCliAdd.projectPathInRepo,
           primaryBranch = _config$emberCliAdd.primaryBranch;
-
-      var projectPath = projectPathInRepo ? '/' + projectPathInRepo + '/' : '/';
-      var rootEditUrl = projectHref + '/edit/' + primaryBranch + projectPath;
+      var projectPath = projectPathInRepo ? "/".concat(projectPathInRepo, "/") : '/';
+      var rootEditUrl = "".concat(projectHref, "/edit/").concat(primaryBranch).concat(projectPath);
 
       if (path === 'docs/api/item') {
         var _EmberGetOwner$looku = Ember.getOwner(this).lookup('route:application').paramsFor('docs.api.item'),
@@ -77571,7 +77701,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         });
 
         if (file) {
-          return rootEditUrl + 'addon/' + file;
+          return "".concat(rootEditUrl, "addon/").concat(file);
         }
       } else {
         var _file = _appFiles.default.filter(function (file) {
@@ -77580,11 +77710,12 @@ lunr.QueryParser.parseBoost = function (parser) {
           return file.match(path);
         });
 
-        return rootEditUrl + 'tests/dummy/app/' + _file;
+        return "".concat(rootEditUrl, "tests/dummy/app/").concat(_file);
       }
     })
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/x-main/template", ["exports"], function (_exports) {
   "use strict";
@@ -77604,22 +77735,23 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/x-nav-item/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/x-nav-item/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav-item/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/x-nav-item/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
     docsRoutes: Ember.inject.service(),
-
     didInsertElement: function didInsertElement() {
       var _this = this;
 
       this._super.apply(this, arguments);
+
       var model = this.get('model');
 
       if (typeof model === 'string' && model.includes('#')) {
@@ -77631,10 +77763,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }
   }).reopenClass({
-
     positionalParams: ['label', 'route', 'model']
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/x-nav-item/template", ["exports"], function (_exports) {
   "use strict";
@@ -77654,48 +77786,44 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/x-nav-list/component', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav-list/component", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     tagName: 'ul',
-
     classNames: ['docs-list-reset'],
-
     layout: Ember.HTMLBars.template({
       "id": "vJoodqVx",
       "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[15,1,[[29,\"hash\",null,[[\"item\"],[[29,\"component\",[\"docs-viewer/x-nav-item\"],null]]]]]],[0,\"\\n  \"]],\"hasEval\":false}",
       "meta": {}
     })
   });
-});
-;define('ember-cli-addon-docs/components/docs-viewer/x-nav/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/x-nav/template', 'dummy/config/environment', 'ember-cli-addon-docs/utils/computed'], function (exports, _template, _environment, _computed) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/x-nav/template", "dummy/config/environment", "ember-cli-addon-docs/utils/computed"], function (_exports, _template, _environment, _computed) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var projectName = _environment.default['ember-cli-addon-docs'].projectName;
 
-  exports.default = Ember.Component.extend({
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
-
     root: 'docs',
-
     store: Ember.inject.service(),
-
     addonLogo: (0, _computed.addonLogo)(projectName),
-
     addonTitle: Ember.computed('addonLogo', function () {
       var logo = this.get('addonLogo');
-
-      return Ember.String.classify(projectName.replace(logo + '-', ''));
+      return Ember.String.classify(projectName.replace("".concat(logo, "-"), ''));
     }),
 
     /*
@@ -77705,6 +77833,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this.get('store').peekRecord('project', projectName);
     })
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/x-nav/template", ["exports"], function (_exports) {
   "use strict";
@@ -77724,21 +77854,23 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/docs-viewer/x-section/component', ['exports', 'ember-cli-addon-docs/components/docs-viewer/x-section/template'], function (exports, _template) {
-  'use strict';
+;define("ember-cli-addon-docs/components/docs-viewer/x-section/component", ["exports", "ember-cli-addon-docs/components/docs-viewer/x-section/template"], function (_exports, _template) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _template.default,
     tagName: '',
     style: 'regular'
   }).reopenClass({
-
     positionalParams: ['label']
-
   });
+
+  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/components/docs-viewer/x-section/template", ["exports"], function (_exports) {
   "use strict";
@@ -77758,38 +77890,37 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define('ember-cli-addon-docs/components/modal-dialog/component', ['exports', 'ember-modal-dialog/components/modal-dialog'], function (exports, _modalDialog) {
-  'use strict';
+;define("ember-cli-addon-docs/components/modal-dialog/component", ["exports", "ember-modal-dialog/components/modal-dialog"], function (_exports, _modalDialog) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _modalDialog.default.extend({
+  _exports.default = void 0;
 
+  var _default = _modalDialog.default.extend({
     renderInPlace: Ember.computed(function () {
       var config = Ember.getOwner(this).resolveRegistration('config:environment');
-
       return config.environment === 'test';
     })
-
   });
-});
-;define('ember-cli-addon-docs/controllers/application', ['exports', 'ember-keyboard', 'ember-cli-addon-docs/keyboard-config'], function (exports, _emberKeyboard, _keyboardConfig) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/controllers/application", ["exports", "ember-keyboard", "ember-cli-addon-docs/keyboard-config"], function (_exports, _emberKeyboard, _keyboardConfig) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Controller.extend(_emberKeyboard.EKMixin, {
+  _exports.default = void 0;
 
+  var _default = Ember.Controller.extend(_emberKeyboard.EKMixin, {
     router: Ember.inject.service(),
-
     isShowingKeyboardShortcuts: false,
-
     activateKeyboard: Ember.on('init', function () {
       this.set('keyboardActivated', true);
     }),
-
     goto: Ember.on((0, _emberKeyboard.keyUp)('KeyG'), function () {
       var _this = this;
 
@@ -77800,7 +77931,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }, 500);
       }
     }),
-
     gotoDocs: Ember.on((0, _emberKeyboard.keyUp)('KeyD'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         if (this.get('isGoingTo')) {
@@ -77808,7 +77938,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
     }),
-
     gotoHome: Ember.on((0, _emberKeyboard.keyUp)('KeyH'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         if (this.get('isGoingTo')) {
@@ -77816,86 +77945,58 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
     }),
-
     toggleKeyboardShortcuts: Ember.on((0, _emberKeyboard.keyUp)('shift+Slash'), function () {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
         this.toggleProperty('isShowingKeyboardShortcuts');
       }
     }),
-
     actions: {
       toggleKeyboardShortcuts: function toggleKeyboardShortcuts() {
         this.toggleProperty('isShowingKeyboardShortcuts');
       }
     }
   });
-});
-;define('ember-cli-addon-docs/controllers/docs/api/class', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/controllers/docs/api/class", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Controller.extend({
+  _exports.default = void 0;
 
+  var _default = Ember.Controller.extend({
     methodParams: Ember.computed('model', function () {
       return this.get('model.methods').reduce(function (allParams, method) {
         var params = method.params ? method.params.map(function (m) {
           return m.name;
         }) : [];
         allParams[method.name] = params.join(', ');
-
         return allParams;
       }, {});
     })
-
   });
-});
-;define('ember-cli-addon-docs/helpers/break-on', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/helpers/break-on", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.breakOn = breakOn;
+  _exports.breakOn = breakOn;
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
-
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   /**
     Helper function that inserts zero-width spaces after the break character, so
@@ -77909,56 +78010,29 @@ lunr.QueryParser.parseBoost = function (parser) {
         string = _ref2[0],
         breakChar = _ref2[1];
 
-    return string.replace(new RegExp(breakChar, 'g'), breakChar + '\u200B');
+    return string.replace(new RegExp(breakChar, 'g'), "".concat(breakChar, "\u200B"));
   }
 
-  exports.default = Ember.Helper.helper(breakOn);
-});
-;define('ember-cli-addon-docs/helpers/type-signature', ['exports'], function (exports) {
-  'use strict';
+  var _default = Ember.Helper.helper(breakOn);
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/helpers/type-signature", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.typeSignature = typeSignature;
+  _exports.typeSignature = typeSignature;
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
-
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   function escape(text) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -77971,7 +78045,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       var params = _ref.params,
           typeParams = _ref.typeParams,
           returns = _ref.returns;
-
       var paramSignature = params.filter(function (p) {
         return !p.name.includes('.');
       }).map(function (_ref2) {
@@ -77979,24 +78052,21 @@ lunr.QueryParser.parseBoost = function (parser) {
             type = _ref2.type,
             isRest = _ref2.isRest,
             isOptional = _ref2.isOptional;
-
         var prefix = isRest ? '...' : '';
         var suffix = isOptional ? '?' : '';
-        return prefix + '<strong>' + name + '</strong>' + suffix + ': <em>' + type + '</em>';
+        return "".concat(prefix, "<strong>").concat(name, "</strong>").concat(suffix, ": <em>").concat(type, "</em>");
       }).join(', ');
-
       var typeParamSignature = '';
+
       if (typeParams && typeParams.length) {
-        typeParamSignature = '&lt;' + typeParams.map(function (p) {
-          return '<em>' + p + '</em>';
-        }).join(', ') + '&gt;';
+        typeParamSignature = "&lt;".concat(typeParams.map(function (p) {
+          return "<em>".concat(p, "</em>");
+        }).join(', '), "&gt;");
       }
 
       var returnType = returns ? returns.type : 'any';
-
-      return '<strong>' + fn.name + '</strong>' + typeParamSignature + '(' + paramSignature + '): <em>' + returnType + '</em>';
+      return "<strong>".concat(fn.name, "</strong>").concat(typeParamSignature, "(").concat(paramSignature, "): <em>").concat(returnType, "</em>");
     });
-
     return signatures.join('<br>');
   }
 
@@ -78005,33 +78075,32 @@ lunr.QueryParser.parseBoost = function (parser) {
         type = _ref3.type,
         hasGetter = _ref3.hasGetter,
         hasSetter = _ref3.hasSetter;
-
     var accessorPrefixes = [hasGetter && 'get', hasSetter && 'set'].filter(function (a) {
       return a;
     }).join('/');
-
-    (false && !(accessorPrefixes) && Ember.assert('accessors must have either a getter or setter, but \'' + name + '\' had neither', accessorPrefixes));
-
-
-    return accessorPrefixes + ' ' + variableSignature({ name: name, type: type });
+    (false && !(accessorPrefixes) && Ember.assert("accessors must have either a getter or setter, but '".concat(name, "' had neither"), accessorPrefixes));
+    return "".concat(accessorPrefixes, " ").concat(variableSignature({
+      name: name,
+      type: type
+    }));
   }
 
   function variableSignature(_ref4) {
     var name = _ref4.name,
         type = _ref4.type;
-
-    return '<strong>' + name + ':</strong> <em>' + escape(type) + '</em>';
+    return "<strong>".concat(name, ":</strong> <em>").concat(escape(type), "</em>");
   }
-
   /**
     @function typeSignature
     @hide
   */
+
+
   function typeSignature(_ref5) {
     var _ref6 = _slicedToArray(_ref5, 1),
         typed = _ref6[0];
 
-    var signature = void 0;
+    var signature;
 
     if ('hasGetter' in typed || 'hasSetter' in typed) {
       signature = accessorSignature(typed);
@@ -78042,25 +78111,29 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     if (typed.isStatic) {
-      signature = 'static ' + signature;
+      signature = "static ".concat(signature);
     }
 
     if (typed.access === 'private' || typed.access === 'protected') {
-      signature = typed.access + ' ' + signature;
+      signature = "".concat(typed.access, " ").concat(signature);
     }
 
     return Ember.String.htmlSafe(signature);
   }
 
-  exports.default = Ember.Helper.helper(typeSignature);
-});
-;define('ember-cli-addon-docs/initializers/inject-media', ['exports'], function (exports) {
-  'use strict';
+  var _default = Ember.Helper.helper(typeSignature);
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/initializers/inject-media", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.initialize = initialize;
+  _exports.initialize = initialize;
+  _exports.default = void 0;
+
   /**
     @function initialize
     @hide
@@ -78070,126 +78143,112 @@ lunr.QueryParser.parseBoost = function (parser) {
     application.inject('controller', 'media', 'service:media');
   }
 
-  exports.default = {
+  var _default = {
     initialize: initialize
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/keyboard-config', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/keyboard-config", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.formElementHasFocus = formElementHasFocus;
+  _exports.formElementHasFocus = formElementHasFocus;
   var TAGNAMES_THAT_WHEN_FOCUSED_PREVENT_KEYBOARD_SHORTCUTS = ['INPUT', 'SELECT', 'TEXTAREA'];
-
   /**
     @function formElementHasFocus
     @hide
   */
+
   function formElementHasFocus() {
     return TAGNAMES_THAT_WHEN_FOCUSED_PREVENT_KEYBOARD_SHORTCUTS.includes(document.activeElement.tagName);
   }
 });
-;define('ember-cli-addon-docs/models/class', ['exports', 'ember-data', 'ember-cli-addon-docs/utils/computed'], function (exports, _emberData, _computed) {
-  'use strict';
+;define("ember-cli-addon-docs/models/class", ["exports", "ember-data", "ember-cli-addon-docs/utils/computed"], function (_exports, _emberData, _computed) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
   var attr = _emberData.default.attr,
       belongsTo = _emberData.default.belongsTo;
-  exports.default = _emberData.default.Model.extend({
-    parentClass: belongsTo('class', { async: false, inverse: null }),
 
+  var _default = _emberData.default.Model.extend({
+    parentClass: belongsTo('class', {
+      async: false,
+      inverse: null
+    }),
     isClass: true,
-
     name: attr(),
     file: attr(),
     exportType: attr(),
     description: attr(),
     lineNumber: attr(),
     access: attr(),
-
     accessors: attr(),
     methods: attr(),
     fields: attr(),
     tags: attr(),
-
     publicAccessors: Ember.computed.filterBy('accessors', 'access', 'public'),
     publicMethods: Ember.computed.filterBy('methods', 'access', 'public'),
     publicFields: Ember.computed.filterBy('fields', 'access', 'public'),
-
     privateAccessors: Ember.computed.filterBy('accessors', 'access', 'private'),
     privateMethods: Ember.computed.filterBy('methods', 'access', 'private'),
     privateFields: Ember.computed.filterBy('fields', 'access', 'private'),
-
     protectedAccessors: Ember.computed.filterBy('accessors', 'access', 'protected'),
     protectedMethods: Ember.computed.filterBy('methods', 'access', 'protected'),
     protectedFields: Ember.computed.filterBy('fields', 'access', 'protected'),
-
     allPublicAccessors: (0, _computed.memberUnion)('parentClass.allPublicAccessors', 'publicAccessors'),
     allPublicMethods: (0, _computed.memberUnion)('parentClass.allPublicMethods', 'publicMethods'),
     allPublicFields: (0, _computed.memberUnion)('parentClass.allPublicFields', 'publicFields'),
-
     allPrivateAccessors: (0, _computed.memberUnion)('parentClass.allPrivateAccessors', 'privateAccessors'),
     allPrivateMethods: (0, _computed.memberUnion)('parentClass.allPrivateMethods', 'privateMethods'),
     allPrivateFields: (0, _computed.memberUnion)('parentClass.allPrivateFields', 'privateFields'),
-
     allProtectedAccessors: (0, _computed.memberUnion)('parentClass.allProtectedAccessors', 'protectedAccessors'),
     allProtectedMethods: (0, _computed.memberUnion)('parentClass.allProtectedMethods', 'protectedMethods'),
     allProtectedFields: (0, _computed.memberUnion)('parentClass.allProtectedFields', 'protectedFields'),
-
     allAccessors: Ember.computed.union('allPublicAccessors', 'allPrivateAccessors', 'allProtectedAccessors'),
     allMethods: Ember.computed.union('allPublicMethods', 'allPrivateMethods', 'allProtectedMethods'),
     allFields: Ember.computed.union('allPublicFields', 'allPrivateFields', 'allProtectedFields'),
-
     hasInherited: Ember.computed.or('parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'),
-
     hasPrivate: Ember.computed.or('allPrivateAccessors.length', 'allPrivateMethods.length', 'allPrivateFields.length'),
-
     hasProtected: Ember.computed.or('allProtectedAccessors.length', 'allProtectedMethods.length', 'allProtectedFields.length'),
-
     hasDeprecated: (0, _computed.hasMemberType)('allFields', 'allAccessors', 'allMethods', function (member) {
       return member.tags && member.tags.find(function (t) {
         return t.name === 'deprecated';
       });
     })
   });
-});
-;define('ember-cli-addon-docs/models/component', ['exports', 'ember-data', 'ember-cli-addon-docs/models/class', 'ember-cli-addon-docs/utils/computed'], function (exports, _emberData, _class, _computed) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/models/component", ["exports", "ember-data", "ember-cli-addon-docs/models/class", "ember-cli-addon-docs/utils/computed"], function (_exports, _emberData, _class, _computed) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
   var attr = _emberData.default.attr;
-  exports.default = _class.default.extend({
-    isComponent: true,
 
+  var _default = _class.default.extend({
+    isComponent: true,
     yields: attr(),
     arguments: attr(),
-
     overloadedYields: Ember.computed.or('yields', 'inheritedYields'),
-
     publicArguments: Ember.computed.filterBy('arguments', 'access', 'public'),
     privateArguments: Ember.computed.filterBy('arguments', 'access', 'private'),
     protectedArguments: Ember.computed.filterBy('arguments', 'access', 'protected'),
-
     allPublicArguments: (0, _computed.memberUnion)('parentClass.allPublicArguments', 'publicArguments'),
     allPrivateArguments: (0, _computed.memberUnion)('parentClass.allPrivateArguments', 'privateArguments'),
     allProtectedArguments: (0, _computed.memberUnion)('parentClass.allProtectedArguments', 'protectedArguments'),
-
     allArguments: (0, _computed.memberUnion)('parentClass.allArguments', 'arguments'),
-
     hasInherited: Ember.computed.or('parentClass.overloadedYields.length', 'parentClass.allArguments.length', 'parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'),
-
     hasInternal: Ember.computed.or('allAccessors.length', 'allMethods.length', 'allFields.length'),
-
     hasPrivate: Ember.computed.or('allPrivateAccessors.length', 'allPrivateArguments.length', 'allPrivateMethods.length', 'allPrivateFields.length'),
-
     hasProtected: Ember.computed.or('allProtectedAccessors.length', 'allProtectedArguments.length', 'allProtectedMethods.length', 'allProtectedFields.length'),
-
     hasDeprecated: (0, _computed.hasMemberType)('allAccessors', 'allArguments', 'allMethods', 'allFields', function (member) {
       return member.tags && member.tags.find(function (t) {
         return t.name === 'deprecated';
@@ -78202,26 +78261,32 @@ lunr.QueryParser.parseBoost = function (parser) {
        Possible refactoring is to always link by actual ID, and implement redirects.
     */
     routingId: Ember.computed('name', function () {
-      return 'components/' + Ember.String.dasherize(this.get('name'));
+      return "components/".concat(Ember.String.dasherize(this.get('name')));
     })
-
   });
-});
-;define('ember-cli-addon-docs/models/module', ['exports', 'ember-data'], function (exports, _emberData) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/models/module", ["exports", "ember-data"], function (_exports, _emberData) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
   var attr = _emberData.default.attr,
       hasMany = _emberData.default.hasMany;
-  exports.default = _emberData.default.Model.extend({
+
+  var _default = _emberData.default.Model.extend({
     file: attr(),
     variables: attr(),
     functions: attr(),
-
-    classes: hasMany('class', { async: false }),
-    components: hasMany('class', { async: false }),
+    classes: hasMany('class', {
+      async: false
+    }),
+    components: hasMany('class', {
+      async: false
+    }),
 
     /*
       This gives us a way to link to a model, since we don't always link by the actual ID:
@@ -78229,38 +78294,62 @@ lunr.QueryParser.parseBoost = function (parser) {
        Possible refactoring is to always link by actual ID, and implement redirects.
     */
     routingId: Ember.computed('id', function () {
-      return 'modules/' + this.get('id');
+      return "modules/".concat(this.get('id'));
     })
-
   });
-});
-;define('ember-cli-addon-docs/models/project', ['exports', 'ember-data'], function (exports, _emberData) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/models/project", ["exports", "ember-data"], function (_exports, _emberData) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
   var attr = _emberData.default.attr,
       hasMany = _emberData.default.hasMany;
-  exports.default = _emberData.default.Model.extend({
+
+  var _default = _emberData.default.Model.extend({
     name: attr(),
     githubUrl: attr(),
     version: attr(),
     navigationIndex: attr(),
-    modules: hasMany('module', { async: false })
+    modules: hasMany('module', {
+      async: false
+    })
   });
-});
-;define('ember-cli-addon-docs/router', ['exports', 'ember-router-scroll'], function (exports, _emberRouterScroll) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/router", ["exports", "ember-router-scroll"], function (_exports, _emberRouterScroll) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.docsRoute = docsRoute;
-  exports.apiRoute = apiRoute;
-  exports.default = Ember.Router.extend(_emberRouterScroll.default);
+  _exports.docsRoute = docsRoute;
+  _exports.apiRoute = apiRoute;
+  _exports.default = void 0;
 
-
+  /**
+    The AddonDocsRouter, which adds some extra functionality. This should be used
+    instead of the standard EmberRouter class in your docs app.
+  
+    ```js
+    import AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
+    import config from './config/environment';
+  
+    const Router = AddonDocsRouter.extend({
+      location: config.locationType,
+      rootURL: config.rootURL,
+    });
+    ```
+  
+    @class AddonDocsRouter
+    @extends EmberRouter
+  */
+  var _default = Ember.Router.extend(_emberRouterScroll.default);
   /**
     Creates the docs route and api docs routes. Can receive a callback with the
     routes you want to add to your docs.
@@ -78277,86 +78366,62 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @function docsRoute
   */
+
+
+  _exports.default = _default;
+
   function docsRoute(router, callback) {
     router.route('docs', function () {
       callback.apply(this);
-
       apiRoute(this);
     });
   }
 
   function apiRoute(router) {
     router.route('api', function () {
-      this.route('item', { path: '/*path' });
+      this.route('item', {
+        path: '/*path'
+      });
     });
   }
 });
-;define('ember-cli-addon-docs/routes/docs', ['exports', 'dummy/config/environment'], function (exports, _environment) {
-  'use strict';
+;define("ember-cli-addon-docs/routes/docs", ["exports", "dummy/config/environment"], function (_exports, _environment) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var projectName = _environment.default['ember-cli-addon-docs'].projectName;
 
-  exports.default = Ember.Route.extend({
+  var _default = Ember.Route.extend({
     model: function model() {
       return this.store.findRecord('project', projectName);
     }
   });
-});
-;define('ember-cli-addon-docs/routes/docs/api/item', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/routes/docs/api/item", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
-
-  exports.default = Ember.Route.extend({
+  var _default = Ember.Route.extend({
     model: function model(_ref) {
       var path = _ref.path;
-
-      var item = void 0;
+      var item;
 
       if (path.match(/^modules\//)) {
         // Find by fully qualified id
@@ -78367,95 +78432,89 @@ lunr.QueryParser.parseBoost = function (parser) {
             moduleId = _itemId$split2[0];
 
         var module = this.store.peekRecord('module', moduleId);
-
         item = module.get('components').findBy('id', itemId) || module.get('classes').findBy('id', itemId) || module;
       } else {
         // Create a regex that will match modules by either the path, or the
         // pod-path (/component, /route, etc)
         var type = path.match(/^(.*)s\//)[1];
-        var pathRegex = new RegExp(path + '(/' + type + ')?$');
-
+        var pathRegex = new RegExp("".concat(path, "(/").concat(type, ")?$"));
         var modules = this.store.peekAll('module');
         var matches = modules.filter(function (m) {
           return m.id.match(pathRegex);
         });
         var _module = matches[0];
-
-        (false && !(matches.length > 0) && Ember.assert('no modules match the path \'' + path + '\'', matches.length > 0));
-        (false && !(matches.length <= 1) && Ember.assert('multiple modules match the path \'' + path + '\', ids: ' + matches.mapBy('id').join(', '), matches.length <= 1));
-
-
+        (false && !(matches.length > 0) && Ember.assert("no modules match the path '".concat(path, "'"), matches.length > 0));
+        (false && !(matches.length <= 1) && Ember.assert("multiple modules match the path '".concat(path, "', ids: ").concat(matches.mapBy('id').join(', ')), matches.length <= 1));
         item = _module.get('components').findBy('exportType', 'default') || _module.get('classes').findBy('exportType', 'default') || _module;
       }
 
-      (false && !(item) && Ember.assert('item not found for path \'' + path + '\'', item));
-
-
+      (false && !(item) && Ember.assert("item not found for path '".concat(path, "'"), item));
       return item;
     }
   });
-});
-;define('ember-cli-addon-docs/serializers/-addon-docs', ['exports', 'ember-data'], function (exports, _emberData) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/serializers/-addon-docs", ["exports", "ember-data"], function (_exports, _emberData) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _emberData.default.Serializer.extend({
+  _exports.default = void 0;
+
+  var _default = _emberData.default.Serializer.extend({
     normalizeResponse: function normalizeResponse(store, primaryModelClass, payload) {
       return payload;
     }
   });
-});
-;define('ember-cli-addon-docs/services/docs-fetch', ['exports', 'ember-fetch-adapter'], function (exports, _emberFetchAdapter) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/services/docs-fetch", ["exports", "ember-fetch-adapter"], function (_exports, _emberFetchAdapter) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(exports, 'default', {
+  Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _emberFetchAdapter.default;
     }
   });
 });
-;define('ember-cli-addon-docs/services/docs-routes', ['exports', 'ember-href-to/helpers/href-to'], function (exports, _hrefTo) {
-  'use strict';
+;define("ember-cli-addon-docs/services/docs-routes", ["exports", "ember-href-to/helpers/href-to"], function (_exports, _hrefTo) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  exports.default = Ember.Service.extend({
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+  var _default = Ember.Service.extend({
     router: Ember.inject.service('-routing'),
-
     init: function init() {
       this._super.apply(this, arguments);
+
       this.resetState();
     },
     resetState: function resetState() {
       this.set('items', Ember.A());
     },
-
-
     // Each routeParam is [ routeName, model ] where model is optional
     routes: Ember.computed('items.[]', function () {
       return this.get('items').map(function (item) {
         var routeParams = [item.route];
+
         if (item.model) {
           routeParams.push(item.model);
         }
@@ -78463,7 +78522,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         return routeParams;
       });
     }),
-
     routeUrls: Ember.computed('routes.[]', function () {
       var _this = this;
 
@@ -78471,111 +78529,76 @@ lunr.QueryParser.parseBoost = function (parser) {
         return _hrefTo.hrefTo.apply(null, [_this].concat(_toConsumableArray(route)));
       });
     }),
-
     currentRouteIndex: Ember.computed('router.router.url', 'routeUrls.[]', function () {
       if (this.get('routeUrls.length')) {
         var router = this.get('router.router');
         var currentURL = router.get('rootURL') + router.get('url');
         currentURL = currentURL.replace('//', '/'); // dedup slashes
-        var longestIndex = void 0,
-            longestPrefix = void 0;
+
+        var longestIndex, longestPrefix;
         this.get('routeUrls').forEach(function (url, index) {
           if (currentURL.indexOf(url) === 0 && (!longestPrefix || url.length > longestPrefix.length)) {
             longestIndex = index;
             longestPrefix = url;
           }
         });
-        (false && !(longestIndex != null) && Ember.assert('DocsRoutes wasn\'t able to correctly detect the current route. The current url is ' + currentURL, longestIndex != null));
-
+        (false && !(longestIndex != null) && Ember.assert("DocsRoutes wasn't able to correctly detect the current route. The current url is ".concat(currentURL), longestIndex != null));
         return longestIndex;
       }
     }),
-
     next: Ember.computed('currentRouteIndex', 'routes.[]', function () {
       var currentIndex = this.get('currentRouteIndex');
 
       if (currentIndex < this.get('routes.length') - 1) {
         var nextRouteIndex = currentIndex + 1;
         var route = this.get('routes')[nextRouteIndex];
-
         return {
           route: route,
           label: this.get('items').objectAt(nextRouteIndex).get('label')
         };
       }
     }),
-
     previous: Ember.computed('currentRouteIndex', 'routes.[]', function () {
       var currentIndex = this.get('currentRouteIndex');
 
       if (currentIndex > 0) {
         var previousRouteIndex = currentIndex - 1;
         var route = this.get('routes')[previousRouteIndex];
-
         return {
           route: route,
           label: this.get('items').objectAt(previousRouteIndex).get('label')
         };
       }
     })
-
   });
-});
-;define('ember-cli-addon-docs/services/docs-search', ['exports', 'lunr', 'dummy/config/environment'], function (exports, _lunr, _environment) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/services/docs-search", ["exports", "lunr", "dummy/config/environment"], function (_exports, _lunr, _environment) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
-
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   var Index = _lunr.default.Index,
       Query = _lunr.default.Query;
-  exports.default = Ember.Service.extend({
-    docsFetch: Ember.inject.service(),
 
+  var _default = Ember.Service.extend({
+    docsFetch: Ember.inject.service(),
     search: function search(phrase) {
       return this.loadSearchIndex().then(function (_ref) {
         var index = _ref.index,
             documents = _ref.documents;
-
         var words = phrase.toLowerCase().split(new RegExp(_environment.default['ember-cli-addon-docs'].searchTokenSeparator));
         var results = index.query(function (query) {
           // In the future we could boost results based on the field they come from
@@ -78586,7 +78609,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           try {
             for (var _iterator = words[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               var word = _step.value;
-
               query.term(index.pipeline.runString(word)[0], {
                 wildcard: Query.wildcard.LEADING | Query.wildcard.TRAILING
               });
@@ -78596,7 +78618,7 @@ lunr.QueryParser.parseBoost = function (parser) {
             _iteratorError = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion && _iterator.return) {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
                 _iterator.return();
               }
             } finally {
@@ -78606,20 +78628,20 @@ lunr.QueryParser.parseBoost = function (parser) {
             }
           }
         });
-
         return results.map(function (resultInfo) {
           var document = documents[resultInfo.ref];
-          return { resultInfo: resultInfo, document: document };
+          return {
+            resultInfo: resultInfo,
+            document: document
+          };
         });
       });
     },
-
-
     // temporary; just useful for tuning search config for now
     searchAndLog: function searchAndLog(phrase) {
       /* eslint-disable no-console */
       this.search(phrase).then(function (results) {
-        console.group('Search For \'' + phrase + '\'');
+        console.group("Search For '".concat(phrase, "'"));
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
         var _iteratorError2 = undefined;
@@ -78627,193 +78649,111 @@ lunr.QueryParser.parseBoost = function (parser) {
         try {
           for (var _iterator2 = results[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var result = _step2.value;
-
             var doc = result.document;
+
             if (doc.type === 'class') {
-              console.groupCollapsed('Class: %c' + doc.title, 'font-family: monospace');
-              var _iteratorNormalCompletion3 = true;
-              var _didIteratorError3 = false;
-              var _iteratorError3 = undefined;
+              console.groupCollapsed("Class: %c".concat(doc.title), 'font-family: monospace');
 
-              try {
-                for (var _iterator3 = Object.entries(result.resultInfo.matchData.metadata)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                  var _ref2 = _step3.value;
+              for (var _i = 0, _Object$entries = Object.entries(result.resultInfo.matchData.metadata); _i < _Object$entries.length; _i++) {
+                var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+                    term = _Object$entries$_i[0],
+                    match = _Object$entries$_i[1];
 
-                  var _ref3 = _slicedToArray(_ref2, 2);
+                for (var _i2 = 0, _Object$entries2 = Object.entries(match); _i2 < _Object$entries2.length; _i2++) {
+                  var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
+                      key = _Object$entries2$_i[0],
+                      data = _Object$entries2$_i[1];
 
-                  var term = _ref3[0];
-                  var match = _ref3[1];
-                  var _iteratorNormalCompletion4 = true;
-                  var _didIteratorError4 = false;
-                  var _iteratorError4 = undefined;
+                  if (key === 'keywords') {
+                    var test = term.toLowerCase();
+                    var _iteratorNormalCompletion3 = true;
+                    var _didIteratorError3 = false;
+                    var _iteratorError3 = undefined;
 
-                  try {
-                    for (var _iterator4 = Object.entries(match)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                      var _ref4 = _step4.value;
-
-                      var _ref5 = _slicedToArray(_ref4, 2);
-
-                      var key = _ref5[0];
-                      var data = _ref5[1];
-
-                      if (key === 'keywords') {
-                        var test = term.toLowerCase();
-                        var _iteratorNormalCompletion5 = true;
-                        var _didIteratorError5 = false;
-                        var _iteratorError5 = undefined;
-
-                        try {
-                          for (var _iterator5 = doc.keywords[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                            var keyword = _step5.value;
-
-                            if (keyword.toLowerCase().indexOf(test) !== -1) {
-                              console.log('%c' + keyword + ' %c(field)', 'font-family: monospace; font-weight: bold', 'font-family: inherit; font-weight: normal');
-                            }
-                          }
-                        } catch (err) {
-                          _didIteratorError5 = true;
-                          _iteratorError5 = err;
-                        } finally {
-                          try {
-                            if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                              _iterator5.return();
-                            }
-                          } finally {
-                            if (_didIteratorError5) {
-                              throw _iteratorError5;
-                            }
-                          }
-                        }
-                      } else {
-                        var _iteratorNormalCompletion6 = true;
-                        var _didIteratorError6 = false;
-                        var _iteratorError6 = undefined;
-
-                        try {
-                          for (var _iterator6 = data.position[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                            var position = _step6.value;
-
-                            logSnippet(doc, key, position);
-                          }
-                        } catch (err) {
-                          _didIteratorError6 = true;
-                          _iteratorError6 = err;
-                        } finally {
-                          try {
-                            if (!_iteratorNormalCompletion6 && _iterator6.return) {
-                              _iterator6.return();
-                            }
-                          } finally {
-                            if (_didIteratorError6) {
-                              throw _iteratorError6;
-                            }
-                          }
-                        }
-                      }
-                    }
-                  } catch (err) {
-                    _didIteratorError4 = true;
-                    _iteratorError4 = err;
-                  } finally {
                     try {
-                      if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                        _iterator4.return();
+                      for (var _iterator3 = doc.keywords[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var keyword = _step3.value;
+
+                        if (keyword.toLowerCase().indexOf(test) !== -1) {
+                          console.log("%c".concat(keyword, " %c(field)"), 'font-family: monospace; font-weight: bold', 'font-family: inherit; font-weight: normal');
+                        }
                       }
+                    } catch (err) {
+                      _didIteratorError3 = true;
+                      _iteratorError3 = err;
                     } finally {
-                      if (_didIteratorError4) {
-                        throw _iteratorError4;
+                      try {
+                        if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+                          _iterator3.return();
+                        }
+                      } finally {
+                        if (_didIteratorError3) {
+                          throw _iteratorError3;
+                        }
                       }
                     }
-                  }
-                }
-              } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                    _iterator3.return();
-                  }
-                } finally {
-                  if (_didIteratorError3) {
-                    throw _iteratorError3;
+                  } else {
+                    var _iteratorNormalCompletion4 = true;
+                    var _didIteratorError4 = false;
+                    var _iteratorError4 = undefined;
+
+                    try {
+                      for (var _iterator4 = data.position[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                        var position = _step4.value;
+                        logSnippet(doc, key, position);
+                      }
+                    } catch (err) {
+                      _didIteratorError4 = true;
+                      _iteratorError4 = err;
+                    } finally {
+                      try {
+                        if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
+                          _iterator4.return();
+                        }
+                      } finally {
+                        if (_didIteratorError4) {
+                          throw _iteratorError4;
+                        }
+                      }
+                    }
                   }
                 }
               }
 
               console.groupEnd();
             } else if (doc.type === 'template') {
-              console.groupCollapsed('Route: %c' + doc.route, 'font-family: monospace');
-              var _iteratorNormalCompletion7 = true;
-              var _didIteratorError7 = false;
-              var _iteratorError7 = undefined;
+              console.groupCollapsed("Route: %c".concat(doc.route), 'font-family: monospace');
 
-              try {
-                for (var _iterator7 = Object.values(result.resultInfo.matchData.metadata)[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                  var _match = _step7.value;
-                  var _iteratorNormalCompletion8 = true;
-                  var _didIteratorError8 = false;
-                  var _iteratorError8 = undefined;
+              for (var _i3 = 0, _Object$values = Object.values(result.resultInfo.matchData.metadata); _i3 < _Object$values.length; _i3++) {
+                var match = _Object$values[_i3];
+
+                for (var _i4 = 0, _Object$entries3 = Object.entries(match); _i4 < _Object$entries3.length; _i4++) {
+                  var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i4], 2),
+                      key = _Object$entries3$_i[0],
+                      data = _Object$entries3$_i[1];
+
+                  var _iteratorNormalCompletion5 = true;
+                  var _didIteratorError5 = false;
+                  var _iteratorError5 = undefined;
 
                   try {
-                    for (var _iterator8 = Object.entries(_match)[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-                      var _ref6 = _step8.value;
-
-                      var _ref7 = _slicedToArray(_ref6, 2);
-
-                      var _key = _ref7[0];
-                      var _data = _ref7[1];
-                      var _iteratorNormalCompletion9 = true;
-                      var _didIteratorError9 = false;
-                      var _iteratorError9 = undefined;
-
-                      try {
-                        for (var _iterator9 = _data.position[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                          var _position = _step9.value;
-
-                          logSnippet(doc, _key, _position);
-                        }
-                      } catch (err) {
-                        _didIteratorError9 = true;
-                        _iteratorError9 = err;
-                      } finally {
-                        try {
-                          if (!_iteratorNormalCompletion9 && _iterator9.return) {
-                            _iterator9.return();
-                          }
-                        } finally {
-                          if (_didIteratorError9) {
-                            throw _iteratorError9;
-                          }
-                        }
-                      }
+                    for (var _iterator5 = data.position[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                      var _position = _step5.value;
+                      logSnippet(doc, key, _position);
                     }
                   } catch (err) {
-                    _didIteratorError8 = true;
-                    _iteratorError8 = err;
+                    _didIteratorError5 = true;
+                    _iteratorError5 = err;
                   } finally {
                     try {
-                      if (!_iteratorNormalCompletion8 && _iterator8.return) {
-                        _iterator8.return();
+                      if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
+                        _iterator5.return();
                       }
                     } finally {
-                      if (_didIteratorError8) {
-                        throw _iteratorError8;
+                      if (_didIteratorError5) {
+                        throw _iteratorError5;
                       }
                     }
-                  }
-                }
-              } catch (err) {
-                _didIteratorError7 = true;
-                _iteratorError7 = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion7 && _iterator7.return) {
-                    _iterator7.return();
-                  }
-                } finally {
-                  if (_didIteratorError7) {
-                    throw _iteratorError7;
                   }
                 }
               }
@@ -78826,7 +78766,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           _iteratorError2 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
               _iterator2.return();
             }
           } finally {
@@ -78842,7 +78782,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     },
     loadSearchIndex: function loadSearchIndex() {
       if (!this._searchIndex) {
-        this._searchIndex = this.get('docsFetch').fetch({ url: this.get('_indexURL') }).json().then(function (json) {
+        this._searchIndex = this.get('docsFetch').fetch({
+          url: this.get('_indexURL')
+        }).json().then(function (json) {
           return {
             index: Index.load(json.index),
             documents: json.documents
@@ -78852,120 +78794,104 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       return this._searchIndex;
     },
-
-
     _indexURL: Ember.computed(function () {
       var config = Ember.getOwner(this).resolveRegistration('config:environment');
-      return config.rootURL + 'ember-cli-addon-docs/search-index.json';
+      return "".concat(config.rootURL, "ember-cli-addon-docs/search-index.json");
     })
   });
 
+  _exports.default = _default;
 
   function logSnippet(doc, key, position) {
     var field = doc[key];
+
     if (!field) {
       return;
     }
 
     var start = Math.max(position[0] - 15, 0);
     var end = Math.min(position[0] + position[1] + 15, field.length);
-    var pre = '' + (start === 0 ? '' : '...') + field.slice(start, position[0]);
+    var pre = "".concat(start === 0 ? '' : '...').concat(field.slice(start, position[0]));
     var snippet = field.slice(position[0], position[0] + position[1]);
-    var post = '' + field.slice(position[0] + position[1], end) + (end === field.length ? '' : '...');
-    console.log(pre + '%c' + snippet + '%c' + post + ' (' + key + ')', 'font-weight: bold', 'font-weight: regular'); // eslint-disable-line no-console
+    var post = "".concat(field.slice(position[0] + position[1], end)).concat(end === field.length ? '' : '...');
+    console.log("".concat(pre, "%c").concat(snippet, "%c").concat(post, " (").concat(key, ")"), 'font-weight: bold', 'font-weight: regular'); // eslint-disable-line no-console
   }
 });
-;define('ember-cli-addon-docs/services/project-version', ['exports', 'ember-concurrency', 'dummy/config/environment'], function (exports, _emberConcurrency, _environment) {
-  'use strict';
+;define("ember-cli-addon-docs/services/project-version", ["exports", "ember-concurrency", "dummy/config/environment"], function (_exports, _emberConcurrency, _environment) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   var latestVersionName = _environment.default['ember-cli-addon-docs'].latestVersionName;
-  exports.default = Ember.Service.extend({
-    docsFetch: Ember.inject.service(),
 
-    _loadAvailableVersions: (0, _emberConcurrency.task)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+  var _default = Ember.Service.extend({
+    docsFetch: Ember.inject.service(),
+    _loadAvailableVersions: (0, _emberConcurrency.task)(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee() {
       var response, json;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return this.get('docsFetch').fetch({ url: this.get('root') + 'versions.json' }).response();
+              return this.get('docsFetch').fetch({
+                url: "".concat(this.get('root'), "versions.json")
+              }).response();
 
             case 2:
               response = _context.sent;
-              json = void 0;
 
               if (!response.ok) {
-                _context.next = 10;
+                _context.next = 9;
                 break;
               }
 
-              _context.next = 7;
+              _context.next = 6;
               return response.json();
 
-            case 7:
+            case 6:
               json = _context.sent;
-              _context.next = 11;
+              _context.next = 10;
               break;
 
-            case 10:
+            case 9:
               json = _defineProperty({}, latestVersionName, Ember.assign({}, this.get('currentVersion')));
 
-            case 11:
-
+            case 10:
               this.set('versions', Object.keys(json).map(function (key) {
                 var version = json[key];
                 version.truncatedSha = version.sha.substr(0, 5);
                 version.key = key;
-
                 return version;
               }));
 
-            case 12:
-            case 'end':
+            case 11:
+            case "end":
               return _context.stop();
           }
         }
       }, _callee, this);
     })),
-
     redirectTo: function redirectTo(version) {
-      window.location.href = '' + this.get('root') + version.path;
+      window.location.href = "".concat(this.get('root')).concat(version.path);
     },
     loadAvailableVersions: function loadAvailableVersions() {
       return this.get('_loadAvailableVersions').perform();
     },
-
-
     root: Ember.computed('currentVersion.path', function () {
       var rootURL = Ember.getOwner(this).resolveRegistration('config:environment').rootURL;
-      return rootURL.replace('/' + this.get('currentVersion.path') + '/', '/');
+      return rootURL.replace("/".concat(this.get('currentVersion.path'), "/"), '/');
     }),
-
     currentVersion: Ember.computed(function () {
       var config = Ember.getOwner(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-      var currentVersion = config.deployVersion;
+      var currentVersion = config.deployVersion; // In development, this token won't have been replaced replaced
 
-      // In development, this token won't have been replaced replaced
       if (currentVersion === 'ADDON_DOCS_DEPLOY_VERSION') {
         currentVersion = {
           key: latestVersionName,
@@ -78978,76 +78904,181 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       return currentVersion;
     })
-
   });
-});
-;define('ember-cli-addon-docs/tailwind/config/background-colors', ['exports', 'ember-cli-addon-docs/tailwind/config/colors'], function (exports, _colors) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/tailwind/config/background-colors", ["exports", "ember-cli-addon-docs/tailwind/config/colors"], function (_exports, _colors) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _colors.default;
-});
-;define('ember-cli-addon-docs/tailwind/config/background-size', ['exports'], function (exports) {
-  'use strict';
+  _exports.default = void 0;
 
-  Object.defineProperty(exports, "__esModule", {
+  /*
+  |-----------------------------------------------------------------------------
+  | Background colors             https://tailwindcss.com/docs/background-color
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your background colors. By default these use
+  | the color palette we defined above, however you're welcome to set
+  | these independently if that makes sense for your project.
+  |
+  | Class name: .bg-{color}
+  |
+  */
+  var _default = _colors.default;
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/tailwind/config/background-size", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Background sizes               https://tailwindcss.com/docs/background-size
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your background sizes. We provide some common
+  | values that are useful in most projects, but feel free to add other sizes
+  | that are specific to your project here as well.
+  |
+  | Class name: .bg-{size}
+  |
+  */
+  var _default = {
     auto: 'auto',
     cover: 'cover',
     contain: 'contain'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/border-colors', ['exports', 'ember-cli-addon-docs/tailwind/config/colors'], function (exports, _colors) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/border-colors", ["exports", "ember-cli-addon-docs/tailwind/config/colors"], function (_exports, _colors) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Object.assign({ default: _colors.default['grey-light'] }, _colors.default);
-});
-;define('ember-cli-addon-docs/tailwind/config/border-radius', ['exports'], function (exports) {
-  'use strict';
+  _exports.default = void 0;
 
-  Object.defineProperty(exports, "__esModule", {
+  /*
+  |-----------------------------------------------------------------------------
+  | Border colors                     https://tailwindcss.com/docs/border-color
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your border colors. By default these use the
+  | color palette we defined above, however you're welcome to set these
+  | independently if that makes sense for your project.
+  |
+  | Take note that border colors require a special "default" value set
+  | as well. This is the color that will be used when you do not
+  | specify a border color.
+  |
+  | Class name: .border-{color}
+  |
+  */
+  var _default = Object.assign({
+    default: _colors.default['grey-light']
+  }, _colors.default);
+
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/tailwind/config/border-radius", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Border radius                    https://tailwindcss.com/docs/border-radius
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your border radius values. If a `default` radius
+  | is provided, it will be made available as the non-suffixed `.rounded`
+  | utility.
+  |
+  | If your scale includes a `0` value to reset already rounded corners, it's
+  | a good idea to put it first so other values are able to override it.
+  |
+  | Class name: .rounded{-side?}{-size?}
+  |
+  */
+  var _default = {
     'none': '0',
     'sm': '.125rem',
     default: '.25rem',
     'lg': '.5rem',
     'full': '9999px'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/border-widths', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/border-widths", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Border widths                     https://tailwindcss.com/docs/border-width
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your border widths. Take note that border
+  | widths require a special "default" value set as well. This is the
+  | width that will be used when you do not specify a border width.
+  |
+  | Class name: .border{-side?}{-width?}
+  |
+  */
+  var _default = {
     default: '1px',
     '0': '0',
     '2': '2px',
     '4': '4px',
     '8': '8px'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/colors', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/colors", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
 
+  /*
+  |:--------------------------------------------------------------------------------|
+  | Colors                                    https://tailwindcss.com/docs/colors   |
+  | ------------------------------------------------------------------------------- |
+  | Text colors                         https://tailwindcss.com/docs/text-color     |
+  |                                                                                 |
+  | Class name: .text-{color}                                                       |
+  |                                                                                 |
+  | -----------------------------------------------------------------------------   |
+  | Background colors             https://tailwindcss.com/docs/background-color     |
+  |                                                                                 |
+  | Class name: .bg-{color}                                                         |
+  |                                                                                 |
+  | -----------------------------------------------------------------------------   |
+  | Border colors                     https://tailwindcss.com/docs/border-color     |
+  |                                                                                 |
+  | Class name: .border-{color}                                                     |
+  |                                                                                 |
+  */
+  var _default = {
     'transparent': 'transparent',
     'inherit': 'inherit',
-
     'black': '#22292f',
     'grey-darkest': '#3d4852',
     'grey-darker': '#606f7b',
@@ -79057,23 +79088,35 @@ lunr.QueryParser.parseBoost = function (parser) {
     'grey-lighter': '#f1f5f8',
     'grey-lightest': '#f8fafc',
     'white': 'white',
-
     'yellow': '#ffed4a',
-
     'code-base': '#282c34',
-
     // See the note in tailwind/compnents/docs-brand-colors.css
     'brand-var': 'var(--brand-primary, #E04E39)'
-
   };
+  _exports.default = _default;
 });
-;define("ember-cli-addon-docs/tailwind/config/font-weights", ["exports"], function (exports) {
+;define("ember-cli-addon-docs/tailwind/config/font-weights", ["exports"], function (_exports) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Font weights                       https://tailwindcss.com/docs/font-weight
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your font weights. We've provided a list of
+  | common font weight names with their respective numeric scale values
+  | to get you started. It's unlikely that your project will require
+  | all of these, so we recommend removing those you don't need.
+  |
+  | Class name: .font-{weight}
+  |
+  */
+  var _default = {
     hairline: 100,
     thin: 200,
     light: 300,
@@ -79084,27 +79127,64 @@ lunr.QueryParser.parseBoost = function (parser) {
     extrabold: 800,
     black: 900
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/fonts', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/fonts", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Fonts                                    https://tailwindcss.com/docs/fonts
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your project's font stack, or font families.
+  | Keep in mind that Tailwind doesn't actually load any fonts for you.
+  | If you're using custom fonts you'll need to import them prior to
+  | defining them here.
+  |
+  | By default we provide a native font stack that works remarkably well on
+  | any device or OS you're using, since it just uses the default fonts
+  | provided by the platform.
+  |
+  | Class name: .font-{name}
+  |
+  */
+  var _default = {
     title: ['"Crimson Text"', 'serif'],
     sans: ['system-ui', 'BlinkMacSystemFont', '-apple-system', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
     serif: ['Constantia', 'Lucida Bright', 'Lucidabright', 'Lucida Serif', 'Lucida', 'DejaVu Serif', 'Bitstream Vera Serif', 'Liberation Serif', 'Georgia', 'serif'],
     mono: ['Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/height', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/height", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Height                                  https://tailwindcss.com/docs/height
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your height utility sizes. These can be
+  | percentage based, pixels, rems, or any other units. By default
+  | we provide a sensible rem based numeric scale plus some other
+  | common use-cases. You can, of course, modify these values as
+  | needed.
+  |
+  | Class name: .h-{size}
+  |
+  */
+  var _default = {
     auto: 'auto',
     px: '1px',
     '1': '0.25rem',
@@ -79123,40 +79203,85 @@ lunr.QueryParser.parseBoost = function (parser) {
     full: '100%',
     screen: '100vh'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/letter-spacing', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/letter-spacing", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Tracking (letter spacing)       https://tailwindcss.com/docs/letter-spacing
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your letter spacing values, or as we call
+  | them in Tailwind, tracking.
+  |
+  | Class name: .tracking-{size}
+  |
+  */
+  var _default = {
     'tight': '-0.2px',
     'normal': '0',
     'wide': '0.05em'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/line-height', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/line-height", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Leading (line height)              https://tailwindcss.com/docs/line-height
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your line height values, or as we call
+  | them in Tailwind, leadings.
+  |
+  | Class name: .leading-{size}
+  |
+  */
+  var _default = {
     'none': 1,
     'tight': 1.25,
     'small': 1.45,
     'normal': 1.625,
     'loose': 2
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/margin', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/margin", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Margin                                  https://tailwindcss.com/docs/margin
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your margin utility sizes. These can be
+  | percentage based, pixels, rems, or any other units. By default we
+  | provide a sensible rem based numeric scale plus a couple other
+  | common use-cases like "1px". You can, of course, modify these
+  | values as needed.
+  |
+  | Class name: .m{side?}-{size}
+  |
+  */
+  var _default = {
     'auto': 'auto',
     'px': '1px',
     '0': '0',
@@ -79170,28 +79295,60 @@ lunr.QueryParser.parseBoost = function (parser) {
     '16': '4rem',
     '20': '5rem'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/max-height', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/max-height", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Maximum height                      https://tailwindcss.com/docs/max-height
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your maximum height utility sizes. These can
+  | be percentage based, pixels, rems, or any other units. We provide a
+  | couple common use-cases by default. You can, of course, modify
+  | these values as needed.
+  |
+  | Class name: .max-h-{size}
+  |
+  */
+  var _default = {
     full: '100%',
     screen: '100vh'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/max-width', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/max-width", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |:------------------------------------------------------------------------------|
+  | Maximum width                        https://tailwindcss.com/docs/max-width   |
+  | ----------------------------------------------------------------------------- |
+  |                                                                               |
+  | Here is where you define your maximum width utility sizes. These can          |
+  | be percentage based, pixels, rems, or any other units. By default             |
+  | we provide a sensible rem based scale and a "full width" size,                |
+  | which is basically a reset utility. You can, of course,                       |
+  | modify these values as needed.                                                |
+  |                                                                               |
+  | Class name: .max-w-{size}                                                     |
+  |                                                                               |
+  */
+  var _default = {
     'site-container': '1400px',
     'measure-byline': '12rem',
-
     'none': 'none',
     'xxs': '17rem',
     'xs': '20rem',
@@ -79204,40 +79361,88 @@ lunr.QueryParser.parseBoost = function (parser) {
     '4xl': '90rem',
     '5xl': '100rem',
     'full': '100%',
-
     '2/3': '66.67%'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/min-height', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/min-height", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Minimum height                      https://tailwindcss.com/docs/min-height
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your minimum height utility sizes. These can
+  | be percentage based, pixels, rems, or any other units. We provide a
+  | few common use-cases by default. You can, of course, modify these
+  | values as needed.
+  |
+  | Class name: .min-h-{size}
+  |
+  */
+  var _default = {
     '0': '0',
     full: '100%',
     screen: '100vh'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/min-width', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/min-width", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Minimum width                        https://tailwindcss.com/docs/min-width
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your minimum width utility sizes. These can
+  | be percentage based, pixels, rems, or any other units. We provide a
+  | couple common use-cases by default. You can, of course, modify
+  | these values as needed.
+  |
+  | Class name: .min-w-{size}
+  |
+  */
+  var _default = {
     '0': '0',
     full: '100%'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/negative-margin', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/negative-margin", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Negative margin                https://tailwindcss.com/docs/negative-margin
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your negative margin utility sizes. These can
+  | be percentage based, pixels, rems, or any other units. By default we
+  | provide matching values to the padding scale since these utilities
+  | generally get used together. You can, of course, modify these
+  | values as needed.
+  |
+  | Class name: .-m{side?}-{size}
+  |
+  */
+  var _default = {
     'px': '1px',
     '2px': '2px',
     '0': '0',
@@ -79250,28 +79455,60 @@ lunr.QueryParser.parseBoost = function (parser) {
     '16': '4rem',
     '20': '5rem'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/opacity', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/opacity", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Opacity                                https://tailwindcss.com/docs/opacity
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your opacity utility values. By default we
+  | provide a sensible numeric scale. You can, of course, modify these
+  | values as needed.
+  |
+  | Class name: .opacity-{name}
+  |
+  */
+  var _default = {
     '0': '0',
     '25': '.25',
     '50': '.5',
     '75': '.75',
     '100': '1'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/padding', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/padding", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Padding                                https://tailwindcss.com/docs/padding
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your padding utility sizes. These can be
+  | percentage based, pixels, rems, or any other units. By default we
+  | provide a sensible rem based numeric scale plus a couple other
+  | common use-cases like "1px". You can, of course, modify these
+  | values as needed.
+  |
+  | Class name: .p{side?}-{size}
+  |
+  */
+  var _default = {
     'px': '1px',
     '0': '0',
     '1': '0.25rem',
@@ -79284,27 +79521,66 @@ lunr.QueryParser.parseBoost = function (parser) {
     '16': '4rem',
     '20': '5rem'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/screens', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/screens", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Screens                      https://tailwindcss.com/docs/responsive-design
+  |-----------------------------------------------------------------------------
+  |
+  | Screens in Tailwind are translated to CSS media queries. They define the
+  | responsive breakpoints for your project. By default Tailwind takes a
+  | "mobile first" approach, where each screen size represents a minimum
+  | viewport width. Feel free to have as few or as many screens as you
+  | want, naming them in whatever way you'd prefer for your project.
+  |
+  | Tailwind also allows for more complex screen definitions, which can be
+  | useful in certain situations. Be sure to see the full responsive
+  | documentation for a complete list of options.
+  |
+  | Class name: .{screen}:{utility}
+  |
+  */
+  var _default = {
     sm: '576px',
     md: '768px',
     lg: '992px',
     xl: '1200px'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/shadows', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/shadows", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Shadows                                https://tailwindcss.com/docs/shadows
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your shadow utilities. As you can see from
+  | the defaults we provide, it's possible to apply multiple shadows
+  | per utility using comma separation.
+  |
+  | If a `default` shadow is provided, it will be made available as the non-
+  | suffixed `.shadow` utility.
+  |
+  | Class name: .shadow-{size?}
+  |
+  */
+  var _default = {
     'sm': '0 1px 1px 0 rgba(116, 129, 141, 0.1)',
     default: '0 2px 4px 0 rgba(0,0,0,0.10)',
     'md': '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
@@ -79312,35 +79588,68 @@ lunr.QueryParser.parseBoost = function (parser) {
     'inner': 'inset 0 2px 4px 0 rgba(0,0,0,0.06)',
     'none': 'none'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/svg-fill', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/svg-fill", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | SVG fill                                   https://tailwindcss.com/docs/svg
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your SVG fill colors. By default we just provide
+  | `fill-current` which sets the fill to the current text color. This lets you
+  | specify a fill color using existing text color utilities and helps keep the
+  | generated CSS file size down.
+  |
+  | Class name: .fill-{name}
+  |
+  */
+  var _default = {
     current: 'currentColor'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/svg-stroke', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/svg-stroke", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | SVG stroke                                 https://tailwindcss.com/docs/svg
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your SVG stroke colors. By default we just provide
+  | `stroke-current` which sets the stroke to the current text color. This lets
+  | you specify a stroke color using existing text color utilities and helps
+  | keep the generated CSS file size down.
+  |
+  | Class name: .stroke-{name}
+  |
+  */
+  var _default = {
     current: 'currentColor'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/tailwind', ['exports', 'ember-cli-addon-docs/tailwind/config/colors', 'ember-cli-addon-docs/tailwind/config/screens', 'ember-cli-addon-docs/tailwind/config/fonts', 'ember-cli-addon-docs/tailwind/config/text-sizes', 'ember-cli-addon-docs/tailwind/config/font-weights', 'ember-cli-addon-docs/tailwind/config/line-height', 'ember-cli-addon-docs/tailwind/config/letter-spacing', 'ember-cli-addon-docs/tailwind/config/text-colors', 'ember-cli-addon-docs/tailwind/config/background-colors', 'ember-cli-addon-docs/tailwind/config/background-size', 'ember-cli-addon-docs/tailwind/config/border-widths', 'ember-cli-addon-docs/tailwind/config/border-colors', 'ember-cli-addon-docs/tailwind/config/border-radius', 'ember-cli-addon-docs/tailwind/config/width', 'ember-cli-addon-docs/tailwind/config/height', 'ember-cli-addon-docs/tailwind/config/min-width', 'ember-cli-addon-docs/tailwind/config/min-height', 'ember-cli-addon-docs/tailwind/config/max-width', 'ember-cli-addon-docs/tailwind/config/max-height', 'ember-cli-addon-docs/tailwind/config/padding', 'ember-cli-addon-docs/tailwind/config/margin', 'ember-cli-addon-docs/tailwind/config/negative-margin', 'ember-cli-addon-docs/tailwind/config/shadows', 'ember-cli-addon-docs/tailwind/config/z-index', 'ember-cli-addon-docs/tailwind/config/opacity', 'ember-cli-addon-docs/tailwind/config/svg-fill', 'ember-cli-addon-docs/tailwind/config/svg-stroke'], function (exports, _colors, _screens, _fonts, _textSizes, _fontWeights, _lineHeight, _letterSpacing, _textColors, _backgroundColors, _backgroundSize, _borderWidths, _borderColors, _borderRadius, _width, _height, _minWidth, _minHeight, _maxWidth, _maxHeight, _padding, _margin, _negativeMargin, _shadows, _zIndex, _opacity, _svgFill, _svgStroke) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/tailwind", ["exports", "ember-cli-addon-docs/tailwind/config/colors", "ember-cli-addon-docs/tailwind/config/screens", "ember-cli-addon-docs/tailwind/config/fonts", "ember-cli-addon-docs/tailwind/config/text-sizes", "ember-cli-addon-docs/tailwind/config/font-weights", "ember-cli-addon-docs/tailwind/config/line-height", "ember-cli-addon-docs/tailwind/config/letter-spacing", "ember-cli-addon-docs/tailwind/config/text-colors", "ember-cli-addon-docs/tailwind/config/background-colors", "ember-cli-addon-docs/tailwind/config/background-size", "ember-cli-addon-docs/tailwind/config/border-widths", "ember-cli-addon-docs/tailwind/config/border-colors", "ember-cli-addon-docs/tailwind/config/border-radius", "ember-cli-addon-docs/tailwind/config/width", "ember-cli-addon-docs/tailwind/config/height", "ember-cli-addon-docs/tailwind/config/min-width", "ember-cli-addon-docs/tailwind/config/min-height", "ember-cli-addon-docs/tailwind/config/max-width", "ember-cli-addon-docs/tailwind/config/max-height", "ember-cli-addon-docs/tailwind/config/padding", "ember-cli-addon-docs/tailwind/config/margin", "ember-cli-addon-docs/tailwind/config/negative-margin", "ember-cli-addon-docs/tailwind/config/shadows", "ember-cli-addon-docs/tailwind/config/z-index", "ember-cli-addon-docs/tailwind/config/opacity", "ember-cli-addon-docs/tailwind/config/svg-fill", "ember-cli-addon-docs/tailwind/config/svg-stroke"], function (_exports, _colors, _screens, _fonts, _textSizes, _fontWeights, _lineHeight, _letterSpacing, _textColors, _backgroundColors, _backgroundSize, _borderWidths, _borderColors, _borderRadius, _width, _height, _minWidth, _minHeight, _maxWidth, _maxHeight, _padding, _margin, _negativeMargin, _shadows, _zIndex, _opacity, _svgFill, _svgStroke) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
-
+  _exports.default = void 0;
+  var _default = {
     colors: _colors.default,
     screens: _screens.default,
     fonts: _fonts.default,
@@ -79368,7 +79677,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     opacity: _opacity.default,
     svgFill: _svgFill.default,
     svgStroke: _svgStroke.default,
-
     modules: {
       appearance: ['responsive'],
       backgroundAttachment: ['responsive'],
@@ -79441,29 +79749,45 @@ lunr.QueryParser.parseBoost = function (parser) {
     | leaving these options alone unless you absolutely need to change them.
     |
     */
-
     options: {
       prefix: 'docs-',
       important: false,
       separator: ':'
     }
-
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/text-colors', ['exports', 'ember-cli-addon-docs/tailwind/config/colors'], function (exports, _colors) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/text-colors", ["exports", "ember-cli-addon-docs/tailwind/config/colors"], function (_exports, _colors) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _colors.default;
-});
-;define('ember-cli-addon-docs/tailwind/config/text-sizes', ['exports'], function (exports) {
-  'use strict';
+  _exports.default = void 0;
 
-  Object.defineProperty(exports, "__esModule", {
+  /*
+  |-----------------------------------------------------------------------------
+  | Text colors                         https://tailwindcss.com/docs/text-color
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your text colors. By default these use the
+  | color palette we defined above, however you're welcome to set these
+  | independently if that makes sense for your project.
+  |
+  | Class name: .text-{color}
+  |
+  */
+  var _default = _colors.default;
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/tailwind/config/text-sizes", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
+
   /*
   |-----------------------------------------------------------------------------
   | Text sizes                         https://tailwindcss.com/docs/text-sizing
@@ -79497,27 +79821,46 @@ lunr.QueryParser.parseBoost = function (parser) {
     'jumbo-1': '60px',
     'jumbo-2': '74px',
     'jumbo-3': '86px'
-  };
+  }; // Convert pixel sizes to REMs
 
-  // Convert pixel sizes to REMs
-  exports.default = Object.keys(textSizes).reduce(function (memo, textSize) {
+  var _default = Object.keys(textSizes).reduce(function (memo, textSize) {
     var pixelValue = textSizes[textSize];
-    var remValue = +pixelValue.replace('px', '') / 16 + 'rem';
-
+    var remValue = "".concat(+pixelValue.replace('px', '') / 16, "rem");
     memo[textSize] = remValue;
-
     return memo;
   }, {});
-});
-;define('ember-cli-addon-docs/tailwind/config/width', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-cli-addon-docs/tailwind/config/width", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
-    'site-container': '1400px',
+  _exports.default = void 0;
 
+  /*
+  |-----------------------------------------------------------------------------
+  | Width                                    https://tailwindcss.com/docs/width
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your width utility sizes. These can be
+  | percentage based, pixels, rems, or any other units. By default
+  | we provide a sensible rem based numeric scale, a percentage
+  | based fraction scale, plus some other common use-cases. You
+  | can, of course, modify these values as needed.
+  |
+  |
+  | It's also worth mentioning that Tailwind automatically escapes
+  | invalid CSS class name characters, which allows you to have
+  | awesome classes like .w-2/3.
+  |
+  | Class name: .w-{size}
+  |
+  */
+  var _default = {
+    'site-container': '1400px',
     'auto': 'auto',
     'px': '1px',
     '1': '0.25rem',
@@ -79551,14 +79894,29 @@ lunr.QueryParser.parseBoost = function (parser) {
     'full': '100%',
     'screen': '100vw'
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/tailwind/config/z-index', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/tailwind/config/z-index", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+
+  /*
+  |-----------------------------------------------------------------------------
+  | Z-index                                https://tailwindcss.com/docs/z-index
+  |-----------------------------------------------------------------------------
+  |
+  | Here is where you define your z-index utility values. By default we
+  | provide a sensible numeric scale. You can, of course, modify these
+  | values as needed.
+  |
+  | Class name: .z-{index}
+  |
+  */
+  var _default = {
     auto: 'auto',
     '0': 0,
     '10': 10,
@@ -79567,22 +79925,24 @@ lunr.QueryParser.parseBoost = function (parser) {
     '40': 40,
     '50': 50
   };
+  _exports.default = _default;
 });
-;define('ember-cli-addon-docs/transitions/fade-and-drop', ['exports', 'liquid-fire'], function (exports, _liquidFire) {
-  'use strict';
+;define("ember-cli-addon-docs/transitions/fade-and-drop", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = fadeAndDrop;
-
+  _exports.default = fadeAndDrop;
 
   /**
     @function fadeAndDrop
     @hide
   */
   function fadeAndDrop() {
-    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { duration: 100 };
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      duration: 100
+    };
 
     if (this.newElement) {
       this.newElement.css('margin-top', '-10px');
@@ -79594,102 +79954,62 @@ lunr.QueryParser.parseBoost = function (parser) {
     }, opts);
   }
 });
-;define('ember-cli-addon-docs/utils/compile-markdown', ['exports', 'marked', 'highlight.js/lib/highlight', 'highlight.js/lib/languages/javascript', 'highlight.js/lib/languages/css', 'highlight.js/lib/languages/handlebars', 'highlight.js/lib/languages/htmlbars', 'highlight.js/lib/languages/json', 'highlight.js/lib/languages/xml', 'highlight.js/lib/languages/diff', 'highlight.js/lib/languages/shell', 'highlight.js/lib/languages/typescript'], function (exports, _marked, _highlight, _javascript, _css, _handlebars, _htmlbars, _json, _xml, _diff, _shell, _typescript) {
-  'use strict';
+;define("ember-cli-addon-docs/utils/compile-markdown", ["exports", "marked", "highlight.js/lib/highlight", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/htmlbars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript"], function (_exports, _marked, _highlight, _javascript, _css, _handlebars, _htmlbars, _json, _xml, _diff, _shell, _typescript) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.highlightCode = highlightCode;
-  exports.default = compileMarkdown;
+  _exports.highlightCode = highlightCode;
+  _exports.default = compileMarkdown;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-  var _get = function get(object, property, receiver) {
-    if (object === null) object = Function.prototype;
-    var desc = Object.getOwnPropertyDescriptor(object, property);
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    if (desc === undefined) {
-      var parent = Object.getPrototypeOf(object);
+  function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
-      if (parent === null) {
-        return undefined;
-      } else {
-        return get(parent, property, receiver);
-      }
-    } else if ("value" in desc) {
-      return desc.value;
-    } else {
-      var getter = desc.get;
+  function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
-      if (getter === undefined) {
-        return undefined;
-      }
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-      return getter.call(receiver);
-    }
-  };
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
   _highlight.default.registerLanguage('javascript', _javascript.default);
-  _highlight.default.registerLanguage('js', _javascript.default);
-  _highlight.default.registerLanguage('css', _css.default);
-  _highlight.default.registerLanguage('handlebars', _handlebars.default);
-  _highlight.default.registerLanguage('htmlbars', _htmlbars.default);
-  _highlight.default.registerLanguage('hbs', _htmlbars.default);
-  _highlight.default.registerLanguage('json', _json.default);
-  _highlight.default.registerLanguage('xml', _xml.default);
-  _highlight.default.registerLanguage('diff', _diff.default);
-  _highlight.default.registerLanguage('shell', _shell.default);
-  _highlight.default.registerLanguage('sh', _shell.default);
-  _highlight.default.registerLanguage('typescript', _typescript.default);
-  _highlight.default.registerLanguage('ts', _typescript.default);
 
+  _highlight.default.registerLanguage('js', _javascript.default);
+
+  _highlight.default.registerLanguage('css', _css.default);
+
+  _highlight.default.registerLanguage('handlebars', _handlebars.default);
+
+  _highlight.default.registerLanguage('htmlbars', _htmlbars.default);
+
+  _highlight.default.registerLanguage('hbs', _htmlbars.default);
+
+  _highlight.default.registerLanguage('json', _json.default);
+
+  _highlight.default.registerLanguage('xml', _xml.default);
+
+  _highlight.default.registerLanguage('diff', _diff.default);
+
+  _highlight.default.registerLanguage('shell', _shell.default);
+
+  _highlight.default.registerLanguage('sh', _shell.default);
+
+  _highlight.default.registerLanguage('typescript', _typescript.default);
+
+  _highlight.default.registerLanguage('ts', _typescript.default);
   /**
     This function is used when `compileMarkdown` encounters code blocks while
     rendering Markdown source.
@@ -79726,10 +80046,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     @param {string} snippet Snippet of code
     @param {string} lang Language to use for syntax highlighting
   */
+
+
   function highlightCode(code, lang) {
     return _highlight.default.getLanguage(lang) ? _highlight.default.highlight(lang, code).value : code;
   }
-
   /**
     This is the function used by AddonDocs to compile Markdown into HTML, for
     example when turning `template.md` files into `template.hbs`. It includes
@@ -79758,8 +80079,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     @param {string} source Markdown string representing the source content
     @param {object} options? Options. Pass `targetHandlebars: true` if turning MD into HBS
   */
+
+
   function compileMarkdown(source, config) {
     var tokens = _marked.default.lexer(source);
+
     var markedOptions = {
       highlight: highlightCode,
       renderer: new HBSRenderer(config)
@@ -79769,21 +80093,19 @@ lunr.QueryParser.parseBoost = function (parser) {
       tokens = compactParagraphs(tokens);
     }
 
-    return '<div class="docs-md">' + _marked.default.parser(tokens, markedOptions).trim() + '</div>';
-  }
-
-  // Whitespace can imply paragraphs in Markdown, which can result
+    return "<div class=\"docs-md\">".concat(_marked.default.parser(tokens, markedOptions).trim(), "</div>");
+  } // Whitespace can imply paragraphs in Markdown, which can result
   // in interleaving between <p> tags and block component invocations,
   // so this scans the Marked tokens to turn things like this:
   //    <p>{{#my-component}}<p>
   //    <p>{{/my-component}}</p>
   // Into this:
   //    <p>{{#my-component}} {{/my-component}}</p>
+
+
   function compactParagraphs(tokens) {
     var compacted = [];
-
     compacted.links = tokens.links;
-
     var balance = 0;
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -79797,12 +80119,11 @@ lunr.QueryParser.parseBoost = function (parser) {
           compacted.push(token);
         } else if (token.text) {
           var last = compacted[compacted.length - 1];
-          last.text = last.text + ' ' + token.text;
+          last.text = "".concat(last.text, " ").concat(token.text);
         }
 
         var tokenText = token.text || '';
         var textWithoutCode = tokenText.replace(/`[\s\S]*?`/g, '');
-
         balance += count(/{{#/g, textWithoutCode);
         balance += count(/<[A-Z]/g, textWithoutCode);
         balance -= count(/{{\//g, textWithoutCode);
@@ -79813,7 +80134,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       _iteratorError = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
           _iterator.return();
         }
       } finally {
@@ -79828,46 +80149,57 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function count(regex, string) {
     var total = 0;
+
     while (regex.exec(string)) {
       total++;
-    }return total;
+    }
+
+    return total;
   }
 
-  var HBSRenderer = function (_marked$Renderer) {
+  var HBSRenderer =
+  /*#__PURE__*/
+  function (_marked$Renderer) {
     _inherits(HBSRenderer, _marked$Renderer);
 
     function HBSRenderer(config) {
+      var _this;
+
       _classCallCheck(this, HBSRenderer);
 
-      var _this = _possibleConstructorReturn(this, (HBSRenderer.__proto__ || Object.getPrototypeOf(HBSRenderer)).call(this));
-
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(HBSRenderer).call(this));
       _this.config = config || {};
       return _this;
     }
 
     _createClass(HBSRenderer, [{
-      key: 'codespan',
+      key: "codespan",
       value: function codespan() {
-        return this._processCode(_get(HBSRenderer.prototype.__proto__ || Object.getPrototypeOf(HBSRenderer.prototype), 'codespan', this).apply(this, arguments));
+        return this._processCode(_get(_getPrototypeOf(HBSRenderer.prototype), "codespan", this).apply(this, arguments));
       }
     }, {
-      key: 'code',
+      key: "code",
       value: function code() {
-        var code = this._processCode(_get(HBSRenderer.prototype.__proto__ || Object.getPrototypeOf(HBSRenderer.prototype), 'code', this).apply(this, arguments));
+        var code = this._processCode(_get(_getPrototypeOf(HBSRenderer.prototype), "code", this).apply(this, arguments));
 
         return code.replace(/^<pre>/, '<pre class="docs-md__code">');
-      }
+      } // Unescape markdown escaping in general, since it can interfere with
+      // Handlebars templating
+
     }, {
-      key: 'text',
+      key: "text",
       value: function text() {
-        var text = _get(HBSRenderer.prototype.__proto__ || Object.getPrototypeOf(HBSRenderer.prototype), 'text', this).apply(this, arguments);
+        var text = _get(_getPrototypeOf(HBSRenderer.prototype), "text", this).apply(this, arguments);
+
         if (this.config.targetHandlebars) {
           text = text.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;|&#34;/g, '"').replace(/&apos;|&#39;/g, '\'');
         }
+
         return text;
-      }
+      } // Escape curlies in code spans/blocks to avoid treating them as Handlebars
+
     }, {
-      key: '_processCode',
+      key: "_processCode",
       value: function _processCode(string) {
         if (this.config.targetHandlebars) {
           string = this._escapeCurlies(string);
@@ -79876,70 +80208,65 @@ lunr.QueryParser.parseBoost = function (parser) {
         return string;
       }
     }, {
-      key: '_escapeCurlies',
+      key: "_escapeCurlies",
       value: function _escapeCurlies(string) {
         return string.replace(/{{/g, '&#123;&#123;').replace(/}}/g, '&#125;&#125;');
       }
     }, {
-      key: 'heading',
+      key: "heading",
       value: function heading(text, level) {
         var id = text.toLowerCase().replace(/<\/?.*?>/g, '').replace(/[^\w]+/g, '-');
-        var inner = level === 1 ? text : '<a href=\'#' + id + '\' class=\'heading-anchor\'>' + text + '</a>';
-
-        return '\n      <h' + level + ' id=\'' + id + '\' class=\'docs-md__h' + level + '\'>' + inner + '</h' + level + '>\n    ';
+        var inner = level === 1 ? text : "<a href='#".concat(id, "' class='heading-anchor'>").concat(text, "</a>");
+        return "\n      <h".concat(level, " id='").concat(id, "' class='docs-md__h").concat(level, "'>").concat(inner, "</h").concat(level, ">\n    ");
       }
     }, {
-      key: 'hr',
+      key: "hr",
       value: function hr() {
-        return '<hr class=\'docs-md__hr\'>';
+        return "<hr class='docs-md__hr'>";
       }
     }, {
-      key: 'blockquote',
+      key: "blockquote",
       value: function blockquote(text) {
-        return '<blockquote class=\'docs-md__blockquote\'>' + text + '</blockquote>';
+        return "<blockquote class='docs-md__blockquote'>".concat(text, "</blockquote>");
       }
     }, {
-      key: 'link',
+      key: "link",
       value: function link(href, title, text) {
-        var titleAttribute = title ? 'title="' + title + '"' : '';
-        return '<a href="' + href + '" ' + titleAttribute + ' class="docs-md__a">' + text + '</a>';
+        var titleAttribute = title ? "title=\"".concat(title, "\"") : '';
+        return "<a href=\"".concat(href, "\" ").concat(titleAttribute, " class=\"docs-md__a\">").concat(text, "</a>");
       }
     }]);
 
     return HBSRenderer;
   }(_marked.default.Renderer);
 });
-;define('ember-cli-addon-docs/utils/computed', ['exports'], function (exports) {
-  'use strict';
+;define("ember-cli-addon-docs/utils/computed", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.memberUnion = memberUnion;
-  exports.memberFilter = memberFilter;
-  exports.hasMemberType = hasMemberType;
-  exports.addonLogo = addonLogo;
-  exports.addonPrefix = addonPrefix;
-  exports.unprefixedAddonName = unprefixedAddonName;
+  _exports.memberUnion = memberUnion;
+  _exports.memberFilter = memberFilter;
+  _exports.hasMemberType = hasMemberType;
+  _exports.addonLogo = addonLogo;
+  _exports.addonPrefix = addonPrefix;
+  _exports.unprefixedAddonName = unprefixedAddonName;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
   /**
     @function initialize
     @hide
   */
   function memberUnion(parentMembersKey, childMembersKey) {
-    return Ember.computed(parentMembersKey + '.[]', childMembersKey + '.[]', function () {
+    return Ember.computed("".concat(parentMembersKey, ".[]"), "".concat(childMembersKey, ".[]"), function () {
       var parentMembers = this.get(parentMembersKey);
       var childMembers = this.get(childMembersKey);
 
@@ -79948,7 +80275,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
 
       var union = {};
-
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -79956,7 +80282,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       try {
         for (var _iterator = parentMembers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var member = _step.value;
-
           union[member.name] = member;
         }
       } catch (err) {
@@ -79964,7 +80289,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
             _iterator.return();
           }
         } finally {
@@ -79981,7 +80306,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       try {
         for (var _iterator2 = childMembers[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var _member = _step2.value;
-
           union[_member.name] = _member;
         }
       } catch (err) {
@@ -79989,7 +80313,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         _iteratorError2 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+          if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
             _iterator2.return();
           }
         } finally {
@@ -80018,11 +80342,12 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     return a.name.localeCompare(b.name);
   }
-
   /**
     @function initialize
     @hide
   */
+
+
   function memberFilter(classKey, memberType) {
     return Ember.computed(classKey, 'showInherited', 'showInternal', 'showProtected', 'showPrivate', 'showDeprecated', function () {
       var _members;
@@ -80033,7 +80358,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       var showProtected = this.get('showProtected');
       var showPrivate = this.get('showPrivate');
       var showDeprecated = this.get('showDeprecated');
-
       var members = [];
 
       if (showInternal === false && memberType !== 'arguments') {
@@ -80041,10 +80365,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
 
       var capitalKey = Ember.String.capitalize(memberType);
-
-      var publicMembers = showInherited ? klass.get('allPublic' + capitalKey) : klass.get('public' + capitalKey);
-      var privateMembers = showInherited ? klass.get('allPrivate' + capitalKey) : klass.get('private' + capitalKey);
-      var protectedMembers = showInherited ? klass.get('allProtected' + capitalKey) : klass.get('protected' + capitalKey);
+      var publicMembers = showInherited ? klass.get("allPublic".concat(capitalKey)) : klass.get("public".concat(capitalKey));
+      var privateMembers = showInherited ? klass.get("allPrivate".concat(capitalKey)) : klass.get("private".concat(capitalKey));
+      var protectedMembers = showInherited ? klass.get("allProtected".concat(capitalKey)) : klass.get("protected".concat(capitalKey));
 
       (_members = members).push.apply(_members, _toConsumableArray(publicMembers));
 
@@ -80071,20 +80394,20 @@ lunr.QueryParser.parseBoost = function (parser) {
       return members.sort(memberSort);
     });
   }
-
   /**
     @function initialize
     @hide
   */
+
+
   function hasMemberType() {
-    for (var _len = arguments.length, memberKeys = Array(_len), _key = 0; _key < _len; _key++) {
+    for (var _len = arguments.length, memberKeys = new Array(_len), _key = 0; _key < _len; _key++) {
       memberKeys[_key] = arguments[_key];
     }
 
     var filter = memberKeys.pop();
-
-    return Ember.computed.apply(undefined, _toConsumableArray(memberKeys.map(function (k) {
-      return k + '.[]';
+    return Ember.computed.apply(void 0, _toConsumableArray(memberKeys.map(function (k) {
+      return "".concat(k, ".[]");
     })).concat([{
       get: function get() {
         var _this = this;
@@ -80097,13 +80420,14 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }]));
   }
-
   /**
     @function initialize
     @hide
   */
+
+
   function addonLogo(name) {
-    var logo = void 0;
+    var logo;
 
     if (name.match(/ember-cli/)) {
       logo = 'ember-cli';
@@ -80125,14 +80449,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     @function initialize
     @hide
   */
+
   function addonPrefix(name) {
     return prefixMap[addonLogo(name)];
   }
-
   /**
     @function initialize
     @hide
   */
+
+
   function unprefixedAddonName(name) {
     return name.replace(/ember-(cli-|data-)?/, "");
   }
