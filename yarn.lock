@@ -4819,9 +4819,9 @@ ember-cli-get-component-path-option@^1.0.0:
   integrity sha1-DXtZVVni+QUKvtgE8djv8bCLx3E=
 
 ember-cli-github-pages@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-github-pages/-/ember-cli-github-pages-0.2.1.tgz#154ade6e76a541eb95b1d62459ef8efddef103e4"
-  integrity sha512-XGv3PfAlKGXC27MyzMk0jgCFoucGLOg40xfMLJKzmu7be7QrKEN8G6UtUhYOZffMpu2t88BQ3uxYIrLyRx/FyQ==
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-github-pages/-/ember-cli-github-pages-0.2.2.tgz#cef01ed1de9ddd82863b310fef05e7f5b55beb9e"
+  integrity sha512-pFtruVBZ5OW1O1MiGQRQSQewW9DSBx6ZbRcbVpcpTlZqeDyWs5nyvhOm4qRFwK6m+jQPe2l52cYtf1rUAkBNxA==
   dependencies:
     ember-cli-version-checker "^2.1.0"
     rsvp "^4.7.0"
