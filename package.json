@@ -97,7 +97,7 @@
     "loader.js": "^4.7.0",
     "mocha": "^6.0.2",
     "prettier": "^1.16.4",
-    "qunit-dom": "^0.8.4",
+    "qunit-dom": "^0.9.0",
     "rsvp": "^4.8.4",
     "testdouble": "^3.11.0"
   },
