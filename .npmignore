@@ -4,6 +4,7 @@
 
 # dependencies
 /bower_components/
+/tests-node/
 
 # misc
 /.bowerrc
@@ -23,6 +24,7 @@
 /testem.js
 /tests/
 /yarn.lock
+/jsconfig.json
 .gitkeep
 
 # ember-try
