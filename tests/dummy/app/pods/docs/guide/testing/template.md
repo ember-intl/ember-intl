@@ -235,3 +235,16 @@ module('t demo', function(hooks) {
   });
 });
 ```
+
+## Guarding against errors
+
+If you have a dynamic, variable driven usage of the `t` helper, you might see an error like `helper requires value attribute`. This might commonly happen in testing environments, where you might not have ensured every single variable has a value, and are trying to test something else entirely. To allow for empty values, you can use `allowEmpty` on the helper itself or you can set it globally for all helpers, by defining you own helper.
+
+```js
+// app/helpers/t.js
+import Helper from 'ember-intl/helpers/t';
+
+export default Helper.extend({
+  allowEmpty: true
+});
+```
