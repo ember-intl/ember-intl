@@ -47,7 +47,6 @@
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.1",
     "has-unicode": "^2.0.1",
-    "intl": "^1.2.5",
     "js-yaml": "^3.12.2",
     "json-stable-stringify": "^1.0.1",
     "locale-emoji": "^0.3.0",

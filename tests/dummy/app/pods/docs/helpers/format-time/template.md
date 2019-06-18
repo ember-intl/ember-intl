@@ -36,9 +36,6 @@ This is just like the `{{format-date}}` helper, except it will reference any str
 > also recognize the time zone names of the IANA time zone database, such as
 > "Asia/Shanghai", "Asia/Kolkata", "America/New_York".
 
-_Note:_ The Intl.js polyfill does not have full support for `timeZone`
-(see [https://github.com/andyearnshaw/Intl.js/issues/19](https://github.com/andyearnshaw/Intl.js/issues/19))
-
 `hour12`
 
 > Whether to use 12-hour time (as opposed to 24-hour time). Possible values
