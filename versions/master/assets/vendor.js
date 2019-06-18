@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.10.1
+ * @version   3.10.2
  */
 
 /*globals process */
@@ -6093,7 +6093,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
         _currentRoute: (0, _metal.alias)('_routing.currentRouteName'),
         _currentRouterState: (0, _metal.alias)('_routing.currentState'),
         _targetRouterState: (0, _metal.alias)('_routing.targetState'),
-        _route: (0, _metal.computed)('route', '_currentRoute', function computeLinkToComponentRoute() {
+        _route: (0, _metal.computed)('route', '_currentRouterState', function computeLinkToComponentRoute() {
           var route = this.route;
           return route === UNDEFINED ? this._currentRoute : route;
         }),
@@ -21627,7 +21627,7 @@ enifed("@ember/-internals/routing/lib/services/router", ["exports", "ember-babel
       The `rootURL` property represents the URL of the root of
       the application, '/' by default.
       This prefix is assumed on all routes defined on this app.
-         IF you change the `rootURL` in your environment configuration
+         If you change the `rootURL` in your environment configuration
       like so:
          ```config/environment.js
       'use strict';
@@ -21648,10 +21648,23 @@ enifed("@ember/-internals/routing/lib/services/router", ["exports", "ember-babel
     rootURL: (0, _computed.readOnly)('_router.rootURL'),
 
     /**
-       A `RouteInfo` that represents the current leaf route.
-       It is guaranteed to change whenever a route transition
-       happens (even when that transition only changes parameters
-       and doesn't change the active route)
+      The `currentRoute` property contains metadata about the current leaf route.
+      It returns a `RouteInfo` object that has information like the route name,
+      params, query params and more.
+         See [RouteInfo](/ember/release/classes/RouteInfo) for more info.
+         This property is guaranteed to change whenever a route transition
+      happens (even when that transition only changes parameters
+      and doesn't change the active route).
+         Usage example:
+      ```app/components/header.js
+        import Component from '@ember/component';
+        import { inject as service } from '@ember/service';
+        import { computed } from '@ember/object';
+           export default Component.extend({
+          router: service(),
+             isChildRoute: computed.notEmpty('router.currentRoute.child')
+        });
+      ```
           @property currentRoute
        @type RouteInfo
        @public
@@ -42489,15 +42502,20 @@ enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
     ```javascript
     import { schedule } from '@ember/runloop';
   
+    schedule('afterRender', this, function() {
+      // this will be executed in the 'afterRender' queue
+      console.log('scheduled on afterRender queue');
+    });
+  
     schedule('actions', this, function() {
-      // this will be executed in the 'actions' queue, after bindings have synced.
+      // this will be executed in the 'actions' queue
       console.log('scheduled on actions queue');
     });
   
     // Note the functions will be run in order based on the run queues order.
     // Output would be:
-    //   scheduled on sync queue
     //   scheduled on actions queue
+    //   scheduled on afterRender queue
     ```
   
     @method schedule
@@ -56933,7 +56951,7 @@ enifed("ember/version", ["exports"], function (_exports) {
   "use strict";
 
   _exports.default = void 0;
-  var _default = "3.10.1";
+  var _default = "3.10.2";
   _exports.default = _default;
 });
 /*global enifed, module */
@@ -110660,10 +110678,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
 
   function translationMacro() {
-    Ember.deprecate("ember-intl: 'translationMacro' was renamed to just 't'. Please update the import statement.", false, {
+    (false && !(false) && Ember.deprecate("ember-intl: 'translationMacro' was renamed to just 't'. Please update the import statement.", false, {
       id: 'ember-intl.translationMacro',
       until: '5.0.0'
-    });
+    }));
     return _macros.t.apply(void 0, arguments);
   }
 });
