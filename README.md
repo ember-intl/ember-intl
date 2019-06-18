@@ -22,11 +22,11 @@
 
 ## Documentation
 
-[4.0.0-beta (current)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
+[4.x (current)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
 
-[3.0](https://github.com/ember-intl/ember-intl/tree/3.x/docs)
+[3.x](https://github.com/ember-intl/ember-intl/tree/3.x/docs)
 
-[2.0 docs](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
+[2.x docs](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
 
 ## Migrating from 2.0?
 
