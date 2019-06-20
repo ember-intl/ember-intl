@@ -44,3 +44,41 @@ export default Route.extend({
   }
 });
 ```
+
+## Fingerprinting
+Add `json` files to [`broccoli-asset-rev`](https://github.com/rickharrison/broccoli-asset-rev) settings:
+```js
+let app = new EmberApp(defaults, {
+  fingerprint: {
+    extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'json']
+  }
+});
+```
+
+As long as the full path to a given translation file is hard-coded and uninterpolated, e.g. `translations/en-us.json` instead of `translations/${language}.json`, broccoli-asset-rev will pick it up and rewrite it in place already.
+
+For cases where interpolation is required, load `assetMap` and enable fingerprinting for it.
+```js
+let app = new EmberApp(defaults, {
+  fingerprint: {
+    extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'json'],
+    generateAssetMap: true,
+    fingerprintAssetMap: true
+  }
+});
+```
+
+Then fetch `assetMap`  in production environment:
+```js
+import ENV from 'your-application-name/config/environment';
+
+let translationPath = `translations/${lang}.json`;
+
+if (ENV.environment === 'production') {
+  const assetMap = await fetch('/assets/assetMap.json');
+  const assetMapJSON = await assetMap.json();
+  translationPath = assetMapJSON.assets[translationPath];
+}
+
+const translations = await fetch(`/${translationPath}`);
+```
