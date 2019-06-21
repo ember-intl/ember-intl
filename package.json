@@ -39,7 +39,7 @@
     "broccoli-funnel": "^2.0.2",
     "broccoli-merge-trees": "^3.0.2",
     "broccoli-source": "^2.1.2",
-    "broccoli-stew": "^2.1.0",
+    "broccoli-stew": "^3.0.0",
     "calculate-cache-key-for-tree": "^2.0.0",
     "cldr-core": "^35.1.0",
     "ember-auto-import": "^1.4.1",
