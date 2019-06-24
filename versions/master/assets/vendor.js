@@ -81099,6 +81099,199 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   };
 });
+;define("ember-code-snippet/-private/extension", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = getExtension;
+
+  function getExtension(name) {
+    var m = /\.(\w+)$/i.exec(name);
+    return m ? m[1].toLowerCase() : undefined;
+  }
+});
+;define("ember-code-snippet/-private/get-snippet", ["exports", "ember-code-snippet/snippets", "ember-code-snippet/-private/language", "ember-code-snippet/-private/extension", "ember-code-snippet/-private/unindent"], function (_exports, _snippets, _language, _extension, _unindent) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = getSnippet;
+
+  function getSnippet(name) {
+    var unindent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var source = name.split('/').reduce(function (dir, name) {
+      return dir && dir[name];
+    }, _snippets.default);
+    (false && !(source) && Ember.assert("Code snippet with name \"".concat(name, "\" not found."), source));
+    source = source.replace(/^(\s*\n)*/, '').replace(/\s*$/, '');
+
+    if (unindent) {
+      source = (0, _unindent.default)(source);
+    }
+
+    var language = (0, _language.default)(name);
+    var extension = (0, _extension.default)(name);
+    return {
+      source: source,
+      language: language,
+      extension: extension
+    };
+  }
+});
+;define("ember-code-snippet/-private/language", ["exports", "ember-code-snippet/-private/extension"], function (_exports, _extension) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = getLanguage;
+
+  function getLanguage(name) {
+    var ext = (0, _extension.default)(name);
+
+    if (ext) {
+      switch (ext) {
+        case 'js':
+          return 'javascript';
+
+        case 'coffee':
+          return 'coffeescript';
+
+        case 'hbs':
+          return 'handlebars';
+
+        case 'css':
+          return 'css';
+
+        case 'scss':
+          return 'scss';
+
+        case 'less':
+          return 'less';
+
+        case 'emblem':
+          return 'emblem';
+
+        case 'ts':
+          return 'typescript';
+
+        default:
+          return ext;
+      }
+    }
+  }
+});
+;define("ember-code-snippet/-private/unindent", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = unindent;
+
+  function unindent(src) {
+    var match,
+        min,
+        lines = src.split("\n").filter(function (l) {
+      return l !== '';
+    });
+
+    for (var i = 0; i < lines.length; i++) {
+      match = /^[ \t]*/.exec(lines[i]);
+
+      if (match && (typeof min === 'undefined' || min > match[0].length)) {
+        min = match[0].length;
+      }
+    }
+
+    if (typeof min !== 'undefined' && min > 0) {
+      src = src.replace(new RegExp("^[ \t]{" + min + "}", 'gm'), "");
+    }
+
+    return src;
+  }
+});
+;define("ember-code-snippet/helpers/get-code-snippet", ["exports", "ember-code-snippet"], function (_exports, _emberCodeSnippet) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+  var _default = Ember.Helper.helper(function (_ref, _ref2) {
+    var _ref3 = _slicedToArray(_ref, 1),
+        name = _ref3[0];
+
+    var _ref2$unindent = _ref2.unindent,
+        unindent = _ref2$unindent === void 0 ? true : _ref2$unindent;
+    return (0, _emberCodeSnippet.getCodeSnippet)(name, unindent);
+  });
+
+  _exports.default = _default;
+});
+;define("ember-code-snippet/index", ["exports", "ember-code-snippet/-private/get-snippet"], function (_exports, _getSnippet) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "getCodeSnippet", {
+    enumerable: true,
+    get: function get() {
+      return _getSnippet.default;
+    }
+  });
+});
+;define("ember-code-snippet/snippets", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "docs-helpers-format-date-01-template.hbs": "    {{format-date instant}}",
+    "docs-helpers-format-date-02-template.hbs": "    {{format-date yesterday}}",
+    "docs-helpers-format-date-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\n\nexport default Controller.extend({\n  yesterday: yesterday,\n  instant: new Date(),\n  now: new Date()\n});",
+    "docs-helpers-format-message-01-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=num\n             timestamp=yesterday }}",
+    "docs-helpers-format-message-02-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=1\n             timestamp=yesterday }}",
+    "docs-helpers-format-message-03-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=0\n             timestamp=yesterday }}",
+    "docs-helpers-format-message-04-template.hbs": "    {{format-message\n             \"The {product} has {numCustomers, shortNumber} customers\"\n             product='Cisco DPC3000'\n             numCustomers=25495}}",
+    "docs-helpers-format-message-05-template.hbs": "    {{format-message \n             \"The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers\"\n             product='Cisco DPC3000' \n             numCustomers=25495}}",
+    "docs-helpers-format-message-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\nconst user = { username: 'Chris' };\n\nexport default Controller.extend({\n  user: user,\n  num: 12,\n  yesterday: yesterday\n});",
+    "docs-helpers-format-number-01-template.hbs": "    {{format-number num}}",
+    "docs-helpers-format-number-02-template.hbs": "    {{format-number num style='currency' currency='USD'}}",
+    "docs-helpers-format-number-controller.js": "import Controller from '@ember/controller';\n\nexport default Controller.extend({\n  num: 1000\n});",
+    "docs-helpers-format-relative-01-template.hbs": "    {{format-relative yesterday}}",
+    "docs-helpers-format-relative-02-template.hbs": "    {{format-relative instant}}",
+    "docs-helpers-format-relative-03-template.hbs": "    {{format-relative now interval=1000}}",
+    "docs-helpers-format-relative-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\n\nexport default Controller.extend({\n  yesterday: yesterday,\n  instant: new Date(),\n  now: new Date()\n});",
+    "docs-helpers-format-t-01-template.hbs": "\n    {{t 'photos.banner' numPhotos=count}}\n\n    <button class=\"btn\" {{action \"inc\" count}}> + Increment photo count </button>\n    <button class=\"btn\" {{action \"dec\" count}}> - Decrement photo count </button>",
+    "docs-helpers-format-t-controller.js": "\nimport Controller from '@ember/controller';\n\nexport default Controller.extend({\n  count: 0,\n\n  actions: {\n    inc(count) {\n      this.set('count', count + 1);\n    },\n    dec(count) {\n      if (count <= 0) return;\n      this.set('count', count - 1);\n    }\n  }\n});",
+    "docs-helpers-format-time-01-template.hbs": "    {{format-time instant format='hhmmss'}}",
+    "docs-helpers-format-time-02-template.hbs": "    {{format-time instant hour='numeric' second='numeric' minute='numeric' hour12=false}}",
+    "docs-helpers-format-time-controller.js": "\nimport Controller from '@ember/controller';\n\nexport default Controller.extend({\n  instant: new Date()\n});",
+    "format-date.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n",
+    "format-message-compact-number.hbs": "{{t 'product.customers' product='Cisco DPC3000' numCustomers=25495}}\n",
+    "format-message.hbs": "{{t 'product.info' product='Cisco DPC3000' price=100}}",
+    "format-number.hbs": "{{format-number num}}\n{{format-number num style='currency' currency='USD'}}\n",
+    "format-relative.hbs": "{{format-relative yesterday}}\n{{format-relative instant}}\n{{format-relative now interval=1000}}\n",
+    "format-time.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n"
+  };
+  _exports.default = _default;
+});
 ;define("ember-component-css/initializers/component-styles", ["exports", "ember-component-css/pod-names"], function (_exports, _podNames) {
   "use strict";
 
@@ -113730,79 +113923,52 @@ define("ember-resolver/features", [], function () {
     return cache;
   }
 });
-;define('ember-responsive/helpers/media', ['exports'], function (exports) {
-  'use strict';
+;define("ember-responsive/helpers/media", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
-
-  exports.default = Ember.Helper.extend({
+  var _default = Ember.Helper.extend({
     init: function init() {
       var _this = this;
 
       this._super.apply(this, arguments);
+
       this.get('media').on('mediaChanged', function () {
         _this.recompute();
       });
     },
-
-
     media: Ember.inject.service(),
-
     compute: function compute(_ref) {
       var _ref2 = _slicedToArray(_ref, 1),
           prop = _ref2[0];
 
-      return Ember.get(this, 'media.' + prop);
+      return Ember.get(this, "media.".concat(prop));
     }
   });
-});
-;define('ember-responsive/initializers/responsive', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-responsive/initializers/responsive", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.initialize = initialize;
+  _exports.initialize = initialize;
+  _exports.default = void 0;
+
   /**
    * Ember responsive initializer
    *
@@ -113810,43 +113976,119 @@ define("ember-resolver/features", [], function () {
    * Generated by the ember-responsive addon.
    */
   function initialize(application) {
-    application.registerOptionsForType('breakpoints', { instantiate: false });
+    application.registerOptionsForType('breakpoints', {
+      instantiate: false
+    });
   }
 
-  exports.default = {
+  var _default = {
     name: 'ember-responsive-breakpoints',
     initialize: initialize
   };
+  _exports.default = _default;
 });
-;define("ember-responsive/null-match-media", ["exports"], function (exports) {
+;define("ember-responsive/null-match-media", ["exports"], function (_exports) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function () {
+  /**
+   * Stub function that is `matchMedia` API compatible but always returns
+   * `false`. Useful for server-side environments like FastBoot where there
+   * is no viewport.
+   */
+  function _default() {
     return {
       matches: false
     };
-  };
+  }
 });
-;define('ember-responsive/services/media', ['exports', 'ember-responsive/null-match-media'], function (exports, _nullMatchMedia) {
-  'use strict';
+;define("ember-responsive/services/media", ["exports", "ember-responsive/null-match-media"], function (_exports, _nullMatchMedia) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  };
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  exports.default = Ember.Service.extend(Ember.Evented, {
+  /**
+  * Handles detecting and responding to media queries.
+  *
+  * **Adding media query matchers**
+  *
+  * The first step to using the class is to add media queries that you
+  * want it to listen to. Each media query has a name that you can
+  * use to reference it by.
+  *
+  * ```javascript
+  * media = Ember.Responsive.Media.create();
+  * media.match('mobile', '(max-width: 767px)');
+  * media.match('desktop', '(min-width: 768px)');
+  * ```
+  *
+  * **Testing the media query matchers**
+  *
+  * Now that you've added a few matchers, you can access those media queries as
+  * if they were properties on your object. The nice thing is that whenever the
+  * media queries change, this class will automatically update the relevant
+  * properties (and so will the rest of your application, thanks to the power
+  * of two-way data-binding).
+  *
+  * ```javascript
+  * media = Ember.Responsive.Media.create();
+  * media.match('mobile', '(max-width: 767px)');
+  * media.match('desktop', '(min-width: 768px)');
+  *
+  * // There are convenient "isser" properties defined...
+  * if (media.get('isMobile')) {
+  *   console.log('mobile!');
+  * }
+  *
+  * // As well as access to the matchMedia API...
+  * if (media.get('desktop.matches')) {
+  *   console.log('desktop!');
+  * }
+  * ```
+  *
+  * **Retrieving a list of matching media queries**
+  *
+  * It's also nice to be able to see which media queries are matching, since
+  * some applications might have many matches at the same time.
+  *
+  * ```javascript
+  * media = Ember.Responsive.Media.create();
+  * media.match('desktop', 'all');
+  * media.match('mobile', 'all');
+  *
+  * console.log(media.get('matches'));
+  * // => Ember.Set(['desktop', 'mobile']);
+  * ```
+  *
+  * This class can also return that list as a string of dasherized class names,
+  * which is useful for placing on your app's rootElement. By default, these
+  * class names are prefixed with `media-`, so as not to clash with any other
+  * classes your app might use.
+  *
+  * ```javascript
+  * App.ApplicationView = Ember.View.extend({
+  *   classNameBindings: ['media.classNames']
+  * });
+  * ```
+  *
+  * @module    ember-responsive
+  * @namespace Ember.Responsive
+  * @class     Media
+  * @extends   Ember.Object
+  */
+  var _default = Ember.Service.extend(Ember.Evented, {
     _mocked: Ember.testing,
     _mockedBreakpoint: 'desktop',
+
     /**
     * A set of matching matchers.
     *
@@ -113891,22 +114133,24 @@ define("ember-resolver/features", [], function () {
       var _this = this;
 
       this._super.apply(this, arguments);
+
       var owner = Ember.getOwner(this);
       var breakpoints = Ember.getOwner(this).lookup('breakpoints:main');
+
       if (breakpoints) {
         Object.keys(breakpoints).forEach(function (name) {
-          var cpName = 'is' + Ember.String.classify(name);
+          var cpName = "is".concat(Ember.String.classify(name));
           Ember.defineProperty(_this, cpName, Ember.computed('matches.[]', function () {
             return this.get('matches').indexOf(name) > -1;
           }));
           Ember.defineProperty(_this, name, Ember.computed(cpName, function () {
             return this.get(cpName);
           }));
+
           _this.match(name, breakpoints[name]);
         });
       }
     },
-
 
     /**
     * A string composed of all the matching matchers' names, turned into
@@ -113917,17 +114161,15 @@ define("ember-resolver/features", [], function () {
     */
     classNames: Ember.computed('matches.[]', function () {
       return this.get('matches').map(function (name) {
-        return 'media-' + Ember.String.dasherize(name);
+        return "media-".concat(Ember.String.dasherize(name));
       }).join(' ');
     }),
-
     _triggerMediaChanged: function _triggerMediaChanged() {
       this.trigger('mediaChanged', {});
     },
     _triggerEvent: function _triggerEvent() {
       Ember.run.once(this, this._triggerMediaChanged);
     },
-
 
     /**
     * Adds a new matcher to the list.
@@ -113964,15 +114206,17 @@ define("ember-resolver/features", [], function () {
           return;
         }
 
-        _this2.set('matchers.' + name, matcher);
+        _this2.set("matchers.".concat(name), matcher);
 
         if (matcher.matches) {
           _this2.get('matches').addObject(name);
         } else {
           _this2.get('matches').removeObject(name);
         }
+
         _this2._triggerEvent();
       };
+
       this.get('listeners')[name] = listener;
 
       if (matcher.addListener) {
@@ -113980,13 +114224,15 @@ define("ember-resolver/features", [], function () {
           Ember.run(null, listener, matcher);
         });
       }
+
       listener(matcher);
     }
   });
 
+  _exports.default = _default;
 
   function detectMatchMedia() {
-    if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && window.matchMedia) {
+    if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window.matchMedia) {
       return window.matchMedia;
     }
 
