@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.10.2
+ * @version   3.11.0
  */
 
 /*globals process */
@@ -1865,7 +1865,7 @@ enifed("@ember/-internals/container", ["exports", "@ember/-internals/owner", "@e
         }
 
       if (!this.class.create) {
-        throw new Error("Failed to create an instance of '" + this.normalizedName + "'. Most likely an improperly defined class or" + " an invalid module export.");
+        throw new Error("Failed to create an instance of '" + this.normalizedName + "'. Most likely an improperly defined class or an invalid module export.");
       } // required to allow access to things like
       // the customized toString, _debugContainerKey,
       // owner, etc. without a double extend and without
@@ -2592,7 +2592,7 @@ enifed("@ember/-internals/container", ["exports", "@ember/-internals/owner", "@e
   */
 
 });
-enifed("@ember/-internals/environment", ["exports"], function (_exports) {
+enifed("@ember/-internals/environment", ["exports", "@ember/deprecated-features"], function (_exports, _deprecatedFeatures) {
   "use strict";
 
   _exports.getLookup = getLookup;
@@ -2776,12 +2776,20 @@ enifed("@ember/-internals/environment", ["exports"], function (_exports) {
     if (EXTEND_PROTOTYPES !== undefined) {
       if (typeof EXTEND_PROTOTYPES === 'object' && EXTEND_PROTOTYPES !== null) {
         ENV.EXTEND_PROTOTYPES.String = EXTEND_PROTOTYPES.String !== false;
-        ENV.EXTEND_PROTOTYPES.Function = EXTEND_PROTOTYPES.Function !== false;
+
+        if (_deprecatedFeatures.FUNCTION_PROTOTYPE_EXTENSIONS) {
+          ENV.EXTEND_PROTOTYPES.Function = EXTEND_PROTOTYPES.Function !== false;
+        }
+
         ENV.EXTEND_PROTOTYPES.Array = EXTEND_PROTOTYPES.Array !== false;
       } else {
         var isEnabled = EXTEND_PROTOTYPES !== false;
         ENV.EXTEND_PROTOTYPES.String = isEnabled;
-        ENV.EXTEND_PROTOTYPES.Function = isEnabled;
+
+        if (_deprecatedFeatures.FUNCTION_PROTOTYPE_EXTENSIONS) {
+          ENV.EXTEND_PROTOTYPES.Function = isEnabled;
+        }
+
         ENV.EXTEND_PROTOTYPES.Array = isEnabled;
       }
     } // TODO this does not seem to be used by anything,
@@ -3462,7 +3470,7 @@ enifed("@ember/-internals/extension-support/lib/data_adapter", ["exports", "@emb
 
   _exports.default = _default;
 });
-enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@ember/polyfills", "@ember/-internals/owner", "@glimmer/opcode-compiler", "@ember/-internals/runtime", "@ember/-internals/utils", "@glimmer/reference", "@ember/-internals/metal", "@ember/debug", "@glimmer/runtime", "@glimmer/util", "@ember/-internals/views", "@ember/-internals/browser-environment", "@ember/instrumentation", "@ember/service", "@ember/-internals/environment", "@ember/string", "@glimmer/wire-format", "@ember/-internals/container", "@ember/runloop", "rsvp", "@glimmer/node", "@ember/-internals/routing", "@ember/deprecated-features"], function (_exports, _nodeModule, _emberBabel, _polyfills, _owner, _opcodeCompiler, _runtime, _utils, _reference, _metal, _debug, _runtime2, _util, _views, _browserEnvironment, _instrumentation, _service, _environment2, _string, _wireFormat, _container, _runloop, _rsvp, _node, _routing, _deprecatedFeatures) {
+enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@ember/polyfills", "@ember/-internals/owner", "@glimmer/opcode-compiler", "@ember/-internals/runtime", "@ember/-internals/utils", "@ember/runloop", "@glimmer/reference", "@ember/-internals/metal", "@ember/debug", "@glimmer/runtime", "@glimmer/util", "@ember/-internals/views", "@ember/-internals/browser-environment", "@ember/instrumentation", "@ember/service", "@ember/-internals/environment", "@ember/string", "@glimmer/wire-format", "@ember/-internals/container", "rsvp", "@glimmer/node", "@ember/-internals/routing", "@ember/deprecated-features"], function (_exports, _nodeModule, _emberBabel, _polyfills, _owner, _opcodeCompiler, _runtime, _utils, _runloop, _reference, _metal, _debug, _runtime2, _util, _views, _browserEnvironment, _instrumentation, _service, _environment2, _string, _wireFormat, _container, _rsvp, _node, _routing, _deprecatedFeatures) {
   "use strict";
 
   _exports.template = template;
@@ -3643,8 +3651,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   }();
 
   var RootTemplate = template({
-    "id": "T+MWx6cw",
-    "block": "{\"symbols\":[],\"statements\":[[1,[29,\"component\",[[24,0,[]]],null],false]],\"hasEval\":false}",
+    "id": "hjhxUoru",
+    "block": "{\"symbols\":[],\"statements\":[[1,[28,\"component\",[[23,0,[]]],null],false]],\"hasEval\":false}",
     "meta": {
       "moduleName": "packages/@ember/-internals/glimmer/lib/templates/root.hbs"
     }
@@ -3736,12 +3744,22 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       @since 1.13.0
     */
     recompute: function () {
-      this[RECOMPUTE_TAG].inner.dirty();
+      var _this = this;
+
+      (0, _runloop.join)(function () {
+        return _this[RECOMPUTE_TAG].inner.dirty();
+      });
     }
   });
 
   _exports.Helper = Helper;
   Helper.isHelperFactory = true;
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      (0, _runtime.setFrameworkClass)(Helper);
+    }
 
   var Wrapper =
   /*#__PURE__*/
@@ -3823,12 +3841,12 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(CachedReference$1, _EmberPathReference);
 
     function CachedReference$1() {
-      var _this;
+      var _this2;
 
-      _this = _EmberPathReference.call(this) || this;
-      _this.lastRevision = null;
-      _this.lastValue = null;
-      return _this;
+      _this2 = _EmberPathReference.call(this) || this;
+      _this2.lastRevision = null;
+      _this2.lastValue = null;
+      return _this2;
     }
 
     var _proto4 = CachedReference$1.prototype;
@@ -3855,11 +3873,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(RootReference, _ConstReference);
 
     function RootReference(value) {
-      var _this2;
+      var _this3;
 
-      _this2 = _ConstReference.call(this, value) || this;
-      _this2.children = Object.create(null);
-      return _this2;
+      _this3 = _ConstReference.call(this, value) || this;
+      _this3.children = Object.create(null);
+      return _this3;
     }
 
     RootReference.create = function create(value) {
@@ -3960,35 +3978,37 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(RootPropertyReference, _PropertyReference);
 
     function RootPropertyReference(parentValue, propertyKey) {
-      var _this3;
+      var _this4;
 
-      _this3 = _PropertyReference.call(this) || this;
-      _this3.parentValue = parentValue;
-      _this3.propertyKey = propertyKey;
+      _this4 = _PropertyReference.call(this) || this;
+      _this4.parentValue = parentValue;
+      _this4.propertyKey = propertyKey;
 
       if (false
       /* EMBER_METAL_TRACKED_PROPERTIES */
       ) {
-          _this3.propertyTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
+          _this4.propertyTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
         } else {
-        _this3.propertyTag = _reference.UpdatableTag.create((0, _metal.tagForProperty)(parentValue, propertyKey));
+        _this4.propertyTag = _reference.UpdatableTag.create((0, _metal.tagForProperty)(parentValue, propertyKey));
       }
 
       if (false
       /* DEBUG */
       ) {
-          _this3.tag = TwoWayFlushDetectionTag.create(_this3.propertyTag, propertyKey, (0, _emberBabel.assertThisInitialized)(_this3));
+          _this4.tag = TwoWayFlushDetectionTag.create(_this4.propertyTag, propertyKey, (0, _emberBabel.assertThisInitialized)(_this4));
         } else {
-        _this3.tag = _this3.propertyTag;
+        _this4.tag = _this4.propertyTag;
       }
 
       if (false
       /* DEBUG */
+      && !false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
       ) {
           (0, _metal.watchKey)(parentValue, propertyKey);
         }
 
-      return _this3;
+      return _this4;
     }
 
     var _proto8 = RootPropertyReference.prototype;
@@ -4003,26 +4023,19 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
           this.tag.inner.didCompute(parentValue);
         }
 
-      var parent = null;
-      var tracker = null;
+      var ret;
 
       if (false
       /* EMBER_METAL_TRACKED_PROPERTIES */
       ) {
-          parent = (0, _metal.getCurrentTracker)();
-          tracker = (0, _metal.setCurrentTracker)();
-        }
-
-      var ret = (0, _metal.get)(parentValue, propertyKey);
-
-      if (false
-      /* EMBER_METAL_TRACKED_PROPERTIES */
-      ) {
-          (0, _metal.setCurrentTracker)(parent);
-          var tag = tracker.combine();
-          if (parent) parent.add(tag);
+          var tag = (0, _metal.track)(function () {
+            ret = (0, _metal.get)(parentValue, propertyKey);
+          });
+          (0, _metal.consume)(tag);
           this.propertyTag.inner.update(tag);
-        }
+        } else {
+        ret = (0, _metal.get)(parentValue, propertyKey);
+      }
 
       return ret;
     };
@@ -4040,25 +4053,25 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(NestedPropertyReference, _PropertyReference2);
 
     function NestedPropertyReference(parentReference, propertyKey) {
-      var _this4;
+      var _this5;
 
-      _this4 = _PropertyReference2.call(this) || this;
-      _this4.parentReference = parentReference;
-      _this4.propertyKey = propertyKey;
+      _this5 = _PropertyReference2.call(this) || this;
+      _this5.parentReference = parentReference;
+      _this5.propertyKey = propertyKey;
       var parentReferenceTag = parentReference.tag;
 
-      var propertyTag = _this4.propertyTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
+      var propertyTag = _this5.propertyTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
 
       if (false
       /* DEBUG */
       ) {
           var tag = (0, _reference.combine)([parentReferenceTag, propertyTag]);
-          _this4.tag = TwoWayFlushDetectionTag.create(tag, propertyKey, (0, _emberBabel.assertThisInitialized)(_this4));
+          _this5.tag = TwoWayFlushDetectionTag.create(tag, propertyKey, (0, _emberBabel.assertThisInitialized)(_this5));
         } else {
-        _this4.tag = (0, _reference.combine)([parentReferenceTag, propertyTag]);
+        _this5.tag = (0, _reference.combine)([parentReferenceTag, propertyTag]);
       }
 
-      return _this4;
+      return _this5;
     }
 
     var _proto9 = NestedPropertyReference.prototype;
@@ -4081,6 +4094,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
 
         if (false
         /* DEBUG */
+        && !false
+        /* EMBER_METAL_TRACKED_PROPERTIES */
         ) {
             (0, _metal.watchKey)(parentValue, propertyKey);
           }
@@ -4091,26 +4106,18 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
             this.tag.inner.didCompute(parentValue);
           }
 
-        var parent = null;
-        var tracker = null;
+        var ret;
 
         if (false
         /* EMBER_METAL_TRACKED_PROPERTIES */
         ) {
-            parent = (0, _metal.getCurrentTracker)();
-            tracker = (0, _metal.setCurrentTracker)();
-          }
-
-        var ret = (0, _metal.get)(parentValue, propertyKey);
-
-        if (false
-        /* EMBER_METAL_TRACKED_PROPERTIES */
-        ) {
-            (0, _metal.setCurrentTracker)(parent);
-            var tag = tracker.combine();
-            if (parent) parent.add(tag);
+            var tag = (0, _metal.track)(function () {
+              ret = (0, _metal.get)(parentValue, propertyKey);
+            });
+            (0, _metal.consume)(tag);
             propertyTag.inner.update(tag);
           } else {
+          ret = (0, _metal.get)(parentValue, propertyKey);
           propertyTag.inner.update((0, _metal.tagForProperty)(parentValue, propertyKey));
         }
 
@@ -4135,12 +4142,12 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(UpdatableReference, _EmberPathReference2);
 
     function UpdatableReference(value) {
-      var _this5;
+      var _this6;
 
-      _this5 = _EmberPathReference2.call(this) || this;
-      _this5.tag = _reference.DirtyableTag.create();
-      _this5._value = value;
-      return _this5;
+      _this6 = _EmberPathReference2.call(this) || this;
+      _this6.tag = _reference.DirtyableTag.create();
+      _this6._value = value;
+      return _this6;
     }
 
     var _proto10 = UpdatableReference.prototype;
@@ -4181,12 +4188,12 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     };
 
     function ConditionalReference$1(reference) {
-      var _this6;
+      var _this7;
 
-      _this6 = _ConditionalReference.call(this, reference) || this;
-      _this6.objectTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
-      _this6.tag = (0, _reference.combine)([reference.tag, _this6.objectTag]);
-      return _this6;
+      _this7 = _ConditionalReference.call(this, reference) || this;
+      _this7.objectTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
+      _this7.tag = (0, _reference.combine)([reference.tag, _this7.objectTag]);
+      return _this7;
     }
 
     var _proto11 = ConditionalReference$1.prototype;
@@ -4210,13 +4217,13 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(SimpleHelperReference, _CachedReference$2);
 
     function SimpleHelperReference(helper$$1, args) {
-      var _this7;
+      var _this8;
 
-      _this7 = _CachedReference$2.call(this) || this;
-      _this7.helper = helper$$1;
-      _this7.args = args;
-      _this7.tag = args.tag;
-      return _this7;
+      _this8 = _CachedReference$2.call(this) || this;
+      _this8.helper = helper$$1;
+      _this8.args = args;
+      _this8.tag = args.tag;
+      return _this8;
     }
 
     SimpleHelperReference.create = function create(helper$$1, args) {
@@ -4269,13 +4276,13 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(ClassBasedHelperReference, _CachedReference$3);
 
     function ClassBasedHelperReference(instance, args) {
-      var _this8;
+      var _this9;
 
-      _this8 = _CachedReference$3.call(this) || this;
-      _this8.instance = instance;
-      _this8.args = args;
-      _this8.tag = (0, _reference.combine)([instance[RECOMPUTE_TAG], args.tag]);
-      return _this8;
+      _this9 = _CachedReference$3.call(this) || this;
+      _this9.instance = instance;
+      _this9.args = args;
+      _this9.tag = (0, _reference.combine)([instance[RECOMPUTE_TAG], args.tag]);
+      return _this9;
     }
 
     ClassBasedHelperReference.create = function create(instance, args) {
@@ -4311,13 +4318,13 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(InternalHelperReference, _CachedReference$4);
 
     function InternalHelperReference(helper$$1, args) {
-      var _this9;
+      var _this10;
 
-      _this9 = _CachedReference$4.call(this) || this;
-      _this9.helper = helper$$1;
-      _this9.args = args;
-      _this9.tag = args.tag;
-      return _this9;
+      _this10 = _CachedReference$4.call(this) || this;
+      _this10.helper = helper$$1;
+      _this10.args = args;
+      _this10.tag = args.tag;
+      return _this10;
     }
 
     var _proto14 = InternalHelperReference.prototype;
@@ -4359,12 +4366,12 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(ReadonlyReference, _CachedReference$5);
 
     function ReadonlyReference(inner) {
-      var _this10;
+      var _this11;
 
-      _this10 = _CachedReference$5.call(this) || this;
-      _this10.inner = inner;
-      _this10.tag = inner.tag;
-      return _this10;
+      _this11 = _CachedReference$5.call(this) || this;
+      _this11.inner = inner;
+      _this11.tag = inner.tag;
+      return _this11;
     }
 
     var _proto16 = ReadonlyReference.prototype;
@@ -5033,15 +5040,35 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   
     ## Handling Browser Events
   
-    Components can respond to user-initiated events in one of two ways: adding
-    event handler methods to the component's class, or adding actions to the
-    component's template.
+    Components can respond to user-initiated events in one of three ways: passing
+    actions with angle bracket invocation, adding event handler methods to the
+    component's class, or adding actions to the component's template.
+  
+    ### Passing Actions With Angle Bracket Invoation
+  
+    For one-off events specific to particular instance of a component, it is possible
+    to pass actions to the component's element using angle bracket invoation syntax.
+  
+    ```handlebars
+    <MyWidget {{action 'firstWidgetClicked'}} />
+  
+    <MyWidget {{action 'secondWidgetClicked'}} />
+    ```
+  
+    In this case, when the first component is clicked on, Ember will invoke the
+    `firstWidgetClicked` action. When the second component is clicked on, Ember
+    will invoke the `secondWidgetClicked` action instead.
+  
+    Besides `{{action}}`, it is also possible to pass any arbitrary element modifiers
+    using the angle bracket invocation syntax.
   
     ### Event Handler Methods
   
-    Components can respond to user-initiated events by implementing a method that
-    matches the event name. An event object will be passed as the argument to this
-    method.
+    Components can also respond to user-initiated events by implementing a method
+    that matches the event name. This approach is appropiate when the same event
+    should be handled by all instances of the same component.
+  
+    An event object will be passed as the argument to the event handler method.
   
     ```app/components/my-widget.js
     import Component from '@ember/component';
@@ -5231,6 +5258,13 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     isComponentFactory: true,
     positionalParams: []
   });
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      (0, _runtime.setFrameworkClass)(Component);
+    }
+
   var layout = template({
     "id": "hvtsz7RF",
     "block": "{\"symbols\":[],\"statements\":[],\"hasEval\":false}",
@@ -5689,8 +5723,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   };
 
   var layout$1 = template({
-    "id": "VKeIRbyr",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[26,1]],null,{\"statements\":[[15,1]],\"parameters\":[]},{\"statements\":[[1,[24,0,[\"linkTitle\"]],false]],\"parameters\":[]}]],\"hasEval\":false}",
+    "id": "giTNx+op",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[25,1]],null,{\"statements\":[[14,1]],\"parameters\":[]},{\"statements\":[[1,[23,0,[\"linkTitle\"]],false]],\"parameters\":[]}]],\"hasEval\":false}",
     "meta": {
       "moduleName": "packages/@ember/-internals/glimmer/lib/templates/link-to.hbs"
     }
@@ -7433,11 +7467,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(ArrayIterator, _BoundedIterator);
 
     function ArrayIterator(array, length, keyFor) {
-      var _this11;
+      var _this12;
 
-      _this11 = _BoundedIterator.call(this, length, keyFor) || this;
-      _this11.array = array;
-      return _this11;
+      _this12 = _BoundedIterator.call(this, length, keyFor) || this;
+      _this12.array = array;
+      return _this12;
     }
 
     ArrayIterator.from = function from(array, keyFor) {
@@ -7473,11 +7507,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(EmberArrayIterator, _BoundedIterator2);
 
     function EmberArrayIterator(array, length, keyFor) {
-      var _this12;
+      var _this13;
 
-      _this12 = _BoundedIterator2.call(this, length, keyFor) || this;
-      _this12.array = array;
-      return _this12;
+      _this13 = _BoundedIterator2.call(this, length, keyFor) || this;
+      _this13.array = array;
+      return _this13;
     }
 
     EmberArrayIterator.from = function from(array, keyFor) {
@@ -7505,12 +7539,12 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(ObjectIterator, _BoundedIterator3);
 
     function ObjectIterator(keys, values, length, keyFor) {
-      var _this13;
+      var _this14;
 
-      _this13 = _BoundedIterator3.call(this, length, keyFor) || this;
-      _this13.keys = keys;
-      _this13.values = values;
-      return _this13;
+      _this14 = _BoundedIterator3.call(this, length, keyFor) || this;
+      _this14.keys = keys;
+      _this14.values = values;
+      return _this14;
     }
 
     ObjectIterator.fromIndexable = function fromIndexable(obj, keyFor) {
@@ -7709,7 +7743,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
         return EMPTY_ITERATOR;
       }
 
-      if (Array.isArray(iterable) || (0, _runtime.isEmberArray)(iterable)) {
+      if (Array.isArray(iterable) || (0, _utils.isEmberArray)(iterable)) {
         return ObjectIterator.fromIndexable(iterable, this.keyFor(true));
       } else if (_utils.HAS_NATIVE_SYMBOL && isNativeIterable(iterable)) {
         return MapLikeNativeIterator.from(iterable, this.keyFor());
@@ -7785,7 +7819,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
 
       if (Array.isArray(iterable)) {
         return ArrayIterator.from(iterable, keyFor);
-      } else if ((0, _runtime.isEmberArray)(iterable)) {
+      } else if ((0, _utils.isEmberArray)(iterable)) {
         return EmberArrayIterator.from(iterable, keyFor);
       } else if (_utils.HAS_NATIVE_SYMBOL && isNativeIterable(iterable)) {
         return ArrayLikeNativeIterator.from(iterable, keyFor);
@@ -8069,23 +8103,23 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(Environment$1, _Environment);
 
     function Environment$1(injections) {
-      var _this14;
+      var _this15;
 
-      _this14 = _Environment.call(this, injections) || this;
-      _this14.inTransaction = false;
-      _this14.owner = injections[_owner.OWNER];
-      _this14.isInteractive = _this14.owner.lookup('-environment:main').isInteractive; // can be removed once https://github.com/tildeio/glimmer/pull/305 lands
+      _this15 = _Environment.call(this, injections) || this;
+      _this15.inTransaction = false;
+      _this15.owner = injections[_owner.OWNER];
+      _this15.isInteractive = _this15.owner.lookup('-environment:main').isInteractive; // can be removed once https://github.com/tildeio/glimmer/pull/305 lands
 
-      _this14.destroyedComponents = [];
-      installProtocolForURL((0, _emberBabel.assertThisInitialized)(_this14));
+      _this15.destroyedComponents = [];
+      installProtocolForURL((0, _emberBabel.assertThisInitialized)(_this15));
 
       if (false
       /* DEBUG */
       ) {
-          _this14.debugStack = new DebugStack$1();
+          _this15.debugStack = new DebugStack$1();
         }
 
-      return _this14;
+      return _this15;
     }
 
     Environment$1.create = function create(options) {
@@ -8577,13 +8611,13 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(StyleBindingReference, _CachedReference);
 
     function StyleBindingReference(inner, isVisible) {
-      var _this15;
+      var _this16;
 
-      _this15 = _CachedReference.call(this) || this;
-      _this15.inner = inner;
-      _this15.isVisible = isVisible;
-      _this15.tag = (0, _reference.combine)([inner.tag, isVisible.tag]);
-      return _this15;
+      _this16 = _CachedReference.call(this) || this;
+      _this16.inner = inner;
+      _this16.isVisible = isVisible;
+      _this16.tag = (0, _reference.combine)([inner.tag, isVisible.tag]);
+      return _this16;
     }
 
     var _proto35 = StyleBindingReference.prototype;
@@ -8653,16 +8687,16 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(SimpleClassNameBindingReference, _CachedReference2);
 
     function SimpleClassNameBindingReference(inner, path) {
-      var _this16;
+      var _this17;
 
-      _this16 = _CachedReference2.call(this) || this;
-      _this16.inner = inner;
-      _this16.path = path;
-      _this16.tag = inner.tag;
-      _this16.inner = inner;
-      _this16.path = path;
-      _this16.dasherizedPath = null;
-      return _this16;
+      _this17 = _CachedReference2.call(this) || this;
+      _this17.inner = inner;
+      _this17.path = path;
+      _this17.tag = inner.tag;
+      _this17.inner = inner;
+      _this17.path = path;
+      _this17.dasherizedPath = null;
+      return _this17;
     }
 
     var _proto36 = SimpleClassNameBindingReference.prototype;
@@ -8690,16 +8724,16 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(ColonClassNameBindingReference, _CachedReference3);
 
     function ColonClassNameBindingReference(inner) {
-      var _this17;
+      var _this18;
 
       var truthy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var falsy = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      _this17 = _CachedReference3.call(this) || this;
-      _this17.inner = inner;
-      _this17.truthy = truthy;
-      _this17.falsy = falsy;
-      _this17.tag = inner.tag;
-      return _this17;
+      _this18 = _CachedReference3.call(this) || this;
+      _this18.inner = inner;
+      _this18.truthy = truthy;
+      _this18.falsy = falsy;
+      _this18.tag = inner.tag;
+      return _this18;
     }
 
     var _proto37 = ColonClassNameBindingReference.prototype;
@@ -9268,11 +9302,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(RootComponentManager, _CurlyComponentManage);
 
     function RootComponentManager(component) {
-      var _this18;
+      var _this19;
 
-      _this18 = _CurlyComponentManage.call(this) || this;
-      _this18.component = component;
-      return _this18;
+      _this19 = _CurlyComponentManage.call(this) || this;
+      _this19.component = component;
+      return _this19;
     }
 
     var _proto40 = RootComponentManager.prototype;
@@ -9400,7 +9434,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   /*#__PURE__*/
   function () {
     function RootState(root, env, template, self, parentElement, dynamicScope, builder) {
-      var _this19 = this;
+      var _this20 = this;
 
       false && !(template !== undefined) && (0, _debug.assert)("You cannot render `" + self.value() + "` without a template.", template !== undefined);
       this.id = (0, _views.getViewId)(root);
@@ -9426,9 +9460,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
           iteratorResult = iterator.next();
         } while (!iteratorResult.done);
 
-        var result = _this19.result = iteratorResult.value; // override .render function after initial render
+        var result = _this20.result = iteratorResult.value; // override .render function after initial render
 
-        _this19.render = function () {
+        _this20.render = function () {
           return result.rerender(options);
         };
       };
@@ -9907,11 +9941,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     (0, _emberBabel.inheritsLoose)(InternalManager, _AbstractManager3);
 
     function InternalManager(owner) {
-      var _this20;
+      var _this21;
 
-      _this20 = _AbstractManager3.call(this) || this;
-      _this20.owner = owner;
-      return _this20;
+      _this21 = _AbstractManager3.call(this) || this;
+      _this21.owner = owner;
+      return _this21;
     }
 
     var _proto47 = InternalManager.prototype;
@@ -10253,9 +10287,18 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   function capabilities(managerAPI) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     false && !(managerAPI === '3.4') && (0, _debug.assert)('Invalid component manager compatibility specified', managerAPI === '3.4');
+    var updateHook = true;
+
+    if (false
+    /* EMBER_CUSTOM_COMPONENT_ARG_PROXY */
+    ) {
+        updateHook = 'updateHook' in options ? Boolean(options.updateHook) : true;
+      }
+
     return {
       asyncLifeCycleCallbacks: Boolean(options.asyncLifecycleCallbacks),
-      destructor: Boolean(options.destructor)
+      destructor: Boolean(options.destructor),
+      updateHook: updateHook
     };
   }
 
@@ -10307,15 +10350,75 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     _proto50.create = function create(_env, definition, args) {
       var delegate = definition.delegate;
       var capturedArgs = args.capture();
-      var component = delegate.createComponent(definition.ComponentClass.class, capturedArgs.value());
-      return new CustomComponentState(delegate, component, capturedArgs);
+      var value;
+      var namedArgsProxy = {};
+
+      if (false
+      /* EMBER_CUSTOM_COMPONENT_ARG_PROXY */
+      ) {
+          if (_utils.HAS_NATIVE_PROXY) {
+            var handler = {
+              get: function (_target, prop) {
+                false && !(typeof prop === 'string') && (0, _debug.assert)('args can only be strings', typeof prop === 'string');
+                var ref = capturedArgs.named.get(prop);
+                (0, _metal.consume)(ref.tag);
+                return ref.value();
+              }
+            };
+
+            if (false
+            /* DEBUG */
+            ) {
+                handler.set = function (_target, prop) {
+                  false && !false && (0, _debug.assert)("You attempted to set " + definition.ComponentClass.class + "#" + String(prop) + " on a components arguments. Component arguments are immutable and cannot be updated directly, they always represent the values that are passed to your component. If you want to set default values, you should use a getter instead");
+                  return false;
+                };
+              }
+
+            namedArgsProxy = new Proxy(namedArgsProxy, handler);
+          } else {
+            capturedArgs.named.names.forEach(function (name) {
+              Object.defineProperty(namedArgsProxy, name, {
+                get: function () {
+                  var ref = capturedArgs.named.get(name);
+                  (0, _metal.consume)(ref.tag);
+                  return ref.value();
+                }
+              });
+            });
+          }
+
+          value = {
+            named: namedArgsProxy,
+            positional: capturedArgs.positional.value()
+          };
+        } else {
+        value = capturedArgs.value();
+      }
+
+      var component = delegate.createComponent(definition.ComponentClass.class, value);
+      return new CustomComponentState(delegate, component, capturedArgs, namedArgsProxy);
     };
 
     _proto50.update = function update(_ref17) {
       var delegate = _ref17.delegate,
           component = _ref17.component,
-          args = _ref17.args;
-      delegate.updateComponent(component, args.value());
+          args = _ref17.args,
+          namedArgsProxy = _ref17.namedArgsProxy;
+      var value;
+
+      if (false
+      /* EMBER_CUSTOM_COMPONENT_ARG_PROXY */
+      ) {
+          value = {
+            named: namedArgsProxy,
+            positional: args.positional.value()
+          };
+        } else {
+        value = args.value();
+      }
+
+      delegate.updateComponent(component, value);
     };
 
     _proto50.didCreate = function didCreate(_ref18) {
@@ -10356,12 +10459,15 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       }
     };
 
-    _proto50.getCapabilities = function getCapabilities() {
-      return CAPABILITIES$2;
+    _proto50.getCapabilities = function getCapabilities(_ref22) {
+      var delegate = _ref22.delegate;
+      return (0, _polyfills.assign)({}, CAPABILITIES$2, {
+        updateHook: delegate.capabilities.updateHook
+      });
     };
 
-    _proto50.getTag = function getTag(_ref22) {
-      var args = _ref22.args;
+    _proto50.getTag = function getTag(_ref23) {
+      var args = _ref23.args;
       return args.tag;
     };
 
@@ -10385,10 +10491,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   var CustomComponentState =
   /*#__PURE__*/
   function () {
-    function CustomComponentState(delegate, component, args) {
+    function CustomComponentState(delegate, component, args, namedArgsProxy) {
       this.delegate = delegate;
       this.component = component;
       this.args = args;
+      this.namedArgsProxy = namedArgsProxy;
     }
 
     var _proto51 = CustomComponentState.prototype;
@@ -10525,8 +10632,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
 
   var componentAssertionHelper = helper$1;
 
-  function classHelper(_ref23) {
-    var positional = _ref23.positional;
+  function classHelper(_ref24) {
+    var positional = _ref24.positional;
     var path = positional.at(0);
     var args = positional.length;
     var value = path.value();
@@ -10554,8 +10661,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     return new InternalHelperReference(classHelper, args.capture());
   }
 
-  function inputTypeHelper(_ref24) {
-    var positional = _ref24.positional;
+  function inputTypeHelper(_ref25) {
+    var positional = _ref25.positional;
     var type = positional.at(0).value();
 
     if (type === 'checkbox') {
@@ -10569,8 +10676,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     return new InternalHelperReference(inputTypeHelper, args.capture());
   }
 
-  function normalizeClass(_ref25) {
-    var positional = _ref25.positional;
+  function normalizeClass(_ref26) {
+    var positional = _ref26.positional;
     var classNameParts = positional.at(0).value().split('.');
     var className = classNameParts[classNameParts.length - 1];
     var value = positional.at(1).value();
@@ -11059,13 +11166,148 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   */
 
 
-  function concat(_ref26) {
-    var positional = _ref26.positional;
+  function concat(_ref27) {
+    var positional = _ref27.positional;
     return positional.value().map(normalizeTextValue).join('');
   }
 
   function concat$1(_vm, args) {
     return new InternalHelperReference(concat, args.capture());
+  }
+
+  function buildUntouchableThis(source) {
+    var context = null;
+
+    if (false
+    /* DEBUG */
+    && _utils.HAS_NATIVE_PROXY) {
+      var assertOnProperty = function (property) {
+        false && !false && (0, _debug.assert)("You accessed `this." + String(property) + "` from a function passed to the " + source + ", but the function itself was not bound to a valid `this` context. Consider updating to usage of `@action`.");
+      };
+
+      context = new Proxy({}, {
+        get: function (_target, property) {
+          assertOnProperty(property);
+        },
+        set: function (_target, property) {
+          assertOnProperty(property);
+          return false;
+        },
+        has: function (_target, property) {
+          assertOnProperty(property);
+          return false;
+        }
+      });
+    }
+
+    return context;
+  }
+
+  var context = buildUntouchableThis('`fn` helper');
+  /**
+  @module ember
+  */
+
+  /**
+    The `fn` helper allows you to ensure a function that you are passing off
+    to another component, helper, or modifier has access to arguments that are
+    available in the template.
+  
+    For example, if you have an `each` helper looping over a number of items, you
+    may need to pass a function that expects to receive the item as an argument
+    to a component invoked within the loop. Here's how you could use the `fn`
+    helper to pass both the function and its arguments together:
+  
+      ```app/templates/components/items-listing.hbs
+    {{#each @items as |item|}}
+      <DisplayItem @item=item @select={{fn this.handleSelected item}} />
+    {{/each}}
+    ```
+  
+    ```app/components/items-list.js
+    import Component from '@glimmer/component';
+    import { action } from '@ember/object';
+  
+    export default class ItemsList extends Component {
+      @action
+      handleSelected(item) {
+        // ...snip...
+      }
+    }
+    ```
+  
+    In this case the `display-item` component will receive a normal function
+    that it can invoke. When it invokes the function, the `handleSelected`
+    function will receive the `item` and any arguments passed, thanks to the
+    `fn` helper.
+  
+    Let's take look at what that means in a couple circumstances:
+  
+    - When invoked as `this.args.select()` the `handleSelected` function will
+      receive the `item` from the loop as its first and only argument.
+    - When invoked as `this.args.selected('foo')` the `handleSelected` function
+      will receive the `item` from the loop as its first argument and the
+      string `'foo'` as its second argument.
+  
+    In the example above, we used `@action` to ensure that `handleSelected` is
+    properly bound to the `items-list`, but let's explore what happens if we
+    left out `@action`:
+  
+    ```app/components/items-list.js
+    import Component from '@glimmer/component';
+  
+    export default class ItemsList extends Component {
+      handleSelected(item) {
+        // ...snip...
+      }
+    }
+    ```
+  
+    In this example, when `handleSelected` is invoked inside the `display-item`
+    component, it will **not** have access to the component instance. In other
+    words, it will have no `this` context, so please make sure your functions
+    are bound (via `@action` or other means) before passing into `fn`!
+  
+    See also [partial application](https://en.wikipedia.org/wiki/Partial_application).
+  
+    @method fn
+    @for Ember.Templates.helpers
+    @public
+    @since 3.11.0
+  */
+
+  function fnHelper(_ref28) {
+    var positional = _ref28.positional;
+    var callbackRef = positional.at(0);
+
+    if (false
+    /* DEBUG */
+    && typeof callbackRef[INVOKE] !== 'function') {
+      var callback = callbackRef.value();
+      false && !(typeof callback === 'function') && (0, _debug.assert)("You must pass a function as the `fn` helpers first argument, you passed " + callback, typeof callback === 'function');
+    }
+
+    return function () {
+      var _positional$value = positional.value(),
+          fn = _positional$value[0],
+          args = _positional$value.slice(1);
+
+      for (var _len2 = arguments.length, invocationArgs = new Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
+        invocationArgs[_key3] = arguments[_key3];
+      }
+
+      if (typeof callbackRef[INVOKE] === 'function') {
+        // references with the INVOKE symbol expect the function behind
+        // the symbol to be bound to the reference
+        return callbackRef[INVOKE].apply(callbackRef, args.concat(invocationArgs));
+      } else {
+        return fn['call'].apply(fn, [context].concat(args, invocationArgs));
+      }
+    };
+  }
+
+  function fn(_vm, args) {
+    return new InternalHelperReference(fnHelper, args.capture());
   }
   /**
   @module ember
@@ -11094,16 +11336,16 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   
     ```handlebars
     {{get person factName}}
-    <button {{action (action (mut factName)) "height"}}>Show height</button>
-    <button {{action (action (mut factName)) "weight"}}>Show weight</button>
+    <button {{action (fn (mut factName)) "height"}}>Show height</button>
+    <button {{action (fn (mut factName)) "weight"}}>Show weight</button>
     ```
   
     The `{{get}}` helper can also respect mutable values itself. For example:
   
     ```handlebars
     {{input value=(mut (get person factName)) type="text"}}
-    <button {{action (action (mut factName)) "height"}}>Show height</button>
-    <button {{action (action (mut factName)) "weight"}}>Show weight</button>
+    <button {{action (fn (mut factName)) "height"}}>Show height</button>
+    <button {{action (fn (mut factName)) "weight"}}>Show weight</button>
     ```
   
     Would allow the user to swap what fact is being displayed, and also edit
@@ -11149,18 +11391,18 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     };
 
     function GetHelperReference(sourceReference, pathReference) {
-      var _this21;
+      var _this22;
 
-      _this21 = _CachedReference$6.call(this) || this;
-      _this21.sourceReference = sourceReference;
-      _this21.pathReference = pathReference;
-      _this21.lastPath = null;
-      _this21.innerReference = _runtime2.NULL_REFERENCE;
+      _this22 = _CachedReference$6.call(this) || this;
+      _this22.sourceReference = sourceReference;
+      _this22.pathReference = pathReference;
+      _this22.lastPath = null;
+      _this22.innerReference = _runtime2.NULL_REFERENCE;
 
-      var innerTag = _this21.innerTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
+      var innerTag = _this22.innerTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
 
-      _this21.tag = (0, _reference.combine)([sourceReference.tag, pathReference.tag, innerTag]);
-      return _this21;
+      _this22.tag = (0, _reference.combine)([sourceReference.tag, pathReference.tag, innerTag]);
+      return _this22;
     }
 
     var _proto54 = GetHelperReference.prototype;
@@ -11255,15 +11497,15 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     };
 
     function ConditionalHelperReference(cond, truthy, falsy) {
-      var _this22;
+      var _this23;
 
-      _this22 = _CachedReference$7.call(this) || this;
-      _this22.branchTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
-      _this22.tag = (0, _reference.combine)([cond.tag, _this22.branchTag]);
-      _this22.cond = cond;
-      _this22.truthy = truthy;
-      _this22.falsy = falsy;
-      return _this22;
+      _this23 = _CachedReference$7.call(this) || this;
+      _this23.branchTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
+      _this23.tag = (0, _reference.combine)([cond.tag, _this23.branchTag]);
+      _this23.cond = cond;
+      _this23.truthy = truthy;
+      _this23.falsy = falsy;
+      return _this23;
     }
 
     var _proto55 = ConditionalHelperReference.prototype;
@@ -11366,8 +11608,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   */
 
 
-  function inlineIf(_vm, _ref27) {
-    var positional = _ref27.positional;
+  function inlineIf(_vm, _ref29) {
+    var positional = _ref29.positional;
     false && !(positional.length === 3 || positional.length === 2) && (0, _debug.assert)('The inline form of the `if` helper expects two or three arguments, e.g. ' + '`{{if trialExpired "Expired" expiryDate}}`.', positional.length === 3 || positional.length === 2);
     return ConditionalHelperReference.create(positional.at(0), positional.at(1), positional.at(2));
   }
@@ -11445,8 +11687,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   */
 
 
-  function inlineUnless(_vm, _ref28) {
-    var positional = _ref28.positional;
+  function inlineUnless(_vm, _ref30) {
+    var positional = _ref30.positional;
     false && !(positional.length === 3 || positional.length === 2) && (0, _debug.assert)('The inline form of the `unless` helper expects two or three arguments, e.g. ' + '`{{unless isFirstLogin "Welcome back!"}}`.', positional.length === 3 || positional.length === 2);
     return ConditionalHelperReference.create(positional.at(0), positional.at(2), positional.at(1));
   }
@@ -11469,10 +11711,10 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   */
 
 
-  function log(_ref29) {
+  function log(_ref31) {
     var _console;
 
-    var positional = _ref29.positional;
+    var positional = _ref31.positional;
     /* eslint-disable no-console */
 
     (_console = console).log.apply(_console, positional.value());
@@ -11494,7 +11736,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     To specify that a parameter is mutable, when invoking the child `Component`:
   
     ```handlebars
-    <MyChild @childClickCount={{action (mut totalClicks)}} />
+    <MyChild @childClickCount={{fn (mut totalClicks)}} />
     ```
   
      or
@@ -11518,20 +11760,20 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     Note that for curly components (`{{my-component}}`) the bindings are already mutable,
     making the `mut` unnecessary.
   
-    Additionally, the `mut` helper can be combined with the `action` helper to
+    Additionally, the `mut` helper can be combined with the `fn` helper to
     mutate a value. For example:
   
     ```handlebars
-    <MyChild @childClickCount={{this.totalClicks}} @click-count-change={{action (mut totalClicks))}} />
+    <MyChild @childClickCount={{this.totalClicks}} @click-count-change={{fn (mut totalClicks))}} />
     ```
   
     or
   
     ```handlebars
-    {{my-child childClickCount=totalClicks click-count-change=(action (mut totalClicks))}}
+    {{my-child childClickCount=totalClicks click-count-change=(fn (mut totalClicks))}}
     ```
   
-    The child `Component` would invoke the action with the new click value:
+    The child `Component` would invoke the function with the new click value:
   
     ```javascript
     // my-child.js
@@ -11542,17 +11784,15 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     });
     ```
   
-    The `mut` helper changes the `totalClicks` value to what was provided as the action argument.
+    The `mut` helper changes the `totalClicks` value to what was provided as the `fn` argument.
   
-    The `mut` helper, when used with `action`, will return a function that
-    sets the value passed to `mut` to its first argument. This works like any other
-    closure action and interacts with the other features `action` provides.
-    As an example, we can create a button that increments a value passing the value
-    directly to the `action`:
+    The `mut` helper, when used with `fn`, will return a function that
+    sets the value passed to `mut` to its first argument. As an example, we can create a
+    button that increments a value passing the value directly to the `fn`:
   
     ```handlebars
     {{! inc helper is not provided by Ember }}
-    <button onclick={{action (mut count) (inc count)}}>
+    <button onclick={{fn (mut count) (inc count)}}>
       Increment count
     </button>
     ```
@@ -11560,7 +11800,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     You can also use the `value` option:
   
     ```handlebars
-    <input value={{name}} oninput={{action (mut name) value="target.value"}}>
+    <input value={{name}} oninput={{fn (mut name) value="target.value"}}>
     ```
   
     @method mut
@@ -11629,9 +11869,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
   */
 
 
-  function queryParams(_ref30) {
-    var positional = _ref30.positional,
-        named = _ref30.named; // tslint:disable-next-line:max-line-length
+  function queryParams(_ref32) {
+    var positional = _ref32.positional,
+        named = _ref32.named; // tslint:disable-next-line:max-line-length
 
     false && !(positional.value().length === 0) && (0, _debug.assert)("The `query-params` helper only accepts hash parameters, e.g. (query-params queryParamPropertyName='foo') as opposed to just (query-params 'foo')", positional.value().length === 0);
     return new _routing.QueryParams((0, _polyfills.assign)({}, named.value()));
@@ -11886,7 +12126,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     };
 
     _proto56.handler = function handler(event) {
-      var _this23 = this;
+      var _this24 = this;
 
       var actionName = this.actionName,
           namedArgs = this.namedArgs;
@@ -11909,7 +12149,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       }
 
       (0, _runloop.join)(function () {
-        var args = _this23.getActionArgs();
+        var args = _this24.getActionArgs();
 
         var payload = {
           args: args,
@@ -12104,8 +12344,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return new CustomModifierState(element, definition.delegate, instance, capturedArgs);
     };
 
-    _proto59.getTag = function getTag(_ref31) {
-      var args = _ref31.args;
+    _proto59.getTag = function getTag(_ref33) {
+      var args = _ref33.args;
       return args.tag;
     };
 
@@ -12159,6 +12399,379 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
 
   var CUSTOM_INTERACTIVE_MODIFIER_MANAGER = new InteractiveCustomModifierManager();
   var CUSTOM_NON_INTERACTIVE_MODIFIER_MANAGER = new NonInteractiveCustomModifierManager();
+  var untouchableContext = buildUntouchableThis('`on` modifier');
+  /**
+  @module ember
+  */
+
+  /*
+    Internet Explorer 11 does not support `once` and also does not support
+    passing `eventOptions`. In some situations it then throws a weird script
+    error, like:
+  
+    ```
+    Could not complete the operation due to error 80020101
+    ```
+  
+    This flag determines, whether `{ once: true }` and thus also event options in
+    general are supported.
+  */
+
+  var SUPPORTS_EVENT_OPTIONS = function () {
+    try {
+      var div = document.createElement('div');
+      var counter = 0;
+      div.addEventListener('click', function () {
+        return counter++;
+      }, {
+        once: true
+      });
+      var event;
+
+      if (typeof Event === 'function') {
+        event = new Event('click');
+      } else {
+        event = document.createEvent('Event');
+        event.initEvent('click', true, true);
+      }
+
+      div.dispatchEvent(event);
+      div.dispatchEvent(event);
+      return counter === 1;
+    } catch (error) {
+      return false;
+    }
+  }();
+
+  var OnModifierState =
+  /*#__PURE__*/
+  function () {
+    function OnModifierState(element, args) {
+      this.shouldUpdate = true;
+      this.element = element;
+      this.args = args;
+      this.tag = args.tag;
+    }
+
+    var _proto61 = OnModifierState.prototype;
+
+    _proto61.updateFromArgs = function updateFromArgs() {
+      var args = this.args;
+
+      var _args$named$value = args.named.value(),
+          once = _args$named$value.once,
+          passive = _args$named$value.passive,
+          capture = _args$named$value.capture;
+
+      if (once !== this.once) {
+        this.once = once;
+        this.shouldUpdate = true;
+      }
+
+      if (passive !== this.passive) {
+        this.passive = passive;
+        this.shouldUpdate = true;
+      }
+
+      if (capture !== this.capture) {
+        this.capture = capture;
+        this.shouldUpdate = true;
+      }
+
+      var options;
+
+      if (once || passive || capture) {
+        options = this.options = {
+          once: once,
+          passive: passive,
+          capture: capture
+        };
+      } else {
+        this.options = undefined;
+      }
+
+      false && !(args.positional.at(0) !== undefined && typeof args.positional.at(0).value() === 'string') && (0, _debug.assert)('You must pass a valid DOM event name as the first argument to the `on` modifier', args.positional.at(0) !== undefined && typeof args.positional.at(0).value() === 'string');
+      var eventName = args.positional.at(0).value();
+
+      if (eventName !== this.eventName) {
+        this.eventName = eventName;
+        this.shouldUpdate = true;
+      }
+
+      false && !(args.positional.at(1) !== undefined && typeof args.positional.at(1).value() === 'function') && (0, _debug.assert)('You must pass a function as the second argument to the `on` modifier', args.positional.at(1) !== undefined && typeof args.positional.at(1).value() === 'function');
+      var userProvidedCallback = args.positional.at(1).value();
+
+      if (userProvidedCallback !== this.userProvidedCallback) {
+        this.userProvidedCallback = userProvidedCallback;
+        this.shouldUpdate = true;
+      }
+
+      false && !(args.positional.length === 2) && (0, _debug.assert)("You can only pass two positional arguments (event name and callback) to the `on` modifier, but you provided " + args.positional.length + ". Consider using the `fn` helper to provide additional arguments to the `on` callback.", args.positional.length === 2);
+      var needsCustomCallback = SUPPORTS_EVENT_OPTIONS === false && once ||
+      /* needs manual once implementation */
+      false
+      /* DEBUG */
+      && passive
+      /* needs passive enforcement */
+      ;
+
+      if (this.shouldUpdate) {
+        if (needsCustomCallback) {
+          var callback = this.callback = function (event) {
+            if (false
+            /* DEBUG */
+            && passive) {
+              event.preventDefault = function () {
+                false && !false && (0, _debug.assert)("You marked this listener as 'passive', meaning that you must not call 'event.preventDefault()': \n\n" + userProvidedCallback);
+              };
+            }
+
+            if (!SUPPORTS_EVENT_OPTIONS && once) {
+              removeEventListener(this, eventName, callback, options);
+            }
+
+            return userProvidedCallback.call(untouchableContext, event);
+          };
+        } else if (false
+        /* DEBUG */
+        ) {
+            // prevent the callback from being bound to the element
+            this.callback = userProvidedCallback.bind(untouchableContext);
+          } else {
+          this.callback = userProvidedCallback;
+        }
+      }
+    };
+
+    _proto61.destroy = function destroy() {
+      var element = this.element,
+          eventName = this.eventName,
+          callback = this.callback,
+          options = this.options;
+      removeEventListener(element, eventName, callback, options);
+    };
+
+    return OnModifierState;
+  }();
+
+  var adds = 0;
+  var removes = 0;
+
+  function removeEventListener(element, eventName, callback, options) {
+    removes++;
+
+    if (SUPPORTS_EVENT_OPTIONS) {
+      // when options are supported, use them across the board
+      element.removeEventListener(eventName, callback, options);
+    } else if (options !== undefined && options.capture) {
+      // used only in the following case:
+      //
+      // `{ once: true | false, passive: true | false, capture: true }
+      //
+      // `once` is handled via a custom callback that removes after first
+      // invocation so we only care about capture here as a boolean
+      element.removeEventListener(eventName, callback, true);
+    } else {
+      // used only in the following cases:
+      //
+      // * where there is no options
+      // * `{ once: true | false, passive: true | false, capture: false }
+      element.removeEventListener(eventName, callback);
+    }
+  }
+
+  function addEventListener(element, eventName, callback, options) {
+    adds++;
+
+    if (SUPPORTS_EVENT_OPTIONS) {
+      // when options are supported, use them across the board
+      element.addEventListener(eventName, callback, options);
+    } else if (options !== undefined && options.capture) {
+      // used only in the following case:
+      //
+      // `{ once: true | false, passive: true | false, capture: true }
+      //
+      // `once` is handled via a custom callback that removes after first
+      // invocation so we only care about capture here as a boolean
+      element.addEventListener(eventName, callback, true);
+    } else {
+      // used only in the following cases:
+      //
+      // * where there is no options
+      // * `{ once: true | false, passive: true | false, capture: false }
+      element.addEventListener(eventName, callback);
+    }
+  }
+  /**
+    The `{{on}}` modifier lets you easily add event listeners (it uses
+    [EventTarget.addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+    internally).
+  
+    For example, if you'd like to run a function on your component when a `<button>`
+    in the components template is clicked you might do something like:
+  
+    ```app/templates/components/like-post.hbs
+    <button {{on 'click' this.saveLike}}>Like this post!</button>
+    ```
+  
+    ```app/components/like-post.js
+    import Component from '@glimmer/component';
+    import { action } from '@ember/object';
+  
+    export default class LikePostComponent extends Component {
+      @action
+      saveLike() {
+        // someone likes your post!
+        // better send a request off to your server...
+      }
+    }
+    ```
+  
+    ### Arguments
+  
+    `{{on}}` accepts two positional arguments, and a few named arguments.
+  
+    The positional arguments are:
+  
+    - `event` -- the name to use when calling `addEventListener`
+    - `callback` -- the function to be passed to `addEventListener`
+  
+    The named arguments are:
+  
+    - capture -- a `true` value indicates that events of this type will be dispatched
+      to the registered listener before being dispatched to any EventTarget beneath it
+      in the DOM tree.
+    - once -- indicates that the listener should be invoked at most once after being
+      added. If true, the listener would be automatically removed when invoked.
+    - passive -- if `true`, indicates that the function specified by listener will never
+      call preventDefault(). If a passive listener does call preventDefault(), the user
+      agent will do nothing other than generate a console warning. See
+      [Improving scrolling performance with passive listeners](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Improving_scrolling_performance_with_passive_listeners)
+      to learn more.
+  
+    The callback function passed to `{{on}}` will receive any arguments that are passed
+    to the event handler. Most commonly this would be the `event` itself.
+  
+    If you would like to pass additional arguments to the function you should use
+    the `{{fn}}` helper.
+  
+    For example, in our example case above if you'd like to pass in the post that
+    was being liked when the button is clicked you could do something like:
+  
+    ```app/templates/components/like-post.js
+    <button {{on 'click' (fn this.saveLike @post)}}>Like this post!</button>
+    ```
+  
+    In this case, the `saveLike` function will receive two arguments: the click event
+    and the value of `@post`.
+  
+    ### Function Context
+  
+    In the example above, we used `@action` to ensure that `likePost` is
+    properly bound to the `items-list`, but let's explore what happens if we
+    left out `@action`:
+  
+    ```app/components/like-post.js
+    import Component from '@glimmer/component';
+  
+    export default class LikePostComponent extends Component {
+      saveLike() {
+        // ...snip...
+      }
+    }
+    ```
+  
+    In this example, when the button is clicked `saveLike` will be invoked,
+    it will **not** have access to the component instance. In other
+    words, it will have no `this` context, so please make sure your functions
+    are bound (via `@action` or other means) before passing into `on`!
+  
+    @method on
+    @for Ember.Templates.helpers
+    @public
+    @since 3.11.0
+  */
+
+
+  var OnModifierManager =
+  /*#__PURE__*/
+  function () {
+    function OnModifierManager(isInteractive) {
+      this.SUPPORTS_EVENT_OPTIONS = SUPPORTS_EVENT_OPTIONS;
+      this.isInteractive = isInteractive;
+    }
+
+    var _proto62 = OnModifierManager.prototype;
+
+    _proto62.create = function create(element, _state, args) {
+      if (!this.isInteractive) {
+        return null;
+      }
+
+      var capturedArgs = args.capture();
+      return new OnModifierState(element, capturedArgs);
+    };
+
+    _proto62.getTag = function getTag(state) {
+      if (state === null) {
+        return _reference.CONSTANT_TAG;
+      }
+
+      return state.tag;
+    };
+
+    _proto62.install = function install(state) {
+      if (state === null) {
+        return;
+      }
+
+      state.updateFromArgs();
+      var element = state.element,
+          eventName = state.eventName,
+          callback = state.callback,
+          options = state.options;
+      addEventListener(element, eventName, callback, options);
+      state.shouldUpdate = false;
+    };
+
+    _proto62.update = function update(state) {
+      if (state === null) {
+        return;
+      } // stash prior state for el.removeEventListener
+
+
+      var element = state.element,
+          eventName = state.eventName,
+          callback = state.callback,
+          options = state.options;
+      state.updateFromArgs();
+
+      if (!state.shouldUpdate) {
+        return;
+      } // use prior state values for removal
+
+
+      removeEventListener(element, eventName, callback, options); // read updated values from the state object
+
+      addEventListener(state.element, state.eventName, state.callback, state.options);
+      state.shouldUpdate = false;
+    };
+
+    _proto62.getDestructor = function getDestructor(state) {
+      return state;
+    };
+
+    (0, _emberBabel.createClass)(OnModifierManager, [{
+      key: "counters",
+      get: function () {
+        return {
+          adds: adds,
+          removes: removes
+        };
+      }
+    }]);
+    return OnModifierManager;
+  }();
 
   function hashToArgs(hash) {
     if (hash === null) return null;
@@ -12415,9 +13028,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return _AbstractManager6.apply(this, arguments) || this;
     }
 
-    var _proto61 = MountManager.prototype;
+    var _proto63 = MountManager.prototype;
 
-    _proto61.getDynamicLayout = function getDynamicLayout(state, _) {
+    _proto63.getDynamicLayout = function getDynamicLayout(state, _) {
       var template = state.engine.lookup('template:application');
       var layout = template.asLayout();
       return {
@@ -12426,11 +13039,11 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       };
     };
 
-    _proto61.getCapabilities = function getCapabilities() {
+    _proto63.getCapabilities = function getCapabilities() {
       return CAPABILITIES$4;
     };
 
-    _proto61.create = function create(environment, state) {
+    _proto63.create = function create(environment, state) {
       if (false
       /* DEBUG */
       ) {
@@ -12482,21 +13095,21 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return bucket;
     };
 
-    _proto61.getSelf = function getSelf(_ref32) {
-      var self = _ref32.self;
+    _proto63.getSelf = function getSelf(_ref34) {
+      var self = _ref34.self;
       return self;
     };
 
-    _proto61.getTag = function getTag(state) {
+    _proto63.getTag = function getTag(state) {
       return state.tag;
     };
 
-    _proto61.getDestructor = function getDestructor(_ref33) {
-      var engine = _ref33.engine;
+    _proto63.getDestructor = function getDestructor(_ref35) {
+      var engine = _ref35.engine;
       return engine;
     };
 
-    _proto61.didRenderLayout = function didRenderLayout() {
+    _proto63.didRenderLayout = function didRenderLayout() {
       if (false
       /* DEBUG */
       ) {
@@ -12504,7 +13117,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
         }
     };
 
-    _proto61.update = function update(bucket) {
+    _proto63.update = function update(bucket) {
       var controller = bucket.controller,
           modelRef = bucket.modelRef,
           modelRev = bucket.modelRev;
@@ -12596,9 +13209,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       this._lastDef = null;
     }
 
-    var _proto62 = DynamicEngineReference.prototype;
+    var _proto64 = DynamicEngineReference.prototype;
 
-    _proto62.value = function value() {
+    _proto64.value = function value() {
       var env = this.env,
           nameRef = this.nameRef,
           modelRef = this.modelRef;
@@ -12626,7 +13239,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       }
     };
 
-    _proto62.get = function get() {
+    _proto64.get = function get() {
       return _runtime2.UNDEFINED_REFERENCE;
     };
 
@@ -12645,17 +13258,17 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       this.tag = _reference.DirtyableTag.create();
     }
 
-    var _proto63 = RootOutletReference.prototype;
+    var _proto65 = RootOutletReference.prototype;
 
-    _proto63.get = function get(key) {
+    _proto65.get = function get(key) {
       return new PathReference(this, key);
     };
 
-    _proto63.value = function value() {
+    _proto65.value = function value() {
       return this.outletState;
     };
 
-    _proto63.update = function update(state) {
+    _proto65.update = function update(state) {
       this.outletState.outlets.main = state;
       this.tag.inner.dirty();
     };
@@ -12676,15 +13289,15 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       this.tag = (0, _reference.combine)([parentStateRef.tag, outletNameRef.tag]);
     }
 
-    var _proto64 = OutletReference.prototype;
+    var _proto66 = OutletReference.prototype;
 
-    _proto64.value = function value() {
+    _proto66.value = function value() {
       var outletState = this.parentStateRef.value();
       var outlets = outletState === undefined ? undefined : outletState.outlets;
       return outlets === undefined ? undefined : outlets[this.outletNameRef.value()];
     };
 
-    _proto64.get = function get(key) {
+    _proto66.get = function get(key) {
       return new PathReference(this, key);
     };
 
@@ -12705,13 +13318,13 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       this.tag = parent.tag;
     }
 
-    var _proto65 = PathReference.prototype;
+    var _proto67 = PathReference.prototype;
 
-    _proto65.get = function get(key) {
+    _proto67.get = function get(key) {
       return new PathReference(this, key);
     };
 
-    _proto65.value = function value() {
+    _proto67.value = function value() {
       var parent = this.parent.value();
       return parent && parent[this.key];
     };
@@ -12798,9 +13411,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       this.tag = outletRef.tag;
     }
 
-    var _proto66 = OutletComponentReference.prototype;
+    var _proto68 = OutletComponentReference.prototype;
 
-    _proto66.value = function value() {
+    _proto68.value = function value() {
       var state = stateFor(this.outletRef);
 
       if (validate(state, this.lastState)) {
@@ -12817,7 +13430,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return this.definition = definition;
     };
 
-    _proto66.get = function get(_key) {
+    _proto68.get = function get(_key) {
       return _runtime2.UNDEFINED_REFERENCE;
     };
 
@@ -13029,14 +13642,15 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     '-get-dynamic-var': _runtime2.getDynamicVar,
     '-mount': mountHelper,
     '-outlet': outletHelper,
-    '-assert-implicit-component-helper-argument': componentAssertionHelper
+    '-assert-implicit-component-helper-argument': componentAssertionHelper,
+    fn: undefined
   };
-  var BUILTIN_MODIFIERS = {
-    action: {
-      manager: new ActionModifierManager(),
-      state: null
+
+  if (true
+  /* EMBER_GLIMMER_FN_HELPER */
+  ) {
+      BUILTINS_HELPERS.fn = fn;
     }
-  };
 
   var RuntimeResolver =
   /*#__PURE__*/
@@ -13044,8 +13658,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     function RuntimeResolver(isInteractive) {
       this.handles = [undefined];
       this.objToHandle = new WeakMap();
-      this.builtInHelpers = BUILTINS_HELPERS;
-      this.builtInModifiers = BUILTIN_MODIFIERS; // supports directly imported late bound layouts on component.prototype.layout
+      this.builtInHelpers = BUILTINS_HELPERS; // supports directly imported late bound layouts on component.prototype.layout
 
       this.templateCache = new Map();
       this.componentDefinitionCache = new Map();
@@ -13058,6 +13671,21 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       populateMacros(macros);
       this.compiler = new _opcodeCompiler.LazyCompiler(new CompileTimeLookup(this), this, macros);
       this.isInteractive = isInteractive;
+      this.builtInModifiers = {
+        action: {
+          manager: new ActionModifierManager(),
+          state: null
+        }
+      };
+
+      if (true
+      /* EMBER_GLIMMER_ON_MODIFIER */
+      ) {
+          this.builtInModifiers.on = {
+            manager: new OnModifierManager(isInteractive),
+            state: null
+          };
+        }
     }
     /***  IRuntimeResolver ***/
 
@@ -13067,9 +13695,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
      */
 
 
-    var _proto67 = RuntimeResolver.prototype;
+    var _proto69 = RuntimeResolver.prototype;
 
-    _proto67.lookupComponentDefinition = function lookupComponentDefinition(name, meta) {
+    _proto69.lookupComponentDefinition = function lookupComponentDefinition(name, meta) {
       var handle = this.lookupComponentHandle(name, meta);
 
       if (handle === null) {
@@ -13080,7 +13708,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return this.resolve(handle);
     };
 
-    _proto67.lookupComponentHandle = function lookupComponentHandle(name, meta) {
+    _proto69.lookupComponentHandle = function lookupComponentHandle(name, meta) {
       var nextHandle = this.handles.length;
       var handle = this.handle(this._lookupComponentDefinition(name, meta));
       false && !!(true
@@ -13098,7 +13726,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
      */
     ;
 
-    _proto67.resolve = function resolve(handle) {
+    _proto69.resolve = function resolve(handle) {
       return this.handles[handle];
     } // End IRuntimeResolver
 
@@ -13107,7 +13735,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
      */
     ;
 
-    _proto67.lookupHelper = function lookupHelper(name, meta) {
+    _proto69.lookupHelper = function lookupHelper(name, meta) {
       var nextHandle = this.handles.length;
 
       var helper$$1 = this._lookupHelper(name, meta);
@@ -13129,7 +13757,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
      */
     ;
 
-    _proto67.lookupModifier = function lookupModifier(name, meta) {
+    _proto69.lookupModifier = function lookupModifier(name, meta) {
       return this.handle(this._lookupModifier(name, meta));
     }
     /**
@@ -13137,7 +13765,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
      */
     ;
 
-    _proto67.lookupPartial = function lookupPartial(name, meta) {
+    _proto69.lookupPartial = function lookupPartial(name, meta) {
       var partial = this._lookupPartial(name, meta);
 
       return this.handle(partial);
@@ -13150,7 +13778,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
      */
     ;
 
-    _proto67.createTemplate = function createTemplate(factory, owner) {
+    _proto69.createTemplate = function createTemplate(factory, owner) {
       var cache = this.templateCache.get(owner);
       var template;
 
@@ -13178,7 +13806,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     } // needed for lazy compile time lookup
     ;
 
-    _proto67.handle = function handle(obj) {
+    _proto69.handle = function handle(obj) {
       if (obj === undefined || obj === null) {
         return null;
       }
@@ -13193,7 +13821,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return handle;
     };
 
-    _proto67._lookupHelper = function _lookupHelper(_name, meta) {
+    _proto69._lookupHelper = function _lookupHelper(_name, meta) {
       var helper$$1 = this.builtInHelpers[_name];
 
       if (helper$$1 !== undefined) {
@@ -13233,7 +13861,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       };
     };
 
-    _proto67._lookupPartial = function _lookupPartial(name, meta) {
+    _proto69._lookupPartial = function _lookupPartial(name, meta) {
       var template = (0, _views.lookupPartial)(name, meta.owner);
 
       if (template) {
@@ -13243,7 +13871,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       }
     };
 
-    _proto67._lookupModifier = function _lookupModifier(name, meta) {
+    _proto69._lookupModifier = function _lookupModifier(name, meta) {
       var builtin = this.builtInModifiers[name];
 
       if (builtin === undefined) {
@@ -13260,7 +13888,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return builtin;
     };
 
-    _proto67._parseNameForNamespace = function _parseNameForNamespace(_name) {
+    _proto69._parseNameForNamespace = function _parseNameForNamespace(_name) {
       var name = _name;
       var namespace = undefined;
 
@@ -13277,9 +13905,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       };
     };
 
-    _proto67._lookupComponentDefinition = function _lookupComponentDefinition(_name, _ref34) {
-      var moduleName = _ref34.moduleName,
-          owner = _ref34.owner;
+    _proto69._lookupComponentDefinition = function _lookupComponentDefinition(_name, _ref36) {
+      var moduleName = _ref36.moduleName,
+          owner = _ref36.owner;
       false && !(true
       /* EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS */
       || _name !== 'textarea') && (0, _debug.assert)('Invoking `{{textarea}}` using angle bracket syntax or `component` helper is not yet supported.', true || _name !== 'textarea');
@@ -13346,7 +13974,7 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return definition;
     };
 
-    _proto67._lookupComponentManager = function _lookupComponentManager(owner, managerId) {
+    _proto69._lookupComponentManager = function _lookupComponentManager(owner, managerId) {
       if (this.customManagerCache.has(managerId)) {
         return this.customManagerCache.get(managerId);
       }
@@ -13361,28 +13989,28 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
 
 
   var TemplateCompiler = {
-    create: function (_ref35) {
-      var environment = _ref35.environment;
+    create: function (_ref37) {
+      var environment = _ref37.environment;
       return new RuntimeResolver(environment.isInteractive).compiler;
     }
   };
   var ComponentTemplate = template({
-    "id": "TfnYOdXy",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1]],\"hasEval\":false}",
+    "id": "chfQcH83",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1]],\"hasEval\":false}",
     "meta": {
       "moduleName": "packages/@ember/-internals/glimmer/lib/templates/component.hbs"
     }
   });
   var InputTemplate = template({
-    "id": "F5xmpEcE",
-    "block": "{\"symbols\":[\"Checkbox\",\"TextField\",\"@__ARGS__\",\"&attrs\"],\"statements\":[[4,\"let\",[[29,\"component\",[\"-checkbox\"],null],[29,\"component\",[\"-text-field\"],null]],null,{\"statements\":[[4,\"if\",[[24,0,[\"isCheckbox\"]]],null,{\"statements\":[[6,[24,1,[]],[[14,4]],[[\"@target\",\"@__ARGS__\"],[[24,0,[\"caller\"]],[24,3,[]]]]]],\"parameters\":[]},{\"statements\":[[6,[24,2,[]],[[14,4]],[[\"@target\",\"@__ARGS__\"],[[24,0,[\"caller\"]],[24,3,[]]]]]],\"parameters\":[]}]],\"parameters\":[1,2]},null]],\"hasEval\":false}",
+    "id": "NWZzLSII",
+    "block": "{\"symbols\":[\"Checkbox\",\"TextField\",\"@__ARGS__\",\"&attrs\"],\"statements\":[[4,\"let\",[[28,\"component\",[\"-checkbox\"],null],[28,\"component\",[\"-text-field\"],null]],null,{\"statements\":[[4,\"if\",[[23,0,[\"isCheckbox\"]]],null,{\"statements\":[[6,[23,1,[]],[[13,4]],[[\"@target\",\"@__ARGS__\"],[[23,0,[\"caller\"]],[23,3,[]]]]]],\"parameters\":[]},{\"statements\":[[6,[23,2,[]],[[13,4]],[[\"@target\",\"@__ARGS__\"],[[23,0,[\"caller\"]],[23,3,[]]]]]],\"parameters\":[]}]],\"parameters\":[1,2]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "packages/@ember/-internals/glimmer/lib/templates/input.hbs"
     }
   });
   var OutletTemplate = template({
-    "id": "tzvJXv5n",
-    "block": "{\"symbols\":[],\"statements\":[[1,[23,\"outlet\"],false]],\"hasEval\":false}",
+    "id": "ffAL6HDl",
+    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"outlet\"],false]],\"hasEval\":false}",
     "meta": {
       "moduleName": "packages/@ember/-internals/glimmer/lib/templates/outlet.hbs"
     }
@@ -13455,9 +14083,9 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       return new OutletView(_environment, renderer, owner, template);
     };
 
-    var _proto68 = OutletView.prototype;
+    var _proto70 = OutletView.prototype;
 
-    _proto68.appendTo = function appendTo(selector) {
+    _proto70.appendTo = function appendTo(selector) {
       var target;
 
       if (this._environment.hasDOM) {
@@ -13469,15 +14097,15 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
       (0, _runloop.schedule)('render', this.renderer, 'appendOutletView', this, target);
     };
 
-    _proto68.rerender = function rerender() {
+    _proto70.rerender = function rerender() {
       /**/
     };
 
-    _proto68.setOutletState = function setOutletState(state) {
+    _proto70.setOutletState = function setOutletState(state) {
       this.ref.update(state);
     };
 
-    _proto68.destroy = function destroy() {
+    _proto70.destroy = function destroy() {
       /**/
     };
 
@@ -13493,8 +14121,8 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     // association won't leak
 
     registry.register('service:-dom-builder', {
-      create: function (_ref36) {
-        var bootOptions = _ref36.bootOptions;
+      create: function (_ref38) {
+        var bootOptions = _ref38.bootOptions;
         var _renderMode = bootOptions._renderMode;
 
         switch (_renderMode) {
@@ -13521,14 +14149,14 @@ enifed("@ember/-internals/glimmer", ["exports", "node-module", "ember-babel", "@
     }
 
     registry.register('service:-dom-changes', {
-      create: function (_ref37) {
-        var document = _ref37.document;
+      create: function (_ref39) {
+        var document = _ref39.document;
         return new _runtime2.DOMChanges(document);
       }
     });
     registry.register('service:-dom-tree-construction', {
-      create: function (_ref38) {
-        var document = _ref38.document;
+      create: function (_ref40) {
+        var document = _ref40.document;
         var Implementation = _browserEnvironment.hasDOM ? _runtime2.DOMTreeConstruction : _node.NodeDOMTreeConstruction;
         return new Implementation(document);
       }
@@ -13750,6 +14378,7 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
         metaCalls: 0,
         metaInstantiated: 0,
         matchingListenersCalls: 0,
+        observerEventsCalls: 0,
         addToListenersCalls: 0,
         removeFromListenersCalls: 0,
         removeAllListenersCalls: 0,
@@ -13757,7 +14386,9 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
         listenersFlattened: 0,
         parentListenersUsed: 0,
         flattenedListenersCalls: 0,
-        reopensAfterFlatten: 0
+        reopensAfterFlatten: 0,
+        readableLazyChainsCalls: 0,
+        writableLazyChainsCalls: 0
       };
     }
   /**
@@ -14058,6 +14689,36 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
       return this._tag;
     };
 
+    _proto.writableLazyChainsFor = function writableLazyChainsFor(key) {
+      if (false
+      /* DEBUG */
+      ) {
+          counters.writableLazyChainsCalls++;
+        }
+
+      var lazyChains = this._getOrCreateOwnMap('_lazyChains');
+
+      if (!(key in lazyChains)) {
+        lazyChains[key] = [];
+      }
+
+      return lazyChains[key];
+    };
+
+    _proto.readableLazyChainsFor = function readableLazyChainsFor(key) {
+      if (false
+      /* DEBUG */
+      ) {
+          counters.readableLazyChainsCalls++;
+        }
+
+      var lazyChains = this._lazyChains;
+
+      if (lazyChains !== undefined) {
+        return lazyChains[key];
+      }
+    };
+
     _proto.writableChainWatchers = function writableChainWatchers(create) {
       false && !!this.isMetaDestroyed() && (0, _debug.assert)(this.isMetaDestroyed() ? "Cannot create a new chain watcher for `" + (0, _utils.toString)(this.source) + "` after it has been destroyed." : '', !this.isMetaDestroyed());
       var ret = this._chainWatchers;
@@ -14208,47 +14869,6 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
       );
     };
 
-    _proto.removeAllListeners = function removeAllListeners(event) {
-      false && !false && (0, _debug.deprecate)('The remove all functionality of removeListener and removeObserver has been deprecated. Remove each listener/observer individually instead.', false, {
-        id: 'events.remove-all-listeners',
-        until: '3.9.0',
-        url: 'https://emberjs.com/deprecations/v3.x#toc_events-remove-all-listeners'
-      });
-
-      if (false
-      /* DEBUG */
-      ) {
-          counters.removeAllListenersCalls++;
-        }
-
-      var listeners = this.writableListeners();
-      var inheritedEnd = this._inheritedEnd; // remove all listeners of event name
-      // adjusting the inheritedEnd if listener is below it
-
-      for (var i = listeners.length - 1; i >= 0; i--) {
-        var listener = listeners[i];
-
-        if (listener.event === event) {
-          listeners.splice(i, 1);
-
-          if (i < inheritedEnd) {
-            inheritedEnd--;
-          }
-        }
-      }
-
-      this._inheritedEnd = inheritedEnd; // we put remove alls at start because rare and easy to check there
-
-      listeners.splice(inheritedEnd, 0, {
-        event: event,
-        target: null,
-        method: null,
-        kind: 3
-        /* REMOVE_ALL */
-
-      });
-    };
-
     _proto.pushListener = function pushListener(event, target, method, kind) {
       var listeners = this.writableListeners();
       var i = indexOfListener(listeners, event, target, method); // remove if found listener was inherited
@@ -14263,18 +14883,10 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
 
 
       if (i === -1) {
-        false && !!(this.isPrototypeMeta(this.source) && typeof method === 'function') && (0, _debug.deprecate)('Adding function listeners to prototypes has been deprecated. Convert the listener to a string listener, or add it to the instance instead.', !(this.isPrototypeMeta(this.source) && typeof method === 'function'), {
-          id: 'events.inherited-function-listeners',
-          until: '3.9.0',
-          url: 'https://emberjs.com/deprecations/v3.x#toc_events-inherited-function-listeners'
-        });
+        false && !!(this.isPrototypeMeta(this.source) && typeof method === 'function') && (0, _debug.assert)('You cannot add function listeners to prototypes. Convert the listener to a string listener, or add it to the instance instead.', !(this.isPrototypeMeta(this.source) && typeof method === 'function'));
         false && !!(!this.isPrototypeMeta(this.source) && typeof method === 'function' && kind === 2
         /* REMOVE */
-        ) && (0, _debug.deprecate)('You attempted to remove a function listener which did not exist on the instance, which means it was an inherited prototype listener, or you attempted to remove it before it was added. Prototype function listeners have been deprecated, and attempting to remove a non-existent function listener this will error in the future.', !(!this.isPrototypeMeta(this.source) && typeof method === 'function' && kind === 2), {
-          id: 'events.inherited-function-listeners',
-          until: '3.9.0',
-          url: 'https://emberjs.com/deprecations/v3.x#toc_events-inherited-function-listeners'
-        });
+        ) && (0, _debug.assert)('You attempted to remove a function listener which did not exist on the instance, which means you may have attempted to remove it before it was added.', !(!this.isPrototypeMeta(this.source) && typeof method === 'function' && kind === 2));
         listeners.push({
           event: event,
           target: target,
@@ -14294,10 +14906,7 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
           listeners.splice(i, 1);
         } else {
           // update own listener
-          listener.kind = kind; // TODO: Remove this when removing REMOVE_ALL, it won't be necessary
-
-          listener.target = target;
-          listener.method = method;
+          listener.kind = kind;
         }
       }
     };
@@ -14416,7 +15025,7 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
 
       if (listeners !== undefined) {
         for (var index = 0; index < listeners.length; index++) {
-          var listener = listeners[index]; // REMOVE and REMOVE_ALL listeners are placeholders that tell us not to
+          var listener = listeners[index]; // REMOVE listeners are placeholders that tell us not to
           // inherit, so they never match. Only ADD and ONCE can match.
 
           if (listener.event === eventName && (listener.kind === 0
@@ -14433,6 +15042,40 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
             result.push(listener.target, listener.method, listener.kind === 1
             /* ONCE */
             );
+          }
+        }
+      }
+
+      return result;
+    };
+
+    _proto.observerEvents = function observerEvents() {
+      var listeners = this.flattenedListeners();
+      var result;
+
+      if (false
+      /* DEBUG */
+      ) {
+          counters.observerEventsCalls++;
+        }
+
+      if (listeners !== undefined) {
+        for (var index = 0; index < listeners.length; index++) {
+          var listener = listeners[index]; // REMOVE listeners are placeholders that tell us not to
+          // inherit, so they never match. Only ADD and ONCE can match.
+
+          if ((listener.kind === 0
+          /* ADD */
+          || listener.kind === 1
+          /* ONCE */
+          ) && listener.event.indexOf(':change') !== -1) {
+            if (result === undefined) {
+              // we create this array only after we've found a listener that
+              // matches to avoid allocations when no matches are found.
+              result = [];
+            }
+
+            result.push(listener.event);
           }
         }
       }
@@ -14654,9 +15297,7 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
     for (var i = listeners.length - 1; i >= 0; i--) {
       var listener = listeners[i];
 
-      if (listener.event === event && (listener.target === target && listener.method === method || listener.kind === 3
-      /* REMOVE_ALL */
-      )) {
+      if (listener.event === event && listener.target === target && listener.method === method) {
         return i;
       }
     }
@@ -14714,6 +15355,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   _exports.unwatchKey = unwatchKey;
   _exports.finishChains = finishChains;
   _exports.removeChainWatcher = removeChainWatcher;
+  _exports.getChainTagsForKey = getChainTagsForKey;
   _exports.watchPath = watchPath;
   _exports.unwatchPath = unwatchPath;
   _exports.isWatching = isWatching;
@@ -14724,7 +15366,9 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   _exports.setProperties = setProperties;
   _exports.expandProperties = expandProperties;
   _exports.addObserver = addObserver;
+  _exports.activateObserver = activateObserver;
   _exports.removeObserver = removeObserver;
+  _exports.flushInvalidActiveObservers = flushInvalidActiveObservers;
   _exports.mixin = mixin;
   _exports.observer = observer;
   _exports.applyMixin = applyMixin;
@@ -14732,9 +15376,9 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   _exports.tagForProperty = tagForProperty;
   _exports.tagFor = tagFor;
   _exports.markObjectAsDirty = markObjectAsDirty;
+  _exports.consume = consume;
   _exports.tracked = tracked;
-  _exports.getCurrentTracker = getCurrentTracker;
-  _exports.setCurrentTracker = setCurrentTracker;
+  _exports.track = track;
   _exports.addNamespace = addNamespace;
   _exports.classToString = classToString;
   _exports.findNamespace = findNamespace;
@@ -14744,7 +15388,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   _exports.removeNamespace = removeNamespace;
   _exports.isNamespaceSearchDisabled = isSearchDisabled;
   _exports.setNamespaceSearchDisabled = setSearchDisabled;
-  _exports.NAMESPACES_BY_ID = _exports.NAMESPACES = _exports.Tracker = _exports.assertNotRendered = _exports.didRender = _exports.runInTransaction = _exports.DEBUG_INJECTION_FUNCTIONS = _exports.aliasMethod = _exports.Mixin = _exports.Libraries = _exports.libraries = _exports.ChainNode = _exports.PROPERTY_DID_CHANGE = _exports.PROXY_CONTENT = _exports.ComputedProperty = _exports._globalsComputed = void 0;
+  _exports.NAMESPACES_BY_ID = _exports.NAMESPACES = _exports.Tracker = _exports.assertNotRendered = _exports.didRender = _exports.runInTransaction = _exports.UNKNOWN_PROPERTY_TAG = _exports.DEBUG_INJECTION_FUNCTIONS = _exports.aliasMethod = _exports.Mixin = _exports.Libraries = _exports.libraries = _exports.ChainNode = _exports.PROPERTY_DID_CHANGE = _exports.PROXY_CONTENT = _exports.ComputedProperty = _exports._globalsComputed = void 0;
   var COMPUTED_PROPERTY_CACHED_VALUES = new WeakMap();
   var COMPUTED_PROPERTY_LAST_REVISION = false
   /* EMBER_METAL_TRACKED_PROPERTIES */
@@ -14770,13 +15414,6 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
 
     if (cache === undefined) {
       cache = new Map();
-
-      if (false
-      /* EMBER_METAL_TRACKED_PROPERTIES */
-      ) {
-          COMPUTED_PROPERTY_LAST_REVISION.set(obj, new Map());
-        }
-
       COMPUTED_PROPERTY_CACHED_VALUES.set(obj, cache);
     }
 
@@ -14798,8 +15435,14 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   /* EMBER_METAL_TRACKED_PROPERTIES */
   ) {
       setLastRevisionFor = function (obj, key, revision) {
-        var lastRevision = COMPUTED_PROPERTY_LAST_REVISION.get(obj);
-        lastRevision.set(key, revision);
+        var cache = COMPUTED_PROPERTY_LAST_REVISION.get(obj);
+
+        if (cache === undefined) {
+          cache = new Map();
+          COMPUTED_PROPERTY_LAST_REVISION.set(obj, cache);
+        }
+
+        cache.set(key, revision);
       };
 
       getLastRevisionFor = function (obj, key) {
@@ -14878,6 +15521,122 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     return typeof path === 'string' && firstDotIndexCache.get(path) !== -1;
   }
 
+  var UNKNOWN_PROPERTY_TAG = (0, _utils.symbol)('UNKNOWN_PROPERTY_TAG');
+  _exports.UNKNOWN_PROPERTY_TAG = UNKNOWN_PROPERTY_TAG;
+
+  function makeTag() {
+    return _reference.DirtyableTag.create();
+  }
+
+  function tagForProperty(object, propertyKey, _meta) {
+    var objectType = typeof object;
+
+    if (objectType !== 'function' && (objectType !== 'object' || object === null)) {
+      return _reference.CONSTANT_TAG;
+    }
+
+    var meta$$1 = _meta === undefined ? (0, _meta2.meta)(object) : _meta;
+
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        if (!(propertyKey in object) && typeof object[UNKNOWN_PROPERTY_TAG] === 'function') {
+          return object[UNKNOWN_PROPERTY_TAG](propertyKey);
+        }
+      } else if ((0, _utils.isProxy)(object)) {
+      return tagFor(object, meta$$1);
+    }
+
+    var tags = meta$$1.writableTags();
+    var tag = tags[propertyKey];
+
+    if (tag) {
+      return tag;
+    }
+
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        var pair = (0, _reference.combine)([makeTag(), _reference.UpdatableTag.create(_reference.CONSTANT_TAG)]);
+
+        if (false
+        /* DEBUG */
+        ) {
+            if (false
+            /* EMBER_METAL_TRACKED_PROPERTIES */
+            ) {
+                (0, _utils.setupMandatorySetter)(object, propertyKey);
+              }
+
+            pair._propertyKey = propertyKey;
+          }
+
+        return tags[propertyKey] = pair;
+      } else {
+      return tags[propertyKey] = makeTag();
+    }
+  }
+
+  function tagFor(object, _meta) {
+    if (typeof object === 'object' && object !== null) {
+      var meta$$1 = _meta === undefined ? (0, _meta2.meta)(object) : _meta;
+
+      if (!meta$$1.isMetaDestroyed()) {
+        return meta$$1.writableTag(makeTag);
+      }
+    }
+
+    return _reference.CONSTANT_TAG;
+  }
+
+  var dirty;
+  var update;
+
+  if (false
+  /* EMBER_METAL_TRACKED_PROPERTIES */
+  ) {
+      dirty = function (tag) {
+        tag.inner.first.inner.dirty();
+      };
+
+      update = function (outer, inner) {
+        outer.inner.lastChecked = 0;
+        outer.inner.second.inner.update(inner);
+      };
+    } else {
+    dirty = function (tag) {
+      tag.inner.dirty();
+    };
+  }
+
+  function markObjectAsDirty(obj, propertyKey, _meta) {
+    var meta$$1 = _meta === undefined ? (0, _meta2.meta)(obj) : _meta;
+    var objectTag = meta$$1.readableTag();
+
+    if (objectTag !== undefined) {
+      if ((0, _utils.isProxy)(obj)) {
+        objectTag.inner.first.inner.dirty();
+      } else {
+        objectTag.inner.dirty();
+      }
+    }
+
+    var tags = meta$$1.readableTags();
+    var propertyTag = tags !== undefined ? tags[propertyKey] : undefined;
+
+    if (propertyTag !== undefined) {
+      dirty(propertyTag);
+    }
+
+    if (objectTag !== undefined || propertyTag !== undefined) {
+      ensureRunloop();
+    }
+  }
+
+  function ensureRunloop() {
+    _runloop.backburner.ensureInstance();
+  }
+
   var AFTER_OBSERVERS = ':change';
 
   function changeEvent(keyName) {
@@ -14946,21 +15705,20 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   */
 
 
-  function removeListener(obj, eventName, target, method) {
-    false && !(Boolean(obj) && Boolean(eventName)) && (0, _debug.assert)('You must pass at least an object and event name to removeListener', Boolean(obj) && Boolean(eventName));
+  function removeListener(obj, eventName, targetOrFunction, functionOrName) {
+    false && !(Boolean(obj) && Boolean(eventName) && (typeof targetOrFunction === 'function' || typeof targetOrFunction === 'object' && Boolean(functionOrName))) && (0, _debug.assert)('You must pass at least an object, event name, and method or target and method/method name to removeListener', Boolean(obj) && Boolean(eventName) && (typeof targetOrFunction === 'function' || typeof targetOrFunction === 'object' && Boolean(functionOrName)));
+    var target, method;
 
-    if (!method && 'function' === typeof target) {
-      method = target;
+    if (typeof targetOrFunction === 'object') {
+      target = targetOrFunction;
+      method = functionOrName;
+    } else {
       target = null;
+      method = targetOrFunction;
     }
 
     var m = (0, _meta2.meta)(obj);
-
-    if (method === undefined) {
-      m.removeAllListeners(eventName);
-    } else {
-      m.removeFromListeners(eventName, target, method);
-    }
+    m.removeFromListeners(eventName, target, method);
   }
   /**
     Send an event. The execution of suspended listeners
@@ -15145,95 +15903,6 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
 
     return ObserverSet;
   }();
-
-  function makeTag() {
-    return _reference.DirtyableTag.create();
-  }
-
-  function tagForProperty(object, propertyKey, _meta) {
-    var objectType = typeof object;
-
-    if (objectType !== 'function' && (objectType !== 'object' || object === null)) {
-      return _reference.CONSTANT_TAG;
-    }
-
-    var meta$$1 = _meta === undefined ? (0, _meta2.meta)(object) : _meta;
-
-    if ((0, _utils.isProxy)(object)) {
-      return tagFor(object, meta$$1);
-    }
-
-    var tags = meta$$1.writableTags();
-    var tag = tags[propertyKey];
-
-    if (tag) {
-      return tag;
-    }
-
-    if (false
-    /* EMBER_METAL_TRACKED_PROPERTIES */
-    ) {
-        var pair = (0, _reference.combine)([makeTag(), _reference.UpdatableTag.create(_reference.CONSTANT_TAG)]);
-        return tags[propertyKey] = pair;
-      } else {
-      return tags[propertyKey] = makeTag();
-    }
-  }
-
-  function tagFor(object, _meta) {
-    if (typeof object === 'object' && object !== null) {
-      var meta$$1 = _meta === undefined ? (0, _meta2.meta)(object) : _meta;
-      return meta$$1.writableTag(makeTag);
-    } else {
-      return _reference.CONSTANT_TAG;
-    }
-  }
-
-  var dirty;
-  var update;
-
-  if (false
-  /* EMBER_METAL_TRACKED_PROPERTIES */
-  ) {
-      dirty = function (tag) {
-        tag.inner.first.inner.dirty();
-      };
-
-      update = function (outer, inner) {
-        outer.inner.second.inner.update(inner);
-      };
-    } else {
-    dirty = function (tag) {
-      tag.inner.dirty();
-    };
-  }
-
-  function markObjectAsDirty(obj, propertyKey, meta$$1) {
-    var objectTag = meta$$1.readableTag();
-
-    if (objectTag !== undefined) {
-      if ((0, _utils.isProxy)(obj)) {
-        objectTag.inner.first.inner.dirty();
-      } else {
-        objectTag.inner.dirty();
-      }
-    }
-
-    var tags = meta$$1.readableTags();
-    var propertyTag = tags !== undefined ? tags[propertyKey] : undefined;
-
-    if (propertyTag !== undefined) {
-      dirty(propertyTag);
-    }
-
-    if (objectTag !== undefined || propertyTag !== undefined) {
-      ensureRunloop();
-    }
-  }
-
-  function ensureRunloop() {
-    _runloop.backburner.ensureInstance();
-  }
 
   var runInTransaction;
   _exports.runInTransaction = runInTransaction;
@@ -15465,28 +16134,28 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       return;
     }
 
-    var possibleDesc = descriptorForProperty(obj, keyName, meta$$1);
+    if (!false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        var possibleDesc = descriptorForProperty(obj, keyName, meta$$1);
 
-    if (possibleDesc !== undefined && typeof possibleDesc.didChange === 'function') {
-      possibleDesc.didChange(obj, keyName);
-    }
+        if (possibleDesc !== undefined && typeof possibleDesc.didChange === 'function') {
+          possibleDesc.didChange(obj, keyName);
+        }
 
-    if (meta$$1 !== null && meta$$1.peekWatching(keyName) > 0) {
-      dependentKeysDidChange(obj, keyName, meta$$1);
-      chainsDidChange(obj, keyName, meta$$1);
-      notifyObservers(obj, keyName, meta$$1);
+        if (meta$$1 !== null && meta$$1.peekWatching(keyName) > 0) {
+          dependentKeysDidChange(obj, keyName, meta$$1);
+          chainsDidChange(obj, keyName, meta$$1);
+          notifyObservers(obj, keyName, meta$$1);
+        }
+      }
+
+    if (meta$$1 !== null) {
+      markObjectAsDirty(obj, keyName, meta$$1);
     }
 
     if (PROPERTY_DID_CHANGE in obj) {
       obj[PROPERTY_DID_CHANGE](keyName);
-    }
-
-    if (meta$$1 !== null) {
-      if (meta$$1.isSourceDestroying()) {
-        return;
-      }
-
-      markObjectAsDirty(obj, keyName, meta$$1);
     }
 
     if (false
@@ -15788,7 +16457,15 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
           value: value
         });
       } else {
-        obj[keyName] = data;
+        if (false
+        /* EMBER_METAL_TRACKED_PROPERTIES */
+        && false
+        /* DEBUG */
+        ) {
+            (0, _utils.setWithMandatorySetter)(obj, keyName, data);
+          } else {
+          obj[keyName] = data;
+        }
       }
     } else {
       value = desc; // fallback to ES5
@@ -15824,9 +16501,13 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
         possibleDesc.willWatch(obj, keyName, meta$$1);
       }
 
-      if (typeof obj.willWatchProperty === 'function') {
-        obj.willWatchProperty(keyName);
-      }
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          if (typeof obj.willWatchProperty === 'function') {
+            obj.willWatchProperty(keyName);
+          }
+        }
 
       if (false
       /* DEBUG */
@@ -15978,7 +16659,12 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     }
 
-    eachProxyArrayWillChange(array, startIdx, removeAmt, addAmt);
+    if (!false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        eachProxyArrayWillChange(array, startIdx, removeAmt, addAmt);
+      }
+
     sendEvent(array, '@array:before', [array, startIdx, removeAmt, addAmt]);
     return array;
   }
@@ -16005,7 +16691,13 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     }
 
     notifyPropertyChange(array, '[]', meta$$1);
-    eachProxyArrayDidChange(array, startIdx, removeAmt, addAmt);
+
+    if (!false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        eachProxyArrayDidChange(array, startIdx, removeAmt, addAmt);
+      }
+
     sendEvent(array, '@array:change', [array, startIdx, removeAmt, addAmt]);
     var cache = peekCacheFor(array);
 
@@ -16032,316 +16724,6 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     }
 
     return array;
-  } // For some reason TS can't infer that these two functions are compatible-ish,
-  // so we need to corece the type
-
-
-  var symbol$1 = _utils.HAS_NATIVE_SYMBOL ? Symbol : _utils.symbol;
-  /**
-    An object that that tracks @tracked properties that were consumed.
-  
-    @private
-  */
-
-  var Tracker =
-  /*#__PURE__*/
-  function () {
-    function Tracker() {
-      this.tags = new Set();
-      this.last = null;
-    }
-
-    var _proto3 = Tracker.prototype;
-
-    _proto3.add = function add(tag) {
-      this.tags.add(tag);
-      this.last = tag;
-    };
-
-    _proto3.combine = function combine() {
-      if (this.tags.size === 0) {
-        return _reference.CONSTANT_TAG;
-      } else if (this.tags.size === 1) {
-        return this.last;
-      } else {
-        var tags = [];
-        this.tags.forEach(function (tag) {
-          return tags.push(tag);
-        });
-        return (0, _reference.combine)(tags);
-      }
-    };
-
-    (0, _emberBabel.createClass)(Tracker, [{
-      key: "size",
-      get: function () {
-        return this.tags.size;
-      }
-    }]);
-    return Tracker;
-  }();
-
-  _exports.Tracker = Tracker;
-
-  function tracked() {
-    for (var _len2 = arguments.length, args = new Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
-      args[_key3] = arguments[_key3];
-    }
-
-    false && !!(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true) && (0, _debug.assert)("@tracked can only be used directly as a native decorator. If you're using tracked in classic classes, add parenthesis to call it like a function: tracked()", !(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true));
-
-    if (!isElementDescriptor(args)) {
-      var propertyDesc = args[0];
-      false && !(args.length === 0 || typeof propertyDesc === 'object' && propertyDesc !== null) && (0, _debug.assert)("tracked() may only receive an options object containing 'value' or 'initializer', received " + propertyDesc, args.length === 0 || typeof propertyDesc === 'object' && propertyDesc !== null);
-
-      if (false
-      /* DEBUG */
-      && propertyDesc) {
-        var keys = Object.keys(propertyDesc);
-        false && !(keys.length <= 1 && (keys[0] === undefined || keys[0] === 'value' || keys[0] === 'undefined')) && (0, _debug.assert)("The options object passed to tracked() may only contain a 'value' or 'initializer' property, not both. Received: [" + keys + "]", keys.length <= 1 && (keys[0] === undefined || keys[0] === 'value' || keys[0] === 'undefined'));
-        false && !(!('initializer' in propertyDesc) || typeof propertyDesc.initializer === 'function') && (0, _debug.assert)("The initializer passed to tracked must be a function. Received " + propertyDesc.initializer, !('initializer' in propertyDesc) || typeof propertyDesc.initializer === 'function');
-      }
-
-      var initializer = propertyDesc ? propertyDesc.initializer : undefined;
-      var value = propertyDesc ? propertyDesc.value : undefined;
-
-      var decorator = function (target, key, _desc, _meta, isClassicDecorator$$1) {
-        false && !isClassicDecorator$$1 && (0, _debug.assert)("You attempted to set a default value for " + key + " with the @tracked({ value: 'default' }) syntax. You can only use this syntax with classic classes. For native classes, you can use class initializers: @tracked field = 'default';", isClassicDecorator$$1);
-        var fieldDesc = {
-          initializer: initializer || function () {
-            return value;
-          }
-        };
-        return descriptorForField([target, key, fieldDesc]);
-      };
-
-      setClassicDecorator(decorator);
-      return decorator;
-    }
-
-    false && !Boolean(true
-    /* EMBER_NATIVE_DECORATOR_SUPPORT */
-    ) && (0, _debug.assert)('Native decorators are not enabled without the EMBER_NATIVE_DECORATOR_SUPPORT flag', Boolean(true));
-    return descriptorForField(args);
-  }
-
-  if (false
-  /* DEBUG */
-  ) {
-      // Normally this isn't a classic decorator, but we want to throw a helpful
-      // error in development so we need it to treat it like one
-      setClassicDecorator(tracked);
-    }
-
-  function descriptorForField(_ref) {
-    var _target = _ref[0],
-        key = _ref[1],
-        desc = _ref[2];
-    false && !(!desc || !desc.value && !desc.get && !desc.set) && (0, _debug.assert)("You attempted to use @tracked on " + key + ", but that element is not a class field. @tracked is only usable on class fields. Native getters and setters will autotrack add any tracked fields they encounter, so there is no need mark getters and setters with @tracked.", !desc || !desc.value && !desc.get && !desc.set);
-    var initializer = desc ? desc.initializer : undefined;
-    var secretKey = symbol$1(key);
-    return {
-      enumerable: true,
-      configurable: true,
-      get: function () {
-        if (CURRENT_TRACKER) CURRENT_TRACKER.add(tagForProperty(this, key)); // If the field has never been initialized, we should initialize it
-
-        if (!(secretKey in this)) {
-          this[secretKey] = typeof initializer === 'function' ? initializer.call(this) : undefined;
-        }
-
-        return this[secretKey];
-      },
-      set: function (newValue) {
-        tagFor(this).inner['dirty']();
-        dirty(tagForProperty(this, key));
-        this[secretKey] = newValue;
-        propertyDidChange();
-      }
-    };
-  }
-  /**
-    @private
-  
-    Whenever a tracked computed property is entered, the current tracker is
-    saved off and a new tracker is replaced.
-  
-    Any tracked properties consumed are added to the current tracker.
-  
-    When a tracked computed property is exited, the tracker's tags are
-    combined and added to the parent tracker.
-  
-    The consequence is that each tracked computed property has a tag
-    that corresponds to the tracked properties consumed inside of
-    itself, including child tracked computed properties.
-  */
-
-
-  var CURRENT_TRACKER = null;
-
-  function getCurrentTracker() {
-    return CURRENT_TRACKER;
-  }
-
-  function setCurrentTracker() {
-    var tracker = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Tracker();
-    return CURRENT_TRACKER = tracker;
-  }
-
-  var propertyDidChange = ensureRunloop;
-  /**
-  @module @ember/object
-  */
-
-  var PROXY_CONTENT = (0, _utils.symbol)('PROXY_CONTENT');
-  _exports.PROXY_CONTENT = PROXY_CONTENT;
-  var getPossibleMandatoryProxyValue;
-
-  if (false
-  /* DEBUG */
-  && _utils.HAS_NATIVE_PROXY) {
-    getPossibleMandatoryProxyValue = function getPossibleMandatoryProxyValue(obj, keyName) {
-      var content = obj[PROXY_CONTENT];
-
-      if (content === undefined) {
-        return obj[keyName];
-      } else {
-        /* global Reflect */
-        return Reflect.get(content, keyName, obj);
-      }
-    };
-  } // ..........................................................
-  // GET AND SET
-  //
-  // If we are on a platform that supports accessors we can use those.
-  // Otherwise simulate accessors by looking up the property directly on the
-  // object.
-
-  /**
-    Gets the value of a property on an object. If the property is computed,
-    the function will be invoked. If the property is not defined but the
-    object implements the `unknownProperty` method then that will be invoked.
-  
-    ```javascript
-    import { get } from '@ember/object';
-    get(obj, "name");
-    ```
-  
-    If you plan to run on IE8 and older browsers then you should use this
-    method anytime you want to retrieve a property on an object that you don't
-    know for sure is private. (Properties beginning with an underscore '_'
-    are considered private.)
-  
-    On all newer browsers, you only need to use this method to retrieve
-    properties if the property might not be defined on the object and you want
-    to respect the `unknownProperty` handler. Otherwise you can ignore this
-    method.
-  
-    Note that if the object itself is `undefined`, this method will throw
-    an error.
-  
-    @method get
-    @for @ember/object
-    @static
-    @param {Object} obj The object to retrieve from.
-    @param {String} keyName The property key to retrieve
-    @return {Object} the property value or `null`.
-    @public
-  */
-
-
-  function _get2(obj, keyName) {
-    false && !(arguments.length === 2) && (0, _debug.assert)("Get must be called with two arguments; an object and a property key", arguments.length === 2);
-    false && !(obj !== undefined && obj !== null) && (0, _debug.assert)("Cannot call get with '" + keyName + "' on an undefined object.", obj !== undefined && obj !== null);
-    false && !(typeof keyName === 'string' || typeof keyName === 'number' && !isNaN(keyName)) && (0, _debug.assert)("The key provided to get must be a string or number, you passed " + keyName, typeof keyName === 'string' || typeof keyName === 'number' && !isNaN(keyName));
-    false && !(typeof keyName !== 'string' || keyName.lastIndexOf('this.', 0) !== 0) && (0, _debug.assert)("'this' in paths is not supported", typeof keyName !== 'string' || keyName.lastIndexOf('this.', 0) !== 0);
-    var type = typeof obj;
-    var isObject = type === 'object';
-    var isFunction = type === 'function';
-    var isObjectLike = isObject || isFunction;
-
-    if (isPath(keyName)) {
-      return isObjectLike ? _getPath(obj, keyName) : undefined;
-    }
-
-    var value;
-
-    if (isObjectLike) {
-      if (false
-      /* EMBER_METAL_TRACKED_PROPERTIES */
-      ) {
-          var tracker = getCurrentTracker();
-          if (tracker) tracker.add(tagForProperty(obj, keyName));
-        }
-
-      var descriptor = descriptorForProperty(obj, keyName);
-
-      if (descriptor !== undefined) {
-        return descriptor.get(obj, keyName);
-      }
-
-      if (false
-      /* DEBUG */
-      && _utils.HAS_NATIVE_PROXY) {
-        value = getPossibleMandatoryProxyValue(obj, keyName);
-      } else {
-        value = obj[keyName];
-      }
-    } else {
-      value = obj[keyName];
-    }
-
-    if (value === undefined) {
-      if (isObject && !(keyName in obj) && typeof obj.unknownProperty === 'function') {
-        return obj.unknownProperty(keyName);
-      }
-    }
-
-    return value;
-  }
-
-  function _getPath(root, path) {
-    var obj = root;
-    var parts = typeof path === 'string' ? path.split('.') : path;
-
-    for (var i = 0; i < parts.length; i++) {
-      if (obj === undefined || obj === null || obj.isDestroyed) {
-        return undefined;
-      }
-
-      obj = _get2(obj, parts[i]);
-    }
-
-    return obj;
-  }
-  /**
-    Retrieves the value of a property from an Object, or a default value in the
-    case that the property returns `undefined`.
-  
-    ```javascript
-    import { getWithDefault } from '@ember/object';
-    getWithDefault(person, 'lastName', 'Doe');
-    ```
-  
-    @method getWithDefault
-    @for @ember/object
-    @static
-    @param {Object} obj The object to retrieve from.
-    @param {String} keyName The name of the property to retrieve
-    @param {Object} defaultValue The value to return if the property value is undefined
-    @return {Object} The property value or the defaultValue.
-    @public
-  */
-
-
-  function getWithDefault(root, key, defaultValue) {
-    var value = _get2(root, key);
-
-    if (value === undefined) {
-      return defaultValue;
-    }
-
-    return value;
   }
 
   var EMPTY_ARRAY = Object.freeze([]);
@@ -16407,6 +16789,8 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   function removeArrayObserver(array, target, opts) {
     return arrayObserversHelper(array, target, opts, removeListener, true);
   }
+
+  var ACTIVE_OBSERVERS = new Map();
   /**
   @module @ember/object
   */
@@ -16422,10 +16806,21 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     @public
   */
 
-
   function addObserver(obj, path, target, method) {
-    addListener(obj, changeEvent(path), target, method);
-    watch(obj, path);
+    var eventName = changeEvent(path);
+    addListener(obj, eventName, target, method);
+
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        var meta$$1 = (0, _meta2.peekMeta)(obj);
+
+        if (meta$$1 === null || !(meta$$1.isPrototypeMeta(obj) || meta$$1.isInitializing())) {
+          activateObserver(obj, eventName);
+        }
+      } else {
+      watch(obj, path);
+    }
   }
   /**
     @method removeObserver
@@ -16440,8 +16835,126 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
 
 
   function removeObserver(obj, path, target, method) {
-    unwatch(obj, path);
-    removeListener(obj, changeEvent(path), target, method);
+    var eventName = changeEvent(path);
+
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        var meta$$1 = (0, _meta2.peekMeta)(obj);
+
+        if (meta$$1 === null || !(meta$$1.isPrototypeMeta(obj) || meta$$1.isInitializing())) {
+          deactivateObserver(obj, eventName);
+        }
+      } else {
+      unwatch(obj, path);
+    }
+
+    removeListener(obj, eventName, target, method);
+  }
+
+  function getOrCreateActiveObserversFor(target) {
+    if (!ACTIVE_OBSERVERS.has(target)) {
+      ACTIVE_OBSERVERS.set(target, new Map());
+    }
+
+    return ACTIVE_OBSERVERS.get(target);
+  }
+
+  function activateObserver(target, eventName) {
+    var activeObservers = getOrCreateActiveObserversFor(target);
+
+    if (activeObservers.has(eventName)) {
+      activeObservers.get(eventName).count++;
+    } else {
+      var _eventName$split = eventName.split(':'),
+          path = _eventName$split[0];
+
+      var tag = getChainTagsForKey(target, path);
+      activeObservers.set(eventName, {
+        count: 1,
+        path: path,
+        tag: tag,
+        lastRevision: tag.value()
+      });
+    }
+  }
+
+  function deactivateObserver(target, eventName) {
+    var activeObservers = ACTIVE_OBSERVERS.get(target);
+
+    if (activeObservers !== undefined) {
+      var _observer = activeObservers.get(eventName);
+
+      _observer.count--;
+
+      if (_observer.count === 0) {
+        activeObservers.delete(eventName);
+
+        if (activeObservers.size === 0) {
+          ACTIVE_OBSERVERS.delete(target);
+        }
+      }
+    }
+  }
+  /**
+   * Primarily used for cases where we are redefining a class, e.g. mixins/reopen
+   * being applied later. Revalidates all the observers, resetting their tags.
+   *
+   * @private
+   * @param target
+   */
+
+
+  function revalidateObservers(target) {
+    if (!ACTIVE_OBSERVERS.has(target)) {
+      return;
+    }
+
+    ACTIVE_OBSERVERS.get(target).forEach(function (observer) {
+      observer.tag = getChainTagsForKey(target, observer.path);
+      observer.lastRevision = observer.tag.value();
+    });
+  }
+
+  var lastKnownRevision = 0;
+
+  function flushInvalidActiveObservers() {
+    var shouldSchedule = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    if (lastKnownRevision === _reference.CURRENT_TAG.value()) {
+      return;
+    }
+
+    lastKnownRevision = _reference.CURRENT_TAG.value();
+    ACTIVE_OBSERVERS.forEach(function (activeObservers, target) {
+      var meta$$1 = (0, _meta2.peekMeta)(target);
+
+      if (meta$$1 && (meta$$1.isSourceDestroying() || meta$$1.isMetaDestroyed())) {
+        ACTIVE_OBSERVERS.delete(target);
+        return;
+      }
+
+      activeObservers.forEach(function (observer, eventName) {
+        if (!observer.tag.validate(observer.lastRevision)) {
+          var sendObserver = function () {
+            try {
+              sendEvent(target, eventName, [target, observer.path]);
+            } finally {
+              observer.tag = getChainTagsForKey(target, observer.path);
+              observer.lastRevision = observer.tag.value();
+            }
+          };
+
+          if (shouldSchedule) {
+            (0, _runloop.schedule)('actions', sendObserver);
+          } else {
+            // TODO: we need to schedule eagerly in exactly one location (_internalReset),
+            // for query params. We should get rid of this ASAP
+            sendObserver();
+          }
+        }
+      });
+    });
   }
 
   function eachProxyFor(array) {
@@ -16467,9 +16980,9 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     // Invokes whenever the content array itself changes.
 
 
-    var _proto4 = EachProxy.prototype;
+    var _proto3 = EachProxy.prototype;
 
-    _proto4.arrayWillChange = function arrayWillChange(content, idx, removedCnt
+    _proto3.arrayWillChange = function arrayWillChange(content, idx, removedCnt
     /*, addedCnt */
     ) {
       // eslint-disable-line no-unused-vars
@@ -16488,7 +17001,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto4.arrayDidChange = function arrayDidChange(content, idx, _removedCnt, addedCnt) {
+    _proto3.arrayDidChange = function arrayDidChange(content, idx, _removedCnt, addedCnt) {
       var keys = this._keys;
 
       if (!keys) {
@@ -16510,18 +17023,18 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     // Start monitoring keys based on who is listening...
     ;
 
-    _proto4.willWatchProperty = function willWatchProperty(property) {
+    _proto3.willWatchProperty = function willWatchProperty(property) {
       this.beginObservingContentKey(property);
     };
 
-    _proto4.didUnwatchProperty = function didUnwatchProperty(property) {
+    _proto3.didUnwatchProperty = function didUnwatchProperty(property) {
       this.stopObservingContentKey(property);
     } // ..........................................................
     // CONTENT KEY OBSERVING
     // Actual watch keys on the source content.
     ;
 
-    _proto4.beginObservingContentKey = function beginObservingContentKey(keyName) {
+    _proto3.beginObservingContentKey = function beginObservingContentKey(keyName) {
       var keys = this._keys;
 
       if (keys === undefined) {
@@ -16538,7 +17051,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto4.stopObservingContentKey = function stopObservingContentKey(keyName) {
+    _proto3.stopObservingContentKey = function stopObservingContentKey(keyName) {
       var keys = this._keys;
 
       if (keys !== undefined && keys[keyName] > 0 && --keys[keyName] <= 0) {
@@ -16548,7 +17061,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto4.contentKeyDidChange = function contentKeyDidChange(_obj, keyName) {
+    _proto3.contentKeyDidChange = function contentKeyDidChange(_obj, keyName) {
       notifyPropertyChange(this, keyName);
     };
 
@@ -16595,9 +17108,9 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       this.chains = Object.create(null);
     }
 
-    var _proto5 = ChainWatchers.prototype;
+    var _proto4 = ChainWatchers.prototype;
 
-    _proto5.add = function add(key, node) {
+    _proto4.add = function add(key, node) {
       var nodes = this.chains[key];
 
       if (nodes === undefined) {
@@ -16607,7 +17120,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto5.remove = function remove(key, node) {
+    _proto4.remove = function remove(key, node) {
       var nodes = this.chains[key];
 
       if (nodes !== undefined) {
@@ -16620,7 +17133,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto5.has = function has(key, node) {
+    _proto4.has = function has(key, node) {
       var nodes = this.chains[key];
 
       if (nodes !== undefined) {
@@ -16634,13 +17147,13 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       return false;
     };
 
-    _proto5.revalidateAll = function revalidateAll() {
+    _proto4.revalidateAll = function revalidateAll() {
       for (var key in this.chains) {
         this.notify(key, true, undefined);
       }
     };
 
-    _proto5.revalidate = function revalidate(key) {
+    _proto4.revalidate = function revalidate(key) {
       this.notify(key, true, undefined);
     } // key: the string key that is part of a path changed
     // revalidate: boolean; the chains that are watching this value should revalidate
@@ -16649,7 +17162,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     //           whether the revalidate flag is passed
     ;
 
-    _proto5.notify = function notify(key, revalidate, callback) {
+    _proto4.notify = function notify(key, revalidate, callback) {
       var nodes = this.chains[key];
 
       if (nodes === undefined || nodes.length === 0) {
@@ -16771,9 +17284,9 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     }
 
-    var _proto6 = ChainNode.prototype;
+    var _proto5 = ChainNode.prototype;
 
-    _proto6.value = function value() {
+    _proto5.value = function value() {
       if (this.content === undefined && this.isWatching) {
         var obj = this.parent.value();
         this.content = lazyGet(obj, this.key);
@@ -16782,7 +17295,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       return this.content;
     };
 
-    _proto6.destroy = function destroy() {
+    _proto5.destroy = function destroy() {
       // check if root
       if (this.parent === null) {
         destroyRoot(this);
@@ -16792,7 +17305,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     } // copies a top level object only
     ;
 
-    _proto6.copyTo = function copyTo(target) {
+    _proto5.copyTo = function copyTo(target) {
       var paths = this.paths;
 
       if (paths !== undefined) {
@@ -16808,7 +17321,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     // path.
     ;
 
-    _proto6.add = function add(path) {
+    _proto5.add = function add(path) {
       var paths = this.paths || (this.paths = {});
       paths[path] = (paths[path] || 0) + 1;
       var tails = path.split('.');
@@ -16817,7 +17330,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     // path
     ;
 
-    _proto6.remove = function remove(path) {
+    _proto5.remove = function remove(path) {
       var paths = this.paths;
 
       if (paths === undefined) {
@@ -16832,7 +17345,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       this.unchain(tails.shift(), tails);
     };
 
-    _proto6.chain = function chain(key, tails) {
+    _proto5.chain = function chain(key, tails) {
       var chains = this.chains;
 
       if (chains === undefined) {
@@ -16853,7 +17366,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto6.unchain = function unchain(key, tails) {
+    _proto5.unchain = function unchain(key, tails) {
       var chains = this.chains;
       var node = chains[key]; // unchain rest of path first...
 
@@ -16870,7 +17383,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto6.notify = function notify(revalidate, affected) {
+    _proto5.notify = function notify(revalidate, affected) {
       if (revalidate && this.isWatching) {
         var parentValue = this.parent.value();
 
@@ -16908,7 +17421,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       }
     };
 
-    _proto6.populateAffected = function populateAffected(path, depth, affected) {
+    _proto5.populateAffected = function populateAffected(path, depth, affected) {
       if (this.key) {
         path = this.key + "." + path;
       }
@@ -17124,13 +17637,13 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       this._meta = undefined;
     }
 
-    var _proto7 = ComputedDescriptor.prototype;
+    var _proto6 = ComputedDescriptor.prototype;
 
-    _proto7.setup = function setup(_obj, keyName, _propertyDesc, meta$$1) {
+    _proto6.setup = function setup(_obj, keyName, _propertyDesc, meta$$1) {
       meta$$1.writeDescriptors(keyName, this);
     };
 
-    _proto7.teardown = function teardown(_obj, keyName, meta$$1) {
+    _proto6.teardown = function teardown(_obj, keyName, meta$$1) {
       meta$$1.removeDescriptors(keyName);
     };
 
@@ -17143,6 +17656,12 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     };
   }
 
+  function DESCRIPTOR_SETTER_FUNCTION(name, descriptor) {
+    return function CPSETTER_FUNCTION(value) {
+      return descriptor.set(this, name, value);
+    };
+  }
+
   function makeComputedDecorator(desc, DecoratorClass) {
     var decorator = function COMPUTED_DECORATOR(target, key, propertyDesc, maybeMeta, isClassicDecorator$$1) {
       false && !(true
@@ -17151,16 +17670,470 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       false && !(isClassicDecorator$$1 || !propertyDesc || !propertyDesc.get || propertyDesc.get.toString().indexOf('CPGETTER_FUNCTION') === -1) && (0, _debug.assert)("Only one computed property decorator can be applied to a class field or accessor, but '" + key + "' was decorated twice. You may have added the decorator to both a getter and setter, which is unecessary.", isClassicDecorator$$1 || !propertyDesc || !propertyDesc.get || propertyDesc.get.toString().indexOf('CPGETTER_FUNCTION') === -1);
       var meta$$1 = arguments.length === 3 ? (0, _meta2.meta)(target) : maybeMeta;
       desc.setup(target, key, propertyDesc, meta$$1);
-      return {
+      var computedDesc = {
         enumerable: desc.enumerable,
         configurable: desc.configurable,
         get: DESCRIPTOR_GETTER_FUNCTION(key, desc)
       };
+
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          computedDesc.set = DESCRIPTOR_SETTER_FUNCTION(key, desc);
+        }
+
+      return computedDesc;
     };
 
     setClassicDecorator(decorator, desc);
     Object.setPrototypeOf(decorator, DecoratorClass.prototype);
     return decorator;
+  } // For some reason TS can't infer that these two functions are compatible-ish,
+  // so we need to corece the type
+
+
+  var symbol$1 = _utils.HAS_NATIVE_SYMBOL ? Symbol : _utils.symbol;
+  /**
+    An object that that tracks @tracked properties that were consumed.
+  
+    @private
+  */
+
+  var Tracker =
+  /*#__PURE__*/
+  function () {
+    function Tracker() {
+      this.tags = new Set();
+      this.last = null;
+    }
+
+    var _proto7 = Tracker.prototype;
+
+    _proto7.add = function add(tag) {
+      this.tags.add(tag);
+      this.last = tag;
+    };
+
+    _proto7.combine = function combine() {
+      if (this.tags.size === 0) {
+        return _reference.CONSTANT_TAG;
+      } else if (this.tags.size === 1) {
+        return this.last;
+      } else {
+        var tags = [];
+        this.tags.forEach(function (tag) {
+          return tags.push(tag);
+        });
+        return (0, _reference.combine)(tags);
+      }
+    };
+
+    (0, _emberBabel.createClass)(Tracker, [{
+      key: "size",
+      get: function () {
+        return this.tags.size;
+      }
+    }]);
+    return Tracker;
+  }();
+
+  _exports.Tracker = Tracker;
+
+  function tracked() {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
+      args[_key3] = arguments[_key3];
+    }
+
+    false && !!(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true) && (0, _debug.assert)("@tracked can only be used directly as a native decorator. If you're using tracked in classic classes, add parenthesis to call it like a function: tracked()", !(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true));
+
+    if (!isElementDescriptor(args)) {
+      var propertyDesc = args[0];
+      false && !(args.length === 0 || typeof propertyDesc === 'object' && propertyDesc !== null) && (0, _debug.assert)("tracked() may only receive an options object containing 'value' or 'initializer', received " + propertyDesc, args.length === 0 || typeof propertyDesc === 'object' && propertyDesc !== null);
+
+      if (false
+      /* DEBUG */
+      && propertyDesc) {
+        var keys = Object.keys(propertyDesc);
+        false && !(keys.length <= 1 && (keys[0] === undefined || keys[0] === 'value' || keys[0] === 'initializer')) && (0, _debug.assert)("The options object passed to tracked() may only contain a 'value' or 'initializer' property, not both. Received: [" + keys + "]", keys.length <= 1 && (keys[0] === undefined || keys[0] === 'value' || keys[0] === 'initializer'));
+        false && !(!('initializer' in propertyDesc) || typeof propertyDesc.initializer === 'function') && (0, _debug.assert)("The initializer passed to tracked must be a function. Received " + propertyDesc.initializer, !('initializer' in propertyDesc) || typeof propertyDesc.initializer === 'function');
+      }
+
+      var initializer = propertyDesc ? propertyDesc.initializer : undefined;
+      var value = propertyDesc ? propertyDesc.value : undefined;
+
+      var decorator = function (target, key, _desc, _meta, isClassicDecorator$$1) {
+        false && !isClassicDecorator$$1 && (0, _debug.assert)("You attempted to set a default value for " + key + " with the @tracked({ value: 'default' }) syntax. You can only use this syntax with classic classes. For native classes, you can use class initializers: @tracked field = 'default';", isClassicDecorator$$1);
+        var fieldDesc = {
+          initializer: initializer || function () {
+            return value;
+          }
+        };
+        return descriptorForField([target, key, fieldDesc]);
+      };
+
+      setClassicDecorator(decorator);
+      return decorator;
+    }
+
+    false && !Boolean(true
+    /* EMBER_NATIVE_DECORATOR_SUPPORT */
+    ) && (0, _debug.assert)('Native decorators are not enabled without the EMBER_NATIVE_DECORATOR_SUPPORT flag', Boolean(true));
+    return descriptorForField(args);
+  }
+
+  if (false
+  /* DEBUG */
+  ) {
+      // Normally this isn't a classic decorator, but we want to throw a helpful
+      // error in development so we need it to treat it like one
+      setClassicDecorator(tracked);
+    }
+
+  function descriptorForField(_ref) {
+    var _target = _ref[0],
+        key = _ref[1],
+        desc = _ref[2];
+    false && !(!desc || !desc.value && !desc.get && !desc.set) && (0, _debug.assert)("You attempted to use @tracked on " + key + ", but that element is not a class field. @tracked is only usable on class fields. Native getters and setters will autotrack add any tracked fields they encounter, so there is no need mark getters and setters with @tracked.", !desc || !desc.value && !desc.get && !desc.set);
+    var initializer = desc ? desc.initializer : undefined;
+    var secretKey = symbol$1(key);
+    return {
+      enumerable: true,
+      configurable: true,
+      get: function () {
+        var propertyTag = tagForProperty(this, key);
+        if (CURRENT_TRACKER) CURRENT_TRACKER.add(propertyTag); // If the field has never been initialized, we should initialize it
+
+        if (!(secretKey in this)) {
+          this[secretKey] = typeof initializer === 'function' ? initializer.call(this) : undefined;
+        }
+
+        var value = this[secretKey]; // Add the tag of the returned value if it is an array, since arrays
+        // should always cause updates if they are consumed and then changed
+
+        if (Array.isArray(value) || (0, _utils.isEmberArray)(value)) {
+          update(propertyTag, tagForProperty(value, '[]'));
+        }
+
+        return this[secretKey];
+      },
+      set: function (newValue) {
+        markObjectAsDirty(this, key);
+        this[secretKey] = newValue;
+
+        if (propertyDidChange !== null) {
+          propertyDidChange();
+        }
+      }
+    };
+  }
+  /**
+    @private
+  
+    Whenever a tracked computed property is entered, the current tracker is
+    saved off and a new tracker is replaced.
+  
+    Any tracked properties consumed are added to the current tracker.
+  
+    When a tracked computed property is exited, the tracker's tags are
+    combined and added to the parent tracker.
+  
+    The consequence is that each tracked computed property has a tag
+    that corresponds to the tracked properties consumed inside of
+    itself, including child tracked computed properties.
+  */
+
+
+  var CURRENT_TRACKER = null;
+
+  function track(callback) {
+    var parent = CURRENT_TRACKER;
+    var current = new Tracker();
+    CURRENT_TRACKER = current;
+
+    try {
+      callback();
+    } finally {
+      CURRENT_TRACKER = parent;
+    }
+
+    return current.combine();
+  }
+
+  function consume(tag) {
+    if (CURRENT_TRACKER !== null) {
+      CURRENT_TRACKER.add(tag);
+    }
+  }
+
+  function isTracking() {
+    return CURRENT_TRACKER !== null;
+  }
+
+  var propertyDidChange = null;
+  /**
+  @module @ember/object
+  */
+
+  var PROXY_CONTENT = (0, _utils.symbol)('PROXY_CONTENT');
+  _exports.PROXY_CONTENT = PROXY_CONTENT;
+  var getPossibleMandatoryProxyValue;
+
+  if (false
+  /* DEBUG */
+  && _utils.HAS_NATIVE_PROXY) {
+    getPossibleMandatoryProxyValue = function getPossibleMandatoryProxyValue(obj, keyName) {
+      var content = obj[PROXY_CONTENT];
+
+      if (content === undefined) {
+        return obj[keyName];
+      } else {
+        /* global Reflect */
+        return Reflect.get(content, keyName, obj);
+      }
+    };
+  } // ..........................................................
+  // GET AND SET
+  //
+  // If we are on a platform that supports accessors we can use those.
+  // Otherwise simulate accessors by looking up the property directly on the
+  // object.
+
+  /**
+    Gets the value of a property on an object. If the property is computed,
+    the function will be invoked. If the property is not defined but the
+    object implements the `unknownProperty` method then that will be invoked.
+  
+    ```javascript
+    import { get } from '@ember/object';
+    get(obj, "name");
+    ```
+  
+    If you plan to run on IE8 and older browsers then you should use this
+    method anytime you want to retrieve a property on an object that you don't
+    know for sure is private. (Properties beginning with an underscore '_'
+    are considered private.)
+  
+    On all newer browsers, you only need to use this method to retrieve
+    properties if the property might not be defined on the object and you want
+    to respect the `unknownProperty` handler. Otherwise you can ignore this
+    method.
+  
+    Note that if the object itself is `undefined`, this method will throw
+    an error.
+  
+    @method get
+    @for @ember/object
+    @static
+    @param {Object} obj The object to retrieve from.
+    @param {String} keyName The property key to retrieve
+    @return {Object} the property value or `null`.
+    @public
+  */
+
+
+  function _get2(obj, keyName) {
+    false && !(arguments.length === 2) && (0, _debug.assert)("Get must be called with two arguments; an object and a property key", arguments.length === 2);
+    false && !(obj !== undefined && obj !== null) && (0, _debug.assert)("Cannot call get with '" + keyName + "' on an undefined object.", obj !== undefined && obj !== null);
+    false && !(typeof keyName === 'string' || typeof keyName === 'number' && !isNaN(keyName)) && (0, _debug.assert)("The key provided to get must be a string or number, you passed " + keyName, typeof keyName === 'string' || typeof keyName === 'number' && !isNaN(keyName));
+    false && !(typeof keyName !== 'string' || keyName.lastIndexOf('this.', 0) !== 0) && (0, _debug.assert)("'this' in paths is not supported", typeof keyName !== 'string' || keyName.lastIndexOf('this.', 0) !== 0);
+    var type = typeof obj;
+    var isObject = type === 'object';
+    var isFunction = type === 'function';
+    var isObjectLike = isObject || isFunction;
+
+    if (isPath(keyName)) {
+      return isObjectLike ? _getPath(obj, keyName) : undefined;
+    }
+
+    var value;
+
+    if (isObjectLike) {
+      var tracking = isTracking();
+
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          if (tracking) {
+            consume(tagForProperty(obj, keyName));
+          }
+        }
+
+      var descriptor = descriptorForProperty(obj, keyName);
+
+      if (descriptor !== undefined) {
+        return descriptor.get(obj, keyName);
+      }
+
+      if (false
+      /* DEBUG */
+      && _utils.HAS_NATIVE_PROXY) {
+        value = getPossibleMandatoryProxyValue(obj, keyName);
+      } else {
+        value = obj[keyName];
+      } // Add the tag of the returned value if it is an array, since arrays
+      // should always cause updates if they are consumed and then changed
+
+
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      && tracking && (Array.isArray(value) || (0, _utils.isEmberArray)(value))) {
+        consume(tagForProperty(value, '[]'));
+      }
+    } else {
+      value = obj[keyName];
+    }
+
+    if (value === undefined) {
+      if (isObject && !(keyName in obj) && typeof obj.unknownProperty === 'function') {
+        return obj.unknownProperty(keyName);
+      }
+    }
+
+    return value;
+  }
+
+  function _getPath(root, path) {
+    var obj = root;
+    var parts = typeof path === 'string' ? path.split('.') : path;
+
+    for (var i = 0; i < parts.length; i++) {
+      if (obj === undefined || obj === null || obj.isDestroyed) {
+        return undefined;
+      }
+
+      obj = _get2(obj, parts[i]);
+    }
+
+    return obj;
+  }
+  /**
+    Retrieves the value of a property from an Object, or a default value in the
+    case that the property returns `undefined`.
+  
+    ```javascript
+    import { getWithDefault } from '@ember/object';
+    getWithDefault(person, 'lastName', 'Doe');
+    ```
+  
+    @method getWithDefault
+    @for @ember/object
+    @static
+    @param {Object} obj The object to retrieve from.
+    @param {String} keyName The name of the property to retrieve
+    @param {Object} defaultValue The value to return if the property value is undefined
+    @return {Object} The property value or the defaultValue.
+    @public
+  */
+
+
+  function getWithDefault(root, key, defaultValue) {
+    var value = _get2(root, key);
+
+    if (value === undefined) {
+      return defaultValue;
+    }
+
+    return value;
+  }
+
+  function finishLazyChains(obj, key, value) {
+    var meta$$1 = (0, _meta2.peekMeta)(obj);
+    var lazyTags = meta$$1 !== null ? meta$$1.readableLazyChainsFor(key) : undefined;
+
+    if (lazyTags === undefined) {
+      return;
+    }
+
+    if (value === null || typeof value !== 'object' && typeof value !== 'function') {
+      lazyTags.clear();
+      return;
+    }
+
+    while (lazyTags.length > 0) {
+      var _lazyTags$pop = lazyTags.pop(),
+          path = _lazyTags$pop[0],
+          tag = _lazyTags$pop[1];
+
+      tag.inner.update(getChainTagsForKey(value, path));
+    }
+  }
+
+  function getChainTagsForKeys(obj, keys) {
+    var chainTags = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      chainTags.push(getChainTagsForKey(obj, keys[i]));
+    }
+
+    return (0, _reference.combine)(chainTags);
+  }
+
+  function getChainTagsForKey(obj, key) {
+    var chainTags = [];
+    var current = obj;
+    var segments = key.split('.'); // prevent closures
+
+    var segment, descriptor;
+
+    while (segments.length > 0) {
+      segment = segments.shift();
+
+      if (segment === '@each' && segments.length > 0) {
+        false && !(Array.isArray(current) || (0, _utils.isEmberArray)(current)) && (0, _debug.assert)("When using @each, the value you are attempting to watch must be an array, was: " + current.toString(), Array.isArray(current) || (0, _utils.isEmberArray)(current));
+        segment = segments.shift(); // Push the tags for each item's property
+
+        var tags = current.map(function (item) {
+          false && !(typeof item === 'object') && (0, _debug.assert)("When using @each to observe the array `" + current.toString() + "`, the items in the array must be objects", typeof item === 'object');
+          return tagForProperty(item, segment);
+        }); // Push the tag for the array length itself
+
+        chainTags.push.apply(chainTags, tags.concat([tagForProperty(current, '[]')])); // There shouldn't be any more segments after an `@each`, so break
+
+        false && !(segments.length === 0) && (0, _debug.assert)("When using @each, you can only chain one property level deep", segments.length === 0);
+        break;
+      }
+
+      var propertyTag = tagForProperty(current, segment);
+      chainTags.push(propertyTag);
+      descriptor = descriptorForProperty(current, segment);
+
+      if (descriptor === undefined) {
+        // TODO: Assert that current[segment] isn't an undecorated, non-MANDATORY_SETTER getter
+        if (!(segment in current) && typeof current.unknownProperty === 'function') {
+          current = current.unknownProperty(segment);
+        } else {
+          current = current[segment];
+        }
+      } else {
+        var lastRevision = getLastRevisionFor(current, segment);
+
+        if (propertyTag.validate(lastRevision)) {
+          if (typeof descriptor.altKey === 'string') {
+            // it's an alias, so just get the altkey without tracking
+            track(function () {
+              current = _get2(obj, descriptor.altKey);
+            });
+          } else {
+            current = peekCacheFor(current).get(segment);
+          }
+        } else if (segments.length > 0) {
+          var placeholderTag = _reference.UpdatableTag.create(_reference.CONSTANT_TAG);
+
+          (0, _meta2.meta)(current).writableLazyChainsFor(segment).push([segments.join('.'), placeholderTag]);
+          chainTags.push(placeholderTag);
+          break;
+        }
+      }
+
+      var currentType = typeof current;
+
+      if (current === null || currentType !== 'object' && currentType !== 'function') {
+        // we've hit the end of the chain for now, break out
+        break;
+      }
+    }
+
+    return (0, _reference.combine)(chainTags);
   }
   /**
   @module @ember/object
@@ -17234,7 +18207,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     }
   }
 
-  var setWithMandatorySetter;
+  var setWithMandatorySetter$1;
   var makeEnumerable;
   /**
    @module @ember/object
@@ -17303,7 +18276,13 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       if (false
       /* DEBUG */
       ) {
-          setWithMandatorySetter(meta$$1, obj, keyName, value);
+          if (false
+          /* EMBER_METAL_TRACKED_PROPERTIES */
+          ) {
+              (0, _utils.setWithMandatorySetter)(obj, keyName, value);
+            } else {
+            setWithMandatorySetter$1(obj, keyName, value, meta$$1);
+          }
         } else {
         obj[keyName] = value;
       }
@@ -17319,7 +18298,7 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   if (false
   /* DEBUG */
   ) {
-      setWithMandatorySetter = function (meta$$1, obj, keyName, value) {
+      setWithMandatorySetter$1 = function (obj, keyName, value, meta$$1) {
         if (meta$$1 !== null && meta$$1.peekWatching(keyName) > 0) {
           makeEnumerable(obj, keyName);
           meta$$1.writeValue(obj, keyName, value);
@@ -17628,12 +18607,6 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
         (_this2 = _this)._property.apply(_this2, args);
       }
 
-      if (false
-      /* EMBER_METAL_TRACKED_PROPERTIES */
-      ) {
-          _this._auto = false;
-        }
-
       return _this;
     }
 
@@ -17822,6 +18795,8 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     };
 
     _proto8.get = function get(obj, keyName) {
+      var _this3 = this;
+
       if (this._volatile) {
         return this._getter.call(obj, keyName);
       }
@@ -17835,12 +18810,6 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
           propertyTag = tagForProperty(obj, keyName);
 
           if (cache.has(keyName)) {
-            // special-case for computed with no dependent keys used to
-            // trigger cacheable behavior.
-            if (!this._auto && (!this._dependentKeys || this._dependentKeys.length === 0)) {
-              return cache.get(keyName);
-            }
-
             var lastRevision = getLastRevisionFor(obj, keyName);
 
             if (propertyTag.validate(lastRevision)) {
@@ -17853,37 +18822,57 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
         }
       }
 
-      var parent;
-      var tracker;
+      var ret;
 
       if (false
       /* EMBER_METAL_TRACKED_PROPERTIES */
       ) {
-          parent = getCurrentTracker();
-          tracker = setCurrentTracker();
-        }
+          false && !!(0, _meta2.meta)(obj).isMetaDestroyed() && (0, _debug.assert)("Attempted to access the computed " + obj + "." + keyName + " on a destroyed object, which is not allowed", !(0, _meta2.meta)(obj).isMetaDestroyed()); // Create a tracker that absorbs any trackable actions inside the CP
 
-      var ret = this._getter.call(obj, keyName);
+          var tag = track(function () {
+            ret = _this3._getter.call(obj, keyName);
+          });
+          finishLazyChains(obj, keyName, ret);
+          var upstreamTags = [];
 
-      if (false
-      /* EMBER_METAL_TRACKED_PROPERTIES */
-      ) {
-          setCurrentTracker(parent);
-          var tag = tracker.combine();
-          if (parent) parent.add(tag);
-          update(propertyTag, tag);
+          if (this._auto === true) {
+            upstreamTags.push(tag);
+          }
+
+          if (this._dependentKeys !== undefined) {
+            upstreamTags.push(getChainTagsForKeys(obj, this._dependentKeys));
+          }
+
+          if (upstreamTags.length > 0) {
+            update(propertyTag, (0, _reference.combine)(upstreamTags));
+          }
+
           setLastRevisionFor(obj, keyName, propertyTag.value());
-        }
+          consume(propertyTag); // Add the tag of the returned value if it is an array, since arrays
+          // should always cause updates if they are consumed and then changed
 
-      cache.set(keyName, ret);
-      var meta$$1 = (0, _meta2.meta)(obj);
-      var chainWatchers = meta$$1.readableChainWatchers();
-
-      if (chainWatchers !== undefined) {
-        chainWatchers.revalidate(keyName);
+          if (Array.isArray(ret) || (0, _utils.isEmberArray)(ret)) {
+            consume(tagForProperty(ret, '[]'));
+          }
+        } else {
+        ret = this._getter.call(obj, keyName);
       }
 
-      addDependentKeys(this, obj, keyName, meta$$1);
+      cache.set(keyName, ret);
+
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          var meta$$1 = (0, _meta2.meta)(obj);
+          var chainWatchers = meta$$1.readableChainWatchers();
+
+          if (chainWatchers !== undefined) {
+            chainWatchers.revalidate(keyName);
+          }
+
+          addDependentKeys(this, obj, keyName, meta$$1);
+        }
+
       return ret;
     };
 
@@ -17900,7 +18889,23 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
         return this.volatileSet(obj, keyName, value);
       }
 
-      return this.setWithSuspend(obj, keyName, value);
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          var ret = this._set(obj, keyName, value);
+
+          finishLazyChains(obj, keyName, ret);
+          var propertyTag = tagForProperty(obj, keyName);
+
+          if (this._dependentKeys !== undefined) {
+            update(propertyTag, getChainTagsForKeys(obj, this._dependentKeys));
+          }
+
+          setLastRevisionFor(obj, keyName, propertyTag.value());
+          return ret;
+        } else {
+        return this.setWithSuspend(obj, keyName, value);
+      }
     };
 
     _proto8._throwReadOnlyError = function _throwReadOnlyError(obj, keyName) {
@@ -17950,20 +18955,14 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
 
       var meta$$1 = (0, _meta2.meta)(obj);
 
-      if (!hadCachedValue) {
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      && !hadCachedValue) {
         addDependentKeys(this, obj, keyName, meta$$1);
       }
 
       cache.set(keyName, ret);
       notifyPropertyChange(obj, keyName, meta$$1);
-
-      if (false
-      /* EMBER_METAL_TRACKED_PROPERTIES */
-      ) {
-          var propertyTag = tagForProperty(obj, keyName);
-          setLastRevisionFor(obj, keyName, propertyTag.value());
-        }
-
       return ret;
     }
     /* called before property is overridden */
@@ -17991,7 +18990,6 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
   ) {
       ComputedProperty.prototype.auto = function () {
         this._auto = true;
-        return this;
       };
     } // TODO: This class can be svelted once `meta` has been deprecated
 
@@ -18140,12 +19138,18 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
     (0, _emberBabel.inheritsLoose)(AliasedProperty, _ComputedDescriptor2);
 
     function AliasedProperty(altKey) {
-      var _this3;
+      var _this4;
 
-      _this3 = _ComputedDescriptor2.call(this) || this;
-      _this3.altKey = altKey;
-      _this3._dependentKeys = [altKey];
-      return _this3;
+      _this4 = _ComputedDescriptor2.call(this) || this;
+      _this4.altKey = altKey;
+
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          _this4._dependentKeys = [altKey];
+        }
+
+      return _this4;
     }
 
     var _proto11 = AliasedProperty.prototype;
@@ -18155,25 +19159,55 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
 
       _ComputedDescriptor2.prototype.setup.call(this, obj, keyName, propertyDesc, meta$$1);
 
-      if (meta$$1.peekWatching(keyName) > 0) {
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      && meta$$1.peekWatching(keyName) > 0) {
         this.consume(obj, keyName, meta$$1);
       }
     };
 
     _proto11.teardown = function teardown(obj, keyName, meta$$1) {
-      this.unconsume(obj, keyName, meta$$1);
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          this.unconsume(obj, keyName, meta$$1);
+        }
 
       _ComputedDescriptor2.prototype.teardown.call(this, obj, keyName, meta$$1);
     };
 
     _proto11.willWatch = function willWatch(obj, keyName, meta$$1) {
-      this.consume(obj, keyName, meta$$1);
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          this.consume(obj, keyName, meta$$1);
+        }
     };
 
     _proto11.get = function get(obj, keyName) {
-      var ret = _get2(obj, this.altKey);
+      var _this5 = this;
 
-      this.consume(obj, keyName, (0, _meta2.meta)(obj));
+      var ret;
+
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          var propertyTag = tagForProperty(obj, keyName); // We don't use the tag since CPs are not automatic, we just want to avoid
+          // anything tracking while we get the altKey
+
+          track(function () {
+            ret = _get2(obj, _this5.altKey);
+          });
+          var altPropertyTag = getChainTagsForKey(obj, this.altKey);
+          update(propertyTag, altPropertyTag);
+          consume(propertyTag);
+          finishLazyChains(obj, keyName, ret);
+          setLastRevisionFor(obj, keyName, propertyTag.value());
+        } else {
+        ret = _get2(obj, this.altKey);
+        this.consume(obj, keyName, (0, _meta2.meta)(obj));
+      }
+
       return ret;
     };
 
@@ -19203,6 +20237,14 @@ enifed("@ember/-internals/metal", ["exports", "ember-babel", "@ember/polyfills",
       defineProperty(obj, key, desc, value, meta$$1);
     }
 
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        if (!meta$$1.isPrototypeMeta(obj)) {
+          revalidateObservers(obj);
+        }
+      }
+
     return obj;
   }
   /**
@@ -19962,8 +21004,9 @@ enifed("@ember/-internals/routing/lib/ext/controller", ["exports", "@ember/-inte
       @private
     */
     _qpChanged: function (controller, _prop) {
-      var prop = _prop.substr(0, _prop.length - 3);
+      var dotIndex = _prop.indexOf('.[]');
 
+      var prop = dotIndex === -1 ? _prop : _prop.slice(0, dotIndex);
       var delegate = controller._qpDelegate;
       var value = (0, _metal.get)(controller, prop);
       delegate(prop, value);
@@ -21300,6 +22343,7 @@ enifed("@ember/-internals/routing/lib/services/router", ["exports", "ember-babel
      Like any service, it can also be injected into helpers, routes, etc.
   
      @public
+     @extends Service
      @class RouterService
    */
 
@@ -22132,7 +23176,7 @@ enifed("@ember/-internals/routing/lib/system/generate_controller", ["exports", "
     });
     var fullName = "controller:" + controllerName;
     owner.register(fullName, Factory);
-    return Factory;
+    return owner.factoryFor(fullName);
   }
   /**
     Generates and instantiates a controller extending from `controller:basic`
@@ -22710,7 +23754,15 @@ enifed("@ember/-internals/routing/lib/system/route", ["exports", "@ember/polyfil
     _proto._internalReset = function _internalReset(isExiting, transition) {
       var controller = this.controller;
       controller._qpDelegate = (0, _metal.get)(this, '_qp.states.inactive');
-      this.resetController(controller, isExiting, transition);
+      this.resetController(controller, isExiting, transition); // TODO: Once tags are enabled by default, we should refactor QP changes to
+      // use autotracking. This will likely be a large refactor, and for now we
+      // just need to trigger observers eagerly.
+
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          (0, _metal.flushInvalidActiveObservers)(false);
+        }
     }
     /**
       @private
@@ -23229,7 +24281,16 @@ enifed("@ember/-internals/routing/lib/system/route", ["exports", "@ember/polyfil
 
       if (this._environment.options.shouldRender) {
         this.renderTemplate(controller, context);
-      }
+      } // TODO: Once tags are enabled by default, we should refactor QP changes to
+      // use autotracking. This will likely be a large refactor, and for now we
+      // just need to trigger observers eagerly.
+
+
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          (0, _metal.flushInvalidActiveObservers)(false);
+        }
     }
     /*
       Called when a query parameter for this route changes, regardless of whether the route
@@ -24725,6 +25786,12 @@ enifed("@ember/-internals/routing/lib/system/route", ["exports", "@ember/polyfil
          */
         buildRouteInfoMetadata: function () {}
       });
+    }
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      (0, _runtime.setFrameworkClass)(Route);
     }
 
   var _default = Route;
@@ -26946,12 +28013,6 @@ enifed("@ember/-internals/runtime/index", ["exports", "@ember/-internals/runtime
       return _array.default;
     }
   });
-  Object.defineProperty(_exports, "isEmberArray", {
-    enumerable: true,
-    get: function () {
-      return _array.isEmberArray;
-    }
-  });
   Object.defineProperty(_exports, "NativeArray", {
     enumerable: true,
     get: function () {
@@ -27016,6 +28077,12 @@ enifed("@ember/-internals/runtime/index", ["exports", "@ember/-internals/runtime
     enumerable: true,
     get: function () {
       return _core_object.default;
+    }
+  });
+  Object.defineProperty(_exports, "setFrameworkClass", {
+    enumerable: true,
+    get: function () {
+      return _core_object.setFrameworkClass;
     }
   });
   Object.defineProperty(_exports, "ActionHandler", {
@@ -27369,13 +28436,13 @@ enifed("@ember/-internals/runtime/lib/copy", ["exports", "@ember/debug", "@ember
     return _copy(obj, deep, deep ? [] : null, deep ? [] : null);
   }
 });
-enifed("@ember/-internals/runtime/lib/ext/function", ["@ember/-internals/environment", "@ember/-internals/metal"], function (_environment, _metal) {
+enifed("@ember/-internals/runtime/lib/ext/function", ["@ember/-internals/environment", "@ember/-internals/metal", "@ember/debug", "@ember/deprecated-features"], function (_environment, _metal, _debug, _deprecatedFeatures) {
   "use strict";
 
   /**
   @module ember
   */
-  if (_environment.ENV.EXTEND_PROTOTYPES.Function) {
+  if (_deprecatedFeatures.FUNCTION_PROTOTYPE_EXTENSIONS && _environment.ENV.EXTEND_PROTOTYPES.Function) {
     Object.defineProperties(Function.prototype, {
       /**
         The `property` extension of Javascript's Function prototype is available
@@ -27432,6 +28499,11 @@ enifed("@ember/-internals/runtime/lib/ext/function", ["@ember/-internals/environ
         enumerable: false,
         writable: true,
         value: function () {
+          false && !false && (0, _debug.deprecate)("Function prototype extensions have been deprecated, please migrate from function(){}.property('bar') to computed('bar', function() {}).", false, {
+            id: 'function-prototype-extensions.property',
+            until: '4.0.0',
+            url: 'https://deprecations.emberjs.com/v3.x#toc_function-prototype-extensions-property'
+          });
           return _metal.computed.apply(void 0, Array.prototype.slice.call(arguments).concat([this]));
         }
       },
@@ -27462,6 +28534,11 @@ enifed("@ember/-internals/runtime/lib/ext/function", ["@ember/-internals/environ
         enumerable: false,
         writable: true,
         value: function () {
+          false && !false && (0, _debug.deprecate)("Function prototype extensions have been deprecated, please migrate from function(){}.observes('foo') to observer('foo', function() {}).", false, {
+            id: 'function-prototype-extensions.observes',
+            until: '4.0.0',
+            url: 'https://deprecations.emberjs.com/v3.x#toc_function-prototype-extensions-observes'
+          });
           return _metal.observer.apply(void 0, Array.prototype.slice.call(arguments).concat([this]));
         }
       },
@@ -27490,6 +28567,11 @@ enifed("@ember/-internals/runtime/lib/ext/function", ["@ember/-internals/environ
         enumerable: false,
         writable: true,
         value: function () {
+          false && !false && (0, _debug.deprecate)("Function prototype extensions have been deprecated, please migrate from function(){}.on('foo') to on('foo', function() {}).", false, {
+            id: 'function-prototype-extensions.on',
+            until: '4.0.0',
+            url: 'https://deprecations.emberjs.com/v3.x#toc_function-prototype-extensions-on'
+          });
           return _metal.on.apply(void 0, Array.prototype.slice.call(arguments).concat([this]));
         }
       }
@@ -27632,9 +28714,12 @@ enifed("@ember/-internals/runtime/lib/mixins/-proxy", ["exports", "@glimmer/refe
   _exports.contentFor = contentFor;
   _exports.default = void 0;
 
+  var _Mixin$create;
   /**
   @module ember
   */
+
+
   function contentFor(proxy, m) {
     var content = (0, _metal.get)(proxy, 'content');
     var tag = (m === undefined ? (0, _meta.meta)(proxy) : m).readableTag();
@@ -27655,13 +28740,13 @@ enifed("@ember/-internals/runtime/lib/mixins/-proxy", ["exports", "@glimmer/refe
   */
 
 
-  var _default = _metal.Mixin.create({
+  var _default = _metal.Mixin.create((_Mixin$create = {
     /**
       The object whose properties will be forwarded.
        @property content
-      @type EmberObject
+      @type {unknown}
       @default null
-      @private
+      @public
     */
     content: null,
     init: function () {
@@ -27682,12 +28767,20 @@ enifed("@ember/-internals/runtime/lib/mixins/-proxy", ["exports", "@glimmer/refe
       return Boolean((0, _metal.get)(this, 'content'));
     }),
     willWatchProperty: function (key) {
-      var contentKey = "content." + key;
-      (0, _metal.addObserver)(this, contentKey, null, '_contentPropertyDidChange');
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          var contentKey = "content." + key;
+          (0, _metal.addObserver)(this, contentKey, null, '_contentPropertyDidChange');
+        }
     },
     didUnwatchProperty: function (key) {
-      var contentKey = "content." + key;
-      (0, _metal.removeObserver)(this, contentKey, null, '_contentPropertyDidChange');
+      if (!false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          var contentKey = "content." + key;
+          (0, _metal.removeObserver)(this, contentKey, null, '_contentPropertyDidChange');
+        }
     },
     _contentPropertyDidChange: function (content, contentKey) {
       var key = contentKey.slice(8); // remove "content."
@@ -27698,29 +28791,29 @@ enifed("@ember/-internals/runtime/lib/mixins/-proxy", ["exports", "@glimmer/refe
 
 
       (0, _metal.notifyPropertyChange)(this, key);
-    },
-    unknownProperty: function (key) {
-      var content = contentFor(this);
-
-      if (content) {
-        return (0, _metal.get)(content, key);
-      }
-    },
-    setUnknownProperty: function (key, value) {
-      var m = (0, _meta.meta)(this);
-
-      if (m.isInitializing() || m.isPrototypeMeta(this)) {
-        // if marked as prototype or object is initializing then just
-        // defineProperty rather than delegate
-        (0, _metal.defineProperty)(this, key, null, value);
-        return value;
-      }
-
-      var content = contentFor(this, m);
-      false && !content && (0, _debug.assert)("Cannot delegate set('" + key + "', " + value + ") to the 'content' property of object proxy " + this + ": its 'content' is undefined.", content);
-      return (0, _metal.set)(content, key, value);
     }
-  });
+  }, _Mixin$create[_metal.UNKNOWN_PROPERTY_TAG] = function (key) {
+    return (0, _metal.getChainTagsForKey)(this, "content." + key);
+  }, _Mixin$create.unknownProperty = function (key) {
+    var content = contentFor(this);
+
+    if (content) {
+      return (0, _metal.get)(content, key);
+    }
+  }, _Mixin$create.setUnknownProperty = function (key, value) {
+    var m = (0, _meta.meta)(this);
+
+    if (m.isInitializing() || m.isPrototypeMeta(this)) {
+      // if marked as prototype or object is initializing then just
+      // defineProperty rather than delegate
+      (0, _metal.defineProperty)(this, key, null, value);
+      return value;
+    }
+
+    var content = contentFor(this, m);
+    false && !content && (0, _debug.assert)("Cannot delegate set('" + key + "', " + value + ") to the 'content' property of object proxy " + this + ": its 'content' is undefined.", content);
+    return (0, _metal.set)(content, key, value);
+  }, _Mixin$create));
 
   _exports.default = _default;
 });
@@ -27922,7 +29015,6 @@ enifed("@ember/-internals/runtime/lib/mixins/action_handler", ["exports", "@embe
 enifed("@ember/-internals/runtime/lib/mixins/array", ["exports", "@ember/-internals/metal", "@ember/-internals/utils", "@ember/debug", "@ember/-internals/runtime/lib/mixins/enumerable", "@ember/-internals/runtime/lib/compare", "@ember/-internals/environment", "@ember/-internals/runtime/lib/mixins/observable", "@ember/-internals/runtime/lib/mixins/mutable_enumerable", "@ember/-internals/runtime/lib/type-of"], function (_exports, _metal, _utils, _debug, _enumerable, _compare, _environment, _observable, _mutable_enumerable, _typeOf) {
   "use strict";
 
-  _exports.isEmberArray = isEmberArray;
   _exports.uniqBy = uniqBy;
   _exports.removeAt = removeAt;
   _exports.isArray = isArray;
@@ -27935,11 +29027,6 @@ enifed("@ember/-internals/runtime/lib/mixins/array", ["exports", "@ember/-intern
 
 
   var EMPTY_ARRAY = Object.freeze([]);
-  var EMBER_ARRAY = (0, _utils.symbol)('EMBER_ARRAY');
-
-  function isEmberArray(obj) {
-    return obj && obj[EMBER_ARRAY];
-  }
 
   var identityFunction = function (item) {
     return item;
@@ -28161,7 +29248,7 @@ enifed("@ember/-internals/runtime/lib/mixins/array", ["exports", "@ember/-intern
   */
 
 
-  var ArrayMixin = _metal.Mixin.create(_enumerable.default, (_Mixin$create = {}, _Mixin$create[EMBER_ARRAY] = true, _Mixin$create.objectsAt = function (indexes) {
+  var ArrayMixin = _metal.Mixin.create(_enumerable.default, (_Mixin$create = {}, _Mixin$create[_utils.EMBER_ARRAY] = true, _Mixin$create.objectsAt = function (indexes) {
     var _this = this;
 
     return indexes.map(function (idx) {
@@ -28787,20 +29874,12 @@ enifed("@ember/-internals/runtime/lib/mixins/array", ["exports", "@ember/-intern
     NativeArray.apply(Array.prototype);
 
     _exports.A = A = function (arr) {
-      false && !!(this instanceof A) && (0, _debug.deprecate)('`new A()` has been deprecated, please update to calling A as a function: `A()`', !(this instanceof A), {
-        id: 'array.new-array-wrapper',
-        until: '3.9.0',
-        url: 'https://emberjs.com/deprecations/v3.x#toc_array-new-array-wrapper'
-      });
+      false && !!(this instanceof A) && (0, _debug.assert)('You cannot create an Ember Array with `new A()`, please update to calling A as a function: `A()`', !(this instanceof A));
       return arr || [];
     };
   } else {
     _exports.A = A = function (arr) {
-      false && !!(this instanceof A) && (0, _debug.deprecate)('`new A()` has been deprecated, please update to calling A as a function: `A()`', !(this instanceof A), {
-        id: 'array.new-array-wrapper',
-        until: '3.9.0',
-        url: 'https://emberjs.com/deprecations/v3.x#toc_array-new-array-wrapper'
-      });
+      false && !!(this instanceof A) && (0, _debug.assert)('You cannot create an Ember Array with `new A()`, please update to calling A as a function: `A()`', !(this instanceof A));
 
       if (!arr) {
         arr = [];
@@ -30332,6 +31411,14 @@ enifed("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
       this._length = 0;
       this._arrangedContent = null;
 
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          this._arrangedContentIsUpdating = false;
+          this._arrangedContentTag = (0, _metal.getChainTagsForKey)(this, 'arrangedContent');
+          this._arrangedContentRevision = this._arrangedContentTag.value();
+        }
+
       this._addArrangedContentArrayObsever();
     };
 
@@ -30389,6 +31476,12 @@ enifed("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
     ;
 
     _proto.objectAt = function objectAt(idx) {
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          this._revalidate();
+        }
+
       if (this._objects === null) {
         this._objects = [];
       }
@@ -30414,29 +31507,39 @@ enifed("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
     ;
 
     _proto[_metal.PROPERTY_DID_CHANGE] = function (key) {
-      if (key === 'arrangedContent') {
-        var oldLength = this._objects === null ? 0 : this._objects.length;
-        var arrangedContent = (0, _metal.get)(this, 'arrangedContent');
-        var newLength = arrangedContent ? (0, _metal.get)(arrangedContent, 'length') : 0;
-
-        this._removeArrangedContentArrayObsever();
-
-        this.arrayContentWillChange(0, oldLength, newLength);
-
-        this._invalidate();
-
-        this.arrayContentDidChange(0, oldLength, newLength);
-
-        this._addArrangedContentArrayObsever();
-      } else if (key === 'content') {
-        this._invalidate();
+      if (false
+      /* EMBER_METAL_TRACKED_PROPERTIES */
+      ) {
+          this._revalidate();
+        } else {
+        if (key === 'arrangedContent') {
+          this._updateArrangedContentArray();
+        } else if (key === 'content') {
+          this._invalidate();
+        }
       }
+    };
+
+    _proto._updateArrangedContentArray = function _updateArrangedContentArray() {
+      var oldLength = this._objects === null ? 0 : this._objects.length;
+      var arrangedContent = (0, _metal.get)(this, 'arrangedContent');
+      var newLength = arrangedContent ? (0, _metal.get)(arrangedContent, 'length') : 0;
+
+      this._removeArrangedContentArrayObsever();
+
+      this.arrayContentWillChange(0, oldLength, newLength);
+
+      this._invalidate();
+
+      this.arrayContentDidChange(0, oldLength, newLength);
+
+      this._addArrangedContentArrayObsever();
     };
 
     _proto._addArrangedContentArrayObsever = function _addArrangedContentArrayObsever() {
       var arrangedContent = (0, _metal.get)(this, 'arrangedContent');
 
-      if (arrangedContent) {
+      if (arrangedContent && !arrangedContent.isDestroyed) {
         false && !(arrangedContent !== this) && (0, _debug.assert)("Can't set ArrayProxy's content to itself", arrangedContent !== this);
         false && !((0, _array.isArray)(arrangedContent) || arrangedContent.isDestroyed) && (0, _debug.assert)("ArrayProxy expects an Array or ArrayProxy, but you passed " + typeof arrangedContent, (0, _array.isArray)(arrangedContent) || arrangedContent.isDestroyed);
         (0, _metal.addArrayObserver)(arrangedContent, this, ARRAY_OBSERVER_MAPPING);
@@ -30477,6 +31580,12 @@ enifed("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
     (0, _emberBabel.createClass)(ArrayProxy, [{
       key: "length",
       get: function () {
+        if (false
+        /* EMBER_METAL_TRACKED_PROPERTIES */
+        ) {
+            this._revalidate();
+          }
+
         if (this._lengthDirty) {
           var arrangedContent = (0, _metal.get)(this, 'arrangedContent');
           this._length = arrangedContent ? (0, _metal.get)(arrangedContent, 'length') : 0;
@@ -30510,6 +31619,25 @@ enifed("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
   }(_object.default);
 
   _exports.default = ArrayProxy;
+
+  var _revalidate;
+
+  if (false
+  /* EMBER_METAL_TRACKED_PROPERTIES */
+  ) {
+      _revalidate = function () {
+        if (!this._arrangedContentIsUpdating && !this._arrangedContentTag.validate(this._arrangedContentRevision)) {
+          this._arrangedContentIsUpdating = true;
+
+          this._updateArrangedContentArray();
+
+          this._arrangedContentIsUpdating = false;
+          this._arrangedContentTag = (0, _metal.getChainTagsForKey)(this, 'arrangedContent');
+          this._arrangedContentRevision = this._arrangedContentTag.value();
+        }
+      };
+    }
+
   ArrayProxy.reopen(_array.MutableArray, {
     /**
       The array that the proxy pretends to be. In the default `ArrayProxy`
@@ -30518,12 +31646,14 @@ enifed("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
        @property arrangedContent
       @public
     */
-    arrangedContent: (0, _metal.alias)('content')
+    arrangedContent: (0, _metal.alias)('content'),
+    _revalidate: _revalidate
   });
 });
-enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-babel", "@ember/-internals/container", "@ember/polyfills", "@ember/-internals/utils", "@ember/runloop", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/-internals/runtime/lib/mixins/action_handler", "@ember/debug"], function (_exports, _emberBabel, _container, _polyfills, _utils, _runloop, _meta2, _metal, _action_handler, _debug) {
+enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-babel", "@ember/-internals/container", "@ember/-internals/owner", "@ember/polyfills", "@ember/-internals/utils", "@ember/runloop", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/-internals/runtime/lib/mixins/action_handler", "@ember/debug"], function (_exports, _emberBabel, _container, _owner, _polyfills, _utils, _runloop, _meta2, _metal, _action_handler, _debug) {
   "use strict";
 
+  _exports.setFrameworkClass = setFrameworkClass;
   _exports.default = void 0;
 
   /**
@@ -30533,15 +31663,20 @@ enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-ba
   var wasApplied = new _polyfills._WeakSet();
   var factoryMap = new WeakMap();
   var prototypeMixinMap = new WeakMap();
-  var DELAY_INIT = Object.freeze({});
-  var initCalled; // only used in debug builds to enable the proxy trap
-  // using DEBUG here to avoid the extraneous variable when not needed
-
-  if (false
+  var initCalled = false
   /* DEBUG */
-  ) {
-      initCalled = new _polyfills._WeakSet();
-    }
+  ? new _polyfills._WeakSet() : undefined; // only used in debug builds to enable the proxy trap
+
+  var PASSED_FROM_CREATE = false
+  /* DEBUG */
+  ? (0, _utils.symbol)('PASSED_FROM_CREATE') : undefined;
+  var FRAMEWORK_CLASSES = true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ? (0, _utils.symbol)('FRAMEWORK_CLASS') : undefined;
+
+  function setFrameworkClass(klass) {
+    klass[FRAMEWORK_CLASSES] = true;
+  }
 
   function initialize(obj, properties) {
     var m = (0, _meta2.meta)(obj);
@@ -30603,10 +31738,24 @@ enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-ba
         initCalled.add(obj);
       }
 
-    obj.init(properties); // re-enable chains
-
+    obj.init(properties);
     m.unsetInitializing();
-    (0, _metal.finishChains)(m);
+
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        var observerEvents = m.observerEvents();
+
+        if (observerEvents !== undefined) {
+          for (var _i = 0; _i < observerEvents.length; _i++) {
+            (0, _metal.activateObserver)(obj, observerEvents[_i]);
+          }
+        }
+      } else {
+      // re-enable chains
+      (0, _metal.finishChains)(m);
+    }
+
     (0, _metal.sendEvent)(obj, 'init', undefined, undefined, undefined, m);
   }
   /**
@@ -30679,7 +31828,7 @@ enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-ba
       factoryMap.set(this, factory);
     };
 
-    function CoreObject(properties) {
+    function CoreObject(passedFromCreate) {
       // pluck off factory
       var initFactory = factoryMap.get(this.constructor);
 
@@ -30725,16 +31874,45 @@ enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-ba
 
       var m = (0, _meta2.meta)(self);
       m.setInitializing();
+      false && !function () {
+        if (passedFromCreate === PASSED_FROM_CREATE) {
+          return true;
+        }
 
-      if (properties !== DELAY_INIT) {
-        false && !false && (0, _debug.deprecate)('using `new` with EmberObject has been deprecated. Please use `create` instead, or consider using native classes without extending from EmberObject.', false, {
-          id: 'object.new-constructor',
-          until: '3.9.0',
-          url: 'https://emberjs.com/deprecations/v3.x#toc_object-new-constructor'
-        });
-        initialize(self, properties);
-      } // only return when in debug builds and `self` is the proxy created above
+        if (!true
+        /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+        ) {
+            return false;
+          }
 
+        if (initFactory === undefined) {
+          return false;
+        }
+
+        if (passedFromCreate === initFactory.owner) {
+          return true;
+        }
+
+        return false;
+      }() && (0, _debug.assert)("An EmberObject based class, " + this.constructor + ", was not instantiated correctly. You may have either used `new` instead of `.create()`, or not passed arguments to your call to super in the constructor: `super(...arguments)`. If you are trying to use `new`, consider using native classes without extending from EmberObject.", function () {
+        if (passedFromCreate === PASSED_FROM_CREATE) {
+          return true;
+        }
+
+        if (!true) {
+          return false;
+        }
+
+        if (initFactory === undefined) {
+          return false;
+        }
+
+        if (passedFromCreate === initFactory.owner) {
+          return true;
+        }
+
+        return false;
+      }()); // only return when in debug builds and `self` is the proxy created above
 
       if (false
       /* DEBUG */
@@ -31128,7 +32306,33 @@ enifed("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-ba
 
     CoreObject.create = function create(props, extra) {
       var C = this;
-      var instance = new C(DELAY_INIT);
+      var instance;
+
+      if (true
+      /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+      && this[FRAMEWORK_CLASSES]) {
+        var initFactory = factoryMap.get(this);
+        var owner;
+
+        if (initFactory !== undefined) {
+          owner = initFactory.owner;
+        } else if (props !== undefined) {
+          owner = (0, _owner.getOwner)(props);
+        }
+
+        if (owner === undefined) {
+          // fallback to passing the special PASSED_FROM_CREATE symbol
+          // to avoid an error when folks call things like Controller.extend().create()
+          // we should do a subsequent deprecation pass to ensure this isn't allowed
+          owner = PASSED_FROM_CREATE;
+        }
+
+        instance = new C(owner);
+      } else {
+        instance = false
+        /* DEBUG */
+        ? new C(PASSED_FROM_CREATE) : new C();
+      }
 
       if (extra === undefined) {
         initialize(instance, props);
@@ -31634,8 +32838,50 @@ enifed("@ember/-internals/runtime/lib/system/object", ["exports", "ember-babel",
 
   _observable.default.apply(EmberObject.prototype);
 
-  var FrameworkObject = EmberObject;
+  var FrameworkObject;
   _exports.FrameworkObject = FrameworkObject;
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      _exports.FrameworkObject = FrameworkObject =
+      /*#__PURE__*/
+      function (_CoreObject2) {
+        (0, _emberBabel.inheritsLoose)(FrameworkObject, _CoreObject2);
+        (0, _emberBabel.createClass)(FrameworkObject, [{
+          key: "_debugContainerKey",
+          get: function () {
+            var factory = _container.FACTORY_FOR.get(this);
+
+            return factory !== undefined && factory.fullName;
+          }
+        }]);
+
+        function FrameworkObject(owner) {
+          var _this;
+
+          _this = _CoreObject2.call(this) || this;
+          (0, _owner.setOwner)((0, _emberBabel.assertThisInitialized)(_this), owner);
+          return _this;
+        }
+
+        return FrameworkObject;
+      }(_core_object.default);
+
+      _observable.default.apply(FrameworkObject.prototype);
+    } else {
+    _exports.FrameworkObject = FrameworkObject =
+    /*#__PURE__*/
+    function (_EmberObject) {
+      (0, _emberBabel.inheritsLoose)(FrameworkObject, _EmberObject);
+
+      function FrameworkObject() {
+        return _EmberObject.apply(this, arguments) || this;
+      }
+
+      return FrameworkObject;
+    }(EmberObject);
+  }
 
   if (false
   /* DEBUG */
@@ -31645,17 +32891,17 @@ enifed("@ember/-internals/runtime/lib/system/object", ["exports", "ember-babel",
 
       _exports.FrameworkObject = FrameworkObject =
       /*#__PURE__*/
-      function (_EmberObject) {
-        (0, _emberBabel.inheritsLoose)(FrameworkObject, _EmberObject);
+      function (_EmberObject2) {
+        (0, _emberBabel.inheritsLoose)(DebugFrameworkObject, _EmberObject2);
 
-        function FrameworkObject() {
-          return _EmberObject.apply(this, arguments) || this;
+        function DebugFrameworkObject() {
+          return _EmberObject2.apply(this, arguments) || this;
         }
 
-        var _proto = FrameworkObject.prototype;
+        var _proto = DebugFrameworkObject.prototype;
 
         _proto.init = function init() {
-          _EmberObject.prototype.init.apply(this, arguments);
+          _EmberObject2.prototype.init.apply(this, arguments);
 
           this[INIT_WAS_CALLED] = true;
         };
@@ -31664,7 +32910,7 @@ enifed("@ember/-internals/runtime/lib/system/object", ["exports", "ember-babel",
           false && !this[INIT_WAS_CALLED] && (0, _debug.assert)("You must call `this._super(...arguments);` when overriding `init` on a framework object. Please update " + this + " to call `this._super(...arguments);` from `init`.", this[INIT_WAS_CALLED]);
         };
 
-        return FrameworkObject;
+        return DebugFrameworkObject;
       }(EmberObject);
 
       (0, _metal.addListener)(FrameworkObject.prototype, 'init', null, ASSERT_INIT_WAS_CALLED);
@@ -31766,7 +33012,7 @@ enifed("@ember/-internals/runtime/lib/system/object_proxy", ["exports", "ember-b
   _exports.default = ObjectProxy;
   ObjectProxy.PrototypeMixin.reopen(_proxy.default);
 });
-enifed("@ember/-internals/runtime/lib/type-of", ["exports", "@ember/-internals/runtime/lib/system/object"], function (_exports, _object) {
+enifed("@ember/-internals/runtime/lib/type-of", ["exports", "@ember/-internals/runtime/lib/system/core_object"], function (_exports, _core_object) {
   "use strict";
 
   _exports.typeOf = typeOf;
@@ -31862,13 +33108,13 @@ enifed("@ember/-internals/runtime/lib/type-of", ["exports", "@ember/-internals/r
     var ret = TYPE_MAP[toString.call(item)] || 'object';
 
     if (ret === 'function') {
-      if (_object.default.detect(item)) {
+      if (_core_object.default.detect(item)) {
         ret = 'class';
       }
     } else if (ret === 'object') {
       if (item instanceof Error) {
         ret = 'error';
-      } else if (item instanceof _object.default) {
+      } else if (item instanceof _core_object.default) {
         ret = 'instance';
       } else if (item instanceof Date) {
         ret = 'date';
@@ -31878,7 +33124,7 @@ enifed("@ember/-internals/runtime/lib/type-of", ["exports", "@ember/-internals/r
     return ret;
   }
 });
-enifed("@ember/-internals/utils", ["exports", "@ember/polyfills"], function (_exports, _polyfills) {
+enifed("@ember/-internals/utils", ["exports", "@ember/polyfills", "@ember/debug"], function (_exports, _polyfills, _debug) {
   "use strict";
 
   _exports.symbol = symbol;
@@ -31903,7 +33149,8 @@ enifed("@ember/-internals/utils", ["exports", "@ember/polyfills"], function (_ex
   _exports.toString = toString;
   _exports.isProxy = isProxy;
   _exports.setProxy = setProxy;
-  _exports.Cache = _exports.HAS_NATIVE_PROXY = _exports.HAS_NATIVE_SYMBOL = _exports.ROOT = _exports.checkHasSuper = _exports.GUID_KEY = _exports.getOwnPropertyDescriptors = _exports.NAME_KEY = void 0;
+  _exports.isEmberArray = isEmberArray;
+  _exports.setWithMandatorySetter = _exports.teardownMandatorySetter = _exports.setupMandatorySetter = _exports.EMBER_ARRAY = _exports.Cache = _exports.HAS_NATIVE_PROXY = _exports.HAS_NATIVE_SYMBOL = _exports.ROOT = _exports.checkHasSuper = _exports.GUID_KEY = _exports.getOwnPropertyDescriptors = _exports.NAME_KEY = void 0;
 
   /**
     Strongly hint runtimes to intern the provided string.
@@ -32596,6 +33843,122 @@ enifed("@ember/-internals/utils", ["exports", "@ember/polyfills"], function (_ex
 
     return Cache;
   }();
+
+  _exports.Cache = Cache;
+  var EMBER_ARRAY = symbol('EMBER_ARRAY');
+  _exports.EMBER_ARRAY = EMBER_ARRAY;
+
+  function isEmberArray(obj) {
+    return obj && obj[EMBER_ARRAY];
+  }
+
+  var setupMandatorySetter;
+  _exports.setupMandatorySetter = setupMandatorySetter;
+  var teardownMandatorySetter;
+  _exports.teardownMandatorySetter = teardownMandatorySetter;
+  var setWithMandatorySetter;
+  _exports.setWithMandatorySetter = setWithMandatorySetter;
+
+  if (false
+  /* DEBUG */
+  && false
+  /* EMBER_METAL_TRACKED_PROPERTIES */
+  ) {
+      var MANDATORY_SETTERS = new WeakMap();
+
+      var getPropertyDescriptor = function (obj, keyName) {
+        var current = obj;
+
+        while (current !== null) {
+          var desc = Object.getOwnPropertyDescriptor(current, keyName);
+
+          if (desc !== undefined) {
+            return desc;
+          }
+
+          current = Object.getPrototypeOf(current);
+        }
+
+        return;
+      };
+
+      var _propertyIsEnumerable = function (obj, key) {
+        return Object.prototype.propertyIsEnumerable.call(obj, key);
+      };
+
+      _exports.setupMandatorySetter = setupMandatorySetter = function (obj, keyName) {
+        var desc = getPropertyDescriptor(obj, keyName) || {};
+
+        if (desc.get || desc.set) {
+          // if it has a getter or setter, we can't install the mandatory setter.
+          // native setters are allowed, we have to assume that they will resolve
+          // to tracked properties.
+          return;
+        }
+
+        if (desc && (!desc.configurable || !desc.writable)) {
+          // if it isn't writable anyways, so we shouldn't provide the setter.
+          // if it isn't configurable, we can't overwrite it anyways.
+          return;
+        }
+
+        var setters = MANDATORY_SETTERS.get(obj);
+
+        if (setters === undefined) {
+          setters = {};
+          MANDATORY_SETTERS.set(obj, setters);
+        }
+
+        desc.hadOwnProperty = Object.hasOwnProperty.call(obj, keyName);
+        setters[keyName] = desc;
+        Object.defineProperty(obj, keyName, {
+          configurable: true,
+          enumerable: _propertyIsEnumerable(obj, keyName),
+          get: function () {
+            if (desc.get) {
+              return desc.get.call(this);
+            } else {
+              return desc.value;
+            }
+          },
+          set: function (value) {
+            false && !false && (0, _debug.assert)("You attempted to update " + this + "." + String(keyName) + " to \"" + String(value) + "\", but it is being tracked by a tracking context, such as a template, computed property, or observer. In order to make sure the context updates properly, you must invalidate the property when updating it. You can mark the property as `@tracked`, or use `@ember/object#set` to do this.");
+          }
+        });
+      };
+
+      _exports.teardownMandatorySetter = teardownMandatorySetter = function (obj, keyName) {
+        var setters = MANDATORY_SETTERS.get(obj);
+
+        if (setters !== undefined && setters[keyName] !== undefined) {
+          Object.defineProperty(obj, keyName, setters[keyName]);
+          setters[keyName] = undefined;
+        }
+      };
+
+      _exports.setWithMandatorySetter = setWithMandatorySetter = function (obj, keyName, value) {
+        var setters = MANDATORY_SETTERS.get(obj);
+
+        if (setters !== undefined && setters[keyName] !== undefined) {
+          var setter = setters[keyName];
+
+          if (setter.set) {
+            setter.set.call(obj, value);
+          } else {
+            setter.value = value; // If the object didn't have own property before, it would have changed
+            // the enumerability after setting the value the first time.
+
+            if (!setter.hadOwnProperty) {
+              var desc = getPropertyDescriptor(obj, keyName);
+              desc.enumerable = true;
+              Object.defineProperty(obj, keyName, desc);
+            }
+          }
+        } else {
+          obj[keyName] = value;
+        }
+      };
+    }
   /*
    This package will be eagerly parsed and should have no dependencies on external
    packages.
@@ -32608,7 +33971,6 @@ enifed("@ember/-internals/utils", ["exports", "@ember/polyfills"], function (_ex
   */
 
 
-  _exports.Cache = Cache;
   var NAME_KEY = symbol('NAME_KEY');
   _exports.NAME_KEY = NAME_KEY;
 });
@@ -34885,7 +36247,7 @@ enifed("@ember/-internals/views/lib/views/states/has_element", ["exports", "@emb
 
   _exports.default = _default2;
 });
-enifed("@ember/-internals/views/lib/views/states/in_dom", ["exports", "@ember/polyfills", "@ember/-internals/metal", "@ember/error", "@ember/-internals/views/lib/views/states/has_element"], function (_exports, _polyfills, _metal, _error, _has_element) {
+enifed("@ember/-internals/views/lib/views/states/in_dom", ["exports", "@ember/-internals/utils", "@ember/polyfills", "@ember/error", "@ember/-internals/views/lib/views/states/has_element"], function (_exports, _utils, _polyfills, _error, _has_element) {
   "use strict";
 
   _exports.default = void 0;
@@ -34898,8 +36260,23 @@ enifed("@ember/-internals/views/lib/views/states/in_dom", ["exports", "@ember/po
       if (false
       /* DEBUG */
       ) {
-          (0, _metal.addObserver)(view, 'elementId', function () {
-            throw new _error.default("Changing a view's elementId after creation is not allowed");
+          var elementId = view.elementId;
+
+          if (false
+          /* EMBER_METAL_TRACKED_PROPERTIES */
+          ) {
+              (0, _utils.teardownMandatorySetter)(view, 'elementId');
+            }
+
+          Object.defineProperty(view, 'elementId', {
+            configurable: true,
+            enumerable: true,
+            get: function () {
+              return elementId;
+            },
+            set: function () {
+              throw new _error.default("Changing a view's elementId after creation is not allowed");
+            }
           });
         }
     },
@@ -36962,7 +38339,7 @@ enifed("@ember/canary-features/index", ["exports", "@ember/-internals/environmen
   "use strict";
 
   _exports.isEnabled = isEnabled;
-  _exports.EMBER_NATIVE_DECORATOR_SUPPORT = _exports.EMBER_ROUTING_BUILD_ROUTEINFO_METADATA = _exports.EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS = _exports.EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP = _exports.EMBER_METAL_TRACKED_PROPERTIES = _exports.EMBER_MODULE_UNIFICATION = _exports.EMBER_IMPROVED_INSTRUMENTATION = _exports.EMBER_LIBRARIES_ISREGISTERED = _exports.FEATURES = _exports.DEFAULT_FEATURES = void 0;
+  _exports.EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT = _exports.EMBER_GLIMMER_ON_MODIFIER = _exports.EMBER_CUSTOM_COMPONENT_ARG_PROXY = _exports.EMBER_GLIMMER_FN_HELPER = _exports.EMBER_NATIVE_DECORATOR_SUPPORT = _exports.EMBER_ROUTING_BUILD_ROUTEINFO_METADATA = _exports.EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS = _exports.EMBER_GLIMMER_FORWARD_MODIFIERS_WITH_SPLATTRIBUTES = _exports.EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP = _exports.EMBER_METAL_TRACKED_PROPERTIES = _exports.EMBER_MODULE_UNIFICATION = _exports.EMBER_IMPROVED_INSTRUMENTATION = _exports.EMBER_LIBRARIES_ISREGISTERED = _exports.FEATURES = _exports.DEFAULT_FEATURES = void 0;
 
   /**
     Set `EmberENV.FEATURES` in your application's `config/environment.js` file
@@ -36979,10 +38356,15 @@ enifed("@ember/canary-features/index", ["exports", "@ember/-internals/environmen
     EMBER_IMPROVED_INSTRUMENTATION: false,
     EMBER_MODULE_UNIFICATION: false,
     EMBER_METAL_TRACKED_PROPERTIES: false,
+    EMBER_GLIMMER_FORWARD_MODIFIERS_WITH_SPLATTRIBUTES: true,
     EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS: true,
     EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP: true,
     EMBER_ROUTING_BUILD_ROUTEINFO_METADATA: true,
-    EMBER_NATIVE_DECORATOR_SUPPORT: true
+    EMBER_NATIVE_DECORATOR_SUPPORT: true,
+    EMBER_GLIMMER_FN_HELPER: true,
+    EMBER_CUSTOM_COMPONENT_ARG_PROXY: false,
+    EMBER_GLIMMER_ON_MODIFIER: true,
+    EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT: true
   };
   /**
     The hash of enabled Canary features. Add to this, any canary features
@@ -37044,12 +38426,22 @@ enifed("@ember/canary-features/index", ["exports", "@ember/-internals/environmen
   _exports.EMBER_METAL_TRACKED_PROPERTIES = EMBER_METAL_TRACKED_PROPERTIES;
   var EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP = featureValue(FEATURES.EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP);
   _exports.EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP = EMBER_GLIMMER_ANGLE_BRACKET_NESTED_LOOKUP;
+  var EMBER_GLIMMER_FORWARD_MODIFIERS_WITH_SPLATTRIBUTES = featureValue(FEATURES.EMBER_GLIMMER_FORWARD_MODIFIERS_WITH_SPLATTRIBUTES);
+  _exports.EMBER_GLIMMER_FORWARD_MODIFIERS_WITH_SPLATTRIBUTES = EMBER_GLIMMER_FORWARD_MODIFIERS_WITH_SPLATTRIBUTES;
   var EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS = featureValue(FEATURES.EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS);
   _exports.EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS = EMBER_GLIMMER_ANGLE_BRACKET_BUILT_INS;
   var EMBER_ROUTING_BUILD_ROUTEINFO_METADATA = featureValue(FEATURES.EMBER_ROUTING_BUILD_ROUTEINFO_METADATA);
   _exports.EMBER_ROUTING_BUILD_ROUTEINFO_METADATA = EMBER_ROUTING_BUILD_ROUTEINFO_METADATA;
   var EMBER_NATIVE_DECORATOR_SUPPORT = featureValue(FEATURES.EMBER_NATIVE_DECORATOR_SUPPORT);
   _exports.EMBER_NATIVE_DECORATOR_SUPPORT = EMBER_NATIVE_DECORATOR_SUPPORT;
+  var EMBER_GLIMMER_FN_HELPER = featureValue(FEATURES.EMBER_GLIMMER_FN_HELPER);
+  _exports.EMBER_GLIMMER_FN_HELPER = EMBER_GLIMMER_FN_HELPER;
+  var EMBER_CUSTOM_COMPONENT_ARG_PROXY = featureValue(FEATURES.EMBER_CUSTOM_COMPONENT_ARG_PROXY);
+  _exports.EMBER_CUSTOM_COMPONENT_ARG_PROXY = EMBER_CUSTOM_COMPONENT_ARG_PROXY;
+  var EMBER_GLIMMER_ON_MODIFIER = featureValue(FEATURES.EMBER_GLIMMER_ON_MODIFIER);
+  _exports.EMBER_GLIMMER_ON_MODIFIER = EMBER_GLIMMER_ON_MODIFIER;
+  var EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT = featureValue(FEATURES.EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT);
+  _exports.EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT = EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT;
 });
 enifed("@ember/controller/index", ["exports", "@ember/-internals/runtime", "@ember/-internals/metal", "@ember/controller/lib/controller_mixin"], function (_exports, _runtime, _metal, _controller_mixin) {
   "use strict";
@@ -37067,7 +38459,13 @@ enifed("@ember/controller/index", ["exports", "@ember/-internals/runtime", "@emb
     @uses Ember.ControllerMixin
     @public
   */
-  var Controller = _runtime.Object.extend(_controller_mixin.default);
+  var Controller = _runtime.FrameworkObject.extend(_controller_mixin.default);
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      (0, _runtime.setFrameworkClass)(Controller);
+    }
   /**
     Creates a property that lazily looks up another controller in the container.
     Can only be used when defining another controller.
@@ -37830,7 +39228,7 @@ enifed("@ember/debug/lib/warn", ["exports", "@ember/debug/index", "@ember/debug/
 enifed("@ember/deprecated-features/index", ["exports"], function (_exports) {
   "use strict";
 
-  _exports.APP_CTRL_ROUTER_PROPS = _exports.ALIAS_METHOD = _exports.JQUERY_INTEGRATION = _exports.COMPONENT_MANAGER_STRING_LOOKUP = _exports.ROUTER_EVENTS = _exports.MERGE = _exports.LOGGER = _exports.RUN_SYNC = _exports.EMBER_EXTEND_PROTOTYPES = _exports.SEND_ACTION = void 0;
+  _exports.FUNCTION_PROTOTYPE_EXTENSIONS = _exports.APP_CTRL_ROUTER_PROPS = _exports.ALIAS_METHOD = _exports.JQUERY_INTEGRATION = _exports.COMPONENT_MANAGER_STRING_LOOKUP = _exports.ROUTER_EVENTS = _exports.MERGE = _exports.LOGGER = _exports.EMBER_EXTEND_PROTOTYPES = _exports.SEND_ACTION = void 0;
 
   /* eslint-disable no-implicit-coercion */
   // These versions should be the version that the deprecation was _introduced_,
@@ -37839,8 +39237,6 @@ enifed("@ember/deprecated-features/index", ["exports"], function (_exports) {
   _exports.SEND_ACTION = SEND_ACTION;
   var EMBER_EXTEND_PROTOTYPES = !!'3.2.0-beta.5';
   _exports.EMBER_EXTEND_PROTOTYPES = EMBER_EXTEND_PROTOTYPES;
-  var RUN_SYNC = !!'3.0.0-beta.4';
-  _exports.RUN_SYNC = RUN_SYNC;
   var LOGGER = !!'3.2.0-beta.1';
   _exports.LOGGER = LOGGER;
   var MERGE = !!'3.6.0-beta.1';
@@ -37853,8 +39249,10 @@ enifed("@ember/deprecated-features/index", ["exports"], function (_exports) {
   _exports.JQUERY_INTEGRATION = JQUERY_INTEGRATION;
   var ALIAS_METHOD = !!'3.9.0';
   _exports.ALIAS_METHOD = ALIAS_METHOD;
-  var APP_CTRL_ROUTER_PROPS = !!'3.10.0';
+  var APP_CTRL_ROUTER_PROPS = !!'3.10.0-beta.1';
   _exports.APP_CTRL_ROUTER_PROPS = APP_CTRL_ROUTER_PROPS;
+  var FUNCTION_PROTOTYPE_EXTENSIONS = !!'3.11.0-beta.1';
+  _exports.FUNCTION_PROTOTYPE_EXTENSIONS = FUNCTION_PROTOTYPE_EXTENSIONS;
 });
 enifed("@ember/engine/index", ["exports", "@ember/engine/lib/engine-parent", "@ember/-internals/utils", "@ember/controller", "@ember/-internals/runtime", "@ember/-internals/container", "dag-map", "@ember/debug", "@ember/-internals/metal", "@ember/application/globals-resolver", "@ember/engine/instance", "@ember/-internals/routing", "@ember/-internals/extension-support", "@ember/-internals/views", "@ember/-internals/glimmer"], function (_exports, _engineParent, _utils, _controller, _runtime, _container, _dagMap, _debug, _metal, _globalsResolver, _instance, _routing, _extensionSupport, _views, _glimmer) {
   "use strict";
@@ -37904,6 +39302,10 @@ enifed("@ember/engine/index", ["exports", "@ember/engine/lib/engine-parent", "@e
 
     return properties;
   }
+  /**
+  @module @ember/engine
+  */
+
   /**
     The `Engine` class contains core functionality for both applications and
     engines.
@@ -41915,61 +43317,90 @@ enifed("@ember/object/lib/computed/reduce_computed_macros", ["exports", "@ember/
   function propertySort(itemsKey, sortPropertiesKey) {
     var activeObserversMap = new WeakMap();
     var sortPropertyDidChangeMap = new WeakMap();
-    return (0, _metal.computed)(sortPropertiesKey + ".[]", function (key) {
-      var _this5 = this;
 
-      var sortProperties = (0, _metal.get)(this, sortPropertiesKey);
-      false && !((0, _runtime.isArray)(sortProperties) && sortProperties.every(function (s) {
-        return typeof s === 'string';
-      })) && (0, _debug.assert)("The sort definition for '" + key + "' on " + this + " must be a function or an array of strings", (0, _runtime.isArray)(sortProperties) && sortProperties.every(function (s) {
-        return typeof s === 'string';
-      })); // Add/remove property observers as required.
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        var cp = (0, _metal.computed)(itemsKey + ".[]", sortPropertiesKey + ".[]", function (key) {
+          var sortProperties = (0, _metal.get)(this, sortPropertiesKey);
+          false && !((0, _runtime.isArray)(sortProperties) && sortProperties.every(function (s) {
+            return typeof s === 'string';
+          })) && (0, _debug.assert)("The sort definition for '" + key + "' on " + this + " must be a function or an array of strings", (0, _runtime.isArray)(sortProperties) && sortProperties.every(function (s) {
+            return typeof s === 'string';
+          }));
+          var itemsKeyIsAtThis = itemsKey === '@this';
+          var normalizedSortProperties = normalizeSortProperties(sortProperties);
+          var items = itemsKeyIsAtThis ? this : (0, _metal.get)(this, itemsKey);
 
-      var activeObservers = activeObserversMap.get(this);
+          if (!(0, _runtime.isArray)(items)) {
+            return (0, _runtime.A)();
+          }
 
-      if (!sortPropertyDidChangeMap.has(this)) {
-        sortPropertyDidChangeMap.set(this, function () {
-          (0, _metal.notifyPropertyChange)(this, key);
-        });
-      }
-
-      var sortPropertyDidChange = sortPropertyDidChangeMap.get(this);
-
-      if (activeObservers !== undefined) {
-        activeObservers.forEach(function (path) {
-          return (0, _metal.removeObserver)(_this5, path, sortPropertyDidChange);
-        });
-      }
-
-      var itemsKeyIsAtThis = itemsKey === '@this';
-      var normalizedSortProperties = normalizeSortProperties(sortProperties);
-
-      if (normalizedSortProperties.length === 0) {
-        var path = itemsKeyIsAtThis ? "[]" : itemsKey + ".[]";
-        (0, _metal.addObserver)(this, path, sortPropertyDidChange);
-        activeObservers = [path];
+          if (normalizedSortProperties.length === 0) {
+            return (0, _runtime.A)(items.slice());
+          } else {
+            return sortByNormalizedSortProperties(items, normalizedSortProperties);
+          }
+        }).readOnly();
+        (0, _metal.descriptorForDecorator)(cp).auto();
+        return cp;
       } else {
-        activeObservers = normalizedSortProperties.map(function (_ref) {
-          var prop = _ref[0];
-          var path = itemsKeyIsAtThis ? "@each." + prop : itemsKey + ".@each." + prop;
-          (0, _metal.addObserver)(_this5, path, sortPropertyDidChange);
-          return path;
-        });
-      }
+      return (0, _metal.computed)(sortPropertiesKey + ".[]", function (key) {
+        var _this5 = this;
 
-      activeObserversMap.set(this, activeObservers);
-      var items = itemsKeyIsAtThis ? this : (0, _metal.get)(this, itemsKey);
+        var sortProperties = (0, _metal.get)(this, sortPropertiesKey);
+        false && !((0, _runtime.isArray)(sortProperties) && sortProperties.every(function (s) {
+          return typeof s === 'string';
+        })) && (0, _debug.assert)("The sort definition for '" + key + "' on " + this + " must be a function or an array of strings", (0, _runtime.isArray)(sortProperties) && sortProperties.every(function (s) {
+          return typeof s === 'string';
+        })); // Add/remove property observers as required.
 
-      if (!(0, _runtime.isArray)(items)) {
-        return (0, _runtime.A)();
-      }
+        var activeObservers = activeObserversMap.get(this);
 
-      if (normalizedSortProperties.length === 0) {
-        return (0, _runtime.A)(items.slice());
-      } else {
-        return sortByNormalizedSortProperties(items, normalizedSortProperties);
-      }
-    }).readOnly();
+        if (!sortPropertyDidChangeMap.has(this)) {
+          sortPropertyDidChangeMap.set(this, function () {
+            (0, _metal.notifyPropertyChange)(this, key);
+          });
+        }
+
+        var sortPropertyDidChange = sortPropertyDidChangeMap.get(this);
+
+        if (activeObservers !== undefined) {
+          activeObservers.forEach(function (path) {
+            return (0, _metal.removeObserver)(_this5, path, sortPropertyDidChange);
+          });
+        }
+
+        var itemsKeyIsAtThis = itemsKey === '@this';
+        var normalizedSortProperties = normalizeSortProperties(sortProperties);
+
+        if (normalizedSortProperties.length === 0) {
+          var path = itemsKeyIsAtThis ? "[]" : itemsKey + ".[]";
+          (0, _metal.addObserver)(this, path, sortPropertyDidChange);
+          activeObservers = [path];
+        } else {
+          activeObservers = normalizedSortProperties.map(function (_ref) {
+            var prop = _ref[0];
+            var path = itemsKeyIsAtThis ? "@each." + prop : itemsKey + ".@each." + prop;
+            (0, _metal.addObserver)(_this5, path, sortPropertyDidChange);
+            return path;
+          });
+        }
+
+        activeObserversMap.set(this, activeObservers);
+        var items = itemsKeyIsAtThis ? this : (0, _metal.get)(this, itemsKey);
+
+        if (!(0, _runtime.isArray)(items)) {
+          return (0, _runtime.A)();
+        }
+
+        if (normalizedSortProperties.length === 0) {
+          return (0, _runtime.A)(items.slice());
+        } else {
+          return sortByNormalizedSortProperties(items, normalizedSortProperties);
+        }
+      }).readOnly();
+    }
   }
 
   function normalizeSortProperties(sortProperties) {
@@ -42168,7 +43599,7 @@ enifed("@ember/polyfills/lib/weak_set", ["exports"], function (_exports) {
 
   _exports.default = _default;
 });
-enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/error-handling", "@ember/-internals/metal", "backburner", "@ember/deprecated-features"], function (_exports, _debug, _errorHandling, _metal, _backburner, _deprecatedFeatures) {
+enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/error-handling", "@ember/-internals/metal", "backburner"], function (_exports, _debug, _errorHandling, _metal, _backburner) {
   "use strict";
 
   _exports.getCurrentRunLoop = getCurrentRunLoop;
@@ -42199,7 +43630,27 @@ enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
 
   function onEnd(current, next) {
     currentRunLoop = next;
+
+    if (false
+    /* EMBER_METAL_TRACKED_PROPERTIES */
+    ) {
+        (0, _metal.flushInvalidActiveObservers)();
+      }
   }
+
+  var flush;
+
+  if (false
+  /* EMBER_METAL_TRACKED_PROPERTIES */
+  ) {
+      flush = function (queueName, next) {
+        if (queueName === 'render' || queueName === _rsvpErrorQueue) {
+          (0, _metal.flushInvalidActiveObservers)();
+        }
+
+        next();
+      };
+    }
 
   var _rsvpErrorQueue = ("" + Math.random() + Date.now()).replace('.', '');
   /**
@@ -42222,23 +43673,14 @@ enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   // position to avoid breaking anything rendered in the other sections
   _rsvpErrorQueue];
   _exports.queues = queues;
-  var backburnerOptions = {
+  var backburner = new _backburner.default(queues, {
     defaultQueue: 'actions',
     onBegin: onBegin,
     onEnd: onEnd,
     onErrorTarget: _errorHandling.onErrorTarget,
-    onErrorMethod: 'onerror'
-  };
-
-  if (_deprecatedFeatures.RUN_SYNC) {
-    queues.unshift('sync');
-    backburnerOptions.sync = {
-      before: _metal.beginPropertyChanges,
-      after: _metal.endPropertyChanges
-    };
-  }
-
-  var backburner = new _backburner.default(queues, backburnerOptions);
+    onErrorMethod: 'onerror',
+    flush: flush
+  });
   /**
    @module @ember/runloop
   */
@@ -42532,13 +43974,9 @@ enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   */
 
 
-  function schedule(queue
-  /*, target, method */
-  ) {
-    false && !(queue !== 'sync') && (0, _debug.deprecate)("Scheduling into the '" + queue + "' run loop queue is deprecated.", queue !== 'sync', {
-      id: 'ember-metal.run.sync',
-      until: '3.5.0'
-    });
+  function schedule()
+  /* queue, target, method */
+  {
     return backburner.schedule.apply(backburner, arguments);
   } // Used by global test teardown
 
@@ -42687,13 +44125,9 @@ enifed("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   */
 
 
-  function scheduleOnce(queue
-  /*, target, method*/
-  ) {
-    false && !(queue !== 'sync') && (0, _debug.deprecate)("Scheduling into the '" + queue + "' run loop queue is deprecated.", queue !== 'sync', {
-      id: 'ember-metal.run.sync',
-      until: '3.5.0'
-    });
+  function scheduleOnce()
+  /* queue, target, method*/
+  {
     return backburner.scheduleOnce.apply(backburner, arguments);
   }
   /**
@@ -43045,11 +44479,18 @@ enifed("@ember/service/index", ["exports", "@ember/-internals/runtime", "@ember/
   */
 
 
-  var Service = _runtime.Object.extend();
+  var Service = _runtime.FrameworkObject.extend();
 
   Service.reopenClass({
     isServiceFactory: true
   });
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      (0, _runtime.setFrameworkClass)(Service);
+    }
+
   var _default = Service;
   _exports.default = _default;
 });
@@ -43798,7 +45239,7 @@ enifed("@glimmer/node", ["exports", "ember-babel", "@glimmer/runtime"], function
         _NewElementBuilder.prototype.closeElement.call(this);
       }
 
-      _NewElementBuilder.prototype.closeElement.call(this);
+      return _NewElementBuilder.prototype.closeElement.call(this);
     };
 
     _proto2.openElement = function openElement(tag) {
@@ -43810,7 +45251,7 @@ enifed("@glimmer/node", ["exports", "ember-babel", "@glimmer/runtime"], function
           // really in the template.
 
           this.constructing['needsExtraClose'] = true;
-          this.flushElement();
+          this.flushElement(null);
         }
       }
 
@@ -43937,11 +45378,14 @@ enifed("@glimmer/opcode-compiler", ["exports", "@ember/polyfills", "ember-babel"
       componentAttr(sexp, true, builder);
     });
     STATEMENTS.add(Ops$2.OpenElement, function (sexp, builder) {
-      builder.openPrimitiveElement(sexp[1]);
-    });
-    STATEMENTS.add(Ops$2.OpenSplattedElement, function (sexp, builder) {
-      builder.putComponentOperations();
-      builder.openPrimitiveElement(sexp[1]);
+      var tag = sexp[1],
+          simple = sexp[2];
+
+      if (!simple) {
+        builder.putComponentOperations();
+      }
+
+      builder.openPrimitiveElement(tag);
     });
     STATEMENTS.add(Ops$2.DynamicComponent, function (sexp, builder) {
       var definition = sexp[1],
@@ -49209,23 +50653,37 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   /* FlushElement */
   , function (vm) {
     var operations = vm.fetchValue(_vm2.Register.t0);
+    var modifiers = null;
 
     if (operations) {
-      operations.flush(vm);
+      modifiers = operations.flush(vm);
       vm.loadValue(_vm2.Register.t0, null);
     }
 
-    vm.elements().flushElement();
+    vm.elements().flushElement(modifiers);
   });
   APPEND_OPCODES.add(39
   /* CloseElement */
   , function (vm) {
-    vm.elements().closeElement();
+    var modifiers = vm.elements().closeElement();
+
+    if (modifiers) {
+      modifiers.forEach(function (_ref26) {
+        var manager = _ref26[0],
+            modifier = _ref26[1];
+        vm.env.scheduleInstallModifier(modifier, manager);
+        var destructor = manager.getDestructor(modifier);
+
+        if (destructor) {
+          vm.newDestroyable(destructor);
+        }
+      });
+    }
   });
   APPEND_OPCODES.add(40
   /* Modifier */
-  , function (vm, _ref26) {
-    var handle = _ref26.op1;
+  , function (vm, _ref27) {
+    var handle = _ref27.op1;
 
     var _vm$constants$resolve = vm.constants.resolveHandle(handle),
         manager = _vm$constants$resolve.manager,
@@ -49235,18 +50693,13 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
     var args = stack.pop();
 
     var _vm$elements = vm.elements(),
-        element = _vm$elements.element,
+        constructing = _vm$elements.constructing,
         updateOperations = _vm$elements.updateOperations;
 
     var dynamicScope = vm.dynamicScope();
-    var modifier = manager.create(element, state, args, dynamicScope, updateOperations);
-    vm.env.scheduleInstallModifier(modifier, manager);
-    var destructor = manager.getDestructor(modifier);
-
-    if (destructor) {
-      vm.newDestroyable(destructor);
-    }
-
+    var modifier = manager.create(constructing, state, args, dynamicScope, updateOperations);
+    var operations = vm.fetchValue(_vm2.Register.t0);
+    operations.addModifier(manager, modifier);
     var tag = manager.getTag(modifier);
 
     if (!(0, _reference.isConstTag)(tag)) {
@@ -49290,10 +50743,10 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(35
   /* StaticAttr */
-  , function (vm, _ref27) {
-    var _name = _ref27.op1,
-        _value = _ref27.op2,
-        _namespace = _ref27.op3;
+  , function (vm, _ref28) {
+    var _name = _ref28.op1,
+        _value = _ref28.op2,
+        _namespace = _ref28.op3;
     var name = vm.constants.getString(_name);
     var value = vm.constants.getString(_value);
     var namespace = _namespace ? vm.constants.getString(_namespace) : null;
@@ -49301,10 +50754,10 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(36
   /* DynamicAttr */
-  , function (vm, _ref28) {
-    var _name = _ref28.op1,
-        trusting = _ref28.op2,
-        _namespace = _ref28.op3;
+  , function (vm, _ref29) {
+    var _name = _ref29.op1,
+        trusting = _ref29.op2,
+        _namespace = _ref29.op3;
     var name = vm.constants.getString(_name);
     var reference = vm.stack.pop();
     var value = reference.value();
@@ -49487,8 +50940,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(71
   /* CurryComponent */
-  , function (vm, _ref29) {
-    var _meta = _ref29.op1;
+  , function (vm, _ref30) {
+    var _meta = _ref30.op1;
     var stack = vm.stack;
     var definition = stack.pop();
     var capturedArgs = stack.pop();
@@ -49498,8 +50951,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(72
   /* PushComponentDefinition */
-  , function (vm, _ref30) {
-    var handle = _ref30.op1;
+  , function (vm, _ref31) {
+    var handle = _ref31.op1;
     var definition = vm.constants.resolveHandle(handle);
     var manager = definition.manager;
     var capabilities = capabilityFlagsFrom(manager.getCapabilities(definition.state));
@@ -49516,8 +50969,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(75
   /* ResolveDynamicComponent */
-  , function (vm, _ref31) {
-    var _meta = _ref31.op1;
+  , function (vm, _ref32) {
+    var _meta = _ref32.op1;
     var stack = vm.stack;
     var component = stack.pop().value();
     var meta = vm.constants.getSerializable(_meta);
@@ -49562,8 +51015,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(74
   /* PushCurriedComponent */
-  , function (vm, _ref32) {
-    (0, _emberBabel.objectDestructuringEmpty)(_ref32);
+  , function (vm, _ref33) {
+    (0, _emberBabel.objectDestructuringEmpty)(_ref33);
     var stack = vm.stack;
     var component = stack.pop().value();
     var definition;
@@ -49578,9 +51031,9 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(76
   /* PushArgs */
-  , function (vm, _ref33) {
-    var _names = _ref33.op1,
-        flags = _ref33.op2;
+  , function (vm, _ref34) {
+    var _names = _ref34.op1,
+        flags = _ref34.op2;
     var stack = vm.stack;
     var names = vm.constants.getStringArray(_names);
     var positionalCount = flags >> 4;
@@ -49608,8 +51061,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(79
   /* PrepareArgs */
-  , function (vm, _ref34) {
-    var _state = _ref34.op1;
+  , function (vm, _ref35) {
+    var _state = _ref35.op1;
     var stack = vm.stack;
     var instance = vm.fetchValue(_state);
     var args = stack.pop();
@@ -49673,9 +51126,9 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(81
   /* CreateComponent */
-  , function (vm, _ref35) {
-    var flags = _ref35.op1,
-        _state = _ref35.op2;
+  , function (vm, _ref36) {
+    var flags = _ref36.op1,
+        _state = _ref36.op2;
     var instance = vm.fetchValue(_state);
     var definition = instance.definition,
         manager = instance.manager;
@@ -49719,8 +51172,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(82
   /* RegisterComponentDestructor */
-  , function (vm, _ref36) {
-    var _state = _ref36.op1;
+  , function (vm, _ref37) {
+    var _state = _ref37.op1;
 
     var _vm$fetchValue = vm.fetchValue(_state),
         manager = _vm$fetchValue.manager,
@@ -49742,10 +51195,10 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(37
   /* ComponentAttr */
-  , function (vm, _ref37) {
-    var _name = _ref37.op1,
-        trusting = _ref37.op2,
-        _namespace = _ref37.op3;
+  , function (vm, _ref38) {
+    var _name = _ref38.op1,
+        trusting = _ref38.op2,
+        _namespace = _ref38.op3;
     var name = vm.constants.getString(_name);
     var reference = vm.stack.pop();
     var namespace = _namespace ? vm.constants.getString(_namespace) : null;
@@ -49758,6 +51211,7 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
     function ComponentElementOperations() {
       this.attributes = (0, _util.dict)();
       this.classes = [];
+      this.modifiers = [];
     }
 
     var _proto18 = ComponentElementOperations.prototype;
@@ -49774,6 +51228,10 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
       }
 
       this.attributes[name] = deferred;
+    };
+
+    _proto18.addModifier = function addModifier(manager, modifier) {
+      this.modifiers.push([manager, modifier]);
     };
 
     _proto18.flush = function flush(vm) {
@@ -49810,6 +51268,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
           vm.updateWith(new UpdateDynamicAttributeOpcode(reference, _attribute));
         }
       }
+
+      return this.modifiers;
     };
 
     return ComponentElementOperations;
@@ -49817,8 +51277,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(93
   /* DidCreateElement */
-  , function (vm, _ref38) {
-    var _state = _ref38.op1;
+  , function (vm, _ref39) {
+    var _state = _ref39.op1;
 
     var _vm$fetchValue2 = vm.fetchValue(_state),
         definition = _vm$fetchValue2.definition,
@@ -49831,8 +51291,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(84
   /* GetComponentSelf */
-  , function (vm, _ref39) {
-    var _state = _ref39.op1;
+  , function (vm, _ref40) {
+    var _state = _ref40.op1;
 
     var _vm$fetchValue3 = vm.fetchValue(_state),
         definition = _vm$fetchValue3.definition,
@@ -49843,8 +51303,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(85
   /* GetComponentTagName */
-  , function (vm, _ref40) {
-    var _state = _ref40.op1;
+  , function (vm, _ref41) {
+    var _state = _ref41.op1;
 
     var _vm$fetchValue4 = vm.fetchValue(_state),
         definition = _vm$fetchValue4.definition,
@@ -49856,8 +51316,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(86
   /* GetComponentLayout */
-  , function (vm, _ref41) {
-    var _state = _ref41.op1;
+  , function (vm, _ref42) {
+    var _state = _ref42.op1;
     var instance = vm.fetchValue(_state);
     var manager = instance.manager,
         definition = instance.definition;
@@ -49894,8 +51354,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(68
   /* Main */
-  , function (vm, _ref42) {
-    var register = _ref42.op1;
+  , function (vm, _ref43) {
+    var register = _ref43.op1;
     var definition = vm.stack.pop();
     var invocation = vm.stack.pop();
     var manager = definition.manager;
@@ -49913,8 +51373,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(89
   /* PopulateLayout */
-  , function (vm, _ref43) {
-    var _state = _ref43.op1;
+  , function (vm, _ref44) {
+    var _state = _ref44.op1;
     var stack = vm.stack;
     var handle = stack.pop();
     var table = stack.pop();
@@ -49924,15 +51384,15 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(21
   /* VirtualRootScope */
-  , function (vm, _ref44) {
-    var _state = _ref44.op1;
+  , function (vm, _ref45) {
+    var _state = _ref45.op1;
     var symbols = vm.fetchValue(_state).table.symbols;
     vm.pushRootScope(symbols.length + 1, true);
   });
   APPEND_OPCODES.add(87
   /* SetupForEval */
-  , function (vm, _ref45) {
-    var _state = _ref45.op1;
+  , function (vm, _ref46) {
+    var _state = _ref46.op1;
     var state = vm.fetchValue(_state);
 
     if (state.table.hasEval) {
@@ -49942,8 +51402,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(2
   /* SetNamedVariables */
-  , function (vm, _ref46) {
-    var _state = _ref46.op1;
+  , function (vm, _ref47) {
+    var _state = _ref47.op1;
     var state = vm.fetchValue(_state);
     var scope = vm.scope();
     var args = vm.stack.peek();
@@ -49971,8 +51431,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(3
   /* SetBlocks */
-  , function (vm, _ref47) {
-    var _state = _ref47.op1;
+  , function (vm, _ref48) {
+    var _state = _ref48.op1;
     var state = vm.fetchValue(_state);
 
     var _vm$stack$peek = vm.stack.peek(),
@@ -49985,15 +51445,15 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(90
   /* InvokeComponentLayout */
-  , function (vm, _ref48) {
-    var _state = _ref48.op1;
+  , function (vm, _ref49) {
+    var _state = _ref49.op1;
     var state = vm.fetchValue(_state);
     vm.call(state.handle);
   });
   APPEND_OPCODES.add(94
   /* DidRenderLayout */
-  , function (vm, _ref49) {
-    var _state = _ref49.op1;
+  , function (vm, _ref50) {
+    var _state = _ref50.op1;
 
     var _vm$fetchValue5 = vm.fetchValue(_state),
         manager = _vm$fetchValue5.manager,
@@ -50141,9 +51601,9 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
   APPEND_OPCODES.add(97
   /* Debugger */
-  , function (vm, _ref50) {
-    var _symbols = _ref50.op1,
-        _evalInfo = _ref50.op2;
+  , function (vm, _ref51) {
+    var _symbols = _ref51.op1,
+        _evalInfo = _ref51.op2;
     var symbols = vm.constants.getStringArray(_symbols);
     var evalInfo = vm.constants.getArray(_evalInfo);
     var inspector = new ScopeInspector(vm.scope(), symbols, evalInfo);
@@ -50153,10 +51613,10 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(95
   /* InvokePartial */
-  , function (vm, _ref51) {
-    var _meta = _ref51.op1,
-        _symbols = _ref51.op2,
-        _evalInfo = _ref51.op3;
+  , function (vm, _ref52) {
+    var _meta = _ref52.op1,
+        _symbols = _ref52.op2,
+        _evalInfo = _ref52.op3;
     var constants = vm.constants,
         resolver = vm.constants.resolver,
         stack = vm.stack;
@@ -50234,8 +51694,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(64
   /* EnterList */
-  , function (vm, _ref52) {
-    var relativeStart = _ref52.op1;
+  , function (vm, _ref53) {
+    var relativeStart = _ref53.op1;
     vm.enterList(relativeStart);
   });
   APPEND_OPCODES.add(65
@@ -50245,8 +51705,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   });
   APPEND_OPCODES.add(67
   /* Iterate */
-  , function (vm, _ref53) {
-    var breaks = _ref53.op1;
+  , function (vm, _ref54) {
+    var breaks = _ref54.op1;
     var stack = vm.stack;
     var item = stack.peek().next();
 
@@ -51200,8 +52660,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
     var _proto36 = Scope.prototype;
 
-    _proto36.init = function init(_ref54) {
-      var self = _ref54.self;
+    _proto36.init = function init(_ref55) {
+      var self = _ref55.self;
       this.slots[0] = self;
       return this;
     };
@@ -51312,13 +52772,13 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
     };
 
     _proto37.scheduleInstallModifier = function scheduleInstallModifier(modifier, manager) {
-      this.scheduledInstallManagers.push(manager);
       this.scheduledInstallModifiers.push(modifier);
+      this.scheduledInstallManagers.push(manager);
     };
 
     _proto37.scheduleUpdateModifier = function scheduleUpdateModifier(modifier, manager) {
-      this.scheduledUpdateModifierManagers.push(manager);
       this.scheduledUpdateModifiers.push(modifier);
+      this.scheduledUpdateModifierManagers.push(manager);
     };
 
     _proto37.didDestroy = function didDestroy(d) {
@@ -51355,8 +52815,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
           scheduledInstallModifiers = this.scheduledInstallModifiers;
 
       for (var _i6 = 0; _i6 < scheduledInstallManagers.length; _i6++) {
-        var _manager3 = scheduledInstallManagers[_i6];
         var modifier = scheduledInstallModifiers[_i6];
+        var _manager3 = scheduledInstallManagers[_i6];
 
         _manager3.install(modifier);
       }
@@ -51365,8 +52825,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
           scheduledUpdateModifiers = this.scheduledUpdateModifiers;
 
       for (var _i7 = 0; _i7 < scheduledUpdateModifierManagers.length; _i7++) {
-        var _manager4 = scheduledUpdateModifierManagers[_i7];
         var _modifier = scheduledUpdateModifiers[_i7];
+        var _manager4 = scheduledUpdateModifierManagers[_i7];
 
         _manager4.update(_modifier);
       }
@@ -51378,9 +52838,9 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   var Environment =
   /*#__PURE__*/
   function () {
-    function Environment(_ref55) {
-      var appendOperations = _ref55.appendOperations,
-          updateOperations = _ref55.updateOperations;
+    function Environment(_ref56) {
+      var appendOperations = _ref56.appendOperations,
+          updateOperations = _ref56.updateOperations;
       this._transaction = null;
       this.appendOperations = appendOperations;
       this.updateOperations = updateOperations;
@@ -51662,6 +53122,7 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
       this.constructing = null;
       this.operations = null;
       this.cursorStack = new _util.Stack();
+      this.modifierStack = new _util.Stack();
       this.blockStack = new _util.Stack();
       this.pushElement(parentNode, nextSibling);
       this.env = env;
@@ -51752,7 +53213,7 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
       return this.dom.createElement(tag, this.element);
     };
 
-    _proto42.flushElement = function flushElement() {
+    _proto42.flushElement = function flushElement(modifiers) {
       var parent = this.element;
       var element = this.constructing;
 
@@ -51760,6 +53221,7 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
       this.constructing = null;
       this.operations = null;
+      this.pushModifiers(modifiers);
       this.pushElement(element, null);
       this.didOpenElement(element);
     };
@@ -51771,6 +53233,7 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
     _proto42.closeElement = function closeElement() {
       this.willCloseElement();
       this.popElement();
+      return this.popModifiers();
     };
 
     _proto42.pushRemoteElement = function pushRemoteElement(element, guid) {
@@ -51792,6 +53255,14 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
     _proto42.pushElement = function pushElement(element, nextSibling) {
       this.cursorStack.push(new Cursor(element, nextSibling));
+    };
+
+    _proto42.pushModifiers = function pushModifiers(modifiers) {
+      this.modifierStack.push(modifiers);
+    };
+
+    _proto42.popModifiers = function popModifiers() {
+      return this.modifierStack.pop();
     };
 
     _proto42.didAddDestroyable = function didAddDestroyable(d) {
@@ -52401,9 +53872,9 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
   var UpdatingVM =
   /*#__PURE__*/
   function () {
-    function UpdatingVM(env, program, _ref56) {
-      var _ref56$alwaysRevalida = _ref56.alwaysRevalidate,
-          alwaysRevalidate = _ref56$alwaysRevalida === void 0 ? false : _ref56$alwaysRevalida;
+    function UpdatingVM(env, program, _ref57) {
+      var _ref57$alwaysRevalida = _ref57.alwaysRevalidate,
+          alwaysRevalidate = _ref57$alwaysRevalida === void 0 ? false : _ref57$alwaysRevalida;
       this.frameStack = new _util.Stack();
       this.env = env;
       this.constants = program.constants;
@@ -52741,11 +54212,11 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
     var _proto55 = RenderResult.prototype;
 
     _proto55.rerender = function rerender() {
-      var _ref57 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      var _ref58 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         alwaysRevalidate: false
       },
-          _ref57$alwaysRevalida = _ref57.alwaysRevalidate,
-          alwaysRevalidate = _ref57$alwaysRevalida === void 0 ? false : _ref57$alwaysRevalida;
+          _ref58$alwaysRevalida = _ref58.alwaysRevalidate,
+          alwaysRevalidate = _ref58$alwaysRevalida === void 0 ? false : _ref58$alwaysRevalida;
 
       var env = this.env,
           program = this.program,
@@ -53496,9 +54967,9 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
       return vm;
     };
 
-    VM.resume = function resume(_ref58, runtime, stack) {
-      var scope = _ref58.scope,
-          dynamicScope = _ref58.dynamicScope;
+    VM.resume = function resume(_ref59, runtime, stack) {
+      var scope = _ref59.scope,
+          dynamicScope = _ref59.dynamicScope;
       return new VM(runtime, scope, dynamicScope, stack);
     };
 
@@ -53816,8 +55287,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
     });
     var blockNames = ['main', 'else', 'attrs']; // Prefix argument names with `@` symbol
 
-    var argNames = argList.map(function (_ref59) {
-      var name = _ref59[0];
+    var argNames = argList.map(function (_ref60) {
+      var name = _ref60[0];
       return "@" + name;
     });
     vm.pushFrame(); // Push blocks on to the stack, three stack values per block
@@ -53828,8 +55299,8 @@ enifed("@glimmer/runtime", ["exports", "ember-babel", "@glimmer/util", "@glimmer
 
     vm.stack.push(null); // For each argument, push its backing reference on to the stack
 
-    argList.forEach(function (_ref60) {
-      var reference = _ref60[1];
+    argList.forEach(function (_ref61) {
+      var reference = _ref61[1];
       vm.stack.push(reference);
     }); // Configure VM based on blocks and args just pushed on to the stack.
 
@@ -54689,7 +56160,7 @@ enifed("@glimmer/wire-format", ["exports"], function (_exports) {
   _exports.is = is;
   _exports.isAttribute = isAttribute;
   _exports.isArgument = isArgument;
-  _exports.Ops = _exports.isMaybeLocal = _exports.isGet = _exports.isFlushElement = void 0;
+  _exports.isMaybeLocal = _exports.isGet = _exports.isFlushElement = _exports.Ops = void 0;
   var Opcodes;
   _exports.Ops = Opcodes;
 
@@ -54703,31 +56174,30 @@ enifed("@glimmer/wire-format", ["exports"], function (_exports) {
     Opcodes[Opcodes["Component"] = 5] = "Component";
     Opcodes[Opcodes["DynamicComponent"] = 6] = "DynamicComponent";
     Opcodes[Opcodes["OpenElement"] = 7] = "OpenElement";
-    Opcodes[Opcodes["OpenSplattedElement"] = 8] = "OpenSplattedElement";
-    Opcodes[Opcodes["FlushElement"] = 9] = "FlushElement";
-    Opcodes[Opcodes["CloseElement"] = 10] = "CloseElement";
-    Opcodes[Opcodes["StaticAttr"] = 11] = "StaticAttr";
-    Opcodes[Opcodes["DynamicAttr"] = 12] = "DynamicAttr";
-    Opcodes[Opcodes["ComponentAttr"] = 13] = "ComponentAttr";
-    Opcodes[Opcodes["AttrSplat"] = 14] = "AttrSplat";
-    Opcodes[Opcodes["Yield"] = 15] = "Yield";
-    Opcodes[Opcodes["Partial"] = 16] = "Partial";
-    Opcodes[Opcodes["DynamicArg"] = 17] = "DynamicArg";
-    Opcodes[Opcodes["StaticArg"] = 18] = "StaticArg";
-    Opcodes[Opcodes["TrustingAttr"] = 19] = "TrustingAttr";
-    Opcodes[Opcodes["TrustingComponentAttr"] = 20] = "TrustingComponentAttr";
-    Opcodes[Opcodes["Debugger"] = 21] = "Debugger";
-    Opcodes[Opcodes["ClientSideStatement"] = 22] = "ClientSideStatement"; // Expressions
+    Opcodes[Opcodes["FlushElement"] = 8] = "FlushElement";
+    Opcodes[Opcodes["CloseElement"] = 9] = "CloseElement";
+    Opcodes[Opcodes["StaticAttr"] = 10] = "StaticAttr";
+    Opcodes[Opcodes["DynamicAttr"] = 11] = "DynamicAttr";
+    Opcodes[Opcodes["ComponentAttr"] = 12] = "ComponentAttr";
+    Opcodes[Opcodes["AttrSplat"] = 13] = "AttrSplat";
+    Opcodes[Opcodes["Yield"] = 14] = "Yield";
+    Opcodes[Opcodes["Partial"] = 15] = "Partial";
+    Opcodes[Opcodes["DynamicArg"] = 16] = "DynamicArg";
+    Opcodes[Opcodes["StaticArg"] = 17] = "StaticArg";
+    Opcodes[Opcodes["TrustingAttr"] = 18] = "TrustingAttr";
+    Opcodes[Opcodes["TrustingComponentAttr"] = 19] = "TrustingComponentAttr";
+    Opcodes[Opcodes["Debugger"] = 20] = "Debugger";
+    Opcodes[Opcodes["ClientSideStatement"] = 21] = "ClientSideStatement"; // Expressions
 
-    Opcodes[Opcodes["Unknown"] = 23] = "Unknown";
-    Opcodes[Opcodes["Get"] = 24] = "Get";
-    Opcodes[Opcodes["MaybeLocal"] = 25] = "MaybeLocal";
-    Opcodes[Opcodes["HasBlock"] = 26] = "HasBlock";
-    Opcodes[Opcodes["HasBlockParams"] = 27] = "HasBlockParams";
-    Opcodes[Opcodes["Undefined"] = 28] = "Undefined";
-    Opcodes[Opcodes["Helper"] = 29] = "Helper";
-    Opcodes[Opcodes["Concat"] = 30] = "Concat";
-    Opcodes[Opcodes["ClientSideExpression"] = 31] = "ClientSideExpression";
+    Opcodes[Opcodes["Unknown"] = 22] = "Unknown";
+    Opcodes[Opcodes["Get"] = 23] = "Get";
+    Opcodes[Opcodes["MaybeLocal"] = 24] = "MaybeLocal";
+    Opcodes[Opcodes["HasBlock"] = 25] = "HasBlock";
+    Opcodes[Opcodes["HasBlockParams"] = 26] = "HasBlockParams";
+    Opcodes[Opcodes["Undefined"] = 27] = "Undefined";
+    Opcodes[Opcodes["Helper"] = 28] = "Helper";
+    Opcodes[Opcodes["Concat"] = 29] = "Concat";
+    Opcodes[Opcodes["ClientSideExpression"] = 30] = "ClientSideExpression";
   })(Opcodes || (_exports.Ops = Opcodes = {}));
 
   function is(variant) {
@@ -54741,7 +56211,7 @@ enifed("@glimmer/wire-format", ["exports"], function (_exports) {
   _exports.isFlushElement = isFlushElement;
 
   function isAttribute(val) {
-    return val[0] === Opcodes.StaticAttr || val[0] === Opcodes.DynamicAttr || val[0] === Opcodes.ComponentAttr || val[0] === Opcodes.TrustingAttr || val[0] === Opcodes.TrustingComponentAttr || val[0] === Opcodes.AttrSplat;
+    return val[0] === Opcodes.StaticAttr || val[0] === Opcodes.DynamicAttr || val[0] === Opcodes.ComponentAttr || val[0] === Opcodes.TrustingAttr || val[0] === Opcodes.TrustingComponentAttr || val[0] === Opcodes.AttrSplat || val[0] === Opcodes.Modifier;
   }
 
   function isArgument(val) {
@@ -56685,6 +58155,12 @@ enifed("ember/index", ["exports", "require", "@ember/-internals/environment", "n
   Ember.compare = _runtime.compare;
   Ember.copy = _runtime.copy;
   Ember.isEqual = _runtime.isEqual;
+
+  if (true
+  /* EMBER_FRAMEWORK_OBJECT_OWNER_ARGUMENT */
+  ) {
+      Ember._setFrameworkClass = _runtime.setFrameworkClass;
+    }
   /**
   @module ember
   */
@@ -56697,6 +58173,7 @@ enifed("ember/index", ["exports", "require", "@ember/-internals/environment", "n
     @static
     @public
   */
+
 
   Ember.inject = function inject() {
     false && !false && (0, EmberDebug.assert)("Injected properties must be created through helpers, see '" + Object.keys(inject).map(function (k) {
@@ -56951,7 +58428,7 @@ enifed("ember/version", ["exports"], function (_exports) {
   "use strict";
 
   _exports.default = void 0;
-  var _default = "3.10.2";
+  var _default = "3.11.0";
   _exports.default = _default;
 });
 /*global enifed, module */
@@ -75830,8 +77307,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "YepyHnQU",
-    "block": "{\"symbols\":[\"panel\"],\"statements\":[[7,\"h1\"],[11,\"class\",\"docs-h1\"],[11,\"data-test-class-name\",\"\"],[9],[1,[25,[\"class\",\"name\"]],false],[10],[0,\"\\n\\n\"],[7,\"div\"],[11,\"data-test-class-description\",\"\"],[9],[1,[25,[\"class\",\"description\"]],true],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[29,\"and\",[[25,[\"class\",\"exportType\"]],[25,[\"showImportPaths\"]]],null],[25,[\"hasToggles\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[25,[\"class\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L9:C9) \"],null]],null,{\"statements\":[[0,\"        Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[1,[29,\"api/x-import-path\",null,[[\"item\"],[[25,[\"class\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L17:C9) \"],null]],null,{\"statements\":[[0,\"        Show\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[0,\"        \"],[1,[29,\"api/x-toggles\",null,[[\"toggles\"],[[29,\"hash\",null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[29,\"if\",[[25,[\"class\",\"hasInherited\"]],[25,[\"showInherited\"]]],null],[29,\"if\",[[25,[\"class\",\"hasProtected\"]],[25,[\"showProtected\"]]],null],[29,\"if\",[[25,[\"class\",\"hasPrivate\"]],[25,[\"showPrivate\"]]],null],[29,\"if\",[[25,[\"class\",\"hasDeprecated\"]],[25,[\"showDeprecated\"]]],null]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasContents\"]]],null,{\"statements\":[[0,\"  \"],[1,[29,\"api/x-sections\",null,[[\"sections\"],[[29,\"hash\",null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[25,[\"class\",\"constructors\"]],[25,[\"class\",\"fields\"]],[25,[\"class\",\"accessors\"]],[25,[\"class\",\"methods\"]]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "JwBvUpNN",
+    "block": "{\"symbols\":[\"panel\"],\"statements\":[[7,\"h1\",true],[10,\"class\",\"docs-h1\"],[10,\"data-test-class-name\",\"\"],[8],[1,[24,[\"class\",\"name\"]],false],[9],[0,\"\\n\\n\"],[7,\"div\",true],[10,\"data-test-class-description\",\"\"],[8],[1,[24,[\"class\",\"description\"]],true],[9],[0,\"\\n\\n\"],[4,\"if\",[[28,\"or\",[[28,\"and\",[[24,[\"class\",\"exportType\"]],[24,[\"showImportPaths\"]]],null],[24,[\"hasToggles\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[24,[\"class\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L9:C9) \"],null]],null,{\"statements\":[[0,\"        Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[1,[28,\"api/x-import-path\",null,[[\"item\"],[[24,[\"class\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"hasToggles\"]]],null,{\"statements\":[[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-class/template.hbs' @ L17:C9) \"],null]],null,{\"statements\":[[0,\"        Show\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"hasToggles\"]]],null,{\"statements\":[[0,\"        \"],[1,[28,\"api/x-toggles\",null,[[\"toggles\"],[[28,\"hash\",null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[28,\"if\",[[24,[\"class\",\"hasInherited\"]],[24,[\"showInherited\"]]],null],[28,\"if\",[[24,[\"class\",\"hasProtected\"]],[24,[\"showProtected\"]]],null],[28,\"if\",[[24,[\"class\",\"hasPrivate\"]],[24,[\"showPrivate\"]]],null],[28,\"if\",[[24,[\"class\",\"hasDeprecated\"]],[24,[\"showDeprecated\"]]],null]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"hasContents\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,\"api/x-sections\",null,[[\"sections\"],[[28,\"hash\",null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[24,[\"class\",\"constructors\"]],[24,[\"class\",\"fields\"]],[24,[\"class\",\"accessors\"]],[24,[\"class\",\"methods\"]]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-class/template.hbs"
     }
@@ -75886,8 +77363,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "4bACXlaq",
-    "block": "{\"symbols\":[\"panel\"],\"statements\":[[7,\"h1\"],[11,\"class\",\"docs-h1\"],[11,\"data-test-component-name\",\"\"],[9],[1,[25,[\"component\",\"name\"]],false],[10],[0,\"\\n\\n\"],[7,\"div\"],[11,\"data-test-component-name\",\"\"],[9],[1,[25,[\"component\",\"description\"]],true],[10],[0,\"\\n\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-component/template.hbs' @ L8:C7) \"],null]],null,{\"statements\":[[0,\"      Show\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"hasToggles\"]]],null,{\"statements\":[[0,\"      \"],[1,[29,\"api/x-toggles\",null,[[\"toggles\",\"onToggle\"],[[29,\"hash\",null,[[\"inherited\",\"internal\",\"protected\",\"private\",\"deprecated\"],[[29,\"if\",[[25,[\"component\",\"hasInherited\"]],[25,[\"showInherited\"]]],null],[29,\"if\",[[25,[\"component\",\"hasInternal\"]],[25,[\"showInternal\"]]],null],[29,\"if\",[[25,[\"component\",\"hasProtected\"]],[25,[\"showProtected\"]]],null],[29,\"if\",[[25,[\"component\",\"hasPrivate\"]],[25,[\"showPrivate\"]]],null],[29,\"if\",[[25,[\"component\",\"hasDeprecated\"]],[25,[\"showDeprecated\"]]],null]]]],[29,\"action\",[[24,0,[]],\"updateFilter\"],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\\n\"],[4,\"if\",[[25,[\"hasContents\"]]],null,{\"statements\":[[0,\"  \"],[1,[29,\"api/x-sections\",null,[[\"sections\"],[[29,\"hash\",null,[[\"constructors\",\"yields\",\"arguments\",\"fields\",\"accessors\",\"methods\"],[[25,[\"constructors\"]],[25,[\"yields\"]],[25,[\"arguments\"]],[25,[\"fields\"]],[25,[\"accessors\"]],[25,[\"methods\"]]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "sEyX35jh",
+    "block": "{\"symbols\":[\"panel\"],\"statements\":[[7,\"h1\",true],[10,\"class\",\"docs-h1\"],[10,\"data-test-component-name\",\"\"],[8],[1,[24,[\"component\",\"name\"]],false],[9],[0,\"\\n\\n\"],[7,\"div\",true],[10,\"data-test-component-name\",\"\"],[8],[1,[24,[\"component\",\"description\"]],true],[9],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"hasToggles\"]]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-component/template.hbs' @ L8:C7) \"],null]],null,{\"statements\":[[0,\"      Show\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"hasToggles\"]]],null,{\"statements\":[[0,\"      \"],[1,[28,\"api/x-toggles\",null,[[\"toggles\",\"onToggle\"],[[28,\"hash\",null,[[\"inherited\",\"internal\",\"protected\",\"private\",\"deprecated\"],[[28,\"if\",[[24,[\"component\",\"hasInherited\"]],[24,[\"showInherited\"]]],null],[28,\"if\",[[24,[\"component\",\"hasInternal\"]],[24,[\"showInternal\"]]],null],[28,\"if\",[[24,[\"component\",\"hasProtected\"]],[24,[\"showProtected\"]]],null],[28,\"if\",[[24,[\"component\",\"hasPrivate\"]],[24,[\"showPrivate\"]]],null],[28,\"if\",[[24,[\"component\",\"hasDeprecated\"]],[24,[\"showDeprecated\"]]],null]]]],[28,\"action\",[[23,0,[]],\"updateFilter\"],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"hasContents\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,\"api/x-sections\",null,[[\"sections\"],[[28,\"hash\",null,[[\"constructors\",\"yields\",\"arguments\",\"fields\",\"accessors\",\"methods\"],[[24,[\"constructors\"]],[24,[\"yields\"]],[24,[\"arguments\"]],[24,[\"fields\"]],[24,[\"accessors\"]],[24,[\"methods\"]]]]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-component/template.hbs"
     }
@@ -75906,8 +77383,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
-      "id": "5XS89d6P",
-      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[7,\"div\"],[11,\"class\",\"import-path docs-mb-6\"],[11,\"data-test-import-path\",\"\"],[9],[0,\"\\n      \"],[7,\"pre\"],[11,\"class\",\"docs-md__code docs-whitespace-no-wrap\"],[9],[0,\"        \"],[7,\"span\"],[11,\"class\",\"hljs-keyword\"],[9],[0,\"import\"],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"eq\",[[25,[\"item\",\"exportType\"]],\"default\"],null]],null,{\"statements\":[[0,\"          \"],[1,[25,[\"item\",\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        { \"],[1,[25,[\"item\",\"name\"]],false],[0,\" }\\n\"]],\"parameters\":[]}],[0,\"\\n        \"],[7,\"span\"],[11,\"class\",\"hljs-keyword\"],[9],[0,\"from\"],[10],[0,\"\\n        \"],[7,\"span\"],[11,\"class\",\"hljs-string\"],[9],[0,\"'\"],[1,[25,[\"item\",\"file\"]],false],[0,\"'\"],[10],[0,\";\\n      \"],[10],[0,\"    \"],[10],[0,\"\\n  \"]],\"hasEval\":false}",
+      "id": "UsevI9nb",
+      "block": "{\"symbols\":[],\"statements\":[[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"import-path docs-mb-6\"],[10,\"data-test-import-path\",\"\"],[8],[0,\"\\n      \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code docs-whitespace-no-wrap\"],[8],[0,\"        \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[28,\"eq\",[[24,[\"item\",\"exportType\"]],\"default\"],null]],null,{\"statements\":[[0,\"          \"],[1,[24,[\"item\",\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        { \"],[1,[24,[\"item\",\"name\"]],false],[0,\" }\\n\"]],\"parameters\":[]}],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'\"],[1,[24,[\"item\",\"file\"]],false],[0,\"'\"],[9],[0,\";\\n      \"],[9],[0,\"    \"],[9],[0,\"\\n  \"]],\"hasEval\":false}",
       "meta": {}
     })
   });
@@ -75925,8 +77402,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
-      "id": "WJArn20f",
-      "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[7,\"div\"],[11,\"class\",\"docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs\"],[9],[0,\"\\n      \"],[15,1,[[29,\"hash\",null,[[\"header\"],[[29,\"component\",[\"api/x-meta-panel/header\"],null]]]]]],[0,\"\\n    \"],[10],[0,\"\\n  \"]],\"hasEval\":false}",
+      "id": "nHHfaHfV",
+      "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs\"],[8],[0,\"\\n      \"],[14,1,[[28,\"hash\",null,[[\"header\"],[[28,\"component\",[\"api/x-meta-panel/header\"],null]]]]]],[0,\"\\n    \"],[9],[0,\"\\n  \"]],\"hasEval\":false}",
       "meta": {}
     })
   });
@@ -75944,8 +77421,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
-      "id": "hPd2YWF0",
-      "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[7,\"h4\"],[11,\"class\",\"docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[9],[0,\"\\n      \"],[15,1],[0,\"\\n    \"],[10],[0,\"\\n  \"]],\"hasEval\":false}",
+      "id": "7knv7NXl",
+      "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[7,\"h4\",true],[10,\"class\",\"docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[8],[0,\"\\n      \"],[14,1],[0,\"\\n    \"],[9],[0,\"\\n  \"]],\"hasEval\":false}",
       "meta": {}
     })
   });
@@ -75976,8 +77453,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "ysEHcRc6",
-    "block": "{\"symbols\":[],\"statements\":[[1,[29,\"api/x-sections\",null,[[\"sections\"],[[29,\"hash\",null,[[\"classes\",\"components\",\"functions\",\"variables\"],[[25,[\"module\",\"classes\"]],[25,[\"module\",\"components\"]],[25,[\"module\",\"functions\"]],[25,[\"module\",\"variables\"]]]]]]]],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "jzA5L3I9",
+    "block": "{\"symbols\":[],\"statements\":[[1,[28,\"api/x-sections\",null,[[\"sections\"],[[28,\"hash\",null,[[\"classes\",\"components\",\"functions\",\"variables\"],[[24,[\"module\",\"classes\"]],[24,[\"module\",\"components\"]],[24,[\"module\",\"functions\"]],[24,[\"module\",\"variables\"]]]]]]]],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-module/template.hbs"
     }
@@ -76029,8 +77506,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "ApCSXm6q",
-    "block": "{\"symbols\":[\"panel\",\"param\"],\"statements\":[[7,\"div\"],[11,\"data-test-item\",\"\"],[11,\"class\",\"docs-pb-8\"],[9],[0,\"\\n  \"],[7,\"h3\"],[12,\"id\",[25,[\"item\",\"name\"]]],[12,\"data-text\",[30,[[25,[\"item\",\"name\"]]]]],[11,\"data-test-item-header\",\"\"],[11,\"class\",\"docs-h3 docs-font-mono docs-font-normal\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"eq\",[[25,[\"item\",\"exportType\"]],\"default\"],null]],null,{\"statements\":[[0,\"      \"],[7,\"span\"],[11,\"class\",\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[9],[0,\"\\n        Default\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[29,\"or\",[[25,[\"item\",\"isClass\"]],[25,[\"item\",\"isComponent\"]]],null]],null,{\"statements\":[[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"hover:underline\",\"docs.api.item\",[29,\"concat\",[\"modules/\",[25,[\"item\",\"id\"]]],null]]],{\"statements\":[[0,\"        \"],[7,\"strong\"],[9],[1,[25,[\"item\",\"name\"]],false],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"a\"],[12,\"href\",[30,[\"#\",[25,[\"item\",\"name\"]]]]],[11,\"class\",\"heading-anchor\"],[9],[0,\"\\n        \"],[1,[29,\"type-signature\",[[25,[\"item\"]]],null],false],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[10],[0,\"\\n\\n  \"],[7,\"p\"],[11,\"data-test-item-description\",\"\"],[9],[0,\"\\n    \"],[1,[25,[\"item\",\"description\"]],true],[0,\"\\n  \"],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[29,\"and\",[[25,[\"item\",\"exportType\"]],[25,[\"showImportPaths\"]]],null],[25,[\"shouldDisplayParams\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[25,[\"item\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L32:C11) \"],null]],null,{\"statements\":[[0,\"          Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[1,[29,\"api/x-import-path\",null,[[\"item\"],[[25,[\"item\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"shouldDisplayParams\"]]],null,{\"statements\":[[4,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L40:C11) \"],null]],null,{\"statements\":[[0,\"          Params\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[7,\"table\"],[11,\"class\",\"docs-mb-6\"],[11,\"data-test-item-params\",\"\"],[9],[0,\"\\n          \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[25,[\"item\",\"params\"]]],null,{\"statements\":[[0,\"              \"],[7,\"tr\"],[11,\"data-test-item-param\",\"\"],[9],[0,\"\\n                \"],[7,\"td\"],[9],[7,\"span\"],[11,\"class\",\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[9],[1,[24,2,[\"name\"]],false],[10],[10],[0,\"\\n                \"],[7,\"td\"],[9],[7,\"span\"],[11,\"class\",\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[9],[1,[24,2,[\"type\"]],false],[10],[10],[0,\"\\n                \"],[7,\"td\"],[11,\"class\",\"docs-pl-2\"],[9],[1,[24,2,[\"description\"]],false],[10],[0,\"\\n              \"],[10],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "o8i4xfOj",
+    "block": "{\"symbols\":[\"panel\",\"param\"],\"statements\":[[7,\"div\",true],[10,\"data-test-item\",\"\"],[10,\"class\",\"docs-pb-8\"],[8],[0,\"\\n  \"],[7,\"h3\",true],[11,\"id\",[24,[\"item\",\"name\"]]],[11,\"data-text\",[29,[[24,[\"item\",\"name\"]]]]],[10,\"data-test-item-header\",\"\"],[10,\"class\",\"docs-h3 docs-font-mono docs-font-normal\"],[8],[0,\"\\n\"],[4,\"if\",[[28,\"eq\",[[24,[\"item\",\"exportType\"]],\"default\"],null]],null,{\"statements\":[[0,\"      \"],[7,\"span\",true],[10,\"class\",\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[8],[0,\"\\n        Default\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[28,\"or\",[[24,[\"item\",\"isClass\"]],[24,[\"item\",\"isComponent\"]]],null]],null,{\"statements\":[[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"hover:underline\",\"docs.api.item\",[28,\"concat\",[\"modules/\",[24,[\"item\",\"id\"]]],null]]],{\"statements\":[[0,\"        \"],[7,\"strong\",true],[8],[1,[24,[\"item\",\"name\"]],false],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"a\",true],[11,\"href\",[29,[\"#\",[24,[\"item\",\"name\"]]]]],[10,\"class\",\"heading-anchor\"],[8],[0,\"\\n        \"],[1,[28,\"type-signature\",[[24,[\"item\"]]],null],false],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[9],[0,\"\\n\\n  \"],[7,\"p\",true],[10,\"data-test-item-description\",\"\"],[8],[0,\"\\n    \"],[1,[24,[\"item\",\"description\"]],true],[0,\"\\n  \"],[9],[0,\"\\n\\n\"],[4,\"if\",[[28,\"or\",[[28,\"and\",[[24,[\"item\",\"exportType\"]],[24,[\"showImportPaths\"]]],null],[24,[\"shouldDisplayParams\"]]],null]],null,{\"statements\":[[4,\"api/x-meta-panel\",null,null,{\"statements\":[[4,\"if\",[[24,[\"item\",\"exportType\"]]],null,{\"statements\":[[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L32:C11) \"],null]],null,{\"statements\":[[0,\"          Import Path\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[1,[28,\"api/x-import-path\",null,[[\"item\"],[[24,[\"item\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"shouldDisplayParams\"]]],null,{\"statements\":[[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"header\"]],\"expected `panel.header` to be a contextual component but found a string. Did you mean `(component panel.header)`? ('ember-cli-addon-docs/components/api/x-section/template.hbs' @ L40:C11) \"],null]],null,{\"statements\":[[0,\"          Params\\n\"]],\"parameters\":[]},null],[0,\"\\n        \"],[7,\"table\",true],[10,\"class\",\"docs-mb-6\"],[10,\"data-test-item-params\",\"\"],[8],[0,\"\\n          \"],[7,\"tbody\",true],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"item\",\"params\"]]],null,{\"statements\":[[0,\"              \"],[7,\"tr\",true],[10,\"data-test-item-param\",\"\"],[8],[0,\"\\n                \"],[7,\"td\",true],[8],[7,\"span\",true],[10,\"class\",\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[8],[1,[23,2,[\"name\"]],false],[9],[9],[0,\"\\n                \"],[7,\"td\",true],[8],[7,\"span\",true],[10,\"class\",\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[8],[1,[23,2,[\"type\"]],false],[9],[9],[0,\"\\n                \"],[7,\"td\",true],[10,\"class\",\"docs-pl-2\"],[8],[1,[23,2,[\"description\"]],false],[9],[0,\"\\n              \"],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"parameters\":[]},null],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-section/template.hbs"
     }
@@ -76049,8 +77526,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = Ember.Component.extend({
     tagName: '',
     layout: Ember.HTMLBars.template({
-      "id": "FTK7NNF+",
-      "block": "{\"symbols\":[\"items\",\"sectionName\",\"item\"],\"statements\":[[0,\"\\n\"],[4,\"each\",[[29,\"-each-in\",[[25,[\"sections\"]]],null]],null,{\"statements\":[[4,\"if\",[[24,1,[]]],null,{\"statements\":[[0,\"        \"],[7,\"section\"],[11,\"data-test-api-section\",\"\"],[11,\"class\",\"item-section\"],[9],[0,\"\\n          \"],[7,\"h2\"],[12,\"data-test-section-header\",[24,2,[]]],[11,\"class\",\"docs-h2\"],[9],[0,\"\\n            \"],[1,[29,\"capitalize\",[[24,2,[]]],null],false],[0,\"\\n          \"],[10],[0,\"\\n\\n\"],[4,\"each\",[[24,1,[]]],null,{\"statements\":[[0,\"            \"],[1,[29,\"api/x-section\",null,[[\"item\"],[[24,3,[]]]]],false],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1,2]},null],[0,\"  \"]],\"hasEval\":false}",
+      "id": "dSSE93Cv",
+      "block": "{\"symbols\":[\"items\",\"sectionName\",\"item\"],\"statements\":[[0,\"\\n\"],[4,\"each\",[[28,\"-each-in\",[[24,[\"sections\"]]],null]],null,{\"statements\":[[4,\"if\",[[23,1,[]]],null,{\"statements\":[[0,\"        \"],[7,\"section\",true],[10,\"data-test-api-section\",\"\"],[10,\"class\",\"item-section\"],[8],[0,\"\\n          \"],[7,\"h2\",true],[11,\"data-test-section-header\",[23,2,[]]],[10,\"class\",\"docs-h2\"],[8],[0,\"\\n            \"],[1,[28,\"capitalize\",[[23,2,[]]],null],false],[0,\"\\n          \"],[9],[0,\"\\n\\n\"],[4,\"each\",[[23,1,[]]],null,{\"statements\":[[0,\"            \"],[1,[28,\"api/x-section\",null,[[\"item\"],[[23,3,[]]]]],false],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1,2]},null],[0,\"  \"]],\"hasEval\":false}",
       "meta": {}
     })
   });
@@ -76081,8 +77558,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "uzGpq+zJ",
-    "block": "{\"symbols\":[\"toggle\",\"key\"],\"statements\":[[7,\"ul\"],[11,\"class\",\"docs-list-reset docs-mb-6\"],[9],[0,\"\\n\"],[4,\"each\",[[29,\"-each-in\",[[25,[\"toggles\"]]],null]],null,{\"statements\":[[4,\"if\",[[29,\"not-eq\",[[24,1,[]],[28]],null]],null,{\"statements\":[[0,\"      \"],[7,\"li\"],[11,\"class\",\"docs-inline docs-ml-4\"],[9],[0,\"\\n        \"],[7,\"label\"],[11,\"data-test-toggle\",\"\"],[9],[0,\"\\n          \"],[7,\"input\"],[12,\"checked\",[24,1,[]]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[25,[\"onToggle\"]],[24,2,[]]],null]],[11,\"class\",\"docs-mr-1\"],[11,\"type\",\"checkbox\"],[9],[10],[0,\"\\n\\n          \"],[1,[29,\"capitalize\",[[24,2,[]]],null],false],[0,\"\\n        \"],[10],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1,2]},null],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "gW3BzcWP",
+    "block": "{\"symbols\":[\"toggle\",\"key\"],\"statements\":[[7,\"ul\",true],[10,\"class\",\"docs-list-reset docs-mb-6\"],[8],[0,\"\\n\"],[4,\"each\",[[28,\"-each-in\",[[24,[\"toggles\"]]],null]],null,{\"statements\":[[4,\"if\",[[28,\"not-eq\",[[23,1,[]],[27]],null]],null,{\"statements\":[[0,\"      \"],[7,\"li\",true],[10,\"class\",\"docs-inline docs-ml-4\"],[8],[0,\"\\n        \"],[7,\"label\",true],[10,\"data-test-toggle\",\"\"],[8],[0,\"\\n          \"],[7,\"input\",true],[11,\"checked\",[23,1,[]]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[24,[\"onToggle\"]],[23,2,[]]],null]],[10,\"class\",\"docs-mr-1\"],[10,\"type\",\"checkbox\"],[8],[9],[0,\"\\n\\n          \"],[1,[28,\"capitalize\",[[23,2,[]]],null],false],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1,2]},null],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/api/x-toggles/template.hbs"
     }
@@ -76244,8 +77721,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "NWu1fozs",
-    "block": "{\"symbols\":[\"snippet\",\"snippet\",\"&default\"],\"statements\":[[7,\"div\"],[12,\"class\",[30,[\"docs-rounded docs-border docs-border-grey-lighter docs-my-8 \",[23,\"class\"]]]],[9],[0,\"\\n\\n  \"],[15,3,[[29,\"hash\",null,[[\"example\",\"snippet\"],[[29,\"component\",[\"docs-demo/x-example\"],null],[29,\"component\",[\"docs-demo/x-snippet\"],[[\"did-init\",\"activeSnippet\"],[[29,\"action\",[[24,0,[]],\"registerSnippet\"],null],[25,[\"activeSnippet\"]]]]]]]]]],[0,\"\\n\\n  \"],[7,\"div\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"and\",[[25,[\"snippets\"]],[29,\"gt\",[[25,[\"snippets\",\"length\"]],1],null]],null]],null,{\"statements\":[[0,\"      \"],[7,\"nav\"],[11,\"class\",\"\\n        docs-demo__snippets-nav docs-py-2 docs-px-4 docs-font-medium\\n        docs-bg-black docs-tracking-tight docs-border-b\\n        docs-border-grey-darkest\\n      \"],[9],[0,\"\\n\"],[4,\"each\",[[25,[\"snippets\"]]],null,{\"statements\":[[0,\"          \"],[7,\"button\"],[12,\"class\",[30,[\"\\n              docs-mr-4 docs-text-xs docs-no-underline outline-none\\n              hover:docs-text-grey-lighter\\n              \",[29,\"if\",[[24,2,[\"isActive\"]],\"docs-text-grey-lighter\",\"docs-text-grey-dark\"],null],\"\\n            \"]]],[9],[0,\"\\n            \"],[1,[24,2,[\"label\"]],false],[0,\"\\n          \"],[3,\"action\",[[24,0,[]],\"selectSnippet\",[24,2,[]]]],[10],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"      \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"each\",[[25,[\"snippets\"]]],null,{\"statements\":[[4,\"if\",[[24,1,[\"isActive\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\"],[11,\"class\",\"\\n          docs-demo__snippet-wrapper docs-bg-code-base docs-rounded-b\\n        \"],[9],[0,\"\\n          \"],[1,[29,\"docs-snippet\",null,[[\"name\",\"unindent\",\"language\"],[[24,1,[\"name\"]],true,[24,1,[\"language\"]]]]],false],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null],[0,\"  \"],[10],[0,\"\\n\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "kqUxAXeg",
+    "block": "{\"symbols\":[\"snippet\",\"snippet\",\"&default\"],\"statements\":[[7,\"div\",true],[11,\"class\",[29,[\"docs-rounded docs-border docs-border-grey-lighter docs-my-8 \",[22,\"class\"]]]],[8],[0,\"\\n\\n  \"],[14,3,[[28,\"hash\",null,[[\"example\",\"snippet\"],[[28,\"component\",[\"docs-demo/x-example\"],null],[28,\"component\",[\"docs-demo/x-snippet\"],[[\"did-init\",\"activeSnippet\"],[[28,\"action\",[[23,0,[]],\"registerSnippet\"],null],[24,[\"activeSnippet\"]]]]]]]]]],[0,\"\\n\\n  \"],[7,\"div\",true],[8],[0,\"\\n\"],[4,\"if\",[[28,\"and\",[[24,[\"snippets\"]],[28,\"gt\",[[24,[\"snippets\",\"length\"]],1],null]],null]],null,{\"statements\":[[0,\"      \"],[7,\"nav\",true],[10,\"class\",\"\\n        docs-demo__snippets-nav docs-py-2 docs-px-4 docs-font-medium\\n        docs-bg-black docs-tracking-tight docs-border-b\\n        docs-border-grey-darkest\\n      \"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"snippets\"]]],null,{\"statements\":[[0,\"          \"],[7,\"button\",false],[12,\"class\",[29,[\"\\n              docs-mr-4 docs-text-xs docs-no-underline outline-none\\n              hover:docs-text-grey-lighter\\n              \",[28,\"if\",[[23,2,[\"isActive\"]],\"docs-text-grey-lighter\",\"docs-text-grey-dark\"],null],\"\\n            \"]]],[3,\"action\",[[23,0,[]],\"selectSnippet\",[23,2,[]]]],[8],[0,\"\\n            \"],[1,[23,2,[\"label\"]],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"      \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"each\",[[24,[\"snippets\"]]],null,{\"statements\":[[4,\"if\",[[23,1,[\"isActive\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"\\n          docs-demo__snippet-wrapper docs-bg-code-base docs-rounded-b\\n        \"],[8],[0,\"\\n          \"],[1,[28,\"docs-snippet\",null,[[\"name\",\"unindent\",\"language\"],[[23,1,[\"name\"]],true,[23,1,[\"language\"]]]]],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null],[0,\"  \"],[9],[0,\"\\n\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-demo/template.hbs"
     }
@@ -76282,8 +77759,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "rcnWg65k",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "+AQqdaef",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-demo/x-example/template.hbs"
     }
@@ -76430,8 +77907,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "uXbu4nX4",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[25,[\"href\"]]],null,{\"statements\":[[0,\"\\n  \"],[7,\"a\"],[12,\"href\",[23,\"href\"]],[12,\"class\",[30,[\"\\n      docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold\\n      docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[29,\"if\",[[25,[\"push\"]],\"docs-ml-auto\"],null],\"\\n    \"]]],[12,\"data-test-id\",[23,\"data-test-id\"]],[9],[0,\"\\n    \"],[15,1],[0,\"\\n  \"],[10],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[25,[\"on-click\"]]],null,{\"statements\":[[0,\"\\n  \"],[7,\"a\"],[11,\"href\",\"#\"],[12,\"class\",[30,[\"\\n      docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold\\n      docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[29,\"if\",[[25,[\"push\"]],\"docs-ml-auto\"],null],\"\\n    \"]]],[12,\"data-test-id\",[23,\"data-test-id\"]],[9],[0,\"\\n    \"],[15,1],[0,\"\\n  \"],[3,\"action\",[[24,0,[]],[25,[\"on-click\"]]]],[10],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"data-test-id\",\"route\"],[[29,\"concat\",[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs\\n      docs-font-bold docs-no-underline \",[29,\"if\",[[29,\"not\",[[29,\"eq\",[[25,[\"route\"]],\"index\"],null]],null],[29,\"if\",[[25,[\"isActive\"]],\"docs-text-brand\",\"docs-text-grey-darkest hover:docs-text-brand\"],null],\"docs-text-grey-darkest\"],null]],null],[25,[\"data-test-id\"]],[25,[\"route\"]]]],{\"statements\":[[0,\"    \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]}]],\"hasEval\":false}",
+    "id": "PZpCfCvY",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[24,[\"href\"]]],null,{\"statements\":[[0,\"\\n  \"],[7,\"a\",true],[11,\"href\",[22,\"href\"]],[11,\"class\",[29,[\"\\n      docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold\\n      docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[28,\"if\",[[24,[\"push\"]],\"docs-ml-auto\"],null],\"\\n    \"]]],[11,\"data-test-id\",[22,\"data-test-id\"]],[8],[0,\"\\n    \"],[14,1],[0,\"\\n  \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[24,[\"on-click\"]]],null,{\"statements\":[[0,\"\\n  \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",[29,[\"\\n      docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold\\n      docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[28,\"if\",[[24,[\"push\"]],\"docs-ml-auto\"],null],\"\\n    \"]]],[12,\"data-test-id\",[22,\"data-test-id\"]],[3,\"action\",[[23,0,[]],[24,[\"on-click\"]]]],[8],[0,\"\\n    \"],[14,1],[0,\"\\n  \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"data-test-id\",\"route\"],[[28,\"concat\",[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs\\n      docs-font-bold docs-no-underline \",[28,\"if\",[[28,\"not\",[[28,\"eq\",[[24,[\"route\"]],\"index\"],null]],null],[28,\"if\",[[24,[\"isActive\"]],\"docs-text-brand\",\"docs-text-grey-darkest hover:docs-text-brand\"],null],\"docs-text-grey-darkest\"],null]],null],[24,[\"data-test-id\"]],[24,[\"route\"]]]],{\"statements\":[[0,\"    \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]}]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/link/template.hbs"
     }
@@ -76502,8 +77979,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "0lcTskuj",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\"],[11,\"class\",\"docs-relative docs-text-grey-darkest\"],[11,\"data-search-box\",\"\"],[9],[0,\"\\n  \"],[1,[29,\"svg-jar\",[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-pin-t docs-h-full docs-ml-1\"]]],false],[0,\"\\n\\n\"],[0,\"  \"],[7,\"input\"],[12,\"oninput\",[29,\"action\",[[24,0,[]],[25,[\"on-input\"]]],[[\"value\"],[\"target.value\"]]]],[12,\"value\",[23,\"query\"]],[12,\"disabled\",[25,[\"fetchProject\",\"isRunning\"]]],[11,\"placeholder\",\"SEARCH\"],[11,\"class\",\"docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter outline-none\"],[11,\"data-search-box-input\",\"\"],[11,\"data-test-search-box-input\",\"\"],[11,\"aria-label\",\"search\"],[11,\"type\",\"text\"],[9],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "Sr2+CIhs",
+    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-relative docs-text-grey-darkest\"],[10,\"data-search-box\",\"\"],[8],[0,\"\\n  \"],[1,[28,\"svg-jar\",[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-pin-t docs-h-full docs-ml-1\"]]],false],[0,\"\\n\\n\"],[0,\"  \"],[7,\"input\",true],[11,\"oninput\",[28,\"action\",[[23,0,[]],[24,[\"on-input\"]]],[[\"value\"],[\"target.value\"]]]],[11,\"value\",[22,\"query\"]],[11,\"disabled\",[24,[\"fetchProject\",\"isRunning\"]]],[10,\"placeholder\",\"SEARCH\"],[10,\"class\",\"docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter outline-none\"],[10,\"data-search-box-input\",\"\"],[10,\"data-test-search-box-input\",\"\"],[10,\"aria-label\",\"search\"],[10,\"type\",\"text\"],[8],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/search-box/template.hbs"
     }
@@ -76640,8 +78117,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "kPaQqmdP",
-    "block": "{\"symbols\":[],\"statements\":[[4,\"link-to\",null,[[\"params\",\"class\"],[[25,[\"linkArgs\"]],[29,\"concat\",[\"docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter \",[29,\"if\",[[25,[\"selected\"]],\"docs-bg-grey-lighter\"],null]],null]]],{\"statements\":[[0,\"  \"],[7,\"div\"],[11,\"class\",\"docs-flex docs-items-center\"],[9],[0,\"\\n    \"],[1,[29,\"svg-jar\",[[25,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[28,28,\"docs-mr-2 docs-flex-no-shrink\"]]],false],[0,\"\\n    \"],[7,\"span\"],[11,\"class\",\"docs-truncate\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"titleMatchesQuery\"]]],null,{\"statements\":[[0,\"        \"],[1,[23,\"highlightedTitle\"],true],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[1,[25,[\"result\",\"document\",\"title\"]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n\\n\"],[4,\"if\",[[29,\"not\",[[25,[\"titleMatchesQuery\"]]],null]],null,{\"statements\":[[0,\"    \"],[7,\"small\"],[11,\"class\",\"docs-text-grey-dark docs-inline-block\"],[9],[0,\"\\n      \"],[1,[23,\"bestMatch\"],true],[0,\"\\n    \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "PUgdYWUe",
+    "block": "{\"symbols\":[],\"statements\":[[4,\"link-to\",null,[[\"params\",\"class\"],[[24,[\"linkArgs\"]],[28,\"concat\",[\"docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter \",[28,\"if\",[[24,[\"selected\"]],\"docs-bg-grey-lighter\"],null]],null]]],{\"statements\":[[0,\"  \"],[7,\"div\",true],[10,\"class\",\"docs-flex docs-items-center\"],[8],[0,\"\\n    \"],[1,[28,\"svg-jar\",[[24,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[28,28,\"docs-mr-2 docs-flex-no-shrink\"]]],false],[0,\"\\n    \"],[7,\"span\",true],[10,\"class\",\"docs-truncate\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"titleMatchesQuery\"]]],null,{\"statements\":[[0,\"        \"],[1,[22,\"highlightedTitle\"],true],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[1,[24,[\"result\",\"document\",\"title\"]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n\"],[4,\"if\",[[28,\"not\",[[24,[\"titleMatchesQuery\"]]],null]],null,{\"statements\":[[0,\"    \"],[7,\"small\",true],[10,\"class\",\"docs-text-grey-dark docs-inline-block\"],[8],[0,\"\\n      \"],[1,[22,\"bestMatch\"],true],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/search-result/template.hbs"
     }
@@ -76820,8 +78297,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Pn5YU8hb",
-    "block": "{\"symbols\":[\"result\",\"index\"],\"statements\":[[4,\"if\",[[29,\"and\",[[25,[\"trimmedQuery\"]],[25,[\"search\",\"isIdle\"]]],null]],null,{\"statements\":[[4,\"modal-dialog\",null,[[\"tetherTarget\",\"attachment\",\"clickOutsideToClose\",\"onClose\",\"targetAttachment\",\"constraints\"],[\"[data-search-box]\",\"top left\",true,[29,\"action\",[[24,0,[]],\"clearSearch\"],null],\"bottom left\",[29,\"array\",[[29,\"hash\",null,[[\"to\",\"attachment\",\"pin\"],[\"window\",\"together\",true]]]],null]]],{\"statements\":[[0,\"\\n    \"],[7,\"ul\"],[11,\"class\",\"docs-w-76 docs-bg-white docs-shadow-md docs-list-reset\"],[11,\"data-test-search-result-list\",\"\"],[9],[0,\"\\n\"],[4,\"each\",[[29,\"take\",[5,[25,[\"searchResults\"]]],null]],null,{\"statements\":[[0,\"        \"],[7,\"li\"],[9],[0,\"\\n          \"],[1,[29,\"docs-header/search-result\",null,[[\"result\",\"query\",\"selected\",\"on-mouse-enter\",\"on-click\"],[[24,1,[]],[25,[\"query\"]],[29,\"eq\",[[24,2,[]],[25,[\"selectedIndex\"]]],null],[29,\"action\",[[24,0,[]],\"selectResult\",[24,2,[]]],null],[29,\"action\",[[24,0,[]],\"clearSearch\"],null]]]],false],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[1,2]},{\"statements\":[[0,\"        \"],[7,\"li\"],[11,\"class\",\"docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline\"],[9],[0,\"\\n          No results.\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[10],[0,\"\\n\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "DDQitWEx",
+    "block": "{\"symbols\":[\"result\",\"index\"],\"statements\":[[4,\"if\",[[28,\"and\",[[24,[\"trimmedQuery\"]],[24,[\"search\",\"isIdle\"]]],null]],null,{\"statements\":[[4,\"modal-dialog\",null,[[\"tetherTarget\",\"attachment\",\"clickOutsideToClose\",\"onClose\",\"targetAttachment\",\"constraints\"],[\"[data-search-box]\",\"top left\",true,[28,\"action\",[[23,0,[]],\"clearSearch\"],null],\"bottom left\",[28,\"array\",[[28,\"hash\",null,[[\"to\",\"attachment\",\"pin\"],[\"window\",\"together\",true]]]],null]]],{\"statements\":[[0,\"\\n    \"],[7,\"ul\",true],[10,\"class\",\"docs-w-76 docs-bg-white docs-shadow-md docs-list-reset\"],[10,\"data-test-search-result-list\",\"\"],[8],[0,\"\\n\"],[4,\"each\",[[28,\"take\",[5,[24,[\"searchResults\"]]],null]],null,{\"statements\":[[0,\"        \"],[7,\"li\",true],[8],[0,\"\\n          \"],[1,[28,\"docs-header/search-result\",null,[[\"result\",\"query\",\"selected\",\"on-mouse-enter\",\"on-click\"],[[23,1,[]],[24,[\"query\"]],[28,\"eq\",[[23,2,[]],[24,[\"selectedIndex\"]]],null],[28,\"action\",[[23,0,[]],\"selectResult\",[23,2,[]]],null],[28,\"action\",[[23,0,[]],\"clearSearch\"],null]]]],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[1,2]},{\"statements\":[[0,\"        \"],[7,\"li\",true],[10,\"class\",\"docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline\"],[8],[0,\"\\n          No results.\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/search-results/template.hbs"
     }
@@ -76838,8 +78315,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "vlFtz2ID",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"header\"],[11,\"class\",\"docs-shadow docs-relative docs-z-40 docs-bg-white\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"docs-flex docs-items-center docs-max-w-site-container docs-mx-auto md:docs-px-2\"],[9],[0,\"\\n\\n\"],[4,\"docs-header/link\",[\"index\"],null,{\"statements\":[[0,\"      \"],[7,\"span\"],[11,\"class\",\"docs-leading-none docs-font-title docs-text-large-2 docs-font-normal docs-normal-case docs-block docs-mr-6\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"prefix\"]]],null,{\"statements\":[[0,\"          \"],[7,\"div\"],[11,\"class\",\"docs-text-xxs\"],[9],[0,\"\\n            \"],[1,[23,\"prefix\"],false],[0,\"\\n          \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"        \"],[1,[23,\"name\"],false],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n    \"],[7,\"div\"],[11,\"class\",\"docs-flex-1 docs-flex docs-items-center docs-overflow-auto docs-overflow-momentum docs-mask-image md:docs-no-mask-image\"],[9],[0,\"\\n\"],[4,\"docs-header/link\",[\"docs\"],null,{\"statements\":[[0,\"        Documentation\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[15,1,[[29,\"hash\",null,[[\"link\"],[[29,\"component\",[\"docs-header/link\"],null]]]]]],[0,\"\\n\\n      \"],[1,[29,\"docs-header/search-box\",null,[[\"query\",\"on-input\"],[[25,[\"query\"]],[29,\"action\",[[24,0,[]],[29,\"mut\",[[25,[\"query\"]]],null]],null]]]],false],[0,\"\\n\\n\"],[4,\"docs-header/link\",null,[[\"on-click\"],[[29,\"action\",[[24,0,[]],[29,\"toggle\",[\"isShowingVersionSelector\",[24,0,[]]],null]],null]]],{\"statements\":[[0,\"        \"],[7,\"span\"],[11,\"data-test-id\",\"current-version\"],[11,\"data-version-selector\",\"\"],[11,\"class\",\"docs-flex docs-items-center\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[29,\"or\",[[29,\"eq\",[[25,[\"currentVersion\",\"key\"]],[25,[\"latestVersionName\"]]],null]],null]],null,{\"statements\":[[4,\"if\",[[25,[\"currentVersion\",\"tag\"]]],null,{\"statements\":[[0,\"              \"],[1,[25,[\"currentVersion\",\"tag\"]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"              Latest\\n\"]],\"parameters\":[]}]],\"parameters\":[]},{\"statements\":[[0,\"            \"],[1,[25,[\"currentVersion\",\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n          \"],[1,[29,\"svg-jar\",[\"caret\"],[[\"height\",\"width\"],[12,12]]],false],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"projectHref\"]]],null,{\"statements\":[[4,\"docs-header/link\",null,[[\"href\"],[[25,[\"projectHref\"]]]],{\"statements\":[[0,\"          \"],[7,\"span\"],[11,\"class\",\"docs-flex\"],[9],[0,\"\\n            \"],[1,[29,\"svg-jar\",[\"github\"],[[\"width\",\"height\"],[24,24]]],false],[0,\"\\n          \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"\\n\"],[0,\"      \"],[7,\"div\"],[11,\"class\",\"docs-h-px docs-px-3 sm:docs-hidden\"],[9],[10],[0,\"\\n    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\\n\"],[4,\"if\",[[25,[\"query\"]]],null,{\"statements\":[[0,\"  \"],[1,[29,\"docs-header/search-results\",null,[[\"query\",\"on-visit\"],[[25,[\"query\"]],[29,\"action\",[[24,0,[]],\"didVisitPage\"],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,[\"isShowingVersionSelector\"]]],null,{\"statements\":[[0,\"  \"],[1,[29,\"docs-header/version-selector\",null,[[\"on-close\"],[[29,\"action\",[[24,0,[]],[29,\"mut\",[[25,[\"isShowingVersionSelector\"]],false],null]],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "Eqnulw02",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"header\",true],[10,\"class\",\"docs-shadow docs-relative docs-z-40 docs-bg-white\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"docs-flex docs-items-center docs-max-w-site-container docs-mx-auto md:docs-px-2\"],[8],[0,\"\\n\\n\"],[4,\"docs-header/link\",[\"index\"],null,{\"statements\":[[0,\"      \"],[7,\"span\",true],[10,\"class\",\"docs-leading-none docs-font-title docs-text-large-2 docs-font-normal docs-normal-case docs-block docs-mr-6\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"prefix\"]]],null,{\"statements\":[[0,\"          \"],[7,\"div\",true],[10,\"class\",\"docs-text-xxs\"],[8],[0,\"\\n            \"],[1,[22,\"prefix\"],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"        \"],[1,[22,\"name\"],false],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-flex-1 docs-flex docs-items-center docs-overflow-auto docs-overflow-momentum docs-mask-image md:docs-no-mask-image\"],[8],[0,\"\\n\"],[4,\"docs-header/link\",[\"docs\"],null,{\"statements\":[[0,\"        Documentation\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[14,1,[[28,\"hash\",null,[[\"link\"],[[28,\"component\",[\"docs-header/link\"],null]]]]]],[0,\"\\n\\n      \"],[1,[28,\"docs-header/search-box\",null,[[\"query\",\"on-input\"],[[24,[\"query\"]],[28,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"query\"]]],null]],null]]]],false],[0,\"\\n\\n\"],[4,\"docs-header/link\",null,[[\"on-click\"],[[28,\"action\",[[23,0,[]],[28,\"toggle\",[\"isShowingVersionSelector\",[23,0,[]]],null]],null]]],{\"statements\":[[0,\"        \"],[7,\"span\",true],[10,\"data-test-id\",\"current-version\"],[10,\"data-version-selector\",\"\"],[10,\"class\",\"docs-flex docs-items-center\"],[8],[0,\"\\n\\n\"],[4,\"if\",[[28,\"or\",[[28,\"eq\",[[24,[\"currentVersion\",\"key\"]],[24,[\"latestVersionName\"]]],null]],null]],null,{\"statements\":[[4,\"if\",[[24,[\"currentVersion\",\"tag\"]]],null,{\"statements\":[[0,\"              \"],[1,[24,[\"currentVersion\",\"tag\"]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"              Latest\\n\"]],\"parameters\":[]}]],\"parameters\":[]},{\"statements\":[[0,\"            \"],[1,[24,[\"currentVersion\",\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n          \"],[1,[28,\"svg-jar\",[\"caret\"],[[\"height\",\"width\"],[12,12]]],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"projectHref\"]]],null,{\"statements\":[[4,\"docs-header/link\",null,[[\"href\"],[[24,[\"projectHref\"]]]],{\"statements\":[[0,\"          \"],[7,\"span\",true],[10,\"class\",\"docs-flex\"],[8],[0,\"\\n            \"],[1,[28,\"svg-jar\",[\"github\"],[[\"width\",\"height\"],[24,24]]],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"\\n\"],[0,\"      \"],[7,\"div\",true],[10,\"class\",\"docs-h-px docs-px-3 sm:docs-hidden\"],[8],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"query\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,\"docs-header/search-results\",null,[[\"query\",\"on-visit\"],[[24,[\"query\"]],[28,\"action\",[[23,0,[]],\"didVisitPage\"],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[24,[\"isShowingVersionSelector\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,\"docs-header/version-selector\",null,[[\"on-close\"],[[28,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"isShowingVersionSelector\"]],false],null]],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/template.hbs"
     }
@@ -76921,8 +78398,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "ZvrAiKcj",
-    "block": "{\"symbols\":[\"version\"],\"statements\":[[4,\"modal-dialog\",null,[[\"tetherTarget\",\"attachment\",\"clickOutsideToClose\",\"onClose\",\"targetAttachment\"],[\"[data-version-selector]\",\"top right\",true,[29,\"action\",[[24,0,[]],[25,[\"on-close\"]]],null],\"bottom right\"]],{\"statements\":[[0,\"  \"],[7,\"ul\"],[11,\"class\",\"docs-list-reset docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10\"],[9],[0,\"\\n\"],[4,\"each\",[[25,[\"sortedVersions\"]]],null,{\"statements\":[[0,\"      \"],[7,\"li\"],[11,\"data-test-id\",\"version\"],[9],[0,\"\\n        \"],[7,\"a\"],[11,\"href\",\"#\"],[12,\"class\",[29,\"concat\",[\"docs-text-black docs-no-underline docs-flex docs-items-center\\n            docs-px-4 docs-py-3 hover:docs-bg-brand hover:docs-text-white group \",[29,\"if\",[[29,\"eq\",[[24,1,[]],[25,[\"sortedVersions\",\"firstObject\"]]],null],\"docs-rounded-t\"],null],[29,\"if\",[[29,\"eq\",[[24,1,[]],[25,[\"sortedVersions\",\"lastObject\"]]],null],\"docs-rounded-b\"],null]],null]],[9],[0,\"\\n          \"],[7,\"span\"],[11,\"class\",\"docs-w-6 flex\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"eq\",[[24,1,[\"key\"]],[25,[\"currentVersion\",\"key\"]]],null]],null,{\"statements\":[[0,\"              \"],[1,[29,\"svg-jar\",[\"check\"],[[\"height\",\"width\"],[16,16]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"          \"],[10],[0,\"\\n          \"],[7,\"span\"],[11,\"class\",\"docs-font-medium\"],[9],[0,\"\\n            \"],[1,[24,1,[\"name\"]],false],[0,\"\\n          \"],[10],[0,\"\\n\\n          \"],[7,\"span\"],[11,\"class\",\"docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"or\",[[29,\"eq\",[[24,1,[\"key\"]],[25,[\"latestVersionName\"]]],null],[29,\"eq\",[[24,1,[\"key\"]],[25,[\"primaryBranch\"]]],null]],null]],null,{\"statements\":[[0,\"              \"],[1,[29,\"svg-jar\",[[29,\"if\",[[24,1,[\"tag\"]],\"git-tag\",\"git-sha\"],null]],[[\"height\",\"width\"],[16,16]]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"              \"],[1,[29,\"svg-jar\",[\"git-sha\"],[[\"height\",\"width\"],[16,16]]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n            \"],[7,\"span\"],[11,\"class\",\"docs-text-xxs docs-font-mono docs-pl-1\"],[9],[0,\"\\n\"],[4,\"if\",[[29,\"or\",[[29,\"eq\",[[24,1,[\"key\"]],[25,[\"latestVersionName\"]]],null],[29,\"eq\",[[24,1,[\"key\"]],[25,[\"primaryBranch\"]]],null]],null]],null,{\"statements\":[[4,\"if\",[[24,1,[\"tag\"]]],null,{\"statements\":[[0,\"                  \"],[1,[24,1,[\"tag\"]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"                  \"],[1,[24,1,[\"truncatedSha\"]],false],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]},{\"statements\":[[0,\"                \"],[1,[24,1,[\"truncatedSha\"]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n        \"],[3,\"action\",[[24,0,[]],\"changeVersion\",[24,1,[]]]],[10],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "qi22XrCJ",
+    "block": "{\"symbols\":[\"version\"],\"statements\":[[4,\"modal-dialog\",null,[[\"tetherTarget\",\"attachment\",\"clickOutsideToClose\",\"onClose\",\"targetAttachment\"],[\"[data-version-selector]\",\"top right\",true,[28,\"action\",[[23,0,[]],[24,[\"on-close\"]]],null],\"bottom right\"]],{\"statements\":[[0,\"  \"],[7,\"ul\",true],[10,\"class\",\"docs-list-reset docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"sortedVersions\"]]],null,{\"statements\":[[0,\"      \"],[7,\"li\",true],[10,\"data-test-id\",\"version\"],[8],[0,\"\\n        \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",[28,\"concat\",[\"docs-text-black docs-no-underline docs-flex docs-items-center\\n            docs-px-4 docs-py-3 hover:docs-bg-brand hover:docs-text-white group \",[28,\"if\",[[28,\"eq\",[[23,1,[]],[24,[\"sortedVersions\",\"firstObject\"]]],null],\"docs-rounded-t\"],null],[28,\"if\",[[28,\"eq\",[[23,1,[]],[24,[\"sortedVersions\",\"lastObject\"]]],null],\"docs-rounded-b\"],null]],null]],[3,\"action\",[[23,0,[]],\"changeVersion\",[23,1,[]]]],[8],[0,\"\\n          \"],[7,\"span\",true],[10,\"class\",\"docs-w-6 flex\"],[8],[0,\"\\n\"],[4,\"if\",[[28,\"eq\",[[23,1,[\"key\"]],[24,[\"currentVersion\",\"key\"]]],null]],null,{\"statements\":[[0,\"              \"],[1,[28,\"svg-jar\",[\"check\"],[[\"height\",\"width\"],[16,16]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"          \"],[9],[0,\"\\n          \"],[7,\"span\",true],[10,\"class\",\"docs-font-medium\"],[8],[0,\"\\n            \"],[1,[23,1,[\"name\"]],false],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"span\",true],[10,\"class\",\"docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100\"],[8],[0,\"\\n\"],[4,\"if\",[[28,\"or\",[[28,\"eq\",[[23,1,[\"key\"]],[24,[\"latestVersionName\"]]],null],[28,\"eq\",[[23,1,[\"key\"]],[24,[\"primaryBranch\"]]],null]],null]],null,{\"statements\":[[0,\"              \"],[1,[28,\"svg-jar\",[[28,\"if\",[[23,1,[\"tag\"]],\"git-tag\",\"git-sha\"],null]],[[\"height\",\"width\"],[16,16]]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"              \"],[1,[28,\"svg-jar\",[\"git-sha\"],[[\"height\",\"width\"],[16,16]]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n            \"],[7,\"span\",true],[10,\"class\",\"docs-text-xxs docs-font-mono docs-pl-1\"],[8],[0,\"\\n\"],[4,\"if\",[[28,\"or\",[[28,\"eq\",[[23,1,[\"key\"]],[24,[\"latestVersionName\"]]],null],[28,\"eq\",[[23,1,[\"key\"]],[24,[\"primaryBranch\"]]],null]],null]],null,{\"statements\":[[4,\"if\",[[23,1,[\"tag\"]]],null,{\"statements\":[[0,\"                  \"],[1,[23,1,[\"tag\"]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"                  \"],[1,[23,1,[\"truncatedSha\"]],false],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]},{\"statements\":[[0,\"                \"],[1,[23,1,[\"truncatedSha\"]],false],[0,\"\\n\"]],\"parameters\":[]}],[0,\"            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-header/version-selector/template.hbs"
     }
@@ -76998,8 +78475,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Z0AqOT63",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\"],[12,\"class\",[30,[\"\\n  docs-bg-brand docs-text-white\\n  docs-px-4 docs-py-16 docs-text-center\\n  \",[23,\"class\"],\"\\n\"]]],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"docs-max-w-sm docs-mx-auto\"],[9],[0,\"\\n    \"],[7,\"h1\"],[11,\"class\",\"\\n      docs-font-title docs-font-normal docs-text-jumbo-1 md:docs-text-jumbo-2 xl:docs-text-jumbo-3\\n      docs-leading-none docs-tracking-tight\\n    \"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"prefix\"]]],null,{\"statements\":[[0,\"        \"],[7,\"span\"],[11,\"class\",\"docs-block docs-text-large-5 md:docs-text-large-6 xl:docs-text-large-7\"],[9],[0,\"\\n          \"],[1,[23,\"prefix\"],false],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[1,[23,\"heading\"],false],[0,\"\\n    \"],[10],[0,\"\\n\\n    \"],[7,\"p\"],[11,\"class\",\"\\n      docs-mt-4 xl:docs-mt-6 docs-mb-2 docs-leading-small docs-mx-auto docs-tracking-tight\\n      docs-text-large-1 md:docs-text-large-2 xl:docs-text-large-3\\n    \"],[9],[0,\"\\n      \"],[1,[23,\"byline\"],false],[0,\"\\n    \"],[10],[0,\"\\n\\n    \"],[7,\"div\"],[11,\"class\",\"docs-mt-8\"],[9],[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"route\"],[\"\\n        docs-no-underline docs-bg-white docs-text-brand docs-text-xs docs-px-3 docs-py-2\\n        docs-rounded docs-mt-4 docs-shadow-md hover:docs-shadow-lg\\n        docs-transition hover:docs-nudge-t docs-font-bold docs-inline-block docs-uppercase\\n      \",\"docs\"]],{\"statements\":[[0,\"        Read the docs\\n\"]],\"parameters\":[]},null],[0,\"    \"],[10],[0,\"\\n\\n    \"],[15,1],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "odKpsp37",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\",true],[11,\"class\",[29,[\"\\n  docs-bg-brand docs-text-white\\n  docs-px-4 docs-py-16 docs-text-center\\n  \",[22,\"class\"],\"\\n\"]]],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"docs-max-w-sm docs-mx-auto\"],[8],[0,\"\\n    \"],[7,\"h1\",true],[10,\"class\",\"\\n      docs-font-title docs-font-normal docs-text-jumbo-1 md:docs-text-jumbo-2 xl:docs-text-jumbo-3\\n      docs-leading-none docs-tracking-tight\\n    \"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"prefix\"]]],null,{\"statements\":[[0,\"        \"],[7,\"span\",true],[10,\"class\",\"docs-block docs-text-large-5 md:docs-text-large-6 xl:docs-text-large-7\"],[8],[0,\"\\n          \"],[1,[22,\"prefix\"],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[1,[22,\"heading\"],false],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"p\",true],[10,\"class\",\"\\n      docs-mt-4 xl:docs-mt-6 docs-mb-2 docs-leading-small docs-mx-auto docs-tracking-tight\\n      docs-text-large-1 md:docs-text-large-2 xl:docs-text-large-3\\n    \"],[8],[0,\"\\n      \"],[1,[22,\"byline\"],false],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-mt-8\"],[8],[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"route\"],[\"\\n        docs-no-underline docs-bg-white docs-text-brand docs-text-xs docs-px-3 docs-py-2\\n        docs-rounded docs-mt-4 docs-shadow-md hover:docs-shadow-lg\\n        docs-transition hover:docs-nudge-t docs-font-bold docs-inline-block docs-uppercase\\n      \",\"docs\"]],{\"statements\":[[0,\"        Read the docs\\n\"]],\"parameters\":[]},null],[0,\"    \"],[9],[0,\"\\n\\n    \"],[14,1],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-hero/template.hbs"
     }
@@ -77075,8 +78552,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "81BHlsJd",
-    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[25,[\"isShowingKeyboardShortcuts\"]]],null,{\"statements\":[[4,\"modal-dialog\",null,[[\"animatable\",\"overlay\",\"wrapperClass\",\"clickOutsideToClose\",\"onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[29,\"action\",[[24,0,[]],\"toggleKeyboardShortcuts\"],null]]],{\"statements\":[[0,\"    \"],[7,\"div\"],[11,\"class\",\"docs-fullscreen-modal__header\"],[9],[0,\"\\n      \"],[7,\"h2\"],[11,\"class\",\"docs-fullscreen-modal__title\"],[9],[0,\"Keyboard shortcuts\"],[10],[0,\"\\n      \"],[7,\"a\"],[11,\"href\",\"#\"],[11,\"class\",\"docs-fullscreen-modal__close-button\"],[9],[0,\"\\n        ×\\n      \"],[3,\"action\",[[24,0,[]],\"toggleKeyboardShortcuts\"]],[10],[0,\"\\n    \"],[10],[0,\"\\n\\n    \"],[7,\"div\"],[11,\"class\",\"docs-fullscreen-modal__body\"],[9],[0,\"\\n      \"],[7,\"table\"],[11,\"class\",\"docs-keyboard-shortcut-modal\"],[9],[0,\"\\n        \"],[7,\"tbody\"],[9],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"th\"],[9],[10],[0,\"\\n            \"],[7,\"th\"],[9],[0,\"\\n              \"],[7,\"h3\"],[11,\"class\",\"docs-fullscreen-modal__subtitle\"],[9],[0,\"Site wide shortcuts\"],[10],[0,\"\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"g\"],[10],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"h\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Go to Home\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"g\"],[10],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"d\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Go to Docs\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"?\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Bring up this help dialog\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"th\"],[9],[10],[0,\"\\n            \"],[7,\"th\"],[9],[0,\"\\n              \"],[7,\"h3\"],[11,\"class\",\"docs-fullscreen-modal__subtitle\"],[9],[0,\"Docs search\"],[10],[0,\"\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"/\"],[10],[0,\"\\n              or\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"s\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Focus search bar\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"ctrl\"],[10],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"n\"],[10],[0,\"\\n              or\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"↓\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Select next search result\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"ctrl\"],[10],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"p\"],[10],[0,\"\\n              or\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"↑\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Select previous search result\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"enter\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Navigate to selected search result\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"th\"],[9],[10],[0,\"\\n            \"],[7,\"th\"],[9],[0,\"\\n              \"],[7,\"h3\"],[11,\"class\",\"docs-fullscreen-modal__subtitle\"],[9],[0,\"Docs nav\"],[10],[0,\"\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"j\"],[10],[0,\"\\n              or\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"→\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Navigate to next page\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"tr\"],[9],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"k\"],[10],[0,\"\\n              or\\n              \"],[7,\"code\"],[11,\"class\",\"docs__keyboard-key\"],[9],[0,\"←\"],[10],[0,\"\\n            \"],[10],[0,\"\\n            \"],[7,\"td\"],[9],[0,\"\\n              Navigate to previous page\\n            \"],[10],[0,\"\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n      \"],[10],[0,\"\\n    \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "p6RwY+yn",
+    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[24,[\"isShowingKeyboardShortcuts\"]]],null,{\"statements\":[[4,\"modal-dialog\",null,[[\"animatable\",\"overlay\",\"wrapperClass\",\"clickOutsideToClose\",\"onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[28,\"action\",[[23,0,[]],\"toggleKeyboardShortcuts\"],null]]],{\"statements\":[[0,\"    \"],[7,\"div\",true],[10,\"class\",\"docs-fullscreen-modal__header\"],[8],[0,\"\\n      \"],[7,\"h2\",true],[10,\"class\",\"docs-fullscreen-modal__title\"],[8],[0,\"Keyboard shortcuts\"],[9],[0,\"\\n      \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",\"docs-fullscreen-modal__close-button\"],[3,\"action\",[[23,0,[]],\"toggleKeyboardShortcuts\"]],[8],[0,\"\\n        ×\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-fullscreen-modal__body\"],[8],[0,\"\\n      \"],[7,\"table\",true],[10,\"class\",\"docs-keyboard-shortcut-modal\"],[8],[0,\"\\n        \"],[7,\"tbody\",true],[8],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Site wide shortcuts\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"g\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"h\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Go to Home\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"g\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"d\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Go to Docs\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"?\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Bring up this help dialog\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Docs search\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"/\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"s\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Focus search bar\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"ctrl\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"n\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"↓\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Select next search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"ctrl\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"p\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"↑\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Select previous search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"enter\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to selected search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Docs nav\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"j\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"→\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to next page\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"k\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"←\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to previous page\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-keyboard-shortcuts/template.hbs"
     }
@@ -77160,8 +78637,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "o278fQ/I",
-    "block": "{\"symbols\":[],\"statements\":[[1,[29,\"svg-jar\",[[25,[\"logo\"]]],[[\"class\"],[\"docs-h-full docs-w-auto docs-max-w-full docs-fill-current\"]]],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "IFndMQcx",
+    "block": "{\"symbols\":[],\"statements\":[[1,[28,\"svg-jar\",[[24,[\"logo\"]]],[[\"class\"],[\"docs-h-full docs-w-auto docs-max-w-full docs-fill-current\"]]],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-logo/template.hbs"
     }
@@ -77272,8 +78749,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "IDnSw70u",
-    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[25,[\"title\"]]],null,{\"statements\":[[0,\"  \"],[7,\"div\"],[11,\"class\",\"\\n    docs-bg-black docs-text-grey-lighter docs-text-xs\\n    docs-font-medium docs-py-2 docs-px-4 docs-rounded-t\\n    docs-border-b docs-border-grey-darkest\\n  \"],[9],[0,\"\\n    \"],[1,[23,\"title\"],false],[0,\"\\n  \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[7,\"div\"],[12,\"class\",[30,[\"\\n    docs-text-sm docs-px-2 docs-py-1 docs-bg-code-base docs-relative\\n    \",[29,\"if\",[[25,[\"title\"]],\"docs-rounded-b\",\"docs-rounded\"],null],\"\\n  \"]]],[12,\"data-test-id\",[23,\"name\"]],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"showCopy\"]]],null,{\"statements\":[[4,\"copy-button\",null,[[\"clipboardText\",\"title\",\"class\"],[[25,[\"snippetText\"]],\"copy to clipboard\",\"\\n        docs-absolute docs-pin-t docs-pin-r docs-bg-transparent hover:docs-bg-transparent\\n        docs-border-none docs-opacity-50 hover:docs-opacity-100 docs-p-3 docs-text-white\\n      \"]],{\"statements\":[[0,\"      Copy\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"\\n  \"],[1,[29,\"code-snippet\",null,[[\"name\",\"language\"],[[25,[\"name\"]],[25,[\"language\"]]]]],false],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "Why8Ikow",
+    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[24,[\"title\"]]],null,{\"statements\":[[0,\"  \"],[7,\"div\",true],[10,\"class\",\"\\n    docs-bg-black docs-text-grey-lighter docs-text-xs\\n    docs-font-medium docs-py-2 docs-px-4 docs-rounded-t\\n    docs-border-b docs-border-grey-darkest\\n  \"],[8],[0,\"\\n    \"],[1,[22,\"title\"],false],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[7,\"div\",true],[11,\"class\",[29,[\"\\n    docs-text-sm docs-px-2 docs-py-1 docs-bg-code-base docs-relative\\n    \",[28,\"if\",[[24,[\"title\"]],\"docs-rounded-b\",\"docs-rounded\"],null],\"\\n  \"]]],[11,\"data-test-id\",[22,\"name\"]],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"showCopy\"]]],null,{\"statements\":[[4,\"copy-button\",null,[[\"clipboardText\",\"title\",\"class\"],[[24,[\"snippetText\"]],\"copy to clipboard\",\"\\n        docs-absolute docs-pin-t docs-pin-r docs-bg-transparent hover:docs-bg-transparent\\n        docs-border-none docs-opacity-50 hover:docs-opacity-100 docs-p-3 docs-text-white\\n      \"]],{\"statements\":[[0,\"      Copy\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"\\n  \"],[1,[28,\"code-snippet\",null,[[\"name\",\"language\"],[[24,[\"name\"]],[24,[\"language\"]]]]],false],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-snippet/template.hbs"
     }
@@ -77332,8 +78809,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "A+Y7CWUX",
-    "block": "{\"symbols\":[],\"statements\":[[1,[29,\"svg-jar\",[[25,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[[25,[\"height\"]],[25,[\"width\"]],\"docs-svg-icon\"]]],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "iEC5D/06",
+    "block": "{\"symbols\":[],\"statements\":[[1,[28,\"svg-jar\",[[24,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[[24,[\"height\"]],[24,[\"width\"]],\"docs-svg-icon\"]]],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-svg-icon/template.hbs"
     }
@@ -77429,8 +78906,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "T6T/wg0v",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\"],[11,\"class\",\"md:docs-flex docs-w-full\"],[9],[0,\"\\n  \"],[15,1,[[29,\"hash\",null,[[\"nav\",\"main\"],[[29,\"component\",[\"docs-viewer/x-nav\"],null],[29,\"component\",[\"docs-viewer/x-main\"],[[\"onReindex\"],[[29,\"action\",[[24,0,[]],[29,\"mut\",[[25,[\"pageIndex\"]]],null]],null]]]]]]]]],[0,\"\\n\\n  \"],[1,[29,\"docs-viewer/x-current-page-index\",null,[[\"pageIndex\"],[[25,[\"pageIndex\"]]]]],false],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "WDK6Srxj",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"md:docs-flex docs-w-full\"],[8],[0,\"\\n  \"],[14,1,[[28,\"hash\",null,[[\"nav\",\"main\"],[[28,\"component\",[\"docs-viewer/x-nav\"],null],[28,\"component\",[\"docs-viewer/x-main\"],[[\"onReindex\"],[[28,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"pageIndex\"]]],null]],null]]]]]]]]],[0,\"\\n\\n  \"],[1,[28,\"docs-viewer/x-current-page-index\",null,[[\"pageIndex\"],[[24,[\"pageIndex\"]]]]],false],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/template.hbs"
     }
@@ -77573,8 +79050,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "E+UMRH/2",
-    "block": "{\"symbols\":[\"subnav\",\"child\"],\"statements\":[[4,\"docs-viewer/x-nav-list\",null,[[\"class\"],[\"docs-ml-4\"]],{\"statements\":[[4,\"docs-viewer/x-section\",null,[[\"style\"],[\"subsection\"]],{\"statements\":[[0,\"    \"],[1,[24,0,[\"node\",\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"each\",[[24,0,[\"node\",\"children\"]]],null,{\"statements\":[[4,\"if\",[[24,2,[\"children\"]]],null,{\"statements\":[[0,\"      \"],[1,[29,\"docs-viewer/x-autogenerated-api-docs/module-nav\",null,[[\"node\",\"root\"],[[24,2,[]],[25,[\"root\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"\\n      \"],[1,[29,\"component\",[[29,\"-assert-implicit-component-helper-argument\",[[24,1,[\"item\"]],\"expected `subnav.item` to be a contextual component but found a string. Did you mean `(component subnav.item)`? ('ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/template.hbs' @ L11:C8) \"],null],[24,2,[\"name\"]],[29,\"concat\",[[25,[\"root\"]],\".api.item\"],null],[29,\"concat\",[\"modules/\",[24,2,[\"id\"]]],null]],null],false],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"hasEval\":false}",
+    "id": "LsJJi00e",
+    "block": "{\"symbols\":[\"subnav\",\"child\"],\"statements\":[[4,\"docs-viewer/x-nav-list\",null,[[\"class\"],[\"docs-ml-4\"]],{\"statements\":[[4,\"docs-viewer/x-section\",null,[[\"style\"],[\"subsection\"]],{\"statements\":[[0,\"    \"],[1,[23,0,[\"node\",\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"each\",[[23,0,[\"node\",\"children\"]]],null,{\"statements\":[[4,\"if\",[[23,2,[\"children\"]]],null,{\"statements\":[[0,\"      \"],[1,[28,\"docs-viewer/x-autogenerated-api-docs/module-nav\",null,[[\"node\",\"root\"],[[23,2,[]],[24,[\"root\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"\\n      \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"item\"]],\"expected `subnav.item` to be a contextual component but found a string. Did you mean `(component subnav.item)`? ('ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/template.hbs' @ L11:C8) \"],null],[23,2,[\"name\"]],[28,\"concat\",[[24,[\"root\"]],\".api.item\"],null],[28,\"concat\",[\"modules/\",[23,2,[\"id\"]]],null]],null],false],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/template.hbs"
     }
@@ -77591,8 +79068,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "7c3JiMmA",
-    "block": "{\"symbols\":[\"section\",\"item\"],\"statements\":[[4,\"if\",[[29,\"gt\",[[25,[\"project\",\"modules\",\"length\"]],0],null]],null,{\"statements\":[[0,\"  \"],[1,[29,\"docs-viewer/x-section\",[\"API Reference\"],[[\"style\"],[\"large\"]]],false],[0,\"\\n\\n\"],[4,\"each\",[[24,0,[\"resolvedTypeSections\"]]],null,{\"statements\":[[0,\"    \"],[1,[29,\"docs-viewer/x-section\",[[24,1,[\"type\"]]],null],false],[0,\"\\n\\n\"],[4,\"each\",[[24,1,[\"items\"]]],null,{\"statements\":[[0,\"      \"],[1,[29,\"docs-viewer/x-nav-item\",[[29,\"break-on\",[[24,2,[\"name\"]],\"/\"],null],[29,\"concat\",[[25,[\"root\"]],\".api.item\"],null],[24,2,[\"path\"]]],null],false],[0,\"\\n\"]],\"parameters\":[2]},null]],\"parameters\":[1]},null],[0,\"\\n\"],[4,\"if\",[[24,0,[\"moduleIndex\"]]],null,{\"statements\":[[0,\"    \"],[1,[29,\"docs-viewer/x-section\",[\"Modules\"],null],false],[0,\"\\n\\n    \"],[1,[29,\"docs-viewer/x-autogenerated-api-docs/module-nav\",null,[[\"node\",\"root\"],[[24,0,[\"moduleIndex\"]],[25,[\"root\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "XWw727vR",
+    "block": "{\"symbols\":[\"section\",\"item\"],\"statements\":[[4,\"if\",[[28,\"gt\",[[24,[\"project\",\"modules\",\"length\"]],0],null]],null,{\"statements\":[[0,\"  \"],[1,[28,\"docs-viewer/x-section\",[\"API Reference\"],[[\"style\"],[\"large\"]]],false],[0,\"\\n\\n\"],[4,\"each\",[[23,0,[\"resolvedTypeSections\"]]],null,{\"statements\":[[0,\"    \"],[1,[28,\"docs-viewer/x-section\",[[23,1,[\"type\"]]],null],false],[0,\"\\n\\n\"],[4,\"each\",[[23,1,[\"items\"]]],null,{\"statements\":[[0,\"      \"],[1,[28,\"docs-viewer/x-nav-item\",[[28,\"break-on\",[[23,2,[\"name\"]],\"/\"],null],[28,\"concat\",[[24,[\"root\"]],\".api.item\"],null],[23,2,[\"path\"]]],null],false],[0,\"\\n\"]],\"parameters\":[2]},null]],\"parameters\":[1]},null],[0,\"\\n\"],[4,\"if\",[[23,0,[\"moduleIndex\"]]],null,{\"statements\":[[0,\"    \"],[1,[28,\"docs-viewer/x-section\",[\"Modules\"],null],false],[0,\"\\n\\n    \"],[1,[28,\"docs-viewer/x-autogenerated-api-docs/module-nav\",null,[[\"node\",\"root\"],[[23,0,[\"moduleIndex\"]],[24,[\"root\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/template.hbs"
     }
@@ -77624,8 +79101,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Avz2gVGf",
-    "block": "{\"symbols\":[\"item\"],\"statements\":[[7,\"nav\"],[11,\"class\",\"AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto\"],[11,\"data-test-current-page-index\",\"\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"docs-sticky docs-pin-t docs-pt-4 docs-pb-8 docs-pr-8 docs-max-h-screen docs-overflow-y-scroll\"],[9],[0,\"\\n    \"],[7,\"ul\"],[11,\"class\",\"docs-list-reset docs-border-l docs-border-grey-lighter docs-pl-6 docs-leading-normal\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"pageIndex\",\"length\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\"],[11,\"class\",\"docs-mt-12 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[9],[0,\"\\n          On This Page\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"each\",[[25,[\"pageIndex\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\"],[12,\"class\",[30,[\"\\n          docs-leading-tight docs-tracking-tight\\n          \",[29,\"if\",[[24,1,[\"indent\"]],[29,\"concat\",[\"docs-ml-\",[24,1,[\"indent\"]]],null]],null],\"\\n          \",[29,\"if\",[[24,1,[\"marginTop\"]],[29,\"concat\",[\"docs-mt-\",[24,1,[\"marginTop\"]]],null]],null],\"\\n          \",[29,\"if\",[[24,1,[\"marginBottom\"]],[29,\"concat\",[\"docs-mt-\",[24,1,[\"marginBottom\"]]],null]],null],\"\\n        \"]]],[11,\"data-test-index-item\",\"\"],[9],[0,\"\\n          \"],[7,\"a\"],[12,\"href\",[30,[\"#\",[24,1,[\"id\"]]]]],[12,\"class\",[30,[\"docs-text-grey-dark docs-font-semibold docs-no-underline hover:docs-underline docs-text-\",[24,1,[\"size\"]]]]],[9],[0,\"\\n            \"],[1,[24,1,[\"text\"]],false],[0,\"\\n            \"],[10],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "McvkQ6iH",
+    "block": "{\"symbols\":[\"item\"],\"statements\":[[7,\"nav\",true],[10,\"class\",\"AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto\"],[10,\"data-test-current-page-index\",\"\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"docs-sticky docs-pin-t docs-pt-4 docs-pb-8 docs-pr-8 docs-max-h-screen docs-overflow-y-scroll\"],[8],[0,\"\\n    \"],[7,\"ul\",true],[10,\"class\",\"docs-list-reset docs-border-l docs-border-grey-lighter docs-pl-6 docs-leading-normal\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"pageIndex\",\"length\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\",true],[10,\"class\",\"docs-mt-12 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[8],[0,\"\\n          On This Page\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"each\",[[24,[\"pageIndex\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\",true],[11,\"class\",[29,[\"\\n          docs-leading-tight docs-tracking-tight\\n          \",[28,\"if\",[[23,1,[\"indent\"]],[28,\"concat\",[\"docs-ml-\",[23,1,[\"indent\"]]],null]],null],\"\\n          \",[28,\"if\",[[23,1,[\"marginTop\"]],[28,\"concat\",[\"docs-mt-\",[23,1,[\"marginTop\"]]],null]],null],\"\\n          \",[28,\"if\",[[23,1,[\"marginBottom\"]],[28,\"concat\",[\"docs-mt-\",[23,1,[\"marginBottom\"]]],null]],null],\"\\n        \"]]],[10,\"data-test-index-item\",\"\"],[8],[0,\"\\n          \"],[7,\"a\",true],[11,\"href\",[29,[\"#\",[23,1,[\"id\"]]]]],[11,\"class\",[29,[\"docs-text-grey-dark docs-font-semibold docs-no-underline hover:docs-underline docs-text-\",[23,1,[\"size\"]]]]],[8],[0,\"\\n            \"],[1,[23,1,[\"text\"]],false],[0,\"\\n            \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-current-page-index/template.hbs"
     }
@@ -77744,8 +79221,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "qesE4YLR",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\"],[11,\"data-current-page-index-target\",\"\"],[9],[0,\"\\n  \"],[15,1],[0,\"\\n\\n\"],[4,\"if\",[[25,[\"editCurrentPageUrl\"]]],null,{\"statements\":[[0,\"    \"],[7,\"div\"],[11,\"class\",\"docs-mt-16 docs-mb-8\"],[11,\"data-test-edit-page-link\",\"\"],[9],[0,\"\\n      \"],[7,\"a\"],[12,\"href\",[23,\"editCurrentPageUrl\"]],[11,\"class\",\"docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs\\n        hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest\"],[9],[0,\"\\n        Edit this page\\n      \"],[10],[0,\"\\n    \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[10],[0,\"\\n\\n\"],[7,\"div\"],[11,\"class\",\"docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"docs-w-1/2\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"docsRoutes\",\"previous\"]]],null,{\"statements\":[[0,\"      \"],[7,\"div\"],[11,\"class\",\"docs-text-xs docs-text-grey-dark\"],[9],[0,\"\\n        Previous\\n      \"],[10],[0,\"\\n\"],[4,\"link-to\",null,[[\"params\",\"class\"],[[25,[\"docsRoutes\",\"previous\",\"route\"]],\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline\\n        docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],{\"statements\":[[0,\"        \"],[1,[25,[\"docsRoutes\",\"previous\",\"label\"]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"  \"],[10],[0,\"\\n\\n  \"],[7,\"div\"],[11,\"class\",\"docs-w-1/2 docs-text-right\"],[11,\"data-test-next-link\",\"\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"docsRoutes\",\"next\"]]],null,{\"statements\":[[0,\"      \"],[7,\"div\"],[11,\"class\",\"docs-text-xs docs-text-grey-dark\"],[9],[0,\"\\n        Next\\n      \"],[10],[0,\"\\n\"],[4,\"link-to\",null,[[\"params\",\"class\"],[[25,[\"docsRoutes\",\"next\",\"route\"]],\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline\\n        docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],{\"statements\":[[0,\"        \"],[1,[25,[\"docsRoutes\",\"next\",\"label\"]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "QSCLcB5P",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\",true],[10,\"data-current-page-index-target\",\"\"],[8],[0,\"\\n  \"],[14,1],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"editCurrentPageUrl\"]]],null,{\"statements\":[[0,\"    \"],[7,\"div\",true],[10,\"class\",\"docs-mt-16 docs-mb-8\"],[10,\"data-test-edit-page-link\",\"\"],[8],[0,\"\\n      \"],[7,\"a\",true],[11,\"href\",[22,\"editCurrentPageUrl\"]],[10,\"class\",\"docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs\\n        hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest\"],[8],[0,\"\\n        Edit this page\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[9],[0,\"\\n\\n\"],[7,\"div\",true],[10,\"class\",\"docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"docs-w-1/2\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"docsRoutes\",\"previous\"]]],null,{\"statements\":[[0,\"      \"],[7,\"div\",true],[10,\"class\",\"docs-text-xs docs-text-grey-dark\"],[8],[0,\"\\n        Previous\\n      \"],[9],[0,\"\\n\"],[4,\"link-to\",null,[[\"params\",\"class\"],[[24,[\"docsRoutes\",\"previous\",\"route\"]],\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline\\n        docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],{\"statements\":[[0,\"        \"],[1,[24,[\"docsRoutes\",\"previous\",\"label\"]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"docs-w-1/2 docs-text-right\"],[10,\"data-test-next-link\",\"\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"docsRoutes\",\"next\"]]],null,{\"statements\":[[0,\"      \"],[7,\"div\",true],[10,\"class\",\"docs-text-xs docs-text-grey-dark\"],[8],[0,\"\\n        Next\\n      \"],[9],[0,\"\\n\"],[4,\"link-to\",null,[[\"params\",\"class\"],[[24,[\"docsRoutes\",\"next\",\"route\"]],\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline\\n        docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],{\"statements\":[[0,\"        \"],[1,[24,[\"docsRoutes\",\"next\",\"label\"]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-main/template.hbs"
     }
@@ -77795,8 +79272,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Bds2k1kD",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"li\"],[11,\"class\",\"docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"model\"]]],null,{\"statements\":[[4,\"link-to\",null,[[\"class\",\"activeClass\",\"data-test-id\",\"data-test-label\",\"route\",\"model\"],[\"docs-text-grey-darker docs-no-underline hover:docs-underline\",\"docs-text-brand docs-font-medium\",\"nav-item\",[25,[\"label\"]],[25,[\"route\"]],[25,[\"model\"]]]],{\"statements\":[[0,\"      \"],[1,[23,\"label\"],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[4,\"link-to\",null,[[\"class\",\"activeClass\",\"data-test-id\",\"data-test-label\",\"route\"],[\"docs-text-grey-darker docs-no-underline hover:docs-underline\",\"docs-text-brand docs-font-medium\",\"nav-item\",[25,[\"label\"]],[25,[\"route\"]]]],{\"statements\":[[0,\"      \"],[1,[23,\"label\"],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]}],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "HQEyS3Xr",
+    "block": "{\"symbols\":[],\"statements\":[[7,\"li\",true],[10,\"class\",\"docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"model\"]]],null,{\"statements\":[[4,\"link-to\",null,[[\"class\",\"activeClass\",\"data-test-id\",\"data-test-label\",\"route\",\"model\"],[\"docs-text-grey-darker docs-no-underline hover:docs-underline\",\"docs-text-brand docs-font-medium\",\"nav-item\",[24,[\"label\"]],[24,[\"route\"]],[24,[\"model\"]]]],{\"statements\":[[0,\"      \"],[1,[22,\"label\"],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[4,\"link-to\",null,[[\"class\",\"activeClass\",\"data-test-id\",\"data-test-label\",\"route\"],[\"docs-text-grey-darker docs-no-underline hover:docs-underline\",\"docs-text-brand docs-font-medium\",\"nav-item\",[24,[\"label\"]],[24,[\"route\"]]]],{\"statements\":[[0,\"      \"],[1,[22,\"label\"],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]}],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav-item/template.hbs"
     }
@@ -77816,8 +79293,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     tagName: 'ul',
     classNames: ['docs-list-reset'],
     layout: Ember.HTMLBars.template({
-      "id": "vJoodqVx",
-      "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[15,1,[[29,\"hash\",null,[[\"item\"],[[29,\"component\",[\"docs-viewer/x-nav-item\"],null]]]]]],[0,\"\\n  \"]],\"hasEval\":false}",
+      "id": "/vQ/4aed",
+      "block": "{\"symbols\":[\"&default\"],\"statements\":[[0,\"\\n    \"],[14,1,[[28,\"hash\",null,[[\"item\"],[[28,\"component\",[\"docs-viewer/x-nav-item\"],null]]]]]],[0,\"\\n  \"]],\"hasEval\":false}",
       "meta": {}
     })
   });
@@ -77863,8 +79340,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "sB1JGlGI",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[25,[\"media\",\"isMobile\"]]],null,{\"statements\":[[0,\"  \"],[7,\"div\"],[11,\"class\",\"docs-text-right docs-px-4 md:docs-px-6 docs-mt-4\"],[9],[0,\"\\n    \"],[7,\"button\"],[11,\"class\",\"docs-text-grey-darkest docs-py-2 docs-text-xs docs-rounded docs-uppercase docs-font-medium\"],[9],[0,\"\\n      ☰ Menu\\n    \"],[3,\"action\",[[24,0,[]],[29,\"toggle\",[\"isShowingMenu\",[24,0,[]]],null]]],[10],[0,\"\\n  \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[7,\"div\"],[11,\"class\",\"AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink\"],[9],[0,\"\\n  \"],[7,\"nav\"],[12,\"onclick\",[29,\"action\",[[24,0,[]],[29,\"mut\",[[25,[\"isShowingMenu\"]]],null],false],null]],[12,\"class\",[30,[\"\\n      docs-absolute docs-pin-r md:docs-relative docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2\\n      docs-max-w-xs docs-w-90% md:docs-w-72 docs-z-10 docs-transition md:docs-sticky md:docs-pin-t\\n      \",[29,\"if\",[[25,[\"media\",\"isMobile\"]],[29,\"if\",[[25,[\"isShowingMenu\"]],\"docs-opacity-100 docs-bg-white\",\"docs-opacity-0 docs-pointer-events-none\"],null]],null],\"\\n    \"]]],[9],[0,\"\\n    \"],[7,\"div\"],[11,\"class\",\"docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll\"],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"media\",\"isMobile\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\"],[11,\"class\",\"docs-text-right\"],[9],[0,\"\\n          \"],[7,\"button\"],[12,\"onclick\",[29,\"action\",[[24,0,[]],[29,\"mut\",[[25,[\"isShowingMenu\"]]],null],false],null]],[11,\"class\",\"docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline\"],[9],[0,\"\\n            ×\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"docs-viewer/x-nav-list\",null,null,{\"statements\":[[0,\"        \"],[15,1,[[29,\"hash\",null,[[\"section\",\"item\",\"subnav\"],[[29,\"component\",[\"docs-viewer/x-section\"],null],[29,\"component\",[\"docs-viewer/x-nav-item\"],null],[29,\"component\",[\"docs-viewer/x-nav-list\"],[[\"class\"],[\"docs-ml-4\"]]]]]]]],[0,\"\\n\\n        \"],[1,[29,\"docs-viewer/x-autogenerated-api-docs\",null,[[\"root\",\"project\"],[[25,[\"root\"]],[25,[\"project\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[7,\"div\"],[11,\"class\",\"docs-mt-16 lg:docs-mb-16 docs-mr-2 docs-text-xxs docs-rounded\"],[9],[0,\"\\n        \"],[7,\"a\"],[11,\"href\",\"https://github.com/ember-learn/ember-cli-addon-docs\"],[11,\"class\",\"docs-opacity-50 hover:docs-opacity-100 docs-transition docs-no-underline\\n          docs-text-inherit docs-flex docs-items-center docs-text-grey-darkest\"],[9],[0,\"\\n          \"],[1,[29,\"svg-jar\",[\"addon-docs-pen\"],[[\"width\",\"height\",\"class\"],[22,16,\"docs-mr-2\"]]],false],[0,\"\\n          \"],[7,\"div\"],[9],[0,\"\\n            Powered by\\n            \"],[7,\"span\"],[11,\"class\",\"docs-font-bold\"],[9],[0,\"AddonDocs\"],[10],[0,\"\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n      \"],[10],[0,\"\\n    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "BecIx3Ol",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[24,[\"media\",\"isMobile\"]]],null,{\"statements\":[[0,\"  \"],[7,\"div\",true],[10,\"class\",\"docs-text-right docs-px-4 md:docs-px-6 docs-mt-4\"],[8],[0,\"\\n    \"],[7,\"button\",false],[12,\"class\",\"docs-text-grey-darkest docs-py-2 docs-text-xs docs-rounded docs-uppercase docs-font-medium\"],[3,\"action\",[[23,0,[]],[28,\"toggle\",[\"isShowingMenu\",[23,0,[]]],null]]],[8],[0,\"\\n      ☰ Menu\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink\"],[8],[0,\"\\n  \"],[7,\"nav\",true],[11,\"onclick\",[28,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"isShowingMenu\"]]],null],false],null]],[11,\"class\",[29,[\"\\n      docs-absolute docs-pin-r md:docs-relative docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2\\n      docs-max-w-xs docs-w-90% md:docs-w-72 docs-z-10 docs-transition md:docs-sticky md:docs-pin-t\\n      \",[28,\"if\",[[24,[\"media\",\"isMobile\"]],[28,\"if\",[[24,[\"isShowingMenu\"]],\"docs-opacity-100 docs-bg-white\",\"docs-opacity-0 docs-pointer-events-none\"],null]],null],\"\\n    \"]]],[8],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"media\",\"isMobile\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"docs-text-right\"],[8],[0,\"\\n          \"],[7,\"button\",true],[11,\"onclick\",[28,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"isShowingMenu\"]]],null],false],null]],[10,\"class\",\"docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline\"],[8],[0,\"\\n            ×\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"docs-viewer/x-nav-list\",null,null,{\"statements\":[[0,\"        \"],[14,1,[[28,\"hash\",null,[[\"section\",\"item\",\"subnav\"],[[28,\"component\",[\"docs-viewer/x-section\"],null],[28,\"component\",[\"docs-viewer/x-nav-item\"],null],[28,\"component\",[\"docs-viewer/x-nav-list\"],[[\"class\"],[\"docs-ml-4\"]]]]]]]],[0,\"\\n\\n        \"],[1,[28,\"docs-viewer/x-autogenerated-api-docs\",null,[[\"root\",\"project\"],[[24,[\"root\"]],[24,[\"project\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"docs-mt-16 lg:docs-mb-16 docs-mr-2 docs-text-xxs docs-rounded\"],[8],[0,\"\\n        \"],[7,\"a\",true],[10,\"href\",\"https://github.com/ember-learn/ember-cli-addon-docs\"],[10,\"class\",\"docs-opacity-50 hover:docs-opacity-100 docs-transition docs-no-underline\\n          docs-text-inherit docs-flex docs-items-center docs-text-grey-darkest\"],[8],[0,\"\\n          \"],[1,[28,\"svg-jar\",[\"addon-docs-pen\"],[[\"width\",\"height\",\"class\"],[22,16,\"docs-mr-2\"]]],false],[0,\"\\n          \"],[7,\"div\",true],[8],[0,\"\\n            Powered by\\n            \"],[7,\"span\",true],[10,\"class\",\"docs-font-bold\"],[8],[0,\"AddonDocs\"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav/template.hbs"
     }
@@ -77899,8 +79376,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "ECEw2U1s",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"li\"],[12,\"class\",[30,[\"\\n  \",[29,\"if\",[[29,\"eq\",[[25,[\"style\"]],\"regular\"],null],\"docs-mt-8 docs-capitalize\"],null],\"\\n  \",[29,\"if\",[[29,\"eq\",[[25,[\"style\"]],\"large\"],null],\"docs-mt-8 docs--mb-4 docs-text-xs docs-uppercase\"],null],\"\\n  \",[29,\"if\",[[29,\"eq\",[[25,[\"style\"]],\"subsection\"],null],\"docs-mt-2 docs-text-sm\"],null],\"\\n\"]]],[9],[0,\"\\n\"],[4,\"if\",[[26,1]],null,{\"statements\":[[0,\"    \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[1,[23,\"label\"],false],[0,\"\\n\"]],\"parameters\":[]}],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "j/AEfgdP",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"li\",true],[11,\"class\",[29,[\"\\n  \",[28,\"if\",[[28,\"eq\",[[24,[\"style\"]],\"regular\"],null],\"docs-mt-8 docs-capitalize\"],null],\"\\n  \",[28,\"if\",[[28,\"eq\",[[24,[\"style\"]],\"large\"],null],\"docs-mt-8 docs--mb-4 docs-text-xs docs-uppercase\"],null],\"\\n  \",[28,\"if\",[[28,\"eq\",[[24,[\"style\"]],\"subsection\"],null],\"docs-mt-2 docs-text-sm\"],null],\"\\n\"]]],[8],[0,\"\\n\"],[4,\"if\",[[25,1]],null,{\"statements\":[[0,\"    \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[1,[22,\"label\"],false],[0,\"\\n\"]],\"parameters\":[]}],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-section/template.hbs"
     }
@@ -80551,8 +82028,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "q8IUBsR3",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "AUy1vOYA",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-clipboard/templates/components/copy-button.hbs"
     }
@@ -81214,6 +82691,88 @@ lunr.QueryParser.parseBoost = function (parser) {
     return src;
   }
 });
+;define("ember-code-snippet/components/code-snippet", ["exports", "ember-code-snippet/templates/components/code-snippet"], function (_exports, _codeSnippet) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var Highlight = self.require('highlight.js');
+
+  var _default = Ember.Component.extend({
+    layout: _codeSnippet.default,
+    tagName: 'pre',
+    classNameBindings: ['language'],
+    unindent: true,
+    _unindent: function _unindent(src) {
+      if (!this.get('unindent')) {
+        return src;
+      }
+
+      var match, min;
+      var lines = src.match(/[^\r\n]+/g); // Split in non-empty lines (both linux + windows)
+
+      for (var i = 0; i < lines.length; i++) {
+        match = /^[ \t]*/.exec(lines[i]);
+
+        if (match && (typeof min === 'undefined' || min > match[0].length)) {
+          min = match[0].length;
+        }
+      }
+
+      if (typeof min !== 'undefined' && min > 0) {
+        src = src.replace(new RegExp("^[ \t]{" + min + "}", 'gm'), "");
+      }
+
+      return src;
+    },
+    source: Ember.computed('name', function () {
+      var snippet = this.get('name').split('/').reduce(function (dir, name) {
+        return dir && dir[name];
+      }, this.snippets);
+      return this._unindent((snippet || "").replace(/^(\s*\n)*/, '') // note: \s already matches \r, no need to check for [whitespace]\r\n
+      .replace(/\s*$/, ''));
+    }),
+    didInsertElement: function didInsertElement() {
+      Highlight.highlightBlock(this.get('element'));
+    },
+    language: Ember.computed('name', function () {
+      var m = /\.(\w+)$/i.exec(this.get('name'));
+
+      if (m) {
+        switch (m[1].toLowerCase()) {
+          case 'js':
+            return 'javascript';
+
+          case 'coffee':
+            return 'coffeescript';
+
+          case 'hbs':
+            return 'htmlbars';
+
+          case 'css':
+            return 'css';
+
+          case 'scss':
+            return 'scss';
+
+          case 'less':
+            return 'less';
+
+          case 'emblem':
+            return 'emblem';
+
+          case 'ts':
+            return 'typescript';
+        }
+      }
+    })
+  });
+
+  _exports.default = _default;
+});
 ;define("ember-code-snippet/helpers/get-code-snippet", ["exports", "ember-code-snippet"], function (_exports, _emberCodeSnippet) {
   "use strict";
 
@@ -81290,6 +82849,24 @@ lunr.QueryParser.parseBoost = function (parser) {
     "format-relative.hbs": "{{format-relative yesterday}}\n{{format-relative instant}}\n{{format-relative now interval=1000}}\n",
     "format-time.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n"
   };
+  _exports.default = _default;
+});
+;define("ember-code-snippet/templates/components/code-snippet", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "Zxcn1XqU",
+    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"source\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "meta": {
+      "moduleName": "ember-code-snippet/templates/components/code-snippet.hbs"
+    }
+  });
+
   _exports.default = _default;
 });
 ;define("ember-component-css/initializers/component-styles", ["exports", "ember-component-css/pod-names"], function (_exports, _podNames) {
@@ -113227,8 +114804,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "AB0aWmcN",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"ember-wormhole\",null,[[\"to\"],[[25,[\"destinationElementId\"]]]],{\"statements\":[[4,\"if\",[[25,[\"isOverlaySibling\"]]],null,{\"statements\":[[0,\"    \"],[7,\"div\"],[12,\"class\",[30,[[23,\"wrapperClassNamesString\"],\" \",[23,\"wrapperClass\"]]]],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\"],[12,\"class\",[23,\"overlayClassNamesString\"]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[25,[\"onClickOverlay\"]]],null]],[11,\"tabindex\",\"-1\"],[11,\"data-emd-overlay\",\"\"],[9],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[4,\"ember-modal-dialog-positioned-container\",null,[[\"class\",\"targetAttachment\",\"target\"],[[25,[\"containerClassNamesString\"]],[25,[\"targetAttachment\"]],[25,[\"legacyTarget\"]]]],{\"statements\":[[0,\"        \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"    \"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[7,\"div\"],[12,\"class\",[30,[[23,\"wrapperClassNamesString\"],\" \",[23,\"wrapperClass\"]]]],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\"],[12,\"class\",[23,\"overlayClassNamesString\"]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[29,\"ignore-children\",[[25,[\"onClickOverlay\"]]],null]],null]],[11,\"tabindex\",\"-1\"],[11,\"data-emd-overlay\",\"\"],[9],[0,\"\\n\"],[4,\"ember-modal-dialog-positioned-container\",null,[[\"class\",\"targetAttachment\",\"target\"],[[25,[\"containerClassNamesString\"]],[25,[\"targetAttachment\"]],[25,[\"legacyTarget\"]]]],{\"statements\":[[0,\"            \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"        \"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"ember-modal-dialog-positioned-container\",null,[[\"class\",\"targetAttachment\",\"target\"],[[25,[\"containerClassNamesString\"]],[25,[\"targetAttachment\"]],[25,[\"legacyTarget\"]]]],{\"statements\":[[0,\"          \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]}],[0,\"    \"],[10],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "O825K3hU",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"ember-wormhole\",null,[[\"to\"],[[24,[\"destinationElementId\"]]]],{\"statements\":[[4,\"if\",[[24,[\"isOverlaySibling\"]]],null,{\"statements\":[[0,\"    \"],[7,\"div\",true],[11,\"class\",[29,[[22,\"wrapperClassNamesString\"],\" \",[22,\"wrapperClass\"]]]],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[22,\"overlayClassNamesString\"]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[24,[\"onClickOverlay\"]]],null]],[10,\"tabindex\",\"-1\"],[10,\"data-emd-overlay\",\"\"],[8],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[4,\"ember-modal-dialog-positioned-container\",null,[[\"class\",\"targetAttachment\",\"target\"],[[24,[\"containerClassNamesString\"]],[24,[\"targetAttachment\"]],[24,[\"legacyTarget\"]]]],{\"statements\":[[0,\"        \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"    \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"    \"],[7,\"div\",true],[11,\"class\",[29,[[22,\"wrapperClassNamesString\"],\" \",[22,\"wrapperClass\"]]]],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[22,\"overlayClassNamesString\"]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[28,\"ignore-children\",[[24,[\"onClickOverlay\"]]],null]],null]],[10,\"tabindex\",\"-1\"],[10,\"data-emd-overlay\",\"\"],[8],[0,\"\\n\"],[4,\"ember-modal-dialog-positioned-container\",null,[[\"class\",\"targetAttachment\",\"target\"],[[24,[\"containerClassNamesString\"]],[24,[\"targetAttachment\"]],[24,[\"legacyTarget\"]]]],{\"statements\":[[0,\"            \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"        \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"ember-modal-dialog-positioned-container\",null,[[\"class\",\"targetAttachment\",\"target\"],[[24,[\"containerClassNamesString\"]],[24,[\"targetAttachment\"]],[24,[\"legacyTarget\"]]]],{\"statements\":[[0,\"          \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-modal-dialog/templates/components/basic-dialog.hbs"
     }
@@ -113245,8 +114822,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "2b0ig8/R",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\"],[12,\"class\",[29,\"concat\",[[25,[\"containerClassNamesString\"]],\" \",[25,[\"attachmentClass\"]],\" \",[25,[\"containerClass\"]]],null]],[9],[0,\"\\n  \"],[15,1],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "Os6lbTWn",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[7,\"div\",true],[11,\"class\",[28,\"concat\",[[24,[\"containerClassNamesString\"]],\" \",[24,[\"attachmentClass\"]],\" \",[24,[\"containerClass\"]]],null]],[8],[0,\"\\n  \"],[14,1],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-modal-dialog/templates/components/in-place-dialog.hbs"
     }
@@ -113263,8 +114840,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "QQUTz0Pn",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[25,[\"isOverlaySibling\"]]],null,{\"statements\":[[4,\"liquid-wormhole\",null,[[\"stack\",\"value\",\"class\"],[[25,[\"stack\"]],[25,[\"value\"]],[29,\"concat\",[\"liquid-dialog-container \",[25,[\"wrapperClassNamesString\"]],\" \",[25,[\"wrapperClass\"]]],null]]],{\"statements\":[[0,\"    \"],[7,\"div\"],[12,\"class\",[30,[[23,\"wrapperClassNamesString\"],\" \",[23,\"wrapperClass\"]]]],[9],[0,\"\\n\"],[4,\"if\",[[25,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\"],[12,\"class\",[23,\"overlayClassNamesString\"]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[25,[\"onClickOverlay\"]]],null]],[11,\"tabindex\",\"-1\"],[11,\"data-emd-overlay\",\"\"],[9],[0,\"\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"      \"],[7,\"div\"],[12,\"class\",[23,\"containerClassNamesString\"]],[9],[0,\"\\n        \"],[15,1],[0,\"\\n      \"],[10],[0,\"\\n    \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[4,\"liquid-wormhole\",null,[[\"stack\",\"value\",\"class\"],[[25,[\"stack\"]],[25,[\"value\"]],[29,\"concat\",[\"liquid-dialog-container \",[25,[\"wrapperClassNamesString\"]],\" \",[25,[\"wrapperClass\"]]],null]]],{\"statements\":[[4,\"if\",[[25,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"      \"],[7,\"div\"],[12,\"class\",[23,\"overlayClassNamesString\"]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[29,\"ignore-children\",[[25,[\"onClickOverlay\"]]],null]],null]],[11,\"tabindex\",\"-1\"],[11,\"data-emd-overlay\",\"\"],[9],[0,\"\\n        \"],[7,\"div\"],[12,\"class\",[23,\"containerClassNamesString\"]],[9],[0,\"\\n          \"],[15,1],[0,\"\\n        \"],[10],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"div\"],[12,\"class\",[23,\"containerClassNamesString\"]],[9],[0,\"\\n        \"],[15,1],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]},null]],\"parameters\":[]}]],\"hasEval\":false}",
+    "id": "BcHVZi6T",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[24,[\"isOverlaySibling\"]]],null,{\"statements\":[[4,\"liquid-wormhole\",null,[[\"stack\",\"value\",\"class\"],[[24,[\"stack\"]],[24,[\"value\"]],[28,\"concat\",[\"liquid-dialog-container \",[24,[\"wrapperClassNamesString\"]],\" \",[24,[\"wrapperClass\"]]],null]]],{\"statements\":[[0,\"    \"],[7,\"div\",true],[11,\"class\",[29,[[22,\"wrapperClassNamesString\"],\" \",[22,\"wrapperClass\"]]]],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[22,\"overlayClassNamesString\"]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[24,[\"onClickOverlay\"]]],null]],[10,\"tabindex\",\"-1\"],[10,\"data-emd-overlay\",\"\"],[8],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"      \"],[7,\"div\",true],[11,\"class\",[22,\"containerClassNamesString\"]],[8],[0,\"\\n        \"],[14,1],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},{\"statements\":[[4,\"liquid-wormhole\",null,[[\"stack\",\"value\",\"class\"],[[24,[\"stack\"]],[24,[\"value\"]],[28,\"concat\",[\"liquid-dialog-container \",[24,[\"wrapperClassNamesString\"]],\" \",[24,[\"wrapperClass\"]]],null]]],{\"statements\":[[4,\"if\",[[24,[\"hasOverlay\"]]],null,{\"statements\":[[0,\"      \"],[7,\"div\",true],[11,\"class\",[22,\"overlayClassNamesString\"]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[28,\"ignore-children\",[[24,[\"onClickOverlay\"]]],null]],null]],[10,\"tabindex\",\"-1\"],[10,\"data-emd-overlay\",\"\"],[8],[0,\"\\n        \"],[7,\"div\",true],[11,\"class\",[22,\"containerClassNamesString\"]],[8],[0,\"\\n          \"],[14,1],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"div\",true],[11,\"class\",[22,\"containerClassNamesString\"]],[8],[0,\"\\n        \"],[14,1],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]},null]],\"parameters\":[]}]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-modal-dialog/templates/components/liquid-dialog.hbs"
     }
@@ -113281,8 +114858,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "t/pPnoCq",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[25,[\"hasOverlay\"]]],null,{\"statements\":[[4,\"liquid-wormhole\",null,[[\"stack\",\"class\"],[\"modal-overlay\",\"liquid-dialog-container\"]],{\"statements\":[[0,\"    \"],[7,\"div\"],[12,\"class\",[23,\"overlayClassNamesString\"]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[25,[\"onClickOverlay\"]]],null]],[11,\"tabindex\",\"-1\"],[11,\"data-emd-overlay\",\"\"],[9],[0,\"\\n    \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"liquid-tether\",null,[[\"class\",\"target\",\"attachment\",\"targetAttachment\",\"targetModifier\",\"classPrefix\",\"offset\",\"targetOffset\",\"constraints\",\"stack\",\"value\"],[[25,[\"containerClassNamesString\"]],[25,[\"tetherTarget\"]],[25,[\"attachment\"]],[25,[\"targetAttachment\"]],[25,[\"targetModifier\"]],[25,[\"tetherClassPrefix\"]],[25,[\"offset\"]],[25,[\"targetOffset\"]],[25,[\"constraints\"]],[25,[\"stack\"]],[25,[\"value\"]]]],{\"statements\":[[0,\"  \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "iojh6Mmx",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[24,[\"hasOverlay\"]]],null,{\"statements\":[[4,\"liquid-wormhole\",null,[[\"stack\",\"class\"],[\"modal-overlay\",\"liquid-dialog-container\"]],{\"statements\":[[0,\"    \"],[7,\"div\",true],[11,\"class\",[22,\"overlayClassNamesString\"]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[24,[\"onClickOverlay\"]]],null]],[10,\"tabindex\",\"-1\"],[10,\"data-emd-overlay\",\"\"],[8],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"liquid-tether\",null,[[\"class\",\"target\",\"attachment\",\"targetAttachment\",\"targetModifier\",\"classPrefix\",\"offset\",\"targetOffset\",\"constraints\",\"stack\",\"value\"],[[24,[\"containerClassNamesString\"]],[24,[\"tetherTarget\"]],[24,[\"attachment\"]],[24,[\"targetAttachment\"]],[24,[\"targetModifier\"]],[24,[\"tetherClassPrefix\"]],[24,[\"offset\"]],[24,[\"targetOffset\"]],[24,[\"constraints\"]],[24,[\"stack\"]],[24,[\"value\"]]]],{\"statements\":[[0,\"  \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-modal-dialog/templates/components/liquid-tether-dialog.hbs"
     }
@@ -113299,8 +114876,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "TUs7qIvY",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"component\",[[25,[\"modalDialogComponentName\"]]],[[\"wrapperClass\",\"wrapperClassNames\",\"overlayClass\",\"overlayClassNames\",\"containerClass\",\"containerClassNames\",\"hasOverlay\",\"translucentOverlay\",\"clickOutsideToClose\",\"destinationElementId\",\"overlayPosition\",\"tetherTarget\",\"legacyTarget\",\"attachment\",\"targetAttachment\",\"targetModifier\",\"targetOffset\",\"offset\",\"tetherClassPrefix\",\"constraints\",\"attachmentClass\",\"targetAttachmentClass\",\"stack\",\"value\",\"onClickOverlay\",\"onClose\"],[[25,[\"wrapperClass\"]],[25,[\"wrapperClassNames\"]],[25,[\"overlayClass\"]],[25,[\"overlayClassNames\"]],[25,[\"containerClass\"]],[25,[\"containerClassNames\"]],[25,[\"hasOverlay\"]],[25,[\"translucentOverlay\"]],[25,[\"clickOutsideToClose\"]],[25,[\"destinationElementId\"]],[25,[\"overlayPosition\"]],[25,[\"tetherTarget\"]],[25,[\"target\"]],[25,[\"attachment\"]],[25,[\"targetAttachment\"]],[25,[\"targetModifier\"]],[25,[\"targetOffset\"]],[25,[\"offset\"]],[25,[\"tetherClassPrefix\"]],[25,[\"constraints\"]],[25,[\"attachmentClass\"]],[25,[\"targetAttachmentClass\"]],[25,[\"stack\"]],[25,[\"value\"]],[29,\"action\",[[24,0,[]],\"onClickOverlay\"],null],[29,\"action\",[[24,0,[]],\"onClose\"],null]]],{\"statements\":[[0,\"  \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "UBHHnY0h",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"component\",[[24,[\"modalDialogComponentName\"]]],[[\"wrapperClass\",\"wrapperClassNames\",\"overlayClass\",\"overlayClassNames\",\"containerClass\",\"containerClassNames\",\"hasOverlay\",\"translucentOverlay\",\"clickOutsideToClose\",\"destinationElementId\",\"overlayPosition\",\"tetherTarget\",\"legacyTarget\",\"attachment\",\"targetAttachment\",\"targetModifier\",\"targetOffset\",\"offset\",\"tetherClassPrefix\",\"constraints\",\"attachmentClass\",\"targetAttachmentClass\",\"stack\",\"value\",\"onClickOverlay\",\"onClose\"],[[24,[\"wrapperClass\"]],[24,[\"wrapperClassNames\"]],[24,[\"overlayClass\"]],[24,[\"overlayClassNames\"]],[24,[\"containerClass\"]],[24,[\"containerClassNames\"]],[24,[\"hasOverlay\"]],[24,[\"translucentOverlay\"]],[24,[\"clickOutsideToClose\"]],[24,[\"destinationElementId\"]],[24,[\"overlayPosition\"]],[24,[\"tetherTarget\"]],[24,[\"target\"]],[24,[\"attachment\"]],[24,[\"targetAttachment\"]],[24,[\"targetModifier\"]],[24,[\"targetOffset\"]],[24,[\"offset\"]],[24,[\"tetherClassPrefix\"]],[24,[\"constraints\"]],[24,[\"attachmentClass\"]],[24,[\"targetAttachmentClass\"]],[24,[\"stack\"]],[24,[\"value\"]],[28,\"action\",[[23,0,[]],\"onClickOverlay\"],null],[28,\"action\",[[23,0,[]],\"onClose\"],null]]],{\"statements\":[[0,\"  \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-modal-dialog/templates/components/modal-dialog.hbs"
     }
@@ -113317,8 +114894,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "OaKeTB3O",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[25,[\"hasOverlay\"]]],null,{\"statements\":[[4,\"ember-wormhole\",null,[[\"to\"],[[25,[\"destinationElementId\"]]]],{\"statements\":[[0,\"    \"],[7,\"div\"],[12,\"class\",[23,\"overlayClassNamesString\"]],[12,\"onclick\",[29,\"action\",[[24,0,[]],[25,[\"onClickOverlay\"]]],null]],[11,\"tabindex\",\"-1\"],[11,\"data-emd-overlay\",\"\"],[9],[0,\"\\n    \"],[10],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"ember-tether\",null,[[\"class\",\"target\",\"attachment\",\"targetAttachment\",\"targetModifier\",\"classPrefix\",\"offset\",\"targetOffset\",\"constraints\"],[[25,[\"containerClassNamesString\"]],[25,[\"tetherTarget\"]],[25,[\"attachment\"]],[25,[\"targetAttachment\"]],[25,[\"targetModifier\"]],[25,[\"tetherClassPrefix\"]],[25,[\"offset\"]],[25,[\"targetOffset\"]],[25,[\"constraints\"]]]],{\"statements\":[[0,\"  \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "YXC7E4JC",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"if\",[[24,[\"hasOverlay\"]]],null,{\"statements\":[[4,\"ember-wormhole\",null,[[\"to\"],[[24,[\"destinationElementId\"]]]],{\"statements\":[[0,\"    \"],[7,\"div\",true],[11,\"class\",[22,\"overlayClassNamesString\"]],[11,\"onclick\",[28,\"action\",[[23,0,[]],[24,[\"onClickOverlay\"]]],null]],[10,\"tabindex\",\"-1\"],[10,\"data-emd-overlay\",\"\"],[8],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"ember-tether\",null,[[\"class\",\"target\",\"attachment\",\"targetAttachment\",\"targetModifier\",\"classPrefix\",\"offset\",\"targetOffset\",\"constraints\"],[[24,[\"containerClassNamesString\"]],[24,[\"tetherTarget\"]],[24,[\"attachment\"]],[24,[\"targetAttachment\"]],[24,[\"targetModifier\"]],[24,[\"tetherClassPrefix\"]],[24,[\"offset\"]],[24,[\"targetOffset\"]],[24,[\"constraints\"]]]],{\"statements\":[[0,\"  \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-modal-dialog/templates/components/tether-dialog.hbs"
     }
@@ -115519,8 +117096,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "EVEcSQ1V",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[1,[29,\"unbound\",[[25,[\"_wormholeHeadNode\"]]],null],false],[15,1],[1,[29,\"unbound\",[[25,[\"_wormholeTailNode\"]]],null],false]],\"hasEval\":false}",
+    "id": "rW/3GFKf",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[1,[28,\"unbound\",[[24,[\"_wormholeHeadNode\"]]],null],false],[14,1],[1,[28,\"unbound\",[[24,[\"_wormholeTailNode\"]]],null],false]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-wormhole/templates/components/ember-wormhole.hbs"
     }
@@ -117767,8 +119344,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "xW88kBU+",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1,[[25,[\"_fixedModel\"]]]]],\"hasEval\":false}",
+    "id": "i3s1ESwf",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1,[[24,[\"_fixedModel\"]]]]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/illiquid-model.hbs"
     }
@@ -117785,8 +119362,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "v174qNea",
-    "block": "{\"symbols\":[\"container\",\"version\",\"version\",\"&default\"],\"statements\":[[4,\"if\",[[25,[\"containerless\"]]],null,{\"statements\":[[4,\"liquid-versions\",null,[[\"value\",\"use\",\"rules\",\"matchContext\",\"versionEquality\",\"renderWhenFalse\",\"class\"],[[25,[\"value\"]],[25,[\"use\"]],[25,[\"rules\"]],[25,[\"forwardMatchContext\"]],[25,[\"versionEquality\"]],true,[25,[\"class\"]]]],{\"statements\":[[4,\"if\",[[26,4]],null,{\"statements\":[[15,4,[[24,3,[]]]]],\"parameters\":[]},{\"statements\":[[1,[24,3,[]],false]],\"parameters\":[]}]],\"parameters\":[3]},null]],\"parameters\":[]},{\"statements\":[[4,\"liquid-container\",null,[[\"id\",\"class\",\"growDuration\",\"growPixelsPerSecond\",\"growEasing\",\"shrinkDelay\",\"growDelay\",\"enableGrowth\"],[[25,[\"containerId\"]],[25,[\"class\"]],[25,[\"growDuration\"]],[25,[\"growPixelsPerSecond\"]],[25,[\"growEasing\"]],[25,[\"shrinkDelay\"]],[25,[\"growDelay\"]],[25,[\"enableGrowth\"]]]],{\"statements\":[[4,\"liquid-versions\",null,[[\"value\",\"notify\",\"use\",\"rules\",\"matchContext\",\"versionEquality\",\"renderWhenFalse\"],[[25,[\"value\"]],[24,1,[]],[25,[\"use\"]],[25,[\"rules\"]],[25,[\"forwardMatchContext\"]],[25,[\"versionEquality\"]],true]],{\"statements\":[[4,\"if\",[[26,4]],null,{\"statements\":[[15,4,[[24,2,[]]]]],\"parameters\":[]},{\"statements\":[[1,[24,2,[]],false]],\"parameters\":[]}]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"parameters\":[]}]],\"hasEval\":false}",
+    "id": "FPk9niYo",
+    "block": "{\"symbols\":[\"container\",\"version\",\"version\",\"&default\"],\"statements\":[[4,\"if\",[[24,[\"containerless\"]]],null,{\"statements\":[[4,\"liquid-versions\",null,[[\"value\",\"use\",\"rules\",\"matchContext\",\"versionEquality\",\"renderWhenFalse\",\"class\"],[[24,[\"value\"]],[24,[\"use\"]],[24,[\"rules\"]],[24,[\"forwardMatchContext\"]],[24,[\"versionEquality\"]],true,[24,[\"class\"]]]],{\"statements\":[[4,\"if\",[[25,4]],null,{\"statements\":[[14,4,[[23,3,[]]]]],\"parameters\":[]},{\"statements\":[[1,[23,3,[]],false]],\"parameters\":[]}]],\"parameters\":[3]},null]],\"parameters\":[]},{\"statements\":[[4,\"liquid-container\",null,[[\"id\",\"class\",\"growDuration\",\"growPixelsPerSecond\",\"growEasing\",\"shrinkDelay\",\"growDelay\",\"enableGrowth\"],[[24,[\"containerId\"]],[24,[\"class\"]],[24,[\"growDuration\"]],[24,[\"growPixelsPerSecond\"]],[24,[\"growEasing\"]],[24,[\"shrinkDelay\"]],[24,[\"growDelay\"]],[24,[\"enableGrowth\"]]]],{\"statements\":[[4,\"liquid-versions\",null,[[\"value\",\"notify\",\"use\",\"rules\",\"matchContext\",\"versionEquality\",\"renderWhenFalse\"],[[24,[\"value\"]],[23,1,[]],[24,[\"use\"]],[24,[\"rules\"]],[24,[\"forwardMatchContext\"]],[24,[\"versionEquality\"]],true]],{\"statements\":[[4,\"if\",[[25,4]],null,{\"statements\":[[14,4,[[23,2,[]]]]],\"parameters\":[]},{\"statements\":[[1,[23,2,[]],false]],\"parameters\":[]}]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"parameters\":[]}]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-bind.hbs"
     }
@@ -117803,8 +119380,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "iMqa3+kF",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1,[[24,0,[]]]]],\"hasEval\":false}",
+    "id": "gHikz7Zi",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1,[[23,0,[]]]]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-container.hbs"
     }
@@ -117821,8 +119398,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "upamFZbr",
-    "block": "{\"symbols\":[\"container\",\"valueVersion\",\"valueVersion\",\"&inverse\",\"&default\"],\"statements\":[[4,\"if\",[[25,[\"containerless\"]]],null,{\"statements\":[[0,\"\\n\"],[0,\"\\n\"],[4,\"liquid-versions\",null,[[\"value\",\"matchContext\",\"use\",\"rules\",\"renderWhenFalse\",\"class\"],[[29,\"if\",[[25,[\"inverted\"]],[29,\"if\",[[25,[\"predicate\"]],false,true],null],[29,\"if\",[[25,[\"predicate\"]],true,false],null]],null],[29,\"hash\",null,[[\"helperName\"],[[25,[\"helperName\"]]]]],[25,[\"use\"]],[25,[\"rules\"]],[26,4],[25,[\"class\"]]]],{\"statements\":[[4,\"if\",[[24,3,[]]],null,{\"statements\":[[0,\"      \"],[15,5],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[15,4],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[3]},null]],\"parameters\":[]},{\"statements\":[[4,\"liquid-container\",null,[[\"id\",\"class\",\"growDuration\",\"growPixelsPerSecond\",\"growEasing\",\"shrinkDelay\",\"growDelay\",\"enableGrowth\"],[[25,[\"containerId\"]],[25,[\"class\"]],[25,[\"growDuration\"]],[25,[\"growPixelsPerSecond\"]],[25,[\"growEasing\"]],[25,[\"shrinkDelay\"]],[25,[\"growDelay\"]],[25,[\"enableGrowth\"]]]],{\"statements\":[[4,\"liquid-versions\",null,[[\"value\",\"notify\",\"matchContext\",\"use\",\"rules\",\"renderWhenFalse\"],[[29,\"if\",[[25,[\"inverted\"]],[29,\"if\",[[25,[\"predicate\"]],false,true],null],[29,\"if\",[[25,[\"predicate\"]],true,false],null]],null],[24,1,[]],[29,\"hash\",null,[[\"helperName\"],[[25,[\"helperName\"]]]]],[25,[\"use\"]],[25,[\"rules\"]],[26,4]]],{\"statements\":[[4,\"if\",[[24,2,[]]],null,{\"statements\":[[0,\"        \"],[15,5],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[15,4],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"parameters\":[]}]],\"hasEval\":false}",
+    "id": "bL8wXiX9",
+    "block": "{\"symbols\":[\"container\",\"valueVersion\",\"valueVersion\",\"&inverse\",\"&default\"],\"statements\":[[4,\"if\",[[24,[\"containerless\"]]],null,{\"statements\":[[0,\"\\n\"],[0,\"\\n\"],[4,\"liquid-versions\",null,[[\"value\",\"matchContext\",\"use\",\"rules\",\"renderWhenFalse\",\"class\"],[[28,\"if\",[[24,[\"inverted\"]],[28,\"if\",[[24,[\"predicate\"]],false,true],null],[28,\"if\",[[24,[\"predicate\"]],true,false],null]],null],[28,\"hash\",null,[[\"helperName\"],[[24,[\"helperName\"]]]]],[24,[\"use\"]],[24,[\"rules\"]],[25,4],[24,[\"class\"]]]],{\"statements\":[[4,\"if\",[[23,3,[]]],null,{\"statements\":[[0,\"      \"],[14,5],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[14,4],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[3]},null]],\"parameters\":[]},{\"statements\":[[4,\"liquid-container\",null,[[\"id\",\"class\",\"growDuration\",\"growPixelsPerSecond\",\"growEasing\",\"shrinkDelay\",\"growDelay\",\"enableGrowth\"],[[24,[\"containerId\"]],[24,[\"class\"]],[24,[\"growDuration\"]],[24,[\"growPixelsPerSecond\"]],[24,[\"growEasing\"]],[24,[\"shrinkDelay\"]],[24,[\"growDelay\"]],[24,[\"enableGrowth\"]]]],{\"statements\":[[4,\"liquid-versions\",null,[[\"value\",\"notify\",\"matchContext\",\"use\",\"rules\",\"renderWhenFalse\"],[[28,\"if\",[[24,[\"inverted\"]],[28,\"if\",[[24,[\"predicate\"]],false,true],null],[28,\"if\",[[24,[\"predicate\"]],true,false],null]],null],[23,1,[]],[28,\"hash\",null,[[\"helperName\"],[[24,[\"helperName\"]]]]],[24,[\"use\"]],[24,[\"rules\"]],[25,4]]],{\"statements\":[[4,\"if\",[[23,2,[]]],null,{\"statements\":[[0,\"        \"],[14,5],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[14,4],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"parameters\":[]}]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-if.hbs"
     }
@@ -117839,8 +119416,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "L8RWYL2X",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "ea/FcAyN",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-measured.hbs"
     }
@@ -117857,8 +119434,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "LdKx/U7I",
-    "block": "{\"symbols\":[\"outletState\",\"version\"],\"statements\":[[4,\"-lf-get-outlet-state\",null,null,{\"statements\":[[4,\"liquid-bind\",[[29,\"lf-lock-model\",[[24,1,[]],[25,[\"outletName\"]]],null]],[[\"containerId\",\"versionEquality\",\"matchContext\",\"class\",\"use\",\"rules\",\"containerless\",\"growDuration\",\"growPixelsPerSecond\",\"growEasing\",\"shrinkDelay\",\"growDelay\",\"enableGrowth\"],[[25,[\"containerId\"]],[25,[\"versionEquality\"]],[29,\"hash\",null,[[\"outletName\",\"helperName\"],[[25,[\"outletName\"]],\"liquid-outlet\"]]],[25,[\"class\"]],[25,[\"use\"]],[25,[\"rules\"]],[25,[\"containerless\"]],[25,[\"growDuration\"]],[25,[\"growPixelsPerSecond\"]],[25,[\"growEasing\"]],[25,[\"shrinkDelay\"]],[25,[\"growDelay\"]],[25,[\"enableGrowth\"]]]],{\"statements\":[[4,\"-with-dynamic-vars\",null,[[\"outletState\"],[[24,2,[]]]],{\"statements\":[[1,[29,\"outlet\",[[25,[\"outletName\"]]],null],false]],\"parameters\":[]},null]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"hasEval\":false}",
+    "id": "wAIJy16e",
+    "block": "{\"symbols\":[\"outletState\",\"version\"],\"statements\":[[4,\"-lf-get-outlet-state\",null,null,{\"statements\":[[4,\"liquid-bind\",[[28,\"lf-lock-model\",[[23,1,[]],[24,[\"outletName\"]]],null]],[[\"containerId\",\"versionEquality\",\"matchContext\",\"class\",\"use\",\"rules\",\"containerless\",\"growDuration\",\"growPixelsPerSecond\",\"growEasing\",\"shrinkDelay\",\"growDelay\",\"enableGrowth\"],[[24,[\"containerId\"]],[24,[\"versionEquality\"]],[28,\"hash\",null,[[\"outletName\",\"helperName\"],[[24,[\"outletName\"]],\"liquid-outlet\"]]],[24,[\"class\"]],[24,[\"use\"]],[24,[\"rules\"]],[24,[\"containerless\"]],[24,[\"growDuration\"]],[24,[\"growPixelsPerSecond\"]],[24,[\"growEasing\"]],[24,[\"shrinkDelay\"]],[24,[\"growDelay\"]],[24,[\"enableGrowth\"]]]],{\"statements\":[[4,\"-with-dynamic-vars\",null,[[\"outletState\"],[[23,2,[]]]],{\"statements\":[[1,[28,\"outlet\",[[24,[\"outletName\"]]],null],false]],\"parameters\":[]},null]],\"parameters\":[2]},null]],\"parameters\":[1]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-outlet.hbs"
     }
@@ -117875,8 +119452,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "72w4Lm+N",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"liquid-measured\",null,[[\"measurements\"],[[25,[\"measurements\"]]]],{\"statements\":[[0,\"  \"],[15,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "svqTCS7A",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"liquid-measured\",null,[[\"measurements\"],[[24,[\"measurements\"]]]],{\"statements\":[[0,\"  \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-spacer.hbs"
     }
@@ -117893,8 +119470,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "DYQG5Bcz",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1,[[29,\"action\",[[24,0,[]],\"ready\"],null]]],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "yJNdNTiX",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1,[[28,\"action\",[[23,0,[]],\"ready\"],null]]],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-sync.hbs"
     }
@@ -117911,8 +119488,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "TENyW3/p",
-    "block": "{\"symbols\":[\"version\",\"&default\"],\"statements\":[[4,\"each\",[[25,[\"versions\"]]],null,{\"statements\":[[4,\"if\",[[29,\"lf-or\",[[25,[\"renderWhenFalse\"]],[24,1,[\"value\"]]],null]],null,{\"statements\":[[4,\"liquid-child\",null,[[\"version\",\"liquidChildDidRender\",\"class\"],[[24,1,[]],[29,\"action\",[[24,0,[]],\"childDidRender\"],null],[25,[\"class\"]]]],{\"statements\":[[15,2,[[24,1,[\"value\"]]]]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"hasEval\":false}",
+    "id": "SFQmeLKO",
+    "block": "{\"symbols\":[\"version\",\"&default\"],\"statements\":[[4,\"each\",[[24,[\"versions\"]]],null,{\"statements\":[[4,\"if\",[[28,\"lf-or\",[[24,[\"renderWhenFalse\"]],[23,1,[\"value\"]]],null]],null,{\"statements\":[[4,\"liquid-child\",null,[[\"version\",\"liquidChildDidRender\",\"class\"],[[23,1,[]],[28,\"action\",[[23,0,[]],\"childDidRender\"],null],[24,[\"class\"]]]],{\"statements\":[[14,2,[[23,1,[\"value\"]]]]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[1]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-versions.hbs"
     }
@@ -117929,8 +119506,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "78sUIuCw",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[15,1,[[29,\"-get-dynamic-var\",[\"outletState\"],null]]]],\"hasEval\":false}",
+    "id": "n+fJR2vT",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1,[[28,\"-get-dynamic-var\",[\"outletState\"],null]]]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/version-specific/get-outlet-state.hbs"
     }
