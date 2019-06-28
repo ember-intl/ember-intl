@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.11.0
+ * @version   3.11.1
  */
 
 /*globals process */
@@ -14894,17 +14894,16 @@ enifed("@ember/-internals/meta/lib/meta", ["exports", "ember-babel", "@ember/-in
           kind: kind
         });
       } else {
-        var listener = listeners[i]; // If the listener is our own function listener and we are trying to
-        // remove it, we want to splice it out entirely so we don't hold onto a
-        // reference.
+        var listener = listeners[i]; // If the listener is our own listener and we are trying to remove it, we
+        // want to splice it out entirely so we don't hold onto a reference.
 
         if (kind === 2
         /* REMOVE */
         && listener.kind !== 2
         /* REMOVE */
-        && typeof method === 'function') {
-          listeners.splice(i, 1);
-        } else {
+        ) {
+            listeners.splice(i, 1);
+          } else {
           // update own listener
           listener.kind = kind;
         }
@@ -58428,7 +58427,7 @@ enifed("ember/version", ["exports"], function (_exports) {
   "use strict";
 
   _exports.default = void 0;
-  var _default = "3.11.0";
+  var _default = "3.11.1";
   _exports.default = _default;
 });
 /*global enifed, module */
@@ -59952,7 +59951,7 @@ enifed("router_js", ["exports", "@ember/polyfills", "ember-babel", "rsvp", "rout
         },
 
         get metadata() {
-          return buildRouteInfoMetadata(route);
+          return buildRouteInfoMetadata(info.route);
         },
 
         get parent() {
@@ -60696,6 +60695,7 @@ enifed("router_js", ["exports", "@ember/polyfills", "ember-babel", "rsvp", "rout
       var params = {}; // Soak up all the provided string/numbers
 
       var numNames = names.length;
+      var missingParams = [];
 
       while (numNames--) {
         // Only use old params if the names match with the new handler
@@ -60712,9 +60712,13 @@ enifed("router_js", ["exports", "@ember/polyfills", "ember-babel", "rsvp", "rout
           if (oldParams.hasOwnProperty(paramName)) {
             params[paramName] = oldParams[paramName];
           } else {
-            throw new Error("You didn't provide enough string/numeric parameters to satisfy all of the dynamic segments for route " + name);
+            missingParams.push(paramName);
           }
         }
+      }
+
+      if (missingParams.length > 0) {
+        throw new Error("You didn't provide enough string/numeric parameters to satisfy all of the dynamic segments for route " + name + "." + (" Missing params: " + missingParams));
       }
 
       return new UnresolvedRouteInfoByParam(this.router, name, names, params);
@@ -110550,6 +110554,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     exports.default = Ember.Mixin.create({
         headers: undefined,
+        init: function init() {
+            this._super.apply(this, arguments);
+            (false && !(false) && Ember.deprecate('FetchAdapter is deprecated, it is no longer required for ember-data>=3.9.2', false, {
+                id: 'deprecate-fetch-ember-data-support',
+                until: '7.0.0'
+            }));
+        },
+
         /**
          * @override
          */
