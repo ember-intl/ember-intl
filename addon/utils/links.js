@@ -1,7 +1,7 @@
-const PROJECT_URL = 'https://github.com/jasonmit/ember-intl';
+const GUIDE_URL = 'https://ember-intl.github.io/ember-intl/docs/guide/';
 
 export default {
-  unsetLocale: `${PROJECT_URL}#setting-runtime-locale`,
-  asyncTranslations: `${PROJECT_URL}/blob/master/docs/asynchronously-loading-translations.md#asynchronous-loading-of-translations`,
-  polyfill: `${PROJECT_URL}/blob/master/docs/intljs-polyfill.md`
+  unsetLocale: `${GUIDE_URL}ember-service-api#locale`,
+  asyncTranslations: `${GUIDE_URL}asynchronously-loading-translations`,
+  polyfill: `${GUIDE_URL}intljs-polyfill`
 };
