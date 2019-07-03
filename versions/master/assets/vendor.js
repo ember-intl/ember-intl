@@ -111025,7 +111025,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       return _system.Inflector;
     }
-  });
+  }, { configurable: true });
 
   Object.defineProperty(Ember.String, 'singularize', {
     get: function get() {
@@ -111036,7 +111036,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       return _system.singularize;
     }
-  });
+  }, { configurable: true });
 
   Object.defineProperty(Ember.String, 'pluralize', {
     get: function get() {
@@ -111047,7 +111047,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       return _system.pluralize;
     }
-  });
+  }, { configurable: true });
 
   exports.default = _system.Inflector;
   exports.pluralize = _system.pluralize;
@@ -111074,7 +111074,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           return (0, _string.pluralize)(this);
         };
       }
-    });
+    }, { configurable: true });
 
     /**
       See {{#crossLink "Ember.String/singularize"}}{{/crossLink}}
@@ -111092,7 +111092,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           return (0, _string.singularize)(this);
         };
       }
-    });
+    }, { configurable: true });
   }
 });
 ;define('ember-inflector/lib/helpers/pluralize', ['exports', 'ember-inflector', 'ember-inflector/lib/utils/make-helper'], function (exports, _emberInflector, _makeHelper) {
