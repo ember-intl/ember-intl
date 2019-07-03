@@ -112917,11 +112917,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var PROJECT_URL = 'https://github.com/jasonmit/ember-intl';
+  var GUIDE_URL = 'https://ember-intl.github.io/ember-intl/docs/guide/';
   var _default = {
-    unsetLocale: "".concat(PROJECT_URL, "#setting-runtime-locale"),
-    asyncTranslations: "".concat(PROJECT_URL, "/blob/master/docs/asynchronously-loading-translations.md#asynchronous-loading-of-translations"),
-    polyfill: "".concat(PROJECT_URL, "/blob/master/docs/intljs-polyfill.md")
+    unsetLocale: "".concat(GUIDE_URL, "ember-service-api#locale"),
+    asyncTranslations: "".concat(GUIDE_URL, "asynchronously-loading-translations"),
+    polyfill: "".concat(GUIDE_URL, "intljs-polyfill")
   };
   _exports.default = _default;
 });
