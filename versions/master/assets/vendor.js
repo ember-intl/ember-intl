@@ -112614,7 +112614,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = TranslationModel;
   _exports.default = _default;
 });
-;define("ember-intl/services/intl", ["exports", "@ember-intl/intl-relativeformat", "@ember-intl/intl-messageformat", "ember-intl/-private/formatters", "ember-intl/-private/is-array-equal", "ember-intl/-private/normalize-locale", "ember-intl/utils/links", "ember-intl/hydrate", "ember-intl/utils/get-dom"], function (_exports, _intlRelativeformat, _intlMessageformat, _formatters, _isArrayEqual, _normalizeLocale, _links, _hydrate, _getDom) {
+;define("ember-intl/services/intl", ["exports", "@ember-intl/intl-relativeformat", "@ember-intl/intl-messageformat", "ember-intl/-private/formatters", "ember-intl/-private/is-array-equal", "ember-intl/-private/normalize-locale", "ember-intl/hydrate", "ember-intl/utils/get-dom"], function (_exports, _intlRelativeformat, _intlMessageformat, _formatters, _isArrayEqual, _normalizeLocale, _hydrate, _getDom) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -112701,12 +112701,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     init: function init() {
       this._super.apply(this, arguments);
 
-      if (typeof Intl === 'undefined') {
-        (false && Ember.warn("[ember-intl] Intl API was not found.\nSee: ".concat(_links.default.polyfill), false, {
-          id: 'ember-intl-undefined-intljs'
-        }));
-      }
-
+      (false && Ember.warn('[ember-intl] Intl API does not exist in this environment.  A polyfill of `Intl` is required.', Intl, {
+        id: 'ember-intl-undefined-intljs'
+      }));
       var initialLocale = Ember.get(this, 'locale') || ['en-us'];
       this.setLocale(initialLocale);
       this._owner = Ember.getOwner(this);
@@ -112920,8 +112917,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var GUIDE_URL = 'https://ember-intl.github.io/ember-intl/docs/guide/';
   var _default = {
     unsetLocale: "".concat(GUIDE_URL, "ember-service-api#locale"),
-    asyncTranslations: "".concat(GUIDE_URL, "asynchronously-loading-translations"),
-    polyfill: "".concat(GUIDE_URL, "intljs-polyfill")
+    asyncTranslations: "".concat(GUIDE_URL, "asynchronously-loading-translations")
   };
   _exports.default = _default;
 });
