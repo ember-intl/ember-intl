@@ -1,6 +1,4 @@
 /* eslint-env node */
-/* globals describe, it */
-
 'use strict';
 
 let expect = require('chai').expect;
