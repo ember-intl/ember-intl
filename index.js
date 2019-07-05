@@ -23,8 +23,6 @@ const DEFAULT_CONFIG = {
   locales: null,
   publicOnly: false,
   fallbackLocale: null,
-  autoPolyfill: false,
-  disablePolyfill: false,
   inputPath: 'translations',
   outputPath: 'translations',
   errorOnMissingTranslations: false,
@@ -89,35 +87,6 @@ module.exports = {
     });
   },
 
-  findAssetPath(appOptions) {
-    if (appOptions.app && appOptions.app.intl) {
-      return appOptions.app.intl;
-    }
-
-    return 'assets/intl';
-  },
-
-  contentFor(name, config) {
-    if (name === 'head' && !this.opts.disablePolyfill && this.opts.autoPolyfill) {
-      let assetPath = this.findAssetPath(this.app.options);
-      let locales = this.locales;
-      let prefix = '';
-
-      if (config.rootURL) {
-        prefix += config.rootURL;
-      }
-      if (assetPath) {
-        prefix += assetPath;
-      }
-
-      let localeScripts = locales.map(function(locale) {
-        return `<script src="${prefix}/locales/${locale}.js"></script>`;
-      });
-
-      return [`<script src="${prefix}/intl.min.js"></script>`].concat(localeScripts).join('\n');
-    }
-  },
-
   treeForApp(tree) {
     let trees = [tree];
 
@@ -153,17 +122,6 @@ module.exports = {
 
   treeForPublic() {
     let trees = [];
-
-    if (!this.opts.disablePolyfill) {
-      let appOptions = this.app.options || {};
-
-      trees.push(
-        require('./lib/broccoli/intl-polyfill')({
-          locales: this.locales,
-          destDir: (appOptions.app && appOptions.app.intl) || 'assets/intl'
-        })
-      );
-    }
 
     if (this.opts.publicOnly) {
       trees.push(this.generateTranslationTree());
