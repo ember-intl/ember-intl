@@ -4598,11 +4598,12 @@ ember-assign-polyfill@~2.4.0:
     ember-cli-version-checker "^2.0.0"
 
 ember-auto-import@^1.2.19, ember-auto-import@^1.4.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.5.1.tgz#1523f73ff80829b5ce6fbb9245004954cf0ead1c"
-  integrity sha512-+jB907MXMX76vi2g2JkviMxhDmqv3/kc/VQlpflUh4wHfjrDTfONPCyw/LK6So1zeqeIXXE0mubu6sP/fzgoAA==
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.5.2.tgz#e97ed96b600caa6090ffed83e4611c3e7ec9bad7"
+  integrity sha512-skVQpfdc6G5OVRsyemDn3vI1nj/iBBgnoqRLRka0ZbDT2GqelmyJ86bp+Bd/ztJe45Le3we+LXbR7T54RU5A9w==
   dependencies:
     "@babel/core" "^7.1.6"
+    "@babel/preset-env" "^7.0.0"
     "@babel/traverse" "^7.1.6"
     "@babel/types" "^7.1.6"
     "@embroider/core" "^0.4.3"
