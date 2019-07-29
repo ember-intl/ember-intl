@@ -32,10 +32,6 @@
 
 [Here is a light touch migration guide to help you get started](https://ember-intl.github.io/ember-intl/docs/legacy/migration-2-0-to-3-0).  If you uncover any gaps, submit a PR to update the migration doc or open an issue.
 
-## Documentation
-
-Documentation is hosted in the repository within the [`/docs`](https://github.com/ember-intl/ember-intl/tree/master/docs) folder.
-
 ## Translations
 Translations are defined in [ICU message syntax][ICU] and store in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
 
