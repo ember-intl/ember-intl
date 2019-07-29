@@ -76365,7 +76365,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return headers;
   }
 
-  /**
+  /*
    * Function that always attempts to parse the response as json, and if an error is thrown,
    * returns `undefined` if the response is successful and has a status code of 204 (No Content),
    * or 205 (Reset Content) or if the request method was 'HEAD', and the plain payload otherwise.
@@ -76399,7 +76399,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function isPlainObject(obj) {
     return Object.prototype.toString.call(obj) === '[object Object]';
   }
-  /**
+  /*
    * Helper function that turns the data/body of a request into a query param string.
    * This is directly copied from jQuery.param.
    */
@@ -76442,7 +76442,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     return buildParams('', queryParamsObject).join('&').replace(/%20/g, '+');
   }
-  /**
+  /*
    * Part of the `serializeQueryParams` helper function.
    */
 
@@ -76472,6 +76472,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _fetch$1 = _fetch;
 
   /**
+    @module @ember-data/adapter
+  */
+
+  /**
 
     WARNING: This interface is likely to change in order to accommodate [RFC: Ember Data url templates](https://github.com/emberjs/rfcs/pull/4)
 
@@ -76498,7 +76502,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     The `host` and `namespace` attributes will be used if defined, and are optional.
 
     @class BuildURLMixin
-    @namespace DS
   */
 
   var buildUrlMixin = Ember.Mixin.create({
@@ -76955,7 +76958,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     included REST adapter.
   
     @class Adapter
-    @namespace DS
     @extends EmberObject
   */
   var _default = Ember.Object.extend({
@@ -77485,13 +77487,16 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.AdapterError = AdapterError;
   _exports.errorsHashToArray = errorsHashToArray;
   _exports.errorsArrayToHash = errorsArrayToHash;
-  _exports.ServerError = _exports.ConflictError = _exports.NotFoundError = _exports.ForbiddenError = _exports.UnauthorizedError = _exports.AbortError = _exports.TimeoutError = _exports.InvalidError = void 0;
+  _exports.ServerError = _exports.ConflictError = _exports.NotFoundError = _exports.ForbiddenError = _exports.UnauthorizedError = _exports.AbortError = _exports.TimeoutError = _exports.InvalidError = _exports.default = void 0;
   var SOURCE_POINTER_REGEXP = /^\/?data\/(attributes|relationships)\/(.*)/;
   var SOURCE_POINTER_PRIMARY_REGEXP = /^\/?data/;
   var PRIMARY_ATTRIBUTE_KEY = 'base';
+  /**
+    @module @ember-data/adapter
+  */
+
   /**
     A `AdapterError` is used by an adapter to signal that an error occurred
     during a request to an external API. It indicates a generic error, and
@@ -77584,6 +77589,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       detail: message
     }];
   }
+
+  var _default = AdapterError;
+  _exports.default = _default;
 
   function extendFn(ErrorClass) {
     return function (_temp) {
@@ -78118,8 +78126,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @since 1.13.0
     @class JSONAPIAdapter
     @constructor
-    @namespace DS
-    @extends DS.RESTAdapter
+    @extends RESTAdapter
   */
   var JSONAPIAdapter = _rest.default.extend({
     defaultSerializer: '-json-api',
@@ -78489,9 +78496,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @class RESTAdapter
     @constructor
-    @namespace DS
-    @extends DS.Adapter
-    @uses DS.BuildURLMixin
+    @extends Adapter
+    @uses BuildURLMixin
   */
 
   var RESTAdapter = _adapter.default.extend(_adapter.BuildURLMixin, {
@@ -79055,7 +79061,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       }
 
-      return new _error.AdapterError(errors, detailedMessage);
+      return new _error.default(errors, detailedMessage);
     },
 
     /**
@@ -79495,13 +79501,13 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.11.2";
+  var _default = "3.11.4";
   _exports.default = _default;
 });
 ;define('@ember-data/model/-private', ['exports', '@ember-data/store/-private', '@ember-data/store'], function (exports, Private, store) { 'use strict';
 
   /**
-    @module ember-data
+    @module @ember-data/model
   */
 
   function getDefaultValue(record, options, key) {
@@ -79593,9 +79599,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     })
     ```
 
-    @namespace
     @method attr
-    @for DS
     @param {String|Object} type the attribute type
     @param {Object} options a hash of options
     @return {Attribute}
@@ -79633,6 +79637,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }).meta(meta);
   }
+
+  /**
+    @module @ember-data/model
+  */
 
   /**
     `belongsTo` is used to define One-To-One and One-To-Many
@@ -79897,9 +79905,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     If you are using `links` with sync relationships, you have to use
     `ref.reload` to fetch the resources.
 
-    @namespace
     @method hasMany
-    @for DS
     @param {String} type (optional) type of the relationship
     @param {Object} options (optional) a hash of options
     @return {Ember.computed} relationship
@@ -79987,10 +79993,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.11.2";
+  var _default = "3.11.4";
   _exports.default = _default;
 });
 ;define('@ember-data/serializer/-private', ['exports'], function (exports) { 'use strict';
+
+  /**
+    @module @ember-data/serializer
+  */
 
   /**
     ## Using Embedded Records
@@ -80082,7 +80092,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     * [serializeHasMany](/api/data/classes/DS.EmbeddedRecordsMixin.html#method_serializeHasMany)
 
     @class EmbeddedRecordsMixin
-    @namespace DS
   */
   var embeddedRecordsMixin = Ember.Mixin.create({
     /**
@@ -80596,6 +80605,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     isEmbeddedRecordsMixin: true
   });
 
+  /**
+    @module @ember-data/serializer
+  */
+
   /*
     Check if the passed model has a `type` attribute or a relationship named `type`.
 
@@ -80606,7 +80619,333 @@ lunr.QueryParser.parseBoost = function (parser) {
     return Ember.get(modelClass, 'attributes').has('type') || Ember.get(modelClass, 'relationshipsByName').has('type');
   }
 
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+    The `Transform` class is used to serialize and deserialize model
+    attributes when they are saved or loaded from an
+    adapter. Subclassing `Transform` is useful for creating custom
+    attributes. All subclasses of `Transform` must implement a
+    `serialize` and a `deserialize` method.
+
+    Example
+
+    ```app/transforms/temperature.js
+    import Transform from '@ember-data/serializer/transform';
+
+    // Converts centigrade in the JSON to fahrenheit in the app
+    export default Transform.extend({
+      deserialize(serialized, options) {
+        return (serialized *  1.8) + 32;
+      },
+
+      serialize(deserialized, options) {
+        return (deserialized - 32) / 1.8;
+      }
+    });
+    ```
+
+    Usage
+
+    ```app/models/requirement.js
+    import Model, { attr } from '@ember-data/model';
+
+    export default Model.extend({
+      name: attr('string'),
+      temperature: attr('temperature')
+    });
+    ```
+
+    The options passed into the `attr` function when the attribute is
+    declared on the model is also available in the transform.
+
+    ```app/models/post.js
+    import Model, { attr } from '@ember-data/model';
+
+    export default Model.extend({
+      title: attr('string'),
+      markdown: attr('markdown', {
+        markdown: {
+          gfm: false,
+          sanitize: true
+        }
+      })
+    });
+    ```
+
+    ```app/transforms/markdown.js
+    import Transform from '@ember-data/serializer/transform';
+
+    export default Transform.extend({
+      serialize(deserialized, options) {
+        return deserialized.raw;
+      },
+
+      deserialize(serialized, options) {
+        var markdownOptions = options.markdown || {};
+
+        return marked(serialized, markdownOptions);
+      }
+    });
+    ```
+
+    @class Transform
+   */
+  var Transform = Ember.Object.extend({
+    /**
+      When given a deserialized value from a record attribute this
+      method must return the serialized value.
+       Example
+       ```javascript
+      import { isEmpty } from '@ember/utils';
+       serialize(deserialized, options) {
+        return isEmpty(deserialized) ? null : Number(deserialized);
+      }
+      ```
+       @method serialize
+      @param deserialized The deserialized value
+      @param options hash of options passed to `attr`
+      @return The serialized value
+    */
+    serialize: null,
+
+    /**
+      When given a serialized value from a JSON object this method must
+      return the deserialized value for the record attribute.
+       Example
+       ```javascript
+      deserialize(serialized, options) {
+        return empty(serialized) ? null : Number(serialized);
+      }
+      ```
+       @method deserialize
+      @param serialized The serialized value
+      @param options hash of options passed to `attr`
+      @return The deserialized value
+    */
+    deserialize: null
+  });
+
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+    The `BooleanTransform` class is used to serialize and deserialize
+    boolean attributes on Ember Data record objects. This transform is
+    used when `boolean` is passed as the type parameter to the
+    [DS.attr](../../data#method_attr) function.
+
+    Usage
+
+    ```app/models/user.js
+    import Model, { attr } from '@ember-data/model';
+
+    export default Model.extend({
+      isAdmin: attr('boolean'),
+      name: attr('string'),
+      email: attr('string')
+    });
+    ```
+
+    By default, the boolean transform only allows for values of `true` or
+    `false`. You can opt into allowing `null` values for
+    boolean attributes via `attr('boolean', { allowNull: true })`
+
+    ```app/models/user.js
+    import Model, { attr } from '@ember-data/model';
+
+    export default Model.extend({
+      email: attr('string'),
+      username: attr('string'),
+      wantsWeeklyEmail: attr('boolean', { allowNull: true })
+    });
+    ```
+
+    @class BooleanTransform
+    @extends Transform
+   */
+
+  var boolean = Transform.extend({
+    deserialize: function deserialize(serialized, options) {
+      if (Ember.isNone(serialized) && options.allowNull === true) {
+        return null;
+      }
+
+      var type = typeof serialized;
+
+      if (type === 'boolean') {
+        return serialized;
+      } else if (type === 'string') {
+        return /^(true|t|1)$/i.test(serialized);
+      } else if (type === 'number') {
+        return serialized === 1;
+      } else {
+        return false;
+      }
+    },
+    serialize: function serialize(deserialized, options) {
+      if (Ember.isNone(deserialized) && options.allowNull === true) {
+        return null;
+      }
+
+      return Boolean(deserialized);
+    }
+  });
+
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+   The `DateTransform` class is used to serialize and deserialize
+   date attributes on Ember Data record objects. This transform is used
+   when `date` is passed as the type parameter to the
+   [DS.attr](../../data#method_attr) function. It uses the [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601)
+   standard.
+
+   ```app/models/score.js
+   import Model, { attr, belongsTo } from '@ember-data/model';
+
+   export default Model.extend({
+      value: attr('number'),
+      player: belongsTo('player'),
+      date: attr('date')
+    });
+   ```
+
+   @class DateTransform
+   @extends Transform
+   */
+
+  var date = Transform.extend({
+    deserialize: function deserialize(serialized) {
+      var type = typeof serialized;
+
+      if (type === 'string') {
+        var offset = serialized.indexOf('+');
+
+        if (offset !== -1 && serialized.length - 5 === offset) {
+          offset += 3;
+          return new Date(serialized.slice(0, offset) + ':' + serialized.slice(offset));
+        }
+
+        return new Date(serialized);
+      } else if (type === 'number') {
+        return new Date(serialized);
+      } else if (serialized === null || serialized === undefined) {
+        // if the value is null return null
+        // if the value is not present in the data return undefined
+        return serialized;
+      } else {
+        return null;
+      }
+    },
+    serialize: function serialize(date) {
+      if (date instanceof Date && !isNaN(date)) {
+        return date.toISOString();
+      } else {
+        return null;
+      }
+    }
+  });
+
+  /**
+    @module @ember-data/serializer
+  */
+
+  function isNumber(value) {
+    return value === value && value !== Infinity && value !== -Infinity;
+  }
+  /**
+    The `NumberTransform` class is used to serialize and deserialize
+    numeric attributes on Ember Data record objects. This transform is
+    used when `number` is passed as the type parameter to the
+    [DS.attr](../../data#method_attr) function.
+
+    Usage
+
+    ```app/models/score.js
+    import Model, { attr, belongsTo } from '@ember-data/model';
+
+    export default Model.extend({
+      value: attr('number'),
+      player: belongsTo('player'),
+      date: attr('date')
+    });
+    ```
+
+    @class NumberTransform
+    @extends Transform
+   */
+
+
+  var number = Transform.extend({
+    deserialize: function deserialize(serialized) {
+      var transformed;
+
+      if (serialized === '' || serialized === null || serialized === undefined) {
+        return null;
+      } else {
+        transformed = Number(serialized);
+        return isNumber(transformed) ? transformed : null;
+      }
+    },
+    serialize: function serialize(deserialized) {
+      var transformed;
+
+      if (deserialized === '' || deserialized === null || deserialized === undefined) {
+        return null;
+      } else {
+        transformed = Number(deserialized);
+        return isNumber(transformed) ? transformed : null;
+      }
+    }
+  });
+
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+    The `StringTransform` class is used to serialize and deserialize
+    string attributes on Ember Data record objects. This transform is
+    used when `string` is passed as the type parameter to the
+    [DS.attr](./DS/methods/attr?anchor=attr) function.
+
+    Usage
+
+    ```app/models/user.js
+    import Model, { attr, belongsTo } from '@ember-data/model';
+
+    export default Model.extend({
+      isAdmin: attr('boolean'),
+      name: attr('string'),
+      email: attr('string')
+    });
+    ```
+
+    @class StringTransform
+    @extends Transform
+   */
+
+  var string = Transform.extend({
+    deserialize: function deserialize(serialized) {
+      return Ember.isNone(serialized) ? null : String(serialized);
+    },
+    serialize: function serialize(deserialized) {
+      return Ember.isNone(deserialized) ? null : String(deserialized);
+    }
+  });
+
+  exports.BooleanTransform = boolean;
+  exports.DateTransform = date;
   exports.EmbeddedRecordsMixin = embeddedRecordsMixin;
+  exports.NumberTransform = number;
+  exports.StringTransform = string;
+  exports.Transform = Transform;
   exports.modelHasAttributeOrRelationshipNamedType = modelHasAttributeOrRelationshipNamedType;
 
   Object.defineProperty(exports, '__esModule', { value: true });
@@ -81194,6 +81533,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
+
+  /**
+    @module @ember-data/serializer
+  */
   var emberAssign = Ember.assign || Ember.merge;
   /**
     Ember Data 2.0 Serializer:
@@ -83334,7 +83677,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     [DS.JSONSerializer](DS.JSONSerializer), the included JSON serializer.
   
     @class Serializer
-    @namespace DS
     @extends EmberObject
   */
   var _default = Ember.Object.extend({
@@ -83453,44 +83795,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define("@ember-data/serializer/transform", ["exports", "@ember-data/serializer/transforms/boolean", "@ember-data/serializer/transforms/date", "@ember-data/serializer/transforms/number", "@ember-data/serializer/transforms/string", "@ember-data/serializer/transforms/transform"], function (_exports, _boolean, _date, _number, _string, _transform) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "BooleanTransform", {
-    enumerable: true,
-    get: function get() {
-      return _boolean.default;
-    }
-  });
-  Object.defineProperty(_exports, "DateTransform", {
-    enumerable: true,
-    get: function get() {
-      return _date.default;
-    }
-  });
-  Object.defineProperty(_exports, "NumberTransform", {
-    enumerable: true,
-    get: function get() {
-      return _number.default;
-    }
-  });
-  Object.defineProperty(_exports, "StringTransform", {
-    enumerable: true,
-    get: function get() {
-      return _string.default;
-    }
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _transform.default;
-    }
-  });
-});
-;define("@ember-data/serializer/transforms/boolean", ["exports", "@ember-data/serializer/transforms/transform"], function (_exports, _transform) {
+;define("@ember-data/serializer/transform", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -83499,344 +83804,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   /**
-    The `BooleanTransform` class is used to serialize and deserialize
-    boolean attributes on Ember Data record objects. This transform is
-    used when `boolean` is passed as the type parameter to the
-    [DS.attr](../../data#method_attr) function.
-  
-    Usage
-  
-    ```app/models/user.js
-    import Model, { attr } from '@ember-data/model';
-  
-    export default Model.extend({
-      isAdmin: attr('boolean'),
-      name: attr('string'),
-      email: attr('string')
-    });
-    ```
-  
-    By default, the boolean transform only allows for values of `true` or
-    `false`. You can opt into allowing `null` values for
-    boolean attributes via `attr('boolean', { allowNull: true })`
-  
-    ```app/models/user.js
-    import Model, { attr } from '@ember-data/model';
-  
-    export default Model.extend({
-      email: attr('string'),
-      username: attr('string'),
-      wantsWeeklyEmail: attr('boolean', { allowNull: true })
-    });
-    ```
-  
-    @class BooleanTransform
-    @extends Transform
-   */
-  var _default = _transform.default.extend({
-    deserialize: function deserialize(serialized, options) {
-      if (Ember.isNone(serialized) && options.allowNull === true) {
-        return null;
-      }
-
-      var type = typeof serialized;
-
-      if (type === 'boolean') {
-        return serialized;
-      } else if (type === 'string') {
-        return /^(true|t|1)$/i.test(serialized);
-      } else if (type === 'number') {
-        return serialized === 1;
-      } else {
-        return false;
-      }
-    },
-    serialize: function serialize(deserialized, options) {
-      if (Ember.isNone(deserialized) && options.allowNull === true) {
-        return null;
-      }
-
-      return Boolean(deserialized);
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("@ember-data/serializer/transforms/date", ["exports", "@ember-data/serializer/transforms/transform"], function (_exports, _transform) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /**
-   The `DateTransform` class is used to serialize and deserialize
-   date attributes on Ember Data record objects. This transform is used
-   when `date` is passed as the type parameter to the
-   [DS.attr](../../data#method_attr) function. It uses the [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601)
-   standard.
-  
-   ```app/models/score.js
-   import Model, { attr, belongsTo } from '@ember-data/model';
-  
-   export default Model.extend({
-      value: attr('number'),
-      player: belongsTo('player'),
-      date: attr('date')
-    });
-   ```
-  
-   @class DateTransform
-   @extends Transform
-   */
-  var _default = _transform.default.extend({
-    deserialize: function deserialize(serialized) {
-      var type = typeof serialized;
-
-      if (type === 'string') {
-        var offset = serialized.indexOf('+');
-
-        if (offset !== -1 && serialized.length - 5 === offset) {
-          offset += 3;
-          return new Date(serialized.slice(0, offset) + ':' + serialized.slice(offset));
-        }
-
-        return new Date(serialized);
-      } else if (type === 'number') {
-        return new Date(serialized);
-      } else if (serialized === null || serialized === undefined) {
-        // if the value is null return null
-        // if the value is not present in the data return undefined
-        return serialized;
-      } else {
-        return null;
-      }
-    },
-    serialize: function serialize(date) {
-      if (date instanceof Date && !isNaN(date)) {
-        return date.toISOString();
-      } else {
-        return null;
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("@ember-data/serializer/transforms/number", ["exports", "@ember-data/serializer/transforms/transform"], function (_exports, _transform) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  function isNumber(value) {
-    return value === value && value !== Infinity && value !== -Infinity;
-  }
-  /**
-    The `NumberTransform` class is used to serialize and deserialize
-    numeric attributes on Ember Data record objects. This transform is
-    used when `number` is passed as the type parameter to the
-    [DS.attr](../../data#method_attr) function.
-  
-    Usage
-  
-    ```app/models/score.js
-    import Model, { attr, belongsTo } from '@ember-data/model';
-  
-    export default Model.extend({
-      value: attr('number'),
-      player: belongsTo('player'),
-      date: attr('date')
-    });
-    ```
-  
-    @class NumberTransform
-    @extends Transform
-   */
-
-
-  var _default = _transform.default.extend({
-    deserialize: function deserialize(serialized) {
-      var transformed;
-
-      if (serialized === '' || serialized === null || serialized === undefined) {
-        return null;
-      } else {
-        transformed = Number(serialized);
-        return isNumber(transformed) ? transformed : null;
-      }
-    },
-    serialize: function serialize(deserialized) {
-      var transformed;
-
-      if (deserialized === '' || deserialized === null || deserialized === undefined) {
-        return null;
-      } else {
-        transformed = Number(deserialized);
-        return isNumber(transformed) ? transformed : null;
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("@ember-data/serializer/transforms/string", ["exports", "@ember-data/serializer/transforms/transform"], function (_exports, _transform) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /**
-    The `StringTransform` class is used to serialize and deserialize
-    string attributes on Ember Data record objects. This transform is
-    used when `string` is passed as the type parameter to the
-    [DS.attr](./DS/methods/attr?anchor=attr) function.
-  
-    Usage
-  
-    ```app/models/user.js
-    import Model, { attr, belongsTo } from '@ember-data/model';
-  
-    export default Model.extend({
-      isAdmin: attr('boolean'),
-      name: attr('string'),
-      email: attr('string')
-    });
-    ```
-  
-    @class StringTransform
-    @extends Transform
-   */
-  var _default = _transform.default.extend({
-    deserialize: function deserialize(serialized) {
-      return Ember.isNone(serialized) ? null : String(serialized);
-    },
-    serialize: function serialize(deserialized) {
-      return Ember.isNone(deserialized) ? null : String(deserialized);
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("@ember-data/serializer/transforms/transform", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /**
-    The `Transform` class is used to serialize and deserialize model
-    attributes when they are saved or loaded from an
-    adapter. Subclassing `Transform` is useful for creating custom
-    attributes. All subclasses of `Transform` must implement a
-    `serialize` and a `deserialize` method.
-  
-    Example
-  
-    ```app/transforms/temperature.js
-    import Transform from '@ember-data/serializer/transform';
-  
-    // Converts centigrade in the JSON to fahrenheit in the app
-    export default Transform.extend({
-      deserialize(serialized, options) {
-        return (serialized *  1.8) + 32;
-      },
-  
-      serialize(deserialized, options) {
-        return (deserialized - 32) / 1.8;
-      }
-    });
-    ```
-  
-    Usage
-  
-    ```app/models/requirement.js
-    import Model, { attr } from '@ember-data/model';
-  
-    export default Model.extend({
-      name: attr('string'),
-      temperature: attr('temperature')
-    });
-    ```
-  
-    The options passed into the `attr` function when the attribute is
-    declared on the model is also available in the transform.
-  
-    ```app/models/post.js
-    import Model, { attr } from '@ember-data/model';
-  
-    export default Model.extend({
-      title: attr('string'),
-      markdown: attr('markdown', {
-        markdown: {
-          gfm: false,
-          sanitize: true
-        }
-      })
-    });
-    ```
-  
-    ```app/transforms/markdown.js
-    import Transform from '@ember-data/serializer/transform';
-  
-    export default Transform.extend({
-      serialize(deserialized, options) {
-        return deserialized.raw;
-      },
-  
-      deserialize(serialized, options) {
-        var markdownOptions = options.markdown || {};
-  
-        return marked(serialized, markdownOptions);
-      }
-    });
-    ```
-  
-    @class Transform
-    @namespace DS
-   */
-  var _default = Ember.Object.extend({
-    /**
-      When given a deserialized value from a record attribute this
-      method must return the serialized value.
-       Example
-       ```javascript
-      import { isEmpty } from '@ember/utils';
-       serialize(deserialized, options) {
-        return isEmpty(deserialized) ? null : Number(deserialized);
-      }
-      ```
-       @method serialize
-      @param deserialized The deserialized value
-      @param options hash of options passed to `attr`
-      @return The serialized value
-    */
-    serialize: null,
-
-    /**
-      When given a serialized value from a JSON object this method must
-      return the deserialized value for the record attribute.
-       Example
-       ```javascript
-      deserialize(serialized, options) {
-        return empty(serialized) ? null : Number(serialized);
-      }
-      ```
-       @method deserialize
-      @param serialized The serialized value
-      @param options hash of options passed to `attr`
-      @return The deserialized value
-    */
-    deserialize: null
-  });
-
+    @module @ember-data/serializer
+  */
+  var _default = _private.Transform;
   _exports.default = _default;
 });
 ;define("@ember-data/serializer/version", ["exports"], function (_exports) {
@@ -83846,12 +83816,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.11.2";
+  var _default = "3.11.4";
   _exports.default = _default;
 });
 ;define('@ember-data/store/-private', ['exports', 'ember-inflector', '@ember/ordered-set', '@ember-data/adapter/error'], function (exports, emberInflector, EmberOrderedSet, error) { 'use strict';
 
   EmberOrderedSet = EmberOrderedSet && EmberOrderedSet.hasOwnProperty('default') ? EmberOrderedSet['default'] : EmberOrderedSet;
+
+  /**
+    @module @ember-data/store
+  */
 
   /*
     A `PromiseArray` is an object that acts like both an `Ember.Array`
@@ -83979,7 +83953,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
 
   /**
-  @module ember-data
+    @module @ember-data/store
   */
 
   /**
@@ -84386,6 +84360,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 
+  /**
+    @module @ember-data/store
+  */
   // All modelNames are dasherized internally. Changing this function may
   // require changes to other normalization hooks (such as typeForRoot).
 
@@ -84405,6 +84382,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  /**
+    @module @ember-data/store
+  */
   function typeForRelationshipMeta(meta) {
     var modelName;
     modelName = meta.type || meta.key;
@@ -84520,6 +84501,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     return new RelationshipDefinition(meta);
   }
 
+  /**
+    @module @ember-data/store
+  */
+
   var relationshipsDescriptor = Ember.computed(function () {
     var map = new Map();
     var relationshipsByName = Ember.get(this, 'relationshipsByName'); // Loop through each computed property on the class
@@ -84581,6 +84566,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     return map;
   }).readOnly();
 
+  /**
+    @module @ember-data/store
+  */
+
   /*
    * Returns the RecordData instance associated with a given
    * Model or InternalModel.
@@ -84607,7 +84596,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
 
   /**
-    @module ember-data
+    @module @ember-data/store
   */
 
   /*
@@ -85289,10 +85278,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _createClass$1(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties$1(Constructor.prototype, protoProps); if (staticProps) _defineProperties$1(Constructor, staticProps); return Constructor; }
   /**
     @class Snapshot
-    @namespace DS
     @private
     @constructor
-    @param {DS.Model} internalModel The model to create a snapshot from
+    @param {Model} internalModel The model to create a snapshot from
   */
 
   var Snapshot =
@@ -85672,6 +85660,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+    @module @ember-data/store
+  */
   var EmberDataOrderedSet =
   /*#__PURE__*/
   function (_EmberOrderedSet) {
@@ -85711,6 +85702,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     return EmberDataOrderedSet;
   }(EmberOrderedSet);
 
+  /**
+    @module @ember-data/store
+  */
   function _bind(fn) {
     for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
@@ -85742,8 +85736,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
   }
 
+  /**
+    @module @ember-data/store
+  */
+
   /*
-    @namespace
     @method diffArray
     @private
     @param {Array} oldArray the old array
@@ -86247,6 +86244,10 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _inheritsLoose$1(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
   /**
+    @module @ember-data/store
+  */
+
+  /**
      An RecordReference is a low-level API that allows users and
      addon author to perform meta-operations on a record.
 
@@ -86321,12 +86322,12 @@ lunr.QueryParser.parseBoost = function (parser) {
         ```javascript
        let userRef = store.getReference('user', 1);
         // provide data for reference
-       userRef.push({ 
-         data: { 
-           id: "1", 
+       userRef.push({
+         data: {
+           id: "1",
            type: "user",
            attributes: {
-             username: "@user" 
+             username: "@user"
            }
          }
        }).then(function(user) {
@@ -86412,6 +86413,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   }(Reference);
 
   function _inheritsLoose$2(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+    @module @ember-data/store
+  */
+
   /**
    A BelongsToReference is a low-level API that allows users and
    addon author to perform meta-operations on a belongs-to
@@ -86734,6 +86739,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   }(Reference);
 
   function _inheritsLoose$3(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+    @module @ember-data/store
+  */
+
   /**
    A HasManyReference is a low-level API that allows users and addon
    author to perform meta-operations on a has-many relationship.
@@ -87080,6 +87089,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _defineProperties$2(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass$2(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties$2(Constructor.prototype, protoProps); if (staticProps) _defineProperties$2(Constructor, staticProps); return Constructor; }
+
+  /**
+    @module @ember-data/store
+  */
 
   /*
     The TransitionChainMap caches the `state.enters`, `state.setups`, and final state reached
@@ -88368,7 +88381,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   var changeProperties = Ember.changeProperties;
   /**
-    @module ember-data
+    @module @ember-data/store
   */
 
   function findPossibleInverses(type, inverseType, name, relationshipsSoFar) {
@@ -89936,6 +89949,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _createClass$3(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties$3(Constructor.prototype, protoProps); if (staticProps) _defineProperties$3(Constructor, staticProps); return Constructor; }
 
   /**
+    @module @ember-data/store
+  */
+
+  /**
    `InternalModelMap` is a custom storage map for internalModels of a given modelName
    used by `IdentityMap`.
 
@@ -90047,6 +90064,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   }();
 
   /**
+    @module @ember-data/store
+  */
+
+  /**
    `IdentityMap` is a custom storage map for records by modelName
    used by `Store`.
 
@@ -90099,6 +90120,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     return IdentityMap;
   }();
 
+  /**
+    @module @ember-data/store
+  */
   var RecordDataStoreWrapper =
   /*#__PURE__*/
   function () {
@@ -90216,15 +90240,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     return RecordDataStoreWrapper;
   }();
 
-  /*
-    This is a helper method that validates a JSON API top-level document
-
-    The format of a document is described here:
-    http://jsonapi.org/format/#document-top-level
-
-    @method validateDocumentStructure
-    @param {Object} doc JSON API document
-    @return {array} An array of errors found in the document structure
+  /**
+    @module @ember-data/store
   */
   /*
     This is a helper method that always returns a JSON-API Document.
@@ -90244,6 +90261,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     return normalizedResponse;
   }
 
+  /**
+    @module @ember-data/store
+  */
   function serializerForAdapter(store, adapter, modelName) {
     var serializer = adapter.serializer;
 
@@ -90262,6 +90282,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     return serializer;
   }
 
+  /**
+    @module @ember-data/store
+  */
   // Used by the store to normalize IDs entering the store.  Despite the fact
   // that developers may provide IDs as numbers (e.g., `store.findRecord('person', 1)`),
   // it is important that internally we use strings, since IDs may be serialized
@@ -90539,6 +90562,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     }, null, "DS: Extract payload of queryRecord " + modelName);
   }
 
+  /**
+    @module @ember-data/store
+  */
   function cloneNull(source) {
     var clone = Object.create(null);
 
@@ -90554,7 +90580,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _createClass$4(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties$4(Constructor.prototype, protoProps); if (staticProps) _defineProperties$4(Constructor, staticProps); return Constructor; }
 
   /**
-    @module ember-data
+    @module @ember-data/store
   */
 
   /**
@@ -90950,6 +90976,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }
   });
+
+  /**
+    @module @ember-data/store
+  */
 
   /**
     Represents an ordered list of records whose order and membership is
@@ -91395,6 +91425,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       internalModel._recordArrays.add(array);
     }
   }
+
+  /**
+    @module @ember-data/store
+  */
 
   /*
     This method normalizes a link to an "links object". If the passed link is
@@ -92073,6 +92107,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _inheritsLoose$4(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+    @module @ember-data/store
+  */
   var ManyRelationship =
   /*#__PURE__*/
   function (_Relationship) {
@@ -92384,6 +92421,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _inheritsLoose$5(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+    @module @ember-data/store
+  */
   var BelongsToRelationship =
   /*#__PURE__*/
   function (_Relationship) {
@@ -92629,6 +92669,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     return BelongsToRelationship;
   }(Relationship);
 
+  /**
+    @module @ember-data/store
+  */
   function createRelationshipFor(relationshipMeta, store, recordData, key) {
     var inverseKey = recordData.storeWrapper.inverseForRelationship(recordData.modelName, key);
     var inverseIsAsync = recordData.storeWrapper.inverseIsAsyncForRelationship(recordData.modelName, key);
@@ -92685,6 +92728,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _defineProperties$8(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass$8(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties$8(Constructor.prototype, protoProps); if (staticProps) _defineProperties$8(Constructor, staticProps); return Constructor; }
+
+  /**
+    @module @ember-data/store
+  */
   var nextBfsId = 1;
 
   var RecordDataDefault =
@@ -95947,7 +95994,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.11.2";
+  var _default = "3.11.4";
   _exports.default = _default;
 });
 ;define('@ember/ordered-set/index', ['exports'], function (exports) {
@@ -107325,7 +107372,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     Extend `Ember.DataAdapter` with ED specific code.
 
     @class DebugAdapter
-    @namespace DS
     @extends Ember.DataAdapter
     @private
   */
@@ -107708,7 +107754,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("ember-data/index", ["exports", "@ember-data/store", "ember-data/-private", "ember-inflector", "ember-data/setup-container", "ember-data/initialize-store-service", "@ember-data/serializer/transform", "@ember-data/adapter", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/adapter/error", "@ember-data/serializer", "@ember-data/serializer/json-api", "@ember-data/serializer/json", "@ember-data/serializer/rest", "@ember-data/model"], function (_exports, _store, _private, _emberInflector, _setupContainer, _initializeStoreService, _transform, _adapter, _jsonApi, _rest, _error, _serializer, _jsonApi2, _json, _rest2, _model) {
+;define("ember-data/index", ["exports", "@ember-data/store", "ember-data/-private", "ember-inflector", "ember-data/setup-container", "ember-data/initialize-store-service", "@ember-data/serializer/transform", "@ember-data/serializer/-private", "@ember-data/adapter", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/adapter/error", "@ember-data/serializer", "@ember-data/serializer/json-api", "@ember-data/serializer/json", "@ember-data/serializer/rest", "@ember-data/model"], function (_exports, _store, _private, _emberInflector, _setupContainer, _initializeStoreService, _transform, _private2, _adapter, _jsonApi, _rest, _error, _serializer, _jsonApi2, _json, _rest2, _model) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -107736,7 +107782,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _private.DS.InternalModel = _private.InternalModel;
   _private.DS.Snapshot = _private.Snapshot;
   _private.DS.Adapter = _adapter.default;
-  _private.DS.AdapterError = _error.AdapterError;
+  _private.DS.AdapterError = _error.default;
   _private.DS.InvalidError = _error.InvalidError;
   _private.DS.TimeoutError = _error.TimeoutError;
   _private.DS.AbortError = _error.AbortError;
@@ -107760,10 +107806,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   _private.DS.JSONAPIAdapter = _jsonApi.default;
   _private.DS.JSONAPISerializer = _jsonApi2.default;
   _private.DS.Transform = _transform.default;
-  _private.DS.DateTransform = _transform.DateTransform;
-  _private.DS.StringTransform = _transform.StringTransform;
-  _private.DS.NumberTransform = _transform.NumberTransform;
-  _private.DS.BooleanTransform = _transform.BooleanTransform;
+  _private.DS.DateTransform = _private2.DateTransform;
+  _private.DS.StringTransform = _private2.StringTransform;
+  _private.DS.NumberTransform = _private2.NumberTransform;
+  _private.DS.BooleanTransform = _private2.BooleanTransform;
   _private.DS.EmbeddedRecordsMixin = _rest2.EmbeddedRecordsMixin;
   _private.DS.belongsTo = _model.belongsTo;
   _private.DS.hasMany = _model.hasMany;
@@ -107899,7 +107945,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("ember-data/setup-container", ["exports", "ember-data/-private", "@ember-data/store", "@ember-data/serializer/json-api", "@ember-data/serializer/json", "@ember-data/serializer/rest", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/serializer/transform"], function (_exports, _private, _store, _jsonApi, _json, _rest, _jsonApi2, _rest2, _transform) {
+;define("ember-data/setup-container", ["exports", "ember-data/-private", "@ember-data/store", "@ember-data/serializer/json-api", "@ember-data/serializer/json", "@ember-data/serializer/rest", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/serializer/-private"], function (_exports, _private, _store, _jsonApi, _json, _rest, _jsonApi2, _rest2, _private2) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -107982,10 +108028,10 @@ lunr.QueryParser.parseBoost = function (parser) {
 
 
   function initializeTransforms(registry) {
-    registry.register('transform:boolean', _transform.BooleanTransform);
-    registry.register('transform:date', _transform.DateTransform);
-    registry.register('transform:number', _transform.NumberTransform);
-    registry.register('transform:string', _transform.StringTransform);
+    registry.register('transform:boolean', _private2.BooleanTransform);
+    registry.register('transform:date', _private2.DateTransform);
+    registry.register('transform:number', _private2.NumberTransform);
+    registry.register('transform:string', _private2.StringTransform);
   }
 
   function setupContainer(application) {
@@ -108028,7 +108074,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.11.2";
+  var _default = "3.11.4";
   _exports.default = _default;
 });
 ;define('ember-fetch-adapter/-private/add-query-params', ['exports', 'ember-fetch/mixins/adapter-fetch'], function (exports, _adapterFetch) {
@@ -115381,11 +115427,18 @@ define("ember-resolver/features", [], function () {
       var preserveScrollPosition;
 
       if (true) {
-        preserveScrollPosition = Ember.get(transition, 'handler.controller.preserveScrollPosition');
+        preserveScrollPosition = Ember.getWithDefault(transition, 'router.currentRouteInfos', []).some(function (routeInfo) {
+          return Ember.get(routeInfo, 'route.controller.preserveScrollPosition');
+        });
       } else {
         preserveScrollPosition = transition.some(function (t) {
           return Ember.get(t, 'handler.controller.preserveScrollPosition');
         });
+      } // If `preserveScrollPosition` was not set on the controller, attempt fallback to `preserveScrollPosition` which was set on the router service.
+
+
+      if (!preserveScrollPosition) {
+        preserveScrollPosition = Ember.get(this, 'service.preserveScrollPosition');
       }
 
       if (!preserveScrollPosition) {
@@ -115475,6 +115528,14 @@ define("ember-resolver/features", [], function () {
   };
 
   var _default = Ember.HistoryLocation.extend({
+    init: function init() {
+      this._super.apply(this, arguments);
+
+      (false && !(false) && Ember.deprecate("Setting 'locationType' to 'router-scroll' in config/environment.js is deprecated, please change it to 'auto'. If you are overriding ember-router-scroll's implementation of \"pushState\" or \"replaceState\", then you can subclass and override a new location object from: import HistoryLocation from '@ember/routing/history-location';", false, {
+        id: 'ember-router-scroll',
+        until: '2.0.0'
+      }));
+    },
     pushState: function pushState(path) {
       var state = {
         path: path,
@@ -115502,8 +115563,7 @@ define("ember-resolver/features", [], function () {
     value: true
   });
   _exports.default = void 0;
-
-  var _default = Ember.Service.extend({
+  var RouterScroll = Ember.Service.extend({
     isFastBoot: Ember.computed(function () {
       var fastboot = Ember.getOwner(this).lookup('service:fastboot');
       return fastboot ? fastboot.get('isFastBoot') : false;
@@ -115513,6 +115573,7 @@ define("ember-resolver/features", [], function () {
     targetElement: null,
     delayScrollTop: false,
     isFirstLoad: true,
+    preserveScrollPosition: false,
     init: function init() {
       this._super.apply(this, arguments);
 
@@ -115573,14 +115634,6 @@ define("ember-resolver/features", [], function () {
         });
       }
     },
-    position: Ember.computed(function position() {
-      var scrollMap = Ember.get(this, 'scrollMap');
-      var stateUuid = Ember.get(window, 'history.state.uuid');
-      Ember.set(this, 'key', stateUuid); // eslint-disable-line ember/no-side-effects
-
-      var key = Ember.getWithDefault(this, 'key', '-1');
-      return Ember.getWithDefault(scrollMap, key, scrollMap.default);
-    }).volatile(),
     _loadConfig: function _loadConfig() {
       var config = Ember.getOwner(this).resolveRegistration('config:environment');
 
@@ -115605,7 +115658,17 @@ define("ember-resolver/features", [], function () {
       }
     }
   });
-
+  Object.defineProperty(RouterScroll.prototype, 'position', {
+    configurable: true,
+    get: function get() {
+      var scrollMap = Ember.get(this, 'scrollMap');
+      var stateUuid = Ember.get(window, 'history.state.uuid');
+      Ember.set(this, 'key', stateUuid);
+      var key = Ember.getWithDefault(this, 'key', '-1');
+      return Ember.getWithDefault(scrollMap, key, scrollMap.default);
+    }
+  });
+  var _default = RouterScroll;
   _exports.default = _default;
 });
 ;define("ember-svg-jar/inlined/addon-docs-pen", ["exports"], function (exports) {
