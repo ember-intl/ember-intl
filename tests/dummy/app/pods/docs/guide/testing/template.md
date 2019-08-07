@@ -183,7 +183,7 @@ module('addTranslations demo', function(hooks) {
   setupIntl(hooks);
 
   test('it adds the translations', async function(assert) {
-    setLocale(['en-ca', 'en-gb', 'en-us'];
+    setLocale(['en-ca', 'en-gb', 'en-us']);
 
     addTranslations({
       translation: {
