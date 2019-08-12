@@ -17,6 +17,6 @@ export default Controller.extend({
   },
 
   get namespacesAreActive() {
-    return this.intl.exists("subdirectory.smoke.subdirectory");
+    return this.intl.exists('subdirectory.smoke.subdirectory');
   }
 });
