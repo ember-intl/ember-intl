@@ -115582,7 +115582,9 @@ define("ember-resolver/features", [], function () {
     },
     _normalize: function _normalize(fullName) {
       // A) Convert underscores to dashes
-      // B) Convert camelCase to dash-case, except for components and helpers where we want to avoid shadowing camelCase expressions
+      // B) Convert camelCase to dash-case, except for components (their
+      //    templates) and helpers where we want to avoid shadowing camelCase
+      //    expressions
       // C) replace `.` with `/` in order to make nested controllers work in the following cases
       //      1. `needs: ['posts/post']`
       //      2. `{{render "posts/post"}}`
@@ -115590,10 +115592,12 @@ define("ember-resolver/features", [], function () {
 
       var split = fullName.split(':');
       if (split.length > 1) {
-        if (split[0] === 'component' || split[0] === 'helper') {
-          return split[0] + ':' + split[1].replace(/_/g, '-');
+        var type = split[0];
+
+        if (type === 'component' || type === 'helper' || type === 'template' && split[1].indexOf('components/') === 0) {
+          return type + ':' + split[1].replace(/_/g, '-');
         } else {
-          return split[0] + ':' + Ember.String.dasherize(split[1].replace(/\./g, '/'));
+          return type + ':' + Ember.String.dasherize(split[1].replace(/\./g, '/'));
         }
       } else {
         return fullName;
@@ -120618,7 +120622,7 @@ L.Vector=function(e){this._magnitude=0,this.elements=e||[]}).prototype.positionF
    * Copyright (C) 2019 Oliver Nightingale
    * Includes code from - http://tartarus.org/~martin/PorterStemmer/js.txt
    */
-L.stemmer=(a={ational:"ate",tional:"tion",enci:"ence",anci:"ance",izer:"ize",bli:"ble",alli:"al",entli:"ent",eli:"e",ousli:"ous",ization:"ize",ation:"ate",ator:"ate",alism:"al",iveness:"ive",fulness:"ful",ousness:"ous",aliti:"al",iviti:"ive",biliti:"ble",logi:"log"},u={icate:"ic",ative:"",alize:"al",iciti:"ic",ical:"ic",ful:"",ness:""},s="[aeiouy]",l="[^aeiou][^aeiouy]*",c=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy][aeiou]*[^aeiou][^aeiouy]*"),f=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy][aeiou]*[^aeiou][^aeiouy]*[aeiouy][aeiou]*[^aeiou][^aeiouy]*"),h=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy][aeiou]*[^aeiou][^aeiouy]*([aeiouy][aeiou]*)?$"),p=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy]"),d=/^(.+?)(ss|i)es$/,g=/^(.+?)([^s])s$/,v=/^(.+?)eed$/,y=/^(.+?)(ed|ing)$/,m=/.$/,_=/(at|bl|iz)$/,b=new RegExp("([^aeiouylsz])\\1$"),x=new RegExp("^"+l+s+"[^aeiouwxy]$"),w=/^(.+?[^aeiou])y$/,E=/^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/,k=/^(.+?)(icate|ative|alize|iciti|ical|ful|ness)$/,S=/^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/,O=/^(.+?)(s|t)(ion)$/,R=/^(.+?)e$/,A=/ll$/,N=new RegExp("^"+l+s+"[^aeiouwxy]$"),T=function(e){var t,n,r,i,o,s,l;if(e.length<3)return e;if("y"==(r=e.substr(0,1))&&(e=r.toUpperCase()+e.substr(1)),o=g,(i=d).test(e)?e=e.replace(i,"$1$2"):o.test(e)&&(e=e.replace(o,"$1$2")),o=y,(i=v).test(e)){var T=i.exec(e);(i=c).test(T[1])&&(i=m,e=e.replace(i,""))}else if(o.test(e)){t=(T=o.exec(e))[1],(o=p).test(t)&&(s=b,l=x,(o=_).test(e=t)?e+="e":s.test(e)?(i=m,e=e.replace(i,"")):l.test(e)&&(e+="e"))}if((i=w).test(e)&&(e=(t=(T=i.exec(e))[1])+"i"),(i=E).test(e)&&(t=(T=i.exec(e))[1],n=T[2],(i=c).test(t)&&(e=t+a[n])),(i=k).test(e)&&(t=(T=i.exec(e))[1],n=T[2],(i=c).test(t)&&(e=t+u[n])),o=O,(i=S).test(e))t=(T=i.exec(e))[1],(i=f).test(t)&&(e=t);else if(o.test(e)){t=(T=o.exec(e))[1]+T[2],(o=f).test(t)&&(e=t)}return(i=R).test(e)&&(t=(T=i.exec(e))[1],o=h,s=N,((i=f).test(t)||o.test(t)&&!s.test(t))&&(e=t)),o=f,(i=A).test(e)&&o.test(e)&&(i=m,e=e.replace(i,"")),"y"==r&&(e=r.toLowerCase()+e.substr(1)),e},function(e){return e.update(T)}),L.Pipeline.registerFunction(L.stemmer,"stemmer"),
+L.stemmer=(a={ational:"ate",tional:"tion",enci:"ence",anci:"ance",izer:"ize",bli:"ble",alli:"al",entli:"ent",eli:"e",ousli:"ous",ization:"ize",ation:"ate",ator:"ate",alism:"al",iveness:"ive",fulness:"ful",ousness:"ous",aliti:"al",iviti:"ive",biliti:"ble",logi:"log"},u={icate:"ic",ative:"",alize:"al",iciti:"ic",ical:"ic",ful:"",ness:""},s="[aeiouy]",l="[^aeiou][^aeiouy]*",c=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy][aeiou]*[^aeiou][^aeiouy]*"),f=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy][aeiou]*[^aeiou][^aeiouy]*[aeiouy][aeiou]*[^aeiou][^aeiouy]*"),h=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy][aeiou]*[^aeiou][^aeiouy]*([aeiouy][aeiou]*)?$"),p=new RegExp("^([^aeiou][^aeiouy]*)?[aeiouy]"),d=/^(.+?)(ss|i)es$/,g=/^(.+?)([^s])s$/,v=/^(.+?)eed$/,y=/^(.+?)(ed|ing)$/,m=/.$/,_=/(at|bl|iz)$/,b=new RegExp("([^aeiouylsz])\\1$"),x=new RegExp("^"+l+s+"[^aeiouwxy]$"),w=/^(.+?[^aeiou])y$/,E=/^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/,k=/^(.+?)(icate|ative|alize|iciti|ical|ful|ness)$/,S=/^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/,O=/^(.+?)(s|t)(ion)$/,R=/^(.+?)e$/,A=/ll$/,N=new RegExp("^"+l+s+"[^aeiouwxy]$"),T=function(e){var t,n,r,i,o,s,l;if(e.length<3)return e;if("y"==(r=e.substr(0,1))&&(e=r.toUpperCase()+e.substr(1)),o=g,(i=d).test(e)?e=e.replace(i,"$1$2"):o.test(e)&&(e=e.replace(o,"$1$2")),o=y,(i=v).test(e)){var T=i.exec(e);(i=c).test(T[1])&&(i=m,e=e.replace(i,""))}else o.test(e)&&(t=(T=o.exec(e))[1],(o=p).test(t)&&(s=b,l=x,(o=_).test(e=t)?e+="e":s.test(e)?(i=m,e=e.replace(i,"")):l.test(e)&&(e+="e")));return(i=w).test(e)&&(e=(t=(T=i.exec(e))[1])+"i"),(i=E).test(e)&&(t=(T=i.exec(e))[1],n=T[2],(i=c).test(t)&&(e=t+a[n])),(i=k).test(e)&&(t=(T=i.exec(e))[1],n=T[2],(i=c).test(t)&&(e=t+u[n])),o=O,(i=S).test(e)?(t=(T=i.exec(e))[1],(i=f).test(t)&&(e=t)):o.test(e)&&(t=(T=o.exec(e))[1]+T[2],(o=f).test(t)&&(e=t)),(i=R).test(e)&&(t=(T=i.exec(e))[1],o=h,s=N,((i=f).test(t)||o.test(t)&&!s.test(t))&&(e=t)),o=f,(i=A).test(e)&&o.test(e)&&(i=m,e=e.replace(i,"")),"y"==r&&(e=r.toLowerCase()+e.substr(1)),e},function(e){return e.update(T)}),L.Pipeline.registerFunction(L.stemmer,"stemmer"),
 /*!
    * lunr.stopWordFilter
    * Copyright (C) 2019 Oliver Nightingale
