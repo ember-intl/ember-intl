@@ -14,5 +14,9 @@ export default Controller.extend({
     changeLocale(locale) {
       this.get('intl').setLocale(locale);
     }
+  },
+
+  get namespacesAreActive() {
+    return this.intl.exists("subdirectory.smoke.subdirectory");
   }
 });
