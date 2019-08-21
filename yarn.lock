@@ -8659,7 +8659,7 @@ lodash@^3.10.0:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
   integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
 
-lodash@^4.0.0, lodash@^4.1.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.1.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -11683,11 +11683,11 @@ testdouble-qunit@^2.1.1:
   integrity sha512-1+2oA5oVogN9PwbshcnC4TneJhRgHSRi1pTPaDfDTM+w41yrLJzH95GK249BvELPs3Tmd9JQ6xkr8fs5DKsmow==
 
 testdouble@^3.12.0:
-  version "3.12.3"
-  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.12.3.tgz#ddf1f299541e990a1630b607234cb357c3a025a5"
-  integrity sha512-OSiuFH8Ag4A2dLXDoR5PU5NUtcSrV4jOfrMc9b+t8PPxMRyphMGSv23iAn1gJkkU/nL0n3yjOnKlbxDt7dpMYg==
+  version "3.12.4"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.12.4.tgz#c8b30a62077212c10c2e05dc4105610d28013df4"
+  integrity sha512-Ake1UjvG6XKYUrVGyNv52xg5lQM079dTQW8/F8GWuE1lbC1NRmkUgtgLrsRr+7SPQZZhIhZp6lHUWXMMBvSHEw==
   dependencies:
-    lodash "^4.17.14"
+    lodash "^4.17.15"
     quibble "^0.5.6"
     stringify-object-es5 "^2.5.0"
     theredoc "^1.0.0"
