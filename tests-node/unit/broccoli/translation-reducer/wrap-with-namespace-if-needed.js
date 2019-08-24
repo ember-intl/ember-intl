@@ -69,6 +69,27 @@ describe('wrapWithNamespaceIfNeeded', function() {
       '/tmp/broccoli_debug-output_path-l4iBcmcT/@a-scoped/addon/foo/bar/en-us.json',
       '/tmp/broccoli_debug-output_path-l4iBcmcT',
       ['@a-scoped/addon', 'other-addon', 'an-addon']
+    ],
+    [
+      { a: true, b: false },
+      { foo_bar: { a: true, b: false } },
+      '/tmp/broccoli_debug-output_path-l4iBcmcT/@a-scoped/addon/foo_bar/en-us.json',
+      '/tmp/broccoli_debug-output_path-l4iBcmcT',
+      ['@a-scoped/addon', 'other-addon', 'an-addon']
+    ],
+    [
+      { a: true, b: false },
+      { 'foo-bar': { a: true, b: false } },
+      '/tmp/broccoli_debug-output_path-l4iBcmcT/@a-scoped/addon/foo-bar/en-us.json',
+      '/tmp/broccoli_debug-output_path-l4iBcmcT',
+      ['@a-scoped/addon', 'other-addon', 'an-addon']
+    ],
+    [
+      { a: true, b: false },
+      { foo_bar: { a: true, b: false } },
+      '/tmp/broccoli_debug-output_path-l4iBcmcT/@a-scoped/addon/foo bar/en-us.json',
+      '/tmp/broccoli_debug-output_path-l4iBcmcT',
+      ['@a-scoped/addon', 'other-addon', 'an-addon']
     ]
   ].forEach(([object, expected, filepath, inputPath, addonNames]) => {
     it(`${JSON.stringify(object)} -> ${JSON.stringify(expected)}`, function() {
