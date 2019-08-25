@@ -1,8 +1,43 @@
 # Translating Text
 
 ## Translations
-Translations are defined in [ICU message syntax](https://formatjs.io/guides/message-syntax/) and stored in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
+Translations are defined in [ICU message syntax](https://formatjs.io/guides/message-syntax/) and stored in
+`<project_root>/translations` in either JSON and/or YAML format. Nested objects are supported within your translation files.
 
+### Nested translations
+
+Translations can be organized in nested directories:
+
+```
+/translations
+  en-us.yaml
+  en-gb.yaml
+  /blog
+    en-us.yaml
+    en-gb.yaml
+  /reports
+    en-us.yaml
+    en-gb.yaml
+  /commerce
+    en-us.yaml
+    en-gb.yaml
+    /cart
+      en-us.yaml
+      en-gb.yaml
+```
+
+### The `wrapTranslationsWithNamespace` option
+
+By default, the keys of the translations are not changed when nested directories are created. With the option
+`wrapTranslationsWithNamespace` activated, Ember-intl will wrap the keys of the translations with the names of
+the subdirectories.
+
+When `wrapTranslationsWithNamespace` is `true`, a translation under `<project_root>/translations/commerce/cart`
+with the key `title` will be accessed using the key `commerce.cart.title`, instead the key `title`.
+
+> White spaces can be used in the names of the subdirectories.
+> They will be converted to underscores when used as namespaces of the keys.
+> `<project_root>/translations/foo bar` will be converted to `foo_bar`.
 
 ## Translate
 
