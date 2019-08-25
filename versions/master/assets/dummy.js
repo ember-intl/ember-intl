@@ -5148,7 +5148,10 @@
       changeLocale: function changeLocale(locale) {
         this.get('intl').setLocale(locale);
       }
-    }
+    },
+    namespacesAreActive: Ember.computed(function () {
+      return this.get('intl').exists('subdirectory.smoke.subdirectory');
+    })
   });
 
   _exports.default = _default;
@@ -5162,8 +5165,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "WUtnxW5R",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"h2\",true],[8],[0,\"Smoke\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Number\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-number\"],[8],[0,\"\\n  \"],[1,[28,\"format-number\",[[24,[\"num\"]]],[[\"format\",\"style\",\"currency\"],[\"currency\",\"currency\",\"EUR\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Date\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-date\"],[8],[0,\"\\n  \"],[1,[28,\"format-date\",[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"timeZone\"],[\"UTC\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Time\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-time\"],[8],[0,\"\\n  \"],[1,[28,\"format-time\",[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"hour\",\"second\",\"minute\",\"hour12\",\"timeZone\"],[\"numeric\",\"numeric\",\"numeric\",false,\"UTC\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Relative\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-relative\"],[8],[0,\"\\n  \"],[1,[28,\"format-relative\",[[24,[\"yesterday\"]]],null],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Translation Subdirectory\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"translation-subdirectory\"],[8],[0,\"\\n  \"],[1,[28,\"t\",[\"smoke.subdirectory\"],null],false],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "kyBWorvj",
+    "block": "{\"symbols\":[],\"statements\":[[7,\"h2\",true],[8],[0,\"Smoke\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Number\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-number\"],[8],[0,\"\\n  \"],[1,[28,\"format-number\",[[24,[\"num\"]]],[[\"format\",\"style\",\"currency\"],[\"currency\",\"currency\",\"EUR\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Date\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-date\"],[8],[0,\"\\n  \"],[1,[28,\"format-date\",[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"timeZone\"],[\"UTC\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Time\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-time\"],[8],[0,\"\\n  \"],[1,[28,\"format-time\",[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"hour\",\"second\",\"minute\",\"hour12\",\"timeZone\"],[\"numeric\",\"numeric\",\"numeric\",false,\"UTC\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Relative\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-relative\"],[8],[0,\"\\n  \"],[1,[28,\"format-relative\",[[24,[\"yesterday\"]]],null],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"namespacesAreActive\"]]],null,{\"statements\":[[0,\"  \"],[7,\"h3\",true],[8],[0,\"Translation Subdirectory (with namespaces)\"],[9],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"translation-subdirectory\"],[8],[0,\"\\n    \"],[1,[28,\"t\",[\"subdirectory.smoke.subdirectory\"],null],false],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[7,\"h3\",true],[8],[0,\"Translation Subdirectory\"],[9],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"translation-subdirectory\"],[8],[0,\"\\n    \"],[1,[28,\"t\",[\"smoke.subdirectory\"],null],false],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "dummy/pods/smoke/template.hbs"
     }
@@ -5812,8 +5815,10 @@
       "info": "The {product} costs {price, number, USD}",
       "title": "Hello"
     },
-    "smoke": {
-      "subdirectory": "translation subdirectories loaded"
+    "subdirectory": {
+      "smoke": {
+        "subdirectory": "translation subdirectories loaded"
+      }
     }
   };
   _exports.default = _default;
@@ -5835,8 +5840,10 @@
       "info": "La {product} cuesta {price, number, USD}",
       "title": "Hola"
     },
-    "smoke": {
-      "subdirectory": "translation subdirectories loaded"
+    "subdirectory": {
+      "smoke": {
+        "subdirectory": "translation subdirectories loaded"
+      }
     }
   };
   _exports.default = _default;
@@ -5858,8 +5865,10 @@
       "info": "Le {product} coûtent {price, number, USD}",
       "title": "Bonjour"
     },
-    "smoke": {
-      "subdirectory": "translation subdirectories loaded"
+    "subdirectory": {
+      "smoke": {
+        "subdirectory": "translation subdirectories loaded"
+      }
     }
   };
   _exports.default = _default;
