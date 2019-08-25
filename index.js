@@ -63,7 +63,7 @@ module.exports = {
   },
 
   generateTranslationTree(bundlerOptions) {
-    const translationTree = buildTree(this.project, this.opts.inputPath, this.treeGenerator);
+    const [translationTree, addons] = buildTree(this.project, this.opts.inputPath, this.treeGenerator);
     const _bundlerOptions = bundlerOptions || {};
     const addon = this;
 
@@ -83,6 +83,8 @@ module.exports = {
       errorOnMissingTranslations: this.opts.throwMissingTranslations || this.opts.errorOnMissingTranslations,
       errorOnNamedArgumentMismatch: this.opts.errorOnNamedArgumentMismatch,
       stripEmptyTranslations: this.opts.stripEmptyTranslations,
+      wrapTranslationsWithNamespace: this.opts.wrapTranslationsWithNamespace,
+      addonsWithTranslations: addons,
       log() {
         return addon.log.apply(addon, arguments);
       }

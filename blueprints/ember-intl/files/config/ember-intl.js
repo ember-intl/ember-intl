@@ -101,6 +101,15 @@ module.exports = function(/* environment */) {
     stripEmptyTranslations: false,
 
     /**
+     * Add the subdirectories of the translations as a namespace for all keys.
+     *
+     * @property wrapTranslationsWithNamespace
+     * @type {Boolean}
+     * @default false
+     */
+    wrapTranslationsWithNamespace: false,
+
+    /**
      * Filter missing translations to ignore expected missing translations.
      *
      * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#requiring-translations

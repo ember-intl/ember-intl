@@ -28,7 +28,10 @@ module('Acceptance: Smoke', function(hooks) {
 
   test('translation-subdirectory', async function(assert) {
     await visit('/smoke');
-    assert.ok(t('smoke.subdirectory'));
-    assert.dom('.translation-subdirectory').includesText(t('smoke.subdirectory'));
+
+    const translation = t('subdirectory.smoke.subdirectory') || t('smoke.subdirectory');
+
+    assert.ok(translation);
+    assert.dom('.translation-subdirectory').includesText(translation);
   });
 });
