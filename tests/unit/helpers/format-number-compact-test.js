@@ -1,5 +1,5 @@
 import hbs from 'htmlbars-inline-precompile';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatNumberCompactHelper from 'ember-intl/helpers/format-number-compact';
