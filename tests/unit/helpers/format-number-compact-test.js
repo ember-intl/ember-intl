@@ -13,7 +13,7 @@ module('format-number-compact', function(hooks) {
       shortNumber: {
         oneDigit: {
           significantDigits: 1
-        },
+        }
       }
     });
   });
@@ -25,7 +25,7 @@ module('format-number-compact', function(hooks) {
 
   test('invoke the formatMessage method', function(assert) {
     assert.expect(1);
-    assert.equal(this.intl.formatMessage("{amount, shortNumber, oneDigit}", { amount: 19634 }), "19.6K");
+    assert.equal(this.intl.formatMessage('{amount, shortNumber, oneDigit}', { amount: 19634 }), '19.6K');
   });
 
   test('number is formats unset locale (en-US)', async function(assert) {

@@ -9,7 +9,7 @@ import { get } from '@ember/object';
 
 export default BaseHelper.extend({
   format(value, options) {
-    const style = get(options, "style");
+    const style = get(options, 'style');
     const opts = { value };
     const message = style ? `{value, shortNumber, ${style}}` : `{value, shortNumber}`;
 
