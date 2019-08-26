@@ -72587,7 +72587,7 @@ return Tether;
     'use strict';
     // Velocity tries to register on jQuery first, if it's not present, then it registers itself globally
     // For FastBoot, jQuery and Velocity don't exist so we use a noop
-    var Velocity = self.Velocity || self.Ember.$ && self.Ember.$.Velocity || function(){};
+    var Velocity = self.Velocity || self.jQuery && self.jQuery.Velocity || function(){};
     return { 'default': Velocity };
   }
 
@@ -97951,10 +97951,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     store: Ember.inject.service(),
     classNames: 'docs-ml-auto',
     query: null,
+    keyboardActivated: true,
     didInsertElement: function didInsertElement() {
       this._super();
 
-      this.set('keyboardActivated', true);
       this.get('fetchProject').perform();
     },
     // TODO: The searchbox doesn't work without the project being fetched.
@@ -98164,10 +98164,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     query: null,
     // passed in
     selectedIndex: null,
+    keyboardActivated: true,
     didInsertElement: function didInsertElement() {
-      this._super();
+      this._super(); // Start downloading the search index immediately
 
-      this.set('keyboardActivated', true); // Start downloading the search index immediately
 
       this.get('docsSearch').loadSearchIndex();
     },
@@ -98523,9 +98523,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     layout: _template.default,
     router: Ember.inject.service(),
     isShowingKeyboardShortcuts: false,
-    activateKeyboard: Ember.on('init', function () {
-      this.set('keyboardActivated', true);
-    }),
+    keyboardActivated: true,
     goto: Ember.on((0, _emberKeyboard.keyUp)('KeyG'), function () {
       var _this = this;
 
@@ -98555,6 +98553,11 @@ lunr.QueryParser.parseBoost = function (parser) {
         this.toggleProperty('isShowingKeyboardShortcuts');
       }
     }),
+    hideKeyboardShortcuts: Ember.on((0, _emberKeyboard.keyUp)('Escape'), function () {
+      if (!(0, _keyboardConfig.formElementHasFocus)() && this.get('isShowingKeyboardShortcuts')) {
+        this.set('isShowingKeyboardShortcuts', false);
+      }
+    }),
     actions: {
       toggleKeyboardShortcuts: function toggleKeyboardShortcuts() {
         this.toggleProperty('isShowingKeyboardShortcuts');
@@ -98573,8 +98576,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "p6RwY+yn",
-    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[24,[\"isShowingKeyboardShortcuts\"]]],null,{\"statements\":[[4,\"modal-dialog\",null,[[\"animatable\",\"overlay\",\"wrapperClass\",\"clickOutsideToClose\",\"onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[28,\"action\",[[23,0,[]],\"toggleKeyboardShortcuts\"],null]]],{\"statements\":[[0,\"    \"],[7,\"div\",true],[10,\"class\",\"docs-fullscreen-modal__header\"],[8],[0,\"\\n      \"],[7,\"h2\",true],[10,\"class\",\"docs-fullscreen-modal__title\"],[8],[0,\"Keyboard shortcuts\"],[9],[0,\"\\n      \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",\"docs-fullscreen-modal__close-button\"],[3,\"action\",[[23,0,[]],\"toggleKeyboardShortcuts\"]],[8],[0,\"\\n        ×\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-fullscreen-modal__body\"],[8],[0,\"\\n      \"],[7,\"table\",true],[10,\"class\",\"docs-keyboard-shortcut-modal\"],[8],[0,\"\\n        \"],[7,\"tbody\",true],[8],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Site wide shortcuts\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"g\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"h\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Go to Home\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"g\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"d\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Go to Docs\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"?\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Bring up this help dialog\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Docs search\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"/\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"s\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Focus search bar\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"ctrl\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"n\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"↓\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Select next search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"ctrl\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"p\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"↑\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Select previous search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"enter\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to selected search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Docs nav\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"j\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"→\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to next page\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"k\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"←\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to previous page\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "LLdJurA4",
+    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[24,[\"isShowingKeyboardShortcuts\"]]],null,{\"statements\":[[4,\"modal-dialog\",null,[[\"animatable\",\"overlay\",\"wrapperClass\",\"clickOutsideToClose\",\"onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[28,\"action\",[[23,0,[]],\"toggleKeyboardShortcuts\"],null]]],{\"statements\":[[0,\"    \"],[7,\"div\",true],[10,\"class\",\"docs-fullscreen-modal__header\"],[8],[0,\"\\n      \"],[7,\"h2\",true],[10,\"class\",\"docs-fullscreen-modal__title\"],[8],[0,\"Keyboard shortcuts\"],[9],[0,\"\\n      \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",\"docs-fullscreen-modal__close-button\"],[3,\"action\",[[23,0,[]],\"toggleKeyboardShortcuts\"]],[8],[0,\"\\n        ×\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"docs-fullscreen-modal__body\"],[8],[0,\"\\n      \"],[7,\"table\",true],[10,\"class\",\"docs-keyboard-shortcut-modal\"],[8],[0,\"\\n        \"],[7,\"tbody\",true],[8],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Site wide shortcuts\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"g\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"h\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Go to Home\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"g\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"d\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Go to Docs\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"?\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Bring up this help dialog\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"esc\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Hide this help dialog\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Docs search\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"/\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"s\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Focus search bar\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"ctrl\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"n\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"↓\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Select next search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"ctrl\"],[9],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"p\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"↑\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Select previous search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"enter\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to selected search result\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"th\",true],[8],[9],[0,\"\\n            \"],[7,\"th\",true],[8],[0,\"\\n              \"],[7,\"h3\",true],[10,\"class\",\"docs-fullscreen-modal__subtitle\"],[8],[0,\"Docs nav\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"j\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"→\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to next page\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"tr\",true],[8],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"k\"],[9],[0,\"\\n              or\\n              \"],[7,\"code\",true],[10,\"class\",\"docs__keyboard-key\"],[8],[0,\"←\"],[9],[0,\"\\n            \"],[9],[0,\"\\n            \"],[7,\"td\",true],[8],[0,\"\\n              Navigate to previous page\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "ember-cli-addon-docs/components/docs-keyboard-shortcuts/template.hbs"
     }
@@ -98886,11 +98889,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     docsRoutes: Ember.inject.service(),
     router: Ember.inject.service(),
     classNames: 'docs-viewer docs-flex docs-flex-1',
-    init: function init() {
-      this._super();
-
-      this.set('keyboardActivated', true);
-    },
+    keyboardActivated: true,
     willDestroyElement: function willDestroyElement() {
       this._super.apply(this, arguments);
 
@@ -99423,58 +99422,6 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/controllers/application", ["exports", "ember-keyboard", "ember-cli-addon-docs/keyboard-config"], function (_exports, _emberKeyboard, _keyboardConfig) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Controller.extend(_emberKeyboard.EKMixin, {
-    router: Ember.inject.service(),
-    isShowingKeyboardShortcuts: false,
-    activateKeyboard: Ember.on('init', function () {
-      this.set('keyboardActivated', true);
-    }),
-    goto: Ember.on((0, _emberKeyboard.keyUp)('KeyG'), function () {
-      var _this = this;
-
-      if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        this.set('isGoingTo', true);
-        Ember.run.later(function () {
-          _this.set('isGoingTo', false);
-        }, 500);
-      }
-    }),
-    gotoDocs: Ember.on((0, _emberKeyboard.keyUp)('KeyD'), function () {
-      if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        if (this.get('isGoingTo')) {
-          this.get('router').transitionTo('docs');
-        }
-      }
-    }),
-    gotoHome: Ember.on((0, _emberKeyboard.keyUp)('KeyH'), function () {
-      if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        if (this.get('isGoingTo')) {
-          this.get('router').transitionTo('index');
-        }
-      }
-    }),
-    toggleKeyboardShortcuts: Ember.on((0, _emberKeyboard.keyUp)('shift+Slash'), function () {
-      if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        this.toggleProperty('isShowingKeyboardShortcuts');
-      }
-    }),
-    actions: {
-      toggleKeyboardShortcuts: function toggleKeyboardShortcuts() {
-        this.toggleProperty('isShowingKeyboardShortcuts');
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
 ;define("ember-cli-addon-docs/controllers/docs/api/class", ["exports"], function (_exports) {
   "use strict";
 
@@ -99952,7 +99899,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         // Create a regex that will match modules by either the path, or the
         // pod-path (/component, /route, etc)
-        var type = path.match(/^(.*)s\//)[1];
+        var type = path.match(/^([\w-]*)s\//)[1];
         var pathRegex = new RegExp("".concat(path, "(/").concat(type, ")?$"));
         var modules = this.store.peekAll('module');
         var matches = modules.filter(function (m) {
@@ -101642,6 +101589,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         var textWithoutCode = tokenText.replace(/`[\s\S]*?`/g, '');
         balance += count(/{{#/g, textWithoutCode);
         balance += count(/<[A-Z]/g, textWithoutCode);
+        balance -= count(/[A-Z][^<>]+\/>/g, textWithoutCode);
         balance -= count(/{{\//g, textWithoutCode);
         balance -= count(/<\/[A-Z]/g, textWithoutCode);
       }
@@ -102956,12 +102904,50 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.initialize = initialize;
   _exports.default = void 0;
 
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   // This file is removed from the build in Ember < 3.6
   function initialize(appInstance) {
     var router = appInstance.lookup('service:router');
-    router.on('routeDidChange', function (transition) {
-      (0, _initRouteStyles.default)(appInstance, transition.routeInfos);
+    router.on('routeDidChange', function (_ref) {
+      var to = _ref.to;
+
+      if (likeRouteInfo(to)) {
+        (0, _initRouteStyles.default)(appInstance, nestedRouteNames(to));
+      }
     });
+    router.on('routeWillChange', function (_ref2) {
+      var to = _ref2.to,
+          isActive = _ref2.isActive;
+
+      if (likeRouteInfo(to)) {
+        if (/_loading$/.test(to.name) && isActive) {
+          var routeNames = nestedRouteNames(to) // loading route names are set with an _loading even though
+          // their path is -loading
+          .map(function (name) {
+            return name.replace(/_loading$/, '-loading');
+          });
+          (0, _initRouteStyles.default)(appInstance, routeNames);
+        }
+      }
+    });
+  }
+
+  function nestedRouteNames(_ref3) {
+    var name = _ref3.name,
+        parent = _ref3.parent;
+    var routeNames = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    routeNames.push(name);
+
+    if (parent) {
+      return nestedRouteNames(parent, routeNames);
+    }
+
+    return routeNames;
+  }
+
+  function likeRouteInfo(info) {
+    return info && _typeof(info) === 'object' && info.hasOwnProperty('name');
   }
 
   var _default = {
@@ -102999,20 +102985,30 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = initRouteStyles;
 
-  function initRouteStyles(owner, routes) {
+  function initRouteStyles(owner, routeNames) {
     var classes = [];
 
-    for (var i = 0; i < routes.length; i++) {
-      var route = routes[i];
-      var currentPath = route.name.replace(/\./g, '/');
+    for (var i = 0; i < routeNames.length; i++) {
+      var routeName = routeNames[i];
 
-      if (_podNames.default[currentPath]) {
-        owner.lookup("controller:".concat(route.name)).set('styleNamespace', _podNames.default[currentPath]);
-        classes.push(_podNames.default[currentPath]);
+      var styleNamespace = _podNames.default[routeName.replace(/\./g, '/')];
+
+      if (styleNamespace) {
+        classes.push(styleNamespace);
+
+        var _controller = owner.lookup("controller:".concat(routeName));
+
+        if (_controller) {
+          _controller.set('styleNamespace', styleNamespace);
+        }
       }
     }
 
-    owner.lookup('controller:application').set('routeStyleNamespaceClassSet', classes.join(' '));
+    var controller = owner.lookup('controller:application');
+
+    if (controller) {
+      controller.set('routeStyleNamespaceClassSet', classes.join(' '));
+    }
   }
 });
 ;define("ember-composable-helpers/-private/closure-action", ["exports"], function (_exports) {
@@ -107591,6 +107587,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   exports.taskGroup = taskGroup;
 
 
+  var setDecorator = Ember._setClassicDecorator || Ember._setComputedDecorator;
+
   function _computed(fn) {
     if (true) {
       var cp = function cp(proto, key) {
@@ -107601,7 +107599,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return Ember.computed(fn).apply(undefined, arguments);
       };
 
-      Ember._setComputedDecorator(cp);
+      setDecorator(cp);
 
       return cp;
     } else {
@@ -114521,17 +114519,16 @@ lunr.QueryParser.parseBoost = function (parser) {
   exports.triggerKeyPress = triggerKeyPress;
   exports.triggerKeyUp = triggerKeyUp;
 });
-;define("ember-load-initializers/index", ["exports"], function (_exports) {
+;define("ember-load-initializers/index", ["exports", "require"], function (_exports, _require) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = _default;
+  _exports.default = loadInitializers;
 
-  /* global requirejs:false, require:false */
   function resolveInitializer(moduleName) {
-    var module = require(moduleName, null, null, true);
+    var module = (0, _require.default)(moduleName, null, null, true);
 
     if (!module) {
       throw new Error(moduleName + ' must export an initializer.');
@@ -114561,15 +114558,19 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
   }
+  /**
+   * Configure your application as it boots
+   */
 
-  function _default(app, prefix) {
+
+  function loadInitializers(app, prefix) {
     var initializerPrefix = prefix + '/initializers/';
     var instanceInitializerPrefix = prefix + '/instance-initializers/';
     var initializers = [];
     var instanceInitializers = []; // this is 2 pass because generally the first pass is the problem
     // and is reduced, and resolveInitializer has potential to deopt
 
-    var moduleNames = Object.keys(requirejs._eak_seen);
+    var moduleNames = Object.keys(self.requirejs._eak_seen);
 
     for (var i = 0; i < moduleNames.length; i++) {
       var moduleName = moduleNames[i];
@@ -116439,182 +116440,311 @@ define("ember-resolver/features", [], function () {
   var _default = RouterScroll;
   _exports.default = _default;
 });
-;define("ember-svg-jar/inlined/addon-docs-pen", ["exports"], function (exports) {
+;define("ember-svg-jar/inlined/addon-docs-pen", ["exports"], function (_exports) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = { "content": "<title>Group 2 Copy 2</title><g fill-rule=\"evenodd\"><path d=\"M206.897 58c-.484 3.423-2.667 6-6.397 6-2.547 0-4.373-1.202-5.429-3.054C157 67.738 122.832 85.927 96.164 111.89 69.004 94.1 37.063 83.1 2.71 81.27A162.4 162.4 0 0 1 .897 57c0-9.006.735-17.813 2.14-26.346C36.881 28.616 68.344 17.673 95.152.118c26.814 26.491 61.364 45.057 99.92 51.936C196.126 50.202 197.952 49 200.5 49c3.73 0 5.913 2.577 6.397 6H95v3h111.897z\"/><g transform=\"translate(19.116 29.756)\"><circle cx=\"26.12\" cy=\"26.12\" r=\"26.12\"/><path d=\"M39.387 28.863s-7.943 5.63-13.164 5.705c-5.22.075-4.69-3.284-4.69-3.284s19.141-6.5 13.92-19.336c-2.346-3.302-5.07-4.342-8.926-4.266-3.86.075-8.645 2.41-11.749 9.316-1.483 3.294-2.022 6.419-2.325 8.785 0 0-3.348.679-5.165-.823-1.817-1.5-2.75 0-2.75 0s-3.12 3.942-.016 5.144c3.104 1.2 7.943 1.762 7.943 1.762.44 2.102 1.736 5.671 5.516 8.518 5.673 4.278 16.567-.393 16.567-.393s2.374-.894 4.463-2.487c3.041-2.649 2.614-10.707.376-8.64zm-18.633-3.62c.224-8.815 6.048-12.667 8.066-10.741 2.017 1.926 1.27 6.074-2.541 8.667-3.807 2.592-5.525 2.074-5.525 2.074z\" fill-rule=\"nonzero\"/></g></g>", "attrs": { "width": "207", "height": "112", "viewBox": "0 0 207 112", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/api-item", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>icons/class</title><path d=\"M13.026 30.176a6.4 6.4 0 0 0 1.128-.13 4.337 4.337 0 0 0 1.345-.5c.434-.245.81-.57 1.128-.975.318-.405.478-.926.478-1.562v-8.937c0-1.013.202-1.895.607-2.647.405-.752.897-1.374 1.475-1.865a5.96 5.96 0 0 1 1.822-1.085c.636-.231 1.186-.347 1.649-.347h3.948v3.905H24.22c-.55 0-.984.094-1.302.282a2.004 2.004 0 0 0-.738.737 2.618 2.618 0 0 0-.325.998 8.58 8.58 0 0 0-.065 1.02v8.46c0 .867-.174 1.59-.52 2.168-.348.579-.76 1.034-1.237 1.367a5.42 5.42 0 0 1-1.475.738c-.506.159-.933.253-1.28.282v.086c.347.03.774.102 1.28.217.506.116.998.34 1.475.673.477.332.89.81 1.236 1.431.347.622.521 1.454.521 2.495v8.2c0 .318.022.658.065 1.02.043.36.152.693.325.997.174.304.42.55.738.737.318.188.752.282 1.302.282h2.386v3.905h-3.948c-.463 0-1.013-.116-1.649-.347a5.96 5.96 0 0 1-1.822-1.085c-.578-.491-1.07-1.113-1.475-1.865s-.607-1.634-.607-2.647v-8.59c0-.694-.16-1.272-.478-1.735a3.65 3.65 0 0 0-1.128-1.085 4.455 4.455 0 0 0-1.345-.542c-.462-.101-.838-.152-1.128-.152v-3.904zm38.092 3.904c-.319 0-.709.05-1.172.152a5.217 5.217 0 0 0-1.345.499c-.434.231-.802.55-1.106.954-.304.405-.456.926-.456 1.562v8.937c0 1.013-.202 1.895-.607 2.647-.405.752-.897 1.374-1.475 1.865a5.96 5.96 0 0 1-1.822 1.085c-.636.231-1.186.347-1.649.347h-3.948v-3.905h2.386c.55 0 .984-.094 1.302-.282.318-.188.564-.433.738-.737.173-.304.282-.636.325-.998a8.58 8.58 0 0 0 .065-1.02v-8.46c0-.867.174-1.59.52-2.168.348-.579.76-1.034 1.237-1.367a4.96 4.96 0 0 1 1.475-.716 11.98 11.98 0 0 1 1.28-.304v-.086a9.443 9.443 0 0 1-1.28-.217 4.22 4.22 0 0 1-1.475-.673c-.477-.332-.89-.81-1.236-1.431-.347-.622-.521-1.454-.521-2.495v-8.2a8.58 8.58 0 0 0-.065-1.02 2.618 2.618 0 0 0-.325-.997 2.004 2.004 0 0 0-.738-.737c-.318-.188-.752-.282-1.302-.282h-2.386v-3.905h3.948c.463 0 1.013.116 1.649.347a5.96 5.96 0 0 1 1.822 1.085c.578.491 1.07 1.113 1.475 1.865s.607 1.634.607 2.647v8.59c0 .694.152 1.272.456 1.735.304.463.672.824 1.106 1.085.434.26.882.44 1.345.542.463.101.853.152 1.172.152v3.904z\" fill-rule=\"evenodd\"/>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/caret", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>caret</title><path d=\"M32 41L15 24h35z\" fill-rule=\"evenodd\"/>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/check", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>check</title><path fill-rule=\"nonzero\" d=\"M9 30l13.25 13.25L54 11.5l5.5 5.5-37.25 37.25L3.5 35.5z\"/>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/ember-cli", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>ember-cli</title><g fill-rule=\"evenodd\"><path d=\"M421.536 116.413c-.71-7.079-7.08-4.446-7.08-4.446s-10.26 7.957-19.29 7.072c-9.02-.885-6.19-21.066-6.19-21.066s1.94-18.497-3.36-20.047c-5.31-1.55-11.86 4.821-11.86 4.821s-8.14 9.025-12.04 20.528l-1.06.354s1.24-20.174-.17-24.775c-1.07-2.301-10.8-2.124-12.39 1.946-1.59 4.07-9.38 32.385-9.91 44.242 0 0-15.22 12.918-28.49 15.042-13.28 2.123-16.46-6.194-16.46-6.194s36.1-10.087 34.86-38.933c-1.24-28.845-29.11-18.178-32.26-15.806-3.05 2.293-19.35 12.118-24.1 39.329-.16.927-.44 4.969-.44 4.969s-13.99 9.379-21.77 11.857c0 0 21.77-36.632-4.78-53.267-12.03-7.256-21.59 7.963-21.59 7.963s35.92-39.994 27.96-73.794c-3.79-16.097-11.83-17.824-19.22-15.22-11.22 4.425-15.46 10.972-15.46 10.972s-14.52 21.059-17.88 52.382c-3.36 31.323-8.32 69.194-8.32 69.194s-6.9 6.725-13.27 7.079c-6.37.354-3.54-18.936-3.54-18.936s4.96-29.376 4.6-34.331c-.35-4.955-.7-7.61-6.54-9.379-5.84-1.77-12.21 5.663-12.21 5.663s-16.82 25.483-18.23 29.376l-.89 1.593-.88-1.062s11.86-34.685.53-35.216c-11.33-.531-18.76 12.387-18.76 12.387s-12.92 21.59-13.45 24.068l-.88-1.062s5.31-25.129 4.24-31.323c-1.06-6.194-6.9-4.955-6.9-4.955s-7.43-.885-9.38 3.893c-1.94 4.778-9.02 36.455-9.91 46.542 0 0-18.58 13.273-30.79 13.45-12.21.177-10.97-7.744-10.97-7.744s44.77-15.326 32.56-45.587c-5.49-7.786-11.86-10.236-20.88-10.059-9.03.177-20.22 5.684-27.48 21.965-3.47 7.766-4.73 15.134-5.44 20.712 0 0-7.83 1.6-12.08-1.939s-6.43 0-6.43 0-7.3 9.294-.04 12.126c7.26 2.831 18.58 4.155 18.58 4.155h-.01c1.04 4.955 4.07 13.371 12.91 20.082 13.27 10.087 38.75-.927 38.75-.927l10.44-5.862s.35 9.578 7.96 10.979c7.61 1.395 10.8-.021 24.07-32.229 7.79-16.457 8.32-15.58 8.32-15.58l.88-.177s-6.02 31.5-3.71 39.995c2.3 8.494 12.38 7.609 12.38 7.609s5.49 1.062 9.91-14.511c4.43-15.573 12.92-32.739 12.92-32.739h1.06s-3.71 32.208 1.95 42.472c5.66 10.264 20.35 3.454 20.35 3.454s10.26-5.181 11.86-6.774c0 0 12.18 10.37 29.37 8.488 38.41-7.56 52.07-17.768 52.07-17.768s6.59 16.72 27.04 18.27c23.36 1.77 36.1-12.926 36.1-12.926s-.18 9.557 7.96 12.919 13.63-15.531 13.63-15.531l13.63-37.559h1.23s.71 24.422 14.16 28.315c13.45 3.893 30.97-9.118 30.97-9.118s4.25-2.343 3.54-9.421zm-380.65 3.497c.53-21.059 14.33-30.262 19.11-25.66 4.78 4.601 3.01 14.511-6.02 20.705-9.02 6.193-13.09 4.955-13.09 4.955zm179.62-81.582s12.56-32.738 15.57-16.811c3.01 15.926-26.37 63.353-26.37 63.353.36-10.618 10.8-46.542 10.8-46.542zm15.04 91.138c-8.32 21.767-28.49 12.918-28.49 12.918s-2.3-7.786 4.24-29.553c6.55-21.767 21.95-13.272 21.95-13.272s10.62 8.14 2.3 29.907zm55.74-9.556s-1.94-6.902 5.31-20.174c7.26-13.273 12.92-6.017 12.92-6.017s6.19 6.724-.88 16.811c-7.08 10.088-17.35 9.38-17.35 9.38z\" fill-rule=\"nonzero\"/><path d=\"M434.606 160.128c-5.13 0-9.63-.94-13.5-2.823-3.88-1.881-7.12-4.402-9.74-7.558-2.62-3.155-4.6-6.809-5.94-10.962-1.34-4.152-2-8.47-2-12.955 0-3.209.55-7.059 1.67-11.543 1.11-4.485 2.32-8.401 3.63-11.75a56.556 56.556 0 0 1 4.84-9.593c1.92-3.043 4.14-5.717 6.68-8.013a30.884 30.884 0 0 1 8.47-5.481c3.12-1.358 6.54-2.036 10.27-2.036 3.36 0 6.46.485 9.32 1.452 2.86.97 5.3 2.315 7.34 4.029a18.657 18.657 0 0 1 4.77 6.103c1.14 2.355 1.72 4.889 1.72 7.6 0 1.883-.27 3.737-.81 5.564s-1.59 3.973-3.14 6.435c-1.56 2.464-3.07 4.141-4.54 5.025-1.47.887-3.13 1.329-4.99 1.329-2.8 0-4.61-.691-5.42-2.076-1.35-2.159-1.77-4.069-1.27-5.73.16-.884.66-2.934 1.49-6.146.11-.442.13-1.438.08-2.989 0-1.329-.14-2.435-.42-3.322-.27-.884-.88-1.329-1.81-1.329-2.26 0-4.19.541-5.79 1.618-1.6 1.083-2.96 2.492-4.1 4.238-1.13 1.742-2.24 4.206-3.34 7.389-1.11 3.185-1.89 5.856-2.36 8.015-.47 2.159-.76 4.222-.87 6.188a90.262 90.262 0 0 0-.16 4.94c0 1.993.18 4.069.54 6.229a16.772 16.772 0 0 0 2.14 5.939 14.506 14.506 0 0 0 4.18 4.484c1.71 1.19 3.91 1.784 6.61 1.784 2.66 0 5.6-.817 8.81-2.448 3.21-1.634 6.43-3.697 9.67-6.188a88.509 88.509 0 0 0 9.26-8.222c2.94-2.99 5.45-5.813 7.56-8.471l5.73 9.634c-4.15 5.925-8.64 11.211-13.45 15.861a81.503 81.503 0 0 1-6.69 5.814 58.855 58.855 0 0 1-7.56 5.025 44.973 44.973 0 0 1-8.22 3.569 28.155 28.155 0 0 1-8.66 1.371\" fill-rule=\"nonzero\"/><path d=\"M494.406 94.297c2.5-4.466 5.15-9.492 7.96-15.074a284.506 284.506 0 0 0 7.96-17.253c2.5-5.917 4.66-11.822 6.5-17.712 1.83-5.889 2.99-11.375 3.49-16.457 0-1.618-.04-3-.11-4.144-.08-1.144-.33-1.717-.75-1.717-1.52 0-3.16 1.052-4.92 3.155-1.76 2.103-3.52 4.948-5.27 8.538-1.76 3.59-3.86 9.427-6.3 17.515l-3.66 12.132s-.74 3.754-2.24 11.257c-1.49 7.501-2.37 14.089-2.66 19.76zm-.08 65.831c-2.98 0-5.75-1.294-8.31-3.882-2.57-2.59-4.8-6.062-6.7-10.423-1.9-4.359-3.39-9.414-4.47-15.163-1.07-5.749-1.61-11.784-1.61-18.106 0-5.433.8-12.685 2.39-21.756l2.4-13.606s1.21-4.527 3.62-13.59c2.42-9.06 4.85-16.328 7.28-21.801 2.43-5.47 5.07-10.584 7.93-15.339 2.85-4.755 5.84-8.9 8.97-12.433 3.13-3.531 6.4-6.309 9.82-8.326 3.41-2.02 6.87-3.03 10.4-3.03 2.56 0 4.68.49 6.35 1.468s2.98 2.269 3.93 3.876c.96 1.605 1.63 3.424 2.02 5.455.38 2.033.58 4.104.58 6.209 0 5.235-.62 10.566-1.86 15.993-1.24 5.428-2.91 10.885-5.01 16.368a182.925 182.925 0 0 1-7.29 16.492 489.471 489.471 0 0 1-8.64 16.411c-2.99 5.427-6 10.774-9.02 16.033a353.033 353.033 0 0 0-8.37 15.428c-.28.56-.57 1.286-.87 2.178-.31.895-.6 1.856-.88 2.89-.27 1.034-.55 2.135-.83 3.309-.28 1.173-.5 2.317-.67 3.431v1.174c0 1.452.16 2.861.46 4.23.31 1.366.68 2.596 1.13 3.683.44 1.091.91 1.956 1.41 2.599.5.64.97.962 1.42.962 1.08 0 2.31-.223 3.7-.67 1.39-.448 2.86-1.048 4.42-1.8a62.09 62.09 0 0 0 4.8-2.596c1.65-.978 3.23-1.969 4.77-2.974 3.57-2.344 16.58-11.873 20.49-14.943l4.8 19.888c-5.07 3.37-16.83 10.807-21.79 13.438-2.16 1.106-4.4 2.196-6.71 3.276a81.996 81.996 0 0 1-6.97 2.883 57.078 57.078 0 0 1-6.84 2.014c-2.23.501-4.31.75-6.25.75z\" fill-rule=\"nonzero\"/><path d=\"M595.086 127.982a5.864 5.864 0 0 0-1.32-1.817 7.14 7.14 0 0 0-1.86-1.284 7.677 7.677 0 0 0-2.08-.661c-.7-.11-1.36-.094-1.97.048-.61.144-1.08.466-1.52.848-.87.769-1.76 1.608-2.64 2.431-1.49 1.242-2.04 1.822-3.84 3.41a170.665 170.665 0 0 1-7.31 6.105c-2.49 1.964-4.95 3.641-7.39 5.023-2.44 1.385-4.65 2.076-6.64 2.076-1.72 0-2.86-.734-3.41-2.199-.55-1.466-.83-3.445-.83-5.937 0-2.545.4-5.374 1.2-8.487.79-3.112 1.45-6.247 1.97-9.403.53-3.155 1.5-6.967 2.93-11.439 1.42-4.471 2.5-8.127 3.23-10.972l1.95-7.606c.56-2.223.85-3.943.85-5.162 0-1.439-.41-2.588-1.23-3.448-.81-.857-2.36-1.286-4.65-1.286-1.25 0-2.65.156-4.2.461-1.55.311-3.04.785-4.49 1.428a15.198 15.198 0 0 0-3.87 2.478c-1.25 1.12-2.02 2.379-2.29 3.777-.49 1.996-1.79 6.301-3.89 12.913-2.26 8.114-3.77 13.351-4.53 15.717-.46 1.186-1.48 6.59-3.07 16.21-.78 4.65-1.17 8.72-1.17 12.208 0 2.491.26 4.776.79 6.85.53 2.078 1.4 3.836 2.62 5.274 1.21 1.441 2.81 2.561 4.77 3.362 1.97.804 4.39 1.206 7.27 1.206 3.21 0 6.6-.582 10.17-1.744a73.92 73.92 0 0 0 10.51-4.359c3.43-1.746 6.63-3.654 9.59-5.733a77.426 77.426 0 0 0 6.6-5.146c2.23-1.591 4.45-3.748 7.4-7.065.96-1.086 1.71-2.061 2.15-3.022.43-.962.66-1.873.67-2.735.02-.86-.14-1.635-.47-2.32M563.326 68.008c2.83 0 5.25-.432 7.27-1.299 2.02-.866 3.7-1.999 5.02-3.395a12.898 12.898 0 0 0 2.91-4.779c.61-1.787.92-3.632.92-5.532 0-2.068-.38-3.855-1.13-5.365-.74-1.509-1.75-2.725-3.03-3.647-1.27-.921-2.77-1.604-4.48-2.054-1.72-.445-3.55-.67-5.48-.67-3.11 0-5.69.49-7.77 1.468-2.07.978-3.73 2.181-4.98 3.603-1.24 1.425-2.15 2.95-2.7 4.57-.55 1.621-.83 3.073-.83 4.359 0 3.855 1.16 6.944 3.49 9.261 2.32 2.32 5.92 3.48 10.79 3.48\" fill-rule=\"nonzero\"/><text font-family=\"LucidaGrande, Lucida Grande\" font-size=\"29.756\"><tspan x=\"359.546\" y=\"159.419\">&#xAE;</tspan></text></g>", "attrs": { "width": "596", "height": "161", "viewBox": "0 0 596 161", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/ember-data", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>ember-data</title><g fill-rule=\"evenodd\"><text transform=\"translate(291 105)\" font-size=\"24.104\" font-family=\"LucidaGrande, Lucida Grande\"><tspan x=\".82\" y=\"23.595\">&#xAE;</tspan></text><path d=\"M342.27 94.464c-.57-5.738-5.73-3.603-5.73-3.603s-8.32 6.449-15.64 5.732c-7.32-.717-5.02-17.077-5.02-17.077s1.58-14.993-2.73-16.25c-4.3-1.256-9.61 3.908-9.61 3.908s-6.6 7.316-9.75 16.64l-.86.287s1-16.353-.15-20.083c-.86-1.865-8.75-1.721-10.04 1.578-1.29 3.299-7.6 26.251-8.03 35.863 0 0-12.34 10.472-23.1 12.193-10.75 1.721-13.34-5.021-13.34-5.021s29.27-8.176 28.26-31.559c-1-23.382-23.6-14.735-26.15-12.813-2.47 1.859-15.68 9.824-19.53 31.881-.14.751-.36 4.028-.36 4.028s-11.34 7.602-17.65 9.611c0 0 17.65-29.694-3.87-43.179-9.76-5.881-17.5 6.455-17.5 6.455s29.12-32.419 22.66-59.819C201.06.188 194.54-1.212 188.55.9c-9.09 3.586-12.53 8.894-12.53 8.894s-11.77 17.07-14.49 42.461c-2.73 25.391-6.75 56.089-6.75 56.089s-5.59 5.451-10.75 5.738c-5.17.287-2.87-15.349-2.87-15.349s4.01-23.813 3.73-27.829c-.29-4.017-.58-6.169-5.31-7.603-4.73-1.435-9.9 4.59-9.9 4.59s-13.63 20.657-14.77 23.813l-.72 1.291-.72-.861s9.61-28.116.43-28.546c-9.18-.431-15.2 10.041-15.2 10.041S88.22 91.13 87.79 93.139l-.71-.861s4.3-20.37 3.44-25.391c-.86-5.021-5.6-4.017-5.6-4.017s-6.02-.717-7.6 3.156c-1.58 3.874-7.31 29.551-8.03 37.728 0 0-15.06 10.759-24.96 10.902-9.9.144-8.9-6.277-8.9-6.277s36.3-12.423 26.4-36.953c-4.45-6.312-9.61-8.297-16.93-8.154-7.31.144-16.39 4.608-22.27 17.805-2.82 6.295-3.84 12.268-4.41 16.79 0 0-6.35 1.296-9.8-1.573-3.44-2.869-5.21 0-5.21 0s-5.91 7.534-.03 9.83c5.88 2.295 15.06 3.368 15.06 3.368.84 4.017 3.3 10.839 10.46 16.279 10.76 8.176 31.41-.752 31.41-.752l8.46-4.751s.29 7.763 6.46 8.9c6.16 1.13 8.75-.018 19.51-26.126 6.31-13.341 6.74-12.629 6.74-12.629l.71-.143s-4.87 25.534-3.01 32.419c1.87 6.886 10.04 6.169 10.04 6.169s4.45.86 8.04-11.763c3.58-12.624 10.47-26.539 10.47-26.539h.86s-3.01 26.108 1.58 34.429c4.59 8.32 16.49 2.8 16.49 2.8s8.32-4.2 9.62-5.492c0 0 9.87 8.407 23.8 6.88 31.14-6.128 42.21-14.402 42.21-14.402s5.35 13.553 21.92 14.81c18.94 1.434 29.26-10.478 29.26-10.478s-.14 7.746 6.46 10.472c6.6 2.726 11.05-12.589 11.05-12.589l11.04-30.446h1.01s.57 19.796 11.47 22.952c10.9 3.156 25.11-7.391 25.11-7.391s3.44-1.899 2.86-7.637zM33.71 97.299c.43-17.071 11.62-24.53 15.5-20.801 3.87 3.73 2.43 11.763-4.88 16.784-7.32 5.021-10.62 4.017-10.62 4.017zm145.6-66.131S189.5 4.629 191.94 17.54c2.44 12.911-21.38 51.355-21.38 51.355.29-8.607 8.75-37.727 8.75-37.727zm12.2 73.877c-6.74 17.644-23.1 10.472-23.1 10.472s-1.86-6.312 3.45-23.956c5.3-17.645 17.78-10.759 17.78-10.759s8.61 6.598 1.87 24.243zm45.19-7.746s-1.58-5.595 4.3-16.354 10.47-4.877 10.47-4.877 5.02 5.451-.72 13.628c-5.73 8.176-14.05 7.603-14.05 7.603z\" fill-rule=\"nonzero\"/><path d=\"M393.28 29.765c.28-3.142.42-5.635.42-7.476 0-2.424-.22-4.108-.65-5.051-.43-.942-1.06-1.415-1.88-1.415-1.47 0-2.79.909-3.98 2.727-1.18 1.817-2.13 4.161-2.86 7.03-.72 2.87-1.5 5.989-2.35 9.358-.84 3.37-1.46 6.67-1.86 9.898-.38 3.23-.7 6.141-.93 8.734-.24 2.59-.41 4.432-.5 5.525-.2 2.23-.36 4.379-.48 6.447-.12 2.07-.21 3.958-.26 5.663-.05 1.707-.07 3.196-.07 4.469v3.617c2.5-5.981 4.8-11.934 6.9-17.869a301.56 301.56 0 0 0 2.6-7.911c.85-2.747 1.7-5.472 2.54-8.174a96.759 96.759 0 0 0 2.14-8.027c.58-2.65.99-5.165 1.22-7.545zm-31.76 45.928a28.284 28.284 0 0 0-7.91 5.736c-2.31 2.375-4.24 5.506-5.79 9.4-1.54 3.891-2.72 7.241-3.53 10.047-.81 2.803-1.21 5.337-1.21 7.601 0 .703.1 1.403.3 2.106.2.703.57 1.335 1.11 1.898.54.56 1.3 1.018 2.29 1.368.98.353 2.26.528 3.84.528.8 0 1.6-.178 2.39-.539a10.71 10.71 0 0 0 2.25-1.4 16.62 16.62 0 0 0 2.06-1.971c.65-.735 1.25-1.503 1.78-2.3 1.26-1.831 2.41-3.899 3.44-6.206-.13-.633-.25-1.64-.34-3.022-.09-1.378-.16-3.484-.2-6.311-.05-2.828-.1-5.149-.14-6.958-.05-1.81-.08-3.46-.1-4.955-.03-1.494-.06-2.714-.1-3.665-.05-.95-.1-1.403-.14-1.357zm46.66 39.756a113.58 113.58 0 0 1-9.42 7.006c-1.3.856-2.67 1.704-4.11 2.539a51.222 51.222 0 0 1-4.24 2.216 32.305 32.305 0 0 1-4.06 1.573c-1.3.404-2.51.606-3.6.606-.65 0-1.6-.143-2.86-.428-1.26-.289-2.64-.87-4.13-1.753-1.5-.881-2.99-2.157-4.49-3.824-1.49-1.67-2.78-3.886-3.89-6.648a67.199 67.199 0 0 1-5.3 4.895 40.913 40.913 0 0 1-5.81 4.036c-2 1.145-4.03 2.063-6.07 2.752a19.213 19.213 0 0 1-6.18 1.037c-2.92 0-5.44-.606-7.58-1.82a16.19 16.19 0 0 1-5.31-4.844c-1.42-2.015-2.47-4.301-3.17-6.859a30.31 30.31 0 0 1-1.04-7.933c0-2.913.37-5.862 1.11-8.848a41.49 41.49 0 0 1 3.23-8.676c1.41-2.8 2.98-5.727 4.71-8.781 1.73-3.051 4.02-5.829 6.87-8.336 2.85-2.505 5.78-4.395 8.78-5.671 3.01-1.274 6.22-2.071 9.63-2.391.14-5.83.76-10.968 1.86-15.411 1.1-4.441 2.29-9.221 3.56-14.34 1.27-5.117 2.91-9.83 4.92-14.138s4.21-8.032 6.6-11.173c2.39-3.141 4.94-5.599 7.65-7.37 2.71-1.772 5.51-2.659 8.4-2.659 2.1 0 3.9.55 5.38 1.652 1.48 1.101 2.69 2.562 3.61 4.383.91 1.822 1.57 3.934 1.98 6.339.4 2.406.61 4.89.61 7.452 0 1.6-.02 3.245-.05 4.935-.13 6.443-1.12 12.44-2.98 17.991-1.86 5.55-3.7 11.037-5.51 16.46a138.443 138.443 0 0 1-6.58 16.098c-3.92 8.123-6.42 13.638-7.49 16.541-.23.635-.46 1.408-.7 2.316-.23.907-.45 1.893-.66 2.959a47.824 47.824 0 0 0-.53 3.269 25.87 25.87 0 0 0-.21 3.231c0 1.317.07 2.566.23 3.746.15 1.179.4 2.235.75 3.164.35.931.82 1.669 1.42 2.213.58.544 1.31.816 2.19.816.85 0 1.79-.17 2.79-.509 1.01-.339 2.08-.802 3.2-1.392a40.897 40.897 0 0 0 3.4-2.001 85.66 85.66 0 0 0 3.33-2.275c2.47-1.81 5.05-3.87 7.74-6.177l2.02 14.032z\" fill-rule=\"nonzero\"/><path d=\"M417.33 107.5c0 1.158.07 2.28.23 3.368s.44 2.06.85 2.916c.4.857.94 1.551 1.61 2.085.68.53 1.53.797 2.56.797 1.67 0 3.17-.722 4.52-2.168 1.35-1.446 2.52-3.185 3.51-5.218a36.804 36.804 0 0 0 2.39-6.304c.61-2.168 1-3.977 1.18-5.423l5.02-21.884c-1.84 0-3.63.458-5.38 1.368-1.75.913-3.4 2.146-4.95 3.705-1.55 1.557-2.97 3.336-4.27 5.337-1.31 2.003-2.59 4.473-3.84 7.408-1.26 2.937-2.14 5.517-2.66 7.741-.52 2.224-.77 4.317-.77 6.272zm57.75 5.275c-1.03 1.451-2.41 3.153-4.14 5.105a51.336 51.336 0 0 1-5.82 5.582 36.568 36.568 0 0 1-6.94 4.494c-2.47 1.225-4.94 1.837-7.4 1.837-2.98 0-5.47-.943-7.46-2.833-1.99-1.888-3.71-4.629-5.16-8.229-1.09 1.244-2.42 2.51-4 3.797a36.379 36.379 0 0 1-5.19 3.5 33.803 33.803 0 0 1-5.87 2.564c-2.04.667-4.08.999-6.11.999-2.16 0-4.25-.442-6.29-1.325-2.05-.883-3.85-2.149-5.42-3.802-1.58-1.654-2.83-3.668-3.77-6.045-.95-2.378-1.42-5.06-1.42-8.049 0-3.352.48-6.796 1.42-10.329.95-3.533 2.42-7.354 4.41-11.471 1.98-4.115 4.12-7.669 6.39-10.666 2.29-2.994 4.78-5.612 7.49-7.847 2.71-2.237 5.56-4.014 8.57-5.334 3-1.319 6.05-1.979 9.17-1.979 1.04 0 1.85.205 2.44.611.59.41 1.07.875 1.46 1.395.38.522.75 1.034 1.11 1.532.36.498.81.862 1.36 1.088.54.226 1.09.374 1.66.442.56.067 1.14.102 1.72.102.5 0 1.01-.011 1.53-.035.52-.022 1.02-.032 1.52-.032.68 0 1.31.067 1.9.202.58.137 1.1.43 1.55.886.45.455.8 1.087 1.05 1.903.24.816.37 1.928.37 3.334 0 2.146-.23 4.526-.68 7.141-.44 2.615-.96 5.294-1.54 8.038-.58 2.744-1.24 5.87-1.98 9.384-.74 3.511-1.11 6.47-1.11 8.878 0 2.057.19 3.665.57 4.822.39 1.161 1.2 1.74 2.46 1.74.94 0 1.93-.234 2.96-.7 1.03-.469 2.08-1.08 3.13-1.834a35.58 35.58 0 0 0 3.17-2.571 47.11 47.11 0 0 0 2.99-2.971c2.2-2.401 4.42-5.116 6.67-8.14l3.23 14.816z\" fill-rule=\"nonzero\"/><path d=\"M510.63 115.117c-1.62 1.481-3.63 3.062-6.03 4.748a64.193 64.193 0 0 1-7.77 4.642 59.18 59.18 0 0 1-8.52 3.535c-2.89.943-5.64 1.414-8.24 1.414-2.34 0-4.3-.326-5.9-.975-1.59-.651-2.88-1.559-3.87-2.727-.98-1.166-1.69-2.594-2.11-4.274-.43-1.685-.65-3.535-.65-5.555 0-2.827.32-6.126.95-9.896 1.29-7.798 2.12-12.176 2.49-13.14.61-1.917 8.5-43.576 10.33-50.152 1.71-5.361 2.76-8.848 3.16-10.466.22-1.134.83-2.155 1.85-3.065.93-.816 1.97-1.486 3.14-2.006 1.17-.522 2.38-.907 3.64-1.158 1.25-.25 2.39-.374 3.41-.374 1.85 0 3.1.347 3.77 1.045.66.695.99 1.626.99 2.792 0 .988-.23 2.383-.7 4.185-.46 1.804-.98 3.858-1.57 6.163-.59 2.308-1.46 5.273-2.62 8.897-1.16 3.624-8.61 44.128-9.03 46.684-.42 2.558-.96 5.1-1.6 7.623-.65 2.523-.97 4.817-.97 6.88 0 2.019.22 3.621.67 4.811.45 1.188 1.37 1.783 2.76 1.783 1.62 0 3.41-.56 5.39-1.683 1.97-1.12 3.97-2.48 5.99-4.074 2.02-1.591 3.99-3.239 5.92-4.947 1.93-1.704 3.64-3.163 5.12-4.375v13.665\" fill-rule=\"nonzero\"/><path d=\"M522.63 107.5c0 1.158.08 2.28.24 3.368.16 1.088.44 2.06.84 2.916.41.857.94 1.551 1.62 2.085.67.53 1.53.797 2.56.797 1.67 0 3.17-.722 4.52-2.168 1.35-1.446 2.52-3.185 3.51-5.218a38.545 38.545 0 0 0 2.39-6.304c.61-2.168 1-3.977 1.18-5.423l5.02-21.884c-1.84 0-3.63.458-5.38 1.368-1.75.913-3.41 2.146-4.95 3.705a33.07 33.07 0 0 0-4.28 5.337c-1.3 2.003-2.58 4.473-3.83 7.408-1.26 2.937-2.15 5.517-2.66 7.741-.52 2.224-.78 4.317-.78 6.272zm57.76 5.275c-1.04 1.451-2.42 3.153-4.15 5.105a49.711 49.711 0 0 1-5.82 5.582 36.183 36.183 0 0 1-6.93 4.494c-2.47 1.225-4.94 1.837-7.41 1.837-2.98 0-5.46-.943-7.45-2.833-1.99-1.888-3.72-4.629-5.16-8.229-1.09 1.244-2.42 2.51-4.01 3.797a35.284 35.284 0 0 1-5.19 3.5 33.151 33.151 0 0 1-5.87 2.564c-2.03.667-4.07.999-6.1.999-2.16 0-4.26-.442-6.3-1.325a16.397 16.397 0 0 1-5.42-3.802c-1.57-1.654-2.82-3.668-3.77-6.045-.94-2.378-1.41-5.06-1.41-8.049 0-3.352.47-6.796 1.42-10.329.95-3.533 2.42-7.354 4.4-11.471 1.99-4.115 4.12-7.669 6.4-10.666 2.28-2.994 4.78-5.612 7.48-7.847 2.71-2.237 5.57-4.014 8.57-5.334 3-1.319 6.06-1.979 9.18-1.979 1.04 0 1.85.205 2.44.611.58.41 1.07.875 1.45 1.395.39.522.76 1.034 1.12 1.532.36.498.81.862 1.35 1.088.54.226 1.1.374 1.66.442.57.067 1.14.102 1.73.102.5 0 1-.011 1.52-.035a36.18 36.18 0 0 1 1.53-.032c.67 0 1.31.067 1.89.202.59.137 1.11.43 1.56.886.45.455.8 1.087 1.04 1.903.25.816.37 1.928.37 3.334 0 2.146-.22 4.526-.67 7.141-.45 2.615-.96 5.294-1.54 8.038-.58 2.744-1.24 5.87-1.98 9.384-.74 3.511-1.11 6.47-1.11 8.878 0 2.057.19 3.665.57 4.822.38 1.161 1.2 1.74 2.46 1.74.94 0 1.93-.234 2.96-.7 1.03-.469 2.07-1.08 3.13-1.834a35.49 35.49 0 0 0 3.16-2.571 44.784 44.784 0 0 0 3-2.971c2.2-2.401 4.42-5.116 6.66-8.14l3.24 14.816zM501.14 57.096c.35-.167.95-.225 1.79-.178.84.05 1.81.064 2.91.046 1.1-.02 2.29-.042 3.57-.071 1.27-.027 2.51-.048 3.71-.065 1.2-.014 2.32-.024 3.36-.033 1.04-.006 1.9-.003 2.58.006.8.01 1.4.482 1.81 1.416.4.934.64 2.128.72 3.581.08 1.681-.25 3.072-1 4.168-.74 1.099-1.59 1.67-2.55 1.718l-23 1.154-19.95-1.165c-1.22-.14-2.16-.281-2.83-.424-.67-.141-1.38-.282-2.13-.419-.76-.139-1.71-.279-2.86-.422-1.16-.143-2.83-.311-5.01-.502-.97-.102-1.73-.353-2.27-.753a3.864 3.864 0 0 1-1.22-1.446 5.508 5.508 0 0 1-.51-1.783 24.97 24.97 0 0 1-.14-1.613c-.04-.71.33-1.272 1.09-1.684.76-.414 1.75-.743 2.96-.992 1.22-.248 2.55-.42 4.02-.518 1.46-.095 2.86-.152 4.21-.176 1.34-.022 2.55-.049 3.61-.081 1.06-.029 1.79-.099 2.19-.21l24.94.446\" fill-rule=\"nonzero\"/></g>", "attrs": { "width": "581", "height": "130", "viewBox": "0 0 581 130", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/ember", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>ember-logo</title><g fill-rule=\"evenodd\"><path d=\"M421.536 116.413c-.71-7.079-7.08-4.446-7.08-4.446s-10.26 7.957-19.29 7.072c-9.02-.885-6.19-21.066-6.19-21.066s1.94-18.497-3.36-20.047c-5.31-1.55-11.86 4.821-11.86 4.821s-8.14 9.025-12.04 20.528l-1.06.354s1.24-20.174-.17-24.775c-1.07-2.301-10.8-2.124-12.39 1.946-1.59 4.07-9.38 32.385-9.91 44.242 0 0-15.22 12.918-28.49 15.042-13.28 2.123-16.46-6.194-16.46-6.194s36.1-10.087 34.86-38.933c-1.24-28.845-29.11-18.178-32.26-15.806-3.05 2.293-19.35 12.118-24.1 39.329-.16.927-.44 4.969-.44 4.969s-13.99 9.379-21.77 11.857c0 0 21.77-36.632-4.78-53.267-12.03-7.256-21.59 7.963-21.59 7.963s35.92-39.994 27.96-73.794c-3.79-16.097-11.83-17.824-19.22-15.22-11.22 4.425-15.46 10.972-15.46 10.972s-14.52 21.059-17.88 52.382c-3.36 31.323-8.32 69.194-8.32 69.194s-6.9 6.725-13.27 7.079c-6.37.354-3.54-18.936-3.54-18.936s4.96-29.376 4.6-34.331c-.35-4.955-.7-7.61-6.54-9.379-5.84-1.77-12.21 5.663-12.21 5.663s-16.82 25.483-18.23 29.376l-.89 1.593-.88-1.062s11.86-34.685.53-35.216c-11.33-.531-18.76 12.387-18.76 12.387s-12.92 21.59-13.45 24.068l-.88-1.062s5.31-25.129 4.24-31.323c-1.06-6.194-6.9-4.955-6.9-4.955s-7.43-.885-9.38 3.893c-1.94 4.778-9.02 36.455-9.91 46.542 0 0-18.58 13.273-30.79 13.45-12.21.177-10.97-7.744-10.97-7.744s44.77-15.326 32.56-45.587c-5.49-7.786-11.86-10.236-20.88-10.059-9.03.177-20.22 5.684-27.48 21.965-3.47 7.766-4.73 15.134-5.44 20.712 0 0-7.83 1.6-12.08-1.939s-6.43 0-6.43 0-7.3 9.294-.04 12.126c7.26 2.831 18.58 4.155 18.58 4.155h-.01c1.04 4.955 4.07 13.371 12.91 20.082 13.27 10.087 38.75-.927 38.75-.927l10.44-5.862s.35 9.578 7.96 10.979c7.61 1.395 10.8-.021 24.07-32.229 7.79-16.457 8.32-15.58 8.32-15.58l.88-.177s-6.02 31.5-3.71 39.995c2.3 8.494 12.38 7.609 12.38 7.609s5.49 1.062 9.91-14.511c4.43-15.573 12.92-32.739 12.92-32.739h1.06s-3.71 32.208 1.95 42.472c5.66 10.264 20.35 3.454 20.35 3.454s10.26-5.181 11.86-6.774c0 0 12.18 10.37 29.37 8.488 38.41-7.56 52.07-17.768 52.07-17.768s6.59 16.72 27.04 18.27c23.36 1.77 36.1-12.926 36.1-12.926s-.18 9.557 7.96 12.919 13.63-15.531 13.63-15.531l13.63-37.559h1.23s.71 24.422 14.16 28.315c13.45 3.893 30.97-9.118 30.97-9.118s4.25-2.343 3.54-9.421zm-380.65 3.497c.53-21.059 14.33-30.262 19.11-25.66 4.78 4.601 3.01 14.511-6.02 20.705-9.02 6.193-13.09 4.955-13.09 4.955zm179.62-81.582s12.56-32.738 15.57-16.811c3.01 15.926-26.37 63.353-26.37 63.353.36-10.618 10.8-46.542 10.8-46.542zm15.04 91.138c-8.32 21.767-28.49 12.918-28.49 12.918s-2.3-7.786 4.24-29.553c6.55-21.767 21.95-13.272 21.95-13.272s10.62 8.14 2.3 29.907zm55.74-9.556s-1.94-6.902 5.31-20.174c7.26-13.273 12.92-6.017 12.92-6.017s6.19 6.724-.88 16.811c-7.08 10.088-17.35 9.38-17.35 9.38z\" fill-rule=\"nonzero\"/><text font-family=\"LucidaGrande, Lucida Grande\" font-size=\"29.756\"><tspan x=\"359.546\" y=\"159.419\">&#xAE;</tspan></text></g>", "attrs": { "width": "422", "height": "161", "viewBox": "0 0 422 161", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/git-sha", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>git-sha</title><path d=\"M18.322 28C19.696 21.71 25.298 17 32 17c6.702 0 12.304 4.71 13.678 11H58v6H45.678C44.304 40.29 38.702 45 32 45c-6.702 0-12.304-4.71-13.678-11H6v-6h12.322zM32 39a8 8 0 1 0 0-16 8 8 0 0 0 0 16z\" fill-rule=\"evenodd\"/>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/git-tag", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>git-tag</title><path d=\"M10.76 30.286l.09-17.457a4 4 0 0 1 3.979-3.98l17.457-.089a6 6 0 0 1 4.273 1.758L58.953 32.91a2 2 0 0 1 0 2.829L37.74 56.953a2 2 0 0 1-2.829 0L12.518 34.559a6 6 0 0 1-1.758-4.273zm14.85-6.676c1.953-1.952 1.945-5.126-.017-7.088-1.962-1.962-5.135-1.97-7.088-.017-1.952 1.953-1.945 5.126.017 7.088 1.962 1.962 5.136 1.97 7.088.017z\" fill-rule=\"evenodd\"/>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/github", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>GitHub</title><path d=\"M10 0a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 0 1 .1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .26.18.58.69.48A10 10 0 0 0 10 0\"/>", "attrs": { "class": "fill-current w-5 h-5", "xmlns": "http://www.w3.org/2000/svg", "viewBox": "0 0 20 20" } };
-});
-;define("ember-svg-jar/inlined/guide", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>icons/guide</title><g fill-rule=\"evenodd\"><g><path d=\"M11 18.08c-.67.19-1.336.403-2 .642v28.927c10-3.306 19.556-.136 24 3.351 2.667-2.615 14-6.657 24-3.351V18.722a30.156 30.156 0 0 0-2-.642v27.3c-6.453-2.92-13.787-2.047-22 2.62V34.187 48c-8.8-4.667-16.133-5.54-22-2.62v-27.3z\"/><path d=\"M34 17.44c5.976-3.001 11.976-3.234 18-.698v24.976C46.762 39.689 40.762 40.45 34 44V17.44zM32 17.44c-5.976-3.001-11.976-3.234-18-.698v24.976C19.238 39.689 25.238 40.45 32 44V17.44z\"/></g></g>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/left-arrow", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>icons/left-arrow</title><g transform=\"matrix(-1 0 0 1 44 12)\" fill-rule=\"evenodd\"><rect transform=\"rotate(45 12.078 12.078)\" x=\"-1.873\" y=\"9.559\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/><rect transform=\"rotate(-45 12.331 28.789)\" x=\"-1.62\" y=\"26.27\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/></g>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/link", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<path d=\"M6.879 9.934a.81.81 0 0 1-.575-.238 3.818 3.818 0 0 1 0-5.392l3-3C10.024.584 10.982.187 12 .187s1.976.397 2.696 1.117a3.818 3.818 0 0 1 0 5.392l-1.371 1.371a.813.813 0 0 1-1.149-1.149l1.371-1.371A2.19 2.19 0 0 0 12 1.812c-.584 0-1.134.228-1.547.641l-3 3a2.19 2.19 0 0 0 0 3.094.813.813 0 0 1-.575 1.387z\"/><path d=\"M4 15.813a3.789 3.789 0 0 1-2.696-1.117 3.818 3.818 0 0 1 0-5.392l1.371-1.371a.813.813 0 0 1 1.149 1.149l-1.371 1.371A2.19 2.19 0 0 0 4 14.188c.585 0 1.134-.228 1.547-.641l3-3a2.19 2.19 0 0 0 0-3.094.813.813 0 0 1 1.149-1.149 3.818 3.818 0 0 1 0 5.392l-3 3A3.789 3.789 0 0 1 4 15.813z\"/>", "attrs": { "xmlns": "http://www.w3.org/2000/svg", "width": "16", "height": "16", "viewBox": "0 0 16 16" } };
-});
-;define("ember-svg-jar/inlined/pencil", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>Group</title><g fill-rule=\"evenodd\"><path d=\"M3.557 34.011l8.842 8.843-9.733 2.808A1.5 1.5 0 0 1 .75 43.744l2.808-9.733zM14.364 40.889l-8.842-8.842L31.067 6.502l8.842 8.842zM41.874 13.379l-8.842-8.843 2.456-2.456a6.253 6.253 0 1 1 8.843 8.843l-2.457 2.456z\"/></g>", "attrs": { "width": "47", "height": "46", "viewBox": "0 0 47 46", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/right-arrow", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>icons/right-arrow</title><g transform=\"translate(20 12)\" fill-rule=\"evenodd\"><rect transform=\"rotate(45 12.078 12.078)\" x=\"-1.873\" y=\"9.559\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/><rect transform=\"rotate(-45 12.331 28.789)\" x=\"-1.62\" y=\"26.27\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/></g>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define("ember-svg-jar/inlined/search", ["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = { "content": "<title>search</title><path d=\"M23.997 40.742c-9.249 0-16.746-7.497-16.746-16.745 0-9.248 7.497-16.745 16.746-16.745 9.248 0 16.746 7.497 16.746 16.745a16.674 16.674 0 0 1-16.746 16.745zm38.885 16.93L43.534 38.32a23.59 23.59 0 0 0 4.65-14.328 24.092 24.092 0 1 0-39.67 18.475 24.092 24.092 0 0 0 29.807 1.065l19.353 19.35a3.6 3.6 0 0 0 5.212 0 3.6 3.6 0 0 0-.004-5.211z\" fill-rule=\"nonzero\"/>", "attrs": { "width": "64", "height": "64", "viewBox": "0 0 64 64", "xmlns": "http://www.w3.org/2000/svg" } };
-});
-;define('ember-svg-jar/utils/make-helper', ['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = makeHelper;
-
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
-
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
-
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
-
-      return _arr;
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>Group 2 Copy 2</title><g fill-rule=\"evenodd\"><path d=\"M206.897 58c-.484 3.423-2.667 6-6.397 6-2.547 0-4.373-1.202-5.429-3.054C157 67.738 122.832 85.927 96.164 111.89 69.004 94.1 37.063 83.1 2.71 81.27A162.4 162.4 0 01.897 57c0-9.006.735-17.813 2.14-26.346C36.881 28.616 68.344 17.673 95.152.118c26.814 26.491 61.364 45.057 99.92 51.936C196.126 50.202 197.952 49 200.5 49c3.73 0 5.913 2.577 6.397 6H95v3h111.897z\"/><g transform=\"translate(19.116 29.756)\"><circle cx=\"26.12\" cy=\"26.12\" r=\"26.12\"/><path d=\"M39.387 28.863s-7.943 5.63-13.164 5.705c-5.22.075-4.69-3.284-4.69-3.284s19.141-6.5 13.92-19.336c-2.346-3.302-5.07-4.342-8.926-4.266-3.86.075-8.645 2.41-11.749 9.316-1.483 3.294-2.022 6.419-2.325 8.785 0 0-3.348.679-5.165-.823-1.817-1.5-2.75 0-2.75 0s-3.12 3.942-.016 5.144c3.104 1.2 7.943 1.762 7.943 1.762.44 2.102 1.736 5.671 5.516 8.518 5.673 4.278 16.567-.393 16.567-.393s2.374-.894 4.463-2.487c3.041-2.649 2.614-10.707.376-8.64zm-18.633-3.62c.224-8.815 6.048-12.667 8.066-10.741 2.017 1.926 1.27 6.074-2.541 8.667-3.807 2.592-5.525 2.074-5.525 2.074z\" fill-rule=\"nonzero\"/></g></g>",
+    "attrs": {
+      "width": "207",
+      "height": "112",
+      "viewBox": "0 0 207 112",
+      "xmlns": "http://www.w3.org/2000/svg"
     }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/api-item", ["exports"], function (_exports) {
+  "use strict";
 
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>icons/class</title><path d=\"M13.026 30.176a6.4 6.4 0 001.128-.13 4.337 4.337 0 001.345-.5c.434-.245.81-.57 1.128-.975.318-.405.478-.926.478-1.562v-8.937c0-1.013.202-1.895.607-2.647.405-.752.897-1.374 1.475-1.865a5.96 5.96 0 011.822-1.085c.636-.231 1.186-.347 1.649-.347h3.948v3.905H24.22c-.55 0-.984.094-1.302.282a2.004 2.004 0 00-.738.737 2.618 2.618 0 00-.325.998 8.58 8.58 0 00-.065 1.02v8.46c0 .867-.174 1.59-.52 2.168-.348.579-.76 1.034-1.237 1.367a5.42 5.42 0 01-1.475.738c-.506.159-.933.253-1.28.282v.086c.347.03.774.102 1.28.217.506.116.998.34 1.475.673.477.332.89.81 1.236 1.431.347.622.521 1.454.521 2.495v8.2c0 .318.022.658.065 1.02.043.36.152.693.325.997.174.304.42.55.738.737.318.188.752.282 1.302.282h2.386v3.905h-3.948c-.463 0-1.013-.116-1.649-.347a5.96 5.96 0 01-1.822-1.085c-.578-.491-1.07-1.113-1.475-1.865s-.607-1.634-.607-2.647v-8.59c0-.694-.16-1.272-.478-1.735a3.65 3.65 0 00-1.128-1.085 4.455 4.455 0 00-1.345-.542c-.462-.101-.838-.152-1.128-.152v-3.904zm38.092 3.904c-.319 0-.709.05-1.172.152a5.217 5.217 0 00-1.345.499c-.434.231-.802.55-1.106.954-.304.405-.456.926-.456 1.562v8.937c0 1.013-.202 1.895-.607 2.647-.405.752-.897 1.374-1.475 1.865a5.96 5.96 0 01-1.822 1.085c-.636.231-1.186.347-1.649.347h-3.948v-3.905h2.386c.55 0 .984-.094 1.302-.282.318-.188.564-.433.738-.737.173-.304.282-.636.325-.998a8.58 8.58 0 00.065-1.02v-8.46c0-.867.174-1.59.52-2.168.348-.579.76-1.034 1.237-1.367a4.96 4.96 0 011.475-.716 11.98 11.98 0 011.28-.304v-.086a9.443 9.443 0 01-1.28-.217 4.22 4.22 0 01-1.475-.673c-.477-.332-.89-.81-1.236-1.431-.347-.622-.521-1.454-.521-2.495v-8.2a8.58 8.58 0 00-.065-1.02 2.618 2.618 0 00-.325-.997 2.004 2.004 0 00-.738-.737c-.318-.188-.752-.282-1.302-.282h-2.386v-3.905h3.948c.463 0 1.013.116 1.649.347a5.96 5.96 0 011.822 1.085c.578.491 1.07 1.113 1.475 1.865s.607 1.634.607 2.647v8.59c0 .694.152 1.272.456 1.735.304.463.672.824 1.106 1.085.434.26.882.44 1.345.542.463.101.853.152 1.172.152v3.904z\" fill-rule=\"evenodd\"/>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/caret", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>caret</title><path d=\"M32 41L15 24h35z\" fill-rule=\"evenodd\"/>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/check", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>check</title><path fill-rule=\"nonzero\" d=\"M9 30l13.25 13.25L54 11.5l5.5 5.5-37.25 37.25L3.5 35.5z\"/>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/ember-cli", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>ember-cli</title><g fill-rule=\"evenodd\"><path d=\"M421.536 116.413c-.71-7.079-7.08-4.446-7.08-4.446s-10.26 7.957-19.29 7.072c-9.02-.885-6.19-21.066-6.19-21.066s1.94-18.497-3.36-20.047c-5.31-1.55-11.86 4.821-11.86 4.821s-8.14 9.025-12.04 20.528l-1.06.354s1.24-20.174-.17-24.775c-1.07-2.301-10.8-2.124-12.39 1.946-1.59 4.07-9.38 32.385-9.91 44.242 0 0-15.22 12.918-28.49 15.042-13.28 2.123-16.46-6.194-16.46-6.194s36.1-10.087 34.86-38.933c-1.24-28.845-29.11-18.178-32.26-15.806-3.05 2.293-19.35 12.118-24.1 39.329-.16.927-.44 4.969-.44 4.969s-13.99 9.379-21.77 11.857c0 0 21.77-36.632-4.78-53.267-12.03-7.256-21.59 7.963-21.59 7.963s35.92-39.994 27.96-73.794c-3.79-16.097-11.83-17.824-19.22-15.22-11.22 4.425-15.46 10.972-15.46 10.972s-14.52 21.059-17.88 52.382c-3.36 31.323-8.32 69.194-8.32 69.194s-6.9 6.725-13.27 7.079c-6.37.354-3.54-18.936-3.54-18.936s4.96-29.376 4.6-34.331c-.35-4.955-.7-7.61-6.54-9.379-5.84-1.77-12.21 5.663-12.21 5.663s-16.82 25.483-18.23 29.376l-.89 1.593-.88-1.062s11.86-34.685.53-35.216c-11.33-.531-18.76 12.387-18.76 12.387s-12.92 21.59-13.45 24.068l-.88-1.062s5.31-25.129 4.24-31.323c-1.06-6.194-6.9-4.955-6.9-4.955s-7.43-.885-9.38 3.893c-1.94 4.778-9.02 36.455-9.91 46.542 0 0-18.58 13.273-30.79 13.45-12.21.177-10.97-7.744-10.97-7.744s44.77-15.326 32.56-45.587c-5.49-7.786-11.86-10.236-20.88-10.059-9.03.177-20.22 5.684-27.48 21.965-3.47 7.766-4.73 15.134-5.44 20.712 0 0-7.83 1.6-12.08-1.939s-6.43 0-6.43 0-7.3 9.294-.04 12.126c7.26 2.831 18.58 4.155 18.58 4.155h-.01c1.04 4.955 4.07 13.371 12.91 20.082 13.27 10.087 38.75-.927 38.75-.927l10.44-5.862s.35 9.578 7.96 10.979c7.61 1.395 10.8-.021 24.07-32.229 7.79-16.457 8.32-15.58 8.32-15.58l.88-.177s-6.02 31.5-3.71 39.995c2.3 8.494 12.38 7.609 12.38 7.609s5.49 1.062 9.91-14.511c4.43-15.573 12.92-32.739 12.92-32.739h1.06s-3.71 32.208 1.95 42.472c5.66 10.264 20.35 3.454 20.35 3.454s10.26-5.181 11.86-6.774c0 0 12.18 10.37 29.37 8.488 38.41-7.56 52.07-17.768 52.07-17.768s6.59 16.72 27.04 18.27c23.36 1.77 36.1-12.926 36.1-12.926s-.18 9.557 7.96 12.919 13.63-15.531 13.63-15.531l13.63-37.559h1.23s.71 24.422 14.16 28.315c13.45 3.893 30.97-9.118 30.97-9.118s4.25-2.343 3.54-9.421zm-380.65 3.497c.53-21.059 14.33-30.262 19.11-25.66 4.78 4.601 3.01 14.511-6.02 20.705-9.02 6.193-13.09 4.955-13.09 4.955zm179.62-81.582s12.56-32.738 15.57-16.811c3.01 15.926-26.37 63.353-26.37 63.353.36-10.618 10.8-46.542 10.8-46.542zm15.04 91.138c-8.32 21.767-28.49 12.918-28.49 12.918s-2.3-7.786 4.24-29.553c6.55-21.767 21.95-13.272 21.95-13.272s10.62 8.14 2.3 29.907zm55.74-9.556s-1.94-6.902 5.31-20.174c7.26-13.273 12.92-6.017 12.92-6.017s6.19 6.724-.88 16.811c-7.08 10.088-17.35 9.38-17.35 9.38z\" fill-rule=\"nonzero\"/><path d=\"M434.606 160.128c-5.13 0-9.63-.94-13.5-2.823-3.88-1.881-7.12-4.402-9.74-7.558-2.62-3.155-4.6-6.809-5.94-10.962-1.34-4.152-2-8.47-2-12.955 0-3.209.55-7.059 1.67-11.543 1.11-4.485 2.32-8.401 3.63-11.75a56.556 56.556 0 014.84-9.593c1.92-3.043 4.14-5.717 6.68-8.013a30.884 30.884 0 018.47-5.481c3.12-1.358 6.54-2.036 10.27-2.036 3.36 0 6.46.485 9.32 1.452 2.86.97 5.3 2.315 7.34 4.029a18.657 18.657 0 014.77 6.103c1.14 2.355 1.72 4.889 1.72 7.6 0 1.883-.27 3.737-.81 5.564s-1.59 3.973-3.14 6.435c-1.56 2.464-3.07 4.141-4.54 5.025-1.47.887-3.13 1.329-4.99 1.329-2.8 0-4.61-.691-5.42-2.076-1.35-2.159-1.77-4.069-1.27-5.73.16-.884.66-2.934 1.49-6.146.11-.442.13-1.438.08-2.989 0-1.329-.14-2.435-.42-3.322-.27-.884-.88-1.329-1.81-1.329-2.26 0-4.19.541-5.79 1.618-1.6 1.083-2.96 2.492-4.1 4.238-1.13 1.742-2.24 4.206-3.34 7.389-1.11 3.185-1.89 5.856-2.36 8.015-.47 2.159-.76 4.222-.87 6.188a90.262 90.262 0 00-.16 4.94c0 1.993.18 4.069.54 6.229a16.772 16.772 0 002.14 5.939 14.506 14.506 0 004.18 4.484c1.71 1.19 3.91 1.784 6.61 1.784 2.66 0 5.6-.817 8.81-2.448 3.21-1.634 6.43-3.697 9.67-6.188a88.509 88.509 0 009.26-8.222c2.94-2.99 5.45-5.813 7.56-8.471l5.73 9.634c-4.15 5.925-8.64 11.211-13.45 15.861a81.503 81.503 0 01-6.69 5.814 58.855 58.855 0 01-7.56 5.025 44.973 44.973 0 01-8.22 3.569 28.155 28.155 0 01-8.66 1.371\" fill-rule=\"nonzero\"/><path d=\"M494.406 94.297c2.5-4.466 5.15-9.492 7.96-15.074a284.506 284.506 0 007.96-17.253c2.5-5.917 4.66-11.822 6.5-17.712 1.83-5.889 2.99-11.375 3.49-16.457 0-1.618-.04-3-.11-4.144-.08-1.144-.33-1.717-.75-1.717-1.52 0-3.16 1.052-4.92 3.155-1.76 2.103-3.52 4.948-5.27 8.538-1.76 3.59-3.86 9.427-6.3 17.515l-3.66 12.132s-.74 3.754-2.24 11.257c-1.49 7.501-2.37 14.089-2.66 19.76zm-.08 65.831c-2.98 0-5.75-1.294-8.31-3.882-2.57-2.59-4.8-6.062-6.7-10.423-1.9-4.359-3.39-9.414-4.47-15.163-1.07-5.749-1.61-11.784-1.61-18.106 0-5.433.8-12.685 2.39-21.756l2.4-13.606s1.21-4.527 3.62-13.59c2.42-9.06 4.85-16.328 7.28-21.801 2.43-5.47 5.07-10.584 7.93-15.339 2.85-4.755 5.84-8.9 8.97-12.433 3.13-3.531 6.4-6.309 9.82-8.326 3.41-2.02 6.87-3.03 10.4-3.03 2.56 0 4.68.49 6.35 1.468s2.98 2.269 3.93 3.876c.96 1.605 1.63 3.424 2.02 5.455.38 2.033.58 4.104.58 6.209 0 5.235-.62 10.566-1.86 15.993-1.24 5.428-2.91 10.885-5.01 16.368a182.925 182.925 0 01-7.29 16.492 489.471 489.471 0 01-8.64 16.411c-2.99 5.427-6 10.774-9.02 16.033a353.033 353.033 0 00-8.37 15.428c-.28.56-.57 1.286-.87 2.178-.31.895-.6 1.856-.88 2.89-.27 1.034-.55 2.135-.83 3.309-.28 1.173-.5 2.317-.67 3.431v1.174c0 1.452.16 2.861.46 4.23.31 1.366.68 2.596 1.13 3.683.44 1.091.91 1.956 1.41 2.599.5.64.97.962 1.42.962 1.08 0 2.31-.223 3.7-.67 1.39-.448 2.86-1.048 4.42-1.8a62.09 62.09 0 004.8-2.596c1.65-.978 3.23-1.969 4.77-2.974 3.57-2.344 16.58-11.873 20.49-14.943l4.8 19.888c-5.07 3.37-16.83 10.807-21.79 13.438-2.16 1.106-4.4 2.196-6.71 3.276a81.996 81.996 0 01-6.97 2.883 57.078 57.078 0 01-6.84 2.014c-2.23.501-4.31.75-6.25.75z\" fill-rule=\"nonzero\"/><path d=\"M595.086 127.982a5.864 5.864 0 00-1.32-1.817 7.14 7.14 0 00-1.86-1.284 7.677 7.677 0 00-2.08-.661c-.7-.11-1.36-.094-1.97.048-.61.144-1.08.466-1.52.848-.87.769-1.76 1.608-2.64 2.431-1.49 1.242-2.04 1.822-3.84 3.41a170.665 170.665 0 01-7.31 6.105c-2.49 1.964-4.95 3.641-7.39 5.023-2.44 1.385-4.65 2.076-6.64 2.076-1.72 0-2.86-.734-3.41-2.199-.55-1.466-.83-3.445-.83-5.937 0-2.545.4-5.374 1.2-8.487.79-3.112 1.45-6.247 1.97-9.403.53-3.155 1.5-6.967 2.93-11.439 1.42-4.471 2.5-8.127 3.23-10.972l1.95-7.606c.56-2.223.85-3.943.85-5.162 0-1.439-.41-2.588-1.23-3.448-.81-.857-2.36-1.286-4.65-1.286-1.25 0-2.65.156-4.2.461-1.55.311-3.04.785-4.49 1.428a15.198 15.198 0 00-3.87 2.478c-1.25 1.12-2.02 2.379-2.29 3.777-.49 1.996-1.79 6.301-3.89 12.913-2.26 8.114-3.77 13.351-4.53 15.717-.46 1.186-1.48 6.59-3.07 16.21-.78 4.65-1.17 8.72-1.17 12.208 0 2.491.26 4.776.79 6.85.53 2.078 1.4 3.836 2.62 5.274 1.21 1.441 2.81 2.561 4.77 3.362 1.97.804 4.39 1.206 7.27 1.206 3.21 0 6.6-.582 10.17-1.744a73.92 73.92 0 0010.51-4.359c3.43-1.746 6.63-3.654 9.59-5.733a77.426 77.426 0 006.6-5.146c2.23-1.591 4.45-3.748 7.4-7.065.96-1.086 1.71-2.061 2.15-3.022.43-.962.66-1.873.67-2.735.02-.86-.14-1.635-.47-2.32M563.326 68.008c2.83 0 5.25-.432 7.27-1.299 2.02-.866 3.7-1.999 5.02-3.395a12.898 12.898 0 002.91-4.779c.61-1.787.92-3.632.92-5.532 0-2.068-.38-3.855-1.13-5.365-.74-1.509-1.75-2.725-3.03-3.647-1.27-.921-2.77-1.604-4.48-2.054-1.72-.445-3.55-.67-5.48-.67-3.11 0-5.69.49-7.77 1.468-2.07.978-3.73 2.181-4.98 3.603-1.24 1.425-2.15 2.95-2.7 4.57-.55 1.621-.83 3.073-.83 4.359 0 3.855 1.16 6.944 3.49 9.261 2.32 2.32 5.92 3.48 10.79 3.48\" fill-rule=\"nonzero\"/><text font-family=\"LucidaGrande, Lucida Grande\" font-size=\"29.756\"><tspan x=\"359.546\" y=\"159.419\">&#xAE;</tspan></text></g>",
+    "attrs": {
+      "width": "596",
+      "height": "161",
+      "viewBox": "0 0 596 161",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/ember-data", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>ember-data</title><g fill-rule=\"evenodd\"><text transform=\"translate(291 105)\" font-size=\"24.104\" font-family=\"LucidaGrande, Lucida Grande\"><tspan x=\".82\" y=\"23.595\">&#xAE;</tspan></text><path d=\"M342.27 94.464c-.57-5.738-5.73-3.603-5.73-3.603s-8.32 6.449-15.64 5.732c-7.32-.717-5.02-17.077-5.02-17.077s1.58-14.993-2.73-16.25c-4.3-1.256-9.61 3.908-9.61 3.908s-6.6 7.316-9.75 16.64l-.86.287s1-16.353-.15-20.083c-.86-1.865-8.75-1.721-10.04 1.578-1.29 3.299-7.6 26.251-8.03 35.863 0 0-12.34 10.472-23.1 12.193-10.75 1.721-13.34-5.021-13.34-5.021s29.27-8.176 28.26-31.559c-1-23.382-23.6-14.735-26.15-12.813-2.47 1.859-15.68 9.824-19.53 31.881-.14.751-.36 4.028-.36 4.028s-11.34 7.602-17.65 9.611c0 0 17.65-29.694-3.87-43.179-9.76-5.881-17.5 6.455-17.5 6.455s29.12-32.419 22.66-59.819C201.06.188 194.54-1.212 188.55.9c-9.09 3.586-12.53 8.894-12.53 8.894s-11.77 17.07-14.49 42.461c-2.73 25.391-6.75 56.089-6.75 56.089s-5.59 5.451-10.75 5.738c-5.17.287-2.87-15.349-2.87-15.349s4.01-23.813 3.73-27.829c-.29-4.017-.58-6.169-5.31-7.603-4.73-1.435-9.9 4.59-9.9 4.59s-13.63 20.657-14.77 23.813l-.72 1.291-.72-.861s9.61-28.116.43-28.546c-9.18-.431-15.2 10.041-15.2 10.041S88.22 91.13 87.79 93.139l-.71-.861s4.3-20.37 3.44-25.391c-.86-5.021-5.6-4.017-5.6-4.017s-6.02-.717-7.6 3.156c-1.58 3.874-7.31 29.551-8.03 37.728 0 0-15.06 10.759-24.96 10.902-9.9.144-8.9-6.277-8.9-6.277s36.3-12.423 26.4-36.953c-4.45-6.312-9.61-8.297-16.93-8.154-7.31.144-16.39 4.608-22.27 17.805-2.82 6.295-3.84 12.268-4.41 16.79 0 0-6.35 1.296-9.8-1.573-3.44-2.869-5.21 0-5.21 0s-5.91 7.534-.03 9.83c5.88 2.295 15.06 3.368 15.06 3.368.84 4.017 3.3 10.839 10.46 16.279 10.76 8.176 31.41-.752 31.41-.752l8.46-4.751s.29 7.763 6.46 8.9c6.16 1.13 8.75-.018 19.51-26.126 6.31-13.341 6.74-12.629 6.74-12.629l.71-.143s-4.87 25.534-3.01 32.419c1.87 6.886 10.04 6.169 10.04 6.169s4.45.86 8.04-11.763c3.58-12.624 10.47-26.539 10.47-26.539h.86s-3.01 26.108 1.58 34.429c4.59 8.32 16.49 2.8 16.49 2.8s8.32-4.2 9.62-5.492c0 0 9.87 8.407 23.8 6.88 31.14-6.128 42.21-14.402 42.21-14.402s5.35 13.553 21.92 14.81c18.94 1.434 29.26-10.478 29.26-10.478s-.14 7.746 6.46 10.472c6.6 2.726 11.05-12.589 11.05-12.589l11.04-30.446h1.01s.57 19.796 11.47 22.952c10.9 3.156 25.11-7.391 25.11-7.391s3.44-1.899 2.86-7.637zM33.71 97.299c.43-17.071 11.62-24.53 15.5-20.801 3.87 3.73 2.43 11.763-4.88 16.784-7.32 5.021-10.62 4.017-10.62 4.017zm145.6-66.131S189.5 4.629 191.94 17.54c2.44 12.911-21.38 51.355-21.38 51.355.29-8.607 8.75-37.727 8.75-37.727zm12.2 73.877c-6.74 17.644-23.1 10.472-23.1 10.472s-1.86-6.312 3.45-23.956c5.3-17.645 17.78-10.759 17.78-10.759s8.61 6.598 1.87 24.243zm45.19-7.746s-1.58-5.595 4.3-16.354 10.47-4.877 10.47-4.877 5.02 5.451-.72 13.628c-5.73 8.176-14.05 7.603-14.05 7.603z\" fill-rule=\"nonzero\"/><path d=\"M393.28 29.765c.28-3.142.42-5.635.42-7.476 0-2.424-.22-4.108-.65-5.051-.43-.942-1.06-1.415-1.88-1.415-1.47 0-2.79.909-3.98 2.727-1.18 1.817-2.13 4.161-2.86 7.03-.72 2.87-1.5 5.989-2.35 9.358-.84 3.37-1.46 6.67-1.86 9.898-.38 3.23-.7 6.141-.93 8.734-.24 2.59-.41 4.432-.5 5.525-.2 2.23-.36 4.379-.48 6.447-.12 2.07-.21 3.958-.26 5.663-.05 1.707-.07 3.196-.07 4.469v3.617c2.5-5.981 4.8-11.934 6.9-17.869a301.56 301.56 0 002.6-7.911c.85-2.747 1.7-5.472 2.54-8.174a96.759 96.759 0 002.14-8.027c.58-2.65.99-5.165 1.22-7.545zm-31.76 45.928a28.284 28.284 0 00-7.91 5.736c-2.31 2.375-4.24 5.506-5.79 9.4-1.54 3.891-2.72 7.241-3.53 10.047-.81 2.803-1.21 5.337-1.21 7.601 0 .703.1 1.403.3 2.106.2.703.57 1.335 1.11 1.898.54.56 1.3 1.018 2.29 1.368.98.353 2.26.528 3.84.528.8 0 1.6-.178 2.39-.539a10.71 10.71 0 002.25-1.4 16.62 16.62 0 002.06-1.971c.65-.735 1.25-1.503 1.78-2.3 1.26-1.831 2.41-3.899 3.44-6.206-.13-.633-.25-1.64-.34-3.022-.09-1.378-.16-3.484-.2-6.311-.05-2.828-.1-5.149-.14-6.958-.05-1.81-.08-3.46-.1-4.955-.03-1.494-.06-2.714-.1-3.665-.05-.95-.1-1.403-.14-1.357zm46.66 39.756a113.58 113.58 0 01-9.42 7.006c-1.3.856-2.67 1.704-4.11 2.539a51.222 51.222 0 01-4.24 2.216 32.305 32.305 0 01-4.06 1.573c-1.3.404-2.51.606-3.6.606-.65 0-1.6-.143-2.86-.428-1.26-.289-2.64-.87-4.13-1.753-1.5-.881-2.99-2.157-4.49-3.824-1.49-1.67-2.78-3.886-3.89-6.648a67.199 67.199 0 01-5.3 4.895 40.913 40.913 0 01-5.81 4.036c-2 1.145-4.03 2.063-6.07 2.752a19.213 19.213 0 01-6.18 1.037c-2.92 0-5.44-.606-7.58-1.82a16.19 16.19 0 01-5.31-4.844c-1.42-2.015-2.47-4.301-3.17-6.859a30.31 30.31 0 01-1.04-7.933c0-2.913.37-5.862 1.11-8.848a41.49 41.49 0 013.23-8.676c1.41-2.8 2.98-5.727 4.71-8.781 1.73-3.051 4.02-5.829 6.87-8.336 2.85-2.505 5.78-4.395 8.78-5.671 3.01-1.274 6.22-2.071 9.63-2.391.14-5.83.76-10.968 1.86-15.411 1.1-4.441 2.29-9.221 3.56-14.34 1.27-5.117 2.91-9.83 4.92-14.138s4.21-8.032 6.6-11.173c2.39-3.141 4.94-5.599 7.65-7.37 2.71-1.772 5.51-2.659 8.4-2.659 2.1 0 3.9.55 5.38 1.652 1.48 1.101 2.69 2.562 3.61 4.383.91 1.822 1.57 3.934 1.98 6.339.4 2.406.61 4.89.61 7.452 0 1.6-.02 3.245-.05 4.935-.13 6.443-1.12 12.44-2.98 17.991-1.86 5.55-3.7 11.037-5.51 16.46a138.443 138.443 0 01-6.58 16.098c-3.92 8.123-6.42 13.638-7.49 16.541-.23.635-.46 1.408-.7 2.316-.23.907-.45 1.893-.66 2.959a47.824 47.824 0 00-.53 3.269 25.87 25.87 0 00-.21 3.231c0 1.317.07 2.566.23 3.746.15 1.179.4 2.235.75 3.164.35.931.82 1.669 1.42 2.213.58.544 1.31.816 2.19.816.85 0 1.79-.17 2.79-.509 1.01-.339 2.08-.802 3.2-1.392a40.897 40.897 0 003.4-2.001 85.66 85.66 0 003.33-2.275c2.47-1.81 5.05-3.87 7.74-6.177l2.02 14.032z\" fill-rule=\"nonzero\"/><path d=\"M417.33 107.5c0 1.158.07 2.28.23 3.368s.44 2.06.85 2.916c.4.857.94 1.551 1.61 2.085.68.53 1.53.797 2.56.797 1.67 0 3.17-.722 4.52-2.168 1.35-1.446 2.52-3.185 3.51-5.218a36.804 36.804 0 002.39-6.304c.61-2.168 1-3.977 1.18-5.423l5.02-21.884c-1.84 0-3.63.458-5.38 1.368-1.75.913-3.4 2.146-4.95 3.705-1.55 1.557-2.97 3.336-4.27 5.337-1.31 2.003-2.59 4.473-3.84 7.408-1.26 2.937-2.14 5.517-2.66 7.741-.52 2.224-.77 4.317-.77 6.272zm57.75 5.275c-1.03 1.451-2.41 3.153-4.14 5.105a51.336 51.336 0 01-5.82 5.582 36.568 36.568 0 01-6.94 4.494c-2.47 1.225-4.94 1.837-7.4 1.837-2.98 0-5.47-.943-7.46-2.833-1.99-1.888-3.71-4.629-5.16-8.229-1.09 1.244-2.42 2.51-4 3.797a36.379 36.379 0 01-5.19 3.5 33.803 33.803 0 01-5.87 2.564c-2.04.667-4.08.999-6.11.999-2.16 0-4.25-.442-6.29-1.325-2.05-.883-3.85-2.149-5.42-3.802-1.58-1.654-2.83-3.668-3.77-6.045-.95-2.378-1.42-5.06-1.42-8.049 0-3.352.48-6.796 1.42-10.329.95-3.533 2.42-7.354 4.41-11.471 1.98-4.115 4.12-7.669 6.39-10.666 2.29-2.994 4.78-5.612 7.49-7.847 2.71-2.237 5.56-4.014 8.57-5.334 3-1.319 6.05-1.979 9.17-1.979 1.04 0 1.85.205 2.44.611.59.41 1.07.875 1.46 1.395.38.522.75 1.034 1.11 1.532.36.498.81.862 1.36 1.088.54.226 1.09.374 1.66.442.56.067 1.14.102 1.72.102.5 0 1.01-.011 1.53-.035.52-.022 1.02-.032 1.52-.032.68 0 1.31.067 1.9.202.58.137 1.1.43 1.55.886.45.455.8 1.087 1.05 1.903.24.816.37 1.928.37 3.334 0 2.146-.23 4.526-.68 7.141-.44 2.615-.96 5.294-1.54 8.038-.58 2.744-1.24 5.87-1.98 9.384-.74 3.511-1.11 6.47-1.11 8.878 0 2.057.19 3.665.57 4.822.39 1.161 1.2 1.74 2.46 1.74.94 0 1.93-.234 2.96-.7 1.03-.469 2.08-1.08 3.13-1.834a35.58 35.58 0 003.17-2.571 47.11 47.11 0 002.99-2.971c2.2-2.401 4.42-5.116 6.67-8.14l3.23 14.816z\" fill-rule=\"nonzero\"/><path d=\"M510.63 115.117c-1.62 1.481-3.63 3.062-6.03 4.748a64.193 64.193 0 01-7.77 4.642 59.18 59.18 0 01-8.52 3.535c-2.89.943-5.64 1.414-8.24 1.414-2.34 0-4.3-.326-5.9-.975-1.59-.651-2.88-1.559-3.87-2.727-.98-1.166-1.69-2.594-2.11-4.274-.43-1.685-.65-3.535-.65-5.555 0-2.827.32-6.126.95-9.896 1.29-7.798 2.12-12.176 2.49-13.14.61-1.917 8.5-43.576 10.33-50.152 1.71-5.361 2.76-8.848 3.16-10.466.22-1.134.83-2.155 1.85-3.065.93-.816 1.97-1.486 3.14-2.006 1.17-.522 2.38-.907 3.64-1.158 1.25-.25 2.39-.374 3.41-.374 1.85 0 3.1.347 3.77 1.045.66.695.99 1.626.99 2.792 0 .988-.23 2.383-.7 4.185-.46 1.804-.98 3.858-1.57 6.163-.59 2.308-1.46 5.273-2.62 8.897-1.16 3.624-8.61 44.128-9.03 46.684-.42 2.558-.96 5.1-1.6 7.623-.65 2.523-.97 4.817-.97 6.88 0 2.019.22 3.621.67 4.811.45 1.188 1.37 1.783 2.76 1.783 1.62 0 3.41-.56 5.39-1.683 1.97-1.12 3.97-2.48 5.99-4.074 2.02-1.591 3.99-3.239 5.92-4.947 1.93-1.704 3.64-3.163 5.12-4.375v13.665\" fill-rule=\"nonzero\"/><path d=\"M522.63 107.5c0 1.158.08 2.28.24 3.368.16 1.088.44 2.06.84 2.916.41.857.94 1.551 1.62 2.085.67.53 1.53.797 2.56.797 1.67 0 3.17-.722 4.52-2.168 1.35-1.446 2.52-3.185 3.51-5.218a38.545 38.545 0 002.39-6.304c.61-2.168 1-3.977 1.18-5.423l5.02-21.884c-1.84 0-3.63.458-5.38 1.368-1.75.913-3.41 2.146-4.95 3.705a33.07 33.07 0 00-4.28 5.337c-1.3 2.003-2.58 4.473-3.83 7.408-1.26 2.937-2.15 5.517-2.66 7.741-.52 2.224-.78 4.317-.78 6.272zm57.76 5.275c-1.04 1.451-2.42 3.153-4.15 5.105a49.711 49.711 0 01-5.82 5.582 36.183 36.183 0 01-6.93 4.494c-2.47 1.225-4.94 1.837-7.41 1.837-2.98 0-5.46-.943-7.45-2.833-1.99-1.888-3.72-4.629-5.16-8.229-1.09 1.244-2.42 2.51-4.01 3.797a35.284 35.284 0 01-5.19 3.5 33.151 33.151 0 01-5.87 2.564c-2.03.667-4.07.999-6.1.999-2.16 0-4.26-.442-6.3-1.325a16.397 16.397 0 01-5.42-3.802c-1.57-1.654-2.82-3.668-3.77-6.045-.94-2.378-1.41-5.06-1.41-8.049 0-3.352.47-6.796 1.42-10.329.95-3.533 2.42-7.354 4.4-11.471 1.99-4.115 4.12-7.669 6.4-10.666 2.28-2.994 4.78-5.612 7.48-7.847 2.71-2.237 5.57-4.014 8.57-5.334 3-1.319 6.06-1.979 9.18-1.979 1.04 0 1.85.205 2.44.611.58.41 1.07.875 1.45 1.395.39.522.76 1.034 1.12 1.532.36.498.81.862 1.35 1.088.54.226 1.1.374 1.66.442.57.067 1.14.102 1.73.102.5 0 1-.011 1.52-.035a36.18 36.18 0 011.53-.032c.67 0 1.31.067 1.89.202.59.137 1.11.43 1.56.886.45.455.8 1.087 1.04 1.903.25.816.37 1.928.37 3.334 0 2.146-.22 4.526-.67 7.141-.45 2.615-.96 5.294-1.54 8.038-.58 2.744-1.24 5.87-1.98 9.384-.74 3.511-1.11 6.47-1.11 8.878 0 2.057.19 3.665.57 4.822.38 1.161 1.2 1.74 2.46 1.74.94 0 1.93-.234 2.96-.7 1.03-.469 2.07-1.08 3.13-1.834a35.49 35.49 0 003.16-2.571 44.784 44.784 0 003-2.971c2.2-2.401 4.42-5.116 6.66-8.14l3.24 14.816zM501.14 57.096c.35-.167.95-.225 1.79-.178.84.05 1.81.064 2.91.046 1.1-.02 2.29-.042 3.57-.071 1.27-.027 2.51-.048 3.71-.065 1.2-.014 2.32-.024 3.36-.033 1.04-.006 1.9-.003 2.58.006.8.01 1.4.482 1.81 1.416.4.934.64 2.128.72 3.581.08 1.681-.25 3.072-1 4.168-.74 1.099-1.59 1.67-2.55 1.718l-23 1.154-19.95-1.165c-1.22-.14-2.16-.281-2.83-.424-.67-.141-1.38-.282-2.13-.419-.76-.139-1.71-.279-2.86-.422-1.16-.143-2.83-.311-5.01-.502-.97-.102-1.73-.353-2.27-.753a3.864 3.864 0 01-1.22-1.446 5.508 5.508 0 01-.51-1.783 24.97 24.97 0 01-.14-1.613c-.04-.71.33-1.272 1.09-1.684.76-.414 1.75-.743 2.96-.992 1.22-.248 2.55-.42 4.02-.518 1.46-.095 2.86-.152 4.21-.176 1.34-.022 2.55-.049 3.61-.081 1.06-.029 1.79-.099 2.19-.21l24.94.446\" fill-rule=\"nonzero\"/></g>",
+    "attrs": {
+      "width": "581",
+      "height": "130",
+      "viewBox": "0 0 581 130",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/ember", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>ember-logo</title><g fill-rule=\"evenodd\"><path d=\"M421.536 116.413c-.71-7.079-7.08-4.446-7.08-4.446s-10.26 7.957-19.29 7.072c-9.02-.885-6.19-21.066-6.19-21.066s1.94-18.497-3.36-20.047c-5.31-1.55-11.86 4.821-11.86 4.821s-8.14 9.025-12.04 20.528l-1.06.354s1.24-20.174-.17-24.775c-1.07-2.301-10.8-2.124-12.39 1.946-1.59 4.07-9.38 32.385-9.91 44.242 0 0-15.22 12.918-28.49 15.042-13.28 2.123-16.46-6.194-16.46-6.194s36.1-10.087 34.86-38.933c-1.24-28.845-29.11-18.178-32.26-15.806-3.05 2.293-19.35 12.118-24.1 39.329-.16.927-.44 4.969-.44 4.969s-13.99 9.379-21.77 11.857c0 0 21.77-36.632-4.78-53.267-12.03-7.256-21.59 7.963-21.59 7.963s35.92-39.994 27.96-73.794c-3.79-16.097-11.83-17.824-19.22-15.22-11.22 4.425-15.46 10.972-15.46 10.972s-14.52 21.059-17.88 52.382c-3.36 31.323-8.32 69.194-8.32 69.194s-6.9 6.725-13.27 7.079c-6.37.354-3.54-18.936-3.54-18.936s4.96-29.376 4.6-34.331c-.35-4.955-.7-7.61-6.54-9.379-5.84-1.77-12.21 5.663-12.21 5.663s-16.82 25.483-18.23 29.376l-.89 1.593-.88-1.062s11.86-34.685.53-35.216c-11.33-.531-18.76 12.387-18.76 12.387s-12.92 21.59-13.45 24.068l-.88-1.062s5.31-25.129 4.24-31.323c-1.06-6.194-6.9-4.955-6.9-4.955s-7.43-.885-9.38 3.893c-1.94 4.778-9.02 36.455-9.91 46.542 0 0-18.58 13.273-30.79 13.45-12.21.177-10.97-7.744-10.97-7.744s44.77-15.326 32.56-45.587c-5.49-7.786-11.86-10.236-20.88-10.059-9.03.177-20.22 5.684-27.48 21.965-3.47 7.766-4.73 15.134-5.44 20.712 0 0-7.83 1.6-12.08-1.939s-6.43 0-6.43 0-7.3 9.294-.04 12.126c7.26 2.831 18.58 4.155 18.58 4.155h-.01c1.04 4.955 4.07 13.371 12.91 20.082 13.27 10.087 38.75-.927 38.75-.927l10.44-5.862s.35 9.578 7.96 10.979c7.61 1.395 10.8-.021 24.07-32.229 7.79-16.457 8.32-15.58 8.32-15.58l.88-.177s-6.02 31.5-3.71 39.995c2.3 8.494 12.38 7.609 12.38 7.609s5.49 1.062 9.91-14.511c4.43-15.573 12.92-32.739 12.92-32.739h1.06s-3.71 32.208 1.95 42.472c5.66 10.264 20.35 3.454 20.35 3.454s10.26-5.181 11.86-6.774c0 0 12.18 10.37 29.37 8.488 38.41-7.56 52.07-17.768 52.07-17.768s6.59 16.72 27.04 18.27c23.36 1.77 36.1-12.926 36.1-12.926s-.18 9.557 7.96 12.919 13.63-15.531 13.63-15.531l13.63-37.559h1.23s.71 24.422 14.16 28.315c13.45 3.893 30.97-9.118 30.97-9.118s4.25-2.343 3.54-9.421zm-380.65 3.497c.53-21.059 14.33-30.262 19.11-25.66 4.78 4.601 3.01 14.511-6.02 20.705-9.02 6.193-13.09 4.955-13.09 4.955zm179.62-81.582s12.56-32.738 15.57-16.811c3.01 15.926-26.37 63.353-26.37 63.353.36-10.618 10.8-46.542 10.8-46.542zm15.04 91.138c-8.32 21.767-28.49 12.918-28.49 12.918s-2.3-7.786 4.24-29.553c6.55-21.767 21.95-13.272 21.95-13.272s10.62 8.14 2.3 29.907zm55.74-9.556s-1.94-6.902 5.31-20.174c7.26-13.273 12.92-6.017 12.92-6.017s6.19 6.724-.88 16.811c-7.08 10.088-17.35 9.38-17.35 9.38z\" fill-rule=\"nonzero\"/><text font-family=\"LucidaGrande, Lucida Grande\" font-size=\"29.756\"><tspan x=\"359.546\" y=\"159.419\">&#xAE;</tspan></text></g>",
+    "attrs": {
+      "width": "422",
+      "height": "161",
+      "viewBox": "0 0 422 161",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/git-sha", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>git-sha</title><path d=\"M18.322 28C19.696 21.71 25.298 17 32 17c6.702 0 12.304 4.71 13.678 11H58v6H45.678C44.304 40.29 38.702 45 32 45c-6.702 0-12.304-4.71-13.678-11H6v-6h12.322zM32 39a8 8 0 100-16 8 8 0 000 16z\" fill-rule=\"evenodd\"/>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/git-tag", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>git-tag</title><path d=\"M10.76 30.286l.09-17.457a4 4 0 013.979-3.98l17.457-.089a6 6 0 014.273 1.758L58.953 32.91a2 2 0 010 2.829L37.74 56.953a2 2 0 01-2.829 0L12.518 34.559a6 6 0 01-1.758-4.273zm14.85-6.676c1.953-1.952 1.945-5.126-.017-7.088-1.962-1.962-5.135-1.97-7.088-.017-1.952 1.953-1.945 5.126.017 7.088 1.962 1.962 5.136 1.97 7.088.017z\" fill-rule=\"evenodd\"/>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/github", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>GitHub</title><path d=\"M10 0a10 10 0 00-3.16 19.49c.5.1.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 01.1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 015 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .26.18.58.69.48A10 10 0 0010 0\"/>",
+    "attrs": {
+      "class": "fill-current w-5 h-5",
+      "xmlns": "http://www.w3.org/2000/svg",
+      "viewBox": "0 0 20 20"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/guide", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>icons/guide</title><g fill-rule=\"evenodd\"><g><path d=\"M11 18.08c-.67.19-1.336.403-2 .642v28.927c10-3.306 19.556-.136 24 3.351 2.667-2.615 14-6.657 24-3.351V18.722a30.156 30.156 0 00-2-.642v27.3c-6.453-2.92-13.787-2.047-22 2.62V34.187 48c-8.8-4.667-16.133-5.54-22-2.62v-27.3z\"/><path d=\"M34 17.44c5.976-3.001 11.976-3.234 18-.698v24.976C46.762 39.689 40.762 40.45 34 44V17.44zM32 17.44c-5.976-3.001-11.976-3.234-18-.698v24.976C19.238 39.689 25.238 40.45 32 44V17.44z\"/></g></g>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/left-arrow", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>icons/left-arrow</title><g transform=\"matrix(-1 0 0 1 44 12)\" fill-rule=\"evenodd\"><rect transform=\"rotate(45 12.078 12.078)\" x=\"-1.873\" y=\"9.559\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/><rect transform=\"rotate(-45 12.331 28.789)\" x=\"-1.62\" y=\"26.27\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/></g>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/link", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<path d=\"M6.879 9.934a.81.81 0 01-.575-.238 3.818 3.818 0 010-5.392l3-3C10.024.584 10.982.187 12 .187s1.976.397 2.696 1.117a3.818 3.818 0 010 5.392l-1.371 1.371a.813.813 0 01-1.149-1.149l1.371-1.371A2.19 2.19 0 0012 1.812c-.584 0-1.134.228-1.547.641l-3 3a2.19 2.19 0 000 3.094.813.813 0 01-.575 1.387z\"/><path d=\"M4 15.813a3.789 3.789 0 01-2.696-1.117 3.818 3.818 0 010-5.392l1.371-1.371a.813.813 0 011.149 1.149l-1.371 1.371A2.19 2.19 0 004 14.188c.585 0 1.134-.228 1.547-.641l3-3a2.19 2.19 0 000-3.094.813.813 0 011.149-1.149 3.818 3.818 0 010 5.392l-3 3A3.789 3.789 0 014 15.813z\"/>",
+    "attrs": {
+      "xmlns": "http://www.w3.org/2000/svg",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/pencil", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>Group</title><g fill-rule=\"evenodd\"><path d=\"M3.557 34.011l8.842 8.843-9.733 2.808A1.5 1.5 0 01.75 43.744l2.808-9.733zM14.364 40.889l-8.842-8.842L31.067 6.502l8.842 8.842zM41.874 13.379l-8.842-8.843 2.456-2.456a6.253 6.253 0 018.843 8.843l-2.457 2.456z\"/></g>",
+    "attrs": {
+      "width": "47",
+      "height": "46",
+      "viewBox": "0 0 47 46",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/right-arrow", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>icons/right-arrow</title><g transform=\"translate(20 12)\" fill-rule=\"evenodd\"><rect transform=\"rotate(45 12.078 12.078)\" x=\"-1.873\" y=\"9.559\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/><rect transform=\"rotate(-45 12.331 28.789)\" x=\"-1.62\" y=\"26.27\" width=\"27.902\" height=\"5.037\" rx=\"2.518\"/></g>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/inlined/search", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  var _default = {
+    "content": "<title>search</title><path d=\"M23.997 40.742c-9.249 0-16.746-7.497-16.746-16.745 0-9.248 7.497-16.745 16.746-16.745 9.248 0 16.746 7.497 16.746 16.745a16.674 16.674 0 01-16.746 16.745zm38.885 16.93L43.534 38.32a23.59 23.59 0 004.65-14.328 24.092 24.092 0 10-39.67 18.475 24.092 24.092 0 0029.807 1.065l19.353 19.35a3.6 3.6 0 005.212 0 3.6 3.6 0 00-.004-5.211z\" fill-rule=\"nonzero\"/>",
+    "attrs": {
+      "width": "64",
+      "height": "64",
+      "viewBox": "0 0 64 64",
+      "xmlns": "http://www.w3.org/2000/svg"
+    }
+  };
+  _exports.default = _default;
+});
+;define("ember-svg-jar/utils/make-helper", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = makeHelper;
+
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   function makeHelper(helperFunc) {
-    var helper = void 0;
+    var helper;
 
     if (Ember.Helper && Ember.Helper.helper) {
       helper = Ember.Helper.helper(function (_ref, options) {
@@ -116632,19 +116762,20 @@ define("ember-resolver/features", [], function () {
     return helper;
   }
 });
-;define('ember-svg-jar/utils/make-svg', ['exports'], function (exports) {
-  'use strict';
+;define("ember-svg-jar/utils/make-svg", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.formatAttrs = formatAttrs;
-  exports.symbolUseFor = symbolUseFor;
-  exports.inlineSvgFor = inlineSvgFor;
-  exports.default = makeSvg;
+  _exports.formatAttrs = formatAttrs;
+  _exports.symbolUseFor = symbolUseFor;
+  _exports.inlineSvgFor = inlineSvgFor;
+  _exports.default = makeSvg;
+
   function formatAttrs(attrs) {
     return Object.keys(attrs).map(function (key) {
-      return !Ember.isNone(attrs[key]) && key + '="' + attrs[key] + '"';
+      return !Ember.isNone(attrs[key]) && "".concat(key, "=\"").concat(attrs[key], "\"");
     }).filter(function (attr) {
       return attr;
     }).join(' ');
@@ -116652,24 +116783,21 @@ define("ember-resolver/features", [], function () {
 
   function symbolUseFor(assetId) {
     var attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    return '<svg ' + formatAttrs(attrs) + '><use xlink:href="' + assetId + '" /></svg>';
+    return "<svg ".concat(formatAttrs(attrs), "><use xlink:href=\"").concat(assetId, "\" /></svg>");
   }
 
   function inlineSvgFor(assetId, getInlineAsset) {
     var attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
     var asset = getInlineAsset(assetId);
 
     if (!asset) {
       // eslint-disable-next-line no-console
-      console.warn('ember-svg-jar: Missing inline SVG for ' + assetId);
+      console.warn("ember-svg-jar: Missing inline SVG for ".concat(assetId));
       return;
     }
 
     var svgAttrs = asset.attrs ? Ember.assign({}, asset.attrs, attrs) : attrs;
     var size = attrs.size;
-
 
     if (size) {
       svgAttrs.width = parseFloat(svgAttrs.width) * size || svgAttrs.width;
@@ -116677,12 +116805,12 @@ define("ember-resolver/features", [], function () {
       delete svgAttrs.size;
     }
 
-    return '<svg ' + formatAttrs(svgAttrs) + '>' + asset.content + '</svg>';
+    return "<svg ".concat(formatAttrs(svgAttrs), ">").concat(asset.content, "</svg>");
   }
 
   function makeSvg(assetId) {
     var attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var getInlineAsset = arguments[2];
+    var getInlineAsset = arguments.length > 2 ? arguments[2] : undefined;
 
     if (!assetId) {
       // eslint-disable-next-line no-console
@@ -116692,7 +116820,6 @@ define("ember-resolver/features", [], function () {
 
     var isSymbol = assetId.lastIndexOf('#', 0) === 0;
     var svg = isSymbol ? symbolUseFor(assetId, attrs) : inlineSvgFor(assetId, getInlineAsset, attrs);
-
     return Ember.String.htmlSafe(svg);
   }
 });
@@ -117509,38 +117636,23 @@ define("ember-resolver/features", [], function () {
     }
   }
 });
-;define("liquid-fire/action", ["exports", "liquid-fire/promise"], function (exports, _promise) {
+;define("liquid-fire/action", ["exports", "liquid-fire/promise"], function (_exports, _promise) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var Action = function () {
+  var Action =
+  /*#__PURE__*/
+  function () {
     function Action(nameOrHandler) {
       var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
       var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -117552,6 +117664,7 @@ define("ember-resolver/features", [], function () {
       } else {
         this.name = nameOrHandler;
       }
+
       this.reversed = opts.reversed;
       this.args = args;
     }
@@ -117577,41 +117690,44 @@ define("ember-resolver/features", [], function () {
     return Action;
   }();
 
-  exports.default = Action;
+  _exports.default = Action;
 });
-;define("liquid-fire/animate", ["exports", "ember-copy", "liquid-fire/promise", "velocity"], function (exports, _emberCopy, _promise, _velocity) {
+;define("liquid-fire/animate", ["exports", "ember-copy", "liquid-fire/promise", "velocity"], function (_exports, _emberCopy, _promise, _velocity) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.animate = animate;
-  exports.stop = stop;
-  exports.setDefaults = setDefaults;
-  exports.isAnimating = isAnimating;
-  exports.finish = finish;
-  exports.timeSpent = timeSpent;
-  exports.timeRemaining = timeRemaining;
+  _exports.animate = animate;
+  _exports.stop = stop;
+  _exports.setDefaults = setDefaults;
+  _exports.isAnimating = isAnimating;
+  _exports.finish = finish;
+  _exports.timeSpent = timeSpent;
+  _exports.timeRemaining = timeRemaining;
 
-
+  /* jshint newcap: false */
   // Make sure Velocity always has promise support by injecting our own
   // RSVP-based implementation if it doesn't already have one.
   if (!_velocity.default.Promise) {
     _velocity.default.Promise = _promise.default;
-  }
-
-  // Velocity's tick() defaults to RAF's high resolution timestamp. If the browser
+  } // Velocity's tick() defaults to RAF's high resolution timestamp. If the browser
   // is under high stress the RAF timestamp may have a significant offset which
   // can result in dropping a large chunk of frames. Because of this, the use of
   // the RAF timestamp should be opt-in.
-  /* jshint newcap: false */
+
+
   _velocity.default.timestamp = false;
 
   function animate(elt, props, opts, label) {
     // These numbers are just sane defaults in the probably-impossible
     // case where somebody tries to read our state before the first
     // 'progress' callback has fired.
-    var state = { percentComplete: 0, timeRemaining: 100, timeSpent: 0 };
+    var state = {
+      percentComplete: 0,
+      timeRemaining: 100,
+      timeSpent: 0
+    };
 
     if (!elt || elt.length === 0) {
       return _promise.default.resolve();
@@ -117621,16 +117737,17 @@ define("ember-resolver/features", [], function () {
       opts = {};
     } else {
       opts = (0, _emberCopy.copy)(opts);
-    }
-
-    // By default, we ask velocity to clear the element's `display`
+    } // By default, we ask velocity to clear the element's `display`
     // and `visibility` properties at the start of animation. Our
     // animated divs are all initially rendered with `display:none`
     // and `visibility:hidden` to prevent a flash of before-animated
     // content.
+
+
     if (typeof opts.display === 'undefined') {
       opts.display = '';
     }
+
     if (typeof opts.visibility === 'undefined') {
       opts.visibility = '';
     }
@@ -117672,6 +117789,7 @@ define("ember-resolver/features", [], function () {
         if (key === 'progress') {
           throw new Error("liquid-fire's 'animate' function reserves the use of Velocity's '" + key + "' option for its own nefarious purposes.");
         }
+
         _velocity.default.defaults[key] = props[key];
       }
     }
@@ -117695,9 +117813,11 @@ define("ember-resolver/features", [], function () {
 
   function stateForLabel(elt, label) {
     var state = isAnimating(elt, label);
+
     if (!state) {
       throw new Error("no animation labeled " + label + " is in progress");
     }
+
     return state;
   }
 
@@ -117713,25 +117833,28 @@ define("ember-resolver/features", [], function () {
     }
   }
 });
-;define('liquid-fire/components/-lf-get-outlet-state', ['exports', 'liquid-fire/ember-internals'], function (exports, _emberInternals) {
-  'use strict';
+;define("liquid-fire/components/-lf-get-outlet-state", ["exports", "liquid-fire/templates/components/get-outlet-state"], function (_exports, _getOutletState) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     tagName: '',
-    layout: _emberInternals.getOutletStateTemplate
+    layout: _getOutletState.default
   });
-});
-;define('liquid-fire/components/illiquid-model', ['exports', 'liquid-fire/templates/components/illiquid-model'], function (exports, _illiquidModel) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("liquid-fire/components/illiquid-model", ["exports", "liquid-fire/templates/components/illiquid-model"], function (_exports, _illiquidModel) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var IlliquidModel = Ember.Component.extend({
     layout: _illiquidModel.default,
     tagName: '',
@@ -117741,54 +117864,57 @@ define("ember-resolver/features", [], function () {
       }
     }
   });
-
   IlliquidModel.reopenClass({
     positionalParams: ['model']
   });
-
-  exports.default = IlliquidModel;
+  var _default = IlliquidModel;
+  _exports.default = _default;
 });
-;define('liquid-fire/components/liquid-bind', ['exports', 'liquid-fire/templates/components/liquid-bind'], function (exports, _liquidBind) {
-  'use strict';
+;define("liquid-fire/components/liquid-bind", ["exports", "liquid-fire/templates/components/liquid-bind"], function (_exports, _liquidBind) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var LiquidBind = Ember.Component.extend({
     layout: _liquidBind.default,
     tagName: '',
-    positionalParams: ['value'], // needed for Ember 1.13.[0-5] and 2.0.0-beta.[1-3] support
+    positionalParams: ['value'],
+    // needed for Ember 1.13.[0-5] and 2.0.0-beta.[1-3] support
     forwardMatchContext: Ember.computed('matchContext', function () {
       var m = this.get('matchContext');
+
       if (!m) {
         m = {};
       }
+
       if (!m.helperName) {
         m.helperName = 'liquid-bind';
       }
+
       return m;
     })
   });
-
   LiquidBind.reopenClass({
     positionalParams: ['value']
   });
-
-  exports.default = LiquidBind;
+  var _default = LiquidBind;
+  _exports.default = _default;
 });
-;define('liquid-fire/components/liquid-child', ['exports'], function (exports) {
-  'use strict';
+;define("liquid-fire/components/liquid-child", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
-    classNames: ['liquid-child'],
+  _exports.default = void 0;
 
+  var _default = Ember.Component.extend({
+    classNames: ['liquid-child'],
     init: function init() {
       this._super.apply(this, arguments);
+
       this._waitingFor = [];
     },
     didInsertElement: function didInsertElement() {
@@ -117797,25 +117923,28 @@ define("ember-resolver/features", [], function () {
       if (this.element) {
         this.element.style.visibility = 'hidden';
       }
+
       this._waitForAll().then(function () {
         if (!_this.isDestroying) {
           _this._waitingFor = null;
           var didRenderAction = Ember.get(_this, 'liquidChildDidRender');
+
           if (typeof didRenderAction === 'function') {
             didRenderAction(_this);
           }
         }
       });
     },
-
-
     _isLiquidChild: true,
     _waitForMe: function _waitForMe(promise) {
       if (!this._waitingFor) {
         return;
       }
+
       this._waitingFor.push(promise);
+
       var ancestor = this.nearestWithProperty('_isLiquidChild');
+
       if (ancestor) {
         ancestor._waitForMe(promise);
       }
@@ -117832,17 +117961,20 @@ define("ember-resolver/features", [], function () {
       });
     }
   });
+
+  _exports.default = _default;
 });
-;define("liquid-fire/components/liquid-container", ["exports", "liquid-fire/growable", "liquid-fire/components/liquid-measured", "liquid-fire/templates/components/liquid-container"], function (exports, _growable, _liquidMeasured, _liquidContainer) {
+;define("liquid-fire/components/liquid-container", ["exports", "liquid-fire/growable", "liquid-fire/components/liquid-measured", "liquid-fire/templates/components/liquid-container"], function (_exports, _growable, _liquidMeasured, _liquidContainer) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend(_growable.default, {
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend(_growable.default, {
     layout: _liquidContainer.default,
     classNames: ['liquid-container'],
-
     lockSize: function lockSize(elt, want) {
       elt.outerWidth(want.width);
       elt.outerHeight(want.height);
@@ -117852,19 +117984,19 @@ define("ember-resolver/features", [], function () {
 
       var doUnlock = function doUnlock() {
         _this.updateAnimatingClass(false);
+
         if (_this.element) {
           _this.element.style.width = '';
           _this.element.style.height = '';
         }
       };
+
       if (this._scaling) {
         this._scaling.then(doUnlock);
       } else {
         doUnlock();
       }
     },
-
-
     // We're doing this manually instead of via classNameBindings
     // because it depends on upward-data-flow, which generates warnings
     // under Glimmer.
@@ -117872,6 +118004,7 @@ define("ember-resolver/features", [], function () {
       if (this.isDestroyed) {
         return;
       }
+
       if (on) {
         this.element.classList.add('liquid-animating');
       } else {
@@ -117880,43 +118013,41 @@ define("ember-resolver/features", [], function () {
     },
     didInsertElement: function didInsertElement() {
       this._super.apply(this, arguments);
+
       this._wasInserted = true;
     },
-
-
     actions: {
       willTransition: function willTransition(versions) {
         if (!this._wasInserted) {
           return;
-        }
+        } // Remember our own size before anything changes
 
-        // Remember our own size before anything changes
-        var elt = this.$();
-        this._cachedSize = (0, _liquidMeasured.measure)(elt);
 
-        // And make any children absolutely positioned with fixed sizes.
+        var elt = Ember.$(this.element);
+        this._cachedSize = (0, _liquidMeasured.measure)(elt); // And make any children absolutely positioned with fixed sizes.
+
         for (var i = 0; i < versions.length; i++) {
           goAbsolute(versions[i]);
         }
       },
       afterChildInsertion: function afterChildInsertion(versions) {
-        var elt = this.$();
-        var enableGrowth = this.get('enableGrowth') !== false;
+        var elt = Ember.$(this.element);
+        var enableGrowth = this.get('enableGrowth') !== false; // Measure children
 
-        // Measure children
         var sizes = [];
+
         for (var i = 0; i < versions.length; i++) {
           if (versions[i].view) {
-            sizes[i] = (0, _liquidMeasured.measure)(versions[i].view.$());
+            var childElt = Ember.$(versions[i].view.element);
+            sizes[i] = (0, _liquidMeasured.measure)(childElt);
           }
-        }
-
-        // Measure ourself again to see how big the new children make
+        } // Measure ourself again to see how big the new children make
         // us.
-        var want = (0, _liquidMeasured.measure)(elt);
-        var have = this._cachedSize || want;
 
-        // Make ourself absolute
+
+        var want = (0, _liquidMeasured.measure)(elt);
+        var have = this._cachedSize || want; // Make ourself absolute
+
         if (enableGrowth) {
           this.lockSize(elt, have);
         } else {
@@ -117924,18 +118055,17 @@ define("ember-resolver/features", [], function () {
             height: Math.max(want.height, have.height),
             width: Math.max(want.width, have.width)
           });
-        }
-
-        // Apply '.liquid-animating' to liquid-container allowing
+        } // Apply '.liquid-animating' to liquid-container allowing
         // any customizable CSS control while an animating is occuring
-        this.updateAnimatingClass(true);
 
-        // Make the children absolute and fixed size.
+
+        this.updateAnimatingClass(true); // Make the children absolute and fixed size.
+
         for (var _i = 0; _i < versions.length; _i++) {
           goAbsolute(versions[_i], sizes[_i]);
-        }
+        } // Kick off our growth animation
 
-        // Kick off our growth animation
+
         if (enableGrowth) {
           this._scaling = this.animateGrowth(elt, have, want);
         }
@@ -117944,21 +118074,26 @@ define("ember-resolver/features", [], function () {
         for (var i = 0; i < versions.length; i++) {
           goStatic(versions[i]);
         }
+
         this.unlockSize();
       }
     }
   });
 
+  _exports.default = _default;
 
   function goAbsolute(version, size) {
     if (!version.view) {
       return;
     }
-    var elt = version.view.$();
+
+    var elt = Ember.$(version.view.element);
     var pos = elt.position();
+
     if (!size) {
       size = (0, _liquidMeasured.measure)(elt);
     }
+
     elt.outerWidth(size.width);
     elt.outerHeight(size.height);
     elt.css({
@@ -117970,55 +118105,56 @@ define("ember-resolver/features", [], function () {
 
   function goStatic(version) {
     if (version.view && !version.view.isDestroyed) {
-      version.view.$().css({ width: '', height: '', position: '' });
+      var elt = Ember.$(version.view.element);
+      elt.css({
+        width: '',
+        height: '',
+        position: ''
+      });
     }
   }
 });
-;define('liquid-fire/components/liquid-if', ['exports', 'liquid-fire/templates/components/liquid-if'], function (exports, _liquidIf) {
-  'use strict';
+;define("liquid-fire/components/liquid-if", ["exports", "liquid-fire/templates/components/liquid-if"], function (_exports, _liquidIf) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var LiquidIf = Ember.Component.extend({
-    positionalParams: ['predicate'], // needed for Ember 1.13.[0-5] and 2.0.0-beta.[1-3] support
+    positionalParams: ['predicate'],
+    // needed for Ember 1.13.[0-5] and 2.0.0-beta.[1-3] support
     layout: _liquidIf.default,
     tagName: '',
     helperName: 'liquid-if'
   });
-
   LiquidIf.reopenClass({
     positionalParams: ['predicate']
   });
-
-  exports.default = LiquidIf;
+  var _default = LiquidIf;
+  _exports.default = _default;
 });
-;define('liquid-fire/components/liquid-measured', ['exports', 'liquid-fire/mutation-observer', 'liquid-fire/templates/components/liquid-measured'], function (exports, _mutationObserver, _liquidMeasured) {
-  'use strict';
+;define("liquid-fire/components/liquid-measured", ["exports", "liquid-fire/mutation-observer", "liquid-fire/templates/components/liquid-measured"], function (_exports, _mutationObserver, _liquidMeasured) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.measure = measure;
-  exports.default = Ember.Component.extend({
-    layout: _liquidMeasured.default,
+  _exports.measure = measure;
+  _exports.default = void 0;
 
+  var _default = Ember.Component.extend({
+    layout: _liquidMeasured.default,
     init: function init() {
       this._super.apply(this, arguments);
+
       this._destroyOnUnload = this._destroyOnUnload.bind(this);
     },
     didInsertElement: function didInsertElement() {
-      var self = this;
+      var self = this; // This prevents margin collapse
 
-      // This prevents margin collapse
-      this.$().css({
-        overflow: 'auto'
-      });
-
+      this.element.style.overflow = 'auto';
       this.didMutate();
-
       this.observer = new _mutationObserver.default(function (mutations) {
         self.didMutate(mutations);
       });
@@ -118028,22 +118164,21 @@ define("ember-resolver/features", [], function () {
         childList: true,
         characterData: true
       });
-      this.$().bind('webkitTransitionEnd', function () {
+      var elt = Ember.$(this.element);
+      elt.bind('webkitTransitionEnd', function () {
         self.didMutate();
-      });
-      // Chrome Memory Leak: https://bugs.webkit.org/show_bug.cgi?id=93661
+      }); // Chrome Memory Leak: https://bugs.webkit.org/show_bug.cgi?id=93661
+
       window.addEventListener('unload', this._destroyOnUnload);
     },
     willDestroyElement: function willDestroyElement() {
       if (this.observer) {
         this.observer.disconnect();
       }
+
       window.removeEventListener('unload', this._destroyOnUnload);
     },
-
-
     transitionMap: Ember.inject.service('liquid-fire-transitions'),
-
     didMutate: function didMutate() {
       // by incrementing the running transitions counter here we prevent
       // tests from falling through the gap between the time they
@@ -118053,48 +118188,50 @@ define("ember-resolver/features", [], function () {
       tmap.incrementRunningTransitions();
       Ember.run.next(this, function () {
         this._didMutate();
+
         tmap.decrementRunningTransitions();
       });
     },
     _didMutate: function _didMutate() {
-      var elt = this.$();
-      if (!elt || !elt[0]) {
+      if (!this.element) {
         return;
       }
-      this.set('measurements', measure(elt));
+
+      var elt = Ember.$(this.element);
+      this.didMeasure(measure(elt));
     },
     _destroyOnUnload: function _destroyOnUnload() {
       this.willDestroyElement();
     }
   });
+
+  _exports.default = _default;
+
   function measure($elt) {
-    var boundingRect = $elt[0].getBoundingClientRect();
-
-    // Calculate the scaling.
+    var boundingRect = $elt[0].getBoundingClientRect(); // Calculate the scaling.
     // NOTE: We only handle the simple zoom case.
-    var claimedWidth = $elt[0].offsetWidth;
 
-    // Round the width because offsetWidth is rounded
+    var claimedWidth = $elt[0].offsetWidth; // Round the width because offsetWidth is rounded
+
     var actualWidth = Math.round(boundingRect.width);
     var scale = actualWidth > 0 ? claimedWidth / actualWidth : 0;
-
     return {
       width: boundingRect.width * scale,
       height: boundingRect.height * scale
     };
   }
 });
-;define('liquid-fire/components/liquid-outlet', ['exports', 'liquid-fire/templates/components/liquid-outlet', 'liquid-fire/ember-internals'], function (exports, _liquidOutlet, _emberInternals) {
-  'use strict';
+;define("liquid-fire/components/liquid-outlet", ["exports", "liquid-fire/templates/components/liquid-outlet", "liquid-fire/ember-internals"], function (_exports, _liquidOutlet, _emberInternals) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var LiquidOutlet = Ember.Component.extend({
     layout: _liquidOutlet.default,
-    positionalParams: ['inputOutletName'], // needed for Ember 1.13.[0-5] and 2.0.0-beta.[1-3] support
+    positionalParams: ['inputOutletName'],
+    // needed for Ember 1.13.[0-5] and 2.0.0-beta.[1-3] support
     tagName: '',
     versionEquality: Ember.computed('outletName', 'watchModels', function () {
       var outletName = this.get('outletName');
@@ -118107,65 +118244,67 @@ define("ember-resolver/features", [], function () {
     }),
     didReceiveAttrs: function didReceiveAttrs() {
       this._super.apply(this, arguments);
+
       this.set('outletName', this.get('inputOutletName') || 'main');
     }
   });
-
   LiquidOutlet.reopenClass({
     positionalParams: ['inputOutletName']
   });
-
-  exports.default = LiquidOutlet;
+  var _default = LiquidOutlet;
+  _exports.default = _default;
 });
-;define('liquid-fire/components/liquid-spacer', ['exports', 'liquid-fire/components/liquid-measured', 'liquid-fire/growable', 'liquid-fire/templates/components/liquid-spacer'], function (exports, _liquidMeasured, _growable, _liquidSpacer) {
-  'use strict';
+;define("liquid-fire/components/liquid-spacer", ["exports", "liquid-fire/components/liquid-measured", "liquid-fire/growable", "liquid-fire/templates/components/liquid-spacer"], function (_exports, _liquidMeasured, _growable, _liquidSpacer) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend(_growable.default, {
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend(_growable.default, {
     layout: _liquidSpacer.default,
     enabled: true,
-
     didInsertElement: function didInsertElement() {
-      var child = this.$('> div');
+      var elt = Ember.$(this.element);
+      var child = elt.find('> div');
       var measurements = this.myMeasurements((0, _liquidMeasured.measure)(child));
-      var elt = this.$();
-      elt.css('overflow', 'hidden');
+      this.element.style.overflow = 'hidden';
+
       if (this.get('growWidth')) {
         elt.outerWidth(measurements.width);
       }
+
       if (this.get('growHeight')) {
         elt.outerHeight(measurements.height);
       }
     },
-
-
-    sizeChange: Ember.observer('measurements', function () {
+    sizeChanged: function sizeChanged(measurements) {
       if (!this.get('enabled')) {
         return;
       }
-      var elt = this.$();
-      if (!elt || !elt[0]) {
+
+      if (!this.element) {
         return;
       }
-      var want = this.myMeasurements(this.get('measurements'));
-      var have = (0, _liquidMeasured.measure)(this.$());
-      this.animateGrowth(elt, have, want);
-    }),
 
+      var want = this.myMeasurements(measurements);
+      var elt = Ember.$(this.element);
+      var have = (0, _liquidMeasured.measure)(elt);
+      this.animateGrowth(elt, have, want);
+    },
     // given our child's outerWidth & outerHeight, figure out what our
     // outerWidth & outerHeight should be.
     myMeasurements: function myMeasurements(childMeasurements) {
-      var elt = this.$();
+      var elt = Ember.$(this.element);
       return {
         width: childMeasurements.width + sumCSS(elt, padding('width')) + sumCSS(elt, border('width')),
         height: childMeasurements.height + sumCSS(elt, padding('height')) + sumCSS(elt, border('height'))
       };
-      //if (this.$().css('box-sizing') === 'border-box') {
     }
   });
 
+  _exports.default = _default;
 
   function sides(dimension) {
     return dimension === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
@@ -118183,67 +118322,78 @@ define("ember-resolver/features", [], function () {
 
   function sumCSS(elt, fields) {
     var accum = 0;
+
     for (var i = 0; i < fields.length; i++) {
       var num = parseFloat(elt.css(fields[i]), 10);
+
       if (!isNaN(num)) {
         accum += num;
       }
     }
+
     return accum;
   }
 });
-;define('liquid-fire/components/liquid-sync', ['exports', 'liquid-fire/templates/components/liquid-sync', 'liquid-fire/mixins/pausable'], function (exports, _liquidSync, _pausable) {
-  'use strict';
+;define("liquid-fire/components/liquid-sync", ["exports", "liquid-fire/templates/components/liquid-sync", "liquid-fire/mixins/pausable"], function (_exports, _liquidSync, _pausable) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend(_pausable.default, {
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend(_pausable.default, {
     tagName: '',
     layout: _liquidSync.default,
     didInsertElement: function didInsertElement() {
       this.pauseLiquidFire();
     },
-
     actions: {
       ready: function ready() {
         this.resumeLiquidFire();
       }
     }
   });
-});
-;define('liquid-fire/components/liquid-unless', ['exports', 'liquid-fire/components/liquid-if'], function (exports, _liquidIf) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("liquid-fire/components/liquid-unless", ["exports", "liquid-fire/components/liquid-if"], function (_exports, _liquidIf) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _liquidIf.default.extend({
+  _exports.default = void 0;
+
+  var _default = _liquidIf.default.extend({
     helperName: 'liquid-unless',
     inverted: true
   });
-});
-;define('liquid-fire/components/liquid-versions', ['exports', 'liquid-fire/ember-internals', 'liquid-fire/templates/components/liquid-versions'], function (exports, _emberInternals, _liquidVersions) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("liquid-fire/components/liquid-versions", ["exports", "liquid-fire/ember-internals", "liquid-fire/templates/components/liquid-versions"], function (_exports, _emberInternals, _liquidVersions) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Component.extend({
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
     layout: _liquidVersions.default,
     tagName: "",
-
     transitionMap: Ember.inject.service('liquid-fire-transitions'),
-
     didReceiveAttrs: function didReceiveAttrs() {
       this._super.apply(this, arguments);
+
       this.appendVersion();
     },
     appendVersion: function appendVersion() {
       var versions = this.versions;
       var firstTime = false;
       var newValue = this.getAttr('value');
-      var oldValue = void 0;
+      var oldValue;
       var versionEquality = this.get('versionEquality') || defaultEqualityCheck;
 
       if (!versions) {
@@ -118263,6 +118413,7 @@ define("ember-resolver/features", [], function () {
           // so they have their own opportunity to react.
           Ember.set(versions[0], 'value', newValue);
         }
+
         return;
       }
 
@@ -118271,8 +118422,8 @@ define("ember-resolver/features", [], function () {
         value: newValue
       };
       versions.unshiftObject(newVersion);
-
       this.firstTime = firstTime;
+
       if (firstTime) {
         Ember.set(this, 'versions', versions);
       }
@@ -118285,12 +118436,10 @@ define("ember-resolver/features", [], function () {
       var _this = this;
 
       var versions = Ember.get(this, 'versions');
-      var transition = void 0;
+      var transition;
       var firstTime = this.firstTime;
       this.firstTime = false;
-
       this.notifyContainer('afterChildInsertion', versions);
-
       transition = Ember.get(this, 'transitionMap').transitionFor({
         versions: versions,
         parentElement: Ember.$((0, _emberInternals.containingElement)(this)),
@@ -118308,18 +118457,21 @@ define("ember-resolver/features", [], function () {
       if (this._runningTransition) {
         this._runningTransition.interrupt();
       }
-      this._runningTransition = transition;
 
+      this._runningTransition = transition;
       transition.run().then(function (wasInterrupted) {
         // if we were interrupted, we don't handle the cleanup because
         // another transition has already taken over.
         if (!wasInterrupted) {
           _this.finalizeVersions(versions);
+
           _this.notifyContainer("afterTransition", versions);
         }
       }, function (err) {
         _this.finalizeVersions(versions);
+
         _this.notifyContainer("afterTransition", versions);
+
         throw err;
       });
     },
@@ -118328,36 +118480,37 @@ define("ember-resolver/features", [], function () {
     },
     notifyContainer: function notifyContainer(method, versions) {
       var target = Ember.get(this, 'notify');
+
       if (target && !target.get('isDestroying')) {
         target.send(method, versions);
       }
     },
-
-
     actions: {
       childDidRender: function childDidRender(child) {
         var version = Ember.get(child, 'version');
         Ember.set(version, 'view', child);
+
         this._transition();
       }
     }
-
-  });
-
-
-  // All falsey values are considered equal, everything else gets strict
+  }); // All falsey values are considered equal, everything else gets strict
   // equality.
+
+
+  _exports.default = _default;
+
   function defaultEqualityCheck(a, b) {
     return !a && !b || a === b;
   }
 });
-;define('liquid-fire/constrainables', ['exports', 'liquid-fire/ember-internals'], function (exports, _emberInternals) {
-  'use strict';
+;define("liquid-fire/constrainables", ["exports", "liquid-fire/ember-internals"], function (_exports, _emberInternals) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+  var _default = {
     oldValue: {
       reversesTo: 'newValue',
       accessor: function accessor(conditions) {
@@ -118407,6 +118560,7 @@ define("ember-resolver/features", [], function () {
     parentElementClass: {
       accessor: function accessor(conditions) {
         var cls = conditions.parentElement.attr('class');
+
         if (cls) {
           return cls.split(/\s+/);
         }
@@ -118416,56 +118570,45 @@ define("ember-resolver/features", [], function () {
     firstTime: {},
     media: {}
   };
-
+  _exports.default = _default;
 
   function versionValue(conditions, index) {
     var versions = conditions.versions;
     return versions[index] ? versions[index].value : null;
   }
 });
-;define('liquid-fire/constraint', ['exports', 'liquid-fire/constrainables'], function (exports, _constrainables) {
-  'use strict';
+;define("liquid-fire/constraint", ["exports", "liquid-fire/constrainables"], function (_exports, _constrainables) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.ANY = exports.EMPTY = undefined;
-  exports.constraintKeys = constraintKeys;
+  _exports.constraintKeys = constraintKeys;
+  _exports.ANY = _exports.EMPTY = _exports.default = void 0;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var Constraint = function () {
+  // Every rule constraint has a target and either `keys` or
+  // `predicate`. key-based constraints are cheaper because we can check
+  // them with O(1) lookups, whereas predicates must be searched O(n).
+  var Constraint =
+  /*#__PURE__*/
+  function () {
     function Constraint(target, matcher) {
       _classCallCheck(this, Constraint);
 
       // targets are the properties of a transition that we can
       // constrain
       this.target = target;
+
       if (arguments.length === 1) {
         return;
       }
+
       if (matcher instanceof RegExp) {
         this.predicate = function (value) {
           return matcher.test(value);
@@ -118482,11 +118625,12 @@ define("ember-resolver/features", [], function () {
     }
 
     _createClass(Constraint, [{
-      key: 'invert',
+      key: "invert",
       value: function invert() {
         if (!_constrainables.default[this.target].reversesTo) {
           return this;
         }
+
         var inverse = new this.constructor(_constrainables.default[this.target].reversesTo);
         inverse.predicate = this.predicate;
         inverse.keys = this.keys;
@@ -118497,9 +118641,11 @@ define("ember-resolver/features", [], function () {
     return Constraint;
   }();
 
-  exports.default = Constraint;
-  var EMPTY = exports.EMPTY = '__liquid_fire_EMPTY__';
-  var ANY = exports.ANY = '__liquid_fire_ANY__';
+  _exports.default = Constraint;
+  var EMPTY = '__liquid_fire_EMPTY__';
+  _exports.EMPTY = EMPTY;
+  var ANY = '__liquid_fire_ANY__';
+  _exports.ANY = ANY;
 
   function constraintKeys(matcher) {
     if (typeof matcher === 'undefined' || matcher === null) {
@@ -118507,6 +118653,7 @@ define("ember-resolver/features", [], function () {
     } else if (!Ember.isArray(matcher)) {
       matcher = [matcher];
     }
+
     return Ember.A(matcher).map(function (elt) {
       if (typeof elt === 'string') {
         return elt;
@@ -118516,68 +118663,53 @@ define("ember-resolver/features", [], function () {
     });
   }
 });
-;define('liquid-fire/constraints', ['exports', 'liquid-fire/constraint', 'liquid-fire/constrainables'], function (exports, _constraint, _constrainables) {
-  'use strict';
+;define("liquid-fire/constraints", ["exports", "liquid-fire/constraint", "liquid-fire/constrainables"], function (_exports, _constraint, _constrainables) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var Constraints = function () {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  var Constraints =
+  /*#__PURE__*/
+  function () {
     function Constraints() {
       _classCallCheck(this, Constraints);
 
       this.targets = {};
       this.ruleCounter = 0;
+
       for (var i = 0; i < constrainableKeys.length; i++) {
         this.targets[constrainableKeys[i]] = {};
       }
     }
 
     _createClass(Constraints, [{
-      key: 'addRule',
+      key: "addRule",
       value: function addRule(rule) {
         rule.id = this.ruleCounter++;
+
         if (rule.debug) {
           this.debug = true;
         }
+
         this.addHalfRule(rule);
+
         if (rule.reverse) {
           var inverted = rule.invert();
           inverted.id = rule.id + ' reverse';
@@ -118585,30 +118717,35 @@ define("ember-resolver/features", [], function () {
         }
       }
     }, {
-      key: 'addHalfRule',
+      key: "addHalfRule",
       value: function addHalfRule(rule) {
         var _this = this;
 
         var seen = {};
         rule.constraints.forEach(function (constraint) {
           seen[constraint.target] = true;
+
           _this.addConstraint(rule, constraint);
         });
         constrainableKeys.forEach(function (key) {
           if (!seen[key]) {
-            _this.addConstraint(rule, { target: key });
+            _this.addConstraint(rule, {
+              target: key
+            });
           }
         });
       }
     }, {
-      key: 'addConstraint',
+      key: "addConstraint",
       value: function addConstraint(rule, constraint) {
         var _this2 = this;
 
         var context = this.targets[constraint.target];
+
         if (!context) {
-          throw new Error('Unknown constraint target ' + constraint.target);
+          throw new Error("Unknown constraint target ".concat(constraint.target));
         }
+
         if (constraint.keys) {
           constraint.keys.forEach(function (key) {
             _this2.addKey(context, key, rule);
@@ -118618,15 +118755,16 @@ define("ember-resolver/features", [], function () {
         }
       }
     }, {
-      key: 'addKey',
+      key: "addKey",
       value: function addKey(context, key, rule) {
         if (!context[key]) {
           context[key] = {};
         }
+
         context[key][Ember.guidFor(rule)] = rule;
       }
     }, {
-      key: 'bestMatch',
+      key: "bestMatch",
       value: function bestMatch(conditions) {
         if (this.debug) {
           console.log("[liquid-fire] Checking transition rules for", conditions.parentElement[0]);
@@ -118638,105 +118776,124 @@ define("ember-resolver/features", [], function () {
         if (rules.length > 1 && this.debug) {
           rules.forEach(function (rule) {
             if (rule !== best && rule.debug) {
-              console.log(describeRule(rule) + ' matched, but it was superceded by another rule');
+              console.log("".concat(describeRule(rule), " matched, but it was superceded by another rule"));
             }
           });
         }
+
         if (best && best.debug) {
-          console.log(describeRule(best) + ' matched');
+          console.log("".concat(describeRule(best), " matched"));
         }
+
         return best;
       }
     }, {
-      key: 'match',
+      key: "match",
       value: function match(conditions) {
         var rules = this.matchByKeys(conditions);
         rules = this.matchPredicates(conditions, rules);
         return rules;
       }
     }, {
-      key: 'matchByKeys',
+      key: "matchByKeys",
       value: function matchByKeys(conditions) {
         var matchSets = [];
+
         for (var i = 0; i < constrainableKeys.length; i++) {
           var key = constrainableKeys[i];
           var value = conditionAccessor(conditions, key);
           matchSets.push(this.matchingSet(key, value));
         }
+
         return intersection(matchSets);
       }
     }, {
-      key: 'matchingSet',
+      key: "matchingSet",
       value: function matchingSet(prop, value) {
         var keys = (0, _constraint.constraintKeys)(value);
         var context = this.targets[prop];
         var matched = Ember.A();
+
         for (var i = 0; i < keys.length; i++) {
           if (context[keys[i]]) {
             matched.push(context[keys[i]]);
           }
         }
+
         if (keys.length === 0 && context[_constraint.EMPTY]) {
           matched.push(context[_constraint.EMPTY]);
         }
+
         if (context[_constraint.ANY]) {
           matched.push(context[_constraint.ANY]);
         }
+
         matched = union(matched);
+
         if (this.debug) {
           this.logDebugRules(matched, context, prop, value);
         }
+
         return matched;
       }
     }, {
-      key: 'logDebugRules',
+      key: "logDebugRules",
       value: function logDebugRules(matched, context, target, value) {
         Ember.A(Object.keys(context)).forEach(function (setKey) {
           var set = context[setKey];
           Ember.A(Object.keys(set)).forEach(function (ruleKey) {
             var rule = set[ruleKey];
+
             if (rule.debug && !matched[Ember.guidFor(rule)]) {
               var _console;
 
-              (_console = console).log.apply(_console, [describeRule(rule) + ' rejected because ' + target + ' was'].concat(_toConsumableArray(value)));
+              (_console = console).log.apply(_console, ["".concat(describeRule(rule), " rejected because ").concat(target, " was")].concat(_toConsumableArray(value)));
             }
           });
         });
       }
     }, {
-      key: 'matchPredicates',
+      key: "matchPredicates",
       value: function matchPredicates(conditions, rules) {
         var output = [];
+
         for (var i = 0; i < rules.length; i++) {
           var rule = rules[i];
           var matched = true;
+
           for (var j = 0; j < rule.constraints.length; j++) {
             var constraint = rule.constraints[j];
+
             if (constraint.predicate && !this.matchConstraintPredicate(conditions, rule, constraint)) {
               matched = false;
               break;
             }
           }
+
           if (matched) {
             output.push(rule);
           }
         }
+
         return output;
       }
     }, {
-      key: 'matchConstraintPredicate',
+      key: "matchConstraintPredicate",
       value: function matchConstraintPredicate(conditions, rule, constraint) {
         var values = conditionAccessor(conditions, constraint.target);
         var reverse = _constrainables.default[constraint.target].reversesTo;
-        var inverseValues = void 0;
+        var inverseValues;
+
         if (reverse) {
           inverseValues = conditionAccessor(conditions, reverse);
         }
+
         for (var i = 0; i < values.length; i++) {
           if (constraint.predicate(values[i], inverseValues ? inverseValues[i] : null)) {
             return true;
           }
         }
+
         if (rule.debug) {
           var _console2;
 
@@ -118745,7 +118902,8 @@ define("ember-resolver/features", [], function () {
               return v[0];
             });
           }
-          (_console2 = console).log.apply(_console2, [describeRule(rule) + ' rejected because of a constraint on ' + constraint.target + '. ' + constraint.target + ' was'].concat(_toConsumableArray(values)));
+
+          (_console2 = console).log.apply(_console2, ["".concat(describeRule(rule), " rejected because of a constraint on ").concat(constraint.target, ". ").concat(constraint.target, " was")].concat(_toConsumableArray(values)));
         }
       }
     }]);
@@ -118753,20 +118911,20 @@ define("ember-resolver/features", [], function () {
     return Constraints;
   }();
 
-  exports.default = Constraints;
-
+  _exports.default = Constraints;
 
   function conditionAccessor(conditions, key) {
     var constrainable = _constrainables.default[key];
+
     if (constrainable.accessor) {
       return constrainable.accessor(conditions) || [];
     } else {
       return [conditions[key]];
     }
-  }
-
-  // Returns a list of property values from source whose keys also
+  } // Returns a list of property values from source whose keys also
   // appear in all of the rest objects.
+
+
   function intersection(sets) {
     var source = sets[0];
     var rest = sets.slice(1);
@@ -118774,88 +118932,83 @@ define("ember-resolver/features", [], function () {
     var keysLength = keys.length;
     var restLength = rest.length;
     var result = [];
+
     for (var keyIndex = 0; keyIndex < keysLength; keyIndex++) {
       var key = keys[keyIndex];
       var matched = true;
+
       for (var restIndex = 0; restIndex < restLength; restIndex++) {
         if (!rest[restIndex].hasOwnProperty(key)) {
           matched = false;
           break;
         }
       }
+
       if (matched) {
         result.push(source[key]);
       }
     }
+
     return result;
   }
 
   function union(sets) {
     var setsLength = sets.length;
     var output = {};
+
     for (var i = 0; i < setsLength; i++) {
       var set = sets[i];
       var keys = Object.keys(set);
+
       for (var j = 0; j < keys.length; j++) {
         var key = keys[j];
         output[key] = set[key];
       }
     }
+
     return output;
   }
 
   function describeRule(rule) {
-    return '[liquid-fire rule ' + rule.id + ']';
+    return "[liquid-fire rule ".concat(rule.id, "]");
   }
 
   function highestPriority(rules) {
-    var best = void 0;
+    var best;
     var bestScore = 0;
+
     for (var i = 0; i < rules.length; i++) {
       var rule = rules[i];
       var score = rules[i].constraints.length;
+
       if (!best || score > bestScore || score === bestScore && rule.id > best.id) {
         best = rule;
         bestScore = score;
       }
     }
+
     return best;
   }
 
   var constrainableKeys = Ember.A(Object.keys(_constrainables.default));
 });
-;define("liquid-fire/dsl", ["exports", "liquid-fire/animate", "liquid-fire/rule", "liquid-fire/constraint", "liquid-fire/action"], function (exports, _animate, _rule, _constraint, _action) {
+;define("liquid-fire/dsl", ["exports", "liquid-fire/animate", "liquid-fire/rule", "liquid-fire/constraint", "liquid-fire/action"], function (_exports, _animate, _rule, _constraint, _action) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var DSL = function () {
+  var DSL =
+  /*#__PURE__*/
+  function () {
     function DSL(map, constraints) {
       _classCallCheck(this, DSL);
 
@@ -118948,7 +119101,7 @@ define("ember-resolver/features", [], function () {
     }, {
       key: "use",
       value: function use(nameOrHandler) {
-        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
           args[_key - 1] = arguments[_key];
         }
 
@@ -118957,16 +119110,18 @@ define("ember-resolver/features", [], function () {
     }, {
       key: "reverse",
       value: function reverse(nameOrHandler) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
           args[_key2 - 1] = arguments[_key2];
         }
 
-        return new _action.default(nameOrHandler, args, { reversed: true });
+        return new _action.default(nameOrHandler, args, {
+          reversed: true
+        });
       }
     }, {
       key: "useAndReverse",
       value: function useAndReverse(nameOrHandler) {
-        for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
           args[_key3 - 1] = arguments[_key3];
         }
 
@@ -118985,7 +119140,7 @@ define("ember-resolver/features", [], function () {
     }, {
       key: "inHelper",
       value: function inHelper() {
-        for (var _len4 = arguments.length, names = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        for (var _len4 = arguments.length, names = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
           names[_key4] = arguments[_key4];
         }
 
@@ -118994,7 +119149,7 @@ define("ember-resolver/features", [], function () {
     }, {
       key: "outletName",
       value: function outletName() {
-        for (var _len5 = arguments.length, names = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        for (var _len5 = arguments.length, names = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
           names[_key5] = arguments[_key5];
         }
 
@@ -119017,105 +119172,50 @@ define("ember-resolver/features", [], function () {
     return DSL;
   }();
 
-  exports.default = DSL;
+  _exports.default = DSL;
 });
-;define('liquid-fire/ember-internals', ['exports', 'liquid-fire/ember-internals/common', 'liquid-fire/ember-internals/version-specific'], function (exports, _common, _versionSpecific) {
-  'use strict';
+;define("liquid-fire/ember-internals", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(exports, 'childRoute', {
-    enumerable: true,
-    get: function () {
-      return _common.childRoute;
-    }
-  });
-  Object.defineProperty(exports, 'routeName', {
-    enumerable: true,
-    get: function () {
-      return _common.routeName;
-    }
-  });
-  Object.defineProperty(exports, 'routeModel', {
-    enumerable: true,
-    get: function () {
-      return _common.routeModel;
-    }
-  });
-  Object.defineProperty(exports, 'routeIsStable', {
-    enumerable: true,
-    get: function () {
-      return _common.routeIsStable;
-    }
-  });
-  Object.defineProperty(exports, 'modelIsStable', {
-    enumerable: true,
-    get: function () {
-      return _common.modelIsStable;
-    }
-  });
-  Object.defineProperty(exports, 'containingElement', {
-    enumerable: true,
-    get: function () {
-      return _versionSpecific.containingElement;
-    }
-  });
-  Object.defineProperty(exports, 'initialize', {
-    enumerable: true,
-    get: function () {
-      return _versionSpecific.initialize;
-    }
-  });
-  Object.defineProperty(exports, 'getOutletStateTemplate', {
-    enumerable: true,
-    get: function () {
-      return _versionSpecific.getOutletStateTemplate;
-    }
-  });
-});
-;define('liquid-fire/ember-internals/common', ['exports'], function (exports) {
-  'use strict';
+  _exports.childRoute = childRoute;
+  _exports.routeName = routeName;
+  _exports.routeModel = routeModel;
+  _exports.routeIsStable = routeIsStable;
+  _exports.modelIsStable = modelIsStable;
+  _exports.containingElement = containingElement;
+  var getViewBounds = Ember.ViewUtils.getViewBounds; // Traverses down to the child routeInfo with the given name.
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.childRoute = childRoute;
-  exports.routeName = routeName;
-  exports.routeModel = routeModel;
-  exports.routeIsStable = routeIsStable;
-  exports.modelIsStable = modelIsStable;
-
-
-  // Traverses down to the child routeInfo with the given name.
   function childRoute(routeInfo, outletName) {
-    var outlets = void 0;
-    // TODO: the second condition is only necessary because every
+    var outlets; // TODO: the second condition is only necessary because every
     // constrainable accessor runs against every value all the time. It
     // would be better to add a precondition on helperName that would
     // short-circuit this elsewhere.
+
     if (routeInfo && (outlets = routeInfo.outlets)) {
       return outlets[outletName];
     }
-  }
-
-  // Finds the route name from a route state so we can apply our
+  } // Finds the route name from a route state so we can apply our
   // matching rules to it.
+
+
   function routeName(routeInfo) {
     if (routeInfo) {
       return [routeInfo.render.name];
     }
-  }
-
-  // Finds the route's model from a route state so we can apply our
+  } // Finds the route's model from a route state so we can apply our
   // matching rules to it. On first access, will lock down the value of
   // the model so that future changes don't change the answer. This lets
   // us avoid the problem of singleton controllers changing underneath
   // us.
+
+
   function routeModel(routeInfo) {
     if (routeInfo && !routeInfo.hasOwnProperty('_lf_model')) {
-      var r = void 0,
-          c = void 0;
+      var r, c;
+
       if ((r = routeInfo.render) && (c = r.controller)) {
         routeInfo._lf_model = Ember.get(c, 'model');
       } else {
@@ -119140,43 +119240,28 @@ define("ember-resolver/features", [], function () {
     }
 
     return oldRouteInfo.render.template === newRouteInfo.render.template && oldRouteInfo.render.controller === newRouteInfo.render.controller;
-  }
+  } // Only valid for states that already satisfy routeIsStable
 
-  // Only valid for states that already satisfy routeIsStable
+
   function modelIsStable(oldRouteInfo, newRouteInfo) {
     var oldModel = routeModel(oldRouteInfo) || [];
     var newModel = routeModel(newRouteInfo) || [];
     return oldModel[0] === newModel[0];
   }
-});
-;define('liquid-fire/ember-internals/version-specific/index', ['exports', 'liquid-fire/templates/version-specific/get-outlet-state'], function (exports, _getOutletState) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.initialize = initialize;
-  exports.containingElement = containingElement;
-  Object.defineProperty(exports, 'getOutletStateTemplate', {
-    enumerable: true,
-    get: function () {
-      return _getOutletState.default;
-    }
-  });
-  var getViewBounds = Ember.ViewUtils.getViewBounds;
-  function initialize() {}
 
   function containingElement(view) {
     return getViewBounds(view).parentElement;
   }
 });
-;define('liquid-fire/growable', ['exports', 'liquid-fire/promise', 'velocity'], function (exports, _promise, _velocity) {
-  'use strict';
+;define("liquid-fire/growable", ["exports", "liquid-fire/promise", "velocity"], function (_exports, _promise, _velocity) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Mixin.create({
+  _exports.default = void 0;
+
+  var _default = Ember.Mixin.create({
     growDuration: 250,
     growPixelsPerSecond: 200,
     growEasing: 'slide',
@@ -119184,9 +119269,7 @@ define("ember-resolver/features", [], function () {
     growDelay: 0,
     growWidth: true,
     growHeight: true,
-
     transitionMap: Ember.inject.service('liquid-fire-transitions'),
-
     animateGrowth: function animateGrowth(elt, have, want) {
       var _this = this;
 
@@ -119205,11 +119288,11 @@ define("ember-resolver/features", [], function () {
         _this.get('transitionMap').decrementRunningTransitions();
       });
     },
-
     _adaptDimension: function _adaptDimension(elt, dimension, have, want) {
       if (have[dimension] === want[dimension]) {
         return _promise.default.resolve();
       }
+
       var target = {};
       target['outer' + Ember.String.capitalize(dimension)] = [want[dimension], have[dimension]];
       return (0, _velocity.default)(elt[0], target, {
@@ -119219,7 +119302,6 @@ define("ember-resolver/features", [], function () {
         easing: this.get('growEasing') || this.constructor.prototype.growEasing
       });
     },
-
     _delayFor: function _delayFor(before, after) {
       if (before > after) {
         return this.get('shrinkDelay') || this.constructor.prototype.shrinkDelay;
@@ -119227,58 +119309,29 @@ define("ember-resolver/features", [], function () {
 
       return this.get('growDelay') || this.constructor.prototype.growDelay;
     },
-
     _durationFor: function _durationFor(before, after) {
       return Math.min(this.get('growDuration') || this.constructor.prototype.growDuration, 1000 * Math.abs(before - after) / (this.get('growPixelsPerSecond') || this.constructor.prototype.growPixelsPerSecond));
     }
-
   });
-});
-;define('liquid-fire/helpers/lf-lock-model', ['exports', 'liquid-fire/ember-internals'], function (exports, _emberInternals) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("liquid-fire/helpers/lf-lock-model", ["exports", "liquid-fire/ember-internals"], function (_exports, _emberInternals) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.lfLockModel = lfLockModel;
+  _exports.lfLockModel = lfLockModel;
+  _exports.default = void 0;
 
-  var _slicedToArray = function () {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = undefined;
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-          if (i && _arr.length === i) break;
-        }
-      } catch (err) {
-        _d = true;
-        _e = err;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
+  function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-      return _arr;
-    }
-
-    return function (arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   function lfLockModel(_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -119290,71 +119343,126 @@ define("ember-resolver/features", [], function () {
     return routeInfo;
   }
 
-  exports.default = Ember.Helper.helper(lfLockModel);
-});
-;define('liquid-fire/helpers/lf-or', ['exports'], function (exports) {
-  'use strict';
+  var _default = Ember.Helper.helper(lfLockModel);
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("liquid-fire/helpers/lf-or", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.lfOr = lfOr;
-  function lfOr(params /*, hash*/) {
+  _exports.lfOr = lfOr;
+  _exports.default = void 0;
+
+  function lfOr(params
+  /*, hash*/
+  ) {
     return params.reduce(function (a, b) {
       return a || b;
     }, false);
   }
 
-  exports.default = Ember.Helper.helper(lfOr);
+  var _default = Ember.Helper.helper(lfOr);
+
+  _exports.default = _default;
 });
-;define("liquid-fire/index", ["exports", "liquid-fire/mixins/pausable", "liquid-fire/transition-map", "liquid-fire/animate", "liquid-fire/promise", "liquid-fire/mutation-observer"], function (exports, _pausable, _transitionMap, _animate, _promise, _mutationObserver) {
+;define("liquid-fire/index", ["exports", "liquid-fire/transition-map", "liquid-fire/animate", "liquid-fire/promise", "liquid-fire/mutation-observer", "liquid-fire/mixins/pausable"], function (_exports, _transitionMap, _animate, _promise, _mutationObserver, _pausable) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.MutationObserver = exports.Promise = exports.finish = exports.timeRemaining = exports.timeSpent = exports.isAnimating = exports.stop = exports.animate = exports.TransitionMap = exports.Pausable = undefined;
-  Object.defineProperty(exports, "Pausable", {
+  Object.defineProperty(_exports, "TransitionMap", {
     enumerable: true,
-    get: function () {
+    get: function get() {
+      return _transitionMap.default;
+    }
+  });
+  Object.defineProperty(_exports, "animate", {
+    enumerable: true,
+    get: function get() {
+      return _animate.animate;
+    }
+  });
+  Object.defineProperty(_exports, "stop", {
+    enumerable: true,
+    get: function get() {
+      return _animate.stop;
+    }
+  });
+  Object.defineProperty(_exports, "isAnimating", {
+    enumerable: true,
+    get: function get() {
+      return _animate.isAnimating;
+    }
+  });
+  Object.defineProperty(_exports, "timeSpent", {
+    enumerable: true,
+    get: function get() {
+      return _animate.timeSpent;
+    }
+  });
+  Object.defineProperty(_exports, "timeRemaining", {
+    enumerable: true,
+    get: function get() {
+      return _animate.timeRemaining;
+    }
+  });
+  Object.defineProperty(_exports, "finish", {
+    enumerable: true,
+    get: function get() {
+      return _animate.finish;
+    }
+  });
+  Object.defineProperty(_exports, "Promise", {
+    enumerable: true,
+    get: function get() {
+      return _promise.default;
+    }
+  });
+  Object.defineProperty(_exports, "MutationObserver", {
+    enumerable: true,
+    get: function get() {
+      return _mutationObserver.default;
+    }
+  });
+  Object.defineProperty(_exports, "Pausable", {
+    enumerable: true,
+    get: function get() {
       return _pausable.default;
     }
   });
-  exports.TransitionMap = _transitionMap.default;
-  exports.animate = _animate.animate;
-  exports.stop = _animate.stop;
-  exports.isAnimating = _animate.isAnimating;
-  exports.timeSpent = _animate.timeSpent;
-  exports.timeRemaining = _animate.timeRemaining;
-  exports.finish = _animate.finish;
-  exports.Promise = _promise.default;
-  exports.MutationObserver = _mutationObserver.default;
 });
-;define('liquid-fire/is-browser', ['exports'], function (exports) {
-  'use strict';
+;define("liquid-fire/is-browser", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = isBrowser;
+  _exports.default = isBrowser;
+
   function isBrowser() {
     return typeof window !== 'undefined' && window && typeof document !== 'undefined' && document;
   }
 });
-;define('liquid-fire/mixins/pausable', ['exports'], function (exports) {
-  'use strict';
+;define("liquid-fire/mixins/pausable", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Mixin.create({
-    _transitionMap: Ember.inject.service('liquid-fire-transitions'),
+  _exports.default = void 0;
 
+  var _default = Ember.Mixin.create({
+    _transitionMap: Ember.inject.service('liquid-fire-transitions'),
     _initializeLiquidFirePauseable: Ember.on('init', function () {
       this._lfDefer = [];
     }),
     pauseLiquidFire: function pauseLiquidFire() {
       var context = this.nearestWithProperty('_isLiquidChild');
+
       if (context) {
         var def = new Ember.RSVP.defer();
         var tmap = this.get('_transitionMap');
@@ -119362,27 +119470,31 @@ define("ember-resolver/features", [], function () {
         def.promise.finally(function () {
           return tmap.decrementRunningTransitions();
         });
+
         this._lfDefer.push(def);
+
         context._waitForMe(def.promise);
       }
     },
-
     resumeLiquidFire: Ember.on('willDestroyElement', function () {
       var def = this._lfDefer.pop();
+
       if (def) {
         def.resolve();
       }
     })
   });
-});
-;define('liquid-fire/mutation-observer', ['exports', 'liquid-fire/is-browser'], function (exports, _isBrowser) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("liquid-fire/mutation-observer", ["exports", "liquid-fire/is-browser"], function (_exports, _isBrowser) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.testingKick = testingKick;
-
+  _exports.testingKick = testingKick;
+  _exports.default = void 0;
   var activePollers = [];
 
   function MutationPoller(callback) {
@@ -119399,65 +119511,52 @@ define("ember-resolver/features", [], function () {
       activePollers.splice(activePollers.indexOf(this), 1);
     }
   };
+  var M;
 
-  var M = void 0;
   if ((0, _isBrowser.default)()) {
     M = window.MutationObserver || window.WebkitMutationObserver || MutationPoller;
   } else {
     M = MutationPoller;
   }
 
-  exports.default = M;
-
-
-  // PhantomJS does not have real mutation observers, so to get
+  var _default = M; // PhantomJS does not have real mutation observers, so to get
   // reasonable test timing we have to manually kick it.
+
+  _exports.default = _default;
+
   function testingKick() {
     for (var i = 0; i < activePollers.length; i++) {
       activePollers[i].callback();
     }
   }
 });
-;define('liquid-fire/promise', ['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = Ember.RSVP.Promise;
-});
-;define("liquid-fire/rule", ["exports", "liquid-fire/action", "liquid-fire/constraint"], function (exports, _action, _constraint) {
+;define("liquid-fire/promise", ["exports"], function (_exports) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
+  var _default = Ember.RSVP.Promise;
+  _exports.default = _default;
+});
+;define("liquid-fire/rule", ["exports", "liquid-fire/action", "liquid-fire/constraint"], function (_exports, _action, _constraint) {
+  "use strict";
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  var Rule = function () {
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  var Rule =
+  /*#__PURE__*/
+  function () {
     function Rule() {
       _classCallCheck(this, Rule);
 
@@ -119471,12 +119570,15 @@ define("ember-resolver/features", [], function () {
       value: function add(thing) {
         if (thing instanceof _action.default) {
           var prop = 'use';
+
           if (thing.reversed) {
             prop = 'reverse';
           }
+
           if (this[prop]) {
-            throw new Error("More than one \"" + prop + "\" statement in the same transition rule is not allowed");
+            throw new Error("More than one \"".concat(prop, "\" statement in the same transition rule is not allowed"));
           }
+
           this[prop] = thing;
         } else if (thing === 'debug') {
           this.debug = true;
@@ -119490,10 +119592,13 @@ define("ember-resolver/features", [], function () {
         if (!this.use) {
           throw new Error("Every transition rule must include a \"use\" statement");
         }
+
         this.use.validateHandler(transitionMap);
+
         if (this.reverse) {
           this.reverse.validateHandler(transitionMap);
         }
+
         if (!this.constraints.find(function (c) {
           return c.target === 'firstTime';
         })) {
@@ -119517,40 +119622,25 @@ define("ember-resolver/features", [], function () {
     return Rule;
   }();
 
-  exports.default = Rule;
+  _exports.default = Rule;
 });
-;define('liquid-fire/running-transition', ['exports'], function (exports) {
-  'use strict';
+;define("liquid-fire/running-transition", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var RunningTransition = function () {
+  var RunningTransition =
+  /*#__PURE__*/
+  function () {
     function RunningTransition(transitionMap, versions, animation) {
       _classCallCheck(this, RunningTransition);
 
@@ -119560,7 +119650,7 @@ define("ember-resolver/features", [], function () {
     }
 
     _createClass(RunningTransition, [{
-      key: 'run',
+      key: "run",
       value: function run() {
         var _this = this;
 
@@ -119580,7 +119670,7 @@ define("ember-resolver/features", [], function () {
         });
       }
     }, {
-      key: 'interrupt',
+      key: "interrupt",
       value: function interrupt() {
         this.interrupted = true;
         this.animationContext.oldElement = null;
@@ -119590,7 +119680,7 @@ define("ember-resolver/features", [], function () {
         });
       }
     }, {
-      key: '_invokeAnimation',
+      key: "_invokeAnimation",
       value: function _invokeAnimation() {
         var _this2 = this;
 
@@ -119601,26 +119691,26 @@ define("ember-resolver/features", [], function () {
     }]);
 
     return RunningTransition;
-  }();
-
-  exports.default = RunningTransition;
-
-
-  // This defines the public set of things that user's transition
+  }(); // This defines the public set of things that user's transition
   // implementations can access as `this`.
+
+
+  _exports.default = RunningTransition;
+
   function publicAnimationContext(rt, versions) {
     var c = {};
     addPublicVersion(c, 'new', versions[0]);
+
     if (versions[1]) {
       addPublicVersion(c, 'old', versions[1]);
     }
+
     c.older = versions.slice(2).map(function (v) {
       var context = {};
       addPublicVersion(context, null, v);
       return context;
-    });
+    }); // Animations are allowed to look each other up.
 
-    // Animations are allowed to look each other up.
     c.lookup = function (name) {
       return rt.transitionMap.lookup(name);
     };
@@ -119629,17 +119719,26 @@ define("ember-resolver/features", [], function () {
   }
 
   function addPublicVersion(context, prefix, version) {
+    var elt = null;
+
+    if (version.view) {
+      elt = Ember.$(version.view.element);
+    }
+
     var props = {
       view: version.view,
-      element: version.view ? version.view.$() : null,
+      element: elt,
       value: version.value
     };
+
     for (var key in props) {
       var outputKey = key;
+
       if (props.hasOwnProperty(key)) {
         if (prefix) {
           outputKey = prefix + Ember.String.capitalize(key);
         }
+
         context[outputKey] = props[key];
       }
     }
@@ -119667,6 +119766,24 @@ define("ember-resolver/features", [], function () {
       return (isTabIndexNaN || tabIndex >= 0) && focusable(element, !isTabIndexNaN);
     };
   }
+});
+;define("liquid-fire/templates/components/get-outlet-state", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "qjwdqBoN",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1,[[28,\"-get-dynamic-var\",[\"outletState\"],null]]]],\"hasEval\":false}",
+    "meta": {
+      "moduleName": "liquid-fire/templates/components/get-outlet-state.hbs"
+    }
+  });
+
+  _exports.default = _default;
 });
 ;define("liquid-fire/templates/components/illiquid-model", ["exports"], function (_exports) {
   "use strict";
@@ -119785,8 +119902,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "svqTCS7A",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"liquid-measured\",null,[[\"measurements\"],[[24,[\"measurements\"]]]],{\"statements\":[[0,\"  \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "G4ml8+q7",
+    "block": "{\"symbols\":[\"&default\"],\"statements\":[[4,\"liquid-measured\",null,[[\"didMeasure\"],[[28,\"action\",[[23,0,[]],[23,0,[\"sizeChanged\"]]],null]]],{\"statements\":[[0,\"  \"],[14,1],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
     "meta": {
       "moduleName": "liquid-fire/templates/components/liquid-spacer.hbs"
     }
@@ -119830,32 +119947,13 @@ define("ember-resolver/features", [], function () {
 
   _exports.default = _default;
 });
-;define("liquid-fire/templates/version-specific/get-outlet-state", ["exports"], function (_exports) {
+;define("liquid-fire/transition-map", ["exports", "liquid-fire/running-transition", "liquid-fire/dsl", "liquid-fire/action", "liquid-fire/constraints"], function (_exports, _runningTransition, _dsl, _action, _constraints) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "n+fJR2vT",
-    "block": "{\"symbols\":[\"&default\"],\"statements\":[[14,1,[[28,\"-get-dynamic-var\",[\"outletState\"],null]]]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "liquid-fire/templates/version-specific/get-outlet-state.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define('liquid-fire/transition-map', ['exports', 'liquid-fire/running-transition', 'liquid-fire/dsl', 'liquid-fire/action', 'liquid-fire/constraints'], function (exports, _runningTransition, _dsl, _action, _constraints) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-
   var TransitionMap = Ember.Service.extend({
     init: function init() {
       this._super.apply(this, arguments);
@@ -119863,13 +119961,15 @@ define("ember-resolver/features", [], function () {
       this.activeCount = 0;
       this.constraints = new _constraints.default();
       var owner = Ember.getOwner(this);
-      var config = void 0;
+      var config;
+
       if (owner.factoryFor) {
         var maybeConfig = owner.factoryFor('transitions:main');
         config = maybeConfig && maybeConfig.class;
       } else {
         config = owner._lookupFactory('transitions:main');
       }
+
       if (config) {
         this.map(config);
       }
@@ -119894,6 +119994,7 @@ define("ember-resolver/features", [], function () {
       if (this._waitingPromise) {
         return this._waitingPromise;
       }
+
       return this._waitingPromise = new Ember.RSVP.Promise(function (resolve) {
         _this2._resolveWaiting = resolve;
         Ember.run.next(function () {
@@ -119911,22 +120012,26 @@ define("ember-resolver/features", [], function () {
     },
     lookup: function lookup(transitionName) {
       var owner = Ember.getOwner(this);
-      var handler = void 0;
+      var handler;
+
       if (owner.factoryFor) {
         var maybeHandler = owner.factoryFor('transition:' + transitionName);
         handler = maybeHandler && maybeHandler.class;
       } else {
         handler = owner._lookupFactory('transition:' + transitionName);
       }
+
       if (!handler) {
         throw new Error("unknown transition name: " + transitionName);
       }
+
       return handler;
     },
     defaultAction: function defaultAction() {
       if (!this._defaultAction) {
         this._defaultAction = new _action.default(this.lookup('default'));
       }
+
       return this._defaultAction;
     },
     constraintsFor: function constraintsFor(conditions) {
@@ -119939,29 +120044,35 @@ define("ember-resolver/features", [], function () {
       }
     },
     transitionFor: function transitionFor(conditions) {
-      var action = void 0;
+      var action;
+
       if (conditions.use && conditions.firstTime !== 'yes') {
         action = new _action.default(conditions.use);
         action.validateHandler(this);
       } else {
         var rule = this.constraintsFor(conditions).bestMatch(conditions);
+
         if (rule) {
           action = rule.use;
         } else {
           action = this.defaultAction();
         }
       }
+
       return new _runningTransition.default(this, conditions.versions, action);
     },
     map: function map(handler, constraints) {
       if (handler) {
         handler.apply(new _dsl.default(this, constraints || this.constraints));
       }
+
       return this;
     }
   });
 
-  if (false) {
+  if (false
+  /* DEBUG */
+  ) {
     TransitionMap.reopen({
       init: function init() {
         var _this3 = this;
@@ -119973,18 +120084,12 @@ define("ember-resolver/features", [], function () {
             return _this3.runningTransitions() === 0;
           };
 
-          // The new module imports version of this function doesn't
-          // work in some of the older ember versions we support
-          // (because it depends on `this` context).
-          Ember.Test.registerWaiter(this._waiter); // eslint-disable-line ember/new-module-imports
+          Ember.Test.registerWaiter(this._waiter);
         }
       },
       willDestroy: function willDestroy() {
         if (this._waiter) {
-          // The new module imports version of this function doesn't
-          // work in some of the older ember versions we support
-          // (because it depends on `this` context).
-          Ember.Test.unregisterWaiter(this._waiter); // eslint-disable-line ember/new-module-imports
+          Ember.Test.unregisterWaiter(this._waiter);
           this._waiter = null;
         }
 
@@ -120000,33 +120105,36 @@ define("ember-resolver/features", [], function () {
       return t;
     }
   });
-
-  exports.default = TransitionMap;
+  var _default = TransitionMap;
+  _exports.default = _default;
 });
-;define("liquid-fire/transitions/cross-fade", ["exports", "liquid-fire"], function (exports, _liquidFire) {
+;define("liquid-fire/transitions/cross-fade", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = crossFade;
+  _exports.default = crossFade;
+
+  // BEGIN-SNIPPET cross-fade-definition
   function crossFade() {
     var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
     (0, _liquidFire.stop)(this.oldElement);
-    return _liquidFire.Promise.all([(0, _liquidFire.animate)(this.oldElement, { opacity: 0 }, opts), (0, _liquidFire.animate)(this.newElement, { opacity: [opts.maxOpacity || 1, 0] }, opts)]);
-  }
-  // END-SNIPPET
-  // BEGIN-SNIPPET cross-fade-definition
+    return _liquidFire.Promise.all([(0, _liquidFire.animate)(this.oldElement, {
+      opacity: 0
+    }, opts), (0, _liquidFire.animate)(this.newElement, {
+      opacity: [opts.maxOpacity || 1, 0]
+    }, opts)]);
+  } // END-SNIPPET
+
 });
-;define("liquid-fire/transitions/default", ["exports", "liquid-fire"], function (exports, _liquidFire) {
+;define("liquid-fire/transitions/default", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = defaultTransition;
-
+  _exports.default = defaultTransition;
 
   // This is what we run when no animation is asked for. It just sets
   // the newly-added element to visible (because we always start them
@@ -120034,31 +120142,32 @@ define("ember-resolver/features", [], function () {
   // appearance).
   function defaultTransition() {
     if (this.newElement) {
-      this.newElement.css({ visibility: '' });
+      this.newElement.css({
+        visibility: ''
+      });
     }
+
     return _liquidFire.Promise.resolve();
   }
 });
-;define('liquid-fire/transitions/explode', ['exports', 'ember-copy', 'liquid-fire'], function (exports, _emberCopy, _liquidFire) {
-  'use strict';
+;define("liquid-fire/transitions/explode", ["exports", "ember-copy", "liquid-fire"], function (_exports, _emberCopy, _liquidFire) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = explode;
-
+  _exports.default = explode;
 
   // Explode is not, by itself, an animation. It exists to pull apart
   // other elements so that each of the pieces can be targeted by
   // animations.
-
   function explode() {
     var _this = this;
 
     var seenElements = {};
     var sawBackgroundPiece = false;
 
-    for (var _len = arguments.length, pieces = Array(_len), _key = 0; _key < _len; _key++) {
+    for (var _len = arguments.length, pieces = new Array(_len), _key = 0; _key < _len; _key++) {
       pieces[_key] = arguments[_key];
     }
 
@@ -120072,26 +120181,33 @@ define("ember-resolver/features", [], function () {
         return runAnimation(_this, piece);
       }
     });
+
     if (!sawBackgroundPiece) {
       if (this.newElement) {
-        this.newElement.css({ visibility: '' });
+        this.newElement.css({
+          visibility: ''
+        });
       }
+
       if (this.oldElement) {
-        this.oldElement.css({ visibility: 'hidden' });
+        this.oldElement.css({
+          visibility: 'hidden'
+        });
       }
     }
+
     return _liquidFire.Promise.all(promises);
   }
 
   function explodePiece(context, piece, seen) {
     var childContext = (0, _emberCopy.copy)(context);
     var selectors = [piece.pickOld || piece.pick, piece.pickNew || piece.pick];
-    var cleanupOld = void 0,
-        cleanupNew = void 0;
+    var cleanupOld, cleanupNew;
 
     if (selectors[0] || selectors[1]) {
       cleanupOld = _explodePart(context, 'oldElement', childContext, selectors[0], seen);
       cleanupNew = _explodePart(context, 'newElement', childContext, selectors[1], seen);
+
       if (!cleanupOld && !cleanupNew) {
         return _liquidFire.Promise.resolve();
       }
@@ -120101,6 +120217,7 @@ define("ember-resolver/features", [], function () {
       if (cleanupOld) {
         cleanupOld();
       }
+
       if (cleanupNew) {
         cleanupNew();
       }
@@ -120108,36 +120225,37 @@ define("ember-resolver/features", [], function () {
   }
 
   function _explodePart(context, field, childContext, selector, seen) {
-    var child = void 0,
-        childOffset = void 0,
-        width = void 0,
-        height = void 0,
-        newChild = void 0;
+    var child, childOffset, width, height, newChild;
     var elt = context[field];
-
     childContext[field] = null;
+
     if (elt && selector) {
       child = elt.find(selector).filter(function () {
         var guid = Ember.guidFor(this);
+
         if (!seen[guid]) {
           seen[guid] = true;
           return true;
         }
       });
+
       if (child.length > 0) {
         childOffset = child.offset();
         width = child.outerWidth();
         height = child.outerHeight();
-        newChild = child.clone();
+        newChild = child.clone(); // Hide the original element
 
-        // Hide the original element
-        child.css({ visibility: 'hidden' });
-
-        // If the original element's parent was hidden, hide our clone
+        child.css({
+          visibility: 'hidden'
+        }); // If the original element's parent was hidden, hide our clone
         // too.
+
         if (elt.css('visibility') === 'hidden') {
-          newChild.css({ visibility: 'hidden' });
+          newChild.css({
+            visibility: 'hidden'
+          });
         }
+
         newChild.appendTo(elt.parent());
         newChild.outerWidth(width);
         newChild.outerHeight(height);
@@ -120147,25 +120265,26 @@ define("ember-resolver/features", [], function () {
           top: childOffset.top - newParentOffset.top,
           left: childOffset.left - newParentOffset.left,
           margin: 0
-        });
+        }); // Pass the clone to the next animation
 
-        // Pass the clone to the next animation
         childContext[field] = newChild;
         return function cleanup() {
           newChild.remove();
-          child.css({ visibility: '' });
+          child.css({
+            visibility: ''
+          });
         };
       }
     }
   }
 
   function animationFor(context, piece) {
-    var name = void 0,
-        args = void 0,
-        func = void 0;
+    var name, args, func;
+
     if (!piece.use) {
       throw new Error("every argument to the 'explode' animation must include a followup animation to 'use'");
     }
+
     if (Ember.isArray(piece.use)) {
       name = piece.use[0];
       args = piece.use.slice(1);
@@ -120173,11 +120292,13 @@ define("ember-resolver/features", [], function () {
       name = piece.use;
       args = [];
     }
+
     if (typeof name === 'function') {
       func = name;
     } else {
       func = context.lookup(name);
     }
+
     return function () {
       return _liquidFire.Promise.resolve(func.apply(this, args));
     };
@@ -120192,9 +120313,9 @@ define("ember-resolver/features", [], function () {
   function matchAndExplode(context, piece, seen) {
     if (!context.oldElement || !context.newElement) {
       return _liquidFire.Promise.resolve();
-    }
+    } // reduce the matchBy scope
 
-    // reduce the matchBy scope
+
     if (piece.pick) {
       context.oldElement = context.oldElement.find(piece.pick);
       context.newElement = context.newElement.find(piece.pick);
@@ -120206,31 +120327,30 @@ define("ember-resolver/features", [], function () {
 
     if (piece.pickNew) {
       context.newElement = context.newElement.find(piece.pickNew);
-    }
+    } // use the fastest selector available
 
-    // use the fastest selector available
-    var selector = void 0;
+
+    var selector;
 
     if (piece.matchBy === 'id') {
       selector = function selector(attrValue) {
-        return '#' + attrValue;
+        return "#".concat(attrValue);
       };
     } else if (piece.matchBy === 'class') {
       selector = function selector(attrValue) {
-        return '.' + attrValue;
+        return ".".concat(attrValue);
       };
     } else {
       selector = function selector(attrValue) {
         var escapedAttrValue = attrValue.replace(/'/g, "\\'");
-        return '[' + piece.matchBy + '=\'' + escapedAttrValue + '\']';
+        return "[".concat(piece.matchBy, "='").concat(escapedAttrValue, "']");
       };
     }
 
-    var hits = Ember.A(context.oldElement.find('[' + piece.matchBy + ']').toArray());
+    var hits = Ember.A(context.oldElement.find("[".concat(piece.matchBy, "]")).toArray());
     return _liquidFire.Promise.all(hits.map(function (elt) {
-      var attrValue = Ember.$(elt).attr(piece.matchBy);
+      var attrValue = Ember.$(elt).attr(piece.matchBy); // if there is no match for a particular item just skip it
 
-      // if there is no match for a particular item just skip it
       if (attrValue === "" || context.newElement.find(selector(attrValue)).length === 0) {
         return _liquidFire.Promise.resolve();
       }
@@ -120242,19 +120362,20 @@ define("ember-resolver/features", [], function () {
     }));
   }
 });
-;define('liquid-fire/transitions/fade', ['exports', 'liquid-fire'], function (exports, _liquidFire) {
-  'use strict';
+;define("liquid-fire/transitions/fade", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = fade;
+  _exports.default = fade;
+
+  // BEGIN-SNIPPET fade-definition
   function fade() {
     var _this = this;
 
     var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    var firstStep = void 0;
+    var firstStep;
     var outOpts = opts;
     var fadingElement = findFadingElement(this);
 
@@ -120266,49 +120387,64 @@ define("ember-resolver/features", [], function () {
       if ((0, _liquidFire.isAnimating)(this.oldElement, 'fade-in')) {
         // if the previous view is partially faded in, scale its
         // fade-out duration appropriately.
-        outOpts = { duration: (0, _liquidFire.timeSpent)(this.oldElement, 'fade-in') };
+        outOpts = {
+          duration: (0, _liquidFire.timeSpent)(this.oldElement, 'fade-in')
+        };
       }
-      (0, _liquidFire.stop)(this.oldElement);
-      firstStep = (0, _liquidFire.animate)(this.oldElement, { opacity: 0 }, outOpts, 'fade-out');
-    }
-    return firstStep.then(function () {
-      return (0, _liquidFire.animate)(_this.newElement, { opacity: [opts.maxOpacity || 1, 0] }, opts, 'fade-in');
-    });
-  } // BEGIN-SNIPPET fade-definition
 
+      (0, _liquidFire.stop)(this.oldElement);
+      firstStep = (0, _liquidFire.animate)(this.oldElement, {
+        opacity: 0
+      }, outOpts, 'fade-out');
+    }
+
+    return firstStep.then(function () {
+      return (0, _liquidFire.animate)(_this.newElement, {
+        opacity: [opts.maxOpacity || 1, 0]
+      }, opts, 'fade-in');
+    });
+  }
 
   function findFadingElement(context) {
     for (var i = 0; i < context.older.length; i++) {
       var entry = context.older[i];
+
       if ((0, _liquidFire.isAnimating)(entry.element, 'fade-out')) {
         return entry.element;
       }
     }
+
     if ((0, _liquidFire.isAnimating)(context.oldElement, 'fade-out')) {
       return context.oldElement;
     }
-  }
-  // END-SNIPPET
-});
-;define('liquid-fire/transitions/flex-grow', ['exports', 'liquid-fire'], function (exports, _liquidFire) {
-  'use strict';
+  } // END-SNIPPET
 
-  Object.defineProperty(exports, "__esModule", {
+});
+;define("liquid-fire/transitions/flex-grow", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = flexGrow;
+  _exports.default = flexGrow;
+
   function flexGrow(opts) {
     (0, _liquidFire.stop)(this.oldElement);
-    return _liquidFire.Promise.all([(0, _liquidFire.animate)(this.oldElement, { 'flex-grow': 0 }, opts), (0, _liquidFire.animate)(this.newElement, { 'flex-grow': [1, 0] }, opts)]);
+    return _liquidFire.Promise.all([(0, _liquidFire.animate)(this.oldElement, {
+      'flex-grow': 0
+    }, opts), (0, _liquidFire.animate)(this.newElement, {
+      'flex-grow': [1, 0]
+    }, opts)]);
   }
 });
-;define('liquid-fire/transitions/fly-to', ['exports', 'liquid-fire'], function (exports, _liquidFire) {
-  'use strict';
+;define("liquid-fire/transitions/fly-to", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = flyTo;
+  _exports.default = flyTo;
+
   function flyTo() {
     var _this = this;
 
@@ -120317,7 +120453,9 @@ define("ember-resolver/features", [], function () {
     if (!this.newElement) {
       return _liquidFire.Promise.resolve();
     } else if (!this.oldElement) {
-      this.newElement.css({ visibility: '' });
+      this.newElement.css({
+        visibility: ''
+      });
       return _liquidFire.Promise.resolve();
     }
 
@@ -120331,7 +120469,9 @@ define("ember-resolver/features", [], function () {
         outerWidth: [this.newElement.outerWidth(), this.oldElement.outerWidth()],
         outerHeight: [this.newElement.outerHeight(), this.oldElement.outerHeight()]
       };
-      this.oldElement.css({ visibility: 'hidden' });
+      this.oldElement.css({
+        visibility: 'hidden'
+      });
       return (0, _liquidFire.animate)(this.newElement, motion, opts);
     } else {
       var _motion = {
@@ -120340,28 +120480,33 @@ define("ember-resolver/features", [], function () {
         outerWidth: this.newElement.outerWidth(),
         outerHeight: this.newElement.outerHeight()
       };
-      this.newElement.css({ visibility: 'hidden' });
+      this.newElement.css({
+        visibility: 'hidden'
+      });
       return (0, _liquidFire.animate)(this.oldElement, _motion, opts).then(function () {
-        _this.newElement.css({ visibility: '' });
+        _this.newElement.css({
+          visibility: ''
+        });
       });
     }
   }
 });
-;define('liquid-fire/transitions/move-over', ['exports', 'liquid-fire'], function (exports, _liquidFire) {
-  'use strict';
+;define("liquid-fire/transitions/move-over", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = moveOver;
+  _exports.default = moveOver;
+
   function moveOver(dimension, direction, opts) {
     var _this = this;
 
     var oldParams = {},
         newParams = {},
-        firstStep = void 0,
-        property = void 0,
-        measure = void 0;
+        firstStep,
+        property,
+        measure;
 
     if (dimension.toLowerCase() === 'x') {
       property = 'translateX';
@@ -120382,166 +120527,166 @@ define("ember-resolver/features", [], function () {
       var bigger = biggestSize(_this, measure);
       oldParams[property] = bigger * direction + 'px';
       newParams[property] = ["0px", -1 * bigger * direction + 'px'];
-
       return _liquidFire.Promise.all([(0, _liquidFire.animate)(_this.oldElement, oldParams, opts), (0, _liquidFire.animate)(_this.newElement, newParams, opts, 'moving-in')]);
     });
   }
 
   function biggestSize(context, dimension) {
     var sizes = [];
+
     if (context.newElement) {
       sizes.push(parseInt(context.newElement.css(dimension), 10));
       sizes.push(parseInt(context.newElement.parent().css(dimension), 10));
     }
+
     if (context.oldElement) {
       sizes.push(parseInt(context.oldElement.css(dimension), 10));
       sizes.push(parseInt(context.oldElement.parent().css(dimension), 10));
     }
+
     return Math.max.apply(null, sizes);
   }
 });
-;define("liquid-fire/transitions/scale", ["exports", "liquid-fire"], function (exports, _liquidFire) {
+;define("liquid-fire/transitions/scale", ["exports", "liquid-fire"], function (_exports, _liquidFire) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = scale;
+  _exports.default = scale;
+
   function scale() {
     var _this = this;
 
     var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    return (0, _liquidFire.animate)(this.oldElement, { scale: [0.2, 1] }, opts).then(function () {
-      return (0, _liquidFire.animate)(_this.newElement, { scale: [1, 0.2] }, opts);
+    return (0, _liquidFire.animate)(this.oldElement, {
+      scale: [0.2, 1]
+    }, opts).then(function () {
+      return (0, _liquidFire.animate)(_this.newElement, {
+        scale: [1, 0.2]
+      }, opts);
     });
   }
 });
-;define('liquid-fire/transitions/scroll-then', ['exports', 'liquid-fire/is-browser'], function (exports, _isBrowser) {
-  'use strict';
+;define("liquid-fire/transitions/scroll-then", ["exports", "liquid-fire/is-browser"], function (_exports, _isBrowser) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function (nextTransitionName, options) {
-    for (var _len = arguments.length, rest = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+  function _default(nextTransitionName, options) {
+    var _this = this;
+
+    for (var _len = arguments.length, rest = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
       rest[_key - 2] = arguments[_key];
     }
 
-    var _this = this;
-
     if ((0, _isBrowser.default)()) {
       (false && !('string' === typeof nextTransitionName) && Ember.assert("You must provide a transition name as the first argument to scrollThen. Example: this.use('scrollThen', 'toLeft')", 'string' === typeof nextTransitionName));
-
-
       var el = document.getElementsByTagName('html');
       var nextTransition = this.lookup(nextTransitionName);
+
       if (!options) {
         options = {};
       }
 
-      (false && !('object' === (typeof options === 'undefined' ? 'undefined' : _typeof(options))) && Ember.assert("The second argument to scrollThen is passed to Velocity's scroll function and must be an object", 'object' === (typeof options === 'undefined' ? 'undefined' : _typeof(options))));
+      (false && !('object' === _typeof(options)) && Ember.assert("The second argument to scrollThen is passed to Velocity's scroll function and must be an object", 'object' === _typeof(options))); // set scroll options via: this.use('scrollThen', 'ToLeft', {easing: 'spring'})
 
-      // set scroll options via: this.use('scrollThen', 'ToLeft', {easing: 'spring'})
-
-      options = Ember.merge({ duration: 500, offset: 0 }, options);
-
-      // additional args can be passed through after the scroll options object
+      options = Ember.merge({
+        duration: 500,
+        offset: 0
+      }, options); // additional args can be passed through after the scroll options object
       // like so: this.use('scrollThen', 'moveOver', {duration: 100}, 'x', -1);
 
       return window.$.Velocity(el, 'scroll', options).then(function () {
         nextTransition.apply(_this, rest);
       });
     }
-  };
-
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  };
+  }
 });
-;define("liquid-fire/transitions/to-down", ["exports", "liquid-fire/transitions/move-over"], function (exports, _moveOver) {
+;define("liquid-fire/transitions/to-down", ["exports", "liquid-fire/transitions/move-over"], function (_exports, _moveOver) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function (opts) {
+  function _default(opts) {
     return _moveOver.default.call(this, 'y', 1, opts);
-  };
+  }
 });
-;define("liquid-fire/transitions/to-left", ["exports", "liquid-fire/transitions/move-over"], function (exports, _moveOver) {
+;define("liquid-fire/transitions/to-left", ["exports", "liquid-fire/transitions/move-over"], function (_exports, _moveOver) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function (opts) {
+  function _default(opts) {
     return _moveOver.default.call(this, 'x', -1, opts);
-  };
+  }
 });
-;define("liquid-fire/transitions/to-right", ["exports", "liquid-fire/transitions/move-over"], function (exports, _moveOver) {
+;define("liquid-fire/transitions/to-right", ["exports", "liquid-fire/transitions/move-over"], function (_exports, _moveOver) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function (opts) {
+  function _default(opts) {
     return _moveOver.default.call(this, 'x', 1, opts);
-  };
+  }
 });
-;define("liquid-fire/transitions/to-up", ["exports", "liquid-fire/transitions/move-over"], function (exports, _moveOver) {
+;define("liquid-fire/transitions/to-up", ["exports", "liquid-fire/transitions/move-over"], function (_exports, _moveOver) {
   "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function (opts) {
+  function _default(opts) {
     return _moveOver.default.call(this, 'y', -1, opts);
-  };
+  }
 });
-;define('liquid-fire/transitions/wait', ['exports'], function (exports) {
-  'use strict';
+;define("liquid-fire/transitions/wait", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = _default;
 
-  exports.default = function (ms, opts) {
-    for (var _len = arguments.length, rest = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+  function _default(ms, opts) {
+    var _this = this;
+
+    for (var _len = arguments.length, rest = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
       rest[_key - 2] = arguments[_key];
     }
 
-    var _this = this;
-
     opts = opts !== undefined ? opts : {};
-
     return new Ember.RSVP.Promise(function (resolve) {
       setTimeout(function () {
-        var _lookup;
+        var _this$lookup;
 
-        resolve((_lookup = _this.lookup(opts.then || 'default')).call.apply(_lookup, [_this].concat(rest)));
+        resolve((_this$lookup = _this.lookup(opts.then || 'default')).call.apply(_this$lookup, [_this].concat(rest)));
       }, ms);
     });
-  };
+  }
 });
-;define('liquid-fire/velocity-ext', ['velocity'], function (_velocity) {
-  'use strict';
+;define("liquid-fire/velocity-ext", ["velocity"], function (_velocity) {
+  "use strict";
 
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  };
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  if ((typeof FastBoot === 'undefined' ? 'undefined' : _typeof(FastBoot)) === undefined) {
-
+  if ((typeof FastBoot === "undefined" ? "undefined" : _typeof(FastBoot)) === undefined) {
     var VCSS = _velocity.default.CSS;
 
     var augmentDimension = function augmentDimension(name, element) {
@@ -120553,12 +120698,15 @@ define("ember-resolver/features", [], function () {
       } else {
         var augment = 0;
         var fields = ['padding' + sides[0], 'padding' + sides[1], 'border' + sides[0] + 'Width', 'border' + sides[1] + 'Width'];
+
         for (var i = 0; i < fields.length; i++) {
           var value = parseFloat(VCSS.getPropertyValue(element, fields[i]));
+
           if (!isNaN(value)) {
             augment += value;
           }
         }
+
         return augment;
       }
     };
@@ -120568,8 +120716,10 @@ define("ember-resolver/features", [], function () {
         switch (type) {
           case "name":
             return name;
+
           case "extract":
             return parseFloat(propertyValue) + augmentDimension(name, element);
+
           case "inject":
             return parseFloat(propertyValue) - augmentDimension(name, element) + "px";
         }

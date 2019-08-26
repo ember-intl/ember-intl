@@ -2518,19 +2518,6 @@
 
   _exports.default = _default;
 });
-;define("dummy/controllers/application", ["exports", "ember-cli-addon-docs/controllers/application"], function (_exports, _application) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _application.default;
-    }
-  });
-});
 ;define("dummy/controllers/docs/api/class", ["exports", "ember-cli-addon-docs/controllers/docs/api/class"], function (_exports, _class) {
   "use strict";
 
@@ -4282,14 +4269,13 @@
     }
   });
 });
-;define("dummy/initializers/liquid-fire", ["exports", "liquid-fire/ember-internals", "liquid-fire/velocity-ext"], function (_exports, _emberInternals, _velocityExt) {
+;define("dummy/initializers/liquid-fire", ["exports", "liquid-fire/velocity-ext"], function (_exports, _velocityExt) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  (0, _emberInternals.initialize)();
   var _default = {
     name: 'liquid-fire',
     initialize: function initialize() {}
