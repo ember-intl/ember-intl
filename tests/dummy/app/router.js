@@ -28,6 +28,7 @@ Router.map(function() {
       this.route('format-date');
       this.route('format-message');
       this.route('format-number');
+      this.route('format-number-compact');
       this.route('format-relative');
       this.route('format-time');
     });
