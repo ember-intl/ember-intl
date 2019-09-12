@@ -76554,24 +76554,29 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
 
   var _fetch = null;
+  function getFetchFunction() {
+    if (_fetch !== null) {
+      return _fetch();
+    }
 
-  if (require.has('fetch')) {
-    // use `fetch` module by default, this is commonly provided by ember-fetch
-    var foundFetch = require__default('fetch').default;
+    if (require.has('fetch')) {
+      // use `fetch` module by default, this is commonly provided by ember-fetch
+      var fetchFn = require__default('fetch').default;
 
-    _fetch = function _fetch() {
-      return foundFetch;
-    };
-  } else if (typeof fetch === 'function') {
-    // fallback to using global fetch
-    _fetch = function _fetch() {
-      return fetch;
-    };
-  } else {
-    throw new Error('cannot find the `fetch` module or the `fetch` global. Did you mean to install the `ember-fetch` addon?');
+      _fetch = function _fetch() {
+        return fetchFn;
+      };
+    } else if (typeof fetch === 'function') {
+      // fallback to using global fetch
+      _fetch = function _fetch() {
+        return fetch;
+      };
+    } else {
+      throw new Error('cannot find the `fetch` module or the `fetch` global. Did you mean to install the `ember-fetch` addon?');
+    }
+
+    return _fetch();
   }
-
-  var _fetch$1 = _fetch;
 
   /**
     @module @ember-data/adapter
@@ -76992,7 +76997,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   exports.BuildURLMixin = buildUrlMixin;
   exports.determineBodyPromise = determineBodyPromise;
-  exports.fetch = _fetch$1;
+  exports.fetch = getFetchFunction;
   exports.parseResponseHeaders = parseResponseHeaders;
   exports.serializeQueryParams = serializeQueryParams;
 
@@ -79481,7 +79486,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.0";
+  var _default = "3.12.2";
   _exports.default = _default;
 });
 ;define("@ember-data/canary-features/default-features", ["exports"], function (_exports) {
@@ -80045,7 +80050,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.0";
+  var _default = "3.12.2";
   _exports.default = _default;
 });
 ;define('@ember-data/serializer/-private', ['exports'], function (exports) { 'use strict';
@@ -83868,7 +83873,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.0";
+  var _default = "3.12.2";
   _exports.default = _default;
 });
 ;define('@ember-data/store/-private', ['exports', 'ember-inflector', '@ember/ordered-set', '@ember-data/canary-features', '@ember-data/adapter/error'], function (exports, emberInflector, EmberOrderedSet, canaryFeatures, error) { 'use strict';
@@ -84569,6 +84574,25 @@ lunr.QueryParser.parseBoost = function (parser) {
   */
 
   /**
+   * This symbol provides a Symbol replacement for browsers that do not have it
+   * (eg. IE 11).
+   *
+   * The replacement is different from the native Symbol in some ways. It is a
+   * function that produces an output:
+   * - iterable;
+   * - that is a string, not a symbol.
+   *
+   * @internal
+   */
+  var symbol = typeof Symbol !== 'undefined' ? Symbol : function (key) {
+    return "__" + key + Math.floor(Math.random() * Date.now()) + "__";
+  };
+
+  /**
+    @module @ember-data/store
+  */
+
+  /**
    * Use this brand to assign a string key to an interface
    * for mapping the interface to a tightly coupled internal
    * class implementation.
@@ -84580,7 +84604,8 @@ lunr.QueryParser.parseBoost = function (parser) {
    *
    * @internal
    */
-  var BRAND_SYMBOL = Symbol("DEBUG-ts-brand");
+
+  var BRAND_SYMBOL = symbol('DEBUG-ts-brand');
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -96758,7 +96783,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.0";
+  var _default = "3.12.2";
   _exports.default = _default;
 });
 ;define('@ember/ordered-set/index', ['exports'], function (exports) {
@@ -108836,7 +108861,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.0";
+  var _default = "3.12.2";
   _exports.default = _default;
 });
 ;define('ember-fetch-adapter/-private/add-query-params', ['exports', 'ember-fetch/mixins/adapter-fetch'], function (exports, _adapterFetch) {
@@ -116133,13 +116158,50 @@ define("ember-resolver/features", [], function () {
     return _nullMatchMedia.default;
   }
 });
-;define("ember-router-scroll/index", ["exports", "ember-app-scheduler"], function (_exports, _emberAppScheduler) {
+;define("ember-router-scroll/index", ["exports", "ember-app-scheduler", "ember-router-scroll/utils/scrollbar-width"], function (_exports, _emberAppScheduler, _scrollbarWidth) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
+  var body = document.body;
+  var html = document.documentElement;
+  var ATTEMPTS = 0;
+  var MAX_ATTEMPTS = 100; // rAF runs every 16ms ideally, so 60x a second
+
+  var requestId;
+  var scrollBarWidth = 0;
+  /**
+   * By default, we start checking to see if the document height is >= the last known `y` position
+   * we want to scroll to.  This is important for content heavy pages that might try to scrollTo
+   * before the content has painted
+   *
+   * @method tryScrollRecursively
+   * @param {Function} fn
+   * @param {Object} scrollHash
+   * @void
+   */
+
+  function tryScrollRecursively(fn, scrollHash) {
+    // read DOM outside of rAF
+    var documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth);
+    var documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    var _window = window,
+        innerHeight = _window.innerHeight,
+        innerWidth = _window.innerWidth;
+    requestId = window.requestAnimationFrame(function () {
+      // write DOM (scrollTo causes reflow)
+      if (documentWidth + scrollBarWidth - innerWidth >= scrollHash.x && documentHeight + scrollBarWidth - innerHeight >= scrollHash.y || ATTEMPTS >= MAX_ATTEMPTS) {
+        ATTEMPTS = 0;
+        fn.call(null, scrollHash.x, scrollHash.y);
+      } else {
+        ATTEMPTS++;
+        tryScrollRecursively(fn, scrollHash);
+      }
+    });
+  }
+
   var RouterScrollMixin = Ember.Mixin.create({
     service: Ember.inject.service('router-scroll'),
     isFastBoot: Ember.computed(function () {
@@ -116161,19 +116223,29 @@ define("ember-resolver/features", [], function () {
           _this._routeDidChange(transition);
         });
       }
+
+      if (!Ember.get(this, 'isFastBoot')) {
+        scrollBarWidth = (0, _scrollbarWidth.getScrollBarWidth)();
+      }
     },
     destroy: function destroy() {
       (0, _emberAppScheduler.reset)();
+
+      if (requestId) {
+        window.cancelAnimationFrame(requestId);
+      }
 
       this._super.apply(this, arguments);
     },
 
     /**
      * Updates the scroll position
-     * @param {transition|transition[]} transition If before Ember 3.6, this will be an array of transitions, otherwise
      * it will be a single transition
+     * @method updateScrollPosition
+     * @param {transition|transition[]} transition If before Ember 3.6, this will be an array of transitions, otherwise
+     * @param {Boolean} recursiveCheck -  if "true", check until document height is >= y. `y` is the last coordinate the target page was on
      */
-    updateScrollPosition: function updateScrollPosition(transition) {
+    updateScrollPosition: function updateScrollPosition(transition, recursiveCheck) {
       var url = Ember.get(this, 'currentURL');
       var hashElement = url ? document.getElementById(url.split('#').pop()) : null;
 
@@ -116214,10 +116286,14 @@ define("ember-resolver/features", [], function () {
         var scrollElement = Ember.get(this, 'service.scrollElement');
         var targetElement = Ember.get(this, 'service.targetElement');
 
-        if (targetElement) {
-          window.scrollTo(scrollPosition.x, scrollPosition.y);
-        } else if ('window' === scrollElement) {
-          window.scrollTo(scrollPosition.x, scrollPosition.y);
+        if (targetElement || 'window' === scrollElement) {
+          if (recursiveCheck) {
+            // our own implementation
+            tryScrollRecursively(window.scrollTo, scrollPosition);
+          } else {
+            // using ember-app-scheduler
+            window.scrollTo(scrollPosition.x, scrollPosition.y);
+          }
         } else if ('#' === scrollElement.charAt(0)) {
           var element = document.getElementById(scrollElement.substring(1));
 
@@ -116243,14 +116319,22 @@ define("ember-resolver/features", [], function () {
       }
 
       var delayScrollTop = Ember.get(this, 'service.delayScrollTop');
+      var scrollWhenPainted = Ember.get(this, 'service.scrollWhenPainted');
+      var scrollWhenIdle = Ember.get(this, 'service.scrollWhenIdle');
 
-      if (!delayScrollTop) {
+      if (!delayScrollTop && !scrollWhenPainted && !scrollWhenIdle) {
+        // out of the 3 options, this happens on the tightest schedule
         Ember.run.scheduleOnce('render', this, function () {
-          return _this2.updateScrollPosition(transition);
+          return _this2.updateScrollPosition(transition, true);
         });
-      } else {
+      } else if (scrollWhenPainted) {
         // as described in ember-app-scheduler, this addon can be used to delay rendering until after First Meaningful Paint.
         // If you loading your routes progressively, this may be a good option to delay scrollTop until the remaining DOM elements are painted.
+        (0, _emberAppScheduler.whenRoutePainted)().then(function () {
+          _this2.updateScrollPosition(transition);
+        });
+      } else {
+        // as described in ember-app-scheduler, this addon can be used to delay rendering until after the route is idle
         (0, _emberAppScheduler.whenRouteIdle)().then(function () {
           _this2.updateScrollPosition(transition);
         });
@@ -116340,9 +116424,12 @@ define("ember-resolver/features", [], function () {
     key: null,
     scrollElement: 'window',
     targetElement: null,
-    delayScrollTop: false,
     isFirstLoad: true,
     preserveScrollPosition: false,
+    delayScrollTop: false,
+    // ember-app-scheduler properties
+    scrollWhenPainted: false,
+    scrollWhenIdle: false,
     init: function init() {
       this._super.apply(this, arguments);
 
@@ -116419,11 +116506,16 @@ define("ember-resolver/features", [], function () {
           Ember.set(this, 'targetElement', targetElement);
         }
 
-        var delayScrollTop = config.routerScroll.delayScrollTop;
-
-        if (delayScrollTop === true) {
-          Ember.set(this, 'delayScrollTop', true);
-        }
+        var _config$routerScroll = config.routerScroll,
+            _config$routerScroll$ = _config$routerScroll.scrollWhenPainted,
+            scrollWhenPainted = _config$routerScroll$ === void 0 ? false : _config$routerScroll$,
+            _config$routerScroll$2 = _config$routerScroll.scrollWhenIdle,
+            scrollWhenIdle = _config$routerScroll$2 === void 0 ? false : _config$routerScroll$2,
+            _config$routerScroll$3 = _config$routerScroll.delayScrollTop,
+            delayScrollTop = _config$routerScroll$3 === void 0 ? false : _config$routerScroll$3;
+        Ember.set(this, 'delayScrollTop', delayScrollTop);
+        Ember.set(this, 'scrollWhenPainted', scrollWhenPainted);
+        Ember.set(this, 'scrollWhenIdle', scrollWhenIdle);
       }
     }
   });
@@ -116439,6 +116531,34 @@ define("ember-resolver/features", [], function () {
   });
   var _default = RouterScroll;
   _exports.default = _default;
+});
+;define("ember-router-scroll/utils/scrollbar-width", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.getScrollBarWidth = getScrollBarWidth;
+
+  // https://stackoverflow.com/questions/13382516/getting-scroll-bar-width-using-javascript
+  function getScrollBarWidth() {
+    var outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.width = '100px';
+    outer.style.msOverflowStyle = 'scrollbar';
+    document.body.appendChild(outer);
+    var widthNoScroll = outer.offsetWidth; // force scrollbars
+
+    outer.style.overflow = 'scroll'; // add innerdiv
+
+    var inner = document.createElement('div');
+    inner.style.width = '100%';
+    outer.appendChild(inner);
+    var widthWithScroll = inner.offsetWidth; // remove divs
+
+    outer.parentNode.removeChild(outer);
+    return widthNoScroll - widthWithScroll;
+  }
 });
 ;define("ember-svg-jar/inlined/addon-docs-pen", ["exports"], function (_exports) {
   "use strict";
