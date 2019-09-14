@@ -116165,8 +116165,6 @@ define("ember-resolver/features", [], function () {
     value: true
   });
   _exports.default = void 0;
-  var body = document.body;
-  var html = document.documentElement;
   var ATTEMPTS = 0;
   var MAX_ATTEMPTS = 100; // rAF runs every 16ms ideally, so 60x a second
 
@@ -116184,7 +116182,9 @@ define("ember-resolver/features", [], function () {
    */
 
   function tryScrollRecursively(fn, scrollHash) {
-    // read DOM outside of rAF
+    var body = document.body;
+    var html = document.documentElement; // read DOM outside of rAF
+
     var documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth);
     var documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     var _window = window,
