@@ -59,7 +59,7 @@
     "walk-sync": "^2.0.1"
   },
   "devDependencies": {
-    "@ember/optional-features": "^0.7.0",
+    "@ember/optional-features": "^1.0.0",
     "babel-eslint": "^10.0.3",
     "broccoli-test-helper": "^2.0.0",
     "chai": "^4.2.0",
