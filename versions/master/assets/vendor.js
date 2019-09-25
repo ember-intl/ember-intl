@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.13.1
+ * @version   3.13.2
  */
 
 /*globals process */
@@ -58193,7 +58193,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.13.1";
+  var _default = "3.13.2";
   _exports.default = _default;
 });
 define("node-module/index", ["exports"], function (_exports) {
