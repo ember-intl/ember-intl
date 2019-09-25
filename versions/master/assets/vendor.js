@@ -104876,31 +104876,30 @@ lunr.QueryParser.parseBoost = function (parser) {
     return (0, _isObject.default)(obj) && isPromiseLike(obj);
   }
 });
-;define('ember-concurrency/-buffer-policy', ['exports'], function (exports) {
-  'use strict';
+;define("ember-concurrency/-buffer-policy", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.dropButKeepLatestPolicy = _exports.cancelOngoingTasksPolicy = _exports.dropQueuedTasksPolicy = _exports.enqueueTasksPolicy = void 0;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
   var saturateActiveQueue = function saturateActiveQueue(scheduler) {
     while (scheduler.activeTaskInstances.length < scheduler.maxConcurrency) {
       var taskInstance = scheduler.queuedTaskInstances.shift();
+
       if (!taskInstance) {
         break;
       }
+
       scheduler.activeTaskInstances.push(taskInstance);
     }
   };
@@ -104909,7 +104908,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return scheduler.maxConcurrency - scheduler.queuedTaskInstances.length - scheduler.activeTaskInstances.length;
   }
 
-  var enqueueTasksPolicy = exports.enqueueTasksPolicy = {
+  var enqueueTasksPolicy = {
     requiresUnboundedConcurrency: true,
     schedule: function schedule(scheduler) {
       // [a,b,_] [c,d,e,f] becomes
@@ -104920,9 +104919,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       return numPerformSlots(scheduler) > 0 ? 'succeed' : 'enqueue';
     }
   };
-
-  var dropQueuedTasksPolicy = exports.dropQueuedTasksPolicy = {
-    cancelReason: 'it belongs to a \'drop\' Task that was already running',
+  _exports.enqueueTasksPolicy = enqueueTasksPolicy;
+  var dropQueuedTasksPolicy = {
+    cancelReason: "it belongs to a 'drop' Task that was already running",
     schedule: function schedule(scheduler) {
       // [a,b,_] [c,d,e,f] becomes
       // [a,b,c] []
@@ -104933,9 +104932,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       return numPerformSlots(scheduler) > 0 ? 'succeed' : 'drop';
     }
   };
-
-  var cancelOngoingTasksPolicy = exports.cancelOngoingTasksPolicy = {
-    cancelReason: 'it belongs to a \'restartable\' Task that was .perform()ed again',
+  _exports.dropQueuedTasksPolicy = dropQueuedTasksPolicy;
+  var cancelOngoingTasksPolicy = {
+    cancelReason: "it belongs to a 'restartable' Task that was .perform()ed again",
     schedule: function schedule(scheduler) {
       // [a,b,_] [c,d,e,f] becomes
       // [d,e,f] []
@@ -104943,7 +104942,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       var queuedTaskInstances = scheduler.queuedTaskInstances;
       activeTaskInstances.push.apply(activeTaskInstances, _toConsumableArray(queuedTaskInstances));
       queuedTaskInstances.length = 0;
-
       var numToShift = Math.max(0, activeTaskInstances.length - scheduler.maxConcurrency);
       scheduler.spliceTaskInstances(this.cancelReason, activeTaskInstances, 0, numToShift);
     },
@@ -104951,9 +104949,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       return numPerformSlots(scheduler) > 0 ? 'succeed' : 'cancel_previous';
     }
   };
-
-  var dropButKeepLatestPolicy = exports.dropButKeepLatestPolicy = {
-    cancelReason: 'it belongs to a \'keepLatest\' Task that was already running',
+  _exports.cancelOngoingTasksPolicy = cancelOngoingTasksPolicy;
+  var dropButKeepLatestPolicy = {
+    cancelReason: "it belongs to a 'keepLatest' Task that was already running",
     schedule: function schedule(scheduler) {
       // [a,b,_] [c,d,e,f] becomes
       // [d,e,f] []
@@ -104961,16 +104959,19 @@ lunr.QueryParser.parseBoost = function (parser) {
       scheduler.spliceTaskInstances(this.cancelReason, scheduler.queuedTaskInstances, 0, scheduler.queuedTaskInstances.length - 1);
     }
   };
+  _exports.dropButKeepLatestPolicy = dropButKeepLatestPolicy;
 });
-;define('ember-concurrency/-cancelable-promise-helpers', ['exports', 'ember-concurrency/-task-instance', 'ember-concurrency/utils'], function (exports, _taskInstance, _utils) {
-  'use strict';
+;define("ember-concurrency/-cancelable-promise-helpers", ["exports", "ember-concurrency/-task-instance", "ember-concurrency/utils"], function (_exports, _taskInstance, _utils) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.hash = exports.race = exports.allSettled = exports.all = undefined;
+  _exports.hash = _exports.race = _exports.allSettled = _exports.all = void 0;
 
-  var _marked = regeneratorRuntime.mark(resolver);
+  var _marked =
+  /*#__PURE__*/
+  regeneratorRuntime.mark(resolver);
 
   var asyncAll = taskAwareVariantOf(Ember.RSVP.Promise, 'all', identity);
 
@@ -104979,16 +104980,15 @@ lunr.QueryParser.parseBoost = function (parser) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            return _context.abrupt('return', value);
+            return _context.abrupt("return", value);
 
           case 1:
-          case 'end':
+          case "end":
             return _context.stop();
         }
       }
-    }, _marked, this);
+    }, _marked);
   }
-
   /**
    * A cancelation-aware variant of [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all).
    * The normal version of a `Promise.all` just returns a regular, uncancelable
@@ -105003,13 +105003,19 @@ lunr.QueryParser.parseBoost = function (parser) {
    *
    * [Check out the "Awaiting Multiple Child Tasks example"](/docs/examples/joining-tasks)
    */
-  var all = exports.all = function all(things) {
+
+
+  var all = function all(things) {
+    // Extra assertion here to circumvent the `things.length` short circuit.
+    (false && !(Array.isArray(things)) && Ember.assert("'all' expects an array.", Array.isArray(things)));
+
     if (things.length === 0) {
       return things;
     }
 
     for (var i = 0; i < things.length; ++i) {
       var t = things[i];
+
       if (!(t && t[_utils.yieldableSymbol])) {
         return asyncAll(things);
       }
@@ -105026,6 +105032,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (ti._completionState !== 1) {
         isAsync = true;
       }
+
       return ti;
     });
 
@@ -105037,7 +105044,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }
   };
-
   /**
    * A cancelation-aware variant of [RSVP.allSettled](http://emberjs.com/api/classes/RSVP.html#method_allSettled).
    * The normal version of a `RSVP.allSettled` just returns a regular, uncancelable
@@ -105047,8 +105053,10 @@ lunr.QueryParser.parseBoost = function (parser) {
    * - if the task that `yield`ed `allSettled()` is canceled, any of the
    *   {@linkcode TaskInstance}s passed in to `allSettled` will be canceled
    */
-  var allSettled = exports.allSettled = taskAwareVariantOf(Ember.RSVP, 'allSettled', identity);
 
+
+  _exports.all = all;
+  var allSettled = taskAwareVariantOf(Ember.RSVP, 'allSettled', identity);
   /**
    * A cancelation-aware variant of [Promise.race](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race).
    * The normal version of a `Promise.race` just returns a regular, uncancelable
@@ -105062,8 +105070,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    *
    * [Check out the "Awaiting Multiple Child Tasks example"](/docs/examples/joining-tasks)
    */
-  var race = exports.race = taskAwareVariantOf(Ember.RSVP.Promise, 'race', identity);
 
+  _exports.allSettled = allSettled;
+  var race = taskAwareVariantOf(Ember.RSVP.Promise, 'race', identity);
   /**
    * A cancelation-aware variant of [RSVP.hash](http://emberjs.com/api/classes/RSVP.html#hash).
    * The normal version of a `RSVP.hash` just returns a regular, uncancelable
@@ -105075,7 +105084,10 @@ lunr.QueryParser.parseBoost = function (parser) {
    * - if any of the items rejects/cancels, all other cancelable items
    *   (e.g. {@linkcode TaskInstance}s) will be canceled
    */
-  var hash = exports.hash = taskAwareVariantOf(Ember.RSVP, 'hash', getValues);
+
+  _exports.race = race;
+  var hash = taskAwareVariantOf(Ember.RSVP, 'hash', getValues);
+  _exports.hash = hash;
 
   function identity(obj) {
     return obj;
@@ -105090,15 +105102,16 @@ lunr.QueryParser.parseBoost = function (parser) {
   function taskAwareVariantOf(obj, method, getItems) {
     return function (thing) {
       var items = getItems(thing);
+      (false && !(Array.isArray(items)) && Ember.assert("'".concat(method, "' expects an array."), Array.isArray(items)));
       var defer = Ember.RSVP.defer();
-
       obj[method](thing).then(defer.resolve, defer.reject);
-
       var hasCancelled = false;
+
       var cancelAll = function cancelAll() {
         if (hasCancelled) {
           return;
         }
+
         hasCancelled = true;
         items.forEach(function (it) {
           if (it) {
@@ -105117,56 +105130,53 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
   }
 });
-;define('ember-concurrency/-encapsulated-task', ['exports', 'ember-concurrency/-task-instance'], function (exports, _taskInstance) {
-  'use strict';
+;define("ember-concurrency/-encapsulated-task", ["exports", "ember-concurrency/-task-instance"], function (_exports, _taskInstance) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = _taskInstance.default.extend({
+  _exports.default = void 0;
+
+  var _default = _taskInstance.default.extend({
     _makeIterator: function _makeIterator() {
       var perform = this.get('perform');
       (false && !(typeof perform === 'function') && Ember.assert("The object passed to `task()` must define a `perform` generator function, e.g. `perform: function * (a,b,c) {...}`, or better yet `*perform(a,b,c) {...}`", typeof perform === 'function'));
-
       return perform.apply(this, this.args);
     },
-
-
     perform: null
   });
-});
-;define('ember-concurrency/-helpers', ['exports'], function (exports) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-concurrency/-helpers", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.taskHelperClosure = taskHelperClosure;
+  _exports.taskHelperClosure = taskHelperClosure;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
   function taskHelperClosure(helperName, taskMethod, _args, hash) {
     var task = _args[0];
+
     var outerArgs = _args.slice(1);
 
     return Ember.run.bind(null, function () {
       if (!task || typeof task[taskMethod] !== 'function') {
-        (false && !(false) && Ember.assert('The first argument passed to the `' + helperName + '` helper should be a Task object (without quotes); you passed ' + task, false));
-
+        (false && !(false) && Ember.assert("The first argument passed to the `".concat(helperName, "` helper should be a Task object (without quotes); you passed ").concat(task), false));
         return;
       }
 
-      for (var _len = arguments.length, innerArgs = Array(_len), _key = 0; _key < _len; _key++) {
+      for (var _len = arguments.length, innerArgs = new Array(_len), _key = 0; _key < _len; _key++) {
         innerArgs[_key] = arguments[_key];
       }
 
@@ -105179,15 +105189,15 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
   }
 });
-;define('ember-concurrency/-property-modifiers-mixin', ['exports', 'ember-concurrency/-scheduler', 'ember-concurrency/-buffer-policy'], function (exports, _scheduler, _bufferPolicy) {
-  'use strict';
+;define("ember-concurrency/-property-modifiers-mixin", ["exports", "ember-concurrency/-scheduler", "ember-concurrency/-buffer-policy"], function (_exports, _scheduler, _bufferPolicy) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.propertyModifiers = undefined;
-  exports.resolveScheduler = resolveScheduler;
-  var propertyModifiers = exports.propertyModifiers = {
+  _exports.resolveScheduler = resolveScheduler;
+  _exports.propertyModifiers = void 0;
+  var propertyModifiers = {
     // by default, task(...) expands to task(...).enqueue().maxConcurrency(Infinity)
     _bufferPolicy: _bufferPolicy.enqueueTasksPolicy,
     _maxConcurrency: Infinity,
@@ -105195,7 +105205,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     _hasUsedModifier: false,
     _hasSetBufferPolicy: false,
     _hasEnabledEvents: false,
-
     restartable: function restartable() {
       return setBufferPolicy(this, _bufferPolicy.cancelOngoingTasksPolicy);
     },
@@ -105228,6 +105237,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this;
     }
   };
+  _exports.propertyModifiers = propertyModifiers;
 
   function setBufferPolicy(obj, policy) {
     obj._hasSetBufferPolicy = true;
@@ -105243,14 +105253,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
 
   function assertModifiersNotMixedWithGroup(obj) {
-    (false && !(!obj._hasUsedModifier || !obj._taskGroupPath) && Ember.assert('ember-concurrency does not currently support using both .group() with other task modifiers (e.g. drop(), enqueue(), restartable())', !obj._hasUsedModifier || !obj._taskGroupPath));
+    (false && !(!obj._hasUsedModifier || !obj._taskGroupPath) && Ember.assert("ember-concurrency does not currently support using both .group() with other task modifiers (e.g. drop(), enqueue(), restartable())", !obj._hasUsedModifier || !obj._taskGroupPath));
   }
 
   function resolveScheduler(propertyObj, obj, TaskGroup) {
     if (propertyObj._taskGroupPath) {
       var taskGroup = obj.get(propertyObj._taskGroupPath);
-      (false && !(taskGroup instanceof TaskGroup) && Ember.assert('Expected path \'' + propertyObj._taskGroupPath + '\' to resolve to a TaskGroup object, but instead was ' + taskGroup, taskGroup instanceof TaskGroup));
-
+      (false && !(taskGroup instanceof TaskGroup) && Ember.assert("Expected path '".concat(propertyObj._taskGroupPath, "' to resolve to a TaskGroup object, but instead was ").concat(taskGroup), taskGroup instanceof TaskGroup));
       return taskGroup._scheduler;
     } else {
       return _scheduler.default.create({
@@ -105260,16 +105269,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 });
-;define('ember-concurrency/-scheduler', ['exports'], function (exports) {
-  'use strict';
+;define("ember-concurrency/-scheduler", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-
-
+  _exports.default = void 0;
   var SEEN_INDEX = 0;
-
   var Scheduler = Ember.Object.extend({
     lastPerformed: null,
     lastStarted: null,
@@ -105280,12 +105287,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     lastCanceled: null,
     lastIncomplete: null,
     performCount: 0,
-
     boundHandleFulfill: null,
     boundHandleReject: null,
-
     init: function init() {
       this._super.apply(this, arguments);
+
       this.activeTaskInstances = [];
       this.queuedTaskInstances = [];
     },
@@ -105307,10 +105313,12 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
 
         taskInstance.cancel(cancelReason);
+
         if (seen) {
           seen.push(taskInstance.task);
         }
       }
+
       taskInstances.splice(index, count);
     },
     schedule: function schedule(taskInstance) {
@@ -105318,6 +105326,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.incrementProperty('performCount');
       taskInstance.task.incrementProperty('numQueued');
       this.queuedTaskInstances.push(taskInstance);
+
       this._flushQueues();
     },
     _flushQueues: function _flushQueues() {
@@ -105328,22 +105337,25 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
 
       this.activeTaskInstances = filterFinished(this.activeTaskInstances);
-
       this.bufferPolicy.schedule(this);
-
       var lastStarted = null;
+
       for (var _i = 0; _i < this.activeTaskInstances.length; ++_i) {
         var taskInstance = this.activeTaskInstances[_i];
+
         if (!taskInstance.hasStarted) {
           this._startTaskInstance(taskInstance);
+
           lastStarted = taskInstance;
         }
+
         seen.push(taskInstance.task);
       }
 
       if (lastStarted) {
         Ember.set(this, 'lastStarted', lastStarted);
       }
+
       Ember.set(this, 'lastRunning', lastStarted);
 
       for (var _i2 = 0; _i2 < this.queuedTaskInstances.length; ++_i2) {
@@ -105364,6 +105376,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         task.decrementProperty('numRunning');
         var state = taskInstance._completionState;
         Ember.set(_this, 'lastComplete', taskInstance);
+
         if (state === 1) {
           Ember.set(_this, 'lastSuccessful', taskInstance);
         } else {
@@ -105372,8 +105385,10 @@ lunr.QueryParser.parseBoost = function (parser) {
           } else if (state === 3) {
             Ember.set(_this, 'lastCanceled', taskInstance);
           }
+
           Ember.set(_this, 'lastIncomplete', taskInstance);
         }
+
         Ember.run.once(_this, _this._flushQueues);
       });
     }
@@ -105381,8 +105396,10 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function flushTaskCounts(tasks) {
     SEEN_INDEX++;
+
     for (var i = 0, l = tasks.length; i < l; ++i) {
       var task = tasks[i];
+
       if (task._seenIndex < SEEN_INDEX) {
         task._seenIndex = SEEN_INDEX;
         updateTaskChainCounts(task);
@@ -105404,82 +105421,70 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function filterFinished(taskInstances) {
     var ret = [];
+
     for (var i = 0, l = taskInstances.length; i < l; ++i) {
       var taskInstance = taskInstances[i];
+
       if (Ember.get(taskInstance, 'isFinished') === false) {
         ret.push(taskInstance);
       }
     }
+
     return ret;
   }
 
-  exports.default = Scheduler;
+  var _default = Scheduler;
+  _exports.default = _default;
 });
-;define('ember-concurrency/-task-group', ['exports', 'ember-concurrency/utils', 'ember-concurrency/-task-state-mixin', 'ember-concurrency/-property-modifiers-mixin'], function (exports, _utils, _taskStateMixin, _propertyModifiersMixin) {
-  'use strict';
+;define("ember-concurrency/-task-group", ["exports", "ember-concurrency/utils", "ember-concurrency/-task-state-mixin", "ember-concurrency/-property-modifiers-mixin"], function (_exports, _utils, _taskStateMixin, _propertyModifiersMixin) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.TaskGroupProperty = exports.TaskGroup = undefined;
+  _exports.TaskGroupProperty = _exports.TaskGroup = void 0;
 
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-  var TaskGroup = exports.TaskGroup = Ember.Object.extend(_taskStateMixin.default, {
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var TaskGroup = Ember.Object.extend(_taskStateMixin.default, {
     isTaskGroup: true,
-
     toString: function toString() {
-      return '<TaskGroup:' + this._propertyName + '>';
+      return "<TaskGroup:".concat(this._propertyName, ">");
     },
-
-
     _numRunningOrNumQueued: Ember.computed.or('numRunning', 'numQueued'),
     isRunning: Ember.computed.bool('_numRunningOrNumQueued'),
     isQueued: false
   });
-
-  var TaskGroupProperty = exports.TaskGroupProperty = void 0;
+  _exports.TaskGroup = TaskGroup;
+  var TaskGroupProperty;
+  _exports.TaskGroupProperty = TaskGroupProperty;
 
   if (true) {
-    exports.TaskGroupProperty = TaskGroupProperty = function TaskGroupProperty() {
+    _exports.TaskGroupProperty = TaskGroupProperty = function TaskGroupProperty() {
       _classCallCheck(this, TaskGroupProperty);
     };
   } else {
-    exports.TaskGroupProperty = TaskGroupProperty = function (_ComputedProperty2) {
+    _exports.TaskGroupProperty = TaskGroupProperty =
+    /*#__PURE__*/
+    function (_ComputedProperty2) {
       _inherits(TaskGroupProperty, _ComputedProperty2);
 
       function TaskGroupProperty() {
         _classCallCheck(this, TaskGroupProperty);
 
-        return _possibleConstructorReturn(this, (TaskGroupProperty.__proto__ || Object.getPrototypeOf(TaskGroupProperty)).apply(this, arguments));
+        return _possibleConstructorReturn(this, _getPrototypeOf(TaskGroupProperty).apply(this, arguments));
       }
 
       return TaskGroupProperty;
@@ -105488,46 +105493,32 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   (0, _utils.objectAssign)(TaskGroupProperty.prototype, _propertyModifiersMixin.propertyModifiers);
 });
-;define('ember-concurrency/-task-instance', ['exports', 'ember-concurrency/utils'], function (exports, _utils) {
-  'use strict';
+;define("ember-concurrency/-task-instance", ["exports", "ember-concurrency/utils"], function (_exports, _utils) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.PERFORM_TYPE_LINKED = exports.PERFORM_TYPE_UNLINKED = exports.PERFORM_TYPE_DEFAULT = undefined;
-  exports.getRunningInstance = getRunningInstance;
-  exports.didCancel = didCancel;
-  exports.go = go;
-  exports.wrap = wrap;
-
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
-
+  _exports.getRunningInstance = getRunningInstance;
+  _exports.didCancel = didCancel;
+  _exports.go = go;
+  _exports.wrap = wrap;
+  _exports.default = _exports.PERFORM_TYPE_LINKED = _exports.PERFORM_TYPE_UNLINKED = _exports.PERFORM_TYPE_DEFAULT = void 0;
   var TASK_CANCELATION_NAME = 'TaskCancelation';
-
   var COMPLETION_PENDING = 0;
   var COMPLETION_SUCCESS = 1;
   var COMPLETION_ERROR = 2;
   var COMPLETION_CANCEL = 3;
-
   var GENERATOR_STATE_BEFORE_CREATE = "BEFORE_CREATE";
   var GENERATOR_STATE_HAS_MORE_VALUES = "HAS_MORE_VALUES";
   var GENERATOR_STATE_DONE = "DONE";
   var GENERATOR_STATE_ERRORED = "ERRORED";
-
-  var PERFORM_TYPE_DEFAULT = exports.PERFORM_TYPE_DEFAULT = "PERFORM_TYPE_DEFAULT";
-  var PERFORM_TYPE_UNLINKED = exports.PERFORM_TYPE_UNLINKED = "PERFORM_TYPE_UNLINKED";
-  var PERFORM_TYPE_LINKED = exports.PERFORM_TYPE_LINKED = "PERFORM_TYPE_LINKED";
-
+  var PERFORM_TYPE_DEFAULT = "PERFORM_TYPE_DEFAULT";
+  _exports.PERFORM_TYPE_DEFAULT = PERFORM_TYPE_DEFAULT;
+  var PERFORM_TYPE_UNLINKED = "PERFORM_TYPE_UNLINKED";
+  _exports.PERFORM_TYPE_UNLINKED = PERFORM_TYPE_UNLINKED;
+  var PERFORM_TYPE_LINKED = "PERFORM_TYPE_LINKED";
+  _exports.PERFORM_TYPE_LINKED = PERFORM_TYPE_LINKED;
   var TASK_INSTANCE_STACK = [];
 
   function getRunningInstance() {
@@ -105541,7 +105532,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       taskInstance.proceed(resumeIndex, _utils.YIELDABLE_THROW, error);
     });
   }
-
   /**
    * Returns true if the object passed to it is a TaskCancelation error.
    * If you call `someTask.perform().catch(...)` or otherwise treat
@@ -105561,23 +105551,24 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @param {Object} error the caught error, which might be a TaskCancelation
    * @returns {Boolean}
    */
+
+
   function didCancel(e) {
     return e && e.name === TASK_CANCELATION_NAME;
   }
 
   function forwardToInternalPromise(method) {
     return function () {
-      var _get;
+      var _this$get;
 
       this._hasSubscribed = true;
-      return (_get = this.get('_promise'))[method].apply(_get, arguments);
+      return (_this$get = this.get('_promise'))[method].apply(_this$get, arguments);
     };
   }
 
   function spliceSlice(str, index, count, add) {
     return str.slice(0, index) + (add || "") + str.slice(index + count);
   }
-
   /**
     A `TaskInstance` represent a single execution of a
     {@linkcode Task}. Every call to {@linkcode Task#perform} returns
@@ -105596,6 +105587,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @class TaskInstance
   */
+
+
   var taskInstanceAttrs = {
     iterator: null,
     _disposer: null,
@@ -105822,32 +105815,43 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param {TaskInstance} taskInstance - Task instance that was started
      * @param {string} cancelationReason - Cancelation reason that was was provided to {@linkcode TaskInstance#cancel}
      */
-
     _index: 1,
-
     _start: function _start() {
       if (this.hasStarted || this.isCanceling) {
         return this;
       }
+
       Ember.set(this, 'hasStarted', true);
+
       this._scheduleProceed(_utils.YIELDABLE_CONTINUE, undefined);
+
       this._triggerEvent('started', this);
+
       return this;
     },
     toString: function toString() {
       var taskString = "" + this.task;
-      return spliceSlice(taskString, -1, 0, '.perform()');
+      return spliceSlice(taskString, -1, 0, ".perform()");
     },
+
+    /**
+     * Cancels the task instance. Has no effect if the task instance has
+     * already been canceled or has already finished running.
+     *
+     * @method cancel
+     * @memberof TaskInstance
+     * @instance
+     */
     cancel: function cancel() {
       var cancelReason = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ".cancel() was explicitly called";
 
       if (this.isCanceling || Ember.get(this, 'isFinished')) {
         return;
       }
-      Ember.set(this, 'isCanceling', true);
 
+      Ember.set(this, 'isCanceling', true);
       var name = Ember.get(this, 'task._propertyName') || "<unknown>";
-      Ember.set(this, 'cancelReason', 'TaskInstance \'' + name + '\' was canceled because ' + cancelReason + '. For more information, see: http://ember-concurrency.com/docs/task-cancelation-help');
+      Ember.set(this, 'cancelReason', "TaskInstance '".concat(name, "' was canceled because ").concat(cancelReason, ". For more information, see: http://ember-concurrency.com/docs/task-cancelation-help"));
 
       if (this.hasStarted) {
         this._proceedSoon(_utils.YIELDABLE_CANCEL, null);
@@ -105855,15 +105859,14 @@ lunr.QueryParser.parseBoost = function (parser) {
         this._finalize(null, COMPLETION_CANCEL);
       }
     },
-
-
     _defer: null,
     _promise: Ember.computed(function () {
       this._defer = Ember.RSVP.defer();
+
       this._maybeResolveDefer();
+
       return this._defer.promise;
     }),
-
     _maybeResolveDefer: function _maybeResolveDefer() {
       if (!this._defer || !this._completionState) {
         return;
@@ -105875,7 +105878,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         this._defer.reject(this.error);
       }
     },
-
 
     /**
      * Returns a promise that resolves with the value returned
@@ -105905,7 +105907,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @return {Promise}
      */
     finally: forwardToInternalPromise('finally'),
-
     _finalize: function _finalize(_value, _completionState) {
       var completionState = _completionState;
       var value = _value;
@@ -105940,16 +105941,17 @@ lunr.QueryParser.parseBoost = function (parser) {
       Ember.set(this, 'isFinished', true);
 
       this._dispose();
+
       this._runFinalizeCallbacks();
+
       this._dispatchFinalizeEvents();
     },
-
-
     _finalizeCallbacks: null,
     _onFinalize: function _onFinalize(callback) {
       if (!this._finalizeCallbacks) {
         this._finalizeCallbacks = [];
       }
+
       this._finalizeCallbacks.push(callback);
 
       if (this._completionState) {
@@ -105958,10 +105960,12 @@ lunr.QueryParser.parseBoost = function (parser) {
     },
     _runFinalizeCallbacks: function _runFinalizeCallbacks() {
       this._maybeResolveDefer();
+
       if (this._finalizeCallbacks) {
         for (var i = 0, l = this._finalizeCallbacks.length; i < l; ++i) {
           this._finalizeCallbacks[i]();
         }
+
         this._finalizeCallbacks = null;
       }
 
@@ -105983,21 +105987,34 @@ lunr.QueryParser.parseBoost = function (parser) {
       switch (this._completionState) {
         case COMPLETION_SUCCESS:
           this._triggerEvent('succeeded', this);
+
           break;
+
         case COMPLETION_ERROR:
           this._triggerEvent('errored', this, Ember.get(this, 'error'));
+
           break;
+
         case COMPLETION_CANCEL:
           this._triggerEvent('canceled', this, Ember.get(this, 'cancelReason'));
+
           break;
       }
     },
+
+    /**
+     * Runs any disposers attached to the task's most recent `yield`.
+     * For instance, when a task yields a TaskInstance, it registers that
+     * child TaskInstance's disposer, so that if the parent task is canceled,
+     * _dispose() will run that disposer and cancel the child TaskInstance.
+     *
+     * @private
+     */
     _dispose: function _dispose() {
       if (this._disposer) {
         var disposer = this._disposer;
-        this._disposer = null;
+        this._disposer = null; // TODO: test erroring disposer
 
-        // TODO: test erroring disposer
         disposer();
       }
     },
@@ -106005,17 +106022,24 @@ lunr.QueryParser.parseBoost = function (parser) {
       var state = this._generatorState;
       return state === GENERATOR_STATE_DONE || state === GENERATOR_STATE_ERRORED;
     },
+
+    /**
+     * Calls .next()/.throw()/.return() on the task's generator function iterator,
+     * essentially taking a single step of execution on the task function.
+     *
+     * @private
+     */
     _resumeGenerator: function _resumeGenerator(nextValue, iteratorMethod) {
       (false && !(!this._isGeneratorDone()) && Ember.assert("The task generator function has already run to completion. This is probably an ember-concurrency bug.", !this._isGeneratorDone()));
-
 
       try {
         TASK_INSTANCE_STACK.push(this);
 
         var iterator = this._getIterator();
-        var result = iterator[iteratorMethod](nextValue);
 
+        var result = iterator[iteratorMethod](nextValue);
         this._generatorValue = result.value;
+
         if (result.done) {
           this._generatorState = GENERATOR_STATE_DONE;
         } else {
@@ -106030,6 +106054,7 @@ lunr.QueryParser.parseBoost = function (parser) {
             // eslint-disable-next-line no-console
             console.warn("You performed a .linked() task without immediately yielding/returning it. This is currently unsupported (but might be supported in future version of ember-concurrency).");
           }
+
           this._expectsLinkedYield = false;
         }
 
@@ -106040,11 +106065,48 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (!this.iterator) {
         this.iterator = this._makeIterator();
       }
+
       return this.iterator;
     },
+
+    /**
+     * Returns a generator function iterator (the object with
+     * .next()/.throw()/.return() methods) using the task function
+     * supplied to `task(...)`. It uses `apply` so that the `this`
+     * context is the host object the task lives on, and passes
+     * the args passed to `perform(...args)` through to the generator
+     * function.
+     *
+     * `_makeIterator` is overridden in EncapsulatedTask to produce
+     * an iterator based on the `*perform()` function on the
+     * EncapsulatedTask definition.
+     *
+     * @private
+     */
     _makeIterator: function _makeIterator() {
       return this.fn.apply(this.context, this.args);
     },
+
+    /**
+     * The TaskInstance internally tracks an index/sequence number
+     * (the `_index` property) which gets incremented every time the
+     * task generator function iterator takes a step. When a task
+     * function is paused at a `yield`, there are two events that
+     * cause the TaskInstance to take a step: 1) the yielded value
+     * "resolves", thus resuming the TaskInstance's execution, or
+     * 2) the TaskInstance is canceled. We need some mechanism to prevent
+     * stale yielded value resolutions from resuming the TaskFunction
+     * after the TaskInstance has already moved on (either because
+     * the TaskInstance has since been canceled or because an
+     * implementation of the Yieldable API tried to resume the
+     * TaskInstance more than once). The `_index` serves as
+     * that simple mechanism: anyone resuming a TaskInstance
+     * needs to pass in the `index` they were provided that acts
+     * as a ticket to resume the TaskInstance that expires once
+     * the TaskInstance has moved on.
+     *
+     * @private
+     */
     _advanceIndex: function _advanceIndex(index) {
       if (this._index === index) {
         return ++this._index;
@@ -106054,6 +106116,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       var _this2 = this;
 
       this._advanceIndex(this._index);
+
       if (this._runLoop) {
         Ember.run.join(function () {
           Ember.run.schedule('actions', _this2, _this2._proceed, yieldResumeType, value);
@@ -106068,9 +106131,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (this._completionState) {
         return;
       }
+
       if (!this._advanceIndex(index)) {
         return;
       }
+
       this._proceedSoon(yieldResumeType, value);
     },
     _scheduleProceed: function _scheduleProceed(yieldResumeType, value) {
@@ -106104,30 +106169,37 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     },
     _handleResolvedReturnedValue: function _handleResolvedReturnedValue(yieldResumeType, value) {
+      // decide what to do in the case of `return maybeYieldable`;
+      // value is the resolved value of the yieldable. We just
+      // need to decide how to finalize.
       (false && !(this._completionState === COMPLETION_PENDING) && Ember.assert("expected completion state to be pending", this._completionState === COMPLETION_PENDING));
       (false && !(this._generatorState === GENERATOR_STATE_DONE) && Ember.assert("expected generator to be done", this._generatorState === GENERATOR_STATE_DONE));
-
 
       switch (yieldResumeType) {
         case _utils.YIELDABLE_CONTINUE:
         case _utils.YIELDABLE_RETURN:
           this._finalize(value, COMPLETION_SUCCESS);
+
           break;
+
         case _utils.YIELDABLE_THROW:
           this._finalize(value, COMPLETION_ERROR);
+
           break;
+
         case _utils.YIELDABLE_CANCEL:
           Ember.set(this, 'isCanceling', true);
+
           this._finalize(null, COMPLETION_CANCEL);
+
           break;
       }
     },
-
-
     _generatorState: GENERATOR_STATE_BEFORE_CREATE,
     _generatorValue: null,
     _handleResolvedContinueValue: function _handleResolvedContinueValue(_yieldResumeType, resumeValue) {
       var iteratorMethod = _yieldResumeType;
+
       if (iteratorMethod === _utils.YIELDABLE_CANCEL) {
         Ember.set(this, 'isCanceling', true);
         iteratorMethod = _utils.YIELDABLE_RETURN;
@@ -106136,6 +106208,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._dispose();
 
       var beforeIndex = this._index;
+
       this._resumeGenerator(resumeValue, iteratorMethod);
 
       if (!this._advanceIndex(beforeIndex)) {
@@ -106144,6 +106217,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       if (this._generatorState === GENERATOR_STATE_ERRORED) {
         this._finalize(this._generatorValue, COMPLETION_ERROR);
+
         return;
       }
 
@@ -106151,13 +106225,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     },
     _handleYieldedValue: function _handleYieldedValue() {
       var yieldedValue = this._generatorValue;
+
       if (!yieldedValue) {
         this._proceedWithSimpleValue(yieldedValue);
+
         return;
       }
 
       if (yieldedValue instanceof _utils.RawValue) {
         this._proceedWithSimpleValue(yieldedValue.value);
+
         return;
       }
 
@@ -106177,6 +106254,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     _addDisposer: function _addDisposer(maybeDisposer) {
       if (typeof maybeDisposer === 'function') {
         var priorDisposer = this._disposer;
+
         if (priorDisposer) {
           this._disposer = function () {
             priorDisposer();
@@ -106190,9 +106268,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     _invokeYieldable: function _invokeYieldable(yieldedValue) {
       try {
         var maybeDisposer = yieldedValue[_utils.yieldableSymbol](this, this._index);
+
         this._addDisposer(maybeDisposer);
-      } catch (e) {
-        // TODO: handle erroneous yieldable implementation
+      } catch (e) {// TODO: handle erroneous yieldable implementation
       }
     },
     _triggerEvent: function _triggerEvent(eventType) {
@@ -106204,11 +106282,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       var eventNamespace = Ember.get(this, 'task._propertyName');
 
       if (host && host.trigger && eventNamespace) {
-        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
           args[_key - 1] = arguments[_key];
         }
 
-        host.trigger.apply(host, [eventNamespace + ':' + eventType].concat(_toConsumableArray(args)));
+        host.trigger.apply(host, ["".concat(eventNamespace, ":").concat(eventType)].concat(args));
       }
     }
   };
@@ -106219,6 +106297,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     yieldedTaskInstance._onFinalize(function () {
       var state = yieldedTaskInstance._completionState;
+
       if (state === COMPLETION_SUCCESS) {
         parentTaskInstance.proceed(resumeIndex, _utils.YIELDABLE_CONTINUE, yieldedTaskInstance.value);
       } else if (state === COMPLETION_ERROR) {
@@ -106233,13 +106312,15 @@ lunr.QueryParser.parseBoost = function (parser) {
         if (yieldedTaskInstance._performType === PERFORM_TYPE_DEFAULT) {
           var parentObj = Ember.get(parentTaskInstance, 'task.context');
           var childObj = Ember.get(yieldedTaskInstance, 'task.context');
+
           if (parentObj && childObj && parentObj !== childObj && parentObj.isDestroying && Ember.get(yieldedTaskInstance, 'isRunning')) {
-            var parentName = '`' + parentTaskInstance.task._propertyName + '`';
-            var childName = '`' + yieldedTaskInstance.task._propertyName + '`';
-            // eslint-disable-next-line no-console
-            console.warn('ember-concurrency detected a potentially hazardous "self-cancel loop" between parent task ' + parentName + ' and child task ' + childName + '. If you want child task ' + childName + ' to be canceled when parent task ' + parentName + ' is canceled, please change `.perform()` to `.linked().perform()`. If you want child task ' + childName + ' to keep running after parent task ' + parentName + ' is canceled, change it to `.unlinked().perform()`');
+            var parentName = "`".concat(parentTaskInstance.task._propertyName, "`");
+            var childName = "`".concat(yieldedTaskInstance.task._propertyName, "`"); // eslint-disable-next-line no-console
+
+            console.warn("ember-concurrency detected a potentially hazardous \"self-cancel loop\" between parent task ".concat(parentName, " and child task ").concat(childName, ". If you want child task ").concat(childName, " to be canceled when parent task ").concat(parentName, " is canceled, please change `.perform()` to `.linked().perform()`. If you want child task ").concat(childName, " to keep running after parent task ").concat(parentName, " is canceled, change it to `.unlinked().perform()`"));
           }
         }
+
         yieldedTaskInstance.cancel();
       }
     };
@@ -106249,15 +106330,17 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function go(args, fn) {
     var attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    return TaskInstance.create(Object.assign({ args: args, fn: fn, context: this }, attrs))._start();
+    return TaskInstance.create(Object.assign({
+      args: args,
+      fn: fn,
+      context: this
+    }, attrs))._start();
   }
 
   function wrap(fn) {
     var attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
     return function wrappedRunnerFunction() {
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
       }
 
@@ -106265,136 +106348,61 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
   }
 
-  exports.default = TaskInstance;
+  var _default = TaskInstance;
+  _exports.default = _default;
 });
-;define('ember-concurrency/-task-property', ['exports', 'ember-concurrency/-task-instance', 'ember-concurrency/-task-state-mixin', 'ember-concurrency/-property-modifiers-mixin', 'ember-concurrency/utils', 'ember-concurrency/-encapsulated-task'], function (exports, _taskInstance, _taskStateMixin, _propertyModifiersMixin, _utils, _encapsulatedTask) {
-  'use strict';
+;define("ember-concurrency/-task-property", ["exports", "ember-concurrency/-task-instance", "ember-concurrency/-task-state-mixin", "ember-concurrency/-property-modifiers-mixin", "ember-concurrency/utils", "ember-concurrency/-encapsulated-task"], function (_exports, _taskInstance, _taskStateMixin, _propertyModifiersMixin, _utils, _encapsulatedTask) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.TaskProperty = exports.Task = undefined;
+  _exports.TaskProperty = _exports.Task = void 0;
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-  var _get = function get(object, property, receiver) {
-    if (object === null) object = Function.prototype;
-    var desc = Object.getOwnPropertyDescriptor(object, property);
+  function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
-    if (desc === undefined) {
-      var parent = Object.getPrototypeOf(object);
+  function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
-      if (parent === null) {
-        return undefined;
-      } else {
-        return get(parent, property, receiver);
-      }
-    } else if ("value" in desc) {
-      return desc.value;
-    } else {
-      var getter = desc.get;
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-      if (getter === undefined) {
-        return undefined;
-      }
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-      return getter.call(receiver);
-    }
-  };
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-    return obj;
-  }
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
-
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  };
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var PerformProxy = Ember.Object.extend({
     _task: null,
     _performType: null,
     _linkedObject: null,
-
     perform: function perform() {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
       return this._task._performShared(args, this._performType, this._linkedObject);
     }
   });
-
   /**
     The `Task` object lives on a host Ember object (e.g.
     a Component, Route, or Controller). You call the
@@ -106412,7 +106420,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @class Task
   */
-  var Task = exports.Task = Ember.Object.extend(_taskStateMixin.default, _defineProperty({
+
+  var Task = Ember.Object.extend(_taskStateMixin.default, _defineProperty({
     /**
      * `true` if any current task instances are running.
      *
@@ -106529,13 +106538,11 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @instance
      * @readOnly
      */
-
     fn: null,
     context: null,
     _observes: null,
     _curryArgs: null,
     _linkedObjects: null,
-
     init: function init() {
       this._super.apply(this, arguments);
 
@@ -106552,17 +106559,18 @@ lunr.QueryParser.parseBoost = function (parser) {
     _curry: function _curry() {
       var task = this._clone();
 
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
       }
 
-      task._curryArgs = [].concat(_toConsumableArray(this._curryArgs || []), _toConsumableArray(args));
+      task._curryArgs = [].concat(_toConsumableArray(this._curryArgs || []), args);
       return task;
     },
     linked: function linked() {
       var taskInstance = (0, _taskInstance.getRunningInstance)();
+
       if (!taskInstance) {
-        throw new Error('You can only call .linked() from within a task.');
+        throw new Error("You can only call .linked() from within a task.");
       }
 
       return PerformProxy.create({
@@ -106587,7 +106595,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         _propertyName: this._propertyName
       });
     },
-
 
     /**
      * This property is true if this task is NOT running, i.e. the number
@@ -106694,14 +106701,14 @@ lunr.QueryParser.parseBoost = function (parser) {
      *
      * @method cancelAll
      * @memberof Task
+     * @param {Object} [options]
+     * @param {string} [options.reason=.cancelAll() was explicitly called on the Task] - a descriptive reason the task was cancelled
+     * @param {boolean} [options.resetState] - if true, will clear the task state (`last*` and `performCount` properties will be set to initial values)
      * @instance
      */
-
     toString: function toString() {
-      return '<Task:' + this._propertyName + '>';
+      return "<Task:".concat(this._propertyName, ">");
     },
-
-
     _taskInstanceFactory: _taskInstance.default,
 
     /**
@@ -106723,7 +106730,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      *
      */
     perform: function perform() {
-      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
         args[_key3] = arguments[_key3];
       }
 
@@ -106731,6 +106738,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     },
     _performShared: function _performShared(args, performType, linkedObject) {
       var fullArgs = this._curryArgs ? [].concat(_toConsumableArray(this._curryArgs), _toConsumableArray(args)) : args;
+
       var taskInstance = this._taskInstanceFactory.create({
         fn: this.fn,
         args: fullArgs,
@@ -106743,6 +106751,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         _performType: performType
       });
 
+      Ember.setOwner(taskInstance, Ember.getOwner(this.context));
+
       if (performType === _taskInstance.PERFORM_TYPE_LINKED) {
         linkedObject._expectsLinkedYield = true;
       }
@@ -106754,12 +106764,12 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
 
       this._scheduler.schedule(taskInstance);
+
       return taskInstance;
     }
   }, _utils.INVOKE, function () {
     return this.perform.apply(this, arguments);
   }));
-
   /**
     A {@link TaskProperty} is the Computed Property-like object returned
     from the {@linkcode task} function. You can call Task Modifier methods
@@ -106776,29 +106786,34 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @class TaskProperty
   */
-  var TaskProperty = exports.TaskProperty = void 0;
+
+  _exports.Task = Task;
+  var TaskProperty;
+  _exports.TaskProperty = TaskProperty;
 
   if (true) {
-    exports.TaskProperty = TaskProperty = function TaskProperty() {
+    _exports.TaskProperty = TaskProperty = function TaskProperty() {
       _classCallCheck(this, TaskProperty);
     };
   } else {
     // Prior to the 3.10.0 refactors, we had to extend the _ComputedProprety class
     // for a classic decorator/descriptor to run correctly.
-    exports.TaskProperty = TaskProperty = function (_ComputedProperty2) {
+    _exports.TaskProperty = TaskProperty =
+    /*#__PURE__*/
+    function (_ComputedProperty2) {
       _inherits(TaskProperty, _ComputedProperty2);
 
       function TaskProperty() {
         _classCallCheck(this, TaskProperty);
 
-        return _possibleConstructorReturn(this, (TaskProperty.__proto__ || Object.getPrototypeOf(TaskProperty)).apply(this, arguments));
+        return _possibleConstructorReturn(this, _getPrototypeOf(TaskProperty).apply(this, arguments));
       }
 
       _createClass(TaskProperty, [{
-        key: 'callSuperSetup',
+        key: "callSuperSetup",
         value: function callSuperSetup() {
-          if (_get(TaskProperty.prototype.__proto__ || Object.getPrototypeOf(TaskProperty.prototype), 'setup', this)) {
-            _get(TaskProperty.prototype.__proto__ || Object.getPrototypeOf(TaskProperty.prototype), 'setup', this).apply(this, arguments);
+          if (_get(_getPrototypeOf(TaskProperty.prototype), "setup", this)) {
+            _get(_getPrototypeOf(TaskProperty.prototype), "setup", this).apply(this, arguments);
           }
         }
       }]);
@@ -106815,50 +106830,211 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       if (this._maxConcurrency !== Infinity && !this._hasSetBufferPolicy) {
         // eslint-disable-next-line no-console
-        console.warn('The use of maxConcurrency() without a specified task modifier is deprecated and won\'t be supported in future versions of ember-concurrency. Please specify a task modifier instead, e.g. `' + taskName + ': task(...).enqueue().maxConcurrency(' + this._maxConcurrency + ')`');
+        console.warn("The use of maxConcurrency() without a specified task modifier is deprecated and won't be supported in future versions of ember-concurrency. Please specify a task modifier instead, e.g. `".concat(taskName, ": task(...).enqueue().maxConcurrency(").concat(this._maxConcurrency, ")`"));
       }
 
       registerOnPrototype(Ember.addListener, proto, this.eventNames, taskName, 'perform', false);
       registerOnPrototype(Ember.addListener, proto, this.cancelEventNames, taskName, 'cancelAll', false);
       registerOnPrototype(Ember.addObserver, proto, this._observes, taskName, 'perform', true);
     },
+
+    /**
+     * Calling `task(...).on(eventName)` configures the task to be
+     * automatically performed when the specified events fire. In
+     * this way, it behaves like
+     * [Ember.on](http://emberjs.com/api/classes/Ember.html#method_on).
+     *
+     * You can use `task(...).on('init')` to perform the task
+     * when the host object is initialized.
+     *
+     * ```js
+     * export default Ember.Component.extend({
+     *   pollForUpdates: task(function * () {
+     *     // ... this runs when the Component is first created
+     *     // because we specified .on('init')
+     *   }).on('init'),
+     *
+     *   handleFoo: task(function * (a, b, c) {
+     *     // this gets performed automatically if the 'foo'
+     *     // event fires on this Component,
+     *     // e.g., if someone called component.trigger('foo')
+     *   }).on('foo'),
+     * });
+     * ```
+     *
+     * [See the Writing Tasks Docs for more info](/#/docs/writing-tasks)
+     *
+     * @method on
+     * @memberof TaskProperty
+     * @param {String} eventNames*
+     * @instance
+     */
     on: function on() {
       this.eventNames = this.eventNames || [];
       this.eventNames.push.apply(this.eventNames, arguments);
       return this;
     },
+
+    /**
+     * This behaves like the {@linkcode TaskProperty#on task(...).on() modifier},
+     * but instead will cause the task to be canceled if any of the
+     * specified events fire on the parent object.
+     *
+     * [See the Live Example](/#/docs/examples/route-tasks/1)
+     *
+     * @method cancelOn
+     * @memberof TaskProperty
+     * @param {String} eventNames*
+     * @instance
+     */
     cancelOn: function cancelOn() {
       this.cancelEventNames = this.cancelEventNames || [];
       this.cancelEventNames.push.apply(this.cancelEventNames, arguments);
       return this;
     },
     observes: function observes() {
-      for (var _len4 = arguments.length, properties = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      for (var _len4 = arguments.length, properties = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
         properties[_key4] = arguments[_key4];
       }
 
       this._observes = properties;
       return this;
     },
+
+    /**
+     * Configures the task to cancel old currently task instances
+     * to make room for a new one to perform. Sets default
+     * maxConcurrency to 1.
+     *
+     * [See the Live Example](/#/docs/examples/route-tasks/1)
+     *
+     * @method restartable
+     * @memberof TaskProperty
+     * @instance
+     */
+
+    /**
+     * Configures the task to run task instances one-at-a-time in
+     * the order they were `.perform()`ed. Sets default
+     * maxConcurrency to 1.
+     *
+     * @method enqueue
+     * @memberof TaskProperty
+     * @instance
+     */
+
+    /**
+     * Configures the task to immediately cancel (i.e. drop) any
+     * task instances performed when the task is already running
+     * at maxConcurrency. Sets default maxConcurrency to 1.
+     *
+     * @method drop
+     * @memberof TaskProperty
+     * @instance
+     */
+
+    /**
+     * Configures the task to drop all but the most recently
+     * performed {@linkcode TaskInstance }.
+     *
+     * @method keepLatest
+     * @memberof TaskProperty
+     * @instance
+     */
+
+    /**
+     * Sets the maximum number of task instances that are allowed
+     * to run at the same time. By default, with no task modifiers
+     * applied, this number is Infinity (there is no limit
+     * to the number of tasks that can run at the same time).
+     * {@linkcode TaskProperty#restartable .restartable()},
+     * {@linkcode TaskProperty#enqueue .enqueue()}, and
+     * {@linkcode TaskProperty#drop .drop()} set the default
+     * maxConcurrency to 1, but you can override this value
+     * to set the maximum number of concurrently running tasks
+     * to a number greater than 1.
+     *
+     * [See the AJAX Throttling example](/#/docs/examples/ajax-throttling)
+     *
+     * The example below uses a task with `maxConcurrency(3)` to limit
+     * the number of concurrent AJAX requests (for anyone using this task)
+     * to 3.
+     *
+     * ```js
+     * doSomeAjax: task(function * (url) {
+     *   return Ember.$.getJSON(url).promise();
+     * }).maxConcurrency(3),
+     *
+     * elsewhere() {
+     *   this.get('doSomeAjax').perform("http://www.example.com/json");
+     * },
+     * ```
+     *
+     * @method maxConcurrency
+     * @memberof TaskProperty
+     * @param {Number} n The maximum number of concurrently running tasks
+     * @instance
+     */
+
+    /**
+     * Adds this task to a TaskGroup so that concurrency constraints
+     * can be shared between multiple tasks.
+     *
+     * [See the Task Group docs for more information](/#/docs/task-groups)
+     *
+     * @method group
+     * @memberof TaskProperty
+     * @param {String} groupPath A path to the TaskGroup property
+     * @instance
+     */
+
+    /**
+     * Activates lifecycle events, allowing Evented host objects to react to task state
+     * changes.
+     *
+     * ```js
+     *
+     * export default Component.extend({
+     *   uploadTask: task(function* (file) {
+     *     // ... file upload stuff
+     *   }).evented(),
+     *
+     *   uploadedStarted: on('uploadTask:started', function(taskInstance) {
+     *     this.get('analytics').track("User Photo: upload started");
+     *   }),
+     * });
+     * ```
+     *
+     * @method evented
+     * @memberof TaskProperty
+     * @instance
+     */
+
+    /**
+     * Logs lifecycle events to aid in debugging unexpected Task behavior.
+     * Presently only logs cancelation events and the reason for the cancelation,
+     * e.g. "TaskInstance 'doStuff' was canceled because the object it lives on was destroyed or unrendered"
+     *
+     * @method debug
+     * @memberof TaskProperty
+     * @instance
+     */
     perform: function perform() {
-      (false && !(false) && Ember.deprecate('[DEPRECATED] An ember-concurrency task property was not set on its object via \'defineProperty\'.\n              You probably used \'set(obj, "myTask", task(function* () { ... }) )\'.\n              Unfortunately due to this we can\'t tell you the name of the task.', false, {
+      (false && !(false) && Ember.deprecate("[DEPRECATED] An ember-concurrency task property was not set on its object via 'defineProperty'.\n              You probably used 'set(obj, \"myTask\", task(function* () { ... }) )'.\n              Unfortunately due to this we can't tell you the name of the task.", false, {
         id: 'ember-meta.descriptor-on-object',
         until: '3.5.0',
         url: 'https://emberjs.com/deprecations/v3.x#toc_use-defineProperty-to-define-computed-properties'
       }));
-
       throw new Error("An ember-concurrency task property was not set on its object via 'defineProperty'. See deprecation warning for details.");
     }
   });
-
   (0, _utils.objectAssign)(TaskProperty.prototype, _propertyModifiersMixin.propertyModifiers);
 
   function registerOnPrototype(addListenerOrObserver, proto, names, taskName, taskMethod, once) {
     if (names) {
       for (var i = 0; i < names.length; ++i) {
         var name = names[i];
-
-        var handlerName = '__ember_concurrency_handler_' + handlerCounter++;
+        var handlerName = "__ember_concurrency_handler_".concat(handlerCounter++);
         proto[handlerName] = makeTaskCallback(taskName, taskMethod, once);
         addListenerOrObserver(proto, name, null, handlerName);
       }
@@ -106870,7 +107046,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       var task = this.get(taskName);
 
       if (once) {
-        Ember.run.scheduleOnce.apply(undefined, ['actions', task, method].concat(Array.prototype.slice.call(arguments)));
+        Ember.run.scheduleOnce.apply(void 0, ['actions', task, method].concat(Array.prototype.slice.call(arguments)));
       } else {
         task[method].apply(task, arguments);
       }
@@ -106879,20 +107055,21 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   var handlerCounter = 0;
 });
-;define('ember-concurrency/-task-state-mixin', ['exports'], function (exports) {
-  'use strict';
+;define("ember-concurrency/-task-state-mixin", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  var alias = Ember.computed.alias;
-  exports.default = Ember.Mixin.create({
+  _exports.default = void 0;
+  var alias = Ember.computed.alias; // this is a mixin of properties/methods shared between Tasks and TaskGroups
+
+  var _default = Ember.Mixin.create({
     isRunning: Ember.computed.gt('numRunning', 0),
     isQueued: Ember.computed.gt('numQueued', 0),
     isIdle: Ember.computed('isRunning', 'isQueued', function () {
       return !this.get('isRunning') && !this.get('isQueued');
     }),
-
     state: Ember.computed('isRunning', 'isQueued', function () {
       if (this.get('isRunning')) {
         return 'running';
@@ -106902,11 +107079,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         return 'idle';
       }
     }),
-
     _propertyName: null,
     _origin: null,
     name: alias('_propertyName'),
-
     concurrency: alias('numRunning'),
     last: alias('_scheduler.lastStarted'),
     lastRunning: alias('_scheduler.lastRunning'),
@@ -106917,11 +107092,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     lastCanceled: alias('_scheduler.lastCanceled'),
     lastIncomplete: alias('_scheduler.lastIncomplete'),
     performCount: alias('_scheduler.performCount'),
-
     numRunning: 0,
     numQueued: 0,
     _seenIndex: 0,
-
     cancelAll: function cancelAll(options) {
       var _ref = options || {},
           reason = _ref.reason,
@@ -106935,14 +107108,10 @@ lunr.QueryParser.parseBoost = function (parser) {
         this._resetState();
       }
     },
-
-
     group: Ember.computed(function () {
       return this._taskGroupPath && this.context.get(this._taskGroupPath);
     }),
-
     _scheduler: null,
-
     _resetState: function _resetState() {
       this.setProperties({
         'last': null,
@@ -106958,72 +107127,46 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }
   });
-});
-;define('ember-concurrency/-wait-for', ['exports', 'ember-concurrency/utils'], function (exports, _utils) {
-  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-concurrency/-wait-for", ["exports", "ember-concurrency/utils"], function (_exports, _utils) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.waitForQueue = waitForQueue;
-  exports.waitForEvent = waitForEvent;
-  exports.waitForProperty = waitForProperty;
+  _exports.waitForQueue = waitForQueue;
+  _exports.waitForEvent = waitForEvent;
+  _exports.waitForProperty = waitForProperty;
 
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var WaitFor = function () {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  var WaitFor =
+  /*#__PURE__*/
+  function () {
     function WaitFor() {
       _classCallCheck(this, WaitFor);
     }
 
     _createClass(WaitFor, [{
-      key: 'then',
+      key: "then",
       value: function then() {
         var _yieldableToPromise;
 
@@ -107034,14 +107177,17 @@ lunr.QueryParser.parseBoost = function (parser) {
     return WaitFor;
   }();
 
-  var WaitForQueueYieldable = function (_WaitFor) {
+  var WaitForQueueYieldable =
+  /*#__PURE__*/
+  function (_WaitFor) {
     _inherits(WaitForQueueYieldable, _WaitFor);
 
     function WaitForQueueYieldable(queueName) {
+      var _this;
+
       _classCallCheck(this, WaitForQueueYieldable);
 
-      var _this = _possibleConstructorReturn(this, (WaitForQueueYieldable.__proto__ || Object.getPrototypeOf(WaitForQueueYieldable)).call(this));
-
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(WaitForQueueYieldable).call(this));
       _this.queueName = queueName;
       return _this;
     }
@@ -107049,23 +107195,30 @@ lunr.QueryParser.parseBoost = function (parser) {
     _createClass(WaitForQueueYieldable, [{
       key: _utils.yieldableSymbol,
       value: function value(taskInstance, resumeIndex) {
-        Ember.run.schedule(this.queueName, function () {
-          taskInstance.proceed(resumeIndex, _utils.YIELDABLE_CONTINUE, null);
-        });
+        try {
+          Ember.run.schedule(this.queueName, function () {
+            taskInstance.proceed(resumeIndex, _utils.YIELDABLE_CONTINUE, null);
+          });
+        } catch (error) {
+          taskInstance.proceed(resumeIndex, _utils.YIELDABLE_THROW, error);
+        }
       }
     }]);
 
     return WaitForQueueYieldable;
   }(WaitFor);
 
-  var WaitForEventYieldable = function (_WaitFor2) {
+  var WaitForEventYieldable =
+  /*#__PURE__*/
+  function (_WaitFor2) {
     _inherits(WaitForEventYieldable, _WaitFor2);
 
     function WaitForEventYieldable(object, eventName) {
+      var _this2;
+
       _classCallCheck(this, WaitForEventYieldable);
 
-      var _this2 = _possibleConstructorReturn(this, (WaitForEventYieldable.__proto__ || Object.getPrototypeOf(WaitForEventYieldable)).call(this));
-
+      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(WaitForEventYieldable).call(this));
       _this2.object = object;
       _this2.eventName = eventName;
       return _this2;
@@ -107077,7 +107230,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         var _this3 = this;
 
         var unbind = function unbind() {};
+
         var didFinish = false;
+
         var fn = function fn(event) {
           didFinish = true;
           unbind();
@@ -107086,10 +107241,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
         if (typeof this.object.addEventListener === 'function') {
           // assume that we're dealing with a DOM `EventTarget`.
-          this.object.addEventListener(this.eventName, fn);
-
-          // unfortunately this is required, because IE 11 does not support the
+          this.object.addEventListener(this.eventName, fn); // unfortunately this is required, because IE 11 does not support the
           // `once` option: https://caniuse.com/#feat=once-event-listener
+
           unbind = function unbind() {
             _this3.object.removeEventListener(_this3.eventName, fn);
           };
@@ -107099,7 +107253,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           // assume that we're dealing with either `Ember.Evented` or a compatible
           // interface, like jQuery.
           this.object.one(this.eventName, fn);
-
           return function () {
             if (!didFinish) {
               _this3.object.off(_this3.eventName, fn);
@@ -107112,16 +107265,19 @@ lunr.QueryParser.parseBoost = function (parser) {
     return WaitForEventYieldable;
   }(WaitFor);
 
-  var WaitForPropertyYieldable = function (_WaitFor3) {
+  var WaitForPropertyYieldable =
+  /*#__PURE__*/
+  function (_WaitFor3) {
     _inherits(WaitForPropertyYieldable, _WaitFor3);
 
     function WaitForPropertyYieldable(object, key) {
+      var _this4;
+
       var predicateCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Boolean;
 
       _classCallCheck(this, WaitForPropertyYieldable);
 
-      var _this4 = _possibleConstructorReturn(this, (WaitForPropertyYieldable.__proto__ || Object.getPrototypeOf(WaitForPropertyYieldable)).call(this));
-
+      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(WaitForPropertyYieldable).call(this));
       _this4.object = object;
       _this4.key = key;
 
@@ -107132,6 +107288,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           return v === predicateCallback;
         };
       }
+
       return _this4;
     }
 
@@ -107142,7 +107299,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
         var observerFn = function observerFn() {
           var value = Ember.get(_this5.object, _this5.key);
+
           var predicateValue = _this5.predicateCallback(value);
+
           if (predicateValue) {
             taskInstance.proceed(resumeIndex, _utils.YIELDABLE_CONTINUE, value);
             return true;
@@ -107160,7 +107319,6 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     return WaitForPropertyYieldable;
   }(WaitFor);
-
   /**
    * Use `waitForQueue` to pause the task until a certain run loop queue is reached.
    *
@@ -107176,10 +107334,11 @@ lunr.QueryParser.parseBoost = function (parser) {
    *
    * @param {string} queueName the name of the Ember run loop queue
    */
+
+
   function waitForQueue(queueName) {
     return new WaitForQueueYieldable(queueName);
   }
-
   /**
    * Use `waitForEvent` to pause the task until an event is fired. The event
    * can either be a jQuery event or an Ember.Evented event (or any event system
@@ -107205,12 +107364,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    *                 that the event fires from
    * @param {function} eventName the name of the event to wait for
    */
-  function waitForEvent(object, eventName) {
-    (false && !((0, _utils.isEventedObject)(object)) && Ember.assert(object + ' must include Ember.Evented (or support `.one()` and `.off()`) or DOM EventTarget (or support `addEventListener` and  `removeEventListener`) to be able to use `waitForEvent`', (0, _utils.isEventedObject)(object)));
 
+
+  function waitForEvent(object, eventName) {
+    (false && !((0, _utils.isEventedObject)(object)) && Ember.assert("".concat(object, " must include Ember.Evented (or support `.one()` and `.off()`) or DOM EventTarget (or support `addEventListener` and  `removeEventListener`) to be able to use `waitForEvent`"), (0, _utils.isEventedObject)(object)));
     return new WaitForEventYieldable(object, eventName);
   }
-
   /**
    * Use `waitForProperty` to pause the task until a property on an object
    * changes to some expected value. This can be used for a variety of use
@@ -107254,67 +107413,76 @@ lunr.QueryParser.parseBoost = function (parser) {
    *                                   a non-Function value that the watched property
    *                                   needs to equal before the task will continue running
    */
+
+
   function waitForProperty(object, key, predicateCallback) {
     return new WaitForPropertyYieldable(object, key, predicateCallback);
   }
 });
-;define('ember-concurrency/helpers/cancel-all', ['exports', 'ember-concurrency/-helpers'], function (exports, _helpers) {
-  'use strict';
+;define("ember-concurrency/helpers/cancel-all", ["exports", "ember-concurrency/-helpers"], function (_exports, _helpers) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.cancelHelper = cancelHelper;
-
-
+  _exports.cancelHelper = cancelHelper;
+  _exports.default = void 0;
   var CANCEL_REASON = "the 'cancel-all' template helper was invoked";
 
   function cancelHelper(args) {
     var cancelable = args[0];
+
     if (!cancelable || typeof cancelable.cancelAll !== 'function') {
-      (false && !(false) && Ember.assert('The first argument passed to the `cancel-all` helper should be a Task or TaskGroup (without quotes); you passed ' + cancelable, false));
+      (false && !(false) && Ember.assert("The first argument passed to the `cancel-all` helper should be a Task or TaskGroup (without quotes); you passed ".concat(cancelable), false));
     }
 
-    return (0, _helpers.taskHelperClosure)('cancel-all', 'cancelAll', [cancelable, { reason: CANCEL_REASON }]);
+    return (0, _helpers.taskHelperClosure)('cancel-all', 'cancelAll', [cancelable, {
+      reason: CANCEL_REASON
+    }]);
   }
 
-  exports.default = Ember.Helper.helper(cancelHelper);
-});
-;define('ember-concurrency/helpers/perform', ['exports', 'ember-concurrency/-helpers'], function (exports, _helpers) {
-  'use strict';
+  var _default = Ember.Helper.helper(cancelHelper);
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-concurrency/helpers/perform", ["exports", "ember-concurrency/-helpers"], function (_exports, _helpers) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.performHelper = performHelper;
+  _exports.performHelper = performHelper;
+  _exports.default = void 0;
+
   function performHelper(args, hash) {
     return (0, _helpers.taskHelperClosure)('perform', 'perform', args, hash);
   }
 
-  exports.default = Ember.Helper.helper(performHelper);
-});
-;define('ember-concurrency/helpers/task', ['exports'], function (exports) {
-  'use strict';
+  var _default = Ember.Helper.helper(performHelper);
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-concurrency/helpers/task", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.default = void 0;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
+  function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
+  function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  function _toArray(arr) {
-    return Array.isArray(arr) ? arr : Array.from(arr);
-  }
+  function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+  function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest(); }
+
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+  function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
   function taskHelper(_ref) {
     var _ref2 = _toArray(_ref),
@@ -107324,19 +107492,78 @@ lunr.QueryParser.parseBoost = function (parser) {
     return task._curry.apply(task, _toConsumableArray(args));
   }
 
-  exports.default = Ember.Helper.helper(taskHelper);
-});
-;define('ember-concurrency/index', ['exports', 'ember-concurrency/utils', 'ember-concurrency/-task-property', 'ember-concurrency/-task-instance', 'ember-concurrency/-task-group', 'ember-concurrency/-cancelable-promise-helpers', 'ember-concurrency/-wait-for', 'ember-concurrency/-property-modifiers-mixin'], function (exports, _utils, _taskProperty, _taskInstance, _taskGroup, _cancelablePromiseHelpers, _waitFor, _propertyModifiersMixin) {
-  'use strict';
+  var _default = Ember.Helper.helper(taskHelper);
 
-  Object.defineProperty(exports, "__esModule", {
+  _exports.default = _default;
+});
+;define("ember-concurrency/index", ["exports", "ember-concurrency/utils", "ember-concurrency/-task-property", "ember-concurrency/-task-instance", "ember-concurrency/-task-group", "ember-concurrency/-cancelable-promise-helpers", "ember-concurrency/-wait-for", "ember-concurrency/-property-modifiers-mixin"], function (_exports, _utils, _taskProperty, _taskInstance, _taskGroup, _cancelablePromiseHelpers, _waitFor, _propertyModifiersMixin) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.forever = exports.waitForProperty = exports.waitForEvent = exports.waitForQueue = exports.timeout = exports.race = exports.hash = exports.didCancel = exports.allSettled = exports.all = undefined;
-  exports.task = task;
-  exports.taskGroup = taskGroup;
-
-
+  _exports.task = task;
+  _exports.taskGroup = taskGroup;
+  Object.defineProperty(_exports, "timeout", {
+    enumerable: true,
+    get: function get() {
+      return _utils.timeout;
+    }
+  });
+  Object.defineProperty(_exports, "forever", {
+    enumerable: true,
+    get: function get() {
+      return _utils.forever;
+    }
+  });
+  Object.defineProperty(_exports, "didCancel", {
+    enumerable: true,
+    get: function get() {
+      return _taskInstance.didCancel;
+    }
+  });
+  Object.defineProperty(_exports, "all", {
+    enumerable: true,
+    get: function get() {
+      return _cancelablePromiseHelpers.all;
+    }
+  });
+  Object.defineProperty(_exports, "allSettled", {
+    enumerable: true,
+    get: function get() {
+      return _cancelablePromiseHelpers.allSettled;
+    }
+  });
+  Object.defineProperty(_exports, "hash", {
+    enumerable: true,
+    get: function get() {
+      return _cancelablePromiseHelpers.hash;
+    }
+  });
+  Object.defineProperty(_exports, "race", {
+    enumerable: true,
+    get: function get() {
+      return _cancelablePromiseHelpers.race;
+    }
+  });
+  Object.defineProperty(_exports, "waitForQueue", {
+    enumerable: true,
+    get: function get() {
+      return _waitFor.waitForQueue;
+    }
+  });
+  Object.defineProperty(_exports, "waitForEvent", {
+    enumerable: true,
+    get: function get() {
+      return _waitFor.waitForEvent;
+    }
+  });
+  Object.defineProperty(_exports, "waitForProperty", {
+    enumerable: true,
+    get: function get() {
+      return _waitFor.waitForProperty;
+    }
+  });
   var setDecorator = Ember._setClassicDecorator || Ember._setComputedDecorator;
 
   function _computed(fn) {
@@ -107346,17 +107573,15 @@ lunr.QueryParser.parseBoost = function (parser) {
           cp.setup(proto, key);
         }
 
-        return Ember.computed(fn).apply(undefined, arguments);
+        return Ember.computed(fn).apply(void 0, arguments);
       };
 
       setDecorator(cp);
-
       return cp;
     } else {
       return Ember.computed(fn);
     }
   }
-
   /**
    * A Task is a cancelable, restartable, asynchronous operation that
    * is driven by a generator function. Tasks are automatically canceled
@@ -107402,9 +107627,11 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @param {function} generatorFunction the generator function backing the task.
    * @returns {TaskProperty}
    */
+
+
   function task(taskFn) {
     var tp = _computed(function (_propertyName) {
-      tp.taskFn.displayName = _propertyName + ' (task)';
+      tp.taskFn.displayName = "".concat(_propertyName, " (task)");
       return _taskProperty.Task.create({
         fn: tp.taskFn,
         context: this,
@@ -107418,12 +107645,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
 
     tp.taskFn = taskFn;
-
     Object.setPrototypeOf(tp, _taskProperty.TaskProperty.prototype);
-
     return tp;
   }
-
   /**
    * "Task Groups" provide a means for applying
    * task modifiers to groups of tasks. Once a {@linkcode Task} is declared
@@ -107445,6 +107669,8 @@ lunr.QueryParser.parseBoost = function (parser) {
    *
    * @returns {TaskGroup}
    */
+
+
   function taskGroup(taskFn) {
     var tp = _computed(function (_propertyName) {
       return _taskGroup.TaskGroup.create({
@@ -107458,63 +107684,42 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
 
     tp.taskFn = taskFn;
-
     Object.setPrototypeOf(tp, _taskGroup.TaskGroupProperty.prototype);
-
     return tp;
   }
-
-  exports.all = _cancelablePromiseHelpers.all;
-  exports.allSettled = _cancelablePromiseHelpers.allSettled;
-  exports.didCancel = _taskInstance.didCancel;
-  exports.hash = _cancelablePromiseHelpers.hash;
-  exports.race = _cancelablePromiseHelpers.race;
-  exports.timeout = _utils.timeout;
-  exports.waitForQueue = _waitFor.waitForQueue;
-  exports.waitForEvent = _waitFor.waitForEvent;
-  exports.waitForProperty = _waitFor.waitForProperty;
-  exports.forever = _utils.forever;
 });
-;define('ember-concurrency/initializers/ember-concurrency', ['exports', 'ember-concurrency'], function (exports) {
-  'use strict';
+;define("ember-concurrency/initializers/ember-concurrency", ["exports", "ember-concurrency"], function (_exports, _emberConcurrency) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.default = {
+  _exports.default = void 0;
+  // This initializer exists only to make sure that the following
+  // imports happen before the app boots.
+  var _default = {
     name: 'ember-concurrency',
     initialize: function initialize() {}
   };
+  _exports.default = _default;
 });
-;define('ember-concurrency/utils', ['exports'], function (exports) {
-  'use strict';
+;define("ember-concurrency/utils", ["exports"], function (_exports) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.isEventedObject = isEventedObject;
-  exports.Arguments = Arguments;
-  exports._cleanupOnDestroy = _cleanupOnDestroy;
-  exports.timeout = timeout;
-  exports.RawValue = RawValue;
-  exports.raw = raw;
-  exports.rawTimeout = rawTimeout;
-  exports.yieldableToPromise = yieldableToPromise;
+  _exports.isEventedObject = isEventedObject;
+  _exports.Arguments = Arguments;
+  _exports._cleanupOnDestroy = _cleanupOnDestroy;
+  _exports.timeout = timeout;
+  _exports.RawValue = RawValue;
+  _exports.raw = raw;
+  _exports.rawTimeout = rawTimeout;
+  _exports.yieldableToPromise = yieldableToPromise;
+  _exports.forever = _exports._ComputedProperty = _exports.YIELDABLE_CANCEL = _exports.YIELDABLE_RETURN = _exports.YIELDABLE_THROW = _exports.YIELDABLE_CONTINUE = _exports.yieldableSymbol = _exports.INVOKE = _exports.objectAssign = void 0;
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function isEventedObject(c) {
     return c && (typeof c.one === 'function' && typeof c.off === 'function' || typeof c.addEventListener === 'function' && typeof c.removeEventListener === 'function');
@@ -107531,7 +107736,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   };
 
-  var objectAssign = exports.objectAssign = Object.assign || function objectAssign(target) {
+  var objectAssign = Object.assign || function objectAssign(target) {
     'use strict';
 
     if (target == null) {
@@ -107539,8 +107744,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     target = Object(target);
+
     for (var index = 1; index < arguments.length; index++) {
       var source = arguments[index];
+
       if (source != null) {
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
@@ -107549,16 +107756,18 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
     }
+
     return target;
   };
 
+  _exports.objectAssign = objectAssign;
+
   function _cleanupOnDestroy(owner, object, cleanupMethodName) {
-    for (var _len = arguments.length, args = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+    for (var _len = arguments.length, args = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
       args[_key - 3] = arguments[_key];
     }
 
     // TODO: find a non-mutate-y, non-hacky way of doing this.
-
     if (!owner.willDestroy) {
       // we're running in non Ember object (possibly in a test mock)
       return;
@@ -107572,8 +107781,10 @@ lunr.QueryParser.parseBoost = function (parser) {
         for (var i = 0, l = disposers.length; i < l; i++) {
           disposers[i]();
         }
+
         oldWillDestroy.apply(owner, arguments);
       };
+
       owner.willDestroy.__ember_processes_destroyers__ = disposers;
     }
 
@@ -107582,26 +107793,29 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
   }
 
-  var INVOKE = exports.INVOKE = "__invoke_symbol__";
-
+  var INVOKE = "__invoke_symbol__";
+  _exports.INVOKE = INVOKE;
   var locations = ['ember-glimmer/helpers/action', 'ember-routing-htmlbars/keywords/closure-action', 'ember-routing/keywords/closure-action'];
 
   for (var i = 0; i < locations.length; i++) {
     if (locations[i] in Ember.__loader.registry) {
-      exports.INVOKE = INVOKE = Ember.__loader.require(locations[i])['INVOKE'];
+      _exports.INVOKE = INVOKE = Ember.__loader.require(locations[i])['INVOKE'];
       break;
     }
-  }
+  } // TODO: Symbol polyfill?
 
-  // TODO: Symbol polyfill?
-  var yieldableSymbol = exports.yieldableSymbol = "__ec_yieldable__";
-  var YIELDABLE_CONTINUE = exports.YIELDABLE_CONTINUE = "next";
-  var YIELDABLE_THROW = exports.YIELDABLE_THROW = "throw";
-  var YIELDABLE_RETURN = exports.YIELDABLE_RETURN = "return";
-  var YIELDABLE_CANCEL = exports.YIELDABLE_CANCEL = "cancel";
 
-  var _ComputedProperty = exports._ComputedProperty = Ember.ComputedProperty;
-
+  var yieldableSymbol = "__ec_yieldable__";
+  _exports.yieldableSymbol = yieldableSymbol;
+  var YIELDABLE_CONTINUE = "next";
+  _exports.YIELDABLE_CONTINUE = YIELDABLE_CONTINUE;
+  var YIELDABLE_THROW = "throw";
+  _exports.YIELDABLE_THROW = YIELDABLE_THROW;
+  var YIELDABLE_RETURN = "return";
+  _exports.YIELDABLE_RETURN = YIELDABLE_RETURN;
+  var YIELDABLE_CANCEL = "cancel";
+  _exports.YIELDABLE_CANCEL = YIELDABLE_CANCEL;
+  var _ComputedProperty = Ember.ComputedProperty;
   /**
    *
    * Yielding `timeout(ms)` will pause a task for the duration
@@ -107624,17 +107838,21 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @param {number} ms - the amount of time to sleep before resuming
    *   the task, in milliseconds
    */
+
+  _exports._ComputedProperty = _ComputedProperty;
+
   function timeout(ms) {
-    var timerId = void 0;
+    var timerId;
     var promise = new Ember.RSVP.Promise(function (r) {
       timerId = Ember.run.later(r, ms);
     });
+
     promise.__ec_cancel__ = function () {
       Ember.run.cancel(timerId);
     };
+
     return promise;
   }
-
   /**
    *
    * Yielding `forever` will pause a task indefinitely until
@@ -107666,7 +107884,11 @@ lunr.QueryParser.parseBoost = function (parser) {
    * });
    * ```
    */
-  var forever = exports.forever = _defineProperty({}, yieldableSymbol, function () {});
+
+
+  var forever = _defineProperty({}, yieldableSymbol, function () {});
+
+  _exports.forever = forever;
 
   function RawValue(value) {
     this.value = value;
@@ -107684,14 +107906,13 @@ lunr.QueryParser.parseBoost = function (parser) {
         taskInstance.proceed(resumeIndex, YIELDABLE_CONTINUE, _this._result);
       }, ms);
       return function () {
-        window.clearInterval(timerId);
+        clearTimeout(timerId);
       };
     });
   }
 
   function yieldableToPromise(yieldable) {
     var def = Ember.RSVP.defer();
-
     def.promise.__ec_cancel__ = yieldable[yieldableSymbol]({
       proceed: function proceed(_index, resumeType, value) {
         if (resumeType == YIELDABLE_CONTINUE || resumeType == YIELDABLE_RETURN) {
@@ -107701,7 +107922,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
     }, 0);
-
     return def.promise;
   }
 });
