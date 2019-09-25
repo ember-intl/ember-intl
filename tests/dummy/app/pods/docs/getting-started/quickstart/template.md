@@ -76,7 +76,7 @@ To enabled the template linter rule, edit the file `.template-lintrc.js` as foll
 module.exports = {
   extends: 'recommended',
 
-    rules: {
+  rules: {
     'no-bare-strings': true
   }
 };
