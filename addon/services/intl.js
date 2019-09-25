@@ -17,6 +17,7 @@ import { next, cancel } from '@ember/runloop';
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
+import links from '../utils/links';
 import hydrate from '../hydrate';
 import getDOM from '../utils/get-dom';
 
@@ -87,9 +88,11 @@ export default Service.extend(Evented, {
   init() {
     this._super(...arguments);
 
-    warn('[ember-intl] Intl API does not exist in this environment.  A polyfill of `Intl` is required.', Intl, {
-      id: 'ember-intl-undefined-intljs'
-    });
+    if (typeof Intl === 'undefined') {
+      warn(`[ember-intl] Intl API was not found.\nSee: ${links.polyfill}`, false, {
+        id: 'ember-intl-undefined-intljs'
+      });
+    }
 
     const initialLocale = get(this, 'locale') || ['en-us'];
 
