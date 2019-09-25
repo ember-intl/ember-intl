@@ -76711,10 +76711,29 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 
+  function serializeIntoHash(store, modelClass, snapshot, options) {
+    if (options === void 0) {
+      options = {
+        includeId: true
+      };
+    }
+
+    var serializer = store.serializerFor(modelClass.modelName);
+
+    if (typeof serializer.serializeIntoHash === 'function') {
+      var data = {};
+      serializer.serializeIntoHash(data, modelClass, snapshot, options);
+      return data;
+    }
+
+    return serializer.serialize(snapshot, options);
+  }
+
   exports.BuildURLMixin = buildUrlMixin;
   exports.determineBodyPromise = determineBodyPromise;
   exports.fetch = getFetchFunction;
   exports.parseResponseHeaders = parseResponseHeaders;
+  exports.serializeIntoHash = serializeIntoHash;
   exports.serializeQueryParams = serializeQueryParams;
 
   Object.defineProperty(exports, '__esModule', { value: true });
@@ -77680,7 +77699,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/adapter/json-api", ["exports", "@ember-data/adapter/rest", "ember-inflector"], function (_exports, _rest, _emberInflector) {
+;define("@ember-data/adapter/json-api", ["exports", "@ember-data/adapter/rest", "ember-inflector", "@ember-data/adapter/-private"], function (_exports, _rest, _emberInflector, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -77906,13 +77925,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       var dasherized = Ember.String.dasherize(modelName);
       return (0, _emberInflector.pluralize)(dasherized);
     },
-    // TODO: Remove this once we have a better way to override HTTP verbs.
     updateRecord: function updateRecord(store, type, snapshot) {
-      var data = {};
-      var serializer = store.serializerFor(type.modelName);
-      serializer.serializeIntoHash(data, type, snapshot, {
-        includeId: true
-      });
+      var data = (0, _private.serializeIntoHash)(store, type, snapshot);
       var url = this.buildURL(type.modelName, snapshot.id, snapshot, 'updateRecord');
       return this.ajax(url, 'PATCH', {
         data: data
@@ -78567,12 +78581,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {Promise} promise
     */
     createRecord: function createRecord(store, type, snapshot) {
-      var data = {};
-      var serializer = store.serializerFor(type.modelName);
       var url = this.buildURL(type.modelName, null, snapshot, 'createRecord');
-      serializer.serializeIntoHash(data, type, snapshot, {
-        includeId: true
-      });
+      var data = (0, _private.serializeIntoHash)(store, type, snapshot);
       return this.ajax(url, 'POST', {
         data: data
       });
@@ -78592,9 +78602,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {Promise} promise
     */
     updateRecord: function updateRecord(store, type, snapshot) {
-      var data = {};
-      var serializer = store.serializerFor(type.modelName);
-      serializer.serializeIntoHash(data, type, snapshot);
+      var data = (0, _private.serializeIntoHash)(store, type, snapshot, {});
       var id = snapshot.id;
       var url = this.buildURL(type.modelName, id, snapshot, 'updateRecord');
       return this.ajax(url, 'PUT', {
@@ -79202,7 +79210,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.3";
+  var _default = "3.12.4";
   _exports.default = _default;
 });
 ;define("@ember-data/canary-features/default-features", ["exports"], function (_exports) {
@@ -79775,7 +79783,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.3";
+  var _default = "3.12.4";
   _exports.default = _default;
 });
 ;define('@ember-data/serializer/-private', ['exports'], function (exports) { 'use strict';
@@ -83598,7 +83606,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.3";
+  var _default = "3.12.4";
   _exports.default = _default;
 });
 ;define('@ember-data/store/-private', ['exports', 'ember-inflector', '@ember/ordered-set', '@ember-data/canary-features', '@ember-data/adapter/error'], function (exports, emberInflector, EmberOrderedSet, canaryFeatures, error) { 'use strict';
@@ -83854,7 +83862,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @return {Object}
   */
 
-  function errorsArrayToHash(errors) {
+  function errorsArrayToHash$1(errors) {
     var out = {};
 
     if (Ember.isPresent(errors)) {
@@ -89340,7 +89348,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           jsonApiErrors = recordData.getErrors();
 
           if (jsonApiErrors) {
-            var errorsHash = errorsArrayToHash(jsonApiErrors);
+            var errorsHash = errorsArrayToHash$1(jsonApiErrors);
             var errorKeys = Object.keys(errorsHash);
 
             for (var i = 0; i < errorKeys.length; i++) {
@@ -89356,7 +89364,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (canaryFeatures.RECORD_DATA_ERRORS) {
         this._clearErrorMessages();
 
-        var errors = errorsArrayToHash(jsonApiErrors);
+        var errors = errorsArrayToHash$1(jsonApiErrors);
         var errorKeys = Object.keys(errors);
 
         for (var i = 0; i < errorKeys.length; i++) {
@@ -96359,7 +96367,14 @@ lunr.QueryParser.parseBoost = function (parser) {
       return internalModel;
     }, function (error$1) {
       if (error$1 instanceof error.InvalidError) {
-        var parsedErrors = serializer.extractErrors(store, modelClass, error$1, snapshot.id);
+        var parsedErrors;
+
+        if (typeof serializer.extractErrors === 'function') {
+          parsedErrors = serializer.extractErrors(store, modelClass, error$1, snapshot.id);
+        } else {
+          parsedErrors = errorsArrayToHash(error$1.errors);
+        }
+
         store.recordWasInvalid(internalModel, parsedErrors, error$1);
       } else {
         store.recordWasError(internalModel, error$1);
@@ -96470,7 +96485,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   exports._objectIsAlive = _objectIsAlive;
   exports.coerceId = coerceId;
   exports.diffArray = diffArray;
-  exports.errorsArrayToHash = errorsArrayToHash;
+  exports.errorsArrayToHash = errorsArrayToHash$1;
   exports.errorsHashToArray = errorsHashToArray;
   exports.guardDestroyedStore = guardDestroyedStore;
   exports.normalizeModelName = normalizeModelName;
@@ -96508,7 +96523,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.3";
+  var _default = "3.12.4";
   _exports.default = _default;
 });
 ;define('@ember/ordered-set/index', ['exports'], function (exports) {
@@ -108806,7 +108821,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.12.3";
+  var _default = "3.12.4";
   _exports.default = _default;
 });
 ;define('ember-fetch-adapter/-private/add-query-params', ['exports', 'ember-fetch/mixins/adapter-fetch'], function (exports, _adapterFetch) {
