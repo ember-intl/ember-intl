@@ -297,7 +297,7 @@ https://ember-intl.github.io/ember-intl/docs/guide/asynchronously-loading-transl
 
 ## Testing with ember-intl
 
-ember-intl ships with a number of helpers for assist with writing tests.  [Documentation](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/guide/testing)
+ember-intl ships with a number of helpers to assist with writing tests.  [Documentation](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/guide/testing)
 
 
 ## Common Errors
