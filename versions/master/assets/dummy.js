@@ -1778,7 +1778,7 @@
     }
   });
 });
-;define("dummy/components/code-snippet", ["exports", "ember-code-snippet/components/code-snippet", "dummy/snippets"], function (_exports, _codeSnippet, _snippets) {
+;define("dummy/components/code-snippet", ["exports", "dummy/snippets"], function (_exports, _snippets) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -1786,8 +1786,78 @@
   });
   _exports.default = void 0;
 
-  var _default = _codeSnippet.default.extend({
-    snippets: _snippets.default
+  /* global require */
+  var Highlight = self.require('highlight.js');
+
+  var _default = Ember.Component.extend({
+    tagName: 'pre',
+    classNameBindings: ['language'],
+    unindent: true,
+    _unindent: function _unindent(src) {
+      if (!this.get('unindent')) {
+        return src;
+      }
+
+      var match,
+          min,
+          lines = src.split("\n").filter(function (l) {
+        return l !== '';
+      });
+
+      for (var i = 0; i < lines.length; i++) {
+        match = /^[ \t]*/.exec(lines[i]);
+
+        if (match && (typeof min === 'undefined' || min > match[0].length)) {
+          min = match[0].length;
+        }
+      }
+
+      if (typeof min !== 'undefined' && min > 0) {
+        src = src.replace(new RegExp("^[ \t]{" + min + "}", 'gm'), "");
+      }
+
+      return src;
+    },
+    source: Ember.computed('name', function () {
+      var snippet = this.get('name').split('/').reduce(function (dir, name) {
+        return dir && dir[name];
+      }, _snippets.default);
+      return this._unindent((snippet || "").replace(/^(\s*\n)*/, '').replace(/\s*$/, ''));
+    }),
+    didInsertElement: function didInsertElement() {
+      Highlight.highlightBlock(this.get('element'));
+    },
+    language: Ember.computed('name', function () {
+      var m = /\.(\w+)$/i.exec(this.get('name'));
+
+      if (m) {
+        switch (m[1].toLowerCase()) {
+          case 'js':
+            return 'javascript';
+
+          case 'coffee':
+            return 'coffeescript';
+
+          case 'hbs':
+            return 'htmlbars';
+
+          case 'css':
+            return 'css';
+
+          case 'scss':
+            return 'scss';
+
+          case 'less':
+            return 'less';
+
+          case 'emblem':
+            return 'emblem';
+
+          case 'ts':
+            return 'typescript';
+        }
+      }
+    })
   });
 
   _exports.default = _default;
@@ -5497,6 +5567,24 @@
     "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"etw-px-4 etw-my-8 etw-max-w-3xl etw-mx-auto etw-font-sans\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-flex etw-mt-6\"],[8],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-w-3/4 etw-pr-6\"],[8],[0,\"\\n      \"],[7,\"h1\",true],[10,\"class\",\"etw-pt-8 etw-text-3xl etw-font-bold\"],[8],[0,\"Your Tailwind styles\"],[9],[0,\"\\n      \"],[7,\"p\",true],[10,\"class\",\"etw-mt-3 etw-mb-4 etw-text-lg\"],[8],[0,\"A reference for every generated class in your app.\"],[9],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Border radius\",[28,\"array\",[\".rounded{-side?}{-size?}\"],null],[24,[\"moduleStyles\",\"borderRadius\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Borders\",[28,\"array\",[\".border{-side?}{-width?}\"],null],[24,[\"moduleStyles\",\"borderWidths\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Colors\",[28,\"array\",[\".text-{color}\",\".bg-{color}\",\".border-{color}\"],null],[24,[\"moduleStyles\",\"colors\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Font weights\",[28,\"array\",[\".font-{weight}\"],null],[24,[\"moduleStyles\",\"fontWeights\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Height\",[28,\"array\",[\".h-{size}\"],null],[24,[\"moduleStyles\",\"height\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Letter spacing\",[28,\"array\",[\".tracking-{size}\"],null],[24,[\"moduleStyles\",\"letterSpacing\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Line height\",[28,\"array\",[\".leading-{size}\"],null],[24,[\"moduleStyles\",\"lineHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Margin\",[28,\"array\",[\".m{side?}-{size}\"],null],[24,[\"moduleStyles\",\"margin\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Max height\",[28,\"array\",[\".max-h-{size}\"],null],[24,[\"moduleStyles\",\"maxHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Max width\",[28,\"array\",[\".max-w-{size}\"],null],[24,[\"moduleStyles\",\"maxWidth\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Min height\",[28,\"array\",[\".min-h-{size}\"],null],[24,[\"moduleStyles\",\"minHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Min width\",[28,\"array\",[\".min-w-{size}\"],null],[24,[\"moduleStyles\",\"minWidth\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Negative margin\",[28,\"array\",[\".-m{side?}-{size}\"],null],[24,[\"moduleStyles\",\"negativeMargin\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Opacity\",[28,\"array\",[\".opacity-{name}\"],null],[24,[\"moduleStyles\",\"opacity\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Padding\",[28,\"array\",[\".p{side?}-{size}\"],null],[24,[\"moduleStyles\",\"padding\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Shadows\",[28,\"array\",[\".shadow-{size?}\"],null],[24,[\"moduleStyles\",\"shadows\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"SVG fill\",[28,\"array\",[\".fill-{name}\"],null],[24,[\"moduleStyles\",\"svgFill\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"SVG stroke\",[28,\"array\",[\".stroke-{name}\"],null],[24,[\"moduleStyles\",\"svgStroke\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Text sizes\",[28,\"array\",[\".text-{size}\"],null],[24,[\"moduleStyles\",\"textSizes\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Width\",[28,\"array\",[\".w-{size}\"],null],[24,[\"moduleStyles\",\"width\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Z index\",[28,\"array\",[\".z-{index}\"],null],[24,[\"moduleStyles\",\"zIndex\"]]]]],false],[0,\"\\n\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-w-1/4 etw-relative\"],[8],[0,\"\\n      \"],[1,[22,\"etw/module-style-detail\"],false],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "dummy/templates/application-tailwind.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("dummy/templates/components/code-snippet", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "zGuD2Kx3",
+    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"source\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "meta": {
+      "moduleName": "dummy/templates/components/code-snippet.hbs"
     }
   });
 

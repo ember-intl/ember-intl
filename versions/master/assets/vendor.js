@@ -102415,88 +102415,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     return src;
   }
 });
-;define("ember-code-snippet/components/code-snippet", ["exports", "ember-code-snippet/templates/components/code-snippet"], function (_exports, _codeSnippet) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var Highlight = self.require('highlight.js');
-
-  var _default = Ember.Component.extend({
-    layout: _codeSnippet.default,
-    tagName: 'pre',
-    classNameBindings: ['language'],
-    unindent: true,
-    _unindent: function _unindent(src) {
-      if (!this.get('unindent')) {
-        return src;
-      }
-
-      var match, min;
-      var lines = src.match(/[^\r\n]+/g); // Split in non-empty lines (both linux + windows)
-
-      for (var i = 0; i < lines.length; i++) {
-        match = /^[ \t]*/.exec(lines[i]);
-
-        if (match && (typeof min === 'undefined' || min > match[0].length)) {
-          min = match[0].length;
-        }
-      }
-
-      if (typeof min !== 'undefined' && min > 0) {
-        src = src.replace(new RegExp("^[ \t]{" + min + "}", 'gm'), "");
-      }
-
-      return src;
-    },
-    source: Ember.computed('name', function () {
-      var snippet = this.get('name').split('/').reduce(function (dir, name) {
-        return dir && dir[name];
-      }, this.snippets);
-      return this._unindent((snippet || "").replace(/^(\s*\n)*/, '') // note: \s already matches \r, no need to check for [whitespace]\r\n
-      .replace(/\s*$/, ''));
-    }),
-    didInsertElement: function didInsertElement() {
-      Highlight.highlightBlock(this.get('element'));
-    },
-    language: Ember.computed('name', function () {
-      var m = /\.(\w+)$/i.exec(this.get('name'));
-
-      if (m) {
-        switch (m[1].toLowerCase()) {
-          case 'js':
-            return 'javascript';
-
-          case 'coffee':
-            return 'coffeescript';
-
-          case 'hbs':
-            return 'htmlbars';
-
-          case 'css':
-            return 'css';
-
-          case 'scss':
-            return 'scss';
-
-          case 'less':
-            return 'less';
-
-          case 'emblem':
-            return 'emblem';
-
-          case 'ts':
-            return 'typescript';
-        }
-      }
-    })
-  });
-
-  _exports.default = _default;
-});
 ;define("ember-code-snippet/helpers/get-code-snippet", ["exports", "ember-code-snippet"], function (_exports, _emberCodeSnippet) {
   "use strict";
 
@@ -102573,24 +102491,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     "format-relative.hbs": "{{format-relative yesterday}}\n{{format-relative instant}}\n{{format-relative now interval=1000}}\n",
     "format-time.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n"
   };
-  _exports.default = _default;
-});
-;define("ember-code-snippet/templates/components/code-snippet", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "Zxcn1XqU",
-    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"source\"],false],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "ember-code-snippet/templates/components/code-snippet.hbs"
-    }
-  });
-
   _exports.default = _default;
 });
 ;define("ember-component-css/initializers/component-styles", ["exports", "ember-component-css/pod-names"], function (_exports, _podNames) {
