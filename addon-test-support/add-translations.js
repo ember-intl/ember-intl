@@ -19,5 +19,5 @@ export default makeIntlHelper((intl, localeName, translations) => {
     localeName = pickLastLocale(get(intl, 'locale'));
   }
 
-  return intl.addTranslations(localeName, translations);
+  intl.addTranslations(localeName, translations);
 });

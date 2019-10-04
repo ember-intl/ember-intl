@@ -191,7 +191,7 @@ export default Service.extend(Evented, {
   addTranslations(localeName, payload) {
     const locale = this.translationsFor(localeName);
 
-    return locale.addTranslations(payload);
+    locale.addTranslations(payload);
   },
 
   /** @public **/
