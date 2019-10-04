@@ -41,7 +41,7 @@ intl.get('locales') => ['en-us', 'en-ca', 'fr-fr'];
 
 ## Methods
 
-### t _(translationKey:String, optionalOptions:Object)_
+### t _(translationKey:String, optionalOptions:Object)_: String | SafeString
 
 Unlike `formatMessage`, the `t` method accepts a translation key instead of a
 translation string. This method returns a translated string. To provide
@@ -85,7 +85,7 @@ this.intl.t('title.header', { htmlSafe: true });
 {{t 'title.header' htmlSafe=true}}
 ```
 
-### formatMessage _(translation:String, optionalOptions:Object)_
+### formatMessage _(translation:String, optionalOptions:Object)_: String
 
 `formatMessage` formats a translation string. Unlike the `t` method, it
 accepts a translation string instead of a translation key.
@@ -101,7 +101,7 @@ Outputs:
 
 > watch will cost \$300
 
-### formatMessage (html) _(value:String, optionalOptions:Object)_
+### formatMessage (html) _(value:String, optionalOptions:Object)_: SafeString
 
 `formatMessage`, when provided the `htmlSafe` options, formats a translation string and returns an
 `Handlebars.SafeString`. This is useful for rendering translations containing
@@ -122,19 +122,19 @@ Outputs:
 
 Note, the Doe is escaped and does not return markup.
 
-### formatNumber _(value:Number, optionalOptions:Object)_
+### formatNumber _(value:Number, optionalOptions:Object)_: String
 
 Documentation missing
 
-### formatDate _(value:Date/Number/String, optionalOptions:Object)_
+### formatDate _(value:Date/Number/String, optionalOptions:Object)_: String
 
 Documentation missing
 
-### formatTime _(value:Date/Number/String, optionalOptions:Object)_
+### formatTime _(value:Date/Number/String, optionalOptions:Object)_: String
 
 Documentation missing
 
-### exists _(translationKey:String, optionalLocale:String)_
+### exists _(translationKey:String, optionalLocale:String)_: Boolean
 
 Returns a boolean indicating whether the translation exists. Locale is
 optional. If omitted, the current/active locale is used in it's place.
@@ -145,11 +145,11 @@ this.get('intl').exists('foo.bar', 'en-us');
 // => true
 ```
 
-### addTranslations _(locale:String, payload:Object)_
+### addTranslations _(locale:String, payload:Object)_: void
 
 Adds a translations to a given locale. Useful for registering translations at runtime.
 
-### lookup _(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)_
+### lookup _(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)_: String | undefined
 
 Given a translation key, will return the translation for either the active
 locale, or the locale specified as the second argument.
@@ -161,3 +161,16 @@ this.intl.lookup('shared.confirmMessage', 'en-us', {
 ```
 
 Returns `undefined` if you pass `{ resilient: true }`. If ommitted, will return a missing translation message.
+
+### setLocale _(locale:String | Array{String})_: void
+
+Documentation missing
+
+### addLocaleData _(data:Object)_: void
+
+Documentation missing
+
+### translationsFor _(localeName:String)_: Object
+
+Documentation missing
+
