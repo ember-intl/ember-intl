@@ -5068,9 +5068,9 @@ ember-cli-addon-docs-esdoc@^0.2.3:
     walk-sync "^0.3.2"
 
 ember-cli-addon-docs@^0.6.14:
-  version "0.6.14"
-  resolved "https://registry.yarnpkg.com/ember-cli-addon-docs/-/ember-cli-addon-docs-0.6.14.tgz#7d7801f0ffca6df00b86a11d58101c8523e6d44b"
-  integrity sha512-kfwGcoeNN6ban1ghHdaIqlfvMkj7T9oWoiel7kHknbgcukC5GX67G1w5CaEVMtmAK69kIlJDzo7VB+hAUnCthw==
+  version "0.6.15"
+  resolved "https://registry.yarnpkg.com/ember-cli-addon-docs/-/ember-cli-addon-docs-0.6.15.tgz#a0b8d744a37e3dba9afa1b0c19b44bb7cca5afba"
+  integrity sha512-swlN0dWY2AUq7CCN8cS0IRtZFdVzDCjcaGorg0NxppP+/MlruRlLPEZm14me3ghS3ArlTohWwp+DIFy1gylczw==
   dependencies:
     "@glimmer/syntax" "^0.42.0"
     broccoli-bridge "^1.0.0"
@@ -7653,12 +7653,7 @@ homedir-polyfill@^1.0.0, homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-hosted-git-info@^2.6.0:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
-  integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
-
-hosted-git-info@^2.7.1:
+hosted-git-info@^2.6.0, hosted-git-info@^2.7.1:
   version "2.8.4"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.4.tgz#44119abaf4bc64692a16ace34700fed9c03e2546"
   integrity sha512-pzXIvANXEFrc5oFFXRMkbLPQ2rXRoDERwDLyrcUxGhaZhgP54BBSl9Oheh7Vv0T090cszWBxPjkQQ5Sq1PbBRQ==
