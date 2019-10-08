@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.13.2
+ * @version   3.13.3
  */
 
 /*globals process */
@@ -16712,9 +16712,9 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/polyf
             observer.suspended = true;
             sendEvent(target, eventName, [target, observer.path]);
           } finally {
-            observer.suspended = false;
             observer.tag = (0, _reference.combine)(getChainTagsForKey(target, observer.path));
             observer.lastRevision = (0, _reference.value)(observer.tag);
+            observer.suspended = false;
           }
         }
       });
@@ -58193,7 +58193,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.13.2";
+  var _default = "3.13.3";
   _exports.default = _default;
 });
 define("node-module/index", ["exports"], function (_exports) {
