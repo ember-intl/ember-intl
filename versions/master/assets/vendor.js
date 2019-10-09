@@ -99992,21 +99992,21 @@ lunr.QueryParser.parseBoost = function (parser) {
               console.groupCollapsed("Route: %c".concat(doc.route), 'font-family: monospace');
 
               for (var _i3 = 0, _Object$values = Object.values(result.resultInfo.matchData.metadata); _i3 < _Object$values.length; _i3++) {
-                var match = _Object$values[_i3];
+                var _match = _Object$values[_i3];
 
-                for (var _i4 = 0, _Object$entries3 = Object.entries(match); _i4 < _Object$entries3.length; _i4++) {
+                for (var _i4 = 0, _Object$entries3 = Object.entries(_match); _i4 < _Object$entries3.length; _i4++) {
                   var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i4], 2),
-                      key = _Object$entries3$_i[0],
-                      data = _Object$entries3$_i[1];
+                      _key = _Object$entries3$_i[0],
+                      _data = _Object$entries3$_i[1];
 
                   var _iteratorNormalCompletion5 = true;
                   var _didIteratorError5 = false;
                   var _iteratorError5 = undefined;
 
                   try {
-                    for (var _iterator5 = data.position[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                    for (var _iterator5 = _data.position[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
                       var _position = _step5.value;
-                      logSnippet(doc, key, _position);
+                      logSnippet(doc, _key, _position);
                     }
                   } catch (err) {
                     _didIteratorError5 = true;
