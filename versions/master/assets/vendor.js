@@ -105202,7 +105202,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function resolveScheduler(propertyObj, obj, TaskGroup) {
     if (propertyObj._taskGroupPath) {
-      var taskGroup = obj.get(propertyObj._taskGroupPath);
+      var taskGroup = Ember.get(obj, propertyObj._taskGroupPath);
       (false && !(taskGroup instanceof TaskGroup) && Ember.assert("Expected path '".concat(propertyObj._taskGroupPath, "' to resolve to a TaskGroup object, but instead was ").concat(taskGroup), taskGroup instanceof TaskGroup));
       return taskGroup._scheduler;
     } else {
@@ -107460,6 +107460,12 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _utils.forever;
     }
   });
+  Object.defineProperty(_exports, "rawTimeout", {
+    enumerable: true,
+    get: function get() {
+      return _utils.rawTimeout;
+    }
+  });
   Object.defineProperty(_exports, "didCancel", {
     enumerable: true,
     get: function get() {
@@ -107765,6 +107771,11 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Yielding `timeout(ms)` will pause a task for the duration
    * of time passed in, in milliseconds.
    *
+   * This timeout will be scheduled on the Ember runloop, which
+   * means that test helpers will wait for it to complete before
+   * continuing with the test. See `rawTimeout()` if you need
+   * different behavior.
+   *
    * The task below, when performed, will print a message to the
    * console every second.
    *
@@ -107841,6 +107852,33 @@ lunr.QueryParser.parseBoost = function (parser) {
   function raw(value) {
     return new RawValue(value);
   }
+  /**
+   *
+   * Yielding `rawTimeout(ms)` will pause a task for the duration
+   * of time passed in, in milliseconds.
+   *
+   * The timeout will use the native `setTimeout()` browser API,
+   * instead of the Ember runloop, which means that test helpers
+   * will *not* wait for it to complete.
+   *
+   * The task below, when performed, will print a message to the
+   * console every second.
+   *
+   * ```js
+   * export default Component.extend({
+   *   myTask: task(function * () {
+   *     while (true) {
+   *       console.log("Hello!");
+   *       yield rawTimeout(1000);
+   *     }
+   *   })
+   * });
+   * ```
+   *
+   * @param {number} ms - the amount of time to sleep before resuming
+   *   the task, in milliseconds
+   */
+
 
   function rawTimeout(ms) {
     return _defineProperty({}, yieldableSymbol, function (taskInstance, resumeIndex) {
