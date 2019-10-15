@@ -116183,7 +116183,6 @@ define("ember-resolver/features", [], function () {
 
       if (Ember.get(this, 'service.isFirstLoad')) {
         Ember.get(this, 'service').unsetFirstLoad();
-        return;
       }
 
       var scrollPosition;
