@@ -5281,9 +5281,9 @@ ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
     strip-bom "^3.0.0"
 
 ember-cli-htmlbars@^4.0.0:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-4.0.7.tgz#64e484b5cd3b43b8802480c91607d116c6b2922c"
-  integrity sha512-D8EfuhMR1U7d2Uk1OOg/y2URHH/IRaEjVSXDBaYT01TLtfAvDHZnraNMt8Ka11PsCPW5FtGS6QCDxLt2R2cj9Q==
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-4.0.8.tgz#e87b62e7040bd478a2d007053bdb1644dd1685b0"
+  integrity sha512-B6fzlqmv2E2dl8P6UIYu3bY8nZU2kKfl1VkEIgxFAINfsu9fP65kX/bKzHqGhHF8nAtWBoXZWw6tomHKfUT/Jg==
   dependencies:
     "@ember/edition-utils" "^1.1.1"
     babel-plugin-htmlbars-inline-precompile "^3.0.0"
