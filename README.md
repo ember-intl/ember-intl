@@ -23,7 +23,9 @@
 ## Documentation
 
 [4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
+
 [3.x](https://github.com/ember-intl/ember-intl/tree/3.x/docs)
+
 [2.x](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
 
 ## Translations
