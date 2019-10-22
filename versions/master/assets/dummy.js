@@ -3526,6 +3526,25 @@
     }
   });
 });
+;define("dummy/helpers/noop", ["exports", "ember-composable-helpers/helpers/noop"], function (_exports, _noop) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _noop.default;
+    }
+  });
+  Object.defineProperty(_exports, "noop", {
+    enumerable: true,
+    get: function get() {
+      return _noop.noop;
+    }
+  });
+});
 ;define("dummy/helpers/not-eq", ["exports", "ember-truth-helpers/helpers/not-equal"], function (_exports, _notEqual) {
   "use strict";
 
