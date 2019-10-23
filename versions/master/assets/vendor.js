@@ -105379,12 +105379,12 @@ lunr.QueryParser.parseBoost = function (parser) {
   function updateTaskChainCounts(task) {
     var numRunning = task.numRunning;
     var numQueued = task.numQueued;
-    var taskGroup = task.get('group');
+    var taskGroup = Ember.get(task, 'group');
 
     while (taskGroup) {
       Ember.set(taskGroup, 'numRunning', numRunning);
       Ember.set(taskGroup, 'numQueued', numQueued);
-      taskGroup = taskGroup.get('group');
+      taskGroup = Ember.get(taskGroup, 'group');
     }
   }
 
@@ -107078,7 +107078,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     },
     group: Ember.computed(function () {
-      return this._taskGroupPath && this.context.get(this._taskGroupPath);
+      return this._taskGroupPath && Ember.get(this.context, this._taskGroupPath);
     }),
     _scheduler: null,
     _resetState: function _resetState() {
