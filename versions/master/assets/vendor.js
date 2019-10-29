@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.13.3
+ * @version   3.13.4
  */
 
 /*globals process */
@@ -6451,13 +6451,15 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
 
         if (!params || params.length === 0) {
           (false && !(!(this.route === UNDEFINED && this.model === UNDEFINED && this.models === UNDEFINED && this.query === UNDEFINED)) && (0, _debug.assert)('You must provide at least one of the `@route`, `@model`, `@models` or `@query` argument to `<LinkTo>`.', !(this.route === UNDEFINED && this.model === UNDEFINED && this.models === UNDEFINED && this.query === UNDEFINED)));
+          var models = this._models;
 
-          if (false
-          /* DEBUG */
-          && this.query === UNDEFINED) {
-            var models = this._models;
-            var lastModel = models.length > 0 && models[models.length - 1];
-            (false && !(!(lastModel && lastModel.isQueryParams)) && (0, _debug.assert)('The `(query-params)` helper can only be used when invoking the `{{link-to}}` component.', !(lastModel && lastModel.isQueryParams)));
+          if (models.length > 0) {
+            var lastModel = models[models.length - 1];
+
+            if (typeof lastModel === 'object' && lastModel !== null && lastModel.isQueryParams) {
+              this.query = lastModel.values;
+              models.pop();
+            }
           }
 
           return;
@@ -17271,8 +17273,11 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/polyf
 
         for (var i = 0; i < arrLength; i++) {
           var item = objectAt(current, i);
-          (false && !(typeof item === 'object') && (0, _debug.assert)("When using @each to observe the array `" + current.toString() + "`, the items in the array must be objects", typeof item === 'object'));
-          chainTags.push(tagForProperty(item, segment));
+
+          if (item) {
+            (false && !(typeof item === 'object') && (0, _debug.assert)("When using @each to observe the array `" + current.toString() + "`, the items in the array must be objects", typeof item === 'object'));
+            chainTags.push(tagForProperty(item, segment));
+          }
         } // Push the tag for the array length itself
 
 
@@ -29940,12 +29945,12 @@ define("@ember/-internals/runtime/lib/mixins/observable", ["exports", "@ember/-i
       @param {String} key The key to observe
       @param {Object} target The target object to invoke
       @param {String|Function} method The method to invoke
-      @param {Boolean} async Whether the observer is async or not
+      @param {Boolean} sync Whether the observer is sync or not
       @return {Observable}
       @public
     */
-    addObserver: function addObserver(key, target, method, async) {
-      (0, _metal.addObserver)(this, key, target, method, async);
+    addObserver: function addObserver(key, target, method, sync) {
+      (0, _metal.addObserver)(this, key, target, method, sync);
       return this;
     },
 
@@ -29957,12 +29962,12 @@ define("@ember/-internals/runtime/lib/mixins/observable", ["exports", "@ember/-i
       @param {String} key The key to observe
       @param {Object} target The target object to invoke
       @param {String|Function} method The method to invoke
-      @param {Boolean} async Whether the observer is async or not
+      @param {Boolean} sync Whether the observer is async or not
       @return {Observable}
       @public
     */
-    removeObserver: function removeObserver(key, target, method, async) {
-      (0, _metal.removeObserver)(this, key, target, method, async);
+    removeObserver: function removeObserver(key, target, method, sync) {
+      (0, _metal.removeObserver)(this, key, target, method, sync);
       return this;
     },
 
@@ -37996,14 +38001,14 @@ define("@ember/controller/index", ["exports", "@ember/-internals/runtime", "@emb
   var _default = Controller;
   _exports.default = _default;
 });
-define("@ember/controller/lib/controller_mixin", ["exports", "@ember/-internals/metal", "@ember/-internals/runtime"], function (_exports, _metal, _runtime) {
+define("@ember/controller/lib/controller_mixin", ["exports", "@ember/-internals/metal", "@ember/-internals/runtime", "@ember/-internals/utils"], function (_exports, _metal, _runtime, _utils) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-
+  var MODEL = (0, _utils.symbol)('MODEL');
   /**
   @module ember
   */
@@ -38014,6 +38019,7 @@ define("@ember/controller/lib/controller_mixin", ["exports", "@ember/-internals/
     @uses Ember.ActionHandler
     @private
   */
+
   var _default = _metal.Mixin.create(_runtime.ActionHandler, {
     /* ducktype as a controller */
     isController: true,
@@ -38040,9 +38046,14 @@ define("@ember/controller/lib/controller_mixin", ["exports", "@ember/-internals/
        @property model
       @public
     */
-    model: true
-    /* EMBER_METAL_TRACKED_PROPERTIES */
-    ? (0, _metal.tracked)() : null
+    model: (0, _metal.computed)({
+      get: function get() {
+        return this[MODEL];
+      },
+      set: function set(key, value) {
+        return this[MODEL] = value;
+      }
+    })
   });
 
   _exports.default = _default;
@@ -58193,7 +58204,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.13.3";
+  var _default = "3.13.4";
   _exports.default = _default;
 });
 define("node-module/index", ["exports"], function (_exports) {
