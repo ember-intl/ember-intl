@@ -1019,7 +1019,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.14.0
+ * @version   3.14.1
  */
 
 /*globals process */
@@ -26854,7 +26854,10 @@ define("@ember/-internals/routing/lib/system/router", ["exports", "ember-babel",
               return true;
             }
 
-            if (_fromRouterService && presentProp !== false) {
+            if (_fromRouterService && presentProp !== false && qp.urlKey !== qp.prop) {
+              // assumptions (mainly from current transitionTo_test):
+              // - this is only supposed to be run when there is an alias to a query param and the alias is used to set the param
+              // - when there is no alias: qp.urlKey == qp.prop
               return false;
             }
 
@@ -26864,7 +26867,7 @@ define("@ember/-internals/routing/lib/system/router", ["exports", "ember-babel",
               return true;
             }
 
-            if (_fromRouterService && presentProp !== false) {
+            if (_fromRouterService && presentProp !== false && qp.urlKey !== qp.prop) {
               return false;
             }
 
@@ -58972,7 +58975,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.14.0";
+  var _default = "3.14.1";
   _exports.default = _default;
 });
 define("node-module/index", ["exports"], function (_exports) {
