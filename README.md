@@ -1,6 +1,7 @@
 # ember-intl
 
 [![npm Version][npm-badge]][npm]
+![Ember Version][ember-version]
 [![Build Status][travis-badge]][travis]
 [![npm](https://img.shields.io/npm/dm/ember-intl.svg)](https://www.npmjs.com/package/ember-intl)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
@@ -315,6 +316,7 @@ The solution is the ensure that the value you are passing in is in a format whic
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
 [travis]: https://travis-ci.org/ember-intl/ember-intl
 [travis-badge]: https://travis-ci.org/ember-intl/ember-intl.svg?branch=master
+[ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
 [Intl-MF]: https://github.com/yahoo/intl-messageformat
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
