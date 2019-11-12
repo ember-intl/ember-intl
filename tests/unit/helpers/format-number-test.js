@@ -161,7 +161,11 @@ module('format-number', function(hooks) {
 
     this.set(
       'currencies',
-      A([{ AMOUNT: 3, CURRENCY: 'USD' }, { AMOUNT: 8, CURRENCY: 'EUR' }, { AMOUNT: 10, CURRENCY: 'JPY' }])
+      A([
+        { AMOUNT: 3, CURRENCY: 'USD' },
+        { AMOUNT: 8, CURRENCY: 'EUR' },
+        { AMOUNT: 10, CURRENCY: 'JPY' }
+      ])
     );
 
     await render(
