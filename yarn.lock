@@ -5392,9 +5392,9 @@ ember-cli-version-checker@^3.0.1, ember-cli-version-checker@^3.1.2, ember-cli-ve
     semver "^5.6.0"
 
 ember-cli@~3.13.0:
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.13.1.tgz#8daefb108130740cd79ad7e4e1c9138fb1f7313d"
-  integrity sha512-CMVLpJYseyCNmN2Tp3vTmTFTXPSZlMQB7q2uoZ+ZTKMgdQ4ekeceW9mVAC4XwXm2FW+v8liowP+co/Bu1xUbPg==
+  version "3.13.2"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.13.2.tgz#f09ab452b537d038ce84f4d4402abb134fb99e71"
+  integrity sha512-nxbUt9znMmQ4hrlSYvxFE4FN0cfqp5nAYwuvyYQ29l8aS+wRSO2KueWbgSgaHz10o4bw0O/LexXevbKK7w+ipw==
   dependencies:
     "@babel/core" "^7.5.5"
     "@babel/plugin-transform-modules-amd" "^7.5.0"
