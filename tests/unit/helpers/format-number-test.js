@@ -176,4 +176,17 @@ module('format-number', function(hooks) {
 
     assert.equal(this.element.textContent.trim(), '$3.00€8.00¥10.00');
   });
+
+  test('should support notation option', async function(assert) {
+    if (!('notation' in new Intl.NumberFormat().resolvedOptions())) {
+      // test running in unsupported browser
+      assert.ok(true);
+
+      return;
+    }
+
+    assert.expect(1);
+    await render(hbs`{{format-number 50000 notation="compact"}}`);
+    assert.equal(this.element.textContent, '50K');
+  });
 });
