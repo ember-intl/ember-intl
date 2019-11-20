@@ -1,9 +1,7 @@
 {
   "product": {
     "title": "Hello",
-    "info": "The {product} costs {price, number, USD}",
-    "customers": "The {product} has {numCustomers, shortNumber} customers",
-    "customers.oneDigit": "The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers"
+    "info": "The {product} costs {price, number, USD}"
   },
   "photos": {
     "banner": "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"

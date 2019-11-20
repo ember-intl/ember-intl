@@ -45,28 +45,6 @@ To enable rendering HTML within translations, pass an `htmlSafe` attribute to th
 ```
 It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  
 
-## Format Message Compact Format
-
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-message-04-template.hbs'}}
-    {{format-message
-             "The {product} has {numCustomers, shortNumber} customers"
-             product='Cisco DPC3000'
-             numCustomers=25495}}
-  {{/demo.example}}
-  {{demo.snippet 'docs-helpers-format-message-04-template.hbs'}}
-{{/docs-demo}}
-
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-message-05-template.hbs'}}
-    {{format-message 
-             "The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers"
-             product='Cisco DPC3000' 
-             numCustomers=25495}}
-  {{/demo.example}}
-  {{demo.snippet "docs-helpers-format-message-05-template.hbs"}}
-{{/docs-demo}}
-
 ## Service API
 
 ```js
