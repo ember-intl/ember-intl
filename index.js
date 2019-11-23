@@ -50,7 +50,7 @@ module.exports = {
   },
 
   cacheKeyForTree(treeType) {
-    return calculateCacheKeyForTree(treeType, this);
+    return calculateCacheKeyForTree(treeType, this, this.project.root);
   },
 
   included() {
