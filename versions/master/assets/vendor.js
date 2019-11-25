@@ -85963,15 +85963,15 @@ lunr.QueryParser.parseBoost = function (parser) {
           if (it) {
             if (it instanceof _taskInstance.default) {
               it.cancel();
-            } else if (typeof it.__ec_cancel__ === 'function') {
-              it.__ec_cancel__();
+            } else if (typeof it[_utils.cancelableSymbol] === 'function') {
+              it[_utils.cancelableSymbol]();
             }
           }
         });
       };
 
       var promise = defer.promise.finally(cancelAll);
-      promise.__ec_cancel__ = cancelAll;
+      promise[_utils.cancelableSymbol] = cancelAll;
       return promise;
     };
   }
@@ -87084,7 +87084,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return;
       }
 
-      this._addDisposer(yieldedValue.__ec_cancel__);
+      this._addDisposer(yieldedValue[_utils.cancelableSymbol]);
 
       if (yieldedValue[_utils.yieldableSymbol]) {
         this._invokeYieldable(yieldedValue);
@@ -87988,6 +87988,12 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
   function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -87998,35 +88004,10 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-  var WaitFor =
-  /*#__PURE__*/
-  function () {
-    function WaitFor() {
-      _classCallCheck(this, WaitFor);
-    }
-
-    _createClass(WaitFor, [{
-      key: "then",
-      value: function then() {
-        var _yieldableToPromise;
-
-        return (_yieldableToPromise = (0, _utils.yieldableToPromise)(this)).then.apply(_yieldableToPromise, arguments);
-      }
-    }]);
-
-    return WaitFor;
-  }();
-
   var WaitForQueueYieldable =
   /*#__PURE__*/
-  function (_WaitFor) {
-    _inherits(WaitForQueueYieldable, _WaitFor);
+  function (_Yieldable) {
+    _inherits(WaitForQueueYieldable, _Yieldable);
 
     function WaitForQueueYieldable(queueName) {
       var _this;
@@ -88035,6 +88016,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(WaitForQueueYieldable).call(this));
       _this.queueName = queueName;
+      _this.timerId = null;
       return _this;
     }
 
@@ -88042,22 +88024,28 @@ lunr.QueryParser.parseBoost = function (parser) {
       key: _utils.yieldableSymbol,
       value: function value(taskInstance, resumeIndex) {
         try {
-          Ember.run.schedule(this.queueName, function () {
+          this.timerId = Ember.run.schedule(this.queueName, function () {
             taskInstance.proceed(resumeIndex, _utils.YIELDABLE_CONTINUE, null);
           });
         } catch (error) {
           taskInstance.proceed(resumeIndex, _utils.YIELDABLE_THROW, error);
         }
       }
+    }, {
+      key: _utils.cancelableSymbol,
+      value: function value() {
+        Ember.run.cancel(this.timerId);
+        this.timerId = null;
+      }
     }]);
 
     return WaitForQueueYieldable;
-  }(WaitFor);
+  }(_utils.Yieldable);
 
   var WaitForEventYieldable =
   /*#__PURE__*/
-  function (_WaitFor2) {
-    _inherits(WaitForEventYieldable, _WaitFor2);
+  function (_Yieldable2) {
+    _inherits(WaitForEventYieldable, _Yieldable2);
 
     function WaitForEventYieldable(object, eventName) {
       var _this2;
@@ -88067,6 +88055,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       _this2 = _possibleConstructorReturn(this, _getPrototypeOf(WaitForEventYieldable).call(this));
       _this2.object = object;
       _this2.eventName = eventName;
+      _this2.fn = null;
+      _this2.didFinish = false;
+      _this2.usesDOMEvents = false;
       return _this2;
     }
 
@@ -88075,46 +88066,48 @@ lunr.QueryParser.parseBoost = function (parser) {
       value: function value(taskInstance, resumeIndex) {
         var _this3 = this;
 
-        var unbind = function unbind() {};
+        this.fn = function (event) {
+          _this3.didFinish = true;
 
-        var didFinish = false;
+          _this3[_utils.cancelableSymbol]();
 
-        var fn = function fn(event) {
-          didFinish = true;
-          unbind();
           taskInstance.proceed(resumeIndex, _utils.YIELDABLE_CONTINUE, event);
         };
 
         if (typeof this.object.addEventListener === 'function') {
           // assume that we're dealing with a DOM `EventTarget`.
-          this.object.addEventListener(this.eventName, fn); // unfortunately this is required, because IE 11 does not support the
-          // `once` option: https://caniuse.com/#feat=once-event-listener
-
-          unbind = function unbind() {
-            _this3.object.removeEventListener(_this3.eventName, fn);
-          };
-
-          return unbind;
+          this.usesDOMEvents = true;
+          this.object.addEventListener(this.eventName, this.fn);
         } else {
           // assume that we're dealing with either `Ember.Evented` or a compatible
           // interface, like jQuery.
-          this.object.one(this.eventName, fn);
-          return function () {
-            if (!didFinish) {
-              _this3.object.off(_this3.eventName, fn);
-            }
-          };
+          this.object.one(this.eventName, this.fn);
+        }
+      }
+    }, {
+      key: _utils.cancelableSymbol,
+      value: function value() {
+        if (this.fn) {
+          if (this.usesDOMEvents) {
+            // unfortunately this is required, because IE 11 does not support the
+            // `once` option: https://caniuse.com/#feat=once-event-listener
+            this.object.removeEventListener(this.eventName, this.fn);
+          } else if (!this.didFinish) {
+            this.object.off(this.eventName, this.fn);
+          }
+
+          this.fn = null;
         }
       }
     }]);
 
     return WaitForEventYieldable;
-  }(WaitFor);
+  }(_utils.Yieldable);
 
   var WaitForPropertyYieldable =
   /*#__PURE__*/
-  function (_WaitFor3) {
-    _inherits(WaitForPropertyYieldable, _WaitFor3);
+  function (_Yieldable3) {
+    _inherits(WaitForPropertyYieldable, _Yieldable3);
 
     function WaitForPropertyYieldable(object, key) {
       var _this4;
@@ -88135,6 +88128,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         };
       }
 
+      _this4.observerBound = false;
       return _this4;
     }
 
@@ -88143,7 +88137,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       value: function value(taskInstance, resumeIndex) {
         var _this5 = this;
 
-        var observerFn = function observerFn() {
+        this.observerFn = function () {
           var value = Ember.get(_this5.object, _this5.key);
 
           var predicateValue = _this5.predicateCallback(value);
@@ -88154,17 +88148,23 @@ lunr.QueryParser.parseBoost = function (parser) {
           }
         };
 
-        if (!observerFn()) {
-          this.object.addObserver(this.key, null, observerFn);
-          return function () {
-            _this5.object.removeObserver(_this5.key, null, observerFn);
-          };
+        if (!this.observerFn()) {
+          this.object.addObserver(this.key, null, this.observerFn);
+          this.observerBound = true;
+        }
+      }
+    }, {
+      key: _utils.cancelableSymbol,
+      value: function value() {
+        if (this.observerBound && this.observerFn) {
+          this.object.removeObserver(this.key, null, this.observerFn);
+          this.observerFn = null;
         }
       }
     }]);
 
     return WaitForPropertyYieldable;
-  }(WaitFor);
+  }(_utils.Yieldable);
   /**
    * Use `waitForQueue` to pause the task until a certain run loop queue is reached.
    *
@@ -88562,31 +88562,58 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.isEventedObject = isEventedObject;
-  _exports.Arguments = Arguments;
   _exports._cleanupOnDestroy = _cleanupOnDestroy;
   _exports.timeout = timeout;
-  _exports.RawValue = RawValue;
   _exports.raw = raw;
   _exports.rawTimeout = rawTimeout;
   _exports.yieldableToPromise = yieldableToPromise;
-  _exports.forever = _exports._ComputedProperty = _exports.YIELDABLE_CANCEL = _exports.YIELDABLE_RETURN = _exports.YIELDABLE_THROW = _exports.YIELDABLE_CONTINUE = _exports.yieldableSymbol = _exports.INVOKE = _exports.objectAssign = void 0;
+  _exports.RawValue = _exports.forever = _exports.Yieldable = _exports._ComputedProperty = _exports.YIELDABLE_CANCEL = _exports.YIELDABLE_RETURN = _exports.YIELDABLE_THROW = _exports.YIELDABLE_CONTINUE = _exports.yieldableSymbol = _exports.cancelableSymbol = _exports.INVOKE = _exports.objectAssign = _exports.Arguments = void 0;
 
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function isEventedObject(c) {
     return c && (typeof c.one === 'function' && typeof c.off === 'function' || typeof c.addEventListener === 'function' && typeof c.removeEventListener === 'function');
   }
 
-  function Arguments(args, defer) {
-    this.args = args;
-    this.defer = defer;
-  }
+  var Arguments =
+  /*#__PURE__*/
+  function () {
+    function Arguments(args, defer) {
+      _classCallCheck(this, Arguments);
 
-  Arguments.prototype.resolve = function (value) {
-    if (this.defer) {
-      this.defer.resolve(value);
+      this.args = args;
+      this.defer = defer;
     }
-  };
+
+    _createClass(Arguments, [{
+      key: "resolve",
+      value: function resolve(value) {
+        if (this.defer) {
+          this.defer.resolve(value);
+        }
+      }
+    }]);
+
+    return Arguments;
+  }();
+
+  _exports.Arguments = Arguments;
 
   var objectAssign = Object.assign || function objectAssign(target) {
     'use strict';
@@ -88647,7 +88674,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   var INVOKE = "__invoke_symbol__";
   _exports.INVOKE = INVOKE;
-  var locations = ['ember-glimmer/helpers/action', 'ember-routing-htmlbars/keywords/closure-action', 'ember-routing/keywords/closure-action'];
+  var locations = ['@ember/-internals/glimmer/index', '@ember/-internals/glimmer', 'ember-glimmer', 'ember-glimmer/helpers/action', 'ember-routing-htmlbars/keywords/closure-action', 'ember-routing/keywords/closure-action'];
 
   for (var i = 0; i < locations.length; i++) {
     if (locations[i] in Ember.__loader.registry) {
@@ -88657,6 +88684,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   } // TODO: Symbol polyfill?
 
 
+  var cancelableSymbol = "__ec_cancel__";
+  _exports.cancelableSymbol = cancelableSymbol;
   var yieldableSymbol = "__ec_yieldable__";
   _exports.yieldableSymbol = yieldableSymbol;
   var YIELDABLE_CONTINUE = "next";
@@ -88668,6 +88697,71 @@ lunr.QueryParser.parseBoost = function (parser) {
   var YIELDABLE_CANCEL = "cancel";
   _exports.YIELDABLE_CANCEL = YIELDABLE_CANCEL;
   var _ComputedProperty = Ember.ComputedProperty;
+  _exports._ComputedProperty = _ComputedProperty;
+
+  var Yieldable =
+  /*#__PURE__*/
+  function () {
+    function Yieldable() {
+      _classCallCheck(this, Yieldable);
+
+      this[yieldableSymbol] = this[yieldableSymbol].bind(this);
+      this[cancelableSymbol] = this[cancelableSymbol].bind(this);
+    }
+
+    _createClass(Yieldable, [{
+      key: "then",
+      value: function then() {
+        var _yieldableToPromise;
+
+        return (_yieldableToPromise = yieldableToPromise(this)).then.apply(_yieldableToPromise, arguments);
+      }
+    }, {
+      key: yieldableSymbol,
+      value: function value() {}
+    }, {
+      key: cancelableSymbol,
+      value: function value() {}
+    }]);
+
+    return Yieldable;
+  }();
+
+  _exports.Yieldable = Yieldable;
+
+  var TimeoutYieldable =
+  /*#__PURE__*/
+  function (_Yieldable) {
+    _inherits(TimeoutYieldable, _Yieldable);
+
+    function TimeoutYieldable(ms) {
+      var _this;
+
+      _classCallCheck(this, TimeoutYieldable);
+
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(TimeoutYieldable).call(this));
+      _this.ms = ms;
+      _this.timerId = null;
+      return _this;
+    }
+
+    _createClass(TimeoutYieldable, [{
+      key: yieldableSymbol,
+      value: function value(taskInstance, resumeIndex) {
+        this.timerId = Ember.run.later(function () {
+          taskInstance.proceed(resumeIndex, YIELDABLE_CONTINUE, taskInstance._result);
+        }, this.ms);
+      }
+    }, {
+      key: cancelableSymbol,
+      value: function value() {
+        Ember.run.cancel(this.timerId);
+        this.timerId = null;
+      }
+    }]);
+
+    return TimeoutYieldable;
+  }(Yieldable);
   /**
    *
    * Yielding `timeout(ms)` will pause a task for the duration
@@ -88696,19 +88790,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    *   the task, in milliseconds
    */
 
-  _exports._ComputedProperty = _ComputedProperty;
 
   function timeout(ms) {
-    var timerId;
-    var promise = new Ember.RSVP.Promise(function (r) {
-      timerId = Ember.run.later(r, ms);
-    });
-
-    promise.__ec_cancel__ = function () {
-      Ember.run.cancel(timerId);
-    };
-
-    return promise;
+    return new TimeoutYieldable(ms);
   }
   /**
    *
@@ -88743,17 +88827,76 @@ lunr.QueryParser.parseBoost = function (parser) {
    */
 
 
-  var forever = _defineProperty({}, yieldableSymbol, function () {});
+  var ForeverYieldable =
+  /*#__PURE__*/
+  function (_Yieldable2) {
+    _inherits(ForeverYieldable, _Yieldable2);
 
+    function ForeverYieldable() {
+      _classCallCheck(this, ForeverYieldable);
+
+      return _possibleConstructorReturn(this, _getPrototypeOf(ForeverYieldable).apply(this, arguments));
+    }
+
+    _createClass(ForeverYieldable, [{
+      key: yieldableSymbol,
+      value: function value() {}
+    }, {
+      key: cancelableSymbol,
+      value: function value() {}
+    }]);
+
+    return ForeverYieldable;
+  }(Yieldable);
+
+  var forever = new ForeverYieldable();
   _exports.forever = forever;
 
-  function RawValue(value) {
+  var RawValue = function RawValue(value) {
+    _classCallCheck(this, RawValue);
+
     this.value = value;
-  }
+  };
+
+  _exports.RawValue = RawValue;
 
   function raw(value) {
     return new RawValue(value);
   }
+
+  var RawTimeoutYieldable =
+  /*#__PURE__*/
+  function (_Yieldable3) {
+    _inherits(RawTimeoutYieldable, _Yieldable3);
+
+    function RawTimeoutYieldable(ms) {
+      var _this2;
+
+      _classCallCheck(this, RawTimeoutYieldable);
+
+      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(RawTimeoutYieldable).call(this));
+      _this2.ms = ms;
+      _this2.timerId = null;
+      return _this2;
+    }
+
+    _createClass(RawTimeoutYieldable, [{
+      key: yieldableSymbol,
+      value: function value(taskInstance, resumeIndex) {
+        this.timerId = setTimeout(function () {
+          taskInstance.proceed(resumeIndex, YIELDABLE_CONTINUE, taskInstance._result);
+        }, this.ms);
+      }
+    }, {
+      key: cancelableSymbol,
+      value: function value() {
+        clearTimeout(this.timerId);
+        this.timerId = null;
+      }
+    }]);
+
+    return RawTimeoutYieldable;
+  }(Yieldable);
   /**
    *
    * Yielding `rawTimeout(ms)` will pause a task for the duration
@@ -88783,21 +88926,12 @@ lunr.QueryParser.parseBoost = function (parser) {
 
 
   function rawTimeout(ms) {
-    return _defineProperty({}, yieldableSymbol, function (taskInstance, resumeIndex) {
-      var _this = this;
-
-      var timerId = setTimeout(function () {
-        taskInstance.proceed(resumeIndex, YIELDABLE_CONTINUE, _this._result);
-      }, ms);
-      return function () {
-        clearTimeout(timerId);
-      };
-    });
+    return new RawTimeoutYieldable(ms);
   }
 
   function yieldableToPromise(yieldable) {
     var def = Ember.RSVP.defer();
-    def.promise.__ec_cancel__ = yieldable[yieldableSymbol]({
+    var thinInstance = {
       proceed: function proceed(_index, resumeType, value) {
         if (resumeType == YIELDABLE_CONTINUE || resumeType == YIELDABLE_RETURN) {
           def.resolve(value);
@@ -88805,7 +88939,9 @@ lunr.QueryParser.parseBoost = function (parser) {
           def.reject(value);
         }
       }
-    }, 0);
+    };
+    var maybeDisposer = yieldable[yieldableSymbol](thinInstance, 0);
+    def.promise[cancelableSymbol] = maybeDisposer || yieldable[cancelableSymbol];
     return def.promise;
   }
 });
