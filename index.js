@@ -18,6 +18,7 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 const buildTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const isValidLocaleFormat = require('./lib/utils/is-valid-locale-format');
+const findEngine = require('./lib/utils/find-engine');
 
 const DEFAULT_CONFIG = {
   locales: null,
@@ -50,13 +51,16 @@ module.exports = {
   },
 
   cacheKeyForTree(treeType) {
-    return calculateCacheKeyForTree(treeType, this, this.project.root);
+    return calculateCacheKeyForTree(treeType, this, this.package.root);
   },
 
-  included() {
+  included(parent) {
     this._super.included.apply(this, arguments);
 
+    const engine = findEngine(parent);
+
     this.app = this._findHost();
+    this.package = engine || this.project;
     this.opts = this.createOptions(this.app.env, this.app.project);
     this.isSilent = this.app.options.intl && this.app.options.intl.silent;
     this.locales = this.findAvailableLocales();
