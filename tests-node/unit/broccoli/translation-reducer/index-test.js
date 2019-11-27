@@ -197,7 +197,13 @@ describe('translation-reducer', function() {
       let { icuMismatch } = subject.lintTranslations(this.icuFixture);
 
       expect(icuMismatch).to.deep.equal([
-        ['foo', [['de', ['whos']], ['en', ['who']]]],
+        [
+          'foo',
+          [
+            ['de', ['whos']],
+            ['en', ['who']]
+          ]
+        ],
         ['missingArg', [['en', ['numPhotos']]]],
         ['deep.nested.ok', [['en', ['reason']]]]
       ]);
