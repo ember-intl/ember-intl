@@ -128,10 +128,7 @@ module('format-message', function(hooks) {
 
     this.setProperties({
       translation: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
-      harvests: emberArray([
-        { person: 'Allison', count: 10 },
-        { person: 'Jeremy', count: 60 }
-      ])
+      harvests: emberArray([{ person: 'Allison', count: 10 }, { person: 'Jeremy', count: 60 }])
     });
 
     await render(
