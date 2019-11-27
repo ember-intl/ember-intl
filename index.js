@@ -15,7 +15,7 @@ const stringify = require('json-stable-stringify');
 const extract = require('@ember-intl/broccoli-cldr-data');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
-const buildTree = require('./lib/broccoli/build-translation-tree');
+const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const isValidLocaleFormat = require('./lib/utils/is-valid-locale-format');
 const findEngine = require('./lib/utils/find-engine');
@@ -28,6 +28,7 @@ const DEFAULT_CONFIG = {
   outputPath: 'translations',
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
+  wrapTranslationsWithNamespace: false,
   requiresTranslation(/* key, locale */) {
     return true;
   }
@@ -65,7 +66,12 @@ module.exports = {
   },
 
   generateTranslationTree(bundlerOptions) {
-    const [translationTree, addons] = buildTree(this.project, this.opts.inputPath, this.treeGenerator);
+    const [translationTree, addonsWithTranslations] = buildTranslationTree(
+      this.project,
+      this.opts.inputPath,
+      this.treeGenerator
+    );
+
     const _bundlerOptions = bundlerOptions || {};
     const addon = this;
 
@@ -75,7 +81,7 @@ module.exports = {
       });
     }
 
-    return new TranslationReducer(translationTree, {
+    return new TranslationReducer([translationTree], {
       verbose: !this.isSilent,
       outputPath: this.opts.outputPath,
       fallbackLocale: this.opts.fallbackLocale,
@@ -86,7 +92,7 @@ module.exports = {
       errorOnNamedArgumentMismatch: this.opts.errorOnNamedArgumentMismatch,
       stripEmptyTranslations: this.opts.stripEmptyTranslations,
       wrapTranslationsWithNamespace: this.opts.wrapTranslationsWithNamespace,
-      addonsWithTranslations: addons,
+      addonsWithTranslations: addonsWithTranslations,
       log() {
         return addon.log.apply(addon, arguments);
       }
