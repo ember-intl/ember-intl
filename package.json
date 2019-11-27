@@ -25,6 +25,7 @@
     "start": "ember serve",
     "build": "ember build",
     "lint:js": "eslint .",
+    "lint-staged": "lint-staged",
     "tests-node": "mocha \"tests-node/**/*.js\"",
     "test": "npm run tests-node && ember test",
     "testall": "npm run tests-node && ember try:each",
@@ -92,8 +93,10 @@
     "eslint-plugin-ember": "^7.0.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "lint-staged": "^9.5.0",
     "loader.js": "^4.7.0",
     "mocha": "^6.0.2",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
     "qunit-dom": "^0.9.0",
     "rsvp": "^4.8.5",
@@ -101,6 +104,12 @@
   },
   "engines": {
     "node": "8.* || >= 10.*"
+  },
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
