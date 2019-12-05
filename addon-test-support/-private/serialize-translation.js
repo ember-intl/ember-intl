@@ -23,7 +23,8 @@ const stringifyDeterministically = obj => JSON.stringify(obj, Object.keys(obj).s
 const replaceInterpolators = subject =>
   String(subject)
     .replace(/\{/g, '(')
-    .replace(/\}/g, ')');
+    .replace(/\}/g, ')')
+    .replace(/\\"/g, '"');
 
 /**
  * A list of internal options that should not be serialized.
