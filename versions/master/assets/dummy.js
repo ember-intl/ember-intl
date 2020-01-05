@@ -1791,90 +1791,6 @@
     }
   });
 });
-;define("dummy/components/code-snippet", ["exports", "dummy/snippets"], function (_exports, _snippets) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /* global require */
-  var Highlight = self.require('highlight.js');
-
-  var _default = Ember.Component.extend({
-    tagName: 'pre',
-    classNameBindings: ['language'],
-    unindent: true,
-    _unindent: function _unindent(src) {
-      if (!this.get('unindent')) {
-        return src;
-      }
-
-      var match,
-          min,
-          lines = src.split("\n").filter(function (l) {
-        return l !== '';
-      });
-
-      for (var i = 0; i < lines.length; i++) {
-        match = /^[ \t]*/.exec(lines[i]);
-
-        if (match && (typeof min === 'undefined' || min > match[0].length)) {
-          min = match[0].length;
-        }
-      }
-
-      if (typeof min !== 'undefined' && min > 0) {
-        src = src.replace(new RegExp("^[ \t]{" + min + "}", 'gm'), "");
-      }
-
-      return src;
-    },
-    source: Ember.computed('name', function () {
-      var snippet = this.get('name').split('/').reduce(function (dir, name) {
-        return dir && dir[name];
-      }, _snippets.default);
-      return this._unindent((snippet || "").replace(/^(\s*\n)*/, '').replace(/\s*$/, ''));
-    }),
-    didInsertElement: function didInsertElement() {
-      Highlight.highlightBlock(this.get('element'));
-    },
-    language: Ember.computed('name', function () {
-      var m = /\.(\w+)$/i.exec(this.get('name'));
-
-      if (m) {
-        switch (m[1].toLowerCase()) {
-          case 'js':
-            return 'javascript';
-
-          case 'coffee':
-            return 'coffeescript';
-
-          case 'hbs':
-            return 'htmlbars';
-
-          case 'css':
-            return 'css';
-
-          case 'scss':
-            return 'scss';
-
-          case 'less':
-            return 'less';
-
-          case 'emblem':
-            return 'emblem';
-
-          case 'ts':
-            return 'typescript';
-        }
-      }
-    })
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/components/copy-button", ["exports", "ember-cli-clipboard/components/copy-button"], function (_exports, _copyButton) {
   "use strict";
 
@@ -1885,6 +1801,19 @@
     enumerable: true,
     get: function get() {
       return _copyButton.default;
+    }
+  });
+});
+;define("dummy/components/docs-code-highlight", ["exports", "ember-cli-addon-docs/components/docs-code-highlight/component"], function (_exports, _component) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _component.default;
     }
   });
 });
@@ -2304,82 +2233,6 @@
     }
   });
 });
-;define("dummy/components/etw/module-section", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Component.extend({
-    tagName: ''
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/components/etw/module-style-detail", ["exports", "ember-cli-tailwind/utils/classes-for-module-style"], function (_exports, _classesForModuleStyle) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Component.extend({
-    etwTailwindStyleguide: Ember.inject.service(),
-    moduleStyle: Ember.computed.reads('etwTailwindStyleguide.selectedModuleStyle'),
-    activeResponsiveClass: 'all',
-    activeState: 'none',
-    detailStyles: Ember.computed('moduleStyle', 'activeResponsiveClass', 'activeState', function () {
-      var moduleStyle = this.moduleStyle;
-      var activeResponsiveClass = this.activeResponsiveClass;
-      var responsivePrefix = activeResponsiveClass === 'all' ? '' : "".concat(activeResponsiveClass, ":");
-      var activeState = this.activeState;
-      var statePrefix = activeState === 'none' ? '' : "".concat(activeState, ":");
-      return (0, _classesForModuleStyle.default)(moduleStyle).map(function (cssClass) {
-        return "".concat(responsivePrefix).concat(statePrefix).concat(cssClass);
-      });
-    }),
-    actions: {
-      highlightStyle: function highlightStyle(style) {
-        var _this = this;
-
-        this.set('highlightedStyle', style);
-        Ember.run.later(function () {
-          _this.set('highlightedStyle', null);
-        }, 1500);
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/components/etw/module-style-example", ["exports", "ember-cli-tailwind/utils/classes-for-module-style"], function (_exports, _classesForModuleStyle) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Component.extend({
-    tagName: '',
-    etwTailwindStyleguide: Ember.inject.service(),
-    // Passed in
-    moduleStyle: null,
-    classesForModuleStyle: Ember.computed('moduleStyle', function () {
-      return (0, _classesForModuleStyle.default)(this.moduleStyle);
-    }),
-    actions: {
-      selectModuleStyle: function selectModuleStyle() {
-        this.etwTailwindStyleguide.set('selectedModuleStyle', this.moduleStyle);
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/components/illiquid-model", ["exports", "liquid-fire/components/illiquid-model"], function (_exports, _illiquidModel) {
   "use strict";
 
@@ -2542,65 +2395,6 @@
     }
   });
 });
-;define("dummy/controllers/application-tailwind", ["exports", "dummy/tailwind/config/colors", "dummy/tailwind/config/screens", "dummy/tailwind/config/fonts", "dummy/tailwind/config/text-sizes", "dummy/tailwind/config/font-weights", "dummy/tailwind/config/line-height", "dummy/tailwind/config/letter-spacing", "dummy/tailwind/config/border-widths", "dummy/tailwind/config/border-radius", "dummy/tailwind/config/width", "dummy/tailwind/config/height", "dummy/tailwind/config/min-width", "dummy/tailwind/config/min-height", "dummy/tailwind/config/max-width", "dummy/tailwind/config/max-height", "dummy/tailwind/config/padding", "dummy/tailwind/config/margin", "dummy/tailwind/config/negative-margin", "dummy/tailwind/config/shadows", "dummy/tailwind/config/z-index", "dummy/tailwind/config/opacity", "dummy/tailwind/config/svg-fill", "dummy/tailwind/config/svg-stroke"], function (_exports, _colors, _screens, _fonts, _textSizes, _fontWeights, _lineHeight, _letterSpacing, _borderWidths, _borderRadius, _width, _height, _minWidth, _minHeight, _maxWidth, _maxHeight, _padding, _margin, _negativeMargin, _shadows, _zIndex, _opacity, _svgFill, _svgStroke) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var modules = {
-    colors: _colors.default,
-    screens: _screens.default,
-    fonts: _fonts.default,
-    textSizes: _textSizes.default,
-    fontWeights: _fontWeights.default,
-    leading: _lineHeight.default,
-    tracking: _letterSpacing.default,
-    borderWidths: _borderWidths.default,
-    borderRadius: _borderRadius.default,
-    width: _width.default,
-    height: _height.default,
-    minWidth: _minWidth.default,
-    minHeight: _minHeight.default,
-    maxWidth: _maxWidth.default,
-    maxHeight: _maxHeight.default,
-    padding: _padding.default,
-    margin: _margin.default,
-    negativeMargin: _negativeMargin.default,
-    shadows: _shadows.default,
-    zIndex: _zIndex.default,
-    opacity: _opacity.default,
-    svgFill: _svgFill.default,
-    svgStroke: _svgStroke.default
-  };
-
-  var _default = Ember.Controller.extend({
-    /*
-      A module style is an object that looks like
-       {
-        module: 'border-radius',
-        name: 'lg',
-        value: '.5rem'
-      }
-    */
-    moduleStyles: Ember.computed(function () {
-      return Object.keys(modules).reduce(function (allModules, moduleName) {
-        var hash = modules[moduleName];
-        allModules[moduleName] = Object.keys(hash).map(function (key) {
-          return {
-            module: Ember.String.dasherize(moduleName),
-            name: key,
-            value: hash[key]
-          };
-        });
-        return allModules;
-      }, {});
-    })
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/controllers/docs/api/class", ["exports", "ember-cli-addon-docs/controllers/docs/api/class"], function (_exports, _class) {
   "use strict";
 
@@ -2611,6 +2405,19 @@
     enumerable: true,
     get: function get() {
       return _class.default;
+    }
+  });
+});
+;define("dummy/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _debug.default;
     }
   });
 });
@@ -4206,6 +4013,19 @@
     }
   });
 });
+;define("dummy/initializers/ember-data-data-adapter", ["exports", "@ember-data/debug/setup"], function (_exports, _setup) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _setup.default;
+    }
+  });
+});
 ;define("dummy/initializers/ember-data", ["exports", "ember-data/setup-container", "ember-data"], function (_exports, _setupContainer, _emberData) {
   "use strict";
 
@@ -4746,8 +4566,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "MLLeDoPh",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"service-api\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Service API\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"ember-intl ships with a service which exposes an API to programmatically\\ninterface with all the known functionality exposed through the declarative\\nhelpers.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"how-to-inject-service\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#how-to-inject-service\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"How to inject service\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"Ember.Object.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": Ember.inject.service()\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Access the service from within the instance via: \"],[7,\"code\",true],[8],[0,\"this.get('intl')\"],[9],[0,\" or just \"],[7,\"code\",true],[8],[0,\"this.intl\"],[9],[0,\", if you have \"],[7,\"a\",true],[10,\"href\",\"https://www.emberjs.com/blog/2018/04/13/ember-3-1-released.html#toc_es5-getters-for-computed-properties-2-of-4\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ES5 getters enabled\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"properties\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#properties\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Properties\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"locale\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#locale\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"locale\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Set/get the current locale for your application. The value you set it to can either be a string or an array of strings. When providing an array, the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper and \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method will attempt to try all the locales in order when resolving a translation key. This is useful if you want to always fallback to another locale when a translation may be missing.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"When you get this property, it will always return an array of strings, even if you have set it to be just one single locale. If you are only interested in retrieving the single (or first) locale, use \"],[7,\"strong\",true],[8],[7,\"code\",true],[8],[0,\"primaryLocale\"],[9],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"primarylocale-readonly\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#primarylocale-readonly\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"primaryLocale \"],[7,\"em\",true],[8],[0,\"readOnly\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns the first locale of the currently active locales, i.e. the first object of the \"],[7,\"code\",true],[8],[0,\"locale\"],[9],[0,\" property.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'primaryLocale'\"],[9],[0,\") => \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"locales-readonly\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#locales-readonly\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"locales \"],[7,\"em\",true],[8],[0,\"readOnly\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns an array of locales that have translations assigned to them. This works\\nwith both bundled translations and lazy-loaded translations.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'locales'\"],[9],[0,\") => [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'fr-fr'\"],[9],[0,\"];\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"methods\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#methods\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Methods\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"t-_-translationkey-string-optionaloptions-object-_-string-safestring\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#t-_-translationkey-string-optionaloptions-object-_-string-safestring\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"t _(translationKey:String, optionalOptions:Object)_: String | SafeString\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Unlike \"],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\", the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method accepts a translation key instead of a\\ntranslation string. This method returns a translated string. To provide\\nvalues to the dynamic segment of the translation, pass an object hash.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"product: '{name} will cost {price, number, USD}'\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/formats.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"number\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"USD\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"style\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'currency'\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"currency\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'USD'\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"minimumFractionDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"2\"],[9],[0,\"\\n    }\\n  }\\n};\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'product'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'watch'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"price\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"300\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"watch will cost $300\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"By default, ember-intl's \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method and \"],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\" will return a String literal. If your translations contain HTML markup and you want to use render HTML from your translations to the document then pass \"],[7,\"code\",true],[8],[0,\"htmlSafe=true\"],[9],[0,\" to either \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" & \"],[7,\"code\",true],[8],[0,\"format-message\"],[9],[0,\" helpers or \"],[7,\"code\",true],[8],[0,\"{ htmlSafe: true }\"],[9],[0,\" to \"],[7,\"code\",true],[8],[0,\"intl.t()\"],[9],[0,\" or \"],[7,\"code\",true],[8],[0,\"intl.formatMessage()\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'title.header'\"],[9],[0,\", { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"htmlSafe\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\" });\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'title.header' htmlSafe=true}}\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatmessage-_-translation-string-optionaloptions-object-_-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatmessage-_-translation-string-optionaloptions-object-_-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatMessage _(translation:String, optionalOptions:Object)_: String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\" formats a translation string. Unlike the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method, it\\naccepts a translation string instead of a translation key.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'{name} will cost {price, number, USD}'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'watch'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"price\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"300\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"watch will cost $300\"],[9],[0,\"\\n\"],[9],[0,\"\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatmessage-html-_-value-string-optionaloptions-object-_-safestring\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatmessage-html-_-value-string-optionaloptions-object-_-safestring\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatMessage (html) _(value:String, optionalOptions:Object)_: SafeString\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\", when provided the \"],[7,\"code\",true],[8],[0,\"htmlSafe\"],[9],[0,\" options, formats a translation string and returns an\\n\"],[7,\"code\",true],[8],[0,\"Handlebars.SafeString\"],[9],[0,\". This is useful for rendering translations containing\\nHTML markup. Since options can contain unsafe markup, all attribute hash\\nvalues are escaped.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'<strong>{firstName}</strong> {lastName}'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"firstName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'John'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"lastName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'<em>Doe</em>'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"htmlSafe\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[7,\"strong\",true],[8],[0,\"John\"],[9],[0,\" \"],[7,\"em\",true],[8],[0,\"Doe\"],[9],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Note, the Doe is escaped and does not return markup.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatnumber-_-value-number-optionaloptions-object-_-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatnumber-_-value-number-optionaloptions-object-_-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatNumber _(value:Number, optionalOptions:Object)_: String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatdate-_-value-date-number-string-optionaloptions-object-_-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatdate-_-value-date-number-string-optionaloptions-object-_-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatDate _(value:Date/Number/String, optionalOptions:Object)_: String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formattime-_-value-date-number-string-optionaloptions-object-_-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formattime-_-value-date-number-string-optionaloptions-object-_-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatTime _(value:Date/Number/String, optionalOptions:Object)_: String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"exists-_-translationkey-string-optionallocale-string-_-boolean\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#exists-_-translationkey-string-optionallocale-string-_-boolean\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"exists _(translationKey:String, optionalLocale:String)_: Boolean\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns a boolean indicating whether the translation exists. Locale is\\noptional. If omitted, the current/active locale is used in it's place.\\nThis method always returns a Boolean.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'intl'\"],[9],[0,\").exists(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'foo.bar'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\");\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// => true\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"addtranslations-_-locale-string-payload-object-_-void\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#addtranslations-_-locale-string-payload-object-_-void\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"addTranslations _(locale:String, payload:Object)_: void\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Adds a translations to a given locale. Useful for registering translations at runtime.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"lookup-_-translationkey-string-optionallocale-string-array-string-optionaloptions-object-_-string-undefined\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#lookup-_-translationkey-string-optionallocale-string-array-string-optionaloptions-object-_-string-undefined\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"lookup _(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)_: String | undefined\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Given a translation key, will return the translation for either the active\\nlocale, or the locale specified as the second argument.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.lookup(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'shared.confirmMessage'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"resilient\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Returns \"],[7,\"code\",true],[8],[0,\"undefined\"],[9],[0,\" if you pass \"],[7,\"code\",true],[8],[0,\"{ resilient: true }\"],[9],[0,\". If ommitted, will return a missing translation message.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"setlocale-_-locale-string-array-string-_-void\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#setlocale-_-locale-string-array-string-_-void\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"setLocale _(locale:String | Array{String})_: void\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"addlocaledata-_-data-object-_-void\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#addlocaledata-_-data-object-_-void\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"addLocaleData _(data:Object)_: void\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"translationsfor-_-localename-string-_-object\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#translationsfor-_-localename-string-_-object\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"translationsFor _(localeName:String)_: Object\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[9]],\"hasEval\":false}",
+    "id": "oBbrWpy6",
+    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"service-api\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Service API\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"ember-intl ships with a service which exposes an API to programmatically\\ninterface with all the known functionality exposed through the declarative\\nhelpers.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"how-to-inject-service\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#how-to-inject-service\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"How to inject service\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"Ember.Object.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": Ember.inject.service()\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Access the service from within the instance via: \"],[7,\"code\",true],[8],[0,\"this.get('intl')\"],[9],[0,\" or just \"],[7,\"code\",true],[8],[0,\"this.intl\"],[9],[0,\", if you have \"],[7,\"a\",true],[10,\"href\",\"https://www.emberjs.com/blog/2018/04/13/ember-3-1-released.html#toc_es5-getters-for-computed-properties-2-of-4\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ES5 getters enabled\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"properties\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#properties\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Properties\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"locale\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#locale\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"locale\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Set/get the current locale for your application. The value you set it to can either be a string or an array of strings. When providing an array, the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper and \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method will attempt to try all the locales in order when resolving a translation key. This is useful if you want to always fallback to another locale when a translation may be missing.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"When you get this property, it will always return an array of strings, even if you have set it to be just one single locale. If you are only interested in retrieving the single (or first) locale, use \"],[7,\"strong\",true],[8],[7,\"code\",true],[8],[0,\"primaryLocale\"],[9],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"primarylocale-readonly\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#primarylocale-readonly\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"primaryLocale \"],[7,\"em\",true],[8],[0,\"readOnly\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns the first locale of the currently active locales, i.e. the first object of the \"],[7,\"code\",true],[8],[0,\"locale\"],[9],[0,\" property.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'primaryLocale'\"],[9],[0,\") => \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"locales-readonly\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#locales-readonly\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"locales \"],[7,\"em\",true],[8],[0,\"readOnly\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns an array of locales that have translations assigned to them. This works\\nwith both bundled translations and lazy-loaded translations.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'locales'\"],[9],[0,\") => [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'fr-fr'\"],[9],[0,\"];\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"methods\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#methods\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Methods\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"t-translationkey-string-optionaloptions-object-string-safestring\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#t-translationkey-string-optionaloptions-object-string-safestring\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"t \"],[7,\"em\",true],[8],[0,\"(translationKey:String, optionalOptions:Object)\"],[9],[0,\": String | SafeString\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Unlike \"],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\", the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method accepts a translation key instead of a\\ntranslation string. This method returns a translated string. To provide\\nvalues to the dynamic segment of the translation, pass an object hash.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"product: '{name} will cost {price, number, USD}'\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/formats.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"number\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"USD\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"style\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'currency'\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"currency\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'USD'\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"minimumFractionDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"2\"],[9],[0,\"\\n    }\\n  }\\n};\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'product'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'watch'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"price\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"300\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"watch will cost $300\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"By default, ember-intl's \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method and \"],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\" will return a String literal. If your translations contain HTML markup and you want to use render HTML from your translations to the document then pass \"],[7,\"code\",true],[8],[0,\"htmlSafe=true\"],[9],[0,\" to either \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" & \"],[7,\"code\",true],[8],[0,\"format-message\"],[9],[0,\" helpers or \"],[7,\"code\",true],[8],[0,\"{ htmlSafe: true }\"],[9],[0,\" to \"],[7,\"code\",true],[8],[0,\"intl.t()\"],[9],[0,\" or \"],[7,\"code\",true],[8],[0,\"intl.formatMessage()\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'title.header'\"],[9],[0,\", { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"htmlSafe\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\" });\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'title.header' htmlSafe=true}}\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatmessage-translation-string-optionaloptions-object-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatmessage-translation-string-optionaloptions-object-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatMessage \"],[7,\"em\",true],[8],[0,\"(translation:String, optionalOptions:Object)\"],[9],[0,\": String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\" formats a translation string. Unlike the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method, it\\naccepts a translation string instead of a translation key.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'{name} will cost {price, number, USD}'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'watch'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"price\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"300\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"watch will cost $300\"],[9],[0,\"\\n\"],[9],[0,\"\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatmessage-html-value-string-optionaloptions-object-safestring\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatmessage-html-value-string-optionaloptions-object-safestring\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatMessage (html) \"],[7,\"em\",true],[8],[0,\"(value:String, optionalOptions:Object)\"],[9],[0,\": SafeString\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\", when provided the \"],[7,\"code\",true],[8],[0,\"htmlSafe\"],[9],[0,\" options, formats a translation string and returns an\\n\"],[7,\"code\",true],[8],[0,\"Handlebars.SafeString\"],[9],[0,\". This is useful for rendering translations containing\\nHTML markup. Since options can contain unsafe markup, all attribute hash\\nvalues are escaped.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'<strong>{firstName}</strong> {lastName}'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"firstName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'John'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"lastName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'<em>Doe</em>'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"htmlSafe\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[7,\"strong\",true],[8],[0,\"John\"],[9],[0,\" <em>Doe</em>\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Note, the Doe is escaped and does not return markup.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatnumber-value-number-optionaloptions-object-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatnumber-value-number-optionaloptions-object-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatNumber \"],[7,\"em\",true],[8],[0,\"(value:Number, optionalOptions:Object)\"],[9],[0,\": String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatdate-value-date-number-string-optionaloptions-object-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatdate-value-date-number-string-optionaloptions-object-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatDate \"],[7,\"em\",true],[8],[0,\"(value:Date/Number/String, optionalOptions:Object)\"],[9],[0,\": String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formattime-value-date-number-string-optionaloptions-object-string\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formattime-value-date-number-string-optionaloptions-object-string\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatTime \"],[7,\"em\",true],[8],[0,\"(value:Date/Number/String, optionalOptions:Object)\"],[9],[0,\": String\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"exists-translationkey-string-optionallocale-string-boolean\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#exists-translationkey-string-optionallocale-string-boolean\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"exists \"],[7,\"em\",true],[8],[0,\"(translationKey:String, optionalLocale:String)\"],[9],[0,\": Boolean\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns a boolean indicating whether the translation exists. Locale is\\noptional. If omitted, the current/active locale is used in it's place.\\nThis method always returns a Boolean.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'intl'\"],[9],[0,\").exists(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'foo.bar'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\");\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// => true\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"addtranslations-locale-string-payload-object-void\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#addtranslations-locale-string-payload-object-void\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"addTranslations \"],[7,\"em\",true],[8],[0,\"(locale:String, payload:Object)\"],[9],[0,\": void\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Adds a translations to a given locale. Useful for registering translations at runtime.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"lookup-translationkey-string-optionallocale-string-array-string-optionaloptions-object-string-undefined\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#lookup-translationkey-string-optionallocale-string-array-string-optionaloptions-object-string-undefined\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"lookup \"],[7,\"em\",true],[8],[0,\"(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)\"],[9],[0,\": String | undefined\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Given a translation key, will return the translation for either the active\\nlocale, or the locale specified as the second argument.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.lookup(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'shared.confirmMessage'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"resilient\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Returns \"],[7,\"code\",true],[8],[0,\"undefined\"],[9],[0,\" if you pass \"],[7,\"code\",true],[8],[0,\"{ resilient: true }\"],[9],[0,\". If ommitted, will return a missing translation message.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"setlocale-locale-string-array-string-void\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#setlocale-locale-string-array-string-void\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"setLocale \"],[7,\"em\",true],[8],[0,\"(locale:String | Array{String})\"],[9],[0,\": void\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"addlocaledata-data-object-void\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#addlocaledata-data-object-void\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"addLocaleData \"],[7,\"em\",true],[8],[0,\"(data:Object)\"],[9],[0,\": void\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"translationsfor-localename-string-object\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#translationsfor-localename-string-object\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"translationsFor \"],[7,\"em\",true],[8],[0,\"(localeName:String)\"],[9],[0,\": Object\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[9]],\"hasEval\":false}",
     "meta": {
       "moduleName": "dummy/pods/docs/guide/ember-service-api/template.hbs"
     }
@@ -5435,19 +5255,6 @@
     }
   });
 });
-;define("dummy/services/etw-tailwind-styleguide", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Service.extend({// body
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/services/intl", ["exports", "ember-intl/services/intl"], function (_exports, _intl) {
   "use strict";
 
@@ -5544,130 +5351,18 @@
     }
   });
 });
-;define("dummy/snippets", ["exports"], function (_exports) {
+;define("dummy/services/store", ["exports", "ember-data/store"], function (_exports, _store) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
-  var _default = {
-    "docs-helpers-format-date-01-template.hbs": "    {{format-date instant}}",
-    "docs-helpers-format-date-02-template.hbs": "    {{format-date yesterday}}",
-    "docs-helpers-format-date-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\n\nexport default Controller.extend({\n  yesterday: yesterday,\n  instant: new Date(),\n  now: new Date()\n});",
-    "docs-helpers-format-message-01-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=num\n             timestamp=yesterday }}",
-    "docs-helpers-format-message-02-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=1\n             timestamp=yesterday }}",
-    "docs-helpers-format-message-03-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=0\n             timestamp=yesterday }}",
-    "docs-helpers-format-message-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\nconst user = { username: 'Chris' };\n\nexport default Controller.extend({\n  user: user,\n  num: 12,\n  yesterday: yesterday\n});",
-    "docs-helpers-format-number-01-template.hbs": "    {{format-number num}}",
-    "docs-helpers-format-number-02-template.hbs": "    {{format-number num style='currency' currency='USD'}}",
-    "docs-helpers-format-number-controller.js": "import Controller from '@ember/controller';\n\nexport default Controller.extend({\n  num: 1000\n});",
-    "docs-helpers-format-relative-01-template.hbs": "    {{format-relative yesterday}}",
-    "docs-helpers-format-relative-02-template.hbs": "    {{format-relative instant}}",
-    "docs-helpers-format-relative-03-template.hbs": "    {{format-relative now interval=1000}}",
-    "docs-helpers-format-relative-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\n\nexport default Controller.extend({\n  yesterday: yesterday,\n  instant: new Date(),\n  now: new Date()\n});",
-    "docs-helpers-format-t-01-template.hbs": "\n    {{t 'photos.banner' numPhotos=count}}\n\n    <button class=\"btn\" {{action \"inc\" count}}> + Increment photo count </button>\n    <button class=\"btn\" {{action \"dec\" count}}> - Decrement photo count </button>",
-    "docs-helpers-format-t-controller.js": "\nimport Controller from '@ember/controller';\n\nexport default Controller.extend({\n  count: 0,\n\n  actions: {\n    inc(count) {\n      this.set('count', count + 1);\n    },\n    dec(count) {\n      if (count <= 0) return;\n      this.set('count', count - 1);\n    }\n  }\n});",
-    "docs-helpers-format-time-01-template.hbs": "    {{format-time instant format='hhmmss'}}",
-    "docs-helpers-format-time-02-template.hbs": "    {{format-time instant hour='numeric' second='numeric' minute='numeric' hour12=false}}",
-    "docs-helpers-format-time-controller.js": "\nimport Controller from '@ember/controller';\n\nexport default Controller.extend({\n  instant: new Date()\n});",
-    "format-date.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n",
-    "format-message.hbs": "{{t 'product.info' product='Cisco DPC3000' price=100}}",
-    "format-number.hbs": "{{format-number num}}\n{{format-number num style='currency' currency='USD'}}\n",
-    "format-relative.hbs": "{{format-relative yesterday}}\n{{format-relative instant}}\n{{format-relative now interval=1000}}\n",
-    "format-time.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n"
-  };
-  _exports.default = _default;
-});
-;define("dummy/templates/application-tailwind", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "y32pvVwn",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"etw-px-4 etw-my-8 etw-max-w-3xl etw-mx-auto etw-font-sans\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-flex etw-mt-6\"],[8],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-w-3/4 etw-pr-6\"],[8],[0,\"\\n      \"],[7,\"h1\",true],[10,\"class\",\"etw-pt-8 etw-text-3xl etw-font-bold\"],[8],[0,\"Your Tailwind styles\"],[9],[0,\"\\n      \"],[7,\"p\",true],[10,\"class\",\"etw-mt-3 etw-mb-4 etw-text-lg\"],[8],[0,\"A reference for every generated class in your app.\"],[9],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Border radius\",[28,\"array\",[\".rounded{-side?}{-size?}\"],null],[24,[\"moduleStyles\",\"borderRadius\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Borders\",[28,\"array\",[\".border{-side?}{-width?}\"],null],[24,[\"moduleStyles\",\"borderWidths\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Colors\",[28,\"array\",[\".text-{color}\",\".bg-{color}\",\".border-{color}\"],null],[24,[\"moduleStyles\",\"colors\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Font weights\",[28,\"array\",[\".font-{weight}\"],null],[24,[\"moduleStyles\",\"fontWeights\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Height\",[28,\"array\",[\".h-{size}\"],null],[24,[\"moduleStyles\",\"height\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Letter spacing\",[28,\"array\",[\".tracking-{size}\"],null],[24,[\"moduleStyles\",\"letterSpacing\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Line height\",[28,\"array\",[\".leading-{size}\"],null],[24,[\"moduleStyles\",\"lineHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Margin\",[28,\"array\",[\".m{side?}-{size}\"],null],[24,[\"moduleStyles\",\"margin\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Max height\",[28,\"array\",[\".max-h-{size}\"],null],[24,[\"moduleStyles\",\"maxHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Max width\",[28,\"array\",[\".max-w-{size}\"],null],[24,[\"moduleStyles\",\"maxWidth\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Min height\",[28,\"array\",[\".min-h-{size}\"],null],[24,[\"moduleStyles\",\"minHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Min width\",[28,\"array\",[\".min-w-{size}\"],null],[24,[\"moduleStyles\",\"minWidth\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Negative margin\",[28,\"array\",[\".-m{side?}-{size}\"],null],[24,[\"moduleStyles\",\"negativeMargin\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Opacity\",[28,\"array\",[\".opacity-{name}\"],null],[24,[\"moduleStyles\",\"opacity\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Padding\",[28,\"array\",[\".p{side?}-{size}\"],null],[24,[\"moduleStyles\",\"padding\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Shadows\",[28,\"array\",[\".shadow-{size?}\"],null],[24,[\"moduleStyles\",\"shadows\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"SVG fill\",[28,\"array\",[\".fill-{name}\"],null],[24,[\"moduleStyles\",\"svgFill\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"SVG stroke\",[28,\"array\",[\".stroke-{name}\"],null],[24,[\"moduleStyles\",\"svgStroke\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Text sizes\",[28,\"array\",[\".text-{size}\"],null],[24,[\"moduleStyles\",\"textSizes\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Width\",[28,\"array\",[\".w-{size}\"],null],[24,[\"moduleStyles\",\"width\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Z index\",[28,\"array\",[\".z-{index}\"],null],[24,[\"moduleStyles\",\"zIndex\"]]]]],false],[0,\"\\n\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-w-1/4 etw-relative\"],[8],[0,\"\\n      \"],[1,[22,\"etw/module-style-detail\"],false],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/application-tailwind.hbs"
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _store.default;
     }
   });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/code-snippet", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "zGuD2Kx3",
-    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"source\"],false],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/code-snippet.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/etw/module-section", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "R0TciJzF",
-    "block": "{\"symbols\":[\"moduleStyle\",\"snippet\"],\"statements\":[[7,\"section\",true],[8],[0,\"\\n  \"],[7,\"h2\",true],[10,\"class\",\"etw-pt-8 etw-mb-6 etw-text-lg etw-font-bold\"],[8],[1,[22,\"title\"],false],[9],[0,\"\\n\\n  \"],[7,\"ul\",true],[10,\"class\",\"etw-list-reset etw-leading-normal\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"codeSnippets\"]]],null,{\"statements\":[[0,\"      \"],[7,\"li\",true],[8],[7,\"code\",true],[8],[1,[23,2,[]],false],[9],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-mt-8 etw-flex etw-flex-wrap\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"moduleStyles\"]]],null,{\"statements\":[[0,\"      \"],[1,[28,\"etw/module-style-example\",null,[[\"moduleStyle\"],[[23,1,[]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/etw/module-section.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/etw/module-style-detail", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "tprZQ+w+",
-    "block": "{\"symbols\":[\"style\",\"state\",\"breakpoint\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"etw-shadow-lg etw-fixed etw-mr-4 etw-px-4 etw-pt-4 etw-pb-14 etw-bg-white etw-w-64 etw-mt-8 overflow-y-auto etw-h-screen\"],[8],[0,\"\\n  \"],[7,\"h3\",true],[8],[0,\"Detail\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"moduleStyle\"]]],null,{\"statements\":[[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-my-8\"],[8],[0,\"\\n      \"],[1,[28,\"etw/module-style-example\",null,[[\"moduleStyle\"],[[24,[\"moduleStyle\"]]]]],false],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-mt-4\"],[8],[0,\"\\n      \"],[7,\"h4\",true],[10,\"class\",\"etw-inline-block etw-pr-2\"],[8],[0,\"Responsive: \"],[9],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"etw-mt-2 etw-text-sm etw-inline-block\"],[8],[0,\"\\n\"],[4,\"each\",[[28,\"array\",[\"all\",\"sm\",\"md\",\"lg\",\"xl\"],null]],null,{\"statements\":[[0,\"          \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",[29,[\"\\n              etw-no-underline\\n              etw-text-black\\n              etw-pr-2\\n              \",[28,\"if\",[[28,\"eq\",[[24,[\"activeResponsiveClass\"]],[23,3,[]]],null],\"etw-opacity-100\",\"etw-opacity-25\"],null],\"\\n            \"]]],[3,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"activeResponsiveClass\"]]],null],[23,3,[]]]],[8],[0,\"\\n            \"],[1,[23,3,[]],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-mt-4\"],[8],[0,\"\\n      \"],[7,\"h4\",true],[10,\"class\",\"etw-inline-block etw-pr-2\"],[8],[0,\"State: \"],[9],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"etw-mt-2 etw-text-sm etw-inline-block\"],[8],[0,\"\\n\"],[4,\"each\",[[28,\"array\",[\"none\",\"hover\",\"focus\"],null]],null,{\"statements\":[[0,\"          \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",[29,[\"\\n              etw-no-underline\\n              etw-text-black\\n              etw-pr-2\\n              \",[28,\"if\",[[28,\"eq\",[[24,[\"activeState\"]],[23,2,[]]],null],\"etw-opacity-100\",\"etw-opacity-25\"],null],\"\\n            \"]]],[3,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"activeState\"]]],null],[23,2,[]]]],[8],[0,\"\\n            \"],[1,[23,2,[]],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-mt-8 etw-mb-4\"],[8],[0,\"\\n      \"],[7,\"p\",true],[10,\"class\",\"etw-text-right etw-text-xs etw-opacity-50\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"highlightedStyle\"]]],null,{\"statements\":[[0,\"          Copied!\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"          Click to copy\\n\"]],\"parameters\":[]}],[0,\"      \"],[9],[0,\"\\n\\n      \"],[7,\"ul\",true],[10,\"class\",\"etw-mt-3 etw-list-reset\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"detailStyles\"]]],null,{\"statements\":[[0,\"          \"],[7,\"li\",true],[10,\"class\",\"etw-mt-4\"],[8],[0,\"\\n\"],[4,\"copy-button\",null,[[\"class\",\"clipboardText\",\"title\",\"success\"],[[28,\"concat\",[\"etw-bg-grey-light etw-opacity-75 hover:etw-opacity-100 \",\"etw-px-1 etw-py-2 etw-w-full etw-text-left etw-transition \",[28,\"if\",[[28,\"eq\",[[24,[\"highlightedStyle\"]],[23,1,[]]],null],\"etw-bg-green etw-text-white\"],null]],null],[23,1,[]],\"Copy\",[28,\"action\",[[23,0,[]],\"highlightStyle\",[23,1,[]]],null]]],{\"statements\":[[0,\"              \"],[7,\"code\",true],[8],[0,\".\"],[1,[23,1,[]],false],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"          \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"\\n    \"],[7,\"p\",true],[10,\"class\",\"etw-mt-4 etw-text-grey etw-italic\"],[8],[0,\"Select a module for more detail.\"],[9],[0,\"\\n\\n\"]],\"parameters\":[]}],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/etw/module-style-detail.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/etw/module-style-example", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "SDHsVR87",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"a\",false],[12,\"class\",\"etw-mb-8 etw-w-1/5 etw-p-2\"],[3,\"action\",[[23,0,[]],\"selectModuleStyle\"]],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-text-center etw-m-4 etw-text-sm \"],[8],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-text-center etw-m-4 etw-text-sm \"],[8],[0,\"\\n\\n\"],[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"border-radius\"],null]],null,{\"statements\":[[0,\"\\n        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-solid etw-border-grey\\n          etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"border-widths\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24\\n          etw-border-red etw-bg-grey-lighter etw-border-solid\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"colors\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"etw-marginx-auto etw-w-full etw-h-24 bg-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"font-weights\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"font-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24\\n          etw-border etw-border-solid etw-border-grey\\n          etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"letter-spacing\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"text-left tracking-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"line-height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"text-left leading-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"margin\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"etw-bg-red etw-w-24 etw-mx-auto etw-border-t etw-border-solid \",[28,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"name\"]],\"auto\"],null],\"\",\"etw-border-transparent\"],null]]]],[8],[0,\"\\n          \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n            etw-mx-auto etw-w-24 etw-h-24 etw-border\\n             etw-bg-grey-lighter\\n            mt-\",[24,[\"moduleStyle\",\"name\"]],\"\\n          \"]]],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"max-height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          max-h-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"max-width\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          max-w-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"min-height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          min-h-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"min-width\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          min-w-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"negative-margin\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-mb-8 etw-bg-red etw-px-4 etw-pb-4 etw-mx-auto etw-h-32 etw-relative\"],[8],[0,\"\\n          \"],[7,\"div\",true],[10,\"class\",\"etw-absolute etw-pin-x\"],[8],[0,\"\\n            \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n            etw-mx-auto etw-w-24 etw-h-24 etw-border\\n            etw-bg-grey-lighter etw-shadow-lg\\n            -mt-\",[24,[\"moduleStyle\",\"name\"]],\"\\n            \"]]],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"opacity\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-grey etw-bg-grey-lighter\\n          opacity-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"padding\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-bg-red etw-w-24 etw-mx-auto\"],[8],[0,\"\\n          \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n            etw-mx-auto etw-w-24 etw-h-24 etw-border\\n             etw-bg-grey-lighter\\n            pt-\",[24,[\"moduleStyle\",\"name\"]],\"\\n          \"]]],[8],[0,\"\\n            \"],[7,\"p\",true],[10,\"class\",\"etw-text-grey-darker\"],[8],[0,\"Lorem\"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"shadows\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-white\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"svg-fill\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-bg-grey-lighter etw-text-red etw-py-4\"],[8],[0,\"\\n          \"],[7,\"svg\",true],[10,\"class\",\"fill-current inline-block h-12 w-12\"],[10,\"xmlns\",\"http://www.w3.org/2000/svg\",\"http://www.w3.org/2000/xmlns/\"],[10,\"viewBox\",\"0 0 20 20\"],[8],[0,\"\\n            \"],[7,\"path\",true],[10,\"d\",\"M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"svg-stroke\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-bg-grey-lighter etw-text-red etw-py-4\"],[8],[0,\"\\n          \"],[7,\"svg\",true],[10,\"class\",\"stroke-current inline-block h-12 w-12\"],[10,\"viewBox\",\"0 0 24 24\"],[10,\"xmlns\",\"http://www.w3.org/2000/svg\",\"http://www.w3.org/2000/xmlns/\"],[10,\"fill\",\"none\"],[10,\"stroke-width\",\"2\"],[10,\"stroke-linecap\",\"round\"],[10,\"stroke-linejoin\",\"round\"],[8],[0,\"\\n              \"],[7,\"circle\",true],[10,\"cx\",\"8\"],[10,\"cy\",\"21\"],[10,\"r\",\"2\"],[8],[9],[0,\"\\n              \"],[7,\"circle\",true],[10,\"cx\",\"20\"],[10,\"cy\",\"21\"],[10,\"r\",\"2\"],[8],[9],[0,\"\\n              \"],[7,\"path\",true],[10,\"d\",\"M5.67 6H23l-1.68 8.39a2 2 0 0 1-2 1.61H8.75a2 2 0 0 1-2-1.74L5.23 2.74A2 2 0 0 0 3.25 1H1\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"text-sizes\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"text-left text-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"width\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-grey etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"z-index\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-grey etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n      \"]],\"parameters\":[]},null]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"etw-mt-3 etw-leading-normal\"],[8],[0,\"\\n        \"],[7,\"p\",true],[8],[1,[24,[\"moduleStyle\",\"name\"]],false],[9],[0,\"\\n        \"],[7,\"p\",true],[10,\"class\",\"etw-opacity-50\"],[8],[1,[24,[\"moduleStyle\",\"value\"]],false],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/etw/module-style-example.hbs"
-    }
-  });
-
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/api/item", ["exports"], function (_exports) {
   "use strict";
