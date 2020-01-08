@@ -8,7 +8,7 @@ ember install ember-intl
 
 This will create the following files:
 
-* `app/format.js`
+* `app/formats.js`
     <!-- default definitions of named formats -->
 * `config/ember-intl.js`
     <!-- default ember-intl settings -->
