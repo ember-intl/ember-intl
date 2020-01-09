@@ -2,11 +2,12 @@
 
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
-  plugins: ['prettier', 'ember'],
+  plugins: ['@typescript-eslint', 'ember', 'prettier'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true
@@ -15,6 +16,12 @@ module.exports = {
     'prettier/prettier': 'error',
     'ember/no-restricted-resolver-tests': 'off',
     'ember/avoid-leaking-state-in-ember-objects': 0
+  },
+  settings: {
+    node: {
+      // Honor both extensions when enforcing e.g. `node/no-missing-require`
+      tryExtensions: ['.js', '.ts']
+    }
   },
   overrides: [
     // node files
@@ -56,6 +63,16 @@ module.exports = {
       excludedFiles: ['tests/dummy/**/*.js'],
       env: {
         embertest: true
+      }
+    },
+
+    // all TypeScript files
+    {
+      files: ['**/*.ts'],
+      rules: {
+        // These are covered by tsc
+        'no-undef': 'off',
+        'no-unused-vars': 'off'
       }
     }
   ]
