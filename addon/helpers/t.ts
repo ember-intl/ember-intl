@@ -4,12 +4,13 @@
  */
 
 import { assert } from '@ember/debug';
-import BaseHelper from './-format-base';
+import BaseFormatHelper from './-format-base';
+import { FormatterOptions } from '../-private/formatters/-base';
 
-export default BaseHelper.extend({
-  format(key, options) {
-    assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
+export default class TranslationHelper extends BaseFormatHelper<string> {
+  format(key: string, options: FormatterOptions) {
+    assert('[ember-intl] translation lookup attempted but no translation key was provided.', Boolean(key));
 
     return this.intl.t(key, options);
   }
-});
+}

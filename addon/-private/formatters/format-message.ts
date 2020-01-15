@@ -8,7 +8,7 @@ import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
 import { assign } from '@ember/polyfills';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
-import Formatter from './-base';
+import Formatter, { FormatterOptions, FormatterContext } from './-base';
 
 const { keys } = Object;
 
@@ -18,7 +18,7 @@ const {
   }
 } = Ember;
 
-function escape(hash) {
+function escape(hash?: { [key: string]: any }) {
   if (!hash) {
     return;
   }
@@ -36,16 +36,12 @@ function escape(hash) {
  * @private
  * @hide
  */
-export default class FormatMessage extends Formatter {
-  constructor() {
-    super();
+export default class FormatMessage implements Formatter<string> {
+  createNativeFormatter = memoize((message, locales, formats) => {
+    return new IntlMessageFormat(message, locales, formats);
+  });
 
-    this.createNativeFormatter = memoize((message, locales, formats) => {
-      return new IntlMessageFormat(message, locales, formats);
-    });
-  }
-
-  format(message, options, { formats, locale }) {
+  format(message: string, options: FormatterOptions | undefined, { formats, locale }: FormatterContext) {
     const isHTMLSafe = options && options.htmlSafe;
     const formatter = this.createNativeFormatter(message, locale, formats);
     const escapedOptions = isHTMLSafe ? escape(options) : options;

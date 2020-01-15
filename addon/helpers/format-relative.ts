@@ -3,35 +3,36 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { bind } from '@ember/runloop';
+import { bind as runBind } from '@ember/runloop';
+import BaseFormatHelper from './-format-base';
+import { FormatterOptions } from '../-private/formatters/-base';
+import { Dateish } from '../-private/formatters/format-date';
 
-import BaseHelper from './-format-base';
+export default class FormatRelativeHelper extends BaseFormatHelper<number> {
+  timer?: number;
 
-const runBind = bind;
+  format(value: Dateish, options: FormatterOptions) {
+    return this.intl.formatRelative(value, options);
+  }
 
-export default BaseHelper.extend({
-  format(params, hash) {
-    return this.intl.formatRelative(params, hash);
-  },
-
-  compute(params, hash) {
+  compute(params: any[], hash: { interval?: string }) {
     this.clearTimer();
 
-    if (hash && typeof hash.interval !== 'undefined') {
+    if (typeof hash.interval !== 'undefined') {
       /* setTimeout versus Ember.run.later so tests will not wait infinitely */
-      this.timer = setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
+      this.timer = window.setTimeout(runBind(this, this.recompute), parseInt(hash.interval, 10));
     }
 
-    return this._super(params, hash);
-  },
+    return super.compute(params, hash);
+  }
 
   clearTimer() {
     clearTimeout(this.timer);
-  },
+  }
 
   willDestroy() {
-    this._super();
+    super.willDestroy();
 
     this.clearTimer();
   }
-});
+}

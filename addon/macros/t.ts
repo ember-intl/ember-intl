@@ -2,8 +2,10 @@ import { get } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/empty-object';
 import intl from './intl';
+import { FormatterOptions, FormatResult } from '../-private/formatters/-base';
+import { IntlComputedPropertyCallback } from './intl';
 
-function partitionDynamicValuesAndStaticValues(options) {
+function partitionDynamicValuesAndStaticValues(options: FormatterOptions) {
   const dynamicValues = new EmptyObject();
   const staticValues = new EmptyObject();
 
@@ -19,7 +21,7 @@ function partitionDynamicValuesAndStaticValues(options) {
   return [dynamicValues, staticValues];
 }
 
-function mapPropertiesByHash(object, hash) {
+function mapPropertiesByHash(object: FormatterOptions, hash: FormatterOptions) {
   const result = new EmptyObject();
 
   Object.keys(hash).forEach(key => {
@@ -36,8 +38,10 @@ function mapPropertiesByHash(object, hash) {
  * This class is internal. Instead of using this class directly, use the `raw`
  * utility function, that creates an instance of this class.
  */
-class Raw {
-  constructor(value) {
+class Raw<T> {
+  readonly _value: T;
+
+  constructor(value: T) {
     this._value = value;
   }
 
@@ -57,16 +61,22 @@ class Raw {
  * @return The same value, but boxed in the `Raw` class so that the consuming
  *  macro understands that this value should be used as is.
  */
-export function raw(value) {
+export function raw<T>(value: T) {
   return new Raw(value);
 }
 
-export default function createTranslatedComputedProperty(translationKey, options) {
+export default function createTranslatedComputedProperty<Context = any>(
+  translationKey: string,
+  options: FormatterOptions
+) {
   const hash = options || new EmptyObject();
   const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
   const dependentKeys = Object.values(dynamicValues);
 
-  return intl(...dependentKeys, (intl, propertyKey, ctx) =>
-    intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues)))
-  );
+  const translate: IntlComputedPropertyCallback<Context, FormatResult> = function translate(intl, _, ctx) {
+    return intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues)));
+  };
+
+  // @ts-ignore
+  return intl<Context, FormatResult>(...dependentKeys, translate);
 }

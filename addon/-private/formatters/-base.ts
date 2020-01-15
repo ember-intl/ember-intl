@@ -1,24 +1,38 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
-import { warn } from '@ember/debug';
 import { camelize } from '@ember/string';
-import { A as emberArray } from '@ember/array';
+import { warn } from '@ember/debug';
 
 import links from '../../utils/links';
 
 const EMPTY_OBJECT = {};
 
-/**
- * @private
- * @hide
- */
-export default class FormatterBase {
-  get options() {
-    return emberArray();
+export interface FormatterOptions {
+  [key: string]: any;
+}
+
+export interface FormatterContext {
+  locale: string[];
+  formats: any;
+}
+
+export type FormatResult = string | { toString(): string };
+
+interface NativeFormatter {
+  format(value: any, options?: object): FormatResult;
+}
+
+export default interface Formatter<T> {
+  format(value: T, options: FormatterOptions | undefined, context: FormatterContext): FormatResult;
+}
+
+export abstract class BaseFormatter<T> implements Formatter<T> {
+  readonly options: string[];
+
+  constructor(options: string[] = []) {
+    this.options = options;
   }
+
+  abstract format(value: T, options: FormatterOptions, context: FormatterContext): FormatResult;
+  abstract createNativeFormatter(locales: string[], options: FormatterOptions): NativeFormatter;
 
   /**
    * Filters out all of the whitelisted formatter options
@@ -28,26 +42,22 @@ export default class FormatterBase {
    * @return {Object} Options object containing just whitelisted options
    * @private
    */
-  readOptions(options) {
+  readOptions(options?: FormatterOptions): FormatterOptions {
     if (!options) {
       return EMPTY_OBJECT;
     }
 
-    let found = {};
+    let found: FormatterOptions = {};
 
     for (let key in options) {
       let normalized = camelize(key);
 
-      if (this.options.includes(normalized)) {
+      if (this.options.indexOf(normalized) >= 0) {
         found[normalized] = options[key];
       }
     }
 
     return found;
-  }
-
-  format() {
-    throw new Error('not implemented');
   }
 
   /**
@@ -59,7 +69,12 @@ export default class FormatterBase {
    * @return {Object} Format options hash
    * @private
    */
-  _format(value, formatterOptions, formatOptions, { locale }) {
+  _format(
+    value: T,
+    formatterOptions: FormatterOptions,
+    formatOptions: object | undefined,
+    { locale }: FormatterContext
+  ): FormatResult {
     if (!locale) {
       warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
         id: 'ember-intl-no-locale-set'

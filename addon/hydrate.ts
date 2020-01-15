@@ -2,16 +2,7 @@
 
 import { warn } from '@ember/debug';
 import links from './utils/links';
-
-/**
- * @private
- * @hide
- */
-export function lookupByFactoryType(type, modulePrefix) {
-  return Object.keys(requirejs.entries).filter(key => {
-    return key.indexOf(`${modulePrefix}/${type}/`) === 0;
-  });
-}
+import IntlService from './services/intl';
 
 /**
  * Peeks into the requirejs map and registers all locale data (CLDR & Translations) found.
@@ -19,12 +10,25 @@ export function lookupByFactoryType(type, modulePrefix) {
  * @private
  * @hide
  */
-export default function(service, owner) {
-  const config = owner.resolveRegistration('config:environment');
-  const cldrs = lookupByFactoryType('cldrs', config.modulePrefix);
-  const translations = lookupByFactoryType('translations', config.modulePrefix);
+export default function(service: IntlService, owner: any) {
+  const { modulePrefix } = owner.resolveRegistration('config:environment');
+  const cldrsPrefix = `${modulePrefix}/cldrs/`;
+  const translationsPrefix = `${modulePrefix}/translations/`;
 
-  if (!cldrs.length) {
+  let foundCldrs = false;
+
+  // @ts-ignore
+  for (const key in requirejs.entries) {
+    if (key.indexOf(cldrsPrefix) === 0) {
+      foundCldrs = true;
+      owner.resolveRegistration(`cldr:${key.split('/').pop()}`).forEach(service.addLocaleData);
+    } else if (key.indexOf(translationsPrefix) === 0) {
+      const localeName = key.split('/').pop() as string;
+      service.addTranslations(localeName, owner.resolveRegistration(`translation:${localeName}`));
+    }
+  }
+
+  if (!foundCldrs) {
     warn(
       `[ember-intl] project is missing CLDR data\nIf you are asynchronously loading translation,
       see: ${links.asyncTranslations}.`,
@@ -34,14 +38,4 @@ export default function(service, owner) {
       }
     );
   }
-
-  cldrs
-    .map(moduleName => owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`))
-    .forEach(data => data.forEach(service.addLocaleData));
-
-  translations.forEach(moduleName => {
-    const localeName = moduleName.split('/').pop();
-
-    service.addTranslations(localeName, owner.resolveRegistration(`translation:${localeName}`));
-  });
 }

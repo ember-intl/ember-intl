@@ -4,68 +4,53 @@
  */
 
 import EmberObject from '@ember/object';
-import EmptyObject from 'ember-intl/-private/empty-object';
-import { assign } from '@ember/polyfills';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-function flatten(src) {
-  const result = new EmptyObject();
-
+function flatten(translations: Map<string, string>, src: any, prefix?: string) {
   for (const key in src) {
     if (!hasOwnProperty.call(src, key)) {
       continue;
     }
 
     const value = src[key];
+    const tKey = prefix ? `${prefix}.${key}` : key;
 
     if (typeof value === 'object' && value) {
-      const hash = flatten(value);
-
-      for (const suffix in hash) {
-        result[`${key}.${suffix}`] = hash[suffix];
-      }
+      flatten(translations, value, tKey);
     } else {
-      result[key] = value;
+      translations.set(tKey, value);
     }
   }
-
-  return result;
 }
 
-const TranslationModel = EmberObject.extend({
-  localeName: null,
-
-  init() {
-    this._super();
-
-    if (!this.translations) {
-      this.translations = new EmptyObject();
-    }
-  },
+// export as named and default so the default adapter can augment the class types because default exports cannot be augmented
+// see http://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation
+export class TranslationModel extends EmberObject {
+  translations: Map<string, string> = new Map();
 
   /**
    * Adds a translation hash
    */
-  addTranslations(translations) {
-    assign(this.translations, flatten(translations));
-  },
+  addTranslations(translations: any) {
+    flatten(this.translations, translations);
+  }
 
   /**
    * Custom accessor hook that can be overridden.
    * This would enable consumers that have dot notated strings
    * to implement this function as `return this[key];`
    */
-  getValue(key) {
-    return this.translations[key];
-  },
+  getValue(key: string) {
+    return this.translations.get(key);
+  }
 
   /**
    * Determines if the translation model contains a key
    */
-  has(key) {
-    return hasOwnProperty.call(this.translations, key);
+  has(key: string) {
+    return this.translations.has(key);
   }
-});
+}
 
 export default TranslationModel;

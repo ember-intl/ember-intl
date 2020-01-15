@@ -3,32 +3,38 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import EmberObject, { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
+import { TranslationModel } from '../models/translation';
 import { A as emberArray } from '@ember/array';
-import EmberObject, { computed, get } from '@ember/object';
-import Translation from '../models/translation';
+import MutableEmberArray from '@ember/array/mutable';
 
-export default EmberObject.extend({
-  _seen: null,
+declare module '../models/translation' {
+  interface TranslationModel {
+    localeName: string;
+  }
+}
+
+class OverridableProps {
+  _seen: any = null;
+
+  locales = computed('_seen.[]', {
+    get(this: IntlAdapterDefault) {
+      return this._seen.map(l => l.localeName);
+    }
+  });
+}
+
+export default class IntlAdapterDefault extends EmberObject.extend(new OverridableProps()) {
+  _seen: MutableEmberArray<TranslationModel> = emberArray();
 
   /** @private **/
-  locales: computed('_seen.[]', function() {
-    return get(this, '_seen').map(l => l.localeName);
-  }).readOnly(),
-
-  /** @private **/
-  init() {
-    this._super();
-    this._seen = emberArray();
-  },
-
-  /** @private **/
-  lookupLocale(localeName) {
+  lookupLocale(localeName: string) {
     return this._seen.findBy('localeName', localeName);
-  },
+  }
 
   /** @private **/
-  localeFactory(localeName) {
+  localeFactory(localeName: string): TranslationModel {
     const owner = getOwner(this);
     const lookupName = `ember-intl@translation:${localeName}`;
     let model = owner.lookup(lookupName);
@@ -41,7 +47,7 @@ export default EmberObject.extend({
     if (owner.hasRegistration('model:ember-intl-translation')) {
       Klass = owner.factoryFor('model:ember-intl-translation').class;
     } else {
-      Klass = Translation;
+      Klass = TranslationModel;
     }
 
     const ModelKlass = Klass.extend();
@@ -56,21 +62,23 @@ export default EmberObject.extend({
     this._seen.pushObject(model);
 
     return model;
-  },
+  }
 
   /** @private **/
-  has(localeName, translationKey) {
+  has(localeName: string, translationKey: string) {
     const model = this.lookupLocale(localeName);
 
     return model && model.has(translationKey);
-  },
+  }
 
   /** @private **/
-  lookup(localeName, translationKey) {
+  lookup(localeName: string, translationKey: string): string | undefined {
     const model = this.lookupLocale(localeName);
 
     if (model && model.has(translationKey)) {
       return model.getValue(translationKey);
     }
+
+    return undefined;
   }
-});
+}

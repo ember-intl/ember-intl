@@ -6,7 +6,9 @@ const proto = Object.create(null, {
   }
 });
 
-function EmptyObject() {}
+class EmptyObject {
+  [key: string]: any;
+}
 EmptyObject.prototype = proto;
 
 /**

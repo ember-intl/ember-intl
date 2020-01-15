@@ -3,25 +3,22 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { A as emberArray } from '@ember/array';
 import memoize from 'fast-memoize';
-import Formatter from './-base';
+import { BaseFormatter, FormatterOptions, FormatterContext } from './-base';
+
+export type Dateish = string | number | Date;
 
 /**
  * @private
  * @hide
  */
-export default class FormatDate extends Formatter {
+export default class FormatDate extends BaseFormatter<Dateish> {
+  createNativeFormatter = memoize((locales, options) => {
+    return new Intl.DateTimeFormat(locales, options);
+  });
+
   constructor() {
-    super();
-
-    this.createNativeFormatter = memoize((locales, options) => {
-      return new Intl.DateTimeFormat(locales, options);
-    });
-  }
-
-  get options() {
-    return emberArray([
+    super([
       'locale',
       'format',
       'localeMatcher',
@@ -40,10 +37,7 @@ export default class FormatDate extends Formatter {
     ]);
   }
 
-  format(value, options, ctx) {
-    const dateTime = new Date(value);
-    const formatOptions = this.readOptions(options);
-
-    return this._format(dateTime, formatOptions, undefined, ctx);
+  format(value: Dateish, options: FormatterOptions | undefined, ctx: FormatterContext) {
+    return this._format(new Date(value), this.readOptions(options), undefined, ctx);
   }
 }

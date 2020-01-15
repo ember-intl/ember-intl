@@ -4,28 +4,24 @@
  */
 
 import memoize from 'fast-memoize';
-import { A as emberArray } from '@ember/array';
 import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
-import Formatter from './-base';
+import { BaseFormatter, FormatterOptions, FormatterContext } from './-base';
+import { Dateish } from './format-date';
 
 /**
  * @private
  * @hide
  */
-export default class FormatRelative extends Formatter {
+export default class FormatRelative extends BaseFormatter<Dateish> {
+  createNativeFormatter = memoize((locales, options) => {
+    return new IntlRelativeFormat(locales, options);
+  });
+
   constructor() {
-    super();
-
-    this.createNativeFormatter = memoize((locales, options) => {
-      return new IntlRelativeFormat(locales, options);
-    });
+    super(['locale', 'format', 'style', 'units']);
   }
 
-  get options() {
-    return emberArray(['locale', 'format', 'style', 'units']);
-  }
-
-  format(value, options, ctx) {
+  format(value: Dateish, options: FormatterOptions | undefined, ctx: FormatterContext) {
     let dateValue = new Date(value);
     let formatOptions;
 

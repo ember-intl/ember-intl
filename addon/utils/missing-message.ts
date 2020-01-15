@@ -1,8 +1,15 @@
 import { isEmpty } from '@ember/utils';
 import { warn } from '@ember/debug';
 import links from './links';
+import IntlService from '../services/intl';
 
-export default function missingMessage(key, locales /*, options */) {
+export type MissingMessageOptions = { [key: string]: any };
+export interface MissingMessage {
+  (this: IntlService, key: string, locales: string[], options?: MissingMessageOptions): string;
+}
+
+// @ts-ignore ignore that options is not used
+export default function missingMessage(key: string, locales: string[] /*, options */) {
   if (isEmpty(locales)) {
     warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
       id: 'ember-intl-no-locale-set'

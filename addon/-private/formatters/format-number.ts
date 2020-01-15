@@ -4,17 +4,20 @@
  */
 
 import memoize from 'fast-memoize';
-import { A as emberArray } from '@ember/array';
 
-import Formatter from './-base';
+import { BaseFormatter, FormatterOptions, FormatterContext } from './-base';
 
 /**
  * @private
  * @hide
  */
-export default class FormatNumber extends Formatter {
-  get options() {
-    return emberArray([
+export default class FormatNumber extends BaseFormatter<number> {
+  createNativeFormatter = memoize((locales, options) => {
+    return new Intl.NumberFormat(locales, options);
+  });
+
+  constructor() {
+    super([
       'locale',
       'format',
       'localeMatcher',
@@ -31,15 +34,7 @@ export default class FormatNumber extends Formatter {
     ]);
   }
 
-  constructor() {
-    super();
-
-    this.createNativeFormatter = memoize((locales, options) => {
-      return new Intl.NumberFormat(locales, options);
-    });
-  }
-
-  format(value, options, ctx) {
+  format(value: number, options: FormatterOptions | undefined, ctx: FormatterContext) {
     return this._format(value, this.readOptions(options), undefined, ctx);
   }
 }

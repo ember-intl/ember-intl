@@ -7,50 +7,66 @@ import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
 import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
+import ComputedProperty from '@ember/object/computed';
 import Evented from '@ember/object/evented';
 import { assert, warn } from '@ember/debug';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
 import { next, cancel } from '@ember/runloop';
+import { EmberRunTimer } from '@ember/runloop/types';
 
+import IntlDefaultAdapter from '../adapters/default';
+import Formatter, { FormatterOptions, FormatResult } from '../-private/formatters/-base';
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
+import { Dateish } from '../-private/formatters/format-date';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
 import hydrate from '../hydrate';
 import getDOM from '../utils/get-dom';
+import { MissingMessage, MissingMessageOptions } from '../utils/missing-message';
 
-export default Service.extend(Evented, {
+type Locale = string[] | null;
+type LocaleName = string | string[];
+
+class OverridableProps {
   /** @private **/
-  _locale: null,
+  _locale: Locale = null;
 
   /** @private **/
-  _adapter: null,
+  _adapter: any = null;
 
   /** @public **/
-  formats: null,
+  formats: any = null;
 
   /** @private **/
-  _timer: null,
+  _formatters: { [name: string]: Formatter<unknown> } = {
+    message: new FormatMessage(),
+    relative: new FormatRelative(),
+    number: new FormatNumber(),
+    time: new FormatTime(),
+    date: new FormatDate()
+  };
 
   /** @public **/
-  locale: computed({
-    set(_, localeName) {
+  locale: ComputedProperty<Locale, LocaleName> = computed<any>({
+    get(this: OverridableProps & IntlService) {
+      return this._locale;
+    },
+
+    set(this: OverridableProps & IntlService, _, localeName: LocaleName) {
       const proposed = makeArray(localeName).map(normalizeLocale);
 
       if (!isArrayEqual(proposed, this._locale)) {
         this._locale = proposed;
-        cancel(this._timer);
-        this._timer = next(() => this.trigger('localeChanged'));
+        if (this._timer) cancel(this._timer);
+        this._timer = next(this, this.trigger, 'localeChanged');
         this.updateDocumentLanguage(this._locale);
       }
 
       return this._locale;
-    },
-    get() {
-      return this._locale;
     }
-  }),
+  });
 
   /**
    * Returns the first locale of the currently active locales
@@ -58,22 +74,22 @@ export default Service.extend(Evented, {
    * @property primaryLocale
    * @public
    */
-  primaryLocale: computed.readOnly('locale.0'),
+  primaryLocale = computed.readOnly('locale.0');
 
   /** @public **/
-  formatRelative: formatter('relative'),
+  formatRelative = formatter<Dateish>('relative');
 
   /** @public **/
-  formatMessage: formatter('message'),
+  formatMessage = formatter<string>('message');
 
   /** @public **/
-  formatNumber: formatter('number'),
+  formatNumber = formatter<number>('number');
 
   /** @public **/
-  formatTime: formatter('time'),
+  formatTime = formatter<Dateish>('time');
 
   /** @public **/
-  formatDate: formatter('date'),
+  formatDate = formatter<Dateish>('date');
 
   /**
    * Returns an array of registered locale names
@@ -81,44 +97,46 @@ export default Service.extend(Evented, {
    * @property locales
    * @public
    */
-  locales: computed.readOnly('_adapter.locales'),
+  locales = computed.readOnly('_adapter.locales');
+}
 
-  /** @public **/
+export default class IntlService extends Service.extend(Evented, new OverridableProps()) {
+  /** @private **/
+  _adapter: IntlDefaultAdapter = getOwner(this).lookup('ember-intl@adapter:default');
+
+  /** @private **/
+  _timer?: EmberRunTimer;
+
   init() {
-    this._super(...arguments);
+    super.init();
 
-    warn('[ember-intl] Intl API does not exist in this environment.  A polyfill of `Intl` is required.', Intl, {
-      id: 'ember-intl-undefined-intljs'
-    });
-
-    const initialLocale = get(this, 'locale') || ['en-us'];
-
+    const initialLocale = get(this as IntlService, 'locale') || ['en-us'];
     this.setLocale(initialLocale);
-    this._owner = getOwner(this);
-    this._adapter = this._owner.lookup('ember-intl@adapter:default');
 
-    this._formatters = {
-      message: new FormatMessage(),
-      relative: new FormatRelative(),
-      number: new FormatNumber(),
-      time: new FormatTime(),
-      date: new FormatDate()
-    };
+    warn(
+      '[ember-intl] Intl API does not exist in this environment.  A polyfill of `Intl` is required.',
+      Boolean(Intl),
+      {
+        id: 'ember-intl-undefined-intljs'
+      }
+    );
+
+    const owner = getOwner(this);
 
     if (!this.formats) {
-      this.formats = this._owner.resolveRegistration('formats:main') || {};
+      this.formats = owner.resolveRegistration('formats:main') || {};
     }
 
-    hydrate(this, this._owner);
-  },
+    hydrate(this, owner);
+  }
 
   willDestroy() {
-    this._super(...arguments);
-    cancel(this._timer);
-  },
+    super.willDestroy();
+    if (this._timer) cancel(this._timer);
+  }
 
   /** @public **/
-  lookup(key, localeName, options = {}) {
+  lookup(key: string, localeName?: LocaleName, options?: { resilient?: boolean } & MissingMessageOptions) {
     const localeNames = this.localeWithDefault(localeName);
     let translation;
 
@@ -130,26 +148,30 @@ export default Service.extend(Evented, {
       }
     }
 
-    if (!options.resilient && translation === undefined) {
-      const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
+    if (!(options && options.resilient) && translation === undefined) {
+      const missingMessage: MissingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames, options);
     }
 
     return translation;
-  },
+  }
 
   /** @public **/
-  t(key, options = {}) {
+  t(key: string, options?: { default?: string | string[]; locale?: LocaleName } & MissingMessageOptions) {
     let defaults = [key];
     let msg;
 
-    if (options.default) {
+    if (options && options.default) {
       defaults = defaults.concat(options.default);
     }
 
     while (!msg && defaults.length) {
-      msg = this.lookup(defaults.shift(), options.locale, assign({}, options, { resilient: defaults.length > 0 }));
+      msg = this.lookup(
+        defaults.shift() as string,
+        options && options.locale,
+        assign({}, options as MissingMessageOptions, { resilient: defaults.length > 0 })
+      );
     }
 
     /* Avoids passing msg to intl-messageformat if it is not a string */
@@ -158,21 +180,23 @@ export default Service.extend(Evented, {
     }
 
     return msg;
-  },
+  }
 
   /** @public **/
-  exists(key, localeName) {
+  exists(key: string, localeName?: LocaleName): boolean {
     const localeNames = this.localeWithDefault(localeName);
-
-    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
+    assert(
+      `[ember-intl] locale is unset, cannot lookup '${key}'`,
+      Array.isArray(localeNames) && localeNames.length > 0
+    );
 
     return localeNames.some(localeName => this._adapter.has(localeName, key));
-  },
+  }
 
   /** @public */
-  setLocale(locale) {
-    set(this, 'locale', locale);
-  },
+  setLocale(locale: LocaleName) {
+    set(this as IntlService, 'locale', locale);
+  }
 
   /**
    * A utility method for registering CLDR data against
@@ -182,38 +206,34 @@ export default Service.extend(Evented, {
    * @param {Object} locale data
    * @public
    */
-  addLocaleData(data) {
+  addLocaleData(data: any) {
     IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
-  },
+  }
 
   /** @public **/
-  addTranslations(localeName, payload) {
+  addTranslations(localeName: string, payload: any) {
     const locale = this.translationsFor(localeName);
 
     locale.addTranslations(payload);
-  },
+  }
 
   /** @public **/
-  translationsFor(localeName) {
+  translationsFor(localeName: string) {
     return this._adapter.localeFactory(normalizeLocale(localeName));
-  },
+  }
 
   /** @private **/
-  getFormat(formatType, format) {
+  getFormat(formatType: string, format: string): any | undefined {
     const formats = get(this, 'formats');
 
     if (formats && formatType && typeof format === 'string') {
       return get(formats, `${formatType}.${format}`);
     }
-  },
+  }
 
   /** @private **/
-  localeWithDefault(localeName) {
-    if (!localeName) {
-      return this._locale || [];
-    }
-
+  localeWithDefault(localeName?: LocaleName) {
     if (typeof localeName === 'string') {
       return makeArray(localeName).map(normalizeLocale);
     }
@@ -221,10 +241,12 @@ export default Service.extend(Evented, {
     if (Array.isArray(localeName)) {
       return localeName.map(normalizeLocale);
     }
-  },
+
+    return this._locale || [];
+  }
 
   /** @private **/
-  updateDocumentLanguage(locales) {
+  updateDocumentLanguage(locales: string[]) {
     const dom = getDOM(this);
 
     if (dom) {
@@ -233,14 +255,14 @@ export default Service.extend(Evented, {
       html.setAttribute('lang', primaryLocale);
     }
   }
-});
+}
 
-function formatter(name) {
-  return function(value, options, formats) {
+function formatter<T>(name: string) {
+  return function(this: IntlService, value: T, options?: FormatterOptions, formats?: any): FormatResult {
     let formatOptions = options;
 
     if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(name, formatOptions.format), formatOptions);
+      formatOptions = assign({}, this.getFormat(name, options.format), options);
     }
 
     return this._formatters[name].format(value, formatOptions, {
@@ -248,4 +270,10 @@ function formatter(name) {
       locale: this.localeWithDefault(formatOptions && formatOptions.locale)
     });
   };
+}
+
+declare module '@ember/service' {
+  interface Registry {
+    intl: IntlService;
+  }
 }
