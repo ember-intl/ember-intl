@@ -40,6 +40,9 @@ class OverridableProps {
   formats: any = null;
 
   /** @private **/
+  _timer?: EmberRunTimer;
+
+  /** @private **/
   _formatters: { [name: string]: Formatter<unknown> } = {
     message: new FormatMessage(),
     relative: new FormatRelative(),
@@ -55,8 +58,8 @@ class OverridableProps {
     },
 
     set(this: OverridableProps & IntlService, _, localeName: LocaleName) {
+      // console.log('set locale', localeName);
       const proposed = makeArray(localeName).map(normalizeLocale);
-
       if (!isArrayEqual(proposed, this._locale)) {
         this._locale = proposed;
         if (this._timer) cancel(this._timer);
@@ -98,14 +101,15 @@ class OverridableProps {
    * @public
    */
   locales = computed.readOnly('_adapter.locales');
+
+  willDestroy() {
+    if (this._timer) cancel(this._timer);
+  }
 }
 
 export default class IntlService extends Service.extend(Evented, new OverridableProps()) {
   /** @private **/
   _adapter: IntlDefaultAdapter = getOwner(this).lookup('ember-intl@adapter:default');
-
-  /** @private **/
-  _timer?: EmberRunTimer;
 
   init() {
     super.init();
@@ -127,12 +131,12 @@ export default class IntlService extends Service.extend(Evented, new Overridable
       this.formats = owner.resolveRegistration('formats:main') || {};
     }
 
-    hydrate(this, owner);
-  }
+    // adapter doesn't get set in constructor on ember <= 3.4
+    if (!this._adapter) {
+      this._adapter = owner.lookup('ember-intl@adapter:default');
+    }
 
-  willDestroy() {
-    super.willDestroy();
-    if (this._timer) cancel(this._timer);
+    hydrate(this, owner);
   }
 
   /** @public **/

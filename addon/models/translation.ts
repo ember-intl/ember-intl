@@ -29,6 +29,15 @@ function flatten(translations: Map<string, string>, src: any, prefix?: string) {
 export class TranslationModel extends EmberObject {
   translations: Map<string, string> = new Map();
 
+  init() {
+    super.init();
+
+    // translations doesn't get set in constructor on ember <= 3.4
+    if (!this.translations) {
+      this.translations = new Map();
+    }
+  }
+
   /**
    * Adds a translation hash
    */
