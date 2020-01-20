@@ -62,7 +62,9 @@ class OverridableProps {
       const proposed = makeArray(localeName).map(normalizeLocale);
       if (!isArrayEqual(proposed, this._locale)) {
         this._locale = proposed;
-        if (this._timer) cancel(this._timer);
+        if (this._timer) {
+          cancel(this._timer);
+        }
         this._timer = next(this, this.trigger, 'localeChanged');
         this.updateDocumentLanguage(this._locale);
       }
@@ -103,7 +105,9 @@ class OverridableProps {
   locales = computed.readOnly('_adapter.locales');
 
   willDestroy() {
-    if (this._timer) cancel(this._timer);
+    if (this._timer) {
+      cancel(this._timer);
+    }
   }
 }
 
