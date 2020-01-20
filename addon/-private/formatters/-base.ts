@@ -1,38 +1,34 @@
 import { camelize } from '@ember/string';
 import { warn } from '@ember/debug';
+import { IntlMessageFormatOptions } from '@ember-intl/intl-messageformat';
 
 import links from '../../utils/links';
 
 const EMPTY_OBJECT = {};
 
-export interface FormatterOptions {
-  [key: string]: any;
-}
-
 export interface FormatterContext {
   locale: string[];
-  formats: any;
+  formats: IntlMessageFormatOptions;
 }
 
-export type FormatResult = string | { toString(): string };
-
-interface NativeFormatter {
-  format(value: any, options?: object): FormatResult;
+interface NativeFormatter<FormatOptions> {
+  format(value: any, options?: FormatOptions): string;
 }
 
-export default interface Formatter<T> {
-  format(value: T, options: FormatterOptions | undefined, context: FormatterContext): FormatResult;
+export default interface Formatter<T, R, FormatOptions = void> {
+  format(value: T, options?: FormatOptions, context?: FormatterContext): R;
 }
 
-export abstract class BaseFormatter<T> implements Formatter<T> {
-  readonly options: string[];
+export abstract class BaseFormatter<T, R, FormatterOptions, FormatOptions = void>
+  implements Formatter<T, R, FormatOptions> {
+  readonly options: (keyof FormatterOptions)[];
 
   constructor(options: string[] = []) {
-    this.options = options;
+    this.options = options as (keyof FormatterOptions)[];
   }
 
-  abstract format(value: T, options: FormatterOptions, context: FormatterContext): FormatResult;
-  abstract createNativeFormatter(locales: string[], options: FormatterOptions): NativeFormatter;
+  abstract format(value: T, options?: FormatterOptions & FormatOptions, context?: FormatterContext): R;
+  abstract createNativeFormatter(locales?: string[], options?: FormatterOptions): NativeFormatter<FormatOptions>;
 
   /**
    * Filters out all of the whitelisted formatter options
@@ -44,13 +40,13 @@ export abstract class BaseFormatter<T> implements Formatter<T> {
    */
   readOptions(options?: FormatterOptions): FormatterOptions {
     if (!options) {
-      return EMPTY_OBJECT;
+      return EMPTY_OBJECT as FormatterOptions;
     }
 
-    let found: FormatterOptions = {};
+    let found = {} as FormatterOptions;
 
     for (let key in options) {
-      let normalized = camelize(key);
+      let normalized = camelize(key) as keyof FormatterOptions;
 
       if (this.options.indexOf(normalized) >= 0) {
         found[normalized] = options[key];
@@ -71,10 +67,11 @@ export abstract class BaseFormatter<T> implements Formatter<T> {
    */
   _format(
     value: T,
-    formatterOptions: FormatterOptions,
-    formatOptions: object | undefined,
-    { locale }: FormatterContext
-  ): FormatResult {
+    formatterOptions?: FormatterOptions,
+    formatOptions?: FormatOptions,
+    ctx?: FormatterContext
+  ): string {
+    const locale = ctx && ctx.locale;
     if (!locale) {
       warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
         id: 'ember-intl-no-locale-set'

@@ -5,13 +5,15 @@
 
 import memoize from 'fast-memoize';
 
-import { BaseFormatter, FormatterOptions, FormatterContext } from './-base';
+import { BaseFormatter, FormatterContext } from './-base';
+
+export type Options = Intl.NumberFormatOptions;
 
 /**
  * @private
  * @hide
  */
-export default class FormatNumber extends BaseFormatter<number> {
+export default class FormatNumber extends BaseFormatter<number, string, Options> {
   createNativeFormatter = memoize((locales, options) => {
     return new Intl.NumberFormat(locales, options);
   });
@@ -34,7 +36,7 @@ export default class FormatNumber extends BaseFormatter<number> {
     ]);
   }
 
-  format(value: number, options: FormatterOptions | undefined, ctx: FormatterContext) {
+  format(value: number, options?: Options, ctx?: FormatterContext) {
     return this._format(value, this.readOptions(options), undefined, ctx);
   }
 }

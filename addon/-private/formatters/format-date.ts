@@ -4,15 +4,17 @@
  */
 
 import memoize from 'fast-memoize';
-import { BaseFormatter, FormatterOptions, FormatterContext } from './-base';
+import { BaseFormatter, FormatterContext } from './-base';
 
 export type Dateish = string | number | Date;
+
+export type Options = Intl.DateTimeFormatOptions;
 
 /**
  * @private
  * @hide
  */
-export default class FormatDate extends BaseFormatter<Dateish> {
+export default class FormatDate extends BaseFormatter<Dateish, string, Options> {
   createNativeFormatter = memoize((locales, options) => {
     return new Intl.DateTimeFormat(locales, options);
   });
@@ -37,7 +39,7 @@ export default class FormatDate extends BaseFormatter<Dateish> {
     ]);
   }
 
-  format(value: Dateish, options: FormatterOptions | undefined, ctx: FormatterContext) {
+  format(value: Dateish, options?: Options, ctx?: FormatterContext) {
     return this._format(new Date(value), this.readOptions(options), undefined, ctx);
   }
 }

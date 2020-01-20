@@ -4,15 +4,13 @@
  */
 
 import BaseFormatHelper from './-format-base';
-import { FormatterOptions } from '../-private/formatters/-base';
 import { Dateish } from '../-private/formatters/format-date';
+import { formatDateOptions } from '../services/intl';
 
-export default class FormatDateHelper extends BaseFormatHelper<Dateish> {
-  get allowEmpty() {
-    return true;
-  }
+export default class FormatDateHelper extends BaseFormatHelper<Dateish, string, formatDateOptions> {
+  readonly allowEmpty = true;
 
-  format(value: Dateish, options: FormatterOptions) {
+  format(value: Dateish, options: formatDateOptions) {
     return this.intl.formatDate(value, options);
   }
 }

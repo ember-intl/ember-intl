@@ -3,7 +3,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import FormatDateFormatter from './format-date';
+import FormatDateFormatter, { Options as DateOptions } from './format-date';
+
+export type Options = DateOptions;
 
 /**
  * @private

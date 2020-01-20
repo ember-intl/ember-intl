@@ -4,10 +4,11 @@
  */
 
 import BaseFormatHelper from './-format-base';
-import { FormatterOptions } from '../-private/formatters/-base';
+import { Result } from '../-private/formatters/format-message';
+import { formatMessageOptions } from '../services/intl';
 
-export default class FormatMessageHelper extends BaseFormatHelper<string> {
-  format(value: string, options: FormatterOptions) {
+export default class FormatMessageHelper extends BaseFormatHelper<string, Result, formatMessageOptions> {
+  format(value: string, options: formatMessageOptions) {
     return this.intl.formatMessage(value, options);
   }
 }

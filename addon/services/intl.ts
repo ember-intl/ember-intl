@@ -3,8 +3,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
-import IntlMessageFormat from '@ember-intl/intl-messageformat';
+import IntlRelativeFormat, { IntlRelativeFormatOptions } from '@ember-intl/intl-relativeformat';
+import IntlMessageFormat, { IntlMessageFormatOptions } from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
 import ComputedProperty from '@ember/object/computed';
@@ -17,8 +17,18 @@ import { next, cancel } from '@ember/runloop';
 import { EmberRunTimer } from '@ember/runloop/types';
 
 import IntlDefaultAdapter from '../adapters/default';
-import Formatter, { FormatterOptions, FormatResult } from '../-private/formatters/-base';
-import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
+import {
+  FormatDate,
+  FormatDateOptions,
+  FormatMessage,
+  FormatMessageOptions,
+  FormatNumber,
+  FormatNumberOptions,
+  FormatRelative,
+  FormatRelativeOptions,
+  FormatTime,
+  FormatTimeOptions
+} from '../-private/formatters';
 import { Dateish } from '../-private/formatters/format-date';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
@@ -30,6 +40,24 @@ import { Translations } from '../models/translation';
 type Locale = string[] | null;
 type LocaleName = string | string[];
 
+interface Formats extends IntlMessageFormatOptions {
+  relative?: {
+    [style: string]: IntlRelativeFormatOptions;
+  };
+}
+
+interface FormatOptionDecoration {
+  format?: string;
+  locale?: LocaleName;
+}
+
+export type formatRelativeOptions = FormatRelativeOptions & FormatOptionDecoration;
+export type formatMessageOptions = FormatMessageOptions & { locale?: LocaleName };
+export type formatNumberOptions = FormatNumberOptions & FormatOptionDecoration;
+export type formatTimeOptions = FormatTimeOptions & FormatOptionDecoration;
+export type formatDateOptions = FormatDateOptions & FormatOptionDecoration;
+export type tOptions = formatMessageOptions & { default?: string | string[] } & MissingMessageOptions;
+
 class OverridableProps {
   /** @private **/
   _locale: Locale = null;
@@ -37,20 +65,8 @@ class OverridableProps {
   /** @private **/
   _adapter: any = null;
 
-  /** @public **/
-  formats: any = null;
-
   /** @private **/
   _timer?: EmberRunTimer;
-
-  /** @private **/
-  _formatters: { [name: string]: Formatter<unknown> } = {
-    message: new FormatMessage(),
-    relative: new FormatRelative(),
-    number: new FormatNumber(),
-    time: new FormatTime(),
-    date: new FormatDate()
-  };
 
   /** @public **/
   locale: ComputedProperty<Locale, LocaleName> = computed<any>({
@@ -81,21 +97,6 @@ class OverridableProps {
    */
   primaryLocale = computed.readOnly('locale.0');
 
-  /** @public **/
-  formatRelative = formatter<Dateish>('relative');
-
-  /** @public **/
-  formatMessage = formatter<string>('message');
-
-  /** @public **/
-  formatNumber = formatter<number>('number');
-
-  /** @public **/
-  formatTime = formatter<Dateish>('time');
-
-  /** @public **/
-  formatDate = formatter<Dateish>('date');
-
   /**
    * Returns an array of registered locale names
    *
@@ -112,8 +113,84 @@ class OverridableProps {
 }
 
 export default class IntlService extends Service.extend(Evented, new OverridableProps()) {
+  /** @public **/
+  formats: Formats = getOwner(this).resolveRegistration('formats:main') || {};
+
   /** @private **/
   _adapter: IntlDefaultAdapter = getOwner(this).lookup('ember-intl@adapter:default');
+
+  /** @private **/
+  _formatters = {
+    message: new FormatMessage(),
+    relative: new FormatRelative(),
+    number: new FormatNumber(),
+    time: new FormatTime(),
+    date: new FormatDate()
+  };
+
+  /** @public **/
+  formatRelative(value: Dateish, options?: formatRelativeOptions) {
+    let opts = options;
+
+    if (options && typeof options.format === 'string' && this.formats && this.formats.relative) {
+      opts = assign({}, this.formats.relative[options.format], options);
+    }
+
+    return this._formatters.relative.format(value, opts, {
+      formats: this.formats,
+      locale: this.localeWithDefault(opts && opts.locale)
+    });
+  }
+
+  /** @public **/
+  formatMessage(value: string, options?: formatMessageOptions, formats?: IntlMessageFormatOptions) {
+    return this._formatters.message.format(value, options, {
+      formats: formats || this.formats,
+      locale: this.localeWithDefault(options && options.locale)
+    });
+  }
+
+  /** @public **/
+  formatNumber(value: number, options?: formatNumberOptions) {
+    let opts = options;
+
+    if (options && typeof options.format === 'string' && this.formats && this.formats.number) {
+      opts = assign({}, this.formats.number[options.format], options);
+    }
+
+    return this._formatters.number.format(value, opts, {
+      formats: this.formats,
+      locale: this.localeWithDefault(opts && opts.locale)
+    });
+  }
+
+  /** @public **/
+  formatTime(value: Dateish, options?: formatTimeOptions) {
+    let opts = options;
+
+    if (options && typeof options.format === 'string' && this.formats && this.formats.time) {
+      opts = assign({}, this.formats.time[options.format], options);
+    }
+
+    return this._formatters.time.format(value, opts, {
+      formats: this.formats,
+      locale: this.localeWithDefault(opts && opts.locale)
+    });
+  }
+
+  /** @public **/
+  formatDate(value: Dateish, options?: formatDateOptions) {
+    let opts = options;
+
+    if (options && typeof options.format === 'string' && this.formats && this.formats.date) {
+      opts = assign({}, this.formats.date[options.format], options);
+    }
+
+    return this._formatters.date.format(value, opts, {
+      formats: this.formats,
+      locale: this.localeWithDefault(opts && opts.locale)
+    });
+  }
 
   init() {
     super.init();
@@ -131,6 +208,7 @@ export default class IntlService extends Service.extend(Evented, new Overridable
 
     const owner = getOwner(this);
 
+    // formats doesn't get set in constructor on ember <= 3.4
     if (!this.formats) {
       this.formats = owner.resolveRegistration('formats:main') || {};
     }
@@ -146,27 +224,24 @@ export default class IntlService extends Service.extend(Evented, new Overridable
   /** @public **/
   lookup(key: string, localeName?: LocaleName, options?: { resilient?: boolean } & MissingMessageOptions) {
     const localeNames = this.localeWithDefault(localeName);
-    let translation;
 
     for (let i = 0; i < localeNames.length; i++) {
-      translation = this._adapter.lookup(localeNames[i], key);
+      const translation = this._adapter.lookup(localeNames[i], key);
 
       if (translation !== undefined) {
-        break;
+        return translation;
       }
     }
 
-    if (!(options && options.resilient) && translation === undefined) {
+    if (!(options && options.resilient)) {
       const missingMessage: MissingMessage = getOwner(this).resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames, options);
     }
-
-    return translation;
   }
 
   /** @public **/
-  t(key: string, options?: { default?: string | string[]; locale?: LocaleName } & MissingMessageOptions) {
+  t(key: string, options?: tOptions) {
     let defaults = [key];
     let msg;
 
@@ -232,15 +307,6 @@ export default class IntlService extends Service.extend(Evented, new Overridable
   }
 
   /** @private **/
-  getFormat(formatType: string, format: string): any | undefined {
-    const formats = get(this, 'formats');
-
-    if (formats && formatType && typeof format === 'string') {
-      return get(formats, `${formatType}.${format}`);
-    }
-  }
-
-  /** @private **/
   localeWithDefault(localeName?: LocaleName) {
     if (typeof localeName === 'string') {
       return makeArray(localeName).map(normalizeLocale);
@@ -263,21 +329,6 @@ export default class IntlService extends Service.extend(Evented, new Overridable
       html.setAttribute('lang', primaryLocale);
     }
   }
-}
-
-function formatter<T>(name: string) {
-  return function(this: IntlService, value: T, options?: FormatterOptions, formats?: any): FormatResult {
-    let formatOptions = options;
-
-    if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(name, options.format), options);
-    }
-
-    return this._formatters[name].format(value, formatOptions, {
-      formats: formats || this.formats,
-      locale: this.localeWithDefault(formatOptions && formatOptions.locale)
-    });
-  };
 }
 
 declare module '@ember/service' {

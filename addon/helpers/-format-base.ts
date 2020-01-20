@@ -6,16 +6,11 @@
 import Helper from '@ember/component/helper';
 import { getOwner } from '@ember/application';
 import { isEmpty } from '@ember/utils';
-import { getWithDefault } from '@ember/object';
 import IntlService from '../services/intl';
-import { FormatterOptions, FormatResult } from '../-private/formatters/-base';
 
-export default abstract class BaseFormatHelper<T> extends Helper {
+export default abstract class BaseFormatHelper<T, R, Options> extends Helper {
   readonly intl: IntlService;
-
-  get allowEmpty() {
-    return false;
-  }
+  readonly allowEmpty: boolean = false;
 
   constructor() {
     super(...arguments);
@@ -33,9 +28,9 @@ export default abstract class BaseFormatHelper<T> extends Helper {
     this.intl.off('localeChanged', this, 'recompute');
   }
 
-  compute([value]: T[], options: FormatterOptions) {
+  compute([value]: T[], options: Options & { allowEmpty?: boolean }) {
     if (isEmpty(value)) {
-      if (getWithDefault(options, 'allowEmpty', this.allowEmpty)) {
+      if (typeof options.allowEmpty === 'undefined' ? this.allowEmpty : options.allowEmpty) {
         return;
       }
 
@@ -47,5 +42,5 @@ export default abstract class BaseFormatHelper<T> extends Helper {
     return this.format(value, options);
   }
 
-  abstract format(value: T, options: FormatterOptions): FormatResult;
+  abstract format(value: T, options: Options): R;
 }

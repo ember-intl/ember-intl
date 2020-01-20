@@ -2,12 +2,25 @@ import { get } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/empty-object';
 import intl from './intl';
-import { FormatterOptions, FormatResult } from '../-private/formatters/-base';
+import { Result } from '../-private/formatters/format-message';
+import { tOptions } from '../services/intl';
 import { IntlComputedPropertyCallback } from './intl';
 
-function partitionDynamicValuesAndStaticValues(options: FormatterOptions) {
-  const dynamicValues = new EmptyObject();
-  const staticValues = new EmptyObject();
+type DynamicOptions<Context> = {
+  [P in keyof tOptions]: keyof Context;
+};
+
+// would be nice to be able to check that the property on Context
+// the key refers to is the right type for P in tOptions
+type TranslatedComputedPropertyOptions<Context> = {
+  [P in keyof tOptions]: Raw<tOptions[P]> | keyof Context;
+};
+
+function partitionDynamicValuesAndStaticValues<Context>(
+  options: TranslatedComputedPropertyOptions<Context>
+): [DynamicOptions<Context>, tOptions] {
+  const dynamicValues = new EmptyObject() as DynamicOptions<Context>;
+  const staticValues = new EmptyObject() as tOptions;
 
   Object.keys(options).forEach(key => {
     const value = options[key];
@@ -21,11 +34,11 @@ function partitionDynamicValuesAndStaticValues(options: FormatterOptions) {
   return [dynamicValues, staticValues];
 }
 
-function mapPropertiesByHash(object: FormatterOptions, hash: FormatterOptions) {
-  const result = new EmptyObject();
+function mapPropertiesByHash<Context>(ctx: Context, hash: DynamicOptions<Context>) {
+  const result = new EmptyObject() as tOptions;
 
   Object.keys(hash).forEach(key => {
-    result[key] = get(object, hash[key]);
+    result[key] = get(ctx, hash[key]);
   });
 
   return result;
@@ -67,16 +80,15 @@ export function raw<T>(value: T) {
 
 export default function createTranslatedComputedProperty<Context = any>(
   translationKey: string,
-  options: FormatterOptions
+  options: TranslatedComputedPropertyOptions<Context> = new EmptyObject()
 ) {
-  const hash = options || new EmptyObject();
-  const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(hash);
+  const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(options);
   const dependentKeys = Object.values(dynamicValues);
 
-  const translate: IntlComputedPropertyCallback<Context, FormatResult> = function translate(intl, _, ctx) {
+  const translate: IntlComputedPropertyCallback<Context, Result> = function translate(intl, _, ctx) {
     return intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues)));
   };
 
   // @ts-ignore
-  return intl<Context, FormatResult>(...dependentKeys, translate);
+  return intl<Context, Result>(...dependentKeys, translate);
 }

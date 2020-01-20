@@ -5,17 +5,17 @@
 
 import { bind as runBind } from '@ember/runloop';
 import BaseFormatHelper from './-format-base';
-import { FormatterOptions } from '../-private/formatters/-base';
+import { formatRelativeOptions } from '../services/intl';
 import { Dateish } from '../-private/formatters/format-date';
 
-export default class FormatRelativeHelper extends BaseFormatHelper<number> {
+export default class FormatRelativeHelper extends BaseFormatHelper<Dateish, string, formatRelativeOptions> {
   timer?: number;
 
-  format(value: Dateish, options: FormatterOptions) {
+  format(value: Dateish, options: formatRelativeOptions) {
     return this.intl.formatRelative(value, options);
   }
 
-  compute(params: any[], hash: { interval?: string }) {
+  compute(params: Dateish[], hash: formatRelativeOptions & { interval?: string }) {
     this.clearTimer();
 
     if (typeof hash.interval !== 'undefined') {

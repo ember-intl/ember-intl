@@ -6,11 +6,12 @@
 import Ember from 'ember';
 import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
-import { assign } from '@ember/polyfills';
-import IntlMessageFormat from '@ember-intl/intl-messageformat';
-import Formatter, { FormatterOptions, FormatterContext } from './-base';
+import IntlMessageFormat, { FormatOptions } from '@ember-intl/intl-messageformat';
+import Formatter, { FormatterContext } from './-base';
+import { SafeString } from '@ember/string/-private/handlebars';
 
-const { keys } = Object;
+export type Options = FormatOptions & { htmlSafe?: boolean };
+export type Result = string | SafeString;
 
 const {
   Handlebars: {
@@ -18,35 +19,41 @@ const {
   }
 } = Ember;
 
-function escape(hash?: { [key: string]: any }) {
+function escape(hash?: FormatOptions) {
   if (!hash) {
     return;
   }
 
-  return keys(hash).reduce((accum, key) => {
-    if (typeof hash[key] === 'string') {
-      accum[key] = escapeExpression(hash[key]);
-    }
+  const escaped = {} as FormatOptions;
 
-    return accum;
-  }, assign({}, hash));
+  for (const key in hash) {
+    const val = hash[key];
+    if (typeof val === 'string') {
+      escaped[key] = escapeExpression(val);
+    } else {
+      escaped[key] = val;
+    }
+  }
+
+  return escaped;
 }
 
 /**
  * @private
  * @hide
  */
-export default class FormatMessage implements Formatter<string> {
+export default class FormatMessage implements Formatter<string, Result, Options> {
   createNativeFormatter = memoize((message, locales, formats) => {
     return new IntlMessageFormat(message, locales, formats);
   });
 
-  format(message: string, options: FormatterOptions | undefined, { formats, locale }: FormatterContext) {
-    const isHTMLSafe = options && options.htmlSafe;
-    const formatter = this.createNativeFormatter(message, locale, formats);
-    const escapedOptions = isHTMLSafe ? escape(options) : options;
-    const result = formatter.format(escapedOptions);
+  format(message: string, options?: Options, ctx?: FormatterContext) {
+    const formatter = this.createNativeFormatter(message, ctx && ctx.locale, ctx && ctx.formats);
 
-    return isHTMLSafe ? htmlSafe(result) : result;
+    if (options && options.htmlSafe) {
+      return htmlSafe(formatter.format(escape(options)));
+    }
+
+    return formatter.format(options);
   }
 }
