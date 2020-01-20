@@ -25,6 +25,7 @@ import normalizeLocale from '../-private/normalize-locale';
 import hydrate from '../hydrate';
 import getDOM from '../utils/get-dom';
 import { MissingMessage, MissingMessageOptions } from '../utils/missing-message';
+import { Translations } from '../models/translation';
 
 type Locale = string[] | null;
 type LocaleName = string | string[];
@@ -215,7 +216,7 @@ export default class IntlService extends Service.extend(Evented, new Overridable
   }
 
   /** @public **/
-  addTranslations(localeName: string, payload: any) {
+  addTranslations(localeName: string, payload: Translations) {
     const locale = this.translationsFor(localeName);
 
     locale.addTranslations(payload);

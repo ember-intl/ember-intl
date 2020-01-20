@@ -7,7 +7,11 @@ import EmberObject from '@ember/object';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-function flatten(translations: Map<string, string>, src: any, prefix?: string) {
+export interface Translations {
+  [key: string]: string | Translations;
+}
+
+function flatten(translations: Map<string, string>, src: Translations, prefix?: string) {
   for (const key in src) {
     if (!hasOwnProperty.call(src, key)) {
       continue;
@@ -41,7 +45,7 @@ export class TranslationModel extends EmberObject {
   /**
    * Adds a translation hash
    */
-  addTranslations(translations: any) {
+  addTranslations(translations: Translations) {
     flatten(this.translations, translations);
   }
 
