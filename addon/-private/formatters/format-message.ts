@@ -8,7 +8,11 @@ import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
 import IntlMessageFormat, { FormatOptions } from '@ember-intl/intl-messageformat';
 import Formatter, { FormatterContext } from './-base';
-import { SafeString } from '@ember/string/-private/handlebars';
+
+interface SafeString {
+  toString(): string;
+  toHTML(): string;
+}
 
 export type Options = FormatOptions & { htmlSafe?: boolean };
 export type Result = string | SafeString;
