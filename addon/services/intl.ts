@@ -58,7 +58,6 @@ class OverridableProps {
     },
 
     set(this: OverridableProps & IntlService, _, localeName: LocaleName) {
-      // console.log('set locale', localeName);
       const proposed = makeArray(localeName).map(normalizeLocale);
       if (!isArrayEqual(proposed, this._locale)) {
         this._locale = proposed;
