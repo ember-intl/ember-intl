@@ -94796,11 +94796,15 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
   function _inheritsLoose$3(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+  var _RecordData;
+
   var emberRun$2 = Ember.run.backburner;
   var ENV = Ember.ENV;
   var HAS_SERIALIZER_PACKAGE = require.has('@ember-data/serializer');
   var HAS_ADAPTER_PACKAGE = require.has('@ember-data/adapter');
   var HAS_MODEL_PACKAGE = require.has('@ember-data/model');
+  var HAS_RECORD_DATA_PACKAGE = require.has('@ember-data/record-data') || require.has('ember-data');
   /**
     The store contains all of the data for records loaded from the server.
     It is also responsible for creating instances of `Model` that wrap
@@ -94964,14 +94968,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     var _proto = CoreStore.prototype;
 
     _proto.getRequestStateService = function getRequestStateService() {
-
-      throw new Error('RequestService is not available unless the feature flag is on and running on a canary build');
     };
 
     _proto._instantiateRecord = function _instantiateRecord(internalModel, modelName, recordData, identifier, properties) {
-      {
-        throw new Error('should not be here, custom model class ff error');
-      }
     };
 
     _proto._internalDeleteRecord = function _internalDeleteRecord(internalModel) {
@@ -95000,9 +94999,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
 
     _proto.getSchemaDefinitionService = function getSchemaDefinitionService() {
-      {
-        throw new Error('need to enable CUSTOM_MODEL_CLASS feature flag in order to access SchemaDefinitionService');
-      }
     } // TODO Double check this return value is correct
     ;
 
@@ -96896,21 +96892,12 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
 
     _proto.serializeRecord = function serializeRecord(record, options) {
-      {
-        throw new Error('serializeRecord is only available when CUSTOM_MODEL_CLASS ff is on');
-      }
     };
 
     _proto.saveRecord = function saveRecord(record, options) {
-      {
-        throw new Error('saveRecord is only available when CUSTOM_MODEL_CLASS ff is on');
-      }
     };
 
     _proto.relationshipReferenceFor = function relationshipReferenceFor(identifier, key) {
-      {
-        throw new Error('relationshipReferenceFor is only available when CUSTOM_MODEL_CLASS ff is on');
-      }
     }
     /**
      * @internal
@@ -96932,7 +96919,26 @@ lunr.QueryParser.parseBoost = function (parser) {
     ;
 
     _proto.createRecordDataFor = function createRecordDataFor(modelName, id, clientId, storeWrapper) {
-      throw new Error("Expected store.createRecordDataFor to be implemented but it wasn't");
+      if (HAS_RECORD_DATA_PACKAGE) {
+        // we can't greedily use require as this causes
+        // a cycle we can't easily fix (or clearly pin point) at present.
+        //
+        // it can be reproduced in partner tests by running
+        // node ./bin/packages-for-commit.js && yarn test-external:ember-observer
+        if (_RecordData === undefined) {
+          _RecordData = require__default('@ember-data/record-data/-private').RecordData;
+        }
+
+        {
+          var _identifier7 = identifierCacheFor(this).getOrCreateRecordIdentifier({
+            type: modelName,
+            id: id,
+            lid: clientId
+          });
+
+          return new _RecordData(_identifier7, storeWrapper);
+        }
+      }
     }
     /**
      * @internal
@@ -96990,9 +96996,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
 
     _proto.newClientId = function newClientId() {
-      {
-        throw new Error("Private API Removed");
-      }
     } //Called by the state machine to notify the store that the record is ready to be interacted with
     ;
 
@@ -97206,8 +97209,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     _createClass$7(CoreStore, [{
       key: "identifierCache",
       get: function get() {
-
-        return identifierCacheFor(this);
+        {
+          return identifierCacheFor(this);
+        }
       }
     }]);
 
@@ -97282,6 +97286,49 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       throw error;
     }, label);
+  }
+
+  function notifyChanges(identifier, value, record, store) {
+    if (value === 'attributes') {
+      record.eachAttribute(function (key) {
+        var currentValue = Ember.cacheFor(record, key);
+
+        var internalModel = store._internalModelForResource(identifier);
+
+        if (currentValue !== internalModel._recordData.getAttr(key)) {
+          record.notifyPropertyChange(key);
+        }
+      });
+    } else if (value === 'relationships') {
+      record.eachRelationship(function (key, meta) {
+        var internalModel = store._internalModelForResource(identifier);
+
+        if (meta.kind === 'belongsTo') {
+          record.notifyPropertyChange(key);
+        } else if (meta.kind === 'hasMany') {
+          if (meta.options.async) {
+            record.notifyPropertyChange(key);
+            internalModel.hasManyRemovalCheck(key);
+          }
+
+          if (internalModel._manyArrayCache[key]) {
+            internalModel._manyArrayCache[key].retrieveLatest();
+          }
+        }
+      });
+    } else if (value === 'errors') {
+      var internalModel = store._internalModelForResource(identifier); //TODO guard
+
+
+      var errors = internalModel._recordData.getErrors(identifier);
+
+      record.invalidErrorsChanged(errors);
+    } else if (value === 'state') {
+      record.notifyPropertyChange('isNew');
+      record.notifyPropertyChange('isDeleted');
+    } else if (value === 'identity') {
+      record.notifyPropertyChange('id');
+    }
   }
 
   var HAS_MODEL_PACKAGE$1 = require.has('@ember-data/model');
@@ -97373,49 +97420,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
 
       return _lookupModelFactory(store, normalizedModelName);
-    }
-  }
-
-  function notifyChanges(identifier, value, record, store) {
-    if (value === 'attributes') {
-      record.eachAttribute(function (key) {
-        var currentValue = Ember.cacheFor(record, key);
-
-        var internalModel = store._internalModelForResource(identifier);
-
-        if (currentValue !== internalModel._recordData.getAttr(key)) {
-          record.notifyPropertyChange(key);
-        }
-      });
-    } else if (value === 'relationships') {
-      record.eachRelationship(function (key, meta) {
-        var internalModel = store._internalModelForResource(identifier);
-
-        if (meta.kind === 'belongsTo') {
-          record.notifyPropertyChange(key);
-        } else if (meta.kind === 'hasMany') {
-          if (meta.options.async) {
-            record.notifyPropertyChange(key);
-            internalModel.hasManyRemovalCheck(key);
-          }
-
-          if (internalModel._manyArrayCache[key]) {
-            internalModel._manyArrayCache[key].retrieveLatest();
-          }
-        }
-      });
-    } else if (value === 'errors') {
-      var internalModel = store._internalModelForResource(identifier); //TODO guard
-
-
-      var errors = internalModel._recordData.getErrors(identifier);
-
-      record.invalidErrorsChanged(errors);
-    } else if (value === 'state') {
-      record.notifyPropertyChange('isNew');
-      record.notifyPropertyChange('isDeleted');
-    } else if (value === 'identity') {
-      record.notifyPropertyChange('id');
     }
   }
 
@@ -109753,46 +109757,18 @@ lunr.QueryParser.parseBoost = function (parser) {
     initializeStore(application);
   }
 });
-;define("ember-data/store", ["exports", "@ember-data/store", "@ember-data/record-data/-private", "@ember-data/store/-private"], function (_exports, _store, _private, _private2) {
+;define("ember-data/store", ["exports", "@ember-data/store"], function (_exports, _store) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
-
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  var DefaultStore =
-  /*#__PURE__*/
-  function (_Store) {
-    _inheritsLoose(DefaultStore, _Store);
-
-    function DefaultStore() {
-      return _Store.apply(this, arguments) || this;
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _store.default;
     }
-
-    var _proto = DefaultStore.prototype;
-
-    _proto.createRecordDataFor = function createRecordDataFor(modelName, id, clientId, storeWrapper) {
-      if (true
-      /* IDENTIFIERS */
-      ) {
-        var identifier = (0, _private2.identifierCacheFor)(this).getOrCreateRecordIdentifier({
-          type: modelName,
-          id: id,
-          lid: clientId
-        });
-        return new _private.RecordData(identifier, storeWrapper);
-      } else {
-        return new _private.RecordData(modelName, id, clientId, storeWrapper);
-      }
-    };
-
-    return DefaultStore;
-  }(_store.default);
-
-  _exports.default = DefaultStore;
+  });
 });
 ;define("ember-data/transform", ["exports", "@ember-data/serializer/transform"], function (_exports, _transform) {
   "use strict";
@@ -109814,7 +109790,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.15.0";
+  var _default = "3.15.1";
   _exports.default = _default;
 });
 ;define('ember-fetch-adapter/-private/add-query-params', ['exports', 'ember-fetch/mixins/adapter-fetch'], function (exports, _adapterFetch) {
