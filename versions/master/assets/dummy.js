@@ -4026,7 +4026,7 @@
     }
   });
 });
-;define("dummy/initializers/ember-data", ["exports", "ember-data/setup-container", "ember-data"], function (_exports, _setupContainer, _emberData) {
+;define("dummy/initializers/ember-data", ["exports", "ember-data", "ember-data/setup-container"], function (_exports, _emberData, _setupContainer) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
