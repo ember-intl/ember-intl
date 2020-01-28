@@ -19,7 +19,7 @@ const AbstractHelper = Helper.extend({
     this._super();
 
     this.intl = getOwner(this).lookup('service:intl');
-    this.intl.on('localeChanged', this, this.recompute);
+    this.intl.on('localeChanged', this, 'recompute');
   },
 
   format() {
@@ -43,7 +43,7 @@ const AbstractHelper = Helper.extend({
   willDestroy() {
     this._super();
 
-    this.intl.off('localeChanged', this, this.recompute);
+    this.intl.off('localeChanged', this, 'recompute');
   }
 });
 
