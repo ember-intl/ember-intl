@@ -113526,7 +113526,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._super();
 
       this.intl = Ember.getOwner(this).lookup('service:intl');
-      this.intl.on('localeChanged', this, this.recompute);
+      this.intl.on('localeChanged', this, 'recompute');
     },
     format: function format() {
       throw new Error('not implemented');
@@ -113550,7 +113550,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     willDestroy: function willDestroy() {
       this._super();
 
-      this.intl.off('localeChanged', this, this.recompute);
+      this.intl.off('localeChanged', this, 'recompute');
     }
   });
   var _default = AbstractHelper;
