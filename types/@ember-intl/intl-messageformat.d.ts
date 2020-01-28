@@ -22,21 +22,11 @@ declare module '@ember-intl/intl-messageformat' {
   }
 
   export interface IntlMessageFormatOptions {
-    number?: {
-      [style: string]: Intl.NumberFormatOptions;
-    };
-    shortNumber?: {
-      [style: string]: ShortNumberFormatOptions & ShortNumberNormalizeOptions;
-    };
-    date?: {
-      [style: string]: Intl.DateTimeFormatOptions;
-    };
-    time?: {
-      [style: string]: Intl.DateTimeFormatOptions;
-    }
+    number?: Record<string, Intl.NumberFormatOptions>;
+    shortNumber?: Record<string, ShortNumberFormatOptions & ShortNumberNormalizeOptions>;
+    date?: Record<string, Intl.DateTimeFormatOptions>;
+    time?: Record<string, Intl.DateTimeFormatOptions>;
   }
 
-  export interface FormatOptions {
-    [key: string]: any;
-  }
+  export type FormatOptions = Record<string, any>;
 }

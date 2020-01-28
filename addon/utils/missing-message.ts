@@ -3,7 +3,7 @@ import { warn } from '@ember/debug';
 import links from './links';
 import IntlService from '../services/intl';
 
-export type MissingMessageOptions = { [key: string]: any };
+export type MissingMessageOptions = Record<string, any>;
 export interface MissingMessage {
   (this: IntlService, key: string, locales: string[], options?: MissingMessageOptions): string;
 }

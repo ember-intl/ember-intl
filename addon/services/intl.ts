@@ -41,9 +41,7 @@ type Locale = string[] | null;
 type LocaleName = string | string[];
 
 interface Formats extends IntlMessageFormatOptions {
-  relative?: {
-    [style: string]: IntlRelativeFormatOptions;
-  };
+  relative?: Record<string, IntlRelativeFormatOptions>;
 }
 
 interface FormatOptionDecoration {
