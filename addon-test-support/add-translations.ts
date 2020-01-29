@@ -1,6 +1,8 @@
 import { get } from '@ember/object';
 import makeIntlHelper from './-private/make-intl-helper';
 import pickLastLocale from './-private/pick-last-locale';
+import IntlService from '../addon/services/intl';
+import { Translations } from '../addon/models/translation';
 
 /**
  * Invokes the `addTranslations` method of the `intl` service. The first
@@ -13,11 +15,10 @@ import pickLastLocale from './-private/pick-last-locale';
  * @param {string} [localeName]
  * @param {object} translations
  */
-export default makeIntlHelper((intl, localeName, translations) => {
+export default makeIntlHelper((intl: IntlService, localeName: string | Translations, translations?: Translations) => {
   if (typeof localeName === 'object') {
-    translations = localeName;
-    localeName = pickLastLocale(get(intl, 'locale'));
+    intl.addTranslations(pickLastLocale(get(intl, 'locale')!), localeName);
+  } else if (translations) {
+    intl.addTranslations(localeName, translations);
   }
-
-  intl.addTranslations(localeName, translations);
 });

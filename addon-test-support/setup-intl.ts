@@ -1,5 +1,16 @@
 import addTranslations from './add-translations';
 import { missingMessage } from './-private/serialize-translation';
+import { Translations } from '../addon/models/translation';
+import IntlService from '../app/services/intl';
+
+interface Hooks {
+  beforeEach: (fn: Function) => any;
+}
+
+interface ApplicationContext {
+  owner: any;
+  intl?: IntlService;
+}
 
 /**
  * Calling this helper will install a special `missing-message` util that will
@@ -16,24 +27,25 @@ import { missingMessage } from './-private/serialize-translation';
  * @param {string} [locale]
  * @param {object} [translations]
  */
-export default function setupIntl(hooks, locale, translations) {
-  if (typeof locale === 'object' && !Array.isArray(locale)) {
-    translations = locale;
-    locale = null;
-  }
-
-  hooks.beforeEach(function() {
+export default function setupIntl(
+  hooks: Hooks,
+  locale?: string | string[] | Translations,
+  translations?: Translations
+) {
+  hooks.beforeEach(function(this: ApplicationContext) {
     this.owner.register('util:intl/missing-message', missingMessage);
     this.intl = this.owner.lookup('service:intl');
   });
 
-  if (locale) {
-    hooks.beforeEach(function() {
-      this.intl.setLocale(locale);
+  if (typeof locale === 'string' || Array.isArray(locale)) {
+    hooks.beforeEach(function(this: ApplicationContext) {
+      this.intl!.setLocale(locale as string | string[]);
     });
+  } else if (typeof locale === 'object') {
+    hooks.beforeEach(() => addTranslations(locale, undefined));
   }
 
   if (translations) {
-    hooks.beforeEach(() => addTranslations(translations));
+    hooks.beforeEach(() => addTranslations(translations, undefined));
   }
 }

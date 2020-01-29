@@ -9,7 +9,7 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = obj => JSON.stringify(obj, Object.keys(obj).sort());
+const stringifyDeterministically = (obj: Record<string, any>) => JSON.stringify(obj, Object.keys(obj).sort());
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -20,7 +20,7 @@ const stringifyDeterministically = obj => JSON.stringify(obj, Object.keys(obj).s
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = subject =>
+const replaceInterpolators = (subject: any) =>
   String(subject)
     .replace(/\{/g, '(')
     .replace(/\}/g, ')');
@@ -40,7 +40,7 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @param {object} options
  * @return {string}
  */
-const stringifyOptions = (options = {}) =>
+const stringifyOptions = (options: Record<string, any> = {}) =>
   replaceInterpolators(stringifyDeterministically(omit(options, INTERNAL_OPTIONS)));
 
 /**
@@ -53,7 +53,8 @@ const stringifyOptions = (options = {}) =>
  * @return {string}
  * @hide
  */
-export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptions(options)}`;
+export const serializeTranslation = (key: string, options?: Record<string, any>) =>
+  `t:${key}:${stringifyOptions(options)}`;
 
 /**
  * Used to overwrite the default `intl/missing-message` implementation in order
@@ -68,4 +69,5 @@ export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptio
  * @return {string}
  * @hide
  */
-export const missingMessage = (key, locales, options) => serializeTranslation(key, options);
+export const missingMessage = (key: string, _: string[], options?: Record<string, any>) =>
+  serializeTranslation(key, options);

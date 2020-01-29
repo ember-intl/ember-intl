@@ -1,6 +1,3 @@
-import castArray from 'lodash.castarray';
-import last from 'lodash.last';
-
 /**
  * Picks the last locale from a locales array. In case of a string value,
  * returns that string.
@@ -11,4 +8,10 @@ import last from 'lodash.last';
  * @return {string}
  * @hide
  */
-export default locale => last(castArray(locale));
+export default function pickLastLocale(locale: string | string[]) {
+  if (Array.isArray(locale)) {
+    return locale[locale.length - 1];
+  }
+
+  return locale;
+}
