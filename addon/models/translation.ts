@@ -4,11 +4,12 @@
  */
 
 import EmberObject from '@ember/object';
+import { isNone } from '@ember/utils';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 export interface Translations {
-  [key: string]: string | Translations;
+  [key: string]: string | Translations | undefined;
 }
 
 function flatten(translations: Map<string, string>, src: Translations, prefix?: string) {
@@ -18,9 +19,14 @@ function flatten(translations: Map<string, string>, src: Translations, prefix?: 
     }
 
     const value = src[key];
+
+    if (isNone(value)) {
+      continue;
+    }
+
     const tKey = prefix ? `${prefix}.${key}` : key;
 
-    if (typeof value === 'object' && value) {
+    if (typeof value === 'object') {
       flatten(translations, value, tKey);
     } else {
       translations.set(tKey, value);
