@@ -1,19 +1,21 @@
-import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('ember-intl@adapter:default', 'Unit | Adapter | default', {
-  beforeEach() {
-    this.adapter = this.subject();
-  }
-});
+module('Unit | Adapter | default', function(hooks) {
+  setupTest(hooks);
 
-test('localeFactory can instantiate custom translation models', function(assert) {
-  const klass = EmberObject.extend({ customType: true });
+  hooks.beforeEach(function() {
+    this.adapter = this.owner.lookup('ember-intl@adapter:default');
+  });
 
-  this.register('model:ember-intl-translation', klass);
-  let model = this.adapter.localeFactory('en-us');
+  test('localeFactory can instantiate custom translation models', function(assert) {
+    const klass = EmberObject.extend({ customType: true });
 
-  assert.ok(klass.detectInstance(model), 'is an instance of the registered type');
-  assert.ok(getOwner(model), 'has an owner assigned');
+    this.owner.register('model:ember-intl-translation', klass);
+    let model = this.adapter.localeFactory('en-us');
+
+    assert.ok(klass.detectInstance(model), 'is an instance of the registered type');
+    assert.ok(this.owner, 'has an owner assigned');
+  });
 });
