@@ -90,7 +90,12 @@
   var App = Ember.Application.extend({
     modulePrefix: _environment.default.modulePrefix,
     podModulePrefix: _environment.default.podModulePrefix,
-    Resolver: _resolver.default
+    Resolver: _resolver.default,
+    customEvents: {
+      mousewheel: null,
+      touchstart: null,
+      touchmove: null
+    }
   });
   (0, _emberLoadInitializers.default)(App, _environment.default.modulePrefix);
   var _default = App;
