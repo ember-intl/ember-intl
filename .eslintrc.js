@@ -19,7 +19,14 @@ module.exports = {
   overrides: [
     // node files
     {
-      files: ['index.js', 'testem.js', 'ember-cli-build.js', 'config/**/*.js', 'tests/dummy/config/**/*.js'],
+      files: [
+        'index.js',
+        'testem.js',
+        'ember-cli-build.js',
+        'config/**/*.js',
+        'tests/dummy/config/**/*.js',
+        'tests-node/**/*.js'
+      ],
       excludedFiles: ['app/**', 'addon-test-support/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
@@ -33,6 +40,14 @@ module.exports = {
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
       })
+    },
+
+    // node tests
+    {
+      files: ['tests-node/**/*.js'],
+      env: {
+        mocha: true
+      }
     },
 
     // test files
