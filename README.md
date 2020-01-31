@@ -314,8 +314,8 @@ The solution is the ensure that the value you are passing in is in a format whic
 
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
-[travis]: https://travis-ci.org/ember-intl/ember-intl
-[travis-badge]: https://travis-ci.org/ember-intl/ember-intl.svg?branch=master
+[travis]: https://travis-ci.com/ember-intl/ember-intl
+[travis-badge]: https://travis-ci.com/ember-intl/ember-intl.svg?branch=master
 [ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
 [Intl-RF]: https://github.com/yahoo/intl-relativeformat
 [Intl-MF]: https://github.com/yahoo/intl-messageformat
