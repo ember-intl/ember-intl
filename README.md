@@ -1,5 +1,6 @@
 # ember-intl
 
+
 [![npm Version][npm-badge]][npm]
 ![Ember Version][ember-version]
 [![Build Status][travis-badge]][travis]
