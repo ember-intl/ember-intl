@@ -312,6 +312,11 @@ The solution is the ensure that the value you are passing in is in a format whic
 * Simple migration tool to convert your translations files and application code to this addon.  Feel free to report any issues with the migration tool [here](https://github.com/DockYard/ember-i18n-to-intl-migrator/issues).
 - https://github.com/DockYard/ember-i18n-to-intl-migrator
 
+## Editor integration
+
+You can get autocomplete and additional information inside [Visual Studio Code](https://code.visualstudio.com/) by installing [els-intl-addon](https://github.com/lifeart/els-intl-addon) addon for [Unstable Ember Language Server](https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable).
+
+
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
 [travis]: https://travis-ci.com/ember-intl/ember-intl
