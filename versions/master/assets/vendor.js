@@ -1026,7 +1026,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.16.1
+ * @version   3.16.2
  */
 /*globals process */
 var define, require, Ember; // Used in @ember/-internals/environment/lib/global.js
@@ -1869,15 +1869,6 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
 
       if (container.isDestroyed) {
         throw new Error("Can not create new instances after the owner has been destroyed (you attempted to create " + this.fullName + ")");
-      }
-
-      if (false
-      /* DEBUG */
-      ) {
-        (false && !(!container.isDestroying) && (0, _debug.deprecate)("Instantiating a new instance of " + this.fullName + " while the owner is being destroyed is deprecated.", !container.isDestroying, {
-          id: 'container.lookup-on-destroy',
-          until: '3.20.0'
-        }));
       }
 
       var injectionsCache = this.injections;
@@ -10175,26 +10166,33 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     _proto50.create = function create(env, definition, args) {
       var delegate = definition.delegate;
       var capturedArgs = args.capture();
+      var namedArgs = capturedArgs.named;
       var value$$1;
       var namedArgsProxy = {};
       {
+        var getTag = function getTag(key) {
+          return namedArgs.get(key).tag;
+        };
+
         if (_utils.HAS_NATIVE_PROXY) {
           var handler = {
             get: function get(_target, prop) {
-              if (capturedArgs.named.has(prop)) {
-                var ref = capturedArgs.named.get(prop);
+              if (namedArgs.has(prop)) {
+                var ref = namedArgs.get(prop);
                 (0, _metal.consume)(ref.tag);
                 return ref.value();
+              } else if (prop === _metal.CUSTOM_TAG_FOR) {
+                return getTag;
               }
             },
             has: function has(_target, prop) {
-              return capturedArgs.named.has(prop);
+              return namedArgs.has(prop);
             },
             ownKeys: function ownKeys(_target) {
-              return capturedArgs.named.names;
+              return namedArgs.names;
             },
             getOwnPropertyDescriptor: function getOwnPropertyDescriptor(_target, prop) {
-              (false && !(capturedArgs.named.has(prop)) && (0, _debug.assert)('args proxies do not have real property descriptors, so you should never need to call getOwnPropertyDescriptor yourself. This code exists for enumerability, such as in for-in loops and Object.keys()', capturedArgs.named.has(prop)));
+              (false && !(namedArgs.has(prop)) && (0, _debug.assert)('args proxies do not have real property descriptors, so you should never need to call getOwnPropertyDescriptor yourself. This code exists for enumerability, such as in for-in loops and Object.keys()', namedArgs.has(prop)));
               return {
                 enumerable: true,
                 configurable: true
@@ -10213,20 +10211,23 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
 
           namedArgsProxy = new Proxy(namedArgsProxy, handler);
         } else {
-          capturedArgs.named.names.forEach(function (name) {
+          Object.defineProperty(namedArgsProxy, _metal.CUSTOM_TAG_FOR, {
+            configurable: false,
+            enumerable: false,
+            value: getTag
+          });
+          namedArgs.names.forEach(function (name) {
             Object.defineProperty(namedArgsProxy, name, {
               enumerable: true,
               configurable: true,
               get: function get() {
-                var ref = capturedArgs.named.get(name);
+                var ref = namedArgs.get(name);
                 (0, _metal.consume)(ref.tag);
                 return ref.value();
               }
             });
           });
         }
-
-        _metal.ARGS_PROXY_TAGS.set(namedArgsProxy, capturedArgs.named);
 
         value$$1 = {
           named: namedArgsProxy,
@@ -15267,6 +15268,7 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
   _exports.applyMixin = applyMixin;
   _exports.inject = inject;
   _exports.tagForProperty = tagForProperty;
+  _exports.createTagForProperty = createTagForProperty;
   _exports.tagFor = tagFor;
   _exports.markObjectAsDirty = markObjectAsDirty;
   _exports.consume = consume;
@@ -15283,7 +15285,7 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
   _exports.removeNamespace = removeNamespace;
   _exports.isNamespaceSearchDisabled = isSearchDisabled;
   _exports.setNamespaceSearchDisabled = setSearchDisabled;
-  _exports.NAMESPACES_BY_ID = _exports.NAMESPACES = _exports.deprecateMutationsInAutotrackingTransaction = _exports.runInAutotrackingTransaction = _exports.Tracker = _exports.UNKNOWN_PROPERTY_TAG = _exports.DEBUG_INJECTION_FUNCTIONS = _exports.aliasMethod = _exports.Mixin = _exports.Libraries = _exports.libraries = _exports.ARGS_PROXY_TAGS = _exports.PROPERTY_DID_CHANGE = _exports.PROXY_CONTENT = _exports.ComputedProperty = _exports._globalsComputed = void 0;
+  _exports.NAMESPACES_BY_ID = _exports.NAMESPACES = _exports.deprecateMutationsInAutotrackingTransaction = _exports.runInAutotrackingTransaction = _exports.Tracker = _exports.CUSTOM_TAG_FOR = _exports.DEBUG_INJECTION_FUNCTIONS = _exports.aliasMethod = _exports.Mixin = _exports.Libraries = _exports.libraries = _exports.PROPERTY_DID_CHANGE = _exports.PROXY_CONTENT = _exports.ComputedProperty = _exports._globalsComputed = void 0;
   var COMPUTED_PROPERTY_CACHED_VALUES = new WeakMap();
   var COMPUTED_PROPERTY_LAST_REVISION = new WeakMap();
 
@@ -16303,8 +16305,8 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
   }
 
   var propertyDidChange = null;
-  var UNKNOWN_PROPERTY_TAG = (0, _utils.symbol)('UNKNOWN_PROPERTY_TAG');
-  _exports.UNKNOWN_PROPERTY_TAG = UNKNOWN_PROPERTY_TAG;
+  var CUSTOM_TAG_FOR = (0, _utils.symbol)('CUSTOM_TAG_FOR');
+  _exports.CUSTOM_TAG_FOR = CUSTOM_TAG_FOR;
 
   function tagForProperty(object, propertyKey, _meta) {
     var objectType = typeof object;
@@ -16313,12 +16315,15 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
       return _reference.CONSTANT_TAG;
     }
 
-    var meta$$1 = _meta === undefined ? (0, _meta2.meta)(object) : _meta;
-
-    if (!(propertyKey in object) && typeof object[UNKNOWN_PROPERTY_TAG] === 'function') {
-      return object[UNKNOWN_PROPERTY_TAG](propertyKey);
+    if (typeof object[CUSTOM_TAG_FOR] === 'function') {
+      return object[CUSTOM_TAG_FOR](propertyKey);
     }
 
+    return createTagForProperty(object, propertyKey);
+  }
+
+  function createTagForProperty(object, propertyKey, _meta) {
+    var meta$$1 = _meta === undefined ? (0, _meta2.meta)(object) : _meta;
     var tags = meta$$1.writableTags();
     var tag = tags[propertyKey];
 
@@ -16331,7 +16336,7 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
     if (false
     /* DEBUG */
     ) {
-      (0, _utils.setupMandatorySetter)(object, propertyKey);
+      (0, _utils.setupMandatorySetter)(newTag, object, propertyKey);
       newTag._propertyKey = propertyKey;
     }
 
@@ -16500,7 +16505,11 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
     return array;
   }
 
-  function arrayContentDidChange(array, startIdx, removeAmt, addAmt) {
+  function arrayContentDidChange(array, startIdx, removeAmt, addAmt, notify) {
+    if (notify === void 0) {
+      notify = true;
+    }
+
     // if no args are passed assume everything changes
     if (startIdx === undefined) {
       startIdx = 0;
@@ -16517,11 +16526,14 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
 
     var meta$$1 = (0, _meta2.peekMeta)(array);
 
-    if (addAmt < 0 || removeAmt < 0 || addAmt - removeAmt !== 0) {
-      notifyPropertyChange(array, 'length', meta$$1);
+    if (notify) {
+      if (addAmt < 0 || removeAmt < 0 || addAmt - removeAmt !== 0) {
+        notifyPropertyChange(array, 'length', meta$$1);
+      }
+
+      notifyPropertyChange(array, '[]', meta$$1);
     }
 
-    notifyPropertyChange(array, '[]', meta$$1);
     sendEvent(array, '@array:change', [array, startIdx, removeAmt, addAmt]);
     var cache = peekCacheFor(array);
 
@@ -16613,9 +16625,6 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
   function removeArrayObserver(array, target, opts) {
     return arrayObserversHelper(array, target, opts, removeListener, true);
   }
-
-  var ARGS_PROXY_TAGS = new WeakMap();
-  _exports.ARGS_PROXY_TAGS = ARGS_PROXY_TAGS;
 
   function finishLazyChains(obj, key, value$$1) {
     var meta$$1 = (0, _meta2.peekMeta)(obj);
@@ -16716,33 +16725,6 @@ define("@ember/-internals/metal/index", ["exports", "ember-babel", "@ember/-inte
 
         chainTags.push(tagForProperty(current, '[]'));
         break;
-      } // If the segment is linking to an args proxy, we need to manually access
-      // the tags for the args, since they are direct references and don't have a
-      // tagForProperty. We then continue chaining like normal after it, since
-      // you could chain off an arg if it were an object, for instance.
-
-
-      if (segment === 'args' && ARGS_PROXY_TAGS.has(current.args)) {
-        (false && !(segmentEnd !== pathLength) && (0, _debug.assert)("When watching the 'args' on a GlimmerComponent, you must watch a value on the args. You cannot watch the object itself, as it never changes.", segmentEnd !== pathLength));
-        lastSegmentEnd = segmentEnd + 1;
-        segmentEnd = path.indexOf('.', lastSegmentEnd);
-
-        if (segmentEnd === -1) {
-          segmentEnd = pathLength;
-        }
-
-        segment = path.slice(lastSegmentEnd, segmentEnd);
-        var namedArgs = ARGS_PROXY_TAGS.get(current.args);
-        var ref = namedArgs.get(segment);
-        chainTags.push(ref.tag); // We still need to break if we're at the end of the path.
-
-        if (segmentEnd === pathLength) {
-          break;
-        } // Otherwise, set the current value and then continue to the next segment
-
-
-        current = ref.value();
-        continue;
       } // TODO: Assert that current[segment] isn't an undecorated, non-MANDATORY_SETTER/dependentKeyCompat getter
 
 
@@ -27764,8 +27746,14 @@ define("@ember/-internals/runtime/lib/mixins/-proxy", ["exports", "@ember/-inter
     isTruthy: (0, _metal.computed)('content', function () {
       return Boolean((0, _metal.get)(this, 'content'));
     })
-  }, _Mixin$create[_metal.UNKNOWN_PROPERTY_TAG] = function (key) {
-    return (0, _reference.combine)((0, _metal.getChainTagsForKey)(this, "content." + key));
+  }, _Mixin$create[_metal.CUSTOM_TAG_FOR] = function (key) {
+    var tag = (0, _metal.createTagForProperty)(this, key);
+
+    if (key in this) {
+      return tag;
+    } else {
+      return (0, _reference.combine)([tag].concat((0, _metal.getChainTagsForKey)(this, "content." + key)));
+    }
   }, _Mixin$create.unknownProperty = function unknownProperty(key) {
     var content = contentFor(this);
 
@@ -30485,6 +30473,9 @@ define("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
       this._arrangedContentRevision = (0, _reference.value)(this._arrangedContentTag);
 
       this._addArrangedContentArrayObserver();
+
+      (0, _reference.update)((0, _metal.tagForProperty)(this, '[]'), (0, _reference.combine)((0, _metal.getChainTagsForKey)(this, 'arrangedContent.[]')));
+      (0, _reference.update)((0, _metal.tagForProperty)(this, 'length'), (0, _reference.combine)((0, _metal.getChainTagsForKey)(this, 'arrangedContent.length')));
     };
 
     _proto.willDestroy = function willDestroy() {
@@ -30686,7 +30677,15 @@ define("@ember/-internals/runtime/lib/system/array_proxy", ["exports", "ember-ba
        @property arrangedContent
       @public
     */
-    arrangedContent: (0, _metal.alias)('content')
+    arrangedContent: (0, _metal.alias)('content'),
+    // Array proxies don't need to notify when they change since their `[]` tag is
+    // already dependent on the `[]` tag of `arrangedContent`
+    arrayContentWillChange: function arrayContentWillChange(startIdx, removeAmt, addAmt) {
+      return (0, _metal.arrayContentWillChange)(this, startIdx, removeAmt, addAmt, false);
+    },
+    arrayContentDidChange: function arrayContentDidChange(startIdx, removeAmt, addAmt) {
+      return (0, _metal.arrayContentDidChange)(this, startIdx, removeAmt, addAmt, false);
+    }
   });
 });
 define("@ember/-internals/runtime/lib/system/core_object", ["exports", "ember-babel", "@ember/-internals/container", "@ember/-internals/owner", "@ember/polyfills", "@ember/-internals/utils", "@ember/runloop", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/-internals/runtime/lib/mixins/action_handler", "@ember/debug"], function (_exports, _emberBabel, _container, _owner, _polyfills, _utils, _runloop, _meta2, _metal, _action_handler, _debug) {
@@ -32942,13 +32941,19 @@ define("@ember/-internals/utils/index", ["exports", "@ember/polyfills", "@ember/
   if (false
   /* DEBUG */
   ) {
+    var SEEN_TAGS = new _polyfills._WeakSet();
     var MANDATORY_SETTERS = new WeakMap();
 
     var _propertyIsEnumerable = function _propertyIsEnumerable(obj, key) {
       return Object.prototype.propertyIsEnumerable.call(obj, key);
     };
 
-    _exports.setupMandatorySetter = setupMandatorySetter = function setupMandatorySetter(obj, keyName) {
+    _exports.setupMandatorySetter = setupMandatorySetter = function setupMandatorySetter(tag, obj, keyName) {
+      if (SEEN_TAGS.has(tag)) {
+        return;
+      }
+
+      SEEN_TAGS.add(tag);
       var desc = lookupDescriptor(obj, keyName) || {};
 
       if (desc.get || desc.set) {
@@ -57762,7 +57767,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.16.1";
+  var _default = "3.16.2";
   _exports.default = _default;
 });
 define("node-module/index", ["exports"], function (_exports) {
