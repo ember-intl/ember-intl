@@ -142,7 +142,8 @@ module('service:intl', function(hooks) {
     function increment() {
       ++count;
     }
-
+    
+    // eslint-disable-next-line ember/no-observers
     this.intl.addObserver('locale', this.intl, increment);
     this.intl.setLocale(['es']);
     this.intl.setLocale(['fr']);
