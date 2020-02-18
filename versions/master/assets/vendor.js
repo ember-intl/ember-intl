@@ -1026,7 +1026,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   3.16.2
+ * @version   3.16.3
  */
 /*globals process */
 var define, require, Ember; // Used in @ember/-internals/environment/lib/global.js
@@ -4497,8 +4497,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   function referenceFromParts(root, parts) {
     var reference = root;
 
-    for (var i = 0; i < parts.length; i++) {
-      reference = reference.get(parts[i]);
+    for (var _i = 0; _i < parts.length; _i++) {
+      reference = reference.get(parts[_i]);
     }
 
     return reference;
@@ -6355,8 +6355,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
           query = this._query,
           routing = this._routing;
 
-      for (var i = 0; i < currentWhen.length; i++) {
-        if (routing.isActiveForRoute(models, query, currentWhen[i], routerState, isCurrentWhenSpecified)) {
+      for (var _i2 = 0; _i2 < currentWhen.length; _i2++) {
+        if (routing.isActiveForRoute(models, query, currentWhen[_i2], routerState, isCurrentWhenSpecified)) {
           return true;
         }
       }
@@ -6493,8 +6493,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     _modelsAreLoaded: (0, _metal.computed)('_models', function computeLinkToComponentModelsAreLoaded() {
       var models = this._models;
 
-      for (var i = 0; i < models.length; i++) {
-        var model = models[i];
+      for (var _i3 = 0; _i3 < models.length; _i3++) {
+        var model = models[_i3];
 
         if (model === null || model === undefined) {
           return false;
@@ -6900,9 +6900,9 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       } else {
         var values = [];
 
-        for (var i = 0; i < length; i++) {
+        for (var _i4 = 0; _i4 < length; _i4++) {
           var value$$1 = void 0;
-          var key = keys[i];
+          var key = keys[_i4];
           value$$1 = obj[key]; // Add the tag of the returned value if it is an array, since arrays
           // should always cause updates if they are consumed and then changed
 
@@ -7762,8 +7762,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       // `didCreate` to prevent errors when removing and adding a component
       // with the same name (would throw an error when added to view registry)
 
-      for (var i = 0; i < destroyedComponents.length; i++) {
-        destroyedComponents[i].destroy();
+      for (var _i5 = 0; _i5 < destroyedComponents.length; _i5++) {
+        destroyedComponents[_i5].destroy();
       }
 
       try {
@@ -8461,8 +8461,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     var args = Object.create(null);
     props[ARGS] = args;
 
-    for (var i = 0; i < keys.length; i++) {
-      var name = keys[i];
+    for (var _i6 = 0; _i6 < keys.length; _i6++) {
+      var name = keys[_i6];
       var ref = namedArgs.get(name);
       var value$$1 = attrs[name];
 
@@ -8661,10 +8661,10 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
         named = {};
         (0, _polyfills.assign)(named, args.named.capture().map);
 
-        for (var i = 0; i < count; i++) {
-          var name = positionalParams[i];
-          (false && !(!args.named.has(name)) && (0, _debug.assert)("You cannot specify both a positional param (at position " + i + ") and the hash argument `" + name + "`.", !args.named.has(name)));
-          named[name] = args.positional.at(i);
+        for (var _i7 = 0; _i7 < count; _i7++) {
+          var name = positionalParams[_i7];
+          (false && !(!args.named.has(name)) && (0, _debug.assert)("You cannot specify both a positional param (at position " + _i7 + ") and the hash argument `" + name + "`.", !args.named.has(name)));
+          named[name] = args.positional.at(_i7);
         }
       } else {
         return null;
@@ -8924,8 +8924,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     (false && !(function () {
       var classNameBindings = component.classNameBindings;
 
-      for (var i = 0; i < classNameBindings.length; i++) {
-        var binding = classNameBindings[i];
+      for (var _i8 = 0; _i8 < classNameBindings.length; _i8++) {
+        var binding = classNameBindings[_i8];
 
         if (typeof binding !== 'string' || binding.length === 0) {
           return false;
@@ -8936,8 +8936,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     }()) && (0, _debug.assert)("classNameBindings must be non-empty strings: " + component, function () {
       var classNameBindings = component.classNameBindings;
 
-      for (var i = 0; i < classNameBindings.length; i++) {
-        var binding = classNameBindings[i];
+      for (var _i8 = 0; _i8 < classNameBindings.length; _i8++) {
+        var binding = classNameBindings[_i8];
 
         if (typeof binding !== 'string' || binding.length === 0) {
           return false;
@@ -8949,8 +8949,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     (false && !(function () {
       var classNameBindings = component.classNameBindings;
 
-      for (var i = 0; i < classNameBindings.length; i++) {
-        var binding = classNameBindings[i];
+      for (var _i9 = 0; _i9 < classNameBindings.length; _i9++) {
+        var binding = classNameBindings[_i9];
 
         if (binding.split(' ').length > 1) {
           return false;
@@ -8961,8 +8961,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     }()) && (0, _debug.assert)("classNameBindings must not have spaces in them: " + component, function () {
       var classNameBindings = component.classNameBindings;
 
-      for (var i = 0; i < classNameBindings.length; i++) {
-        var binding = classNameBindings[i];
+      for (var _i9 = 0; _i9 < classNameBindings.length; _i9++) {
+        var binding = classNameBindings[_i9];
 
         if (binding.split(' ').length > 1) {
           return false;
@@ -9261,8 +9261,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   }
 
   function loopBegin() {
-    for (var i = 0; i < renderers.length; i++) {
-      renderers[i]._scheduleRevalidate();
+    for (var _i10 = 0; _i10 < renderers.length; _i10++) {
+      renderers[_i10]._scheduleRevalidate();
     }
   }
 
@@ -9307,12 +9307,13 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   var loops = 0;
 
   function loopEnd() {
-    for (var i = 0; i < renderers.length; i++) {
-      if (!renderers[i]._isValid()) {
+    for (var _i11 = 0; _i11 < renderers.length; _i11++) {
+      if (!renderers[_i11]._isValid()) {
         if (loops > _environment2.ENV._RERENDER_LOOP_LIMIT) {
           loops = 0; // TODO: do something better
 
-          renderers[i].destroy();
+          renderers[_i11].destroy();
+
           throw new Error('infinite rendering invalidation detected');
         }
 
@@ -9473,8 +9474,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
           // each root is processed
           initialRootsLength = roots.length;
 
-          for (var i = 0; i < roots.length; i++) {
-            var root = roots[i];
+          for (var _i12 = 0; _i12 < roots.length; _i12++) {
+            var root = roots[_i12];
 
             if (root.destroyed) {
               // add to the list of roots to be removed
@@ -9486,7 +9487,7 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
             // do not process more roots than needed
 
 
-            if (i >= initialRootsLength) {
+            if (_i12 >= initialRootsLength) {
               continue;
             }
 
@@ -9553,8 +9554,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     _proto44._clearAllRoots = function _clearAllRoots() {
       var roots = this._roots;
 
-      for (var i = 0; i < roots.length; i++) {
-        var root = roots[i];
+      for (var _i13 = 0; _i13 < roots.length; _i13++) {
+        var root = roots[_i13];
         root.destroy();
       }
 
@@ -10608,8 +10609,18 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     return new InternalHelperReference(classHelper, args.capture());
   }
 
-  function inputTypeHelper(_ref24) {
+  function i(_ref24) {
     var positional = _ref24.positional;
+    (false && !(typeof positional.at(0).value() === 'string') && (0, _debug.assert)('[BUG] -i takes a single string', typeof positional.at(0).value() === 'string'));
+    return parseInt(positional.at(0).value(), 10);
+  }
+
+  function parseIntHelper(_vm, args) {
+    return new InternalHelperReference(i, args.capture());
+  }
+
+  function inputTypeHelper(_ref25) {
+    var positional = _ref25.positional;
     var type = positional.at(0).value();
 
     if (type === 'checkbox') {
@@ -10623,8 +10634,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     return new InternalHelperReference(inputTypeHelper, args.capture());
   }
 
-  function normalizeClass(_ref25) {
-    var positional = _ref25.positional;
+  function normalizeClass(_ref26) {
+    var positional = _ref26.positional;
     var classNameParts = positional.at(0).value().split('.');
     var className = classNameParts[classNameParts.length - 1];
     var value$$1 = positional.at(1).value();
@@ -11115,8 +11126,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   */
 
 
-  function concat(_ref26) {
-    var positional = _ref26.positional;
+  function concat(_ref27) {
+    var positional = _ref27.positional;
     return positional.value().map(normalizeTextValue).join('');
   }
 
@@ -11225,8 +11236,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     @since 3.11.0
   */
 
-  function fnHelper(_ref27) {
-    var positional = _ref27.positional;
+  function fnHelper(_ref28) {
+    var positional = _ref28.positional;
     var callbackRef = positional.at(0);
 
     if (false
@@ -11595,8 +11606,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   */
 
 
-  function inlineIf(_vm, _ref28) {
-    var positional = _ref28.positional;
+  function inlineIf(_vm, _ref29) {
+    var positional = _ref29.positional;
     (false && !(positional.length === 3 || positional.length === 2) && (0, _debug.assert)('The inline form of the `if` helper expects two or three arguments, e.g. ' + '`{{if trialExpired "Expired" expiryDate}}`.', positional.length === 3 || positional.length === 2));
     return ConditionalHelperReference.create(positional.at(0), positional.at(1), positional.at(2));
   }
@@ -11687,8 +11698,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   */
 
 
-  function inlineUnless(_vm, _ref29) {
-    var positional = _ref29.positional;
+  function inlineUnless(_vm, _ref30) {
+    var positional = _ref30.positional;
     (false && !(positional.length === 3 || positional.length === 2) && (0, _debug.assert)('The inline form of the `unless` helper expects two or three arguments, e.g. ' + '`{{unless isFirstLogin "Welcome back!"}}`.', positional.length === 3 || positional.length === 2));
     return ConditionalHelperReference.create(positional.at(0), positional.at(2), positional.at(1));
   }
@@ -11711,10 +11722,10 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   */
 
 
-  function log(_ref30) {
+  function log(_ref31) {
     var _console;
 
-    var positional = _ref30.positional;
+    var positional = _ref31.positional;
 
     /* eslint-disable no-console */
     (_console = console).log.apply(_console, positional.value());
@@ -11874,9 +11885,9 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   */
 
 
-  function queryParams(_ref31) {
-    var positional = _ref31.positional,
-        named = _ref31.named;
+  function queryParams(_ref32) {
+    var positional = _ref32.positional,
+        named = _ref32.named;
     // tslint:disable-next-line:max-line-length
     (false && !(positional.value().length === 0) && (0, _debug.assert)("The `query-params` helper only accepts hash parameters, e.g. (query-params queryParamPropertyName='foo') as opposed to just (query-params 'foo')", positional.value().length === 0));
     return new _routing.QueryParams((0, _polyfills.assign)({}, named.value()));
@@ -12060,8 +12071,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       return true;
     }
 
-    for (var i = 0; i < MODIFIERS.length; i++) {
-      if (event[MODIFIERS[i] + 'Key'] && allowedKeys.indexOf(MODIFIERS[i]) === -1) {
+    for (var _i14 = 0; _i14 < MODIFIERS.length; _i14++) {
+      if (event[MODIFIERS[_i14] + 'Key'] && allowedKeys.indexOf(MODIFIERS[_i14]) === -1) {
         return false;
       }
     }
@@ -12109,8 +12120,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     _proto56.getActionArgs = function getActionArgs() {
       var result = new Array(this.actionArgs.length);
 
-      for (var i = 0; i < this.actionArgs.length; i++) {
-        result[i] = this.actionArgs[i].value();
+      for (var _i15 = 0; _i15 < this.actionArgs.length; _i15++) {
+        result[_i15] = this.actionArgs[_i15].value();
       }
 
       return result;
@@ -12233,8 +12244,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       var actionArgs = []; // The first two arguments are (1) `this` and (2) the action name.
       // Everything else is a param.
 
-      for (var i = 2; i < positional.length; i++) {
-        actionArgs.push(positional.at(i));
+      for (var _i16 = 2; _i16 < positional.length; _i16++) {
+        actionArgs.push(positional.at(_i16));
       }
 
       var actionId = (0, _utils.uuid)();
@@ -12381,9 +12392,9 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       return new CustomModifierState(element, delegate, instance, capturedArgs);
     };
 
-    _proto59.getTag = function getTag(_ref32) {
-      var args = _ref32.args,
-          tag = _ref32.tag;
+    _proto59.getTag = function getTag(_ref33) {
+      var args = _ref33.args,
+          tag = _ref33.tag;
       return (0, _reference.combine)([tag, args.tag]);
     };
 
@@ -12953,8 +12964,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       return CAPABILITIES$4;
     };
 
-    _proto63.create = function create(environment, _ref33, args) {
-      var name = _ref33.name;
+    _proto63.create = function create(environment, _ref34, args) {
+      var name = _ref34.name;
       // TODO
       // mount is a runtime helper, this shouldn't use dynamic layout
       // we should resolve the engine app template in the helper
@@ -13017,8 +13028,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       return bucket;
     };
 
-    _proto63.getSelf = function getSelf(_ref34) {
-      var self = _ref34.self;
+    _proto63.getSelf = function getSelf(_ref35) {
+      var self = _ref35.self;
       return self;
     };
 
@@ -13642,8 +13653,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     blocks.add('let', blockLetMacro);
     blocks.addMissing(refineBlockSyntax);
 
-    for (var i = 0; i < experimentalMacros.length; i++) {
-      var macro = experimentalMacros[i];
+    for (var _i17 = 0; _i17 < experimentalMacros.length; _i17++) {
+      var macro = experimentalMacros[_i17];
       macro(blocks, inlines);
     }
 
@@ -13819,6 +13830,7 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     unless: inlineUnless,
     '-class': classHelper$1,
     '-each-in': eachIn,
+    '-i': parseIntHelper,
     '-input-type': inputTypeHelper$1,
     '-normalize-class': normalizeClassHelper,
     '-get-dynamic-var': _runtime2.getDynamicVar,
@@ -14025,9 +14037,9 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
       };
     };
 
-    _proto70._lookupComponentDefinition = function _lookupComponentDefinition(_name, _ref35) {
-      var moduleName = _ref35.moduleName,
-          owner = _ref35.owner;
+    _proto70._lookupComponentDefinition = function _lookupComponentDefinition(_name, _ref36) {
+      var moduleName = _ref36.moduleName,
+          owner = _ref36.owner;
       var name = _name;
       var namespace = undefined;
       var pair = lookupComponent(owner, name, makeOptions(moduleName, namespace));
@@ -14098,8 +14110,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
   }();
 
   var TemplateCompiler = {
-    create: function create(_ref36) {
-      var environment = _ref36.environment;
+    create: function create(_ref37) {
+      var environment = _ref37.environment;
       return new RuntimeResolver(environment.isInteractive).compiler;
     }
   };
@@ -14233,8 +14245,8 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     // association won't leak
 
     registry.register('service:-dom-builder', {
-      create: function create(_ref37) {
-        var bootOptions = _ref37.bootOptions;
+      create: function create(_ref38) {
+        var bootOptions = _ref38.bootOptions;
         var _renderMode = bootOptions._renderMode;
 
         switch (_renderMode) {
@@ -14261,14 +14273,14 @@ define("@ember/-internals/glimmer/index", ["exports", "ember-babel", "@ember/pol
     }
 
     registry.register('service:-dom-changes', {
-      create: function create(_ref38) {
-        var document = _ref38.document;
+      create: function create(_ref39) {
+        var document = _ref39.document;
         return new _runtime2.DOMChanges(document);
       }
     });
     registry.register('service:-dom-tree-construction', {
-      create: function create(_ref39) {
-        var document = _ref39.document;
+      create: function create(_ref40) {
+        var document = _ref40.document;
         var Implementation = _browserEnvironment.hasDOM ? _runtime2.DOMTreeConstruction : _node.NodeDOMTreeConstruction;
         return new Implementation(document);
       }
@@ -57767,7 +57779,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "3.16.2";
+  var _default = "3.16.3";
   _exports.default = _default;
 });
 define("node-module/index", ["exports"], function (_exports) {
