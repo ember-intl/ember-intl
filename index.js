@@ -52,7 +52,9 @@ module.exports = {
   },
 
   cacheKeyForTree(treeType) {
-    return calculateCacheKeyForTree(treeType, this, this.package.root);
+    const paths = this.package.paths || this.package.treePaths;
+
+    return calculateCacheKeyForTree(treeType, this, paths ? paths[treeType] : this.package.root);
   },
 
   included(parent) {
