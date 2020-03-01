@@ -22,11 +22,11 @@ type IntlFunctionProps = {
 export default function makeIntlHelper<T extends keyof IntlFunctionProps>(
   fn: T
 ): (...args: Parameters<IntlFunctionProps[T]>) => ReturnType<IntlFunctionProps[T]>;
-export default function makeIntlHelper<T, A1, A2>(
-  fn: (intl: IntlService, arg1: A1, arg2: A2) => T
-): (arg1: A1, arg2: A2) => T;
-export default function makeIntlHelper<T>(fn: (intl: IntlService, ...args: any[]) => T) {
-  return (...args: any[]) => {
+export default function makeIntlHelper<T, A extends unknown[]>(
+  fn: (intl: IntlService, ...args: A) => T
+): (...args: A) => T;
+export default function makeIntlHelper<T>(fn: (intl: IntlService, ...args: unknown[]) => T) {
+  return (...args: unknown[]) => {
     // @ts-ignore result of getContext() is only typed as object
     const { owner } = getContext();
     const intl = owner.lookup('service:intl');

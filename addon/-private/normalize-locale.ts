@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 
-function assertIsString(val: any): asserts val is string {
+function assertIsString(val: unknown): asserts val is string {
   assert('locale names must be strings', typeof val === 'string');
 }
 

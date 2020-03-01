@@ -4,7 +4,7 @@ export * from './macros';
 import { deprecate } from '@ember/application/deprecations';
 import { t } from './macros';
 
-export function translationMacro(...args: any[]) {
+export function translationMacro(...args: unknown[]) {
   deprecate(`ember-intl: 'translationMacro' was renamed to just 't'. Please update the import statement.`, false, {
     id: 'ember-intl.translationMacro',
     until: '5.0.0'

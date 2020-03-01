@@ -1,6 +1,6 @@
 declare module '@ember-intl/intl-relativeformat' {
   export default class IntlRelativeFormat {
-    static __addLocaleData(data: any): void;
+    static __addLocaleData(data: unknown): void;
     constructor(locales: string[], options?: IntlRelativeFormatOptions);
     format(value?: number | Date, options?: FormatOptions): string;
   }

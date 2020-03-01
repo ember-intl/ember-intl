@@ -12,7 +12,7 @@ export interface FormatterContext {
 }
 
 interface NativeFormatter<FormatOptions> {
-  format(value: any, options?: FormatOptions): string;
+  format(value: unknown, options?: FormatOptions): string;
 }
 
 export default interface Formatter<T, R, FormatOptions = void> {

@@ -1,6 +1,6 @@
 declare module '@ember-intl/intl-messageformat' {
   export default class IntlMessageFormat {
-    static __addLocaleData(data: any): void;
+    static __addLocaleData(data: unknown): void;
     constructor(message: string, locales: string | string[], formats?: IntlMessageFormatOptions);
     format(context?: FormatOptions): string;
     static defaultLocale: string;
@@ -28,5 +28,5 @@ declare module '@ember-intl/intl-messageformat' {
     time?: Record<string, Intl.DateTimeFormatOptions>;
   }
 
-  export type FormatOptions = Record<string, any>;
+  export type FormatOptions = Record<string, unknown>;
 }

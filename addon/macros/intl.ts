@@ -18,36 +18,39 @@ type IntlComputedContext = MaybeIntlInjected & object;
  * @private
  * @hide
  */
-export interface IntlComputedPropertyCallback<Context extends IntlComputedContext = any, Result = any> {
+export interface IntlComputedPropertyCallback<
+  Context extends IntlComputedContext = IntlComputedContext,
+  Result = unknown
+> {
   (this: Context, intl: IntlService, propertyKey: string, context: Context): Result;
 }
 
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   cb: IntlComputedPropertyCallback<Context, Result>
 ): ComputedProperty<Result>;
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   k1: string,
   cb: IntlComputedPropertyCallback<Context, Result>
 ): ComputedProperty<Result>;
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   k1: string,
   k2: string,
   cb: IntlComputedPropertyCallback<Context, Result>
 ): ComputedProperty<Result>;
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   k1: string,
   k2: string,
   k3: string,
   cb: IntlComputedPropertyCallback<Context, Result>
 ): ComputedProperty<Result>;
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   k1: string,
   k2: string,
   k3: string,
   k4: string,
   cb: IntlComputedPropertyCallback<Context, Result>
 ): ComputedProperty<Result>;
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   k1: string,
   k2: string,
   k3: string,
@@ -55,7 +58,7 @@ function intl<Context extends IntlComputedContext = any, Result = any>(
   k5: string,
   cb: IntlComputedPropertyCallback<Context, Result>
 ): ComputedProperty<Result>;
-function intl<Context extends IntlComputedContext = any, Result = any>(
+function intl<Context extends IntlComputedContext = IntlComputedContext, Result = unknown>(
   ...dependentKeysAndGetterFn: any[]
 ): ComputedProperty<Result> {
   const getterFn: IntlComputedPropertyCallback<Context, Result> = dependentKeysAndGetterFn.pop();

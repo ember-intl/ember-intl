@@ -78,7 +78,7 @@ export function raw<T>(value: T) {
   return new Raw(value);
 }
 
-export default function createTranslatedComputedProperty<Context = any>(
+export default function createTranslatedComputedProperty<Context = unknown>(
   translationKey: string,
   options: TranslatedComputedPropertyOptions<Context> = new EmptyObject()
 ) {

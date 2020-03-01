@@ -2,14 +2,14 @@ import addTranslations from './add-translations';
 import { missingMessage } from './-private/serialize-translation';
 import { Translations } from '../addon/models/translation';
 import IntlService from '../app/services/intl';
+import { TestContext } from 'ember-test-helpers';
 
-interface Hooks {
-  beforeEach: (fn: Function) => any;
+export interface IntlTestContext extends TestContext {
+  intl: IntlService;
 }
 
-interface ApplicationContext {
-  owner: any;
-  intl?: IntlService;
+interface NestedHooks {
+  beforeEach: (fn: Function) => unknown;
 }
 
 /**
@@ -28,24 +28,24 @@ interface ApplicationContext {
  * @param {object} [translations]
  */
 export default function setupIntl(
-  hooks: Hooks,
+  hooks: NestedHooks,
   locale?: string | string[] | Translations,
   translations?: Translations
 ) {
-  hooks.beforeEach(function(this: ApplicationContext) {
+  hooks.beforeEach(function(this: IntlTestContext) {
     this.owner.register('util:intl/missing-message', missingMessage);
     this.intl = this.owner.lookup('service:intl');
   });
 
   if (typeof locale === 'string' || Array.isArray(locale)) {
-    hooks.beforeEach(function(this: ApplicationContext) {
+    hooks.beforeEach(function(this: IntlTestContext) {
       this.intl!.setLocale(locale as string | string[]);
     });
   } else if (typeof locale === 'object') {
-    hooks.beforeEach(() => addTranslations(locale, undefined));
+    hooks.beforeEach(() => addTranslations(locale));
   }
 
   if (translations) {
-    hooks.beforeEach(() => addTranslations(translations, undefined));
+    hooks.beforeEach(() => addTranslations(translations));
   }
 }

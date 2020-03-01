@@ -9,7 +9,7 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = (obj: Record<string, any>) => JSON.stringify(obj, Object.keys(obj).sort());
+const stringifyDeterministically = (obj: Record<string, unknown>) => JSON.stringify(obj, Object.keys(obj).sort());
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -20,7 +20,7 @@ const stringifyDeterministically = (obj: Record<string, any>) => JSON.stringify(
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = (subject: any) =>
+const replaceInterpolators = (subject: unknown) =>
   String(subject)
     .replace(/\{/g, '(')
     .replace(/\}/g, ')');
@@ -40,7 +40,7 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @param {object} options
  * @return {string}
  */
-const stringifyOptions = (options: Record<string, any> = {}) =>
+const stringifyOptions = (options: Record<string, unknown> = {}) =>
   replaceInterpolators(stringifyDeterministically(omit(options, INTERNAL_OPTIONS)));
 
 /**
@@ -53,7 +53,7 @@ const stringifyOptions = (options: Record<string, any> = {}) =>
  * @return {string}
  * @hide
  */
-export const serializeTranslation = (key: string, options?: Record<string, any>) =>
+export const serializeTranslation = (key: string, options?: Record<string, unknown>) =>
   `t:${key}:${stringifyOptions(options)}`;
 
 /**
@@ -69,5 +69,5 @@ export const serializeTranslation = (key: string, options?: Record<string, any>)
  * @return {string}
  * @hide
  */
-export const missingMessage = (key: string, _: string[], options?: Record<string, any>) =>
+export const missingMessage = (key: string, _locales: string[], options?: Record<string, unknown>) =>
   serializeTranslation(key, options);

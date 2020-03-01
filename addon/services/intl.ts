@@ -287,7 +287,7 @@ export default class IntlService extends Service.extend(Evented, new Overridable
    * @param {Object} locale data
    * @public
    */
-  addLocaleData(data: any) {
+  addLocaleData(data: unknown) {
     IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
   }
