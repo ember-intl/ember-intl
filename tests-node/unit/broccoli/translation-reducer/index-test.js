@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const Rsvp = require('rsvp');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const { createBuilder, createTempDir } = require('broccoli-test-helper');
@@ -12,7 +11,7 @@ const { expect } = chai;
 chai.use(chaiAsPromised);
 
 function build(output, callback) {
-  return new Rsvp.Promise((resolve) => resolve(output.build()))
+  return new Promise((resolve) => resolve(output.build()))
     .then(() => callback(output.read()))
     .finally(() => output.dispose());
 }
