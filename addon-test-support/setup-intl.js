@@ -22,13 +22,13 @@ export default function setupIntl(hooks, locale, translations) {
     locale = null;
   }
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('util:intl/missing-message', missingMessage);
     this.intl = this.owner.lookup('service:intl');
   });
 
   if (locale) {
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       this.intl.setLocale(locale);
     });
   }

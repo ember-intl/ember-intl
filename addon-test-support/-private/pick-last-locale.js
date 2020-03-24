@@ -11,4 +11,4 @@ import last from 'lodash.last';
  * @return {string}
  * @hide
  */
-export default locale => last(castArray(locale));
+export default (locale) => last(castArray(locale));

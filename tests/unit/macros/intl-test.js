@@ -7,11 +7,11 @@ import { setupIntl } from 'ember-intl/test-support';
 import { intl } from 'ember-intl';
 import { __intlInjectionName } from 'ember-intl/macros/intl';
 
-module('Unit | Macros | intl', function(hooks) {
+module('Unit | Macros | intl', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
 
     const { owner } = this;
@@ -19,15 +19,15 @@ module('Unit | Macros | intl', function(hooks) {
       init() {
         this._super();
         setOwner(this, owner);
-      }
+      },
     });
   });
 
-  test('looks up the intl service through the owner and injects the service invisibly', function(assert) {
+  test('looks up the intl service through the owner and injects the service invisibly', function (assert) {
     assert.expect(3);
 
     const object = this.ContainerObject.extend({
-      property: intl(intl => assert.strictEqual(intl, this.intl, 'service is accessible in CP callback'))
+      property: intl((intl) => assert.strictEqual(intl, this.intl, 'service is accessible in CP callback')),
     }).create();
 
     get(object, 'property');
@@ -36,14 +36,14 @@ module('Unit | Macros | intl', function(hooks) {
     assert.notOk(Object.keys(object).includes(__intlInjectionName), 'service is non-enumerable');
   });
 
-  test('does not use or clobber the pre-existing intl injection', function(assert) {
+  test('does not use or clobber the pre-existing intl injection', function (assert) {
     assert.expect(2);
 
     const IDENTITY = {};
 
     const object = this.ContainerObject.extend({
       intl: IDENTITY,
-      property: intl(intl => assert.strictEqual(intl, this.intl))
+      property: intl((intl) => assert.strictEqual(intl, this.intl)),
     }).create();
 
     get(object, 'property');
@@ -51,38 +51,38 @@ module('Unit | Macros | intl', function(hooks) {
     assert.strictEqual(get(object, 'intl'), IDENTITY);
   });
 
-  test('passes the propertyKey, context, and binds to it', function(assert) {
+  test('passes the propertyKey, context, and binds to it', function (assert) {
     assert.expect(3);
 
     const object = this.ContainerObject.extend({
-      property: intl(function(intl, propertyKey, ctx) {
+      property: intl(function (intl, propertyKey, ctx) {
         assert.strictEqual(propertyKey, 'property', 'passes propertyKey');
         assert.strictEqual(ctx, object, 'passes context');
         assert.strictEqual(this, object, 'binds to the instance');
-      })
+      }),
     }).create();
 
     get(object, 'property');
   });
 
-  test('uses the return value of the passed function as the computed property value', function(assert) {
+  test('uses the return value of the passed function as the computed property value', function (assert) {
     assert.expect(1);
 
     const IDENTITY = {};
 
     const object = this.ContainerObject.extend({
-      property: intl(() => IDENTITY)
+      property: intl(() => IDENTITY),
     }).create();
 
     assert.strictEqual(get(object, 'property'), IDENTITY);
   });
 
-  test('listens for locale changes', function(assert) {
+  test('listens for locale changes', function (assert) {
     assert.expect(2);
     this.intl.setLocale(['en-us']);
 
     const object = this.ContainerObject.extend({
-      property: intl(intl => get(intl, 'locale'))
+      property: intl((intl) => get(intl, 'locale')),
     }).create();
 
     assert.deepEqual(get(object, 'property'), ['en-us']);
@@ -91,7 +91,7 @@ module('Unit | Macros | intl', function(hooks) {
     assert.deepEqual(get(object, 'property'), ['de-de']);
   });
 
-  test('accpets further dependent keys', function(assert) {
+  test('accpets further dependent keys', function (assert) {
     const dependencies = { dependencyA: 1, dependencyB: 2, dependencyC: 3 };
     const dependencyKeys = Object.keys(dependencies);
 
@@ -99,7 +99,7 @@ module('Unit | Macros | intl', function(hooks) {
       dependencyA: 1,
       dependencyB: 2,
       dependencyC: 3,
-      property: intl(...dependencyKeys, (intl, propertyKey, ctx) => getProperties(ctx, ...dependencyKeys))
+      property: intl(...dependencyKeys, (intl, propertyKey, ctx) => getProperties(ctx, ...dependencyKeys)),
     }).create();
 
     assert.deepEqual(get(object, 'property'), dependencies);

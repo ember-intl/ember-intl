@@ -8,7 +8,7 @@ import links from './utils/links';
  * @hide
  */
 export function lookupByFactoryType(type, modulePrefix) {
-  return Object.keys(requirejs.entries).filter(key => {
+  return Object.keys(requirejs.entries).filter((key) => {
     return key.indexOf(`${modulePrefix}/${type}/`) === 0;
   });
 }
@@ -19,7 +19,7 @@ export function lookupByFactoryType(type, modulePrefix) {
  * @private
  * @hide
  */
-export default function(service, owner) {
+export default function (service, owner) {
   const config = owner.resolveRegistration('config:environment');
   const cldrs = lookupByFactoryType('cldrs', config.modulePrefix);
   const translations = lookupByFactoryType('translations', config.modulePrefix);
@@ -30,16 +30,16 @@ export default function(service, owner) {
       see: ${links.asyncTranslations}.`,
       false,
       {
-        id: 'ember-intl-missing-cldr-data'
+        id: 'ember-intl-missing-cldr-data',
       }
     );
   }
 
   cldrs
-    .map(moduleName => owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`))
-    .forEach(data => data.forEach(service.addLocaleData));
+    .map((moduleName) => owner.resolveRegistration(`cldr:${moduleName.split('/').pop()}`))
+    .forEach((data) => data.forEach(service.addLocaleData));
 
-  translations.forEach(moduleName => {
+  translations.forEach((moduleName) => {
     const localeName = moduleName.split('/').pop();
 
     service.addTranslations(localeName, owner.resolveRegistration(`translation:${localeName}`));

@@ -5,7 +5,7 @@ let expect = require('chai').expect;
 
 let pluralCategories = require('../../../../lib/broccoli/translation-reducer/utils/plural-categories');
 
-describe('pluralCategories', function() {
+describe('pluralCategories', function () {
   let expectations = {
     ar: ['zero', 'one', 'two', 'few', 'many', 'other'],
     as: ['one', 'other'],
@@ -13,13 +13,13 @@ describe('pluralCategories', function() {
     de: ['one', 'other'],
     en: ['one', 'other'],
     hsb: ['one', 'two', 'few', 'other'],
-    vi: ['other']
+    vi: ['other'],
   };
 
-  Object.keys(expectations).forEach(language => {
+  Object.keys(expectations).forEach((language) => {
     let expected = expectations[language];
 
-    it(`"${language}" equals: ${JSON.stringify(expected)}`, function() {
+    it(`"${language}" equals: ${JSON.stringify(expected)}`, function () {
       expect(pluralCategories[language]).to.deep.equal(expected);
     });
   });

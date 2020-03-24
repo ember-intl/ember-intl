@@ -2,8 +2,8 @@ const proto = Object.create(null, {
   constructor: {
     value: undefined,
     enumerable: false,
-    writable: true
-  }
+    writable: true,
+  },
 });
 
 function EmptyObject() {}

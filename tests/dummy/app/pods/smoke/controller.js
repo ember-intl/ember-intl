@@ -14,10 +14,10 @@ export default Controller.extend({
   actions: {
     changeLocale(locale) {
       this.get('intl').setLocale(locale);
-    }
+    },
   },
 
-  namespacesAreActive: computed(function() {
+  namespacesAreActive: computed(function () {
     return this.get('intl').exists('subdirectory.smoke.subdirectory');
-  })
+  }),
 });

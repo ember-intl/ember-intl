@@ -7,6 +7,6 @@ export default {
     EUR: { style: 'currency', currency: 'EUR' },
     USD: { style: 'currency', currency: 'USD' },
     JPY: { style: 'currency', currency: 'JPY' },
-    currency: { style: 'currency', minimumFractionDigits: 2 }
-  }
+    currency: { style: 'currency', minimumFractionDigits: 2 },
+  },
 };

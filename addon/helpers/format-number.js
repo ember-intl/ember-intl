@@ -8,5 +8,5 @@ import BaseHelper from './-format-base';
 export default BaseHelper.extend({
   format(value, options) {
     return this.intl.formatNumber(value, options);
-  }
+  },
 });

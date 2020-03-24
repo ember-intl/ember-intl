@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { get } from '@ember/object';
 import { setupIntl, t, setLocale, addTranslations } from 'ember-intl/test-support';
 
-module('Integration | Test Helpers', function(hooks) {
+module('Integration | Test Helpers', function (hooks) {
   setupRenderingTest(hooks);
 
-  module('setupIntl(hooks)', function(hooks) {
+  module('setupIntl(hooks)', function (hooks) {
     setupIntl(hooks);
 
-    test('hooks were properly executed and helpers work', async function(assert) {
+    test('hooks were properly executed and helpers work', async function (assert) {
       assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.strictEqual(
@@ -47,9 +47,9 @@ module('Integration | Test Helpers', function(hooks) {
       addTranslations({
         some: {
           german: {
-            translation: 'Guten Tag.'
-          }
-        }
+            translation: 'Guten Tag.',
+          },
+        },
       });
       assert.strictEqual(
         this.intl.t('some.german.translation'),
@@ -61,9 +61,9 @@ module('Integration | Test Helpers', function(hooks) {
       addTranslations(englishLocale, {
         some: {
           english: {
-            translation: 'Good day, sir.'
-          }
-        }
+            translation: 'Good day, sir.',
+          },
+        },
       });
       assert.notOk(
         this.intl.exists('some.english.translation'),
@@ -79,14 +79,14 @@ module('Integration | Test Helpers', function(hooks) {
     });
   });
 
-  module('setupIntl(hooks, translations)', function(hooks) {
+  module('setupIntl(hooks, translations)', function (hooks) {
     setupIntl(hooks, {
       some: {
-        translation: 'The cake is a lie.'
-      }
+        translation: 'The cake is a lie.',
+      },
     });
 
-    test('hooks were properly executed and translations have been added', async function(assert) {
+    test('hooks were properly executed and translations have been added', async function (assert) {
       assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.strictEqual(
@@ -97,16 +97,16 @@ module('Integration | Test Helpers', function(hooks) {
     });
   });
 
-  module('setupIntl(hooks, translations)', function(hooks) {
+  module('setupIntl(hooks, translations)', function (hooks) {
     const germanLocale = 'de-de';
 
     setupIntl(hooks, germanLocale, {
       some: {
-        translation: 'Der Kuchen ist eine Lüge.'
-      }
+        translation: 'Der Kuchen ist eine Lüge.',
+      },
     });
 
-    test('hooks were properly executed, locale was set and translations have been added', async function(assert) {
+    test('hooks were properly executed, locale was set and translations have been added', async function (assert) {
       assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.deepEqual(get(this.intl, 'locale'), [germanLocale], 'locale has been switched');

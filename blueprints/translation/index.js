@@ -45,7 +45,7 @@ module.exports = {
       },
       __name__(options) {
         return options.dasherizedModuleName;
-      }
+      },
     };
-  }
+  },
 };

@@ -9,7 +9,7 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = obj => JSON.stringify(obj, Object.keys(obj).sort());
+const stringifyDeterministically = (obj) => JSON.stringify(obj, Object.keys(obj).sort());
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -20,10 +20,7 @@ const stringifyDeterministically = obj => JSON.stringify(obj, Object.keys(obj).s
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = subject =>
-  String(subject)
-    .replace(/\{/g, '(')
-    .replace(/\}/g, ')');
+const replaceInterpolators = (subject) => String(subject).replace(/\{/g, '(').replace(/\}/g, ')');
 
 /**
  * A list of internal options that should not be serialized.

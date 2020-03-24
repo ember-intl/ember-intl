@@ -4,7 +4,7 @@ let expect = require('chai').expect;
 
 let validateMessage = require('../../../../lib/broccoli/translation-reducer/utils/validate-message');
 
-describe('validateMessage', function() {
+describe('validateMessage', function () {
   let valid = [
     'hello world',
     `hello world!`,
@@ -24,11 +24,11 @@ describe('validateMessage', function() {
         two {#nd}
         few {#rd}
         other {#th}
-    } birthday!`
+    } birthday!`,
   ];
 
-  valid.forEach(message => {
-    it(`passes for "${message}"`, function() {
+  valid.forEach((message) => {
+    it(`passes for "${message}"`, function () {
       expect(() => validateMessage(message, 'en-us')).to.not.throw(Error);
     });
   });
@@ -36,11 +36,11 @@ describe('validateMessage', function() {
   let invalidSyntax = [
     'hello {world!',
     `{product} will cost {price, number, USD} if ordered by {deadline, date, time, foo}`,
-    `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`
+    `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`,
   ];
 
-  invalidSyntax.forEach(message => {
-    it(`throws SyntaxError for "${message}"`, function() {
+  invalidSyntax.forEach((message) => {
+    it(`throws SyntaxError for "${message}"`, function () {
       try {
         validateMessage(message);
       } catch (e) {
@@ -58,12 +58,12 @@ describe('validateMessage', function() {
     {
       locale: 'en-us',
       message: `{name} took {numPhotos, plural, zero {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
-      error: 'Unknown plural category: zero'
+      error: 'Unknown plural category: zero',
     },
     {
       locale: 'de-de',
       message: `{name} took {numPhotos, plural, null {no photos} eins {one photo} other {# photos}} on {takenDate, date, long}.`,
-      error: 'Unknown plural categories: null, eins'
+      error: 'Unknown plural categories: null, eins',
     },
     {
       locale: 'en-us',
@@ -73,7 +73,7 @@ describe('validateMessage', function() {
         many {#rd}
         other {#th}
     } birthday!`,
-      error: 'Unknown ordinal category: many'
+      error: 'Unknown ordinal category: many',
     },
     {
       locale: 'de-de',
@@ -83,23 +83,23 @@ describe('validateMessage', function() {
         many {#rd}
         other {#th}
     } birthday!`,
-      error: 'Unknown ordinal categories: one, two, many'
-    }
+      error: 'Unknown ordinal categories: one, two, many',
+    },
   ];
 
-  unknownCategory.forEach(item => {
-    it(`throws unknown category error for "${item.message}" with locale "${item.locale}"`, function() {
+  unknownCategory.forEach((item) => {
+    it(`throws unknown category error for "${item.message}" with locale "${item.locale}"`, function () {
       expect(() => validateMessage(item.message, item.locale)).to.throw(item.error);
     });
   });
 
   let missingOther = [
     `{ gender, select, male {He avoids bugs} female {She avoids bugs} }`,
-    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`
+    `{name} took {numPhotos, plural, null {no photos} eins {one photo} andere {# photos}} on {takenDate, date, long}.`,
   ];
 
-  missingOther.forEach(message => {
-    it(`throws missing other error for "${message}"`, function() {
+  missingOther.forEach((message) => {
+    it(`throws missing other error for "${message}"`, function () {
       expect(() => validateMessage(message)).to.throw('Missing selector: other');
     });
   });

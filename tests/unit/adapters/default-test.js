@@ -2,14 +2,14 @@ import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Adapter | default', function(hooks) {
+module('Unit | Adapter | default', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.adapter = this.owner.lookup('ember-intl@adapter:default');
   });
 
-  test('localeFactory can instantiate custom translation models', function(assert) {
+  test('localeFactory can instantiate custom translation models', function (assert) {
     const klass = EmberObject.extend({ customType: true });
 
     this.owner.register('model:ember-intl-translation', klass);

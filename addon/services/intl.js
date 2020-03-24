@@ -49,7 +49,7 @@ export default Service.extend(Evented, {
     },
     get() {
       return this._locale;
-    }
+    },
   }),
 
   /**
@@ -88,7 +88,7 @@ export default Service.extend(Evented, {
     this._super(...arguments);
 
     warn('[ember-intl] Intl API does not exist in this environment.  A polyfill of `Intl` is required.', Intl, {
-      id: 'ember-intl-undefined-intljs'
+      id: 'ember-intl-undefined-intljs',
     });
 
     const initialLocale = get(this, 'locale') || ['en-us'];
@@ -102,7 +102,7 @@ export default Service.extend(Evented, {
       relative: new FormatRelative(),
       number: new FormatNumber(),
       time: new FormatTime(),
-      date: new FormatDate()
+      date: new FormatDate(),
     };
 
     if (!this.formats) {
@@ -166,7 +166,7 @@ export default Service.extend(Evented, {
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    return localeNames.some(localeName => this._adapter.has(localeName, key));
+    return localeNames.some((localeName) => this._adapter.has(localeName, key));
   },
 
   /** @public */
@@ -232,11 +232,11 @@ export default Service.extend(Evented, {
       const html = dom.documentElement;
       html.setAttribute('lang', primaryLocale);
     }
-  }
+  },
 });
 
 function formatter(name) {
-  return function(value, options, formats) {
+  return function (value, options, formats) {
     let formatOptions = options;
 
     if (options && typeof options.format === 'string') {
@@ -245,7 +245,7 @@ function formatter(name) {
 
     return this._formatters[name].format(value, formatOptions, {
       formats: formats || this.formats,
-      locale: this.localeWithDefault(formatOptions && formatOptions.locale)
+      locale: this.localeWithDefault(formatOptions && formatOptions.locale),
     });
   };
 }

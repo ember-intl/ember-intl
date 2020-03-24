@@ -7,7 +7,7 @@ function partitionDynamicValuesAndStaticValues(options) {
   const dynamicValues = new EmptyObject();
   const staticValues = new EmptyObject();
 
-  Object.keys(options).forEach(key => {
+  Object.keys(options).forEach((key) => {
     const value = options[key];
     if (value instanceof Raw) {
       staticValues[key] = value.valueOf();
@@ -22,7 +22,7 @@ function partitionDynamicValuesAndStaticValues(options) {
 function mapPropertiesByHash(object, hash) {
   const result = new EmptyObject();
 
-  Object.keys(hash).forEach(key => {
+  Object.keys(hash).forEach((key) => {
     result[key] = get(object, hash[key]);
   });
 

@@ -11,5 +11,5 @@ export default BaseHelper.extend({
     assert('[ember-intl] translation lookup attempted but no translation key was provided.', key);
 
     return this.intl.t(key, options);
-  }
+  },
 });

@@ -4,12 +4,12 @@ const expect = require('chai').expect;
 
 const subject = require('../../index');
 
-describe('index', function() {
-  it('createOptions ensures that requiresTranslation is a function.', function() {
+describe('index', function () {
+  it('createOptions ensures that requiresTranslation is a function.', function () {
     const index = Object.assign({}, subject);
     const logs = [];
 
-    index.log = message => logs.push(message);
+    index.log = (message) => logs.push(message);
     index.readConfig = () => ({ requiresTranslation: undefined });
 
     const addonConfig = index.createOptions.call(index);

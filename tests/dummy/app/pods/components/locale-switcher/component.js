@@ -6,6 +6,6 @@ export default Component.extend({
   actions: {
     changeLocale(locale) {
       return this.intl.setLocale(locale);
-    }
-  }
+    },
+  },
 });

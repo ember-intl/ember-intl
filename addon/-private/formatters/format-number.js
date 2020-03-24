@@ -27,7 +27,7 @@ export default class FormatNumber extends Formatter {
       'maximumFractionDigits',
       'minimumSignificantDigits',
       'maximumSignificantDigits',
-      'notation'
+      'notation',
     ]);
   }
 

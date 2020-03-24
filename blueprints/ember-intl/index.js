@@ -26,7 +26,7 @@ module.exports = {
         } else {
           return path.join('config');
         }
-      }
+      },
     };
   },
 
@@ -35,5 +35,5 @@ module.exports = {
       "[ember-intl] Don't forget to setup your application-wide locale.  " +
         'Documentation: https://github.com/ember-intl/ember-intl#setting-locale'
     );
-  }
+  },
 };

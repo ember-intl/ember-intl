@@ -12,8 +12,8 @@ export default EmberObject.extend({
   _seen: null,
 
   /** @private **/
-  locales: computed('_seen.[]', function() {
-    return get(this, '_seen').map(l => l.localeName);
+  locales: computed('_seen.[]', function () {
+    return get(this, '_seen').map((l) => l.localeName);
   }).readOnly(),
 
   /** @private **/
@@ -48,7 +48,7 @@ export default EmberObject.extend({
     Object.defineProperty(ModelKlass.proto(), 'localeName', {
       writable: false,
       enumerable: true,
-      value: localeName
+      value: localeName,
     });
 
     owner.register(lookupName, ModelKlass);
@@ -72,5 +72,5 @@ export default EmberObject.extend({
     if (model && model.has(translationKey)) {
       return model.getValue(translationKey);
     }
-  }
+  },
 });

@@ -33,5 +33,5 @@ export default BaseHelper.extend({
     this._super();
 
     this.clearTimer();
-  }
+  },
 });

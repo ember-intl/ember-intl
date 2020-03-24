@@ -65,7 +65,7 @@ const TranslationModel = EmberObject.extend({
    */
   has(key) {
     return hasOwnProperty.call(this.translations, key);
-  }
+  },
 });
 
 export default TranslationModel;

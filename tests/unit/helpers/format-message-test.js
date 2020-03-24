@@ -9,17 +9,17 @@ import { module, skip, test } from 'qunit';
 
 const DEFAULT_LOCALE_NAME = 'en-us';
 
-module('format-message', function(hooks) {
+module('format-message', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
 
     this.intl.addTranslations(DEFAULT_LOCALE_NAME, {
       foo: {
         bar: 'foo bar baz',
-        baz: 'baz baz baz'
-      }
+        baz: 'baz baz baz',
+      },
     });
 
     this.intl.set('formats', {
@@ -28,40 +28,40 @@ module('format-message', function(hooks) {
           timeZone: 'UTC',
           day: 'numeric',
           month: 'long',
-          year: 'numeric'
-        }
-      }
+          year: 'numeric',
+        },
+      },
     });
   });
 
-  test('exists', function(assert) {
+  test('exists', function (assert) {
     assert.expect(1);
     assert.ok(formatMessageHelper);
   });
 
-  test('invoke formatMessage directly', function(assert) {
+  test('invoke formatMessage directly', function (assert) {
     assert.expect(1);
     assert.equal(this.intl.formatMessage('hello {world}', { world: 'world' }), 'hello world');
   });
 
-  test('invoke formatMessage directly with formats', function(assert) {
+  test('invoke formatMessage directly with formats', function (assert) {
     assert.expect(1);
     assert.equal(
       this.intl.formatMessage('Sale begins {day, date, shortWeekDay}', {
         day: 1390518044403,
-        locale: 'en_us'
+        locale: 'en_us',
       }),
       'Sale begins January 23, 2014'
     );
   });
 
-  test('message is formatted correctly with argument', async function(assert) {
+  test('message is formatted correctly with argument', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-message 'Hello {name}' name='Tom Dale'}}`);
     assert.equal(this.element.textContent, 'Hello Tom Dale');
   });
 
-  skip('should throw if called with out a value', async function(/*assert*/) {
+  skip('should throw if called with out a value', async function (/*assert*/) {
     // assert.expect(1);
     // expectError(
     //   () => render(hbs`{{format-message}}`),
@@ -75,13 +75,13 @@ module('format-message', function(hooks) {
     // );
   });
 
-  test('should return a formatted string', async function(assert) {
+  test('should return a formatted string', async function (assert) {
     assert.expect(1);
 
     this.setProperties({
       translation: 'Hi, my name is {firstName} {lastName}.',
       firstName: 'Tom',
-      lastName: 'Dale'
+      lastName: 'Dale',
     });
 
     await render(hbs`{{format-message translation firstName=firstName lastName=lastName}}`);
@@ -89,7 +89,7 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent, 'Hi, my name is Tom Dale.');
   });
 
-  test('should return a formatted string with formatted numbers and dates', async function(assert) {
+  test('should return a formatted string with formatted numbers and dates', async function (assert) {
     assert.expect(1);
 
     this.setProperties({
@@ -97,7 +97,7 @@ module('format-message', function(hooks) {
       city: 'Atlanta',
       population: 5475213,
       census_date: new Date('1/1/2010').getTime(),
-      timeZone: 'UTC'
+      timeZone: 'UTC',
     });
 
     await render(
@@ -106,7 +106,7 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent, 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
   });
 
-  test('should return a formatted string with formatted numbers and dates in a different locale', async function(assert) {
+  test('should return a formatted string with formatted numbers and dates in a different locale', async function (assert) {
     assert.expect(1);
     this.intl.setLocale(['de-de']);
     this.setProperties({
@@ -114,7 +114,7 @@ module('format-message', function(hooks) {
       city: 'Atlanta',
       population: 5475213,
       census_date: new Date('1/1/2010'),
-      timeZone: 'UTC'
+      timeZone: 'UTC',
     });
 
     await render(
@@ -123,15 +123,15 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent, 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
   });
 
-  test('should return a formatted string with an `each` block', async function(assert) {
+  test('should return a formatted string with an `each` block', async function (assert) {
     assert.expect(1);
 
     this.setProperties({
       translation: '{person} harvested {count, plural, one {# apple} other {# apples}}.',
       harvests: emberArray([
         { person: 'Allison', count: 10 },
-        { person: 'Jeremy', count: 60 }
-      ])
+        { person: 'Jeremy', count: 60 },
+      ]),
     });
 
     await render(
@@ -143,7 +143,7 @@ module('format-message', function(hooks) {
     assert.equal(this.element.textContent.trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
   });
 
-  test('able to discover all register translations', function(assert) {
+  test('able to discover all register translations', function (assert) {
     assert.expect(1);
     this.intl.addTranslations('es_MX', { foo: 'bar' });
     /* tests that the locale name becomes normalized to es-mx */
@@ -151,27 +151,27 @@ module('format-message', function(hooks) {
     assert.equal(get(this.intl, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
   });
 
-  test('should respect format options for date ICU block', async function(assert) {
+  test('should respect format options for date ICU block', async function (assert) {
     assert.expect(1);
     this.day = 1390518044403;
     await render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=day}}`);
     assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
   });
 
-  test('should support allowEmpty', async function(assert) {
+  test('should support allowEmpty', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-message allowEmpty=true}}`);
     assert.equal(this.element.textContent, '');
   });
 
-  test('should return 0 instead of nothing', async function(assert) {
+  test('should return 0 instead of nothing', async function (assert) {
     assert.expect(1);
     this.set('count', 0);
     await render(hbs`{{format-message '{count}' count=count}}`);
     assert.equal(this.element.textContent, '0');
   });
 
-  test('l helper handles bound computed property', async function(assert) {
+  test('l helper handles bound computed property', async function (assert) {
     const done = assert.async();
     assert.expect(2);
 
@@ -180,8 +180,8 @@ module('format-message', function(hooks) {
       translation: computed('foo', {
         get() {
           return get(this, 'foo') ? 'foo foo' : 'bar bar';
-        }
-      })
+        },
+      }),
     }).create();
 
     set(this, 'context', context);

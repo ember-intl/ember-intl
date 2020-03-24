@@ -36,7 +36,7 @@ export default class FormatDate extends Formatter {
       'hour',
       'minute',
       'second',
-      'timeZoneName'
+      'timeZoneName',
     ]);
   }
 

@@ -12,7 +12,7 @@ export default Controller.extend({
     dec(count) {
       if (count <= 0) return;
       this.set('count', count - 1);
-    }
-  }
+    },
+  },
 });
 // END-SNIPPET

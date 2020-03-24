@@ -4,42 +4,42 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
 
-module('format-relative', function(hooks) {
+module('format-relative', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
     this.intl.set('formats', { relative: { hours: { units: 'hour', style: 'numeric' } } });
   });
 
-  test('exists', function(assert) {
+  test('exists', function (assert) {
     assert.expect(1);
     assert.ok(formatRelativehelper);
   });
 
-  test('invoke the formatRelative directly', function(assert) {
+  test('invoke the formatRelative directly', function (assert) {
     assert.expect(1);
     assert.equal(this.intl.formatRelative(new Date()), 'now');
   });
 
-  skip('should throw if called with out a value', function(/*assert*/) {
+  skip('should throw if called with out a value', function (/*assert*/) {
     // assert.expect(1);
     // expectError(() => render(hbs`{{format-relative}}`), ex => assert.ok(ex));
   });
 
-  test('should support allowEmpty', async function(assert) {
+  test('should support allowEmpty', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-relative allowEmpty=true}}`);
     assert.equal(this.element.textContent, '');
   });
 
-  test('can specify a `value` and `now` on the options hash', async function(assert) {
+  test('can specify a `value` and `now` on the options hash', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-relative 2000 now=0}}`);
     assert.equal(this.element.textContent, 'in 2 seconds');
   });
 
-  test('can specify a `interval` to trigger recompute', async function(assert) {
+  test('can specify a `interval` to trigger recompute', async function (assert) {
     assert.expect(2);
     const done = assert.async();
 
@@ -53,7 +53,7 @@ module('format-relative', function(hooks) {
     }, 1001);
   });
 
-  test('should return relative time in hours, not best fit', async function(assert) {
+  test('should return relative time in hours, not best fit', async function (assert) {
     assert.expect(1);
     this.set('date', 1000 * 60 * 60 * 24 * 2);
     // two days
@@ -61,14 +61,14 @@ module('format-relative', function(hooks) {
     assert.equal(this.element.textContent, 'in 48 hours');
   });
 
-  test('should return now', async function(assert) {
+  test('should return now', async function (assert) {
     assert.expect(1);
     this.set('date', new Date().getTime());
     await render(hbs`{{format-relative date}}`);
     assert.equal(this.element.textContent, 'now');
   });
 
-  test('should return now when an array is supplied as the locale', async function(assert) {
+  test('should return now when an array is supplied as the locale', async function (assert) {
     assert.expect(1);
     this.set('date', new Date().getTime());
 
@@ -80,13 +80,13 @@ module('format-relative', function(hooks) {
     assert.equal(this.element.textContent, 'jetzt');
   });
 
-  test('should handle short units', async function(assert) {
+  test('should handle short units', async function (assert) {
     const testCases = [
       ['second-short', new Date(Date.now() - 1000), '1 sec. ago'],
       ['minute-short', new Date(Date.now() - 60 * 1000), '1 min. ago'],
       ['hour-short', new Date(Date.now() - 60 * 60 * 1000), '1 hr. ago'],
       ['year-short', new Date(Date.now() - 24 * 60 * 60 * 1000 * 365 * 2), '2 yr. ago'],
-      ['month-short', new Date(), 'this mo.']
+      ['month-short', new Date(), 'this mo.'],
     ];
 
     assert.expect(testCases.length);

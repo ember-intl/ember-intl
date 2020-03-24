@@ -14,8 +14,8 @@ const { keys } = Object;
 
 const {
   Handlebars: {
-    Utils: { escapeExpression }
-  }
+    Utils: { escapeExpression },
+  },
 } = Ember;
 
 function escape(hash) {

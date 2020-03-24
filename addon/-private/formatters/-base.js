@@ -62,7 +62,7 @@ export default class FormatterBase {
   _format(value, formatterOptions, formatOptions, { locale }) {
     if (!locale) {
       warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
-        id: 'ember-intl-no-locale-set'
+        id: 'ember-intl-no-locale-set',
       });
     }
 

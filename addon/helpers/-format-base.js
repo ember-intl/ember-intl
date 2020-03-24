@@ -44,7 +44,7 @@ const AbstractHelper = Helper.extend({
     this._super();
 
     this.intl.off('localeChanged', this, 'recompute');
-  }
+  },
 });
 
 export default AbstractHelper;

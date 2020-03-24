@@ -9,6 +9,6 @@ const user = { username: 'Chris' };
 export default Controller.extend({
   user: user,
   num: 12,
-  yesterday: yesterday
+  yesterday: yesterday,
 });
 // END-SNIPPET

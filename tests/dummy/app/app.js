@@ -10,8 +10,8 @@ const App = Application.extend({
   customEvents: {
     mousewheel: null,
     touchstart: null,
-    touchmove: null
-  }
+    touchmove: null,
+  },
 });
 
 loadInitializers(App, config.modulePrefix);

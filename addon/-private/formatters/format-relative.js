@@ -31,7 +31,7 @@ export default class FormatRelative extends Formatter {
 
     if (options && typeof options.now !== 'undefined') {
       formatOptions = {
-        now: options.now
+        now: options.now,
       };
     }
 

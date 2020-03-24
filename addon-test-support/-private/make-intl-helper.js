@@ -10,7 +10,7 @@ import { getContext } from '@ember/test-helpers';
  * @return {function}
  * @hide
  */
-export default fn => (...args) => {
+export default (fn) => (...args) => {
   const { owner } = getContext();
   const intl = owner.lookup('service:intl');
 
