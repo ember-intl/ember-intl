@@ -4,17 +4,17 @@ module.exports = {
   root: true,
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['prettier', 'ember'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
-    browser: true
+    browser: true,
   },
   rules: {
     'prettier/prettier': 'error',
     'ember/no-restricted-resolver-tests': 'off',
-    'ember/avoid-leaking-state-in-ember-objects': 0
+    'ember/avoid-leaking-state-in-ember-objects': 0,
   },
   overrides: [
     // node files
@@ -25,29 +25,29 @@ module.exports = {
         'ember-cli-build.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
-        'tests-node/**/*.js'
+        'tests-node/**/*.js',
       ],
       excludedFiles: ['app/**', 'addon-test-support/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2015
+        ecmaVersion: 2015,
       },
       env: {
         browser: false,
-        node: true
+        node: true,
       },
       plugins: ['node'],
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
-      })
+      }),
     },
 
     // node tests
     {
       files: ['tests-node/**/*.js'],
       env: {
-        mocha: true
-      }
+        mocha: true,
+      },
     },
 
     // test files
@@ -55,8 +55,8 @@ module.exports = {
       files: ['tests/**/*.js'],
       excludedFiles: ['tests/dummy/**/*.js'],
       env: {
-        embertest: true
-      }
-    }
-  ]
+        embertest: true,
+      },
+    },
+  ],
 };

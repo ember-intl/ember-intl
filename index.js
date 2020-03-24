@@ -31,7 +31,7 @@ const DEFAULT_CONFIG = {
   wrapTranslationsWithNamespace: false,
   requiresTranslation(/* key, locale */) {
     return true;
-  }
+  },
 };
 
 module.exports = {
@@ -43,10 +43,10 @@ module.exports = {
     autoImport: {
       webpack: {
         node: {
-          global: true
-        }
-      }
-    }
+          global: true,
+        },
+      },
+    },
   },
 
   cacheKeyForTree(treeType) {
@@ -79,7 +79,7 @@ module.exports = {
 
     if ('throwMissingTranslations' in this.opts) {
       this.log('DEPRECIATION: `throwMissingTranslations` has been renamed to `errorOnMissingTranslations`', {
-        warning: true
+        warning: true,
       });
     }
 
@@ -97,7 +97,7 @@ module.exports = {
       addonsWithTranslations: addonsWithTranslations,
       log() {
         return addon.log.apply(addon, arguments);
-      }
+      },
     });
   },
 
@@ -113,7 +113,7 @@ module.exports = {
           },
           wrapEntry(obj) {
             return `export default ${stringify(obj)};`;
-          }
+          },
         })
       );
     }
@@ -125,7 +125,7 @@ module.exports = {
         numberFields: true,
         destDir: 'cldrs',
         prelude: '/*jslint eqeq: true*/\n',
-        moduleType: 'es6'
+        moduleType: 'es6',
       });
 
       trees.push(cldrTree);
@@ -196,8 +196,8 @@ module.exports = {
       locales.push(
         ...walkSync(projectInputPath, {
           globs: ['**/*.{yml,yaml,json}'],
-          directories: false
-        }).map(function(filename) {
+          directories: false,
+        }).map(function (filename) {
           return path.basename(filename, path.extname(filename));
         })
       );
@@ -207,14 +207,11 @@ module.exports = {
       locales.push(...this.opts.locales);
     }
 
-    let normalizedLocales = locales.map(locale => {
-      return locale
-        .trim()
-        .toLowerCase()
-        .replace(/_/g, '-');
+    let normalizedLocales = locales.map((locale) => {
+      return locale.trim().toLowerCase().replace(/_/g, '-');
     });
 
-    return [...new Set(normalizedLocales).values()].filter(locale => {
+    return [...new Set(normalizedLocales).values()].filter((locale) => {
       if (isValidLocaleFormat(locale)) {
         return true;
       }
@@ -223,5 +220,5 @@ module.exports = {
 
       return false;
     });
-  }
+  },
 };

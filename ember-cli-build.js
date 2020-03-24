@@ -2,7 +2,7 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   let project = defaults.project;
   let options = { vendorFiles: { 'app-shims.js': null } };
 
