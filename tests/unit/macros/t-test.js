@@ -40,6 +40,11 @@ module('Unit | Macros | t', function (hooks) {
     assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 9');
   });
 
+  test('allows property to be overridden', function (assert) {
+    this.object.set('tMacroProperty2', 'A new value');
+    assert.equal(this.object.get('tMacroProperty2'), 'A new value');
+  });
+
   test('defines a computed property with dependencies', function (assert) {
     run(this.object, 'set', 'numberClicks', 13);
     assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 13');

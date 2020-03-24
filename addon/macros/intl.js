@@ -20,5 +20,5 @@ export default function intl(...dependentKeysAndGetterFn) {
     }
     const intl = get(this, __intlInjectionName);
     return getterFn.call(this, intl, propertyKey, this);
-  }).readOnly();
+  });
 }
