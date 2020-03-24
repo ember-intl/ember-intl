@@ -149,6 +149,13 @@ describe('translation-reducer', function() {
         }
       };
 
+      this.brokenIcuFixture = {
+        en: {
+          brokenSyntax: 'You have {count, plural, =0 {one {cat} other {several cats}}.',
+          validSyntax: 'You have {count, plural, =0 {one cat} other {several cats}.}'
+        }
+      };
+
       this.fixture = {
         de: {
           foo: 'FOO',
@@ -190,6 +197,18 @@ describe('translation-reducer', function() {
         ['baz', ['de', 'en', 'it']],
         ['nested.translation.lock', ['de', 'en', 'it']]
       ]);
+    });
+
+    it('lintTranslations throws error for invalid ICU argument syntax', function() {
+      let subject = new TranslationReducer(this.input.path());
+
+      // this might change slightly if the parser lib is updated, if so it's fine to adjust
+      let expectedParserError = 'Expected "," or "}" but "c" found.';
+      let brokenString = this.brokenIcuFixture.en.brokenSyntax;
+
+      expect(() => subject.lintTranslations(this.brokenIcuFixture)).throws(
+        `An error occured (${expectedParserError}) when extracting ICU arguments for '${brokenString}'`
+      );
     });
 
     it('lintTranslations returns list of icu argument mismatch', function() {
