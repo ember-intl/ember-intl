@@ -17,11 +17,9 @@
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating
 * 🎉 [Advanced addon support](https://ember-intl.github.io/ember-intl/docs/advanced/addon-support) to provide translations to the host app
 
-## Installation
-
-`ember i ember-intl`
-
 ## Documentation
+
+[5.x (master)](https://ember-intl.github.io/ember-intl/docs)
 
 [4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
 
