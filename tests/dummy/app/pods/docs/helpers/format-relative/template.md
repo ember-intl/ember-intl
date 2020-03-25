@@ -1,7 +1,7 @@
 {{locale-switcher}}
 # Format Relative
 
-Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://github.com/yahoo/intl-relativeformat), and returns the formatted string value.
+Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://github.com/formatjs/formatjs/tree/master/packages/intl-relativetimeformat), and returns the formatted string value.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-relative-01-template.hbs'}}
@@ -23,7 +23,7 @@ Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-relative-03-template.hbs'}}
-    {{format-relative now interval=1000}}
+    {{format-relative now}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-relative-03-template.hbs'}}
@@ -40,5 +40,7 @@ Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://
 
 > options for always rendering in a particular unit; e.g. "30 days ago",
 > instead of "1 month ago".
+
+# TODO: implement complete list
 
 By default, the relative time is computed to the best fit unit, but you can explicitly call it to force units to be displayed in `"second"`, `"second-short"`, `"minute"`, `"minute-short"`, `"hour"`, `"hour-short"`, `"day"`, `"day-short"`, `"month"`, `"month-short"`, `"year"` or `"year-short"`

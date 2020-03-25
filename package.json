@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "@ember-intl/broccoli-cldr-data": "^3.1.0",
-    "@ember-intl/intl-messageformat": "^2.5.0",
-    "@ember-intl/intl-messageformat-parser": "^1.5.0",
-    "@ember-intl/intl-relativeformat": "^2.1.0",
+    "@formatjs/intl-relativetimeformat": "^4.5.10",
+    "intl-messageformat": "^8.2.3",
+    "intl-messageformat-parser": "^4.1.1",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.2",
     "broccoli-merge-trees": "^4.1.0",

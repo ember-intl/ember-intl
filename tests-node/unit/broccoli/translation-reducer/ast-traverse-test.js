@@ -1,9 +1,9 @@
 'use strict';
 
-let expect = require('chai').expect;
-let messageParser = require('@ember-intl/intl-messageformat-parser');
+const expect = require('chai').expect;
+const messageParser = require('intl-messageformat-parser');
 
-let traverse = require('../../../../lib/broccoli/translation-reducer/utils/ast-traverse');
+const traverse = require('../../../../lib/broccoli/translation-reducer/utils/ast-traverse');
 
 describe('traverse', function () {
   it('hello world!', function () {

@@ -215,7 +215,7 @@ module('service:intl', function (hooks) {
     assert.expect(1);
 
     this.intl.addTranslations(LOCALE, {
-      html_safe_translation: '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>',
+      html_safe_translation: "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
     });
 
     const out = this.intl.t('html_safe_translation', {
@@ -231,7 +231,7 @@ module('service:intl', function (hooks) {
     assert.expect(1);
 
     this.intl.addTranslations(LOCALE, {
-      html_safe_translation: '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>',
+      html_safe_translation: "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
     });
 
     const out = this.intl.t('html_safe_translation', {

@@ -195,14 +195,6 @@ export default Component.extend({
 });
 ```
 
-#### Live Relative Timestamp
-
-Recompute the relative timestamp on an interval by passing an `interval` argument (in milliseconds).
-
-```hbs
-{{format-relative now interval=1000}} -> now, 1 second ago, 2 seconds ago, etc. (will recompute every 1s)
-```
-
 #### Format Relative Options
 
 [List of supported format relative options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options)
@@ -322,8 +314,8 @@ You can get autocomplete and additional information inside [Visual Studio Code](
 [travis]: https://travis-ci.com/ember-intl/ember-intl
 [travis-badge]: https://travis-ci.com/ember-intl/ember-intl.svg?branch=master
 [ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
-[Intl-RF]: https://github.com/yahoo/intl-relativeformat
-[Intl-MF]: https://github.com/yahoo/intl-messageformat
+[Intl-RF]: https://github.com/formatjs/formatjs/tree/master/packages/intl-relativetimeformat
+[Intl-MF]: https://github.com/formatjs/formatjs/tree/master/packages/intl-messageformat
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
 [Intl-NF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
 [Intl-DTF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat

@@ -5,7 +5,7 @@
 
 import memoize from 'fast-memoize';
 import { A as emberArray } from '@ember/array';
-import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
+import IntlRelativeFormat from '@formatjs/intl-relativetimeformat';
 import Formatter from './-base';
 
 /**
@@ -22,19 +22,14 @@ export default class FormatRelative extends Formatter {
   }
 
   get options() {
-    return emberArray(['locale', 'format', 'style', 'units']);
+    return emberArray(['localeMatcher', 'numeric', 'style']);
   }
 
-  format(value, options, ctx) {
-    let dateValue = new Date(value);
-    let formatOptions;
+  format(value, options, context) {
+    const { locale } = context;
+    const formatterOptions = this.readOptions(options);
+    const formatter = this.createNativeFormatter(locale, formatterOptions);
 
-    if (options && typeof options.now !== 'undefined') {
-      formatOptions = {
-        now: options.now,
-      };
-    }
-
-    return this._format(dateValue, this.readOptions(options), formatOptions, ctx);
+    return formatter.format(value, options.unit);
   }
 }

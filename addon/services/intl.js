@@ -3,8 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
-import IntlMessageFormat from '@ember-intl/intl-messageformat';
+import IntlRelativeFormat from '@formatjs/intl-relativetimeformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
@@ -175,15 +174,13 @@ export default Service.extend(Evented, {
   },
 
   /**
-   * A utility method for registering CLDR data against
-   * intl-messageformat and intl-relativeformat.
+   * A utility method for registering CLDR data
    *
    * @method addLocaleData
    * @param {Object} locale data
-   * @public
+   * @private
    */
   addLocaleData(data) {
-    IntlMessageFormat.__addLocaleData(data);
     IntlRelativeFormat.__addLocaleData(data);
   },
 

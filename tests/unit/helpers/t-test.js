@@ -14,7 +14,7 @@ module('t', function (hooks) {
     this.intl.setLocale([DEFAULT_LOCALE]);
     this.intl.addTranslations(DEFAULT_LOCALE, {
       html: {
-        greeting: '<strong>Hello {name} {count, number}</strong>',
+        greeting: "'<strong>'Hello {name} {count, number}'</strong>'",
       },
       number: 2,
       foo: {
