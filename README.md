@@ -162,7 +162,7 @@ export default Component.extend({
 Formats dates relative to "now" using [`Intl.RelativeTimeFormat`][Intl-RF] and returns the formatted string value.
 
 ```hbs
-{{format-relative -3 unit="day"}} returns "3 days ago"
+{{format-relative -3 unit="day"}} -> "3 days ago"
 ```
 
 `unit` is required.  [A full list of supported unit options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat/format#Syntax)

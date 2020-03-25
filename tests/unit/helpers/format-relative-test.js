@@ -29,7 +29,7 @@ module('format-relative', function (hooks) {
 
   test('should support allowEmpty', async function (assert) {
     assert.expect(1);
-    await render(hbs`{{format-relative allowEmpty=true}}`);
+    await render(hbs`{{format-relative allowEmpty=true unit="day"}}`);
     assert.equal(this.element.textContent, '');
   });
 
