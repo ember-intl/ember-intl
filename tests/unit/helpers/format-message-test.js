@@ -44,6 +44,11 @@ module('format-message', function (hooks) {
     assert.equal(this.intl.formatMessage('hello {world}', { world: 'world' }), 'hello world');
   });
 
+  test('formatMessage properly escapes using single quotes', function (assert) {
+    assert.expect(1);
+    assert.equal(this.intl.formatMessage(`'{'0'}' '{'1'}' '{'2'}'`), '{0} {1} {2}');
+  });
+
   test('invoke formatMessage directly with formats', function (assert) {
     assert.expect(1);
     assert.equal(
