@@ -2,7 +2,7 @@
 
 let expect = require('chai').expect;
 
-let validateMessage = require('../../../../lib/broccoli/translation-reducer/utils/validate-message');
+let validateMessage = require('../../../lib/linter/validate-message');
 
 describe('validateMessage', function () {
   let valid = [
@@ -33,11 +33,7 @@ describe('validateMessage', function () {
     });
   });
 
-  let invalidSyntax = [
-    'hello {world!',
-    `{product} will cost {price, number, USD} if ordered by {deadline, date, time, foo}`,
-    `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`,
-  ];
+  let invalidSyntax = ['hello {world!', `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`];
 
   invalidSyntax.forEach((message) => {
     it(`throws SyntaxError for "${message}"`, function () {

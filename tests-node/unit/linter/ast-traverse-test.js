@@ -2,7 +2,7 @@
 
 const { expect } = require('chai');
 const messageParser = require('intl-messageformat-parser');
-const traverse = require('../../../../lib/broccoli/translation-reducer/utils/ast-traverse');
+const traverse = require('../../../lib/linter/ast-traverse');
 
 describe('traverse', function () {
   it('hello world!', function () {
