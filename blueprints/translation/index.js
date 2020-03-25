@@ -27,7 +27,7 @@ module.exports = {
         'Full list of supported locales: https://ember-intl.github.io/ember-intl/docs/guide/supported-locales'
       );
 
-      throw new SilentError(`[ember-intl] Invalid locale format: "${locale}"`);
+      throw new SilentError(`[ember-intl] invalid locale format: "${locale}"`);
     }
   },
 
