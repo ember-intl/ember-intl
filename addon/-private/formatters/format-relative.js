@@ -25,10 +25,6 @@ export default class FormatRelative extends Formatter {
   }
 
   format(value, options, context) {
-    const { locale } = context;
-    const formatterOptions = this.readOptions(options);
-    const formatter = this.createNativeFormatter(locale, formatterOptions);
-
-    return formatter.format(value, options.unit);
+    return this._format(value, this.readOptions(options), options.unit, context);
   }
 }
