@@ -7,8 +7,6 @@ import { warn } from '@ember/debug';
 import { camelize } from '@ember/string';
 import { A as emberArray } from '@ember/array';
 
-import links from '../../utils/links';
-
 const EMPTY_OBJECT = {};
 
 /**
@@ -61,9 +59,13 @@ export default class FormatterBase {
    */
   _format(value, formatterOptions, formatOptions, { locale }) {
     if (!locale) {
-      warn(`[ember-intl] no locale has been set. Documentation: ${links.unsetLocale}`, false, {
-        id: 'ember-intl-no-locale-set',
-      });
+      warn(
+        `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
+        false,
+        {
+          id: 'ember-intl-no-locale-set',
+        }
+      );
     }
 
     const formatter = this.createNativeFormatter(locale, formatterOptions);

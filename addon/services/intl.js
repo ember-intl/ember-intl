@@ -2,8 +2,6 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-
-import IntlRelativeFormat from '@formatjs/intl-relativetimeformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
@@ -173,22 +171,9 @@ export default Service.extend(Evented, {
     set(this, 'locale', locale);
   },
 
-  /**
-   * A utility method for registering CLDR data
-   *
-   * @method addLocaleData
-   * @param {Object} locale data
-   * @private
-   */
-  addLocaleData(data) {
-    IntlRelativeFormat.__addLocaleData(data);
-  },
-
   /** @public **/
   addTranslations(localeName, payload) {
-    const locale = this.translationsFor(localeName);
-
-    locale.addTranslations(payload);
+    this.translationsFor(localeName).addTranslations(payload);
   },
 
   /** @public **/

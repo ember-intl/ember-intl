@@ -1,11 +1,11 @@
 {{locale-switcher}}
 # Format Relative
 
-Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://github.com/formatjs/formatjs/tree/master/packages/intl-relativetimeformat), and returns the formatted string value.
+Formats dates relative to "now" using [<code>Intl.RelativeTimeFormat</code>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat), and returns the formatted string value.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-relative-01-template.hbs'}}
-    {{format-relative yesterday}}
+    {{format-relative -1 unit="day"}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-relative-01-template.hbs'}}
@@ -14,7 +14,7 @@ Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-relative-02-template.hbs'}}
-    {{format-relative instant}}
+    {{format-relative 1 unit="day"}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-relative-02-template.hbs'}}
@@ -23,7 +23,7 @@ Formats dates relative to "now" using [<code>IntlRelativeFormat</code>](https://
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-relative-03-template.hbs'}}
-    {{format-relative now}}
+    {{format-relative 0 unit="day"}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-relative-03-template.hbs'}}

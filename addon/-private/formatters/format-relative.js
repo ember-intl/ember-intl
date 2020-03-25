@@ -5,7 +5,6 @@
 
 import memoize from 'fast-memoize';
 import { A as emberArray } from '@ember/array';
-import IntlRelativeFormat from '@formatjs/intl-relativetimeformat';
 import Formatter from './-base';
 
 /**
@@ -17,7 +16,7 @@ export default class FormatRelative extends Formatter {
     super();
 
     this.createNativeFormatter = memoize((locales, options) => {
-      return new IntlRelativeFormat(locales, options);
+      return new Intl.RelativeTimeFormat(locales, options);
     });
   }
 

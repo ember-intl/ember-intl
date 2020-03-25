@@ -12,7 +12,7 @@ const path = require('path');
 const walkSync = require('walk-sync');
 const mergeTrees = require('broccoli-merge-trees');
 const stringify = require('json-stable-stringify');
-const extract = require('@ember-intl/broccoli-cldr-data');
+//const extractDataTree = require('@ember-intl/broccoli-cldr-data');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
@@ -119,16 +119,15 @@ module.exports = {
     }
 
     if (tree && this.locales.length) {
-      let cldrTree = extract(tree, {
-        locales: this.locales,
-        relativeFields: true,
-        numberFields: true,
-        destDir: 'cldrs',
-        prelude: '/*jslint eqeq: true*/\n',
-        moduleType: 'es6',
-      });
-
-      trees.push(cldrTree);
+      // let cldrTree = extractDataTree(tree, {
+      //   locales: this.locales,
+      //   relativeFields: true,
+      //   numberFields: true,
+      //   destDir: 'cldrs',
+      //   prelude: '/*jslint eqeq: true*/\n',
+      //   moduleType: 'es6',
+      // });
+      // trees.push(cldrTree);
     }
 
     return mergeTrees(trees, { overwrite: true });
