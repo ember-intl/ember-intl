@@ -14,7 +14,7 @@ module('format-message (html)', function (hooks) {
   test('invoke the formatMessage directly', function (assert) {
     assert.expect(1);
     assert.equal(
-      this.intl.formatMessage('<strong>Hello {name} {count, number}</strong>', {
+      this.intl.formatMessage(`'<strong>'Hello {name} {count, number}'</strong>'`, {
         htmlSafe: true,
         name: '<em>Jason</em>',
         count: 42000,
@@ -26,7 +26,7 @@ module('format-message (html)', function (hooks) {
   test('invoke the formatMessage directly with inlined locale', function (assert) {
     assert.expect(1);
 
-    let output = this.intl.formatMessage('<strong>Hello {name} {count, number}</strong>', {
+    let output = this.intl.formatMessage(`'<strong>'Hello {name} {count, number}'</strong>'`, {
       htmlSafe: true,
       name: '<em>Jason</em>',
       count: 42000,
@@ -47,7 +47,7 @@ module('format-message (html)', function (hooks) {
 
   test('should allow for inlined html in the value', async function (assert) {
     assert.expect(1);
-    await render(hbs`{{format-message "<strong>Hello {name}</strong>" name="Jason" htmlSafe=true}}`);
+    await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="Jason" htmlSafe=true}}`);
     assert.equal(this.element.innerHTML, '<strong>Hello Jason</strong>');
   });
 
@@ -59,7 +59,7 @@ module('format-message (html)', function (hooks) {
 
   test('should allow for inlined html in the value but escape arguments', async function (assert) {
     assert.expect(1);
-    await render(hbs`{{format-message "<strong>Hello {name}</strong>" name="<em>Jason</em>" htmlSafe=true}}`);
+    await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="<em>Jason</em>" htmlSafe=true}}`);
     assert.equal(this.element.innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
   });
 });

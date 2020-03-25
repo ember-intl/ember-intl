@@ -2,9 +2,6 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-
-import IntlRelativeFormat from '@ember-intl/intl-relativeformat';
-import IntlMessageFormat from '@ember-intl/intl-messageformat';
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
@@ -174,24 +171,9 @@ export default Service.extend(Evented, {
     set(this, 'locale', locale);
   },
 
-  /**
-   * A utility method for registering CLDR data against
-   * intl-messageformat and intl-relativeformat.
-   *
-   * @method addLocaleData
-   * @param {Object} locale data
-   * @public
-   */
-  addLocaleData(data) {
-    IntlMessageFormat.__addLocaleData(data);
-    IntlRelativeFormat.__addLocaleData(data);
-  },
-
   /** @public **/
   addTranslations(localeName, payload) {
-    const locale = this.translationsFor(localeName);
-
-    locale.addTranslations(payload);
+    this.translationsFor(localeName).addTranslations(payload);
   },
 
   /** @public **/

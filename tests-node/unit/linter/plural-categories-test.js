@@ -3,7 +3,7 @@
 
 let expect = require('chai').expect;
 
-let pluralCategories = require('../../../../lib/broccoli/translation-reducer/utils/plural-categories');
+let pluralCategories = require('../../../lib/linter/plural-categories');
 
 describe('pluralCategories', function () {
   let expectations = {

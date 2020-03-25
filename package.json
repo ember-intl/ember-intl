@@ -32,10 +32,6 @@
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\""
   },
   "dependencies": {
-    "@ember-intl/broccoli-cldr-data": "^3.1.0",
-    "@ember-intl/intl-messageformat": "^2.5.0",
-    "@ember-intl/intl-messageformat-parser": "^1.5.0",
-    "@ember-intl/intl-relativeformat": "^2.1.0",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.2",
     "broccoli-merge-trees": "^4.1.0",
@@ -48,6 +44,8 @@
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.2",
     "has-unicode": "^2.0.1",
+    "intl-messageformat": "^8.2.3",
+    "intl-messageformat-parser": "^4.1.1",
     "js-yaml": "^3.13.1",
     "json-stable-stringify": "^1.0.1",
     "locale-emoji": "^0.3.0",

@@ -17,11 +17,9 @@
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating
 * 🎉 [Advanced addon support](https://ember-intl.github.io/ember-intl/docs/advanced/addon-support) to provide translations to the host app
 
-## Installation
-
-`ember i ember-intl`
-
 ## Documentation
+
+[5.x (master)](https://ember-intl.github.io/ember-intl/docs)
 
 [4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
 
@@ -144,7 +142,7 @@ This is just like the `{{format-date}}` helper, except it will reference any str
 {{format-time now hour='numeric' minute='numeric' hour12=false}}
 ```
 
-Or programmatically convert a time within any Ember Object.
+An example of the service API implementation of `formatTime`:
 
 ```js
 // example
@@ -161,51 +159,24 @@ export default Component.extend({
 
 ### Format Relative
 
-Formats dates relative to "now" using [`IntlRelativeFormat`][Intl-RF], and returns the formatted string value.
-
-```js
-export default Component.extend({
-  timestamp: computed(function() {
-    let date = new Date();
-    date.setDate(date.getDate() - 3);
-    return date;
-  })
-});
-```
+Formats dates relative to "now" using [`Intl.RelativeTimeFormat`][Intl-RF] and returns the formatted string value.
 
 ```hbs
-{{format-relative timestamp}} -> 3 days ago
+{{format-relative -3 unit="day"}} -> "3 days ago"
 ```
 
-```hbs
-{{format-relative timestamp units='day'}} -> 3 days ago
-```
+`unit` is required.  [A full list of supported unit options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat/format#Syntax)
 
-`units` is optional, by default will default to `best-fit`.  [A full list of supported unit options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options)
-
-Or programmatically convert a relative time within any Ember Object.
+An example of the service API implementation of `formatRelative`:
 
 ```js
 export default Component.extend({
   intl: service(),
   yesterday: computed('intl.locale', function() {
-    let date = new Date();
-    return this.intl.formatRelative(date.setDate(date.getDate() - 1)/*, optional options hash */);
+    return this.intl.formatRelative(1, { unit: 'day' }));
   })
 });
 ```
-
-#### Live Relative Timestamp
-
-Recompute the relative timestamp on an interval by passing an `interval` argument (in milliseconds).
-
-```hbs
-{{format-relative now interval=1000}} -> now, 1 second ago, 2 seconds ago, etc. (will recompute every 1s)
-```
-
-#### Format Relative Options
-
-[List of supported format relative options](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options)
 
 #### Formatting a string literal ICU messages
 
@@ -322,8 +293,8 @@ You can get autocomplete and additional information inside [Visual Studio Code](
 [travis]: https://travis-ci.com/ember-intl/ember-intl
 [travis-badge]: https://travis-ci.com/ember-intl/ember-intl.svg?branch=master
 [ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
-[Intl-RF]: https://github.com/yahoo/intl-relativeformat
-[Intl-MF]: https://github.com/yahoo/intl-messageformat
+[Intl-RF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat
+[Intl-MF]: https://github.com/formatjs/formatjs/tree/master/packages/intl-messageformat
 [Intl]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
 [Intl-NF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
 [Intl-DTF]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat

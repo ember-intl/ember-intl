@@ -23,7 +23,7 @@ module('Acceptance: Smoke', function (hooks) {
 
   test('format-relative', async function (assert) {
     await visit('/smoke');
-    assert.dom('.format-relative').includesText('yesterday');
+    assert.dom('.format-relative').includesText('in 1 day');
   });
 
   test('translation-subdirectory', async function (assert) {

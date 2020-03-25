@@ -145,6 +145,9 @@ describe('translation-reducer', function () {
           foo: 'Hello {whos}',
           sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
           missingArg: 'You have photos',
+          date: '{datetime, date, long}',
+          time: '{datetime, time, short}',
+          select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
         },
       };
 
@@ -184,6 +187,26 @@ describe('translation-reducer', function () {
       };
     });
 
+    it('lintTranslations returns list of icu argument mismatch', function () {
+      let subject = new TranslationReducer(this.input.path());
+      let { icuMismatch } = subject.lintTranslations(this.icuFixture);
+
+      expect(icuMismatch).to.deep.equal([
+        [
+          'foo',
+          [
+            ['de', ['whos']],
+            ['en', ['who']],
+          ],
+        ],
+        ['missingArg', [['en', ['numPhotos']]]],
+        ['deep.nested.ok', [['en', ['reason']]]],
+        ['date', [['de', ['datetime']]]],
+        ['time', [['de', ['datetime']]]],
+        ['select', [['de', ['gender']]]],
+      ]);
+    });
+
     it('lintTranslations returns list of missing translations', function () {
       let subject = new TranslationReducer(this.input.path());
       let { missingTranslations: missing } = subject.lintTranslations(this.fixture);
@@ -202,29 +225,12 @@ describe('translation-reducer', function () {
       let subject = new TranslationReducer(this.input.path());
 
       // this might change slightly if the parser lib is updated, if so it's fine to adjust
-      let expectedParserError = 'Expected "," or "}" but "c" found.';
+      let expectedParserError = 'Expected "," but "c" found.';
       let brokenString = this.brokenIcuFixture.en.brokenSyntax;
 
       expect(() => subject.lintTranslations(this.brokenIcuFixture)).throws(
         `An error occured (${expectedParserError}) when extracting ICU arguments for '${brokenString}'`
       );
-    });
-
-    it('lintTranslations returns list of icu argument mismatch', function () {
-      let subject = new TranslationReducer(this.input.path());
-      let { icuMismatch } = subject.lintTranslations(this.icuFixture);
-
-      expect(icuMismatch).to.deep.equal([
-        [
-          'foo',
-          [
-            ['de', ['whos']],
-            ['en', ['who']],
-          ],
-        ],
-        ['missingArg', [['en', ['numPhotos']]]],
-        ['deep.nested.ok', [['en', ['reason']]]],
-      ]);
     });
 
     it('lintTranslations returns list of icu argument mismatch without those that are required', function () {
