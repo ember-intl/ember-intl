@@ -1,56 +1,55 @@
 'use strict';
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const messageParser = require('intl-messageformat-parser');
-
 const traverse = require('../../../../lib/broccoli/translation-reducer/utils/ast-traverse');
 
 describe('traverse', function () {
   it('hello world!', function () {
     let ast = messageParser.parse(`hello world!`);
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 1,
-      messageTextElement: 1,
+    expect(result).to.deep.equal({
+      literalElement: 1,
       argumentElement: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
       pluralFormat: 0,
       selectFormat: 0,
-      optionalFormatPattern: 0,
+      poundElement: 0,
     });
   });
 
   it('hello {name}!', function () {
     let ast = messageParser.parse(`hello {name}!`);
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 1,
-      messageTextElement: 2,
+    expect(result).to.deep.equal({
+      literalElement: 2,
       argumentElement: 1,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
       pluralFormat: 0,
       selectFormat: 0,
-      optionalFormatPattern: 0,
+      poundElement: 0,
     });
   });
 
   it('{product} will cost {price, number, USD} if ordered by {deadline, date, time}', function () {
     let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, date, time}`);
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 1,
-      messageTextElement: 2,
-      argumentElement: 3,
+    expect(result).to.deep.equal({
+      literalElement: 2,
+      argumentElement: 1,
       numberFormat: 1,
       dateFormat: 1,
       timeFormat: 0,
       pluralFormat: 0,
       selectFormat: 0,
-      optionalFormatPattern: 0,
+      poundElement: 0,
     });
   });
 
@@ -58,17 +57,17 @@ describe('traverse', function () {
     let ast = messageParser.parse(
       `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`
     );
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 4,
-      messageTextElement: 6,
-      argumentElement: 3,
+    expect(result).to.deep.equal({
+      literalElement: 6,
+      argumentElement: 1,
       numberFormat: 0,
       dateFormat: 1,
       timeFormat: 0,
       pluralFormat: 1,
       selectFormat: 0,
-      optionalFormatPattern: 3,
+      poundElement: 1,
     });
   });
 
@@ -76,17 +75,17 @@ describe('traverse', function () {
     let ast = messageParser.parse(
       `{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`
     );
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 4,
-      messageTextElement: 3,
-      argumentElement: 1,
+    expect(result).to.deep.equal({
+      literalElement: 3,
+      argumentElement: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
       pluralFormat: 0,
       selectFormat: 1,
-      optionalFormatPattern: 3,
+      poundElement: 0,
     });
   });
 
@@ -99,17 +98,17 @@ describe('traverse', function () {
         other {You and # trainers}
       }`
     );
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 5,
-      messageTextElement: 4,
-      argumentElement: 1,
+    expect(result).to.deep.equal({
+      literalElement: 6,
+      argumentElement: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
       pluralFormat: 1,
       selectFormat: 0,
-      optionalFormatPattern: 4,
+      poundElement: 2,
     });
   });
 
@@ -122,61 +121,57 @@ describe('traverse', function () {
         other {#th}
     } birthday!`
     );
+    let result = count(ast);
 
-    expect(count(ast)).to.deep.equal({
-      messageFormatPattern: 5,
-      messageTextElement: 6,
-      argumentElement: 1,
+    expect(result).to.deep.equal({
+      literalElement: 6,
+      argumentElement: 0,
       numberFormat: 0,
       dateFormat: 0,
       timeFormat: 0,
       pluralFormat: 1,
       selectFormat: 0,
-      optionalFormatPattern: 4,
+      poundElement: 4,
     });
   });
 });
 
 function count(ast) {
   let result = {
-    messageFormatPattern: 0,
-    messageTextElement: 0,
+    literalElement: 0,
     argumentElement: 0,
     numberFormat: 0,
     dateFormat: 0,
     timeFormat: 0,
     pluralFormat: 0,
     selectFormat: 0,
-    optionalFormatPattern: 0,
+    poundElement: 0,
   };
 
   traverse(ast, {
-    messageFormatPattern() {
-      result.messageFormatPattern++;
+    [messageParser.TYPE.pound]() {
+      result.poundElement++;
     },
-    messageTextElement() {
-      result.messageTextElement++;
+    [messageParser.TYPE.literal]() {
+      result.literalElement++;
     },
-    argumentElement() {
+    [messageParser.TYPE.argument]() {
       result.argumentElement++;
     },
-    numberFormat() {
+    [messageParser.TYPE.number]() {
       result.numberFormat++;
     },
-    dateFormat() {
+    [messageParser.TYPE.date]() {
       result.dateFormat++;
     },
-    timeFormat() {
+    [messageParser.TYPE.time]() {
       result.timeFormat++;
     },
-    pluralFormat() {
+    [messageParser.TYPE.plural]() {
       result.pluralFormat++;
     },
-    selectFormat() {
+    [messageParser.TYPE.select]() {
       result.selectFormat++;
-    },
-    optionalFormatPattern() {
-      result.optionalFormatPattern++;
     },
   });
 
