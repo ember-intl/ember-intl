@@ -15,19 +15,6 @@ module.exports = function() {
 };
 ```
 
-## Asynchronous loading of translations
-
-Manually configure ember-intl with the list of locales the application needs to support. This is an important step, since at build time we use this information to specific CLDR data for each locale. NOTE: If the translations are managed by ember-intl, i.e. stored in `/translations`, this step is not needed.
-
-```js
-// config/ember-intl.js
-module.exports = function() {
-  return {
-    locales: ['en-us', 'en-ca', 'es-es', 'fr-fr']
-  };
-};
-```
-
 ## Pushing translations into ember-intl
 
 ```js
