@@ -9,18 +9,15 @@
 
 const fs = require('fs');
 const path = require('path');
-const walkSync = require('walk-sync');
 const mergeTrees = require('broccoli-merge-trees');
 const stringify = require('json-stable-stringify');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
-const isValidLocaleFormat = require('./lib/utils/is-valid-locale-format');
 const findEngine = require('./lib/utils/find-engine');
 
 const DEFAULT_CONFIG = {
-  locales: null,
   publicOnly: false,
   fallbackLocale: null,
   inputPath: 'translations',
@@ -63,7 +60,6 @@ module.exports = {
     this.package = engine || this.project;
     this.opts = this.createOptions(this.app.env, this.app.project);
     this.isSilent = this.app.options.intl && this.app.options.intl.silent;
-    this.locales = this.findAvailableLocales();
   },
 
   generateTranslationTree(bundlerOptions) {
@@ -167,44 +163,6 @@ module.exports = {
       config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
     }
 
-    if (config.locales && !Array.isArray(config.locales)) {
-      config.locales = [config.locales];
-    }
-
     return config;
-  },
-
-  findAvailableLocales() {
-    let locales = [];
-    let projectInputPath = path.join(this.app.project.root, this.opts.inputPath);
-
-    if (fs.existsSync(projectInputPath)) {
-      locales.push(
-        ...walkSync(projectInputPath, {
-          globs: ['**/*.{yml,yaml,json}'],
-          directories: false,
-        }).map(function (filename) {
-          return path.basename(filename, path.extname(filename));
-        })
-      );
-    }
-
-    if (Array.isArray(this.opts.locales)) {
-      locales.push(...this.opts.locales);
-    }
-
-    let normalizedLocales = locales.map((locale) => {
-      return locale.trim().toLowerCase().replace(/_/g, '-');
-    });
-
-    return [...new Set(normalizedLocales).values()].filter((locale) => {
-      if (isValidLocaleFormat(locale)) {
-        return true;
-      }
-
-      this.log(`'${locale}' is not a valid locale name`);
-
-      return false;
-    });
   },
 };

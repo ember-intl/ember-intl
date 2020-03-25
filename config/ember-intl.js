@@ -3,21 +3,6 @@
 module.exports = function (/* environment */) {
   return {
     /**
-     * The locales that the application needs to support.
-     *
-     * NOTE: this is optional and is automatically set *if* you store translations
-     * within the `inputPath` defined below.
-     *
-     * If you side load translations, you must then explicitly
-     * list out the locales. i.e: ['en-us', 'en-gb', 'fr-fr']
-     *
-     * @property locales
-     * @type {Array?}
-     * @default "null"
-     */
-    locales: null,
-
-    /**
      * Merges the fallback locale's translations into all other locales as a
      * build-time fallback strategy.
      *
