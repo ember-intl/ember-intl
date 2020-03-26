@@ -25,8 +25,9 @@
 
 ## Migrating from ember-i18n
 
-* Simple migration tool to convert your translations files and application code to this addon.  Feel free to report any issues with the migration tool [here](https://github.com/DockYard/ember-i18n-to-intl-migrator/issues).
-- https://github.com/DockYard/ember-i18n-to-intl-migrator
+There's an [ember-i18n-to-intl-migrator tool](https://github.com/DockYard/ember-i18n-to-intl-migrator) that is used to convert your translations files and application code to ember-intl.
+
+If you have any questions or issues, please open in [ember-i18n-to-intl-migrator/issues](https://github.com/DockYard/ember-i18n-to-intl-migrator/issues)
 
 ## Editor integration
 
