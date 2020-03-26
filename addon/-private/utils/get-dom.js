@@ -4,6 +4,10 @@ import { getOwner } from '@ember/application';
 //
 // Private Ember API usage. Get the dom implementation used by the current
 // renderer, be it native browser DOM or Fastboot SimpleDOM
+/**
+ * @private
+ * @hide
+ */
 export default function getDOM(context) {
   let { renderer } = context;
   if (!renderer || !renderer._dom) {

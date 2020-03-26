@@ -29,6 +29,7 @@ Router.map(function () {
       this.route('format-time');
     });
     this.route('cookbook', function () {
+      this.route('migration-4-0-to-5-0');
       this.route('migration-3-0-to-4-0');
       this.route('common-errors');
     });

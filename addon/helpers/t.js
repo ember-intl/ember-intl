@@ -4,7 +4,7 @@
  */
 
 import { assert } from '@ember/debug';
-import BaseHelper from './-format-base';
+import BaseHelper from '../-private/helpers/-format-base';
 
 export default BaseHelper.extend({
   format(key, options) {

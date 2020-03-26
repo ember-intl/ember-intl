@@ -8,7 +8,7 @@ Formats [ICU message syntax](https://formatjs.io/guides/message-syntax/) strings
     {{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
              name=user.username
              numPhotos=num
-             timestamp=yesterday }}
+             timestamp=yesterday}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-message-01-template.hbs'}}
@@ -19,7 +19,7 @@ Formats [ICU message syntax](https://formatjs.io/guides/message-syntax/) strings
     {{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
              name=user.username
              numPhotos=1
-             timestamp=yesterday }}
+             timestamp=yesterday}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-message-02-template.hbs'}}
@@ -30,7 +30,7 @@ Formats [ICU message syntax](https://formatjs.io/guides/message-syntax/) strings
     {{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
              name=user.username
              numPhotos=0
-             timestamp=yesterday }}
+             timestamp=yesterday}}
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-message-03-template.hbs'}}
@@ -41,8 +41,9 @@ Formats [ICU message syntax](https://formatjs.io/guides/message-syntax/) strings
 To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `format-message` helper.
 
 ```hbs
-{{format-message '<em>{photos, number}</em>' photos=models.photos.length htmlSafe=true}}
+{{format-message "'<em>'{photos, number}'</em>'" photos=models.photos.length htmlSafe=true}}
 ```
+
 It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  
 
 ## Service API

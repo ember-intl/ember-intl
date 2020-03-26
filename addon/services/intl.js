@@ -14,8 +14,8 @@ import { next, cancel } from '@ember/runloop';
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import isArrayEqual from '../-private/is-array-equal';
 import normalizeLocale from '../-private/normalize-locale';
+import getDOM from '../-private/utils/get-dom';
 import hydrate from '../hydrate';
-import getDOM from '../utils/get-dom';
 
 export default Service.extend(Evented, {
   /** @private **/

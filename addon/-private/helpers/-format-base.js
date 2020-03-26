@@ -8,6 +8,10 @@ import { getOwner } from '@ember/application';
 import { isEmpty } from '@ember/utils';
 import { getWithDefault } from '@ember/object';
 
+/**
+ * @private
+ * @hide
+ */
 const AbstractHelper = Helper.extend({
   intl: null,
 
