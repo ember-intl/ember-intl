@@ -39,3 +39,4 @@ You can get autocomplete and additional information inside [Visual Studio Code](
 [travis]: https://travis-ci.com/ember-intl/ember-intl
 [travis-badge]: https://travis-ci.com/ember-intl/ember-intl.svg?branch=master
 [ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
+[ICU]: https://formatjs.io/guides/message-syntax/
