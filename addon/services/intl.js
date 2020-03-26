@@ -5,7 +5,7 @@
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
-import { assert, warn } from '@ember/debug';
+import { assert } from '@ember/debug';
 import { makeArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
@@ -83,10 +83,6 @@ export default Service.extend(Evented, {
   /** @public **/
   init() {
     this._super(...arguments);
-
-    warn('[ember-intl] Intl API does not exist in this environment.  A polyfill of `Intl` is required.', Intl, {
-      id: 'ember-intl-undefined-intljs',
-    });
 
     const initialLocale = get(this, 'locale') || ['en-us'];
 

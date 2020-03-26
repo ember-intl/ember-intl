@@ -23,10 +23,6 @@ module.exports = {
     let locale = options.entity.name;
 
     if (!isValidLocaleFormat(locale)) {
-      this.ui.writeLine(
-        'Full list of supported locales: https://ember-intl.github.io/ember-intl/docs/guide/supported-locales'
-      );
-
       throw new SilentError(`[ember-intl] invalid locale format: "${locale}"`);
     }
   },

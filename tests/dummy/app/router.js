@@ -16,11 +16,9 @@ Router.map(function () {
     this.route('guide', function () {
       this.route('asynchronously-loading-translations');
       this.route('ember-service-api');
-      this.route('intljs-polyfill');
       this.route('missing-translations');
       this.route('testing');
       this.route('translating-text');
-      this.route('supported-locales');
     });
     this.route('helpers', function () {
       this.route('t');
