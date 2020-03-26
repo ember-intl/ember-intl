@@ -4,8 +4,8 @@
  */
 
 import EmberObject from '@ember/object';
-import EmptyObject from 'ember-intl/-private/empty-object';
 import { assign } from '@ember/polyfills';
+import EmptyObject from 'ember-intl/-private/utils/empty-object';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 

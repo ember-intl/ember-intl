@@ -12,10 +12,10 @@ import Service from '@ember/service';
 import { next, cancel } from '@ember/runloop';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
-import isArrayEqual from '../-private/is-array-equal';
-import normalizeLocale from '../-private/normalize-locale';
+import isArrayEqual from '../-private/utils/is-array-equal';
+import normalizeLocale from '../-private/utils/normalize-locale';
 import getDOM from '../-private/utils/get-dom';
-import hydrate from '../hydrate';
+import hydrate from '../-private/utils/hydrate';
 
 export default Service.extend(Evented, {
   /** @private **/

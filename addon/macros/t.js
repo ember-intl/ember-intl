@@ -1,6 +1,6 @@
 import { get } from '@ember/object';
 import { assign } from '@ember/polyfills';
-import EmptyObject from 'ember-intl/-private/empty-object';
+import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import intl from './intl';
 
 function partitionDynamicValuesAndStaticValues(options) {
