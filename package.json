@@ -11,7 +11,7 @@
     "internationalization"
   ],
   "author": "jason.mitchell.w@gmail.com",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "directories": {
     "doc": "doc",
     "test": "tests"
