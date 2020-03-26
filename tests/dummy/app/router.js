@@ -14,6 +14,7 @@ Router.map(function () {
       this.route('quickstart');
     });
     this.route('guide', function () {
+      this.route('editor-integration');
       this.route('asynchronously-loading-translations');
       this.route('ember-service-api');
       this.route('missing-translations');
