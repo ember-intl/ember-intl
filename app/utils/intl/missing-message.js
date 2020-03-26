@@ -1,1 +1,1 @@
-export { default } from 'ember-intl/utils/missing-message';
+export { default } from 'ember-intl/-private/utils/missing-message';
