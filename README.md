@@ -23,10 +23,6 @@
 
 [4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
 
-[3.x](https://github.com/ember-intl/ember-intl/tree/3.x/docs)
-
-[2.x](https://github.com/ember-intl/ember-intl/tree/2.x/docs)
-
 ## Translations
 Translations are defined in [ICU message syntax][ICU] and store in `<project_root>/translations` in either JSON and/or YAML format.  Nested directories are supported along with nested objects within your translation files.
 
