@@ -2,7 +2,7 @@
 
 ## Translations
 Translations are defined in [ICU message syntax](https://formatjs.io/guides/message-syntax/) and stored in
-`<project_root>/translations` in either JSON and/or YAML format. Nested objects are supported within your translation files.
+`<root>/translations` in either JSON and/or YAML format. Nested objects are supported within your translation files.
 
 ### Nested translations
 
@@ -32,42 +32,48 @@ By default, the keys of the translations are not changed when nested directories
 `wrapTranslationsWithNamespace` activated, Ember-intl will wrap the keys of the translations with the names of
 the subdirectories.
 
-When `wrapTranslationsWithNamespace` is `true`, a translation under `<project_root>/translations/commerce/cart`
+When `wrapTranslationsWithNamespace` is `true`, a translation under `<root>/translations/commerce/cart`
 with the key `title` will be accessed using the key `commerce.cart.title`, instead the key `title`.
 
 > White spaces can be used in the names of the subdirectories.
 > They will be converted to underscores when used as namespaces of the keys.
-> `<project_root>/translations/foo bar` will be converted to `foo_bar`.
+> `<root>/translations/foo bar` will be converted to `foo_bar`.
 
 ## Translate
 
 ```hbs
-<h2 id="title">{{t 'hello.world'}}</h2>
+<h2 id="title">{{t 'page.home_title'}}</h2>
 ```
 
 ### HTML Element Attributes
 
 ```hbs
-<input type='email' value='Some value' placeholder={{t 'hello.world'}}>
+<input type="email" value="" placeholder={{t 'fields.email_placeholder'}}>
 ```
 
 ### Helper/Component Attributes
 
 ```hbs
-{{input value=email placeholder=(t 'hello.world')}}
+{{input type='email' value=email placeholder=(t 'fields.email_placeholder')}}
 ```
 
-### Fallback Translations
+### Fallback Translation
 
-The `t` helper, as of 3.0.0, supports a fallback lookup if the primary translation key is missing. In the below example, the translation key `"actual_key"` would be used in place of the primary key, `"missing_key"`, if translation missing for key.
+The `t` helper supports a fallback lookup if the intended translation key is missing.
+
+In the below example, if the translation for `"a_key_that_is_missing"` was missing then the translation key `"errors.graceful_missing_translation"` would be lookuped and used in its place.
 
 ```hbs
-{{t 'missing_key' default='actual_key'}}
+{{t 'a_key_that_is_missing' default='errors.graceful_missing_translation'}}
 ```
 
 ```js
-this.intl.t('missing_key', {
-  default: ['does_not_exist', 'does_exist'] /* default can also be an Array */
+this.intl.t('a_key_that_is_missing', {
+  /* Note: default can also be a string[], they'll be tried in order */
+  default: [
+    'errors.graceful_missing_translation_one',
+    'errors.graceful_missing_translation_two'
+  ]
 });
 ```
 
@@ -83,13 +89,10 @@ import Component from '@ember/component':
 import { t } from 'ember-intl';
 
 export default Component.extend({
-  // Injecting the service is not required for `t` to work.
-  // intl: service(),
+  followersCount: 1,
 
   // A simple translation.
   title: t('user.edit.title'),
-
-  followersCount: 1,
 
   // A translation with interpolations. This computed property
   // depends on `count` and will send `{ count: this.followersCount }`

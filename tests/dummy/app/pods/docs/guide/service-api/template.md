@@ -4,7 +4,7 @@ ember-intl ships with a service which exposes an API to programmatically
 interface with all the known functionality exposed through the declarative
 helpers.
 
-## How to inject service
+## How to inject the service
 
 ```js
 Ember.Object.extend({
@@ -108,10 +108,13 @@ Outputs:
 HTML markup. Since options can contain unsafe markup, all attribute hash
 values are escaped.
 
+By default, all XML-like tags inside a translation must be escaped in order to build.  You escape
+by using single quotes around the tag.
+
 ```js
-this.intl.formatMessage('<strong>{firstName}</strong> {lastName}', {
+this.intl.formatMessage("'<strong>'{firstName}'</strong>' {lastName}", {
   firstName: 'John',
-  lastName: '<em>Doe</em>',
+  lastName: "'<em>'Doe'</em>'",
   htmlSafe: true
 });
 ```
@@ -131,6 +134,10 @@ Documentation missing
 Documentation missing
 
 ### formatTime _(value:Date/Number/String, optionalOptions:Object)_: String
+
+Documentation missing
+
+### formatRelative _(delta:Number, unit:String)_: String
 
 Documentation missing
 

@@ -25,7 +25,7 @@ Changes:
 ### **Translations**
 
 * Escaping in translations is now done via a single quote, `'`, instead of the previous slash `\`.  This was done to ensure compliance with the ICU spec.
-* Any HTML tags within a translation need to be escaped.
+* Additionally, all HTML tags now need to be escaped.
 
 `<strong>{name}</strong>`
 

@@ -66,4 +66,4 @@ export default Component.extend({
 });
 ```
 
-{{docs-link 'More details here' 'docs.guide.ember-service-api'}}
+{{docs-link 'More details here' 'docs.guide.service-api'}}

@@ -19,7 +19,6 @@ This will create the following files:
 Create a translation key in `translations/en-us.yaml`
 
 ```yaml
-# translations/en-us.yaml
 hello:
   world: Hello World!
 ```
@@ -36,16 +35,17 @@ In a template add the following:
 Create a new translation file: `translations/fr-fr.yaml`
 
 ```
-# translations/fr-fr.yaml
 hello:
   world: "Bonjour tout le monde!"
 ```
 
 ## 4. Configure ember-intl
 
-**Setup your application-wide locale**
+**Setting your applications runtime locale**
 
-You will need to define what locale your app will use by default. This can be done at any point after your app boots. This is typically done within your Application route's `beforeModel` hook by calling `intl.setLocale(['en-us'])`.
+When your application boots, you want to tell ember-intl which locale it should be targeting.  One common approach, is to do this in your top-level `application` route's `beforeModel` hook.
+
+_Note:_ This is usually implemented with custom business logic - such as read it off a User model.
 
 ```js
 // app/routes/application.js
@@ -56,7 +56,8 @@ export default Route.extend({
   intl: service(),
   beforeModel() {
     this._super(...arguments);
-    return this.intl.setLocale(['en-us']);
+    
+    this.intl.setLocale(['en-us']);
   }
 });
 ```
