@@ -10,7 +10,7 @@ Ember-intl is now entirely built on native [ECMAScript Internationalization APIs
 
 * 💵 Locale-aware numbers: currencies, decimals, and percentages
 * 📅 Locale-aware date and time formatting
-* 🕑 Locale-aware display of relative time, examples: `"1 day ago"`, `"in 2 years"`
+* 🕑 Locale-aware display of relative time. i.e, `"in 1 day"`, `"2 years ago"`, etc.
 * 💬 Translations containing fragments of any of the above
 
 ```icu

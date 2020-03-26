@@ -10,7 +10,7 @@
 
 * 💵 Locale-aware numbers. Formatting of currencies, decimals, and percentages
 * 📅 Locale-aware dates and times formatting
-* 🕑 Locale-aware display of relative time. I.e, `"now"`, `"yesterday"`, `"2 mo. ago"`
+* 🕑 Locale-aware display of relative time. i.e, `"in 1 day"`, `"2 years ago"`, etc.
 * 💬 ICU Message Syntax. Pluralization and formatted segments (numbers, datetime, etc.)
 * 🌐 Support for 150+ languages
 * 📜 Built largely on standards. [ICU message syntax][ICU] & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)
