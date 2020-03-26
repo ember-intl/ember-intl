@@ -1,6 +1,10 @@
 import { isEmpty } from '@ember/utils';
 import { warn } from '@ember/debug';
 
+/**
+ * @private
+ * @hide
+ */
 export default function missingMessage(key, locales /*, options */) {
   if (isEmpty(locales)) {
     warn(

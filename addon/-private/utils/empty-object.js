@@ -1,3 +1,7 @@
+/**
+ * @private
+ * @hide
+ */
 const proto = Object.create(null, {
   constructor: {
     value: undefined,

@@ -8,7 +8,7 @@ The `locales` configuration option within `config/ember-intl.js` can now be remo
 
 ### **Polyfilling**
 
-This addon longer provides Polyfills.  The reasoning along with the details can be found in the {{docs-link 'Runtime Requirements' 'docs.getting-started.runtime-requirements'}} section.
+This addon no longer provides polyfills "out of the box."  The reasoning, along with the current browser requirements, can be found in the {{docs-link 'Runtime Requirements' 'docs.getting-started.runtime-requirements'}} section.
 
 ### **`Intl.RelativeTimeFormat`**
 

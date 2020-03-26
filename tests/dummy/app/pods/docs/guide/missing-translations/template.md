@@ -1,44 +1,58 @@
 # Missing translations
 
-## At runtime
+## **At runtime**
 
-When a translation key does not resolve to a translation, ember-intl invokes the function from `app/utils/intl/missing-message.js` with a `key`, `locales` and `options` as arguments.
+When a translation does not exist, `ember-intl` will import and invoked a function from the location `app/utils/intl/missing-message.js`.  It is provided three argumnets: `key: String` and `locales: String[]` as arguments.
 
 The default implementation is to return `"Missing translation: [key]"`, but can be overridden by exporting a function from `app/utils/intl/missing-message.js`.
 
-The following is a custom implementation that throws an error instead of returning a `String`.
+Here is how you might implement your own error handler:
 
 ```js
-// app/utils/intl/missing-message.js:
-
-export default function missingMessage(key, locales, options) {
+// app/utils/intl/missing-message.js
+export default function missingMessage(key, locales) {
   throw new Error(`[ember-intl] Missing translation for key: "${key}" for locales: "${locales}"`);
 }
 ```
 
-The feature, and the documentation, is based entirely off ember-i18n's. The `options` hash is a new addition.
+## **At build-time**
 
-## At build-time
+`ember-intl` automatically detects missing translations at build-time.
 
-Ember Intl automatically detects missing translations when building the app.
+If you don't like the default behavior, you can control the detection by configuring `errorOnMissingTranslations` and `requiresTranslation` in your `config/ember-intl.js` configuration file.  By default, `ember-intl` will emit warnings to stdout but will not fail the build.
 
-You can control the detection behavior by configuring the `errorOnMissingTranslations` and `requiresTranslation` options in your `config/ember-intl.js`.
+### Throwing a build error on missing (when required) translations
 
-### Requiring translations
+Setting `errorOnMissingTranslations` to `true` will cause ember-intl to throw a build error if missing (and when required) translations were spotted during bundling.
 
-By setting a `requiresTranslation` function, it's possible to filter what translations are required.
-The default implementation requires all keys to be translated in all locales.
+This changes the default behavior where missing translations are only logged as build warnings.
 
-The provided function will be called for any translation key that is missing in any locale.
-This means it won't be called for any key that exists in all configured locales.
-
-The following missing translations will be logged, If an ember-intl project is configured with the following configuration.
-
-- `page.description` is missing in `it`
+Given the following configuration, any missing translation in any locale, will cause a build error to be thrown.
 
 ```js
 // config/ember-intl.js
-module.exports = function(/* environment */) {
+module.exports = function(/* env */) {
+  return {
+    errorOnMissingTranslations: true
+  };
+};
+```
+
+### Requiring translations
+
+`requiresTranslation` is a function that is called whenever any translation key, from any locale, is missing.
+
+The default implementation requires all keys to be translated by all locales.  For example, if my application supports locales en-US and fr-FR and I create a translation key `"home.hero_title"` then both locales must implement that key or a warning, or optionally an error, will present itself at build-time.
+
+If an ember-intl project is configured with the following configuration, the following with print to the console:
+
+- `page.description` is missing in `it`
+
+Example configuration:
+
+```js
+// config/ember-intl.js
+module.exports = function(/* env */) {
   return {
     requiresTranslation(key, locale) {
       if (key.startsWith('wip.')) {
@@ -71,20 +85,4 @@ wip:
 # translations/it.yaml
 page:
   title: Titolo della pagina
-```
-
-### Throwing a build error on missing, required translation
-
-Setting `errorOnMissingTranslations` to `true` will cause ember-intl to throw a build error if missing, required translations were detected.
-This changes the default behavior where missing translations are only logged as build warnings.
-
-Given the following configuration, any missing translation in any locale will cause a build error to be thrown.
-
-```js
-// config/ember-intl.js
-module.exports = function(/* environment */) {
-  return {
-    errorOnMissingTranslations: true
-  };
-};
 ```

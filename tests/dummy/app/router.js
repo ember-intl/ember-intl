@@ -14,7 +14,6 @@ Router.map(function () {
       this.route('quickstart');
     });
     this.route('guide', function () {
-      this.route('editor-integration');
       this.route('asynchronously-loading-translations');
       this.route('ember-service-api');
       this.route('missing-translations');
@@ -31,15 +30,18 @@ Router.map(function () {
     });
     this.route('cookbook', function () {
       this.route('migration-4-0-to-5-0');
-      this.route('migration-3-0-to-4-0');
       this.route('common-errors');
     });
     this.route('advanced', function () {
       this.route('addon-support');
-      this.route('ember-cp-validation');
       this.route('engine-support');
     });
+    this.route('integrations', function () {
+      this.route('ember-cp-validation');
+      this.route('visual-studio-code');
+    });
     this.route('legacy', function () {
+      this.route('migration-3-0-to-4-0');
       this.route('migration-2-0-to-3-0');
       this.route('v2');
     });

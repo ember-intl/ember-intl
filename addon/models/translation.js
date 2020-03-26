@@ -33,6 +33,10 @@ function flatten(src) {
   return result;
 }
 
+/**
+ * @private
+ * @hide
+ */
 const TranslationModel = EmberObject.extend({
   localeName: null,
 
