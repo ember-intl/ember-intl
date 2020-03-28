@@ -58,19 +58,19 @@ export default Service.extend(Evented, {
   primaryLocale: computed.readOnly('locale.0'),
 
   /** @public **/
-  formatRelative: formatter('relative'),
+  formatRelative: createFormatterProxy('relative'),
 
   /** @public **/
-  formatMessage: formatter('message'),
+  formatMessage: createFormatterProxy('message'),
 
   /** @public **/
-  formatNumber: formatter('number'),
+  formatNumber: createFormatterProxy('number'),
 
   /** @public **/
-  formatTime: formatter('time'),
+  formatTime: createFormatterProxy('time'),
 
   /** @public **/
-  formatDate: formatter('date'),
+  formatDate: createFormatterProxy('date'),
 
   /** @private **/
   _translationContainer: null,
@@ -216,13 +216,12 @@ export default Service.extend(Evented, {
   },
 });
 
-function formatter(name) {
-  return function (value, formatOptions) {
+function createFormatterProxy(name) {
+  return function serviceFormatterProxy(value, formatOptions) {
     let locale;
 
-    // TODO: this should not be here
     if (formatOptions && formatOptions.locale) {
-      locale = this._localeWithDefault(formatOptions && formatOptions.locale);
+      locale = this._localeWithDefault(formatOptions.locale);
     } else {
       locale = get(this, 'locale');
     }

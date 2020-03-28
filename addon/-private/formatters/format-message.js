@@ -19,18 +19,18 @@ const {
   },
 } = Ember;
 
-function escape(hash) {
-  if (!hash) {
+function escape(object) {
+  if (typeof object !== 'object') {
     return;
   }
 
-  return keys(hash).reduce((accum, key) => {
-    if (typeof hash[key] === 'string') {
-      accum[key] = escapeExpression(hash[key]);
+  return keys(object).reduce((accum, key) => {
+    if (typeof object[key] === 'string') {
+      accum[key] = escapeExpression(object[key]);
     }
 
     return accum;
-  }, assign({}, hash));
+  }, assign({}, object));
 }
 
 /**

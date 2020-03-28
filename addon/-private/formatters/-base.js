@@ -28,7 +28,7 @@ export default class FormatterBase {
    * @method readOptions
    * @param {Object} Options object
    * @return {Object} Options object containing just whitelisted options
-   * @private
+   * @protected
    */
   parseOptions(options) {
     if (!options) {
@@ -87,22 +87,5 @@ export default class FormatterBase {
 
   format() {
     throw new Error('not implemented');
-  }
-
-  /**
-   * Invokes the Intl formatter methods
-   *
-   * @method _format
-   * @param {value} Raw input value that needs formatting
-   * @return {Object} Formatter options hash
-   * @return {Object} Format options hash
-   * @private
-   */
-  _format(locale, value, formatterOptions, formatOptions) {
-    this.validateFormatterOptions(locale, formatterOptions);
-
-    const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
-
-    return formatterInstance.format(value, formatOptions);
   }
 }
