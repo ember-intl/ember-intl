@@ -19,17 +19,8 @@ import hydrate from '../-private/utils/hydrate';
 import TranslationContainer from '../-private/store/container';
 
 export default Service.extend(Evented, {
-  /** @private **/
-  _locale: null,
-
-  /** @private **/
-  _translationContainer: null,
-
   /** @public **/
   formats: null,
-
-  /** @private **/
-  _timer: null,
 
   /** @public **/
   locale: computed({
@@ -80,6 +71,15 @@ export default Service.extend(Evented, {
    * @public
    */
   locales: computed.readOnly('_translationContainer.locales'),
+
+  /** @private **/
+  _locale: null,
+
+  /** @private **/
+  _translationContainer: null,
+
+  /** @private **/
+  _timer: null,
 
   /** @public **/
   init() {
