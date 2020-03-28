@@ -136,22 +136,17 @@ export default Service.extend(Evented, {
   /** @public **/
   t(key, options = {}) {
     let defaults = [key];
-    let msg;
+    let ast;
 
     if (options.default) {
       defaults = defaults.concat(options.default);
     }
 
-    while (!msg && defaults.length) {
-      msg = this.lookup(defaults.shift(), options.locale, assign({}, options, { resilient: defaults.length > 0 }));
+    while (!ast && defaults.length) {
+      ast = this.lookup(defaults.shift(), options.locale, assign({}, options, { resilient: defaults.length > 0 }));
     }
 
-    /* Avoids passing msg to intl-messageformat if it is not a string */
-    if (typeof msg === 'string') {
-      return this.formatMessage(msg, options);
-    }
-
-    return msg;
+    return this.formatMessage(ast, options);
   },
 
   /** @public **/
