@@ -175,7 +175,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   translationsFor(localeName) {
-    return this._translationContainer.localeFactory(normalizeLocale(localeName));
+    return this._translationContainer.lookupTranslationObject(normalizeLocale(localeName), false);
   },
 
   /** @private **/

@@ -15,12 +15,8 @@ export default EmberObject.extend({
     this._translations = new Map();
   },
 
-  getTranslationsForLocale(localeName) {
-    return this._translations.get(localeName);
-  },
-
-  localeFactory(localeName) {
-    if (this._translations.has(localeName)) {
+  lookupTranslationObject(localeName, autogenerate = true) {
+    if (this._translations.has(localeName) || !autogenerate) {
       return this._translations.get(localeName);
     }
 
@@ -35,13 +31,11 @@ export default EmberObject.extend({
   },
 
   push(locale, payload) {
-    const translationObject = this.localeFactory(locale);
-
-    translationObject.addTranslations(payload);
+    this.lookupTranslationObject(locale, true).addTranslations(payload);
   },
 
   has(locale, key) {
-    const translationObject = this.getTranslationsForLocale(locale);
+    const translationObject = this.lookupTranslationObject(locale, false);
 
     if (translationObject) {
       return translationObject.has(key);
@@ -49,7 +43,7 @@ export default EmberObject.extend({
   },
 
   lookup(locale, key) {
-    const translationObject = this.getTranslationsForLocale(locale);
+    const translationObject = this.lookupTranslationObject(locale, false);
 
     if (translationObject && translationObject.has(key)) {
       return translationObject.find(key);

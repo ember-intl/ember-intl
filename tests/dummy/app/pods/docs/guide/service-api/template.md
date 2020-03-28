@@ -173,7 +173,7 @@ Returns `undefined` if you pass `{ resilient: true }`. If ommitted, will return 
 
 Documentation missing
 
-### translationsFor _(localeName:String)_: Object
+### translationsFor _(localeName:String)_: Object | undefined
 
 Documentation missing
 
