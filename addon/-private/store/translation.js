@@ -60,7 +60,7 @@ const TranslationModel = EmberObject.extend({
    * This would enable consumers that have dot notated strings
    * to implement this function as `return this[key];`
    */
-  getValue(key) {
+  find(key) {
     return this.translations[key];
   },
 

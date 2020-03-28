@@ -16,13 +16,14 @@ import isArrayEqual from '../-private/utils/is-array-equal';
 import normalizeLocale from '../-private/utils/normalize-locale';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
+import TranslationContainer from '../-private/store/container';
 
 export default Service.extend(Evented, {
   /** @private **/
   _locale: null,
 
   /** @private **/
-  _adapter: null,
+  _translationContainer: null,
 
   /** @public **/
   formats: null,
@@ -78,7 +79,7 @@ export default Service.extend(Evented, {
    * @property locales
    * @public
    */
-  locales: computed.readOnly('_adapter.locales'),
+  locales: computed.readOnly('_translationContainer.locales'),
 
   /** @public **/
   init() {
@@ -88,7 +89,7 @@ export default Service.extend(Evented, {
 
     this.setLocale(initialLocale);
     this._owner = getOwner(this);
-    this._adapter = this._owner.lookup('ember-intl@adapter:default');
+    this._translationContainer = TranslationContainer.create();
 
     this._formatters = {
       message: new FormatMessage(),
@@ -116,7 +117,7 @@ export default Service.extend(Evented, {
     let translation;
 
     for (let i = 0; i < localeNames.length; i++) {
-      translation = this._adapter.lookup(localeNames[i], key);
+      translation = this._translationContainer.lookup(localeNames[i], key);
 
       if (translation !== undefined) {
         break;
@@ -159,7 +160,7 @@ export default Service.extend(Evented, {
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    return localeNames.some((localeName) => this._adapter.has(localeName, key));
+    return localeNames.some((localeName) => this._translationContainer.has(localeName, key));
   },
 
   /** @public */
@@ -169,12 +170,12 @@ export default Service.extend(Evented, {
 
   /** @public **/
   addTranslations(localeName, payload) {
-    this.translationsFor(localeName).addTranslations(payload);
+    this._translationContainer.push(normalizeLocale(localeName), payload);
   },
 
   /** @public **/
   translationsFor(localeName) {
-    return this._adapter.localeFactory(normalizeLocale(localeName));
+    return this._translationContainer.localeFactory(normalizeLocale(localeName));
   },
 
   /** @private **/
