@@ -37,19 +37,22 @@ function escape(hash) {
  * @hide
  */
 export default class FormatMessage extends Formatter {
-  constructor() {
-    super();
+  constructor(config) {
+    super(config);
 
-    this.createNativeFormatter = memoize((message, locales, formats) => {
-      return new IntlMessageFormat(message, locales, formats);
+    this.createNativeFormatter = memoize((ast, locales, formats) => {
+      return new IntlMessageFormat(ast, locales, formats);
     });
   }
 
-  format(message, options, { formats, locale }) {
+  format(ast, options, { formats, locale }) {
     const isHTMLSafe = options && options.htmlSafe;
-    const formatter = this.createNativeFormatter(message, locale, formats);
+    const formatterInstance = this.createNativeFormatter(ast, locale, formats);
     const escapedOptions = isHTMLSafe ? escape(options) : options;
-    const result = formatter.format(escapedOptions);
+
+    // TODO: convert this parse if `ast` is a string (it can be if not going through .t() paths)
+    // Will enable us to do more things here if we are only ever dealing with the message ast
+    const result = formatterInstance.format(escapedOptions);
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }
