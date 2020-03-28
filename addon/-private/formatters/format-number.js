@@ -34,6 +34,8 @@ const NUMBER_OPTIONS = [
  * @hide
  */
 export default class FormatNumber extends Formatter {
+  static type = 'number';
+
   get options() {
     return NUMBER_OPTIONS;
   }
@@ -46,7 +48,12 @@ export default class FormatNumber extends Formatter {
     });
   }
 
-  format(value, options, ctx) {
-    return this._format(value, this.readOptions(options), undefined, ctx);
+  format(locale, value, formatOptions) {
+    const formatterOptions = this.readOptions(formatOptions);
+
+    this.validateFormatterOptions(locale, formatterOptions);
+    const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
+
+    return formatterInstance.format(value, formatOptions);
   }
 }

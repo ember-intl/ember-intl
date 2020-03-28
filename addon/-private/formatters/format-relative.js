@@ -5,6 +5,7 @@
 
 import memoize from 'fast-memoize';
 import { FormatError, ErrorCode } from 'intl-messageformat';
+import { MISSING_INTL_API } from '../error-types';
 import Formatter from './-base';
 
 const RELATIVE_TIME_OPTIONS = ['numeric', 'style'];
@@ -14,12 +15,14 @@ const RELATIVE_TIME_OPTIONS = ['numeric', 'style'];
  * @hide
  */
 export default class FormatRelative extends Formatter {
+  static type = 'relative';
+
   constructor(config) {
     super(config);
 
     if (!Intl.RelativeTimeFormat) {
       config.onError({
-        kind: 'polyfill',
+        kind: MISSING_INTL_API,
         error: new FormatError(
           `Intl.RelativeTimeFormat is not available in this environment.
   Try polyfilling it using "@formatjs/intl-relativetimeformat"
@@ -38,7 +41,21 @@ export default class FormatRelative extends Formatter {
     return RELATIVE_TIME_OPTIONS;
   }
 
-  format(value, options, context) {
-    return this._format(value, this.readOptions(options), options.unit, context);
+  getNamedFormat(key) {
+    const formats = this.readFormatConfig();
+    const relativeNamedFormats = formats[FormatRelative.type];
+
+    if (relativeNamedFormats && relativeNamedFormats[key]) {
+      return relativeNamedFormats[key];
+    }
+  }
+
+  format(locale, value, formatOptions) {
+    let formatterOptions = this.readOptions(formatOptions);
+
+    this.validateFormatterOptions(locale, formatterOptions);
+    const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
+
+    return formatterInstance.format(value, formatOptions.unit || formatterOptions.unit);
   }
 }

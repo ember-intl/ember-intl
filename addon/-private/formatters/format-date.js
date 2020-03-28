@@ -27,6 +27,8 @@ const DATE_TIME_OPTIONS = [
  * @hide
  */
 export default class FormatDate extends Formatter {
+  static type = 'date';
+
   constructor(config) {
     super(config);
 
@@ -39,10 +41,12 @@ export default class FormatDate extends Formatter {
     return DATE_TIME_OPTIONS;
   }
 
-  format(value, options, ctx) {
-    const dateTime = new Date(value);
-    const formatOptions = this.readOptions(options);
+  format(locale, value, formatOptions) {
+    const formatterOptions = this.readOptions(formatOptions);
 
-    return this._format(dateTime, formatOptions, undefined, ctx);
+    this.validateFormatterOptions(locale, formatterOptions);
+    const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
+
+    return formatterInstance.format(new Date(value), formatOptions);
   }
 }

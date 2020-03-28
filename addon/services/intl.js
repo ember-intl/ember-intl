@@ -108,7 +108,9 @@ export default Service.extend(Evented, {
   },
 
   onError({ /* kind, */ error }) {
-    throw error;
+    if (error) {
+      throw error;
+    }
   },
 
   /** @public **/
@@ -174,15 +176,6 @@ export default Service.extend(Evented, {
   },
 
   /** @private **/
-  _getFormat(formatType, format) {
-    const formats = get(this, 'formats');
-
-    if (formats && formatType && typeof format === 'string') {
-      return get(formats, `${formatType}.${format}`);
-    }
-  },
-
-  /** @private **/
   _localeWithDefault(localeName) {
     if (!localeName) {
       return this._locale || [];
@@ -212,6 +205,7 @@ export default Service.extend(Evented, {
   _createFormatters() {
     const formatterConfig = {
       onError: this.onError.bind(this),
+      readFormatConfig: () => this.formats,
     };
 
     return {
@@ -225,16 +219,16 @@ export default Service.extend(Evented, {
 });
 
 function formatter(name) {
-  return function (value, options, formats) {
-    let formatOptions = options;
+  return function (value, formatOptions) {
+    let locale;
 
-    if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this._getFormat(name, formatOptions.format), formatOptions);
+    // TODO: this should not be here
+    if (formatOptions && formatOptions.locale) {
+      locale = this._localeWithDefault(formatOptions && formatOptions.locale);
+    } else {
+      locale = get(this, 'locale');
     }
 
-    return this._formatters[name].format(value, formatOptions, {
-      formats: formats || this.formats,
-      locale: this._localeWithDefault(formatOptions && formatOptions.locale),
-    });
+    return this._formatters[name].format(locale, value, formatOptions);
   };
 }
