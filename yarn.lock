@@ -8185,9 +8185,9 @@ intl-messageformat-parser@^4.1.1:
     "@formatjs/intl-unified-numberformat" "^3.3.0"
 
 intl-messageformat@^8.2.3:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.1.tgz#384d5313925f2da672907bdf707f05332ad51f40"
-  integrity sha512-3WLsyFv1TuYU259TnJtYbQp1NgNh0zk6ELFSOyQBGsf15MnL04QjA1wYGEYEWcbuIXcd/BRTOPdKiMAABPOxlw==
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.2.tgz#ad6b06982d749d39b6610ad26e88637d64688972"
+  integrity sha512-CMcGPciQjt1nesTME7vekUgx+Igy2sa14g/BZE2ZrYwqkdnVDO5f0bt3X0ZjQJohgZth9RvlIMvVoRUjrDRubA==
   dependencies:
     intl-format-cache "^4.2.22"
     intl-messageformat-parser "^4.1.1"
