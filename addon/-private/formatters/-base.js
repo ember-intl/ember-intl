@@ -5,17 +5,21 @@
 
 import { warn } from '@ember/debug';
 import { camelize } from '@ember/string';
-import { A as emberArray } from '@ember/array';
 
-const EMPTY_OBJECT = {};
+const EMPTY_OBJECT = Object.create(null);
 
 /**
  * @private
  * @hide
  */
 export default class FormatterBase {
+  constructor(config) {
+    this.config = config;
+    this.formatConfig = config.formatConfig;
+  }
+
   get options() {
-    return emberArray();
+    return [];
   }
 
   /**

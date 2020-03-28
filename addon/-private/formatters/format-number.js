@@ -4,9 +4,30 @@
  */
 
 import memoize from 'fast-memoize';
-import { A as emberArray } from '@ember/array';
-
 import Formatter from './-base';
+
+const NUMBER_OPTIONS = [
+  'localeMatcher',
+  'style',
+  'currency',
+  'currencyDisplay',
+  'unit',
+  'unitDisplay',
+  'useGrouping',
+  'minimumIntegerDigits',
+  'minimumFractionDigits',
+  'maximumFractionDigits',
+  'minimumSignificantDigits',
+  'maximumSignificantDigits',
+  // Unified NumberFormat (Stage 3 as of 10/22/19)
+  'compactDisplay',
+  'currencyDisplay',
+  'currencySign',
+  'notation',
+  'signDisplay',
+  'unitDisplay',
+  'unit',
+];
 
 /**
  * @private
@@ -14,25 +35,11 @@ import Formatter from './-base';
  */
 export default class FormatNumber extends Formatter {
   get options() {
-    return emberArray([
-      'locale',
-      'format',
-      'localeMatcher',
-      'style',
-      'currency',
-      'currencyDisplay',
-      'useGrouping',
-      'minimumIntegerDigits',
-      'minimumFractionDigits',
-      'maximumFractionDigits',
-      'minimumSignificantDigits',
-      'maximumSignificantDigits',
-      'notation',
-    ]);
+    return NUMBER_OPTIONS;
   }
 
-  constructor() {
-    super();
+  constructor(config) {
+    super(config);
 
     this.createNativeFormatter = memoize((locales, options) => {
       return new Intl.NumberFormat(locales, options);

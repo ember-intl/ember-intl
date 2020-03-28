@@ -81,6 +81,9 @@ export default Service.extend(Evented, {
   /** @private **/
   _timer: null,
 
+  /** @private **/
+  _formatters: null,
+
   /** @public **/
   init() {
     this._super(...arguments);
@@ -90,14 +93,7 @@ export default Service.extend(Evented, {
     this.setLocale(initialLocale);
     this._owner = getOwner(this);
     this._translationContainer = TranslationContainer.create();
-
-    this._formatters = {
-      message: new FormatMessage(),
-      relative: new FormatRelative(),
-      number: new FormatNumber(),
-      time: new FormatTime(),
-      date: new FormatDate(),
-    };
+    this._formatters = this._createFormatters();
 
     if (!this.formats) {
       this.formats = this._owner.resolveRegistration('formats:main') || {};
@@ -109,6 +105,10 @@ export default Service.extend(Evented, {
   willDestroy() {
     this._super(...arguments);
     cancel(this._timer);
+  },
+
+  onError({ /* kind, */ error }) {
+    throw error;
   },
 
   /** @public **/
@@ -206,6 +206,21 @@ export default Service.extend(Evented, {
       const html = dom.documentElement;
       html.setAttribute('lang', primaryLocale);
     }
+  },
+
+  /** @private */
+  _createFormatters() {
+    const formatterConfig = {
+      onError: this.onError.bind(this),
+    };
+
+    return {
+      message: new FormatMessage(formatterConfig),
+      relative: new FormatRelative(formatterConfig),
+      number: new FormatNumber(formatterConfig),
+      time: new FormatTime(formatterConfig),
+      date: new FormatDate(formatterConfig),
+    };
   },
 });
 
