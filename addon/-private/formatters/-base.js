@@ -78,10 +78,10 @@ export default class FormatterBase {
 
   getNamedFormat(key) {
     const formats = this.readFormatConfig();
-    const numberNamedFormats = formats[this.constructor.type];
+    const namedFormatsForType = formats[this.constructor.type];
 
-    if (numberNamedFormats && numberNamedFormats[key]) {
-      return numberNamedFormats[key];
+    if (namedFormatsForType && namedFormatsForType[key]) {
+      return namedFormatsForType[key];
     }
   }
 
