@@ -22,6 +22,14 @@ export default Service.extend(Evented, {
   /** @public **/
   formats: null,
 
+  /**
+   * Returns an array of registered locale names
+   *
+   * @property locales
+   * @public
+   */
+  locales: computed.readOnly('_translationContainer.locales'),
+
   /** @public **/
   locale: computed({
     set(_, localeName) {
@@ -31,7 +39,7 @@ export default Service.extend(Evented, {
         this._locale = proposed;
         cancel(this._timer);
         this._timer = next(() => this.trigger('localeChanged'));
-        this.updateDocumentLanguage(this._locale);
+        this._updateDocumentLanguage(this._locale);
       }
 
       return this._locale;
@@ -64,19 +72,11 @@ export default Service.extend(Evented, {
   /** @public **/
   formatDate: formatter('date'),
 
-  /**
-   * Returns an array of registered locale names
-   *
-   * @property locales
-   * @public
-   */
-  locales: computed.readOnly('_translationContainer.locales'),
+  /** @private **/
+  _translationContainer: null,
 
   /** @private **/
   _locale: null,
-
-  /** @private **/
-  _translationContainer: null,
 
   /** @private **/
   _timer: null,
@@ -113,7 +113,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   lookup(key, localeName, options = {}) {
-    const localeNames = this.localeWithDefault(localeName);
+    const localeNames = this._localeWithDefault(localeName);
     let translation;
 
     for (let i = 0; i < localeNames.length; i++) {
@@ -151,7 +151,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   exists(key, localeName) {
-    const localeNames = this.localeWithDefault(localeName);
+    const localeNames = this._localeWithDefault(localeName);
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
@@ -174,7 +174,7 @@ export default Service.extend(Evented, {
   },
 
   /** @private **/
-  getFormat(formatType, format) {
+  _getFormat(formatType, format) {
     const formats = get(this, 'formats');
 
     if (formats && formatType && typeof format === 'string') {
@@ -183,7 +183,7 @@ export default Service.extend(Evented, {
   },
 
   /** @private **/
-  localeWithDefault(localeName) {
+  _localeWithDefault(localeName) {
     if (!localeName) {
       return this._locale || [];
     }
@@ -198,7 +198,7 @@ export default Service.extend(Evented, {
   },
 
   /** @private **/
-  updateDocumentLanguage(locales) {
+  _updateDocumentLanguage(locales) {
     const dom = getDOM(this);
 
     if (dom) {
@@ -214,12 +214,12 @@ function formatter(name) {
     let formatOptions = options;
 
     if (options && typeof options.format === 'string') {
-      formatOptions = assign({}, this.getFormat(name, formatOptions.format), formatOptions);
+      formatOptions = assign({}, this._getFormat(name, formatOptions.format), formatOptions);
     }
 
     return this._formatters[name].format(value, formatOptions, {
       formats: formats || this.formats,
-      locale: this.localeWithDefault(formatOptions && formatOptions.locale),
+      locale: this._localeWithDefault(formatOptions && formatOptions.locale),
     });
   };
 }
