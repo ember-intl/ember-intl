@@ -7,6 +7,7 @@ import EmberObject from '@ember/object';
 import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import flatten from 'ember-intl/-private/utils/flatten';
+import { parse } from 'intl-messageformat-parser';
 
 /**
  * @private
@@ -23,8 +24,25 @@ const TranslationModel = EmberObject.extend({
     }
   },
 
+  compile(translation) {
+    return parse(translation);
+  },
+
   addTranslations(translations) {
-    assign(this.translations, flatten(translations));
+    const flatTranslations = flatten(translations);
+
+    for (let key in flatTranslations) {
+      let translation = flatTranslations[key];
+
+      // If it's not a string, coerce it to one.
+      if (typeof translation !== 'string') {
+        translation = `${translation}`;
+      }
+
+      flatTranslations[key] = this.compile(translation);
+    }
+
+    assign(this.translations, flatTranslations);
   },
 
   find(key) {
