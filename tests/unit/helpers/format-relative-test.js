@@ -9,7 +9,7 @@ module('format-relative', function (hooks) {
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.set('formats', { relative: { hours: { units: 'hour', style: 'numeric' } } });
+    this.intl.set('formats', { relative: { yearShort: { unit: 'year', style: 'short' } } });
   });
 
   test('exists', function (assert) {
@@ -47,6 +47,11 @@ module('format-relative', function (hooks) {
     assert.equal(this.element.textContent, '1 mo. ago');
 
     await render(hbs`{{format-relative -1 unit="year" style="short"}}`);
+    assert.equal(this.element.textContent, '1 yr. ago');
+  });
+
+  test('should handle inline format', async function (assert) {
+    await render(hbs`{{format-relative -1 format="yearShort"}}`);
     assert.equal(this.element.textContent, '1 yr. ago');
   });
 });

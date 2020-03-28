@@ -15,7 +15,7 @@ const EMPTY_OBJECT = Object.create(null);
 export default class FormatterBase {
   constructor(config) {
     this.config = config;
-    this.formatConfig = config.formatConfig;
+    this.readFormatConfig = config.readFormatConfig;
   }
 
   get options() {
@@ -30,7 +30,7 @@ export default class FormatterBase {
    * @return {Object} Options object containing just whitelisted options
    * @private
    */
-  readOptions(options) {
+  parseOptions(options) {
     if (!options) {
       return EMPTY_OBJECT;
     }
@@ -48,6 +48,43 @@ export default class FormatterBase {
     return found;
   }
 
+  readOptions(formatOptions) {
+    let formatterOptions = this.parseOptions(formatOptions);
+
+    if (formatOptions && 'format' in formatOptions) {
+      const namedFormatsOptions = this.getNamedFormat(formatOptions.format);
+
+      formatterOptions = {
+        ...formatterOptions,
+        ...namedFormatsOptions,
+      };
+    }
+
+    return formatterOptions;
+  }
+
+  validateFormatterOptions(locale /*, formatterOptions*/) {
+    if (!locale) {
+      // TODO: config.onError instead?
+      warn(
+        `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
+        false,
+        {
+          id: 'ember-intl-no-locale-set',
+        }
+      );
+    }
+  }
+
+  getNamedFormat(key) {
+    const formats = this.readFormatConfig();
+    const numberNamedFormats = formats[this.constructor.type];
+
+    if (numberNamedFormats && numberNamedFormats[key]) {
+      return numberNamedFormats[key];
+    }
+  }
+
   format() {
     throw new Error('not implemented');
   }
@@ -61,16 +98,8 @@ export default class FormatterBase {
    * @return {Object} Format options hash
    * @private
    */
-  _format(value, formatterOptions, formatOptions, { locale }) {
-    if (!locale) {
-      warn(
-        `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
-        false,
-        {
-          id: 'ember-intl-no-locale-set',
-        }
-      );
-    }
+  _format(locale, value, formatterOptions, formatOptions) {
+    this.validateFormatterOptions(locale, formatterOptions);
 
     const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
 

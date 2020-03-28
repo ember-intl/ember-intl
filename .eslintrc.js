@@ -6,6 +6,7 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
+  parser: 'babel-eslint',
   plugins: ['prettier', 'ember'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {

@@ -65,29 +65,25 @@ module('format-number', function (hooks) {
 
   test('should return a decimal as a string', async function (assert) {
     assert.expect(1);
-    this.set('NUM', 4.004);
-    await render(hbs`{{format-number NUM}}`);
+    await render(hbs`{{format-number 4.004}}`);
     assert.equal(this.element.textContent, '4.004');
   });
 
   test('should return a formatted string with a thousand separator', async function (assert) {
     assert.expect(1);
-    this.set('NUM', 40000);
-    await render(hbs`{{format-number NUM}}`);
+    await render(hbs`{{format-number 40000}}`);
     assert.equal(this.element.textContent, '40,000');
   });
 
   test('should return a formatted string with a thousand separator and decimal', async function (assert) {
     assert.expect(1);
-    this.set('NUM', 40000.004);
-    await render(hbs`{{format-number NUM}}`);
+    await render(hbs`{{format-number 40000.004}}`);
     assert.equal(this.element.textContent, '40,000.004');
   });
 
   test('locale can be passed as an argument', async function (assert) {
     assert.expect(1);
-    this.set('NUM', 4.004);
-    await render(hbs`{{format-number NUM locale="de-de"}}`);
+    await render(hbs`{{format-number 4.004 locale="de-de"}}`);
     assert.equal(this.element.textContent, '4,004');
   });
 
@@ -101,32 +97,29 @@ module('format-number', function (hooks) {
   test('in another locale - should return a decimal as a string', async function (assert) {
     assert.expect(1);
     this.intl.setLocale(['de-de']);
-    this.set('NUM', 4.004);
-    await render(hbs`{{format-number NUM}}`);
+    await render(hbs`{{format-number 4.004}}`);
     assert.equal(this.element.textContent, '4,004');
   });
 
   test('in another locale - should return a formatted string with a thousand separator', async function (assert) {
     assert.expect(1);
     this.intl.setLocale(['de-de']);
-    this.set('NUM', 40000);
-    await render(hbs`{{format-number NUM}}`);
+    await render(hbs`{{format-number 40000}}`);
     assert.equal(this.element.textContent, '40.000');
   });
 
   test('in another locale - should return a formatted string with a thousand separator and decimal', async function (assert) {
     assert.expect(1);
     this.intl.setLocale(['de-de']);
-    this.set('NUM', 40000.004);
-    await render(hbs`{{format-number NUM}}`);
+    await render(hbs`{{format-number 40000.004}}`);
     assert.equal(this.element.textContent, '40.000,004');
   });
 
   test('currency - should return a string formatted to currency', async function (assert) {
     assert.expect(3);
-    await render(hbs`{{format-number 40000 format="currency" style="currency" currency="USD"}}`);
+    await render(hbs`{{format-number 40000 format="currency" currency="USD"}}`);
     assert.equal(this.element.textContent, '$40,000.00');
-    await render(hbs`{{format-number 40000 format="currency" style="currency" currency="EUR"}}`);
+    await render(hbs`{{format-number 40000 format="currency" currency="EUR"}}`);
     assert.equal(this.element.textContent, '€40,000.00');
     await render(hbs`{{format-number 40000 style="currency" currency="JPY"}}`);
     assert.equal(this.element.textContent, '¥40,000');

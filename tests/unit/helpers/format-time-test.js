@@ -11,7 +11,6 @@ module('format-time-test', function (hooks) {
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.set('formats', { relative: { hours: { units: 'hour', style: 'numeric' } } });
   });
 
   test('exists', function (assert) {
@@ -30,12 +29,11 @@ module('format-time-test', function (hooks) {
 
   test('invoke formatTime directly with format', function (assert) {
     assert.expect(1);
+    this.intl.set('formats', { time: { test: { timeZone: 'UTC' } } });
 
-    this.intl.set('formats', { time: { test: { timeZone: 'UTC', locale: 'fr-fr' } } });
+    const output = this.intl.formatTime(date, { format: 'test', locale: 'fr-fr' });
 
-    const output = this.intl.formatTime(date, { format: 'test' });
-
-    // Try both for browser Intl data inconsistencies
+    // Try both for browser Intl because of data inconsistencies between implementations
     assert.ok(output === '23/1/2014' || output === '23/01/2014');
   });
 
@@ -52,6 +50,34 @@ module('format-time-test', function (hooks) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-time dateString timeZone='UTC'}}`);
     assert.equal(this.element.textContent, '1/23/2014');
+  });
+
+  test('it should return a formatted string formatted with formatConfig key', async function (assert) {
+    assert.expect(1);
+
+    this.intl.set('formats', {
+      time: { example: { units: 'hour', style: 'numeric', timeZone: 'utc', timeZoneName: 'short' } },
+    });
+
+    this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
+
+    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
+    await render(hbs`{{format-time dateString format='example'}}`);
+    assert.equal(this.element.textContent, '1/23/2014, UTC');
+  });
+
+  test('it should return a formatted string formatted using formatConfig key with inline locale', async function (assert) {
+    assert.expect(1);
+
+    this.intl.set('formats', {
+      time: { example: { units: 'hour', style: 'numeric', timeZone: 'utc', timeZoneName: 'short' } },
+    });
+
+    this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
+
+    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
+    await render(hbs`{{format-time dateString locale='de' format='example'}}`);
+    assert.equal(this.element.textContent, '23.1.2014, UTC');
   });
 
   test('it should return a formatted string from a timestamp', async function (assert) {

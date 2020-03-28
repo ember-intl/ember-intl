@@ -9,4 +9,6 @@ import FormatDateFormatter from './format-date';
  * @private
  * @hide
  */
-export default class FormatTime extends FormatDateFormatter {}
+export default class FormatTime extends FormatDateFormatter {
+  static type = 'time';
+}

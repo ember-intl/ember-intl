@@ -8,6 +8,7 @@ import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
 import { assign } from '@ember/polyfills';
 import IntlMessageFormat from 'intl-messageformat';
+import { parse } from 'intl-messageformat-parser';
 import Formatter from './-base';
 
 const { keys } = Object;
@@ -40,18 +41,25 @@ export default class FormatMessage extends Formatter {
   constructor(config) {
     super(config);
 
-    this.createNativeFormatter = memoize((ast, locales, formats) => {
-      return new IntlMessageFormat(ast, locales, formats);
+    this.createNativeFormatter = memoize((ast, locales, formatConfig) => {
+      return new IntlMessageFormat(ast, locales, formatConfig);
     });
   }
 
-  format(ast, options, { formats, locale }) {
-    const isHTMLSafe = options && options.htmlSafe;
-    const formatterInstance = this.createNativeFormatter(ast, locale, formats);
-    const escapedOptions = isHTMLSafe ? escape(options) : options;
+  format(locale, maybeAst, options) {
+    let ast = maybeAst;
 
-    // TODO: convert this parse if `ast` is a string (it can be if not going through .t() paths)
-    // Will enable us to do more things here if we are only ever dealing with the message ast
+    if (typeof maybeAst === 'string') {
+      // maybe memoize?  it's not a typical hot path since we
+      // parse when translations are pushed to ember-intl.
+      // This is only used if inlining a translation i.e.,
+      // {{format-mesage "Hi {name}"}}
+      ast = parse(maybeAst);
+    }
+
+    const isHTMLSafe = options && options.htmlSafe;
+    const formatterInstance = this.createNativeFormatter(ast, locale, this.readFormatConfig());
+    const escapedOptions = isHTMLSafe ? escape(options) : options;
     const result = formatterInstance.format(escapedOptions);
 
     return isHTMLSafe ? htmlSafe(result) : result;
