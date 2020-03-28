@@ -15,7 +15,6 @@ const EMPTY_OBJECT = Object.create(null);
 export default class FormatterBase {
   constructor(config) {
     this.config = config;
-    // TODO: finish implementing
     this.readFormatConfig = config.readFormatConfig;
   }
 

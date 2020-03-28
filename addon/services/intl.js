@@ -108,9 +108,7 @@ export default Service.extend(Evented, {
   },
 
   onError({ /* kind, */ error }) {
-    if (error) {
-      throw error;
-    }
+    throw error;
   },
 
   /** @public **/

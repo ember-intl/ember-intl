@@ -41,15 +41,6 @@ export default class FormatRelative extends Formatter {
     return RELATIVE_TIME_OPTIONS;
   }
 
-  getNamedFormat(key) {
-    const formats = this.readFormatConfig();
-    const relativeNamedFormats = formats[FormatRelative.type];
-
-    if (relativeNamedFormats && relativeNamedFormats[key]) {
-      return relativeNamedFormats[key];
-    }
-  }
-
   format(locale, value, formatOptions) {
     let formatterOptions = this.readOptions(formatOptions);
 
