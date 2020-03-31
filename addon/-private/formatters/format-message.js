@@ -25,7 +25,7 @@ function escape(object) {
   }
 
   return keys(object).reduce((accum, key) => {
-    // NOTE due to the typeof chekc this won't escape if 
+    // NOTE due to the typeof check this won't escape if 
     // the value is an Ember `SafeString`
     if (typeof object[key] === 'string') {
       accum[key] = escapeExpression(object[key]);
