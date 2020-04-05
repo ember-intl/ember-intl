@@ -131,12 +131,6 @@ module('format-number', function (hooks) {
     assert.equal(this.element.textContent, '0,000,000,001.00', 'should return a string formatted to a percent');
   });
 
-  test('should be able to combine hash options with format options with dasherized options name', async function (assert) {
-    assert.expect(1);
-    await render(hbs`{{format-number 1 format="digits" minimum-integer-digits=10}}`);
-    assert.equal(this.element.textContent, '0,000,000,001.00', 'should return a string formatted to a percent');
-  });
-
   test('used to format percentages', async function (assert) {
     assert.expect(2);
     await render(hbs`{{format-number 400 style="percent"}}`);

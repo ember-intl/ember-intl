@@ -4,7 +4,6 @@
  */
 
 import { warn } from '@ember/debug';
-import { camelize } from '@ember/string';
 
 const EMPTY_OBJECT = Object.create(null);
 
@@ -28,12 +27,12 @@ export default class FormatterBase {
   /**
    * Filters out all of the whitelisted formatter options
    *
-   * @method readOptions
+   * @method filterKnownOptions
    * @param {Object} Options object
    * @return {Object} Options object containing just whitelisted options
-   * @protected
+   * @private
    */
-  parseOptions(options) {
+  filterKnownOptions(options) {
     if (!options) {
       return EMPTY_OBJECT;
     }
@@ -41,10 +40,8 @@ export default class FormatterBase {
     let found = {};
 
     for (let key in options) {
-      let normalized = camelize(key);
-
-      if (this.options.includes(normalized)) {
-        found[normalized] = options[key];
+      if (this.options.includes(key)) {
+        found[key] = options[key];
       }
     }
 
@@ -52,7 +49,7 @@ export default class FormatterBase {
   }
 
   readOptions(formatOptions) {
-    let formatterOptions = this.parseOptions(formatOptions);
+    let formatterOptions = this.filterKnownOptions(formatOptions);
 
     if (formatOptions && 'format' in formatOptions) {
       const namedFormatsOptions = this.getNamedFormat(formatOptions.format);
