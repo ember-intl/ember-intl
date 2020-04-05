@@ -70,13 +70,6 @@ module.exports = {
     );
 
     const _bundlerOptions = bundlerOptions || {};
-    const addon = this;
-
-    if ('throwMissingTranslations' in this.opts) {
-      this.log('DEPRECIATION: `throwMissingTranslations` has been renamed to `errorOnMissingTranslations`', {
-        warning: true,
-      });
-    }
 
     return new TranslationReducer([translationTree], {
       verbose: !this.isSilent,
@@ -85,13 +78,13 @@ module.exports = {
       filename: _bundlerOptions.filename,
       wrapEntry: _bundlerOptions.wrapEntry,
       requiresTranslation: this.opts.requiresTranslation,
-      errorOnMissingTranslations: this.opts.throwMissingTranslations || this.opts.errorOnMissingTranslations,
+      errorOnMissingTranslations: this.opts.errorOnMissingTranslations,
       errorOnNamedArgumentMismatch: this.opts.errorOnNamedArgumentMismatch,
       stripEmptyTranslations: this.opts.stripEmptyTranslations,
       wrapTranslationsWithNamespace: this.opts.wrapTranslationsWithNamespace,
       addonsWithTranslations: addonsWithTranslations,
-      log() {
-        return addon.log.apply(addon, arguments);
+      log: (...args) => {
+        return this.log(...args);
       },
     });
   },
