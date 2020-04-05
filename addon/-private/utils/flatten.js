@@ -2,6 +2,10 @@ import EmptyObject from 'ember-intl/-private/utils/empty-object';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
+/**
+ * @private
+ * @hide
+ */
 export default function flatten(src) {
   const result = new EmptyObject();
 
