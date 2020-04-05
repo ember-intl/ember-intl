@@ -10,29 +10,18 @@
 const fs = require('fs');
 const path = require('path');
 const mergeTrees = require('broccoli-merge-trees');
+const { BroccoliMergeFiles } = require('broccoli-merge-files');
 const stringify = require('json-stable-stringify');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/find-engine');
-
-const DEFAULT_CONFIG = {
-  publicOnly: false,
-  fallbackLocale: null,
-  inputPath: 'translations',
-  outputPath: 'translations',
-  errorOnMissingTranslations: false,
-  errorOnNamedArgumentMismatch: false,
-  wrapTranslationsWithNamespace: false,
-  requiresTranslation(/* key, locale */) {
-    return true;
-  },
-};
+const DEFAULT_CONFIG = require('./lib/default-config');
 
 module.exports = {
   name: 'ember-intl',
-  opts: null,
+  configOptions: null,
   isLocalizationFramework: true,
 
   options: {
@@ -58,61 +47,78 @@ module.exports = {
 
     this.app = this._findHost();
     this.package = engine || this.project;
-    this.opts = this.createOptions(this.app.env, this.app.project);
+    this.configOptions = this.createOptions(this.app.env, this.app.project);
     this.isSilent = this.app.options.intl && this.app.options.intl.silent;
   },
 
-  generateTranslationTree(bundlerOptions) {
+  generateTranslationTree(options = {}) {
+    const {
+      outputPath,
+      fallbackLocale,
+      requiresTranslation,
+      errorOnMissingTranslations,
+      errorOnNamedArgumentMismatch,
+      stripEmptyTranslations,
+      wrapTranslationsWithNamespace,
+    } = this.configOptions;
+
     const [translationTree, addonsWithTranslations] = buildTranslationTree(
       this.project,
-      this.opts.inputPath,
+      this.configOptions.inputPath,
       this.treeGenerator
     );
 
-    const _bundlerOptions = bundlerOptions || {};
-
     return new TranslationReducer([translationTree], {
+      fallbackLocale,
+      requiresTranslation,
+      errorOnMissingTranslations,
+      errorOnNamedArgumentMismatch,
+      stripEmptyTranslations,
+      wrapTranslationsWithNamespace,
       verbose: !this.isSilent,
-      outputPath: this.opts.outputPath,
-      fallbackLocale: this.opts.fallbackLocale,
-      filename: _bundlerOptions.filename,
-      wrapEntry: _bundlerOptions.wrapEntry,
-      requiresTranslation: this.opts.requiresTranslation,
-      errorOnMissingTranslations: this.opts.errorOnMissingTranslations,
-      errorOnNamedArgumentMismatch: this.opts.errorOnNamedArgumentMismatch,
-      stripEmptyTranslations: this.opts.stripEmptyTranslations,
-      wrapTranslationsWithNamespace: this.opts.wrapTranslationsWithNamespace,
-      addonsWithTranslations: addonsWithTranslations,
+      filename: options.filename,
+      outputPath: 'outputPath' in options ? options.outputPath : outputPath,
+      addonsWithTranslations,
       log: (...args) => {
         return this.log(...args);
       },
     });
   },
 
-  treeForApp(tree) {
+  treeForAddon(tree) {
     let trees = [tree];
 
-    if (!this.opts.publicOnly) {
-      trees.push(
-        this.generateTranslationTree({
-          outputPath: 'translations',
-          filename(key) {
-            return `${key}.js`;
-          },
-          wrapEntry(obj) {
-            return `export default ${stringify(obj)};`;
-          },
-        })
-      );
+    if (!this.configOptions.publicOnly) {
+      const translationTree = this.generateTranslationTree({
+        outputPath: '',
+        filename(key) {
+          return key;
+        },
+      });
+
+      const flattenedTranslationTree = new BroccoliMergeFiles([translationTree], {
+        outputFileName: 'translations.js',
+        merge: (entries) => {
+          const output = [];
+
+          entries.forEach(([locale, translations]) => {
+            output.push([locale, JSON.parse(translations)]);
+          });
+
+          return 'export default ' + stringify(output);
+        },
+      });
+
+      trees.push(flattenedTranslationTree);
     }
 
-    return mergeTrees(trees, { overwrite: true });
+    return this._super.treeForAddon.call(this, mergeTrees(trees, { overwrite: true }));
   },
 
   treeForPublic() {
     let trees = [];
 
-    if (this.opts.publicOnly) {
+    if (this.configOptions.publicOnly) {
       trees.push(this.generateTranslationTree());
     }
 

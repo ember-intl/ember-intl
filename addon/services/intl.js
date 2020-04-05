@@ -99,7 +99,7 @@ export default Service.extend(Evented, {
       this.formats = this._owner.resolveRegistration('formats:main') || {};
     }
 
-    hydrate(this, this._owner);
+    hydrate(this);
   },
 
   willDestroy() {
