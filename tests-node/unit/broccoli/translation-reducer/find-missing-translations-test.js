@@ -1,9 +1,7 @@
-/* eslint-env node */
-'use strict';
+const expect = require('chai').expect;
 
-let expect = require('chai').expect;
+const findMissingTranslations = require('../../../../lib/broccoli/translation-reducer/linter/find-missing-translations');
 
-let findMissingTranslations = require('../../../../lib/broccoli/translation-reducer/utils/find-missing-translations');
 const isTrue = () => true;
 
 describe('findMissingTranslations', function () {

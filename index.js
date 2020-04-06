@@ -17,10 +17,12 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/find-engine');
+const Logger = require('./lib/logger');
 const DEFAULT_CONFIG = require('./lib/default-config');
 
 module.exports = {
   name: 'ember-intl',
+  logger: null,
   configOptions: null,
   isLocalizationFramework: true,
 
@@ -34,21 +36,25 @@ module.exports = {
     },
   },
 
+  included(parent) {
+    this._super.included.apply(this, arguments);
+
+    this.app = this._findHost();
+    const options = this.app.options.intl || {};
+
+    this.logger = new Logger({
+      ui: this.ui,
+      silent: options.silent,
+    });
+
+    this.package = findEngine(parent) || this.project;
+    this.configOptions = this.createOptions(this.app.env, this.app.project);
+  },
+
   cacheKeyForTree(treeType) {
     const paths = this.package.paths || this.package.treePaths;
 
     return calculateCacheKeyForTree(treeType, this, paths ? paths[treeType] : this.package.root);
-  },
-
-  included(parent) {
-    this._super.included.apply(this, arguments);
-
-    const engine = findEngine(parent);
-
-    this.app = this._findHost();
-    this.package = engine || this.project;
-    this.configOptions = this.createOptions(this.app.env, this.app.project);
-    this.isSilent = this.app.options.intl && this.app.options.intl.silent;
   },
 
   generateTranslationTree(options = {}) {
@@ -80,7 +86,10 @@ module.exports = {
       outputPath: 'outputPath' in options ? options.outputPath : outputPath,
       addonsWithTranslations,
       log: (...args) => {
-        return this.log(...args);
+        return this.logger.log(...args);
+      },
+      warn: (...args) => {
+        return this.logger.warn(...args);
       },
     });
   },
@@ -99,10 +108,8 @@ module.exports = {
       const flattenedTranslationTree = new BroccoliMergeFiles([translationTree], {
         outputFileName: 'translations.js',
         merge: (entries) => {
-          const output = [];
-
-          entries.forEach(([locale, translations]) => {
-            output.push([locale, JSON.parse(translations)]);
+          const output = entries.map(([locale, translations]) => {
+            return [locale, JSON.parse(translations)];
           });
 
           return 'export default ' + stringify(output);
@@ -123,18 +130,6 @@ module.exports = {
     }
 
     return mergeTrees(trees, { overwrite: true });
-  },
-
-  log(msg, options) {
-    if (this.isSilent) {
-      return;
-    }
-
-    if (options && options.warning && this.ui.writeWarnLine) {
-      this.ui.writeWarnLine(`[ember-intl] ${msg}`);
-    } else {
-      this.ui.writeLine(`[ember-intl] ${msg}`);
-    }
   },
 
   readConfig(environment, project) {
@@ -158,7 +153,7 @@ module.exports = {
     let config = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, project));
 
     if (typeof config.requiresTranslation !== 'function') {
-      this.log('Configured `requiresTranslation` is not a function. Using default implementation.');
+      this.logger.log('Configured `requiresTranslation` is not a function. Using default implementation.');
       config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
     }
 

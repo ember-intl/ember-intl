@@ -1,8 +1,6 @@
-'use strict';
+const expect = require('chai').expect;
 
-let expect = require('chai').expect;
-
-let validateMessage = require('../../../lib/linter/validate-message');
+const validateMessage = require('../../../lib/message-validator/validate-message');
 
 describe('validateMessage', function () {
   let valid = [

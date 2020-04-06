@@ -1,9 +1,5 @@
-/* eslint-env node */
-'use strict';
-
-let expect = require('chai').expect;
-
-let stripNestedNulls = require('../../../../lib/broccoli/translation-reducer/utils/strip-nested-nulls');
+const expect = require('chai').expect;
+const stripNestedNulls = require('../../../../lib/broccoli/translation-reducer/utils/strip-nested-nulls');
 
 describe('stripNestedNulls', function () {
   [

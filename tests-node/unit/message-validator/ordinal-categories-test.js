@@ -1,12 +1,9 @@
-/* eslint-env node */
-'use strict';
+const expect = require('chai').expect;
 
-let expect = require('chai').expect;
-
-let ordinalCategories = require('../../../lib/linter/ordinal-categories');
+const ordinalCategories = require('../../../lib/message-validator/ordinal-categories');
 
 describe('ordinalCategories', function () {
-  let expectations = {
+  const expectations = {
     ar: ['other'],
     as: ['one', 'two', 'few', 'many', 'other'],
     be: ['few', 'other'],
@@ -17,7 +14,7 @@ describe('ordinalCategories', function () {
   };
 
   Object.keys(expectations).forEach((language) => {
-    let expected = expectations[language];
+    const expected = expectations[language];
 
     it(`"${language}" equals: ${JSON.stringify(expected)}`, function () {
       expect(ordinalCategories[language]).to.deep.equal(expected);

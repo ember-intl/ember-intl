@@ -1,9 +1,6 @@
-/* eslint-env node */
-'use strict';
+const expect = require('chai').expect;
 
-let expect = require('chai').expect;
-
-let findMissingICUArguments = require('../../../../lib/broccoli/translation-reducer/utils/find-missing-icu-arguments');
+const findMissingICUArguments = require('../../../../lib/broccoli/translation-reducer/linter/find-missing-icu-arguments');
 
 describe('findMissingICUArguments', function () {
   it('finds nothing if nothing is missing', function () {
