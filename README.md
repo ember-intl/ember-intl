@@ -19,9 +19,9 @@
 
 ## Documentation
 
-[5.x (@next)](https://ember-intl.github.io/ember-intl/docs) `yarn i ember-intl@next`
+[5.x (@next)](https://ember-intl.github.io/ember-intl/docs)
 
-[4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs) `yarn i ember-intl`
+[4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs)
 
 ## Migrating from ember-i18n
 
