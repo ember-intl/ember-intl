@@ -27,6 +27,7 @@ module.exports = {
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
         'tests-node/**/*.js',
+        'lib/**/*.js',
       ],
       excludedFiles: ['app/**', 'addon-test-support/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {

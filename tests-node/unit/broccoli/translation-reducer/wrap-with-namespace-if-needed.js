@@ -1,6 +1,3 @@
-/* eslint-env node */
-'use strict';
-
 const expect = require('chai').expect;
 
 const wrapWithNamespaceIfNeeded = require('../../../../lib/broccoli/translation-reducer/utils/wrap-with-namespace-if-needed');

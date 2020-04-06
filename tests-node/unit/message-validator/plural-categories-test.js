@@ -1,12 +1,9 @@
-/* eslint-env node */
-'use strict';
+const expect = require('chai').expect;
 
-let expect = require('chai').expect;
-
-let pluralCategories = require('../../../lib/linter/plural-categories');
+const pluralCategories = require('../../../lib/message-validator/plural-categories');
 
 describe('pluralCategories', function () {
-  let expectations = {
+  const expectations = {
     ar: ['zero', 'one', 'two', 'few', 'many', 'other'],
     as: ['one', 'other'],
     be: ['one', 'few', 'many', 'other'],
