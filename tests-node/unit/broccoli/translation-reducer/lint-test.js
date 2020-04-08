@@ -33,6 +33,7 @@ describe('linting', function () {
           nested: {
             ok: 'Account created {reason}',
             missing: 'Account invalid {reason}',
+            keyOnlyInOneLanguage: 'Long live the {royalty}!',
           },
         },
       },
