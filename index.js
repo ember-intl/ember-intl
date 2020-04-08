@@ -28,6 +28,7 @@ module.exports = {
 
   options: {
     autoImport: {
+      forbidEval: true,
       webpack: {
         node: {
           global: true,
