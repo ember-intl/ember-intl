@@ -32,7 +32,7 @@ describe('findMissingICUArguments', function () {
     ]);
   });
 
-  it('ignores missing icu arguments if not required', function() {
+  it('ignores missing icu arguments if not required', function () {
     const key = 'baz';
     const allIcuArguments = { baz: ['arg0', 'arg1', 'arg2'] };
     const locales = ['de', 'en'];
@@ -43,7 +43,7 @@ describe('findMissingICUArguments', function () {
     const isAllowed = (key, locale) => locale !== 'en';
 
     expect(findMissingICUArguments(key, allIcuArguments, locales, icuArguments, isAllowed)).to.deep.equal([
-      ['de', ['arg1']]
+      ['de', ['arg1']],
     ]);
   });
 });
