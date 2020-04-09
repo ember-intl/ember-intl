@@ -139,7 +139,9 @@ describe('translation-reducer', function () {
           sameArgumentDifferentContent:
             'You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}',
           missingArg: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
-          deep: { nested: { ok: 'ok {reason}' } },
+          date: '{datetime, date}',
+          time: '{datetime, time, short}',
+          deep: { nested: { ok: 'Response was ok {reason}' } },
         },
         en: {
           foo: 'Hello {whos}',
@@ -148,6 +150,7 @@ describe('translation-reducer', function () {
           date: '{datetime, date, long}',
           time: '{datetime, time, short}',
           select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
+          deep: { nested: { ok: 'Response was ok {reason}, {code}' } },
         },
       };
 
@@ -229,7 +232,7 @@ describe('translation-reducer', function () {
       expect(() => subject.handleLintResult(subject.linter.lint(this.icuFixture))).throws(`ICU arguments mismatch:
 - "foo" ICU argument missing: "de": "whos", "en": "who"
 - "missingArg" ICU argument missing: "en": "numPhotos"
-- "deep.nested.ok" ICU argument missing: "en": "reason"`);
+- "deep.nested.ok" ICU argument missing: "de": "code"`);
     });
 
     describe('mergeTranslations', function () {

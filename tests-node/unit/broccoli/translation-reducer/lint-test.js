@@ -13,18 +13,29 @@ describe('linting', function () {
 
     this.icuFixture = {
       de: {
-        foo: 'Hallo {who}',
+        greeting: 'Hallo {who}',
         sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}',
         missingArg: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
-        deep: { nested: { ok: 'ok {reason}' } },
+        select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
+        deep: {
+          nested: {
+            ok: 'Account created {reason}',
+            missing: 'Account invalid {reason}, {code}',
+          },
+        },
       },
       en: {
-        foo: 'Hello {whos}',
+        greeting: 'Hello {whos}',
         sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
         missingArg: 'You have photos',
-        date: '{datetime, date, long}',
-        time: '{datetime, time, short}',
         select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
+        deep: {
+          nested: {
+            ok: 'Account created {reason}',
+            missing: 'Account invalid {reason}',
+            keyOnlyInOneLanguage: 'Long live the {royalty}!',
+          },
+        },
       },
     };
 
@@ -69,17 +80,14 @@ describe('linting', function () {
 
     expect(icuMismatch).to.deep.equal([
       [
-        'foo',
+        'greeting',
         [
           ['de', ['whos']],
           ['en', ['who']],
         ],
       ],
       ['missingArg', [['en', ['numPhotos']]]],
-      ['deep.nested.ok', [['en', ['reason']]]],
-      ['date', [['de', ['datetime']]]],
-      ['time', [['de', ['datetime']]]],
-      ['select', [['de', ['gender']]]],
+      ['deep.nested.missing', [['en', ['code']]]],
     ]);
   });
 
@@ -130,13 +138,13 @@ describe('linting', function () {
       },
     });
 
-    delete this.icuFixture['de'].foo;
+    delete this.icuFixture['de'].greeting;
 
     const { icuMismatch } = this.linter.lint(this.icuFixture);
 
     expect(icuMismatch).to.deep.equal([
       ['missingArg', [['en', ['numPhotos']]]],
-      ['deep.nested.ok', [['en', ['reason']]]],
+      ['deep.nested.missing', [['en', ['code']]]],
     ]);
   });
 });
