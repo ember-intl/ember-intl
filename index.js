@@ -26,16 +26,6 @@ module.exports = {
   configOptions: null,
   isLocalizationFramework: true,
 
-  options: {
-    autoImport: {
-      webpack: {
-        node: {
-          global: true,
-        },
-      },
-    },
-  },
-
   included(parent) {
     this._super.included.apply(this, arguments);
 
