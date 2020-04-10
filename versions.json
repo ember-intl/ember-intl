@@ -22,5 +22,11 @@
     "name": "v4.2.0",
     "sha": "238ec5cc62487f465d82ed5b56f3b26c2187a1a3",
     "tag": "v4.2.0"
+  },
+  "v5.0.0-beta.1": {
+    "path": "versions/v5.0.0-beta.1",
+    "name": "v5.0.0-beta.1",
+    "sha": "44c39d0d593413ea5692265314dcbc7c756ec494",
+    "tag": "v5.0.0-beta.1"
   }
 }
