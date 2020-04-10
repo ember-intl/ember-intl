@@ -10,6 +10,14 @@ module.exports = function (defaults) {
     options.vendorFiles['jquery.js'] = null;
   }
 
+  options.autoImport = {
+    webpack: {
+      node: {
+        global: true,
+      },
+    },
+  };
+
   let app = new EmberAddon(defaults, options);
 
   app.options.snippetPaths = ['tests/dummy/snippets'];
