@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "5.0.0",
+  "version": "5.0.0-beta.1",
   "description": "A internationalization toolbox for ambitious applications.",
   "keywords": [
     "ember-addon",
