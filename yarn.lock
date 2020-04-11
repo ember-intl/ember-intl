@@ -1052,14 +1052,14 @@
     resolve "^1.8.1"
     semver "^5.6.0"
 
-"@formatjs/intl-unified-numberformat@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-unified-numberformat/-/intl-unified-numberformat-3.3.0.tgz#0692346a9cd432abb2cd9b6879ddd6592585641a"
-  integrity sha512-wLT3myYq6fUhJYUh53tt5fMok+sUqO3Jy1XeSqYTphP7MmQl38tHqAIL65Dxh7M6/QlDEQTOkMZNpQcnT0AzaQ==
+"@formatjs/intl-unified-numberformat@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-unified-numberformat/-/intl-unified-numberformat-3.3.1.tgz#67b7642b3405e3bf7aaad26862c39a901ba8111f"
+  integrity sha512-ZmSxfs7Vt1qnF4AmOuN1XVFK3rXPTxEW4K6mjEJjJkWlgmqSbZeLg7Q46c4GfU6x5dbHVFCaIWsy+U2ko6WkfA==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.0"
+    "@formatjs/intl-utils" "^2.2.1"
 
-"@formatjs/intl-utils@^2.2.0":
+"@formatjs/intl-utils@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.2.1.tgz#0eeefe92d317acfcd179c14826e719b3b130d82a"
   integrity sha512-WF3oU6l2WqJjN4OWvnjF9AHyQjHpjcfpyuckM7euFeX6ZGRPpPj+ZCqzf41g81MSksf9aZI4fFCZXWTBusgcWA==
@@ -8230,11 +8230,11 @@ intl-format-cache@^4.2.22:
   integrity sha512-a1chSSjN323lnm3f4VWR/+6uyaXgTLII8PkiDeKkC3A+eauUswf/k09iBwDQGlkLg29mZ+zShWdm+YdH+sLY4w==
 
 intl-messageformat-parser@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-4.1.1.tgz#33a3ac1854a8b9adc18dfc73db018abf91be4c32"
-  integrity sha512-RDmhjncV9VOKZ5nkoeeTxVy6G2kV5ZZNtewT89vj7vkr5NAPjw8/q6xYjUxdLnxNbQPcwno6zTD6j9VC0PW+Ag==
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-4.1.2.tgz#ba49f8b51bbe81ffc13cf94abdcb657a9dcd03e9"
+  integrity sha512-elPjsKkp5L1C60/DPw1jAxmv7ikSpFqmx5NEWeg6DjcZoNr7ZSk+S4Bj9WG5zsJdHF3QfVYr0AbQvDaq6DioqA==
   dependencies:
-    "@formatjs/intl-unified-numberformat" "^3.3.0"
+    "@formatjs/intl-unified-numberformat" "^3.3.1"
 
 intl-messageformat@^8.3.2:
   version "8.3.2"
