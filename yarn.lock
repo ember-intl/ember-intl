@@ -8224,12 +8224,12 @@ inquirer@^7.0.0, inquirer@^7.0.1:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-intl-format-cache@^4.2.22:
+intl-format-cache@^4.2.23:
   version "4.2.23"
   resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-4.2.23.tgz#2c508f64b3bb5862abc71392a4b1696e2b8572d2"
   integrity sha512-a1chSSjN323lnm3f4VWR/+6uyaXgTLII8PkiDeKkC3A+eauUswf/k09iBwDQGlkLg29mZ+zShWdm+YdH+sLY4w==
 
-intl-messageformat-parser@^4.1.1:
+intl-messageformat-parser@^4.1.1, intl-messageformat-parser@^4.1.3:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-4.1.3.tgz#5fad8a72e5fd0ded82d441bf09dd8677a806c41c"
   integrity sha512-y49ZC+vzV+N3vtNFxQ3p9LNKyhVPmb78VJhi4ESoAqvNOYPIyYo/yVGijmtLbb0Uh67V/3XupLgY9uL7Je7EcA==
@@ -8237,12 +8237,12 @@ intl-messageformat-parser@^4.1.1:
     "@formatjs/intl-unified-numberformat" "^3.3.2"
 
 intl-messageformat@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.2.tgz#ad6b06982d749d39b6610ad26e88637d64688972"
-  integrity sha512-CMcGPciQjt1nesTME7vekUgx+Igy2sa14g/BZE2ZrYwqkdnVDO5f0bt3X0ZjQJohgZth9RvlIMvVoRUjrDRubA==
+  version "8.3.5"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.5.tgz#e571d05fed67e16e417f61b55e089ee8b031d3c9"
+  integrity sha512-JcUWjKUL4SXTBRKzZLJbP3kC+hE9njkAN+V6ArSe+8Ye6wdCA3pcXcNG8YNRvLdo9lso7ZesrbHfMrlB8+Xb0A==
   dependencies:
-    intl-format-cache "^4.2.22"
-    intl-messageformat-parser "^4.1.1"
+    intl-format-cache "^4.2.23"
+    intl-messageformat-parser "^4.1.3"
 
 into-stream@^3.1.0:
   version "3.1.0"
