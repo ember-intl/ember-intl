@@ -47,7 +47,7 @@
     "fast-memoize": "^2.5.2",
     "has-unicode": "^2.0.1",
     "intl-messageformat": "^8.3.2",
-    "intl-messageformat-parser": "^4.1.1",
+    "intl-messageformat-parser": "^5.0.0",
     "js-yaml": "^3.13.1",
     "json-stable-stringify": "^1.0.1",
     "locale-emoji": "^0.3.0",
