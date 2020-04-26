@@ -118,4 +118,33 @@ module('Integration | Test Helpers', function (hooks) {
       );
     });
   });
+
+  module('setupIntl(hooks, translations) for nested translations', function (hooks) {
+    setupIntl(hooks);
+
+    test('hooks were properly executed and translations have been added', async function (assert) {
+      const ENGLISH_LOCALE = 'en-us';
+
+      addTranslations(ENGLISH_LOCALE, {
+        some: {
+          translation: 'The {foo} is a lie.',
+          nested_translation: '{count, plural, =1 {Cake} other {Cakes}}',
+        },
+      });
+
+      assert.strictEqual(
+        this.intl.t('some.translation', { foo: this.intl.t('some.nested_translation', { count: 1 }) }),
+        'The Cake is a lie.',
+        '`t` method serializes translation with countables'
+      );
+    });
+
+    test('hooks were properly executed and translations have been added', async function (assert) {
+      assert.strictEqual(
+        this.intl.t('some.translation', { foo: this.intl.t('some.nested_translation', { count: 1 }) }),
+        't:some.translation:("foo":"t:some.nested_translation:("count":1)")',
+        '`t` method serializes translation with countables'
+      );
+    });
+  });
 });

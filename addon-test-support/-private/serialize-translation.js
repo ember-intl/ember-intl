@@ -14,13 +14,15 @@ const stringifyDeterministically = (obj) => JSON.stringify(obj, Object.keys(obj)
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
  * not be interpreted as variables.
+ * Replaces the `\"` characters with `"` in order for the additional escape to work.
+ * For more details, refer: https://github.com/ember-intl/ember-intl/issues/1035
  *
  * @private
  * @function
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = (subject) => String(subject).replace(/\{/g, '(').replace(/\}/g, ')');
+const replaceInterpolators = (subject) => String(subject).replace(/\{/g, '(').replace(/\}/g, ')').replace(/\\"/g, '"');
 
 /**
  * A list of internal options that should not be serialized.
