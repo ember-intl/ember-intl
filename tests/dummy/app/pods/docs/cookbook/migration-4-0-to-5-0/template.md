@@ -6,6 +6,10 @@ The `locales` configuration option within `config/ember-intl.js` can now be remo
 
 ## **Breaking Change**
 
+### Node runtime
+
+We now support down to Node 10, dropping support for Node 8
+
 ### **Polyfilling**
 
 This addon no longer provides polyfills "out of the box."  The reasoning, along with the current browser requirements, can be found in the {{docs-link 'Runtime Requirements' 'docs.getting-started.runtime-requirements'}} section.
