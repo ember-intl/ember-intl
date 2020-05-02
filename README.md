@@ -19,9 +19,9 @@
 
 ## Documentation
 
-[5.x (@next)](https://ember-intl.github.io/ember-intl/versions/master/docs/quickstart)
+[5.x](https://ember-intl.github.io/ember-intl/versions/master/docs/quickstart)
 
-[4.x (current stable)](https://ember-intl.github.io/ember-intl/versions/v4.2.0/docs/quickstart)
+[4.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v4.2.0/docs/quickstart)
 
 ## Migrating from ember-i18n
 
