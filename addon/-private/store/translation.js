@@ -4,7 +4,6 @@
  */
 
 import EmberObject from '@ember/object';
-import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import flatten from 'ember-intl/-private/utils/flatten';
 import { parse } from 'intl-messageformat-parser';
@@ -39,10 +38,8 @@ const TranslationModel = EmberObject.extend({
         translation = `${translation}`;
       }
 
-      flatTranslations[key] = this.compile(translation);
+      this.translations[key] = this.compile(translation);
     }
-
-    assign(this.translations, flatTranslations);
   },
 
   find(key) {

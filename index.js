@@ -140,7 +140,10 @@ module.exports = {
   },
 
   createOptions(environment, project) {
-    let config = Object.assign({}, DEFAULT_CONFIG, this.readConfig(environment, project));
+    let config = {
+      ...DEFAULT_CONFIG,
+      ...this.readConfig(environment, project),
+    };
 
     if (typeof config.requiresTranslation !== 'function') {
       this.logger.log('Configured `requiresTranslation` is not a function. Using default implementation.');

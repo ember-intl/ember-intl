@@ -1,5 +1,4 @@
 import { get } from '@ember/object';
-import { assign } from '@ember/polyfills';
 import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import intl from './intl';
 
@@ -67,6 +66,6 @@ export default function createTranslatedComputedProperty(translationKey, options
   const dependentKeys = Object.values(dynamicValues);
 
   return intl(...dependentKeys, (intl, propertyKey, ctx) =>
-    intl.t(translationKey, assign({}, staticValues, mapPropertiesByHash(ctx, dynamicValues)))
+    intl.t(translationKey, { ...staticValues, ...mapPropertiesByHash(ctx, dynamicValues) })
   );
 }

@@ -7,7 +7,6 @@ import { computed, get, set } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { assert } from '@ember/debug';
 import { makeArray } from '@ember/array';
-import { assign } from '@ember/polyfills';
 import Service from '@ember/service';
 import { next, cancel } from '@ember/runloop';
 
@@ -143,7 +142,10 @@ export default Service.extend(Evented, {
     }
 
     while (!ast && defaults.length) {
-      ast = this.lookup(defaults.shift(), options.locale, assign({}, options, { resilient: defaults.length > 0 }));
+      ast = this.lookup(defaults.shift(), options.locale, {
+        ...options,
+        resilient: defaults.length > 0,
+      });
     }
 
     return this.formatMessage(ast, options);
