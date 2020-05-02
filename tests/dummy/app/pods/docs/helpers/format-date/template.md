@@ -85,3 +85,9 @@ Formats dates using [<code>Intl.DateTimeFormat</code>](https://developer.mozilla
 
 > The representation of the time zone name. Possible values are "short",
 > "long".
+
+`hourCycle`
+
+> The hour cycle to use. Possible values are "h11", "h12", "h23", or "h24".
+> This option overrides the hc language tag, if both are present, and the
+> hour12 option takes precedence in case both options have been specified.

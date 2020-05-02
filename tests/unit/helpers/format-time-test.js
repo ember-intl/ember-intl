@@ -101,4 +101,22 @@ module('format-time-test', function (hooks) {
     await render(hbs`{{format-time 0}}`);
     assert.equal(this.element.textContent, new Intl.DateTimeFormat('en-us').format(0));
   });
+
+  test('should support hourCycle', async function (assert) {
+    assert.expect(2);
+
+    this.intl.setLocale(['en-ie']);
+
+    this.intl.set('formats', {
+      time: { test: { timeZone: 'UTC', hour: 'numeric', minute: 'numeric' } },
+    });
+
+    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test"}}`);
+
+    assert.equal(this.element.textContent, '00:00', 'en-ie time format defaults to h23');
+
+    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test" hourCycle="h12"}}`);
+
+    assert.equal(this.element.textContent, '12:00 a.m.', 'en-ie hourCycle overridden');
+  });
 });
