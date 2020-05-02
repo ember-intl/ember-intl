@@ -20,6 +20,7 @@ const DATE_TIME_OPTIONS = [
   'minute',
   'second',
   'timeZoneName',
+  'hourCycle',
 ];
 
 /**
