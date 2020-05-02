@@ -21,7 +21,7 @@
 
 [5.x](https://ember-intl.github.io/ember-intl/versions/master/docs/quickstart)
 
-[4.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v4.2.0/docs/quickstart)
+[4.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v4.4.0/docs/quickstart)
 
 ## Migrating from ember-i18n
 
