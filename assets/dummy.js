@@ -15,6 +15,19 @@
     }
   });
 });
+;define("dummy/adapters/-json-api", ["exports", "@ember-data/adapter/json-api"], function (_exports, _jsonApi) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _jsonApi.default;
+    }
+  });
+});
 ;define("dummy/adapters/class", ["exports", "ember-cli-addon-docs/adapters/class"], function (_exports, _class) {
   "use strict";
 
@@ -77,7 +90,12 @@
   var App = Ember.Application.extend({
     modulePrefix: _environment.default.modulePrefix,
     podModulePrefix: _environment.default.podModulePrefix,
-    Resolver: _resolver.default
+    Resolver: _resolver.default,
+    customEvents: {
+      mousewheel: null,
+      touchstart: null,
+      touchmove: null
+    }
   });
   (0, _emberLoadInitializers.default)(App, _environment.default.modulePrefix);
   var _default = App;
@@ -96,1556 +114,6 @@
     desktop: '(min-width: 992px) and (max-width: 1200px)',
     jumbo: '(min-width: 1201px)'
   };
-  _exports.default = _default;
-});
-;define("dummy/cldrs/de", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /*jslint eqeq: true*/
-  var _default = [{
-    "locale": "de-de",
-    "parentLocale": "de"
-  }, {
-    "locale": "de",
-    "pluralRuleFunction": function pluralRuleFunction(n, ord) {
-      var s = String(n).split("."),
-          v0 = !s[1];
-      if (ord) return "other";
-      return n == 1 && v0 ? "one" : "other";
-    },
-    "fields": {
-      "year": {
-        "displayName": "Jahr",
-        "relative": {
-          "0": "dieses Jahr",
-          "1": "nächstes Jahr",
-          "-1": "letztes Jahr"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Jahr",
-            "other": "in {0} Jahren"
-          },
-          "past": {
-            "one": "vor {0} Jahr",
-            "other": "vor {0} Jahren"
-          }
-        }
-      },
-      "year-short": {
-        "displayName": "Jahr",
-        "relative": {
-          "0": "dieses Jahr",
-          "1": "nächstes Jahr",
-          "-1": "letztes Jahr"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Jahr",
-            "other": "in {0} Jahren"
-          },
-          "past": {
-            "one": "vor {0} Jahr",
-            "other": "vor {0} Jahren"
-          }
-        }
-      },
-      "month": {
-        "displayName": "Monat",
-        "relative": {
-          "0": "diesen Monat",
-          "1": "nächsten Monat",
-          "-1": "letzten Monat"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Monat",
-            "other": "in {0} Monaten"
-          },
-          "past": {
-            "one": "vor {0} Monat",
-            "other": "vor {0} Monaten"
-          }
-        }
-      },
-      "month-short": {
-        "displayName": "Monat",
-        "relative": {
-          "0": "diesen Monat",
-          "1": "nächsten Monat",
-          "-1": "letzten Monat"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Monat",
-            "other": "in {0} Monaten"
-          },
-          "past": {
-            "one": "vor {0} Monat",
-            "other": "vor {0} Monaten"
-          }
-        }
-      },
-      "day": {
-        "displayName": "Tag",
-        "relative": {
-          "0": "heute",
-          "1": "morgen",
-          "2": "übermorgen",
-          "-2": "vorgestern",
-          "-1": "gestern"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Tag",
-            "other": "in {0} Tagen"
-          },
-          "past": {
-            "one": "vor {0} Tag",
-            "other": "vor {0} Tagen"
-          }
-        }
-      },
-      "day-short": {
-        "displayName": "Tag",
-        "relative": {
-          "0": "heute",
-          "1": "morgen",
-          "2": "übermorgen",
-          "-2": "vorgestern",
-          "-1": "gestern"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Tag",
-            "other": "in {0} Tagen"
-          },
-          "past": {
-            "one": "vor {0} Tag",
-            "other": "vor {0} Tagen"
-          }
-        }
-      },
-      "hour": {
-        "displayName": "Stunde",
-        "relative": {
-          "0": "in dieser Stunde"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Stunde",
-            "other": "in {0} Stunden"
-          },
-          "past": {
-            "one": "vor {0} Stunde",
-            "other": "vor {0} Stunden"
-          }
-        }
-      },
-      "hour-short": {
-        "displayName": "Std.",
-        "relative": {
-          "0": "in dieser Stunde"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Std.",
-            "other": "in {0} Std."
-          },
-          "past": {
-            "one": "vor {0} Std.",
-            "other": "vor {0} Std."
-          }
-        }
-      },
-      "minute": {
-        "displayName": "Minute",
-        "relative": {
-          "0": "in dieser Minute"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Minute",
-            "other": "in {0} Minuten"
-          },
-          "past": {
-            "one": "vor {0} Minute",
-            "other": "vor {0} Minuten"
-          }
-        }
-      },
-      "minute-short": {
-        "displayName": "Min.",
-        "relative": {
-          "0": "in dieser Minute"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Min.",
-            "other": "in {0} Min."
-          },
-          "past": {
-            "one": "vor {0} Min.",
-            "other": "vor {0} Min."
-          }
-        }
-      },
-      "second": {
-        "displayName": "Sekunde",
-        "relative": {
-          "0": "jetzt"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Sekunde",
-            "other": "in {0} Sekunden"
-          },
-          "past": {
-            "one": "vor {0} Sekunde",
-            "other": "vor {0} Sekunden"
-          }
-        }
-      },
-      "second-short": {
-        "displayName": "Sek.",
-        "relative": {
-          "0": "jetzt"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} Sek.",
-            "other": "in {0} Sek."
-          },
-          "past": {
-            "one": "vor {0} Sek.",
-            "other": "vor {0} Sek."
-          }
-        }
-      }
-    },
-    "numbers": {
-      "decimal": {
-        "long": [[1000, {
-          "one": ["0 Tausend", 1],
-          "other": ["0 Tausend", 1]
-        }], [10000, {
-          "one": ["00 Tausend", 2],
-          "other": ["00 Tausend", 2]
-        }], [100000, {
-          "one": ["000 Tausend", 3],
-          "other": ["000 Tausend", 3]
-        }], [1000000, {
-          "one": ["0 Million", 1],
-          "other": ["0 Millionen", 1]
-        }], [10000000, {
-          "one": ["00 Millionen", 2],
-          "other": ["00 Millionen", 2]
-        }], [100000000, {
-          "one": ["000 Millionen", 3],
-          "other": ["000 Millionen", 3]
-        }], [1000000000, {
-          "one": ["0 Milliarde", 1],
-          "other": ["0 Milliarden", 1]
-        }], [10000000000, {
-          "one": ["00 Milliarden", 2],
-          "other": ["00 Milliarden", 2]
-        }], [100000000000, {
-          "one": ["000 Milliarden", 3],
-          "other": ["000 Milliarden", 3]
-        }], [1000000000000, {
-          "one": ["0 Billion", 1],
-          "other": ["0 Billionen", 1]
-        }], [10000000000000, {
-          "one": ["00 Billionen", 2],
-          "other": ["00 Billionen", 2]
-        }], [100000000000000, {
-          "one": ["000 Billionen", 3],
-          "other": ["000 Billionen", 3]
-        }]],
-        "short": [[1000, {
-          "one": ["0", 1],
-          "other": ["0", 1]
-        }], [10000, {
-          "one": ["0", 1],
-          "other": ["0", 1]
-        }], [100000, {
-          "one": ["0", 1],
-          "other": ["0", 1]
-        }], [1000000, {
-          "one": ["0 Mio'.'", 1],
-          "other": ["0 Mio'.'", 1]
-        }], [10000000, {
-          "one": ["00 Mio'.'", 2],
-          "other": ["00 Mio'.'", 2]
-        }], [100000000, {
-          "one": ["000 Mio'.'", 3],
-          "other": ["000 Mio'.'", 3]
-        }], [1000000000, {
-          "one": ["0 Mrd'.'", 1],
-          "other": ["0 Mrd'.'", 1]
-        }], [10000000000, {
-          "one": ["00 Mrd'.'", 2],
-          "other": ["00 Mrd'.'", 2]
-        }], [100000000000, {
-          "one": ["000 Mrd'.'", 3],
-          "other": ["000 Mrd'.'", 3]
-        }], [1000000000000, {
-          "one": ["0 Bio'.'", 1],
-          "other": ["0 Bio'.'", 1]
-        }], [10000000000000, {
-          "one": ["00 Bio'.'", 2],
-          "other": ["00 Bio'.'", 2]
-        }], [100000000000000, {
-          "one": ["000 Bio'.'", 3],
-          "other": ["000 Bio'.'", 3]
-        }]]
-      }
-    }
-  }];
-  _exports.default = _default;
-});
-;define("dummy/cldrs/en", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /*jslint eqeq: true*/
-  var _default = [{
-    "locale": "en-US",
-    "parentLocale": "en"
-  }, {
-    "locale": "en",
-    "pluralRuleFunction": function pluralRuleFunction(n, ord) {
-      var s = String(n).split("."),
-          v0 = !s[1],
-          t0 = Number(s[0]) == n,
-          n10 = t0 && s[0].slice(-1),
-          n100 = t0 && s[0].slice(-2);
-      if (ord) return n10 == 1 && n100 != 11 ? "one" : n10 == 2 && n100 != 12 ? "two" : n10 == 3 && n100 != 13 ? "few" : "other";
-      return n == 1 && v0 ? "one" : "other";
-    },
-    "fields": {
-      "year": {
-        "displayName": "year",
-        "relative": {
-          "0": "this year",
-          "1": "next year",
-          "-1": "last year"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} year",
-            "other": "in {0} years"
-          },
-          "past": {
-            "one": "{0} year ago",
-            "other": "{0} years ago"
-          }
-        }
-      },
-      "year-short": {
-        "displayName": "yr.",
-        "relative": {
-          "0": "this yr.",
-          "1": "next yr.",
-          "-1": "last yr."
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} yr.",
-            "other": "in {0} yr."
-          },
-          "past": {
-            "one": "{0} yr. ago",
-            "other": "{0} yr. ago"
-          }
-        }
-      },
-      "month": {
-        "displayName": "month",
-        "relative": {
-          "0": "this month",
-          "1": "next month",
-          "-1": "last month"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} month",
-            "other": "in {0} months"
-          },
-          "past": {
-            "one": "{0} month ago",
-            "other": "{0} months ago"
-          }
-        }
-      },
-      "month-short": {
-        "displayName": "mo.",
-        "relative": {
-          "0": "this mo.",
-          "1": "next mo.",
-          "-1": "last mo."
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} mo.",
-            "other": "in {0} mo."
-          },
-          "past": {
-            "one": "{0} mo. ago",
-            "other": "{0} mo. ago"
-          }
-        }
-      },
-      "day": {
-        "displayName": "day",
-        "relative": {
-          "0": "today",
-          "1": "tomorrow",
-          "-1": "yesterday"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} day",
-            "other": "in {0} days"
-          },
-          "past": {
-            "one": "{0} day ago",
-            "other": "{0} days ago"
-          }
-        }
-      },
-      "day-short": {
-        "displayName": "day",
-        "relative": {
-          "0": "today",
-          "1": "tomorrow",
-          "-1": "yesterday"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} day",
-            "other": "in {0} days"
-          },
-          "past": {
-            "one": "{0} day ago",
-            "other": "{0} days ago"
-          }
-        }
-      },
-      "hour": {
-        "displayName": "hour",
-        "relative": {
-          "0": "this hour"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} hour",
-            "other": "in {0} hours"
-          },
-          "past": {
-            "one": "{0} hour ago",
-            "other": "{0} hours ago"
-          }
-        }
-      },
-      "hour-short": {
-        "displayName": "hr.",
-        "relative": {
-          "0": "this hour"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} hr.",
-            "other": "in {0} hr."
-          },
-          "past": {
-            "one": "{0} hr. ago",
-            "other": "{0} hr. ago"
-          }
-        }
-      },
-      "minute": {
-        "displayName": "minute",
-        "relative": {
-          "0": "this minute"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} minute",
-            "other": "in {0} minutes"
-          },
-          "past": {
-            "one": "{0} minute ago",
-            "other": "{0} minutes ago"
-          }
-        }
-      },
-      "minute-short": {
-        "displayName": "min.",
-        "relative": {
-          "0": "this minute"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} min.",
-            "other": "in {0} min."
-          },
-          "past": {
-            "one": "{0} min. ago",
-            "other": "{0} min. ago"
-          }
-        }
-      },
-      "second": {
-        "displayName": "second",
-        "relative": {
-          "0": "now"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} second",
-            "other": "in {0} seconds"
-          },
-          "past": {
-            "one": "{0} second ago",
-            "other": "{0} seconds ago"
-          }
-        }
-      },
-      "second-short": {
-        "displayName": "sec.",
-        "relative": {
-          "0": "now"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "in {0} sec.",
-            "other": "in {0} sec."
-          },
-          "past": {
-            "one": "{0} sec. ago",
-            "other": "{0} sec. ago"
-          }
-        }
-      }
-    },
-    "numbers": {
-      "decimal": {
-        "long": [[1000, {
-          "one": ["0 thousand", 1],
-          "other": ["0 thousand", 1]
-        }], [10000, {
-          "one": ["00 thousand", 2],
-          "other": ["00 thousand", 2]
-        }], [100000, {
-          "one": ["000 thousand", 3],
-          "other": ["000 thousand", 3]
-        }], [1000000, {
-          "one": ["0 million", 1],
-          "other": ["0 million", 1]
-        }], [10000000, {
-          "one": ["00 million", 2],
-          "other": ["00 million", 2]
-        }], [100000000, {
-          "one": ["000 million", 3],
-          "other": ["000 million", 3]
-        }], [1000000000, {
-          "one": ["0 billion", 1],
-          "other": ["0 billion", 1]
-        }], [10000000000, {
-          "one": ["00 billion", 2],
-          "other": ["00 billion", 2]
-        }], [100000000000, {
-          "one": ["000 billion", 3],
-          "other": ["000 billion", 3]
-        }], [1000000000000, {
-          "one": ["0 trillion", 1],
-          "other": ["0 trillion", 1]
-        }], [10000000000000, {
-          "one": ["00 trillion", 2],
-          "other": ["00 trillion", 2]
-        }], [100000000000000, {
-          "one": ["000 trillion", 3],
-          "other": ["000 trillion", 3]
-        }]],
-        "short": [[1000, {
-          "one": ["0K", 1],
-          "other": ["0K", 1]
-        }], [10000, {
-          "one": ["00K", 2],
-          "other": ["00K", 2]
-        }], [100000, {
-          "one": ["000K", 3],
-          "other": ["000K", 3]
-        }], [1000000, {
-          "one": ["0M", 1],
-          "other": ["0M", 1]
-        }], [10000000, {
-          "one": ["00M", 2],
-          "other": ["00M", 2]
-        }], [100000000, {
-          "one": ["000M", 3],
-          "other": ["000M", 3]
-        }], [1000000000, {
-          "one": ["0B", 1],
-          "other": ["0B", 1]
-        }], [10000000000, {
-          "one": ["00B", 2],
-          "other": ["00B", 2]
-        }], [100000000000, {
-          "one": ["000B", 3],
-          "other": ["000B", 3]
-        }], [1000000000000, {
-          "one": ["0T", 1],
-          "other": ["0T", 1]
-        }], [10000000000000, {
-          "one": ["00T", 2],
-          "other": ["00T", 2]
-        }], [100000000000000, {
-          "one": ["000T", 3],
-          "other": ["000T", 3]
-        }]]
-      }
-    }
-  }];
-  _exports.default = _default;
-});
-;define("dummy/cldrs/es", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /*jslint eqeq: true*/
-  var _default = [{
-    "locale": "es-es",
-    "parentLocale": "es"
-  }, {
-    "locale": "es",
-    "pluralRuleFunction": function pluralRuleFunction(n, ord) {
-      if (ord) return "other";
-      return n == 1 ? "one" : "other";
-    },
-    "fields": {
-      "year": {
-        "displayName": "año",
-        "relative": {
-          "0": "este año",
-          "1": "el próximo año",
-          "-1": "el año pasado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} año",
-            "other": "dentro de {0} años"
-          },
-          "past": {
-            "one": "hace {0} año",
-            "other": "hace {0} años"
-          }
-        }
-      },
-      "year-short": {
-        "displayName": "a",
-        "relative": {
-          "0": "este año",
-          "1": "el próximo año",
-          "-1": "el año pasado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} a",
-            "other": "dentro de {0} a"
-          },
-          "past": {
-            "one": "hace {0} a",
-            "other": "hace {0} a"
-          }
-        }
-      },
-      "month": {
-        "displayName": "mes",
-        "relative": {
-          "0": "este mes",
-          "1": "el próximo mes",
-          "-1": "el mes pasado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} mes",
-            "other": "dentro de {0} meses"
-          },
-          "past": {
-            "one": "hace {0} mes",
-            "other": "hace {0} meses"
-          }
-        }
-      },
-      "month-short": {
-        "displayName": "m",
-        "relative": {
-          "0": "este mes",
-          "1": "el próximo mes",
-          "-1": "el mes pasado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} m",
-            "other": "dentro de {0} m"
-          },
-          "past": {
-            "one": "hace {0} m",
-            "other": "hace {0} m"
-          }
-        }
-      },
-      "day": {
-        "displayName": "día",
-        "relative": {
-          "0": "hoy",
-          "1": "mañana",
-          "2": "pasado mañana",
-          "-2": "anteayer",
-          "-1": "ayer"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} día",
-            "other": "dentro de {0} días"
-          },
-          "past": {
-            "one": "hace {0} día",
-            "other": "hace {0} días"
-          }
-        }
-      },
-      "day-short": {
-        "displayName": "d",
-        "relative": {
-          "0": "hoy",
-          "1": "mañana",
-          "2": "pasado mañana",
-          "-2": "anteayer",
-          "-1": "ayer"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} día",
-            "other": "dentro de {0} días"
-          },
-          "past": {
-            "one": "hace {0} día",
-            "other": "hace {0} días"
-          }
-        }
-      },
-      "hour": {
-        "displayName": "hora",
-        "relative": {
-          "0": "esta hora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} hora",
-            "other": "dentro de {0} horas"
-          },
-          "past": {
-            "one": "hace {0} hora",
-            "other": "hace {0} horas"
-          }
-        }
-      },
-      "hour-short": {
-        "displayName": "h",
-        "relative": {
-          "0": "esta hora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} h",
-            "other": "dentro de {0} h"
-          },
-          "past": {
-            "one": "hace {0} h",
-            "other": "hace {0} h"
-          }
-        }
-      },
-      "minute": {
-        "displayName": "minuto",
-        "relative": {
-          "0": "este minuto"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} minuto",
-            "other": "dentro de {0} minutos"
-          },
-          "past": {
-            "one": "hace {0} minuto",
-            "other": "hace {0} minutos"
-          }
-        }
-      },
-      "minute-short": {
-        "displayName": "min",
-        "relative": {
-          "0": "este minuto"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} min",
-            "other": "dentro de {0} min"
-          },
-          "past": {
-            "one": "hace {0} min",
-            "other": "hace {0} min"
-          }
-        }
-      },
-      "second": {
-        "displayName": "segundo",
-        "relative": {
-          "0": "ahora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} segundo",
-            "other": "dentro de {0} segundos"
-          },
-          "past": {
-            "one": "hace {0} segundo",
-            "other": "hace {0} segundos"
-          }
-        }
-      },
-      "second-short": {
-        "displayName": "s",
-        "relative": {
-          "0": "ahora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dentro de {0} s",
-            "other": "dentro de {0} s"
-          },
-          "past": {
-            "one": "hace {0} s",
-            "other": "hace {0} s"
-          }
-        }
-      }
-    },
-    "numbers": {
-      "decimal": {
-        "long": [[1000, {
-          "one": ["0 mil", 1],
-          "other": ["0 mil", 1]
-        }], [10000, {
-          "one": ["00 mil", 2],
-          "other": ["00 mil", 2]
-        }], [100000, {
-          "one": ["000 mil", 3],
-          "other": ["000 mil", 3]
-        }], [1000000, {
-          "one": ["0 millón", 1],
-          "other": ["0 millones", 1]
-        }], [10000000, {
-          "one": ["00 millones", 2],
-          "other": ["00 millones", 2]
-        }], [100000000, {
-          "one": ["000 millones", 3],
-          "other": ["000 millones", 3]
-        }], [1000000000, {
-          "one": ["0 mil millones", 1],
-          "other": ["0 mil millones", 1]
-        }], [10000000000, {
-          "one": ["00 mil millones", 2],
-          "other": ["00 mil millones", 2]
-        }], [100000000000, {
-          "one": ["000 mil millones", 3],
-          "other": ["000 mil millones", 3]
-        }], [1000000000000, {
-          "one": ["0 billón", 1],
-          "other": ["0 billones", 1]
-        }], [10000000000000, {
-          "one": ["00 billones", 2],
-          "other": ["00 billones", 2]
-        }], [100000000000000, {
-          "one": ["000 billones", 3],
-          "other": ["000 billones", 3]
-        }]],
-        "short": [[1000, {
-          "one": ["0 mil", 1],
-          "other": ["0 mil", 1]
-        }], [10000, {
-          "one": ["00 mil", 2],
-          "other": ["00 mil", 2]
-        }], [100000, {
-          "one": ["000 mil", 3],
-          "other": ["000 mil", 3]
-        }], [1000000, {
-          "one": ["0 M", 1],
-          "other": ["0 M", 1]
-        }], [10000000, {
-          "one": ["00 M", 2],
-          "other": ["00 M", 2]
-        }], [100000000, {
-          "one": ["000 M", 3],
-          "other": ["000 M", 3]
-        }], [1000000000, {
-          "one": ["0000 M", 4],
-          "other": ["0000 M", 4]
-        }], [10000000000, {
-          "one": ["00 mil M", 2],
-          "other": ["00 mil M", 2]
-        }], [100000000000, {
-          "one": ["000 mil M", 3],
-          "other": ["000 mil M", 3]
-        }], [1000000000000, {
-          "one": ["0 B", 1],
-          "other": ["0 B", 1]
-        }], [10000000000000, {
-          "one": ["00 B", 2],
-          "other": ["00 B", 2]
-        }], [100000000000000, {
-          "one": ["000 B", 3],
-          "other": ["000 B", 3]
-        }]]
-      }
-    }
-  }];
-  _exports.default = _default;
-});
-;define("dummy/cldrs/fr", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /*jslint eqeq: true*/
-  var _default = [{
-    "locale": "fr-fr",
-    "parentLocale": "fr"
-  }, {
-    "locale": "fr",
-    "pluralRuleFunction": function pluralRuleFunction(n, ord) {
-      if (ord) return n == 1 ? "one" : "other";
-      return n >= 0 && n < 2 ? "one" : "other";
-    },
-    "fields": {
-      "year": {
-        "displayName": "année",
-        "relative": {
-          "0": "cette année",
-          "1": "l’année prochaine",
-          "-1": "l’année dernière"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} an",
-            "other": "dans {0} ans"
-          },
-          "past": {
-            "one": "il y a {0} an",
-            "other": "il y a {0} ans"
-          }
-        }
-      },
-      "year-short": {
-        "displayName": "an",
-        "relative": {
-          "0": "cette année",
-          "1": "l’année prochaine",
-          "-1": "l’année dernière"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} a",
-            "other": "dans {0} a"
-          },
-          "past": {
-            "one": "il y a {0} a",
-            "other": "il y a {0} a"
-          }
-        }
-      },
-      "month": {
-        "displayName": "mois",
-        "relative": {
-          "0": "ce mois-ci",
-          "1": "le mois prochain",
-          "-1": "le mois dernier"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} mois",
-            "other": "dans {0} mois"
-          },
-          "past": {
-            "one": "il y a {0} mois",
-            "other": "il y a {0} mois"
-          }
-        }
-      },
-      "month-short": {
-        "displayName": "m.",
-        "relative": {
-          "0": "ce mois-ci",
-          "1": "le mois prochain",
-          "-1": "le mois dernier"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} m.",
-            "other": "dans {0} m."
-          },
-          "past": {
-            "one": "il y a {0} m.",
-            "other": "il y a {0} m."
-          }
-        }
-      },
-      "day": {
-        "displayName": "jour",
-        "relative": {
-          "0": "aujourd’hui",
-          "1": "demain",
-          "2": "après-demain",
-          "-2": "avant-hier",
-          "-1": "hier"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} jour",
-            "other": "dans {0} jours"
-          },
-          "past": {
-            "one": "il y a {0} jour",
-            "other": "il y a {0} jours"
-          }
-        }
-      },
-      "day-short": {
-        "displayName": "j",
-        "relative": {
-          "0": "aujourd’hui",
-          "1": "demain",
-          "2": "après-demain",
-          "-2": "avant-hier",
-          "-1": "hier"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} j",
-            "other": "dans {0} j"
-          },
-          "past": {
-            "one": "il y a {0} j",
-            "other": "il y a {0} j"
-          }
-        }
-      },
-      "hour": {
-        "displayName": "heure",
-        "relative": {
-          "0": "cette heure-ci"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} heure",
-            "other": "dans {0} heures"
-          },
-          "past": {
-            "one": "il y a {0} heure",
-            "other": "il y a {0} heures"
-          }
-        }
-      },
-      "hour-short": {
-        "displayName": "h",
-        "relative": {
-          "0": "cette heure-ci"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} h",
-            "other": "dans {0} h"
-          },
-          "past": {
-            "one": "il y a {0} h",
-            "other": "il y a {0} h"
-          }
-        }
-      },
-      "minute": {
-        "displayName": "minute",
-        "relative": {
-          "0": "cette minute-ci"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} minute",
-            "other": "dans {0} minutes"
-          },
-          "past": {
-            "one": "il y a {0} minute",
-            "other": "il y a {0} minutes"
-          }
-        }
-      },
-      "minute-short": {
-        "displayName": "min",
-        "relative": {
-          "0": "cette minute-ci"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} min",
-            "other": "dans {0} min"
-          },
-          "past": {
-            "one": "il y a {0} min",
-            "other": "il y a {0} min"
-          }
-        }
-      },
-      "second": {
-        "displayName": "seconde",
-        "relative": {
-          "0": "maintenant"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} seconde",
-            "other": "dans {0} secondes"
-          },
-          "past": {
-            "one": "il y a {0} seconde",
-            "other": "il y a {0} secondes"
-          }
-        }
-      },
-      "second-short": {
-        "displayName": "s",
-        "relative": {
-          "0": "maintenant"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "dans {0} s",
-            "other": "dans {0} s"
-          },
-          "past": {
-            "one": "il y a {0} s",
-            "other": "il y a {0} s"
-          }
-        }
-      }
-    },
-    "numbers": {
-      "decimal": {
-        "long": [[1000, {
-          "one": ["0 millier", 1],
-          "other": ["0 mille", 1]
-        }], [10000, {
-          "one": ["00 mille", 2],
-          "other": ["00 mille", 2]
-        }], [100000, {
-          "one": ["000 mille", 3],
-          "other": ["000 mille", 3]
-        }], [1000000, {
-          "one": ["0 million", 1],
-          "other": ["0 millions", 1]
-        }], [10000000, {
-          "one": ["00 million", 2],
-          "other": ["00 millions", 2]
-        }], [100000000, {
-          "one": ["000 million", 3],
-          "other": ["000 millions", 3]
-        }], [1000000000, {
-          "one": ["0 milliard", 1],
-          "other": ["0 milliards", 1]
-        }], [10000000000, {
-          "one": ["00 milliard", 2],
-          "other": ["00 milliards", 2]
-        }], [100000000000, {
-          "one": ["000 milliard", 3],
-          "other": ["000 milliards", 3]
-        }], [1000000000000, {
-          "one": ["0 billion", 1],
-          "other": ["0 billions", 1]
-        }], [10000000000000, {
-          "one": ["00 billion", 2],
-          "other": ["00 billions", 2]
-        }], [100000000000000, {
-          "one": ["000 billion", 3],
-          "other": ["000 billions", 3]
-        }]],
-        "short": [[1000, {
-          "one": ["0 k", 1],
-          "other": ["0 k", 1]
-        }], [10000, {
-          "one": ["00 k", 2],
-          "other": ["00 k", 2]
-        }], [100000, {
-          "one": ["000 k", 3],
-          "other": ["000 k", 3]
-        }], [1000000, {
-          "one": ["0 M", 1],
-          "other": ["0 M", 1]
-        }], [10000000, {
-          "one": ["00 M", 2],
-          "other": ["00 M", 2]
-        }], [100000000, {
-          "one": ["000 M", 3],
-          "other": ["000 M", 3]
-        }], [1000000000, {
-          "one": ["0 Md", 1],
-          "other": ["0 Md", 1]
-        }], [10000000000, {
-          "one": ["00 Md", 2],
-          "other": ["00 Md", 2]
-        }], [100000000000, {
-          "one": ["000 Md", 3],
-          "other": ["000 Md", 3]
-        }], [1000000000000, {
-          "one": ["0 Bn", 1],
-          "other": ["0 Bn", 1]
-        }], [10000000000000, {
-          "one": ["00 Bn", 2],
-          "other": ["00 Bn", 2]
-        }], [100000000000000, {
-          "one": ["000 Bn", 3],
-          "other": ["000 Bn", 3]
-        }]]
-      }
-    }
-  }];
-  _exports.default = _default;
-});
-;define("dummy/cldrs/pt", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /*jslint eqeq: true*/
-  var _default = [{
-    "locale": "pt-br",
-    "parentLocale": "pt"
-  }, {
-    "locale": "pt",
-    "pluralRuleFunction": function pluralRuleFunction(n, ord) {
-      var s = String(n).split("."),
-          i = s[0];
-      if (ord) return "other";
-      return i == 0 || i == 1 ? "one" : "other";
-    },
-    "fields": {
-      "year": {
-        "displayName": "ano",
-        "relative": {
-          "0": "este ano",
-          "1": "próximo ano",
-          "-1": "ano passado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} ano",
-            "other": "em {0} anos"
-          },
-          "past": {
-            "one": "há {0} ano",
-            "other": "há {0} anos"
-          }
-        }
-      },
-      "year-short": {
-        "displayName": "ano",
-        "relative": {
-          "0": "este ano",
-          "1": "próximo ano",
-          "-1": "ano passado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} ano",
-            "other": "em {0} anos"
-          },
-          "past": {
-            "one": "há {0} ano",
-            "other": "há {0} anos"
-          }
-        }
-      },
-      "month": {
-        "displayName": "mês",
-        "relative": {
-          "0": "este mês",
-          "1": "próximo mês",
-          "-1": "mês passado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} mês",
-            "other": "em {0} meses"
-          },
-          "past": {
-            "one": "há {0} mês",
-            "other": "há {0} meses"
-          }
-        }
-      },
-      "month-short": {
-        "displayName": "mês",
-        "relative": {
-          "0": "este mês",
-          "1": "próximo mês",
-          "-1": "mês passado"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} mês",
-            "other": "em {0} meses"
-          },
-          "past": {
-            "one": "há {0} mês",
-            "other": "há {0} meses"
-          }
-        }
-      },
-      "day": {
-        "displayName": "dia",
-        "relative": {
-          "0": "hoje",
-          "1": "amanhã",
-          "2": "depois de amanhã",
-          "-2": "anteontem",
-          "-1": "ontem"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} dia",
-            "other": "em {0} dias"
-          },
-          "past": {
-            "one": "há {0} dia",
-            "other": "há {0} dias"
-          }
-        }
-      },
-      "day-short": {
-        "displayName": "dia",
-        "relative": {
-          "0": "hoje",
-          "1": "amanhã",
-          "2": "depois de amanhã",
-          "-2": "anteontem",
-          "-1": "ontem"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} dia",
-            "other": "em {0} dias"
-          },
-          "past": {
-            "one": "há {0} dia",
-            "other": "há {0} dias"
-          }
-        }
-      },
-      "hour": {
-        "displayName": "hora",
-        "relative": {
-          "0": "esta hora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} hora",
-            "other": "em {0} horas"
-          },
-          "past": {
-            "one": "há {0} hora",
-            "other": "há {0} horas"
-          }
-        }
-      },
-      "hour-short": {
-        "displayName": "h",
-        "relative": {
-          "0": "esta hora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} h",
-            "other": "em {0} h"
-          },
-          "past": {
-            "one": "há {0} h",
-            "other": "há {0} h"
-          }
-        }
-      },
-      "minute": {
-        "displayName": "minuto",
-        "relative": {
-          "0": "este minuto"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} minuto",
-            "other": "em {0} minutos"
-          },
-          "past": {
-            "one": "há {0} minuto",
-            "other": "há {0} minutos"
-          }
-        }
-      },
-      "minute-short": {
-        "displayName": "min.",
-        "relative": {
-          "0": "este minuto"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} min.",
-            "other": "em {0} min."
-          },
-          "past": {
-            "one": "há {0} min.",
-            "other": "há {0} min."
-          }
-        }
-      },
-      "second": {
-        "displayName": "segundo",
-        "relative": {
-          "0": "agora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} segundo",
-            "other": "em {0} segundos"
-          },
-          "past": {
-            "one": "há {0} segundo",
-            "other": "há {0} segundos"
-          }
-        }
-      },
-      "second-short": {
-        "displayName": "seg.",
-        "relative": {
-          "0": "agora"
-        },
-        "relativeTime": {
-          "future": {
-            "one": "em {0} seg.",
-            "other": "em {0} seg."
-          },
-          "past": {
-            "one": "há {0} seg.",
-            "other": "há {0} seg."
-          }
-        }
-      }
-    },
-    "numbers": {
-      "decimal": {
-        "long": [[1000, {
-          "one": ["0 mil", 1],
-          "other": ["0 mil", 1]
-        }], [10000, {
-          "one": ["00 mil", 2],
-          "other": ["00 mil", 2]
-        }], [100000, {
-          "one": ["000 mil", 3],
-          "other": ["000 mil", 3]
-        }], [1000000, {
-          "one": ["0 milhão", 1],
-          "other": ["0 milhões", 1]
-        }], [10000000, {
-          "one": ["00 milhão", 2],
-          "other": ["00 milhões", 2]
-        }], [100000000, {
-          "one": ["000 milhão", 3],
-          "other": ["000 milhões", 3]
-        }], [1000000000, {
-          "one": ["0 bilhão", 1],
-          "other": ["0 bilhões", 1]
-        }], [10000000000, {
-          "one": ["00 bilhão", 2],
-          "other": ["00 bilhões", 2]
-        }], [100000000000, {
-          "one": ["000 bilhão", 3],
-          "other": ["000 bilhões", 3]
-        }], [1000000000000, {
-          "one": ["0 trilhão", 1],
-          "other": ["0 trilhões", 1]
-        }], [10000000000000, {
-          "one": ["00 trilhão", 2],
-          "other": ["00 trilhões", 2]
-        }], [100000000000000, {
-          "one": ["000 trilhão", 3],
-          "other": ["000 trilhões", 3]
-        }]],
-        "short": [[1000, {
-          "one": ["0 mil", 1],
-          "other": ["0 mil", 1]
-        }], [10000, {
-          "one": ["00 mil", 2],
-          "other": ["00 mil", 2]
-        }], [100000, {
-          "one": ["000 mil", 3],
-          "other": ["000 mil", 3]
-        }], [1000000, {
-          "one": ["0 mi", 1],
-          "other": ["0 mi", 1]
-        }], [10000000, {
-          "one": ["00 mi", 2],
-          "other": ["00 mi", 2]
-        }], [100000000, {
-          "one": ["000 mi", 3],
-          "other": ["000 mi", 3]
-        }], [1000000000, {
-          "one": ["0 bi", 1],
-          "other": ["0 bi", 1]
-        }], [10000000000, {
-          "one": ["00 bi", 2],
-          "other": ["00 bi", 2]
-        }], [100000000000, {
-          "one": ["000 bi", 3],
-          "other": ["000 bi", 3]
-        }], [1000000000000, {
-          "one": ["0 tri", 1],
-          "other": ["0 tri", 1]
-        }], [10000000000000, {
-          "one": ["00 tri", 2],
-          "other": ["00 tri", 2]
-        }], [100000000000000, {
-          "one": ["000 tri", 3],
-          "other": ["000 tri", 3]
-        }]]
-      }
-    }
-  }];
   _exports.default = _default;
 });
 ;define("dummy/components/-lf-get-outlet-state", ["exports", "liquid-fire/components/-lf-get-outlet-state"], function (_exports, _lfGetOutletState) {
@@ -1778,20 +246,6 @@
     }
   });
 });
-;define("dummy/components/code-snippet", ["exports", "ember-code-snippet/components/code-snippet", "dummy/snippets"], function (_exports, _codeSnippet, _snippets) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = _codeSnippet.default.extend({
-    snippets: _snippets.default
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/components/copy-button", ["exports", "ember-cli-clipboard/components/copy-button"], function (_exports, _copyButton) {
   "use strict";
 
@@ -1802,6 +256,19 @@
     enumerable: true,
     get: function get() {
       return _copyButton.default;
+    }
+  });
+});
+;define("dummy/components/docs-code-highlight", ["exports", "ember-cli-addon-docs/components/docs-code-highlight/component"], function (_exports, _component) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _component.default;
     }
   });
 });
@@ -2221,82 +688,6 @@
     }
   });
 });
-;define("dummy/components/etw/module-section", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Component.extend({
-    tagName: ''
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/components/etw/module-style-detail", ["exports", "ember-cli-tailwind/utils/classes-for-module-style"], function (_exports, _classesForModuleStyle) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Component.extend({
-    etwTailwindStyleguide: Ember.inject.service(),
-    moduleStyle: Ember.computed.reads('etwTailwindStyleguide.selectedModuleStyle'),
-    activeResponsiveClass: 'all',
-    activeState: 'none',
-    detailStyles: Ember.computed('moduleStyle', 'activeResponsiveClass', 'activeState', function () {
-      var moduleStyle = this.moduleStyle;
-      var activeResponsiveClass = this.activeResponsiveClass;
-      var responsivePrefix = activeResponsiveClass === 'all' ? '' : "".concat(activeResponsiveClass, ":");
-      var activeState = this.activeState;
-      var statePrefix = activeState === 'none' ? '' : "".concat(activeState, ":");
-      return (0, _classesForModuleStyle.default)(moduleStyle).map(function (cssClass) {
-        return "".concat(responsivePrefix).concat(statePrefix).concat(cssClass);
-      });
-    }),
-    actions: {
-      highlightStyle: function highlightStyle(style) {
-        var _this = this;
-
-        this.set('highlightedStyle', style);
-        Ember.run.later(function () {
-          _this.set('highlightedStyle', null);
-        }, 1500);
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/components/etw/module-style-example", ["exports", "ember-cli-tailwind/utils/classes-for-module-style"], function (_exports, _classesForModuleStyle) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Component.extend({
-    tagName: '',
-    etwTailwindStyleguide: Ember.inject.service(),
-    // Passed in
-    moduleStyle: null,
-    classesForModuleStyle: Ember.computed('moduleStyle', function () {
-      return (0, _classesForModuleStyle.default)(this.moduleStyle);
-    }),
-    actions: {
-      selectModuleStyle: function selectModuleStyle() {
-        this.etwTailwindStyleguide.set('selectedModuleStyle', this.moduleStyle);
-      }
-    }
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/components/illiquid-model", ["exports", "liquid-fire/components/illiquid-model"], function (_exports, _illiquidModel) {
   "use strict";
 
@@ -2459,65 +850,6 @@
     }
   });
 });
-;define("dummy/controllers/application-tailwind", ["exports", "dummy/tailwind/config/colors", "dummy/tailwind/config/screens", "dummy/tailwind/config/fonts", "dummy/tailwind/config/text-sizes", "dummy/tailwind/config/font-weights", "dummy/tailwind/config/line-height", "dummy/tailwind/config/letter-spacing", "dummy/tailwind/config/border-widths", "dummy/tailwind/config/border-radius", "dummy/tailwind/config/width", "dummy/tailwind/config/height", "dummy/tailwind/config/min-width", "dummy/tailwind/config/min-height", "dummy/tailwind/config/max-width", "dummy/tailwind/config/max-height", "dummy/tailwind/config/padding", "dummy/tailwind/config/margin", "dummy/tailwind/config/negative-margin", "dummy/tailwind/config/shadows", "dummy/tailwind/config/z-index", "dummy/tailwind/config/opacity", "dummy/tailwind/config/svg-fill", "dummy/tailwind/config/svg-stroke"], function (_exports, _colors, _screens, _fonts, _textSizes, _fontWeights, _lineHeight, _letterSpacing, _borderWidths, _borderRadius, _width, _height, _minWidth, _minHeight, _maxWidth, _maxHeight, _padding, _margin, _negativeMargin, _shadows, _zIndex, _opacity, _svgFill, _svgStroke) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var modules = {
-    colors: _colors.default,
-    screens: _screens.default,
-    fonts: _fonts.default,
-    textSizes: _textSizes.default,
-    fontWeights: _fontWeights.default,
-    leading: _lineHeight.default,
-    tracking: _letterSpacing.default,
-    borderWidths: _borderWidths.default,
-    borderRadius: _borderRadius.default,
-    width: _width.default,
-    height: _height.default,
-    minWidth: _minWidth.default,
-    minHeight: _minHeight.default,
-    maxWidth: _maxWidth.default,
-    maxHeight: _maxHeight.default,
-    padding: _padding.default,
-    margin: _margin.default,
-    negativeMargin: _negativeMargin.default,
-    shadows: _shadows.default,
-    zIndex: _zIndex.default,
-    opacity: _opacity.default,
-    svgFill: _svgFill.default,
-    svgStroke: _svgStroke.default
-  };
-
-  var _default = Ember.Controller.extend({
-    /*
-      A module style is an object that looks like
-       {
-        module: 'border-radius',
-        name: 'lg',
-        value: '.5rem'
-      }
-    */
-    moduleStyles: Ember.computed(function () {
-      return Object.keys(modules).reduce(function (allModules, moduleName) {
-        var hash = modules[moduleName];
-        allModules[moduleName] = Object.keys(hash).map(function (key) {
-          return {
-            module: Ember.String.dasherize(moduleName),
-            name: key,
-            value: hash[key]
-          };
-        });
-        return allModules;
-      }, {});
-    })
-  });
-
-  _exports.default = _default;
-});
 ;define("dummy/controllers/docs/api/class", ["exports", "ember-cli-addon-docs/controllers/docs/api/class"], function (_exports, _class) {
   "use strict";
 
@@ -2528,6 +860,19 @@
     enumerable: true,
     get: function get() {
       return _class.default;
+    }
+  });
+});
+;define("dummy/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _debug.default;
     }
   });
 });
@@ -2551,6 +896,9 @@
       hhmmss: hhmmss
     },
     number: {
+      compact: {
+        notation: 'compact'
+      },
       EUR: {
         style: 'currency',
         currency: 'EUR'
@@ -2566,17 +914,6 @@
       currency: {
         style: 'currency',
         minimumFractionDigits: 2
-      }
-    },
-    shortNumber: {
-      zeroSignificantDigits: {
-        significantDigits: 0
-      },
-      oneSignificantDigit: {
-        significantDigits: 1
-      },
-      twoSignificantDigits: {
-        significantDigits: 2
       }
     }
   };
@@ -3456,6 +1793,25 @@
     }
   });
 });
+;define("dummy/helpers/noop", ["exports", "ember-composable-helpers/helpers/noop"], function (_exports, _noop) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _noop.default;
+    }
+  });
+  Object.defineProperty(_exports, "noop", {
+    enumerable: true,
+    get: function get() {
+      return _noop.noop;
+    }
+  });
+});
 ;define("dummy/helpers/not-eq", ["exports", "ember-truth-helpers/helpers/not-equal"], function (_exports, _notEqual) {
   "use strict";
 
@@ -4115,7 +2471,20 @@
     }
   });
 });
-;define("dummy/initializers/ember-data", ["exports", "ember-data/setup-container", "ember-data"], function (_exports, _setupContainer, _emberData) {
+;define("dummy/initializers/ember-data-data-adapter", ["exports", "@ember-data/debug/setup"], function (_exports, _setup) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _setup.default;
+    }
+  });
+});
+;define("dummy/initializers/ember-data", ["exports", "ember-data", "ember-data/setup-container"], function (_exports, _emberData, _setupContainer) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -4124,42 +2493,10 @@
   _exports.default = void 0;
 
   /*
+    This code initializes EmberData in an Ember application.
   
-    This code initializes Ember-Data onto an Ember application.
-  
-    If an Ember.js developer defines a subclass of DS.Store on their application,
-    as `App.StoreService` (or via a module system that resolves to `service:store`)
-    this code will automatically instantiate it and make it available on the
-    router.
-  
-    Additionally, after an application's controllers have been injected, they will
-    each have the store made available to them.
-  
-    For example, imagine an Ember.js application with the following classes:
-  
-    ```app/services/store.js
-    import DS from 'ember-data';
-  
-    export default DS.Store.extend({
-      adapter: 'custom'
-    });
-    ```
-  
-    ```app/controllers/posts.js
-    import { Controller } from '@ember/controller';
-  
-    export default Controller.extend({
-      // ...
-    });
-  
-    When the application is initialized, `ApplicationStore` will automatically be
-    instantiated, and the instance of `PostsController` will have its `store`
-    property set to that instance.
-  
-    Note that this code will only be run if the `ember-application` package is
-    loaded. If Ember Data is being used in an environment other than a
-    typical application (e.g., node.js where only `ember-runtime` is available),
-    this code will be ignored.
+    It ensures that the `store` service is automatically injected
+    as the `store` property on all routes and controllers.
   */
   var _default = {
     name: 'ember-data',
@@ -4281,6 +2618,25 @@
     initialize: function initialize() {}
   };
   _exports.default = _default;
+});
+;define("dummy/initializers/route-anchor-jump", ["exports", "ember-cli-addon-docs/initializers/route-anchor-jump"], function (_exports, _routeAnchorJump) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _routeAnchorJump.default;
+    }
+  });
+  Object.defineProperty(_exports, "initialize", {
+    enumerable: true,
+    get: function get() {
+      return _routeAnchorJump.initialize;
+    }
+  });
 });
 ;define("dummy/instance-initializers/ember-data", ["exports", "ember-data/initialize-store-service"], function (_exports, _initializeStoreService) {
   "use strict";
@@ -4451,8 +2807,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "paK0sx+G",
-    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"docs-header\"],false],[0,\"\\n\"],[7,\"div\",true],[10,\"id\",\"locale-switcher\"],[8],[9],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"],[1,[22,\"docs-keyboard-shortcuts\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "Qdri3yZn",
+    "block": "{\"symbols\":[],\"statements\":[[1,0,0,0,[27,[26,0,\"AppendSingleId\"],[]]],[1,1,0,0,\"\\n\"],[9,\"div\",true],[12,\"id\",\"locale-switcher\",null],[10],[11],[1,1,0,0,\"\\n\"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],null,null]],null]],[1,1,0,0,\"\\n\"],[1,0,0,0,[27,[26,3,\"AppendSingleId\"],[]]],[1,1,0,0,\"\\n\"]],\"hasEval\":false,\"upvars\":[\"docs-header\",\"-outlet\",\"component\",\"docs-keyboard-shortcuts\"]}",
     "meta": {
       "moduleName": "dummy/pods/application/template.hbs"
     }
@@ -4488,8 +2844,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "coeI74wM",
-    "block": "{\"symbols\":[],\"statements\":[[4,\"ember-wormhole\",null,[[\"to\"],[\"locale-switcher\"]],{\"statements\":[[0,\"  \"],[7,\"ul\",true],[10,\"class\",\"intl-tools\"],[8],[0,\"\\n    \"],[7,\"li\",true],[8],[7,\"button\",false],[3,\"action\",[[23,0,[]],\"changeLocale\",\"en-us\"]],[8],[0,\"en-us\"],[9],[9],[0,\"\\n    \"],[7,\"li\",true],[8],[7,\"button\",false],[3,\"action\",[[23,0,[]],\"changeLocale\",\"es-es\"]],[8],[0,\"es-es\"],[9],[9],[0,\"\\n    \"],[7,\"li\",true],[8],[7,\"button\",false],[3,\"action\",[[23,0,[]],\"changeLocale\",\"fr-fr\"]],[8],[0,\"fr-fr\"],[9],[9],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}",
+    "id": "zWEncshQ",
+    "block": "{\"symbols\":[],\"statements\":[[5,[27,[26,1,\"BlockHead\"],[]],null,[[\"to\"],[\"locale-switcher\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"  \"],[9,\"ul\",true],[12,\"class\",\"intl-tools\",null],[10],[1,1,0,0,\"\\n    \"],[9,\"li\",true],[10],[9,\"button\",false],[3,0,0,[27,[26,0,\"ModifierHead\"],[]],[[27,[24,0],[]],\"changeLocale\",\"en-us\"],null],[10],[1,1,0,0,\"en-us\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"li\",true],[10],[9,\"button\",false],[3,0,0,[27,[26,0,\"ModifierHead\"],[]],[[27,[24,0],[]],\"changeLocale\",\"es-es\"],null],[10],[1,1,0,0,\"es-es\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"li\",true],[10],[9,\"button\",false],[3,0,0,[27,[26,0,\"ModifierHead\"],[]],[[27,[24,0],[]],\"changeLocale\",\"fr-fr\"],null],[10],[1,1,0,0,\"fr-fr\"],[11],[11],[1,1,0,0,\"\\n  \"],[11],[1,1,0,0,\"\\n\"]],\"parameters\":[]}]]]],\"hasEval\":false,\"upvars\":[\"action\",\"ember-wormhole\"]}",
     "meta": {
       "moduleName": "dummy/pods/components/locale-switcher/template.hbs"
     }
@@ -4506,46 +2862,10 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "fXEwwIPH",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"addon-support\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Addon support\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"By default, addons are supported out of the box. They simply need to implement a \"],[7,\"code\",true],[8],[0,\"/translations\"],[9],[0,\" folder at the root of your project (NOTE: a sibling to \"],[7,\"code\",true],[8],[0,\"app\"],[9],[0,\" \"],[7,\"em\",true],[8],[0,\"not\"],[9],[0,\" a child) then the contents of the translation folder will be bundled with the translations of your host app.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"advanced-usage-treefortranslations-\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#advanced-usage-treefortranslations-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Advanced Usage (treeForTranslations)\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"As of 3.0.0, a new hook called \"],[7,\"code\",true],[8],[0,\"treeForTranslations\"],[9],[0,\" was introduced for better addon support.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The behavior is that every addon that implements a \"],[7,\"code\",true],[8],[0,\"treeForTranslations\"],[9],[0,\" hook will be invoked at build time. If an addon does not implement a \"],[7,\"code\",true],[8],[0,\"treeForTranslations\"],[9],[0,\" but instead has a \"],[7,\"code\",true],[8],[0,\"/translations\"],[9],[0,\" folder then the contents of the folder will be used.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"An example use-case of this hook would be programmatically fetching translations at build time from a third-party service. If you create a broccoli plugin that you think will be useful for others, submit a PR to add to the documentation!\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// index.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'an-ember-addon'\"],[9],[0,\",\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"/**\\n   * \"],[7,\"span\",true],[10,\"class\",\"hljs-doctag\"],[8],[0,\"NOTE:\"],[9],[0,\" addon's translation tree provided as an arg.\\n   * No need to return it if you are reimplementing behavior.\\n   * If you want to programmatically modify the translation node,\\n   * then feel free to mutate the passed in tree and return it.\\n   */\"],[9],[0,\"\\n  treeForTranslations(\"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"/*tree*/\"],[9],[0,\") {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"new\"],[9],[0,\" BroccoliTranslationPlugin();\\n  }\\n};\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"overriding-translations\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#overriding-translations\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Overriding Translations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"The host application can always override addon translations. If the application implements a key that collides with an addon, then the application wins when bundling the translations. This is intended to allow host applications to override translations w/o having to modify an addon.\"],[9],[9]],\"hasEval\":false}",
+    "id": "RFS+nEzy",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"addon-support\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Addon support\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"By default, addons are supported out of the box. They simply need to implement a \"],[9,\"code\",true],[10],[1,1,0,0,\"/translations\"],[11],[1,1,0,0,\" folder at the root of your project (NOTE: a sibling to \"],[9,\"code\",true],[10],[1,1,0,0,\"app\"],[11],[1,1,0,0,\" \"],[9,\"em\",true],[10],[1,1,0,0,\"not\"],[11],[1,1,0,0,\" a child) then the contents of the translation folder will be bundled with the translations of your host app.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"advanced-usage-treefortranslations-\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#advanced-usage-treefortranslations-\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Advanced Usage (treeForTranslations)\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"As of 3.0.0, a new hook called \"],[9,\"code\",true],[10],[1,1,0,0,\"treeForTranslations\"],[11],[1,1,0,0,\" was introduced for better addon support.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"The behavior is that every addon that implements a \"],[9,\"code\",true],[10],[1,1,0,0,\"treeForTranslations\"],[11],[1,1,0,0,\" hook will be invoked at build time. If an addon does not implement a \"],[9,\"code\",true],[10],[1,1,0,0,\"treeForTranslations\"],[11],[1,1,0,0,\" but instead has a \"],[9,\"code\",true],[10],[1,1,0,0,\"/translations\"],[11],[1,1,0,0,\" folder then the contents of the folder will be used.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"An example use-case of this hook would be programmatically fetching translations at build time from a third-party service. If you create a broccoli plugin that you think will be useful for others, submit a PR to add to the documentation!\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// index.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\".exports = {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"name\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'an-ember-addon'\"],[11],[1,1,0,0,\",\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"/**\\n   * \"],[9,\"span\",true],[12,\"class\",\"hljs-doctag\",null],[10],[1,1,0,0,\"NOTE:\"],[11],[1,1,0,0,\" addon's translation tree provided as an arg.\\n   * No need to return it if you are reimplementing behavior.\\n   * If you want to programmatically modify the translation node,\\n   * then feel free to mutate the passed in tree and return it.\\n   */\"],[11],[1,1,0,0,\"\\n  treeForTranslations(\"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"/*tree*/\"],[11],[1,1,0,0,\") {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"new\"],[11],[1,1,0,0,\" BroccoliTranslationPlugin();\\n  }\\n};\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"overriding-translations\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#overriding-translations\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Overriding Translations\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"The host application can always override addon translations. If the application implements a key that collides with an addon, then the application wins when bundling the translations. This is intended to allow host applications to override translations w/o having to modify an addon.\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/advanced/addon-support/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/advanced/ember-cp-validation/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "RmlvTElp",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"ember-intl-cp-validations\"],[10,\"class\",\"docs-md__h1\"],[8],[7,\"a\",true],[10,\"href\",\"https://github.com/jasonmit/ember-intl-cp-validations\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ember-intl-cp-validations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Adds support for ember-intl in \"],[7,\"a\",true],[10,\"href\",\"https://github.com/offirgolan/ember-cp-validations\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ember-cp-validations\"],[9],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/advanced/ember-cp-validation/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/advanced/engine-support/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "cVIs+5nk",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"engine-support\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Engine Support\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"// TODO\"],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/advanced/engine-support/template.hbs"
     }
   });
 
@@ -4560,8 +2880,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "y3uvro3f",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"common-errors\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Common errors\"],[9],[0,\"\\n    \\n      \"],[7,\"h4\",true],[10,\"id\",\"date-value-is-not-finite-in-datetimeformat-format-\"],[10,\"class\",\"docs-md__h4\"],[8],[7,\"a\",true],[10,\"href\",\"#date-value-is-not-finite-in-datetimeformat-format-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"date value is not finite in DateTimeFormat.format()\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: \"],[7,\"code\",true],[8],[0,\"new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The solution is the ensure that the value you are passing in is in a format which is valid for the \"],[7,\"code\",true],[8],[0,\"Date\"],[9],[0,\" constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.\"],[9],[9]],\"hasEval\":false}",
+    "id": "s8EHYAB2",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"common-errors\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Common errors\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h4\",true],[12,\"id\",\"date-value-is-not-finite-in-datetimeformat-format-\",null],[12,\"class\",\"docs-md__h4\",null],[10],[9,\"a\",true],[12,\"href\",\"#date-value-is-not-finite-in-datetimeformat-format-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"date value is not finite in DateTimeFormat.format()\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Browser vendors implement date/time parsing differently.  For example, the following will parse correctly in Chrome but fail in Firefox: \"],[9,\"code\",true],[10],[1,1,0,0,\"new Intl.DateTimeFormat().format('2015-04-21 20:47:31 GMT');\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"The solution is the ensure that the value you are passing in is in a format which is valid for the \"],[9,\"code\",true],[10],[1,1,0,0,\"Date\"],[11],[1,1,0,0,\" constructor.  This library currently does not try and normalize date strings outside of what the browser already implements.\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/cookbook/common-errors/template.hbs"
     }
@@ -4569,7 +2889,7 @@
 
   _exports.default = _default;
 });
-;define("dummy/pods/docs/cookbook/migration-3-0-to-4-0/template", ["exports"], function (_exports) {
+;define("dummy/pods/docs/cookbook/migration-4-0-to-5-0/template", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -4578,10 +2898,10 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "P6XkDybP",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"migrating-from-3-0-to-4-0\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Migrating from 3.0 to 4.0\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"No migration necessary.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"breaking-change\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#breaking-change\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Breaking Change\"],[9],[9],[0,\"\\n    \"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"CLDR locale data set has been updated from 28.0.0 to 34.0.0\"],[9],[0,\"\\n\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"enhancements\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#enhancements\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Enhancements\"],[9],[9],[0,\"\\n    \"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"Translation blueprint now adds translation relative to config \"],[7,\"code\",true],[8],[0,\"inputPath\"],[9],[0,\" option\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"Relative time API now has \"],[7,\"a\",true],[10,\"href\",\"https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"short\"],[9],[9],[0,\" units\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"baseLocale\"],[9],[0,\" API has returned as \"],[7,\"code\",true],[8],[0,\"fallbackLocale\"],[9],[0,\". Enables merging the fallback locale's translations into all other locales as a build-time fallback strategy.\"],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
+    "id": "BtZDPqoy",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"migrating-from-4-0-to-5-0\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Migrating from 4.0 to 5.0\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h2\",true],[12,\"id\",\"obsolete\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#obsolete\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Obsolete\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"The \"],[9,\"code\",true],[10],[1,1,0,0,\"locales\"],[11],[1,1,0,0,\" configuration option within \"],[9,\"code\",true],[10],[1,1,0,0,\"config/ember-intl.js\"],[11],[1,1,0,0,\" can now be removed\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"breaking-change\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#breaking-change\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Breaking Change\"],[11],[11],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h3\",true],[12,\"id\",\"node-runtime\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#node-runtime\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Node runtime\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"We now support down to Node 10, dropping support for Node 8\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"polyfilling\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#polyfilling\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Polyfilling\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"This addon no longer provides polyfills \\\"out of the box.\\\"  The reasoning, along with the current browser requirements, can be found in the \"],[1,0,0,0,[31,968,9,[27,[26,0,\"CallHead\"],[]],[\"Runtime Requirements\",\"docs.getting-started.runtime-requirements\"],null]],[1,1,0,0,\" section.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"intl-relativetimeformat\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#intl-relativetimeformat\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"Intl.RelativeTimeFormat\"],[11],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"When we introduced FormatRelative, the spec for \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"Intl.RelativeTimeFormat\"],[11],[11],[1,1,0,0,\" was still under development. It has now reached stage 3 and multiple browsers have implemented it. However, the API is quite different from the spec we had implemented so we've had to adjust the API to match the spec which means it's not backwards compatible.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Changes:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"units\"],[11],[1,1,0,0,\" is now \"],[9,\"code\",true],[10],[1,1,0,0,\"unit\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"style\"],[11],[1,1,0,0,\" becomes \"],[9,\"code\",true],[10],[1,1,0,0,\"numeric\"],[11],[1,1,0,0,\" (the default)\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Type of \"],[9,\"code\",true],[10],[1,1,0,0,\"value\"],[11],[1,1,0,0,\" is no longer a \"],[9,\"code\",true],[10],[1,1,0,0,\"Date\"],[11],[1,1,0,0,\" instance but rather delta in the specified \"],[9,\"code\",true],[10],[1,1,0,0,\"unit\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"interval\"],[11],[1,1,0,0,\" was removed from the format-relative helper\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"now\"],[11],[1,1,0,0,\" was removed from the format-relative helper\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"translations\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#translations\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Translations\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Escaping in translations is now done via a single quote, \"],[9,\"code\",true],[10],[1,1,0,0,\"'\"],[11],[1,1,0,0,\", instead of the previous slash \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\\\"],[11],[1,1,0,0,\".  This was done to ensure compliance with the ICU spec.\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Additionally, all HTML tags now need to be escaped.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"<strong>{name}</strong>\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"becomes\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"'<strong>'{name}'</strong>'\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"compact-number-formatter\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#compact-number-formatter\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Compact Number Formatter\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"In 4.x, we introduced a shortNumber formatter.  This is no longer necessary as we can rely on the native Intl.NumberFormat to compact numbers into their abbreviated form.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"{numCustomers, shortNumber}\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"becomes\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"{numCustomers, number, compact}\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"or\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"{{format-number numCustomers notation=\\\"compact\\\"}}\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[\"docs-link\"]}",
     "meta": {
-      "moduleName": "dummy/pods/docs/cookbook/migration-3-0-to-4-0/template.hbs"
+      "moduleName": "dummy/pods/docs/cookbook/migration-4-0-to-5-0/template.hbs"
     }
   });
 
@@ -4596,28 +2916,10 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "0XcYMlau",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"overview\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Overview\"],[9],[0,\"\\n    \\n      \"],[7,\"h2\",true],[10,\"id\",\"what-is-ember-intl-\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#what-is-ember-intl-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"What is Ember-Intl?\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Ember-intl is an ember addon for internationalization that focuses on \"],[7,\"strong\",true],[8],[0,\"translating simple to complex messages\"],[9],[0,\" as well as \"],[7,\"strong\",true],[8],[0,\"localized formatting\"],[9],[0,\" for date/time, number, and relative time.\\nEmber-intl is based on the native \"],[7,\"a\",true],[10,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ECMAScript Internationalization API\"],[9],[0,\" that is now supported by \"],[7,\"a\",true],[10,\"href\",\"https://caniuse.com/#feat=internationalization\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"all modern browsers\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"notable-features\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#notable-features\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Notable Features\"],[9],[9],[0,\"\\n    \"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"💵 Locale-aware numbers. Formatting of currencies, decimals, and percentages.\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"📅 Locale-aware dates and times formatting\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"🕑 Locale-aware display of relative time. I.e, \"],[7,\"code\",true],[8],[0,\"\\\"now\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"yesterday\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"2 mo. ago\\\"\"],[9],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"💬 ICU Message Syntax. Pluralization and formatted segments (numbers, datetime, etc.).\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"🌐 Support for 150+ languages.\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"📜 Built largely on standards. \"],[7,\"a\",true],[10,\"href\",\"https://formatjs.io/guides/message-syntax/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ICU message syntax\"],[9],[0,\" & \"],[7,\"a\",true],[10,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"Native Intl API\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"⚡ Extensive Ember Service API and template helpers for formatting and translating.\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"🎉 \"],[1,[28,\"docs-link\",[\"Advanced addon support\",\"docs.advanced.addon-support\"],null],false],[0,\" to provide translations to the host app\"],[9],[0,\"\\n\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"online-community-chat\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#online-community-chat\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Online Community Chat\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Join the \"],[7,\"code\",true],[8],[0,\"topic-i18n\"],[9],[0,\" channel \"],[7,\"a\",true],[10,\"href\",\"https://discordapp.com/invite/zT3asNS\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"here\"],[9],[0,\" to ask questions and chat with community members in real-time.\"],[9],[9]],\"hasEval\":false}",
+    "id": "el6fEFi0",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"overview\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Overview\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h2\",true],[12,\"id\",\"what-is-ember-intl-\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#what-is-ember-intl-\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"What is Ember-Intl?\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Ember-intl is an internationalization addon that unlocks \"],[9,\"strong\",true],[10],[1,1,0,0,\"translating simple to complex messages\"],[11],[1,1,0,0,\" using built-in \"],[9,\"strong\",true],[10],[1,1,0,0,\"pluralization rules\"],[11],[1,1,0,0,\", \"],[9,\"strong\",true],[10],[1,1,0,0,\"number and datetime formatting\"],[11],[1,1,0,0,\", with support for \"],[9,\"strong\",true],[10],[1,1,0,0,\"over 150 languages\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Ember-intl is now entirely built on native \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ECMAScript Internationalization APIs\"],[11],[1,1,0,0,\" that are now supported by \"],[9,\"a\",true],[12,\"href\",\"https://caniuse.com/#feat=internationalization\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"all modern browsers\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"notable-features\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#notable-features\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Notable Features\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"💵 Locale-aware numbers: currencies, decimals, and percentages\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"📅 Locale-aware date and time formatting\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"🕑 Locale-aware display of relative time. i.e, \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"in 1 day\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"2 years ago\\\"\"],[11],[1,1,0,0,\", etc.\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"💬 Translations containing fragments of any of the above\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedicu\",null],[10],[1,1,0,0,\"Sale begins {start, date, medium}\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"also built-in pluralization:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedicu\",null],[10],[1,1,0,0,\"You have {itemCount, plural,\\n    =0 {no items}\\n    one {# item}\\n    other {# items}\\n}\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"🌐 Support for 150+ languages.\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"📜 Built on standards such as the \"],[9,\"a\",true],[12,\"href\",\"https://formatjs.io/guides/message-syntax/\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ICU message syntax\"],[11],[1,1,0,0,\" & \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Native Intl API\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"⚡ Extensive Ember Service API and template helpers for formatting and translating.\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"🎉 \"],[1,0,0,0,[31,2011,9,[27,[26,0,\"CallHead\"],[]],[\"Advanced addon support\",\"docs.advanced.addon-support\"],null]],[1,1,0,0,\" to provide translations to the host app\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"online-community-chat\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#online-community-chat\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Online Community Chat\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Join the \"],[9,\"code\",true],[10],[1,1,0,0,\"topic-i18n\"],[11],[1,1,0,0,\" channel \"],[9,\"a\",true],[12,\"href\",\"https://discordapp.com/invite/zT3asNS\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"here\"],[11],[1,1,0,0,\" to ask questions and chat with community members in real-time.\"],[11],[11]],\"hasEval\":false,\"upvars\":[\"docs-link\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/getting-started/index/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/getting-started/installation/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "KziLvHMv",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"installation\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Installation\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"To install ember-intl, run:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[8],[0,\"ember install ember-intl\"],[9],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/getting-started/installation/template.hbs"
     }
   });
 
@@ -4632,10 +2934,28 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "LMcMbcgq",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"quickstart\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Quickstart\"],[9],[0,\"\\n    \\n      \"],[7,\"h2\",true],[10,\"id\",\"1-install-ember-intl\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#1-install-ember-intl\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"1. Install ember-intl\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedbash\"],[8],[0,\"ember install ember-intl\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"This will create the following files:\"],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"app/format.js\"],[9],[0,\"  \"],[2,\" default definitions of named formats \"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"config/ember-intl.js\"],[9],[0,\"  \"],[2,\" default ember-intl settings \"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"translations/en-us.yaml\"],[9],[9],[0,\"\\n\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"2-add-your-first-translation\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#2-add-your-first-translation\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"2. Add your first translation\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Create a translation key in \"],[7,\"code\",true],[8],[0,\"translations/en-us.yaml\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"# translations/en-us.yaml\\nhello:\\n  world: Hello World!\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"In a template add the following:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"<!-- app/templates/application.hbs -->\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"h1\"],[9],[0,\">\"],[9],[0,\"{{t \\\"hello.world\\\"}}\"],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"</\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"h1\"],[9],[0,\">\"],[9],[0,\"\\n\\n\"],[9],[7,\"span\",true],[10,\"class\",\"hljs-template-variable\"],[8],[0,\"{{\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"outlet\"],[9],[0,\"}}\"],[9],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"3-add-a-new-language\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#3-add-a-new-language\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"3. Add a new language\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Create a new translation file: \"],[7,\"code\",true],[8],[0,\"translations/fr-fr.yaml\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[8],[0,\"# translations/fr-fr.yaml\\nhello:\\n  world: \\\"Bonjour tout le monde!\\\"\"],[9],[9],[0,\"\\n      \"],[7,\"h2\",true],[10,\"id\",\"4-configure-ember-intl\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#4-configure-ember-intl\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"4. Configure ember-intl\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"strong\",true],[8],[0,\"Setup your application-wide locale\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"You will need to define what locale your app will use by default. This can be done at any point after your app boots. This is typically done within your Application route's \"],[7,\"code\",true],[8],[0,\"beforeModel\"],[9],[0,\" hook by calling \"],[7,\"code\",true],[8],[0,\"intl.setLocale(['en-us'])\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/routes/application.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { inject \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"as\"],[9],[0,\" service } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/service'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" Route \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/routing/route'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Route.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": service(),\\n  beforeModel() {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\"._super(...arguments);\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.setLocale([\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\"]);\\n  }\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[7,\"strong\",true],[8],[0,\"Configure your template linter\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"If your app uses \"],[7,\"code\",true],[8],[0,\"ember-cli-template-lint\"],[9],[0,\" (which is installed by default since ember-cli v3.4.1),\\nit is strongly recommanded that you add the \"],[7,\"code\",true],[8],[0,\"no-bare-strings\"],[9],[0,\" rule to your template linter.\\nThis rule will prevent you from using plain text strings in your templates (because they cannot be translated).\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"To enabled the template linter rule, edit the file \"],[7,\"code\",true],[8],[0,\".template-lintrc.js\"],[9],[0,\" as follow:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// .template-lintrc.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-meta\"],[8],[0,\"'use strict'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"extends\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'recommended'\"],[9],[0,\",\\n\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"rules\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'no-bare-strings'\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n  }\\n};\"],[9],[9],[9]],\"hasEval\":false}",
+    "id": "vqtAbMic",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"quickstart\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Quickstart\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h2\",true],[12,\"id\",\"1-install-ember-intl\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#1-install-ember-intl\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"1. Install ember-intl\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedbash\",null],[10],[1,1,0,0,\"ember install ember-intl@next\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"This will create the following files:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"app/formats.js\"],[11],[1,1,0,0,\"  \"],[2,\" default definitions of named formats \"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"config/ember-intl.js\"],[11],[1,1,0,0,\"  \"],[2,\" default ember-intl settings \"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"translations/en-us.yaml\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"2-add-your-first-translation\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#2-add-your-first-translation\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"2. Add your first translation\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Create a translation key in \"],[9,\"code\",true],[10],[1,1,0,0,\"translations/en-us.yaml\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedyaml\",null],[10],[1,1,0,0,\"hello:\\n  world: Hello World!\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"In a template add the following:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"<!-- app/templates/application.hbs -->\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-tag\",null],[10],[1,1,0,0,\"<\"],[9,\"span\",true],[12,\"class\",\"hljs-name\",null],[10],[1,1,0,0,\"h1\"],[11],[1,1,0,0,\">\"],[11],[1,1,0,0,\"{{t \\\"hello.world\\\"}}\"],[9,\"span\",true],[12,\"class\",\"hljs-tag\",null],[10],[1,1,0,0,\"</\"],[9,\"span\",true],[12,\"class\",\"hljs-name\",null],[10],[1,1,0,0,\"h1\"],[11],[1,1,0,0,\">\"],[11],[1,1,0,0,\"\\n\\n\"],[11],[9,\"span\",true],[12,\"class\",\"hljs-template-variable\",null],[10],[1,1,0,0,\"{{\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"outlet\"],[11],[1,1,0,0,\"}}\"],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"3-add-a-new-language\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#3-add-a-new-language\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"3. Add a new language\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Create a new translation file: \"],[9,\"code\",true],[10],[1,1,0,0,\"translations/fr-fr.yaml\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"hello:\\n  world: \\\"Bonjour tout le monde!\\\"\"],[11],[11],[1,1,0,0,\"\\n      \"],[9,\"h2\",true],[12,\"id\",\"4-configure-ember-intl\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#4-configure-ember-intl\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"4. Configure ember-intl\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Setting your applications runtime locale\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"When your application boots, you want to tell ember-intl which locale it should be targeting.  One common approach, is to do this in your top-level \"],[9,\"code\",true],[10],[1,1,0,0,\"application\"],[11],[1,1,0,0,\" route's \"],[9,\"code\",true],[10],[1,1,0,0,\"beforeModel\"],[11],[1,1,0,0,\" hook.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"em\",true],[10],[1,1,0,0,\"Note:\"],[11],[1,1,0,0,\" This is usually implemented with custom business logic - such as read it off a User model.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// app/routes/application.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { inject \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"as\"],[11],[1,1,0,0,\" service } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/service'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" Route \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/routing/route'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Route.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\": service(),\\n  beforeModel() {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\"._super(...arguments);\\n\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.setLocale([\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\"]);\\n  }\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Configure your template linter\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"If your app uses \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-cli-template-lint\"],[11],[1,1,0,0,\" (which is installed by default since ember-cli v3.4.1),\\nit is strongly recommanded that you add the \"],[9,\"code\",true],[10],[1,1,0,0,\"no-bare-strings\"],[11],[1,1,0,0,\" rule to your template linter.\\nThis rule will prevent you from using plain text strings in your templates (because they cannot be translated).\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"To enabled the template linter rule, edit the file \"],[9,\"code\",true],[10],[1,1,0,0,\".template-lintrc.js\"],[11],[1,1,0,0,\" as follow:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// .template-lintrc.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-meta\",null],[10],[1,1,0,0,\"'use strict'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\".exports = {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"extends\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'recommended'\"],[11],[1,1,0,0,\",\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"rules\"],[11],[1,1,0,0,\": {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'no-bare-strings'\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n  }\\n};\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/getting-started/quickstart/template.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("dummy/pods/docs/getting-started/runtime-requirements/template", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "EfsEOwte",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"runtime-requirements\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Runtime Requirements\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"strong\",true],[10],[1,1,0,0,\"We support IE11 & 2 most recent versions of Edge, Chrome & Firefox.\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"React Intl relies on these \"],[9,\"code\",true],[10],[1,1,0,0,\"Intl\"],[11],[1,1,0,0,\" APIs:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Intl.NumberFormat\"],[11],[1,1,0,0,\": Available on IE11+\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Intl.DateTimeFormat\"],[11],[1,1,0,0,\": Available on IE11+\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Intl.PluralRules\"],[11],[1,1,0,0,\": This can be polyfilled using \"],[9,\"a\",true],[12,\"href\",\"https://www.npmjs.com/package/@formatjs/intl-pluralrules\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"this package\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Intl.RelativeTimeFormat\"],[11],[1,1,0,0,\": This can be polyfilled using \"],[9,\"a\",true],[12,\"href\",\"https://www.npmjs.com/package/@formatjs/intl-relativetimeformat\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"this package\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"polyfills\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#polyfills\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Polyfills\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"If you need to support older browsers, we recommend you do the following:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ol\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Polyfill \"],[9,\"code\",true],[10],[1,1,0,0,\"Intl.NumberFormat\"],[11],[1,1,0,0,\" with https://github.com/andyearnshaw/Intl.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Polyfill \"],[9,\"code\",true],[10],[1,1,0,0,\"Intl.DateTimeFormat\"],[11],[1,1,0,0,\" with https://github.com/formatjs/date-time-format-timezone\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"If you're supporting browsers that do not have \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Intl.PluralRules\"],[11],[1,1,0,0,\" (e.g IE11 & Safari 12-), include this \"],[9,\"a\",true],[12,\"href\",\"https://www.npmjs.com/package/@formatjs/intl-pluralrules\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"polyfill\"],[11],[1,1,0,0,\" in your build.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// first run: yarn install @formatjs/intl-pluralrules\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@formatjs/intl-pluralrules/polyfill'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@formatjs/intl-pluralrules/dist/locale-data/de'\"],[11],[1,1,0,0,\"; \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// Add locale data for de\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"ol\",true],[12,\"start\",\"4\",null],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"If you're supporting browsers that do not have \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Intl.RelativeTimeFormat\"],[11],[1,1,0,0,\" (e.g IE11, Edge, Safari 12-), include this \"],[9,\"a\",true],[12,\"href\",\"https://www.npmjs.com/package/@formatjs/intl-relativetimeformat\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"polyfill\"],[11],[1,1,0,0,\" in your build along with individual CLDR data for each locale you support.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// first run: yarn install @formatjs/intl-relativetimeformat\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@formatjs/intl-relativetimeformat/polyfill'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@formatjs/intl-relativetimeformat/dist/locale-data/de'\"],[11],[1,1,0,0,\"; \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// Add locale data for de\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Important to note,\"],[11],[1,1,0,0,\" polyfilling strategies such as lazy-loading or dynamically injecting the script based on whether or not the requesting browser needs it \"],[9,\"em\",true],[10],[1,1,0,0,\"is\"],[11],[1,1,0,0,\" recommended!  There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story.  If you don't yet have a strategy, \"],[9,\"a\",true],[12,\"href\",\"https://polyfill.io/v3/\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"polyfill.io\"],[11],[1,1,0,0,\" may be a good option.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"browser-support\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#browser-support\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Browser Support\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"We officially support IE11 along with 2 most recent versions of Edge, Chrome & Firefox.\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
+    "meta": {
+      "moduleName": "dummy/pods/docs/getting-started/runtime-requirements/template.hbs"
     }
   });
 
@@ -4650,82 +2970,10 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "I33lG3Tm",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"asynchronously-loading-translations\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Asynchronously loading translations\"],[9],[0,\"\\n    \\n      \"],[7,\"h2\",true],[10,\"id\",\"writing-translations-to-dist\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#writing-translations-to-dist\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Writing Translations to \"],[7,\"code\",true],[8],[0,\"dist\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"By default, translations stored in \"],[7,\"code\",true],[8],[0,\"<project root>/translations\"],[9],[0,\" will be bundled into your application. This is likely not optimal for many. If need more control over which translations are loaded and how, set \"],[7,\"code\",true],[8],[0,\"publicOnly\"],[9],[0,\" to \"],[7,\"code\",true],[8],[0,\"true\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"At build time, translations will be now written to the \"],[7,\"code\",true],[8],[0,\"dist\"],[9],[0,\" output path instead of bundled within \"],[7,\"code\",true],[8],[0,\"app.js\"],[9],[0,\". For an example of how to load these translations at runtime, continue reading the section below.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// config/ember-intl.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"publicOnly\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n  };\\n};\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"asynchronous-loading-of-translations\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#asynchronous-loading-of-translations\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Asynchronous loading of translations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Manually configure ember-intl with the list of locales the application needs to support. This is an important step, since at build time we use this information to specific CLDR data for each locale. NOTE: If the translations are managed by ember-intl, i.e. stored in \"],[7,\"code\",true],[8],[0,\"/translations\"],[9],[0,\", this step is not needed.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// config/ember-intl.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"locales\"],[9],[0,\": [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'es-es'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'fr-fr'\"],[9],[0,\"]\\n  };\\n};\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"pushing-translations-into-ember-intl\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#pushing-translations-into-ember-intl\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Pushing translations into ember-intl\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/routes/application.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { inject \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"as\"],[9],[0,\" service } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/service'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" Route \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/routing/route'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Route.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": service(),\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" beforeModel() {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"const\"],[9],[0,\" translations = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" fetch(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'/translations/en-us.json'\"],[9],[0,\");\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.addTranslations(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" translations.json());\\n  }\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"fingerprinting\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#fingerprinting\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Fingerprinting\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Add \"],[7,\"code\",true],[8],[0,\"json\"],[9],[0,\" files to \"],[7,\"a\",true],[10,\"href\",\"https://github.com/rickharrison/broccoli-asset-rev\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"broccoli-asset-rev\"],[9],[9],[0,\" settings:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"let\"],[9],[0,\" app = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"new\"],[9],[0,\" EmberApp(defaults, {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"fingerprint\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"extensions\"],[9],[0,\": [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'js'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'css'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'png'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'jpg'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'gif'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'map'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'json'\"],[9],[0,\"]\\n  }\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"As long as the full path to a given translation file is hard-coded and uninterpolated, e.g. \"],[7,\"code\",true],[8],[0,\"translations/en-us.json\"],[9],[0,\" instead of \"],[7,\"code\",true],[8],[0,\"translations/${language}.json\"],[9],[0,\", broccoli-asset-rev will pick it up and rewrite it in place already.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"For cases where interpolation is required, load \"],[7,\"code\",true],[8],[0,\"assetMap\"],[9],[0,\" and enable fingerprinting for it.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"let\"],[9],[0,\" app = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"new\"],[9],[0,\" EmberApp(defaults, {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"fingerprint\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"extensions\"],[9],[0,\": [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'js'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'css'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'png'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'jpg'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'gif'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'map'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'json'\"],[9],[0,\"],\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"generateAssetMap\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\",\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"fingerprintAssetMap\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n  }\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Then fetch \"],[7,\"code\",true],[8],[0,\"assetMap\"],[9],[0,\"  in production environment:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" ENV \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'your-application-name/config/environment'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"let\"],[9],[0,\" translationPath = \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`translations/\"],[7,\"span\",true],[10,\"class\",\"hljs-subst\"],[8],[0,\"${lang}\"],[9],[0,\".json`\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"if\"],[9],[0,\" (ENV.environment === \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'production'\"],[9],[0,\") {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"const\"],[9],[0,\" assetMap = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" fetch(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'/assets/assetMap.json'\"],[9],[0,\");\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"const\"],[9],[0,\" assetMapJSON = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" assetMap.json();\\n  translationPath = assetMapJSON.assets[translationPath];\\n}\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"const\"],[9],[0,\" translations = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" fetch(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`/\"],[7,\"span\",true],[10,\"class\",\"hljs-subst\"],[8],[0,\"${translationPath}\"],[9],[0,\"`\"],[9],[0,\");\"],[9],[9],[9]],\"hasEval\":false}",
+    "id": "Xegq6bFV",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"asynchronously-loading-translations\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Asynchronously loading translations\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h2\",true],[12,\"id\",\"writing-translations-to-dist-folder\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#writing-translations-to-dist-folder\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"Writing Translations to \"],[9,\"code\",true],[10],[1,1,0,0,\"dist\"],[11],[1,1,0,0,\" folder\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"By default, translations stored in \"],[9,\"code\",true],[10],[1,1,0,0,\"<project root>/translations/**.{yml,xml}\"],[11],[1,1,0,0,\" are bundled with your application code. Depending on scenario, this may not be an optimal way to ship your translations to the client. If you prefer to opt out of this behavior and just write to somewhere in the \"],[9,\"code\",true],[10],[1,1,0,0,\"dist\"],[11],[1,1,0,0,\" folder you can use the \"],[9,\"code\",true],[10],[1,1,0,0,\"publicOnly\"],[11],[1,1,0,0,\" option.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"At build time, translations will be now written to the \"],[9,\"code\",true],[10],[1,1,0,0,\"dist\"],[11],[1,1,0,0,\" output path instead of bundled within \"],[9,\"code\",true],[10],[1,1,0,0,\"app.js\"],[11],[1,1,0,0,\". For an example of how to load these translations at runtime, continue reading the next section.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// config/ember-intl.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\".exports = \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"publicOnly\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n  };\\n};\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"pushing-translations-into-ember-intl\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#pushing-translations-into-ember-intl\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Pushing translations into ember-intl\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// app/routes/application.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { inject \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"as\"],[11],[1,1,0,0,\" service } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/service'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" Route \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/routing/route'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Route.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\": service(),\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" beforeModel() {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"const\"],[11],[1,1,0,0,\" translations = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" fetch(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'/translations/en-us.json'\"],[11],[1,1,0,0,\");\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"const\"],[11],[1,1,0,0,\" translationsAsJson = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" translations.json();\\n\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.addTranslations(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-US'\"],[11],[1,1,0,0,\", translationsAsJson);\\n  }\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"fingerprinting\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#fingerprinting\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Fingerprinting\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Add \"],[9,\"code\",true],[10],[1,1,0,0,\"json\"],[11],[1,1,0,0,\" files to \"],[9,\"a\",true],[12,\"href\",\"https://github.com/rickharrison/broccoli-asset-rev\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"broccoli-asset-rev\"],[11],[11],[1,1,0,0,\" settings:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"let\"],[11],[1,1,0,0,\" app = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"new\"],[11],[1,1,0,0,\" EmberApp(defaults, {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"fingerprint\"],[11],[1,1,0,0,\": {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"extensions\"],[11],[1,1,0,0,\": [\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'js'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'css'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'png'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'jpg'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'gif'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'map'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'json'\"],[11],[1,1,0,0,\"]\\n  }\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"As long as the full path to a given translation file is hard-coded and uninterpolated, e.g. \"],[9,\"code\",true],[10],[1,1,0,0,\"translations/en-us.json\"],[11],[1,1,0,0,\" instead of \"],[9,\"code\",true],[10],[1,1,0,0,\"translations/${language}.json\"],[11],[1,1,0,0,\", broccoli-asset-rev will pick it up and rewrite it in place already.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"For cases where interpolation is required, load \"],[9,\"code\",true],[10],[1,1,0,0,\"assetMap\"],[11],[1,1,0,0,\" and enable fingerprinting for it.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"let\"],[11],[1,1,0,0,\" app = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"new\"],[11],[1,1,0,0,\" EmberApp(defaults, {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"fingerprint\"],[11],[1,1,0,0,\": {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"extensions\"],[11],[1,1,0,0,\": [\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'js'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'css'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'png'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'jpg'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'gif'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'map'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'json'\"],[11],[1,1,0,0,\"],\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"generateAssetMap\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\",\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"fingerprintAssetMap\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n  }\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Then fetch \"],[9,\"code\",true],[10],[1,1,0,0,\"assetMap\"],[11],[1,1,0,0,\"  in production environment:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" ENV \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'your-application-name/config/environment'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"let\"],[11],[1,1,0,0,\" translationPath = \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`translations/\"],[9,\"span\",true],[12,\"class\",\"hljs-subst\",null],[10],[1,1,0,0,\"${lang}\"],[11],[1,1,0,0,\".json`\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"if\"],[11],[1,1,0,0,\" (ENV.environment === \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'production'\"],[11],[1,1,0,0,\") {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"const\"],[11],[1,1,0,0,\" assetMap = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" fetch(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'/assets/assetMap.json'\"],[11],[1,1,0,0,\");\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"const\"],[11],[1,1,0,0,\" assetMapJSON = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" assetMap.json();\\n  translationPath = assetMapJSON.assets[translationPath];\\n}\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"const\"],[11],[1,1,0,0,\" translations = \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" fetch(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`/\"],[9,\"span\",true],[12,\"class\",\"hljs-subst\",null],[10],[1,1,0,0,\"${translationPath}\"],[11],[1,1,0,0,\"`\"],[11],[1,1,0,0,\");\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/guide/asynchronously-loading-translations/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/guide/compact-decimal-formatting/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "G548G5T3",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"compact-decimal-formatting-api\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Compact Decimal Formatting API\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"ember-intl ships with the ability to short format a number. For example, \"],[7,\"code\",true],[8],[0,\"123,000\"],[9],[0,\" can be\\nconverted to \"],[7,\"code\",true],[8],[0,\"123K\"],[9],[0,\" in English or \"],[7,\"code\",true],[8],[0,\"12万\"],[9],[0,\" in Japanese.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"This functionality depends on data from \"],[7,\"a\",true],[10,\"href\",\"https://github.com/unicode-cldr/cldr-numbers-full\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"cldr-numbers-full\"],[9],[0,\" and has been extracted\\nto \"],[7,\"a\",true],[10,\"href\",\"https://github.com/snewcomer/cldr-compact-number\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"cldr-compact-number\"],[9],[0,\". API formatting options can be found \"],[7,\"a\",true],[10,\"href\",\"https://github.com/snewcomer/cldr-compact-number#usage\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"here\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"how-to-short-format-a-number\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#how-to-short-format-a-number\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"How to short format a number\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"product: 'The product has {reviews, shortNumber} reviews'\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/formats.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"shortNumber\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"significantDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"1\"],[9],[0,\"\\n  }\\n};\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'product'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"reviews\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"19634\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"English\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The product has 19.6K reviews\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Japanese\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The product has 2 万 reviews\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Spanish\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The product has 19,6 mil reviews\"],[9],[0,\"\\n\"],[9],[0,\"\\n      \"],[7,\"h3\",true],[10,\"id\",\"multiple-output-formats\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#multiple-output-formats\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Multiple output formats\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/formats.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"shortNumber\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"zeroDigits\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"significantDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"0\"],[9],[0,\"\\n    },\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"oneDigit\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"significantDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"1\"],[9],[0,\"\\n    },\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"financialFormat\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"significantDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"1\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"financialFormat\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n    }\\n  }\\n};\"],[9],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"Zero Significant Digits\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"product: 'The product has {reviews, shortNumber, zeroDigits} reviews'\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'product'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"reviews\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"19634\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"English\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The product has 19K reviews\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Japanese\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The product has 2 万 reviews\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Spanish\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The product has 19 mil reviews\"],[9],[0,\"\\n\"],[9],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"One Significant Digit in Financial Format\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"product: 'This investment product has {trades, shortNumber, financialFormat} trades'\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'product'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"reviews\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"101000\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"English\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"This investment product has 0.1M trades\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Japanese\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"This investment product has 10.1 万 trades\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Spanish\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"This investment product has 0,1M trades\"],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/guide/compact-decimal-formatting/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/guide/ember-service-api/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "HHFrHo2R",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"service-api\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Service API\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"ember-intl ships with a service which exposes an API to programmatically\\ninterface with all the known functionality exposed through the declarative\\nhelpers.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"how-to-inject-service\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#how-to-inject-service\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"How to inject service\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"Ember.Object.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": Ember.inject.service()\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Access the service from within the instance via: \"],[7,\"code\",true],[8],[0,\"this.get('intl')\"],[9],[0,\" or just \"],[7,\"code\",true],[8],[0,\"this.intl\"],[9],[0,\", if you have \"],[7,\"a\",true],[10,\"href\",\"https://www.emberjs.com/blog/2018/04/13/ember-3-1-released.html#toc_es5-getters-for-computed-properties-2-of-4\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ES5 getters enabled\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"properties\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#properties\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Properties\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"locale\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#locale\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"locale\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Set/get the current locale for your application. The value you set it to can either be a string or an array of strings. When providing an array, the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper and \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method will attempt to try all the locales in order when resolving a translation key. This is useful if you want to always fallback to another locale when a translation may be missing.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"When you get this property, it will always return an array of strings, even if you have set it to be just one single locale. If you are only interested in retrieving the single (or first) locale, use \"],[7,\"strong\",true],[8],[7,\"code\",true],[8],[0,\"primaryLocale\"],[9],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"primarylocale-readonly\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#primarylocale-readonly\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"primaryLocale \"],[7,\"em\",true],[8],[0,\"readOnly\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns the first locale of the currently active locales, i.e. the first object of the \"],[7,\"code\",true],[8],[0,\"locale\"],[9],[0,\" property.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'primaryLocale'\"],[9],[0,\") => \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"locales-readonly\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#locales-readonly\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"locales \"],[7,\"em\",true],[8],[0,\"readOnly\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns an array of locales that have translations assigned to them. This works\\nwith both bundled translations and lazy-loaded translations.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'locales'\"],[9],[0,\") => [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'fr-fr'\"],[9],[0,\"];\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"methods\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#methods\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Methods\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"t-translationkey-string-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#t-translationkey-string-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"t \"],[7,\"em\",true],[8],[0,\"(translationKey:String, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Unlike \"],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\", the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method accepts a translation key instead of a\\ntranslation string. This method returns a translated string. To provide\\nvalues to the dynamic segment of the translation, pass an object hash.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"product: '{name} will cost {price, number, USD}'\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/formats.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"number\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"USD\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"style\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'currency'\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"currency\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'USD'\"],[9],[0,\",\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"minimumFractionDigits\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"2\"],[9],[0,\"\\n    }\\n  }\\n};\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'product'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'watch'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"price\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"300\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"watch will cost $300\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"By default, ember-intl's \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method and \"],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\" will return a String literal. If your translations contain HTML markup and you want to use render HTML from your translations to the document then pass \"],[7,\"code\",true],[8],[0,\"htmlSafe=true\"],[9],[0,\" to either \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" & \"],[7,\"code\",true],[8],[0,\"format-message\"],[9],[0,\" helpers or \"],[7,\"code\",true],[8],[0,\"{ htmlSafe: true }\"],[9],[0,\" to \"],[7,\"code\",true],[8],[0,\"intl.t()\"],[9],[0,\" or \"],[7,\"code\",true],[8],[0,\"intl.formatMessage()\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'title.header'\"],[9],[0,\", { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"htmlSafe\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\" });\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'title.header' htmlSafe=true}}\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatmessage-translation-string-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatmessage-translation-string-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatMessage \"],[7,\"em\",true],[8],[0,\"(translation:String, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\" formats a translation string. Unlike the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method, it\\naccepts a translation string instead of a translation key.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'{name} will cost {price, number, USD}'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'watch'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"price\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"300\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"watch will cost $300\"],[9],[0,\"\\n\"],[9],[0,\"\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatmessage-html-value-string-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatmessage-html-value-string-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatMessage (html) \"],[7,\"em\",true],[8],[0,\"(value:String, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMessage\"],[9],[0,\", when provided the \"],[7,\"code\",true],[8],[0,\"htmlSafe\"],[9],[0,\" options, formats a translation string and returns an\\n\"],[7,\"code\",true],[8],[0,\"Handlebars.SafeString\"],[9],[0,\". This is useful for rendering translations containing\\nHTML markup. Since options can contain unsafe markup, all attribute hash\\nvalues are escaped.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'<strong>{firstName}</strong> {lastName}'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"firstName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'John'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"lastName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'<em>Doe</em>'\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"htmlSafe\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Outputs:\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[7,\"strong\",true],[8],[0,\"John\"],[9],[0,\" \"],[7,\"em\",true],[8],[0,\"Doe\"],[9],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"Note, the Doe is escaped and does not return markup.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatnumber-value-number-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatnumber-value-number-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatNumber \"],[7,\"em\",true],[8],[0,\"(value:Number, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formatdate-value-date-number-string-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formatdate-value-date-number-string-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatDate \"],[7,\"em\",true],[8],[0,\"(value:Date/Number/String, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"formattime-value-date-number-string-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#formattime-value-date-number-string-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"formatTime \"],[7,\"em\",true],[8],[0,\"(value:Date/Number/String, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation missing\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"exists-translationkey-string-optionallocale-string-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#exists-translationkey-string-optionallocale-string-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"exists \"],[7,\"em\",true],[8],[0,\"(translationKey:String, optionalLocale:String)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Returns a boolean indicating whether the translation exists. Locale is\\noptional. If omitted, the current/active locale is used in it's place.\\nThis method always returns a Boolean.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'intl'\"],[9],[0,\").exists(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'foo.bar'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\");\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// => true\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"addtranslations-locale-string-payload-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#addtranslations-locale-string-payload-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"addTranslations \"],[7,\"em\",true],[8],[0,\"(locale:String, payload:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Adds a translations to a given locale. Useful for registering translations at runtime.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"lookup-translationkey-string-optionallocale-string-array-string-optionaloptions-object-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#lookup-translationkey-string-optionallocale-string-array-string-optionaloptions-object-\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"lookup \"],[7,\"em\",true],[8],[0,\"(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Given a translation key, will return the translation for either the active\\nlocale, or the locale specified as the second argument.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.lookup(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'shared.confirmMessage'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"resilient\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Returns \"],[7,\"code\",true],[8],[0,\"undefined\"],[9],[0,\" if you pass \"],[7,\"code\",true],[8],[0,\"{ resilient: true }\"],[9],[0,\". If ommitted, will return a missing translation message.\"],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/guide/ember-service-api/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/guide/intljs-polyfill/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "XZ3j4lEa",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"intl-js-polyfill\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Intl.js Polyfill\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Ember Intl automatically pushes the \"],[7,\"a\",true],[10,\"href\",\"https://github.com/andyearnshaw/Intl.js/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"Intl.js polyfill\"],[9],[0,\" to your \"],[7,\"code\",true],[8],[0,\"/assets\"],[9],[0,\"\\nfolder. Using the polyfill is not required if targeting a modern set of\\nbrowsers which natively implement the Intl API.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"loading-files-from-assets\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#loading-files-from-assets\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Loading files from assets\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Add the following tags to your index.html, or any mechanism in which you serve\\nyour your application payload. Note: these script tags should be set above\\nthe application's script tag.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhtml\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"src\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"{{rootURL}}assets/intl/intl.min.js\\\"\"],[9],[0,\">\"],[9],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"</\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\">\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"src\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"{{rootURL}}assets/intl/locales/en-us.js\\\"\"],[9],[0,\">\"],[9],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"</\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\">\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"src\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"{{rootURL}}assets/intl/locales/fr-fr.js\\\"\"],[9],[0,\">\"],[9],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"</\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\">\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"src\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"{{rootURL}}assets/intl/locales/es-es.js\\\"\"],[9],[0,\">\"],[9],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"</\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"script\"],[9],[0,\">\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"<!--\\nYou can view the full list of CLDR locales which can be accessed from the `/assets/intl` folder\\nof your application.  The CLDRs are automatically placed there at build time.  Typically this folder\\non your filesystem is ``<project>/dist/assets/intl`\\n\\nFull list: https://github.com/yahoo/formatjs-extract-cldr-data/tree/master/data/main\\n-->\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"cherry-pick-cldr-modules\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#cherry-pick-cldr-modules\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Cherry pick CLDR modules\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"At build time, we copy roughly 700 files, totaling 18mb, to the asset folder.\\nDon't worry, this does not add weight to your app or vendor files. The only\\npenalty you incur is at build time with the ember-cli build pipeline. Since\\nmost applications support only a subset of the locales we support, you can\\nspecify the locales in \"],[7,\"code\",true],[8],[0,\"config/environment.js\"],[9],[0,\" to optimize only copying the\\nfiles needed.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"locales\"],[9],[0,\": [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'fr-fr'\"],[9],[0,\"]\\n    }\\n  };\\n};\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"In this case, \"],[7,\"code\",true],[8],[0,\"en-us.js\"],[9],[0,\" and \"],[7,\"code\",true],[8],[0,\"fr-fr.js\"],[9],[0,\" will be copied to\\n\"],[7,\"code\",true],[8],[0,\"/assets/intl/locales\"],[9],[0,\" on build.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"change-output-path\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#change-output-path\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Change output path\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// ember-cli-build.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"var\"],[9],[0,\" app = \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"new\"],[9],[0,\" EmberApp({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"app\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'/assets/intl'\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// default\"],[9],[0,\"\\n  }\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"disabling\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#disabling\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Disabling\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// config/ember-intl.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"disablePolyfill\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n  };\\n};\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"polyfill-io\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#polyfill-io\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Polyfill.io\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Intl.js polyfill was recently added to the \"],[7,\"a\",true],[10,\"href\",\"https://cdn.polyfill.io/v2/docs/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"Polyfill.io service\"],[9],[0,\", which is\\ndeveloped and maintained by a community of contributors led by a team at the\\n\"],[7,\"a\",true],[10,\"href\",\"http://www.ft.com/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"Financial Times\"],[9],[0,\". It is available thru \"],[7,\"code\",true],[8],[0,\"cdn.polyfill.io\"],[9],[0,\"\\ndomain, which routes traffic through \"],[7,\"a\",true],[10,\"href\",\"http://www.fastly.com/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"Fastly\"],[9],[0,\", which\\nmakes it available with global high availability and superb performance no\\nmatter where your users are.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"To use the Intl polyfill thru the \"],[7,\"a\",true],[10,\"href\",\"https://cdn.polyfill.io/v2/docs/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"Polyfill.io service\"],[9],[0,\", you can install\\n\"],[7,\"a\",true],[10,\"href\",\"https://github.com/alexlafroscia/ember-cli-polyfill-io\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"ember-cli-polyfill-io\"],[9],[9],[0,\" which will add the appropriate \"],[7,\"code\",true],[8],[0,\"<script>\"],[9],[0,\" tag to\\nyour Ember app.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"When specifying the \"],[7,\"code\",true],[8],[0,\"features\"],[9],[0,\" to use thru the polyfill service, you have to\\nspecify what locale, or locales, to load along with the Intl polyfill for the\\npage to function:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjavascript\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// config/environment.js\"],[9],[0,\"\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"environment\"],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"var\"],[9],[0,\" ENV = {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// ...\"],[9],[0,\"\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'polyfill-io'\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"features\"],[9],[0,\": [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Intl.~locale.en-US'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Intl.~locale.fr-FR'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Intl.~locale.es-ES'\"],[9],[0,\"]\\n    }\\n  };\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// ...\"],[9],[0,\"\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" ENV;\\n};\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[7,\"em\",true],[8],[0,\"Note: the example above will load the polyfill with three locale data set,\\n\"],[7,\"code\",true],[8],[0,\"fr-FR\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"en-US\"],[9],[0,\", and \"],[7,\"code\",true],[8],[0,\"es-ES\"],[9],[0,\".\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"This is by far the best option to use the Intl polyfill since it will only\\nload the polyfill code and the corresponding locale data when it is really\\nneeded (e.g.: safari will get the code and patch the runtime while chrome\\nwill get an empty script tag).\"],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/guide/intljs-polyfill/template.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/pods/docs/guide/list-of-supported-locales/template", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "kGhgzYlV",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"supported-locales\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Supported Locales\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Full list of locales IntlJS currently supports:\\nhttps://github.com/andyearnshaw/Intl.js/tree/master/locale-data/jsonp\"],[9],[9]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/pods/docs/guide/list-of-supported-locales/template.hbs"
     }
   });
 
@@ -4740,10 +2988,28 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "4KUYi1lz",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"missing-translations\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Missing translations\"],[9],[0,\"\\n    \\n      \"],[7,\"h2\",true],[10,\"id\",\"at-runtime\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#at-runtime\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"At runtime\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"When a translation key does not resolve to a translation, ember-intl invokes the function from \"],[7,\"code\",true],[8],[0,\"app/utils/intl/missing-message.js\"],[9],[0,\" with a \"],[7,\"code\",true],[8],[0,\"key\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"locales\"],[9],[0,\" and \"],[7,\"code\",true],[8],[0,\"options\"],[9],[0,\" as arguments.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The default implementation is to return \"],[7,\"code\",true],[8],[0,\"\\\"Missing translation: [key]\\\"\"],[9],[0,\", but can be overridden by exporting a function from \"],[7,\"code\",true],[8],[0,\"app/utils/intl/missing-message.js\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The following is a custom implementation that throws an error instead of returning a \"],[7,\"code\",true],[8],[0,\"String\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/utils/intl/missing-message.js:\"],[9],[0,\"\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-title\"],[8],[0,\"missingMessage\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"key, locales, options\"],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"throw\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"new\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"Error\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`[ember-intl] Missing translation for key: \\\"\"],[7,\"span\",true],[10,\"class\",\"hljs-subst\"],[8],[0,\"${key}\"],[9],[0,\"\\\" for locales: \\\"\"],[7,\"span\",true],[10,\"class\",\"hljs-subst\"],[8],[0,\"${locales}\"],[9],[0,\"\\\"`\"],[9],[0,\");\\n}\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The feature, and the documentation, is based entirely off ember-i18n's. The \"],[7,\"code\",true],[8],[0,\"options\"],[9],[0,\" hash is a new addition.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"at-build-time\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#at-build-time\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"At build-time\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Ember Intl automatically detects missing translations when building the app.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"You can control the detection behavior by configuring the \"],[7,\"code\",true],[8],[0,\"errorOnMissingTranslations\"],[9],[0,\" and \"],[7,\"code\",true],[8],[0,\"requiresTranslation\"],[9],[0,\" options in your \"],[7,\"code\",true],[8],[0,\"config/ember-intl.js\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"requiring-translations\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#requiring-translations\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Requiring translations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"By setting a \"],[7,\"code\",true],[8],[0,\"requiresTranslation\"],[9],[0,\" function, it's possible to filter what translations are required.\\nThe default implementation requires all keys to be translated in all locales.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The provided function will be called for any translation key that is missing in any locale.\\nThis means it won't be called for any key that exists in all configured locales.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The following missing translations will be logged, If an ember-intl project is configured with the following configuration.\"],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"page.description\"],[9],[0,\" is missing in \"],[7,\"code\",true],[8],[0,\"it\"],[9],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// config/ember-intl.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-regexp\"],[8],[0,\"/* environment */\"],[9],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" {\\n    requiresTranslation(key, locale) {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"if\"],[9],[0,\" (key.startsWith(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'wip.'\"],[9],[0,\")) {\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// ignore any missing translations for keys starting with 'wip.'.\"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"false\"],[9],[0,\";\\n      }\\n\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"if\"],[9],[0,\" (locale === \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'de'\"],[9],[0,\") {\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// ignore any missing german translations.\"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"false\"],[9],[0,\";\\n      }\\n\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\";\\n    }\\n  };\\n};\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"# translations/en.yaml\\npage:\\n  title: Page title\\n  description: Page description\\nwip:\\n  title: WIP title\\n\\n# translations/de.yaml\\n# nothing to see here\\n\\n# translations/it.yaml\\npage:\\n  title: Titolo della pagina\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"throwing-a-build-error-on-missing-required-translation\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#throwing-a-build-error-on-missing-required-translation\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Throwing a build error on missing, required translation\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Setting \"],[7,\"code\",true],[8],[0,\"errorOnMissingTranslations\"],[9],[0,\" to \"],[7,\"code\",true],[8],[0,\"true\"],[9],[0,\" will cause ember-intl to throw a build error if missing, required translations were detected.\\nThis changes the default behavior where missing translations are only logged as build warnings.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Given the following configuration, any missing translation in any locale will cause a build error to be thrown.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// config/ember-intl.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\".exports = \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-regexp\"],[8],[0,\"/* environment */\"],[9],[9],[0,\") \"],[9],[0,\"{\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"errorOnMissingTranslations\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n  };\\n};\"],[9],[9],[9]],\"hasEval\":false}",
+    "id": "ANmv/MM1",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"missing-translations\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Missing translations\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h2\",true],[12,\"id\",\"at-runtime\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#at-runtime\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"At runtime\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"When a translation does not exist, \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-intl\"],[11],[1,1,0,0,\" will import and invoked a function from the location \"],[9,\"code\",true],[10],[1,1,0,0,\"app/utils/intl/missing-message.js\"],[11],[1,1,0,0,\".  It is provided three argumnets: \"],[9,\"code\",true],[10],[1,1,0,0,\"key: String\"],[11],[1,1,0,0,\" and \"],[9,\"code\",true],[10],[1,1,0,0,\"locales: String[]\"],[11],[1,1,0,0,\" as arguments.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"The default implementation is to return \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"Missing translation: [key]\\\"\"],[11],[1,1,0,0,\", but can be overridden by exporting a function from \"],[9,\"code\",true],[10],[1,1,0,0,\"app/utils/intl/missing-message.js\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Here is how you might implement your own error handler:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// app/utils/intl/missing-message.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-title\",null],[10],[1,1,0,0,\"missingMessage\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"key, locales\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"throw\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"new\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"Error\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`[ember-intl] Missing translation for key: \\\"\"],[9,\"span\",true],[12,\"class\",\"hljs-subst\",null],[10],[1,1,0,0,\"${key}\"],[11],[1,1,0,0,\"\\\" for locales: \\\"\"],[9,\"span\",true],[12,\"class\",\"hljs-subst\",null],[10],[1,1,0,0,\"${locales}\"],[11],[1,1,0,0,\"\\\"`\"],[11],[1,1,0,0,\");\\n}\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"at-build-time\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#at-build-time\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"strong\",true],[10],[1,1,0,0,\"At build-time\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"ember-intl\"],[11],[1,1,0,0,\" automatically detects missing translations at build-time.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"If you don't like the default behavior, you can control the detection by configuring \"],[9,\"code\",true],[10],[1,1,0,0,\"errorOnMissingTranslations\"],[11],[1,1,0,0,\" and \"],[9,\"code\",true],[10],[1,1,0,0,\"requiresTranslation\"],[11],[1,1,0,0,\" in your \"],[9,\"code\",true],[10],[1,1,0,0,\"config/ember-intl.js\"],[11],[1,1,0,0,\" configuration file.  By default, \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-intl\"],[11],[1,1,0,0,\" will emit warnings to stdout but will not fail the build.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"throwing-a-build-error-on-missing-when-required-translations\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#throwing-a-build-error-on-missing-when-required-translations\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Throwing a build error on missing (when required) translations\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Setting \"],[9,\"code\",true],[10],[1,1,0,0,\"errorOnMissingTranslations\"],[11],[1,1,0,0,\" to \"],[9,\"code\",true],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\" will cause ember-intl to throw a build error if missing (and when required) translations were spotted during bundling.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"This changes the default behavior where missing translations are only logged as build warnings.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Given the following configuration, any missing translation in any locale, will cause a build error to be thrown.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// config/ember-intl.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\".exports = \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-regexp\",null],[10],[1,1,0,0,\"/* env */\"],[11],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"errorOnMissingTranslations\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n  };\\n};\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"requiring-translations\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#requiring-translations\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Requiring translations\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"requiresTranslation\"],[11],[1,1,0,0,\" is a function that is called whenever any translation key, from any locale, is missing.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"The default implementation requires all keys to be translated by all locales.  For example, if my application supports locales en-US and fr-FR and I create a translation key \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"home.hero_title\\\"\"],[11],[1,1,0,0,\" then both locales must implement that key or a warning, or optionally an error, will present itself at build-time.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"If an ember-intl project is configured with the following configuration, the following with print to the console:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"page.description\"],[11],[1,1,0,0,\" is missing in \"],[9,\"code\",true],[10],[1,1,0,0,\"it\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Example configuration:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// config/ember-intl.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\".exports = \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-regexp\",null],[10],[1,1,0,0,\"/* env */\"],[11],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" {\\n    requiresTranslation(key, locale) {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"if\"],[11],[1,1,0,0,\" (key.startsWith(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'wip.'\"],[11],[1,1,0,0,\")) {\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// ignore any missing translations for keys starting with 'wip.'.\"],[11],[1,1,0,0,\"\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"false\"],[11],[1,1,0,0,\";\\n      }\\n\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"if\"],[11],[1,1,0,0,\" (locale === \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'de'\"],[11],[1,1,0,0,\") {\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// ignore any missing german translations.\"],[11],[1,1,0,0,\"\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"false\"],[11],[1,1,0,0,\";\\n      }\\n\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\";\\n    }\\n  };\\n};\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedyaml\",null],[10],[1,1,0,0,\"# translations/en.yaml\\npage:\\n  title: Page title\\n  description: Page description\\nwip:\\n  title: WIP title\\n\\n# translations/de.yaml\\n# nothing to see here\\n\\n# translations/it.yaml\\npage:\\n  title: Titolo della pagina\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/guide/missing-translations/template.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("dummy/pods/docs/guide/service-api/template", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "QzFYOW21",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"service-api\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Service API\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"ember-intl ships with a service which exposes an API to programmatically\\ninterface with all the known functionality exposed through the declarative\\nhelpers.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"how-to-inject-the-service\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#how-to-inject-the-service\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"How to inject the service\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[1,1,0,0,\"Ember.Object.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\": Ember.inject.service()\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Access the service from within the instance via: \"],[9,\"code\",true],[10],[1,1,0,0,\"this.get('intl')\"],[11],[1,1,0,0,\" or just \"],[9,\"code\",true],[10],[1,1,0,0,\"this.intl\"],[11],[1,1,0,0,\", if you have \"],[9,\"a\",true],[12,\"href\",\"https://www.emberjs.com/blog/2018/04/13/ember-3-1-released.html#toc_es5-getters-for-computed-properties-2-of-4\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ES5 getters enabled\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"properties\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#properties\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Properties\"],[11],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h3\",true],[12,\"id\",\"locale\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#locale\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"locale\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Set/get the current locale for your application. The value you set it to can either be a string or an array of strings. When providing an array, the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper and \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" method will attempt to try all the locales in order when resolving a translation key. This is useful if you want to always fallback to another locale when a translation may be missing.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"When you get this property, it will always return an array of strings, even if you have set it to be just one single locale. If you are only interested in retrieving the single (or first) locale, use \"],[9,\"strong\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"primaryLocale\"],[11],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"primarylocale-readonly\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#primarylocale-readonly\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"primaryLocale \"],[9,\"em\",true],[10],[1,1,0,0,\"readOnly\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Returns the first locale of the currently active locales, i.e. the first object of the \"],[9,\"code\",true],[10],[1,1,0,0,\"locale\"],[11],[1,1,0,0,\" property.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[1,1,0,0,\"intl.get(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'primaryLocale'\"],[11],[1,1,0,0,\") => \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"locales-readonly\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#locales-readonly\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"locales \"],[9,\"em\",true],[10],[1,1,0,0,\"readOnly\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Returns an array of locales that have translations assigned to them. This works\\nwith both bundled translations and lazy-loaded translations.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[1,1,0,0,\"intl.get(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'locales'\"],[11],[1,1,0,0,\") => [\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-ca'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'fr-fr'\"],[11],[1,1,0,0,\"];\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"methods\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#methods\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Methods\"],[11],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h3\",true],[12,\"id\",\"t-translationkey-string-optionaloptions-object-string-safestring\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#t-translationkey-string-optionaloptions-object-string-safestring\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"t \"],[9,\"em\",true],[10],[1,1,0,0,\"(translationKey:String, optionalOptions:Object)\"],[11],[1,1,0,0,\": String | SafeString\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Unlike \"],[9,\"code\",true],[10],[1,1,0,0,\"formatMessage\"],[11],[1,1,0,0,\", the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" method accepts a translation key instead of a\\ntranslation string. This method returns a translated string. To provide\\nvalues to the dynamic segment of the translation, pass an object hash.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedyaml\",null],[10],[1,1,0,0,\"product: '{name} will cost {price, number, USD}'\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// app/formats.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"number\"],[11],[1,1,0,0,\": {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"USD\"],[11],[1,1,0,0,\": {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"style\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'currency'\"],[11],[1,1,0,0,\",\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"currency\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'USD'\"],[11],[1,1,0,0,\",\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"minimumFractionDigits\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-number\",null],[10],[1,1,0,0,\"2\"],[11],[1,1,0,0,\"\\n    }\\n  }\\n};\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'product'\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"name\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'watch'\"],[11],[1,1,0,0,\",\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"price\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-number\",null],[10],[1,1,0,0,\"300\"],[11],[1,1,0,0,\"\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Outputs:\"],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"watch will cost $300\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[1,1,0,0,\"By default, ember-intl's \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" method and \"],[9,\"code\",true],[10],[1,1,0,0,\"formatMessage\"],[11],[1,1,0,0,\" will return a String literal. If your translations contain HTML markup and you want to use render HTML from your translations to the document then pass \"],[9,\"code\",true],[10],[1,1,0,0,\"htmlSafe=true\"],[11],[1,1,0,0,\" to either \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" & \"],[9,\"code\",true],[10],[1,1,0,0,\"format-message\"],[11],[1,1,0,0,\" helpers or \"],[9,\"code\",true],[10],[1,1,0,0,\"{ htmlSafe: true }\"],[11],[1,1,0,0,\" to \"],[9,\"code\",true],[10],[1,1,0,0,\"intl.t()\"],[11],[1,1,0,0,\" or \"],[9,\"code\",true],[10],[1,1,0,0,\"intl.formatMessage()\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'title.header'\"],[11],[1,1,0,0,\", { \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"htmlSafe\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\" });\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[1,1,0,0,\"{{t 'title.header' htmlSafe=true}}\"],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"formatmessage-translation-string-optionaloptions-object-string\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#formatmessage-translation-string-optionaloptions-object-string\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"formatMessage \"],[9,\"em\",true],[10],[1,1,0,0,\"(translation:String, optionalOptions:Object)\"],[11],[1,1,0,0,\": String\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"formatMessage\"],[11],[1,1,0,0,\" formats a translation string. Unlike the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" method, it\\naccepts a translation string instead of a translation key.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.formatMessage(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'{name} will cost {price, number, USD}'\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"name\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'watch'\"],[11],[1,1,0,0,\",\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"price\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-number\",null],[10],[1,1,0,0,\"300\"],[11],[1,1,0,0,\"\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Outputs:\"],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"watch will cost $300\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n      \"],[9,\"h3\",true],[12,\"id\",\"formatmessage-html-value-string-optionaloptions-object-safestring\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#formatmessage-html-value-string-optionaloptions-object-safestring\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"formatMessage (html) \"],[9,\"em\",true],[10],[1,1,0,0,\"(value:String, optionalOptions:Object)\"],[11],[1,1,0,0,\": SafeString\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"formatMessage\"],[11],[1,1,0,0,\", when provided the \"],[9,\"code\",true],[10],[1,1,0,0,\"htmlSafe\"],[11],[1,1,0,0,\" options, formats a translation string and returns an\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"Handlebars.SafeString\"],[11],[1,1,0,0,\". This is useful for rendering translations containing\\nHTML markup. Since options can contain unsafe markup, all attribute hash\\nvalues are escaped.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"By default, all XML-like tags inside a translation must be escaped in order to build.  You escape\\nby using single quotes around the tag.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.formatMessage(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"'<strong>'{firstName}'</strong>' {lastName}\\\"\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"firstName\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'John'\"],[11],[1,1,0,0,\",\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"lastName\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"'<em>'Doe'</em>'\\\"\"],[11],[1,1,0,0,\",\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"htmlSafe\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Outputs:\"],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[9,\"strong\",true],[10],[1,1,0,0,\"John\"],[11],[1,1,0,0,\" <em>Doe</em>\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[1,1,0,0,\"Note, the Doe is escaped and does not return markup.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"formatnumber-value-number-optionaloptions-object-string\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#formatnumber-value-number-optionaloptions-object-string\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"formatNumber \"],[9,\"em\",true],[10],[1,1,0,0,\"(value:Number, optionalOptions:Object)\"],[11],[1,1,0,0,\": String\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation missing\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"formatdate-value-date-number-string-optionaloptions-object-string\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#formatdate-value-date-number-string-optionaloptions-object-string\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"formatDate \"],[9,\"em\",true],[10],[1,1,0,0,\"(value:Date/Number/String, optionalOptions:Object)\"],[11],[1,1,0,0,\": String\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation missing\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"formattime-value-date-number-string-optionaloptions-object-string\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#formattime-value-date-number-string-optionaloptions-object-string\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"formatTime \"],[9,\"em\",true],[10],[1,1,0,0,\"(value:Date/Number/String, optionalOptions:Object)\"],[11],[1,1,0,0,\": String\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation missing\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"formatrelative-delta-number-unit-string-string\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#formatrelative-delta-number-unit-string-string\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"formatRelative \"],[9,\"em\",true],[10],[1,1,0,0,\"(delta:Number, unit:String)\"],[11],[1,1,0,0,\": String\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation missing\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"exists-translationkey-string-optionallocale-string-boolean\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#exists-translationkey-string-optionallocale-string-boolean\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"exists \"],[9,\"em\",true],[10],[1,1,0,0,\"(translationKey:String, optionalLocale:String)\"],[11],[1,1,0,0,\": Boolean\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Returns a boolean indicating whether the translation exists. Locale is\\noptional. If omitted, the current/active locale is used in it's place.\\nThis method always returns a Boolean.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".get(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'intl'\"],[11],[1,1,0,0,\").exists(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'foo.bar'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\");\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// => true\"],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"addtranslations-locale-string-payload-object-void\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#addtranslations-locale-string-payload-object-void\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"addTranslations \"],[9,\"em\",true],[10],[1,1,0,0,\"(locale:String, payload:Object)\"],[11],[1,1,0,0,\": void\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Adds a translations to a given locale. Useful for registering translations at runtime.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"lookup-translationkey-string-optionallocale-string-array-string-optionaloptions-object-string-undefined\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#lookup-translationkey-string-optionallocale-string-array-string-optionaloptions-object-string-undefined\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"lookup \"],[9,\"em\",true],[10],[1,1,0,0,\"(translationKey:String, optionalLocale:String | Array{String}, optionalOptions:Object)\"],[11],[1,1,0,0,\": String | undefined\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Given a translation key, will return the translation for either the active\\nlocale, or the locale specified as the second argument.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.lookup(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'shared.confirmMessage'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"resilient\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Returns \"],[9,\"code\",true],[10],[1,1,0,0,\"undefined\"],[11],[1,1,0,0,\" if you pass \"],[9,\"code\",true],[10],[1,1,0,0,\"{ resilient: true }\"],[11],[1,1,0,0,\". If ommitted, will return a missing translation message.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"setlocale-locale-string-array-string-void\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#setlocale-locale-string-array-string-void\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"setLocale \"],[9,\"em\",true],[10],[1,1,0,0,\"(locale:String | Array{String})\"],[11],[1,1,0,0,\": void\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation missing\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"translationsfor-localename-string-object-undefined\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#translationsfor-localename-string-object-undefined\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"translationsFor \"],[9,\"em\",true],[10],[1,1,0,0,\"(localeName:String)\"],[11],[1,1,0,0,\": Object | undefined\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation missing\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
+    "meta": {
+      "moduleName": "dummy/pods/docs/guide/service-api/template.hbs"
     }
   });
 
@@ -4758,8 +3024,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "uybV5Tq1",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"supported-locales\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Supported Locales\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Full list of locales IntlJS currently supports:\\n\"],[7,\"a\",true],[10,\"href\",\"https://github.com/andyearnshaw/Intl.js/tree/master/locale-data/json\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"https://github.com/andyearnshaw/Intl.js/tree/master/locale-data/json\"],[9],[9],[9]],\"hasEval\":false}",
+    "id": "PjzEcvKG",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"supported-locales\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Supported Locales\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Full list of locales IntlJS currently supports:\\n\"],[9,\"a\",true],[12,\"href\",\"https://github.com/andyearnshaw/Intl.js/tree/master/locale-data/json\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"https://github.com/andyearnshaw/Intl.js/tree/master/locale-data/json\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/guide/supported-locales/template.hbs"
     }
@@ -4776,8 +3042,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "PwaQz4lJ",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"testing\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Testing\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"ember-intl provides some convenience test helpers for easy mocking of\\ntranslations and running assertions against translated strings.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"setupintl-hooks-locale-translations-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#setupintl-hooks-locale-translations-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"setupIntl(hooks, [locale], [translations])\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"This helper does two main things:\"],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"It makes the \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" service available as \"],[7,\"code\",true],[8],[0,\"this.intl\"],[9],[0,\" in your current test\\ncontext for easier access.\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[0,\"It registers a custom \"],[7,\"code\",true],[8],[0,\"missing-message\"],[9],[0,\" util, that deterministically\\nserializes all not explicitly defined translations. This allows you to focus\\non the actual logic in your tests and not on providing / mocking translations.\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"It can be invoked in four different ways.\"],[9],[0,\"\\n\\n      \"],[7,\"h4\",true],[10,\"id\",\"setupintl-hooks-\"],[10,\"class\",\"docs-md__h4\"],[8],[7,\"a\",true],[10,\"href\",\"#setupintl-hooks-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"setupIntl(hooks)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Just injects \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" into the context and enables deterministic serialization of\\nmissing translations. Also take a look at the \"],[7,\"a\",true],[10,\"href\",\"#tkey-options\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper\"],[9],[0,\"\\nfurther down, that makes asserting against these translations a breeze.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'setupIntl demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it serializes missing translations and injects the `intl` service'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" render(hbs\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`{{t \\\"some.translation\\\" someVariable=\\\"Hello\\\"}}`\"],[9],[0,\");\\n    assert.dom().hasText(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'t:some.translation:(\\\"someVariable\\\":\\\"Hello\\\")'\"],[9],[0,\");\\n\\n    assert.strictEqual(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl, \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".owner.resolve(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'service:intl'\"],[9],[0,\"));\\n  });\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h4\",true],[10,\"id\",\"setupintl-hooks-locale-\"],[10,\"class\",\"docs-md__h4\"],[8],[7,\"a\",true],[10,\"href\",\"#setupintl-hooks-locale-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"setupIntl(hooks, locale)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Does what \"],[7,\"code\",true],[8],[0,\"setupIntl(hooks)\"],[9],[0,\" does and also sets the locale. You can also use\\n\"],[7,\"a\",true],[10,\"href\",\"#setlocalelocale\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"setLocale(locale)\"],[9],[9],[0,\" for that.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'setupIntl demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks, \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\");\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it sets the locale'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    assert.deepEqual(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"get\"],[9],[0,\"(this.intl, 'locale'), ['en-us']);\\n  });\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h4\",true],[10,\"id\",\"setupintl-hooks-translations-\"],[10,\"class\",\"docs-md__h4\"],[8],[7,\"a\",true],[10,\"href\",\"#setupintl-hooks-translations-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"setupIntl(hooks, translations)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Does what \"],[7,\"code\",true],[8],[0,\"setupIntl(hooks)\"],[9],[0,\" does and adds translations to the active locale.\\nYou can also use \"],[7,\"a\",true],[10,\"href\",\"#addtranslationslocale-translations\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"addTranslations([locale], translations)\"],[9],[9],[0,\"\\nfor that.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'setupIntl demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks, {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"some\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"mocked\"],[9],[0,\": {\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"translations\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Hello {thing}'\"],[9],[0,\"\\n      }\\n    }\\n  });\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it renders'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" render(hbs\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`{{t \\\"some.mocked.translation\\\" thing=\\\"world\\\"}}`\"],[9],[0,\");\\n    assert.dom().hasText(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Hello world'\"],[9],[0,\");\\n\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// stuff that is not explicitly mocked uses fallback serialization\"],[9],[0,\"\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" render(hbs\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`{{t \\\"some.translation\\\" someVariable=\\\"Hello\\\"}}`\"],[9],[0,\");\\n    assert.dom().hasText(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'t:some.translation:(\\\"someVariable\\\":\\\"Hello\\\")'\"],[9],[0,\");\\n\\n    assert.strictEqual(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl, \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".owner.resolve(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'service:intl'\"],[9],[0,\"));\\n  });\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h4\",true],[10,\"id\",\"setupintl-hooks-locale-translations-\"],[10,\"class\",\"docs-md__h4\"],[8],[7,\"a\",true],[10,\"href\",\"#setupintl-hooks-locale-translations-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"setupIntl(hooks, locale, translations)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Combination of the previous two. Sets the locale and also adds the translations.\\nYou can also use \"],[7,\"a\",true],[10,\"href\",\"#setlocalelocale\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"setLocale(locale)\"],[9],[9],[0,\" and\\n\"],[7,\"a\",true],[10,\"href\",\"#addtranslationslocale-translations\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"addTranslations([locale], translations)\"],[9],[9],[0,\"\\nfor that.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'setupIntl demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks, \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"some\"],[9],[0,\": {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"mocked\"],[9],[0,\": {\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"translations\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Hello {thing}'\"],[9],[0,\"\\n      }\\n    }\\n  });\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it sets the locale and mocks the translations'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    assert.deepEqual(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"get\"],[9],[0,\"(this.intl, 'locale'), ['en-us']);\\n\\n    await render(hbs`{{t \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"some.mocked.translation\\\"\"],[9],[0,\" thing=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"world\\\"\"],[9],[0,\"}}\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`);\\n    assert.dom().hasText('Hello world');\\n\\n    // stuff that is not explicitly mocked uses fallback serialization\\n    await render(hbs`\"],[9],[0,\"{{t \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"some.translation\\\"\"],[9],[0,\" someVariable=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"Hello\\\"\"],[9],[0,\"}}\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`);\\n    assert.dom().hasText('t:some.translation:(\\\"someVariable\\\":\\\"Hello\\\")');\\n\\n    assert.strictEqual(this.intl, this.owner.resolve('service:intl'));\\n  });\\n});\"],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"setlocale-locale-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#setlocale-locale-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"setLocale(locale)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Behaves as if you called \"],[7,\"code\",true],[8],[0,\"setLocale(locale)\"],[9],[0,\" on the \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" service.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl, setLocale } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'setLocale demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it sets the locale'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    setLocale(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\");\\n    assert.deepEqual(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"get\"],[9],[0,\"(this.intl, 'locale'), ['en-us']);\\n\\n    setLocale('de-de');\\n    assert.deepEqual(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"get\"],[9],[0,\"(this.intl, 'locale'), ['de-de']);\\n  });\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"addtranslations-locale-translations-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#addtranslations-locale-translations-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"addTranslations([locale], translations)\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Behaves as if you called \"],[7,\"code\",true],[8],[0,\"addTranslations(locale, translations)\"],[9],[0,\" on the \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\"\\nservice. For your convenience you can omit the \"],[7,\"code\",true],[8],[0,\"locale\"],[9],[0,\" parameter and it will\\ndefault to the last currently active locale, meaning that if your current\\nlocales were \"],[7,\"code\",true],[8],[0,\"['en-ca', 'en-gb', 'en-us']\"],[9],[0,\", the translations would be added to\\n\"],[7,\"code\",true],[8],[0,\"'en-us'\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl, setLocale } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'addTranslations demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it adds the translations'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    setLocale([\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-gb'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\"]);\\n\\n    addTranslations({\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"translation\"],[9],[0,\": {\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"on\"],[9],[0,\": {\\n          \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"enUs\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"'murica\\\"\"],[9],[0,\"\\n        }\\n      }\\n    });\\n\\n    addTranslations(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"translation\"],[9],[0,\": {\\n        \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"on\"],[9],[0,\": {\\n          \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"enCa\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Sorry'\"],[9],[0,\"\\n        }\\n      }\\n    });\\n\\n    assert.ok(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.exists(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'translation.on.enUs'\"],[9],[0,\"));\\n    assert.ok(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.exists(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-ca'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'translation.on.enCa'\"],[9],[0,\"));\\n  });\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"t-key-options-\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#t-key-options-\"],[10,\"class\",\"heading-anchor\"],[8],[7,\"code\",true],[8],[0,\"t(key, [options])\"],[9],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"The \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper is a shortcut for accessing the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" method on the \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" service.\\nIn combination with the fallback serialization behavior of \"],[7,\"code\",true],[8],[0,\"setupIntl(hooks)\"],[9],[0,\",\\nit becomes especially useful, because you now don't need to worry about how to\\nprovide translations or mock them for tests.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Your case can now focus on testing what you actually want to test: that the\\ncorrect translation is rendered with the correct variables. And not that the\\ntranslation messages are there and correctly interpolated by ember-intl.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\", test } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupRenderingTest } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-qunit'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { find, render, settled } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/test-helpers'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" hbs \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'htmlbars-inline-precompile'\"],[9],[0,\";\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { setupIntl, t } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/test-support'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"module\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'t demo'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"hooks\"],[9],[0,\") \"],[9],[0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'it is a shortcut for accessing translations'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"async\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"assert\"],[9],[0,\") \"],[9],[0,\"{\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"await\"],[9],[0,\" render(hbs\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`{{t \\\"some.translation\\\" someVariable=\\\"Hello\\\"}}`\"],[9],[0,\");\\n    assert.dom().hasText(t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'some.translation'\"],[9],[0,\", { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"someVariable\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Hello'\"],[9],[0,\" }));\\n  });\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"guarding-against-errors\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#guarding-against-errors\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Guarding against errors\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"If you have a dynamic, variable driven usage of the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper, you might see an error like \"],[7,\"code\",true],[8],[0,\"helper requires value attribute\"],[9],[0,\". This might commonly happen in testing environments, where you might not have ensured every single variable has a value, and are trying to test something else entirely. To allow for empty values, you can use \"],[7,\"code\",true],[8],[0,\"allowEmpty\"],[9],[0,\" on the helper itself or you can set it globally for all helpers, by defining you own helper.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// app/helpers/t.js\"],[9],[0,\"\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" Helper \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl/helpers/t'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Helper.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"allowEmpty\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-literal\"],[8],[0,\"true\"],[9],[0,\"\\n});\"],[9],[9],[9]],\"hasEval\":false}",
+    "id": "jjsj/Y2q",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"testing\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Testing\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"ember-intl provides some convenience test helpers for easy mocking of\\ntranslations and running assertions against translated strings.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"setupintl-hooks-locale-translations-\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#setupintl-hooks-locale-translations-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks, [locale], [translations])\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"This helper does two main things:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"It makes the \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" service available as \"],[9,\"code\",true],[10],[1,1,0,0,\"this.intl\"],[11],[1,1,0,0,\" in your current test\\ncontext for easier access.\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"It registers a custom \"],[9,\"code\",true],[10],[1,1,0,0,\"missing-message\"],[11],[1,1,0,0,\" util, that deterministically\\nserializes all not explicitly defined translations. This allows you to focus\\non the actual logic in your tests and not on providing / mocking translations.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"It can be invoked in four different ways.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h4\",true],[12,\"id\",\"setupintl-hooks-\",null],[12,\"class\",\"docs-md__h4\",null],[10],[9,\"a\",true],[12,\"href\",\"#setupintl-hooks-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks)\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Just injects \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" into the context and enables deterministic serialization of\\nmissing translations. Also take a look at the \"],[9,\"a\",true],[12,\"href\",\"#tkey-options\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper\"],[11],[1,1,0,0,\"\\nfurther down, that makes asserting against these translations a breeze.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'setupIntl demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it serializes missing translations and injects the `intl` service'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" render(hbs\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`{{t \\\"some.translation\\\" someVariable=\\\"Hello\\\"}}`\"],[11],[1,1,0,0,\");\\n    assert.dom().hasText(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'t:some.translation:(\\\"someVariable\\\":\\\"Hello\\\")'\"],[11],[1,1,0,0,\");\\n\\n    assert.strictEqual(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl, \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".owner.resolve(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'service:intl'\"],[11],[1,1,0,0,\"));\\n  });\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h4\",true],[12,\"id\",\"setupintl-hooks-locale-\",null],[12,\"class\",\"docs-md__h4\",null],[10],[9,\"a\",true],[12,\"href\",\"#setupintl-hooks-locale-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks, locale)\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Does what \"],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks)\"],[11],[1,1,0,0,\" does and also sets the locale. You can also use\\n\"],[9,\"a\",true],[12,\"href\",\"#setlocalelocale\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setLocale(locale)\"],[11],[11],[1,1,0,0,\" for that.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'setupIntl demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks, \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\");\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it sets the locale'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    assert.deepEqual(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"get\"],[11],[1,1,0,0,\"(this.intl, 'locale'), ['en-us']);\\n  });\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h4\",true],[12,\"id\",\"setupintl-hooks-translations-\",null],[12,\"class\",\"docs-md__h4\",null],[10],[9,\"a\",true],[12,\"href\",\"#setupintl-hooks-translations-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks, translations)\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Does what \"],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks)\"],[11],[1,1,0,0,\" does and adds translations to the active locale.\\nYou can also use \"],[9,\"a\",true],[12,\"href\",\"#addtranslationslocale-translations\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"addTranslations([locale], translations)\"],[11],[11],[1,1,0,0,\"\\nfor that.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'setupIntl demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks, {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"some\"],[11],[1,1,0,0,\": {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"mocked\"],[11],[1,1,0,0,\": {\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"translations\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Hello {thing}'\"],[11],[1,1,0,0,\"\\n      }\\n    }\\n  });\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it renders'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" render(hbs\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`{{t \\\"some.mocked.translation\\\" thing=\\\"world\\\"}}`\"],[11],[1,1,0,0,\");\\n    assert.dom().hasText(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Hello world'\"],[11],[1,1,0,0,\");\\n\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// stuff that is not explicitly mocked uses fallback serialization\"],[11],[1,1,0,0,\"\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" render(hbs\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`{{t \\\"some.translation\\\" someVariable=\\\"Hello\\\"}}`\"],[11],[1,1,0,0,\");\\n    assert.dom().hasText(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'t:some.translation:(\\\"someVariable\\\":\\\"Hello\\\")'\"],[11],[1,1,0,0,\");\\n\\n    assert.strictEqual(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl, \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".owner.resolve(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'service:intl'\"],[11],[1,1,0,0,\"));\\n  });\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h4\",true],[12,\"id\",\"setupintl-hooks-locale-translations-\",null],[12,\"class\",\"docs-md__h4\",null],[10],[9,\"a\",true],[12,\"href\",\"#setupintl-hooks-locale-translations-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks, locale, translations)\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Combination of the previous two. Sets the locale and also adds the translations.\\nYou can also use \"],[9,\"a\",true],[12,\"href\",\"#setlocalelocale\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setLocale(locale)\"],[11],[11],[1,1,0,0,\" and\\n\"],[9,\"a\",true],[12,\"href\",\"#addtranslationslocale-translations\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"addTranslations([locale], translations)\"],[11],[11],[1,1,0,0,\"\\nfor that.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'setupIntl demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks, \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\", {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"some\"],[11],[1,1,0,0,\": {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"mocked\"],[11],[1,1,0,0,\": {\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"translations\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Hello {thing}'\"],[11],[1,1,0,0,\"\\n      }\\n    }\\n  });\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it sets the locale and mocks the translations'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    assert.deepEqual(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"get\"],[11],[1,1,0,0,\"(this.intl, 'locale'), ['en-us']);\\n\\n    await render(hbs`{{t \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"some.mocked.translation\\\"\"],[11],[1,1,0,0,\" thing=\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"world\\\"\"],[11],[1,1,0,0,\"}}\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`);\\n    assert.dom().hasText('Hello world');\\n\\n    // stuff that is not explicitly mocked uses fallback serialization\\n    await render(hbs`\"],[11],[1,1,0,0,\"{{t \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"some.translation\\\"\"],[11],[1,1,0,0,\" someVariable=\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"Hello\\\"\"],[11],[1,1,0,0,\"}}\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`);\\n    assert.dom().hasText('t:some.translation:(\\\"someVariable\\\":\\\"Hello\\\")');\\n\\n    assert.strictEqual(this.intl, this.owner.resolve('service:intl'));\\n  });\\n});\"],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"setlocale-locale-\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#setlocale-locale-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"setLocale(locale)\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Behaves as if you called \"],[9,\"code\",true],[10],[1,1,0,0,\"setLocale(locale)\"],[11],[1,1,0,0,\" on the \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" service.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl, setLocale } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'setLocale demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it sets the locale'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    setLocale(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\");\\n    assert.deepEqual(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"get\"],[11],[1,1,0,0,\"(this.intl, 'locale'), ['en-us']);\\n\\n    setLocale('de-de');\\n    assert.deepEqual(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"get\"],[11],[1,1,0,0,\"(this.intl, 'locale'), ['de-de']);\\n  });\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"addtranslations-locale-translations-\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#addtranslations-locale-translations-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"addTranslations([locale], translations)\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Behaves as if you called \"],[9,\"code\",true],[10],[1,1,0,0,\"addTranslations(locale, translations)\"],[11],[1,1,0,0,\" on the \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\"\\nservice. For your convenience you can omit the \"],[9,\"code\",true],[10],[1,1,0,0,\"locale\"],[11],[1,1,0,0,\" parameter and it will\\ndefault to the last currently active locale, meaning that if your current\\nlocales were \"],[9,\"code\",true],[10],[1,1,0,0,\"['en-ca', 'en-gb', 'en-us']\"],[11],[1,1,0,0,\", the translations would be added to\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl, setLocale } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'addTranslations demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it adds the translations'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    setLocale([\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-ca'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-gb'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\"]);\\n\\n    addTranslations({\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"translation\"],[11],[1,1,0,0,\": {\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"on\"],[11],[1,1,0,0,\": {\\n          \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"enUs\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"'murica\\\"\"],[11],[1,1,0,0,\"\\n        }\\n      }\\n    });\\n\\n    addTranslations(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-ca'\"],[11],[1,1,0,0,\", {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"translation\"],[11],[1,1,0,0,\": {\\n        \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"on\"],[11],[1,1,0,0,\": {\\n          \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"enCa\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Sorry'\"],[11],[1,1,0,0,\"\\n        }\\n      }\\n    });\\n\\n    assert.ok(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.exists(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'translation.on.enUs'\"],[11],[1,1,0,0,\"));\\n    assert.ok(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.exists(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-ca'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'translation.on.enCa'\"],[11],[1,1,0,0,\"));\\n  });\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"t-key-options-\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#t-key-options-\",null],[12,\"class\",\"heading-anchor\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"t(key, [options])\"],[11],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"The \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper is a shortcut for accessing the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" method on the \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" service.\\nIn combination with the fallback serialization behavior of \"],[9,\"code\",true],[10],[1,1,0,0,\"setupIntl(hooks)\"],[11],[1,1,0,0,\",\\nit becomes especially useful, because you now don't need to worry about how to\\nprovide translations or mock them for tests.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Your case can now focus on testing what you actually want to test: that the\\ncorrect translation is rendered with the correct variables. And not that the\\ntranslation messages are there and correctly interpolated by ember-intl.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\", test } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupRenderingTest } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-qunit'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { find, render, settled } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/test-helpers'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" hbs \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'htmlbars-inline-precompile'\"],[11],[1,1,0,0,\";\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { setupIntl, t } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/test-support'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"module\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'t demo'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"hooks\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n  setupRenderingTest(hooks);\\n  setupIntl(hooks);\\n\\n  test(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'it is a shortcut for accessing translations'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"async\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"assert\"],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"await\"],[11],[1,1,0,0,\" render(hbs\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`{{t \\\"some.translation\\\" someVariable=\\\"Hello\\\"}}`\"],[11],[1,1,0,0,\");\\n    assert.dom().hasText(t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'some.translation'\"],[11],[1,1,0,0,\", { \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"someVariable\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Hello'\"],[11],[1,1,0,0,\" }));\\n  });\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"guarding-against-errors\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#guarding-against-errors\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Guarding against errors\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"If you have a dynamic, variable driven usage of the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper, you might see an error like \"],[9,\"code\",true],[10],[1,1,0,0,\"helper requires value attribute\"],[11],[1,1,0,0,\". This might commonly happen in testing environments, where you might not have ensured every single variable has a value, and are trying to test something else entirely. To allow for empty values, you can use \"],[9,\"code\",true],[10],[1,1,0,0,\"allowEmpty\"],[11],[1,1,0,0,\" on the helper itself or you can set it globally for all helpers, by defining you own helper.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// app/helpers/t.js\"],[11],[1,1,0,0,\"\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" Helper \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl/helpers/t'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Helper.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"allowEmpty\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-literal\",null],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\"\\n});\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/guide/testing/template.hbs"
     }
@@ -4794,8 +3060,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "+LVBwOSK",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"translating-text\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Translating Text\"],[9],[0,\"\\n    \\n      \"],[7,\"h2\",true],[10,\"id\",\"translations\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#translations\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Translations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Translations are defined in \"],[7,\"a\",true],[10,\"href\",\"https://formatjs.io/guides/message-syntax/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ICU message syntax\"],[9],[0,\" and stored in\\n\"],[7,\"code\",true],[8],[0,\"<project_root>/translations\"],[9],[0,\" in either JSON and/or YAML format. Nested objects are supported within your translation files.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"nested-translations\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#nested-translations\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Nested translations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Translations can be organized in nested directories:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[8],[0,\"/translations\\n  en-us.yaml\\n  en-gb.yaml\\n  /blog\\n    en-us.yaml\\n    en-gb.yaml\\n  /reports\\n    en-us.yaml\\n    en-gb.yaml\\n  /commerce\\n    en-us.yaml\\n    en-gb.yaml\\n    /cart\\n      en-us.yaml\\n      en-gb.yaml\"],[9],[9],[0,\"\\n      \"],[7,\"h3\",true],[10,\"id\",\"the-wraptranslationswithnamespace-option\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#the-wraptranslationswithnamespace-option\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"The \"],[7,\"code\",true],[8],[0,\"wrapTranslationsWithNamespace\"],[9],[0,\" option\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"By default, the keys of the translations are not changed when nested directories are created. With the option\\n\"],[7,\"code\",true],[8],[0,\"wrapTranslationsWithNamespace\"],[9],[0,\" activated, Ember-intl will wrap the keys of the translations with the names of\\nthe subdirectories.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"When \"],[7,\"code\",true],[8],[0,\"wrapTranslationsWithNamespace\"],[9],[0,\" is \"],[7,\"code\",true],[8],[0,\"true\"],[9],[0,\", a translation under \"],[7,\"code\",true],[8],[0,\"<project_root>/translations/commerce/cart\"],[9],[0,\"\\nwith the key \"],[7,\"code\",true],[8],[0,\"title\"],[9],[0,\" will be accessed using the key \"],[7,\"code\",true],[8],[0,\"commerce.cart.title\"],[9],[0,\", instead the key \"],[7,\"code\",true],[8],[0,\"title\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"White spaces can be used in the names of the subdirectories.\\nThey will be converted to underscores when used as namespaces of the keys.\\n\"],[7,\"code\",true],[8],[0,\"<project_root>/translations/foo bar\"],[9],[0,\" will be converted to \"],[7,\"code\",true],[8],[0,\"foo_bar\"],[9],[0,\".\"],[9],[0,\"\\n\"],[9],[0,\"\\n      \"],[7,\"h2\",true],[10,\"id\",\"translate\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#translate\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Translate\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"h2\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"id\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"\\\"title\\\"\"],[9],[0,\">\"],[9],[0,\"{{t 'hello.world'}}\"],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"</\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"h2\"],[9],[0,\">\"],[9],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"html-element-attributes\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#html-element-attributes\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"HTML Element Attributes\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-tag\"],[8],[0,\"<\"],[7,\"span\",true],[10,\"class\",\"hljs-name\"],[8],[0,\"input\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"type\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'email'\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"value\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Some value'\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"placeholder\"],[9],[0,\"=\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"{{t\"],[9],[0,\" '\"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"hello.world\"],[9],[0,\"'}}>\"],[9],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"helper-component-attributes\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#helper-component-attributes\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Helper/Component Attributes\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[9],[7,\"span\",true],[10,\"class\",\"hljs-template-variable\"],[8],[0,\"{{\"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"input\"],[9],[0,\" value=email placeholder=(t 'hello.world')}}\"],[9],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[9],[9],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"fallback-translations\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#fallback-translations\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Fallback Translations\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"The \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper, as of 3.0.0, supports a fallback lookup if the primary translation key is missing. In the below example, the translation key \"],[7,\"code\",true],[8],[0,\"\\\"actual_key\\\"\"],[9],[0,\" would be used in place of the primary key, \"],[7,\"code\",true],[8],[0,\"\\\"missing_key\\\"\"],[9],[0,\", if translation missing for key.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'missing_key' default='actual_key'}}\"],[9],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'missing_key'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"default\"],[9],[0,\": [\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'does_not_exist'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'does_exist'\"],[9],[0,\"] \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"/* default can also be an Array */\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"computed-property-macros\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#computed-property-macros\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Computed Property Macros\"],[9],[9],[0,\"\\n    \\n      \"],[7,\"h3\",true],[10,\"id\",\"t\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#t\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"t\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" is a computed property macro that makes it easy to define translated\\ncomputed properties. For example:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" Component \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/component'\"],[9],[0,\":\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { t } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Component.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// Injecting the service is not required for `t` to work.\"],[9],[0,\"\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// intl: service(),\"],[9],[0,\"\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// A simple translation.\"],[9],[0,\"\\n  title: t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'user.edit.title'\"],[9],[0,\"),\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"followersCount\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"1\"],[9],[0,\",\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// A translation with interpolations. This computed property\"],[9],[0,\"\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// depends on `count` and will send `{ count: this.followersCount }`\"],[9],[0,\"\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// in to the translation.\"],[9],[0,\"\\n  followersTitle: t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'user.followers.title'\"],[9],[0,\", { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"count\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'followersCount'\"],[9],[0,\" })\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"The first argument is the translation key. The second is a hash where the keys\\nare interpolations in the translation and the values are paths to the values\\nrelative to this.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"If you want to pass static values instead of paths to dynamic value, you can use\\nthe \"],[7,\"code\",true],[8],[0,\"raw\"],[9],[0,\" function like in\\n\"],[7,\"a\",true],[10,\"href\",\"https://github.com/kellyselden/ember-macro-helpers#raw\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"ember-macro-helpers\"],[9],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" Component \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/component'\"],[9],[0,\":\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { t, raw } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Component.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"userName\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Tom'\"],[9],[0,\",\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-comment\"],[8],[0,\"// A translation with dynamic and static values\"],[9],[0,\"\\n  title: t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'user.edit.title'\"],[9],[0,\", { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"name\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'userName'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"brand\"],[9],[0,\": raw(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Ember'\"],[9],[0,\") })\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Note: Even though \"],[7,\"code\",true],[8],[0,\"raw\"],[9],[0,\" is \"],[7,\"em\",true],[8],[0,\"named\"],[9],[0,\" the same as in \"],[7,\"code\",true],[8],[0,\"ember-awesome-macros\"],[9],[0,\" /\\n\"],[7,\"code\",true],[8],[0,\"ember-macro-helpers\"],[9],[0,\", they \"],[7,\"em\",true],[8],[0,\"are not\"],[9],[0,\" the same. Be sure to always use the\\ncorrect \"],[7,\"code\",true],[8],[0,\"raw\"],[9],[0,\" with \"],[7,\"code\",true],[8],[0,\"ember-intl\"],[9],[0,\" and \"],[7,\"code\",true],[8],[0,\"ember-awesome-macros\"],[9],[0,\" / \"],[7,\"code\",true],[8],[0,\"ember-macro-helpers\"],[9],[0,\".\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"intl\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#intl\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"intl\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" is the underlying computed property macro for \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" and you can use it\\ndirectly to access other methods from the \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" service. It looks like this:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" Component \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'@ember/component'\"],[9],[0,\":\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"import\"],[9],[0,\" { intl } \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"from\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'ember-intl'\"],[9],[0,\";\\n\\n\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Component.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"now\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"new\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-built_in\"],[8],[0,\"Date\"],[9],[0,\"(),\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"dateFormat\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'hhmmss'\"],[9],[0,\",\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"nowFormatted\"],[9],[0,\": intl(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'now'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'dateFormat'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[0,\"intl \"],[7,\"span\",true],[10,\"class\",\"hljs-regexp\"],[8],[0,\"/* , propertyKey, instance */\"],[9],[9],[0,\") \"],[9],[0,\"{\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" intl.formatDate(\"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".now, { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"format\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".format });\\n  })\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" expects a list of dependent keys, which may be empty, and the computed\\nproperty getter method as the last argument. The getter method receives three\\narguments:\"],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\": The \"],[7,\"code\",true],[8],[0,\"intl\"],[9],[0,\" service.\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"propertyKey\"],[9],[0,\": The name of the computed property. In the above example it\\nwould be \"],[7,\"code\",true],[8],[0,\"nowFormatted\"],[9],[0,\".\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"instance\"],[9],[0,\": The class instance the computed property is installed on. This is\\nequivalent to \"],[7,\"code\",true],[8],[0,\"this\"],[9],[0,\" in the above example. The reason \"],[7,\"code\",true],[8],[0,\"instance\"],[9],[0,\" is also\\npassed to the getter method is to allow terser arrow function syntax instead\\nof the \"],[7,\"code\",true],[8],[0,\"function\"],[9],[0,\" keyword:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'now'\"],[9],[0,\", (intl, key, instance) => intl.formatDate(instance.now, { \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"format\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'hhmmss'\"],[9],[0,\" }));\"],[9],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
+    "id": "hghkElvc",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"translating-text\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Translating Text\"],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h2\",true],[12,\"id\",\"translations\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#translations\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Translations\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Translations are defined in \"],[9,\"a\",true],[12,\"href\",\"https://formatjs.io/guides/message-syntax/\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ICU message syntax\"],[11],[1,1,0,0,\" and stored in\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"<root>/translations\"],[11],[1,1,0,0,\" in either JSON and/or YAML format. Nested objects are supported within your translation files.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"nested-translations\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#nested-translations\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Nested translations\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Translations can be organized in nested directories:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"/translations\\n  en-us.yaml\\n  en-gb.yaml\\n  /blog\\n    en-us.yaml\\n    en-gb.yaml\\n  /reports\\n    en-us.yaml\\n    en-gb.yaml\\n  /commerce\\n    en-us.yaml\\n    en-gb.yaml\\n    /cart\\n      en-us.yaml\\n      en-gb.yaml\"],[11],[11],[1,1,0,0,\"\\n      \"],[9,\"h3\",true],[12,\"id\",\"the-wraptranslationswithnamespace-option\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#the-wraptranslationswithnamespace-option\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"The \"],[9,\"code\",true],[10],[1,1,0,0,\"wrapTranslationsWithNamespace\"],[11],[1,1,0,0,\" option\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"By default, the keys of the translations are not changed when nested directories are created. With the option\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"wrapTranslationsWithNamespace\"],[11],[1,1,0,0,\" activated, Ember-intl will wrap the keys of the translations with the names of\\nthe subdirectories.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"When \"],[9,\"code\",true],[10],[1,1,0,0,\"wrapTranslationsWithNamespace\"],[11],[1,1,0,0,\" is \"],[9,\"code\",true],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\", a translation under \"],[9,\"code\",true],[10],[1,1,0,0,\"<root>/translations/commerce/cart\"],[11],[1,1,0,0,\"\\nwith the key \"],[9,\"code\",true],[10],[1,1,0,0,\"title\"],[11],[1,1,0,0,\" will be accessed using the key \"],[9,\"code\",true],[10],[1,1,0,0,\"commerce.cart.title\"],[11],[1,1,0,0,\", instead the key \"],[9,\"code\",true],[10],[1,1,0,0,\"title\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"White spaces can be used in the names of the subdirectories.\\nThey will be converted to underscores when used as namespaces of the keys.\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"<root>/translations/foo bar\"],[11],[1,1,0,0,\" will be converted to \"],[9,\"code\",true],[10],[1,1,0,0,\"foo_bar\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n      \"],[9,\"h2\",true],[12,\"id\",\"translate\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#translate\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Translate\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-tag\",null],[10],[1,1,0,0,\"<\"],[9,\"span\",true],[12,\"class\",\"hljs-name\",null],[10],[1,1,0,0,\"h2\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"id\"],[11],[1,1,0,0,\"=\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"title\\\"\"],[11],[1,1,0,0,\">\"],[11],[1,1,0,0,\"{{t 'page.home_title'}}\"],[9,\"span\",true],[12,\"class\",\"hljs-tag\",null],[10],[1,1,0,0,\"</\"],[9,\"span\",true],[12,\"class\",\"hljs-name\",null],[10],[1,1,0,0,\"h2\"],[11],[1,1,0,0,\">\"],[11],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"html-element-attributes\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#html-element-attributes\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"HTML Element Attributes\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-tag\",null],[10],[1,1,0,0,\"<\"],[9,\"span\",true],[12,\"class\",\"hljs-name\",null],[10],[1,1,0,0,\"input\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"type\"],[11],[1,1,0,0,\"=\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"email\\\"\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"value\"],[11],[1,1,0,0,\"=\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"\\\"\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"placeholder\"],[11],[1,1,0,0,\"=\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"{{t\"],[11],[1,1,0,0,\" '\"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"fields.email_placeholder\"],[11],[1,1,0,0,\"'}}>\"],[11],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"helper-component-attributes\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#helper-component-attributes\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Helper/Component Attributes\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-template-variable\",null],[10],[1,1,0,0,\"{{\"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"input\"],[11],[1,1,0,0,\" type='email' value=email placeholder=(t 'fields.email_placeholder')}}\"],[11],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"fallback-translation\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#fallback-translation\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Fallback Translation\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"The \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper supports a fallback lookup if the intended translation key is missing.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"In the below example, if the translation for \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"a_key_that_is_missing\\\"\"],[11],[1,1,0,0,\" was missing then the translation key \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"errors.graceful_missing_translation\\\"\"],[11],[1,1,0,0,\" would be lookuped and used in its place.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[1,1,0,0,\"{{t 'a_key_that_is_missing' default='errors.graceful_missing_translation'}}\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'a_key_that_is_missing'\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"/* Note: default can also be a string[], they'll be tried in order */\"],[11],[1,1,0,0,\"\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\": [\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'errors.graceful_missing_translation_one'\"],[11],[1,1,0,0,\",\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'errors.graceful_missing_translation_two'\"],[11],[1,1,0,0,\"\\n  ]\\n});\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"computed-property-macros\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#computed-property-macros\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Computed Property Macros\"],[11],[11],[1,1,0,0,\"\\n    \\n      \"],[9,\"h3\",true],[12,\"id\",\"t\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#t\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"t\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" is a computed property macro that makes it easy to define translated\\ncomputed properties. For example:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" Component \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/component'\"],[11],[1,1,0,0,\":\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { t } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Component.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"followersCount\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-number\",null],[10],[1,1,0,0,\"1\"],[11],[1,1,0,0,\",\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// A simple translation.\"],[11],[1,1,0,0,\"\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"title\"],[11],[1,1,0,0,\": t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'user.edit.title'\"],[11],[1,1,0,0,\"),\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// A translation with interpolations. This computed property\"],[11],[1,1,0,0,\"\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// depends on `count` and will send `{ count: this.followersCount }`\"],[11],[1,1,0,0,\"\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// in to the translation.\"],[11],[1,1,0,0,\"\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"followersTitle\"],[11],[1,1,0,0,\": t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'user.followers.title'\"],[11],[1,1,0,0,\", { \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"count\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'followersCount'\"],[11],[1,1,0,0,\" })\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"The first argument is the translation key. The second is a hash where the keys\\nare interpolations in the translation and the values are paths to the values\\nrelative to this.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"If you want to pass static values instead of paths to dynamic value, you can use\\nthe \"],[9,\"code\",true],[10],[1,1,0,0,\"raw\"],[11],[1,1,0,0,\" function like in\\n\"],[9,\"a\",true],[12,\"href\",\"https://github.com/kellyselden/ember-macro-helpers#raw\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"ember-macro-helpers\"],[11],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" Component \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/component'\"],[11],[1,1,0,0,\":\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { t, raw } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Component.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"userName\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Tom'\"],[11],[1,1,0,0,\",\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-comment\",null],[10],[1,1,0,0,\"// A translation with dynamic and static values\"],[11],[1,1,0,0,\"\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"title\"],[11],[1,1,0,0,\": t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'user.edit.title'\"],[11],[1,1,0,0,\", { \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"name\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'userName'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"brand\"],[11],[1,1,0,0,\": raw(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Ember'\"],[11],[1,1,0,0,\") })\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Note: Even though \"],[9,\"code\",true],[10],[1,1,0,0,\"raw\"],[11],[1,1,0,0,\" is \"],[9,\"em\",true],[10],[1,1,0,0,\"named\"],[11],[1,1,0,0,\" the same as in \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-awesome-macros\"],[11],[1,1,0,0,\" /\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"ember-macro-helpers\"],[11],[1,1,0,0,\", they \"],[9,\"em\",true],[10],[1,1,0,0,\"are not\"],[11],[1,1,0,0,\" the same. Be sure to always use the\\ncorrect \"],[9,\"code\",true],[10],[1,1,0,0,\"raw\"],[11],[1,1,0,0,\" with \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-intl\"],[11],[1,1,0,0,\" and \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-awesome-macros\"],[11],[1,1,0,0,\" / \"],[9,\"code\",true],[10],[1,1,0,0,\"ember-macro-helpers\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"intl\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#intl\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"intl\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" is the underlying computed property macro for \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" and you can use it\\ndirectly to access other methods from the \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" service. It looks like this:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" Component \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'@ember/component'\"],[11],[1,1,0,0,\":\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"import\"],[11],[1,1,0,0,\" { intl } \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"from\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'ember-intl'\"],[11],[1,1,0,0,\";\\n\\n\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Component.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"now\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"new\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-built_in\",null],[10],[1,1,0,0,\"Date\"],[11],[1,1,0,0,\"(),\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"dateFormat\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'hhmmss'\"],[11],[1,1,0,0,\",\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"nowFormatted\"],[11],[1,1,0,0,\": intl(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'now'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'dateFormat'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[1,1,0,0,\"intl \"],[9,\"span\",true],[12,\"class\",\"hljs-regexp\",null],[10],[1,1,0,0,\"/* , propertyKey, instance */\"],[11],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" intl.formatDate(\"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".now, { \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"format\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".format });\\n  })\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" expects a list of dependent keys, which may be empty, and the computed\\nproperty getter method as the last argument. The getter method receives three\\narguments:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\": The \"],[9,\"code\",true],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\" service.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"propertyKey\"],[11],[1,1,0,0,\": The name of the computed property. In the above example it\\nwould be \"],[9,\"code\",true],[10],[1,1,0,0,\"nowFormatted\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"instance\"],[11],[1,1,0,0,\": The class instance the computed property is installed on. This is\\nequivalent to \"],[9,\"code\",true],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\" in the above example. The reason \"],[9,\"code\",true],[10],[1,1,0,0,\"instance\"],[11],[1,1,0,0,\" is also\\npassed to the getter method is to allow terser arrow function syntax instead\\nof the \"],[9,\"code\",true],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\" keyword:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[1,1,0,0,\"intl(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'now'\"],[11],[1,1,0,0,\", (intl, key, instance) => intl.formatDate(instance.now, { \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"format\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'hhmmss'\"],[11],[1,1,0,0,\" }));\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/guide/translating-text/template.hbs"
     }
@@ -4831,8 +3097,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "gj86mj77",
-    "block": "{\"symbols\":[\"demo\",\"demo\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"p\",true],[8],[1,[22,\"locale-switcher\"],false],[9],[0,\"\\n\\n      \"],[7,\"h1\",true],[10,\"id\",\"format-date\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Format Date\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Formats dates using \"],[7,\"a\",true],[10,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"Intl.DateTimeFormat\"],[9],[9],[0,\", and returns the formatted string value.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-date-01-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-date\",[[24,[\"instant\"]]],null],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L8:C24) \"],null],\"docs-helpers-format-date-01-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L9:C4) \"],null],\"docs-helpers-format-date-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[2]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L12:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-date-02-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-date\",[[24,[\"yesterday\"]]],null],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L14:C24) \"],null],\"docs-helpers-format-date-02-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L15:C4) \"],null],\"docs-helpers-format-date-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-date-time-options\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-date-time-options\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format Date & Time Options\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"localeMatcher\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The locale matching algorithm to use. Possible values are \\\"lookup\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". For information about this option,\\nsee the Intl page.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"timeZone\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The time zone to use. The only value implementations must recognize is\\n\\\"UTC\\\"; the default is the runtime's default time zone. Implementations may\\nalso recognize the time zone names of the IANA time zone database, such as\\n\\\"Asia/Shanghai\\\", \\\"Asia/Kolkata\\\", \\\"America/New_York\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"em\",true],[8],[0,\"Note:\"],[9],[0,\" The Intl.js polyfill does not have full support for \"],[7,\"code\",true],[8],[0,\"timeZone\"],[9],[0,\"\\n(see \"],[7,\"a\",true],[10,\"href\",\"https://github.com/andyearnshaw/Intl.js/issues/19\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"https://github.com/andyearnshaw/Intl.js/issues/19\"],[9],[0,\")\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"hour12\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"Whether to use 12-hour time (as opposed to 24-hour time). Possible values\\nare \"],[7,\"code\",true],[8],[0,\"true\"],[9],[0,\" and \"],[7,\"code\",true],[8],[0,\"false\"],[9],[0,\"; the default is locale dependent.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"hourCycle\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The hour cycle to use. Possible values are \\\"h11\\\", \\\"h12\\\", \\\"h23\\\", or \\\"h24\\\".\\nThis option overrides the hc language tag, if both are present, and the\\nhour12 option takes precedence in case both options have been specified.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMatcher\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The format matching algorithm to use. Possible values are \\\"basic\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". See the following paragraphs for\\ninformation about the use of this property.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"weekday\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the weekday. Possible values are \\\"narrow\\\",\\n\\\"short\\\", \\\"long\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"era\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the era. Possible values are \\\"narrow\\\", \\\"short\\\",\\n\\\"long\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"year\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the year. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"month\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the month. Possible values are \\\"numeric\\\", \\\"2-digit\\\",\\n\\\"narrow\\\", \\\"short\\\", \\\"long\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"day\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the day. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"hour\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the hour. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"minute\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the minute. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"second\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the second. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"timeZoneName\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the time zone name. Possible values are \\\"short\\\",\\n\\\"long\\\".\"],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
+    "id": "NmarXE1+",
+    "block": "{\"symbols\":[\"demo\",\"demo\"],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"p\",true],[10],[1,0,0,0,[27,[26,5,\"AppendSingleId\"],[]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h1\",true],[12,\"id\",\"format-date\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Format Date\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Formats dates using \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"Intl.DateTimeFormat\"],[11],[11],[1,1,0,0,\", and returns the formatted string value.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,6,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,3,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-date-01-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,450,11,[27,[26,1,\"CallHead\"],[]],[[27,[26,4,\"Expression\"],[]]],null]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L8:C24) \"],null],\"docs-helpers-format-date-01-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L9:C4) \"],null],\"docs-helpers-format-date-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[2]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,6,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,3,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L12:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-date-02-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,735,11,[27,[26,1,\"CallHead\"],[]],[[27,[26,0,\"Expression\"],[]]],null]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L14:C24) \"],null],\"docs-helpers-format-date-02-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-date/template.hbs' @ L15:C4) \"],null],\"docs-helpers-format-date-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[1]}]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"format-date-time-options\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#format-date-time-options\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Format Date & Time Options\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"localeMatcher\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The locale matching algorithm to use. Possible values are \\\"lookup\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". For information about this option,\\nsee the Intl page.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"timeZone\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The time zone to use. The only value implementations must recognize is\\n\\\"UTC\\\"; the default is the runtime's default time zone. Implementations may\\nalso recognize the time zone names of the IANA time zone database, such as\\n\\\"Asia/Shanghai\\\", \\\"Asia/Kolkata\\\", \\\"America/New_York\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"hour12\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"Whether to use 12-hour time (as opposed to 24-hour time). Possible values\\nare \"],[9,\"code\",true],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\" and \"],[9,\"code\",true],[10],[1,1,0,0,\"false\"],[11],[1,1,0,0,\"; the default is locale dependent.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"formatMatcher\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The format matching algorithm to use. Possible values are \\\"basic\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". See the following paragraphs for\\ninformation about the use of this property.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"weekday\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the weekday. Possible values are \\\"narrow\\\",\\n\\\"short\\\", \\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"era\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the era. Possible values are \\\"narrow\\\", \\\"short\\\",\\n\\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"year\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the year. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"month\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the month. Possible values are \\\"numeric\\\", \\\"2-digit\\\",\\n\\\"narrow\\\", \\\"short\\\", \\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"day\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the day. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"hour\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the hour. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minute\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the minute. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"second\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the second. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"timeZoneName\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the time zone name. Possible values are \\\"short\\\",\\n\\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"hourCycle\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The hour cycle to use. Possible values are \\\"h11\\\", \\\"h12\\\", \\\"h23\\\", or \\\"h24\\\".\\nThis option overrides the hc language tag, if both are present, and the\\nhour12 option takes precedence in case both options have been specified.\"],[11],[1,1,0,0,\"\\n\"],[11],[11]],\"hasEval\":false,\"upvars\":[\"yesterday\",\"format-date\",\"-assert-implicit-component-helper-argument\",\"component\",\"instant\",\"locale-switcher\",\"docs-demo\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/format-date/template.hbs"
     }
@@ -4871,8 +3137,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "JASvE3tw",
-    "block": "{\"symbols\":[\"demo\",\"demo\",\"demo\",\"demo\",\"demo\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"p\",true],[8],[1,[22,\"locale-switcher\"],false],[9],[0,\"\\n\\n      \"],[7,\"h1\",true],[10,\"id\",\"format-message\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Format Message\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Formats \"],[7,\"a\",true],[10,\"href\",\"https://formatjs.io/guides/message-syntax/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ICU message syntax\"],[9],[0,\" strings with the provided values passed as arguments to the helper/method.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,5,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-01-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-message\",[\"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"],[[\"name\",\"numPhotos\",\"timestamp\"],[[24,[\"user\",\"username\"]],[24,[\"num\"]],[24,[\"yesterday\"]]]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,5,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L11:C24) \"],null],\"docs-helpers-format-message-01-template.hbs\"],null],false],[0,\"\\n\"]],\"parameters\":[5]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,4,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L14:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-02-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-message\",[\"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"],[[\"name\",\"numPhotos\",\"timestamp\"],[[24,[\"user\",\"username\"]],1,[24,[\"yesterday\"]]]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,4,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L19:C24) \"],null],\"docs-helpers-format-message-02-template.hbs\"],null],false],[0,\"\\n\"]],\"parameters\":[4]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,3,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L22:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-03-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-message\",[\"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"],[[\"name\",\"numPhotos\",\"timestamp\"],[[24,[\"user\",\"username\"]],0,[24,[\"yesterday\"]]]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,3,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L27:C24) \"],null],\"docs-helpers-format-message-03-template.hbs\"],null],false],[0,\"\\n\"]],\"parameters\":[3]},null],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-html-message\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-html-message\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format HTML Message\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"To enable rendering HTML within translations, pass an \"],[7,\"code\",true],[8],[0,\"htmlSafe\"],[9],[0,\" attribute to the \"],[7,\"code\",true],[8],[0,\"format-message\"],[9],[0,\" helper.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[9],[7,\"span\",true],[10,\"class\",\"hljs-template-variable\"],[8],[0,\"{{format-message '<em>{photos, number}</em>' photos=models.photos.length htmlSafe=true}}\"],[9],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[9],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  \"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-message-compact-format\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-message-compact-format\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format Message Compact Format\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L37:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-04-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-message\",[\"The {product} has {numCustomers, shortNumber} customers\"],[[\"product\",\"numCustomers\"],[\"Cisco DPC3000\",25495]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L43:C4) \"],null],\"docs-helpers-format-message-04-template.hbs\"],null],false],[0,\"\\n\"]],\"parameters\":[2]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L46:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-05-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-message\",[\"The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers\"],[[\"product\",\"numCustomers\"],[\"Cisco DPC3000\",25495]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L52:C4) \"],null],\"docs-helpers-format-message-05-template.hbs\"],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"service-api\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#service-api\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Service API\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Component.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": service(),\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"count\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-number\"],[8],[0,\"0\"],[9],[0,\",\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"label\"],[9],[0,\": computed(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'intl.locale'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'model.photos.length'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[9],[0,\") \"],[9],[0,\"{\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.formatMessage(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"`\\n      You took {numPhotos, plural,\\n        =0 {no photos}\\n        =1 {one photo}\\n        other {# photos}\\n      }\\n    `\"],[9],[0,\",\\n    {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"numPhotos\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'model.photos.length'\"],[9],[0,\")\\n    });\\n  }).readOnly()\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[1,[28,\"docs-link\",[\"More details here\",\"docs.guide.ember-service-api\"],null],false],[9],[9]],\"hasEval\":false}",
+    "id": "Hk2YR5nq",
+    "block": "{\"symbols\":[\"demo\",\"demo\",\"demo\"],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"p\",true],[10],[1,0,0,0,[27,[26,6,\"AppendSingleId\"],[]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h1\",true],[12,\"id\",\"format-message\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Format Message\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Formats \"],[9,\"a\",true],[12,\"href\",\"https://formatjs.io/guides/message-syntax/\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ICU message syntax\"],[11],[1,1,0,0,\" strings with the provided values passed as arguments to the helper/method.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,7,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,4,\"BlockHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,3],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-01-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,414,14,[27,[26,2,\"CallHead\"],[]],[\"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"],[[\"name\",\"numPhotos\",\"timestamp\"],[[27,[26,1,\"Expression\"],[\"username\"]],[27,[26,5,\"Expression\"],[]],[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,4,\"CallHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,3],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L11:C24) \"],null],\"docs-helpers-format-message-01-template.hbs\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[3]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,7,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,4,\"BlockHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,2],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L14:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-02-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,841,14,[27,[26,2,\"CallHead\"],[]],[\"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"],[[\"name\",\"numPhotos\",\"timestamp\"],[[27,[26,1,\"Expression\"],[\"username\"]],1,[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,4,\"CallHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L19:C24) \"],null],\"docs-helpers-format-message-02-template.hbs\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[2]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,7,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,4,\"BlockHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,1],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L22:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-message-03-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,1266,14,[27,[26,2,\"CallHead\"],[]],[\"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"],[[\"name\",\"numPhotos\",\"timestamp\"],[[27,[26,1,\"Expression\"],[\"username\"]],0,[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,4,\"CallHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-message/template.hbs' @ L27:C24) \"],null],\"docs-helpers-format-message-03-template.hbs\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[1]}]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"format-html-message\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#format-html-message\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Format HTML Message\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"To enable rendering HTML within translations, pass an \"],[9,\"code\",true],[10],[1,1,0,0,\"htmlSafe\"],[11],[1,1,0,0,\" attribute to the \"],[9,\"code\",true],[10],[1,1,0,0,\"format-message\"],[11],[1,1,0,0,\" helper.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-template-variable\",null],[10],[1,1,0,0,\"{{format-message \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"\\\"'<em>'{photos, number}'</em>'\\\"\"],[11],[1,1,0,0,\" photos=models.photos.length htmlSafe=true}}\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  \"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"service-api\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#service-api\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Service API\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Component.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\": service(),\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"count\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-number\",null],[10],[1,1,0,0,\"0\"],[11],[1,1,0,0,\",\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"label\"],[11],[1,1,0,0,\": computed(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'intl.locale'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'model.photos.length'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.formatMessage(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"`\\n      You took {numPhotos, plural,\\n        =0 {no photos}\\n        =1 {one photo}\\n        other {# photos}\\n      }\\n    `\"],[11],[1,1,0,0,\",\\n    {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"numPhotos\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".get(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'model.photos.length'\"],[11],[1,1,0,0,\")\\n    });\\n  }).readOnly()\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,0,0,0,[31,3367,9,[27,[26,8,\"CallHead\"],[]],[\"More details here\",\"docs.guide.service-api\"],null]],[11],[11]],\"hasEval\":false,\"upvars\":[\"yesterday\",\"user\",\"format-message\",\"-assert-implicit-component-helper-argument\",\"component\",\"num\",\"locale-switcher\",\"docs-demo\",\"docs-link\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/format-message/template.hbs"
     }
@@ -4904,8 +3170,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "oPT+zyP0",
-    "block": "{\"symbols\":[\"demo\",\"demo\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"p\",true],[8],[1,[22,\"locale-switcher\"],false],[9],[0,\"\\n\\n      \"],[7,\"h1\",true],[10,\"id\",\"format-number\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Format Number\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Formats numbers using \"],[7,\"a\",true],[10,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"Intl.NumberFormat\"],[9],[9],[0,\", and returns the formatted string value.\"],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"basic-numbers\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#basic-numbers\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Basic Numbers\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L8:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-number-01-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-number\",[[24,[\"num\"]]],null],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L10:C24) \"],null],\"docs-helpers-format-number-01-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L11:C4) \"],null],\"docs-helpers-format-number-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[2]},null],[9],[0,\"\\n\\n      \"],[7,\"h3\",true],[10,\"id\",\"currency\"],[10,\"class\",\"docs-md__h3\"],[8],[7,\"a\",true],[10,\"href\",\"#currency\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Currency\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L16:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-number-02-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-number\",[[24,[\"num\"]]],[[\"style\",\"currency\"],[\"currency\",\"USD\"]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L18:C24) \"],null],\"docs-helpers-format-number-02-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L19:C4) \"],null],\"docs-helpers-format-number-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-number-options\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-number-options\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format Number Options\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"localeMatcher\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The locale matching algorithm to use. Possible values are \\\"lookup\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". For information about this option,\\nsee the Intl page.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"style\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The formatting style to use. Possible values are \\\"decimal\\\" for plain number\\nformatting, \\\"currency\\\" for currency formatting, and \\\"percent\\\" for percent\\nformatting; the default is \\\"decimal\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"currency\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The currency to use in currency formatting. Possible values are the ISO 4217\\ncurrency codes, such as \\\"USD\\\" for the US dollar, \\\"EUR\\\" for the euro, or\\n\\\"CNY\\\" for the Chinese RMB — see the Current currency & funds code list.\\nThere is no default value; if the style is \\\"currency\\\", the currency property\\nmust be provided.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"currencyDisplay\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"How to display the currency in currency formatting. Possible values are\\n\\\"symbol\\\" to use a localized currency symbol such as €, \\\"code\\\" to use the\\nISO currency code, \\\"name\\\" to use a localized currency name such as \\\"dollar\\\";\\nthe default is \\\"symbol\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"useGrouping\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"Whether to use grouping separators, such as thousands separators or\\nthousand/lakh/crore separators. Possible values are true and false;\\nthe default is true.\"],[9],[0,\"\\n\"],[9],[7,\"hr\",true],[10,\"class\",\"docs-md__hr\"],[8],[9],[7,\"p\",true],[8],[0,\"The following properties fall into two groups:\"],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"minimumIntegerDigits\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"minimumFractionDigits\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"maximumFractionDigits\"],[9],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"minimumSignificantDigits\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"maximumSignificantDigits\"],[9],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"If at least one property from the second group is defined, then the first\\ngroup is ignored.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"minimumIntegerDigits\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The minimum number of integer digits to use. Possible values are from\\n1 to 21; the default is 1.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"minimumFractionDigits\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The minimum number of fraction digits to use. Possible values are from\\n0 to 20; the default for plain number and percent formatting is 0; the\\ndefault for currency formatting is the number of minor unit digits provided\\nby the ISO 4217 currency code list (2 if the list doesn't provide that\\ninformation).\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"maximumFractionDigits\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The maximum number of fraction digits to use. Possible values are from\\n0 to 20; the default for plain number formatting is the larger of\\n\"],[7,\"code\",true],[8],[0,\"minimumFractionDigits\"],[9],[0,\" and 3; the default for currency formatting is the\\nlarger of \"],[7,\"code\",true],[8],[0,\"minimumFractionDigits\"],[9],[0,\" and the number of minor unit digits\\nprovided by the ISO 4217 currency code list (2 if the list doesn't provide\\nthat information); the default for percent formatting is the larger of\\n\"],[7,\"code\",true],[8],[0,\"minimumFractionDigits\"],[9],[0,\" and 0.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"minimumSignificantDigits\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The minimum number of significant digits to use. Possible values are from\\n1 to 21; the default is 1.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"maximumSignificantDigits\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The maximum number of significant digits to use. Possible values are\\nfrom 1 to 21; the default is \"],[7,\"code\",true],[8],[0,\"minimumSignificantDigits\"],[9],[0,\".\"],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
+    "id": "av3+8Zx2",
+    "block": "{\"symbols\":[\"demo\",\"demo\"],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"p\",true],[10],[1,0,0,0,[27,[26,4,\"AppendSingleId\"],[]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h1\",true],[12,\"id\",\"format-number\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Format Number\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Formats numbers using \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"Intl.NumberFormat\"],[11],[11],[1,1,0,0,\", and returns the formatted string value.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"basic-numbers\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#basic-numbers\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Basic Numbers\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[5,[27,[26,5,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,3,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L8:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-number-01-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,579,13,[27,[26,1,\"CallHead\"],[]],[[27,[26,0,\"Expression\"],[]]],null]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L10:C24) \"],null],\"docs-helpers-format-number-01-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L11:C4) \"],null],\"docs-helpers-format-number-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[2]}]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h3\",true],[12,\"id\",\"currency\",null],[12,\"class\",\"docs-md__h3\",null],[10],[9,\"a\",true],[12,\"href\",\"#currency\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Currency\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[5,[27,[26,5,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,3,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L16:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-number-02-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,978,13,[27,[26,1,\"CallHead\"],[]],[[27,[26,0,\"Expression\"],[]]],[[\"style\",\"currency\"],[\"currency\",\"USD\"]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L18:C24) \"],null],\"docs-helpers-format-number-02-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-number/template.hbs' @ L19:C4) \"],null],\"docs-helpers-format-number-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[1]}]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"format-number-options\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#format-number-options\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Format Number Options\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"localeMatcher\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The locale matching algorithm to use. Possible values are \\\"lookup\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". For information about this option,\\nsee the Intl page.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"style\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The formatting style to use. Possible values are \\\"decimal\\\" for plain number\\nformatting, \\\"currency\\\" for currency formatting, and \\\"percent\\\" for percent\\nformatting; the default is \\\"decimal\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"currency\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The currency to use in currency formatting. Possible values are the ISO 4217\\ncurrency codes, such as \\\"USD\\\" for the US dollar, \\\"EUR\\\" for the euro, or\\n\\\"CNY\\\" for the Chinese RMB — see the Current currency & funds code list.\\nThere is no default value; if the style is \\\"currency\\\", the currency property\\nmust be provided.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"currencyDisplay\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"How to display the currency in currency formatting. Possible values are\\n\\\"symbol\\\" to use a localized currency symbol such as €, \\\"code\\\" to use the\\nISO currency code, \\\"name\\\" to use a localized currency name such as \\\"dollar\\\";\\nthe default is \\\"symbol\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"useGrouping\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"Whether to use grouping separators, such as thousands separators or\\nthousand/lakh/crore separators. Possible values are true and false;\\nthe default is true.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"hr\",true],[12,\"class\",\"docs-md__hr\",null],[10],[11],[9,\"p\",true],[10],[1,1,0,0,\"The following properties fall into two groups:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minimumIntegerDigits\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"minimumFractionDigits\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"maximumFractionDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minimumSignificantDigits\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"maximumSignificantDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"If at least one property from the second group is defined, then the first\\ngroup is ignored.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minimumIntegerDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The minimum number of integer digits to use. Possible values are from\\n1 to 21; the default is 1.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minimumFractionDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The minimum number of fraction digits to use. Possible values are from\\n0 to 20; the default for plain number and percent formatting is 0; the\\ndefault for currency formatting is the number of minor unit digits provided\\nby the ISO 4217 currency code list (2 if the list doesn't provide that\\ninformation).\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"maximumFractionDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The maximum number of fraction digits to use. Possible values are from\\n0 to 20; the default for plain number formatting is the larger of\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"minimumFractionDigits\"],[11],[1,1,0,0,\" and 3; the default for currency formatting is the\\nlarger of \"],[9,\"code\",true],[10],[1,1,0,0,\"minimumFractionDigits\"],[11],[1,1,0,0,\" and the number of minor unit digits\\nprovided by the ISO 4217 currency code list (2 if the list doesn't provide\\nthat information); the default for percent formatting is the larger of\\n\"],[9,\"code\",true],[10],[1,1,0,0,\"minimumFractionDigits\"],[11],[1,1,0,0,\" and 0.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minimumSignificantDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The minimum number of significant digits to use. Possible values are from\\n1 to 21; the default is 1.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"maximumSignificantDigits\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The maximum number of significant digits to use. Possible values are\\nfrom 1 to 21; the default is \"],[9,\"code\",true],[10],[1,1,0,0,\"minimumSignificantDigits\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[11],[11]],\"hasEval\":false,\"upvars\":[\"num\",\"format-number\",\"-assert-implicit-component-helper-argument\",\"component\",\"locale-switcher\",\"docs-demo\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/format-number/template.hbs"
     }
@@ -4941,8 +3207,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "38NwZDgI",
-    "block": "{\"symbols\":[\"demo\",\"demo\",\"demo\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"p\",true],[8],[1,[22,\"locale-switcher\"],false],[9],[0,\"\\n\\n      \"],[7,\"h1\",true],[10,\"id\",\"format-relative\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Format Relative\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Formats dates relative to \\\"now\\\" using \"],[7,\"a\",true],[10,\"href\",\"https://github.com/yahoo/intl-relativeformat\"],[10,\"class\",\"docs-md__a\"],[8],[7,\"code\",true],[8],[0,\"IntlRelativeFormat\"],[9],[9],[0,\", and returns the formatted string value.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,3,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-relative-01-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-relative\",[[24,[\"yesterday\"]]],null],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,3,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L8:C24) \"],null],\"docs-helpers-format-relative-01-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,3,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L9:C4) \"],null],\"docs-helpers-format-relative-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[3]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L12:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-relative-02-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-relative\",[[24,[\"instant\"]]],null],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L14:C24) \"],null],\"docs-helpers-format-relative-02-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L15:C4) \"],null],\"docs-helpers-format-relative-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[2]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L18:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-relative-03-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-relative\",[[24,[\"now\"]]],[[\"interval\"],[1000]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L20:C24) \"],null],\"docs-helpers-format-relative-03-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L21:C4) \"],null],\"docs-helpers-format-relative-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-relative-options\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-relative-options\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format Relative Options\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"style\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"options for \\\"best fit\\\" (\\\"yesterday\\\") and \\\"numeric\\\" (\\\"1 day ago\\\") output.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"units\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"options for always rendering in a particular unit; e.g. \\\"30 days ago\\\",\\ninstead of \\\"1 month ago\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[0,\"By default, the relative time is computed to the best fit unit, but you can explicitly call it to force units to be displayed in \"],[7,\"code\",true],[8],[0,\"\\\"second\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"second-short\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"minute\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"minute-short\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"hour\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"hour-short\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"day\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"day-short\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"month\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"month-short\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"year\\\"\"],[9],[0,\" or \"],[7,\"code\",true],[8],[0,\"\\\"year-short\\\"\"],[9],[9],[9]],\"hasEval\":false}",
+    "id": "42Xw8a94",
+    "block": "{\"symbols\":[\"demo\",\"demo\",\"demo\"],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"p\",true],[10],[1,0,0,0,[27,[26,3,\"AppendSingleId\"],[]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h1\",true],[12,\"id\",\"format-relative\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Format Relative\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Formats dates relative to \\\"now\\\" using \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"Intl.RelativeTimeFormat\"],[11],[11],[1,1,0,0,\", and returns the formatted string value.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,4,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,2,\"BlockHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,3],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-relative-01-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,488,15,[27,[26,0,\"CallHead\"],[]],[-1],[[\"unit\"],[\"day\"]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,3],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L8:C24) \"],null],\"docs-helpers-format-relative-01-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,3],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L9:C4) \"],null],\"docs-helpers-format-relative-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[3]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,4,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,2,\"BlockHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,2],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L12:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-relative-02-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,795,15,[27,[26,0,\"CallHead\"],[]],[1],[[\"unit\"],[\"day\"]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L14:C24) \"],null],\"docs-helpers-format-relative-02-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L15:C4) \"],null],\"docs-helpers-format-relative-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[2]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,4,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,2,\"BlockHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,1],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L18:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-relative-03-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,1101,15,[27,[26,0,\"CallHead\"],[]],[0],[[\"unit\"],[\"day\"]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L20:C24) \"],null],\"docs-helpers-format-relative-03-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,2,\"CallHead\"],[]],[[31,0,0,[27,[26,1,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-relative/template.hbs' @ L21:C4) \"],null],\"docs-helpers-format-relative-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[1]}]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"format-relative-options\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#format-relative-options\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Format Relative Options\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"style\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"options for \\\"best fit\\\" (\\\"yesterday\\\") and \\\"numeric\\\" (\\\"1 day ago\\\") output.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"units\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"options for always rendering in a particular unit; e.g. \\\"30 days ago\\\",\\ninstead of \\\"1 month ago\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n      \"],[9,\"h1\",true],[12,\"id\",\"todo-implement-complete-list\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"TODO: implement complete list\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"By default, the relative time is computed to the best fit unit, but you can explicitly call it to force units to be displayed in \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"second\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"second-short\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"minute\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"minute-short\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"hour\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"hour-short\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"day\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"day-short\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"month\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"month-short\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"year\\\"\"],[11],[1,1,0,0,\" or \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"year-short\\\"\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[\"format-relative\",\"-assert-implicit-component-helper-argument\",\"component\",\"locale-switcher\",\"docs-demo\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/format-relative/template.hbs"
     }
@@ -4974,8 +3240,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "2YoQVBYr",
-    "block": "{\"symbols\":[\"demo\",\"demo\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"p\",true],[8],[1,[22,\"locale-switcher\"],false],[9],[0,\"\\n\\n      \"],[7,\"h1\",true],[10,\"id\",\"format-time\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Format Time\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"This is just like the \"],[7,\"code\",true],[8],[0,\"{{format-date}}\"],[9],[0,\" helper, except it will reference any string-named format from \"],[7,\"code\",true],[8],[0,\"formats.time\"],[9],[0,\".\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-time-01-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-time\",[[24,[\"instant\"]]],[[\"format\"],[\"hhmmss\"]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L8:C24) \"],null],\"docs-helpers-format-time-01-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L9:C4) \"],null],\"docs-helpers-format-time-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[2]},null],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L12:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-time-02-template.hbs\"]],{\"statements\":[[0,\"    \"],[1,[28,\"format-time\",[[24,[\"instant\"]]],[[\"hour\",\"second\",\"minute\",\"hour12\"],[\"numeric\",\"numeric\",\"numeric\",false]]],false],[0,\"\\n  \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L14:C24) \"],null],\"docs-helpers-format-time-02-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L15:C4) \"],null],\"docs-helpers-format-time-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-date-time-options\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-date-time-options\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format Date & Time Options\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"localeMatcher\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The locale matching algorithm to use. Possible values are \\\"lookup\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". For information about this option,\\nsee the Intl page.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"timeZone\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The time zone to use. The only value implementations must recognize is\\n\\\"UTC\\\"; the default is the runtime's default time zone. Implementations may\\nalso recognize the time zone names of the IANA time zone database, such as\\n\\\"Asia/Shanghai\\\", \\\"Asia/Kolkata\\\", \\\"America/New_York\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"em\",true],[8],[0,\"Note:\"],[9],[0,\" The Intl.js polyfill does not have full support for \"],[7,\"code\",true],[8],[0,\"timeZone\"],[9],[0,\"\\n(see \"],[7,\"a\",true],[10,\"href\",\"https://github.com/andyearnshaw/Intl.js/issues/19\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"https://github.com/andyearnshaw/Intl.js/issues/19\"],[9],[0,\")\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"hour12\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"Whether to use 12-hour time (as opposed to 24-hour time). Possible values\\nare \"],[7,\"code\",true],[8],[0,\"true\"],[9],[0,\" and \"],[7,\"code\",true],[8],[0,\"false\"],[9],[0,\"; the default is locale dependent.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"hourCycle\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The hour cycle to use. Possible values are \\\"h11\\\", \\\"h12\\\", \\\"h23\\\", or \\\"h24\\\".\\nThis option overrides the hc language tag, if both are present, and the\\nhour12 option takes precedence in case both options have been specified.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"formatMatcher\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The format matching algorithm to use. Possible values are \\\"basic\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". See the following paragraphs for\\ninformation about the use of this property.\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"weekday\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the weekday. Possible values are \\\"narrow\\\",\\n\\\"short\\\", \\\"long\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"era\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the era. Possible values are \\\"narrow\\\", \\\"short\\\",\\n\\\"long\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"year\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the year. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"month\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the month. Possible values are \\\"numeric\\\", \\\"2-digit\\\",\\n\\\"narrow\\\", \\\"short\\\", \\\"long\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"day\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the day. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"hour\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the hour. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"minute\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the minute. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"second\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the second. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[9],[0,\"\\n\"],[9],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"timeZoneName\"],[9],[9],[0,\"\\n\"],[7,\"blockquote\",true],[10,\"class\",\"docs-md__blockquote\"],[8],[7,\"p\",true],[8],[0,\"The representation of the time zone name. Possible values are \\\"short\\\",\\n\\\"long\\\".\"],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
+    "id": "GzEKTgBP",
+    "block": "{\"symbols\":[\"demo\",\"demo\"],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"p\",true],[10],[1,0,0,0,[27,[26,4,\"AppendSingleId\"],[]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h1\",true],[12,\"id\",\"format-time\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Format Time\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"This is just like the \"],[9,\"code\",true],[10],[1,1,0,0,\"{{format-date}}\"],[11],[1,1,0,0,\" helper, except it will reference any string-named format from \"],[9,\"code\",true],[10],[1,1,0,0,\"formats.time\"],[11],[1,1,0,0,\".\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,5,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,3,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L6:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-time-01-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,386,11,[27,[26,1,\"CallHead\"],[]],[[27,[26,0,\"Expression\"],[]]],[[\"format\"],[\"hhmmss\"]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L8:C24) \"],null],\"docs-helpers-format-time-01-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L9:C4) \"],null],\"docs-helpers-format-time-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[2]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,5,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n\"],[5,[27,[26,3,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L12:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-time-02-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,687,11,[27,[26,1,\"CallHead\"],[]],[[27,[26,0,\"Expression\"],[]]],[[\"hour\",\"second\",\"minute\",\"hour12\"],[\"numeric\",\"numeric\",\"numeric\",false]]]],[1,1,0,0,\"\\n  \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L14:C24) \"],null],\"docs-helpers-format-time-02-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,3,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/format-time/template.hbs' @ L15:C4) \"],null],\"docs-helpers-format-time-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[1]}]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"format-date-time-options\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#format-date-time-options\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Format Date & Time Options\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"localeMatcher\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The locale matching algorithm to use. Possible values are \\\"lookup\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". For information about this option,\\nsee the Intl page.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"timeZone\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The time zone to use. The only value implementations must recognize is\\n\\\"UTC\\\"; the default is the runtime's default time zone. Implementations may\\nalso recognize the time zone names of the IANA time zone database, such as\\n\\\"Asia/Shanghai\\\", \\\"Asia/Kolkata\\\", \\\"America/New_York\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"hour12\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"Whether to use 12-hour time (as opposed to 24-hour time). Possible values\\nare \"],[9,\"code\",true],[10],[1,1,0,0,\"true\"],[11],[1,1,0,0,\" and \"],[9,\"code\",true],[10],[1,1,0,0,\"false\"],[11],[1,1,0,0,\"; the default is locale dependent.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"formatMatcher\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The format matching algorithm to use. Possible values are \\\"basic\\\" and\\n\\\"best fit\\\"; the default is \\\"best fit\\\". See the following paragraphs for\\ninformation about the use of this property.\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"weekday\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the weekday. Possible values are \\\"narrow\\\",\\n\\\"short\\\", \\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"era\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the era. Possible values are \\\"narrow\\\", \\\"short\\\",\\n\\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"year\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the year. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"month\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the month. Possible values are \\\"numeric\\\", \\\"2-digit\\\",\\n\\\"narrow\\\", \\\"short\\\", \\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"day\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the day. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"hour\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the hour. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"minute\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the minute. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"second\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the second. Possible values are \\\"numeric\\\", \\\"2-digit\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"timeZoneName\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The representation of the time zone name. Possible values are \\\"short\\\",\\n\\\"long\\\".\"],[11],[1,1,0,0,\"\\n\"],[11],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"hourCycle\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"blockquote\",true],[12,\"class\",\"docs-md__blockquote\",null],[10],[9,\"p\",true],[10],[1,1,0,0,\"The hour cycle to use. Possible values are \\\"h11\\\", \\\"h12\\\", \\\"h23\\\", or \\\"h24\\\".\\nThis option overrides the hc language tag, if both are present, and the\\nhour12 option takes precedence in case both options have been specified.\"],[11],[1,1,0,0,\"\\n\"],[11],[11]],\"hasEval\":false,\"upvars\":[\"instant\",\"format-time\",\"-assert-implicit-component-helper-argument\",\"component\",\"locale-switcher\",\"docs-demo\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/format-time/template.hbs"
     }
@@ -4992,8 +3258,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "dYwGqSs5",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"ember-intl-template-helpers\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Ember Intl Template Helpers\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Ember-intl provide several template helpers for formatting and translating.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"helper-options\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#helper-options\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Helper Options\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"All helpers accept optional arguments:\"],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"locale\"],[9],[0,\" argument to explicitly pass/override the application locale\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"format\"],[9],[0,\" argument which you pass in a key corresponding to a format configuration in \"],[7,\"code\",true],[8],[0,\"app/formats.js\"],[9],[9],[0,\"\\n\"],[9],[9]],\"hasEval\":false}",
+    "id": "ok3l6hd8",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"ember-intl-template-helpers\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Ember Intl Template Helpers\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Ember-intl provide several template helpers for formatting and translating.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"helper-options\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#helper-options\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Helper Options\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"All helpers accept optional arguments:\"],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"locale\"],[11],[1,1,0,0,\" argument to explicitly pass/override the application locale\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"format\"],[11],[1,1,0,0,\" argument which you pass in a key corresponding to a format configuration in \"],[9,\"code\",true],[10],[1,1,0,0,\"app/formats.js\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/index/template.hbs"
     }
@@ -5034,10 +3300,46 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "upaIxoxO",
-    "block": "{\"symbols\":[\"demo\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"p\",true],[8],[1,[22,\"locale-switcher\"],false],[9],[0,\"\\n\\n      \"],[7,\"h1\",true],[10,\"id\",\"the-t-helper\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"The \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"The \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper accepts a translation key and returns a translated string.\\nTo provide values to the dynamic segment of the translation, pass an object hash.\"],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"icu-message-syntax\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#icu-message-syntax\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"ICU message syntax\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Compiles a \"],[7,\"a\",true],[10,\"href\",\"https://formatjs.io/guides/message-syntax/\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"ICU message syntax\"],[9],[0,\" strings with its hash values passed.\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[4,\"docs-demo\",null,null,{\"statements\":[[0,\"\\n  \"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/t/template.hbs' @ L10:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-t-01-template.hbs\"]],{\"statements\":[[0,\" \"],[1,[28,\"t\",[\"photos.banner\"],[[\"numPhotos\"],[[24,[\"count\"]]]]],false],[0,\"\\n\\n\"],[7,\"button\",false],[12,\"class\",\"btn\"],[3,\"action\",[[23,0,[]],\"inc\",[24,[\"count\"]]]],[8],[0,\" + Increment photo count \"],[9],[0,\"\\n\"],[7,\"button\",false],[12,\"class\",\"btn\"],[3,\"action\",[[23,0,[]],\"dec\",[24,[\"count\"]]]],[8],[0,\" - Decrement photo count \"],[9],[0,\"   \"]],\"parameters\":[]},null],[0,\"   \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/t/template.hbs' @ L13:C102) \"],null],\"docs-helpers-format-t-01-template.hbs\"],null],false],[0,\"\\n  \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/t/template.hbs' @ L14:C4) \"],null],\"docs-helpers-format-t-controller.js\"],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjson\"],[8],[0,\"# translations/en-us.json\\n{\\n  \\\"photos\\\": {\\n    \\\"banner\\\": \\\"You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}\\\"\\n  }\\n}\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"format-html-message\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#format-html-message\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Format HTML Message\"],[9],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"To enable rendering HTML within translations, pass an \"],[7,\"code\",true],[8],[0,\"htmlSafe\"],[9],[0,\" attribute to the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" helper.\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'a.translation' htmlSafe=true}}\"],[9],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"# translations/en-en.yml\\na:\\n  translations: '<em>Hello</em>'\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  \"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedyaml\"],[8],[0,\"# translations/fr-fr.yml\\nphotos:\\n  banner: Vous {numPhotos, plural, =0 {n'avez aucune photo.} =1 {avez une photo.} other {avez {numPhotos} photos.}}\"],[9],[9],[0,\"\\n\\n      \"],[7,\"h2\",true],[10,\"id\",\"service-api\"],[10,\"class\",\"docs-md__h2\"],[8],[7,\"a\",true],[10,\"href\",\"#service-api\"],[10,\"class\",\"heading-anchor\"],[8],[0,\"Service API\"],[9],[9],[0,\"\\n    \"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"export\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"default\"],[9],[0,\" Component.extend({\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"intl\"],[9],[0,\": service(),\\n\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"banner\"],[9],[0,\": computed(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'intl.locale'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'model.photos.length'\"],[9],[0,\", \"],[7,\"span\",true],[10,\"class\",\"hljs-function\"],[8],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"function\"],[9],[0,\"(\"],[7,\"span\",true],[10,\"class\",\"hljs-params\"],[8],[9],[0,\") \"],[9],[0,\"{\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"return\"],[9],[0,\" \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".intl.t(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'photos.banner'\"],[9],[0,\", {\\n      \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"photos\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-keyword\"],[8],[0,\"this\"],[9],[0,\".get(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'model.photos.length'\"],[9],[0,\")\\n    });\\n  })\\n});\"],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[1,[28,\"docs-link\",[\"More details here\",\"docs.guide.ember-service-api\"],null],false],[9],[9]],\"hasEval\":false}",
+    "id": "XqmM6okz",
+    "block": "{\"symbols\":[\"demo\"],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"p\",true],[10],[1,0,0,0,[27,[26,5,\"AppendSingleId\"],[]]],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h1\",true],[12,\"id\",\"the-t-helper\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"The \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"The \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper accepts a translation key and returns a translated string.\\nTo provide values to the dynamic segment of the translation, pass an object hash.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"icu-message-syntax\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#icu-message-syntax\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"ICU message syntax\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Compiles a \"],[9,\"a\",true],[12,\"href\",\"https://formatjs.io/guides/message-syntax/\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ICU message syntax\"],[11],[1,1,0,0,\" strings with its hash values passed.\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[5,[27,[26,6,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"\\n  \"],[5,[27,[26,4,\"BlockHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,1],[\"example\"]],\"expected `demo.example` to be a contextual component but found a string. Did you mean `(component demo.example)`? ('dummy/pods/docs/helpers/t/template.hbs' @ L10:C5) \"],null]],[[\"name\"],[\"docs-helpers-format-t-01-template.hbs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\" \"],[1,0,0,0,[31,692,1,[27,[26,1,\"CallHead\"],[]],[\"photos.banner\"],[[\"numPhotos\"],[[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n\\n\"],[9,\"button\",false],[23,\"class\",\"btn\",null],[3,0,0,[27,[26,2,\"ModifierHead\"],[]],[[27,[24,0],[]],\"inc\",[27,[26,0,\"Expression\"],[]]],null],[10],[1,1,0,0,\" + Increment photo count \"],[11],[1,1,0,0,\"\\n\"],[9,\"button\",false],[23,\"class\",\"btn\",null],[3,0,0,[27,[26,2,\"ModifierHead\"],[]],[[27,[24,0],[]],\"dec\",[27,[26,0,\"Expression\"],[]]],null],[10],[1,1,0,0,\" - Decrement photo count \"],[11],[1,1,0,0,\"   \"]],\"parameters\":[]}]]],[1,1,0,0,\"   \"],[1,0,0,0,[31,0,0,[27,[26,4,\"CallHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/t/template.hbs' @ L13:C102) \"],null],\"docs-helpers-format-t-01-template.hbs\"],null]],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,0,0,[27,[26,4,\"CallHead\"],[]],[[31,0,0,[27,[26,3,\"CallHead\"],[]],[[27,[24,1],[\"snippet\"]],\"expected `demo.snippet` to be a contextual component but found a string. Did you mean `(component demo.snippet)`? ('dummy/pods/docs/helpers/t/template.hbs' @ L14:C4) \"],null],\"docs-helpers-format-t-controller.js\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[1]}]]],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjson\",null],[10],[1,1,0,0,\"# translations/en-us.json\\n{\\n  \\\"photos\\\": {\\n    \\\"banner\\\": \\\"You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}\\\"\\n  }\\n}\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"format-html-message\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#format-html-message\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Format HTML Message\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"To enable rendering HTML within translations, pass an \"],[9,\"code\",true],[10],[1,1,0,0,\"htmlSafe\"],[11],[1,1,0,0,\" attribute to the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" helper.\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[1,1,0,0,\"{{t 'a.translation' htmlSafe=true}}\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedyaml\",null],[10],[1,1,0,0,\"# translations/en-en.yml\\na:\\n  translations: '<em>Hello</em>'\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  \"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedyaml\",null],[10],[1,1,0,0,\"# translations/fr-fr.yml\\nphotos:\\n  banner: Vous {numPhotos, plural, =0 {n'avez aucune photo.} =1 {avez une photo.} other {avez {numPhotos} photos.}}\"],[11],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"service-api\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#service-api\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Service API\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"export\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"default\"],[11],[1,1,0,0,\" Component.extend({\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"intl\"],[11],[1,1,0,0,\": service(),\\n\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"banner\"],[11],[1,1,0,0,\": computed(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'intl.locale'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'model.photos.length'\"],[11],[1,1,0,0,\", \"],[9,\"span\",true],[12,\"class\",\"hljs-function\",null],[10],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"function\"],[11],[1,1,0,0,\"(\"],[9,\"span\",true],[12,\"class\",\"hljs-params\",null],[10],[11],[1,1,0,0,\") \"],[11],[1,1,0,0,\"{\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"return\"],[11],[1,1,0,0,\" \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".intl.t(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'photos.banner'\"],[11],[1,1,0,0,\", {\\n      \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"photos\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-keyword\",null],[10],[1,1,0,0,\"this\"],[11],[1,1,0,0,\".get(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'model.photos.length'\"],[11],[1,1,0,0,\")\\n    });\\n  })\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,0,0,0,[31,3109,9,[27,[26,7,\"CallHead\"],[]],[\"More details here\",\"docs.guide.service-api\"],null]],[11],[11]],\"hasEval\":false,\"upvars\":[\"count\",\"t\",\"action\",\"-assert-implicit-component-helper-argument\",\"component\",\"locale-switcher\",\"docs-demo\",\"docs-link\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/helpers/t/template.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("dummy/pods/docs/integrations/ember-cp-validation/template", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "eDRpZCAM",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"ember-intl-cp-validations\",null],[12,\"class\",\"docs-md__h1\",null],[10],[9,\"a\",true],[12,\"href\",\"https://github.com/jasonmit/ember-intl-cp-validations\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ember-intl-cp-validations\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Adds support for ember-intl in \"],[9,\"a\",true],[12,\"href\",\"https://github.com/offirgolan/ember-cp-validations\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"ember-cp-validations\"],[11],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
+    "meta": {
+      "moduleName": "dummy/pods/docs/integrations/ember-cp-validation/template.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("dummy/pods/docs/integrations/visual-studio-code/template", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "j/R0qWwx",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"visual-studio-code\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Visual Studio Code\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"You can get autocomplete and additional information inside \"],[9,\"a\",true],[12,\"href\",\"https://code.visualstudio.com/\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Visual Studio Code\"],[11],[1,1,0,0,\" by installing \"],[9,\"a\",true],[12,\"href\",\"https://github.com/lifeart/els-intl-addon\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"els-intl-addon\"],[11],[1,1,0,0,\" addon for \"],[9,\"a\",true],[12,\"href\",\"https://marketplace.visualstudio.com/items?itemName=lifeart.vscode-ember-unstable\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"Unstable Ember Language Server\"],[11],[1,1,0,0,\".\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
+    "meta": {
+      "moduleName": "dummy/pods/docs/integrations/visual-studio-code/template.hbs"
     }
   });
 
@@ -5052,10 +3354,28 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "NgtRrd8R",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"migrating-from-2-0-to-3-0\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Migrating from 2.0 to 3.0\"],[9],[0,\"\\n    \"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"baseLocale\"],[9],[0,\" was removed from \"],[7,\"code\",true],[8],[0,\"config/ember-intl.js\"],[9],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"format-html-message\"],[9],[0,\" was removed in favor of passing \"],[7,\"code\",true],[8],[0,\"htmlSafe=true\"],[9],[0,\" into the \"],[7,\"code\",true],[8],[0,\"t\"],[9],[0,\" & \"],[7,\"code\",true],[8],[0,\"format-message\"],[9],[0,\" API.\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'sale_begins' day=day htmlSafe=true}}`\\n\"],[9],[7,\"span\",true],[10,\"class\",\"hljs-template-variable\"],[8],[0,\"{{format-html-message ''Sale begins {day, date, shortWeekDay}' day=day htmlSafe=true}}\"],[9],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[9],[9],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"ember-intl-dot-notation\"],[9],[0,\" is no longer needed. Delete \"],[7,\"code\",true],[8],[0,\"app/models/ember-intl-translation.js\"],[9],[0,\". Your application should continue to behave the same whether your keys are flat or nested objects.\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"p\",true],[8],[7,\"code\",true],[8],[0,\"intl.addTranslation\"],[9],[0,\" was removed in favor of using \"],[7,\"code\",true],[8],[0,\"intl.addTranslations\"],[9],[0,\". \"],[7,\"code\",true],[8],[0,\"addTranslations\"],[9],[0,\" takes a locale as the first argument and a object as the second.\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Example:\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.addTranslations(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"hero\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Welcome to ember-intl 3.0'\"],[9],[0,\"\\n});\"],[9],[9],[0,\"\\n\"],[7,\"ul\",true],[8],[0,\"\\n\"],[7,\"li\",true],[8],[7,\"code\",true],[8],[0,\"fallback\"],[9],[0,\" was removed in favor of \"],[7,\"code\",true],[8],[0,\"defaults\"],[9],[0,\". This is for better alignment with ember-i18n's API.\"],[9],[0,\"\\n\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=day}}\"],[9],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"becomes\"],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedjs\"],[8],[0,\"intl.addTranslations(\"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'en-us'\"],[9],[0,\", {\\n  \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"home\"],[9],[0,\": {\\n    \"],[7,\"span\",true],[10,\"class\",\"hljs-attr\"],[8],[0,\"sale_begins\"],[9],[0,\": \"],[7,\"span\",true],[10,\"class\",\"hljs-string\"],[8],[0,\"'Sale begins {day, date, shortWeekDay}'\"],[9],[0,\"\\n  }\\n});\"],[9],[9],[0,\"\\n\"],[7,\"pre\",true],[10,\"class\",\"docs-md__code\"],[8],[7,\"code\",true],[10,\"class\",\"undefinedhbs\"],[8],[7,\"span\",true],[10,\"class\",\"xml\"],[8],[0,\"{{t 'app.sale_begins' defaults='home.sale_begins' day=day}}\"],[9],[9],[9],[0,\"\\n\"],[7,\"p\",true],[8],[0,\"Something missing? Submit a PR to this document.\"],[9],[9]],\"hasEval\":false}",
+    "id": "l/w2are3",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"migrating-from-2-0-to-3-0\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Migrating from 2.0 to 3.0\"],[11],[1,1,0,0,\"\\n    \"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"baseLocale\"],[11],[1,1,0,0,\" was removed from \"],[9,\"code\",true],[10],[1,1,0,0,\"config/ember-intl.js\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"format-html-message\"],[11],[1,1,0,0,\" was removed in favor of passing \"],[9,\"code\",true],[10],[1,1,0,0,\"htmlSafe=true\"],[11],[1,1,0,0,\" into the \"],[9,\"code\",true],[10],[1,1,0,0,\"t\"],[11],[1,1,0,0,\" & \"],[9,\"code\",true],[10],[1,1,0,0,\"format-message\"],[11],[1,1,0,0,\" API.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[1,1,0,0,\"{{t 'sale_begins' day=day htmlSafe=true}}`\\n\"],[11],[9,\"span\",true],[12,\"class\",\"hljs-template-variable\",null],[10],[1,1,0,0,\"{{format-html-message ''Sale begins {day, date, shortWeekDay}' day=day htmlSafe=true}}\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"ember-intl-dot-notation\"],[11],[1,1,0,0,\" is no longer needed. Delete \"],[9,\"code\",true],[10],[1,1,0,0,\"app/models/ember-intl-translation.js\"],[11],[1,1,0,0,\". Your application should continue to behave the same whether your keys are flat or nested objects.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"p\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"intl.addTranslation\"],[11],[1,1,0,0,\" was removed in favor of using \"],[9,\"code\",true],[10],[1,1,0,0,\"intl.addTranslations\"],[11],[1,1,0,0,\". \"],[9,\"code\",true],[10],[1,1,0,0,\"addTranslations\"],[11],[1,1,0,0,\" takes a locale as the first argument and a object as the second.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Example:\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[1,1,0,0,\"intl.addTranslations(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"hero\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Welcome to ember-intl 3.0'\"],[11],[1,1,0,0,\"\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"fallback\"],[11],[1,1,0,0,\" was removed in favor of \"],[9,\"code\",true],[10],[1,1,0,0,\"defaults\"],[11],[1,1,0,0,\". This is for better alignment with ember-i18n's API.\"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[1,1,0,0,\"{{t 'app.sale_begins' fallback='Sale begins {day, date, shortWeekDay}' day=day}}\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"becomes\"],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedjs\",null],[10],[1,1,0,0,\"intl.addTranslations(\"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'en-us'\"],[11],[1,1,0,0,\", {\\n  \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"home\"],[11],[1,1,0,0,\": {\\n    \"],[9,\"span\",true],[12,\"class\",\"hljs-attr\",null],[10],[1,1,0,0,\"sale_begins\"],[11],[1,1,0,0,\": \"],[9,\"span\",true],[12,\"class\",\"hljs-string\",null],[10],[1,1,0,0,\"'Sale begins {day, date, shortWeekDay}'\"],[11],[1,1,0,0,\"\\n  }\\n});\"],[11],[11],[1,1,0,0,\"\\n\"],[9,\"pre\",true],[12,\"class\",\"docs-md__code\",null],[10],[9,\"code\",true],[12,\"class\",\"undefinedhbs\",null],[10],[9,\"span\",true],[12,\"class\",\"xml\",null],[10],[1,1,0,0,\"{{t 'app.sale_begins' defaults='home.sale_begins' day=day}}\"],[11],[11],[11],[1,1,0,0,\"\\n\"],[9,\"p\",true],[10],[1,1,0,0,\"Something missing? Submit a PR to this document.\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/legacy/migration-2-0-to-3-0/template.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("dummy/pods/docs/legacy/migration-3-0-to-4-0/template", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "PnMFHxQk",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"migrating-from-3-0-to-4-0\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Migrating from 3.0 to 4.0\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"No migration necessary.\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"breaking-change\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#breaking-change\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Breaking Change\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"CLDR locale data set has been updated from 28.0.0 to 34.0.0\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Legacy instance initializer removed.  Only a breaking change if you reference it in another one of your initializers using \"],[9,\"code\",true],[10],[1,1,0,0,\"before: 'ember-intl'\"],[11],[1,1,0,0,\" or \"],[9,\"code\",true],[10],[1,1,0,0,\"after: 'ember-intl'\"],[11],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n      \"],[9,\"h2\",true],[12,\"id\",\"enhancements\",null],[12,\"class\",\"docs-md__h2\",null],[10],[9,\"a\",true],[12,\"href\",\"#enhancements\",null],[12,\"class\",\"heading-anchor\",null],[10],[1,1,0,0,\"Enhancements\"],[11],[11],[1,1,0,0,\"\\n    \"],[9,\"ul\",true],[10],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Translation blueprint now adds translation relative to config \"],[9,\"code\",true],[10],[1,1,0,0,\"inputPath\"],[11],[1,1,0,0,\" option\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[1,1,0,0,\"Relative time API now has \"],[9,\"a\",true],[12,\"href\",\"https://ember-intl.github.io/ember-intl/versions/v4.0.0/docs/helpers/format-relative#format-relative-options\",null],[12,\"class\",\"docs-md__a\",null],[10],[9,\"code\",true],[10],[1,1,0,0,\"short\"],[11],[11],[1,1,0,0,\" units\"],[11],[1,1,0,0,\"\\n\"],[9,\"li\",true],[10],[9,\"code\",true],[10],[1,1,0,0,\"baseLocale\"],[11],[1,1,0,0,\" API has returned as \"],[9,\"code\",true],[10],[1,1,0,0,\"fallbackLocale\"],[11],[1,1,0,0,\". Enables merging the fallback locale's translations into all other locales as a build-time fallback strategy.\"],[11],[1,1,0,0,\"\\n\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
+    "meta": {
+      "moduleName": "dummy/pods/docs/legacy/migration-3-0-to-4-0/template.hbs"
     }
   });
 
@@ -5070,8 +3390,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "YtYDwUPR",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"docs-md\"],[8],[7,\"h1\",true],[10,\"id\",\"documentation-for-2-x\"],[10,\"class\",\"docs-md__h1\"],[8],[0,\"Documentation for 2.x\"],[9],[0,\"\\n    \"],[7,\"p\",true],[8],[0,\"Documentation is hosted in the GitHub repository within the \"],[7,\"a\",true],[10,\"href\",\"https://github.com/ember-intl/ember-intl/tree/2.x/docs\"],[10,\"class\",\"docs-md__a\"],[8],[0,\"/docs\"],[9],[0,\" folder.\"],[9],[9]],\"hasEval\":false}",
+    "id": "rW5S385k",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"div\",true],[12,\"class\",\"docs-md\",null],[10],[9,\"h1\",true],[12,\"id\",\"documentation-for-2-x\",null],[12,\"class\",\"docs-md__h1\",null],[10],[1,1,0,0,\"Documentation for 2.x\"],[11],[1,1,0,0,\"\\n    \"],[9,\"p\",true],[10],[1,1,0,0,\"Documentation is hosted in the GitHub repository within the \"],[9,\"a\",true],[12,\"href\",\"https://github.com/ember-intl/ember-intl/tree/2.x/docs\",null],[12,\"class\",\"docs-md__a\",null],[10],[1,1,0,0,\"/docs\"],[11],[1,1,0,0,\" folder.\"],[11],[11]],\"hasEval\":false,\"upvars\":[]}",
     "meta": {
       "moduleName": "dummy/pods/docs/legacy/v2/template.hbs"
     }
@@ -5088,8 +3408,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "NRuiM7KS",
-    "block": "{\"symbols\":[\"viewer\",\"nav\"],\"statements\":[[4,\"docs-viewer\",null,null,{\"statements\":[[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"nav\"]],\"expected `viewer.nav` to be a contextual component but found a string. Did you mean `(component viewer.nav)`? ('dummy/pods/docs/template.hbs' @ L2:C5) \"],null]],null,{\"statements\":[[0,\"    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L3:C6) \"],null],\"Getting Started\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L4:C6) \"],null],\"Overview\",\"docs.getting-started.index\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L5:C6) \"],null],\"Installation\",\"docs.getting-started.installation\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L6:C6) \"],null],\"Quickstart\",\"docs.getting-started.quickstart\"],null],false],[0,\"\\n\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L8:C6) \"],null],\"Guide\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L9:C6) \"],null],\"Translating text\",\"docs.guide.translating-text\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L10:C6) \"],null],\"Ember service API\",\"docs.guide.ember-service-api\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L11:C6) \"],null],\"Loading translations asynchronously\",\"docs.guide.asynchronously-loading-translations\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L12:C6) \"],null],\"Compact decimal formatting\",\"docs.guide.compact-decimal-formatting\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L13:C6) \"],null],\"intljs polyfill\",\"docs.guide.intljs-polyfill\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L14:C6) \"],null],\"Missing translations\",\"docs.guide.missing-translations\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L15:C6) \"],null],\"Supported locales\",\"docs.guide.supported-locales\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L16:C6) \"],null],\"Testing\",\"docs.guide.testing\"],null],false],[0,\"\\n\\n\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L19:C6) \"],null],\"Template helpers\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L20:C6) \"],null],\"Introduction\",\"docs.helpers.index\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L21:C6) \"],null],\"The t helper\",\"docs.helpers.t\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L22:C6) \"],null],\"format-date\",\"docs.helpers.format-date\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L23:C6) \"],null],\"format-time\",\"docs.helpers.format-time\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L24:C6) \"],null],\"format-message\",\"docs.helpers.format-message\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L25:C6) \"],null],\"format-number\",\"docs.helpers.format-number\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L26:C6) \"],null],\"format-relative\",\"docs.helpers.format-relative\"],null],false],[0,\"\\n\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L28:C6) \"],null],\"Cookbook\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L29:C6) \"],null],\"Migration from 3.0 to 4.0\",\"docs.cookbook.migration-3-0-to-4-0\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L30:C6) \"],null],\"Common errors\",\"docs.cookbook.common-errors\"],null],false],[0,\"\\n\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L32:C6) \"],null],\"Advanced\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L33:C6) \"],null],\"Addon support\",\"docs.advanced.addon-support\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L34:C6) \"],null],\"ember-cp-validation\",\"docs.advanced.ember-cp-validation\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L35:C6) \"],null],\"Engine support\",\"docs.advanced.engine-support\"],null],false],[0,\"\\n\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L37:C6) \"],null],\"Legacy\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L38:C6) \"],null],\"Migration from 2.0 to 3.0\",\"docs.legacy.migration-2-0-to-3-0\"],null],false],[0,\"\\n    \"],[1,[28,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,2,[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L39:C6) \"],null],\"Documentation for 2.0\",\"docs.legacy.v2\"],null],false],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"\\n\"],[4,\"component\",[[28,\"-assert-implicit-component-helper-argument\",[[23,1,[\"main\"]],\"expected `viewer.main` to be a contextual component but found a string. Did you mean `(component viewer.main)`? ('dummy/pods/docs/template.hbs' @ L42:C5) \"],null]],null,{\"statements\":[[0,\"    \"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[1]},null],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "aZ8AGQkM",
+    "block": "{\"symbols\":[\"viewer\",\"nav\"],\"statements\":[[5,[27,[26,3,\"BlockHead\"],[]],null,null,[[\"default\"],[{\"statements\":[[5,[27,[26,1,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"nav\"]],\"expected `viewer.nav` to be a contextual component but found a string. Did you mean `(component viewer.nav)`? ('dummy/pods/docs/template.hbs' @ L2:C5) \"],null]],null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L3:C6) \"],null],\"Getting Started\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L4:C6) \"],null],\"Overview\",\"docs.getting-started.index\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L5:C6) \"],null],\"Runtime requirements\",\"docs.getting-started.runtime-requirements\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L6:C6) \"],null],\"Quickstart\",\"docs.getting-started.quickstart\"],null]],[1,1,0,0,\"\\n\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L8:C6) \"],null],\"Guide\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L9:C6) \"],null],\"Translating text\",\"docs.guide.translating-text\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L10:C6) \"],null],\"Service API\",\"docs.guide.service-api\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L11:C6) \"],null],\"Lazy-loading translations\",\"docs.guide.asynchronously-loading-translations\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L12:C6) \"],null],\"Missing translations\",\"docs.guide.missing-translations\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L13:C6) \"],null],\"Testing\",\"docs.guide.testing\"],null]],[1,1,0,0,\"\\n\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L15:C6) \"],null],\"Template helpers\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L16:C6) \"],null],\"Introduction\",\"docs.helpers.index\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L17:C6) \"],null],\"The t helper\",\"docs.helpers.t\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L18:C6) \"],null],\"format-date\",\"docs.helpers.format-date\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L19:C6) \"],null],\"format-time\",\"docs.helpers.format-time\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L20:C6) \"],null],\"format-message\",\"docs.helpers.format-message\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L21:C6) \"],null],\"format-number\",\"docs.helpers.format-number\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L22:C6) \"],null],\"format-relative\",\"docs.helpers.format-relative\"],null]],[1,1,0,0,\"\\n\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L24:C6) \"],null],\"Cookbook\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L25:C6) \"],null],\"Migration from 4.0 to 5.0\",\"docs.cookbook.migration-4-0-to-5-0\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L26:C6) \"],null],\"Common errors\",\"docs.cookbook.common-errors\"],null]],[1,1,0,0,\"\\n\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L28:C6) \"],null],\"Advanced\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L29:C6) \"],null],\"Addon support\",\"docs.advanced.addon-support\"],null]],[1,1,0,0,\"\\n\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L31:C6) \"],null],\"Integrations\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L32:C6) \"],null],\"ember-cp-validation\",\"docs.integrations.ember-cp-validation\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L33:C6) \"],null],\"Visual Studio Code\",\"docs.integrations.visual-studio-code\"],null]],[1,1,0,0,\"\\n\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"section\"]],\"expected `nav.section` to be a contextual component but found a string. Did you mean `(component nav.section)`? ('dummy/pods/docs/template.hbs' @ L35:C6) \"],null],\"Legacy\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L36:C6) \"],null],\"Migration from 3.0 to 4.0\",\"docs.legacy.migration-3-0-to-4-0\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L37:C6) \"],null],\"Migration from 2.0 to 3.0\",\"docs.legacy.migration-2-0-to-3-0\"],null]],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,2],[\"item\"]],\"expected `nav.item` to be a contextual component but found a string. Did you mean `(component nav.item)`? ('dummy/pods/docs/template.hbs' @ L38:C6) \"],null],\"Documentation for 2.0\",\"docs.legacy.v2\"],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[2]}]]],[1,1,0,0,\"\\n\"],[5,[27,[26,1,\"BlockHead\"],[]],[[31,0,0,[27,[26,2,\"CallHead\"],[]],[[27,[24,1],[\"main\"]],\"expected `viewer.main` to be a contextual component but found a string. Did you mean `(component viewer.main)`? ('dummy/pods/docs/template.hbs' @ L41:C5) \"],null]],null,[[\"default\"],[{\"statements\":[[1,1,0,0,\"    \"],[1,0,0,0,[31,0,0,[27,[26,1,\"CallHead\"],[]],[[31,0,0,[27,[26,0,\"CallHead\"],[]],null,null]],null]],[1,1,0,0,\"\\n\"]],\"parameters\":[]}]]]],\"parameters\":[1]}]]],[1,1,0,0,\"\\n\"]],\"hasEval\":false,\"upvars\":[\"-outlet\",\"component\",\"-assert-implicit-component-helper-argument\",\"docs-viewer\"]}",
     "meta": {
       "moduleName": "dummy/pods/docs/template.hbs"
     }
@@ -5106,8 +3426,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Tr6UVGru",
-    "block": "{\"symbols\":[],\"statements\":[[1,[28,\"docs-hero\",null,[[\"logo\",\"byline\"],[\"ember\",\"🌐 Internationalize your Ember apps.\"]]],false],[0,\"\\n\\n\"],[7,\"div\",true],[10,\"class\",\"home\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"home__section\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"Notable Features\"],[9],[0,\"\\n    \"],[7,\"ul\",true],[10,\"class\",\"home__list\"],[8],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\"💵 Locale-aware numbers. Formatting of currencies, decimals, and percentages.\"],[9],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\" 📅 Locale-aware dates and times formatting \"],[9],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\"\\n        🕑 Locale-aware display of relative time. I.e, \"],[7,\"code\",true],[8],[0,\"\\\"now\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"yesterday\\\"\"],[9],[0,\", \"],[7,\"code\",true],[8],[0,\"\\\"2 mo. ago\\\"\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\"\\n        🌐 Support for 150+ languages.\\n      \"],[9],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\"\\n        📜 Built largely on standards. \"],[7,\"a\",true],[10,\"href\",\"https://formatjs.io/guides/message-syntax/\"],[8],[0,\"ICU message syntax\"],[9],[0,\" & \"],[7,\"a\",true],[10,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl\"],[8],[0,\"Native Intl API\"],[9],[0,\".\\n      \"],[9],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\"\\n        ⚡ Extensive Ember Service API and template helpers for formatting and translating.\\n      \"],[9],[0,\"\\n      \"],[7,\"li\",true],[8],[0,\"\\n        🎉 \"],[1,[28,\"docs-link\",[\"Advanced addon support\",\"docs.advanced.addon-support\"],null],false],[0,\" to provide translations to the host app\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"home__cta\"],[8],[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"route\"],[\"home__cta-link\",\"docs\"]],{\"statements\":[[0,\"      Read the docs\\n\"]],\"parameters\":[]},null],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\\n\"]],\"hasEval\":false}",
+    "id": "kBDpxITN",
+    "block": "{\"symbols\":[],\"statements\":[[1,0,0,0,[31,2,9,[27,[26,0,\"CallHead\"],[]],null,[[\"logo\",\"byline\"],[\"ember\",\"🌐 Internationalize your Ember apps.\"]]]],[1,1,0,0,\"\\n\\n\"],[9,\"div\",true],[12,\"class\",\"home\",null],[10],[1,1,0,0,\"\\n  \"],[9,\"div\",true],[12,\"class\",\"home__section\",null],[10],[1,1,0,0,\"\\n    \"],[9,\"h2\",true],[10],[1,1,0,0,\"Notable Features\"],[11],[1,1,0,0,\"\\n    \"],[9,\"ul\",true],[12,\"class\",\"home__list\",null],[10],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\"💵 Locale-aware numbers. Formatting of currencies, decimals, and percentages.\"],[11],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\" 📅 Locale-aware dates and times formatting \"],[11],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\"\\n        🕑 Locale-aware display of relative time. i.e, \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"in 1 day\\\"\"],[11],[1,1,0,0,\", \"],[9,\"code\",true],[10],[1,1,0,0,\"\\\"2 years ago\\\"\"],[11],[1,1,0,0,\", etc.\\n      \"],[11],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\"\\n        🌐 Support for 150+ languages.\\n      \"],[11],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\"\\n        📜 Built largely on standards. \"],[9,\"a\",true],[12,\"href\",\"https://formatjs.io/guides/message-syntax/\",null],[10],[1,1,0,0,\"ICU message syntax\"],[11],[1,1,0,0,\" & \"],[9,\"a\",true],[12,\"href\",\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl\",null],[10],[1,1,0,0,\"Native Intl API\"],[11],[1,1,0,0,\".\\n      \"],[11],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\"\\n        ⚡ Extensive Ember Service API and template helpers for formatting and translating.\\n      \"],[11],[1,1,0,0,\"\\n      \"],[9,\"li\",true],[10],[1,1,0,0,\"\\n        🎉 \"],[1,0,0,0,[31,931,9,[27,[26,1,\"CallHead\"],[]],[\"Advanced addon support\",\"docs.advanced.addon-support\"],null]],[1,1,0,0,\" to provide translations to the host app\\n      \"],[11],[1,1,0,0,\"\\n    \"],[11],[1,1,0,0,\"\\n  \"],[11],[1,1,0,0,\"\\n\\n  \"],[9,\"div\",true],[12,\"class\",\"home__cta\",null],[10],[1,1,0,0,\"\\n\"],[5,[27,[26,2,\"BlockHead\"],[]],null,[[\"class\",\"route\"],[\"home__cta-link\",\"docs\"]],[[\"default\"],[{\"statements\":[[1,1,0,0,\"      Read the docs\\n\"]],\"parameters\":[]}]]],[1,1,0,0,\"  \"],[11],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n\"]],\"hasEval\":false,\"upvars\":[\"docs-hero\",\"docs-link\",\"link-to\"]}",
     "meta": {
       "moduleName": "dummy/pods/index/template.hbs"
     }
@@ -5122,14 +3442,11 @@
     value: true
   });
   _exports.default = void 0;
-  var now = new Date();
-  var yesterday = new Date(now).setDate(now.getDate() - 1);
 
   var _default = Ember.Controller.extend({
     intl: Ember.inject.service(),
     locales: Ember.A(['en-us', 'fr-fr', 'es-es']),
     num: 1000,
-    yesterday: yesterday,
     actions: {
       changeLocale: function changeLocale(locale) {
         this.get('intl').setLocale(locale);
@@ -5151,8 +3468,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "kyBWorvj",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"h2\",true],[8],[0,\"Smoke\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Number\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-number\"],[8],[0,\"\\n  \"],[1,[28,\"format-number\",[[24,[\"num\"]]],[[\"format\",\"style\",\"currency\"],[\"currency\",\"currency\",\"EUR\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Date\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-date\"],[8],[0,\"\\n  \"],[1,[28,\"format-date\",[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"timeZone\"],[\"UTC\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Time\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-time\"],[8],[0,\"\\n  \"],[1,[28,\"format-time\",[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"hour\",\"second\",\"minute\",\"hour12\",\"timeZone\"],[\"numeric\",\"numeric\",\"numeric\",false,\"UTC\"]]],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[7,\"h3\",true],[8],[0,\"Format Relative\"],[9],[0,\"\\n\"],[7,\"div\",true],[10,\"class\",\"format-relative\"],[8],[0,\"\\n  \"],[1,[28,\"format-relative\",[[24,[\"yesterday\"]]],null],false],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"namespacesAreActive\"]]],null,{\"statements\":[[0,\"  \"],[7,\"h3\",true],[8],[0,\"Translation Subdirectory (with namespaces)\"],[9],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"translation-subdirectory\"],[8],[0,\"\\n    \"],[1,[28,\"t\",[\"subdirectory.smoke.subdirectory\"],null],false],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[7,\"h3\",true],[8],[0,\"Translation Subdirectory\"],[9],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"translation-subdirectory\"],[8],[0,\"\\n    \"],[1,[28,\"t\",[\"smoke.subdirectory\"],null],false],[0,\"\\n  \"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "cUQBErDt",
+    "block": "{\"symbols\":[],\"statements\":[[9,\"h2\",true],[10],[1,1,0,0,\"Smoke\"],[11],[1,1,0,0,\"\\n\\n\"],[9,\"h3\",true],[10],[1,1,0,0,\"Format Number\"],[11],[1,1,0,0,\"\\n\"],[9,\"div\",true],[12,\"class\",\"format-number\",null],[10],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,71,13,[27,[26,2,\"CallHead\"],[]],[[27,[26,1,\"Expression\"],[]]],[[\"format\",\"style\",\"currency\"],[\"currency\",\"currency\",\"EUR\"]]]],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n\"],[9,\"h3\",true],[10],[1,1,0,0,\"Format Date\"],[11],[1,1,0,0,\"\\n\"],[9,\"div\",true],[12,\"class\",\"format-date\",null],[10],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,200,11,[27,[26,3,\"CallHead\"],[]],[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"timeZone\"],[\"UTC\"]]]],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n\"],[9,\"h3\",true],[10],[1,1,0,0,\"Format Time\"],[11],[1,1,0,0,\"\\n\"],[9,\"div\",true],[12,\"class\",\"format-time\",null],[10],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,330,11,[27,[26,4,\"CallHead\"],[]],[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"hour\",\"second\",\"minute\",\"hour12\",\"timeZone\"],[\"numeric\",\"numeric\",\"numeric\",false,\"UTC\"]]]],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n\"],[9,\"h3\",true],[10],[1,1,0,0,\"Format Relative\"],[11],[1,1,0,0,\"\\n\"],[9,\"div\",true],[12,\"class\",\"format-relative\",null],[10],[1,1,0,0,\"\\n  \"],[1,0,0,0,[31,550,15,[27,[26,5,\"CallHead\"],[]],[1],[[\"unit\"],[\"day\"]]]],[1,1,0,0,\"\\n\"],[11],[1,1,0,0,\"\\n\\n\"],[5,[27,[26,7,\"BlockHead\"],[]],[[27,[26,6,\"Expression\"],[]]],null,[[\"default\",\"else\"],[{\"statements\":[[1,1,0,0,\"  \"],[9,\"h3\",true],[10],[1,1,0,0,\"Translation Subdirectory (with namespaces)\"],[11],[1,1,0,0,\"\\n  \"],[9,\"div\",true],[12,\"class\",\"translation-subdirectory\",null],[10],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,718,1,[27,[26,0,\"CallHead\"],[]],[\"subdirectory.smoke.subdirectory\"],null]],[1,1,0,0,\"\\n  \"],[11],[1,1,0,0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[1,1,0,0,\"  \"],[9,\"h3\",true],[10],[1,1,0,0,\"Translation Subdirectory\"],[11],[1,1,0,0,\"\\n  \"],[9,\"div\",true],[12,\"class\",\"translation-subdirectory\",null],[10],[1,1,0,0,\"\\n    \"],[1,0,0,0,[31,857,1,[27,[26,0,\"CallHead\"],[]],[\"smoke.subdirectory\"],null]],[1,1,0,0,\"\\n  \"],[11],[1,1,0,0,\"\\n\"]],\"parameters\":[]}]]],[1,1,0,0,\"\\n\"]],\"hasEval\":false,\"upvars\":[\"t\",\"num\",\"format-number\",\"format-date\",\"format-time\",\"format-relative\",\"namespacesAreActive\",\"if\"]}",
     "meta": {
       "moduleName": "dummy/pods/smoke/template.hbs"
     }
@@ -5189,18 +3506,15 @@
         path: '/'
       }, function () {
         this.route('overview');
-        this.route('installation');
+        this.route('runtime-requirements');
         this.route('quickstart');
       });
       this.route('guide', function () {
         this.route('asynchronously-loading-translations');
-        this.route('compact-decimal-formatting');
-        this.route('ember-service-api');
-        this.route('intljs-polyfill');
+        this.route('service-api');
         this.route('missing-translations');
         this.route('testing');
         this.route('translating-text');
-        this.route('supported-locales');
       });
       this.route('helpers', function () {
         this.route('t');
@@ -5211,15 +3525,19 @@
         this.route('format-time');
       });
       this.route('cookbook', function () {
-        this.route('migration-3-0-to-4-0');
+        this.route('migration-4-0-to-5-0');
         this.route('common-errors');
       });
       this.route('advanced', function () {
         this.route('addon-support');
-        this.route('ember-cp-validation');
         this.route('engine-support');
       });
+      this.route('integrations', function () {
+        this.route('ember-cp-validation');
+        this.route('visual-studio-code');
+      });
       this.route('legacy', function () {
+        this.route('migration-3-0-to-4-0');
         this.route('migration-2-0-to-3-0');
         this.route('v2');
       });
@@ -5285,6 +3603,45 @@
     }
   });
 });
+;define("dummy/serializers/-default", ["exports", "@ember-data/serializer/json"], function (_exports, _json) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _json.default;
+    }
+  });
+});
+;define("dummy/serializers/-json-api", ["exports", "@ember-data/serializer/json-api"], function (_exports, _jsonApi) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _jsonApi.default;
+    }
+  });
+});
+;define("dummy/serializers/-rest", ["exports", "@ember-data/serializer/rest"], function (_exports, _rest) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _rest.default;
+    }
+  });
+});
 ;define("dummy/services/adapter", ["exports", "ember-fetch-adapter"], function (_exports, _emberFetchAdapter) {
   "use strict";
 
@@ -5336,19 +3693,6 @@
       return _docsSearch.default;
     }
   });
-});
-;define("dummy/services/etw-tailwind-styleguide", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.Service.extend({// body
-  });
-
-  _exports.default = _default;
 });
 ;define("dummy/services/intl", ["exports", "ember-intl/services/intl"], function (_exports, _intl) {
   "use strict";
@@ -5446,115 +3790,18 @@
     }
   });
 });
-;define("dummy/snippets", ["exports"], function (_exports) {
+;define("dummy/services/store", ["exports", "ember-data/store"], function (_exports, _store) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
-  var _default = {
-    "docs-helpers-format-date-01-template.hbs": "    {{format-date instant}}",
-    "docs-helpers-format-date-02-template.hbs": "    {{format-date yesterday}}",
-    "docs-helpers-format-date-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\n\nexport default Controller.extend({\n  yesterday: yesterday,\n  instant: new Date(),\n  now: new Date()\n});",
-    "docs-helpers-format-message-01-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=num\n             timestamp=yesterday }}",
-    "docs-helpers-format-message-02-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=1\n             timestamp=yesterday }}",
-    "docs-helpers-format-message-03-template.hbs": "    {{format-message \"{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}\"\n             name=user.username\n             numPhotos=0\n             timestamp=yesterday }}",
-    "docs-helpers-format-message-04-template.hbs": "    {{format-message\n             \"The {product} has {numCustomers, shortNumber} customers\"\n             product='Cisco DPC3000'\n             numCustomers=25495}}",
-    "docs-helpers-format-message-05-template.hbs": "    {{format-message \n             \"The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers\"\n             product='Cisco DPC3000' \n             numCustomers=25495}}",
-    "docs-helpers-format-message-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\nconst user = { username: 'Chris' };\n\nexport default Controller.extend({\n  user: user,\n  num: 12,\n  yesterday: yesterday\n});",
-    "docs-helpers-format-number-01-template.hbs": "    {{format-number num}}",
-    "docs-helpers-format-number-02-template.hbs": "    {{format-number num style='currency' currency='USD'}}",
-    "docs-helpers-format-number-controller.js": "import Controller from '@ember/controller';\n\nexport default Controller.extend({\n  num: 1000\n});",
-    "docs-helpers-format-relative-01-template.hbs": "    {{format-relative yesterday}}",
-    "docs-helpers-format-relative-02-template.hbs": "    {{format-relative instant}}",
-    "docs-helpers-format-relative-03-template.hbs": "    {{format-relative now interval=1000}}",
-    "docs-helpers-format-relative-controller.js": "\nimport Controller from '@ember/controller';\n\nconst date = new Date();\nconst yesterday = date.setDate(date.getDate() - 1);\n\nexport default Controller.extend({\n  yesterday: yesterday,\n  instant: new Date(),\n  now: new Date()\n});",
-    "docs-helpers-format-t-01-template.hbs": "\n    {{t 'photos.banner' numPhotos=count}}\n\n    <button class=\"btn\" {{action \"inc\" count}}> + Increment photo count </button>\n    <button class=\"btn\" {{action \"dec\" count}}> - Decrement photo count </button>",
-    "docs-helpers-format-t-controller.js": "\nimport Controller from '@ember/controller';\n\nexport default Controller.extend({\n  count: 0,\n\n  actions: {\n    inc(count) {\n      this.set('count', count + 1);\n    },\n    dec(count) {\n      if (count <= 0) return;\n      this.set('count', count - 1);\n    }\n  }\n});",
-    "docs-helpers-format-time-01-template.hbs": "    {{format-time instant format='hhmmss'}}",
-    "docs-helpers-format-time-02-template.hbs": "    {{format-time instant hour='numeric' second='numeric' minute='numeric' hour12=false}}",
-    "docs-helpers-format-time-controller.js": "\nimport Controller from '@ember/controller';\n\nexport default Controller.extend({\n  instant: new Date()\n});",
-    "format-date.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n",
-    "format-message-compact-number.hbs": "{{t 'product.customers' product='Cisco DPC3000' numCustomers=25495}}\n",
-    "format-message.hbs": "{{t 'product.info' product='Cisco DPC3000' price=100}}",
-    "format-number.hbs": "{{format-number num}}\n{{format-number num style='currency' currency='USD'}}\n",
-    "format-relative.hbs": "{{format-relative yesterday}}\n{{format-relative instant}}\n{{format-relative now interval=1000}}\n",
-    "format-time.hbs": "Can be represent using the format key or inline the format\n\n{{format-time now format='hhmmss'}}\n{{format-time now hour='numeric' minute='numeric' hour12=false}}\n"
-  };
-  _exports.default = _default;
-});
-;define("dummy/templates/application-tailwind", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "y32pvVwn",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"div\",true],[10,\"class\",\"etw-px-4 etw-my-8 etw-max-w-3xl etw-mx-auto etw-font-sans\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-flex etw-mt-6\"],[8],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-w-3/4 etw-pr-6\"],[8],[0,\"\\n      \"],[7,\"h1\",true],[10,\"class\",\"etw-pt-8 etw-text-3xl etw-font-bold\"],[8],[0,\"Your Tailwind styles\"],[9],[0,\"\\n      \"],[7,\"p\",true],[10,\"class\",\"etw-mt-3 etw-mb-4 etw-text-lg\"],[8],[0,\"A reference for every generated class in your app.\"],[9],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Border radius\",[28,\"array\",[\".rounded{-side?}{-size?}\"],null],[24,[\"moduleStyles\",\"borderRadius\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Borders\",[28,\"array\",[\".border{-side?}{-width?}\"],null],[24,[\"moduleStyles\",\"borderWidths\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Colors\",[28,\"array\",[\".text-{color}\",\".bg-{color}\",\".border-{color}\"],null],[24,[\"moduleStyles\",\"colors\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Font weights\",[28,\"array\",[\".font-{weight}\"],null],[24,[\"moduleStyles\",\"fontWeights\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Height\",[28,\"array\",[\".h-{size}\"],null],[24,[\"moduleStyles\",\"height\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Letter spacing\",[28,\"array\",[\".tracking-{size}\"],null],[24,[\"moduleStyles\",\"letterSpacing\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Line height\",[28,\"array\",[\".leading-{size}\"],null],[24,[\"moduleStyles\",\"lineHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Margin\",[28,\"array\",[\".m{side?}-{size}\"],null],[24,[\"moduleStyles\",\"margin\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Max height\",[28,\"array\",[\".max-h-{size}\"],null],[24,[\"moduleStyles\",\"maxHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Max width\",[28,\"array\",[\".max-w-{size}\"],null],[24,[\"moduleStyles\",\"maxWidth\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Min height\",[28,\"array\",[\".min-h-{size}\"],null],[24,[\"moduleStyles\",\"minHeight\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Min width\",[28,\"array\",[\".min-w-{size}\"],null],[24,[\"moduleStyles\",\"minWidth\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Negative margin\",[28,\"array\",[\".-m{side?}-{size}\"],null],[24,[\"moduleStyles\",\"negativeMargin\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Opacity\",[28,\"array\",[\".opacity-{name}\"],null],[24,[\"moduleStyles\",\"opacity\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Padding\",[28,\"array\",[\".p{side?}-{size}\"],null],[24,[\"moduleStyles\",\"padding\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Shadows\",[28,\"array\",[\".shadow-{size?}\"],null],[24,[\"moduleStyles\",\"shadows\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"SVG fill\",[28,\"array\",[\".fill-{name}\"],null],[24,[\"moduleStyles\",\"svgFill\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"SVG stroke\",[28,\"array\",[\".stroke-{name}\"],null],[24,[\"moduleStyles\",\"svgStroke\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Text sizes\",[28,\"array\",[\".text-{size}\"],null],[24,[\"moduleStyles\",\"textSizes\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Width\",[28,\"array\",[\".w-{size}\"],null],[24,[\"moduleStyles\",\"width\"]]]]],false],[0,\"\\n\\n      \"],[1,[28,\"etw/module-section\",null,[[\"title\",\"codeSnippets\",\"moduleStyles\"],[\"Z index\",[28,\"array\",[\".z-{index}\"],null],[24,[\"moduleStyles\",\"zIndex\"]]]]],false],[0,\"\\n\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-w-1/4 etw-relative\"],[8],[0,\"\\n      \"],[1,[22,\"etw/module-style-detail\"],false],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/application-tailwind.hbs"
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _store.default;
     }
   });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/etw/module-section", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "R0TciJzF",
-    "block": "{\"symbols\":[\"moduleStyle\",\"snippet\"],\"statements\":[[7,\"section\",true],[8],[0,\"\\n  \"],[7,\"h2\",true],[10,\"class\",\"etw-pt-8 etw-mb-6 etw-text-lg etw-font-bold\"],[8],[1,[22,\"title\"],false],[9],[0,\"\\n\\n  \"],[7,\"ul\",true],[10,\"class\",\"etw-list-reset etw-leading-normal\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"codeSnippets\"]]],null,{\"statements\":[[0,\"      \"],[7,\"li\",true],[8],[7,\"code\",true],[8],[1,[23,2,[]],false],[9],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-mt-8 etw-flex etw-flex-wrap\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"moduleStyles\"]]],null,{\"statements\":[[0,\"      \"],[1,[28,\"etw/module-style-example\",null,[[\"moduleStyle\"],[[23,1,[]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/etw/module-section.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/etw/module-style-detail", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "tprZQ+w+",
-    "block": "{\"symbols\":[\"style\",\"state\",\"breakpoint\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"etw-shadow-lg etw-fixed etw-mr-4 etw-px-4 etw-pt-4 etw-pb-14 etw-bg-white etw-w-64 etw-mt-8 overflow-y-auto etw-h-screen\"],[8],[0,\"\\n  \"],[7,\"h3\",true],[8],[0,\"Detail\"],[9],[0,\"\\n\\n\"],[4,\"if\",[[24,[\"moduleStyle\"]]],null,{\"statements\":[[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-my-8\"],[8],[0,\"\\n      \"],[1,[28,\"etw/module-style-example\",null,[[\"moduleStyle\"],[[24,[\"moduleStyle\"]]]]],false],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-mt-4\"],[8],[0,\"\\n      \"],[7,\"h4\",true],[10,\"class\",\"etw-inline-block etw-pr-2\"],[8],[0,\"Responsive: \"],[9],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"etw-mt-2 etw-text-sm etw-inline-block\"],[8],[0,\"\\n\"],[4,\"each\",[[28,\"array\",[\"all\",\"sm\",\"md\",\"lg\",\"xl\"],null]],null,{\"statements\":[[0,\"          \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",[29,[\"\\n              etw-no-underline\\n              etw-text-black\\n              etw-pr-2\\n              \",[28,\"if\",[[28,\"eq\",[[24,[\"activeResponsiveClass\"]],[23,3,[]]],null],\"etw-opacity-100\",\"etw-opacity-25\"],null],\"\\n            \"]]],[3,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"activeResponsiveClass\"]]],null],[23,3,[]]]],[8],[0,\"\\n            \"],[1,[23,3,[]],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-mt-4\"],[8],[0,\"\\n      \"],[7,\"h4\",true],[10,\"class\",\"etw-inline-block etw-pr-2\"],[8],[0,\"State: \"],[9],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"etw-mt-2 etw-text-sm etw-inline-block\"],[8],[0,\"\\n\"],[4,\"each\",[[28,\"array\",[\"none\",\"hover\",\"focus\"],null]],null,{\"statements\":[[0,\"          \"],[7,\"a\",false],[12,\"href\",\"#\"],[12,\"class\",[29,[\"\\n              etw-no-underline\\n              etw-text-black\\n              etw-pr-2\\n              \",[28,\"if\",[[28,\"eq\",[[24,[\"activeState\"]],[23,2,[]]],null],\"etw-opacity-100\",\"etw-opacity-25\"],null],\"\\n            \"]]],[3,\"action\",[[23,0,[]],[28,\"mut\",[[24,[\"activeState\"]]],null],[23,2,[]]]],[8],[0,\"\\n            \"],[1,[23,2,[]],false],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-mt-8 etw-mb-4\"],[8],[0,\"\\n      \"],[7,\"p\",true],[10,\"class\",\"etw-text-right etw-text-xs etw-opacity-50\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"highlightedStyle\"]]],null,{\"statements\":[[0,\"          Copied!\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"          Click to copy\\n\"]],\"parameters\":[]}],[0,\"      \"],[9],[0,\"\\n\\n      \"],[7,\"ul\",true],[10,\"class\",\"etw-mt-3 etw-list-reset\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"detailStyles\"]]],null,{\"statements\":[[0,\"          \"],[7,\"li\",true],[10,\"class\",\"etw-mt-4\"],[8],[0,\"\\n\"],[4,\"copy-button\",null,[[\"class\",\"clipboardText\",\"title\",\"success\"],[[28,\"concat\",[\"etw-bg-grey-light etw-opacity-75 hover:etw-opacity-100 \",\"etw-px-1 etw-py-2 etw-w-full etw-text-left etw-transition \",[28,\"if\",[[28,\"eq\",[[24,[\"highlightedStyle\"]],[23,1,[]]],null],\"etw-bg-green etw-text-white\"],null]],null],[23,1,[]],\"Copy\",[28,\"action\",[[23,0,[]],\"highlightStyle\",[23,1,[]]],null]]],{\"statements\":[[0,\"              \"],[7,\"code\",true],[8],[0,\".\"],[1,[23,1,[]],false],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"          \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"\\n    \"],[7,\"p\",true],[10,\"class\",\"etw-mt-4 etw-text-grey etw-italic\"],[8],[0,\"Select a module for more detail.\"],[9],[0,\"\\n\\n\"]],\"parameters\":[]}],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/etw/module-style-detail.hbs"
-    }
-  });
-
-  _exports.default = _default;
-});
-;define("dummy/templates/components/etw/module-style-example", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = Ember.HTMLBars.template({
-    "id": "SDHsVR87",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"a\",false],[12,\"class\",\"etw-mb-8 etw-w-1/5 etw-p-2\"],[3,\"action\",[[23,0,[]],\"selectModuleStyle\"]],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"etw-text-center etw-m-4 etw-text-sm \"],[8],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"etw-text-center etw-m-4 etw-text-sm \"],[8],[0,\"\\n\\n\"],[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"border-radius\"],null]],null,{\"statements\":[[0,\"\\n        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-solid etw-border-grey\\n          etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"border-widths\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24\\n          etw-border-red etw-bg-grey-lighter etw-border-solid\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"colors\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"etw-marginx-auto etw-w-full etw-h-24 bg-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"font-weights\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"font-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24\\n          etw-border etw-border-solid etw-border-grey\\n          etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"letter-spacing\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"text-left tracking-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"line-height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"text-left leading-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"margin\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"etw-bg-red etw-w-24 etw-mx-auto etw-border-t etw-border-solid \",[28,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"name\"]],\"auto\"],null],\"\",\"etw-border-transparent\"],null]]]],[8],[0,\"\\n          \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n            etw-mx-auto etw-w-24 etw-h-24 etw-border\\n             etw-bg-grey-lighter\\n            mt-\",[24,[\"moduleStyle\",\"name\"]],\"\\n          \"]]],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"max-height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          max-h-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"max-width\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          max-w-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"min-height\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          min-h-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"min-width\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-grey-lighter\\n          etw-border etw-border-solid etw-border-grey\\n          min-w-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"negative-margin\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-mb-8 etw-bg-red etw-px-4 etw-pb-4 etw-mx-auto etw-h-32 etw-relative\"],[8],[0,\"\\n          \"],[7,\"div\",true],[10,\"class\",\"etw-absolute etw-pin-x\"],[8],[0,\"\\n            \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n            etw-mx-auto etw-w-24 etw-h-24 etw-border\\n            etw-bg-grey-lighter etw-shadow-lg\\n            -mt-\",[24,[\"moduleStyle\",\"name\"]],\"\\n            \"]]],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"opacity\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-grey etw-bg-grey-lighter\\n          opacity-\",[24,[\"moduleStyle\",\"name\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"padding\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-bg-red etw-w-24 etw-mx-auto\"],[8],[0,\"\\n          \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n            etw-mx-auto etw-w-24 etw-h-24 etw-border\\n             etw-bg-grey-lighter\\n            pt-\",[24,[\"moduleStyle\",\"name\"]],\"\\n          \"]]],[8],[0,\"\\n            \"],[7,\"p\",true],[10,\"class\",\"etw-text-grey-darker\"],[8],[0,\"Lorem\"],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"shadows\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-bg-white\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"svg-fill\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-bg-grey-lighter etw-text-red etw-py-4\"],[8],[0,\"\\n          \"],[7,\"svg\",true],[10,\"class\",\"fill-current inline-block h-12 w-12\"],[10,\"xmlns\",\"http://www.w3.org/2000/svg\",\"http://www.w3.org/2000/xmlns/\"],[10,\"viewBox\",\"0 0 20 20\"],[8],[0,\"\\n            \"],[7,\"path\",true],[10,\"d\",\"M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"svg-stroke\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[10,\"class\",\"etw-bg-grey-lighter etw-text-red etw-py-4\"],[8],[0,\"\\n          \"],[7,\"svg\",true],[10,\"class\",\"stroke-current inline-block h-12 w-12\"],[10,\"viewBox\",\"0 0 24 24\"],[10,\"xmlns\",\"http://www.w3.org/2000/svg\",\"http://www.w3.org/2000/xmlns/\"],[10,\"fill\",\"none\"],[10,\"stroke-width\",\"2\"],[10,\"stroke-linecap\",\"round\"],[10,\"stroke-linejoin\",\"round\"],[8],[0,\"\\n              \"],[7,\"circle\",true],[10,\"cx\",\"8\"],[10,\"cy\",\"21\"],[10,\"r\",\"2\"],[8],[9],[0,\"\\n              \"],[7,\"circle\",true],[10,\"cx\",\"20\"],[10,\"cy\",\"21\"],[10,\"r\",\"2\"],[8],[9],[0,\"\\n              \"],[7,\"path\",true],[10,\"d\",\"M5.67 6H23l-1.68 8.39a2 2 0 0 1-2 1.61H8.75a2 2 0 0 1-2-1.74L5.23 2.74A2 2 0 0 0 3.25 1H1\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"text-sizes\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"p\",true],[11,\"class\",[29,[\"text-left text-\",[24,[\"moduleStyle\",\"name\"]]]]],[8],[0,\"\\n          Lorem ipsum dolor sit amet, consectetur adipisicing elit.\\n        \"],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"width\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-grey etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[28,\"eq\",[[24,[\"moduleStyle\",\"module\"]],\"z-index\"],null]],null,{\"statements\":[[0,\"        \"],[7,\"div\",true],[11,\"class\",[29,[\"\\n          etw-mx-auto etw-w-24 etw-h-24 etw-border\\n          etw-border-grey etw-bg-grey-lighter\\n          \",[24,[\"classesForModuleStyle\",\"0\"]],\"\\n        \"]]],[8],[9],[0,\"\\n\\n      \"]],\"parameters\":[]},null]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}]],\"parameters\":[]}],[0,\"\\n      \"],[7,\"div\",true],[10,\"class\",\"etw-mt-3 etw-leading-normal\"],[8],[0,\"\\n        \"],[7,\"p\",true],[8],[1,[24,[\"moduleStyle\",\"name\"]],false],[9],[0,\"\\n        \"],[7,\"p\",true],[10,\"class\",\"etw-opacity-50\"],[8],[1,[24,[\"moduleStyle\",\"value\"]],false],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
-    "meta": {
-      "moduleName": "dummy/templates/components/etw/module-style-example.hbs"
-    }
-  });
-
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/api/item", ["exports"], function (_exports) {
   "use strict";
@@ -5565,14 +3812,66 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "/a54ola1",
-    "block": "{\"symbols\":[],\"statements\":[[4,\"if\",[[24,[\"model\",\"isComponent\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,\"api/x-component\",null,[[\"component\"],[[24,[\"model\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[24,[\"model\",\"isClass\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,\"api/x-class\",null,[[\"class\"],[[24,[\"model\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[1,[28,\"api/x-module\",null,[[\"module\"],[[24,[\"model\"]]]]],false],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]}]],\"hasEval\":false}",
+    "id": "XmPP4cYp",
+    "block": "{\"symbols\":[],\"statements\":[[5,[27,[26,3,\"BlockHead\"],[]],[[27,[26,0,\"Expression\"],[\"isComponent\"]]],null,[[\"default\",\"else\"],[{\"statements\":[[1,1,0,0,\"  \"],[1,0,0,0,[31,30,15,[27,[26,4,\"CallHead\"],[]],null,[[\"component\"],[[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[5,[27,[26,3,\"BlockHead\"],[]],[[27,[26,0,\"Expression\"],[\"isClass\"]]],null,[[\"default\",\"else\"],[{\"statements\":[[1,1,0,0,\"  \"],[1,0,0,0,[31,94,11,[27,[26,2,\"CallHead\"],[]],null,[[\"class\"],[[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[1,1,0,0,\"  \"],[1,0,0,0,[31,133,12,[27,[26,1,\"CallHead\"],[]],null,[[\"module\"],[[27,[26,0,\"Expression\"],[]]]]]],[1,1,0,0,\"\\n\"]],\"parameters\":[]}]]]],\"parameters\":[]}]]]],\"hasEval\":false,\"upvars\":[\"model\",\"api/x-module\",\"api/x-class\",\"if\",\"api/x-component\"]}",
     "meta": {
       "moduleName": "dummy/templates/docs/api/item.hbs"
     }
   });
 
   _exports.default = _default;
+});
+;define("dummy/transforms/boolean", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _private.BooleanTransform;
+    }
+  });
+});
+;define("dummy/transforms/date", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _private.DateTransform;
+    }
+  });
+});
+;define("dummy/transforms/number", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _private.NumberTransform;
+    }
+  });
+});
+;define("dummy/transforms/string", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _private.StringTransform;
+    }
+  });
 });
 ;define("dummy/transitions", ["exports"], function (_exports) {
   "use strict";
@@ -5784,81 +4083,6 @@
     }
   });
 });
-;define("dummy/translations/en-us", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _default = {
-    "photos": {
-      "banner": "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"
-    },
-    "product": {
-      "customers": "The {product} has {numCustomers, shortNumber} customers",
-      "customers.oneDigit": "The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers",
-      "info": "The {product} costs {price, number, USD}",
-      "title": "Hello"
-    },
-    "subdirectory": {
-      "smoke": {
-        "subdirectory": "translation subdirectories loaded"
-      }
-    }
-  };
-  _exports.default = _default;
-});
-;define("dummy/translations/es-es", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _default = {
-    "photos": {
-      "banner": "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"
-    },
-    "product": {
-      "customers": "The {product} has {numCustomers, shortNumber} customers",
-      "customers.oneDigit": "The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers",
-      "info": "La {product} cuesta {price, number, USD}",
-      "title": "Hola"
-    },
-    "subdirectory": {
-      "smoke": {
-        "subdirectory": "translation subdirectories loaded"
-      }
-    }
-  };
-  _exports.default = _default;
-});
-;define("dummy/translations/fr-fr", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _default = {
-    "photos": {
-      "banner": "Vous {numPhotos, plural, =0 {n'avez aucune photo.} =1 {avez une photo.} other {avez {numPhotos} photos.}}"
-    },
-    "product": {
-      "customers": "The {product} has {numCustomers, shortNumber} customers",
-      "customers.oneDigit": "The {product} has {numCustomers, shortNumber, oneSignificantDigit} customers",
-      "info": "Le {product} coûtent {price, number, USD}",
-      "title": "Bonjour"
-    },
-    "subdirectory": {
-      "smoke": {
-        "subdirectory": "translation subdirectories loaded"
-      }
-    }
-  };
-  _exports.default = _default;
-});
 ;define("dummy/utils/get-cmd-key", ["exports", "ember-keyboard/utils/get-cmd-key"], function (_exports, _getCmdKey) {
   "use strict";
 
@@ -5872,7 +4096,7 @@
     }
   });
 });
-;define("dummy/utils/intl/missing-message", ["exports", "ember-intl/utils/missing-message"], function (_exports, _missingMessage) {
+;define("dummy/utils/intl/missing-message", ["exports", "ember-intl/-private/utils/missing-message"], function (_exports, _missingMessage) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
