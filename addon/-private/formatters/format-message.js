@@ -6,7 +6,6 @@
 import Ember from 'ember';
 import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
-import { assign } from '@ember/polyfills';
 import IntlMessageFormat from 'intl-messageformat';
 import { parse } from 'intl-messageformat-parser';
 import Formatter from './-base';
@@ -24,15 +23,18 @@ function escape(object) {
     return;
   }
 
-  return keys(object).reduce((accum, key) => {
-    // NOTE due to the typeof check this won't escape if
-    // the value is an Ember `SafeString`
-    if (typeof object[key] === 'string') {
-      accum[key] = escapeExpression(object[key]);
-    }
+  return keys(object).reduce(
+    (accum, key) => {
+      // NOTE due to the typeof check this won't escape if
+      // the value is an Ember `SafeString`
+      if (typeof object[key] === 'string') {
+        accum[key] = escapeExpression(object[key]);
+      }
 
-    return accum;
-  }, assign({}, object));
+      return accum;
+    },
+    { ...object }
+  );
 }
 
 /**
