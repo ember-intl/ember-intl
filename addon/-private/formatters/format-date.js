@@ -27,6 +27,7 @@ export default class FormatDate extends Formatter {
       'localeMatcher',
       'timeZone',
       'hour12',
+      'hourCycle',
       'formatMatcher',
       'weekday',
       'era',

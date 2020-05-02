@@ -44,6 +44,12 @@ _Note:_ The Intl.js polyfill does not have full support for `timeZone`
 > Whether to use 12-hour time (as opposed to 24-hour time). Possible values
 > are `true` and `false`; the default is locale dependent.
 
+`hourCycle`
+
+> The hour cycle to use. Possible values are "h11", "h12", "h23", or "h24".
+> This option overrides the hc language tag, if both are present, and the
+> hour12 option takes precedence in case both options have been specified.
+
 `formatMatcher`
 
 > The format matching algorithm to use. Possible values are "basic" and

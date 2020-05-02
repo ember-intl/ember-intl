@@ -39,6 +39,22 @@ module('format-time-test', function(hooks) {
     assert.ok(output === '23/1/2014' || output === '23/01/2014');
   });
 
+  test('should support hourCycle', async function(assert) {
+    assert.expect(2);
+
+    this.intl.set('formats', {
+      time: { test: { timeZone: 'UTC', locale: 'en-ie', hour: 'numeric', minute: 'numeric' } }
+    });
+
+    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test"}}`);
+
+    assert.equal(this.element.textContent, '00:00', 'en-ie time format defaults to h23');
+
+    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test" hourCycle="h12"}}`);
+
+    assert.equal(this.element.textContent, '12:00 a.m.', 'en-ie hourCycle overridden');
+  });
+
   test('should support allowEmpty', async function(assert) {
     assert.expect(1);
     await render(hbs`{{format-time allowEmpty=true}}`);
