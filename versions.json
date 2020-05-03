@@ -14,8 +14,8 @@
   "-latest": {
     "path": "",
     "name": "Latest",
-    "sha": "c29895b75380e34ec98fafce8ca44c3ea2400914",
-    "tag": "v5.0.4"
+    "sha": "b0792bc3dd9f990fc199e2cce833f2b8b309ed7b",
+    "tag": "v5.0.5"
   },
   "v4.2.0": {
     "path": "versions/v4.2.0",
@@ -64,5 +64,11 @@
     "name": "u/jasonmit/caniuse-matrix",
     "sha": "7afca26c410c0551bff1cc43b6395e5ac5b6d0dd",
     "tag": null
+  },
+  "v5.0.5": {
+    "path": "versions/v5.0.5",
+    "name": "v5.0.5",
+    "sha": "b0792bc3dd9f990fc199e2cce833f2b8b309ed7b",
+    "tag": "v5.0.5"
   }
 }
