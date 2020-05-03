@@ -74,3 +74,11 @@ body {
   margin-left: 4px;
   padding: 10px;
 }
+
+.docs-overflow-y-scroll {
+  overflow-y: auto;
+}
+
+.docs-md__code, .docs-overflow-x-scroll {
+  overflow-x: auto;
+}
