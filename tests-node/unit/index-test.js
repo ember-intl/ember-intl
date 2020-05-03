@@ -9,7 +9,7 @@ describe('index', function () {
       ...addon,
       readConfig: () => ({ requiresTranslation: undefined }),
       logger: {
-        log: (message) => logs.push(message),
+        warn: (message) => logs.push(message),
       },
     };
 
