@@ -18,7 +18,7 @@ If you need to support older browsers, we recommend you do the following:
 3. If you're supporting browsers that do not have [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules) (e.g IE11 & Safari 12-), include this [polyfill](https://www.npmjs.com/package/@formatjs/intl-pluralrules) in your build.
 
 ```js
-// first run: yarn install @formatjs/intl-pluralrules
+// first run: yarn add @formatjs/intl-pluralrules
 import '@formatjs/intl-pluralrules/polyfill';
 import '@formatjs/intl-pluralrules/dist/locale-data/de'; // Add locale data for de
 ```
@@ -26,7 +26,7 @@ import '@formatjs/intl-pluralrules/dist/locale-data/de'; // Add locale data for 
 4. If you're supporting browsers that do not have [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat) (e.g IE11, Edge, Safari 12-), include this [polyfill](https://www.npmjs.com/package/@formatjs/intl-relativetimeformat) in your build along with individual CLDR data for each locale you support.
 
 ```js
-// first run: yarn install @formatjs/intl-relativetimeformat
+// first run: yarn add @formatjs/intl-relativetimeformat
 import '@formatjs/intl-relativetimeformat/polyfill';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/de'; // Add locale data for de
 ```
