@@ -106,6 +106,7 @@ export default Service.extend(Evented, {
     cancel(this._timer);
   },
 
+  /** @private **/
   onError({ /* kind, */ error }) {
     throw error;
   },
