@@ -2,31 +2,48 @@
 
 ember-intl relies on these `Intl` APIs:
 
-- [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+
-- [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+
-- [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules): This can be polyfilled using [this package](https://www.npmjs.com/package/@formatjs/intl-pluralrules).
-- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat): This can be polyfilled using [this package](https://www.npmjs.com/package/@formatjs/intl-relativetimeformat).
+- [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+.  Polyfill: [Intl.js](https://github.com/andyearnshaw/Intl.js/).
 
-### **Polyfills**
+<a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_numberformat"><img src={{root-url 'images/numberformat.png'}} /></a>
 
-If you need to support older browsers, we recommend you do the following:
+- [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+.  Polyfill: [date-time-format-timezone](https://github.com/formatjs/date-time-format-timezone).
 
-1. Polyfill `Intl.NumberFormat` with https://github.com/andyearnshaw/Intl.js
-2. Polyfill `Intl.DateTimeFormat` with https://github.com/formatjs/date-time-format-timezone
-3. If you're supporting browsers that do not have [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules) (e.g IE11 & Safari 12-), include this [polyfill](https://www.npmjs.com/package/@formatjs/intl-pluralrules) in your build.
+<a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_datetimeformat"><img src={{root-url 'images/datetimeformat.png'}} /></a>
+
+- [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules): Polyfill: [`@formatjs/intl-pluralrules`](https://www.npmjs.com/package/@formatjs/intl-pluralrules).
+
+<a href="https://caniuse.com/#feat=intl-pluralrules"><img src={{root-url 'images/pluralrules.png'}} /></a>
+
+- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat): Polyfill: [`@formatjs/intl-relativetimeformat`](https://www.npmjs.com/package/@formatjs/intl-relativetimeformat).
+
+<a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_relativetimeformat"><img src={{root-url 'images/relativetimeformat.png'}} /></a>
+
+### **Basic Polyfilling Strategies**
+
+> _Important to note_: polyfilling strategies such as lazy-loading or dynamically injecting the script based on the browser requesting the page _is_ recommended.  There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story.  If you don't yet have a strategy, [polyfill.io](https://polyfill.io/v3/) may be a good option.
+
+#### **Adding `@formatjs/intl-pluralrules`**
+
+`yarn add @formatjs/intl-pluralrules`
 
 ```js
-// first run: yarn add @formatjs/intl-pluralrules
+// app.js (Ember app entry point)
 import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-pluralrules/dist/locale-data/de'; // Add locale data for de
+import '@formatjs/intl-pluralrules/dist/locale-data/en'; // Add English data
+import '@formatjs/intl-pluralrules/dist/locale-data/fr'; // Add French data
+import '@formatjs/intl-pluralrules/dist/locale-data/es'; // Add Spanish data
+// etc.
 ```
 
-4. If you're supporting browsers that do not have [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat) (e.g IE11, Edge, Safari 12-), include this [polyfill](https://www.npmjs.com/package/@formatjs/intl-relativetimeformat) in your build along with individual CLDR data for each locale you support.
+#### **Adding `@formatjs/intl-relativetimeformat`**
+
+`yarn add @formatjs/intl-relativetimeformat`
 
 ```js
-// first run: yarn add @formatjs/intl-relativetimeformat
+// app.js (Ember app entry point)
 import '@formatjs/intl-relativetimeformat/polyfill';
-import '@formatjs/intl-relativetimeformat/dist/locale-data/de'; // Add locale data for de
+import '@formatjs/intl-relativetimeformat/dist/locale-data/en'; // Add English data
+import '@formatjs/intl-relativetimeformat/dist/locale-data/fr'; // Add French data
+import '@formatjs/intl-relativetimeformat/dist/locale-data/es'; // Add Spanish data
+// etc.
 ```
-
-**Important to note,** polyfilling strategies such as lazy-loading or dynamically injecting the script based on whether or not the requesting browser needs it _is_ recommended!  There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story.  If you don't yet have a strategy, [polyfill.io](https://polyfill.io/v3/) may be a good option.
