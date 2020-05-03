@@ -2,7 +2,7 @@
 
 **We support IE11 & 2 most recent versions of Edge, Chrome & Firefox.**
 
-React Intl relies on these `Intl` APIs:
+ember-intl relies on these `Intl` APIs:
 
 - [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+
 - [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+
