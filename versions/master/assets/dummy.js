@@ -80,7 +80,7 @@
     }
   });
 });
-;define("dummy/app", ["exports", "dummy/resolver", "ember-load-initializers", "dummy/config/environment"], function (_exports, _resolver, _emberLoadInitializers, _environment) {
+;define("dummy/app", ["exports", "dummy/resolver", "ember-load-initializers", "dummy/config/environment", "@formatjs/intl-relativetimeformat/polyfill", "@formatjs/intl-relativetimeformat/dist/locale-data/en", "@formatjs/intl-relativetimeformat/dist/locale-data/fr", "@formatjs/intl-relativetimeformat/dist/locale-data/es"], function (_exports, _resolver, _emberLoadInitializers, _environment, _polyfill, _en, _fr, _es) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
