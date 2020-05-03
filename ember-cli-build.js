@@ -20,8 +20,6 @@ module.exports = function (defaults) {
 
   let app = new EmberAddon(defaults, options);
 
-  app.options.snippetPaths = ['tests/dummy/snippets'];
-
   /*
     This build file specifies the options for the dummy test app of this
     addon, located in `/tests/dummy`
