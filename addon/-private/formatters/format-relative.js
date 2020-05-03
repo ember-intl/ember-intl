@@ -20,19 +20,21 @@ export default class FormatRelative extends Formatter {
   constructor(config) {
     super(config);
 
-    if (!Intl.RelativeTimeFormat) {
-      config.onError({
-        kind: MISSING_INTL_API,
-        error: new FormatError(
-          `Intl.RelativeTimeFormat is not available in this environment.
-  Try polyfilling it using "@formatjs/intl-relativetimeformat"
-  `,
-          ErrorCode.MISSING_INTL_API
-        ),
-      });
-    }
-
     this.createNativeFormatter = memoize((locales, options) => {
+      if (!Intl || !Intl.RelativeTimeFormat) {
+        config.onError({
+          kind: MISSING_INTL_API,
+          error: new FormatError(
+            `Intl.RelativeTimeFormat is not available in this environment.
+    Try polyfilling it using "@formatjs/intl-relativetimeformat"
+    `,
+            ErrorCode.MISSING_INTL_API
+          ),
+        });
+
+        return;
+      }
+
       return new Intl.RelativeTimeFormat(locales, options);
     });
   }
