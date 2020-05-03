@@ -2,13 +2,13 @@
 
 ## **Obsolete**
 
-The `locales` configuration option within `config/ember-intl.js` can now be removed
+The `locales` and `autoPolyfill` configuration options in `config/ember-intl.js` are no longer used and can be safely removed.
 
-## **Breaking Change**
+## **Breaking Changes**
 
-### Node runtime
+### **Node runtime**
 
-We now support down to Node 10, dropping support for Node 8
+We now support down to Node 10, dropping support for Node 8.
 
 ### **Polyfilling**
 
