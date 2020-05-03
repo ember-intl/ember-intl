@@ -2,7 +2,7 @@
 
 ## **Obsolete**
 
-The `locales` and `autoPolyfill` configuration options in `config/ember-intl.js` are no longer used and can be safely removed.
+The `locales`, `disablePolyfill`, and `autoPolyfill` configuration options in `config/ember-intl.js` are no longer used and can be safely removed.
 
 ## **Breaking Changes**
 

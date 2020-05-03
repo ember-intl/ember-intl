@@ -20,6 +20,8 @@ const findEngine = require('./lib/utils/find-engine');
 const Logger = require('./lib/logger');
 const DEFAULT_CONFIG = require('./lib/default-config');
 
+const OBSOLETE_OPTIONS = ['locales', 'disablePolyfill', 'autoPolyfill'];
+
 module.exports = {
   name: 'ember-intl',
   logger: null,
@@ -140,15 +142,19 @@ module.exports = {
   },
 
   createOptions(environment, project) {
-    let config = {
+    const config = {
       ...DEFAULT_CONFIG,
       ...this.readConfig(environment, project),
     };
 
     if (typeof config.requiresTranslation !== 'function') {
-      this.logger.log('Configured `requiresTranslation` is not a function. Using default implementation.');
+      this.logger.warn('Configured `requiresTranslation` is not a function. Using default implementation.');
       config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
     }
+
+    OBSOLETE_OPTIONS.filter((option) => option in config).forEach((option) => {
+      this.logger.warn(`\`${option}\` is obsolete and can be removed from config/ember-intl.js.`);
+    });
 
     return config;
   },
