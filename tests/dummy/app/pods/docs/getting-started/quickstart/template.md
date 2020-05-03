@@ -3,7 +3,7 @@
 ## 1. Install ember-intl
 
 ```bash
-ember install ember-intl@next
+ember install ember-intl
 ```
 
 This will create the following files:
