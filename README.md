@@ -24,7 +24,7 @@
 [4.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v4.4.0/docs/quickstart)
 
 ## Migrating from 4.x to 5.x
-https://ember-intl.github.io/ember-intl/docs/cookbook/migration-4-0-to-5-0
+https://ember-intl.github.io/ember-intl/versions/master/docs/guide/migration-4-0-to-5-0
 
 ## Migrating from ember-i18n
 
