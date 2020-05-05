@@ -14,6 +14,7 @@ Router.map(function () {
       this.route('quickstart');
     });
     this.route('guide', function () {
+      this.route('migration-4-0-to-5-0');
       this.route('asynchronously-loading-translations');
       this.route('service-api');
       this.route('missing-translations');
@@ -29,7 +30,6 @@ Router.map(function () {
       this.route('format-time');
     });
     this.route('cookbook', function () {
-      this.route('migration-4-0-to-5-0');
       this.route('common-errors');
     });
     this.route('advanced', function () {
