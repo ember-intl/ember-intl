@@ -14,6 +14,8 @@ We now support down to Node 10, dropping support for Node 8.
 
 This addon no longer provides polyfills "out of the box."  The reasoning, along with the current browser requirements, can be found in the {{docs-link 'Runtime Requirements' 'docs.getting-started.runtime-requirements'}} section.
 
+I highly encourage you read through all the browser support matrices within the {{docs-link 'Runtime Requirements' 'docs.getting-started.runtime-requirements'}} to ensure it aligns with your projects runtime targets.
+
 ### **`Intl.RelativeTimeFormat`**
 
 When we introduced FormatRelative, the spec for [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat) was still under development. It has now reached stage 3 and multiple browsers have implemented it. However, the API is quite different from the spec we had implemented so we've had to adjust the API to match the spec which means it's not backwards compatible.
