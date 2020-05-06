@@ -73,7 +73,11 @@ describe('translation-reducer', function () {
         'en-us.json': `{ "greet": "hello" }`,
       });
 
-      return expect(build(createBuilder(subject))).to.eventually.rejectedWith(/"greet" was not found in "de-de"/);
+      return expect(
+        build(createBuilder(subject), () => {
+          throw new Error('Should have have been reached.');
+        })
+      ).to.eventually.rejectedWith(/"greet" was not found in "de-de"/);
     });
 
     it('should not not overwrite translations', function () {
@@ -230,9 +234,9 @@ describe('translation-reducer', function () {
       subject._log = (msg) => logs.push(msg);
 
       expect(() => subject.handleLintResult(subject.linter.lint(this.icuFixture))).throws(`ICU arguments mismatch:
-- "foo" ICU argument missing: "de": "whos", "en": "who"
-- "missingArg" ICU argument missing: "en": "numPhotos"
-- "deep.nested.ok" ICU argument missing: "de": "code"`);
+- "foo" ICU argument mismatch: "de": "whos", "en": "who"
+- "missingArg" ICU argument mismatch: "en": "numPhotos"
+- "deep.nested.ok" ICU argument mismatch: "de": "code"`);
     });
 
     describe('mergeTranslations', function () {
