@@ -24,7 +24,28 @@
 [4.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v4.4.0/docs/quickstart)
 
 ## Migrating from 4.x to 5.x
-https://ember-intl.github.io/ember-intl/versions/master/docs/guide/migration-4-0-to-5-0
+### Notable Changes
+
+* Polyfills have been removed entirely and with it the need to bundle the pluralization rules as they now come from the native `Intl.PluraRules` API
+* Translations are now placed in a fixed location when bundled, no longer need to traverse the private API `requirejs._eak_seen` to hydrate the service with translations
+* Intl.MessageFormat [parser](https://formatjs.io/docs/intl-messageformat-parser) and [compiler](https://formatjs.io/docs/intl-messageformat) updated which fixes escaping issues - making escaping text ICU-compliant
+
+### Breaking Changes
+
+* Node 8 support dropped
+* `Intl.RelativeTime` polyfill has been replaced with the native API which behaves entirely different than the previous older spec implementation (read about in the [Migration Document](https://ember-intl.github.io/ember-intl/docs/guide/migration-4-0-to-5-0))
+* Translations are now escaped differently (read about in the [Migration Document](https://ember-intl.github.io/ember-intl/docs/guide/migration-4-0-to-5-0))
+* Removes `shortNumber` formatting in favor of now supported native implementation using the `"notation"` property i.e.,
+```js
+this.intl.formatNumber(1000, {
+  notation: "compact" ,
+  compactDisplay: "short"
+}); // -> 1k
+```
+
+When you're ready to upgrade, head over to the [Migration Document](https://ember-intl.github.io/ember-intl/docs/guide/migration-4-0-to-5-0) to read more in detail about what changed.
+
+All of this will result in smaller bundles, faster build times, and less work done on app boot.
 
 ## Migrating from ember-i18n
 
