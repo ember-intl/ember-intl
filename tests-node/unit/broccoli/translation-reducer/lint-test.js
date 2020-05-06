@@ -130,21 +130,22 @@ describe('linting', function () {
     );
   });
 
-  it('returns list of icu argument mismatch without those that are required', function () {
-    this.linter = new Linter({
-      fallbackLocale: 'en',
-      requiresTranslation() {
+  it('ignores icu mismatch reporting for translations that do not exist', function () {
+    const linter = new Linter({
+      requiresTranslation(/* key, locale */) {
         return true;
       },
     });
 
-    delete this.icuFixture['de'].greeting;
+    const results = linter.lint({
+      en: { one: '{one}' }, // not reported, no match
+      es: { missing: '{foo}' }, // not reported, no match
+    });
 
-    const { icuMismatch } = this.linter.lint(this.icuFixture);
-
-    expect(icuMismatch).to.deep.equal([
-      ['missingArg', [['en', ['numPhotos']]]],
-      ['deep.nested.missing', [['en', ['code']]]],
+    expect(results.icuMismatch).to.deep.equal([]);
+    expect(results.missingTranslations).to.deep.equal([
+      ['one', ['es']],
+      ['missing', ['en']],
     ]);
   });
 });

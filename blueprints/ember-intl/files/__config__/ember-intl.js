@@ -6,7 +6,9 @@ module.exports = function (/* environment */) {
      * Merges the fallback locale's translations into all other locales as a
      * build-time fallback strategy.
      *
-     * NOTE: a side effect of this option could result in missing translation warnings to be masked.
+     * This will **not** prevent missing translation warnings or errors from occurring.
+     * It's meant as safety net when warning are enabled.
+     * When enabled along with `errorOnMissingTranslations` any fallback attempts will result in an error.
      *
      * @property fallbackLocale
      * @type {String?}
@@ -39,6 +41,15 @@ module.exports = function (/* environment */) {
     publicOnly: false,
 
     /**
+     * Add the subdirectories of the translations as a namespace for all keys.
+     *
+     * @property wrapTranslationsWithNamespace
+     * @type {Boolean}
+     * @default "false"
+     */
+    wrapTranslationsWithNamespace: false,
+
+    /**
      * Cause a build error if ICU argument mismatches are detected.
      *
      * @property errorOnNamedArgumentMismatch
@@ -63,18 +74,9 @@ module.exports = function (/* environment */) {
      *
      * @property stripEmptyTranslations
      * @type {Boolean}
-     * @default false
+     * @default "false"
      */
     stripEmptyTranslations: false,
-
-    /**
-     * Add the subdirectories of the translations as a namespace for all keys.
-     *
-     * @property wrapTranslationsWithNamespace
-     * @type {Boolean}
-     * @default false
-     */
-    wrapTranslationsWithNamespace: false,
 
     /**
      * Filter missing translations to ignore expected missing translations.
@@ -83,7 +85,7 @@ module.exports = function (/* environment */) {
      *
      * @property requiresTranslation
      * @type {Function}
-     * @default "function(key,locale){return true}"
+     * @default "function(key,locale) { return true }"
      */
     requiresTranslation(/* key, locale */) {
       return true;

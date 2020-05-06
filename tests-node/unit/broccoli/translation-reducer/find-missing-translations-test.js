@@ -1,10 +1,8 @@
 const expect = require('chai').expect;
 
-const findMissingTranslations = require('../../../../lib/broccoli/translation-reducer/linter/find-missing-translations');
+const findLocalesMissingTranslation = require('../../../../lib/broccoli/translation-reducer/linter/find-missing-translations');
 
-const isTrue = () => true;
-
-describe('findMissingTranslations', function () {
+describe('findLocalesMissingTranslation', function () {
   it('finds nothing if nothing is missing', function () {
     const key = 'foo';
     const localeKeys = [
@@ -12,7 +10,7 @@ describe('findMissingTranslations', function () {
       ['en', ['foo']],
     ];
 
-    expect(findMissingTranslations(key, localeKeys, isTrue)).to.deep.equal([]);
+    expect(findLocalesMissingTranslation(key, localeKeys)).to.deep.equal([]);
   });
 
   it('finds missing translations', function () {
@@ -22,17 +20,6 @@ describe('findMissingTranslations', function () {
       ['en', ['bar']],
     ];
 
-    expect(findMissingTranslations(key, localeKeys, isTrue)).to.deep.equal(['en']);
-  });
-
-  it('ignores missing translations if not required', function () {
-    const key = 'foo';
-    const localeKeys = [
-      ['de', ['foo']],
-      ['en', ['bar']],
-    ];
-    const isAllowed = (key, locale) => locale !== 'en';
-
-    expect(findMissingTranslations(key, localeKeys, isAllowed)).to.deep.equal([]);
+    expect(findLocalesMissingTranslation(key, localeKeys)).to.deep.equal(['en']);
   });
 });
