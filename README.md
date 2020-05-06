@@ -28,7 +28,7 @@
 
 * Polyfills have been removed entirely and with it the need to bundle the pluralization rules as they now come from the native `Intl.PluraRules` API
 * Translations are now placed in a fixed location when bundled, no longer need to traverse the private API `requirejs._eak_seen` to hydrate the service with translations
-* Intl.MessageFormat [parser](https://formatjs.io/docs/intl-messageformat-parser) and [compiler](https://formatjs.io/docs/intl-messageformat) updated which fixes escaping issues - making escaping text ICU-compliant
+* `Intl.MessageFormat` [parser](https://formatjs.io/docs/intl-messageformat-parser) and [compiler](https://formatjs.io/docs/intl-messageformat) which changes how we esape text - making it more ICU-compliant
 
 ### Breaking Changes
 
