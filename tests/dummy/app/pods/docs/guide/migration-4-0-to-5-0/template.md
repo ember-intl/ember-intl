@@ -30,7 +30,9 @@ Changes:
 
 ### **Translations**
 
-* Escaping in translations is now done via a single quote, `'`, instead of the previous slash `\`.  This was done to ensure compliance with the ICU spec.
+* Special character escaping in translations is now done via a single quote, `'` instead of the previous slash `\`.
+
+_This is not to be confused with string escaping in YAML or JSON where you'll need to use `\` to escape quotes to keep a string together.  This change is specifically about escaping special characters and HTML tags within your ICU message._
 * Additionally, all HTML tags now need to be escaped.
 
 `<strong>{name}</strong>`
