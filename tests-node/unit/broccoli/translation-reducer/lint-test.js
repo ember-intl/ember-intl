@@ -223,14 +223,11 @@ describe('linting', function () {
       }`,
       },
       en: {
-        key: `{count, plural,
-        one {An error}
-        other {# errors}
-      } prevented this {model} from being saved`,
+        key: ``,
       },
     });
 
-    expect(results.icuMismatch).to.deep.equal([]);
+    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['count', 'model']]]]]);
     expect(results.missingTranslations).to.deep.equal([]);
   });
 });
