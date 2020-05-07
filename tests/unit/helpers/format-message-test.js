@@ -201,4 +201,12 @@ module('format-message', function (hooks) {
       });
     });
   });
+
+  test('handles hashtags within `select`', function (assert) {
+    assert.expect(1);
+    assert.equal(
+      this.intl.formatMessage('{type, select, anime {Rank #{rank}} other {}}', { type: 'anime', rank: 1 }),
+      'Rank #1'
+    );
+  });
 });

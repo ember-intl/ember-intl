@@ -7,7 +7,7 @@ import Ember from 'ember';
 import memoize from 'fast-memoize';
 import { htmlSafe } from '@ember/string';
 import IntlMessageFormat from 'intl-messageformat';
-import { parse } from 'intl-messageformat-parser';
+import parse from '../utils/parse';
 import Formatter from './-base';
 
 const { keys } = Object;

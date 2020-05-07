@@ -6,7 +6,7 @@
 import EmberObject from '@ember/object';
 import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import flatten from 'ember-intl/-private/utils/flatten';
-import { parse } from 'intl-messageformat-parser';
+import parse from 'ember-intl/-private/utils/parse';
 
 /**
  * @private
