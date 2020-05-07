@@ -82,3 +82,9 @@ body {
 .docs-md__code, .docs-overflow-x-scroll {
   overflow-x: auto;
 }
+
+@media (min-width: 768px) {
+  .md\:docs-overflow-y-scroll {
+    overflow-y: auto;
+  }
+}
