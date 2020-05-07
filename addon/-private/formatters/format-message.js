@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 import memoize from 'fast-memoize';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe, isHTMLSafe } from '@ember/string';
 import IntlMessageFormat from 'intl-messageformat';
 import parse from '../utils/parse';
 import Formatter from './-base';
@@ -25,9 +25,14 @@ function escape(object) {
 
   return keys(object).reduce(
     (accum, key) => {
-      // NOTE due to the typeof check this won't escape if
-      // the value is an Ember `SafeString`
-      if (typeof object[key] === 'string') {
+      if (isHTMLSafe(object[key])) {
+        // If the option is an instance of Ember SafeString,
+        // we don't want to pass it into the formatter, since the
+        // formatter won't know what to do with it. Instead, we cast
+        // the SafeString to a regular string using `toHTML`.
+        // Since it was already marked as safe we should *not* escape it.
+        accum[key] = object[key].toHTML();
+      } else if (typeof object[key] === 'string') {
         accum[key] = escapeExpression(object[key]);
       }
 

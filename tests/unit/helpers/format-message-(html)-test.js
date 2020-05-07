@@ -1,4 +1,5 @@
 import { render } from '@ember/test-helpers';
+import { htmlSafe } from '@ember/string';
 import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
@@ -20,6 +21,17 @@ module('format-message (html)', function (hooks) {
         count: 42000,
       }).string,
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
+    );
+  });
+
+  test('arguments marked as safe-string is not escaped', function (assert) {
+    assert.expect(1);
+    assert.equal(
+      this.intl.formatMessage(`'<strong>'Welcome {name}!'</strong>'`, {
+        htmlSafe: true,
+        name: htmlSafe('<em>Alexander</em>'),
+      }).string,
+      '<strong>Welcome <em>Alexander</em>!</strong>'
     );
   });
 
