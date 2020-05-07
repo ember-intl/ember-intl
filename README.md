@@ -13,6 +13,7 @@
 * 🕑 Locale-aware display of relative time. i.e, `"in 1 day"`, `"2 years ago"`, etc.
 * 💬 ICU Message Syntax. Pluralization and formatted segments (numbers, datetime, etc.)
 * 🌐 Support for 150+ languages
+* 🕵🏻 Translation linting (detects missing translations & translation argument mismatches)
 * 📜 Built largely on standards. [ICU message syntax][ICU] & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating
 * 🎉 [Advanced addon support](https://ember-intl.github.io/ember-intl/docs/advanced/addon-support) to provide translations to the host app
