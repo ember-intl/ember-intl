@@ -126,7 +126,7 @@ describe('linting', function () {
     const brokenString = this.brokenIcuFixture.en.brokenSyntax;
 
     expect(() => this.linter.lint(this.brokenIcuFixture)).throws(
-      `An error occured (${expectedParserError}) when extracting ICU arguments for '${brokenString}'`
+      `An error occurred (${expectedParserError}) when extracting ICU arguments for '${brokenString}'`
     );
   });
 
