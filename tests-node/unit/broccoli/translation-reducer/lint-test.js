@@ -149,14 +149,73 @@ describe('linting', function () {
     ]);
   });
 
-  it('matches arguments even when used within plural type nodes', function () {
-    const linter = new Linter({
-      requiresTranslation(/* key, locale */) {
-        return true;
+  it('detects mismatched arguments', function () {
+    const results = this.linter.lint({
+      de: {
+        key: `{count}`,
+      },
+      en: {
+        key: ``,
       },
     });
 
-    const results = linter.lint({
+    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['count']]]]]);
+  });
+
+  it('detects date arguments', function () {
+    const results = this.linter.lint({
+      de: {
+        key: `{timestamp, date, long}`,
+      },
+      en: {
+        key: ``,
+      },
+    });
+
+    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['timestamp']]]]]);
+  });
+
+  it('detects time arguments', function () {
+    const results = this.linter.lint({
+      de: {
+        key: `{timestamp, time, short}`,
+      },
+      en: {
+        key: ``,
+      },
+    });
+
+    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['timestamp']]]]]);
+  });
+
+  it('detects select arguments', function () {
+    const results = this.linter.lint({
+      de: {
+        key: `{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}`,
+      },
+      en: {
+        key: ``,
+      },
+    });
+
+    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['gender']]]]]);
+  });
+
+  it('detects plural arguments', function () {
+    const results = this.linter.lint({
+      de: {
+        key: `{numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}`,
+      },
+      en: {
+        key: ``,
+      },
+    });
+
+    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['numPhotos']]]]]);
+  });
+
+  it('detects arguments within plural arguments', function () {
+    const results = this.linter.lint({
       de: {
         key: `{count, plural,
         one {Ein Fehler hat die Speicherung von {model} verhindert}
