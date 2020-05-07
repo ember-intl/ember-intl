@@ -148,4 +148,30 @@ describe('linting', function () {
       ['missing', ['en']],
     ]);
   });
+
+  it('matches arguments even when used within plural type nodes', function () {
+    const linter = new Linter({
+      requiresTranslation(/* key, locale */) {
+        return true;
+      },
+    });
+
+    const results = linter.lint({
+      de: {
+        key: `{count, plural,
+        one {Ein Fehler hat die Speicherung von {model} verhindert}
+        other {# Fehler hat verhindert, dass {model} gespeichert wurden}
+      }`,
+      },
+      en: {
+        key: `{count, plural,
+        one {An error}
+        other {# errors}
+      } prevented this {model} from being saved`,
+      },
+    });
+
+    expect(results.icuMismatch).to.deep.equal([]);
+    expect(results.missingTranslations).to.deep.equal([]);
+  });
 });
