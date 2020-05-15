@@ -133,23 +133,42 @@ export default Service.extend(Evented, {
     return translation;
   },
 
+  validateKeys(keys) {
+    return keys.forEach((key) => {
+      assert(
+        `[ember-intl] expected translation key "${key}" to be of type String but received: "${typeof key}"`,
+        typeof key === 'string'
+      );
+    });
+  },
+
   /** @public **/
   t(key, options = {}) {
-    let defaults = [key];
-    let ast;
+    let keys = [key];
 
     if (options.default) {
-      defaults = defaults.concat(options.default);
+      if (Array.isArray(options.default)) {
+        keys = [...keys, ...options.default];
+      } else if (typeof options.default === 'string') {
+        keys = [...keys, options.default];
+      }
     }
 
-    while (!ast && defaults.length) {
-      ast = this.lookup(defaults.shift(), options.locale, {
+    this.validateKeys(keys);
+
+    for (let index = 0; index < keys.length; index++) {
+      const key = keys[index];
+      const ast = this.lookup(key, options.locale, {
         ...options,
-        resilient: defaults.length > 0,
+        // Note: last iteration will throw with the last key that was missing
+        // in the future maybe the thrown error should include all the keys to help debugging
+        resilient: keys.length - 1 !== index,
       });
-    }
 
-    return this.formatMessage(ast, options);
+      if (ast) {
+        return this.formatMessage(ast, options);
+      }
+    }
   },
 
   /** @public **/

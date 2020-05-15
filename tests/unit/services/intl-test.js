@@ -29,11 +29,6 @@ module('service:intl', function (hooks) {
     this.intl.setLocale([LOCALE]);
   });
 
-  test('can access formatMessage without a locale set', function (assert) {
-    this.intl.t('does.not.exist');
-    assert.ok(true, 'Exception was not raised');
-  });
-
   test('should return a number if the translation is a number', function (assert) {
     this.intl.addTranslations(LOCALE, {
       a_number: 2,
@@ -44,15 +39,15 @@ module('service:intl', function (hooks) {
 
   test('`t` should cascade translation lookup', function (assert) {
     this.intl.addTranslations(LOCALE, {
-      should_exist: 'I do exist!',
-      should_also_exist: 'I do also exist!',
+      first: 'first translation should win',
+      second: 'second translation (error if used)',
     });
 
     assert.equal(
-      this.intl.t('does.not.exist', {
-        default: ['also.does.not.exist', 'should_exist', 'should_also_exist'],
+      this.intl.t('invalid', {
+        default: ['also_invalid', 'first', 'second'],
       }),
-      'I do exist!'
+      'first translation should win'
     );
   });
 
@@ -160,6 +155,7 @@ module('service:intl', function (hooks) {
 
   test('it does not mutate t options hash', function (assert) {
     this.intl.setLocale(LOCALE);
+    this.intl.addTranslations(LOCALE, { foo: '' });
     const obj = { bar: 'bar' };
     this.intl.t('foo', obj);
     assert.ok(typeof obj.locale === 'undefined');
@@ -167,6 +163,7 @@ module('service:intl', function (hooks) {
 
   test('`t` can be passed a null options hash', function (assert) {
     this.intl.setLocale(LOCALE);
+    this.intl.addTranslations(LOCALE, { foo: '' });
     this.intl.t('foo', undefined);
     assert.ok(true, 'Exception was not raised');
   });
