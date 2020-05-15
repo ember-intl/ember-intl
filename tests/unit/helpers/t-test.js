@@ -116,4 +116,26 @@ module('t', function (hooks) {
     await render(hbs`{{t 'does.not.exist' default='happy_birthday' age=10}}`);
     assert.equal(this.element.textContent, 'You are 10 years old!');
   });
+
+  test('should throw when unknown key type is provided', async function (assert) {
+    const assertInvalidTranslationKey = (input) => {
+      let error;
+
+      try {
+        this.intl.t(input);
+      } catch (e) {
+        error = e;
+      }
+
+      assert.ok(error);
+      assert.ok(error.message.includes('expected translation key'));
+    };
+
+    assertInvalidTranslationKey(null);
+    assertInvalidTranslationKey(undefined);
+    assertInvalidTranslationKey(false);
+    assertInvalidTranslationKey([]);
+    assertInvalidTranslationKey({});
+    assertInvalidTranslationKey(1);
+  });
 });
