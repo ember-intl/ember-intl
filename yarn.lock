@@ -1119,17 +1119,22 @@
   dependencies:
     "@formatjs/intl-utils" "^2.2.5"
 
-"@formatjs/intl-unified-numberformat@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-unified-numberformat/-/intl-unified-numberformat-3.3.6.tgz#ab69818f7568894023cb31fdb5b5c7eed62c6537"
-  integrity sha512-VQYswh9Pxf4kN6FQvKprAQwSJrF93eJstCDPM1HIt3c3O6NqPFWNWhZ91PLTppOV11rLYsFK11ZxiGbnLNiPTg==
+"@formatjs/intl-unified-numberformat@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-unified-numberformat/-/intl-unified-numberformat-3.3.7.tgz#9995a24568908188e716d81a1de5b702b2ee00e2"
+  integrity sha512-KnWgLRHzCAgT9eyt3OS34RHoyD7dPDYhRcuKn+/6Kv2knDF8Im43J6vlSW6Hm1w63fNq3ZIT1cFk7RuVO3Psag==
   dependencies:
-    "@formatjs/intl-utils" "^2.2.5"
+    "@formatjs/intl-utils" "^2.3.0"
 
 "@formatjs/intl-utils@^2.2.5":
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.2.5.tgz#eaafd94df3d102ee13e54e80f992a33868a6b1e8"
   integrity sha512-p7gcmazKROteL4IECCp03Qrs790fZ8tbemUAjQu0+K0AaAlK49rI1SIFFq3LzDUAqXIshV95JJhRe/yXxkal5g==
+
+"@formatjs/intl-utils@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.3.0.tgz#2dc8c57044de0340eb53a7ba602e59abf80dc799"
+  integrity sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==
 
 "@fullhuman/postcss-purgecss@^2.1.2":
   version "2.1.2"
@@ -8447,11 +8452,11 @@ intl-format-cache@^4.2.27:
   integrity sha512-blHXX9qBp8H6fGhQc0jHGh7j97HF0megj4rIB878iazMBdFk/tR7b3av0PJxE72TP8MycLFpeXW9vLY5cBmF4A==
 
 intl-messageformat-parser@^5.0.2, intl-messageformat-parser@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.3.tgz#f281a9446b896f24a8f00ab9415019a28d59ca57"
-  integrity sha512-u2goKAXOJLkiHBy0zB3HTMuHhWDNFYUyPVevvUeSuacGFqe04jvyvYIJIoVgHD3RYhFJ9T+0UgT0dNbu+51TEw==
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.4.tgz#c3e2f3be02a51ae78bb3cc61f8ade6d1e2aa7f5c"
+  integrity sha512-7+MvIzLkcjCEPBKW/NLGBIZr1cpOz/iAp6Thx8tc1BZUeWMfHOIb/Z53/nTwWd4p0ij9plB8+tHcFmI24Ubvuw==
   dependencies:
-    "@formatjs/intl-unified-numberformat" "^3.3.6"
+    "@formatjs/intl-unified-numberformat" "^3.3.7"
 
 intl-messageformat@^8.3.9:
   version "8.3.10"
