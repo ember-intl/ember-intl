@@ -191,9 +191,11 @@ describe('translation-reducer', function () {
       const logs = [];
       const subject = new TranslationReducer(this.input.path(), {
         verbose: true,
+        log(msg) {
+          logs.push(msg);
+        },
       });
 
-      subject._log = (msg) => logs.push(msg);
       subject.handleLintResult(subject.linter.lint(this.fixture));
 
       expect(logs).to.satisfy((string) =>
@@ -208,13 +210,36 @@ describe('translation-reducer', function () {
       );
     });
 
+    it('warns on unknown languages', function () {
+      const logs = [];
+      const subject = new TranslationReducer(this.input.path(), {
+        verbose: true,
+        log(msg) {
+          logs.push(msg);
+        },
+      });
+
+      this.input.write({
+        'en-us.json': `{ "greet": "hi" }`,
+        'ypk-us-ak.json': `{ "greet": "hello" }`,
+      });
+
+      return build(createBuilder(subject), () => {
+        expect(logs).to.have.lengthOf(1);
+        expect(logs).to.deep.equal([
+          `🇦🇰  ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.`,
+        ]);
+      });
+    });
+
     it('handleLintResult throws if errorOnMissingTranslations is set', function () {
       const logs = [];
       const subject = new TranslationReducer(this.input.path(), {
         errorOnMissingTranslations: true,
+        log(msg) {
+          logs.push(msg);
+        },
       });
-
-      subject._log = (msg) => logs.push(msg);
 
       expect(() => subject.handleLintResult(subject.linter.lint(this.fixture))).throws(`Missing translations:
 - "foo" was not found in "it"
@@ -229,9 +254,10 @@ describe('translation-reducer', function () {
       const logs = [];
       const subject = new TranslationReducer(this.input.path(), {
         errorOnNamedArgumentMismatch: true,
+        log(msg) {
+          logs.push(msg);
+        },
       });
-
-      subject._log = (msg) => logs.push(msg);
 
       expect(() => subject.handleLintResult(subject.linter.lint(this.icuFixture))).throws(`ICU arguments mismatch:
 - "foo" ICU argument mismatch: "de": "whos", "en": "who"
