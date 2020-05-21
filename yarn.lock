@@ -8452,9 +8452,9 @@ intl-format-cache@^4.2.28:
   integrity sha512-yFACAtiacQj2nPfFSyDd/ZRgDFDDtw55cmqdYux7ncqrqvaMTajf3Biuc4a3HAWNuMvk0r2VHBfwy2YmOmAZ+A==
 
 intl-messageformat-parser@^5.0.2, intl-messageformat-parser@^5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.5.tgz#d50c5a295631585ed4e3a1c4e84ce2c06bf01f6d"
-  integrity sha512-qPiOBJ525Q6l9JYRoe4Zz2PH3iowBBcv6S/eKXxX8VN9rtLSc90UtP/6+TFlIPynSx8PeStkkHOZkW/ZXAjIEw==
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.6.tgz#5722c7de5178367657da77c5adbe07b28bd74530"
+  integrity sha512-jaIjJsyol5v5fk3kxGViMw4LzyFgHW9Z7wlhBXWjeSz6lhw+iMCl/4Y04DjFj23+ZEbfwVgT8oAPtwadAXmfww==
   dependencies:
     "@formatjs/intl-numberformat" "^3.3.8"
 
