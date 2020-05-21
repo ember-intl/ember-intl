@@ -41,7 +41,7 @@ To enable rendering HTML within translations, pass an `htmlSafe` attribute to th
 ```yaml
 # translations/en-en.yml
 a:
-  translations: '<em>Hello</em>'
+  translations: "'<em>'Hello'</em>'"
 ```
 It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  
 
