@@ -8451,7 +8451,7 @@ intl-format-cache@^4.2.28:
   resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-4.2.28.tgz#67cccee0ae5234cb61bb72f82c4f1df5804aed7f"
   integrity sha512-yFACAtiacQj2nPfFSyDd/ZRgDFDDtw55cmqdYux7ncqrqvaMTajf3Biuc4a3HAWNuMvk0r2VHBfwy2YmOmAZ+A==
 
-intl-messageformat-parser@^5.0.2, intl-messageformat-parser@^5.0.4:
+intl-messageformat-parser@^5.0.2, intl-messageformat-parser@^5.0.5:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.5.tgz#d50c5a295631585ed4e3a1c4e84ce2c06bf01f6d"
   integrity sha512-qPiOBJ525Q6l9JYRoe4Zz2PH3iowBBcv6S/eKXxX8VN9rtLSc90UtP/6+TFlIPynSx8PeStkkHOZkW/ZXAjIEw==
@@ -8459,12 +8459,12 @@ intl-messageformat-parser@^5.0.2, intl-messageformat-parser@^5.0.4:
     "@formatjs/intl-numberformat" "^3.3.8"
 
 intl-messageformat@^8.3.9:
-  version "8.3.11"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.11.tgz#90381357d72d76dd1a5557f50b150b71089a9511"
-  integrity sha512-unuEfGZdUxO64sqClyRESfLC01mo2cmzUtTILMKluv0Z4bwS5KoJ6X8mUvyGOKzZkxhLwAzo6B/AC0ahSjaa2g==
+  version "8.3.12"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-8.3.12.tgz#c7d4a7bfa87570c097f93e25b383d6059a3c31a0"
+  integrity sha512-Z70dnVnlS3alYyL8xlCzGMs+/lv4a3d559i0VsWAP8khHpA+pLnnjLAGwV/UH5BjwJFsfzkyWb2ufTlKlaJGfg==
   dependencies:
     intl-format-cache "^4.2.28"
-    intl-messageformat-parser "^5.0.4"
+    intl-messageformat-parser "^5.0.5"
 
 into-stream@^3.1.0:
   version "3.1.0"
