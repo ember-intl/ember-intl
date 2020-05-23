@@ -1119,17 +1119,22 @@
   dependencies:
     "@formatjs/intl-utils" "^2.3.0"
 
-"@formatjs/intl-relativetimeformat@^4.5.14":
-  version "4.5.16"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-4.5.16.tgz#7449cef3213dd66d25924ca41f125f87b58df95a"
-  integrity sha512-IQ0haY97oHAH5OYUdykNiepdyEWj3SAT+Fp9ZpR85ov2JNiFx+12WWlxlVS8ehdyncC2ZMt/SwFIy2huK2+6/A==
+"@formatjs/intl-relativetimeformat@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-5.0.0.tgz#9fb87efcbe69cf3e94b85ac1cf3a0188f3ab978d"
+  integrity sha512-JDoqUbikHkZ/ULESgBtw6yqfE0deR71shqC7ZXSlYCFwqqfWs6SsatvHSdITCgMBMfNO08dAFRQ2ATfH4jOKmQ==
   dependencies:
-    "@formatjs/intl-utils" "^2.3.0"
+    "@formatjs/intl-utils" "^3.0.0"
 
 "@formatjs/intl-utils@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.3.0.tgz#2dc8c57044de0340eb53a7ba602e59abf80dc799"
   integrity sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==
+
+"@formatjs/intl-utils@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-3.0.0.tgz#6ef4a9c839bac22da59bc3656f2ba30fe3ec7f7d"
+  integrity sha512-ohiN6qC4OHTqIRkQgdqL50mVEODgajD7/FAu3BruNd9SOZ8M9LWUzBV2R6GrihB6dtRnq5LHz5c3BSEg6deqFg==
 
 "@fullhuman/postcss-purgecss@^2.1.2":
   version "2.1.2"
