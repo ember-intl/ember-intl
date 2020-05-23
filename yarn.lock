@@ -1105,12 +1105,12 @@
     resolve "^1.8.1"
     semver "^5.6.0"
 
-"@formatjs/intl-numberformat@^3.3.8":
-  version "3.3.8"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-3.3.8.tgz#e03539872746121e4ecec001b20b298bb93992e1"
-  integrity sha512-XvpTOEAABHVXw76KoEjxbytgkEUnRkY6XRqjKeOmdoU8wBQj7hgAxxpy7doS+i/ShVwRumS8FaQpgNLSR4QDeg==
+"@formatjs/intl-numberformat@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-4.0.0.tgz#da7f52f903e1e10c92a201b56befa47d57dfc7eb"
+  integrity sha512-gefOYlnBElp/Pn+/J6x+Ep4onRZmBF4l40UO15FAZXCyshzQOQWCdvZrRWOqhIAN0HIvpRx23I6LkumQboEm5w==
   dependencies:
-    "@formatjs/intl-utils" "^2.3.0"
+    "@formatjs/intl-utils" "^3.0.0"
 
 "@formatjs/intl-pluralrules@^1.5.7":
   version "1.5.9"
@@ -1130,6 +1130,11 @@
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.3.0.tgz#2dc8c57044de0340eb53a7ba602e59abf80dc799"
   integrity sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==
+
+"@formatjs/intl-utils@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-3.0.0.tgz#6ef4a9c839bac22da59bc3656f2ba30fe3ec7f7d"
+  integrity sha512-ohiN6qC4OHTqIRkQgdqL50mVEODgajD7/FAu3BruNd9SOZ8M9LWUzBV2R6GrihB6dtRnq5LHz5c3BSEg6deqFg==
 
 "@fullhuman/postcss-purgecss@^2.1.2":
   version "2.1.2"
@@ -8452,11 +8457,11 @@ intl-format-cache@^4.2.28:
   integrity sha512-yFACAtiacQj2nPfFSyDd/ZRgDFDDtw55cmqdYux7ncqrqvaMTajf3Biuc4a3HAWNuMvk0r2VHBfwy2YmOmAZ+A==
 
 intl-messageformat-parser@^5.0.2, intl-messageformat-parser@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.6.tgz#5722c7de5178367657da77c5adbe07b28bd74530"
-  integrity sha512-jaIjJsyol5v5fk3kxGViMw4LzyFgHW9Z7wlhBXWjeSz6lhw+iMCl/4Y04DjFj23+ZEbfwVgT8oAPtwadAXmfww==
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-5.0.7.tgz#bdbd7e9d0f1c8d432aa241ec97f954b0608341e5"
+  integrity sha512-ypK3KsCDgiIEgq24l6xIXvR/ranStASEGrSEM4DrdzVIQySHAV14PHfYZel2t71XsoIAPR3XCLEWTygOtJPErg==
   dependencies:
-    "@formatjs/intl-numberformat" "^3.3.8"
+    "@formatjs/intl-numberformat" "^4.0.0"
 
 intl-messageformat@^8.3.9:
   version "8.3.13"
