@@ -51,6 +51,17 @@ module('format-message (html)', function (hooks) {
     );
   });
 
+  test('should handle dynamic attributes', function (assert) {
+    assert.expect(1);
+
+    let output = this.intl.formatMessage(`'<'a href="{link}"'>'text'</a>'`, {
+      htmlSafe: true,
+      link: 'http://formatjs.io',
+    }).string;
+
+    assert.equal(output, '<a href="http://formatjs.io">text</a>');
+  });
+
   test('message is formatted correctly with argument', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-message "Hello {name}" name="Jason" htmlSafe=true}}`);
