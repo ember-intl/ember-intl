@@ -16,7 +16,7 @@
     "doc": "doc",
     "test": "tests"
   },
-  "homepage": "https://github.com/ember-intl/ember-intl",
+  "homepage": "https://ember-intl.github.io/ember-intl/",
   "repository": {
     "type": "git",
     "url": "http://github.com/ember-intl/ember-intl.git"
@@ -111,6 +111,6 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "https://ember-intl.github.io/"
+    "demoURL": "https://ember-intl.github.io/ember-intl/"
   }
 }
