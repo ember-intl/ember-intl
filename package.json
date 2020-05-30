@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "broccoli-caching-writer": "^3.0.3",
-    "broccoli-funnel": "^3.0.2",
+    "broccoli-funnel": "^3.0.3",
     "broccoli-merge-files": "^0.8.0",
     "broccoli-merge-trees": "^4.2.0",
     "broccoli-source": "^3.0.0",
