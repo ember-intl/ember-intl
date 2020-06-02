@@ -35,7 +35,7 @@ export default Service.extend(Evented, {
       const proposed = makeArray(localeName).map(normalizeLocale);
 
       if (!isArrayEqual(proposed, this._locale)) {
-        this._locale = proposed;
+        set(this, '_locale', proposed);
         cancel(this._timer);
         this._timer = next(() => this.trigger('localeChanged'));
         this._updateDocumentLanguage(this._locale);
@@ -44,7 +44,7 @@ export default Service.extend(Evented, {
       return this._locale;
     },
     get() {
-      return this._locale;
+      return get(this, '_locale');
     },
   }),
 
@@ -198,7 +198,7 @@ export default Service.extend(Evented, {
   /** @private **/
   _localeWithDefault(localeName) {
     if (!localeName) {
-      return this._locale || [];
+      return get(this, '_locale') || [];
     }
 
     if (typeof localeName === 'string') {

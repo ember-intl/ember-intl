@@ -1,8 +1,9 @@
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import tHelper from 'ember-intl/helpers/t';
 import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
+import { gte } from 'ember-compatibility-helpers';
 
 const DEFAULT_LOCALE = 'en-us';
 
@@ -138,4 +139,27 @@ module('t', function (hooks) {
     assertInvalidTranslationKey({});
     assertInvalidTranslationKey(1);
   });
+
+  // Autotracking was added in Ember 3.13, so this test isn't applicable to earlier versions
+  if (gte('3.13.0')) {
+    test('current locale entangles with autotracking', async function (assert) {
+      this.intl.addTranslations('en-us', { greeting: 'Hello' });
+      this.intl.addTranslations('fr-fr', { greeting: 'Bonjour' });
+
+      // Define a native getter that calls intl.t()
+      Object.defineProperty(this, 'translatedGreeting', {
+        get() {
+          return this.intl.t('greeting');
+        },
+      });
+
+      this.intl.setLocale(['en-us']);
+      await render(hbs`{{this.translatedGreeting}}`);
+      assert.equal(this.element.textContent, 'Hello');
+
+      this.intl.setLocale(['fr-fr']);
+      await settled();
+      assert.equal(this.element.textContent, 'Bonjour');
+    });
+  }
 });
