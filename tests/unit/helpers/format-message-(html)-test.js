@@ -62,6 +62,16 @@ module('format-message (html)', function (hooks) {
     assert.equal(output, '<a href="http://formatjs.io">text</a>');
   });
 
+  test('should handle static attributes', function (assert) {
+    assert.expect(1);
+
+    let output = this.intl.formatMessage(`Fields marked '<'strong class="primary"'>'*'</strong>' are required`, {
+      htmlSafe: true,
+    }).string;
+
+    assert.equal(output, 'Fields marked <strong class="primary">*</strong> are required');
+  });
+
   test('message is formatted correctly with argument', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-message "Hello {name}" name="Jason" htmlSafe=true}}`);
