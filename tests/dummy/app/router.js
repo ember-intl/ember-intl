@@ -30,6 +30,7 @@ Router.map(function () {
       this.route('format-time');
     });
     this.route('cookbook', function () {
+      this.route('addon-configs');
       this.route('common-errors');
     });
     this.route('advanced', function () {

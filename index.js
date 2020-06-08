@@ -53,6 +53,8 @@ module.exports = {
     const {
       outputPath,
       fallbackLocale,
+      includeLocales,
+      excludeLocales,
       requiresTranslation,
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
@@ -68,6 +70,8 @@ module.exports = {
 
     return new TranslationReducer([translationTree], {
       fallbackLocale,
+      includeLocales,
+      excludeLocales,
       requiresTranslation,
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,

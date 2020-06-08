@@ -135,6 +135,103 @@ describe('translation-reducer', function () {
     });
   });
 
+  describe('includeLocales', function () {
+    it('should only include specified locales', function () {
+      const subject = new TranslationReducer(this.input.path(), {
+        includeLocales: ['en-us'],
+        errorOnMissingTranslations: true,
+      });
+
+      this.input.write({
+        'de-de.json': `{ "greet": "hallo" }`,
+        'en-us.json': `{ "greet": "hello" }`,
+      });
+
+      return build(createBuilder(subject), (fs) => {
+        expect(fs).to.deep.equal({
+          'en-us.json': `{"greet":"hello"}`,
+        });
+      });
+    });
+
+    it('should be case-insensitive for includeLocales', function () {
+      const subject = new TranslationReducer(this.input.path(), {
+        includeLocales: ['en-us', 'zh-CN'],
+        errorOnMissingTranslations: true,
+      });
+
+      this.input.write({
+        'de-DE.json': `{ "greet": "hallo" }`,
+        'en-US.json': `{ "greet": "hello" }`,
+        'zh-CN.json': `{ "greet": "你好" }`,
+      });
+
+      return build(createBuilder(subject), (fs) => {
+        expect(fs).to.deep.equal({
+          'en-us.json': `{"greet":"hello"}`,
+          'zh-cn.json': `{"greet":"你好"}`,
+        });
+      });
+    });
+  });
+
+  describe('excludeLocales', function () {
+    it('should exclude specified locales', function () {
+      const subject = new TranslationReducer(this.input.path(), {
+        excludeLocales: ['en-us'],
+        errorOnMissingTranslations: true,
+      });
+
+      this.input.write({
+        'de-de.json': `{ "greet": "hallo" }`,
+        'en-us.json': `{ "greet": "hello" }`,
+      });
+
+      return build(createBuilder(subject), (fs) => {
+        expect(fs).to.deep.equal({
+          'de-de.json': `{"greet":"hallo"}`,
+        });
+      });
+    });
+
+    it('should be case-insensitive for excludeLocales', function () {
+      const subject = new TranslationReducer(this.input.path(), {
+        excludeLocales: ['en-us', 'zh-CN'],
+        errorOnMissingTranslations: true,
+      });
+
+      this.input.write({
+        'de-DE.json': `{ "greet": "hallo" }`,
+        'en-US.json': `{ "greet": "hello" }`,
+        'zh-cn.json': `{ "greet": "你好" }`,
+      });
+
+      return build(createBuilder(subject), (fs) => {
+        expect(fs).to.deep.equal({
+          'de-de.json': `{"greet":"hallo"}`,
+        });
+      });
+    });
+
+    it('should ignore includeLocales when excludeLocales exist', function () {
+      const subject = new TranslationReducer(this.input.path(), {
+        includeLocales: ['en-us'],
+        excludeLocales: ['en-us', 'zh-cn'],
+        errorOnMissingTranslations: true,
+      });
+
+      this.input.write({
+        'de-de.json': `{ "greet": "hallo" }`,
+        'en-us.json': `{ "greet": "hello" }`,
+        'zh-cn.json': `{ "greet": "你好" }`,
+      });
+
+      return build(createBuilder(subject), (fs) => {
+        expect(fs).to.deep.equal({});
+      });
+    });
+  });
+
   describe('linting', function () {
     beforeEach(function () {
       this.icuFixture = {
