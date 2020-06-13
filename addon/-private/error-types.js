@@ -16,4 +16,4 @@ export const MISSING_INTL_API = ErrorCode.MISSING_INTL_API;
  * @private
  * @hide
  */
-export const MISSING_TRANSLATION = Symbol();
+export const MISSING_TRANSLATION = 'MISSING_TRANSLATION';
