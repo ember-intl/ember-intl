@@ -28,11 +28,9 @@ You have {itemCount, plural,
 ```
 
 * 🌐 Support for 150+ languages.
-* 📜 Built on standards such as the [ICU message syntax](https://formatjs.io/guides/message-syntax/) & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* 📜 Built on standards such as the [ICU message syntax](https://formatjs.io/docs/icu-syntax) & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating.
 * 🎉 {{docs-link 'Advanced addon support' 'docs.advanced.addon-support'}} to provide translations to the host app
 
 ## Online Community Chat
 Join the `topic-i18n` channel [here](https://discordapp.com/invite/zT3asNS) to ask questions and chat with community members in real-time.
-
-
