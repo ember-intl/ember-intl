@@ -6,7 +6,7 @@ To provide values to the dynamic segment of the translation, pass an object hash
 
 ## ICU message syntax
 
-Compiles a [ICU message syntax](https://formatjs.io/guides/message-syntax/) strings with its hash values passed.
+Compiles a [ICU message syntax](https://formatjs.io/docs/icu-syntax) strings with its hash values passed.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-t-01-template.hbs'}}
