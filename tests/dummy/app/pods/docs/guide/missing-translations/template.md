@@ -44,10 +44,6 @@ module.exports = function(/* env */) {
 
 The default implementation requires all keys to be translated by all locales.  For example, if my application supports locales en-US and fr-FR and I create a translation key `"home.hero_title"` then both locales must implement that key or a warning, or optionally an error, will present itself at build-time.
 
-If an ember-intl project is configured with the following configuration, the following with print to the console:
-
-- `page.description` is missing in `it`
-
 Example configuration:
 
 ```js
@@ -86,3 +82,7 @@ wip:
 page:
   title: Titolo della pagina
 ```
+
+If an ember-intl project is configured with the following implementation of this method, the following will print to the console:
+
+> `page.description` is missing in `it`

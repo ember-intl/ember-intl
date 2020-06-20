@@ -7,7 +7,7 @@ module.exports = function (/* environment */) {
      * build-time fallback strategy.
      *
      * This will **not** prevent missing translation warnings or errors from occurring.
-     * It's meant as safety net when warning are enabled.
+     * It's meant as safety net when warnings are enabled.
      * When enabled along with `errorOnMissingTranslations` any fallback attempts will result in an error.
      *
      * @property fallbackLocale
@@ -17,7 +17,7 @@ module.exports = function (/* environment */) {
     fallbackLocale: null,
 
     /**
-     * Path where translations are kept.  This is relative to the project root.
+     * Path where translations are stored.  This is relative to the project root.
      * For example, if your translations are an npm dependency, set this to:
      *`'./node_modules/path/to/translations'`
      *
@@ -79,7 +79,7 @@ module.exports = function (/* environment */) {
     stripEmptyTranslations: false,
 
     /**
-     * Filter missing translations to ignore expected missing translations.
+     * A function that is called whenever any translation key, from any locale, is missing at build time.
      *
      * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#requiring-translations
      *
