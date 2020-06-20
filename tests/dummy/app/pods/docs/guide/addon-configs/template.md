@@ -38,7 +38,7 @@ Add the subdirectories of the translations as a namespace for all keys.
 
 ## Error on Named Argument Mismatch
 
-Cause a build error if ICU argument mismatches are detected.
+Cause a build error if ICU argument mismatches are detected between translations with the same key across all locales.
 
 ```
 // config/ember-intl.js

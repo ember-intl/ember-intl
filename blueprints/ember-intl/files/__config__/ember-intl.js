@@ -50,7 +50,8 @@ module.exports = function (/* environment */) {
     wrapTranslationsWithNamespace: false,
 
     /**
-     * Cause a build error if ICU argument mismatches are detected.
+     * Cause a build error if ICU argument mismatches are detected between translations
+     * with the same key across all locales.
      *
      * @property errorOnNamedArgumentMismatch
      * @type {Boolean}
