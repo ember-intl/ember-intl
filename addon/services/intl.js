@@ -37,8 +37,10 @@ export default Service.extend(Evented, {
       if (!isArrayEqual(proposed, this._locale)) {
         set(this, '_locale', proposed);
         cancel(this._timer);
-        this._timer = next(() => this.trigger('localeChanged'));
-        this._updateDocumentLanguage(this._locale);
+        this._timer = next(() => {
+          this.trigger('localeChanged');
+          this._updateDocumentLanguage(this._locale);
+        });
       }
 
       return this._locale;
