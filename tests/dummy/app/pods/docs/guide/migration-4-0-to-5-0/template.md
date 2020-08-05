@@ -41,6 +41,11 @@ becomes
 
 `'<strong>'{name}'</strong>'`
 
+If you use placeholders _inside_ of an HTML tag for attributes, escape only the
+angle brackets, like so:
+
+`Please accept our '<'a href="{url}"'>'terms & conditions'</a>'.`
+
 ### **Compact Number Formatter**
 
 In 4.x, we introduced a shortNumber formatter.  This is no longer necessary as we can rely on the native Intl.NumberFormat to compact numbers into their abbreviated form.

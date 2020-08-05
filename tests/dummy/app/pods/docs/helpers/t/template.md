@@ -38,12 +38,16 @@ To enable rendering HTML within translations, pass an `htmlSafe` attribute to th
 {{t 'a.translation' htmlSafe=true}}
 ```
 
+_Do not_ use `{{{triple-curlies}}}`! This would enable XSS for variables passed
+to `{{t}}`.
+
 ```yaml
 # translations/en-en.yml
 a:
   translations: "'<em>'Hello'</em>'"
 ```
-It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  
+
+It will escape all hash arguments and returns as an `htmlSafe` String which renders an ElementNode.  
 
 ```yaml
 # translations/fr-fr.yml
@@ -51,6 +55,14 @@ photos:
   banner: Vous {numPhotos, plural, =0 {n'avez aucune photo.} =1 {avez une photo.} other {avez {numPhotos} photos.}}
 ```
 
+If you use placeholders _inside_ of an HTML tag for attributes, escape only the
+angle brackets, like so:
+
+```yaml
+# translations/en-en.yml
+legal:
+  accept-terms: Please accept our '<'a href="{url}"'>'terms & conditions'</a>'.
+```
 
 ## Service API
 
