@@ -2,7 +2,7 @@
 
 [![npm Version][npm-badge]][npm]
 ![Ember Version][ember-version]
-[![Build Status][travis-badge]][travis]
+![CI](https://github.com/ember-intl/ember-intl/workflows/CI/badge.svg)
 [![npm](https://img.shields.io/npm/dm/ember-intl.svg)](https://www.npmjs.com/package/ember-intl)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
@@ -56,7 +56,5 @@ If you have any questions or issues, please open in [ember-i18n-to-intl-migrator
 
 [npm]: https://www.npmjs.org/package/ember-intl
 [npm-badge]: https://img.shields.io/npm/v/ember-intl.svg?style=flat-square
-[travis]: https://travis-ci.com/ember-intl/ember-intl
-[travis-badge]: https://travis-ci.com/ember-intl/ember-intl.svg?branch=master
 [ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
 [ICU]: https://formatjs.io/docs/core-concepts/icu-syntax
