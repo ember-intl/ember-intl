@@ -1,0 +1,26 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  CI: true
+  NAME: deploy
+
+jobs:
+  deploy-docs:
+    name: Deploy Docs
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Deploy docs with `ember-cli-deploy`
+        run: yarn ember deploy production
