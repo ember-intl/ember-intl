@@ -55,8 +55,8 @@ export default class FormatterBase {
       const namedFormatsOptions = this.getNamedFormat(formatOptions.format);
 
       formatterOptions = {
-        ...formatterOptions,
         ...namedFormatsOptions,
+        ...formatterOptions,
       };
     }
 
