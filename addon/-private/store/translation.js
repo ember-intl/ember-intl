@@ -23,10 +23,6 @@ const TranslationModel = EmberObject.extend({
     }
   },
 
-  compile(translation) {
-    return parse(translation);
-  },
-
   addTranslations(translations) {
     const flatTranslations = flatten(translations);
 
@@ -38,7 +34,10 @@ const TranslationModel = EmberObject.extend({
         translation = `${translation}`;
       }
 
-      this.translations[key] = this.compile(translation);
+      this.translations[key] = {
+        original: translation,
+        ast: parse(translation),
+      };
     }
   },
 

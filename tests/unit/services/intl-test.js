@@ -101,6 +101,14 @@ module('service:intl', function (hooks) {
     assert.equal(this.intl.t('foo.bar.baz'), 'baz!');
   });
 
+  test('should lookup translation string', function (assert) {
+    this.intl.addTranslations(LOCALE, {
+      foo: 'hello world',
+    });
+
+    assert.equal(this.intl.lookup('foo'), 'hello world');
+  });
+
   test('`t` should display last missing translation key when using default', function (assert) {
     assert.equal(
       this.intl.t('x', {
