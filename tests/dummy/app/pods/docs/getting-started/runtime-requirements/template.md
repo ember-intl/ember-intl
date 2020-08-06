@@ -29,9 +29,9 @@ ember-intl relies on these `Intl` APIs:
 ```js
 // app.js (Ember app entry point)
 import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-pluralrules/dist/locale-data/en'; // Add English data
-import '@formatjs/intl-pluralrules/dist/locale-data/fr'; // Add French data
-import '@formatjs/intl-pluralrules/dist/locale-data/es'; // Add Spanish data
+import '@formatjs/intl-pluralrules/locale-data/en'; // Add English data
+import '@formatjs/intl-pluralrules/locale-data/fr'; // Add French data
+import '@formatjs/intl-pluralrules/locale-data/es'; // Add Spanish data
 // etc.
 ```
 
