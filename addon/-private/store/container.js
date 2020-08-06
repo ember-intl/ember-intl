@@ -15,38 +15,60 @@ export default EmberObject.extend({
     this._translations = new Map();
   },
 
-  lookupTranslationObject(localeName, autogenerate = true) {
-    if (this._translations.has(localeName) || !autogenerate) {
-      return this._translations.get(localeName);
-    }
-
-    const translationObject = Translation.create({
+  createTranslationModel(localeName) {
+    const translationModel = Translation.create({
       localeName: localeName,
     });
 
-    this._translations.set(localeName, translationObject);
+    this._translations.set(localeName, translationModel);
     this.notifyPropertyChange('locales');
 
-    return translationObject;
+    return translationModel;
   },
 
-  push(locale, payload) {
-    this.lookupTranslationObject(locale, true).addTranslations(payload);
+  findTranslationModel(localeName) {
+    return this._translations.get(localeName);
   },
 
-  has(locale, key) {
-    const translationObject = this.lookupTranslationObject(locale, false);
+  push(localeName, payload) {
+    let translationModel = this.findTranslationModel(localeName);
 
-    if (translationObject) {
-      return translationObject.has(key);
+    if (!translationModel) {
+      translationModel = this.createTranslationModel(localeName);
+    }
+
+    translationModel.addTranslations(payload);
+  },
+
+  has(localeName, key) {
+    const translationModel = this.findTranslationModel(localeName);
+
+    if (translationModel) {
+      return translationModel.has(key);
     }
   },
 
-  lookup(locale, key) {
-    const translationObject = this.lookupTranslationObject(locale, false);
+  _lookup(localeName, key) {
+    const translationModel = this.findTranslationModel(localeName);
 
-    if (translationObject && translationObject.has(key)) {
-      return translationObject.find(key);
+    if (translationModel && translationModel.has(key)) {
+      return translationModel.find(key);
+    }
+  },
+
+  lookupAst(localeName, key) {
+    const translationResult = this._lookup(localeName, key);
+
+    if (translationResult) {
+      return translationResult.ast;
+    }
+  },
+
+  lookup(localeName, key) {
+    const translationResult = this._lookup(localeName, key);
+
+    if (translationResult) {
+      return translationResult.original;
     }
   },
 });

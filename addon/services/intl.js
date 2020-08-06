@@ -114,7 +114,7 @@ export default Service.extend(Evented, {
   },
 
   /** @public **/
-  lookup(key, localeName, options = {}) {
+  lookup(key, localeName) {
     const localeNames = this._localeWithDefault(localeName);
     let translation;
 
@@ -126,7 +126,23 @@ export default Service.extend(Evented, {
       }
     }
 
-    if (!options.resilient && translation === undefined) {
+    return translation;
+  },
+
+  /** @private **/
+  lookupAst(key, localeName, options = {}) {
+    const localeNames = this._localeWithDefault(localeName);
+    let translation;
+
+    for (let i = 0; i < localeNames.length; i++) {
+      translation = this._translationContainer.lookupAst(localeNames[i], key);
+
+      if (translation !== undefined) {
+        break;
+      }
+    }
+
+    if (translation === undefined && options.resilient !== true) {
       const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
 
       return missingMessage.call(this, key, localeNames, options);
@@ -160,7 +176,7 @@ export default Service.extend(Evented, {
 
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
-      const ast = this.lookup(key, options.locale, {
+      const ast = this.lookupAst(key, options.locale, {
         ...options,
         // Note: last iteration will throw with the last key that was missing
         // in the future maybe the thrown error should include all the keys to help debugging
