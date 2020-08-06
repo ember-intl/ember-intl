@@ -42,8 +42,8 @@ import '@formatjs/intl-pluralrules/locale-data/es'; // Add Spanish data
 ```js
 // app.js (Ember app entry point)
 import '@formatjs/intl-relativetimeformat/polyfill';
-import '@formatjs/intl-relativetimeformat/dist/locale-data/en'; // Add English data
-import '@formatjs/intl-relativetimeformat/dist/locale-data/fr'; // Add French data
-import '@formatjs/intl-relativetimeformat/dist/locale-data/es'; // Add Spanish data
+import '@formatjs/intl-relativetimeformat/locale-data/en'; // Add English data
+import '@formatjs/intl-relativetimeformat/locale-data/fr'; // Add French data
+import '@formatjs/intl-relativetimeformat/locale-data/es'; // Add Spanish data
 // etc.
 ```
