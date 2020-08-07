@@ -23,4 +23,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Deploy docs with `ember-cli-deploy`
+        env:
+          SUPER_SECRET: ${{ secrets.DEPLOY_KEY }}
         run: yarn ember deploy production
