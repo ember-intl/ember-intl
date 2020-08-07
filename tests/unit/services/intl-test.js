@@ -196,6 +196,16 @@ module('service:intl', function (hooks) {
     assert.equal(this.intl.t('empty_string'), '');
   });
 
+  test('translationsFor returns translation model', async function (assert) {
+    this.intl.addTranslations(LOCALE, { foo: 'bar' });
+
+    const model = this.intl.translationsFor(LOCALE);
+    assert.equal(typeof model, 'object');
+    assert.equal('asts' in model, true);
+    assert.equal('translations' in model, true);
+    assert.equal(this.intl.translationsFor('ZZ'), undefined);
+  });
+
   test('translations keys can contain periods within the key', async function (assert) {
     assert.expect(2);
 
