@@ -22,6 +22,11 @@ jobs:
           node-version: 14
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+      - name: Set ENV
+        # 'master' or 'v1.2.3'
+        # https://github.com/ember-learn/ember-cli-addon-docs/issues/454#issuecomment-584129324
+        # https://github.com/ember-learn/ember-cli-addon-docs/issues/437
+        run: echo "::set-env name=ADDON_DOCS_VERSION_PATH::${GITHUB_REF##*/}"
       - name: Deploy docs with `ember-cli-deploy`
         env:
           SUPER_SECRET: ${{ secrets.DEPLOY_KEY }}
