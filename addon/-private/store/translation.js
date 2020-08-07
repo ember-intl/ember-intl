@@ -21,12 +21,16 @@ const TranslationModel = EmberObject.extend({
     if (!this.translations) {
       this.translations = new EmptyObject();
     }
+
+    if (!this.asts) {
+      this.asts = new EmptyObject();
+    }
   },
 
   addTranslations(translations) {
     const flatTranslations = flatten(translations);
 
-    for (let key in flatTranslations) {
+    for (const key in flatTranslations) {
       let translation = flatTranslations[key];
 
       // If it's not a string, coerce it to one.
@@ -34,15 +38,18 @@ const TranslationModel = EmberObject.extend({
         translation = `${translation}`;
       }
 
-      this.translations[key] = {
-        original: translation,
-        ast: parse(translation),
-      };
+      this.translations[key] = translation;
+      this.asts[key] = parse(translation);
     }
   },
 
   find(key) {
-    return this.translations[key];
+    if (this.has(key)) {
+      return {
+        ast: this.asts[key],
+        original: this.translations[key],
+      };
+    }
   },
 
   has(key) {

@@ -210,7 +210,7 @@ export default Service.extend(Evented, {
 
   /** @public **/
   translationsFor(localeName) {
-    return this._translationContainer.lookupTranslationObject(normalizeLocale(localeName), false);
+    return this._translationContainer.findTranslationModel(normalizeLocale(localeName), false);
   },
 
   /** @private **/
