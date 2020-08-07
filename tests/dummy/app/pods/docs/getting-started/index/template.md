@@ -28,7 +28,7 @@ You have {itemCount, plural,
 ```
 
 * 🌐 Support for 150+ languages.
-* 📜 Built on standards such as the [ICU message syntax](https://formatjs.io/docs/icu-syntax) & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* 📜 Built on standards such as the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * ⚡ Extensive Ember Service API and template helpers for formatting and translating.
 * 🎉 {{docs-link 'Advanced addon support' 'docs.advanced.addon-support'}} to provide translations to the host app
 

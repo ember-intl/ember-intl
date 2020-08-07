@@ -1,7 +1,7 @@
 {{locale-switcher}}
 # Format Message
 
-Formats [ICU message syntax](https://formatjs.io/docs/icu-syntax) strings with the provided values passed as arguments to the helper/method.
+Formats [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) strings with the provided values passed as arguments to the helper/method.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-message-01-template.hbs'}}
