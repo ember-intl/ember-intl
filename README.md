@@ -59,4 +59,4 @@ If you have any questions or issues, please open in [ember-i18n-to-intl-migrator
 [travis]: https://travis-ci.com/ember-intl/ember-intl
 [travis-badge]: https://travis-ci.com/ember-intl/ember-intl.svg?branch=master
 [ember-version]: https://img.shields.io/badge/Ember-2.12%2B-brightgreen.svg
-[ICU]: https://formatjs.io/docs/icu-syntax
+[ICU]: https://formatjs.io/docs/core-concepts/icu-syntax
