@@ -29,5 +29,5 @@ jobs:
         run: echo "::set-env name=ADDON_DOCS_VERSION_PATH::${GITHUB_REF##*/}"
       - name: Deploy docs with `ember-cli-deploy`
         env:
-          SUPER_SECRET: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: yarn ember deploy production
