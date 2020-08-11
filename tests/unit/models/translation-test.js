@@ -6,7 +6,7 @@ module('Unit | Model | translation', function (hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function () {
-    this.translationObject = Translation.create();
+    this.translationObject = new Translation('en-us');
   });
 
   test('can handle deeply nested object passed into addTranslations', function (assert) {
