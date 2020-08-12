@@ -4,7 +4,14 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let project = defaults.project;
-  let options = { vendorFiles: { 'app-shims.js': null } };
+  let options = {
+    'ember-fetch': {
+      preferNative: true,
+    },
+    vendorFiles: {
+      'app-shims.js': null,
+    },
+  };
 
   if (project.findAddonByName('ember-native-dom-event-dispatcher')) {
     options.vendorFiles['jquery.js'] = null;
