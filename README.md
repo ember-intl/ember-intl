@@ -27,7 +27,7 @@
 ## Migrating from 4.x to 5.x
 ### Notable Changes
 
-* Improved the internals for how ember-intl loads translations on boot
+* Improved the internals for loading translations on boot
 * Polyfills have been remove and no longer bundle pluralization rules as it's available natively via the `Intl.PluralRules` API
 * `Intl.MessageFormat` [parser](https://formatjs.io/docs/intl-messageformat-parser) and [compiler](https://formatjs.io/docs/intl-messageformat) updated which changes how text and tags are escaped
 
