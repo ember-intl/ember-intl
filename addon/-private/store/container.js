@@ -6,28 +6,26 @@ import Translation from './translation';
  * @hide
  */
 export default EmberObject.extend({
-  locales: computed('_translations', function () {
-    return Array.from(this._translations.keys());
+  locales: computed('_translationModels', function () {
+    return Array.from(this._translationModels.keys());
   }).readOnly(),
 
   init() {
     this._super();
-    this._translations = new Map();
+    this._translationModels = new Map();
   },
 
   createTranslationModel(localeName) {
-    const translationModel = Translation.create({
-      localeName: localeName,
-    });
+    const translationModel = new Translation(localeName);
 
-    this._translations.set(localeName, translationModel);
+    this._translationModels.set(localeName, translationModel);
     this.notifyPropertyChange('locales');
 
     return translationModel;
   },
 
   findTranslationModel(localeName) {
-    return this._translations.get(localeName);
+    return this._translationModels.get(localeName);
   },
 
   push(localeName, payload) {

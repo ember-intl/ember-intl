@@ -3,29 +3,21 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import EmberObject from '@ember/object';
-import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import flatten from 'ember-intl/-private/utils/flatten';
 import parse from 'ember-intl/-private/utils/parse';
 
-/**
- * @private
- * @hide
- */
-const TranslationModel = EmberObject.extend({
-  localeName: null,
+class Translation {
+  translations = new Map();
+  asts = new Map();
+  _localeName;
 
-  init() {
-    this._super();
+  get localeName() {
+    return this._localeName;
+  }
 
-    if (!this.translations) {
-      this.translations = new EmptyObject();
-    }
-
-    if (!this.asts) {
-      this.asts = new EmptyObject();
-    }
-  },
+  constructor(localeName) {
+    this._localeName = localeName;
+  }
 
   addTranslations(translations) {
     const flatTranslations = flatten(translations);
@@ -38,23 +30,23 @@ const TranslationModel = EmberObject.extend({
         translation = `${translation}`;
       }
 
-      this.translations[key] = translation;
-      this.asts[key] = parse(translation);
+      this.translations.set(key, translation);
+      this.asts.set(key, parse(translation));
     }
-  },
+  }
 
   find(key) {
     if (this.has(key)) {
       return {
-        ast: this.asts[key],
-        original: this.translations[key],
+        ast: this.asts.get(key),
+        original: this.translations.get(key),
       };
     }
-  },
+  }
 
   has(key) {
-    return hasOwnProperty.call(this.translations, key);
-  },
-});
+    return this.translations.has(key);
+  }
+}
 
-export default TranslationModel;
+export default Translation;
