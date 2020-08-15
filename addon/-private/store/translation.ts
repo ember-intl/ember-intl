@@ -3,23 +3,28 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import flatten from 'ember-intl/-private/utils/flatten';
+import type { MessageFormatElement } from 'intl-messageformat-parser';
+import flatten, { NestedStructure } from 'ember-intl/-private/utils/flatten';
 import parse from 'ember-intl/-private/utils/parse';
 
+export type TranslationAST = MessageFormatElement[];
+
+export type Translations = NestedStructure<string>;
+
 class Translation {
-  translations = new Map();
-  asts = new Map();
-  _localeName;
+  private readonly translations = new Map<string, string>();
+  private readonly asts = new Map<string, MessageFormatElement[]>();
+  private readonly _localeName: string;
 
   get localeName() {
     return this._localeName;
   }
 
-  constructor(localeName) {
+  constructor(localeName: string) {
     this._localeName = localeName;
   }
 
-  addTranslations(translations) {
+  addTranslations(translations: Translations): void {
     const flatTranslations = flatten(translations);
 
     for (const key in flatTranslations) {
@@ -35,16 +40,16 @@ class Translation {
     }
   }
 
-  find(key) {
+  find(key: string): void | { ast: TranslationAST; original: string } {
     if (this.has(key)) {
       return {
-        ast: this.asts.get(key),
-        original: this.translations.get(key),
+        ast: this.asts.get(key)!,
+        original: this.translations.get(key)!,
       };
     }
   }
 
-  has(key) {
+  has(key: string): boolean {
     return this.translations.has(key);
   }
 }

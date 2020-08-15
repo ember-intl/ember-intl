@@ -4,7 +4,7 @@ import { isArray } from '@ember/array';
  * @private
  * @hide
  */
-export default function (a, b) {
+export default function (a: any, b: any): boolean {
   if (!isArray(a) || !isArray(b)) {
     return false;
   }

@@ -9,6 +9,8 @@ import FormatDateFormatter from './format-date';
  * @private
  * @hide
  */
+// @ts-ignore We could use a proper intermediary abstract class, but it's
+// unnecessarily complicated.
 export default class FormatTime extends FormatDateFormatter {
-  static type = 'time';
+  static readonly type = 'time';
 }

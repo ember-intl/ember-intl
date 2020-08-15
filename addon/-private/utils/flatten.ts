@@ -2,12 +2,16 @@ import EmptyObject from 'ember-intl/-private/utils/empty-object';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
+export type NestedStructure<T = string> = {
+  [Key in string | number]?: T | NestedStructure<T>;
+};
+
 /**
  * @private
  * @hide
  */
-export default function flatten(src) {
-  const result = new EmptyObject();
+export default function flatten<T>(src: NestedStructure<T>): Record<string, T> {
+  const result = new EmptyObject() as Record<string, T>;
 
   for (const key in src) {
     if (!hasOwnProperty.call(src, key)) {
@@ -23,7 +27,7 @@ export default function flatten(src) {
         result[`${key}.${suffix}`] = hash[suffix];
       }
     } else {
-      result[key] = value;
+      result[key] = value!;
     }
   }
 

@@ -6,24 +6,28 @@
 import Ember from 'ember';
 import memoize from 'fast-memoize';
 import { htmlSafe, isHTMLSafe } from '@ember/string';
+import type { SafeString } from '@ember/template/-private/handlebars';
 import IntlMessageFormat from 'intl-messageformat';
+import type { Options, Formats } from 'intl-messageformat';
 import parse from '../utils/parse';
 import Formatter from './-base';
+import { TranslationAST } from '../store/translation';
 
 const {
   Handlebars: {
+    // @ts-ignore
     Utils: { escapeExpression },
   },
 } = Ember;
 
-function escapeOptions(object) {
+function escapeOptions<T extends Record<string, unknown>>(object?: T) {
   if (typeof object !== 'object') {
     return;
   }
 
-  let escapedOpts = {};
+  let escapedOpts = {} as { [K in keyof T]: T[K] extends SafeString ? string : T[K] };
 
-  Object.keys(object).forEach((key) => {
+  (Object.keys(object) as (keyof T)[]).forEach((key) => {
     let val = object[key];
 
     if (isHTMLSafe(val)) {
@@ -32,10 +36,12 @@ function escapeOptions(object) {
       // formatter won't know what to do with it. Instead, we cast
       // the SafeString to a regular string using `toHTML`.
       // Since it was already marked as safe we should *not* escape it.
+      // @ts-ignore
       escapedOpts[key] = val.toHTML();
     } else if (typeof val === 'string') {
       escapedOpts[key] = escapeExpression(val);
     } else {
+      // @ts-ignore
       escapedOpts[key] = val; // copy as-is
     }
   });
@@ -46,18 +52,23 @@ function escapeOptions(object) {
 /**
  * @private
  * @hide
+ * @TODO Should not extend from abstract base class.
  */
-export default class FormatMessage extends Formatter {
-  constructor(config) {
-    super(config);
+export default class FormatMessage extends Formatter<Options> {
+  // @ts-ignore This class does not match the abstract base class.
+  createNativeFormatter = memoize(
+    (ast: TranslationAST, locales: string | string[], formatConfig?: Partial<Formats>) => {
+      return new IntlMessageFormat(ast as any, locales, formatConfig);
+    }
+  );
 
-    this.createNativeFormatter = memoize((ast, locales, formatConfig) => {
-      return new IntlMessageFormat(ast, locales, formatConfig);
-    });
-  }
-
-  format(locale, maybeAst, options) {
-    let ast = maybeAst;
+  // @ts-ignore This class does not match the abstract base class.
+  format(
+    locale: string | string[],
+    maybeAst: string | TranslationAST,
+    options?: Partial<Record<string, unknown>> & { htmlSafe: boolean }
+  ) {
+    let ast = maybeAst as TranslationAST;
 
     if (typeof maybeAst === 'string') {
       // maybe memoize?  it's not a typical hot path since we
@@ -70,7 +81,7 @@ export default class FormatMessage extends Formatter {
     const isHTMLSafe = options && options.htmlSafe;
     const formatterInstance = this.createNativeFormatter(ast, locale, this.readFormatConfig());
     const escapedOptions = isHTMLSafe ? escapeOptions(options) : options;
-    const result = formatterInstance.format(escapedOptions);
+    const result = formatterInstance.format(escapedOptions) as string;
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }
