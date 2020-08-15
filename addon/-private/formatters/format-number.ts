@@ -4,7 +4,7 @@
  */
 
 import memoize from 'fast-memoize';
-import Formatter from './-base';
+import Formatter, { BaseOptions } from './-base';
 
 const NUMBER_OPTIONS = [
   'localeMatcher',
@@ -27,33 +27,29 @@ const NUMBER_OPTIONS = [
   'signDisplay',
   'unitDisplay',
   'unit',
-];
+] as readonly (keyof Intl.NumberFormatOptions)[];
 
 /**
  * @private
  * @hide
  */
-export default class FormatNumber extends Formatter {
-  static type = 'number';
+export default class FormatNumber extends Formatter<Intl.NumberFormatOptions> {
+  static readonly type = 'number';
+
+  createNativeFormatter = memoize((locales: string | string[], options: Intl.NumberFormatOptions) => {
+    return new Intl.NumberFormat(locales, options);
+  });
 
   get options() {
     return NUMBER_OPTIONS;
   }
 
-  constructor(config) {
-    super(config);
-
-    this.createNativeFormatter = memoize((locales, options) => {
-      return new Intl.NumberFormat(locales, options);
-    });
-  }
-
-  format(locale, value, formatOptions) {
+  format(locale: string | string[], value: number, formatOptions: Intl.NumberFormatOptions & BaseOptions): string {
     const formatterOptions = this.readOptions(formatOptions);
 
     this.validateFormatterOptions(locale, formatterOptions);
     const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
 
-    return formatterInstance.format(value, formatOptions);
+    return formatterInstance.format(value);
   }
 }
