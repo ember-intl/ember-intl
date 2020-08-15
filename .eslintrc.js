@@ -2,12 +2,12 @@
 
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
-  parser: 'babel-eslint',
-  plugins: ['prettier', 'ember'],
+  plugins: ['ember', '@typescript-eslint', 'prettier'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
@@ -46,7 +46,7 @@ module.exports = {
 
     // node tests
     {
-      files: ['tests-node/**/*.js'],
+      files: ['tests-node/**/*.{js,ts}'],
       env: {
         mocha: true,
       },
@@ -54,10 +54,21 @@ module.exports = {
 
     // test files
     {
-      files: ['tests/**/*.js'],
-      excludedFiles: ['tests/dummy/**/*.js'],
+      files: ['tests/**/*.{js,ts}'],
+      excludedFiles: ['tests/dummy/**/*.{js,ts}'],
       env: {
         embertest: true,
+      },
+    },
+
+    // all TypeScript files
+    {
+      files: ['**/*.ts'],
+      rules: {
+        // These are covered by tsc
+        'no-undef': 'off',
+        'no-unused-vars': 'off',
+        'no-dupe-class-members': 'off',
       },
     },
   ],

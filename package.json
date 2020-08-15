@@ -24,7 +24,7 @@
   "scripts": {
     "start": "ember serve",
     "build": "ember build",
-    "lint:js": "eslint .",
+    "lint:js": "eslint --ext ts,js .",
     "lint-staged": "lint-staged",
     "tests-node": "mocha \"tests-node/**/*.js\"",
     "test": "yarn run tests-node && ember test",
@@ -69,7 +69,8 @@
     "@types/ember-resolver": "^5.0.9",
     "@types/ember__test-helpers": "^1.7.2",
     "@types/qunit": "^2.9.1",
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
     "broccoli-test-helper": "^2.0.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
