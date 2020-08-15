@@ -24,7 +24,9 @@
   "scripts": {
     "start": "ember serve",
     "build": "ember build",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:js": "eslint --ext ts,js .",
+    "lint:types": "tsc --noEmit",
     "lint-staged": "lint-staged",
     "tests-node": "mocha \"tests-node/**/*.js\"",
     "test": "yarn run tests-node && ember test",
@@ -105,6 +107,7 @@
     "lint-staged": "^10.2.2",
     "loader.js": "^4.7.0",
     "mocha": "^8.1.0",
+    "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2",
     "prettier": "^2.0.5",
     "qunit-dom": "^1.2.0",
@@ -116,7 +119,7 @@
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
-    "*.js": [
+    "*.js,*.ts": [
       "eslint"
     ]
   },
