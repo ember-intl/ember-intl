@@ -1,4 +1,4 @@
-// @ts-ignore We don't won't to bring along extra baggage, when installed in a
+// @ts-ignore We don't want to bring along extra baggage, when installed in a
 // host project.
 import castArray from 'lodash.castarray';
 // @ts-ignore
