@@ -1,5 +1,14 @@
 import addTranslations from './add-translations';
 import { missingMessage } from './-private/serialize-translation';
+import type { TestContext as BaseTestContext } from 'ember-test-helpers';
+import type IntlService from 'ember-intl/services/intl';
+import type { Translations } from 'ember-intl/-private/store/translation';
+
+export interface IntlTestContext {
+  intl: IntlService;
+}
+
+export interface TestContext extends IntlTestContext, BaseTestContext {}
 
 /**
  * Calling this helper will install a special `missing-message` util that will
@@ -16,24 +25,24 @@ import { missingMessage } from './-private/serialize-translation';
  * @param {string} [locale]
  * @param {object} [translations]
  */
-export default function setupIntl(hooks, locale, translations) {
+export default function setupIntl(hooks: NestedHooks, locale?: string | string[], translations?: Translations) {
   if (typeof locale === 'object' && !Array.isArray(locale)) {
     translations = locale;
-    locale = null;
+    locale = undefined;
   }
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(function (this: TestContext) {
     this.owner.register('util:intl/missing-message', missingMessage);
     this.intl = this.owner.lookup('service:intl');
   });
 
   if (locale) {
-    hooks.beforeEach(function () {
-      this.intl.setLocale(locale);
+    hooks.beforeEach(function (this: TestContext) {
+      this.intl.setLocale(locale!);
     });
   }
 
   if (translations) {
-    hooks.beforeEach(() => addTranslations(translations));
+    hooks.beforeEach(() => addTranslations(translations!));
   }
 }

@@ -1,3 +1,5 @@
+// @ts-ignore We don't won't to bring along extra baggage, when installed in a
+// host project.
 import omit from 'lodash.omit';
 
 /**
@@ -9,7 +11,7 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = (obj) => JSON.stringify(obj, Object.keys(obj).sort());
+const stringifyDeterministically = (obj: Record<string, unknown>) => JSON.stringify(obj, Object.keys(obj).sort());
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -22,7 +24,8 @@ const stringifyDeterministically = (obj) => JSON.stringify(obj, Object.keys(obj)
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = (subject) => String(subject).replace(/\{/g, '(').replace(/\}/g, ')').replace(/\\"/g, '"');
+const replaceInterpolators = (subject: string) =>
+  String(subject).replace(/\{/g, '(').replace(/\}/g, ')').replace(/\\"/g, '"');
 
 /**
  * A list of internal options that should not be serialized.
@@ -39,7 +42,7 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @param {object} options
  * @return {string}
  */
-const stringifyOptions = (options = {}) =>
+const stringifyOptions = (options: Record<string, unknown> = {}) =>
   replaceInterpolators(stringifyDeterministically(omit(options, INTERNAL_OPTIONS)));
 
 /**
@@ -52,7 +55,8 @@ const stringifyOptions = (options = {}) =>
  * @return {string}
  * @hide
  */
-export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptions(options)}`;
+export const serializeTranslation = (key: string, options: Record<string, unknown>) =>
+  `t:${key}:${stringifyOptions(options)}`;
 
 /**
  * Used to overwrite the default `intl/missing-message` implementation in order
@@ -67,4 +71,5 @@ export const serializeTranslation = (key, options) => `t:${key}:${stringifyOptio
  * @return {string}
  * @hide
  */
-export const missingMessage = (key, locales, options) => serializeTranslation(key, options);
+export const missingMessage = (key: string, _locales: string[], options: Record<string, unknown>) =>
+  serializeTranslation(key, options);

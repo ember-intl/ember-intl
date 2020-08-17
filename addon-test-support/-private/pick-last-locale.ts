@@ -1,4 +1,7 @@
+// @ts-ignore We don't won't to bring along extra baggage, when installed in a
+// host project.
 import castArray from 'lodash.castarray';
+// @ts-ignore
 import last from 'lodash.last';
 
 /**
@@ -11,4 +14,5 @@ import last from 'lodash.last';
  * @return {string}
  * @hide
  */
-export default (locale) => last(castArray(locale));
+export const pickLastLocale = (locale: string | [string, ...string[]]) => last(castArray(locale)) as string;
+export default pickLastLocale;

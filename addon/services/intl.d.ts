@@ -32,7 +32,7 @@ export default class IntlService extends Service.extend(Evented) {
    */
   readonly locales: string[];
 
-  locale: string | string[];
+  locale: string | [string, ...string[]];
 
   /**
    * Returns the first locale of the currently active locales
