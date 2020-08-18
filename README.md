@@ -33,6 +33,7 @@
 ### Breaking Changes
 
 * Node 8 support dropped
+* Improved ICU-spec compliance, special characters are now escaped via a single quote `'` instead of a slash `\`
 * `Intl.RelativeTime` polyfill has been replaced with the native API which behaves entirely different than the previous older spec implementation (read about in the [Migration Document](https://ember-intl.github.io/ember-intl/docs/guide/migration-4-0-to-5-0))
 * `intl.lookup()` API will no longer return missing translation warnings
 * Removes `shortNumber` formatting in favor of now supported native implementation using the `"notation"` property i.e.,
