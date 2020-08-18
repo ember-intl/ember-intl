@@ -8,10 +8,10 @@ import memoize from 'fast-memoize';
 import { htmlSafe, isHTMLSafe } from '@ember/string';
 import type { SafeString } from '@ember/template/-private/handlebars';
 import IntlMessageFormat from 'intl-messageformat';
-import type { Options, Formats } from 'intl-messageformat';
+import type { Formats } from '../../types';
 import parse from '../utils/parse';
-import Formatter from './-base';
-import { TranslationAST } from '../store/translation';
+import type { FormatterConfig } from './-base';
+import type { TranslationAST } from '../store/translation';
 
 const {
   Handlebars: {
@@ -52,19 +52,29 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
 /**
  * @private
  * @hide
- * @TODO Should not extend from abstract base class.
  */
-export default class FormatMessage extends Formatter<Options> {
-  // @ts-ignore This class does not match the abstract base class.
+export default class FormatMessage {
+  static readonly type = 'message';
+
+  protected readonly config: FormatterConfig;
+  protected readonly readFormatConfig: () => Formats;
+
+  constructor(config: FormatterConfig) {
+    this.config = config;
+
+    // NOTE: a fn since we lazily grab the formatter from the config
+    // as it can change at runtime by calling intl.set('formats', {...});
+    this.readFormatConfig = config.readFormatConfig;
+  }
+
   createNativeFormatter = memoize(
     (ast: TranslationAST, locales: string | string[], formatConfig?: Partial<Formats>) => {
-      return new IntlMessageFormat(ast as any, locales, formatConfig, {
+      return new IntlMessageFormat(ast, locales, formatConfig, {
         ignoreTag: true,
       });
     }
   );
 
-  // @ts-ignore This class does not match the abstract base class.
   format(
     locale: string | string[],
     maybeAst: string | TranslationAST,
@@ -76,7 +86,7 @@ export default class FormatMessage extends Formatter<Options> {
       // maybe memoize?  it's not a typical hot path since we
       // parse when translations are pushed to ember-intl.
       // This is only used if inlining a translation i.e.,
-      // {{format-mesage "Hi {name}"}}
+      // {{format-message "Hi {name}"}}
       ast = parse(maybeAst);
     }
 
