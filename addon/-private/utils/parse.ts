@@ -7,5 +7,6 @@ import { parse } from 'intl-messageformat-parser';
 export default function parseString(string: string) {
   return parse(string, {
     normalizeHashtagInPlural: false,
+    ignoreTag: true,
   });
 }

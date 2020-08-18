@@ -6,6 +6,10 @@ The `locales`, `disablePolyfill`, and `autoPolyfill` configuration options in `c
 
 ## **Breaking Changes**
 
+### **Translations**	
+
+Improved ICU-spec compliance, special characters are now escaped via a single quote `'` instead of a slash `\`
+
 ### **Node runtime**
 
 We now support down to Node 10, dropping support for Node 8.
@@ -33,24 +37,6 @@ Changes:
 * Type of `value` is no longer a `Date` instance but rather delta in the specified `unit`
 * `interval` was removed from the format-relative helper
 * `now` was removed from the format-relative helper
-
-### **Translations**
-
-* Special character escaping in translations is now done via a single quote, `'` instead of the previous slash `\`.
-
-_This is not to be confused with string escaping in YAML or JSON where you'll need to use `\` to escape quotes to keep a string together.  This change is specifically about escaping special characters and HTML tags within your ICU message._
-* Additionally, all HTML tags now need to be escaped.
-
-`<strong>{name}</strong>`
-
-becomes
-
-`'<strong>'{name}'</strong>'`
-
-If you use placeholders _inside_ of an HTML tag for attributes, escape only the
-angle brackets, like so:
-
-`Please accept our '<'a href="{url}"'>'terms & conditions'</a>'.`
 
 ### **Compact Number Formatter**
 
