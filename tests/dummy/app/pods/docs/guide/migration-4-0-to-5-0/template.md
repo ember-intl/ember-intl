@@ -6,6 +6,10 @@ The `locales`, `disablePolyfill`, and `autoPolyfill` configuration options in `c
 
 ## **Breaking Changes**
 
+### **Translations**	
+
+* Improved ICU-spec compliance, special characters are now escaped via a single quote `'` instead of a slash `\`
+
 ### **Node runtime**
 
 We now support down to Node 10, dropping support for Node 8.
