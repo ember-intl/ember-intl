@@ -8,7 +8,7 @@ The `locales`, `disablePolyfill`, and `autoPolyfill` configuration options in `c
 
 ### **Translations**	
 
-* Improved ICU-spec compliance, special characters are now escaped via a single quote `'` instead of a slash `\`
+Improved ICU-spec compliance, special characters are now escaped via a single quote `'` instead of a slash `\`
 
 ### **Node runtime**
 
