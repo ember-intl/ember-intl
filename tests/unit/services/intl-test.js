@@ -109,6 +109,22 @@ module('service:intl', function (hooks) {
     assert.equal(this.intl.lookup('foo'), 'hello world');
   });
 
+  test('should escape attributes but render translation as HTML', async function (assert) {
+    this.intl.addTranslations(LOCALE, {
+      legacyStyle: `'<strong class="example">'Hello {name}'</strong>'`,
+      modernStyle: `<strong class="example">Hello {name}</strong>`,
+    });
+
+    assert.equal(
+      this.intl.t('modernStyle', { htmlSafe: true, name: '<em>Tom</em>' }).string,
+      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>'
+    );
+    assert.equal(
+      this.intl.t('legacyStyle', { htmlSafe: true, name: '<em>Tom</em>' }).string,
+      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>'
+    );
+  });
+
   test('lookup() should return undefined for missing translations ', function (assert) {
     assert.equal(this.intl.lookup('missing'), undefined);
   });

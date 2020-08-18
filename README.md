@@ -29,13 +29,11 @@
 
 * Improved the internals for loading translations on boot
 * Polyfills have been remove and no longer bundle pluralization rules as they're available natively via the `Intl.PluralRules` API
-* `Intl.MessageFormat` [parser](https://formatjs.io/docs/intl-messageformat-parser) and [compiler](https://formatjs.io/docs/intl-messageformat) updated which changes how text and tags are escaped
 
 ### Breaking Changes
 
 * Node 8 support dropped
 * `Intl.RelativeTime` polyfill has been replaced with the native API which behaves entirely different than the previous older spec implementation (read about in the [Migration Document](https://ember-intl.github.io/ember-intl/docs/guide/migration-4-0-to-5-0))
-* Translations are now escaped differently (read about in the [Migration Document](https://ember-intl.github.io/ember-intl/docs/guide/migration-4-0-to-5-0))
 * `intl.lookup()` API will no longer return missing translation warnings
 * Removes `shortNumber` formatting in favor of now supported native implementation using the `"notation"` property i.e.,
 ```js

@@ -25,9 +25,18 @@ module('format-message (html)', function (hooks) {
   });
 
   test('arguments marked as safe-string is not escaped', function (assert) {
-    assert.expect(1);
+    assert.expect(2);
+
     assert.equal(
       this.intl.formatMessage(`'<strong>'Welcome {name}!'</strong>'`, {
+        htmlSafe: true,
+        name: htmlSafe('<em>Alexander</em>'),
+      }).string,
+      '<strong>Welcome <em>Alexander</em>!</strong>'
+    );
+
+    assert.equal(
+      this.intl.formatMessage(`<strong>Welcome {name}!</strong>`, {
         htmlSafe: true,
         name: htmlSafe('<em>Alexander</em>'),
       }).string,
@@ -52,24 +61,41 @@ module('format-message (html)', function (hooks) {
   });
 
   test('should handle dynamic attributes', function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
-    let output = this.intl.formatMessage(`'<'a href="{link}"'>'text'</a>'`, {
-      htmlSafe: true,
-      link: 'http://formatjs.io',
-    }).string;
+    assert.equal(
+      this.intl.formatMessage(`'<'a href="{link}"'>'text'</a>'`, {
+        htmlSafe: true,
+        link: 'http://formatjs.io',
+      }).string,
+      '<a href="http://formatjs.io">text</a>'
+    );
 
-    assert.equal(output, '<a href="http://formatjs.io">text</a>');
+    assert.equal(
+      this.intl.formatMessage(`<a href="{link}"'>text</a>`, {
+        htmlSafe: true,
+        link: 'http://formatjs.io',
+      }).string,
+      '<a href="http://formatjs.io">text</a>'
+    );
   });
 
   test('should handle static attributes', function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
-    let output = this.intl.formatMessage(`Fields marked '<'strong class="primary"'>'*'</strong>' are required`, {
-      htmlSafe: true,
-    }).string;
+    assert.equal(
+      this.intl.formatMessage(`Fields marked '<'strong class="primary"'>'*'</strong>' are required`, {
+        htmlSafe: true,
+      }).string,
+      'Fields marked <strong class="primary">*</strong> are required'
+    );
 
-    assert.equal(output, 'Fields marked <strong class="primary">*</strong> are required');
+    assert.equal(
+      this.intl.formatMessage(`Fields marked <strong class="primary">*</strong> are required`, {
+        htmlSafe: true,
+      }).string,
+      'Fields marked <strong class="primary">*</strong> are required'
+    );
   });
 
   test('should handle static attributes, approach #2', function (assert) {
@@ -101,8 +127,10 @@ module('format-message (html)', function (hooks) {
   });
 
   test('should allow for inlined html in the value but escape arguments', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="<em>Jason</em>" htmlSafe=true}}`);
+    assert.equal(this.element.innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
+    await render(hbs`{{format-message "<strong>Hello {name}</strong>" name="<em>Jason</em>" htmlSafe=true}}`);
     assert.equal(this.element.innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
   });
 });

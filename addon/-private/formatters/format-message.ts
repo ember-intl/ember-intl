@@ -58,7 +58,9 @@ export default class FormatMessage extends Formatter<Options> {
   // @ts-ignore This class does not match the abstract base class.
   createNativeFormatter = memoize(
     (ast: TranslationAST, locales: string | string[], formatConfig?: Partial<Formats>) => {
-      return new IntlMessageFormat(ast as any, locales, formatConfig);
+      return new IntlMessageFormat(ast as any, locales, formatConfig, {
+        ignoreTag: true,
+      });
     }
   );
 

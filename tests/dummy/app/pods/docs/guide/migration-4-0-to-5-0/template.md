@@ -34,24 +34,6 @@ Changes:
 * `interval` was removed from the format-relative helper
 * `now` was removed from the format-relative helper
 
-### **Translations**
-
-* Special character escaping in translations is now done via a single quote, `'` instead of the previous slash `\`.
-
-_This is not to be confused with string escaping in YAML or JSON where you'll need to use `\` to escape quotes to keep a string together.  This change is specifically about escaping special characters and HTML tags within your ICU message._
-* Additionally, all HTML tags now need to be escaped.
-
-`<strong>{name}</strong>`
-
-becomes
-
-`'<strong>'{name}'</strong>'`
-
-If you use placeholders _inside_ of an HTML tag for attributes, escape only the
-angle brackets, like so:
-
-`Please accept our '<'a href="{url}"'>'terms & conditions'</a>'.`
-
 ### **Compact Number Formatter**
 
 In 4.x, we introduced a shortNumber formatter.  This is no longer necessary as we can rely on the native Intl.NumberFormat to compact numbers into their abbreviated form.
