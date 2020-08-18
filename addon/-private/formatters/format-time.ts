@@ -3,14 +3,12 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import FormatDateFormatter from './format-date';
+import FormatDateTime from './-format-datetime';
 
 /**
  * @private
  * @hide
  */
-// @ts-ignore We could use a proper intermediary abstract class, but it's
-// unnecessarily complicated.
-export default class FormatTime extends FormatDateFormatter {
+export default class FormatTime extends FormatDateTime {
   static readonly type = 'time';
 }
