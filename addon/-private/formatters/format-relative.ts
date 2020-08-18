@@ -4,7 +4,7 @@
  */
 
 import memoize from 'fast-memoize';
-import { FormatError, ErrorCode } from 'intl-messageformat';
+import { FormatError } from 'intl-messageformat';
 import { MISSING_INTL_API } from '../error-types';
 import Formatter, { BaseOptions } from './-base';
 
@@ -86,7 +86,7 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
           `Intl.RelativeTimeFormat is not available in this environment.
   Try polyfilling it using "@formatjs/intl-relativetimeformat"
   `,
-          ErrorCode.MISSING_INTL_API
+          MISSING_INTL_API
         ),
       });
 
