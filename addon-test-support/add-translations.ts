@@ -5,7 +5,7 @@ import type IntlService from 'ember-intl/services/intl';
 import type { Translations } from 'ember-intl/-private/store/translation';
 
 // ! Because TypeScript seems to short-circuit overloaded functions when passed
-// as generics, including these overloads, would not work with `makeIntlHelper`.
+// as generics, including these overloads would not work with `makeIntlHelper`.
 // function addTranslations(intl: IntlService, translations: Translations): void;
 // function addTranslations(intl: IntlService, localeName: string, translations: Translations): void;
 function addTranslations(
