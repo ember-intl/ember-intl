@@ -17,12 +17,12 @@ jobs:
     name: Deploy Docs
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v1
-      - name: Install Node
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - name: Set Git User
+        run: git config user.name "GitHub Actions" && git config user.email "actions@users.noreply.github.com"
+      - uses: actions/setup-node@v2-beta
         with:
-          node-version: 14
+          node-version: '14'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Set ENV
@@ -31,6 +31,4 @@ jobs:
         # https://github.com/ember-learn/ember-cli-addon-docs/issues/437
         run: echo "::set-env name=ADDON_DOCS_VERSION_PATH::${GITHUB_REF##*/}"
       - name: Deploy docs with `ember-cli-deploy`
-        env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: yarn ember deploy production --verbose --activate
