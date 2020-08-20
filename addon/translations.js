@@ -7,5 +7,4 @@
  * @private
  * @hide
  */
-declare const translations: readonly [/* locale */ string, /* translations */ unknown][];
-export default translations;
+export default [];
