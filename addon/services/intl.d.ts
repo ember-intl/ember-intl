@@ -18,6 +18,13 @@ type FormatterProxy<T extends keyof IntlService['_formatters']> = (
   formatOptions: Parameters<IntlService['_formatters'][T]['format']>[2]
 ) => ReturnType<IntlService['_formatters'][T]['format']>;
 
+/**
+ * By default `utils/intl/missing-message` always returns a string. Users could
+ * change this. This type is to indicate that some methods just pass through the
+ * return value of that function.
+ */
+type MissingMessage = string;
+
 export default class IntlService extends Service.extend(Evented) {
   /**
    * @public
@@ -66,12 +73,12 @@ export default class IntlService extends Service.extend(Evented) {
     key: string,
     localeName?: string | string[],
     options?: { resilient: boolean }
-  ): MessageFormatElement[] | undefined;
+  ): MessageFormatElement[] | MissingMessage;
 
   private validateKeys(keys: string[]): void;
   private validateKeys(keys: unknown[]): void | never;
 
-  t(key: string, options?: TOptions): string | undefined;
+  t(key: string, options?: TOptions): string | MissingMessage;
 
   exists(key: string, localeName?: string | string[]): boolean;
 
