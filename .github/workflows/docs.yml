@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set Git User
-        run: git config user.name "GitHub Actions" && git config user.email "actions@users.noreply.github.com"
+        run: git config --global user.name "GitHub Actions" && git config --global user.email "actions@users.noreply.github.com"
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '14'
