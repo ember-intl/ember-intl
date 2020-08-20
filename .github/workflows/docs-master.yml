@@ -1,12 +1,9 @@
-name: Docs
+name: Deploy Latest `master` Docs
 
 on:
   push:
     branches:
       - master
-      - fix-docs-deployment
-    tags:
-      - '*'
 
 env:
   CI: true
