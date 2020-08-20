@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+      - fix-docs-deployment
+    tags:
+      - '*'
 
 env:
   CI: true
@@ -12,7 +15,7 @@ env:
 jobs:
   deploy-docs:
     name: Deploy Docs
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
@@ -30,4 +33,4 @@ jobs:
       - name: Deploy docs with `ember-cli-deploy`
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-        run: yarn ember deploy production
+        run: yarn ember deploy production --verbose --activate
