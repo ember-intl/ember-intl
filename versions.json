@@ -142,5 +142,11 @@
     "name": "v5.4.1",
     "sha": "9827c597cde850ed56205ba9dc07c1aa8423bf21",
     "tag": "v5.4.1"
+  },
+  "fix-docs-deployment": {
+    "path": "versions/fix-docs-deployment",
+    "name": "fix-docs-deployment",
+    "sha": "fd627fc4d3b53bd1c412549b55842c942f468de4",
+    "tag": null
   }
 }
