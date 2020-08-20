@@ -22,13 +22,19 @@ export interface TestContext extends IntlTestContext, BaseTestContext {}
  * bootstrap translations. Both arguments are optional.
  *
  * @param {object} hooks
- * @param {string} [locale]
+ * @param {string} [localeOrTranslations]
  * @param {object} [translations]
  */
-export default function setupIntl(hooks: NestedHooks, locale?: string | string[], translations?: Translations) {
-  if (typeof locale === 'object' && !Array.isArray(locale)) {
-    translations = locale;
-    locale = undefined;
+export default function setupIntl(hooks: NestedHooks, locale: string | string[], translations?: Translations): void;
+export default function setupIntl(hooks: NestedHooks, translations?: Translations): void;
+export default function setupIntl(
+  hooks: NestedHooks,
+  localeOrTranslations?: string | string[] | Translations,
+  translations?: Translations
+) {
+  if (typeof localeOrTranslations === 'object' && !Array.isArray(localeOrTranslations)) {
+    translations = localeOrTranslations;
+    localeOrTranslations = undefined;
   }
 
   hooks.beforeEach(function (this: TestContext) {
@@ -36,9 +42,10 @@ export default function setupIntl(hooks: NestedHooks, locale?: string | string[]
     this.intl = this.owner.lookup('service:intl');
   });
 
-  if (locale) {
+  if (localeOrTranslations) {
+    const locale = localeOrTranslations;
     hooks.beforeEach(function (this: TestContext) {
-      this.intl.setLocale(locale!);
+      this.intl.setLocale(locale);
     });
   }
 
