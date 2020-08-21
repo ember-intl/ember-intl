@@ -105,7 +105,7 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
     locale: string | string[],
     value: ConstructorParameters<typeof Date>[0],
     formatOptions: RelativeTimeFormatOptions & BaseOptions
-  ) {
+  ): string {
     const formatterOptions = this.readOptions(formatOptions);
 
     this.validateFormatterOptions(locale, formatterOptions);

@@ -78,8 +78,18 @@ export default class FormatMessage {
   format(
     locale: string | string[],
     maybeAst: string | TranslationAST,
+    options?: Partial<Record<string, unknown>> & { htmlSafe?: false }
+  ): string;
+  format(
+    locale: string | string[],
+    maybeAst: string | TranslationAST,
+    options: Partial<Record<string, unknown>> & { htmlSafe: true }
+  ): SafeString;
+  format(
+    locale: string | string[],
+    maybeAst: string | TranslationAST,
     options?: Partial<Record<string, unknown>> & { htmlSafe?: boolean }
-  ) {
+  ): string | SafeString {
     let ast = maybeAst as TranslationAST;
 
     if (typeof maybeAst === 'string') {

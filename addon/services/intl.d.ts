@@ -1,6 +1,7 @@
 import Evented from '@ember/object/evented';
 import Service from '@ember/service';
 import { EmberRunTimer } from '@ember/runloop/types';
+import type { SafeString } from '@ember/template/-private/handlebars';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import TranslationContainer from '../-private/store/container';
@@ -10,6 +11,7 @@ import { MessageFormatElement } from 'intl-messageformat-parser';
 export interface TOptions {
   default?: string | string[];
   locale?: string | string[];
+  htmlSafe?: boolean;
   [option: string]: unknown;
 }
 
@@ -78,7 +80,9 @@ export default class IntlService extends Service.extend(Evented) {
   private validateKeys(keys: string[]): void;
   private validateKeys(keys: unknown[]): void | never;
 
-  t(key: string, options?: TOptions): string | MissingMessage;
+  t(key: string, options?: TOptions & { htmlSafe?: false }): string | MissingMessage;
+  t(key: string, options: TOptions & { htmlSafe: true }): SafeString | MissingMessage;
+  t(key: string, options?: TOptions): string | SafeString | MissingMessage;
 
   exists(key: string, localeName?: string | string[]): boolean;
 
