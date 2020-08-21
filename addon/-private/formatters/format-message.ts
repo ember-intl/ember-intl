@@ -83,7 +83,7 @@ export default class FormatMessage {
   format(
     locale: string | string[],
     maybeAst: string | TranslationAST,
-    options?: Partial<Record<string, unknown>> & { htmlSafe: true }
+    options: Partial<Record<string, unknown>> & { htmlSafe: true }
   ): SafeString;
   format(
     locale: string | string[],

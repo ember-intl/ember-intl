@@ -81,7 +81,7 @@ export default class IntlService extends Service.extend(Evented) {
   private validateKeys(keys: unknown[]): void | never;
 
   t(key: string, options?: TOptions & { htmlSafe?: false }): string | MissingMessage;
-  t(key: string, options?: TOptions & { htmlSafe: true }): SafeString | MissingMessage;
+  t(key: string, options: TOptions & { htmlSafe: true }): SafeString | MissingMessage;
   t(key: string, options?: TOptions): string | SafeString | MissingMessage;
 
   exists(key: string, localeName?: string | string[]): boolean;
