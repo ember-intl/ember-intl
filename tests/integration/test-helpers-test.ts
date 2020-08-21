@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { get } from '@ember/object';
 import { setupIntl, t, setLocale, addTranslations } from 'ember-intl/test-support';
+import { TestContext } from 'ember-intl/test-support';
 
 module('Integration | Test Helpers', function (hooks) {
   setupRenderingTest(hooks);
@@ -9,7 +10,7 @@ module('Integration | Test Helpers', function (hooks) {
   module('setupIntl(hooks)', function (hooks) {
     setupIntl(hooks);
 
-    test('hooks were properly executed and helpers work', async function (assert) {
+    test('hooks were properly executed and helpers work', async function (this: TestContext, assert) {
       assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.strictEqual(
@@ -86,7 +87,7 @@ module('Integration | Test Helpers', function (hooks) {
       },
     });
 
-    test('hooks were properly executed and translations have been added', async function (assert) {
+    test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
       assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.strictEqual(
@@ -106,7 +107,7 @@ module('Integration | Test Helpers', function (hooks) {
       },
     });
 
-    test('hooks were properly executed, locale was set and translations have been added', async function (assert) {
+    test('hooks were properly executed, locale was set and translations have been added', async function (this: TestContext, assert) {
       assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
       assert.deepEqual(get(this.intl, 'locale'), [germanLocale], 'locale has been switched');
@@ -122,7 +123,7 @@ module('Integration | Test Helpers', function (hooks) {
   module('setupIntl(hooks, translations) for nested translations', function (hooks) {
     setupIntl(hooks);
 
-    test('hooks were properly executed and translations have been added', async function (assert) {
+    test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
       const ENGLISH_LOCALE = 'en-us';
 
       addTranslations(ENGLISH_LOCALE, {
@@ -139,7 +140,7 @@ module('Integration | Test Helpers', function (hooks) {
       );
     });
 
-    test('hooks were properly executed and translations have been added', async function (assert) {
+    test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
       assert.strictEqual(
         this.intl.t('some.translation', { foo: this.intl.t('some.nested_translation', { count: 1 }) }),
         't:some.translation:("foo":"t:some.nested_translation:("count":1)")',
