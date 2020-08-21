@@ -7,6 +7,7 @@ import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } f
 import TranslationContainer from '../-private/store/container';
 import { Formats } from '../types';
 import { MessageFormatElement } from 'intl-messageformat-parser';
+import type { TranslationAST } from '../-private/store/translation';
 
 export interface TOptions {
   default?: string | string[];
@@ -52,10 +53,26 @@ export default class IntlService extends Service.extend(Evented) {
   readonly primaryLocale: string;
 
   readonly formatRelative: FormatterProxy<'relative'>;
-  readonly formatMessage: FormatterProxy<'message'>;
   readonly formatNumber: FormatterProxy<'number'>;
   readonly formatTime: FormatterProxy<'time'>;
   readonly formatDate: FormatterProxy<'date'>;
+
+  // ! This _should_ just be the type shown below, but because TypeScript
+  // garbles up function overloads in generics, we need to manually enumerate
+  // and duplicate the types here.
+  // readonly formatMessage: FormatterProxy<'message'>;
+  formatMessage(
+    maybeAst: string | TranslationAST,
+    options?: Partial<Record<string, unknown>> & { htmlSafe?: false }
+  ): string;
+  formatMessage(
+    maybeAst: string | TranslationAST,
+    options: Partial<Record<string, unknown>> & { htmlSafe: true }
+  ): SafeString;
+  formatMessage(
+    maybeAst: string | TranslationAST,
+    options?: Partial<Record<string, unknown>> & { htmlSafe?: boolean }
+  ): string | SafeString;
 
   private _translationContainer?: TranslationContainer;
 
