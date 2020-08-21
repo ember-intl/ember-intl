@@ -78,7 +78,7 @@ export default class FormatMessage {
   format(
     locale: string | string[],
     maybeAst: string | TranslationAST,
-    options?: Partial<Record<string, unknown>> & { htmlSafe: boolean }
+    options?: Partial<Record<string, unknown>> & { htmlSafe?: boolean }
   ) {
     let ast = maybeAst as TranslationAST;
 
