@@ -75,6 +75,10 @@ export default class FormatMessage {
     }
   );
 
+  // ! Function overloads are not passed through generic types for reasons that
+  // evade my knowledge. ¯\_(ツ)_/¯
+  // For this reason these types need to be manually copied over to the
+  // `IntlService#formatMessage`.
   format(
     locale: string | string[],
     maybeAst: string | TranslationAST,
