@@ -6,7 +6,6 @@
 import Helper from '@ember/component/helper';
 import { getOwner } from '@ember/application';
 import { isEmpty } from '@ember/utils';
-import { getWithDefault } from '@ember/object';
 
 /**
  * @private
@@ -31,7 +30,7 @@ const AbstractHelper = Helper.extend({
 
   compute([value], options) {
     if (isEmpty(value)) {
-      if (getWithDefault(options, 'allowEmpty', this.allowEmpty)) {
+      if (options.allowEmpty ?? this.allowEmpty) {
         return;
       }
 
