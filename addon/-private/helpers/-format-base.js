@@ -30,7 +30,7 @@ const AbstractHelper = Helper.extend({
 
   compute([value], options) {
     if (isEmpty(value)) {
-      if (options.allowEmpty || this.allowEmpty) {
+      if (options.allowEmpty ?? this.allowEmpty) {
         return;
       }
 
