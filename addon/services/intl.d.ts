@@ -7,6 +7,7 @@ import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } f
 import TranslationContainer from '../-private/store/container';
 import { Formats } from '../types';
 import { MessageFormatElement } from 'intl-messageformat-parser';
+import type Translation from '../-private/store/translation';
 import type { TranslationAST } from '../-private/store/translation';
 
 export interface TOptions {
@@ -107,7 +108,7 @@ export default class IntlService extends Service.extend(Evented) {
 
   addTranslations(localeName: string, payload: unknown): void;
 
-  translationsFor(localeName: string): unknown;
+  translationsFor(localeName: string): Translation | undefined;
 
   private _localeWithDefault(localeName?: string | string[]): string[];
 
