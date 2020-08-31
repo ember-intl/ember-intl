@@ -9,7 +9,12 @@ import parse from 'ember-intl/-private/utils/parse';
 
 export type TranslationAST = MessageFormatElement[];
 
-export type Translations = NestedStructure<string>;
+/**
+ * @remarks
+ * `tests/unit/helpers/t-test.ts` has a test that asserts that numbers are
+ * acceptable as translations and converted to strings.
+ */
+export type Translations = NestedStructure<string | number>;
 
 class Translation {
   private readonly translations = new Map<string, string>();

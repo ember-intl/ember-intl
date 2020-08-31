@@ -3,21 +3,22 @@ import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
+import { setupIntl, TestContext } from 'ember-intl/test-support';
 
 module('format-relative', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks);
 
-  hooks.beforeEach(function () {
-    this.intl = this.owner.lookup('service:intl');
+  hooks.beforeEach(function (this: TestContext) {
     this.intl.set('formats', { relative: { yearShort: { unit: 'year', style: 'short' } } });
   });
 
-  test('exists', function (assert) {
+  test('exists', function (this: TestContext, assert) {
     assert.expect(1);
     assert.ok(formatRelativehelper);
   });
 
-  test('invoke the formatRelative directly', function (assert) {
+  test('invoke the formatRelative directly', function (this: TestContext, assert) {
     assert.expect(1);
     assert.equal(this.intl.formatRelative(-1, { unit: 'days' }), '1 day ago');
   });
@@ -27,13 +28,13 @@ module('format-relative', function (hooks) {
     // expectError(() => render(hbs`{{format-relative}}`), ex => assert.ok(ex));
   });
 
-  test('should support allowEmpty', async function (assert) {
+  test('should support allowEmpty', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{format-relative allowEmpty=true unit="day"}}`);
     assert.equal(this.element.textContent, '');
   });
 
-  test('should handle short units', async function (assert) {
+  test('should handle short units', async function (this: TestContext, assert) {
     await render(hbs`{{format-relative -1 unit="second" style="short"}}`);
     assert.equal(this.element.textContent, '1 sec. ago');
 
@@ -50,7 +51,7 @@ module('format-relative', function (hooks) {
     assert.equal(this.element.textContent, '1 yr. ago');
   });
 
-  test('should handle inline format', async function (assert) {
+  test('should handle inline format', async function (this: TestContext, assert) {
     await render(hbs`{{format-relative -1 format="yearShort"}}`);
     assert.equal(this.element.textContent, '1 yr. ago');
   });

@@ -101,7 +101,7 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
     }
   }
 
-  getNamedFormat(key: string): void | ValueOf<ValueOf<Formats>> {
+  getNamedFormat(key: string): void | ValueOf<ValueOf<Required<Formats>>> {
     const formats = this.readFormatConfig();
     const namedFormatsForType = formats[(this.constructor as typeof FormatterBase).type];
 
@@ -113,6 +113,6 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
   abstract format(
     locale: string | string[],
     value: unknown,
-    formatOptions: KnownOptions & BaseOptions
+    formatOptions?: KnownOptions & BaseOptions
   ): string | SafeString;
 }

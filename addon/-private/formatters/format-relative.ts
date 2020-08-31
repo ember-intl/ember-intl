@@ -104,13 +104,13 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
   format(
     locale: string | string[],
     value: ConstructorParameters<typeof Date>[0],
-    formatOptions: RelativeTimeFormatOptions & BaseOptions
+    formatOptions?: RelativeTimeFormatOptions & BaseOptions
   ): string {
     const formatterOptions = this.readOptions(formatOptions);
 
     this.validateFormatterOptions(locale, formatterOptions);
     const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
 
-    return formatterInstance.format(value, formatOptions.unit ?? formatterOptions.unit);
+    return formatterInstance.format(value, formatOptions?.unit ?? formatterOptions.unit);
   }
 }

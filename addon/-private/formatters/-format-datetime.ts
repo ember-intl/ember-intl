@@ -41,7 +41,7 @@ export default abstract class FormatDateTime extends Formatter<Intl.DateTimeForm
   format(
     locale: string | string[],
     value: ConstructorParameters<typeof Date>[0],
-    formatOptions: Intl.DateTimeFormatOptions & BaseOptions
+    formatOptions?: Intl.DateTimeFormatOptions & BaseOptions
   ): string {
     const formatterOptions = this.readOptions(formatOptions);
 
