@@ -3,8 +3,18 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
-import { setupIntl, addTranslations } from 'ember-intl/test-support';
+import { setupIntl, addTranslations, TestContext as BaseTextContext } from 'ember-intl/test-support';
+
 import { t, raw } from 'ember-intl';
+
+interface TestContext extends BaseTextContext {
+  ContainerObject: typeof EmberObject;
+  object: EmberObject & {
+    numberClicks: number;
+    tMacroProperty1: ReturnType<typeof t>;
+    tMacroProperty2: ReturnType<typeof t>;
+  };
+}
 
 module('Unit | Macros | t', function (hooks) {
   setupTest(hooks);
@@ -14,9 +24,7 @@ module('Unit | Macros | t', function (hooks) {
     'with.two.interpolations': 'Coordinates: {x}, {y}',
   });
 
-  hooks.beforeEach(function () {
-    this.intl = this.owner.lookup('service:intl');
-
+  hooks.beforeEach(function (this: TestContext) {
     const { owner } = this;
     this.ContainerObject = EmberObject.extend({
       init() {
@@ -32,25 +40,25 @@ module('Unit | Macros | t', function (hooks) {
     }).create();
   });
 
-  test('defines a computed property that translates without interpolations', function (assert) {
+  test('defines a computed property that translates without interpolations', function (this: TestContext, assert) {
     assert.equal(this.object.get('tMacroProperty1'), 'text with no interpolations');
   });
 
-  test('defines a computed property that translates with interpolations', function (assert) {
+  test('defines a computed property that translates with interpolations', function (this: TestContext, assert) {
     assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 9');
   });
 
-  test('allows property to be overridden', function (assert) {
+  test('allows property to be overridden', function (this: TestContext, assert) {
     this.object.set('tMacroProperty2', 'A new value');
     assert.equal(this.object.get('tMacroProperty2'), 'A new value');
   });
 
-  test('defines a computed property with dependencies', function (assert) {
+  test('defines a computed property with dependencies', function (this: TestContext, assert) {
     run(this.object, 'set', 'numberClicks', 13);
     assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 13');
   });
 
-  test('defines a computed property that depends on the locale', function (assert) {
+  test('defines a computed property that depends on the locale', function (this: TestContext, assert) {
     addTranslations('es', {
       'no.interpolations': 'texto sin interpolaciones',
     });
@@ -60,7 +68,7 @@ module('Unit | Macros | t', function (hooks) {
     assert.equal(this.object.get('tMacroProperty1'), 'texto sin interpolaciones');
   });
 
-  test('defines a computed property that accepts static and dynamic values', function (assert) {
+  test('defines a computed property that accepts static and dynamic values', function (this: TestContext, assert) {
     const object = this.ContainerObject.extend({
       yCoord: 4,
       macroProperty: t('with.two.interpolations', { x: raw(10), y: 'yCoord' }),
@@ -70,7 +78,7 @@ module('Unit | Macros | t', function (hooks) {
     assert.equal(object.get('macroProperty'), 'Coordinates: 10, 13');
   });
 
-  test('looks up the intl service through the owner, if it is not injected, and still watches locale changes', function (assert) {
+  test('looks up the intl service through the owner, if it is not injected, and still watches locale changes', function (this: TestContext, assert) {
     addTranslations('es', {
       'no.interpolations': 'texto sin interpolaciones',
     });
@@ -80,7 +88,7 @@ module('Unit | Macros | t', function (hooks) {
     }).create();
 
     setOwner(object, {
-      lookup: (name) => {
+      lookup: (name: string) => {
         assert.strictEqual(name, 'service:intl', 'looks up the service through the owner');
         return this.intl;
       },
