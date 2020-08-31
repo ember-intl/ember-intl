@@ -2,6 +2,7 @@ import addTranslations from './add-translations';
 import { missingMessage } from './-private/serialize-translation';
 import type { TestContext as BaseTestContext } from 'ember-test-helpers';
 import type IntlService from 'ember-intl/services/intl';
+import type { TOptions } from 'ember-intl/services/intl';
 import type { Translations } from 'ember-intl/-private/store/translation';
 
 export interface IntlTestContext {
@@ -9,6 +10,17 @@ export interface IntlTestContext {
 }
 
 export interface TestContext extends IntlTestContext, BaseTestContext {}
+
+export interface SetupIntlOptions {
+  /**
+   * Whether to install the special `missing-message` handler.
+   *
+   * @defaultValue true
+   */
+  missingMessage?: boolean | ((key: string, locales: string[], options: TOptions) => string);
+
+  formats?: IntlService['formats'];
+}
 
 /**
  * Calling this helper will install a special `missing-message` util that will
@@ -24,28 +36,51 @@ export interface TestContext extends IntlTestContext, BaseTestContext {}
  * @param {object} hooks
  * @param {string} [localeOrTranslations]
  * @param {object} [translations]
+ * @param {object} [options]
  */
-export default function setupIntl(hooks: NestedHooks, locale: string | string[], translations?: Translations): void;
-export default function setupIntl(hooks: NestedHooks, translations?: Translations): void;
+export default function setupIntl(
+  hooks: NestedHooks,
+  locale: string | string[],
+  translations?: Translations,
+  options?: SetupIntlOptions
+): void;
+export default function setupIntl(hooks: NestedHooks, translations?: Translations, options?: SetupIntlOptions): void;
 export default function setupIntl(
   hooks: NestedHooks,
   localeOrTranslations?: string | string[] | Translations,
-  translations?: Translations
+  translationsOrOptions?: Translations | SetupIntlOptions,
+  options?: SetupIntlOptions
 ) {
+  let locale: string | string[] | undefined;
+  let translations: Translations | undefined;
   if (typeof localeOrTranslations === 'object' && !Array.isArray(localeOrTranslations)) {
     translations = localeOrTranslations;
     localeOrTranslations = undefined;
+    if (typeof translationsOrOptions === 'object') {
+      options = translationsOrOptions;
+    }
+  } else {
+    locale = localeOrTranslations;
+    translations = translationsOrOptions as Translations | undefined;
   }
 
   hooks.beforeEach(function (this: TestContext) {
-    this.owner.register('util:intl/missing-message', missingMessage);
+    if (typeof options?.missingMessage === 'function') {
+      this.owner.register('util:intl/missing-message', options.missingMessage);
+    } else if ((options?.missingMessage ?? true) === true) {
+      this.owner.register('util:intl/missing-message', missingMessage);
+    }
+
     this.intl = this.owner.lookup('service:intl');
+
+    if (options?.formats) {
+      this.intl.set('formats', options.formats);
+    }
   });
 
-  if (localeOrTranslations) {
-    const locale = localeOrTranslations;
+  if (locale) {
     hooks.beforeEach(function (this: TestContext) {
-      this.intl.setLocale(locale);
+      this.intl.setLocale(locale!);
     });
   }
 
