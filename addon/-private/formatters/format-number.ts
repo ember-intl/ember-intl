@@ -44,7 +44,7 @@ export default class FormatNumber extends Formatter<Intl.NumberFormatOptions> {
     return NUMBER_OPTIONS;
   }
 
-  format(locale: string | string[], value: number, formatOptions: Intl.NumberFormatOptions & BaseOptions): string {
+  format(locale: string | string[], value: number, formatOptions?: Intl.NumberFormatOptions & BaseOptions): string {
     const formatterOptions = this.readOptions(formatOptions);
 
     this.validateFormatterOptions(locale, formatterOptions);
