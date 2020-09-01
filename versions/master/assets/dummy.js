@@ -888,7 +888,7 @@
     minute: 'numeric',
     second: 'numeric'
   };
-  var _default = {
+  var formats = {
     date: {
       hhmmss: hhmmss
     },
@@ -896,6 +896,8 @@
       hhmmss: hhmmss
     },
     number: {
+      // @ts-expect-error `intl-messageformat` types are incorrect.
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#Parameters
       compact: {
         notation: 'compact'
       },
@@ -917,6 +919,7 @@
       }
     }
   };
+  var _default = formats;
   _exports.default = _default;
 });
 ;define("dummy/helpers/and", ["exports", "ember-truth-helpers/helpers/and"], function (_exports, _and) {
@@ -3534,12 +3537,12 @@
     value: true
   });
   _exports.default = void 0;
-
-  var Router = _router.default.extend({
+  // @ts-ignore
+  var AddonDocsRouter = _router.default;
+  var Router = AddonDocsRouter.extend({
     location: _environment.default.locationType,
     rootURL: _environment.default.rootURL
   });
-
   Router.map(function () {
     (0, _router.docsRoute)(this, function () {
       this.route('getting-started', {
