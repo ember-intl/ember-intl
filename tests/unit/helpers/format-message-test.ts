@@ -198,7 +198,6 @@ module('format-message', function (hooks) {
 
     run(() => {
       context.set('foo', false);
-      // @ts-expect-error The upstream types for `next` are incorrect.
       next(() => {
         assert.equal(this.element.textContent, 'bar bar');
         done();
