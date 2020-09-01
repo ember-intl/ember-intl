@@ -10,14 +10,14 @@ on:
     # filtering branches here prevents duplicate builds from pull_request and push
     branches:
       - master
-      - "v*"
+      - 'v*'
     # always run CI for tags
     tags:
-      - "*"
+      - '*'
 
   # early issue detection: run CI weekly on Sundays
   schedule:
-    - cron: "0 6 * * 0"
+    - cron: '0 6 * * 0'
 
 env:
   CI: true
@@ -37,6 +37,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Lint
         run: yarn lint
+      - name: Attempt TypeScript Release Build
+        run: yarn ember ts:precompile && yarn ember ts:clean
       - name: Browser Tests
         run: yarn test
       - name: Node Tests
