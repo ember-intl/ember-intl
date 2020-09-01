@@ -6,10 +6,10 @@ import config from './config/environment';
 
 const AddonDocsRouter = _AddonDocsRouter as typeof EmberRouter;
 
-export default class Router extends AddonDocsRouter {
-  location = config.locationType;
-  rootURL = config.rootURL;
-}
+const Router = AddonDocsRouter.extend({
+  location: config.locationType,
+  rootURL: config.rootURL,
+});
 
 Router.map(function () {
   docsRoute(this, function (this: RouterDSL) {
@@ -54,3 +54,5 @@ Router.map(function () {
   });
   this.route('smoke');
 });
+
+export default Router;
