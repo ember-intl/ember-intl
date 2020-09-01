@@ -1,13 +1,18 @@
-import AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
+// @ts-ignore
+import _AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
+import type EmberRouter from '@ember/routing/router';
+import type RouterDSL from '@ember/routing/-private/router-dsl';
 import config from './config/environment';
 
-const Router = AddonDocsRouter.extend({
-  location: config.locationType,
-  rootURL: config.rootURL,
-});
+const AddonDocsRouter = _AddonDocsRouter as typeof EmberRouter;
+
+export default class Router extends AddonDocsRouter {
+  location = config.locationType;
+  rootURL = config.rootURL;
+}
 
 Router.map(function () {
-  docsRoute(this, function () {
+  docsRoute(this, function (this: RouterDSL) {
     this.route('getting-started', { path: '/' }, function () {
       this.route('overview');
       this.route('runtime-requirements');
@@ -49,5 +54,3 @@ Router.map(function () {
   });
   this.route('smoke');
 });
-
-export default Router;
