@@ -47,7 +47,7 @@
     "cldr-core": "^36.0.0",
     "ember-auto-import": "^1.5.3",
     "ember-cli-babel": "^7.18.0",
-    "ember-cli-typescript": "^4.0.0-rc.1",
+    "ember-cli-typescript": "^4.0.0",
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.2",
     "has-unicode": "^2.0.1",
@@ -111,7 +111,7 @@
     "qunit-dom": "^1.2.0",
     "testdouble": "^3.13.1",
     "testdouble-qunit": "^2.1.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.3"
   },
   "engines": {
     "node": ">= 10.*"
