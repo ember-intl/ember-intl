@@ -16,6 +16,7 @@ module('t', function (hooks) {
     {
       html: {
         greeting: "'<strong>'Hello {name} {count, number}'</strong>'",
+        legacy: `<a href="{href}">{text}</a>`,
       },
       number: 2,
       foo: {
@@ -61,6 +62,14 @@ module('t', function (hooks) {
     assert.equal(this.element.querySelectorAll('strong').length, 1);
     assert.equal(this.element.querySelectorAll('em').length, 0);
     assert.equal(this.element.innerHTML, `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`);
+  });
+
+  test('should support legacy HTML escaping', async function (this: TestContext, assert) {
+    assert.expect(3);
+    await render(hbs`{{t 'html.legacy' htmlSafe=true text="<em>Jason</em>" href="/foo"}}`);
+    assert.equal(this.element.querySelectorAll('a').length, 1);
+    assert.equal(this.element.querySelectorAll('em').length, 0);
+    assert.equal(this.element.innerHTML, `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`);
   });
 
   test('should render a TextNode', async function (this: TestContext, assert) {

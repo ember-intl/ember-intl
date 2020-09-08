@@ -80,7 +80,7 @@ module('format-message (html)', function (hooks) {
 
     assert.equal(
       this.intl
-        .formatMessage(`<a href="{link}"'>text</a>`, {
+        .formatMessage(`<a href="{link}">text</a>`, {
           htmlSafe: true,
           link: 'http://formatjs.io',
         })
