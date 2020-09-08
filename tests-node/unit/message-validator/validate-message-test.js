@@ -23,6 +23,9 @@ describe('validateMessage', function () {
         few {#rd}
         other {#th}
     } birthday!`,
+    '<a href="{href}">Click Here {text}</a>',
+    `'<'a href="{href}"'>'Click Here {text}'<'/a'>'`,
+    `'<a href="{href}">'Click Here {text}'</a>'`, // ! `{href}` will _not_ be treated as a variable
   ];
 
   valid.forEach((message) => {
