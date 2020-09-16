@@ -1,4 +1,4 @@
-import BaseHelper from '../-private/helpers/-format-base';
+import BaseHelper from './-format-base';
 import IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatDate']>;
