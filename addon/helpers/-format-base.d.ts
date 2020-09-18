@@ -1,5 +1,5 @@
 import Helper from '@ember/component/helper';
-import IntlService from '../../services/intl';
+import IntlService from '../services/intl';
 
 export default abstract class AbstractHelper<V, O extends {} | undefined> extends Helper {
   readonly intl: IntlService;

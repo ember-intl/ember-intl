@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import BaseHelper from '../-private/helpers/-format-base';
+import BaseHelper from './-format-base';
 
 export default BaseHelper.extend({
   allowEmpty: true,
