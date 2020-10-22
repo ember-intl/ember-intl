@@ -179,7 +179,9 @@ module('format-message', function (hooks) {
     assert.equal(this.element.textContent, '0');
   });
 
-  test('l helper handles bound computed property', async function (this: TestContext & { context: object }, assert) {
+  test('l helper handles bound computed property', async function (this: TestContext & {
+    context: EmberObject;
+  }, assert) {
     const done = assert.async();
     assert.expect(2);
 

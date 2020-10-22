@@ -15,7 +15,7 @@ import type { TranslationAST } from '../store/translation';
 
 const {
   Handlebars: {
-    // @ts-ignore
+    // @ts-expect-error Upstream types are incomplete.
     Utils: { escapeExpression },
   },
 } = Ember;
@@ -25,10 +25,10 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
     return;
   }
 
-  let escapedOpts = {} as { [K in keyof T]: T[K] extends SafeString ? string : T[K] };
+  const escapedOpts = {} as { [K in keyof T]: T[K] extends SafeString ? string : T[K] };
 
   (Object.keys(object) as (keyof T)[]).forEach((key) => {
-    let val = object[key];
+    const val = object[key];
 
     if (isHTMLSafe(val)) {
       // If the option is an instance of Ember SafeString,
@@ -36,11 +36,13 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
       // formatter won't know what to do with it. Instead, we cast
       // the SafeString to a regular string using `toHTML`.
       // Since it was already marked as safe we should *not* escape it.
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       escapedOpts[key] = val.toHTML();
     } else if (typeof val === 'string') {
       escapedOpts[key] = escapeExpression(val);
     } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       escapedOpts[key] = val; // copy as-is
     }

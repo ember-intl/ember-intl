@@ -10,6 +10,7 @@ const proto = Object.create(null, {
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 function EmptyObject() {}
 EmptyObject.prototype = proto;
 
