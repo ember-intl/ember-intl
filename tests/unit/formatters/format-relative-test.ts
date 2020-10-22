@@ -49,7 +49,23 @@ module('format-relative', function (hooks) {
     });
 
     assert.throws(() => {
-      formatter.format('en-us', 0);
+      formatter.format('en-us', 0, { unit: 'days' });
     }, /Intl.RelativeTimeFormat is not available in this environment/);
+  });
+
+  test('should throw when formatting when a default unit is missing', function (assert) {
+    const formatter = new FormatRelative({
+      onError({ error }) {
+        // NOTE: Default implementation in service is to throw.
+        throw error;
+      },
+      readFormatConfig() {
+        return {};
+      },
+    });
+
+    assert.throws(() => {
+      formatter.format('en-us', 0);
+    }, /FormatRelative: 'formatOptions' are missing a 'unit'/);
   });
 });
