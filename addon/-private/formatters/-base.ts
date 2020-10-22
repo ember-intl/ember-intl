@@ -34,7 +34,7 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
   protected abstract readonly createNativeFormatter: (
     locales: string | string[],
     options: KnownOptions
-  ) => Intl.DateTimeFormat | Intl.NumberFormat | IntlMessageFormat;
+  ) => Intl.DateTimeFormat | Intl.RelativeTimeFormat | Intl.NumberFormat | IntlMessageFormat;
 
   constructor(config: FormatterConfig) {
     this.config = config;

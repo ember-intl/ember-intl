@@ -3,6 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+import { assert } from '@ember/debug';
 import memoize from 'fast-memoize';
 import { FormatError } from 'intl-messageformat';
 import { MISSING_INTL_API } from '../error-types';
@@ -78,22 +79,18 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
   static readonly type = 'relative';
 
   createNativeFormatter = memoize((locales, options) => {
-    // @ts-ignore `Intl.RelativeTimeFormat` will be added in TypeScript 4.0
     if (!Intl || !Intl.RelativeTimeFormat) {
+      const error = new FormatError(
+        `Intl.RelativeTimeFormat is not available in this environment. Try polyfilling it using "@formatjs/intl-relativetimeformat"`,
+        MISSING_INTL_API
+      );
       this.config.onError({
         kind: MISSING_INTL_API,
-        error: new FormatError(
-          `Intl.RelativeTimeFormat is not available in this environment.
-  Try polyfilling it using "@formatjs/intl-relativetimeformat"
-  `,
-          MISSING_INTL_API
-        ),
+        error,
       });
-
-      return;
+      throw error;
     }
 
-    // @ts-ignore `Intl.RelativeTimeFormat` will be added in TypeScript 4.0
     return new Intl.RelativeTimeFormat(locales, options);
   });
 
@@ -109,8 +106,11 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
     const formatterOptions = this.readOptions(formatOptions);
 
     this.validateFormatterOptions(locale, formatterOptions);
+    const unit = formatOptions?.unit ?? formatterOptions.unit;
+    assert(`[ember-intl] FormatRelative: 'formatOptions' are missing a 'unit'.`, unit);
+
     const formatterInstance = this.createNativeFormatter(locale, formatterOptions);
 
-    return formatterInstance.format(value, formatOptions?.unit ?? formatterOptions.unit);
+    return formatterInstance.format(typeof value === 'number' ? value : new Date(value).getTime(), unit);
   }
 }

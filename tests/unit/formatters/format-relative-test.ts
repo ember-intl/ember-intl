@@ -5,7 +5,6 @@ module('format-relative', function (hooks) {
   let IntlRelativeTimeFormat: unknown;
 
   hooks.beforeEach(function () {
-    // @ts-expect-error
     IntlRelativeTimeFormat = Intl.RelativeTimeFormat;
   });
 

@@ -6,8 +6,6 @@ const formats: Formats = {
   date: { hhmmss: hhmmss },
   time: { hhmmss: hhmmss },
   number: {
-    // @ts-expect-error `intl-messageformat` types are incorrect.
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#Parameters
     compact: { notation: 'compact' },
     EUR: { style: 'currency', currency: 'EUR' },
     USD: { style: 'currency', currency: 'USD' },
