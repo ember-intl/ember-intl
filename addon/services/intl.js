@@ -30,7 +30,7 @@ export default Service.extend(Evented, {
   locales: computed.readOnly('_translationContainer.locales'),
 
   /** @public **/
-  locale: computed({
+  locale: computed('_locale', {
     set(_, localeName) {
       const proposed = makeArray(localeName).map(normalizeLocale);
 
@@ -93,6 +93,8 @@ export default Service.extend(Evented, {
 
     this.setLocale(initialLocale);
     this._owner = getOwner(this);
+    // Below issue can be ignored, as this is during the `init()` constructor.
+    // eslint-disable-next-line ember/no-assignment-of-untracked-properties-used-in-tracking-contexts
     this._translationContainer = TranslationContainer.create();
     this._formatters = this._createFormatters();
 

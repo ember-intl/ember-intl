@@ -13,9 +13,9 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'prettier/prettier': 'error',
     'ember/no-restricted-resolver-tests': 'off',
-    'ember/avoid-leaking-state-in-ember-objects': 0,
+    'ember/avoid-leaking-state-in-ember-objects': 'off',
+    'ember/no-get': 'off', // @TODO remove support for old Ember
   },
   overrides: [
     // node files
@@ -52,6 +52,12 @@ module.exports = {
       },
     },
 
+    // all TypeScript files
+    {
+      files: ['**/*.ts'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+    },
+
     // test files
     {
       files: ['tests/**/*.{js,ts}'],
@@ -59,16 +65,23 @@ module.exports = {
       env: {
         embertest: true,
       },
+      rules: {
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@@typescript-eslint/ban-ts-comment': 'off',
+      },
     },
 
-    // all TypeScript files
+    // dummy app
     {
-      files: ['**/*.ts'],
+      files: ['tests/dummy/**/*.{js,ts}'],
+      env: {
+        embertest: true,
+      },
       rules: {
-        // These are covered by tsc
-        'no-undef': 'off',
-        'no-unused-vars': 'off',
-        'no-dupe-class-members': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
       },
     },
   ],

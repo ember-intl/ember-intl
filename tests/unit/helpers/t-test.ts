@@ -118,7 +118,7 @@ module('t', function (hooks) {
   test('warns when no locale has been set', async function (this: TestContext, assert) {
     assert.expect(1);
     // @TODO We should likely disallow unsetting the locale.
-    // @ts-expect-error
+    // @ts-expect-error This is undesired private behavior.
     this.intl.setLocale(null);
     await render(hbs`{{t 'foo.bar'}}`);
     assert.equal(this.element.textContent, `No locale defined.  Unable to resolve translation: "foo.bar"`);

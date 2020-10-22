@@ -9,7 +9,7 @@ module('format-relative', function (hooks) {
   });
 
   hooks.afterEach(function () {
-    // @ts-expect-error
+    // @ts-expect-error Setting this property is not allowed.
     Intl.RelativeTimeFormat = IntlRelativeTimeFormat;
   });
 
@@ -18,7 +18,7 @@ module('format-relative', function (hooks) {
   });
 
   test('should instantiate without throwing when Intl.RelativeTimeFormat is missing', function (assert) {
-    // @ts-expect-error
+    // @ts-expect-error Setting this property is not allowed.
     Intl.RelativeTimeFormat = undefined;
 
     assert.ok(
@@ -35,7 +35,7 @@ module('format-relative', function (hooks) {
   });
 
   test('should throw when formatting when Intl.RelativeTimeFormat is missing', function (assert) {
-    // @ts-expect-error
+    // @ts-expect-error Setting this property is not allowed.
     Intl.RelativeTimeFormat = undefined;
 
     const formatter = new FormatRelative({

@@ -10,6 +10,7 @@ import type IntlMessageFormat from 'intl-messageformat';
 
 export type ValueOf<ObjectType, ValueType extends keyof ObjectType = keyof ObjectType> = ObjectType[ValueType];
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 const EMPTY_OBJECT: {} = Object.create(null);
 
 export interface FormatterConfig {
@@ -25,6 +26,7 @@ export interface BaseOptions {
  * @private
  * @hide
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export default abstract class FormatterBase<KnownOptions extends {}> {
   protected readonly config: FormatterConfig;
   protected readonly readFormatConfig: () => Formats;
@@ -61,9 +63,9 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
       return EMPTY_OBJECT as { [K in keyof O & keyof KnownOptions]: O[K] };
     }
 
-    let found = {} as { [K in keyof O & keyof KnownOptions]: O[K] };
+    const found = {} as { [K in keyof O & keyof KnownOptions]: O[K] };
 
-    for (let key in options) {
+    for (const key in options) {
       if (this.options.includes((key as unknown) as keyof O & keyof KnownOptions)) {
         found[(key as unknown) as keyof O & keyof KnownOptions] =
           options[(key as unknown) as keyof O & keyof KnownOptions];

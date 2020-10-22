@@ -50,7 +50,7 @@ module('format-message (html)', function (hooks) {
   test('invoke the formatMessage directly with inlined locale', function (this: TestContext, assert) {
     assert.expect(1);
 
-    let output = this.intl
+    const output = this.intl
       .formatMessage(`'<strong>'Hello {name} {count, number}'</strong>'`, {
         htmlSafe: true,
         name: '<em>Jason</em>',
@@ -114,7 +114,7 @@ module('format-message (html)', function (hooks) {
   test('should handle static attributes, approach #2', function (this: TestContext, assert) {
     assert.expect(1);
 
-    let output = this.intl
+    const output = this.intl
       .formatMessage(`Fields marked '<strong class="primary">*</strong>' are required`, {
         htmlSafe: true,
       })

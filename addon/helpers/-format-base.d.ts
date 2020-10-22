@@ -1,6 +1,7 @@
 import Helper from '@ember/component/helper';
 import IntlService from '../services/intl';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export default abstract class AbstractHelper<V, O extends {} | undefined> extends Helper {
   readonly intl: IntlService;
   allowEmpty: boolean;

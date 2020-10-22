@@ -7,6 +7,7 @@ import { ErrorCode } from 'intl-messageformat';
  * @private
  * @hide
  */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore If the consuming project uses `--isolatedModules`, `const enums`
 // may not be used. Since `ember-cli-babel` does not care for `const enums`
 // _anyway_ , this is not an issue.
