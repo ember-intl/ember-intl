@@ -65,7 +65,9 @@ jobs:
     name: Ember Try
     runs-on: ubuntu-16.04
     needs: [test-locked-deps]
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
+      fail-fast: false
       matrix:
         scenario:
           - ember-lts-2.12
@@ -78,7 +80,10 @@ jobs:
           - ember-lts-3.20
           - ember-release
           - ember-beta
-          - ember-canary
+        experimental: [false]
+        include:
+          - scenario: ember-canary
+            experimental: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
