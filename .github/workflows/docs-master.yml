@@ -35,6 +35,6 @@ jobs:
         # 'master' or 'v1.2.3'
         # https://github.com/ember-learn/ember-cli-addon-docs/issues/454#issuecomment-584129324
         # https://github.com/ember-learn/ember-cli-addon-docs/issues/437
-        run: echo "::set-env name=ADDON_DOCS_VERSION_PATH::${GITHUB_REF##*/}"
+        run: echo "ADDON_DOCS_VERSION_PATH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: Deploy docs with `ember-cli-deploy`
         run: yarn ember deploy production --verbose --activate
