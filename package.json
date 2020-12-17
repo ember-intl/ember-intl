@@ -119,6 +119,9 @@
   "engines": {
     "node": ">= 10.*"
   },
+  "typesVersions": {
+    "^3.0": { "*": ["types.ts3/*", "addon/*"] }
+  },
   "pre-commit": "lint-staged",
   "lint-staged": {
     "*.js,*.ts": [
