@@ -90,3 +90,19 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Try Scenario
         run: yarn ember try:one ${{ matrix.scenario }}
+
+  lint-ts3:
+    name: TypeScript 3
+    runs-on: ubuntu-16.04
+    needs: [test-locked-deps]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Try Scenario
+        run: yarn ember try:one ts3 --- yarn lint:types --project tsconfig.ts3.json

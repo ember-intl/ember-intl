@@ -110,6 +110,14 @@ module.exports = function () {
             devDependencies: {},
           },
         },
+        {
+          name: 'ts3',
+          npm: {
+            devDependencies: {
+              typescript: '^3.9.7',
+            },
+          },
+        },
       ],
     };
   });
