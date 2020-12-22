@@ -81,10 +81,9 @@ jobs:
           - ember-release
           - ember-beta
         experimental: [false]
-        # https://github.com/emberjs/ember.js/issues/19313
-        # include:
-        #   - scenario: ember-canary
-        #     experimental: true
+        include:
+          - scenario: ember-canary
+            experimental: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
