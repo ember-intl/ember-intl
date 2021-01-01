@@ -68,7 +68,7 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@formatjs/intl-pluralrules": "^3.4.5",
-    "@formatjs/intl-relativetimeformat": "^7.2.5",
+    "@formatjs/intl-relativetimeformat": "^8.0.2",
     "@types/ember": "^3.16.1",
     "@types/ember-qunit": "^3.4.12",
     "@types/ember-resolver": "^5.0.10",
