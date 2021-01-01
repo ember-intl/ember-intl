@@ -9241,21 +9241,21 @@ inquirer@^7.3.3:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-intl-messageformat-parser@6.0.18, intl-messageformat-parser@^6.0.5:
-  version "6.0.18"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-6.0.18.tgz#bf2855b82b0749e1f34e452f0a15d08d3277c8c7"
-  integrity sha512-vLjACEunfi5uSUCWFLOR4PXQ9DGLpED3tM7o9zsYsOvjl0VIheoxyG0WZXnsnhn+S+Zu158M6CkuHXeNZfKRRg==
+intl-messageformat-parser@6.1.1, intl-messageformat-parser@^6.0.5:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-6.1.1.tgz#060971897bba3c15baec05ab65831657e32a06c2"
+  integrity sha512-LtIWD8MbLZYgnaQAwRjaieO2Fd7wDetcmCwqMOFgi0fq69Ll6C2QiJacUSRl7CIw3ZPewdU7bLBFb2U/hS+Whg==
   dependencies:
     "@formatjs/ecma402-abstract" "1.5.0"
     tslib "^2.0.1"
 
 intl-messageformat@^9.3.6:
-  version "9.3.20"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.3.20.tgz#87ec7e5f7a0f5d13157dc8bed88fe37b4c57b2a1"
-  integrity sha512-jmpjYHE076J/0CIofrPhtUC4LfmsAhuv4JMQxytl2KJd2bim+3+gQJh+Z1vyHUzcj4fIHdt388ZGchb8f0NwOA==
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.4.1.tgz#86cb6d92c5543d8245d3b1ee49aeb412a121539b"
+  integrity sha512-YhS51JxrLgwml6xXvphTB3uycuk1x+Q5MT2LeW34jiU0K6Zedm8bj8QyqfnWEAyny9JjOD+p0DeD4S7a5zFm8Q==
   dependencies:
     fast-memoize "^2.5.2"
-    intl-messageformat-parser "6.0.18"
+    intl-messageformat-parser "6.1.1"
     tslib "^2.0.1"
 
 into-stream@^3.1.0:
