@@ -1,5 +1,5 @@
 # Create Pull-Requests for NPM updates automatically
-# https://dependabot.com/docs/config-file/
+# https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-and-disabling-version-updates#enabling-dependabot-version-updates
 
 version: 2
 updates:
