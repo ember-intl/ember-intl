@@ -16,6 +16,8 @@ import normalizeLocale from '../-private/utils/normalize-locale';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
 import TranslationContainer from '../-private/store/container';
+import memoize from 'fast-memoize';
+import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
 
 export default Service.extend(Evented, {
   /** @public **/
@@ -85,6 +87,10 @@ export default Service.extend(Evented, {
   /** @private **/
   _formatters: null,
 
+  _intls: null,
+
+  _cache: createIntlCache(),
+
   /** @public **/
   init() {
     this._super(...arguments);
@@ -102,6 +108,23 @@ export default Service.extend(Evented, {
       this.formats = this._owner.resolveRegistration('formats:main') || {};
     }
 
+    this.onIntlError = this.onIntlError.bind(this);
+    this.getIntl = this.getIntl.bind(this);
+    this.createIntl = memoize((locale, formats) => {
+      const translation = this.translationsFor(locale);
+      return createIntl(
+        {
+          locale,
+          defaultLocale: locale,
+          formats,
+          defaultFormats: formats,
+          onError: this.onIntlError,
+          messages: translation ? translation.toObject() : {},
+        },
+        this._cache
+      );
+    });
+
     hydrate(this);
   },
 
@@ -110,34 +133,24 @@ export default Service.extend(Evented, {
     cancel(this._timer);
   },
 
+  onIntlError(err) {
+    if (err.code !== IntlErrorCode.MISSING_TRANSLATION) {
+      throw err;
+    }
+  },
+
   /** @private **/
   onError({ /* kind, */ error }) {
     throw error;
   },
 
   /** @public **/
-  lookup(key, localeName) {
+  lookup(key, localeName, options = {}) {
     const localeNames = this._localeWithDefault(localeName);
     let translation;
 
     for (let i = 0; i < localeNames.length; i++) {
       translation = this._translationContainer.lookup(localeNames[i], key);
-
-      if (translation !== undefined) {
-        break;
-      }
-    }
-
-    return translation;
-  },
-
-  /** @private **/
-  lookupAst(key, localeName, options = {}) {
-    const localeNames = this._localeWithDefault(localeName);
-    let translation;
-
-    for (let i = 0; i < localeNames.length; i++) {
-      translation = this._translationContainer.lookupAst(localeNames[i], key);
 
       if (translation !== undefined) {
         break;
@@ -151,6 +164,13 @@ export default Service.extend(Evented, {
     }
 
     return translation;
+  },
+
+  /**
+   * @private
+   */
+  getIntl(locale) {
+    return this.createIntl(Array.isArray(locale) ? locale[0] : locale, this.formats);
   },
 
   validateKeys(keys) {
@@ -178,15 +198,26 @@ export default Service.extend(Evented, {
 
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
-      const ast = this.lookupAst(key, options.locale, {
+      const message = this.lookup(key, options.locale, {
         ...options,
         // Note: last iteration will throw with the last key that was missing
         // in the future maybe the thrown error should include all the keys to help debugging
         resilient: keys.length - 1 !== index,
       });
 
-      if (ast) {
-        return this.formatMessage(ast, options);
+      // @formatjs/intl consider empty message to be an error
+      if (message === '') {
+        return message;
+      }
+
+      if (message) {
+        return this.formatMessage(
+          {
+            id: key,
+            defaultMessage: message,
+          },
+          options
+        );
       }
     }
   },
@@ -202,12 +233,19 @@ export default Service.extend(Evented, {
 
   /** @public */
   setLocale(locale) {
+    assert(
+      `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
+      locale
+    );
+
     set(this, 'locale', locale);
   },
 
   /** @public **/
   addTranslations(localeName, payload) {
-    this._translationContainer.push(normalizeLocale(localeName), payload);
+    const locale = normalizeLocale(localeName);
+    this._translationContainer.push(locale, payload);
+    this.getIntl(locale).__addMessages(this.translationsFor(locale).toObject());
   },
 
   /** @public **/
@@ -244,8 +282,7 @@ export default Service.extend(Evented, {
   /** @private */
   _createFormatters() {
     const formatterConfig = {
-      onError: this.onError.bind(this),
-      readFormatConfig: () => this.formats,
+      getIntl: (locale) => this.getIntl(locale),
     };
 
     return {

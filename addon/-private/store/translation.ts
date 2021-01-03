@@ -5,7 +5,6 @@
 
 import type { MessageFormatElement } from 'intl-messageformat-parser';
 import flatten, { NestedStructure } from 'ember-intl/-private/utils/flatten';
-import parse from 'ember-intl/-private/utils/parse';
 
 export type TranslationAST = MessageFormatElement[];
 
@@ -18,7 +17,6 @@ export type Translations = NestedStructure<string | number>;
 
 class Translation {
   private readonly translations = new Map<string, string>();
-  private readonly asts = new Map<string, MessageFormatElement[]>();
   private readonly _localeName: string;
 
   get localeName() {
@@ -41,14 +39,12 @@ class Translation {
       }
 
       this.translations.set(key, translation);
-      this.asts.set(key, parse(translation));
     }
   }
 
-  find(key: string): void | { ast: TranslationAST; original: string } {
+  find(key: string): void | { original: string } {
     if (this.has(key)) {
       return {
-        ast: this.asts.get(key)!,
         original: this.translations.get(key)!,
       };
     }
@@ -56,6 +52,14 @@ class Translation {
 
   has(key: string): boolean {
     return this.translations.has(key);
+  }
+
+  toObject(): Record<string, string> {
+    const obj: Record<string, string> = {};
+    this.translations.forEach((v, k) => {
+      obj[k] = v;
+    });
+    return obj;
   }
 }
 

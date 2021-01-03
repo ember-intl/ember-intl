@@ -20,7 +20,5 @@ export default class TranslationContainer extends EmberObject {
 
   private _lookup(localeName: string, key: string): undefined | ReturnType<Translation['find']>;
 
-  lookupAst(localeName: string, key: string): undefined | TranslationAST;
-
   lookup(localeName: string, key: string): undefined | string;
 }

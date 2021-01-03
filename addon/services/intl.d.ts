@@ -87,13 +87,7 @@ export default class IntlService extends Service.extend(Evented) {
 
   private onError(info: { kind: unknown; error: unknown }): never;
 
-  lookup(key: string, localeName?: string | string[]): string | undefined;
-
-  lookupAst(
-    key: string,
-    localeName?: string | string[],
-    options?: { resilient: boolean }
-  ): MessageFormatElement[] | MissingMessage;
+  lookup(key: string, localeName?: string | string[], opts?: { resilient?: boolean }): string | undefined;
 
   private validateKeys(keys: string[]): void;
   private validateKeys(keys: unknown[]): void | never;

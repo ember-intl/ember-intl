@@ -4,15 +4,12 @@
  */
 
 import Ember from 'ember';
-import memoize from 'fast-memoize';
+
 import { htmlSafe, isHTMLSafe } from '@ember/string';
 import type { SafeString } from '@ember/template/-private/handlebars';
-import IntlMessageFormat from 'intl-messageformat';
-import type { Formats } from '../../types';
-import parse from '../utils/parse';
-import type { FormatterConfig } from './-base';
-import type { TranslationAST } from '../store/translation';
-
+import Formatter from './-base';
+import { MessageDescriptor } from '@formatjs/intl';
+import { PrimitiveType } from 'intl-messageformat';
 const {
   Handlebars: {
     // @ts-expect-error Upstream types are incomplete.
@@ -51,31 +48,14 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
   return escapedOpts;
 }
 
+type MessageFormatOptions = Record<string, PrimitiveType>;
+
 /**
  * @private
  * @hide
  */
-export default class FormatMessage {
+export default class FormatMessage extends Formatter<any> {
   static readonly type = 'message';
-
-  protected readonly config: FormatterConfig;
-  protected readonly readFormatConfig: () => Formats;
-
-  constructor(config: FormatterConfig) {
-    this.config = config;
-
-    // NOTE: a fn since we lazily grab the formatter from the config
-    // as it can change at runtime by calling intl.set('formats', {...});
-    this.readFormatConfig = config.readFormatConfig;
-  }
-
-  createNativeFormatter = memoize(
-    (ast: TranslationAST, locales: string | string[], formatConfig?: Partial<Formats>) => {
-      return new IntlMessageFormat(ast, locales, formatConfig, {
-        ignoreTag: true,
-      });
-    }
-  );
 
   // ! Function overloads are not passed through generic types for reasons that
   // evade my knowledge. ¯\_(ツ)_/¯
@@ -83,33 +63,33 @@ export default class FormatMessage {
   // `IntlService#formatMessage`.
   format(
     locale: string | string[],
-    maybeAst: string | TranslationAST,
-    options?: Partial<Record<string, unknown>> & { htmlSafe?: false }
-  ): string;
-  format(
-    locale: string | string[],
-    maybeAst: string | TranslationAST,
-    options: Partial<Record<string, unknown>> & { htmlSafe: true }
+    stringOrDesc: string,
+    options: MessageFormatOptions & { htmlSafe: true }
   ): SafeString;
   format(
     locale: string | string[],
-    maybeAst: string | TranslationAST,
-    options?: Partial<Record<string, unknown>> & { htmlSafe?: boolean }
+    stringOrDesc: MessageDescriptor,
+    options?: MessageFormatOptions & { htmlSafe: boolean }
+  ): SafeString;
+  format(
+    locale: string | string[],
+    stringOrDesc: MessageDescriptor | string,
+    options?: MessageFormatOptions & { htmlSafe?: boolean }
   ): string | SafeString {
-    let ast = maybeAst as TranslationAST;
-
-    if (typeof maybeAst === 'string') {
-      // maybe memoize?  it's not a typical hot path since we
-      // parse when translations are pushed to ember-intl.
-      // This is only used if inlining a translation i.e.,
-      // {{format-message "Hi {name}"}}
-      ast = parse(maybeAst);
-    }
-
     const isHTMLSafe = options && options.htmlSafe;
-    const formatterInstance = this.createNativeFormatter(ast, locale, this.readFormatConfig());
-    const escapedOptions = isHTMLSafe ? escapeOptions(options) : options;
-    const result = formatterInstance.format(escapedOptions) as string;
+    // Empty string is considered an err in ember-intl
+    // if (typeof stringOrDesc === 'string' && !stringOrDesc) {
+    //   return stringOrDesc;
+    // }
+    const escapedOptions: MessageFormatOptions | undefined = isHTMLSafe ? escapeOptions(options) : options;
+    const desc =
+      stringOrDesc && typeof stringOrDesc === 'object'
+        ? stringOrDesc
+        : {
+            id: stringOrDesc,
+            defaultMessage: stringOrDesc,
+          };
+    const result = this.getIntl(locale).formatMessage(desc, escapedOptions, { ignoreTag: true });
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }
