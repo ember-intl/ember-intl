@@ -26,6 +26,15 @@ ember-intl relies on these `Intl` APIs:
 
 > _Important to note_: polyfilling strategies such as lazy-loading or dynamically injecting the script based on the browser requesting the page _is_ recommended.  There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story.  If you don't yet have a strategy, [polyfill.io](https://polyfill.io/v3/) may be a good option.
 
+#### **Adding `@formatjs/intl-locale`**
+
+`yarn add @formatjs/intl-locale`
+
+```js
+// app.js (Ember app entry point)
+import '@formatjs/intl-locale/polyfill';
+```
+
 #### **Adding `@formatjs/intl-getcanonicallocales`**
 
 `yarn add @formatjs/intl-getcanonicallocales`
@@ -36,6 +45,8 @@ import '@formatjs/intl-getcanonicallocales/polyfill';
 ```
 
 #### **Adding `@formatjs/intl-pluralrules`**
+
+Requirements: `Intl.getCanonicalLocales` and `Intl.Locale`.
 
 `yarn add @formatjs/intl-pluralrules`
 
@@ -49,6 +60,8 @@ import '@formatjs/intl-pluralrules/locale-data/es'; // Add Spanish data
 ```
 
 #### **Adding `@formatjs/intl-relativetimeformat`**
+
+Requirements: `Intl.getCanonicalLocales`, `Intl.Locale`, and `Intl.PluralRules`.
 
 `yarn add @formatjs/intl-relativetimeformat`
 
