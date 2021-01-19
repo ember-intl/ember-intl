@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "5.6.0",
+  "version": "5.6.1",
   "description": "A internationalization toolbox for ambitious applications.",
   "keywords": [
     "ember-addon",
@@ -121,8 +121,12 @@
   },
   "typesVersions": {
     "^3.0": {
-      "test-support": ["test-support/index.d.ts"],
-      "test-support/*": ["test-support/*"],  
+      "test-support": [
+        "test-support/index.d.ts"
+      ],
+      "test-support/*": [
+        "test-support/*"
+      ],
       "*": [
         "types.ts3/*",
         "addon/*"
