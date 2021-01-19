@@ -121,6 +121,8 @@
   },
   "typesVersions": {
     "^3.0": {
+      "test-support": ["test-support/index.d.ts"],
+      "test-support/*": ["test-support/*"],  
       "*": [
         "types.ts3/*",
         "addon/*"
