@@ -363,7 +363,7 @@ describe('translation-reducer', function () {
     });
 
     describe('mergeTranslations', function () {
-      const testDirectory = path.join(__dirname, '../../../fixtures/strip-nested-nulls');
+      const testDirectory = path.join(__dirname, '../../../fixtures/strip-empty-translations');
       const listFiles = ['de-de.yml', 'en-us.yml'].map((file) => path.join(testDirectory, file));
 
       it('strips empty translations if enabled', function () {
@@ -382,7 +382,7 @@ describe('translation-reducer', function () {
         const translations = subject.mergeTranslations(listFiles);
 
         expect(translations).to.deep.equal({
-          'de-de': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: null } },
+          'de-de': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: '', translation_3: null } },
           'en-us': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: 'dolor sit amet' } },
         });
       });
