@@ -62,7 +62,7 @@ Cause a build error if missing translations are detected.
 
 ## Strip Empty Translations
 
-At build time, removes empty translation keys if their values are falsey.
+Removes empty translations from the build output.
 
 ```
 // config/ember-intl.js

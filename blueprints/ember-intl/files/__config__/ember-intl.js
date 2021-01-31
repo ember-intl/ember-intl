@@ -71,7 +71,7 @@ module.exports = function(/* environment */) {
     errorOnMissingTranslations: false,
 
     /**
-     * removes empty translations from the build output.
+     * Removes empty translations from the build output.
      *
      * @property stripEmptyTranslations
      * @type {Boolean}

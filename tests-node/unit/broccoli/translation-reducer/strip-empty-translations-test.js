@@ -1,21 +1,18 @@
 const expect = require('chai').expect;
-const stripNestedNulls = require('../../../../lib/broccoli/translation-reducer/utils/strip-nested-nulls');
+const stripEmptyTranslations = require('../../../../lib/broccoli/translation-reducer/utils/strip-empty-translations');
 
-describe('stripNestedNulls', function () {
+describe('stripEmptyTranslations', function () {
   [
     [{ a: true, b: null }, { a: true }],
-    [{ a: { b: null } }, { a: {} }],
-    [
-      { a: { b: null, c: '' }, d: '' },
-      { a: { c: '' }, d: '' },
-    ],
+    [{ a: { b: null } }, {}],
+    [{ a: { b: null, c: '' }, d: '' }, {}],
     [
       { a: true, b: { c: true, d: { e: null, f: true } } },
       { a: true, b: { c: true, d: { f: true } } },
     ],
   ].forEach(([object, expected]) => {
     it(`${JSON.stringify(object)} -> ${JSON.stringify(expected)}`, function () {
-      expect(stripNestedNulls(object)).to.deep.equal(expected);
+      expect(stripEmptyTranslations(object)).to.deep.equal(expected);
     });
   });
 });
