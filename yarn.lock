@@ -1417,17 +1417,20 @@
   dependencies:
     tslib "^2.0.1"
 
-"@formatjs/ecma402-abstract@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.2.0.tgz#5b03ba4931436070ad926d1b2e89bf07edc5ea5b"
-  integrity sha512-jc1bZHhIE1YI0HnZIZcdlKpF4wle2pkgQpzXHDoyy4bUqzBSvDqktnF26hOkyA04KD4wqd61gkuTvRrHMmroAg==
-
-"@formatjs/intl-pluralrules@^3.4.5":
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.5.tgz#0802dc700fa0fd8b3b88a67d09f0a61256cb6f36"
-  integrity sha512-zX3cxhHinAz11Zdggc95NmlbfqaLeuSfi3dqdXO/H3XQbeo8fid5ePIj64YyNTetXyOwFE0DnVqKOK5nwCmDjw==
+"@formatjs/ecma402-abstract@1.5.2", "@formatjs/ecma402-abstract@^1.2.0":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.5.2.tgz#6c20c24f814ebf8e9dd46e34310a67895853a931"
+  integrity sha512-rscxoLyIwH2x+l15Z4eD580ioO3CkFVoWDLgDtgiOnWzDzpL5EigDRg9V4mINb8W6bQRT1xnCxiRwvw3bgvqrA==
   dependencies:
-    "@formatjs/ecma402-abstract" "^1.2.0"
+    tslib "^2.0.1"
+
+"@formatjs/intl-pluralrules@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-4.0.6.tgz#bab69e68b122089daa39f57072978a560f955176"
+  integrity sha512-/7Hjg/7EiHuZq4zwd406UoX2w5KtUrLRj9SI8mPOkUpHHqruSskYuJYahKWW7rNytPRaoCLfsigoFS0CDHBjlg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.5.2"
+    tslib "^2.0.1"
 
 "@formatjs/intl-relativetimeformat@^7.2.5":
   version "7.2.5"
