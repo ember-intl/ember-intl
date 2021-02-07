@@ -6,11 +6,15 @@ ember-intl relies on these `Intl` APIs:
 
 <a href="https://caniuse.com/#search=getCanonicalLocales"><img src={{root-url 'images/getcanonicallocales.png'}} /></a>
 
-- [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+.  Polyfill: [@formatjs/intl-numberformat](https://formatjs.io/docs/polyfills/intl-numberformat).
+- [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): Polyfill: [@formatjs/intl-locale](https://formatjs.io/docs/polyfills/intl-locale).
+
+<a href="https://caniuse.com/mdn-javascript_builtins_intl_locale_maximize"><img src={{root-url 'images/locale.png'}} /></a>
+
+- [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+. Polyfill: [@formatjs/intl-numberformat](https://formatjs.io/docs/polyfills/intl-numberformat).
 
 <a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_numberformat"><img src={{root-url 'images/numberformat.png'}} /></a>
 
-- [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+.  Polyfill: [@formatjs/intl-datetimeformat](https://formatjs.io/docs/polyfills/intl-datetimeformat).
+- [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+. Polyfill: [@formatjs/intl-datetimeformat](https://formatjs.io/docs/polyfills/intl-datetimeformat).
 
 <a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_datetimeformat"><img src={{root-url 'images/datetimeformat.png'}} /></a>
 
@@ -24,7 +28,7 @@ ember-intl relies on these `Intl` APIs:
 
 ### **Basic Polyfilling Strategies**
 
-> _Important to note_: polyfilling strategies such as lazy-loading or dynamically injecting the script based on the browser requesting the page _is_ recommended.  There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story.  If you don't yet have a strategy, [polyfill.io](https://polyfill.io/v3/) may be a good option.
+> _Important to note_: polyfilling strategies such as lazy-loading or dynamically injecting the script based on the browser requesting the page _is_ recommended. There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story. If you don't yet have a strategy, [polyfill.io](https://polyfill.io/v3/) may be a good option.
 
 #### **Adding `@formatjs/intl-locale`**
 
