@@ -35,20 +35,6 @@ module('service:intl', function (hooks) {
     assert.equal(this.intl.t('a_number'), 2);
   });
 
-  test('`t` should cascade translation lookup', function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      first: 'first translation should win',
-      second: 'second translation (error if used)',
-    });
-
-    assert.equal(
-      this.intl.t('invalid', {
-        default: ['also_invalid', 'first', 'second'],
-      }),
-      'first translation should win'
-    );
-  });
-
   test('should deepMerge addTranslations', function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, {
       foo: {
@@ -124,7 +110,7 @@ module('service:intl', function (hooks) {
   });
 
   test('lookup() should return undefined for missing translations ', function (this: TestContext, assert) {
-    assert.equal(this.intl.lookup('missing'), undefined);
+    assert.equal(this.intl.lookup('missing', undefined, { resilient: true }), undefined);
   });
 
   test('`t` should display last missing translation key when using default', function (this: TestContext, assert) {
@@ -219,7 +205,6 @@ module('service:intl', function (hooks) {
 
     const model = this.intl.translationsFor(LOCALE);
     assert.equal(typeof model, 'object');
-    assert.equal('asts' in model!, true);
     assert.equal('translations' in model!, true);
     assert.equal(typeof this.intl.translationsFor('ZZ'), 'undefined');
   });

@@ -54,14 +54,6 @@ export default EmberObject.extend({
     }
   },
 
-  lookupAst(localeName, key) {
-    const translationResult = this._lookup(localeName, key);
-
-    if (translationResult) {
-      return translationResult.ast;
-    }
-  },
-
   lookup(localeName, key) {
     const translationResult = this._lookup(localeName, key);
 

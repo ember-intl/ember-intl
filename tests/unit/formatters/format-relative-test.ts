@@ -1,5 +1,19 @@
 import { module, test } from 'qunit';
 import FormatRelative from 'ember-intl/-private/formatters/format-relative';
+import { createIntl, OnErrorFn } from '@formatjs/intl';
+
+function getIntl(locales: string | string[]) {
+  return createIntl({
+    locale: Array.isArray(locales) ? locales[0] : locales,
+    onError: onIntlError,
+  });
+}
+
+const onIntlError: OnErrorFn = (err) => {
+  if (err.code !== 'MISSING_TRANSLATION') {
+    throw err;
+  }
+};
 
 module('format-relative', function (hooks) {
   let IntlRelativeTimeFormat: unknown;
@@ -23,13 +37,7 @@ module('format-relative', function (hooks) {
 
     assert.ok(
       new FormatRelative({
-        onError({ error }) {
-          // NOTE: Default implementation in service is to throw.
-          throw error;
-        },
-        readFormatConfig() {
-          return {};
-        },
+        getIntl,
       })
     );
   });
@@ -39,13 +47,7 @@ module('format-relative', function (hooks) {
     Intl.RelativeTimeFormat = undefined;
 
     const formatter = new FormatRelative({
-      onError({ error }) {
-        // NOTE: Default implementation in service is to throw.
-        throw error;
-      },
-      readFormatConfig() {
-        return {};
-      },
+      getIntl,
     });
 
     assert.throws(() => {
@@ -55,17 +57,11 @@ module('format-relative', function (hooks) {
 
   test('should throw when formatting when a default unit is missing', function (assert) {
     const formatter = new FormatRelative({
-      onError({ error }) {
-        // NOTE: Default implementation in service is to throw.
-        throw error;
-      },
-      readFormatConfig() {
-        return {};
-      },
+      getIntl,
     });
 
     assert.throws(() => {
-      formatter.format('en-us', 0);
+      formatter.format('en-us', 0, {});
     }, /FormatRelative: 'formatOptions' are missing a 'unit'/);
   });
 });
