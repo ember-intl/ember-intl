@@ -2459,27 +2459,6 @@
   };
   _exports.default = _default;
 });
-;define("dummy/initializers/component-styles", ["exports", "ember-component-css/initializers/component-styles", "dummy/mixins/style-namespacing-extras"], function (_exports, _componentStyles, _styleNamespacingExtras) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _componentStyles.default;
-    }
-  });
-  Object.defineProperty(_exports, "initialize", {
-    enumerable: true,
-    get: function get() {
-      return _componentStyles.initialize;
-    }
-  });
-  // eslint-disable-next-line ember/new-module-imports
-  Ember.Component.reopen(_styleNamespacingExtras.default);
-});
 ;define("dummy/initializers/container-debug-adapter", ["exports", "ember-resolver/resolvers/classic/container-debug-adapter"], function (_exports, _containerDebugAdapter) {
   "use strict";
 
@@ -2742,25 +2721,6 @@
   };
   _exports.default = _default;
 });
-;define("dummy/instance-initializers/route-styles", ["exports", "ember-component-css/instance-initializers/route-styles"], function (_exports, _routeStyles) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _routeStyles.default;
-    }
-  });
-  Object.defineProperty(_exports, "initialize", {
-    enumerable: true,
-    get: function get() {
-      return _routeStyles.initialize;
-    }
-  });
-});
 ;define("dummy/intl-polyfills", ["@formatjs/intl-pluralrules/polyfill", "@formatjs/intl-pluralrules/locale-data/en", "@formatjs/intl-pluralrules/locale-data/fr", "@formatjs/intl-pluralrules/locale-data/es", "@formatjs/intl-relativetimeformat/polyfill", "@formatjs/intl-relativetimeformat/locale-data/en", "@formatjs/intl-relativetimeformat/locale-data/fr", "@formatjs/intl-relativetimeformat/locale-data/es"], function (_polyfill, _en, _fr, _es, _polyfill2, _en2, _fr2, _es2) {
   "use strict";
 });
@@ -2774,19 +2734,6 @@
     enumerable: true,
     get: function get() {
       return _routerScroll.default;
-    }
-  });
-});
-;define("dummy/mixins/style-namespacing-extras", ["exports", "ember-component-css/mixins/style-namespacing-extras"], function (_exports, _styleNamespacingExtras) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _styleNamespacingExtras.default;
     }
   });
 });
