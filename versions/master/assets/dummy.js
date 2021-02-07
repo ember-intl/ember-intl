@@ -1654,6 +1654,25 @@
     }
   });
 });
+;define("dummy/helpers/loc", ["exports", "@ember/string/helpers/loc"], function (_exports, _loc) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _loc.default;
+    }
+  });
+  Object.defineProperty(_exports, "loc", {
+    enumerable: true,
+    get: function get() {
+      return _loc.loc;
+    }
+  });
+});
 ;define("dummy/helpers/lowercase", ["exports", "ember-cli-string-helpers/helpers/lowercase"], function (_exports, _lowercase) {
   "use strict";
 
@@ -2658,16 +2677,18 @@
     }
   });
 });
-;define("dummy/instance-initializers/ember-data", ["exports", "ember-data/initialize-store-service"], function (_exports, _initializeStoreService) {
+;define("dummy/instance-initializers/ember-data", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
+
+  /* exists only for things that historically used "after" or "before" */
   var _default = {
     name: 'ember-data',
-    initialize: _initializeStoreService.default
+    initialize: function initialize() {}
   };
   _exports.default = _default;
 });
