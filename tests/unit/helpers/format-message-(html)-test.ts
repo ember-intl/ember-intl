@@ -1,7 +1,7 @@
 import { render } from '@ember/test-helpers';
 import { htmlSafe } from '@ember/string';
 import { setupRenderingTest } from 'ember-qunit';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupIntl, TestContext } from 'ember-intl/test-support';
 

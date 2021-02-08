@@ -1,4 +1,4 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -7,11 +7,13 @@ import { setupIntl, TestContext } from 'ember-intl/test-support';
 
 module('format-relative', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
-
-  hooks.beforeEach(function (this: TestContext) {
-    this.intl.set('formats', { relative: { yearShort: { unit: 'year', style: 'short' } } });
-  });
+  setupIntl(
+    hooks,
+    {},
+    {
+      formats: { relative: { yearShort: { unit: 'year', style: 'short' } } },
+    }
+  );
 
   test('exists', function (this: TestContext, assert) {
     assert.expect(1);

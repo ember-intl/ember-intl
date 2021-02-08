@@ -1,4 +1,4 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -9,7 +9,19 @@ const date = 1390518044403;
 
 module('format-time-test', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(
+    hooks,
+    {},
+    {
+      formats: {
+        time: {
+          test: { timeZone: 'UTC' },
+          test2: { timeZone: 'UTC', hour: 'numeric', minute: 'numeric' },
+          example: { timeZone: 'utc', timeZoneName: 'short' },
+        },
+      },
+    }
+  );
 
   test('exists', function (this: TestContext, assert) {
     assert.expect(1);
@@ -30,8 +42,6 @@ module('format-time-test', function (hooks) {
 
   test('invoke formatTime directly with format', function (this: TestContext, assert) {
     assert.expect(1);
-    this.intl.set('formats', { time: { test: { timeZone: 'UTC' } } });
-
     const output = this.intl.formatTime(date, { format: 'test', locale: 'fr-fr' });
 
     // Try both for browser Intl because of data inconsistencies between implementations
@@ -59,10 +69,6 @@ module('format-time-test', function (hooks) {
   test('it should return a formatted string formatted with formatConfig key', async function (this: TestContext, assert) {
     assert.expect(1);
 
-    this.intl.set('formats', {
-      time: { example: { timeZone: 'utc', timeZoneName: 'short' } },
-    });
-
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
@@ -72,10 +78,6 @@ module('format-time-test', function (hooks) {
 
   test('it should return a formatted string formatted using formatConfig key with inline locale', async function (this: TestContext, assert) {
     assert.expect(1);
-
-    this.intl.set('formats', {
-      time: { example: { timeZone: 'utc', timeZoneName: 'short' } },
-    });
 
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
@@ -114,15 +116,11 @@ module('format-time-test', function (hooks) {
 
     this.intl.setLocale(['en-ie']);
 
-    this.intl.set('formats', {
-      time: { test: { timeZone: 'UTC', hour: 'numeric', minute: 'numeric' } },
-    });
-
-    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test"}}`);
+    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test2"}}`);
 
     assert.equal(this.element.textContent, '00:00', 'en-ie time format defaults to h23');
 
-    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test" hourCycle="h12"}}`);
+    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test2" hourCycle="h12"}}`);
 
     assert.equal(this.element.textContent, '12:00 a.m.', 'en-ie hourCycle overridden');
   });

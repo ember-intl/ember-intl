@@ -1,14 +1,16 @@
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatDateHelper from 'ember-intl/helpers/format-date';
+import { setupIntl } from 'ember-intl/test-support';
 
 const date = 1390518044403;
 const locale = 'en-us';
 
 module('format-date', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks);
 
   test('exists', function (assert) {
     assert.expect(1);

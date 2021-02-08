@@ -5,8 +5,6 @@ import type { SafeString } from '@ember/template/-private/handlebars';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
 import TranslationContainer from '../-private/store/container';
-import { Formats } from '../types';
-import { MessageFormatElement } from 'intl-messageformat-parser';
 import type Translation from '../-private/store/translation';
 import type { TranslationAST } from '../-private/store/translation';
 
@@ -30,11 +28,6 @@ type FormatterProxy<T extends keyof IntlService['_formatters']> = (
 type MissingMessage = string;
 
 export default class IntlService extends Service.extend(Evented) {
-  /**
-   * @public
-   */
-  readonly formats: Formats;
-
   /**
    * Returns an array of registered locale names
    *
