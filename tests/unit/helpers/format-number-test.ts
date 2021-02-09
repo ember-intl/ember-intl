@@ -1,6 +1,6 @@
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -17,6 +17,7 @@ module('format-number', function (hooks) {
         number: {
           digits: { minimumFractionDigits: 2 },
           currency: { style: 'currency', minimumFractionDigits: 2 },
+          currency2: { style: 'currency', currency: 'USD', minimumFractionDigits: 3 },
         },
       },
     }
@@ -141,11 +142,8 @@ module('format-number', function (hooks) {
   // https://github.com/ember-intl/ember-intl/pull/1401
   test('hash options take precedence over named format options', async function (this: TestContext, assert) {
     assert.expect(1);
-    this.intl.set('formats', {
-      number: { currency: { style: 'currency', currency: 'USD', minimumFractionDigits: 3 } },
-    });
     await render(
-      hbs`{{format-number 1 format="currency"}} / {{format-number 1 format="currency" minimumFractionDigits=0}}`
+      hbs`{{format-number 1 format="currency2"}} / {{format-number 1 format="currency2" minimumFractionDigits=0}}`
     );
     assert.equal(this.element.textContent, '$1.000 / $1', '`minimumFractionDigits` overrides named format');
   });

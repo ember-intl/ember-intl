@@ -25,14 +25,14 @@ further down, that makes asserting against these translations a breeze.
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('setupIntl demo', function(hooks) {
+module('setupIntl demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  test('it serializes missing translations and injects the `intl` service', async function(assert) {
+  test('it serializes missing translations and injects the `intl` service', async function (assert) {
     await render(hbs`{{t "some.translation" someVariable="Hello"}}`);
     assert.dom().hasText('t:some.translation:("someVariable":"Hello")');
 
@@ -50,14 +50,14 @@ Does what `setupIntl(hooks)` does and also sets the locale. You can also use
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('setupIntl demo', function(hooks) {
+module('setupIntl demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
-  test('it sets the locale', async function(assert) {
+  test('it sets the locale', async function (assert) {
     assert.deepEqual(get(this.intl, 'locale'), ['en-us']);
   });
 });
@@ -73,20 +73,20 @@ for that.
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('setupIntl demo', function(hooks) {
+module('setupIntl demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, {
     some: {
       mocked: {
-        translations: 'Hello {thing}'
-      }
-    }
+        translations: 'Hello {thing}',
+      },
+    },
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     await render(hbs`{{t "some.mocked.translation" thing="world"}}`);
     assert.dom().hasText('Hello world');
 
@@ -110,20 +110,20 @@ for that.
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('setupIntl demo', function(hooks) {
+module('setupIntl demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us', {
     some: {
       mocked: {
-        translations: 'Hello {thing}'
-      }
-    }
+        translations: 'Hello {thing}',
+      },
+    },
   });
 
-  test('it sets the locale and mocks the translations', async function(assert) {
+  test('it sets the locale and mocks the translations', async function (assert) {
     assert.deepEqual(get(this.intl, 'locale'), ['en-us']);
 
     await render(hbs`{{t "some.mocked.translation" thing="world"}}`);
@@ -146,14 +146,14 @@ Behaves as if you called `setLocale(locale)` on the `intl` service.
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl, setLocale } from 'ember-intl/test-support';
 
-module('setLocale demo', function(hooks) {
+module('setLocale demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  test('it sets the locale', async function(assert) {
+  test('it sets the locale', async function (assert) {
     setLocale('en-us');
     assert.deepEqual(get(this.intl, 'locale'), ['en-us']);
 
@@ -175,30 +175,30 @@ locales were `['en-ca', 'en-gb', 'en-us']`, the translations would be added to
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl, setLocale } from 'ember-intl/test-support';
 
-module('addTranslations demo', function(hooks) {
+module('addTranslations demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  test('it adds the translations', async function(assert) {
+  test('it adds the translations', async function (assert) {
     setLocale(['en-ca', 'en-gb', 'en-us']);
 
     addTranslations({
       translation: {
         on: {
-          enUs: "'murica"
-        }
-      }
+          enUs: "'murica",
+        },
+      },
     });
 
     addTranslations('en-ca', {
       translation: {
         on: {
-          enCa: 'Sorry'
-        }
-      }
+          enCa: 'Sorry',
+        },
+      },
     });
 
     assert.ok(this.intl.exists('en-us', 'translation.on.enUs'));
@@ -222,14 +222,14 @@ translation messages are there and correctly interpolated by ember-intl.
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl, t } from 'ember-intl/test-support';
 
-module('t demo', function(hooks) {
+module('t demo', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  test('it is a shortcut for accessing translations', async function(assert) {
+  test('it is a shortcut for accessing translations', async function (assert) {
     await render(hbs`{{t "some.translation" someVariable="Hello"}}`);
     assert.dom().hasText(t('some.translation', { someVariable: 'Hello' }));
   });
@@ -245,6 +245,6 @@ If you have a dynamic, variable driven usage of the `t` helper, you might see an
 import Helper from 'ember-intl/helpers/t';
 
 export default Helper.extend({
-  allowEmpty: true
+  allowEmpty: true,
 });
 ```

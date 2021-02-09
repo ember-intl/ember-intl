@@ -4,7 +4,7 @@ import { run, next } from '@ember/runloop';
 import { render } from '@ember/test-helpers';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
 import { setupRenderingTest } from 'ember-qunit';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, skip, test } from 'qunit';
 import { setupIntl, TestContext } from 'ember-intl/test-support';
 
@@ -154,7 +154,7 @@ module('format-message', function (hooks) {
     this.intl.addTranslations('es_MX', { foo: 'bar' });
     /* tests that the locale name becomes normalized to es-mx */
     this.intl.exists('test', 'fr-ca');
-    assert.equal(get(this.intl, 'locales').join('; '), 'en-us; es-es; fr-fr; es-mx');
+    assert.deepEqual(get(this.intl, 'locales'), ['en-us', 'es-es', 'fr-fr', 'es-mx']);
   });
 
   test('should respect format options for date ICU block', async function (this: TestContext & {

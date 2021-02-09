@@ -16,20 +16,20 @@ import normalizeLocale from '../-private/utils/normalize-locale';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
 import TranslationContainer from '../-private/store/container';
-import memoize from 'fast-memoize';
 import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
 
 export default Service.extend(Evented, {
-  /** @public **/
-  formats: null,
-
   /**
    * Returns an array of registered locale names
    *
    * @property locales
    * @public
    */
-  locales: computed.readOnly('_translationContainer.locales'),
+  locales: computed('_intls', {
+    get() {
+      return Object.keys(get(this, '_intls'));
+    },
+  }),
 
   /** @public **/
   locale: computed('_locale', {
@@ -85,8 +85,12 @@ export default Service.extend(Evented, {
   _timer: null,
 
   /** @private **/
+  _formats: null,
+
+  /** @private **/
   _formatters: null,
 
+  /** @private */
   _intls: null,
 
   _cache: createIntlCache(),
@@ -104,26 +108,12 @@ export default Service.extend(Evented, {
     this._translationContainer = TranslationContainer.create();
     this._formatters = this._createFormatters();
 
-    if (!this.formats) {
-      this.formats = this._owner.resolveRegistration('formats:main') || {};
+    if (!this._formats) {
+      this._formats = this._owner.resolveRegistration('formats:main') || {};
     }
-
+    set(this, '_intls', {});
     this.onIntlError = this.onIntlError.bind(this);
     this.getIntl = this.getIntl.bind(this);
-    this.createIntl = memoize((locale, formats) => {
-      const translation = this.translationsFor(locale);
-      return createIntl(
-        {
-          locale,
-          defaultLocale: locale,
-          formats,
-          defaultFormats: formats,
-          onError: this.onIntlError,
-          messages: translation ? translation.toObject() : {},
-        },
-        this._cache
-      );
-    });
 
     hydrate(this);
   },
@@ -170,7 +160,31 @@ export default Service.extend(Evented, {
    * @private
    */
   getIntl(locale) {
-    return this.createIntl(Array.isArray(locale) ? locale[0] : locale, this.formats);
+    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    if (!this._intls[resolvedLocale]) {
+      this._intls[resolvedLocale] = this.createIntl(resolvedLocale);
+    }
+
+    return this._intls[resolvedLocale];
+  },
+
+  /**
+   * @private
+   * @param {String} locale Locale of intl obj to create
+   */
+  createIntl(locale) {
+    const translation = this.translationsFor(locale);
+    return createIntl(
+      {
+        locale,
+        defaultLocale: locale,
+        formats: this._formats,
+        defaultFormats: this._formats,
+        onError: this.onIntlError,
+        messages: translation ? translation.toObject() : {},
+      },
+      this._cache
+    );
   },
 
   validateKeys(keys) {
