@@ -15,8 +15,8 @@ import isArrayEqual from '../-private/utils/is-array-equal';
 import normalizeLocale from '../-private/utils/normalize-locale';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
-import TranslationContainer from '../-private/store/container';
 import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
+import flatten from '../-private/utils/flatten';
 
 export default Service.extend(Evented, {
   /**
@@ -76,9 +76,6 @@ export default Service.extend(Evented, {
   formatDate: createFormatterProxy('date'),
 
   /** @private **/
-  _translationContainer: null,
-
-  /** @private **/
   _locale: null,
 
   /** @private **/
@@ -103,9 +100,6 @@ export default Service.extend(Evented, {
 
     this.setLocale(initialLocale);
     this._owner = getOwner(this);
-    // Below issue can be ignored, as this is during the `init()` constructor.
-    // eslint-disable-next-line ember/no-assignment-of-untracked-properties-used-in-tracking-contexts
-    this._translationContainer = TranslationContainer.create();
     this._formatters = this._createFormatters();
 
     if (!this._formats) {
@@ -114,6 +108,7 @@ export default Service.extend(Evented, {
     set(this, '_intls', {});
     this.onIntlError = this.onIntlError.bind(this);
     this.getIntl = this.getIntl.bind(this);
+    this.getOrCreateIntl = this.getOrCreateIntl.bind(this);
 
     hydrate(this);
   },
@@ -140,7 +135,11 @@ export default Service.extend(Evented, {
     let translation;
 
     for (let i = 0; i < localeNames.length; i++) {
-      translation = this._translationContainer.lookup(localeNames[i], key);
+      const messages = this.translationsFor(localeNames[i]);
+      if (!messages) {
+        continue;
+      }
+      translation = messages[key];
 
       if (translation !== undefined) {
         break;
@@ -161,6 +160,11 @@ export default Service.extend(Evented, {
    */
   getIntl(locale) {
     const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    return this._intls[resolvedLocale];
+  },
+
+  getOrCreateIntl(locale) {
+    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
     if (!this._intls[resolvedLocale]) {
       this._intls[resolvedLocale] = this.createIntl(resolvedLocale);
     }
@@ -172,8 +176,7 @@ export default Service.extend(Evented, {
    * @private
    * @param {String} locale Locale of intl obj to create
    */
-  createIntl(locale) {
-    const translation = this.translationsFor(locale);
+  createIntl(locale, messages = {}) {
     return createIntl(
       {
         locale,
@@ -181,7 +184,7 @@ export default Service.extend(Evented, {
         formats: this._formats,
         defaultFormats: this._formats,
         onError: this.onIntlError,
-        messages: translation ? translation.toObject() : {},
+        messages,
       },
       this._cache
     );
@@ -220,7 +223,7 @@ export default Service.extend(Evented, {
       });
 
       // @formatjs/intl consider empty message to be an error
-      if (message === '') {
+      if (message === '' || typeof message === 'number') {
         return message;
       }
 
@@ -242,7 +245,7 @@ export default Service.extend(Evented, {
 
     assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
 
-    return localeNames.some((localeName) => this._translationContainer.has(localeName, key));
+    return localeNames.some((localeName) => key in (this.getIntl(localeName)?.messages || {}));
   },
 
   /** @public */
@@ -258,13 +261,13 @@ export default Service.extend(Evented, {
   /** @public **/
   addTranslations(localeName, payload) {
     const locale = normalizeLocale(localeName);
-    this._translationContainer.push(locale, payload);
-    this.getIntl(locale).__addMessages(this.translationsFor(locale).toObject());
+    this.getOrCreateIntl(locale).__addMessages(flatten(payload));
   },
 
   /** @public **/
   translationsFor(localeName) {
-    return this._translationContainer.findTranslationModel(normalizeLocale(localeName), false);
+    const locale = normalizeLocale(localeName);
+    return this.getIntl(locale)?.messages;
   },
 
   /** @private **/
@@ -296,7 +299,7 @@ export default Service.extend(Evented, {
   /** @private */
   _createFormatters() {
     const formatterConfig = {
-      getIntl: (locale) => this.getIntl(locale),
+      getIntl: (locale) => this.getOrCreateIntl(locale),
     };
 
     return {

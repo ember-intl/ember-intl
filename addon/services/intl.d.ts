@@ -4,9 +4,6 @@ import { EmberRunTimer } from '@ember/runloop/types';
 import type { SafeString } from '@ember/template/-private/handlebars';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
-import TranslationContainer from '../-private/store/container';
-import type Translation from '../-private/store/translation';
-import type { TranslationAST } from '../-private/store/translation';
 
 export interface TOptions {
   default?: string | string[];
@@ -56,19 +53,17 @@ export default class IntlService extends Service.extend(Evented) {
   // and duplicate the types here.
   // readonly formatMessage: FormatterProxy<'message'>;
   formatMessage(
-    maybeAst: string | TranslationAST,
+    maybeAst: string,
     options?: Partial<Record<string, unknown>> & { locale?: string | [string, ...string[]]; htmlSafe?: false }
   ): string;
   formatMessage(
-    maybeAst: string | TranslationAST,
+    maybeAst: string,
     options: Partial<Record<string, unknown>> & { locale?: string | [string, ...string[]]; htmlSafe: true }
   ): SafeString;
   formatMessage(
-    maybeAst: string | TranslationAST,
+    maybeAst: string,
     options?: Partial<Record<string, unknown>> & { locale?: string | [string, ...string[]]; htmlSafe?: boolean }
   ): string | SafeString;
-
-  private _translationContainer?: TranslationContainer;
 
   private _locale: string[];
 
@@ -95,7 +90,7 @@ export default class IntlService extends Service.extend(Evented) {
 
   addTranslations(localeName: string, payload: unknown): void;
 
-  translationsFor(localeName: string): Translation | undefined;
+  translationsFor(localeName: string): Record<string, string>;
 
   private _localeWithDefault(localeName?: string | string[]): string[];
 
