@@ -208,5 +208,11 @@
     "name": "v5.6.2",
     "sha": "8b7f7ac20e6e3205deecf1a54ffa05519572dd49",
     "tag": "v5.6.2"
+  },
+  "main": {
+    "path": "versions/main",
+    "name": "main",
+    "sha": "fd2dc93fdf342ad75166033e936a612c4a265cd3",
+    "tag": null
   }
 }
