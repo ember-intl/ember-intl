@@ -1,9 +1,9 @@
-name: Deploy Latest `master` Docs
+name: Deploy Latest `main` Docs
 
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   CI: true
@@ -32,7 +32,7 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Set ENV
-        # 'master' or 'v1.2.3'
+        # 'main' or 'v1.2.3'
         # https://github.com/ember-learn/ember-cli-addon-docs/issues/454#issuecomment-584129324
         # https://github.com/ember-learn/ember-cli-addon-docs/issues/437
         run: echo "ADDON_DOCS_VERSION_PATH=${GITHUB_REF##*/}" >> $GITHUB_ENV
