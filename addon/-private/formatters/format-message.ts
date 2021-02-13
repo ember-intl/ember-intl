@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 
-import { htmlSafe, isHTMLSafe } from '@ember/string';
+import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
 import Formatter from './-base';
 import { MessageDescriptor } from '@formatjs/intl';

@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 import { getOwner } from '@ember/application';
-import { computed, get, set } from '@ember/object';
+import { computed, set } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { assert } from '@ember/debug';
 import { makeArray } from '@ember/array';
@@ -27,7 +27,7 @@ export default Service.extend(Evented, {
    */
   locales: computed('_intls', {
     get() {
-      return Object.keys(get(this, '_intls'));
+      return Object.keys(this._intls);
     },
   }),
 
@@ -48,7 +48,7 @@ export default Service.extend(Evented, {
       return this._locale;
     },
     get() {
-      return get(this, '_locale');
+      return this._locale;
     },
   }),
 
@@ -99,7 +99,7 @@ export default Service.extend(Evented, {
   init() {
     this._super(...arguments);
 
-    const initialLocale = get(this, 'locale') || ['en-us'];
+    const initialLocale = this.locale || ['en-us'];
 
     this.setLocale(initialLocale);
     this._owner = getOwner(this);
@@ -270,7 +270,7 @@ export default Service.extend(Evented, {
   /** @private **/
   _localeWithDefault(localeName) {
     if (!localeName) {
-      return get(this, '_locale') || [];
+      return this._locale || [];
     }
 
     if (typeof localeName === 'string') {
@@ -316,7 +316,7 @@ function createFormatterProxy(name) {
     if (formatOptions && formatOptions.locale) {
       locale = this._localeWithDefault(formatOptions.locale);
     } else {
-      locale = get(this, 'locale');
+      locale = this.locale;
     }
 
     return this._formatters[name].format(locale, value, formatOptions);

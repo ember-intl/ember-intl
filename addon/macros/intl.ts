@@ -1,4 +1,4 @@
-import { computed, get, defineProperty } from '@ember/object';
+import { computed, defineProperty } from '@ember/object';
 import type ComputedProperty from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import type IntlService from '../services/intl';
@@ -106,13 +106,13 @@ export default function intl<T>(...dependentKeysAndGetterFn: unknown[]): Compute
     this: { [__intlInjectionName]?: IntlService },
     propertyKey: string
   ) {
-    if (!get(this, __intlInjectionName)) {
+    if (!this[__intlInjectionName]) {
       defineProperty(this, __intlInjectionName, {
         value: getOwner(this).lookup('service:intl'),
         enumerable: false,
       });
     }
-    const intl = get(this, __intlInjectionName);
+    const intl = this[__intlInjectionName];
     return getterFn.call(this, intl, propertyKey, this);
   } as any) as ComputedProperty<T>;
 }

@@ -1,7 +1,7 @@
 import { addListener } from '@ember/object/events';
 import { registerWarnHandler } from '@ember/debug';
 import { settled } from '@ember/test-helpers';
-import { isHTMLSafe } from '@ember/string';
+import { isHTMLSafe } from '@ember/template';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { get } from '@ember/object';
