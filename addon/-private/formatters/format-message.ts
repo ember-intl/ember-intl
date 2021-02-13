@@ -5,7 +5,7 @@
 
 import Ember from 'ember';
 import memoize from 'fast-memoize';
-import { htmlSafe, isHTMLSafe } from '@ember/string';
+import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
 import IntlMessageFormat from 'intl-messageformat';
 import type { Formats } from '../../types';
