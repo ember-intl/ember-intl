@@ -1,4 +1,3 @@
-import { addListener } from '@ember/object/events';
 import { registerWarnHandler } from '@ember/debug';
 import { settled } from '@ember/test-helpers';
 import { isHTMLSafe } from '@ember/template';
@@ -8,18 +7,22 @@ import { get } from '@ember/object';
 import td from 'testdouble';
 import { setupIntl, TestContext } from 'ember-intl/test-support';
 import type { TOptions } from 'ember-intl/services/intl';
-
+import { next } from '@ember/runloop';
 const LOCALE = 'en-us';
 
 module('service:init initialization', function (hooks) {
   setupTest(hooks);
 
-  test('it calls `setLocale` on init', function (this: TestContext, assert) {
-    const setLocale = td.func();
+  test('it calls `setLocale` on init', async function (this: TestContext, assert) {
+    assert.expect(1);
+    const localeChanged = td.func();
     const Intl = this.owner.factoryFor('service:intl');
 
-    Intl.create({ setLocale });
-    assert.verify(setLocale([LOCALE]));
+    const unsubscribe = Intl.create().onLocaleChanged(localeChanged);
+    next(() => {
+      assert.verify(localeChanged());
+      unsubscribe();
+    });
   });
 });
 
@@ -143,22 +146,6 @@ module('service:intl', function (hooks) {
     });
   });
 
-  test('triggers notifyPropertyChange only when locale changes', function (this: TestContext, assert) {
-    let count = 0;
-
-    function increment() {
-      ++count;
-    }
-
-    // eslint-disable-next-line ember/no-observers
-    this.intl.addObserver('locale', this.intl, increment);
-    this.intl.setLocale(['es']);
-    this.intl.setLocale(['fr']);
-    assert.equal(count, 2);
-    assert.equal(this.intl.get('locale'), 'fr');
-    this.intl.removeObserver('locale', this.intl, increment);
-  });
-
   test('waits for translations to load', async function (this: TestContext, assert) {
     assert.expect(1);
     await settled();
@@ -275,8 +262,9 @@ module('service:intl', function (hooks) {
     const newLocale = ['de', 'en-us'];
 
     // @ts-expect-error https://discordapp.com/channels/480462759797063690/484421406659182603/749961012417003590
-    addListener(this.intl, 'localeChanged', () => {
+    const unsubscribe = this.intl.onLocaleChanged(() => {
       assert.deepEqual(get(this.intl, 'locale') as string[], newLocale);
+      unsubscribe();
     });
 
     this.intl.setLocale(newLocale);

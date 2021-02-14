@@ -5,12 +5,8 @@
 
 import BaseHelper from './-format-base';
 
-export default BaseHelper.extend({
+export default class extends BaseHelper {
   format(params, hash) {
     return this.intl.formatRelative(params, hash);
-  },
-
-  compute(params, hash = {}) {
-    return this._super(params, hash);
-  },
-});
+  }
+}

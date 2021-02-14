@@ -49,6 +49,7 @@
     "ember-auto-import": "^1.5.3",
     "ember-cli-babel": "^7.23.0",
     "ember-cli-typescript": "^4.0.0",
+    "eventemitter3": "^4.0.7",
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.2",
     "has-unicode": "^2.0.1",
