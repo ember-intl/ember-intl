@@ -3,8 +3,7 @@ import { missingMessage } from './-private/serialize-translation';
 import type { TestContext as BaseTestContext } from 'ember-test-helpers';
 import type IntlService from 'ember-intl/services/intl';
 import type { TOptions } from 'ember-intl/services/intl';
-import type { Translations } from 'ember-intl/-private/store/translation';
-import { Formats } from 'ember-intl/types';
+import { Formats, Translations } from 'ember-intl/types';
 
 export interface IntlTestContext {
   intl: IntlService;

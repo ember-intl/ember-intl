@@ -193,20 +193,16 @@ module('service:intl', function (hooks) {
     assert.ok(!invokedWarn, 'Warning was not raised');
   });
 
-  test('translations that are empty strings are valid', async function (this: TestContext, assert) {
-    assert.expect(1);
-
+  test('translations that are empty strings are valid', function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, { empty_string: '' });
     assert.equal(this.intl.t('empty_string'), '');
   });
 
-  test('translationsFor returns translation model', async function (this: TestContext, assert) {
+  test('translationsFor returns messages', async function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, { foo: 'bar' });
 
-    const model = this.intl.translationsFor(LOCALE);
-    assert.equal(typeof model, 'object');
-    assert.equal('translations' in model!, true);
-    assert.equal(typeof this.intl.translationsFor('ZZ'), 'undefined');
+    assert.equal(this.intl.translationsFor(LOCALE).foo, 'bar');
+    assert.deepEqual(this.intl.translationsFor('ZZ'), undefined);
   });
 
   test('translations keys can contain periods within the key', async function (this: TestContext, assert) {
