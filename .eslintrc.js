@@ -16,6 +16,7 @@ module.exports = {
     'ember/no-restricted-resolver-tests': 'off',
     'ember/avoid-leaking-state-in-ember-objects': 'off',
     'ember/no-get': 'off', // @TODO remove support for old Ember
+    'ember/no-classic-classes': 'off',
   },
   overrides: [
     // node files

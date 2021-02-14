@@ -1,4 +1,5 @@
 import { get } from '@ember/object';
+// eslint-disable-next-line ember/no-computed-properties-in-native-classes
 import type ComputedProperty from '@ember/object/computed';
 import EmptyObject from 'ember-intl/-private/utils/empty-object';
 import intl from './intl';
