@@ -2,7 +2,7 @@
 
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  instant: new Date(),
-});
+export default class extends Controller {
+  instant = new Date();
+}
 // END-SNIPPET

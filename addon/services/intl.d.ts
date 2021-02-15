@@ -1,4 +1,3 @@
-import Evented from '@ember/object/evented';
 import Service from '@ember/service';
 import { EmberRunTimer } from '@ember/runloop/types';
 import type { SafeString } from '@ember/template/-private/handlebars';
@@ -24,7 +23,7 @@ type FormatterProxy<T extends keyof IntlService['_formatters']> = (
  */
 type MissingMessage = string;
 
-export default class IntlService extends Service.extend(Evented) {
+export default class IntlService extends Service {
   /**
    * Returns an array of registered locale names
    *

@@ -1,5 +1,5 @@
 import { A as emberArray } from '@ember/array';
-import EmberObject, { computed, get, set } from '@ember/object';
+import EmberObject, { get, set } from '@ember/object';
 import { run, next } from '@ember/runloop';
 import { render } from '@ember/test-helpers';
 import formatMessageHelper from 'ember-intl/helpers/format-message';
@@ -7,6 +7,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, skip, test } from 'qunit';
 import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { tracked } from '@glimmer/tracking';
 
 const DEFAULT_LOCALE_NAME = 'en-us';
 
@@ -185,14 +186,13 @@ module('format-message', function (hooks) {
     const done = assert.async();
     assert.expect(2);
 
-    const context = EmberObject.extend({
-      foo: true,
-      translation: computed('foo', {
-        get() {
-          return get(this, 'foo') ? 'foo foo' : 'bar bar';
-        },
-      }),
-    }).create();
+    class Context extends EmberObject {
+      @tracked foo = true;
+      get translation() {
+        return this.foo ? 'foo foo' : 'bar bar';
+      }
+    }
+    const context = new Context();
 
     set(this, 'context', context);
     await render(hbs`{{format-message context.translation}}`);

@@ -26,12 +26,13 @@ module('Unit | Macros | t', function (hooks) {
 
   hooks.beforeEach(function (this: TestContext) {
     const { owner } = this;
-    this.ContainerObject = EmberObject.extend({
-      init() {
-        this._super();
+    this.ContainerObject = class extends EmberObject {
+      constructor() {
+        // eslint-disable-next-line prefer-rest-params
+        super(...arguments);
         setOwner(this, owner);
-      },
-    });
+      }
+    };
 
     this.object = this.ContainerObject.extend({
       numberClicks: 9,
