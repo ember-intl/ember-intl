@@ -3,6 +3,7 @@ import { EmberRunTimer } from '@ember/runloop/types';
 import type { SafeString } from '@ember/template/-private/handlebars';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
+import FormatList from 'ember-intl/-private/formatters/format-list';
 
 export interface TOptions {
   default?: string | string[];
@@ -46,6 +47,7 @@ export default class IntlService extends Service {
   readonly formatNumber: FormatterProxy<'number'>;
   readonly formatTime: FormatterProxy<'time'>;
   readonly formatDate: FormatterProxy<'date'>;
+  readonly formatList: FormatterProxy<'list'>;
 
   // ! This _should_ just be the type shown below, but because TypeScript
   // garbles up function overloads in generics, we need to manually enumerate
@@ -101,5 +103,6 @@ export default class IntlService extends Service {
     number: FormatNumber;
     time: FormatTime;
     date: FormatDate;
+    list: FormatList;
   };
 }

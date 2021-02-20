@@ -26,6 +26,8 @@ ember-intl relies on these `Intl` APIs:
 
 <a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_relativetimeformat"><img src={{root-url 'images/relativetimeformat.png'}} /></a>
 
+- [Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ListFormat): Polyfill: [`@formatjs/intl-listformat`](https://formatjs.io/docs/polyfills/intl-listformat).
+
 ### **Basic Polyfilling Strategies**
 
 > _Important to note_: polyfilling strategies such as lazy-loading or dynamically injecting the script based on the browser requesting the page _is_ recommended. There are many strategies for doing so and they often vary between projects, so ember-intl avoids trying to solve that story. If you don't yet have a strategy, [polyfill.io](https://polyfill.io/v3/) may be a good option.

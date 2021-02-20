@@ -34,6 +34,7 @@ Router.map(function () {
       this.route('format-number');
       this.route('format-relative');
       this.route('format-time');
+      this.route('format-list');
     });
     this.route('cookbook', function () {
       this.route('common-errors');

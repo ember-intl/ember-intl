@@ -8,7 +8,14 @@ import { makeArray } from '@ember/array';
 import Service from '@ember/service';
 import { next, cancel } from '@ember/runloop';
 
-import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
+import {
+  FormatDate,
+  FormatMessage,
+  FormatNumber,
+  FormatRelative,
+  FormatTime,
+  FormatList,
+} from '../-private/formatters';
 import isArrayEqual from '../-private/utils/is-array-equal';
 import normalizeLocale from '../-private/utils/normalize-locale';
 import getDOM from '../-private/utils/get-dom';
@@ -18,6 +25,7 @@ import flatten from '../-private/utils/flatten';
 import EventEmitter from 'eventemitter3';
 import { tracked } from '@glimmer/tracking';
 import { dependentKeyCompat } from '@ember/object/compat';
+
 export default class extends Service {
   /**
    * Returns an array of registered locale names
@@ -73,6 +81,9 @@ export default class extends Service {
 
   /** @public **/
   formatDate = createFormatterProxy('date');
+
+  /** @public **/
+  formatList = createFormatterProxy('list');
 
   /** @private **/
   @tracked _locale = null;
@@ -325,6 +336,7 @@ export default class extends Service {
       number: new FormatNumber(formatterConfig),
       time: new FormatTime(formatterConfig),
       date: new FormatDate(formatterConfig),
+      list: new FormatList(formatterConfig),
     };
   }
   /**

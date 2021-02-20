@@ -25,7 +25,7 @@ export interface BaseOptions {
 export default abstract class FormatterBase<KnownOptions extends {}> {
   protected readonly config: FormatterConfig;
   protected readonly getIntl: (locale: string | string[]) => IntlShape<string>;
-  static type: keyof Formats | 'message';
+  static type: keyof Formats | 'message' | 'list' | 'dateRange' | 'timeRange';
 
   constructor(config: FormatterConfig) {
     this.config = config;
