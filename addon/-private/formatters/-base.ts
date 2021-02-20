@@ -23,26 +23,19 @@ export interface BaseOptions {
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
 export default abstract class FormatterBase<KnownOptions extends {}> {
-  protected readonly config: FormatterConfig;
-  protected readonly getIntl: (locale: string | string[]) => IntlShape<string>;
   static type: keyof Formats | 'message' | 'list' | 'dateRange' | 'timeRange';
-
-  constructor(config: FormatterConfig) {
-    this.config = config;
-    this.getIntl = config.getIntl;
-  }
 
   get options(): readonly (keyof KnownOptions)[] {
     return ([] as unknown[]) as readonly (keyof KnownOptions)[];
   }
 
   abstract format<T>(
-    locale: string | string[],
+    intl: IntlShape<string>,
     value: T,
     formatOptions?: KnownOptions & BaseOptions
   ): string | SafeString;
   abstract format(
-    locale: string | string[],
+    intl: IntlShape<string>,
     value: unknown,
     formatOptions?: KnownOptions & BaseOptions
   ): string | SafeString;

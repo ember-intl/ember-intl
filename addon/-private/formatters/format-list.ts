@@ -12,7 +12,7 @@ import Formatter from './-base';
  */
 export default class FormatList extends Formatter<FormatListOptions> {
   static readonly type = 'list';
-  format(locale: string | string[], ...[value, opts]: Parameters<IntlShape<string>['formatList']>): string {
-    return this.getIntl(locale).formatList(value, opts);
+  format(intl: IntlShape<string>, ...[value, opts]: Parameters<IntlShape<string>['formatList']>): string {
+    return intl.formatList(value, opts);
   }
 }

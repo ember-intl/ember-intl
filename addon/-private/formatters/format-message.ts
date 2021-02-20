@@ -8,7 +8,7 @@ import Ember from 'ember';
 import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
 import Formatter from './-base';
-import { MessageDescriptor } from '@formatjs/intl';
+import { IntlShape, MessageDescriptor } from '@formatjs/intl';
 import { PrimitiveType } from 'intl-messageformat';
 const {
   Handlebars: {
@@ -61,18 +61,14 @@ export default class FormatMessage extends Formatter<any> {
   // evade my knowledge. ¯\_(ツ)_/¯
   // For this reason these types need to be manually copied over to the
   // `IntlService#formatMessage`.
+  format(intl: IntlShape<string>, stringOrDesc: string, options: MessageFormatOptions & { htmlSafe: true }): SafeString;
   format(
-    locale: string | string[],
-    stringOrDesc: string,
-    options: MessageFormatOptions & { htmlSafe: true }
-  ): SafeString;
-  format(
-    locale: string | string[],
+    intl: IntlShape<string>,
     stringOrDesc: MessageDescriptor,
     options?: MessageFormatOptions & { htmlSafe: boolean }
   ): SafeString;
   format(
-    locale: string | string[],
+    intl: IntlShape<string>,
     stringOrDesc: MessageDescriptor | string,
     options?: MessageFormatOptions & { htmlSafe?: boolean }
   ): string | SafeString {
@@ -89,7 +85,7 @@ export default class FormatMessage extends Formatter<any> {
             id: stringOrDesc,
             defaultMessage: stringOrDesc,
           };
-    const result = this.getIntl(locale).formatMessage(desc, escapedOptions, { ignoreTag: true });
+    const result = intl.formatMessage(desc, escapedOptions, { ignoreTag: true });
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }

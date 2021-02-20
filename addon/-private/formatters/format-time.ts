@@ -12,7 +12,7 @@ import Formatter from './-base';
  */
 export default class FormatTime extends Formatter<FormatDateOptions> {
   static readonly type = 'time';
-  format(locale: string | string[], ...[value, opts]: Parameters<IntlShape<string>['formatTime']>): string {
-    return this.getIntl(locale).formatTime(value, opts);
+  format(intl: IntlShape<string>, ...[value, opts]: Parameters<IntlShape<string>['formatTime']>): string {
+    return intl.formatTime(value, opts);
   }
 }
