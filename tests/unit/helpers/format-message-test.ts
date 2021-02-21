@@ -192,7 +192,7 @@ module('format-message', function (hooks) {
         return this.foo ? 'foo foo' : 'bar bar';
       }
     }
-    const context = new Context();
+    const context = Context.create();
 
     set(this, 'context', context);
     await render(hbs`{{format-message context.translation}}`);
