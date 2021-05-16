@@ -91,3 +91,18 @@ Formats dates using [<code>Intl.DateTimeFormat</code>](https://developer.mozilla
 > The hour cycle to use. Possible values are "h11", "h12", "h23", or "h24".
 > This option overrides the hc language tag, if both are present, and the
 > hour12 option takes precedence in case both options have been specified.
+
+## Custom format
+
+You can create a custom format configuration in `app/formats.js`, and provide its key as `format` named argument's value.
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name='docs-helpers-format-date-03-template.hbs'}}
+    {{format-date instant format="my-custom-format"}}
+  {{/demo.example}}
+
+  {{demo.snippet 'docs-helpers-format-date-03-template.hbs'}}
+  {{demo.snippet 'docs-helpers-format-date-controller.js'}}
+  {{demo.snippet 'docs-helpers-format-date-app.js'}}
+
+{{/docs-demo}}
