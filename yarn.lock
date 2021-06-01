@@ -10587,9 +10587,9 @@ mktemp@~0.4.0:
   integrity sha1-bQUVYRyKjITkhKogABKbmOmB/ws=
 
 mocha@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-8.3.0.tgz#a83a7432d382ae1ca29686062d7fdc2c36f63fe5"
-  integrity sha512-TQqyC89V1J/Vxx0DhJIXlq9gbbL9XFNdeLQ1+JsnZsVaSOV1z3tWfw0qZmQJGQRIfkvZcs7snQnZnOCKoldq1Q==
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-8.4.0.tgz#677be88bf15980a3cae03a73e10a0fc3997f0cff"
+  integrity sha512-hJaO0mwDXmZS4ghXsvPVriOhsxQ7ofcpQdm8dE+jISUOKopitvnXFQmpRR7jd2K6VBG6E26gU3IAbXXGIbu4sQ==
   dependencies:
     "@ungap/promise-all-settled" "1.1.2"
     ansi-colors "4.1.1"
