@@ -1,1 +1,1 @@
-{"jsonapi":{"version":"1.0"},"data":{"type":"project","id":"ember-intl","attributes":{"name":"ember-intl","version":"5.6.2","navigationIndex":[]},"relationships":{"modules":{"data":[]}}}}
+{"jsonapi":{"version":"1.0"},"data":{"type":"project","id":"ember-intl","attributes":{"name":"ember-intl","version":"5.7.0","navigationIndex":[]},"relationships":{"modules":{"data":[]}}}}
