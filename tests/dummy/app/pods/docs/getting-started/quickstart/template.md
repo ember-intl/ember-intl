@@ -49,17 +49,20 @@ _Note:_ This is usually implemented with custom business logic - such as read it
 
 ```js
 // app/routes/application.js
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  intl: service(),
-  beforeModel() {
-    this._super(...arguments);
-    
-    this.intl.setLocale(['en-us']);
-  }
-});
+export default class ApplicationRoute extends Route {
+    @service intl;
+
+    beforeModel() {
+        this.intl.setLocale(['en-us']);
+    }
+
+    model() {
+        // ...
+    }
+}
 ```
 
 **Configure your template linter**
