@@ -10,6 +10,8 @@ The `locales`, `disablePolyfill`, and `autoPolyfill` configuration options in `c
 
 Improved ICU-spec compliance, special characters are now escaped via a single quote `'` instead of a slash `\`
 
+**NOTE**: This change is advised for all future translations, however `\` escaping is backwards-compatible starting with the [V5.5.0 release](https://github.com/ember-intl/ember-intl/releases/tag/v5.5.0)
+
 ### **Node runtime**
 
 We now support down to Node 10, dropping support for Node 8.
