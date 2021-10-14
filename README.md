@@ -58,7 +58,7 @@ import Component from '@glimmer/component';
 import type IntlService from 'ember-intl/services/intl';
 
 export default class ExampleComponent extends Component {
-  @service intl!: IntlService;
+  @service declare intl: IntlService;
 }
 ```
 
