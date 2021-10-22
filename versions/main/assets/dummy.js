@@ -3117,7 +3117,7 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _class2, _descriptor, _temp;
+  var _dec, _dec2, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -3147,7 +3147,7 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = /*#__PURE__*/function (_Component) {
     _inherits(_class2, _Component);
 
     var _super = _createSuper(_class2);
@@ -3176,7 +3176,7 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
     }]);
 
     return _class2;
-  }(_component.default), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
+  }(_component.default), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -3929,7 +3929,7 @@ define("dummy/pods/docs/helpers/t/controller", ["exports"], function (_exports) 
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _class2, _descriptor, _temp;
+  var _dec, _dec2, _dec3, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -3959,7 +3959,7 @@ define("dummy/pods/docs/helpers/t/controller", ["exports"], function (_exports) 
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember._tracked, _dec2 = Ember._action, _dec3 = Ember._action, (_class2 = (_temp = /*#__PURE__*/function (_Ember$Controller) {
+  var _class = (_dec = Ember._tracked, _dec2 = Ember._action, _dec3 = Ember._action, (_class2 = /*#__PURE__*/function (_Ember$Controller) {
     _inherits(_class2, _Ember$Controller);
 
     var _super = _createSuper(_class2);
@@ -3994,7 +3994,7 @@ define("dummy/pods/docs/helpers/t/controller", ["exports"], function (_exports) 
     }]);
 
     return _class2;
-  }(Ember.Controller), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "count", [_dec], {
+  }(Ember.Controller), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "count", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -4152,7 +4152,7 @@ define("dummy/pods/smoke/controller", ["exports"], function (_exports) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _class2, _descriptor, _temp;
+  var _dec, _dec2, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -4182,7 +4182,7 @@ define("dummy/pods/smoke/controller", ["exports"], function (_exports) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = (_temp = /*#__PURE__*/function (_Ember$Controller) {
+  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = /*#__PURE__*/function (_Ember$Controller) {
     _inherits(_class2, _Ember$Controller);
 
     var _super = _createSuper(_class2);
@@ -4220,7 +4220,7 @@ define("dummy/pods/smoke/controller", ["exports"], function (_exports) {
     }]);
 
     return _class2;
-  }(Ember.Controller), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
+  }(Ember.Controller), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -4328,7 +4328,7 @@ define("dummy/routes/application", ["exports"], function (_exports) {
   });
   _exports.default = void 0;
 
-  var _dec, _class2, _descriptor, _temp;
+  var _dec, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -4358,7 +4358,7 @@ define("dummy/routes/application", ["exports"], function (_exports) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember.inject.service, (_class2 = (_temp = /*#__PURE__*/function (_Ember$Route) {
+  var _class = (_dec = Ember.inject.service, (_class2 = /*#__PURE__*/function (_Ember$Route) {
     _inherits(_class2, _Ember$Route);
 
     var _super = _createSuper(_class2);
@@ -4387,7 +4387,7 @@ define("dummy/routes/application", ["exports"], function (_exports) {
     }]);
 
     return _class2;
-  }(Ember.Route), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
+  }(Ember.Route), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
