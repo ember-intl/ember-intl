@@ -3117,7 +3117,7 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _class2, _descriptor, _temp;
+  var _dec, _dec2, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -3147,7 +3147,7 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = /*#__PURE__*/function (_Component) {
     _inherits(_class2, _Component);
 
     var _super = _createSuper(_class2);
@@ -3176,7 +3176,7 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
     }]);
 
     return _class2;
-  }(_component.default), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
+  }(_component.default), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -3330,8 +3330,8 @@ define("dummy/pods/components/locale-switcher/component", ["exports", "@glimmer/
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "uupLnmxx",
-    "block": "[[[10,0],[14,0,\"docs-md\"],[12],[10,\"h1\"],[14,1,\"migrating-from-4-0-to-5-0\"],[14,0,\"docs-md__h1\"],[12],[1,\"Migrating from 4.0 to 5.0\"],[13],[1,\"\\n    \\n      \"],[10,\"h2\"],[14,1,\"obsolete\"],[14,0,\"docs-md__h2\"],[12],[10,3],[14,6,\"#obsolete\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Obsolete\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"The \"],[10,\"code\"],[12],[1,\"locales\"],[13],[1,\", \"],[10,\"code\"],[12],[1,\"disablePolyfill\"],[13],[1,\", and \"],[10,\"code\"],[12],[1,\"autoPolyfill\"],[13],[1,\" configuration options in \"],[10,\"code\"],[12],[1,\"config/ember-intl.js\"],[13],[1,\" are no longer used and can be safely removed.\"],[13],[1,\"\\n\\n      \"],[10,\"h2\"],[14,1,\"breaking-changes\"],[14,0,\"docs-md__h2\"],[12],[10,3],[14,6,\"#breaking-changes\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Breaking Changes\"],[13],[13],[13],[1,\"\\n    \\n      \"],[10,\"h3\"],[14,1,\"translations\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#translations\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Translations\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"Improved ICU-spec compliance, special characters are now escaped via a single quote \"],[10,\"code\"],[12],[1,\"'\"],[13],[1,\" instead of a slash \"],[10,\"code\"],[12],[1,\"\\\\\"],[13],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"node-runtime\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#node-runtime\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Node runtime\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"We now support down to Node 10, dropping support for Node 8.\"],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"polyfilling\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#polyfilling\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Polyfilling\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"This addon no longer provides polyfills \\\"out of the box.\\\"  The reasoning, along with the current browser requirements, can be found in the \"],[1,[28,[35,0],[\"Runtime Requirements\",\"docs.getting-started.runtime-requirements\"],null]],[1,\" section.\"],[13],[1,\"\\n\"],[10,2],[12],[1,\"I highly encourage you read through all the browser support matrices within the \"],[1,[28,[35,0],[\"Runtime Requirements\",\"docs.getting-started.runtime-requirements\"],null]],[1,\" to ensure it aligns with your projects runtime targets.\"],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"lookup-missing-translations\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#lookup-missing-translations\"],[14,0,\"heading-anchor\"],[12],[10,\"code\"],[12],[1,\"lookup()\"],[13],[1,\" missing translations\"],[13],[13],[1,\"\\n    \"],[10,2],[12],[10,\"code\"],[12],[1,\"intl.lookup()\"],[13],[1,\" will no longer return \\\"Missing translations\\\" or emit any runtime warnings.  If a translation is missing, \"],[10,\"code\"],[12],[1,\"undefined\"],[13],[1,\" is returned from the method.\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"strong\"],[12],[1,\"NOTE\"],[13],[1,\": This does not impact \"],[10,\"code\"],[12],[1,\"intl.t()\"],[13],[1,\" or the \"],[10,\"code\"],[12],[1,\"{{t}}\"],[13],[1,\" API for when missing translations occurs.  Missing translation behavior for those flows remains the same as found in 4.x.\"],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"intl-relativetimeformat\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#intl-relativetimeformat\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[10,\"code\"],[12],[1,\"Intl.RelativeTimeFormat\"],[13],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"When we introduced FormatRelative, the spec for \"],[10,3],[14,6,\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat\"],[14,0,\"docs-md__a\"],[12],[10,\"code\"],[12],[1,\"Intl.RelativeTimeFormat\"],[13],[13],[1,\" was still under development. It has now reached stage 3 and multiple browsers have implemented it. However, the API is quite different from the spec we had implemented so we've had to adjust the API to match the spec which means it's not backwards compatible.\"],[13],[1,\"\\n\"],[10,2],[12],[1,\"Changes:\"],[13],[1,\"\\n\\n        \"],[10,\"ul\"],[14,0,\"docs-list-disc\"],[12],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"units\"],[13],[1,\" is now \"],[10,\"code\"],[12],[1,\"unit\"],[13],[13],[1,\"\\n\"],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"style\"],[13],[1,\" becomes \"],[10,\"code\"],[12],[1,\"numeric\"],[13],[1,\" (the default)\"],[13],[1,\"\\n\"],[10,\"li\"],[12],[1,\"Type of \"],[10,\"code\"],[12],[1,\"value\"],[13],[1,\" is no longer a \"],[10,\"code\"],[12],[1,\"Date\"],[13],[1,\" instance but rather delta in the specified \"],[10,\"code\"],[12],[1,\"unit\"],[13],[13],[1,\"\\n\"],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"interval\"],[13],[1,\" was removed from the format-relative helper\"],[13],[1,\"\\n\"],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"now\"],[13],[1,\" was removed from the format-relative helper\"],[13],[1,\"\\n\"],[13],[1,\"\\n      \\n      \"],[10,\"h3\"],[14,1,\"compact-number-formatter\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#compact-number-formatter\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Compact Number Formatter\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"In 4.x, we introduced a shortNumber formatter.  This is no longer necessary as we can rely on the native Intl.NumberFormat to compact numbers into their abbreviated form.\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"code\"],[12],[1,\"{numCustomers, shortNumber}\"],[13],[13],[1,\"\\n\"],[10,2],[12],[1,\"becomes\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"code\"],[12],[1,\"{numCustomers, number, compact}\"],[13],[13],[1,\"\\n\"],[10,2],[12],[1,\"or\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"code\"],[12],[1,\"{{format-number numCustomers notation=\\\"compact\\\"}}\"],[13],[13],[13]],[],false,[\"docs-link\"]]",
+    "id": "Wex+U3uz",
+    "block": "[[[10,0],[14,0,\"docs-md\"],[12],[10,\"h1\"],[14,1,\"migrating-from-4-0-to-5-0\"],[14,0,\"docs-md__h1\"],[12],[1,\"Migrating from 4.0 to 5.0\"],[13],[1,\"\\n    \\n      \"],[10,\"h2\"],[14,1,\"obsolete\"],[14,0,\"docs-md__h2\"],[12],[10,3],[14,6,\"#obsolete\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Obsolete\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"The \"],[10,\"code\"],[12],[1,\"locales\"],[13],[1,\", \"],[10,\"code\"],[12],[1,\"disablePolyfill\"],[13],[1,\", and \"],[10,\"code\"],[12],[1,\"autoPolyfill\"],[13],[1,\" configuration options in \"],[10,\"code\"],[12],[1,\"config/ember-intl.js\"],[13],[1,\" are no longer used and can be safely removed.\"],[13],[1,\"\\n\\n      \"],[10,\"h2\"],[14,1,\"breaking-changes\"],[14,0,\"docs-md__h2\"],[12],[10,3],[14,6,\"#breaking-changes\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Breaking Changes\"],[13],[13],[13],[1,\"\\n    \\n      \"],[10,\"h3\"],[14,1,\"translations\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#translations\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Translations\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"Improved ICU-spec compliance, special characters are now escaped via a single quote \"],[10,\"code\"],[12],[1,\"'\"],[13],[1,\" instead of a slash \"],[10,\"code\"],[12],[1,\"\\\\\"],[13],[13],[1,\"\\n\"],[10,2],[12],[10,\"strong\"],[12],[1,\"NOTE\"],[13],[1,\": This change is advised for all future translations, however \"],[10,\"code\"],[12],[1,\"\\\\\"],[13],[1,\" escaping is backwards-compatible starting with the \"],[10,3],[14,6,\"https://github.com/ember-intl/ember-intl/releases/tag/v5.5.0\"],[14,0,\"docs-md__a\"],[12],[1,\"V5.5.0 release\"],[13],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"node-runtime\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#node-runtime\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Node runtime\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"We now support down to Node 10, dropping support for Node 8.\"],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"polyfilling\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#polyfilling\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Polyfilling\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"This addon no longer provides polyfills \\\"out of the box.\\\"  The reasoning, along with the current browser requirements, can be found in the \"],[1,[28,[35,0],[\"Runtime Requirements\",\"docs.getting-started.runtime-requirements\"],null]],[1,\" section.\"],[13],[1,\"\\n\"],[10,2],[12],[1,\"I highly encourage you read through all the browser support matrices within the \"],[1,[28,[35,0],[\"Runtime Requirements\",\"docs.getting-started.runtime-requirements\"],null]],[1,\" to ensure it aligns with your projects runtime targets.\"],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"lookup-missing-translations\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#lookup-missing-translations\"],[14,0,\"heading-anchor\"],[12],[10,\"code\"],[12],[1,\"lookup()\"],[13],[1,\" missing translations\"],[13],[13],[1,\"\\n    \"],[10,2],[12],[10,\"code\"],[12],[1,\"intl.lookup()\"],[13],[1,\" will no longer return \\\"Missing translations\\\" or emit any runtime warnings.  If a translation is missing, \"],[10,\"code\"],[12],[1,\"undefined\"],[13],[1,\" is returned from the method.\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"strong\"],[12],[1,\"NOTE\"],[13],[1,\": This does not impact \"],[10,\"code\"],[12],[1,\"intl.t()\"],[13],[1,\" or the \"],[10,\"code\"],[12],[1,\"{{t}}\"],[13],[1,\" API for when missing translations occurs.  Missing translation behavior for those flows remains the same as found in 4.x.\"],[13],[1,\"\\n\\n      \"],[10,\"h3\"],[14,1,\"intl-relativetimeformat\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#intl-relativetimeformat\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[10,\"code\"],[12],[1,\"Intl.RelativeTimeFormat\"],[13],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"When we introduced FormatRelative, the spec for \"],[10,3],[14,6,\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat\"],[14,0,\"docs-md__a\"],[12],[10,\"code\"],[12],[1,\"Intl.RelativeTimeFormat\"],[13],[13],[1,\" was still under development. It has now reached stage 3 and multiple browsers have implemented it. However, the API is quite different from the spec we had implemented so we've had to adjust the API to match the spec which means it's not backwards compatible.\"],[13],[1,\"\\n\"],[10,2],[12],[1,\"Changes:\"],[13],[1,\"\\n\\n        \"],[10,\"ul\"],[14,0,\"docs-list-disc\"],[12],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"units\"],[13],[1,\" is now \"],[10,\"code\"],[12],[1,\"unit\"],[13],[13],[1,\"\\n\"],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"style\"],[13],[1,\" becomes \"],[10,\"code\"],[12],[1,\"numeric\"],[13],[1,\" (the default)\"],[13],[1,\"\\n\"],[10,\"li\"],[12],[1,\"Type of \"],[10,\"code\"],[12],[1,\"value\"],[13],[1,\" is no longer a \"],[10,\"code\"],[12],[1,\"Date\"],[13],[1,\" instance but rather delta in the specified \"],[10,\"code\"],[12],[1,\"unit\"],[13],[13],[1,\"\\n\"],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"interval\"],[13],[1,\" was removed from the format-relative helper\"],[13],[1,\"\\n\"],[10,\"li\"],[12],[10,\"code\"],[12],[1,\"now\"],[13],[1,\" was removed from the format-relative helper\"],[13],[1,\"\\n\"],[13],[1,\"\\n      \\n      \"],[10,\"h3\"],[14,1,\"compact-number-formatter\"],[14,0,\"docs-md__h3\"],[12],[10,3],[14,6,\"#compact-number-formatter\"],[14,0,\"heading-anchor\"],[12],[10,\"strong\"],[12],[1,\"Compact Number Formatter\"],[13],[13],[13],[1,\"\\n    \"],[10,2],[12],[1,\"In 4.x, we introduced a shortNumber formatter.  This is no longer necessary as we can rely on the native Intl.NumberFormat to compact numbers into their abbreviated form.\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"code\"],[12],[1,\"{numCustomers, shortNumber}\"],[13],[13],[1,\"\\n\"],[10,2],[12],[1,\"becomes\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"code\"],[12],[1,\"{numCustomers, number, compact}\"],[13],[13],[1,\"\\n\"],[10,2],[12],[1,\"or\"],[13],[1,\"\\n\"],[10,2],[12],[10,\"code\"],[12],[1,\"{{format-number numCustomers notation=\\\"compact\\\"}}\"],[13],[13],[13]],[],false,[\"docs-link\"]]",
     "moduleName": "dummy/pods/docs/guide/migration-4-0-to-5-0/template.hbs",
     "isStrictMode": false
   });
@@ -3929,7 +3929,7 @@ define("dummy/pods/docs/helpers/t/controller", ["exports"], function (_exports) 
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _class2, _descriptor, _temp;
+  var _dec, _dec2, _dec3, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -3959,7 +3959,7 @@ define("dummy/pods/docs/helpers/t/controller", ["exports"], function (_exports) 
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember._tracked, _dec2 = Ember._action, _dec3 = Ember._action, (_class2 = (_temp = /*#__PURE__*/function (_Ember$Controller) {
+  var _class = (_dec = Ember._tracked, _dec2 = Ember._action, _dec3 = Ember._action, (_class2 = /*#__PURE__*/function (_Ember$Controller) {
     _inherits(_class2, _Ember$Controller);
 
     var _super = _createSuper(_class2);
@@ -3994,7 +3994,7 @@ define("dummy/pods/docs/helpers/t/controller", ["exports"], function (_exports) 
     }]);
 
     return _class2;
-  }(Ember.Controller), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "count", [_dec], {
+  }(Ember.Controller), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "count", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -4152,7 +4152,7 @@ define("dummy/pods/smoke/controller", ["exports"], function (_exports) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _class2, _descriptor, _temp;
+  var _dec, _dec2, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -4182,7 +4182,7 @@ define("dummy/pods/smoke/controller", ["exports"], function (_exports) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = (_temp = /*#__PURE__*/function (_Ember$Controller) {
+  var _class = (_dec = Ember.inject.service, _dec2 = Ember._action, (_class2 = /*#__PURE__*/function (_Ember$Controller) {
     _inherits(_class2, _Ember$Controller);
 
     var _super = _createSuper(_class2);
@@ -4220,7 +4220,7 @@ define("dummy/pods/smoke/controller", ["exports"], function (_exports) {
     }]);
 
     return _class2;
-  }(Ember.Controller), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
+  }(Ember.Controller), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -4328,7 +4328,7 @@ define("dummy/routes/application", ["exports"], function (_exports) {
   });
   _exports.default = void 0;
 
-  var _dec, _class2, _descriptor, _temp;
+  var _dec, _class2, _descriptor;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -4358,7 +4358,7 @@ define("dummy/routes/application", ["exports"], function (_exports) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  var _class = (_dec = Ember.inject.service, (_class2 = (_temp = /*#__PURE__*/function (_Ember$Route) {
+  var _class = (_dec = Ember.inject.service, (_class2 = /*#__PURE__*/function (_Ember$Route) {
     _inherits(_class2, _Ember$Route);
 
     var _super = _createSuper(_class2);
@@ -4387,7 +4387,7 @@ define("dummy/routes/application", ["exports"], function (_exports) {
     }]);
 
     return _class2;
-  }(Ember.Route), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
+  }(Ember.Route), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "intl", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
