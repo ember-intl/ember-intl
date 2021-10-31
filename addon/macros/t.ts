@@ -15,7 +15,7 @@ function partitionDynamicValuesAndStaticValues(options: Record<string, string | 
     if (value instanceof Raw) {
       staticValues[key] = value.valueOf();
     } else {
-      dynamicValues[key] = value;
+      dynamicValues[key] = value!;
     }
   });
 

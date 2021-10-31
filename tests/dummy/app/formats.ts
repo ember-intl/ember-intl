@@ -1,6 +1,6 @@
 import type { Formats } from 'ember-intl/types';
 
-const hhmmss = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+const hhmmss: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
 
 const formats: Formats = {
   date: { hhmmss: hhmmss },
