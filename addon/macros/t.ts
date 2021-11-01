@@ -14,8 +14,8 @@ function partitionDynamicValuesAndStaticValues(options: Record<string, string | 
     const value = options[key];
     if (value instanceof Raw) {
       staticValues[key] = value.valueOf();
-    } else {
-      dynamicValues[key] = value!;
+    } else if (typeof value !== 'undefined') {
+      dynamicValues[key] = value;
     }
   });
 

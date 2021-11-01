@@ -24,10 +24,15 @@ export default function flatten<T>(src: NestedStructure<T>): Record<string, T> {
       const hash = flatten(value);
 
       for (const suffix in hash) {
-        result[`${key}.${suffix}`] = hash[suffix]!;
+        const hasSuffix = hash[suffix];
+        if (typeof hasSuffix !== 'undefined') {
+          result[`${key}.${suffix}`] = hasSuffix;
+        }
       }
     } else {
-      result[key] = value!;
+      if (typeof value !== 'undefined') {
+        result[key] = value;
+      }
     }
   }
 
