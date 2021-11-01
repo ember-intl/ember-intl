@@ -4,7 +4,7 @@ import { createIntl, OnErrorFn } from '@formatjs/intl';
 
 function getIntl(locale: string) {
   return createIntl({
-    locale: locale,
+    locale,
     onError: onIntlError,
   });
 }
