@@ -2,9 +2,9 @@ import { module, test } from 'qunit';
 import FormatRelative from 'ember-intl/-private/formatters/format-relative';
 import { createIntl, OnErrorFn } from '@formatjs/intl';
 
-function getIntl(locales: string | string[]) {
+function getIntl(locale: string) {
   return createIntl({
-    locale: Array.isArray(locales) ? locales[0] : locales,
+    locale,
     onError: onIntlError,
   });
 }

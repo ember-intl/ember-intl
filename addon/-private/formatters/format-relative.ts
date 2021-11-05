@@ -35,7 +35,7 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
 
     const { format } = formatOptions;
     let unit = formatOptions.unit;
-    let opts: RelativeTimeFormatOptions = formatOptions;
+    let opts: RelativeTimeFormatOptions | undefined = formatOptions;
     if (!unit && format && intl.formats.relative && (opts = intl.formats.relative[format])) {
       unit = opts.unit;
     }
