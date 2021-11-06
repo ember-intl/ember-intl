@@ -10,20 +10,20 @@ Translations can be organized in nested directories:
 
 ```
 /translations
-  en-us.yaml
-  en-gb.yaml
+  en-us.yml
+  en-gb.yml
   /blog
-    en-us.yaml
-    en-gb.yaml
+    en-us.yml
+    en-gb.yml
   /reports
-    en-us.yaml
-    en-gb.yaml
+    en-us.yml
+    en-gb.yml
   /commerce
-    en-us.yaml
-    en-gb.yaml
+    en-us.yml
+    en-gb.yml
     /cart
-      en-us.yaml
-      en-gb.yaml
+      en-us.yml
+      en-gb.yml
 ```
 
 ### The `wrapTranslationsWithNamespace` option

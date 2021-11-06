@@ -68,17 +68,17 @@ module.exports = function(/* env */) {
 ```
 
 ```yaml
-# translations/en.yaml
+# translations/en.yml
 page:
   title: Page title
   description: Page description
 wip:
   title: WIP title
 
-# translations/de.yaml
+# translations/de.yml
 # nothing to see here
 
-# translations/it.yaml
+# translations/it.yml
 page:
   title: Titolo della pagina
 ```

@@ -12,11 +12,11 @@ This will create the following files:
     <!-- default definitions of named formats -->
 * `config/ember-intl.js`
     <!-- default ember-intl settings -->
-* `translations/en-us.yaml`
+* `translations/en-us.yml`
 
 ## 2. Add your first translation
 
-Create a translation key in `translations/en-us.yaml`
+Create a translation key in `translations/en-us.yml`
 
 ```yaml
 hello:
@@ -32,7 +32,7 @@ In a template add the following:
 
 ## 3. Add a new language
 
-Create a new translation file: `translations/fr-fr.yaml`
+Create a new translation file: `translations/fr-fr.yml`
 
 ```
 hello:
