@@ -1,6 +1,7 @@
 import addTranslations from './add-translations';
 import { missingMessage } from './-private/serialize-translation';
 import type { TestContext as BaseTestContext } from 'ember-test-helpers';
+import { settled } from '@ember/test-helpers';
 import type IntlService from 'ember-intl/services/intl';
 import type { TOptions } from 'ember-intl/services/intl';
 import { Formats, Translations } from 'ember-intl/types';
@@ -64,7 +65,7 @@ export default function setupIntl(
     translations = translationsOrOptions as Translations | undefined;
   }
 
-  hooks.beforeEach(function (this: TestContext) {
+  hooks.beforeEach(async function (this: TestContext) {
     if (typeof options?.missingMessage === 'function') {
       this.owner.register('util:intl/missing-message', options.missingMessage);
     } else if ((options?.missingMessage ?? true) === true) {
@@ -86,5 +87,7 @@ export default function setupIntl(
     if (translations) {
       addTranslations(translations);
     }
+
+    await settled();
   });
 }
