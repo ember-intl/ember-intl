@@ -4,6 +4,7 @@
  */
 import { getOwner } from '@ember/application';
 import { computed, get, set } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import Evented from '@ember/object/evented';
 import { assert } from '@ember/debug';
 import { makeArray } from '@ember/array';
@@ -27,7 +28,7 @@ export default Service.extend(Evented, {
    * @property locales
    * @public
    */
-  locales: computed.readOnly('_translationContainer.locales'),
+  locales: readOnly('_translationContainer.locales'),
 
   /** @public **/
   locale: computed('_locale', {
@@ -56,7 +57,7 @@ export default Service.extend(Evented, {
    * @property primaryLocale
    * @public
    */
-  primaryLocale: computed.readOnly('locale.0'),
+  primaryLocale: readOnly('locale.0'),
 
   /** @public **/
   formatRelative: createFormatterProxy('relative'),
