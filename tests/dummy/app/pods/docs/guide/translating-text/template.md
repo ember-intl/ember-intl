@@ -139,7 +139,7 @@ export default Component.extend({
   dateFormat: 'hhmmss',
 
   nowFormatted: intl('now', 'dateFormat', function(intl /* , propertyKey, instance */) {
-    return intl.formatDate(this.now, { format: this.format });
+    return intl.formatDate(this.now, { format: this.dateFormat });
   })
 });
 ```
