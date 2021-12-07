@@ -37,7 +37,7 @@
     "postpack": "ember ts:clean"
   },
   "dependencies": {
-    "@formatjs/intl": "^1.6.7",
+    "@formatjs/intl": "^1.17.0",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.3",
     "broccoli-merge-files": "^0.8.0",
