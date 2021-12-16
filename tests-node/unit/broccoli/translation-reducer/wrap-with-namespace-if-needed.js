@@ -94,4 +94,29 @@ describe('wrapWithNamespaceIfNeeded', function () {
       expect(wrapWithNamespaceIfNeeded(object, filepath, inputPath, addonNames)).to.deep.equal(expected);
     });
   });
+
+  describe('with win32 platform', () => {
+    let originalPlatform;
+
+    before(() => {
+      originalPlatform = Object.getOwnPropertyDescriptor(process, 'platform');
+      Object.defineProperty(process, 'platform', { value: 'win32' });
+    });
+
+    after(() => {
+      Object.defineProperty(process, 'platform', originalPlatform);
+    });
+
+    it('path dirname uses win32 platform', () => {
+      const translationFileContent = { age: 'twenty' };
+      const filepath = 'C:\\Users\\*exampleDirectory/\\en-us.yaml';
+      const addons = [];
+
+      const translationFileWithDirpath = { 'C:Users': { '*exampleDirectory/': { age: 'twenty' } } };
+
+      const withNamespace = wrapWithNamespaceIfNeeded(translationFileContent, filepath, filepath, addons);
+
+      expect(withNamespace).to.deep.equal(translationFileWithDirpath);
+    });
+  });
 });
