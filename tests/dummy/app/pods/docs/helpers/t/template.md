@@ -30,23 +30,22 @@ Compiles a [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-synta
 }
 ```
 
-## Named VS Positional Arguments
+## Named and Positional Arguments
 
-Options may be passed to the `t` helper as either named or positional arguments.
-
-The following examples are equivalent:
+Options may be passed to the `t` helper as either named or positional arguments. The following examples are equivalent:
 
 _Named arguments:_
 ```hbs
 {{t 'photos.banner' numPhotos=count}}
 ```
 
-_Positional argument:_
+_Positional arguments:_
 ```hbs
 {{t 'photos.banner' (hash numPhotos=count)}}
 ```
 
-In the case where both named and positional arguments are used, they'll be merged together and named arguments will take precedence over the properties of a positional argument where there are duplicates.
+When both named and positional arguments are used, they'll be merged together and named arguments will take precedence over the properties of duplicate positional arguments.
+
 ## Format HTML Message
 
 To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `t` helper.
