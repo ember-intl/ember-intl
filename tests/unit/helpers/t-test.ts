@@ -72,6 +72,22 @@ module('t', function (hooks) {
     assert.equal(this.element.innerHTML, `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`);
   });
 
+  test('should support optional positional options object argument', async function (this: TestContext, assert) {
+    assert.expect(1);
+    await render(hbs`
+      {{t 'html.greeting' (hash name="Jason" count=42)}}
+    `);
+    assert.equal(this.element.textContent?.includes('<strong>Hello Jason 42</strong>'), true);
+  });
+
+  test('should overried optional positional options argument properties with named arguments', async function (this: TestContext, assert) {
+    assert.expect(1);
+    await render(hbs`
+      {{t 'html.greeting' (hash name="Jason" count=42) count=39.99}}
+    `);
+    assert.equal(this.element.textContent?.includes('<strong>Hello Jason 39.99</strong>'), true);
+  });
+
   test('should render a TextNode', async function (this: TestContext, assert) {
     assert.expect(2);
     await render(hbs`{{t 'html.greeting' name="<em>Jason</em>" count=42000}}`);

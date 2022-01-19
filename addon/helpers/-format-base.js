@@ -28,7 +28,9 @@ export default class AbstractHelper extends Helper {
     throw new Error('not implemented');
   }
 
-  compute([value], options) {
+  compute([value, positionalOptions], namedOptions) {
+    const options = positionalOptions ? Object.assign({}, positionalOptions, namedOptions) : namedOptions;
+
     if (isEmpty(value)) {
       if (options.allowEmpty ?? this.allowEmpty) {
         return;

@@ -6,9 +6,9 @@ export default abstract class AbstractHelper<V, O extends {} | undefined> extend
   readonly intl: IntlService;
   allowEmpty: boolean;
 
-  abstract format(value: V, options?: O): string;
+  abstract format(value: V, namedOptions?: O): string;
 
-  compute(positional: [undefined], options: O & { allowEmpty: false }): never;
-  compute(positional: [undefined], options: O & { allowEmpty: true }): void;
-  compute(positional: [V], options: O & { allowEmpty?: boolean }): string | never;
+  compute(positional: [undefined], namedOptions: O & { allowEmpty: false }): never;
+  compute(positional: [undefined], namedOptions: O & { allowEmpty: true }): void;
+  compute(positional: [value: V, positionalOptions?: O], namedOptions: O & { allowEmpty?: boolean }): string | never;
 }

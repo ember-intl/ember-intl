@@ -1,10 +1,10 @@
 {{locale-switcher}}
-# The `t` helper
+# The `t` Helper
 
 The `t` helper accepts a translation key and returns a translated string.
 To provide values to the dynamic segment of the translation, pass an object hash.
 
-## ICU message syntax
+## ICU Message Syntax
 
 Compiles a [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) strings with its hash values passed.
 
@@ -29,6 +29,22 @@ Compiles a [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-synta
   }
 }
 ```
+
+## Named and Positional Arguments
+
+Options may be passed to the `t` helper as either named or positional arguments. The following examples are equivalent:
+
+_Named arguments:_
+```hbs
+{{t 'photos.banner' numPhotos=count}}
+```
+
+_Positional arguments:_
+```hbs
+{{t 'photos.banner' (hash numPhotos=count)}}
+```
+
+When both named and positional arguments are used, they'll be merged together and named arguments will take precedence over the properties of duplicate positional arguments.
 
 ## Format HTML Message
 
