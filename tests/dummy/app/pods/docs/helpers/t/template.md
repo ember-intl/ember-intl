@@ -1,10 +1,10 @@
 {{locale-switcher}}
-# The `t` helper
+# The `t` Helper
 
 The `t` helper accepts a translation key and returns a translated string.
 To provide values to the dynamic segment of the translation, pass an object hash.
 
-## ICU message syntax
+## ICU Message Syntax
 
 Compiles a [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) strings with its hash values passed.
 
