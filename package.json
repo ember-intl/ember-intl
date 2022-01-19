@@ -152,5 +152,8 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "demoURL": "https://ember-intl.github.io/ember-intl/"
+  },
+  "volta": {
+    "node": "14.18.3"
   }
 }
