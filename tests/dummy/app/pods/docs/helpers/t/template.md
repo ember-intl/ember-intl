@@ -47,8 +47,6 @@ _Positional argument:_
 ```
 
 In the case where both named and positional arguments are used, they'll be merged together and named arguments will take precedence over the properties of a positional argument where there are duplicates.
-
-
 ## Format HTML Message
 
 To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `t` helper.
