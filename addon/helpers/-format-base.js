@@ -29,9 +29,7 @@ export default class AbstractHelper extends Helper {
   }
 
   compute([value, positionalOptions], namedOptions) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
+    const options = positionalOptions ? Object.assign({}, positionalOptions, namedOptions) : namedOptions;
 
     if (isEmpty(value)) {
       if (options.allowEmpty ?? this.allowEmpty) {
