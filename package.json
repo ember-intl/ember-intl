@@ -130,6 +130,9 @@
   "engines": {
     "node": ">= 10.*"
   },
+  "ember": {
+    "edition": "octane"
+  },
   "typesVersions": {
     "^3.0": {
       "test-support": [
