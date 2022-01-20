@@ -3,38 +3,53 @@
 
 Formats [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) strings with the provided values passed as arguments to the helper/method.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-message-01-template.hbs'}}
-    {{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
-             name=user.username
-             numPhotos=num
-             timestamp=yesterday}}
-  {{/demo.example}}
+{{format-message
+  "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
+  name=this.user.username
+  numPhotos=this.num
+  timestamp=this.yesterday
+}}
 
-  {{demo.snippet 'docs-helpers-format-message-01-template.hbs'}}
-{{/docs-demo}}
+```hbs
+{{format-message
+  "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
+  name=this.user.username
+  numPhotos=this.num
+  timestamp=this.yesterday
+}}
+```
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-message-02-template.hbs'}}
-    {{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
-             name=user.username
-             numPhotos=1
-             timestamp=yesterday}}
-  {{/demo.example}}
+{{format-message
+  "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
+  name=this.user.username
+  numPhotos=1
+  timestamp=this.yesterday
+}}
 
-  {{demo.snippet 'docs-helpers-format-message-02-template.hbs'}}
-{{/docs-demo}}
+```hbs
+{{format-message
+  "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
+  name=this.user.username
+  numPhotos=1
+  timestamp=this.yesterday
+}}
+```
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-message-03-template.hbs'}}
-    {{format-message "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
-             name=user.username
-             numPhotos=0
-             timestamp=yesterday}}
-  {{/demo.example}}
+{{format-message
+  "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
+  name=this.user.username
+  numPhotos=0
+  timestamp=this.yesterday
+}}
 
-  {{demo.snippet 'docs-helpers-format-message-03-template.hbs'}}
-{{/docs-demo}}
+```hbs
+{{format-message
+  "{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}"
+  name=this.user.username
+  numPhotos=0
+  timestamp=this.yesterday
+}}
+```
 
 ## Format HTML Message
 

@@ -8,18 +8,14 @@ To provide values to the dynamic segment of the translation, pass an object hash
 
 Compiles a [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) strings with its hash values passed.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-t-01-template.hbs'}}
+{{t "photos.banner" numPhotos=this.count}}
 
-    {{t "photos.banner" numPhotos=this.count}}
+<button class="btn" {{on "click" this.increment}}> + Increment photo count </button>
+<button class="btn" {{on "click" this.decrement}}> - Decrement photo count </button>
 
-    <button class="btn" {{on "click" this.increment}}> + Increment photo count </button>
-    <button class="btn" {{on "click" this.decrement}}> - Decrement photo count </button>
-  {{/demo.example}}
-
-  {{demo.snippet 'docs-helpers-format-t-01-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-t-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{t "photos.banner" numPhotos=this.count}}
+```
 
 ```json
 # translations/en-us.json

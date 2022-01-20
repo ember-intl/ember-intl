@@ -3,24 +3,17 @@
 
 Format a list of string into a single value.
 
+{{format-list this.example}}
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-list-01-template.hbs'}}
-    {{format-list example}}
-  {{/demo.example}}
+```hbs
+{{format-list this.example}}
+```
 
-  {{demo.snippet 'docs-helpers-format-list-01-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-list-controller.js'}}
-{{/docs-demo}}
+{{format-list this.example type='disjunction'}}
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-list-02-template.hbs'}}
-    {{format-list example type='disjunction'}}
-  {{/demo.example}}
-
-  {{demo.snippet 'docs-helpers-format-list-02-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-list-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{format-list this.example type='disjunction'}}
+```
 
 ## Format List Options
 `localeMatcher`

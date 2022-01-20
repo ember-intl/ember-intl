@@ -3,23 +3,17 @@
 
 Formats dates using [<code>Intl.DateTimeFormat</code>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat), and returns the formatted string value.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-date-01-template.hbs'}}
-    {{format-date instant}}
-  {{/demo.example}}
+{{format-date this.instant}}
 
-  {{demo.snippet 'docs-helpers-format-date-01-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-date-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{format-date this.instant}}
+```
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-date-02-template.hbs'}}
-    {{format-date yesterday}}
-  {{/demo.example}}
+{{format-date this.yesterday}}
 
-  {{demo.snippet 'docs-helpers-format-date-02-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-date-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{format-date this.yesterday}}
+```
 
 ## Format Date & Time Options
 `localeMatcher`
@@ -96,13 +90,6 @@ Formats dates using [<code>Intl.DateTimeFormat</code>](https://developer.mozilla
 
 You can create a custom format configuration in `app/formats.js`, and provide its key as `format` named argument's value.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-date-03-template.hbs'}}
-    {{format-date instant format="my-custom-format"}}
-  {{/demo.example}}
-
-  {{demo.snippet 'docs-helpers-format-date-03-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-date-controller.js'}}
-  {{demo.snippet 'docs-helpers-format-date-app.js'}}
-
-{{/docs-demo}}
+```hbs
+{{format-date this.instant format="my-custom-format"}}
+```

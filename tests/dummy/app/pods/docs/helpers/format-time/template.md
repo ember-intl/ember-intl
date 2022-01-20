@@ -3,24 +3,17 @@
 
 This is just like the `{{format-date}}` helper, except it will reference any string-named format from `formats.time`.
 
+{{format-time this.instant format='hhmmss'}}
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-time-01-template.hbs'}}
-    {{format-time instant format='hhmmss'}}
-  {{/demo.example}}
+```hbs
+{{format-time this.instant format='hhmmss'}}
+```
 
-  {{demo.snippet 'docs-helpers-format-time-01-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-time-controller.js'}}
-{{/docs-demo}}
+{{format-time this.instant hour='numeric' second='numeric' minute='numeric' hour12=false}}
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-time-02-template.hbs'}}
-    {{format-time instant hour='numeric' second='numeric' minute='numeric' hour12=false}}
-  {{/demo.example}}
-
-  {{demo.snippet 'docs-helpers-format-time-02-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-time-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{format-time this.instant hour='numeric' second='numeric' minute='numeric' hour12=false}}
+```
 
 ## Format Date & Time Options
 `localeMatcher`

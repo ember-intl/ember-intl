@@ -3,32 +3,23 @@
 
 Formats dates relative to "now" using [<code>Intl.RelativeTimeFormat</code>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat), and returns the formatted string value.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-relative-01-template.hbs'}}
-    {{format-relative -1 unit="day"}}
-  {{/demo.example}}
+{{format-relative -1 unit="day"}}
 
-  {{demo.snippet 'docs-helpers-format-relative-01-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-relative-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{format-relative -1 unit="day"}}
+```
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-relative-02-template.hbs'}}
-    {{format-relative 1 unit="day"}}
-  {{/demo.example}}
+{{format-relative 1 unit="day"}}
 
-  {{demo.snippet 'docs-helpers-format-relative-02-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-relative-controller.js'}}
-{{/docs-demo}}
+```hbs
+{{format-relative 1 unit="day"}}
+```
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name='docs-helpers-format-relative-03-template.hbs'}}
-    {{format-relative 0 unit="day"}}
-  {{/demo.example}}
+{{format-relative 0 unit="day"}}
 
-  {{demo.snippet 'docs-helpers-format-relative-03-template.hbs'}}
-  {{demo.snippet 'docs-helpers-format-relative-controller.js'}}
-{{/docs-demo}}
+```hs
+{{format-relative 0 unit="day"}}
+```
 
 ## Format Relative Options
 
