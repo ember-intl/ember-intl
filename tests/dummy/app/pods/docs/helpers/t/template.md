@@ -11,10 +11,10 @@ Compiles a [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-synta
 {{#docs-demo as |demo|}}
   {{#demo.example name='docs-helpers-format-t-01-template.hbs'}}
 
-    {{t 'photos.banner' numPhotos=count}}
+    {{t "photos.banner" numPhotos=this.count}}
 
-    <button class="btn" {{action "inc" count}}> + Increment photo count </button>
-    <button class="btn" {{action "dec" count}}> - Decrement photo count </button>
+    <button class="btn" {{on "click" this.increment}}> + Increment photo count </button>
+    <button class="btn" {{on "click" this.decrement}}> - Decrement photo count </button>
   {{/demo.example}}
 
   {{demo.snippet 'docs-helpers-format-t-01-template.hbs'}}
@@ -36,12 +36,12 @@ Options may be passed to the `t` helper as either named or positional arguments.
 
 _Named arguments:_
 ```hbs
-{{t 'photos.banner' numPhotos=count}}
+{{t 'photos.banner' numPhotos=this.count}}
 ```
 
 _Positional arguments:_
 ```hbs
-{{t 'photos.banner' (hash numPhotos=count)}}
+{{t 'photos.banner' (hash numPhotos=this.count)}}
 ```
 
 When both named and positional arguments are used, they'll be merged together and named arguments will take precedence over the properties of duplicate positional arguments.

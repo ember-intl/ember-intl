@@ -7,14 +7,14 @@ export default class extends Controller {
   @tracked count = 0;
 
   @action
-  inc(count) {
-    this.count = count + 1;
+  increment() {
+    this.count++;
   }
 
   @action
-  dec(count) {
-    if (count <= 0) return;
-    this.count = count - 1;
+  decrement() {
+    if (this.count <= 0) return;
+    this.count--;
   }
 }
 // END-SNIPPET
