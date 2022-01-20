@@ -76,7 +76,7 @@ export default function setupIntl(
       const factory = this.owner.factoryFor('service:intl');
       this.owner.unregister('service:intl');
       this.owner.register('formats:main', options.formats);
-      this.owner.register('service:intl', factory);
+      this.owner.register('service:intl', factory.class);
     }
     this.intl = this.owner.lookup('service:intl');
 
