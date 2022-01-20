@@ -2,7 +2,7 @@
 
 <h3>Format Number</h3>
 <div class="format-number">
-  {{format-number num format='currency' style='currency' currency='EUR'}}
+  {{format-number this.num format='currency' style='currency' currency='EUR'}}
 </div>
 
 <h3>Format Date</h3>
@@ -25,7 +25,7 @@
   {{format-relative 1 unit="day"}}
 </div>
 
-{{#if namespacesAreActive}}
+{{#if this.namespacesAreActive}}
   <h3>Translation Subdirectory (with namespaces)</h3>
   <div class="translation-subdirectory">
     {{t 'subdirectory.smoke.subdirectory'}}

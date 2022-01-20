@@ -66,7 +66,7 @@ module('format-number', function (hooks) {
   test('should handle null value when allowEmpty is true', async function (this: TestContext, assert) {
     assert.expect(1);
     this.set('somethingNull', null);
-    await render(hbs`{{format-number somethingNull allowEmpty=true}}`);
+    await render(hbs`{{format-number this.somethingNull allowEmpty=true}}`);
     assert.equal(this.element.textContent, '');
   });
 
@@ -174,7 +174,7 @@ module('format-number', function (hooks) {
 
     await render(
       hbs`
-      {{#each currencies as |currency|}}{{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}
+      {{#each this.currencies as |currency|}}{{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}
       `
     );
 
