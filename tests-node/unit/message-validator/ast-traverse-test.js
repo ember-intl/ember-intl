@@ -1,7 +1,7 @@
 'use strict';
 
 const { expect } = require('chai');
-const messageParser = require('intl-messageformat-parser');
+const messageParser = require('@formatjs/icu-messageformat-parser');
 const traverse = require('../../../lib/message-validator/ast-traverse');
 
 describe('traverse', function () {
