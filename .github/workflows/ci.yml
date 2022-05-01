@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - name: Install Node
         uses: actions/setup-node@v2.1.5
         with:
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - name: Install Node
         uses: actions/setup-node@v2.1.5
         with:
@@ -80,7 +80,7 @@ jobs:
             experimental: true
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - name: Install Node
         uses: actions/setup-node@v2.1.5
         with:
@@ -96,7 +96,7 @@ jobs:
     needs: [test-locked-deps]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - name: Install Node
         uses: actions/setup-node@v2.1.5
         with:
