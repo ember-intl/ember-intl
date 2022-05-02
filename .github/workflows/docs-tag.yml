@@ -9,6 +9,9 @@ env:
   CI: true
   NAME: deploy
 
+permissions:
+  contents: read
+
 jobs:
   deploy-docs:
     name: Deploy Docs

@@ -22,6 +22,9 @@ on:
 env:
   CI: true
 
+permissions:
+  contents: read
+
 jobs:
   test-locked-deps:
     name: Locked Deps
