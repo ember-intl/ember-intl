@@ -1,6 +1,6 @@
 import addTranslations from './add-translations';
 import { missingMessage } from './-private/serialize-translation';
-import type { TestContext as BaseTestContext } from 'ember-test-helpers';
+import type { TestContext as BaseTestContext } from '@ember/test-helpers';
 import { settled } from '@ember/test-helpers';
 import type IntlService from 'ember-intl/services/intl';
 import type { TOptions } from 'ember-intl/services/intl';

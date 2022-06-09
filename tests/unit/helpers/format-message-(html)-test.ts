@@ -132,20 +132,20 @@ module('format-message (html)', function (hooks) {
   test('should allow for inlined html in the value', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="Jason" htmlSafe=true}}`);
-    assert.equal(this.element.innerHTML, '<strong>Hello Jason</strong>');
+    assert.equal((this.element as HTMLElement).innerHTML, '<strong>Hello Jason</strong>');
   });
 
   test('should escape arguments', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{format-message "{foo}" foo="<em>BAR</em>" htmlSafe=true}}`);
-    assert.equal(this.element.innerHTML, '&lt;em&gt;BAR&lt;/em&gt;');
+    assert.equal((this.element as HTMLElement).innerHTML, '&lt;em&gt;BAR&lt;/em&gt;');
   });
 
   test('should allow for inlined html in the value but escape arguments', async function (this: TestContext, assert) {
     assert.expect(2);
     await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="<em>Jason</em>" htmlSafe=true}}`);
-    assert.equal(this.element.innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
+    assert.equal((this.element as HTMLElement).innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
     await render(hbs`{{format-message "<strong>Hello {name}</strong>" name="<em>Jason</em>" htmlSafe=true}}`);
-    assert.equal(this.element.innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
+    assert.equal((this.element as HTMLElement).innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
   });
 });
