@@ -952,16 +952,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _and.default;
-    }
-  });
   Object.defineProperty(_exports, "and", {
     enumerable: true,
     get: function get() {
       return _and.and;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _and.default;
     }
   });
 });
@@ -971,16 +971,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _append.default;
-    }
-  });
   Object.defineProperty(_exports, "append", {
     enumerable: true,
     get: function get() {
       return _append.append;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _append.default;
     }
   });
 });
@@ -1003,16 +1003,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _call.default;
-    }
-  });
   Object.defineProperty(_exports, "call", {
     enumerable: true,
     get: function get() {
       return _call.call;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _call.default;
     }
   });
 });
@@ -1022,16 +1022,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _camelize.default;
-    }
-  });
   Object.defineProperty(_exports, "camelize", {
     enumerable: true,
     get: function get() {
       return _camelize.camelize;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _camelize.default;
     }
   });
 });
@@ -1054,16 +1054,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _capitalize.default;
-    }
-  });
   Object.defineProperty(_exports, "capitalize", {
     enumerable: true,
     get: function get() {
       return _capitalize.capitalize;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _capitalize.default;
     }
   });
 });
@@ -1073,16 +1073,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _chunk.default;
-    }
-  });
   Object.defineProperty(_exports, "chunk", {
     enumerable: true,
     get: function get() {
       return _chunk.chunk;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _chunk.default;
     }
   });
 });
@@ -1092,16 +1092,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _classify.default;
-    }
-  });
   Object.defineProperty(_exports, "classify", {
     enumerable: true,
     get: function get() {
       return _classify.classify;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _classify.default;
     }
   });
 });
@@ -1124,16 +1124,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _compute.default;
-    }
-  });
   Object.defineProperty(_exports, "compute", {
     enumerable: true,
     get: function get() {
       return _compute.compute;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _compute.default;
     }
   });
 });
@@ -1143,16 +1143,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _contains.default;
-    }
-  });
   Object.defineProperty(_exports, "contains", {
     enumerable: true,
     get: function get() {
       return _contains.contains;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _contains.default;
     }
   });
 });
@@ -1162,16 +1162,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _dasherize.default;
-    }
-  });
   Object.defineProperty(_exports, "dasherize", {
     enumerable: true,
     get: function get() {
       return _dasherize.dasherize;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _dasherize.default;
     }
   });
 });
@@ -1181,16 +1181,16 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function get() {
-      return _dec.default;
-    }
-  });
   Object.defineProperty(_exports, "dec", {
     enumerable: true,
     get: function get() {
       return _dec.dec;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _dec.default;
     }
   });
 });
@@ -1204,6 +1204,19 @@
     enumerable: true,
     get: function get() {
       return _drop.default;
+    }
+  });
+});
+;define("dummy/helpers/ensure-safe-component", ["exports", "@embroider/util"], function (_exports, _util) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _util.EnsureSafeComponentHelper;
     }
   });
 });
@@ -2381,8 +2394,8 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.svgJar = svgJar;
   _exports.default = void 0;
+  _exports.svgJar = svgJar;
 
   function getInlineAsset(assetId) {
     try {
@@ -2780,8 +2793,8 @@
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.initialize = initialize;
   _exports.default = void 0;
+  _exports.initialize = initialize;
 
   function initialize() {
     var application = arguments[1] || arguments[0];
@@ -3456,6 +3469,10 @@ define("dummy/pods/docs/helpers/format-date/controller", ["exports"], function (
   });
   _exports.default = void 0;
 
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -3502,7 +3519,7 @@ define("dummy/pods/docs/helpers/format-date/controller", ["exports"], function (
       return _this;
     }
 
-    return _default;
+    return _createClass(_default);
   }(Ember.Controller); // END-SNIPPET
 
 
@@ -3534,6 +3551,10 @@ define("dummy/pods/docs/helpers/format-list/controller", ["exports"], function (
     value: true
   });
   _exports.default = void 0;
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3574,7 +3595,7 @@ define("dummy/pods/docs/helpers/format-list/controller", ["exports"], function (
       return _this;
     }
 
-    return _default;
+    return _createClass(_default);
   }(Ember.Controller); // END-SNIPPET
 
 
@@ -3606,6 +3627,10 @@ define("dummy/pods/docs/helpers/format-message/controller", ["exports"], functio
     value: true
   });
   _exports.default = void 0;
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3656,7 +3681,7 @@ define("dummy/pods/docs/helpers/format-message/controller", ["exports"], functio
       return _this;
     }
 
-    return _default;
+    return _createClass(_default);
   }(Ember.Controller); // END-SNIPPET
 
 
@@ -3688,6 +3713,10 @@ define("dummy/pods/docs/helpers/format-number/controller", ["exports"], function
     value: true
   });
   _exports.default = void 0;
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3728,7 +3757,7 @@ define("dummy/pods/docs/helpers/format-number/controller", ["exports"], function
       return _this;
     }
 
-    return _default;
+    return _createClass(_default);
   }(Ember.Controller); // END-SNIPPET
 
 
@@ -3760,6 +3789,10 @@ define("dummy/pods/docs/helpers/format-relative/controller", ["exports"], functi
     value: true
   });
   _exports.default = void 0;
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3807,7 +3840,7 @@ define("dummy/pods/docs/helpers/format-relative/controller", ["exports"], functi
       return _this;
     }
 
-    return _default;
+    return _createClass(_default);
   }(Ember.Controller); // END-SNIPPET
 
 
@@ -3839,6 +3872,10 @@ define("dummy/pods/docs/helpers/format-time/controller", ["exports"], function (
     value: true
   });
   _exports.default = void 0;
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3879,7 +3916,7 @@ define("dummy/pods/docs/helpers/format-time/controller", ["exports"], function (
       return _this;
     }
 
-    return _default;
+    return _createClass(_default);
   }(Ember.Controller); // END-SNIPPET
 
 
@@ -4523,6 +4560,19 @@ define("dummy/routes/application", ["exports"], function (_exports) {
     enumerable: true,
     get: function get() {
       return _project.default;
+    }
+  });
+});
+;define("dummy/services/-ensure-registered", ["exports", "@embroider/util/services/ensure-registered"], function (_exports, _ensureRegistered) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function get() {
+      return _ensureRegistered.default;
     }
   });
 });
