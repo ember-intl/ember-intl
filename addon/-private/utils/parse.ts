@@ -1,4 +1,4 @@
-import { parse } from 'intl-messageformat-parser';
+import { parse } from '@formatjs/icu-messageformat-parser';
 
 /**
  * @private
@@ -7,7 +7,6 @@ import { parse } from 'intl-messageformat-parser';
 export default function parseString(string: string) {
   // ! Sync with `lib/parse-options.js`
   return parse(string, {
-    normalizeHashtagInPlural: false,
     ignoreTag: true,
   });
 }

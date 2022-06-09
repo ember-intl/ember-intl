@@ -122,7 +122,7 @@ describe('linting', function () {
 
   it('throws error for invalid ICU argument syntax', function () {
     // this might change slightly if the parser lib is updated, if so it's fine to adjust
-    const expectedParserError = 'Expected "," but "c" found.';
+    const expectedParserError = 'MALFORMED_ARGUMENT';
     const brokenString = this.brokenIcuFixture.en.brokenSyntax;
 
     expect(() => this.linter.lint(this.brokenIcuFixture)).throws(
