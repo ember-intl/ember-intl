@@ -30,8 +30,6 @@ export default class extends Service {
   /**
    * Returns an array of registered locale names
    *
-   * @property locales
-   * @public
    */
   get locales() {
     return Object.keys(this._intls);
@@ -60,8 +58,6 @@ export default class extends Service {
   /**
    * Returns the first locale of the currently active locales
    *
-   * @property primaryLocale
-   * @public
    */
   get primaryLocale() {
     return this.locale[0];
