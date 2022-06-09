@@ -26,7 +26,7 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
   static type: keyof Formats | 'message' | 'list' | 'dateRange' | 'timeRange';
 
   get options(): readonly (keyof KnownOptions)[] {
-    return ([] as unknown[]) as readonly (keyof KnownOptions)[];
+    return [] as unknown[] as readonly (keyof KnownOptions)[];
   }
 
   abstract format<T>(
