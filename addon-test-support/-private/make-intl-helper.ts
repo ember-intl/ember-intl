@@ -1,5 +1,5 @@
 import { getContext } from '@ember/test-helpers';
-import type { TestContext } from 'ember-test-helpers';
+import type { TestContext } from '@ember/test-helpers';
 import { assert } from '@ember/debug';
 import type Evented from '@ember/object/evented';
 import type Service from '@ember/service';
