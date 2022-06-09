@@ -2307,12 +2307,6 @@
       return _rootUrl.default;
     }
   });
-  Object.defineProperty(_exports, "rootUrl", {
-    enumerable: true,
-    get: function get() {
-      return _rootUrl.rootUrl;
-    }
-  });
 });
 ;define("dummy/helpers/route-idle", ["exports", "ember-app-scheduler/helpers/route-idle"], function (_exports, _routeIdle) {
   "use strict";
@@ -2707,7 +2701,6 @@
     initialize: function initialize() {
       var app = arguments[1] || arguments[0];
       app.register('container-debug-adapter:main', _containerDebugAdapter.default);
-      app.inject('container-debug-adapter:main', 'namespace', 'application:main');
     }
   };
   _exports.default = _default;
