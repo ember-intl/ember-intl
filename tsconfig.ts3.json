@@ -1,4 +1,36 @@
 {
-  "extends": "./tsconfig.json",
-  "include": ["types.ts3/**/*"]
+  "compilerOptions": {
+    "target": "es2020",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noEmitOnError": false,
+    "noEmit": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "baseUrl": ".",
+    "module": "es6",
+    "experimentalDecorators": true,
+    "skipLibCheck": true, // Don't check the types of dependencies
+    "paths": {
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
+      "ember-intl": ["addon"],
+      "ember-intl/*": ["addon/*"],
+      "ember-intl/test-support": ["addon-test-support"],
+      "ember-intl/test-support/*": ["addon-test-support/*"],
+      "*": ["types/*"]
+    }
+  },
+  "include": ["types.ts3/**/*", "app/**/*", "addon/**/*", "tests/**/*", "types/**/*", "test-support/**/*", "addon-test-support/**/*"]
 }
