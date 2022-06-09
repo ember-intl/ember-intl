@@ -25,6 +25,9 @@ module.exports = function (defaults) {
     },
   };
 
+  // Code snippets for ember-cli-addon-docs
+  options.snippetExtensions = ['css', 'hbs', 'js', 'json', 'ts', 'yaml'];
+
   let app = new EmberAddon(defaults, options);
 
   /*

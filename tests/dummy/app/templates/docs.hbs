@@ -1,0 +1,35 @@
+<DocsViewer as |viewer|>
+  <viewer.nav as |nav|>
+    <nav.section
+      @label="Getting Started"
+    />
+
+    <nav.section
+      @label="Guide"
+    />
+
+    <nav.section
+      @label="Template helpers"
+    />
+
+    <nav.section
+      @label="Cookbook"
+    />
+
+    <nav.section
+      @label="Advanced"
+    />
+
+    <nav.section
+      @label="Integrations"
+    />
+
+    <nav.section
+      @label="Legacy"
+    />
+  </viewer.nav>
+
+  <viewer.main>
+    {{outlet}}
+  </viewer.main>
+</DocsViewer>
