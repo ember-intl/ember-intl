@@ -1,4 +1,4 @@
-import { parse } from 'intl-messageformat-parser';
+import { parse } from '@formatjs/icu-messageformat-parser';
 
 /**
  * @private
