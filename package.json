@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
+    "@ember/test-helpers": "^2.8.1",
     "@formatjs/intl-pluralrules": "^4.0.6",
     "@formatjs/intl-relativetimeformat": "^8.0.4",
     "@glimmer/component": "^1.0.3",
@@ -99,6 +100,7 @@
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator-for-testing": "^1.0.0",
     "ember-open-browser": "^1.0.0",
+    "ember-qunit": "^5.1.5",
     "ember-resolver": "^8.0.2",
     "ember-root-url": "^0.2.0",
     "ember-source": "~3.25.1",
@@ -115,6 +117,7 @@
     "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2",
     "prettier": "^2.2.1",
+    "qunit": "^2.19.1",
     "qunit-dom": "^1.6.0",
     "testdouble": "^3.16.1",
     "testdouble-qunit": "^3.0.0",
