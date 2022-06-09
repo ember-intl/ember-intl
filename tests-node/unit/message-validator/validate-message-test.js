@@ -97,7 +97,7 @@ describe('validateMessage', function () {
 
   missingOther.forEach((message) => {
     it(`throws missing other error for "${message}"`, function () {
-      expect(() => validateMessage(message, 'en-us')).to.throw('Missing selector: other');
+      expect(() => validateMessage(message, 'en-us')).to.throw('MISSING_OTHER_CLAUSE');
     });
   });
 });
