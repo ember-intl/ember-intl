@@ -61,7 +61,7 @@ module('t', function (hooks) {
     await render(hbs`{{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}`);
     assert.equal(this.element.querySelectorAll('strong').length, 1);
     assert.equal(this.element.querySelectorAll('em').length, 0);
-    assert.equal(this.element.innerHTML, `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`);
+    assert.equal((this.element as HTMLElement).innerHTML, `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`);
   });
 
   test('should support legacy HTML escaping', async function (this: TestContext, assert) {
@@ -69,7 +69,7 @@ module('t', function (hooks) {
     await render(hbs`{{t 'html.legacy' htmlSafe=true text="<em>Jason</em>" href="/foo"}}`);
     assert.equal(this.element.querySelectorAll('a').length, 1);
     assert.equal(this.element.querySelectorAll('em').length, 0);
-    assert.equal(this.element.innerHTML, `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`);
+    assert.equal((this.element as HTMLElement).innerHTML, `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`);
   });
 
   test('should support optional positional options object argument', async function (this: TestContext, assert) {
