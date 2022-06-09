@@ -22,19 +22,19 @@
     "url": "http://github.com/ember-intl/ember-intl.git"
   },
   "scripts": {
-    "start": "ember serve",
     "build": "ember build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:js": "eslint --ext ts,js .",
     "lint:types": "tsc --noEmit",
     "lint-staged": "lint-staged",
-    "tests-node": "mocha \"tests-node/**/*.js\"",
-    "test": "yarn run tests-node && ember test",
-    "test-node": "yarn tests-node",
-    "testall": "yarn run tests-node && ember try:each",
     "prettier": "prettier --single-quote --print-width 120 --write \"{blueprints,config,lib,app,addon,addon-test-support,tests,tests-node}/**/*.js\"",
     "prepack": "ember ts:precompile",
-    "postpack": "ember ts:clean"
+    "postpack": "ember ts:clean",
+    "start": "ember serve",
+    "test": "npm-run-all --aggregate-output --continue-on-error --parallel test:ember test:node",
+    "test:ember": "ember test",
+    "test:ember-compatibility": "./node_modules/.bin/ember try:one",
+    "test:node": "mocha \"tests-node/**/*.js\""
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.0.18",
