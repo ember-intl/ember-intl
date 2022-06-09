@@ -7,7 +7,6 @@ import { parse } from '@formatjs/icu-messageformat-parser';
 export default function parseString(string: string) {
   // ! Sync with `lib/parse-options.js`
   return parse(string, {
-    normalizeHashtagInPlural: false,
     ignoreTag: true,
   });
 }
