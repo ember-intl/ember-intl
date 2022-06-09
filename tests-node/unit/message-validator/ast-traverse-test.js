@@ -1,12 +1,12 @@
 'use strict';
 
 const { expect } = require('chai');
-const messageParser = require('intl-messageformat-parser');
+const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
 const traverse = require('../../../lib/message-validator/ast-traverse');
 
 describe('traverse', function () {
   it('hello world!', function () {
-    let ast = messageParser.parse(`hello world!`);
+    let ast = parse(`hello world!`);
     let result = count(ast);
 
     expect(result).to.deep.equal({
@@ -22,7 +22,7 @@ describe('traverse', function () {
   });
 
   it('hello {name}!', function () {
-    let ast = messageParser.parse(`hello {name}!`);
+    let ast = parse(`hello {name}!`);
     let result = count(ast);
 
     expect(result).to.deep.equal({
@@ -38,7 +38,7 @@ describe('traverse', function () {
   });
 
   it('{product} will cost {price, number, USD} if ordered by {deadline, date, time}', function () {
-    let ast = messageParser.parse(`{product} will cost {price, number, USD} if ordered by {deadline, date, time}`);
+    let ast = parse(`{product} will cost {price, number, USD} if ordered by {deadline, date, time}`);
     let result = count(ast);
 
     expect(result).to.deep.equal({
@@ -54,7 +54,7 @@ describe('traverse', function () {
   });
 
   it('{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.', function () {
-    let ast = messageParser.parse(
+    let ast = parse(
       `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`
     );
     let result = count(ast);
@@ -72,9 +72,7 @@ describe('traverse', function () {
   });
 
   it('{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }', function () {
-    let ast = messageParser.parse(
-      `{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`
-    );
+    let ast = parse(`{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`);
     let result = count(ast);
 
     expect(result).to.deep.equal({
@@ -90,7 +88,7 @@ describe('traverse', function () {
   });
 
   it('{ trainers, plural, offset:1 ... }', function () {
-    let ast = messageParser.parse(
+    let ast = parse(
       `{ trainers, plural, offset:1
         =0 {The gym is empty}
         =1 {You are alone here}
@@ -113,7 +111,7 @@ describe('traverse', function () {
   });
 
   it(`It's my cat's {year, selectordinal, ... }`, function () {
-    let ast = messageParser.parse(
+    let ast = parse(
       `It's my cat's {year, selectordinal,
         one {#st}
         two {#nd}
@@ -149,28 +147,28 @@ function count(ast) {
   };
 
   traverse(ast, {
-    [messageParser.TYPE.pound]() {
+    [TYPE.pound]() {
       result.poundElement++;
     },
-    [messageParser.TYPE.literal]() {
+    [TYPE.literal]() {
       result.literalElement++;
     },
-    [messageParser.TYPE.argument]() {
+    [TYPE.argument]() {
       result.argumentElement++;
     },
-    [messageParser.TYPE.number]() {
+    [TYPE.number]() {
       result.numberFormat++;
     },
-    [messageParser.TYPE.date]() {
+    [TYPE.date]() {
       result.dateFormat++;
     },
-    [messageParser.TYPE.time]() {
+    [TYPE.time]() {
       result.timeFormat++;
     },
-    [messageParser.TYPE.plural]() {
+    [TYPE.plural]() {
       result.pluralFormat++;
     },
-    [messageParser.TYPE.select]() {
+    [TYPE.select]() {
       result.selectFormat++;
     },
   });
