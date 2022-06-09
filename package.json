@@ -31,7 +31,7 @@
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean",
     "start": "ember serve",
-    "test": "npm-run-all --aggregate-output --continue-on-error --parallel test:node",
+    "test": "npm-run-all --aggregate-output --continue-on-error --parallel test:ember test:node",
     "test:ember": "ember test",
     "test:ember-compatibility": "./node_modules/.bin/ember try:one",
     "test:node": "mocha \"tests-node/**/*.js\""
