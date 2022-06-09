@@ -1,107 +1,14 @@
-# This workflow is largely based on
-# https://github.com/salsify/ember-css-modules/blob/master/.github/workflows/ci.yml
-
 name: CI
 
-# These trigger patterns courtesy of https://github.com/broccolijs/broccoli/pull/436
-on:
-  pull_request:
+on: 
   push:
-    # filtering branches here prevents duplicate builds from pull_request and push
     branches:
       - main
       - 'v*'
-    # always run CI for tags
     tags:
       - '*'
-
-  # early issue detection: run CI weekly on Sundays
+  pull_request:
   schedule:
-    - cron: '0 6 * * 0'
-
-env:
-  CI: true
+    - cron: '0 6 * * SUN'
 
 jobs:
-  test-locked-deps:
-    name: Locked Deps
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.4
-      - name: Install Node
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 14
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-      - name: Lint
-        run: yarn lint
-      - name: Attempt TypeScript Release Build
-        run: yarn ember ts:precompile && yarn ember ts:clean
-      - name: Browser Tests
-        run: yarn test
-      - name: Node Tests
-        run: yarn test-node
-
-  test-old-dependencies:
-    name: Oldest Supported Env
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.4
-      - name: Install Node
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 10
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-      - name: Browser Tests
-        run: yarn test
-      - name: Node Tests
-        run: yarn test-node
-
-  test-try:
-    name: Ember Try
-    runs-on: ubuntu-latest
-    needs: [test-locked-deps]
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      fail-fast: false
-      matrix:
-        scenario:
-          - ember-lts-3.16
-          - ember-lts-3.20
-          - ember-release
-          - ember-beta
-        experimental: [false]
-        include:
-          - scenario: ember-canary
-            experimental: true
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.4
-      - name: Install Node
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 14
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-      - name: Try Scenario
-        run: yarn ember try:one ${{ matrix.scenario }}
-
-  lint-ts3:
-    name: TypeScript 3
-    runs-on: ubuntu-latest
-    needs: [test-locked-deps]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.4
-      - name: Install Node
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 14
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-      - name: Try Scenario
-        run: yarn ember try:one ts3 --- yarn lint:types --project tsconfig.ts3.json
