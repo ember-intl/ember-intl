@@ -12,6 +12,7 @@ on:
     - cron: '0 6 * * SUN'
 
 env:
+  CI: true
   NODE_VERSION: 16
 
 jobs:
@@ -34,3 +35,24 @@ jobs:
 
       - name: Lint
         run: yarn lint
+
+
+  test-addon:
+    name: Test addon
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn test
