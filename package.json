@@ -129,7 +129,7 @@
     }
   },
   "engines": {
-    "node": ">= 10.*"
+    "node": ">= 14.*"
   },
   "typesVersions": {
     "^3.0": {
