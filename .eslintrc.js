@@ -21,27 +21,26 @@ module.exports = {
     // node files
     {
       files: [
-        'index.js',
-        'testem.js',
-        'ember-cli-build.js',
-        'config/**/*.js',
-        'tests/dummy/config/**/*.js',
-        'tests-node/**/*.js',
-        'lib/**/*.js',
+        './.eslintrc.js',
+        './.prettierrc.js',
+        './ember-cli-build.js',
+        './index.js',
+        './testem.js',
+        './blueprints/*/index.js',
+        './config/**/*.js',
+        './lib/**/*.js',
+        './tests/dummy/config/**/*.js',
+        './tests-node/**/*.js',
       ],
-      excludedFiles: ['app/**', 'addon-test-support/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2015,
       },
       env: {
         browser: false,
         node: true,
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-      }),
+      extends: ['plugin:node/recommended'],
     },
 
     // node tests
