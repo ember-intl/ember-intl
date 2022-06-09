@@ -62,7 +62,7 @@ module('format-time-test', function (hooks) {
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`{{format-time dateString timeZone='UTC'}}`);
+    await render(hbs`{{format-time this.dateString timeZone='UTC'}}`);
     assert.equal(this.element.textContent, '11:00 PM');
   });
 
@@ -72,7 +72,7 @@ module('format-time-test', function (hooks) {
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`{{format-time dateString format='example'}}`);
+    await render(hbs`{{format-time this.dateString format='example'}}`);
     assert.equal(this.element.textContent, '11:00 PM UTC');
   });
 
@@ -82,7 +82,7 @@ module('format-time-test', function (hooks) {
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`{{format-time dateString locale='de' format='example'}}`);
+    await render(hbs`{{format-time this.dateString locale='de' format='example'}}`);
     assert.equal(this.element.textContent, '23:00 UTC');
   });
 
@@ -91,14 +91,14 @@ module('format-time-test', function (hooks) {
     this.set('date', date);
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`{{format-time date timeZone='UTC'}}`);
+    await render(hbs`{{format-time this.date timeZone='UTC'}}`);
     assert.equal(this.element.textContent, '11:00 PM');
   });
 
   test('it should return a formatted string of just the time', async function (this: TestContext, assert) {
     assert.expect(1);
     this.set('date', date);
-    await render(hbs`{{format-time date hour='numeric' minute='numeric' timeZone='UTC'}}`);
+    await render(hbs`{{format-time this.date hour='numeric' minute='numeric' timeZone='UTC'}}`);
     assert.equal(this.element.textContent, '11:00 PM');
   });
 

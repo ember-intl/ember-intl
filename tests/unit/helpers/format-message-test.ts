@@ -91,7 +91,7 @@ module('format-message', function (hooks) {
       lastName: 'Dale',
     });
 
-    await render(hbs`{{format-message translation firstName=firstName lastName=lastName}}`);
+    await render(hbs`{{format-message this.translation firstName=this.firstName lastName=this.lastName}}`);
 
     assert.equal(this.element.textContent, 'Hi, my name is Tom Dale.');
   });
@@ -108,7 +108,7 @@ module('format-message', function (hooks) {
     });
 
     await render(
-      hbs`{{format-message translation city=city population=population census_date=census_date timeZone=timeZone}}`
+      hbs`{{format-message this.translation city=this.city population=this.population census_date=this.census_date timeZone=this.timeZone}}`
     );
     assert.equal(this.element.textContent, 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
   });
@@ -125,7 +125,7 @@ module('format-message', function (hooks) {
     });
 
     await render(
-      hbs`{{format-message translation city=city population=population census_date=census_date timeZone=timeZone}}`
+      hbs`{{format-message this.translation city=this.city population=this.population census_date=this.census_date timeZone=this.timeZone}}`
     );
     assert.equal(this.element.textContent, 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
   });
@@ -143,7 +143,7 @@ module('format-message', function (hooks) {
 
     await render(
       hbs`
-      {{#each harvests as |harvest|}}{{format-message translation person=harvest.person count=harvest.count}}{{/each}}
+      {{#each this.harvests as |harvest|}}{{format-message this.translation person=harvest.person count=harvest.count}}{{/each}}
       `
     );
 
@@ -163,7 +163,7 @@ module('format-message', function (hooks) {
   }, assert) {
     assert.expect(1);
     this.day = 1390518044403;
-    await render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=day}}`);
+    await render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=this.day}}`);
     assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
   });
 
@@ -176,7 +176,7 @@ module('format-message', function (hooks) {
   test('should return 0 instead of nothing', async function (this: TestContext, assert) {
     assert.expect(1);
     this.set('count', 0);
-    await render(hbs`{{format-message '{count}' count=count}}`);
+    await render(hbs`{{format-message '{count}' count=this.count}}`);
     assert.equal(this.element.textContent, '0');
   });
 
@@ -195,7 +195,7 @@ module('format-message', function (hooks) {
     const context = Context.create();
 
     set(this, 'context', context);
-    await render(hbs`{{format-message context.translation}}`);
+    await render(hbs`{{format-message this.context.translation}}`);
     assert.equal(this.element.textContent, 'foo foo');
 
     run(() => {
