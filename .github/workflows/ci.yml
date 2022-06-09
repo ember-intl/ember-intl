@@ -53,7 +53,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 10
+          node-version: 14
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Browser Tests
