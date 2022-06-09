@@ -22,6 +22,7 @@
     "baseUrl": ".",
     "module": "es6",
     "experimentalDecorators": true,
+    "skipLibCheck": true, // Don't check the types of dependencies
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
