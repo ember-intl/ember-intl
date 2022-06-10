@@ -1,0 +1,49 @@
+<ul class="locale-switcher container" role="toolbar">
+  <li class="list-item">
+    <button
+      aria-posinset="1"
+      aria-setsize="4"
+      class="button"
+      type="button"
+      {{on "click" (fn this.updateLocale "en-us")}}
+    >
+      en-us
+    </button>
+  </li>
+
+  <li class="list-item">
+    <button
+      aria-posinset="2"
+      aria-setsize="4"
+      class="button"
+      type="button"
+      {{on "click" (fn this.updateLocale "de-de")}}
+    >
+      de-de
+    </button>
+  </li>
+
+  <li class="list-item">
+    <button
+      aria-posinset="3"
+      aria-setsize="4"
+      class="button"
+      type="button"
+      {{on "click" (fn this.updateLocale "es-es")}}
+    >
+      es-es
+    </button>
+  </li>
+
+  <li class="list-item">
+    <button
+      aria-posinset="4"
+      aria-setsize="4"
+      class="button"
+      type="button"
+      {{on "click" (fn this.updateLocale "fr-fr")}}
+    >
+      fr-fr
+    </button>
+  </li>
+</ul>

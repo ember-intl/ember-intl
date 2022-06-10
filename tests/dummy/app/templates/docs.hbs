@@ -1,0 +1,160 @@
+<DocsViewer as |viewer|>
+  <viewer.nav as |nav|>
+    <nav.section
+      @label="Getting Started"
+    />
+
+    <nav.item
+      @label="Overview"
+      @route="docs.getting-started.index"
+    />
+
+    <nav.item
+      @label="Runtime requirements"
+      @route="docs.getting-started.runtime-requirements"
+    />
+
+    <nav.item
+      @label="Quickstart"
+      @route="docs.getting-started.quickstart"
+    />
+
+    <nav.section
+      @label="Guide"
+    />
+
+    <nav.item
+      @label="Migration from 4.0 to 5.0"
+      @route="docs.guide.migration-4-0-to-5-0"
+    />
+
+    <nav.item
+      @label="Configuration"
+      @route="docs.guide.addon-configs"
+    />
+
+    <nav.item
+      @label="Translating text"
+      @route="docs.guide.translating-text"
+    />
+
+    <nav.item
+      @label="Service API"
+      @route="docs.guide.service-api"
+    />
+
+    <nav.item
+      @label="Lazy-loading translations"
+      @route="docs.guide.asynchronously-loading-translations"
+    />
+
+    <nav.item
+      @label="Missing translations"
+      @route="docs.guide.missing-translations"
+    />
+
+    <nav.item
+      @label="Testing"
+      @route="docs.guide.testing"
+    />
+
+    <nav.section
+      @label="Template helpers"
+    />
+
+    <nav.item
+      @label="Introduction"
+      @route="docs.helpers.index"
+    />
+
+    <nav.item
+      @label="The t helper"
+      @route="docs.helpers.t"
+    />
+
+    <nav.item
+      @label="format-date"
+      @route="docs.helpers.format-date"
+    />
+
+    <nav.item
+      @label="format-time"
+      @route="docs.helpers.format-time"
+    />
+
+    <nav.item
+      @label="format-message"
+      @route="docs.helpers.format-message"
+    />
+
+    <nav.item
+      @label="format-number"
+      @route="docs.helpers.format-number"
+    />
+
+    <nav.item
+      @label="format-relative"
+      @route="docs.helpers.format-relative"
+    />
+
+    <nav.item
+      @label="format-list"
+      @route="docs.helpers.format-list"
+    />
+
+    <nav.section
+      @label="Cookbook"
+    />
+
+    <nav.item
+      @label="Common errors"
+      @route="docs.cookbook.common-errors"
+    />
+
+    <nav.section
+      @label="Advanced"
+    />
+
+    <nav.item
+      @label="Addon support"
+      @route="docs.advanced.addon-support"
+    />
+
+    <nav.section
+      @label="Integrations"
+    />
+
+    <nav.item
+      @label="ember-cp-validations"
+      @route="docs.integrations.ember-cp-validations"
+    />
+
+    <nav.item
+      @label="Visual Studio Code"
+      @route="docs.integrations.visual-studio-code"
+    />
+
+    <nav.section
+      @label="Legacy"
+    />
+
+    <nav.item
+      @label="Migration from 3.0 to 4.0"
+      @route="docs.legacy.migration-3-0-to-4-0"
+    />
+
+    <nav.item
+      @label="Migration from 2.0 to 3.0"
+      @route="docs.legacy.migration-2-0-to-3-0"
+    />
+
+    <nav.item
+      @label="Documentation for 2.0"
+      @route="docs.legacy.v2"
+    />
+  </viewer.nav>
+
+  <viewer.main>
+    {{outlet}}
+  </viewer.main>
+</DocsViewer>

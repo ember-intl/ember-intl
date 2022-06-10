@@ -28,8 +28,6 @@ export default class IntlService extends Service {
   /**
    * Returns an array of registered locale names
    *
-   * @property locales
-   * @public
    */
   readonly locales: string[];
 
@@ -38,8 +36,6 @@ export default class IntlService extends Service {
   /**
    * Returns the first locale of the currently active locales
    *
-   * @property primaryLocale
-   * @public
    */
   readonly primaryLocale: string;
 

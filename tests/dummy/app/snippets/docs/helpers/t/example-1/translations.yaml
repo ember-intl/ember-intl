@@ -1,0 +1,4 @@
+# BEGIN-SNIPPET docs__helpers__t__example-1__translations__en-us.yaml
+photos:
+  banner: You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
+# END-SNIPPET

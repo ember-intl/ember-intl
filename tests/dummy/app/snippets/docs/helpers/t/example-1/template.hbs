@@ -1,0 +1,17 @@
+{{!-- BEGIN-SNIPPET docs__helpers__t__example-1__my-component.hbs --}}
+<button
+  type="button"
+  {{on "click" this.addPhoto}}
+>
+  Add photo
+</button>
+
+<button
+  type="button"
+  {{on "click" this.deletePhoto}}
+>
+  Delete photo
+</button>
+
+Message: {{t "photos.banner" numPhotos=this.numPhotos}}
+{{!-- END-SNIPPET --}}

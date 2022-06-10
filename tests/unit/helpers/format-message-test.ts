@@ -155,7 +155,7 @@ module('format-message', function (hooks) {
     this.intl.addTranslations('es_MX', { foo: 'bar' });
     /* tests that the locale name becomes normalized to es-mx */
     this.intl.exists('test', 'fr-ca');
-    assert.deepEqual(get(this.intl, 'locales'), ['en-us', 'es-es', 'fr-fr', 'es-mx']);
+    assert.deepEqual(get(this.intl, 'locales'), ['en-us', 'de-de', 'es-es', 'fr-fr', 'es-mx']);
   });
 
   test('should respect format options for date ICU block', async function (this: TestContext & {

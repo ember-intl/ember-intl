@@ -33,6 +33,9 @@
 /jsconfig.json
 .gitkeep
 
+# ember-cli-addon-docs
+/config/addon-docs.js
+
 # ember-try
 /.node_modules.ember-try/
 /bower.json.ember-try
