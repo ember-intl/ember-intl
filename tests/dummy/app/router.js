@@ -43,6 +43,7 @@ Router.map(function () {
 
     this.route('integrations', function () {
       this.route('ember-cp-validations');
+      this.route('visual-studio-code');
     });
   });
 });
