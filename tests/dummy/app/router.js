@@ -8,6 +8,10 @@ export default class Router extends AddonDocsRouter {
 
 Router.map(function () {
   docsRoute(this, function () {
+    this.route('cookbook', function () {
+      this.route('common-errors');
+    });
+
     this.route('getting-started', { path: '/' }, function () {
       this.route('quickstart');
       this.route('runtime-requirements');
