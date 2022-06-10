@@ -18,6 +18,7 @@ Router.map(function () {
       this.route('asynchronously-loading-translations');
       this.route('migration-4-0-to-5-0');
       this.route('missing-translations');
+      this.route('service-api');
     });
   });
 });
