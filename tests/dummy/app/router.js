@@ -40,5 +40,9 @@ Router.map(function () {
       this.route('format-time');
       this.route('t');
     });
+
+    this.route('integrations', function () {
+      this.route('ember-cp-validations');
+    });
   });
 });
