@@ -12,5 +12,9 @@ Router.map(function () {
       this.route('quickstart');
       this.route('runtime-requirements');
     });
+
+    this.route('guide', function () {
+      this.route('addon-configs');
+    });
   });
 });
