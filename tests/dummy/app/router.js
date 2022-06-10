@@ -7,6 +7,7 @@ export default class Router extends AddonDocsRouter {
 }
 
 Router.map(function () {
-  /* eslint-disable-next-line @typescript-eslint/no-empty-function */
-  docsRoute(this, function () {});
+  docsRoute(this, function () {
+    this.route('getting-started', { path: '/' }, function () {});
+  });
 });
