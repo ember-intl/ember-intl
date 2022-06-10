@@ -15,6 +15,7 @@ Router.map(function () {
 
     this.route('guide', function () {
       this.route('addon-configs');
+      this.route('asynchronously-loading-translations');
     });
   });
 });
