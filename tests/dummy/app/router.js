@@ -23,6 +23,8 @@ Router.map(function () {
       this.route('translating-text');
     });
 
-    this.route('helpers', function () {});
+    this.route('helpers', function () {
+      this.route('format-date');
+    });
   });
 });
