@@ -1,10 +1,5 @@
 {
-  "product": {
-    "title": "Hello",
-    "info": "The {product} costs {price, number, USD}"
-  },
   "photos": {
-    "banner": "You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}"
-  },
-  "legacyHTML": "<a href=\"{href}\">Click Here</a>"
+    "banner": "You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}."
+  }
 }

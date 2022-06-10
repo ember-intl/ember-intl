@@ -1,3 +1,2 @@
-product:
-  title: Hola
-  info: La {product} cuesta {price, number, USD}
+photos:
+  banner: "{numPhotos, plural, =0 {No tienes fotos} =1 {Tienes una foto} other {Tienes {numPhotos} fotos}}."
