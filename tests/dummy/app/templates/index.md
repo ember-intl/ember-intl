@@ -3,9 +3,9 @@
   @logo="ember"
 />
 
-<div>
+<div class="index-route container">
   <div>
-    <h2>
+    <h2 class="section-title">
       Notable Features
     </h2>
     <ul>
