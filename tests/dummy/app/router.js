@@ -26,6 +26,7 @@ Router.map(function () {
     this.route('helpers', function () {
       this.route('format-date');
       this.route('format-list');
+      this.route('format-message');
     });
   });
 });
