@@ -10,6 +10,7 @@ Router.map(function () {
   docsRoute(this, function () {
     this.route('getting-started', { path: '/' }, function () {
       this.route('quickstart');
+      this.route('runtime-requirements');
     });
   });
 });
