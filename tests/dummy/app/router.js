@@ -22,5 +22,7 @@ Router.map(function () {
       this.route('testing');
       this.route('translating-text');
     });
+
+    this.route('helpers', function () {});
   });
 });
