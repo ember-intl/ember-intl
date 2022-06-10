@@ -20,6 +20,7 @@ Router.map(function () {
       this.route('missing-translations');
       this.route('service-api');
       this.route('testing');
+      this.route('translating-text');
     });
   });
 });
