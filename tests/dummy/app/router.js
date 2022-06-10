@@ -28,6 +28,7 @@ Router.map(function () {
       this.route('format-list');
       this.route('format-message');
       this.route('format-number');
+      this.route('format-relative');
     });
   });
 });
