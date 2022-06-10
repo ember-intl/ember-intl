@@ -54,4 +54,6 @@ Router.map(function () {
   });
 
   this.route('smoke');
+
+  this.route('not-found', { path: '*' });
 });
