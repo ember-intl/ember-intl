@@ -45,5 +45,9 @@ Router.map(function () {
       this.route('ember-cp-validations');
       this.route('visual-studio-code');
     });
+
+    this.route('legacy', function () {
+      this.route('migration-2-0-to-3-0');
+    });
   });
 });
