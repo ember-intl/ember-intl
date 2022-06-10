@@ -52,4 +52,6 @@ Router.map(function () {
       this.route('v2');
     });
   });
+
+  this.route('smoke');
 });
