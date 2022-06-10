@@ -48,6 +48,7 @@ Router.map(function () {
 
     this.route('legacy', function () {
       this.route('migration-2-0-to-3-0');
+      this.route('migration-3-0-to-4-0');
     });
   });
 });
