@@ -30,6 +30,7 @@ Router.map(function () {
       this.route('format-number');
       this.route('format-relative');
       this.route('format-time');
+      this.route('t');
     });
   });
 });
