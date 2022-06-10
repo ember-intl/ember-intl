@@ -19,7 +19,7 @@ module('format-list-test', function (hooks) {
     this.set('example', ['foo', 'bar']);
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`{{format-list example}}`);
+    await render(hbs`{{format-list this.example}}`);
     assert.equal(this.element.textContent, 'foo and bar');
   });
 });

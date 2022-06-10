@@ -23,6 +23,7 @@ module.exports = {
       files: [
         './.eslintrc.js',
         './.prettierrc.js',
+        './.template-lintrc.js',
         './ember-cli-build.js',
         './index.js',
         './testem.js',
@@ -70,6 +71,12 @@ module.exports = {
         '@@typescript-eslint/ban-ts-comment': 'off',
       },
     },
+
+    // test files
+    // {
+    //   files: ['tests/**/*-test.{js,ts}'],
+    //   extends: ['plugin:qunit/recommended'],
+    // },
 
     // dummy app
     {
