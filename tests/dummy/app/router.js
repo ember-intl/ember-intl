@@ -8,6 +8,8 @@ export default class Router extends AddonDocsRouter {
 
 Router.map(function () {
   docsRoute(this, function () {
-    this.route('getting-started', { path: '/' }, function () {});
+    this.route('getting-started', { path: '/' }, function () {
+      this.route('quickstart');
+    });
   });
 });
