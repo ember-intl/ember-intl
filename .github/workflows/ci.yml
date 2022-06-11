@@ -77,3 +77,64 @@ jobs:
 
       - name: Test
         run: yarn test:ember
+
+
+  try-scenarios:
+    name: Try scenarios
+    runs-on: ubuntu-latest
+    needs: [lint, test-addon]
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario:
+          - 'ember-lts-3.24'
+          - 'ember-lts-3.28'
+          - 'ember-release'
+          - 'ember-beta'
+          - 'ember-canary'
+          - 'ember-classic'
+          - 'embroider-safe'
+          - 'embroider-optimized'
+    timeout-minutes: 10
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn test:ember
+
+
+  try-typescript:
+    name: Try TypeScript
+    runs-on: ubuntu-latest
+    needs: [lint, test-addon]
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario:
+          - 'typescript-3'
+    timeout-minutes: 10
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn lint:types --project tsconfig.ts3.json
