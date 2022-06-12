@@ -6,11 +6,12 @@ import { setupTest } from 'ember-qunit';
 import { get } from '@ember/object';
 import td from 'testdouble';
 import { setupIntl, TestContext } from 'ember-intl/test-support';
+import IntlService from 'ember-intl/services/intl';
 import type { TOptions } from 'ember-intl/services/intl';
 import { next } from '@ember/runloop';
 const LOCALE = 'en-us';
 
-module('service:init initialization', function (hooks) {
+module('service:intl initialization', function (hooks) {
   setupTest(hooks);
 
   test('it calls `setLocale` on init', async function (this: TestContext, assert) {
@@ -23,6 +24,24 @@ module('service:init initialization', function (hooks) {
       assert.verify(localeChanged());
       unsubscribe();
     });
+  });
+});
+
+module('service:intl inheritance', function (hooks) {
+  setupTest(hooks);
+
+  test('it calls overriden method', async function (this: TestContext, assert) {
+    assert.expect(2);
+
+    this.owner.register('service:intl', class extends IntlService {
+      formatNumber(value, options) {
+        assert.step('custom formatNumber')
+        return super.formatNumber(value, options);
+      }
+    })
+
+    this.owner.lookup('service:intl').formatNumber(1)
+    assert.verifySteps(['custom formatNumber'])
   });
 });
 

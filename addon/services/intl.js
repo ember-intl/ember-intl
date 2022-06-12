@@ -64,22 +64,34 @@ export default class extends Service {
   }
 
   /** @public **/
-  formatRelative = createFormatterProxy('relative');
+  formatRelative() {
+    return this._format('relative', ...arguments);
+  }
 
   /** @public **/
-  formatMessage = createFormatterProxy('message');
+  formatMessage() {
+    return this._format('message', ...arguments);
+  }
 
   /** @public **/
-  formatNumber = createFormatterProxy('number');
+  formatNumber() {
+    return this._format('number', ...arguments);
+  }
 
   /** @public **/
-  formatTime = createFormatterProxy('time');
+  formatTime() {
+    return this._format('time', ...arguments);
+  }
 
   /** @public **/
-  formatDate = createFormatterProxy('date');
+  formatDate() {
+    return this._format('date', ...arguments);
+  }
 
   /** @public **/
-  formatList = createFormatterProxy('list');
+  formatList() {
+    return this._format('list', ...arguments);
+  }
 
   /** @private **/
   @tracked _locale = null;
@@ -346,10 +358,9 @@ export default class extends Service {
       this._ee.off('localeChanged', ...args);
     };
   }
-}
 
-function createFormatterProxy(name) {
-  return function serviceFormatterProxy(value, formatOptions) {
+  /** @private */
+  _format(name, value, formatOptions) {
     let locale;
     let intl;
     if (formatOptions && formatOptions.locale) {
@@ -365,5 +376,5 @@ function createFormatterProxy(name) {
     }
 
     return this._formatters[name].format(intl, value, formatOptions);
-  };
+  }
 }
