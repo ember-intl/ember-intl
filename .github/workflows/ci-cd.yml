@@ -176,10 +176,10 @@ jobs:
 
       - name: Deploy the latest documentation
         if: github.ref == 'refs/heads/main'
-        run: yarn deploy
+        run: yarn deploy --activate --verbose
 
       - name: Deploy the tagged documentation
         if: github.ref.type == 'tag'
-        run: yarn deploy
+        run: yarn deploy --activate --verbose
         env:
           ADDON_DOCS_UPDATE_LATEST: 'true'
