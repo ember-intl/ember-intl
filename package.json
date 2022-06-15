@@ -22,7 +22,7 @@
     "url": "http://github.com/ember-intl/ember-intl.git"
   },
   "scripts": {
-    "build": "ember build",
+    "build": "ember build --environment=production",
     "deploy": "ember deploy production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:js": "eslint . --cache --ext=.js,.ts",
