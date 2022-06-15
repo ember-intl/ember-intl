@@ -138,3 +138,48 @@ jobs:
 
   #     - name: Test
   #       run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn lint:types --project tsconfig.ts3.json
+
+
+  deploy-documentation:
+    name: Deploy documentation
+    runs-on: ubuntu-latest
+    needs: [lint, test-addon, test-floating-dependencies, try-scenarios]
+    timeout-minutes: 10
+    # Only run on pushes to the main branch or a tag (i.e. ignore pull requests and cron)
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref.type == 'tag')
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Set a Git user
+        run: |
+          # Set a Git user for committing
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@users.noreply.github.com"
+
+          # Copy the Git Auth from the local config
+          git config --global "http.https://github.com/.extraheader" \
+            "$(git config --local --get http.https://github.com/.extraheader)"
+
+      - name: Set the version path
+        # 'main' or 'v1.2.3'
+        run: echo "ADDON_DOCS_VERSION_PATH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Deploy the latest documentation
+        if: github.ref == 'refs/heads/main'
+        run: yarn deploy
+
+      - name: Deploy the tagged documentation
+        if: github.ref.type == 'tag'
+        run: yarn deploy
+        env:
+          ADDON_DOCS_UPDATE_LATEST: 'true'

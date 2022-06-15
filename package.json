@@ -23,6 +23,7 @@
   },
   "scripts": {
     "build": "ember build",
+    "deploy": "ember deploy production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:js": "eslint . --cache --ext=.js,.ts",
     "lint:js:fix": "eslint . --fix",
