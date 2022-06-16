@@ -91165,79 +91165,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function initializeRuntimeMacrosConfig() {
     return {
-      "packages": {
-        "/home/runner/work/ember-intl/ember-intl/node_modules/ember-get-config": {
-          "config": {
-            "modulePrefix": "dummy",
-            "environment": "production",
-            "rootURL": "/ADDON_DOCS_ROOT_URL/",
-            "locationType": "history",
-            "EmberENV": {
-              "FEATURES": {},
-              "EXTEND_PROTOTYPES": false,
-              "_APPLICATION_TEMPLATE_WRAPPER": false,
-              "_DEFAULT_ASYNC_OBSERVERS": true,
-              "_JQUERY_INTEGRATION": false,
-              "_TEMPLATE_ONLY_GLIMMER_COMPONENTS": true
-            },
-            "APP": {},
-            "ember-cli-addon-docs": {
-              "projectName": "ember-intl",
-              "projectDescription": "A internationalization toolbox for ambitious applications.",
-              "projectTag": "6.0.0-beta.3",
-              "projectHref": "https://github.com/ember-intl/ember-intl",
-              "docsAppPathInRepo": "tests/dummy/app",
-              "addonPathInRepo": "addon",
-              "primaryBranch": "main",
-              "latestVersionName": "-latest",
-              "deployVersion": "ADDON_DOCS_DEPLOY_VERSION",
-              "searchTokenSeparator": "\\s+",
-              "showImportPaths": true
-            },
-            "ember-modal-dialog": {
-              "hasEmberTether": "2.0.1"
-            },
-            "exportApplicationGlobal": false
-          },
-          "testConfig": {
-            "modulePrefix": "dummy",
-            "environment": "test",
-            "rootURL": "/",
-            "locationType": "none",
-            "EmberENV": {
-              "FEATURES": {},
-              "EXTEND_PROTOTYPES": false,
-              "_APPLICATION_TEMPLATE_WRAPPER": false,
-              "_DEFAULT_ASYNC_OBSERVERS": true,
-              "_JQUERY_INTEGRATION": false,
-              "_TEMPLATE_ONLY_GLIMMER_COMPONENTS": true
-            },
-            "APP": {
-              "LOG_ACTIVE_GENERATION": false,
-              "LOG_VIEW_LOOKUPS": false,
-              "rootElement": "#ember-testing",
-              "autoboot": false
-            },
-            "ember-cli-addon-docs": {
-              "projectName": "ember-intl",
-              "projectDescription": "A internationalization toolbox for ambitious applications.",
-              "projectTag": "6.0.0-beta.3",
-              "projectHref": "https://github.com/ember-intl/ember-intl",
-              "docsAppPathInRepo": "tests/dummy/app",
-              "addonPathInRepo": "addon",
-              "primaryBranch": "main",
-              "latestVersionName": "-latest",
-              "deployVersion": "ADDON_DOCS_DEPLOY_VERSION",
-              "searchTokenSeparator": "\\s+",
-              "showImportPaths": true
-            },
-            "ember-modal-dialog": {
-              "hasEmberTether": "2.0.1"
-            },
-            "exportApplicationGlobal": true
-          }
-        }
-      },
+      "packages": {},
       "global": {
         "@embroider/macros": {
           "isTesting": false
@@ -106032,19 +105960,18 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = serializeQueryParams;
   _exports.default = _default;
 });
-;define("ember-get-config/index", ["exports"], function (_exports) {
+;define("ember-get-config/index", ["exports", "dummy/config/environment"], function (_exports, _environment) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
-  let config;
-  {
-    config = undefined;
-  }
-  var _default = config;
-  _exports.default = _default;
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _environment.default;
+    }
+  });
 });
 ;define("ember-inflector/index", ["exports", "ember-inflector/lib/system"], function (_exports, _system) {
   "use strict";
