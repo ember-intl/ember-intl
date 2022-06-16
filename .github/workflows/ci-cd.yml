@@ -146,7 +146,7 @@ jobs:
     needs: [lint, test-addon, test-floating-dependencies, try-scenarios]
     timeout-minutes: 10
     # Only run on pushes to the main branch or a tag (i.e. ignore pull requests and cron)
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref.type == 'tag')
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v3
@@ -177,9 +177,10 @@ jobs:
       - name: Deploy the latest documentation
         if: github.ref == 'refs/heads/main'
         run: yarn deploy --activate --verbose
+        env:
+          # Rebuild the demo application
+          ADDON_DOCS_UPDATE_LATEST: 'true'
 
       - name: Deploy the tagged documentation
-        if: github.ref.type == 'tag'
+        if: startsWith(github.ref, 'refs/tags/')
         run: yarn deploy --activate --verbose
-        env:
-          ADDON_DOCS_UPDATE_LATEST: 'true'
