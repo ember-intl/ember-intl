@@ -132,6 +132,9 @@
       "optional": true
     }
   },
+  "resolutions": {
+    "ember-get-config": "0.5.0"
+  },
   "engines": {
     "node": "14.* || >= 16"
   },
