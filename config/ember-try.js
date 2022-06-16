@@ -67,14 +67,6 @@ module.exports = async function () {
       },
       embroiderSafe(),
       embroiderOptimized(),
-      {
-        name: 'typescript-3',
-        npm: {
-          devDependencies: {
-            typescript: '^3.9.7',
-          },
-        },
-      },
     ],
   };
 };
