@@ -177,9 +177,10 @@ jobs:
       - name: Deploy the latest documentation
         if: github.ref == 'refs/heads/main'
         run: yarn deploy --activate --verbose
+        env:
+          # Rebuild the demo application
+          ADDON_DOCS_UPDATE_LATEST: 'true'
 
       - name: Deploy the tagged documentation
         if: github.ref.type == 'tag'
         run: yarn deploy --activate --verbose
-        env:
-          ADDON_DOCS_UPDATE_LATEST: 'true'
