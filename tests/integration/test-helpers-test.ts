@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { get } from '@ember/object';
 import { setupIntl, t, setLocale, addTranslations } from 'ember-intl/test-support';
-import { TestContext } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 
 module('Integration | Test Helpers', function (hooks) {
   setupRenderingTest(hooks);

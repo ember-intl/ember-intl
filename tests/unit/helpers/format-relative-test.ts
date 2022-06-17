@@ -3,7 +3,9 @@ import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+
+import type { TestContext } from 'ember-intl/test-support';
 
 module('format-relative', function (hooks) {
   setupRenderingTest(hooks);

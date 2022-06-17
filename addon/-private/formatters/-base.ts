@@ -5,7 +5,7 @@
 
 import type { SafeString } from '@ember/template/-private/handlebars';
 import type { Formats } from '../../types';
-import { IntlShape } from '@formatjs/intl';
+import type { IntlShape } from '@formatjs/intl';
 
 export type ValueOf<ObjectType, ValueType extends keyof ObjectType = keyof ObjectType> = ObjectType[ValueType];
 

@@ -8,8 +8,8 @@ import Ember from 'ember';
 import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
 import Formatter from './-base';
-import { IntlShape, MessageDescriptor } from '@formatjs/intl';
-import { PrimitiveType } from 'intl-messageformat';
+import type { IntlShape, MessageDescriptor } from '@formatjs/intl';
+import type { PrimitiveType } from 'intl-messageformat';
 const {
   Handlebars: {
     // @ts-expect-error Upstream types are incomplete.
