@@ -10,6 +10,7 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
+    "importsNotUsedAsValues": "error", // enforces type imports when imports are not used as values
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,

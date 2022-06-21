@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import { FormatNumberOptions, IntlShape } from '@formatjs/intl';
+import type { FormatNumberOptions, IntlShape } from '@formatjs/intl';
 import Formatter from './-base';
 
 /**
