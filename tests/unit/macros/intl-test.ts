@@ -3,11 +3,12 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import EmberObject, { get, getProperties, set } from '@ember/object';
 import { run } from '@ember/runloop';
-import { setupIntl, TestContext as BaseTextContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { intl } from 'ember-intl';
 import { __intlInjectionName } from 'ember-intl/macros/intl';
 
-interface TestContext extends BaseTextContext {
+interface TestContext extends BaseTestContext {
   ContainerObject: typeof EmberObject;
 }
 

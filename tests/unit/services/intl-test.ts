@@ -5,7 +5,8 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { get } from '@ember/object';
 import td from 'testdouble';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 import type { TOptions } from 'ember-intl/services/intl';
 import { next } from '@ember/runloop';
 const LOCALE = 'en-us';
@@ -35,7 +36,7 @@ module('service:intl', function (hooks) {
       a_number: 2,
     });
 
-    assert.equal(this.intl.t('a_number'), 2);
+    assert.strictEqual(this.intl.t('a_number') as unknown as number, 2);
   });
 
   test('should deepMerge addTranslations', function (this: TestContext, assert) {
@@ -64,8 +65,8 @@ module('service:intl', function (hooks) {
       },
     });
 
-    assert.equal(this.intl.t('foo.bar.baz.a'), 'a');
-    assert.equal(this.intl.t('foo.bar.baz.b'), 'b');
+    assert.strictEqual(this.intl.t('foo.bar.baz.a'), 'a');
+    assert.strictEqual(this.intl.t('foo.bar.baz.b'), 'b');
   });
 
   test('should overwrite translations', function (this: TestContext, assert) {
@@ -85,7 +86,7 @@ module('service:intl', function (hooks) {
       },
     });
 
-    assert.equal(this.intl.t('foo.bar.baz'), 'baz!');
+    assert.strictEqual(this.intl.t('foo.bar.baz'), 'baz!');
   });
 
   test('lookup() should return translation string', function (this: TestContext, assert) {
@@ -93,7 +94,7 @@ module('service:intl', function (hooks) {
       foo: 'hello world',
     });
 
-    assert.equal(this.intl.lookup('foo'), 'hello world');
+    assert.strictEqual(this.intl.lookup('foo'), 'hello world');
   });
 
   test('should escape attributes but render translation as HTML', async function (this: TestContext, assert) {
@@ -102,22 +103,22 @@ module('service:intl', function (hooks) {
       modernStyle: `<strong class="example">Hello {name}</strong>`,
     });
 
-    assert.equal(
+    assert.strictEqual(
       this.intl.t('modernStyle', { htmlSafe: true, name: '<em>Tom</em>' }).toString(),
       '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>'
     );
-    assert.equal(
+    assert.strictEqual(
       this.intl.t('legacyStyle', { htmlSafe: true, name: '<em>Tom</em>' }).toString(),
       '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>'
     );
   });
 
   test('lookup() should return undefined for missing translations ', function (this: TestContext, assert) {
-    assert.equal(this.intl.lookup('missing', undefined, { resilient: true }), undefined);
+    assert.strictEqual(this.intl.lookup('missing', undefined, { resilient: true }), undefined);
   });
 
   test('`t` should display last missing translation key when using default', function (this: TestContext, assert) {
-    assert.equal(
+    assert.strictEqual(
       this.intl.t('x', {
         default: ['y', 'z'],
       }),
@@ -149,7 +150,7 @@ module('service:intl', function (hooks) {
   test('waits for translations to load', async function (this: TestContext, assert) {
     assert.expect(1);
     await settled();
-    assert.equal(this.intl.t('smoke.parent.child', { locale: 'en-us' }), 'Hello world!');
+    assert.strictEqual(this.intl.t('smoke.parent.child', { locale: 'en-us' }), 'Hello world!');
   });
 
   test('it does not mutate t options hash', function (this: TestContext, assert) {
@@ -177,18 +178,18 @@ module('service:intl', function (hooks) {
 
     this.intl.addTranslations(LOCALE, { foo: 'FOO' });
     this.intl.t('foo');
-    assert.ok(!invokedWarn, 'Warning was not raised');
+    assert.false(invokedWarn, 'Warning was not raised');
   });
 
   test('translations that are empty strings are valid', function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, { empty_string: '' });
-    assert.equal(this.intl.t('empty_string'), '');
+    assert.strictEqual(this.intl.t('empty_string'), '');
   });
 
   test('translationsFor returns messages', async function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, { foo: 'bar' });
 
-    assert.equal(this.intl.translationsFor(LOCALE).foo, 'bar');
+    assert.strictEqual(this.intl.translationsFor(LOCALE).foo, 'bar');
     assert.deepEqual(this.intl.translationsFor('ZZ'), undefined);
   });
 
@@ -208,8 +209,8 @@ module('service:intl', function (hooks) {
       'b.b': 'Root key with double period.',
     });
 
-    assert.equal(this.intl.t('a.b.c.d.d.e.e'), 'Periods within a key work are now valid.');
-    assert.equal(this.intl.t('b.b'), 'Root key with double period.');
+    assert.strictEqual(this.intl.t('a.b.c.d.d.e.e'), 'Periods within a key work are now valid.');
+    assert.strictEqual(this.intl.t('b.b'), 'Root key with double period.');
   });
 
   test('should return safestring when htmlSafe attribute passed to `t`', async function (this: TestContext, assert) {
@@ -225,7 +226,7 @@ module('service:intl', function (hooks) {
       count: 42000,
     });
 
-    assert.ok(isHTMLSafe(out));
+    assert.true(isHTMLSafe(out));
   });
 
   test('should return regular string when htmlSafe is falsey', async function (this: TestContext, assert) {
@@ -241,19 +242,19 @@ module('service:intl', function (hooks) {
       count: 42000,
     });
 
-    assert.ok(!isHTMLSafe(out));
+    assert.false(isHTMLSafe(out));
   });
 
   test('exists returns true when key found', async function (this: TestContext, assert) {
     assert.expect(1);
 
     this.intl.addTranslations(LOCALE, { hello: 'world' });
-    assert.equal(this.intl.exists('hello'), true);
+    assert.true(this.intl.exists('hello'));
   });
 
   test('exists returns false when key not found', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.equal(this.intl.exists('bar'), false);
+    assert.false(this.intl.exists('bar'));
   });
 
   test('changing the locale emits the `localeChanged` event and the new locale is available', async function (this: TestContext, assert) {
@@ -275,19 +276,19 @@ module('service:intl', function (hooks) {
 
     this.intl.setLocale(['de']);
     await settled();
-    assert.equal(document.documentElement.getAttribute('lang'), 'de');
+    assert.strictEqual(document.documentElement.getAttribute('lang'), 'de');
 
     this.intl.setLocale(['es', 'fr']);
     await settled();
-    assert.equal(document.documentElement.getAttribute('lang'), 'es');
+    assert.strictEqual(document.documentElement.getAttribute('lang'), 'es');
   });
 
   test('primaryLocale returns the first locale of the currently active locales', async function (this: TestContext, assert) {
     assert.expect(2);
 
-    assert.equal(this.intl.get('primaryLocale'), LOCALE);
+    assert.strictEqual(this.intl.get('primaryLocale'), LOCALE);
 
     this.intl.setLocale(['de']);
-    assert.equal(this.intl.get('primaryLocale'), 'de');
+    assert.strictEqual(this.intl.get('primaryLocale'), 'de');
   });
 });

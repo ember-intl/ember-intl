@@ -3,7 +3,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatListHelper from 'ember-intl/helpers/format-list';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 
 module('format-list-test', function (hooks) {
   setupRenderingTest(hooks);
@@ -20,6 +21,6 @@ module('format-list-test', function (hooks) {
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-list this.example}}`);
-    assert.equal(this.element.textContent, 'foo and bar');
+    assert.strictEqual(this.element.textContent, 'foo and bar');
   });
 });

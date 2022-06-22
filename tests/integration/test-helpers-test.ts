@@ -80,50 +80,52 @@ module('Integration | Test Helpers', function (hooks) {
     });
   });
 
-  module('setupIntl(hooks, translations)', function (hooks) {
-    setupIntl(hooks, {
-      some: {
-        translation: 'The cake is a lie.',
-      },
+  module('setupIntl(hooks, translations)', function () {
+    module('With default locale', function (hooks) {
+      setupIntl(hooks, {
+        some: {
+          translation: 'The cake is a lie.',
+        },
+      });
+
+      test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
+        assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
+
+        assert.strictEqual(
+          this.intl.t('some.translation'),
+          'The cake is a lie.',
+          'translations that were provided to `setupIntl` have been added'
+        );
+      });
     });
 
-    test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
-      assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
+    module('With a non-default locale', function (hooks) {
+      const germanLocale = 'de-de';
 
-      assert.strictEqual(
-        this.intl.t('some.translation'),
-        'The cake is a lie.',
-        'translations that were provided to `setupIntl` have been added'
-      );
-    });
-  });
+      setupIntl(hooks, germanLocale, {
+        some: {
+          translation: 'Der Kuchen ist eine Lüge.',
+        },
+      });
 
-  module('setupIntl(hooks, translations)', function (hooks) {
-    const germanLocale = 'de-de';
+      test('hooks were properly executed, locale was set and translations have been added', async function (this: TestContext, assert) {
+        assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
 
-    setupIntl(hooks, germanLocale, {
-      some: {
-        translation: 'Der Kuchen ist eine Lüge.',
-      },
-    });
+        assert.deepEqual(get(this.intl, 'locale'), [germanLocale], 'locale has been switched');
 
-    test('hooks were properly executed, locale was set and translations have been added', async function (this: TestContext, assert) {
-      assert.strictEqual(this.intl, this.owner.lookup('service:intl'), '`this.intl` shorthand is available');
-
-      assert.deepEqual(get(this.intl, 'locale'), [germanLocale], 'locale has been switched');
-
-      assert.strictEqual(
-        this.intl.t('some.translation'),
-        'Der Kuchen ist eine Lüge.',
-        'translations that were provided to `setupIntl` have been added'
-      );
+        assert.strictEqual(
+          this.intl.t('some.translation'),
+          'Der Kuchen ist eine Lüge.',
+          'translations that were provided to `setupIntl` have been added'
+        );
+      });
     });
   });
 
   module('setupIntl(hooks, translations) for nested translations', function (hooks) {
     setupIntl(hooks);
 
-    test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
+    test('hooks were properly executed and translations have been added (1)', async function (this: TestContext, assert) {
       const ENGLISH_LOCALE = 'en-us';
 
       addTranslations(ENGLISH_LOCALE, {
@@ -140,7 +142,7 @@ module('Integration | Test Helpers', function (hooks) {
       );
     });
 
-    test('hooks were properly executed and translations have been added', async function (this: TestContext, assert) {
+    test('hooks were properly executed and translations have been added (2)', async function (this: TestContext, assert) {
       assert.strictEqual(
         this.intl.t('some.translation', { foo: this.intl.t('some.nested_translation', { count: 1 }) }),
         't:some.translation:("foo":"t:some.nested_translation:("count":1)")',
