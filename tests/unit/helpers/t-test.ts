@@ -1,11 +1,11 @@
 import { render, settled } from '@ember/test-helpers';
-import tHelper from 'ember-intl/helpers/t';
-import { setupRenderingTest } from 'ember-qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import { module, test } from 'qunit';
 import { gte } from 'ember-compatibility-helpers';
-import { setupIntl } from 'ember-intl/test-support';
+import tHelper from 'ember-intl/helpers/t';
 import type { TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 const DEFAULT_LOCALE = 'en-us';
 

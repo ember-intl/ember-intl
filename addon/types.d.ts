@@ -1,4 +1,5 @@
 import type { Formats as BaseFormats } from 'intl-messageformat';
+
 import { RelativeTimeFormatOptions } from './-private/formatters/format-relative';
 import { NestedStructure } from './-private/utils/flatten';
 

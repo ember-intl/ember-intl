@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import FormatRelative from 'ember-intl/-private/formatters/format-relative';
 import { createIntl, OnErrorFn } from '@formatjs/intl';
+import FormatRelative from 'ember-intl/-private/formatters/format-relative';
+import { module, test } from 'qunit';
 
 function getIntl(locale: string) {
   return createIntl({

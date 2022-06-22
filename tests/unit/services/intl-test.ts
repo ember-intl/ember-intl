@@ -1,14 +1,14 @@
 import { registerWarnHandler } from '@ember/debug';
-import { settled } from '@ember/test-helpers';
-import { isHTMLSafe } from '@ember/template';
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
 import { get } from '@ember/object';
-import td from 'testdouble';
-import { setupIntl } from 'ember-intl/test-support';
-import type { TestContext } from 'ember-intl/test-support';
-import type { TOptions } from 'ember-intl/services/intl';
 import { next } from '@ember/runloop';
+import { isHTMLSafe } from '@ember/template';
+import { settled } from '@ember/test-helpers';
+import type { TOptions } from 'ember-intl/services/intl';
+import type { TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+import td from 'testdouble';
 const LOCALE = 'en-us';
 
 module('service:init initialization', function (hooks) {

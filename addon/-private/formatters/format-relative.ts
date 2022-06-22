@@ -3,8 +3,9 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import type { FormatRelativeTimeOptions, IntlShape } from '@formatjs/intl';
 import { assert } from '@ember/debug';
+import type { FormatRelativeTimeOptions, IntlShape } from '@formatjs/intl';
+
 import Formatter from './-base';
 
 /**

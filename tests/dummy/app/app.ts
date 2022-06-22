@@ -1,9 +1,9 @@
+import './intl-polyfills';
+
 import Application from '@ember/application';
 import config from 'dummy/config/environment';
-import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
-
-import './intl-polyfills';
+import Resolver from 'ember-resolver';
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;

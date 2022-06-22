@@ -1,10 +1,10 @@
-import { render } from '@ember/test-helpers';
 import { htmlSafe } from '@ember/template';
-import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { module, test } from 'qunit';
-import { setupIntl } from 'ember-intl/test-support';
 import type { TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 module('format-message (html)', function (hooks) {
   setupRenderingTest(hooks);

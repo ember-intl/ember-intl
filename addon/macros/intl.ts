@@ -1,6 +1,7 @@
+import { getOwner } from '@ember/application';
 import { computed, defineProperty } from '@ember/object';
 import type ComputedProperty from '@ember/object/computed';
-import { getOwner } from '@ember/application';
+
 import type IntlService from '../services/intl';
 
 export type GetterFn<T, C = unknown> = (this: C, intl: IntlService, key: string, context: C) => T;

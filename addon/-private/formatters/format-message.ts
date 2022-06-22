@@ -3,13 +3,13 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Ember from 'ember';
-
 import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
-import Formatter from './-base';
 import type { IntlShape, MessageDescriptor } from '@formatjs/intl';
+import Ember from 'ember';
 import type { PrimitiveType } from 'intl-messageformat';
+
+import Formatter from './-base';
 const {
   Handlebars: {
     // @ts-expect-error Upstream types are incomplete.

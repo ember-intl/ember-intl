@@ -3,8 +3,8 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
-import Helper from '@ember/component/helper';
 import { getOwner } from '@ember/application';
+import Helper from '@ember/component/helper';
 import { isEmpty } from '@ember/utils';
 
 /**
