@@ -109,6 +109,8 @@ export default function intl<T>(...dependentKeysAndGetterFn: unknown[]): Compute
   ) {
     if (!this[__intlInjectionName]) {
       defineProperty(this, __intlInjectionName, {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: https://github.com/typed-ember/ember-cli-typescript/issues/1471
         value: getOwner(this).lookup('service:intl'),
         enumerable: false,
       });

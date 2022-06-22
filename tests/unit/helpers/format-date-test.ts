@@ -1,6 +1,7 @@
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import formatDateHelper from 'ember-intl/helpers/format-date';
+import type IntlService from 'ember-intl/services/intl';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
@@ -19,7 +20,7 @@ module('format-date', function (hooks) {
 
   test('invoke the formatDate directly', function (assert) {
     assert.expect(1);
-    const service = this.owner.lookup('service:intl');
+    const service = this.owner.lookup('service:intl') as IntlService;
     assert.strictEqual(service.formatDate(date, { timeZone: 'UTC', locale }), '1/23/2014');
   });
 
