@@ -7,7 +7,7 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
-  plugins: ['ember', '@typescript-eslint', 'prettier'],
+  plugins: ['ember', '@typescript-eslint', 'simple-import-sort'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
@@ -16,6 +16,8 @@ module.exports = {
     'ember/avoid-leaking-state-in-ember-objects': 'off',
     'ember/no-get': 'off', // @TODO remove support for old Ember
     'ember/no-classic-classes': 'off',
+    'simple-import-sort/exports': 'error',
+    'simple-import-sort/imports': 'error',
   },
   overrides: [
     // node files

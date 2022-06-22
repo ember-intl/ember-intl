@@ -1,4 +1,5 @@
 import Helper from '@ember/component/helper';
+
 import IntlService from '../services/intl';
 
 // eslint-disable-next-line @typescript-eslint/ban-types

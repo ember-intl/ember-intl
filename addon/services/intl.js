@@ -3,28 +3,28 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 import { getOwner } from '@ember/application';
-import { assert } from '@ember/debug';
 import { makeArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { dependentKeyCompat } from '@ember/object/compat';
+import { cancel, next } from '@ember/runloop';
 import Service from '@ember/service';
-import { next, cancel } from '@ember/runloop';
+import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
+import { tracked } from '@glimmer/tracking';
+import EventEmitter from 'eventemitter3';
 
 import {
   FormatDate,
+  FormatList,
   FormatMessage,
   FormatNumber,
   FormatRelative,
   FormatTime,
-  FormatList,
 } from '../-private/formatters';
-import isArrayEqual from '../-private/utils/is-array-equal';
-import normalizeLocale from '../-private/utils/normalize-locale';
+import flatten from '../-private/utils/flatten';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
-import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
-import flatten from '../-private/utils/flatten';
-import EventEmitter from 'eventemitter3';
-import { tracked } from '@glimmer/tracking';
-import { dependentKeyCompat } from '@ember/object/compat';
+import isArrayEqual from '../-private/utils/is-array-equal';
+import normalizeLocale from '../-private/utils/normalize-locale';
 
 export default class extends Service {
   /**

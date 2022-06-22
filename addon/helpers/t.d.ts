@@ -1,5 +1,5 @@
-import BaseHelper from './-format-base';
 import IntlService from '../services/intl';
+import BaseHelper from './-format-base';
 
 type Params = Parameters<IntlService['t']>;
 

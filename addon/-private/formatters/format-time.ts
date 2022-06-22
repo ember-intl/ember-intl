@@ -4,6 +4,7 @@
  */
 
 import type { FormatDateOptions, IntlShape } from '@formatjs/intl';
+
 import Formatter from './-base';
 
 /**

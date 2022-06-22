@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { get } from '@ember/object';
-import { setupIntl, t, setLocale, addTranslations } from 'ember-intl/test-support';
 import type { TestContext } from 'ember-intl/test-support';
+import { addTranslations, setLocale, setupIntl, t } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 module('Integration | Test Helpers', function (hooks) {
   setupRenderingTest(hooks);

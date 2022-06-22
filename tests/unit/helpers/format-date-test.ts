@@ -1,9 +1,9 @@
-import { hbs } from 'ember-cli-htmlbars';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 import formatDateHelper from 'ember-intl/helpers/format-date';
 import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 const date = 1390518044403;
 const locale = 'en-us';

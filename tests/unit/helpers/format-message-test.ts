@@ -1,14 +1,14 @@
 import { A as emberArray } from '@ember/array';
 import EmberObject, { get, set } from '@ember/object';
-import { run, next } from '@ember/runloop';
+import { next, run } from '@ember/runloop';
 import { render } from '@ember/test-helpers';
-import formatMessageHelper from 'ember-intl/helpers/format-message';
-import { setupRenderingTest } from 'ember-qunit';
-import { hbs } from 'ember-cli-htmlbars';
-import { module, skip, test } from 'qunit';
-import { setupIntl } from 'ember-intl/test-support';
-import type { TestContext } from 'ember-intl/test-support';
 import { tracked } from '@glimmer/tracking';
+import { hbs } from 'ember-cli-htmlbars';
+import formatMessageHelper from 'ember-intl/helpers/format-message';
+import type { TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, skip, test } from 'qunit';
 
 const DEFAULT_LOCALE_NAME = 'en-us';
 

@@ -1,12 +1,12 @@
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
-import { hbs } from 'ember-cli-htmlbars';
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 import formatNumberHelper from 'ember-intl/helpers/format-number';
-import { setupIntl } from 'ember-intl/test-support';
 import type { TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, skip, test } from 'qunit';
 
 module('format-number', function (hooks) {
   setupRenderingTest(hooks);

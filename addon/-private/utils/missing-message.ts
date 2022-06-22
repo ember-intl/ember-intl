@@ -1,5 +1,5 @@
-import { isEmpty } from '@ember/utils';
 import { warn } from '@ember/debug';
+import { isEmpty } from '@ember/utils';
 
 /**
  * @private

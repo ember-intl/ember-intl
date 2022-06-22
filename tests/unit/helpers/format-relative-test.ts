@@ -1,10 +1,10 @@
-import { hbs } from 'ember-cli-htmlbars';
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 import formatRelativehelper from 'ember-intl/helpers/format-relative';
-import { setupIntl } from 'ember-intl/test-support';
 import type { TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, skip, test } from 'qunit';
 
 module('format-relative', function (hooks) {
   setupRenderingTest(hooks);

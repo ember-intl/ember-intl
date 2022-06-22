@@ -1,12 +1,12 @@
 import { setOwner } from '@ember/application';
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
 import EmberObject, { get, getProperties, set } from '@ember/object';
 import { run } from '@ember/runloop';
-import { setupIntl } from 'ember-intl/test-support';
-import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { intl } from 'ember-intl';
 import { __intlInjectionName } from 'ember-intl/macros/intl';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 interface TestContext extends BaseTestContext {
   ContainerObject: typeof EmberObject;

@@ -1,9 +1,9 @@
-import Service from '@ember/service';
 import { EmberRunTimer } from '@ember/runloop/types';
+import Service from '@ember/service';
 import type { SafeString } from '@ember/template/-private/handlebars';
+import FormatList from 'ember-intl/-private/formatters/format-list';
 
 import { FormatDate, FormatMessage, FormatNumber, FormatRelative, FormatTime } from '../-private/formatters';
-import FormatList from 'ember-intl/-private/formatters/format-list';
 
 export interface TOptions {
   default?: string | string[];
