@@ -43,17 +43,17 @@ module('format-message', function (hooks) {
 
   test('invoke formatMessage directly', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.equal(this.intl.formatMessage('hello {world}', { world: 'world' }), 'hello world');
+    assert.strictEqual(this.intl.formatMessage('hello {world}', { world: 'world' }), 'hello world');
   });
 
   test('formatMessage properly escapes using single quotes', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.equal(this.intl.formatMessage(`'{'0'}' '{'1'}' '{'2'}'`), '{0} {1} {2}');
+    assert.strictEqual(this.intl.formatMessage(`'{'0'}' '{'1'}' '{'2'}'`), '{0} {1} {2}');
   });
 
   test('invoke formatMessage directly with formats', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.equal(
+    assert.strictEqual(
       this.intl.formatMessage('Sale begins {day, date, shortWeekDay}', {
         day: 1390518044403,
         locale: 'en_us',
@@ -65,7 +65,7 @@ module('format-message', function (hooks) {
   test('message is formatted correctly with argument', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{format-message 'Hello {name}' name='Tom Dale'}}`);
-    assert.equal(this.element.textContent, 'Hello Tom Dale');
+    assert.strictEqual(this.element.textContent, 'Hello Tom Dale');
   });
 
   skip('should throw if called with out a value', async function (/*assert*/) {
@@ -93,7 +93,7 @@ module('format-message', function (hooks) {
 
     await render(hbs`{{format-message this.translation firstName=this.firstName lastName=this.lastName}}`);
 
-    assert.equal(this.element.textContent, 'Hi, my name is Tom Dale.');
+    assert.strictEqual(this.element.textContent, 'Hi, my name is Tom Dale.');
   });
 
   test('should return a formatted string with formatted numbers and dates', async function (this: TestContext, assert) {
@@ -110,7 +110,7 @@ module('format-message', function (hooks) {
     await render(
       hbs`{{format-message this.translation city=this.city population=this.population census_date=this.census_date timeZone=this.timeZone}}`
     );
-    assert.equal(this.element.textContent, 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
+    assert.strictEqual(this.element.textContent, 'Atlanta has a population of 5,475,213 as of January 1, 2010.');
   });
 
   test('should return a formatted string with formatted numbers and dates in a different locale', async function (this: TestContext, assert) {
@@ -127,7 +127,7 @@ module('format-message', function (hooks) {
     await render(
       hbs`{{format-message this.translation city=this.city population=this.population census_date=this.census_date timeZone=this.timeZone}}`
     );
-    assert.equal(this.element.textContent, 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
+    assert.strictEqual(this.element.textContent, 'Atlanta hat eine Bevölkerung von 5.475.213 zum 1. Januar 2010.');
   });
 
   test('should return a formatted string with an `each` block', async function (this: TestContext, assert) {
@@ -147,7 +147,7 @@ module('format-message', function (hooks) {
       `
     );
 
-    assert.equal(this.element.textContent!.trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
+    assert.strictEqual(this.element.textContent!.trim(), 'Allison harvested 10 apples.Jeremy harvested 60 apples.');
   });
 
   test('able to discover all register translations', function (this: TestContext, assert) {
@@ -164,20 +164,20 @@ module('format-message', function (hooks) {
     assert.expect(1);
     this.day = 1390518044403;
     await render(hbs`{{format-message 'Sale begins {day, date, shortWeekDay}' day=this.day}}`);
-    assert.equal(this.element.textContent, 'Sale begins January 23, 2014');
+    assert.strictEqual(this.element.textContent, 'Sale begins January 23, 2014');
   });
 
   test('should support allowEmpty', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{format-message allowEmpty=true}}`);
-    assert.equal(this.element.textContent, '');
+    assert.strictEqual(this.element.textContent, '');
   });
 
   test('should return 0 instead of nothing', async function (this: TestContext, assert) {
     assert.expect(1);
     this.set('count', 0);
     await render(hbs`{{format-message '{count}' count=this.count}}`);
-    assert.equal(this.element.textContent, '0');
+    assert.strictEqual(this.element.textContent, '0');
   });
 
   test('l helper handles bound computed property', async function (this: TestContext & {
@@ -196,12 +196,12 @@ module('format-message', function (hooks) {
 
     set(this, 'context', context);
     await render(hbs`{{format-message this.context.translation}}`);
-    assert.equal(this.element.textContent, 'foo foo');
+    assert.strictEqual(this.element.textContent, 'foo foo');
 
     run(() => {
       context.set('foo', false);
       next(() => {
-        assert.equal(this.element.textContent, 'bar bar');
+        assert.strictEqual(this.element.textContent, 'bar bar');
         done();
       });
     });
@@ -209,7 +209,7 @@ module('format-message', function (hooks) {
 
   test('handles hashtags within `select`', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.equal(
+    assert.strictEqual(
       this.intl.formatMessage('{type, select, anime {Rank #{rank}} other {}}', { type: 'anime', rank: 1 }),
       'Rank #1'
     );

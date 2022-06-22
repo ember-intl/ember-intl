@@ -24,7 +24,7 @@ module('format-relative', function (hooks) {
 
   test('invoke the formatRelative directly', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.equal(this.intl.formatRelative(-1, { unit: 'days' }), '1 day ago');
+    assert.strictEqual(this.intl.formatRelative(-1, { unit: 'days' }), '1 day ago');
   });
 
   skip('should throw if called with out a value', function (/*assert*/) {
@@ -35,28 +35,28 @@ module('format-relative', function (hooks) {
   test('should support allowEmpty', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{format-relative allowEmpty=true unit="day"}}`);
-    assert.equal(this.element.textContent, '');
+    assert.strictEqual(this.element.textContent, '');
   });
 
   test('should handle short units', async function (this: TestContext, assert) {
     await render(hbs`{{format-relative -1 unit="second" style="short"}}`);
-    assert.equal(this.element.textContent, '1 sec. ago');
+    assert.strictEqual(this.element.textContent, '1 sec. ago');
 
     await render(hbs`{{format-relative -1 unit="minute" style="short"}}`);
-    assert.equal(this.element.textContent, '1 min. ago');
+    assert.strictEqual(this.element.textContent, '1 min. ago');
 
     await render(hbs`{{format-relative -1 unit="hour" style="short"}}`);
-    assert.equal(this.element.textContent, '1 hr. ago');
+    assert.strictEqual(this.element.textContent, '1 hr. ago');
 
     await render(hbs`{{format-relative -1 unit="month" style="short"}}`);
-    assert.equal(this.element.textContent, '1 mo. ago');
+    assert.strictEqual(this.element.textContent, '1 mo. ago');
 
     await render(hbs`{{format-relative -1 unit="year" style="short"}}`);
-    assert.equal(this.element.textContent, '1 yr. ago');
+    assert.strictEqual(this.element.textContent, '1 yr. ago');
   });
 
   test('should handle inline format', async function (this: TestContext, assert) {
     await render(hbs`{{format-relative -1 format="yearShort"}}`);
-    assert.equal(this.element.textContent, '1 yr. ago');
+    assert.strictEqual(this.element.textContent, '1 yr. ago');
   });
 });
