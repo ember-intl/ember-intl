@@ -4,7 +4,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { gte } from 'ember-compatibility-helpers';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 
 const DEFAULT_LOCALE = 'en-us';
 

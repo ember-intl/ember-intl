@@ -3,11 +3,12 @@ import { module, skip, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
-import { setupIntl, addTranslations, TestContext as BaseTextContext } from 'ember-intl/test-support';
+import { setupIntl, addTranslations } from 'ember-intl/test-support';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 
 import { t, raw } from 'ember-intl';
 
-interface TestContext extends BaseTextContext {
+interface TestContext extends BaseTestContext {
   ContainerObject: typeof EmberObject;
   object: EmberObject & {
     numberClicks: number;

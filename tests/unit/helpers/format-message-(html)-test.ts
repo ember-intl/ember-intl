@@ -3,7 +3,8 @@ import { htmlSafe } from '@ember/template';
 import { setupRenderingTest } from 'ember-qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 
 module('format-message (html)', function (hooks) {
   setupRenderingTest(hooks);

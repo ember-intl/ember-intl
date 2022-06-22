@@ -3,7 +3,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import formatListHelper from 'ember-intl/helpers/format-list';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 
 module('format-list-test', function (hooks) {
   setupRenderingTest(hooks);

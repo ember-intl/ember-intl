@@ -6,7 +6,8 @@ import formatMessageHelper from 'ember-intl/helpers/format-message';
 import { setupRenderingTest } from 'ember-qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, skip, test } from 'qunit';
-import { setupIntl, TestContext } from 'ember-intl/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import type { TestContext } from 'ember-intl/test-support';
 import { tracked } from '@glimmer/tracking';
 
 const DEFAULT_LOCALE_NAME = 'en-us';
