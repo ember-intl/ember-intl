@@ -86,14 +86,14 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/project"eaimeta@70e063a35619d71f
 });
-;define("dummy/app", ["exports", "@ember/application", "dummy/config/environment", "ember-resolver", "ember-load-initializers", "dummy/intl-polyfills"], function (_exports, _application, _environment, _emberResolver, _emberLoadInitializers, _intlPolyfills) {
+;define("dummy/app", ["exports", "dummy/intl-polyfills", "@ember/application", "dummy/config/environment", "ember-load-initializers", "ember-resolver"], function (_exports, _intlPolyfills, _application, _environment, _emberLoadInitializers, _emberResolver) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/application",0,"dummy/config/environment",0,"ember-resolver",0,"ember-load-initializers",0,"dummy/intl-polyfills"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"dummy/intl-polyfills",0,"@ember/application",0,"dummy/config/environment",0,"ember-load-initializers",0,"ember-resolver"eaimeta@70e063a35619d71f
 
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -3135,14 +3135,14 @@
   });
   0; //eaimeta@70e063a35619d71f0,"@ember/render-modifiers/modifiers/will-destroy"eaimeta@70e063a35619d71f
 });
-;define("dummy/router", ["exports", "ember-cli-addon-docs/router", "dummy/config/environment"], function (_exports, _router, _environment) {
+;define("dummy/router", ["exports", "dummy/config/environment", "ember-cli-addon-docs/router"], function (_exports, _environment, _router) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/router",0,"dummy/config/environment"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"dummy/config/environment",0,"ember-cli-addon-docs/router"eaimeta@70e063a35619d71f
 
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
