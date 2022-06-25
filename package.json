@@ -40,8 +40,8 @@
     "test:node": "mocha \"tests-node/**/*.js\""
   },
   "dependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.0.18",
-    "@formatjs/intl": "^1.6.7",
+    "@formatjs/icu-messageformat-parser": "^2.1.3",
+    "@formatjs/intl": "^2.3.0",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.3",
     "broccoli-merge-files": "^0.8.0",
