@@ -107327,6 +107327,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     return (0, _object.computed)(`${__intlInjectionName}.locale`, ...dependentKeys, function (propertyKey) {
       if (!this[__intlInjectionName]) {
         (0, _object.defineProperty)(this, __intlInjectionName, {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore: https://github.com/typed-ember/ember-cli-typescript/issues/1471
           value: (0, _application.getOwner)(this).lookup('service:intl'),
           enumerable: false
         });
