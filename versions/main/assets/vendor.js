@@ -356,7 +356,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   4.4.1
+ * @version   4.4.2
  */
 /* eslint-disable no-var */
 
@@ -53774,7 +53774,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "4.4.1";
+  var _default = "4.4.2";
   _exports.default = _default;
 });
 define("route-recognizer", ["exports"], function (_exports) {
@@ -105980,12 +105980,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  Object.defineProperty(_exports, "defaultRules", {
-    enumerable: true,
-    get: function () {
-      return _system.defaultRules;
-    }
-  });
   Object.defineProperty(_exports, "pluralize", {
     enumerable: true,
     get: function () {
