@@ -79,7 +79,8 @@ export default function setupIntl(
       this.owner.register('formats:main', options.formats);
       this.owner.register('service:intl', factory);
     }
-    this.intl = this.owner.lookup('service:intl');
+
+    this.intl = this.owner.lookup('service:intl') as IntlService;
 
     if (locale) {
       this.intl.setLocale(locale);
