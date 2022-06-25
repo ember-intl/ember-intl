@@ -1342,13 +1342,6 @@
     "@formatjs/intl-localematcher" "0.2.24"
     tslib "^2.1.0"
 
-"@formatjs/ecma402-abstract@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.5.2.tgz#6c20c24f814ebf8e9dd46e34310a67895853a931"
-  integrity sha512-rscxoLyIwH2x+l15Z4eD580ioO3CkFVoWDLgDtgiOnWzDzpL5EigDRg9V4mINb8W6bQRT1xnCxiRwvw3bgvqrA==
-  dependencies:
-    tslib "^2.0.1"
-
 "@formatjs/ecma402-abstract@1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.6.2.tgz#9d064a2cf790769aa6721e074fb5d5c357084bb9"
@@ -1404,15 +1397,7 @@
   dependencies:
     tslib "^2.1.0"
 
-"@formatjs/intl-pluralrules@^4.0.6":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-4.0.6.tgz#bab69e68b122089daa39f57072978a560f955176"
-  integrity sha512-/7Hjg/7EiHuZq4zwd406UoX2w5KtUrLRj9SI8mPOkUpHHqruSskYuJYahKWW7rNytPRaoCLfsigoFS0CDHBjlg==
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.5.2"
-    tslib "^2.0.1"
-
-"@formatjs/intl-relativetimeformat@8.1.2", "@formatjs/intl-relativetimeformat@^8.0.4":
+"@formatjs/intl-relativetimeformat@8.1.2":
   version "8.1.2"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-8.1.2.tgz#119f3dce97458991f86bf34a736880e4a7bc1697"
   integrity sha512-LZUxbc9GHVGmDc4sqGAXugoxhvZV7EG2lG2c0aKERup2ixvmDMbbEN3iEEr5aKkP7YyGxXxgqDn2dwg7QCPR6Q==
@@ -13592,7 +13577,7 @@ tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.1:
+tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==

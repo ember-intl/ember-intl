@@ -1,5 +1,3 @@
-import './intl-polyfills';
-
 import Application from '@ember/application';
 import config from 'dummy/config/environment';
 import loadInitializers from 'ember-load-initializers';
