@@ -86,14 +86,14 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/project"eaimeta@70e063a35619d71f
 });
-;define("dummy/app", ["exports", "dummy/intl-polyfills", "@ember/application", "dummy/config/environment", "ember-load-initializers", "ember-resolver"], function (_exports, _intlPolyfills, _application, _environment, _emberLoadInitializers, _emberResolver) {
+;define("dummy/app", ["exports", "@ember/application", "dummy/config/environment", "ember-load-initializers", "ember-resolver"], function (_exports, _application, _environment, _emberLoadInitializers, _emberResolver) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"dummy/intl-polyfills",0,"@ember/application",0,"dummy/config/environment",0,"ember-load-initializers",0,"ember-resolver"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/application",0,"dummy/config/environment",0,"ember-load-initializers",0,"ember-resolver"eaimeta@70e063a35619d71f
 
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -3017,11 +3017,6 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-router-scroll/instance-initializers/ember-router-scroll"eaimeta@70e063a35619d71f
-});
-;define("dummy/intl-polyfills", ["@formatjs/intl-pluralrules/polyfill", "@formatjs/intl-pluralrules/locale-data/en", "@formatjs/intl-pluralrules/locale-data/fr", "@formatjs/intl-pluralrules/locale-data/es", "@formatjs/intl-relativetimeformat/polyfill", "@formatjs/intl-relativetimeformat/locale-data/en", "@formatjs/intl-relativetimeformat/locale-data/fr", "@formatjs/intl-relativetimeformat/locale-data/es"], function (_polyfill, _en, _fr, _es, _polyfill2, _en2, _fr2, _es2) {
-  "use strict";
-
-  0; //eaimeta@70e063a35619d71f0,"@formatjs/intl-pluralrules/polyfill",0,"@formatjs/intl-pluralrules/locale-data/en",0,"@formatjs/intl-pluralrules/locale-data/fr",0,"@formatjs/intl-pluralrules/locale-data/es",0,"@formatjs/intl-relativetimeformat/polyfill",0,"@formatjs/intl-relativetimeformat/locale-data/en",0,"@formatjs/intl-relativetimeformat/locale-data/fr",0,"@formatjs/intl-relativetimeformat/locale-data/es"eaimeta@70e063a35619d71f
 });
 ;define("dummy/models/class", ["exports", "ember-cli-addon-docs/models/class"], function (_exports, _class) {
   "use strict";
