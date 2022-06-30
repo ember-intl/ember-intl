@@ -104,7 +104,7 @@
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "ember-cli": "~4.4.0",
-    "ember-cli-addon-docs": "^4.2.2",
+    "ember-cli-addon-docs": "^5.0.0",
     "ember-cli-addon-docs-yuidoc": "^1.0.0",
     "ember-cli-deploy": "^1.0.2",
     "ember-cli-deploy-build": "^2.0.0",
@@ -149,7 +149,6 @@
     }
   },
   "resolutions": {
-    "ember-get-config": "0.5.0",
     "@types/ember": "^4.0.0",
     "@types/ember-qunit": "^5.0.0",
     "@types/ember-resolver": "^5.0.11",
