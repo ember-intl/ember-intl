@@ -87851,2090 +87851,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
   }
 });
-;define("@ember/legacy-built-in-components/components/_has-dom", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  // check if window exists and actually is the global
-  var _default = typeof self === 'object' && self !== null && self.Object === Object && typeof Window !== 'undefined' && self.constructor === Window && typeof document === 'object' && document !== null && self.document === document && typeof location === 'object' && location !== null && self.location === location && typeof history === 'object' && history !== null && self.history === history && typeof navigator === 'object' && navigator !== null && self.navigator === navigator && typeof navigator.userAgent === 'string';
-
-  _exports.default = _default;
-});
-;define("@ember/legacy-built-in-components/components/_internals", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.HAS_BLOCK = void 0;
-  _exports.isSimpleClick = isSimpleClick;
-
-  function intern(str) {
-    let obj = {}; //@ts-ignore
-
-    obj[str] = 1;
-
-    for (let key in obj) {
-      if (key === str) {
-        return key;
-      }
-    }
-
-    return str;
-  }
-
-  const GUID_KEY = intern(`__ember${Date.now()}`); // `enumerableSymbol` copied from https://github.com/emberjs/ember.js/blob/master/packages/@ember/-internals/utils/lib/symbol.ts
-  // for not exported code these legacy components are dependant on.
-  // Some legacy symbols still need to be enumerable for a variety of reasons.
-  // This code exists for that, and as a fallback in IE11. In general, prefer
-  // `symbol` below when creating a new symbol.
-
-  function enumerableSymbol(debugName) {
-    let id = GUID_KEY + Math.floor(Math.random() * Date.now());
-    let symbol = intern(`__${debugName}${id}__`);
-    return symbol;
-  }
-
-  const HAS_BLOCK = enumerableSymbol('HAS_BLOCK');
-  _exports.HAS_BLOCK = HAS_BLOCK;
-
-  function isSimpleClick(event) {
-    let modifier = event.shiftKey || event.metaKey || event.altKey || event.ctrlKey;
-    let secondaryClick = event.which > 1; // IE9 may return undefined
-
-    return !modifier && !secondaryClick;
-  } // export interface GlobalContext {
-  //   imports: object;
-  //   exports: object;
-  //   lookup: object;
-  // }
-  // /* globals global, window, self */
-  // declare const mainContext: object | undefined;
-  // // from lodash to catch fake globals
-  // function checkGlobal(value: any | null | undefined): value is object {
-  //   return value && value.Object === Object ? value : undefined;
-  // }
-  // // element ids can ruin global miss checks
-  // function checkElementIdShadowing(value: any | null | undefined) {
-  //   return value && value.nodeType === undefined ? value : undefined;
-  // }
-  // // export real global
-  // export default checkGlobal(checkElementIdShadowing(typeof global === 'object' && global)) ||
-  //   checkGlobal(typeof self === 'object' && self) ||
-  //   checkGlobal(typeof window === 'object' && window) ||
-  //   (typeof mainContext !== 'undefined' && mainContext) || // set before strict mode in Ember loader/wrapper
-  //   new Function('return this')(); // eval outside of strict mode
-  // // legacy imports/exports/lookup stuff (should we keep this??)
-  // export const context = (function (
-  //   global: object,
-  //   Ember: Partial<GlobalContext> | undefined
-  // ): GlobalContext {
-  //   return Ember === undefined
-  //     ? { imports: global, exports: global, lookup: global }
-  //     : {
-  //         // import jQuery
-  //         imports: Ember.imports || global,
-  //         // export Ember
-  //         exports: Ember.exports || global,
-  //         // search for Namespaces
-  //         lookup: Ember.lookup || global,
-  //       };
-  // })(global, global.Ember);
-
-});
-;define("@ember/legacy-built-in-components/components/checkbox", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/debug"], function (_exports, _component, _templateFactory, _object, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
-  /*
-    {{yield}}
-  */
-  {
-    "id": "YiZ7OnUO",
-    "block": "[[[18,1,null]],[\"&default\"],false,[\"yield\"]]",
-    "moduleName": "@ember/legacy-built-in-components/components/checkbox.hbs",
-    "isStrictMode": false
-  }); //@ts-check
-
-  /* eslint-disable ember/no-component-lifecycle-hooks */
-
-  /* eslint-disable ember/require-tagless-components */
-
-  /* eslint-disable ember/no-classic-classes */
-
-  /* eslint-disable ember/no-classic-components */
-
-
-  /**
-  @module @ember/component
-  */
-
-  /**
-    The internal class used to create text inputs when the `{{input}}`
-    helper is used with `type` of `checkbox`.
-  
-    See [Ember.Templates.helpers.input](/ember/release/classes/Ember.Templates.helpers/methods/input?anchor=input)  for usage details.
-  
-    ## Direct manipulation of `checked`
-  
-    The `checked` attribute of an `Checkbox` object should always be set
-    through the Ember object or by interacting with its rendered element
-    representation via the mouse, keyboard, or touch. Updating the value of the
-    checkbox via jQuery will result in the checked value of the object and its
-    element losing synchronization.
-  
-    ## Layout and LayoutName properties
-  
-    Because HTML `input` elements are self closing `layout` and `layoutName`
-    properties will not be applied.
-  
-    @class Checkbox
-    @public
-  */
-  const Checkbox = _component.default.extend({
-    /**
-      By default, this component will add the `ember-checkbox` class to the component's element.
-       @property classNames
-      @type Array<String> | String
-      @default ['ember-checkbox']
-      @public
-     */
-    classNames: ['ember-checkbox'],
-    tagName: 'input',
-
-    /**
-      By default this component will forward a number of arguments to attributes on the the
-      component's element:
-       * indeterminate
-      * disabled
-      * tabindex
-      * name
-      * autofocus
-      * required
-      * form
-       When invoked with curly braces, this is the exhaustive list of HTML attributes you can
-      customize (i.e. `{{input type="checkbox" disabled=true}}`).
-       When invoked with angle bracket invocation, this list is irrelevant, because you can use HTML
-      attribute syntax to customize the element (i.e.
-      `<Input @type="checkbox" disabled data-custom="custom value" />`). However, `@type` and
-      `@checked` must be passed as named arguments, not attributes.
-       @property attributeBindings
-      @type Array<String> | String
-      @default ['type', 'checked', 'indeterminate', 'disabled', 'tabindex', 'name', 'autofocus', 'required', 'form']
-      @public
-    */
-    attributeBindings: ['type', 'checked', 'indeterminate', 'disabled', 'tabindex', 'name', 'autofocus', 'required', 'form'],
-
-    /**
-      Sets the `type` attribute of the `Checkbox`'s element
-       @property disabled
-      @default false
-      @private
-     */
-    type: 'checkbox',
-
-    /**
-      Sets the `disabled` attribute of the `Checkbox`'s element
-       @property disabled
-      @default false
-      @public
-     */
-    disabled: false,
-
-    /**
-      Corresponds to the `indeterminate` property of the `Checkbox`'s element
-       @property disabled
-      @default false
-      @public
-     */
-    indeterminate: false,
-
-    /**
-      @property checked
-      @default false
-      @private
-     */
-    checked: false,
-
-    /**
-      Whenever the checkbox is inserted into the DOM, perform initialization steps, which include
-      setting the indeterminate property if needed.
-       If this method is overridden, `super` must be called.
-       @method
-      @public
-     */
-    didInsertElement() {
-      this._super(...arguments);
-
-      this.element.indeterminate = Boolean(this.indeterminate);
-    },
-
-    /**
-      Whenever the `change` event is fired on the checkbox, update its `checked` property to reflect
-      whether the checkbox is checked.
-       If this method is overridden, `super` must be called.
-       @method
-      @public
-     */
-    change() {
-      (0, _object.set)(this, 'checked', this.element.checked);
-    }
-
-  });
-
-  if (false
-  /* DEBUG */
-  ) {
-    const UNSET = {};
-    Checkbox.reopen({
-      value: UNSET,
-
-      didReceiveAttrs() {
-        this._super();
-
-        (false && !(!(this.type === 'checkbox' && this.value !== UNSET)) && (0, _debug.assert)("`<Input @type='checkbox' @value={{...}} />` is not supported; " + "please use `<Input @type='checkbox' @checked={{...}} />` instead.", !(this.type === 'checkbox' && this.value !== UNSET)));
-      }
-
-    });
-  }
-
-  Checkbox.toString = () => '@ember/component/checkbox';
-
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, Checkbox);
-
-  _exports.default = _default;
-});
-;define("@ember/legacy-built-in-components/components/link-to", ["exports", "@ember/component", "@ember/template-factory", "@ember/object/computed", "@ember/object", "@ember/application", "@ember/debug", "@ember/engine", "@ember/service", "@ember/legacy-built-in-components/components/_internals"], function (_exports, _component, _templateFactory, _computed, _object, _application, _debug, _engine, _service, _internals) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
-  /*
-    {{~#if (has-block)~}}
-    {{yield}}
-  {{~else~}}
-    {{this.linkTitle}}
-  {{~/if~}}
-  
-  */
-  {
-    "id": "mXLN+5/0",
-    "block": "[[[41,[48,[30,1]],[[[18,1,null]],[]],[[[1,[30,0,[\"linkTitle\"]]]],[]]]],[\"&default\"],false,[\"if\",\"has-block\",\"yield\"]]",
-    "moduleName": "@ember/legacy-built-in-components/components/link-to.hbs",
-    "isStrictMode": false
-  });
-
-  /**
-    The `LinkTo` component renders a link to the supplied `routeName` passing an optionally
-    supplied model to the route as its `model` context of the route. The block for `LinkTo`
-    becomes the contents of the rendered element:
-  
-    ```handlebars
-    <LinkTo @route='photoGallery'>
-      Great Hamster Photos
-    </LinkTo>
-    ```
-  
-    This will result in:
-  
-    ```html
-    <a href="/hamster-photos">
-      Great Hamster Photos
-    </a>
-    ```
-  
-    ### Disabling the `LinkTo` component
-  
-    The `LinkTo` component can be disabled by using the `disabled` argument. A disabled link
-    doesn't result in a transition when activated, and adds the `disabled` class to the `<a>`
-    element.
-  
-    (The class name to apply to the element can be overridden by using the `disabledClass`
-    argument)
-  
-    ```handlebars
-    <LinkTo @route='photoGallery' @disabled={{true}}>
-      Great Hamster Photos
-    </LinkTo>
-    ```
-  
-    ### Handling `href`
-  
-    `<LinkTo>` will use your application's Router to fill the element's `href` property with a URL
-    that matches the path to the supplied `routeName`.
-  
-    ### Handling current route
-  
-    The `LinkTo` component will apply a CSS class name of 'active' when the application's current
-    route matches the supplied routeName. For example, if the application's current route is
-    'photoGallery.recent', then the following invocation of `LinkTo`:
-  
-    ```handlebars
-    <LinkTo @route='photoGallery.recent'>
-      Great Hamster Photos
-    </LinkTo>
-    ```
-  
-    will result in
-  
-    ```html
-    <a href="/hamster-photos/this-week" class="active">
-      Great Hamster Photos
-    </a>
-    ```
-  
-    The CSS class used for active classes can be customized by passing an `activeClass` argument:
-  
-    ```handlebars
-    <LinkTo @route='photoGallery.recent' @activeClass="current-url">
-      Great Hamster Photos
-    </LinkTo>
-    ```
-  
-    ```html
-    <a href="/hamster-photos/this-week" class="current-url">
-      Great Hamster Photos
-    </a>
-    ```
-  
-    ### Keeping a link active for other routes
-  
-    If you need a link to be 'active' even when it doesn't match the current route, you can use the
-    `current-when` argument.
-  
-    ```handlebars
-    <LinkTo @route='photoGallery' @current-when='photos'>
-      Photo Gallery
-    </LinkTo>
-    ```
-  
-    This may be helpful for keeping links active for:
-  
-    * non-nested routes that are logically related
-    * some secondary menu approaches
-    * 'top navigation' with 'sub navigation' scenarios
-  
-    A link will be active if `current-when` is `true` or the current
-    route is the route this link would transition to.
-  
-    To match multiple routes 'space-separate' the routes:
-  
-    ```handlebars
-    <LinkTo @route='gallery' @current-when='photos drawings paintings'>
-      Art Gallery
-    </LinkTo>
-    ```
-  
-    ### Supplying a model
-  
-    An optional `model` argument can be used for routes whose
-    paths contain dynamic segments. This argument will become
-    the model context of the linked route:
-  
-    ```javascript
-    Router.map(function() {
-      this.route("photoGallery", {path: "hamster-photos/:photo_id"});
-    });
-    ```
-  
-    ```handlebars
-    <LinkTo @route='photoGallery' @model={{this.aPhoto}}>
-      {{aPhoto.title}}
-    </LinkTo>
-    ```
-  
-    ```html
-    <a href="/hamster-photos/42">
-      Tomster
-    </a>
-    ```
-  
-    ### Supplying multiple models
-  
-    For deep-linking to route paths that contain multiple
-    dynamic segments, the `models` argument can be used.
-  
-    As the router transitions through the route path, each
-    supplied model argument will become the context for the
-    route with the dynamic segments:
-  
-    ```javascript
-    Router.map(function() {
-      this.route("photoGallery", { path: "hamster-photos/:photo_id" }, function() {
-        this.route("comment", {path: "comments/:comment_id"});
-      });
-    });
-    ```
-  
-    This argument will become the model context of the linked route:
-  
-    ```handlebars
-    <LinkTo @route='photoGallery.comment' @models={{array this.aPhoto this.comment}}>
-      {{comment.body}}
-    </LinkTo>
-    ```
-  
-    ```html
-    <a href="/hamster-photos/42/comments/718">
-      A+++ would snuggle again.
-    </a>
-    ```
-  
-    ### Supplying an explicit dynamic segment value
-  
-    If you don't have a model object available to pass to `LinkTo`,
-    an optional string or integer argument can be passed for routes whose
-    paths contain dynamic segments. This argument will become the value
-    of the dynamic segment:
-  
-    ```javascript
-    Router.map(function() {
-      this.route("photoGallery", { path: "hamster-photos/:photo_id" });
-    });
-    ```
-  
-    ```handlebars
-    <LinkTo @route='photoGallery' @model={{aPhotoId}}>
-      {{this.aPhoto.title}}
-    </LinkTo>
-    ```
-  
-    ```html
-    <a href="/hamster-photos/42">
-      Tomster
-    </a>
-    ```
-  
-    When transitioning into the linked route, the `model` hook will
-    be triggered with parameters including this passed identifier.
-  
-    ### Supplying a `tagName`
-  
-    By default `<LinkTo>` renders an `<a>` element. This can be overridden for a single use of
-    `<LinkTo>` by supplying a `tagName` argument:
-  
-    ```handlebars
-    <LinkTo @route='photoGallery' @tagName='li'>
-      Great Hamster Photos
-    </LinkTo>
-    ```
-  
-    This produces:
-  
-    ```html
-    <li>
-      Great Hamster Photos
-    </li>
-    ```
-  
-    In general, this is not recommended.
-  
-    ### Supplying query parameters
-  
-    If you need to add optional key-value pairs that appear to the right of the ? in a URL,
-    you can use the `query` argument.
-  
-    ```handlebars
-    <LinkTo @route='photoGallery' @query={{hash page=1 per_page=20}}>
-      Great Hamster Photos
-    </LinkTo>
-    ```
-  
-    This will result in:
-  
-    ```html
-    <a href="/hamster-photos?page=1&per_page=20">
-      Great Hamster Photos
-    </a>
-    ```
-  
-    @for Ember.Templates.components
-    @method LinkTo
-    @see {LinkComponent}
-    @public
-  */
-
-  /**
-    @module @ember/routing
-  */
-
-  /**
-    See [Ember.Templates.components.LinkTo](/ember/release/classes/Ember.Templates.components/methods/input?anchor=LinkTo).
-  
-    @for Ember.Templates.helpers
-    @method link-to
-    @see {Ember.Templates.components.LinkTo}
-    @public
-  **/
-
-  /**
-    `LinkComponent` is the internal component invoked with `<LinkTo>` or `{{link-to}}`.
-  
-    @class LinkComponent
-    @extends Component
-    @see {Ember.Templates.components.LinkTo}
-    @public
-  **/
-  const UNDEFINED = Object.freeze({
-    toString() {
-      return 'UNDEFINED';
-    }
-
-  });
-  const EMPTY_QUERY_PARAMS = Object.freeze({});
-
-  const LinkComponent = _component.default.extend({
-    tagName: 'a',
-
-    /**
-      @property route
-      @public
-    */
-    route: UNDEFINED,
-
-    /**
-      @property model
-      @public
-    */
-    model: UNDEFINED,
-
-    /**
-      @property models
-      @public
-    */
-    models: UNDEFINED,
-
-    /**
-      @property query
-      @public
-    */
-    query: UNDEFINED,
-
-    /**
-      Used to determine when this `LinkComponent` is active.
-       @property current-when
-      @public
-    */
-    'current-when': null,
-
-    /**
-      @property disabledWhen
-      @public
-    */
-    disabledWhen: undefined,
-
-    /**
-      Sets the `title` attribute of the `LinkComponent`'s HTML element.
-       @property title
-      @default null
-      @public
-    **/
-    title: null,
-
-    /**
-      Sets the `rel` attribute of the `LinkComponent`'s HTML element.
-       @property rel
-      @default null
-      @public
-    **/
-    rel: null,
-
-    /**
-      Sets the `tabindex` attribute of the `LinkComponent`'s HTML element.
-       @property tabindex
-      @default null
-      @public
-    **/
-    tabindex: null,
-
-    /**
-      Sets the `target` attribute of the `LinkComponent`'s HTML element.
-       @since 1.8.0
-      @property target
-      @default null
-      @public
-    **/
-    target: null,
-
-    /**
-      The CSS class to apply to `LinkComponent`'s element when its `active`
-      property is `true`.
-       @property activeClass
-      @type String
-      @default active
-      @public
-    **/
-    activeClass: 'active',
-
-    /**
-      The CSS class to apply to `LinkComponent`'s element when its `loading`
-      property is `true`.
-       @property loadingClass
-      @type String
-      @default loading
-      @public
-    **/
-    loadingClass: 'loading',
-
-    /**
-      The CSS class to apply to a `LinkComponent`'s element when its `disabled`
-      property is `true`.
-       @property disabledClass
-      @type String
-      @default disabled
-      @public
-    **/
-    disabledClass: 'disabled',
-
-    /**
-      Determines whether the `LinkComponent` will trigger routing via
-      the `replaceWith` routing strategy.
-       @property replace
-      @type Boolean
-      @default false
-      @public
-    **/
-    replace: false,
-
-    /**
-      Determines whether the `LinkComponent` will prevent the default
-      browser action by calling preventDefault() to avoid reloading
-      the browser page.
-       If you need to trigger a full browser reload pass `@preventDefault={{false}}`:
-       ```handlebars
-      <LinkTo @route='photoGallery' @model={{this.aPhotoId}} @preventDefault={{false}}>
-        {{this.aPhotoId.title}}
-      </LinkTo>
-      ```
-       @property preventDefault
-      @type Boolean
-      @default true
-      @private
-    **/
-    preventDefault: true,
-
-    /**
-      @property linkTitle
-      @private
-    */
-    linkTitle: undefined,
-
-    /**
-      By default this component will forward `href`, `title`, `rel`, `tabindex`, and `target`
-      arguments to attributes on the component's element. When invoked with `{{link-to}}`, you can
-      only customize these attributes. When invoked with `<LinkTo>`, you can just use HTML
-      attributes directly.
-       @property attributeBindings
-      @type Array | String
-      @default ['title', 'rel', 'tabindex', 'target']
-      @public
-    */
-    attributeBindings: ['href', 'title', 'rel', 'tabindex', 'target'],
-
-    /**
-      By default this component will set classes on its element when any of the following arguments
-      are truthy:
-       * active
-      * loading
-      * disabled
-       When these arguments are truthy, a class with the same name will be set on the element. When
-      falsy, the associated class will not be on the element.
-       @property classNameBindings
-      @type Array
-      @default ['active', 'loading', 'disabled', 'ember-transitioning-in', 'ember-transitioning-out']
-      @public
-    */
-    classNameBindings: ['active', 'loading', 'disabled', 'transitioningIn', 'transitioningOut'],
-
-    /**
-      By default this component responds to the `click` event. When the component element is an
-      `<a>` element, activating the link in another way, such as using the keyboard, triggers the
-      click event.
-       @property eventName
-      @type String
-      @default click
-      @private
-    */
-    eventName: 'click',
-
-    // this is doc'ed here so it shows up in the events
-    // section of the API documentation, which is where
-    // people will likely go looking for it.
-
-    /**
-      Triggers the `LinkComponent`'s routing behavior. If
-      `eventName` is changed to a value other than `click`
-      the routing behavior will trigger on that custom event
-      instead.
-       @event click
-      @private
-    */
-
-    /**
-      An overridable method called when `LinkComponent` objects are instantiated.
-       Example:
-       ```app/components/my-link.js
-      import LinkComponent from '@ember/routing/link-component';
-       export default LinkComponent.extend({
-        init() {
-          this._super(...arguments);
-          console.log('Event is ' + this.get('eventName'));
-        }
-      });
-      ```
-       NOTE: If you do override `init` for a framework class like `Component`,
-      be sure to call `this._super(...arguments)` in your
-      `init` declaration! If you don't, Ember may not have an opportunity to
-      do important setup work, and you'll see strange behavior in your
-      application.
-       @method init
-      @private
-    */
-    init() {
-      this._super(...arguments);
-
-      (false && !(!this._isEngine || this._engineMountPoint !== undefined) && (0, _debug.assert)('You attempted to use the <LinkTo> component within a routeless engine, this is not supported. ' + 'If you are using the ember-engines addon, use the <LinkToExternal> component instead. ' + 'See https://ember-engines.com/docs/links for more info.', !this._isEngine || this._engineMountPoint !== undefined)); // Map desired event name to invoke function
-
-      let {
-        eventName
-      } = this;
-      this.on(eventName, this, this._invoke);
-    },
-
-    //@ts-ignore
-    _routing: (0, _service.inject)('-routing'),
-    _currentRoute: (0, _computed.alias)('_routing.currentRouteName'),
-    _currentRouterState: (0, _computed.alias)('_routing.currentState'),
-    _targetRouterState: (0, _computed.alias)('_routing.targetState'),
-    _isEngine: (0, _object.computed)(function () {
-      return (0, _engine.getEngineParent)((0, _application.getOwner)(this)) !== undefined;
-    }),
-    _engineMountPoint: (0, _object.computed)(function () {
-      //@ts-ignore
-      return (0, _application.getOwner)(this).mountPoint;
-    }),
-    _route: (0, _object.computed)('route', '_currentRouterState', function computeLinkToComponentRoute() {
-      let {
-        route
-      } = this;
-      return route === UNDEFINED ? this._currentRoute : this._namespaceRoute(route);
-    }),
-    _models: (0, _object.computed)('model', 'models', function computeLinkToComponentModels() {
-      let {
-        model,
-        models
-      } = this;
-      (false && !(model === UNDEFINED || models === UNDEFINED) && (0, _debug.assert)('You cannot provide both the `@model` and `@models` arguments to the <LinkTo> component.', model === UNDEFINED || models === UNDEFINED));
-
-      if (model !== UNDEFINED) {
-        return [model];
-      } else if (models !== UNDEFINED) {
-        (false && !(Array.isArray(models)) && (0, _debug.assert)('The `@models` argument must be an array.', Array.isArray(models)));
-        return models;
-      } else {
-        return [];
-      }
-    }),
-    _query: (0, _object.computed)('query', function computeLinkToComponentQuery() {
-      let {
-        query
-      } = this;
-
-      if (query === UNDEFINED) {
-        return EMPTY_QUERY_PARAMS;
-      } else {
-        return Object.assign({}, query);
-      }
-    }),
-
-    /**
-      Accessed as a classname binding to apply the component's `disabledClass`
-      CSS `class` to the element when the link is disabled.
-       When `true`, interactions with the element will not trigger route changes.
-      @property disabled
-      @public
-    */
-    disabled: (0, _object.computed)({
-      get(_key) {
-        // always returns false for `get` because (due to the `set` just below)
-        // the cached return value from the set will prevent this getter from _ever_
-        // being called after a set has occurred
-        return false;
-      },
-
-      set(_key, value) {
-        this._isDisabled = value;
-        return value ? this.disabledClass : false;
-      }
-
-    }),
-
-    /**
-      Accessed as a classname binding to apply the component's `activeClass`
-      CSS `class` to the element when the link is active.
-       This component is considered active when its `currentWhen` property is `true`
-      or the application's current route is the route this component would trigger
-      transitions into.
-       The `currentWhen` property can match against multiple routes by separating
-      route names using the ` ` (space) character.
-       @property active
-      @private
-    */
-    active: (0, _object.computed)('activeClass', '_active', function computeLinkToComponentActiveClass() {
-      return this._active ? this.activeClass : false;
-    }),
-    _active: (0, _object.computed)('_currentRouterState', '_route', '_models', '_query', 'loading', 'current-when', function computeLinkToComponentActive() {
-      let {
-        _currentRouterState: state
-      } = this;
-
-      if (state) {
-        return this._isActive(state);
-      } else {
-        return false;
-      }
-    }),
-    willBeActive: (0, _object.computed)('_currentRouterState', '_targetRouterState', '_route', '_models', '_query', 'loading', 'current-when', function computeLinkToComponentWillBeActive() {
-      let {
-        _currentRouterState: current,
-        _targetRouterState: target
-      } = this;
-
-      if (current === target) {
-        return;
-      }
-
-      return this._isActive(target);
-    }),
-
-    _isActive(routerState) {
-      if (this.loading) {
-        return false;
-      }
-
-      let currentWhen = this['current-when'];
-
-      if (typeof currentWhen === 'boolean') {
-        return currentWhen;
-      }
-
-      let {
-        _models: models,
-        _routing: routing
-      } = this;
-
-      if (typeof currentWhen === 'string') {
-        return currentWhen.split(' ').some(route => routing.isActiveForRoute(models, undefined, this._namespaceRoute(route), routerState));
-      } else {
-        return routing.isActiveForRoute(models, this._query, this._route, routerState);
-      }
-    },
-
-    transitioningIn: (0, _object.computed)('_active', 'willBeActive', function computeLinkToComponentTransitioningIn() {
-      if (this.willBeActive === true && !this._active) {
-        return 'ember-transitioning-in';
-      } else {
-        return false;
-      }
-    }),
-    transitioningOut: (0, _object.computed)('_active', 'willBeActive', function computeLinkToComponentTransitioningOut() {
-      if (this.willBeActive === false && this._active) {
-        return 'ember-transitioning-out';
-      } else {
-        return false;
-      }
-    }),
-
-    _namespaceRoute(route) {
-      let {
-        _engineMountPoint: mountPoint
-      } = this;
-
-      if (mountPoint === undefined) {
-        return route;
-      } else if (route === 'application') {
-        return mountPoint;
-      } else {
-        return `${mountPoint}.${route}`;
-      }
-    },
-
-    /**
-      Event handler that invokes the link, activating the associated route.
-       @method _invoke
-      @param {Event} event
-      @private
-    */
-    _invoke(event) {
-      if (!(0, _internals.isSimpleClick)(event)) {
-        return true;
-      }
-
-      let {
-        bubbles,
-        preventDefault
-      } = this;
-      let target = this.element.target;
-      let isSelf = !target || target === '_self';
-
-      if (preventDefault !== false && isSelf) {
-        event.preventDefault();
-      }
-
-      if (bubbles === false) {
-        event.stopPropagation();
-      }
-
-      if (this._isDisabled) {
-        return false;
-      }
-
-      if (this.loading) {
-        // tslint:disable-next-line:max-line-length
-        (false && (0, _debug.warn)('This link is in an inactive loading state because at least one of its models ' + 'currently has a null/undefined value, or the provided route name is invalid.', false, {
-          id: 'ember-glimmer.link-to.inactive-loading-state'
-        }));
-        return false;
-      }
-
-      if (!isSelf) {
-        return false;
-      }
-
-      let {
-        _route: routeName,
-        _models: models,
-        _query: queryParams,
-        replace: shouldReplace
-      } = this;
-      let payload = {
-        queryParams,
-        routeName
-      }; // flaggedInstrument(
-      //   'interaction.link-to',
-      //   payload,
-      //   this._generateTransition(
-      //     payload,
-      //     routeName,
-      //     models,
-      //     queryParams,
-      //     shouldReplace
-      //   )
-      // );
-
-      this._generateTransition(payload, routeName, models, queryParams, shouldReplace);
-
-      return false;
-    },
-
-    _generateTransition(payload, qualifiedRouteName, models, queryParams, shouldReplace) {
-      let {
-        _routing: routing
-      } = this;
-      payload.transition = routing.transitionTo(qualifiedRouteName, models, queryParams, shouldReplace);
-    },
-
-    /**
-      Sets the element's `href` attribute to the url for
-      the `LinkComponent`'s targeted route.
-       If the `LinkComponent`'s `tagName` is changed to a value other
-      than `a`, this property will be ignored.
-       @property href
-      @private
-    */
-    href: (0, _object.computed)('_currentRouterState', '_route', '_models', '_query', 'tagName', 'loading', 'loadingHref', function computeLinkToComponentHref() {
-      if (this.tagName !== 'a') {
-        return;
-      }
-
-      if (this.loading) {
-        return this.loadingHref;
-      }
-
-      let {
-        _route: route,
-        _models: models,
-        _query: query,
-        _routing: routing
-      } = this;
-
-      if (false
-      /* DEBUG */
-      ) {
-        /*
-         * Unfortunately, to get decent error messages, we need to do this.
-         * In some future state we should be able to use a "feature flag"
-         * which allows us to strip this without needing to call it twice.
-         *
-         * if (isDebugBuild()) {
-         *   // Do the useful debug thing, probably including try/catch.
-         * } else {
-         *   // Do the performant thing.
-         * }
-         */
-        try {
-          return routing.generateURL(route, models, query);
-        } catch (e) {
-          // tslint:disable-next-line:max-line-length
-          e.message = `While generating link to route "${this.route}": ${e.message}`;
-          throw e;
-        }
-      } else {
-        return routing.generateURL(route, models, query);
-      }
-    }),
-
-    /**
-      The loading state. Returns the loadingClass is true.
-       @property activeClass
-      @type {string|undefined}
-      @default active
-      @public
-    **/
-    loading: (0, _object.computed)('_route', '_modelsAreLoaded', 'loadingClass', function computeLinkToComponentLoading() {
-      let {
-        _route: route,
-        _modelsAreLoaded: loaded
-      } = this;
-
-      if (!loaded || route === null || route === undefined) {
-        return this.loadingClass;
-      }
-    }),
-    _modelsAreLoaded: (0, _object.computed)('_models', function computeLinkToComponentModelsAreLoaded() {
-      let {
-        _models: models
-      } = this;
-
-      for (let i = 0; i < models.length; i++) {
-        let model = models[i];
-
-        if (model === null || model === undefined) {
-          return false;
-        }
-      }
-
-      return true;
-    }),
-
-    /**
-      The default href value to use while a link-to is loading.
-      Only applies when tagName is 'a'
-       @property loadingHref
-      @type String
-      @default #
-      @private
-    */
-    loadingHref: '#',
-
-    didReceiveAttrs() {
-      let {
-        disabledWhen
-      } = this;
-
-      if (disabledWhen !== undefined) {
-        this.set('disabled', disabledWhen);
-      } // @ts-ignore
-
-
-      let {
-        params
-      } = this;
-
-      if (!params || params.length === 0) {
-        (false && !(!(this.route === UNDEFINED && this.model === UNDEFINED && this.models === UNDEFINED && this.query === UNDEFINED)) && (0, _debug.assert)('You must provide at least one of the `@route`, `@model`, `@models` or `@query` argument to `<LinkTo>`.', !(this.route === UNDEFINED && this.model === UNDEFINED && this.models === UNDEFINED && this.query === UNDEFINED)));
-        let {
-          _models: models
-        } = this;
-
-        if (models.length > 0) {
-          let lastModel = models[models.length - 1];
-
-          if (typeof lastModel === 'object' && lastModel !== null && lastModel.isQueryParams) {
-            this.query = lastModel.values;
-            models.pop();
-          }
-        }
-
-        return;
-      }
-
-      let hasBlock = this[_internals.HAS_BLOCK];
-      params = params.slice(); // Process the positional arguments, in order.
-      // 1. Inline link title comes first, if present.
-
-      if (!hasBlock) {
-        this.set('linkTitle', params.shift());
-      } // 2. The last argument is possibly the `query` object.
-
-
-      let queryParams = params[params.length - 1];
-
-      if (queryParams && queryParams.isQueryParams) {
-        this.set('query', params.pop().values);
-      } else {
-        this.set('query', UNDEFINED);
-      } // 3. If there is a `route`, it is now at index 0.
-
-
-      if (params.length === 0) {
-        this.set('route', UNDEFINED);
-      } else {
-        this.set('route', params.shift());
-      } // 4. Any remaining indices (if any) are `models`.
-
-
-      this.set('model', UNDEFINED);
-      this.set('models', params);
-      (0, _debug.runInDebug)(() => {
-        // @ts-ignore
-        params = this.params.slice();
-        let equivalentNamedArgs = [];
-        let hasQueryParams = false; // Process the positional arguments, in order.
-        // 1. Inline link title comes first, if present.
-
-        if (!hasBlock) {
-          params.shift();
-        } // 2. The last argument is possibly the `query` object.
-
-
-        let query = params[params.length - 1];
-
-        if (query && query.isQueryParams) {
-          params.pop();
-          hasQueryParams = true;
-        } // 3. If there is a `route`, it is now at index 0.
-
-
-        if (params.length > 0) {
-          params.shift();
-          equivalentNamedArgs.push('`@route`');
-        } // 4. Any remaining params (if any) are `models`.
-
-
-        if (params.length === 1) {
-          equivalentNamedArgs.push('`@model`');
-        } else if (params.length > 1) {
-          equivalentNamedArgs.push('`@models`');
-        }
-
-        if (hasQueryParams) {
-          equivalentNamedArgs.push('`@query`');
-        }
-
-        if (equivalentNamedArgs.length > 0) {
-          let message = 'Invoking the `<LinkTo>` component with positional arguments is deprecated.';
-          message += `Please use the equivalent named arguments (${equivalentNamedArgs.join(', ')})`;
-
-          if (hasQueryParams) {
-            message += ' along with the `hash` helper';
-          }
-
-          if (!hasBlock) {
-            message += " and pass a block for the link's content.";
-          }
-
-          message += '.';
-          (false && !(false) && (0, _debug.deprecate)(message, false, {
-            id: 'ember-glimmer.link-to.positional-arguments',
-            until: '4.0.0',
-            for: 'ember-source',
-            url: 'https://deprecations.emberjs.com/v3.x#toc_ember-glimmer-link-to-positional-arguments',
-            since: {
-              available: '3.26.0-beta.1',
-              enabled: '3.26.0-beta.1'
-            }
-          }));
-        }
-      });
-    }
-
-  });
-
-  LinkComponent.toString = () => '@ember/routing/link-component';
-
-  LinkComponent.reopenClass({
-    positionalParams: 'params'
-  });
-
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, LinkComponent);
-
-  _exports.default = _default;
-});
-;define("@ember/legacy-built-in-components/components/text-field", ["exports", "@ember/legacy-built-in-components/components/_has-dom", "@ember/object", "@ember/component", "@ember/legacy-built-in-components/mixins/text-support"], function (_exports, _hasDom, _object, _component, _textSupport) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /* eslint-disable ember/no-mixins */
-
-  /* eslint-disable ember/no-classic-classes */
-
-  /**
-  @module @ember/component
-  */
-  const inputTypes = _hasDom.default ? Object.create(null) : null;
-
-  function canSetTypeOfInput(type) {
-    // if running in outside of a browser always return
-    // the original type
-    if (!_hasDom.default) {
-      return Boolean(type);
-    }
-
-    if (type in inputTypes) {
-      return inputTypes[type];
-    }
-
-    let inputTypeTestElement = document.createElement('input');
-
-    try {
-      inputTypeTestElement.type = type;
-    } catch (e) {// ignored
-    }
-
-    return inputTypes[type] = inputTypeTestElement.type === type;
-  }
-  /**
-    The internal class used to create text inputs when the `Input` component is used with `type` of `text`.
-  
-    See [Ember.Templates.components.Input](/ember/release/classes/Ember.Templates.components/methods/Input?anchor=Input) for usage details.
-  
-    ## Layout and LayoutName properties
-  
-    Because HTML `input` elements are self closing `layout` and `layoutName`
-    properties will not be applied.
-  
-    @class TextField
-    @extends Component
-    @uses Ember.TextSupport
-    @public
-  */
-
-
-  const TextField = _component.default.extend(_textSupport.default, {
-    /**
-      By default, this component will add the `ember-text-field` class to the component's element.
-       @property classNames
-      @type Array | String
-      @default ['ember-text-field']
-      @public
-     */
-    classNames: ['ember-text-field'],
-    tagName: 'input',
-
-    /**
-      By default this component will forward a number of arguments to attributes on the the
-      component's element:
-       * accept
-      * autocomplete
-      * autosave
-      * dir
-      * formaction
-      * formenctype
-      * formmethod
-      * formnovalidate
-      * formtarget
-      * height
-      * inputmode
-      * lang
-      * list
-      * type
-      * max
-      * min
-      * multiple
-      * name
-      * pattern
-      * size
-      * step
-      * value
-      * width
-       When invoked with `{{input type="text"}}`, you can only customize these attributes. When invoked
-      with `<Input @type="text" />`, you can just use HTML attributes directly.
-       @property attributeBindings
-      @type Array | String
-      @default ['accept', 'autocomplete', 'autosave', 'dir', 'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'inputmode', 'lang', 'list', 'type', 'max', 'min', 'multiple', 'name', 'pattern', 'size', 'step', 'value', 'width']
-      @public
-    */
-    attributeBindings: ['accept', 'autocomplete', 'autosave', 'dir', 'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'inputmode', 'lang', 'list', 'type', // needs to be before min and max. See #15675
-    'max', 'min', 'multiple', 'name', 'pattern', 'size', 'step', 'value', 'width'],
-
-    /**
-      As the user inputs text, this property is updated to reflect the `value` property of the HTML
-      element.
-       @property value
-      @type String
-      @default ""
-      @public
-    */
-    value: '',
-
-    /**
-      The `type` attribute of the input element.
-       @property type
-      @type String
-      @default "text"
-      @public
-    */
-    type: (0, _object.computed)({
-      get() {
-        return 'text';
-      },
-
-      set(_key, value) {
-        let type = 'text';
-
-        if (canSetTypeOfInput(value)) {
-          type = value;
-        }
-
-        return type;
-      }
-
-    }),
-
-    /**
-      The `size` of the text field in characters.
-       @property size
-      @type String
-      @default null
-      @public
-    */
-    size: null,
-
-    /**
-      The `pattern` attribute of input element.
-       @property pattern
-      @type String
-      @default null
-      @public
-    */
-    pattern: null,
-
-    /**
-      The `min` attribute of input element used with `type="number"` or `type="range"`.
-       @property min
-      @type String
-      @default null
-      @since 1.4.0
-      @public
-    */
-    min: null,
-
-    /**
-      The `max` attribute of input element used with `type="number"` or `type="range"`.
-       @property max
-      @type String
-      @default null
-      @since 1.4.0
-      @public
-    */
-    max: null
-  });
-
-  TextField.toString = () => '@ember/component/text-field';
-
-  var _default = TextField;
-  _exports.default = _default;
-});
-;define("@ember/legacy-built-in-components/components/textarea", ["exports", "@ember/legacy-built-in-components/mixins/text-support", "@ember/component", "@ember/legacy-built-in-components/templates/empty"], function (_exports, _textSupport, _component, _empty) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /* eslint-disable ember/no-mixins */
-
-  /* eslint-disable ember/require-tagless-components */
-
-  /**
-  @module @ember/component
-  */
-
-  /**
-    The `Textarea` component inserts a new instance of `<textarea>` tag into the template.
-  
-    The `@value` argument provides the content of the `<textarea>`.
-  
-    This template:
-  
-    ```handlebars
-    <Textarea @value="A bunch of text" />
-    ```
-  
-    Would result in the following HTML:
-  
-    ```html
-    <textarea class="ember-text-area">
-      A bunch of text
-    </textarea>
-    ```
-  
-    The `@value` argument is two-way bound. If the user types text into the textarea, the `@value`
-    argument is updated. If the `@value` argument is updated, the text in the textarea is updated.
-  
-    In the following example, the `writtenWords` property on the component will be updated as the user
-    types 'Lots of text' into the text area of their browser's window.
-  
-    ```app/components/word-editor.js
-    import Component from '@glimmer/component';
-    import { tracked } from '@glimmer/tracking';
-  
-    export default class WordEditorComponent extends Component {
-      @tracked writtenWords = "Lots of text that IS bound";
-    }
-    ```
-  
-    ```handlebars
-    <Textarea @value={{writtenWords}} />
-    ```
-  
-    Would result in the following HTML:
-  
-    ```html
-    <textarea class="ember-text-area">
-      Lots of text that IS bound
-    </textarea>
-    ```
-  
-    If you wanted a one way binding, you could use the `<textarea>` element directly, and use the
-    `value` DOM property and the `input` event.
-  
-    ### Actions
-  
-    The `Textarea` component takes a number of arguments with callbacks that are invoked in
-    response to user events.
-  
-    * `enter`
-    * `insert-newline`
-    * `escape-press`
-    * `focus-in`
-    * `focus-out`
-    * `key-press`
-  
-    These callbacks are passed to `Textarea` like this:
-  
-    ```handlebars
-    <Textarea @value={{this.searchWord}} @enter={{this.query}} />
-    ```
-  
-    ## Classic Invocation Syntax
-  
-    The `Textarea` component can also be invoked using curly braces, just like any other Ember
-    component.
-  
-    For example, this is an invocation using angle-bracket notation:
-  
-    ```handlebars
-    <Textarea @value={{this.searchWord}} @enter={{this.query}} />
-    ```
-  
-    You could accomplish the same thing using classic invocation:
-  
-    ```handlebars
-    {{textarea value=this.searchWord enter=this.query}}
-    ```
-  
-    The main difference is that angle-bracket invocation supports any HTML attribute using HTML
-    attribute syntax, because attributes and arguments have different syntax when using angle-bracket
-    invocation. Curly brace invocation, on the other hand, only has a single syntax for arguments,
-    and components must manually map attributes onto component arguments.
-  
-    When using classic invocation with `{{textarea}}`, only the following attributes are mapped onto
-    arguments:
-  
-    * rows
-    * cols
-    * name
-    * selectionEnd
-    * selectionStart
-    * autocomplete
-    * wrap
-    * lang
-    * dir
-    * value
-  
-    ## Classic `layout` and `layoutName` properties
-  
-    Because HTML `textarea` elements do not contain inner HTML the `layout` and
-    `layoutName` properties will not be applied.
-  
-    @method Textarea
-    @for Ember.Templates.components
-    @see {TextArea}
-    @public
-  */
-
-  /**
-    See Ember.Templates.components.Textarea.
-  
-    @method textarea
-    @for Ember.Templates.helpers
-    @see {Ember.Templates.components.textarea}
-    @public
-  */
-
-  /**
-    The internal representation used for `Textarea` invocations.
-  
-    @class TextArea
-    @extends Component
-    @see {Ember.Templates.components.Textarea}
-    @uses Ember.TextSupport
-    @public
-  */
-  const TextArea = _component.default.extend(_textSupport.default, {
-    classNames: ['ember-text-area'],
-    layout: _empty.default,
-    tagName: 'textarea',
-    attributeBindings: ['rows', 'cols', 'name', 'selectionEnd', 'selectionStart', 'autocomplete', 'wrap', 'lang', 'dir', 'value'],
-    rows: null,
-    cols: null
-  });
-
-  TextArea.toString = () => '@ember/component/text-area';
-
-  var _default = TextArea;
-  _exports.default = _default;
-});
-;define("@ember/legacy-built-in-components/index", ["exports", "@embroider/macros/es-compat", "ember"], function (_exports, _esCompat, _ember) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.TextField = _exports.TextArea = _exports.LinkComponent = _exports.Checkbox = void 0;
-
-  /* eslint-disable ember/new-module-imports */
-  let Checkbox;
-  _exports.Checkbox = Checkbox;
-  {
-    _exports.Checkbox = Checkbox = (0, _esCompat.default)(require("@ember/legacy-built-in-components/components/checkbox")).default;
-  }
-  let LinkComponent;
-  _exports.LinkComponent = LinkComponent;
-  {
-    _exports.LinkComponent = LinkComponent = (0, _esCompat.default)(require("@ember/legacy-built-in-components/components/link-to")).default;
-  }
-  let TextArea;
-  _exports.TextArea = TextArea;
-  {
-    _exports.TextArea = TextArea = (0, _esCompat.default)(require("@ember/legacy-built-in-components/components/textarea")).default;
-  }
-  let TextField;
-  _exports.TextField = TextField;
-  {
-    _exports.TextField = TextField = (0, _esCompat.default)(require("@ember/legacy-built-in-components/components/text-field")).default;
-  }
-});
-;define("@ember/legacy-built-in-components/mixins/_target_action_support", ["exports", "@ember/legacy-built-in-components/components/_internals", "@ember/object", "@ember/object/mixin", "@ember/debug"], function (_exports, _internals, _object, _mixin, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /* eslint-disable ember/no-get */
-
-  /* eslint-disable ember/no-new-mixins */
-
-  /**
-  @module ember
-  */
-
-  /**
-  `Ember.TargetActionSupport` is a mixin that can be included in a class
-  to add a `triggerAction` method with semantics similar to the Handlebars
-  `{{action}}` helper. In normal Ember usage, the `{{action}}` helper is
-  usually the best choice. This mixin is most often useful when you are
-  doing more complex event handling in Components.
-  
-  @class TargetActionSupport
-  @namespace Ember
-  @extends Mixin
-  @private
-  */
-  var _default = _mixin.default.create({
-    target: null,
-    action: null,
-    actionContext: null,
-    actionContextObject: (0, _object.computed)('actionContext', function () {
-      let actionContext = (0, _object.get)(this, 'actionContext');
-
-      if (typeof actionContext === 'string') {
-        let value = (0, _object.get)(this, actionContext);
-
-        if (value === undefined) {
-          value = (0, _object.get)(_internals.context.lookup, actionContext);
-        }
-
-        return value;
-      } else {
-        return actionContext;
-      }
-    }),
-
-    /**
-    Send an `action` with an `actionContext` to a `target`. The action, actionContext
-    and target will be retrieved from properties of the object. For example:
-     ```javascript
-    import { alias } from '@ember/object/computed';
-     App.SaveButtonView = Ember.View.extend(Ember.TargetActionSupport, {
-      target: alias('controller'),
-      action: 'save',
-      actionContext: alias('context'),
-      click() {
-        this.triggerAction(); // Sends the `save` action, along with the current context
-                              // to the current controller
-      }
-    });
-    ```
-     The `target`, `action`, and `actionContext` can be provided as properties of
-    an optional object argument to `triggerAction` as well.
-     ```javascript
-    App.SaveButtonView = Ember.View.extend(Ember.TargetActionSupport, {
-      click() {
-        this.triggerAction({
-          action: 'save',
-          target: this.get('controller'),
-          actionContext: this.get('context')
-        }); // Sends the `save` action, along with the current context
-            // to the current controller
-      }
-    });
-    ```
-     The `actionContext` defaults to the object you are mixing `TargetActionSupport` into.
-    But `target` and `action` must be specified either as properties or with the argument
-    to `triggerAction`, or a combination:
-     ```javascript
-    import { alias } from '@ember/object/computed';
-     App.SaveButtonView = Ember.View.extend(Ember.TargetActionSupport, {
-      target: alias('controller'),
-      click() {
-        this.triggerAction({
-          action: 'save'
-        }); // Sends the `save` action, along with a reference to `this`,
-            // to the current controller
-      }
-    });
-    ```
-     @method triggerAction
-    @param opts {Object} (optional, with the optional keys action, target and/or actionContext)
-    @return {Boolean} true if the action was sent successfully and did not return false
-    @private
-    */
-    triggerAction() {
-      let opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      let {
-        action,
-        target,
-        actionContext
-      } = opts;
-      action = action || (0, _object.get)(this, 'action');
-      target = target || getTarget(this);
-
-      if (actionContext === undefined) {
-        actionContext = (0, _object.get)(this, 'actionContextObject') || this;
-      }
-
-      if (target && action) {
-        let ret;
-
-        if (target.send) {
-          ret = target.send(...[action].concat(actionContext));
-        } else {
-          (false && !(typeof target[action] === 'function') && (0, _debug.assert)(`The action '${action}' did not exist on ${target}`, typeof target[action] === 'function'));
-          ret = target[action](...[].concat(actionContext));
-        }
-
-        if (ret !== false) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-  });
-
-  _exports.default = _default;
-
-  function getTarget(instance) {
-    let target = (0, _object.get)(instance, 'target');
-
-    if (target) {
-      if (typeof target === 'string') {
-        let value = (0, _object.get)(instance, target);
-
-        if (value === undefined) {
-          value = (0, _object.get)(_internals.context.lookup, target);
-        }
-
-        return value;
-      } else {
-        return target;
-      }
-    }
-
-    if (instance._target) {
-      return instance._target;
-    }
-
-    return null;
-  }
-});
-;define("@ember/legacy-built-in-components/mixins/text-support", ["exports", "@ember/object", "@ember/object/mixin", "@ember/legacy-built-in-components/mixins/_target_action_support", "@ember/debug", "@ember/deprecated-features", "@ember/-internals/views"], function (_exports, _object, _mixin, _target_action_support, _debug, _deprecatedFeatures, _views) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  /* eslint-disable ember/no-new-mixins */
-  const KEY_EVENTS = {
-    Enter: 'insertNewline',
-    Escape: 'cancel'
-  };
-  /**
-    `TextSupport` is a shared mixin used by both `TextField` and
-    `TextArea`. `TextSupport` adds a number of methods that allow you to
-    specify a controller action to invoke when a certain event is fired on your
-    text field or textarea. The specified controller action would get the current
-    value of the field passed in as the only argument unless the value of
-    the field is empty. In that case, the instance of the field itself is passed
-    in as the only argument.
-  
-    Let's use the pressing of the escape key as an example. If you wanted to
-    invoke a controller action when a user presses the escape key while on your
-    field, you would use the `escape-press` attribute on your field like so:
-  
-    ```handlebars
-      {{! application.hbs}}
-  
-      {{input escape-press='alertUser'}}
-    ```
-  
-    ```javascript
-        import Application from '@ember/application';
-        import Controller from '@ember/controller';
-        App = Application.create();
-  
-        App.ApplicationController = Controller.extend({
-          actions: {
-            alertUser: function ( currentValue ) {
-              alert( 'escape pressed, current value: ' + currentValue );
-            }
-          }
-        });
-    ```
-  
-    The following chart is a visual representation of what takes place when the
-    escape key is pressed in this scenario:
-  
-    ```
-    The Template
-    +---------------------------+
-    |                           |
-    | escape-press='alertUser'  |
-    |                           |          TextSupport Mixin
-    +----+----------------------+          +-------------------------------+
-         |                                 | cancel method                 |
-         |      escape button pressed      |                               |
-         +-------------------------------> | checks for the `escape-press` |
-                                           | attribute and pulls out the   |
-         +-------------------------------+ | `alertUser` value             |
-         |     action name 'alertUser'     +-------------------------------+
-         |     sent to controller
-         v
-    Controller
-    +------------------------------------------ +
-    |                                           |
-    |  actions: {                               |
-    |     alertUser: function( currentValue ){  |
-    |       alert( 'the esc key was pressed!' ) |
-    |     }                                     |
-    |  }                                        |
-    |                                           |
-    +-------------------------------------------+
-    ```
-  
-    Here are the events that we currently support along with the name of the
-    attribute you would need to use on your field. To reiterate, you would use the
-    attribute name like so:
-  
-    ```handlebars
-      {{input attribute-name='controllerAction'}}
-    ```
-  
-    ```
-    +--------------------+----------------+
-    |                    |                |
-    | event              | attribute name |
-    +--------------------+----------------+
-    | new line inserted  | insert-newline |
-    |                    |                |
-    | enter key pressed  | enter          |
-    |                    |                |
-    | cancel key pressed | escape-press   |
-    |                    |                |
-    | focusin            | focus-in       |
-    |                    |                |
-    | focusout           | focus-out      |
-    |                    |                |
-    | keypress           | key-press      |
-    |                    |                |
-    | keyup              | key-up         |
-    |                    |                |
-    | keydown            | key-down       |
-    +--------------------+----------------+
-    ```
-  
-    @class TextSupport
-    @namespace Ember
-    @uses Ember.TargetActionSupport
-    @extends Mixin
-    @private
-  */
-
-  var _default = _mixin.default.create(_target_action_support.default, {
-    value: '',
-    attributeBindings: ['autocapitalize', 'autocorrect', 'autofocus', 'disabled', 'form', 'maxlength', 'minlength', 'placeholder', 'readonly', 'required', 'selectionDirection', 'spellcheck', 'tabindex', 'title'],
-    placeholder: null,
-    disabled: false,
-    maxlength: null,
-
-    init() {
-      this._super(...arguments);
-
-      this.on('paste', this, this._elementValueDidChange);
-      this.on('cut', this, this._elementValueDidChange);
-      this.on('input', this, this._elementValueDidChange);
-    },
-
-    /**
-      Whether the `keyUp` event that triggers an `action` to be sent continues
-      propagating to other views.
-       By default, when the user presses the return key on their keyboard and
-      the text field has an `action` set, the action will be sent to the view's
-      controller and the key event will stop propagating.
-       If you would like parent views to receive the `keyUp` event even after an
-      action has been dispatched, set `bubbles` to true.
-       @property bubbles
-      @type Boolean
-      @default false
-      @private
-    */
-    bubbles: false,
-
-    interpretKeyEvents(event) {
-      let method = KEY_EVENTS[event.key];
-
-      this._elementValueDidChange();
-
-      if (method) {
-        return this[method](event);
-      }
-    },
-
-    _elementValueDidChange() {
-      (0, _object.set)(this, 'value', this.element.value);
-    },
-
-    change(event) {
-      this._elementValueDidChange(event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when either the `enter`
-      key is pressed or, in the case of the field being a textarea, when a newline
-      is inserted. To use this method, give your field an `insert-newline`
-      attribute. The value of that attribute should be the name of the action
-      in your controller that you wish to invoke.
-       For an example on how to use the `insert-newline` attribute, please
-      reference the example near the top of this file.
-       @method insertNewline
-      @param {Event} event
-      @private
-    */
-    insertNewline(event) {
-      sendAction('enter', this, event);
-      sendAction('insert-newline', this, event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when the escape button
-      is pressed. To use this method, give your field an `escape-press`
-      attribute. The value of that attribute should be the name of the action
-      in your controller that you wish to invoke.
-       For an example on how to use the `escape-press` attribute, please reference
-      the example near the top of this file.
-       @method cancel
-      @param {Event} event
-      @private
-    */
-    cancel(event) {
-      sendAction('escape-press', this, event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when a field receives
-      focus. To use this method, give your field a `focus-in` attribute. The value
-      of that attribute should be the name of the action in your controller
-      that you wish to invoke.
-       For an example on how to use the `focus-in` attribute, please reference the
-      example near the top of this file.
-       @method focusIn
-      @param {Event} event
-      @private
-    */
-    focusIn(event) {
-      sendAction('focus-in', this, event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when a field loses
-      focus. To use this method, give your field a `focus-out` attribute. The value
-      of that attribute should be the name of the action in your controller
-      that you wish to invoke.
-       For an example on how to use the `focus-out` attribute, please reference the
-      example near the top of this file.
-       @method focusOut
-      @param {Event} event
-      @private
-    */
-    focusOut(event) {
-      this._elementValueDidChange(event);
-
-      sendAction('focus-out', this, event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when a key is pressed.
-      To use this method, give your field a `key-press` attribute. The value of
-      that attribute should be the name of the action in your controller you
-      that wish to invoke.
-       For an example on how to use the `key-press` attribute, please reference the
-      example near the top of this file.
-       @method keyPress
-      @param {Event} event
-      @private
-    */
-    keyPress(event) {
-      sendAction('key-press', this, event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when a key-up event is
-      fired. To use this method, give your field a `key-up` attribute. The value
-      of that attribute should be the name of the action in your controller
-      that you wish to invoke.
-       For an example on how to use the `key-up` attribute, please reference the
-      example near the top of this file.
-       @method keyUp
-      @param {Event} event
-      @private
-    */
-    keyUp(event) {
-      this.interpretKeyEvents(event);
-      sendAction('key-up', this, event);
-    },
-
-    /**
-      Allows you to specify a controller action to invoke when a key-down event is
-      fired. To use this method, give your field a `key-down` attribute. The value
-      of that attribute should be the name of the action in your controller that
-      you wish to invoke.
-       For an example on how to use the `key-down` attribute, please reference the
-      example near the top of this file.
-       @method keyDown
-      @param {Event} event
-      @private
-    */
-    keyDown(event) {
-      sendAction('key-down', this, event);
-    }
-
-  }); // In principle, this shouldn't be necessary, but the legacy
-  // sendAction semantics for TextField are different from
-  // the component semantics so this method normalizes them.
-
-
-  _exports.default = _default;
-
-  function sendAction(eventName, view, event) {
-    let action = (0, _object.get)(view, `attrs.${eventName}`);
-
-    if (action !== null && typeof action === 'object' && action[_views.MUTABLE_CELL] === true) {
-      action = action.value;
-    }
-
-    if (action === undefined) {
-      action = (0, _object.get)(view, eventName);
-    }
-
-    let value = view.value;
-
-    if (_deprecatedFeatures.SEND_ACTION && typeof action === 'string') {
-      let message = `Passing actions to components as strings (like \`<Input @${eventName}="${action}" />\`) is deprecated. Please use closure actions instead (\`<Input @${eventName}={{action "${action}"}} />\`).`;
-      (false && !(false) && (0, _debug.deprecate)(message, false, {
-        id: 'ember-component.send-action',
-        until: '4.0.0',
-        url: 'https://emberjs.com/deprecations/v3.x#toc_ember-component-send-action',
-        for: 'ember-source',
-        since: {
-          enabled: '3.4.0'
-        }
-      }));
-      view.triggerAction({
-        action: action,
-        actionContext: [value, event]
-      });
-    } else if (typeof action === 'function') {
-      action(value, event);
-    }
-
-    if (action && !view.bubbles) {
-      event.stopPropagation();
-    }
-  }
-});
-;define("@ember/legacy-built-in-components/templates/empty", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "J3hEX+8O",
-    "block": "[[],[],false,[]]",
-    "moduleName": "@ember/legacy-built-in-components/templates/empty.hbs",
-    "isStrictMode": false
-  });
-
-  _exports.default = _default;
-});
 ;define("@ember/render-modifiers/modifiers/did-insert", ["exports", "@ember/modifier"], function (_exports, _modifier) {
   "use strict";
 
@@ -91212,7 +89128,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 });
-;define("@embroider/util/ember-private-api", ["exports"], function (_exports) {
+;define("@embroider/util/ember-private-api", ["exports", "@embroider/macros/es-compat"], function (_exports, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -91223,7 +89139,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   let runtime;
   {
     // new enough ember has a real module we can import
-    runtime = require("@glimmer/runtime");
+    runtime = (0, _esCompat.default)(require("@glimmer/runtime"));
   }
   let {
     isCurriedComponentDefinition,
@@ -91323,7 +89239,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function handleString(name, thingWithOwner) {
     (false && !(false) && (0, _debug.deprecate)(`You're trying to invoke the component "${name}" by passing its name as a string. This won't work under Embroider.`, false, {
       id: 'ensure-safe-component.string',
-      url: 'https://github.com/embroider-build/embroider/blob/master/ADDON-AUTHOR-GUIDE.md#when-youre-passing-a-component-to-someone-else',
+      url: 'https://github.com/embroider-build/embroider/blob/main/REPLACING-COMPONENT-HELPER.md#when-youre-passing-a-component-to-someone-else',
       until: 'embroider',
       for: '@embroider/util',
       since: '0.27.0'
@@ -91339,9 +89255,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
 
   function handleClass(klass, thingWithOwner) {
-    let owner = (0, _application.getOwner)(thingWithOwner);
-    let nonce = ensureRegistered(klass, owner);
-    return (0, _emberPrivateApi.lookupCurriedComponentDefinition)(nonce, owner);
+    {
+      return klass;
+    }
   }
 });
 ;define("@embroider/util/services/ensure-registered", ["exports", "@ember/service", "@ember/application"], function (_exports, _service, _application) {
@@ -92115,26 +90031,102 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
   }
 });
-;define("ember-cli-addon-docs/adapters/-addon-docs", ["exports", "@ember-data/adapter", "ember-get-config", "fetch"], function (_exports, _adapter, _emberGetConfig, _fetch) {
+;define("ember-cli-addon-docs/-private/config", ["exports", "@ember/application", "tracked-toolbox"], function (_exports, _application, _trackedToolbox) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.addonDocsConfig = addonDocsConfig;
+  _exports.getAddonDocsConfig = getAddonDocsConfig;
+  _exports.getRootURL = getRootURL;
+  0; //eaimeta@70e063a35619d71f0,"@ember/application",0,"tracked-toolbox"eaimeta@70e063a35619d71f
+
+  /**
+   * Function to get the currently configured rootURL from the containers.
+   *
+   * @function getRootURL
+   * @private
+   * @param {*} target Instance of an ember class that has an owner
+   * @returns {String} The currently configured rootURL
+   */
+  function getRootURL(target) {
+    return (0, _application.getOwner)(target).resolveRegistration('config:environment').rootURL;
+  }
+  /**
+   * Function to get the current configuration of `ember-cli-addon-docs` from the
+   * container.
+   *
+   * @function getAddonDocsConfig
+   * @private
+   * @param {*} target Instance of an ember class that has an owner
+   * @returns {Object} The `ember-cli-addon-docs` configuration object
+   */
+
+
+  function getAddonDocsConfig(target) {
+    return (0, _application.getOwner)(target).resolveRegistration('config:environment')['ember-cli-addon-docs'];
+  }
+  /**
+   * Decorator to use the `ember-cli-addon-docs` configuration object on a class.
+   *
+   * Usage:
+   *
+   * ```js
+   * class MyComponent extends Component {
+   *   @addonDocsConfig config;
+   *
+   *   get projectName() {
+   *     // will return the value of `projectName` configured in the
+   *     // `ember-cli-addon-docs` section of the host configuration
+   *     return this.config.projectName:
+   *   }
+   * }
+   * ```
+   *
+   * @function addonDocsConfig
+   * @private
+   */
+
+
+  function addonDocsConfig(target, property, descriptor) {
+    return (0, _trackedToolbox.cached)(target, property, {
+      get() {
+        return getAddonDocsConfig(this);
+      }
+
+    });
+  }
+});
+;define("ember-cli-addon-docs/adapters/-addon-docs", ["exports", "@ember-data/adapter", "fetch", "ember-cli-addon-docs/-private/config"], function (_exports, _adapter, _fetch, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter",0,"ember-get-config",0,"fetch"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter",0,"fetch",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
 
-  var _default = _adapter.default.extend({
-    defaultSerializer: '-addon-docs',
-    namespace: `${_emberGetConfig.default.rootURL.replace(/\/$/, '')}/docs`,
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  class AddonDocsAdapter extends _adapter.default {
+    constructor() {
+      super(...arguments);
+
+      _defineProperty(this, "defaultSerializer", '-addon-docs');
+    }
+
+    get namespace() {
+      return `${(0, _config.getRootURL)(this).replace(/\/$/, '')}/docs`;
+    }
 
     shouldBackgroundReloadAll() {
       return false;
-    },
+    }
 
     shouldBackgroundReloadRecord() {
       return false;
-    },
+    }
 
     findRecord(store, modelClass, id, snapshot) {
       if (modelClass.modelName === 'project') {
@@ -92144,9 +90136,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
 
-  });
+  }
 
-  _exports.default = _default;
+  _exports.default = AddonDocsAdapter;
 });
 ;define("ember-cli-addon-docs/adapters/class", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
@@ -92154,12 +90146,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _addonDocs.default;
+    }
+  });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/-addon-docs"eaimeta@70e063a35619d71f
-
-  var _default = _addonDocs.default.extend();
-
-  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/adapters/component", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
@@ -92167,12 +90160,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _addonDocs.default;
+    }
+  });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/-addon-docs"eaimeta@70e063a35619d71f
-
-  var _default = _addonDocs.default.extend();
-
-  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/adapters/module", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
@@ -92180,12 +90174,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _addonDocs.default;
+    }
+  });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/-addon-docs"eaimeta@70e063a35619d71f
-
-  var _default = _addonDocs.default.extend();
-
-  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/adapters/project", ["exports", "ember-cli-addon-docs/adapters/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
@@ -92193,12 +90188,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _addonDocs.default;
+    }
+  });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/-addon-docs"eaimeta@70e063a35619d71f
-
-  var _default = _addonDocs.default.extend();
-
-  _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/addon-files", ["exports"], function (_exports) {
   "use strict";
@@ -92240,14 +90236,25 @@ lunr.QueryParser.parseBoost = function (parser) {
   };
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-class/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-get-config"], function (_exports, _component, _templateFactory, _object, _computed, _string, _computed2, _emberGetConfig) {
+;define("ember-cli-addon-docs/components/api/x-class/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _tracking, _computed, _string, _computed2, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/object",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-get-config"eaimeta@70e063a35619d71f
+
+  var _dec, _dec2, _dec3, _dec4, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
@@ -92256,7 +90263,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{! wrapping in a div seems to work around https://github.com/ember-learn/ember-cli-addon-docs/issues/7 }}
   <div data-test-class-description>{{{@class.description}}}</div>
   
-  {{#if (or (and @class.exportType this.showImportPaths) this.hasToggles)}}
+  {{#if (or (and @class.exportType this.config.showImportPaths) this.hasToggles)}}
     <Api::XMetaPanel as |panel|>
       {{#if @class.exportType}}
         <panel.header>
@@ -92294,57 +90301,125 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "LYc0bMRn",
-    "block": "[[[10,\"h1\"],[14,0,\"docs-h1\"],[14,\"data-test-class-name\",\"\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-class-description\",\"\"],[12],[2,[30,1,[\"description\"]]],[13],[1,\"\\n\\n\"],[41,[28,[37,1],[[28,[37,2],[[30,1,[\"exportType\"]],[30,0,[\"showImportPaths\"]]],null],[30,0,[\"hasToggles\"]]],null],[[[1,\"  \"],[8,[39,3],null,null,[[\"default\"],[[[[1,\"\\n\"],[41,[30,1,[\"exportType\"]],[[[1,\"      \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n        Import Path\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[8,[39,4],null,[[\"@item\"],[[30,1]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,3],[[[1,\"      \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n        Show\\n      \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,3],[[[1,\"        \"],[8,[39,5],null,[[\"@toggles\"],[[28,[37,6],null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[52,[30,1,[\"hasInherited\"]],[30,0,[\"showInherited\"]]],[52,[30,1,[\"hasProtected\"]],[30,0,[\"showProtected\"]]],[52,[30,1,[\"hasPrivate\"]],[30,0,[\"showPrivate\"]]],[52,[30,1,[\"hasDeprecated\"]],[30,0,[\"showDeprecated\"]]]]]]]],null],[1,\"\\n\"]],[]],null]],[]],null],[1,\"  \"]],[2]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"hasContents\"]],[[[1,\"  \"],[8,[39,7],null,[[\"@sections\"],[[28,[37,6],null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[30,1,[\"constructors\"]],[30,1,[\"fields\"]],[30,1,[\"accessors\"]],[30,1,[\"methods\"]]]]]]],null],[1,\"\\n\"]],[]],null]],[\"@class\",\"panel\",\"@hasToggles\"],false,[\"if\",\"or\",\"and\",\"api/x-meta-panel\",\"api/x-import-path\",\"api/x-toggles\",\"hash\",\"api/x-sections\"]]",
+    "id": "EiBnW/TC",
+    "block": "[[[10,\"h1\"],[14,0,\"docs-h1\"],[14,\"data-test-class-name\",\"\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-class-description\",\"\"],[12],[2,[30,1,[\"description\"]]],[13],[1,\"\\n\\n\"],[41,[28,[37,1],[[28,[37,2],[[30,1,[\"exportType\"]],[30,0,[\"config\",\"showImportPaths\"]]],null],[30,0,[\"hasToggles\"]]],null],[[[1,\"  \"],[8,[39,3],null,null,[[\"default\"],[[[[1,\"\\n\"],[41,[30,1,[\"exportType\"]],[[[1,\"      \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n        Import Path\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[8,[39,4],null,[[\"@item\"],[[30,1]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,3],[[[1,\"      \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n        Show\\n      \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,3],[[[1,\"        \"],[8,[39,5],null,[[\"@toggles\"],[[28,[37,6],null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[52,[30,1,[\"hasInherited\"]],[30,0,[\"showInherited\"]]],[52,[30,1,[\"hasProtected\"]],[30,0,[\"showProtected\"]]],[52,[30,1,[\"hasPrivate\"]],[30,0,[\"showPrivate\"]]],[52,[30,1,[\"hasDeprecated\"]],[30,0,[\"showDeprecated\"]]]]]]]],null],[1,\"\\n\"]],[]],null]],[]],null],[1,\"  \"]],[2]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"hasContents\"]],[[[1,\"  \"],[8,[39,7],null,[[\"@sections\"],[[28,[37,6],null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[30,1,[\"constructors\"]],[30,1,[\"fields\"]],[30,1,[\"accessors\"]],[30,1,[\"methods\"]]]]]]],null],[1,\"\\n\"]],[]],null]],[\"@class\",\"panel\",\"@hasToggles\"],false,[\"if\",\"or\",\"and\",\"api/x-meta-panel\",\"api/x-import-path\",\"api/x-toggles\",\"hash\",\"api/x-sections\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-class/index.hbs",
     "isStrictMode": false
   });
 
-  const {
-    showImportPaths
-  } = _emberGetConfig.default['ember-cli-addon-docs'];
+  let XClass = (_dec = (0, _computed2.memberFilter)('args.class', 'accessors'), _dec2 = (0, _computed2.memberFilter)('args.class', 'methods'), _dec3 = (0, _computed2.memberFilter)('args.class', 'fields'), _dec4 = (0, _computed.or)('component.hasInherited', 'component.hasProtected', 'component.hasPrivate', 'component.hasDeprecated'), (_class = class XClass extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    showImportPaths,
-    showInherited: false,
-    showProtected: false,
-    showPrivate: false,
-    showDeprecated: false,
-    accessors: (0, _computed2.memberFilter)('class', 'accessors'),
-    methods: (0, _computed2.memberFilter)('class', 'methods'),
-    fields: (0, _computed2.memberFilter)('class', 'fields'),
-    hasToggles: (0, _computed.or)('component.hasInherited', 'component.hasProtected', 'component.hasPrivate', 'component.hasDeprecated'),
-    hasContents: (0, _object.computed)('class', {
-      get() {
-        let klass = this.class;
-        return klass.get('allFields.length') > 0 || klass.get('allAccessors.length') > 0 || klass.get('allMethods.length') > 0;
-      }
+      _initializerDefineProperty(this, "config", _descriptor, this);
 
-    }),
-    actions: {
-      updateFilter(filter, _ref) {
-        let {
-          target: {
-            checked
-          }
-        } = _ref;
-        this.set(`show${(0, _string.capitalize)(filter)}`, checked);
-      }
+      _initializerDefineProperty(this, "showInherited", _descriptor2, this);
 
+      _initializerDefineProperty(this, "showProtected", _descriptor3, this);
+
+      _initializerDefineProperty(this, "showPrivate", _descriptor4, this);
+
+      _initializerDefineProperty(this, "showDeprecated", _descriptor5, this);
+
+      _initializerDefineProperty(this, "accessors", _descriptor6, this);
+
+      _initializerDefineProperty(this, "methods", _descriptor7, this);
+
+      _initializerDefineProperty(this, "fields", _descriptor8, this);
+
+      _initializerDefineProperty(this, "hasToggles", _descriptor9, this);
     }
-  }));
 
-  _exports.default = _default;
+    get hasContents() {
+      let klass = this.args.class;
+      return klass.allFields.length > 0 || klass.allAccessors.length > 0 || klass.allMethods.length > 0;
+    }
+
+    updateFilter(filter, _ref) {
+      let {
+        target: {
+          checked
+        }
+      } = _ref;
+      this[`show${(0, _string.capitalize)(filter)}`] = checked;
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "showInherited", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "showProtected", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "showPrivate", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "showDeprecated", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "accessors", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "methods", [_dec2], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "fields", [_dec3], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "hasToggles", [_dec4], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = XClass;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XClass);
 });
-;define("ember-cli-addon-docs/components/api/x-component/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed"], function (_exports, _component, _templateFactory, _object, _computed, _string, _computed2) {
+;define("ember-cli-addon-docs/components/api/x-component/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed"], function (_exports, _component, _templateFactory, _component2, _tracking, _object, _computed, _string, _computed2) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/object",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
+
+  var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
@@ -92366,7 +90441,7 @@ lunr.QueryParser.parseBoost = function (parser) {
             protected=(if @component.hasProtected this.showProtected)
             private=(if @component.hasPrivate this.showPrivate)
             deprecated=(if @component.hasDeprecated this.showDeprecated)
-          }} @onToggle={{action "updateFilter"}} />
+          }} @onToggle={{this.updateFilter}} />
       {{/if}}
     </Api::XMetaPanel>
   {{/if}}
@@ -92385,46 +90460,121 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "nDNWpNzN",
-    "block": "[[[10,\"h1\"],[14,0,\"docs-h1\"],[14,\"data-test-component-name\",\"\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-component-name\",\"\"],[12],[2,[30,1,[\"description\"]]],[13],[1,\"\\n\\n\"],[41,[30,0,[\"hasToggles\"]],[[[1,\"  \"],[8,[39,1],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n      Show\\n    \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,0,[\"hasToggles\"]],[[[1,\"      \"],[8,[39,2],null,[[\"@toggles\",\"@onToggle\"],[[28,[37,3],null,[[\"inherited\",\"internal\",\"protected\",\"private\",\"deprecated\"],[[52,[30,1,[\"hasInherited\"]],[30,0,[\"showInherited\"]]],[52,[30,1,[\"hasInternal\"]],[30,0,[\"showInternal\"]]],[52,[30,1,[\"hasProtected\"]],[30,0,[\"showProtected\"]]],[52,[30,1,[\"hasPrivate\"]],[30,0,[\"showPrivate\"]]],[52,[30,1,[\"hasDeprecated\"]],[30,0,[\"showDeprecated\"]]]]]],[28,[37,4],[[30,0],\"updateFilter\"],null]]],null],[1,\"\\n\"]],[]],null],[1,\"  \"]],[2]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\\n\"],[41,[30,0,[\"hasContents\"]],[[[1,\"  \"],[8,[39,5],null,[[\"@sections\"],[[28,[37,3],null,[[\"constructors\",\"yields\",\"arguments\",\"fields\",\"accessors\",\"methods\"],[[30,0,[\"constructors\"]],[30,0,[\"yields\"]],[30,0,[\"arguments\"]],[30,0,[\"fields\"]],[30,0,[\"accessors\"]],[30,0,[\"methods\"]]]]]]],null],[1,\"\\n\"]],[]],null]],[\"@component\",\"panel\"],false,[\"if\",\"api/x-meta-panel\",\"api/x-toggles\",\"hash\",\"action\",\"api/x-sections\"]]",
+    "id": "xFF46oG0",
+    "block": "[[[10,\"h1\"],[14,0,\"docs-h1\"],[14,\"data-test-component-name\",\"\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-component-name\",\"\"],[12],[2,[30,1,[\"description\"]]],[13],[1,\"\\n\\n\"],[41,[30,0,[\"hasToggles\"]],[[[1,\"  \"],[8,[39,1],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n      Show\\n    \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,0,[\"hasToggles\"]],[[[1,\"      \"],[8,[39,2],null,[[\"@toggles\",\"@onToggle\"],[[28,[37,3],null,[[\"inherited\",\"internal\",\"protected\",\"private\",\"deprecated\"],[[52,[30,1,[\"hasInherited\"]],[30,0,[\"showInherited\"]]],[52,[30,1,[\"hasInternal\"]],[30,0,[\"showInternal\"]]],[52,[30,1,[\"hasProtected\"]],[30,0,[\"showProtected\"]]],[52,[30,1,[\"hasPrivate\"]],[30,0,[\"showPrivate\"]]],[52,[30,1,[\"hasDeprecated\"]],[30,0,[\"showDeprecated\"]]]]]],[30,0,[\"updateFilter\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"  \"]],[2]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\\n\"],[41,[30,0,[\"hasContents\"]],[[[1,\"  \"],[8,[39,4],null,[[\"@sections\"],[[28,[37,3],null,[[\"constructors\",\"yields\",\"arguments\",\"fields\",\"accessors\",\"methods\"],[[30,0,[\"constructors\"]],[30,0,[\"yields\"]],[30,0,[\"arguments\"]],[30,0,[\"fields\"]],[30,0,[\"accessors\"]],[30,0,[\"methods\"]]]]]]],null],[1,\"\\n\"]],[]],null]],[\"@component\",\"panel\"],false,[\"if\",\"api/x-meta-panel\",\"api/x-toggles\",\"hash\",\"api/x-sections\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-component/index.hbs",
     "isStrictMode": false
   });
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    showInherited: false,
-    showInternal: false,
-    showProtected: false,
-    showPrivate: false,
-    showDeprecated: false,
-    yields: (0, _computed.alias)('component.overloadedYields'),
-    arguments: (0, _computed2.memberFilter)('component', 'arguments'),
-    accessors: (0, _computed2.memberFilter)('component', 'accessors'),
-    methods: (0, _computed2.memberFilter)('component', 'methods'),
-    fields: (0, _computed2.memberFilter)('component', 'fields'),
-    hasToggles: (0, _computed.or)('component.hasInherited', 'component.hasInternal', 'component.hasProtected', 'component.hasPrivate', 'component.hasDeprecated'),
-    hasContents: (0, _object.computed)('component', {
-      get() {
-        let component = this.component;
-        return component.get('overloadedYields.length') > 0 || component.get('arguments.length') > 0 || component.get('fields.length') > 0 || component.get('accessors.length') > 0 || component.get('methods.length') > 0;
-      }
+  let XComponent = (_dec = (0, _computed.alias)('args.component.overloadedYields'), _dec2 = (0, _computed2.memberFilter)('args.component', 'arguments'), _dec3 = (0, _computed2.memberFilter)('args.component', 'accessors'), _dec4 = (0, _computed2.memberFilter)('args.component', 'methods'), _dec5 = (0, _computed2.memberFilter)('args.component', 'fields'), _dec6 = (0, _computed.or)('args.component.hasInherited', 'args.component.hasInternal', 'args.component.hasProtected', 'args.component.hasPrivate', 'args.component.hasDeprecated'), (_class = class XComponent extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-    }),
-    actions: {
-      updateFilter(filter, _ref) {
-        let {
-          target: {
-            checked
-          }
-        } = _ref;
-        this.set(`show${(0, _string.capitalize)(filter)}`, checked);
-      }
+      _initializerDefineProperty(this, "showInherited", _descriptor, this);
 
+      _initializerDefineProperty(this, "showInternal", _descriptor2, this);
+
+      _initializerDefineProperty(this, "showProtected", _descriptor3, this);
+
+      _initializerDefineProperty(this, "showPrivate", _descriptor4, this);
+
+      _initializerDefineProperty(this, "showDeprecated", _descriptor5, this);
+
+      _initializerDefineProperty(this, "yields", _descriptor6, this);
+
+      _initializerDefineProperty(this, "arguments", _descriptor7, this);
+
+      _initializerDefineProperty(this, "accessors", _descriptor8, this);
+
+      _initializerDefineProperty(this, "methods", _descriptor9, this);
+
+      _initializerDefineProperty(this, "fields", _descriptor10, this);
+
+      _initializerDefineProperty(this, "hasToggles", _descriptor11, this);
     }
-  }));
 
-  _exports.default = _default;
+    get hasContents() {
+      let component = this.args.component;
+      return component.overloadedYields.length > 0 || component.arguments.length > 0 || component.fields.length > 0 || component.accessors.length > 0 || component.methods.length > 0;
+    }
+
+    updateFilter(filter, _ref) {
+      let {
+        target: {
+          checked
+        }
+      } = _ref;
+      this[`show${(0, _string.capitalize)(filter)}`] = checked;
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "showInherited", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "showInternal", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "showProtected", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "showPrivate", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "showDeprecated", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
+  }), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "yields", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "arguments", [_dec2], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "accessors", [_dec3], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "methods", [_dec4], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, "fields", [_dec5], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, "hasToggles", [_dec6], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "updateFilter", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateFilter"), _class.prototype)), _class));
+  _exports.default = XComponent;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XComponent);
 });
 ;define("ember-cli-addon-docs/components/api/x-import-path", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
   "use strict";
@@ -92437,7 +90587,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <div class="import-path docs-mb-6" data-test-import-path>
+    <div class="import-path docs-mb-6" data-test-import-path ...attributes>
     <pre class="docs-md__code docs-whitespace-no-wrap">
       <span class="hljs-keyword">
         import
@@ -92457,8 +90607,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "n28E/Tku",
-    "block": "[[[10,0],[14,0,\"import-path docs-mb-6\"],[14,\"data-test-import-path\",\"\"],[12],[1,\"\\n  \"],[10,\"pre\"],[14,0,\"docs-md__code docs-whitespace-no-wrap\"],[12],[1,\"    \"],[10,1],[14,0,\"hljs-keyword\"],[12],[1,\"\\n      import\\n    \"],[13],[1,\"\\n\\n\"],[41,[28,[37,1],[[30,1,[\"exportType\"]],\"default\"],null],[[[1,\"      \"],[1,[30,1,[\"name\"]]],[1,\"\\n\"]],[]],[[[1,\"      { \"],[1,[30,1,[\"name\"]]],[1,\" }\\n\"]],[]]],[1,\"\\n    \"],[10,1],[14,0,\"hljs-keyword\"],[12],[1,\"\\n      from\\n    \"],[13],[1,\"\\n    \"],[10,1],[14,0,\"hljs-string\"],[12],[1,\"'\"],[1,[30,1,[\"file\"]]],[1,\"'\"],[13],[1,\";\\n  \"],[13],[1,\"\\n\"],[13]],[\"@item\"],false,[\"if\",\"eq\"]]",
+    "id": "wdNBnYzQ",
+    "block": "[[[11,0],[24,0,\"import-path docs-mb-6\"],[24,\"data-test-import-path\",\"\"],[17,1],[12],[1,\"\\n  \"],[10,\"pre\"],[14,0,\"docs-md__code docs-whitespace-no-wrap\"],[12],[1,\"    \"],[10,1],[14,0,\"hljs-keyword\"],[12],[1,\"\\n      import\\n    \"],[13],[1,\"\\n\\n\"],[41,[28,[37,1],[[30,2,[\"exportType\"]],\"default\"],null],[[[1,\"      \"],[1,[30,2,[\"name\"]]],[1,\"\\n\"]],[]],[[[1,\"      { \"],[1,[30,2,[\"name\"]]],[1,\" }\\n\"]],[]]],[1,\"\\n    \"],[10,1],[14,0,\"hljs-keyword\"],[12],[1,\"\\n      from\\n    \"],[13],[1,\"\\n    \"],[10,1],[14,0,\"hljs-string\"],[12],[1,\"'\"],[1,[30,2,[\"file\"]]],[1,\"'\"],[13],[1,\";\\n  \"],[13],[1,\"\\n\"],[13]],[\"&attrs\",\"@item\"],false,[\"if\",\"eq\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-import-path.hbs",
     "isStrictMode": false
   });
@@ -92478,13 +90628,13 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-        <h4 class="docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs">
+        <h4 class="docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs" ...attributes>
         {{yield}}
       </h4>
   */
   {
-    "id": "F6kBy+pr",
-    "block": "[[[1,\"    \"],[10,\"h4\"],[14,0,\"docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[12],[1,\"\\n      \"],[18,1,null],[1,\"\\n    \"],[13]],[\"&default\"],false,[\"yield\"]]",
+    "id": "GuyXYhYq",
+    "block": "[[[1,\"    \"],[11,\"h4\"],[24,0,\"docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[17,1],[12],[1,\"\\n      \"],[18,2,null],[1,\"\\n    \"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-meta-panel/header.hbs",
     "isStrictMode": false
   });
@@ -92504,15 +90654,15 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-        <div class="docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs">
+        <div class="docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs" ...attributes>
         {{yield (hash
           header=(component 'api/x-meta-panel/header')
         )}}
       </div>
   */
   {
-    "id": "ugE71jYu",
-    "block": "[[[1,\"    \"],[10,0],[14,0,\"docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs\"],[12],[1,\"\\n      \"],[18,1,[[28,[37,1],null,[[\"header\"],[[50,\"api/x-meta-panel/header\",0,null,null]]]]]],[1,\"\\n    \"],[13]],[\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
+    "id": "pckEfFe6",
+    "block": "[[[1,\"    \"],[11,0],[24,0,\"docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs\"],[17,1],[12],[1,\"\\n      \"],[18,2,[[28,[37,1],null,[[\"header\"],[[50,\"api/x-meta-panel/header\",0,null,null]]]]]],[1,\"\\n    \"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-meta-panel/index.hbs",
     "isStrictMode": false
   });
@@ -92540,11 +90690,12 @@ lunr.QueryParser.parseBoost = function (parser) {
       functions=@module.functions
       variables=@module.variables
     }}
+    ...attributes
   />
   */
   {
-    "id": "9Pcz8NqE",
-    "block": "[[[8,[39,0],null,[[\"@sections\"],[[28,[37,1],null,[[\"classes\",\"components\",\"functions\",\"variables\"],[[30,1,[\"classes\"]],[30,1,[\"components\"]],[30,1,[\"functions\"]],[30,1,[\"variables\"]]]]]]],null]],[\"@module\"],false,[\"api/x-sections\",\"hash\"]]",
+    "id": "2ABA3q5e",
+    "block": "[[[8,[39,0],[[17,1]],[[\"@sections\"],[[28,[37,1],null,[[\"classes\",\"components\",\"functions\",\"variables\"],[[30,2,[\"classes\"]],[30,2,[\"components\"]],[30,2,[\"functions\"]],[30,2,[\"variables\"]]]]]]],null]],[\"&attrs\",\"@module\"],false,[\"api/x-sections\",\"hash\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-module/index.hbs",
     "isStrictMode": false
   });
@@ -92553,18 +90704,29 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-section/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "ember-get-config"], function (_exports, _component, _templateFactory, _object, _emberGetConfig) {
+;define("ember-cli-addon-docs/components/api/x-section/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/object",0,"ember-get-config"eaimeta@70e063a35619d71f
+
+  var _class, _descriptor;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <div data-test-item class="docs-pb-8">
+    <div data-test-item class="docs-pb-8" ...attributes>
     <h3
       id={{@item.name}}
       data-text={{@item.name}}
@@ -92592,7 +90754,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       {{{@item.description}}}
     </p>
   
-    {{#if (or (and @item.exportType this.showImportPaths) this.shouldDisplayParams)}}
+    {{#if (or (and @item.exportType this.config.showImportPaths) this.shouldDisplayParams)}}
       <Api::XMetaPanel as |panel|>
         {{#if @item.exportType}}
           <panel.header>
@@ -92625,23 +90787,22 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "SP5evRhQ",
-    "block": "[[[10,0],[14,\"data-test-item\",\"\"],[14,0,\"docs-pb-8\"],[12],[1,\"\\n  \"],[10,\"h3\"],[15,1,[30,1,[\"name\"]]],[15,\"data-text\",[30,1,[\"name\"]]],[14,\"data-test-item-header\",\"\"],[14,0,\"docs-h3 docs-font-mono docs-font-normal\"],[12],[1,\"\\n\"],[41,[28,[37,1],[[30,1,[\"exportType\"]],\"default\"],null],[[[1,\"      \"],[10,1],[14,0,\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[12],[1,\"\\n        Default\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[28,[37,2],[[30,1,[\"isClass\"]],[30,1,[\"isComponent\"]]],null],[[[1,\"      \"],[8,[39,3],[[24,0,\"hover:underline\"]],[[\"@route\",\"@model\"],[\"docs.api.item\",[28,[37,4],[\"modules/\",[30,1,[\"id\"]]],null]]],[[\"default\"],[[[[1,\"\\n        \"],[10,\"strong\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n      \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"      \"],[10,3],[15,6,[29,[\"#\",[30,1,[\"name\"]]]]],[14,0,\"heading-anchor\"],[12],[1,\"\\n        \"],[1,[28,[35,5],[[30,1]],null]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]],[1,\"  \"],[13],[1,\"\\n\\n  \"],[10,2],[14,\"data-test-item-description\",\"\"],[12],[1,\"\\n    \"],[2,[30,1,[\"description\"]]],[1,\"\\n  \"],[13],[1,\"\\n\\n\"],[41,[28,[37,2],[[28,[37,6],[[30,1,[\"exportType\"]],[30,0,[\"showImportPaths\"]]],null],[30,0,[\"shouldDisplayParams\"]]],null],[[[1,\"    \"],[8,[39,7],null,null,[[\"default\"],[[[[1,\"\\n\"],[41,[30,1,[\"exportType\"]],[[[1,\"        \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n          Import Path\\n        \"]],[]]]]],[1,\"\\n\\n        \"],[8,[39,8],null,[[\"@item\"],[[30,1]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"shouldDisplayParams\"]],[[[1,\"        \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n          Params\\n        \"]],[]]]]],[1,\"\\n\\n        \"],[10,\"table\"],[14,0,\"docs-mb-6\"],[14,\"data-test-item-params\",\"\"],[12],[1,\"\\n          \"],[10,\"tbody\"],[12],[1,\"\\n\"],[42,[28,[37,10],[[28,[37,10],[[30,1,[\"params\"]]],null]],null],null,[[[1,\"              \"],[10,\"tr\"],[14,\"data-test-item-param\",\"\"],[12],[1,\"\\n                \"],[10,\"td\"],[12],[10,1],[14,0,\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[12],[1,[30,3,[\"name\"]]],[13],[13],[1,\"\\n                \"],[10,\"td\"],[12],[10,1],[14,0,\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[12],[1,[30,3,[\"type\"]]],[13],[13],[1,\"\\n                \"],[10,\"td\"],[14,0,\"docs-pl-2\"],[12],[1,[30,3,[\"description\"]]],[13],[1,\"\\n              \"],[13],[1,\"\\n\"]],[3]],null],[1,\"          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"    \"]],[2]]]]],[1,\"\\n\"]],[]],null],[13],[1,\"\\n\"]],[\"@item\",\"panel\",\"param\"],false,[\"if\",\"eq\",\"or\",\"link-to\",\"concat\",\"type-signature\",\"and\",\"api/x-meta-panel\",\"api/x-import-path\",\"each\",\"-track-array\"]]",
+    "id": "uZNpL6SJ",
+    "block": "[[[11,0],[24,\"data-test-item\",\"\"],[24,0,\"docs-pb-8\"],[17,1],[12],[1,\"\\n  \"],[10,\"h3\"],[15,1,[30,2,[\"name\"]]],[15,\"data-text\",[30,2,[\"name\"]]],[14,\"data-test-item-header\",\"\"],[14,0,\"docs-h3 docs-font-mono docs-font-normal\"],[12],[1,\"\\n\"],[41,[28,[37,1],[[30,2,[\"exportType\"]],\"default\"],null],[[[1,\"      \"],[10,1],[14,0,\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[12],[1,\"\\n        Default\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[28,[37,2],[[30,2,[\"isClass\"]],[30,2,[\"isComponent\"]]],null],[[[1,\"      \"],[8,[39,3],[[24,0,\"hover:underline\"]],[[\"@route\",\"@model\"],[\"docs.api.item\",[28,[37,4],[\"modules/\",[30,2,[\"id\"]]],null]]],[[\"default\"],[[[[1,\"\\n        \"],[10,\"strong\"],[12],[1,[30,2,[\"name\"]]],[13],[1,\"\\n      \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"      \"],[10,3],[15,6,[29,[\"#\",[30,2,[\"name\"]]]]],[14,0,\"heading-anchor\"],[12],[1,\"\\n        \"],[1,[28,[35,5],[[30,2]],null]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]],[1,\"  \"],[13],[1,\"\\n\\n  \"],[10,2],[14,\"data-test-item-description\",\"\"],[12],[1,\"\\n    \"],[2,[30,2,[\"description\"]]],[1,\"\\n  \"],[13],[1,\"\\n\\n\"],[41,[28,[37,2],[[28,[37,6],[[30,2,[\"exportType\"]],[30,0,[\"config\",\"showImportPaths\"]]],null],[30,0,[\"shouldDisplayParams\"]]],null],[[[1,\"    \"],[8,[39,7],null,null,[[\"default\"],[[[[1,\"\\n\"],[41,[30,2,[\"exportType\"]],[[[1,\"        \"],[8,[30,3,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n          Import Path\\n        \"]],[]]]]],[1,\"\\n\\n        \"],[8,[39,8],null,[[\"@item\"],[[30,2]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"shouldDisplayParams\"]],[[[1,\"        \"],[8,[30,3,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n          Params\\n        \"]],[]]]]],[1,\"\\n\\n        \"],[10,\"table\"],[14,0,\"docs-mb-6\"],[14,\"data-test-item-params\",\"\"],[12],[1,\"\\n          \"],[10,\"tbody\"],[12],[1,\"\\n\"],[42,[28,[37,10],[[28,[37,10],[[30,2,[\"params\"]]],null]],null],null,[[[1,\"              \"],[10,\"tr\"],[14,\"data-test-item-param\",\"\"],[12],[1,\"\\n                \"],[10,\"td\"],[12],[10,1],[14,0,\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[12],[1,[30,4,[\"name\"]]],[13],[13],[1,\"\\n                \"],[10,\"td\"],[12],[10,1],[14,0,\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[12],[1,[30,4,[\"type\"]]],[13],[13],[1,\"\\n                \"],[10,\"td\"],[14,0,\"docs-pl-2\"],[12],[1,[30,4,[\"description\"]]],[13],[1,\"\\n              \"],[13],[1,\"\\n\"]],[4]],null],[1,\"          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"    \"]],[3]]]]],[1,\"\\n\"]],[]],null],[13],[1,\"\\n\"]],[\"&attrs\",\"@item\",\"panel\",\"param\"],false,[\"if\",\"eq\",\"or\",\"link-to\",\"concat\",\"type-signature\",\"and\",\"api/x-meta-panel\",\"api/x-import-path\",\"each\",\"-track-array\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-section/index.hbs",
     "isStrictMode": false
   });
 
-  const {
-    showImportPaths
-  } = _emberGetConfig.default['ember-cli-addon-docs'];
   /**
     @class Api/XSection
     @hide
   */
+  let XSection = (_class = class XSection extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    showImportPaths,
+      _initializerDefineProperty(this, "config", _descriptor, this);
+    }
 
     /**
      * Params shouldn't be displayed when there are no descriptions and no subparams,
@@ -92650,13 +90811,19 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @function
      * @hide
      */
-    shouldDisplayParams: (0, _object.computed)('item.params.[]', function () {
-      let params = this.get('item.params') || [];
+    get shouldDisplayParams() {
+      let params = this.args.item?.params || [];
       return params.some(p => p.description || p.name.includes('.'));
-    })
-  }));
+    }
 
-  _exports.default = _default;
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class);
+  _exports.default = XSection;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XSection);
 });
 ;define("ember-cli-addon-docs/components/api/x-sections", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
   "use strict";
@@ -92705,14 +90872,14 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <ul class="docs-mb-6">
+    <ul class="docs-mb-6" ...attributes>
     {{#each-in @toggles as |key toggle|}}
       {{#if (not-eq toggle undefined)}}
         <li class="docs-inline docs-ml-4">
           <label data-test-toggle>
             <input type="checkbox"
               checked={{toggle}}
-              onclick={{action @onToggle key}}
+              onclick={{fn @onToggle key}}
               class="docs-mr-1"
             >
   
@@ -92725,8 +90892,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "W6d16YYK",
-    "block": "[[[10,\"ul\"],[14,0,\"docs-mb-6\"],[12],[1,\"\\n\"],[42,[28,[37,1],[[30,1]],null],null,[[[41,[28,[37,3],[[30,2],[27]],null],[[[1,\"      \"],[10,\"li\"],[14,0,\"docs-inline docs-ml-4\"],[12],[1,\"\\n        \"],[10,\"label\"],[14,\"data-test-toggle\",\"\"],[12],[1,\"\\n          \"],[10,\"input\"],[15,\"checked\",[30,2]],[15,\"onclick\",[28,[37,4],[[30,0],[30,4],[30,3]],null]],[14,0,\"docs-mr-1\"],[14,4,\"checkbox\"],[12],[13],[1,\"\\n\\n          \"],[1,[28,[35,5],[[30,3]],null]],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null]],[2,3]],null],[13],[1,\"\\n\"]],[\"@toggles\",\"toggle\",\"key\",\"@onToggle\"],false,[\"each\",\"-each-in\",\"if\",\"not-eq\",\"action\",\"capitalize\"]]",
+    "id": "tcDaMzOH",
+    "block": "[[[11,\"ul\"],[24,0,\"docs-mb-6\"],[17,1],[12],[1,\"\\n\"],[42,[28,[37,1],[[30,2]],null],null,[[[41,[28,[37,3],[[30,3],[27]],null],[[[1,\"      \"],[10,\"li\"],[14,0,\"docs-inline docs-ml-4\"],[12],[1,\"\\n        \"],[10,\"label\"],[14,\"data-test-toggle\",\"\"],[12],[1,\"\\n          \"],[10,\"input\"],[15,\"checked\",[30,3]],[15,\"onclick\",[28,[37,4],[[30,5],[30,4]],null]],[14,0,\"docs-mr-1\"],[14,4,\"checkbox\"],[12],[13],[1,\"\\n\\n          \"],[1,[28,[35,5],[[30,4]],null]],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null]],[3,4]],null],[13],[1,\"\\n\"]],[\"&attrs\",\"@toggles\",\"toggle\",\"key\",\"@onToggle\"],false,[\"each\",\"-each-in\",\"if\",\"not-eq\",\"fn\",\"capitalize\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-toggles.hbs",
     "isStrictMode": false
   });
@@ -92735,26 +90902,26 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-code-highlight/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component", "highlight.js/lib/core", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/htmlbars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript"], function (_exports, _component, _templateFactory, _component2, _core, _javascript, _css, _handlebars, _htmlbars, _json, _xml, _diff, _shell, _typescript) {
+;define("ember-cli-addon-docs/components/docs-code-highlight/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "highlight.js/lib/core", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript"], function (_exports, _component, _templateFactory, _component2, _core, _javascript, _css, _handlebars, _json, _xml, _diff, _shell, _typescript) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-
-  var _dec, _dec2, _class;
-
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/component",0,"highlight.js/lib/core",0,"highlight.js/lib/languages/javascript",0,"highlight.js/lib/languages/css",0,"highlight.js/lib/languages/handlebars",0,"highlight.js/lib/languages/htmlbars",0,"highlight.js/lib/languages/json",0,"highlight.js/lib/languages/xml",0,"highlight.js/lib/languages/diff",0,"highlight.js/lib/languages/shell",0,"highlight.js/lib/languages/typescript"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"highlight.js/lib/core",0,"highlight.js/lib/languages/javascript",0,"highlight.js/lib/languages/css",0,"highlight.js/lib/languages/handlebars",0,"highlight.js/lib/languages/json",0,"highlight.js/lib/languages/xml",0,"highlight.js/lib/languages/diff",0,"highlight.js/lib/languages/shell",0,"highlight.js/lib/languages/typescript"eaimeta@70e063a35619d71f
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    {{yield}}
-  
+    <pre
+    class={{@language}}
+    {{did-insert this.setupElement}}
+    ...attributes
+  >{{yield}}</pre>
   */
   {
-    "id": "iY6wo2Pe",
-    "block": "[[[18,1,null],[1,\"\\n\"]],[\"&default\"],false,[\"yield\"]]",
+    "id": "9H6zZ0TG",
+    "block": "[[[11,\"pre\"],[16,0,[30,1]],[17,2],[4,[38,0],[[30,0,[\"setupElement\"]]],null],[12],[18,3,null],[13]],[\"@language\",\"&attrs\",\"&default\"],false,[\"did-insert\",\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-code-highlight/index.hbs",
     "isStrictMode": false
   });
@@ -92767,9 +90934,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _core.default.registerLanguage('handlebars', _handlebars.default);
 
-  _core.default.registerLanguage('htmlbars', _htmlbars.default);
+  _core.default.registerLanguage('htmlbars', _handlebars.default);
 
-  _core.default.registerLanguage('hbs', _htmlbars.default);
+  _core.default.registerLanguage('hbs', _handlebars.default);
 
   _core.default.registerLanguage('json', _json.default);
 
@@ -92785,18 +90952,17 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _core.default.registerLanguage('ts', _typescript.default);
 
-  let DocsCodeHighlight = (_dec = (0, _component2.tagName)('pre'), _dec2 = (0, _component2.classNameBindings)('language'), _dec(_class = _dec2(_class = class DocsCodeHighlight extends _component.default {
-    didInsertElement() {
-      super.didInsertElement(...arguments);
-
-      _core.default.highlightBlock(this.element);
+  class DocsCodeHighlight extends _component2.default {
+    setupElement(element) {
+      _core.default.highlightElement(element);
     }
 
-  }) || _class) || _class);
+  }
+
   _exports.default = DocsCodeHighlight;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsCodeHighlight);
 });
-;define("ember-cli-addon-docs/components/docs-demo/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component", "@ember/object", "@ember/array"], function (_exports, _component, _templateFactory, _component2, _object, _array) {
+;define("ember-cli-addon-docs/components/docs-demo/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/array", "@glimmer/component", "@glimmer/tracking"], function (_exports, _component, _templateFactory, _object, _array, _component2, _tracking) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -92804,21 +90970,25 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _class, _class2;
+  var _class, _descriptor;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/object",0,"@ember/array",0,"@ember/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/array",0,"@glimmer/component",0,"@glimmer/tracking"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <div class="docs-rounded docs-border docs-border-grey-lighter docs-my-8 {{@class}}">
+    <div class="docs-rounded docs-border docs-border-grey-lighter docs-my-8" ...attributes>
   
     {{yield (hash
       example=(component "docs-demo/x-example")
-      snippet=(component "docs-demo/x-snippet" did-init=(action "registerSnippet") activeSnippet=this.activeSnippet)
+      snippet=(component "docs-demo/x-snippet" didInit=this.registerSnippet activeSnippet=this.activeSnippet)
     )}}
   
     <div>
@@ -92829,7 +90999,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           docs-border-grey-darkest
         ">
           {{#each this.snippets as |snippet|}}
-            <button {{action "selectSnippet" snippet}}
+            <button {{on "click" (fn this.selectSnippet snippet)}}
               class="
                 docs-mr-4 docs-text-xs docs-no-underline outline-none
                 hover:docs-text-grey-lighter
@@ -92860,29 +91030,28 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "TEumdt9D",
-    "block": "[[[10,0],[15,0,[29,[\"docs-rounded docs-border docs-border-grey-lighter docs-my-8 \",[30,1]]]],[12],[1,\"\\n\\n  \"],[18,4,[[28,[37,1],null,[[\"example\",\"snippet\"],[[50,\"docs-demo/x-example\",0,null,null],[50,\"docs-demo/x-snippet\",0,null,[[\"did-init\",\"activeSnippet\"],[[28,[37,3],[[30,0],\"registerSnippet\"],null],[30,0,[\"activeSnippet\"]]]]]]]]]],[1,\"\\n\\n  \"],[10,0],[12],[1,\"\\n\"],[41,[28,[37,5],[[30,0,[\"snippets\"]],[28,[37,6],[[30,0,[\"snippets\",\"length\"]],1],null]],null],[[[1,\"      \"],[10,\"nav\"],[14,0,\"\\n        docs-demo__snippets-nav docs-py-2 docs-px-4 docs-font-medium\\n        docs-bg-black docs-tracking-tight docs-border-b\\n        docs-border-grey-darkest\\n      \"],[12],[1,\"\\n\"],[42,[28,[37,8],[[28,[37,8],[[30,0,[\"snippets\"]]],null]],null],null,[[[1,\"          \"],[11,\"button\"],[16,0,[29,[\"\\n              docs-mr-4 docs-text-xs docs-no-underline outline-none\\n              hover:docs-text-grey-lighter\\n              \",[52,[30,2,[\"isActive\"]],\"docs-text-grey-lighter\",\"docs-text-grey-dark\"],\"\\n            \"]]],[4,[38,3],[[30,0],\"selectSnippet\",[30,2]],null],[12],[1,\"\\n            \"],[1,[30,2,[\"label\"]]],[1,\"\\n          \"],[13],[1,\"\\n\"]],[2]],null],[1,\"      \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[42,[28,[37,8],[[28,[37,8],[[30,0,[\"snippets\"]]],null]],null],null,[[[41,[30,3,[\"isActive\"]],[[[1,\"        \"],[10,0],[14,0,\"\\n          docs-demo__snippet-wrapper docs-bg-code-base docs-rounded-b\\n        \"],[12],[1,\"\\n          \"],[8,[39,9],null,[[\"@name\",\"@unindent\",\"@language\"],[[30,3,[\"name\"]],true,[30,3,[\"language\"]]]],null],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null]],[3]],null],[1,\"  \"],[13],[1,\"\\n\\n\"],[13],[1,\"\\n\"]],[\"@class\",\"snippet\",\"snippet\",\"&default\"],false,[\"yield\",\"hash\",\"component\",\"action\",\"if\",\"and\",\"gt\",\"each\",\"-track-array\",\"docs-snippet\"]]",
+    "id": "gKpG5lJh",
+    "block": "[[[11,0],[24,0,\"docs-rounded docs-border docs-border-grey-lighter docs-my-8\"],[17,1],[12],[1,\"\\n\\n  \"],[18,4,[[28,[37,1],null,[[\"example\",\"snippet\"],[[50,\"docs-demo/x-example\",0,null,null],[50,\"docs-demo/x-snippet\",0,null,[[\"didInit\",\"activeSnippet\"],[[30,0,[\"registerSnippet\"]],[30,0,[\"activeSnippet\"]]]]]]]]]],[1,\"\\n\\n  \"],[10,0],[12],[1,\"\\n\"],[41,[28,[37,4],[[30,0,[\"snippets\"]],[28,[37,5],[[30,0,[\"snippets\",\"length\"]],1],null]],null],[[[1,\"      \"],[10,\"nav\"],[14,0,\"\\n        docs-demo__snippets-nav docs-py-2 docs-px-4 docs-font-medium\\n        docs-bg-black docs-tracking-tight docs-border-b\\n        docs-border-grey-darkest\\n      \"],[12],[1,\"\\n\"],[42,[28,[37,7],[[28,[37,7],[[30,0,[\"snippets\"]]],null]],null],null,[[[1,\"          \"],[11,\"button\"],[16,0,[29,[\"\\n              docs-mr-4 docs-text-xs docs-no-underline outline-none\\n              hover:docs-text-grey-lighter\\n              \",[52,[30,2,[\"isActive\"]],\"docs-text-grey-lighter\",\"docs-text-grey-dark\"],\"\\n            \"]]],[4,[38,8],[\"click\",[28,[37,9],[[30,0,[\"selectSnippet\"]],[30,2]],null]],null],[12],[1,\"\\n            \"],[1,[30,2,[\"label\"]]],[1,\"\\n          \"],[13],[1,\"\\n\"]],[2]],null],[1,\"      \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[42,[28,[37,7],[[28,[37,7],[[30,0,[\"snippets\"]]],null]],null],null,[[[41,[30,3,[\"isActive\"]],[[[1,\"        \"],[10,0],[14,0,\"\\n          docs-demo__snippet-wrapper docs-bg-code-base docs-rounded-b\\n        \"],[12],[1,\"\\n          \"],[8,[39,10],null,[[\"@name\",\"@unindent\",\"@language\"],[[30,3,[\"name\"]],true,[30,3,[\"language\"]]]],null],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null]],[3]],null],[1,\"  \"],[13],[1,\"\\n\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"snippet\",\"snippet\",\"&default\"],false,[\"yield\",\"hash\",\"component\",\"if\",\"and\",\"gt\",\"each\",\"-track-array\",\"on\",\"fn\",\"docs-snippet\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-demo/index.hbs",
     "isStrictMode": false
   });
 
-  let DocsDemo = (
   /**
     A demo component that can be used to demonstrate code samples. Comes
     with built in snippet handling, so you don't have to write code twice!
   
     ```hbs
-    {{#docs-demo as |demo|}}
-      {{#demo.example name='docs-demo-basic.hbs'}}
+    <DocsDemo as |demo|>
+      <demo.example @name="docs-demo-basic.hbs">
         <p>I am a <strong>handlebars</strong> template!</p>
-        <p>The value is: {{val}}</p>
+        <p>The value is: {{this.val}}</p>
         <div>
-          {{input value=val}}
+          <Input @value={{this.val}}/>
         </div>
-      {{/demo.example}}
+      </demo.example>
   
-      {{demo.snippet 'docs-demo-basic.hbs'}}
-    {{/docs-demo}}
+      <demo.snippet @name="docs-demo-basic.hbs"/>
+    </DocsDemo>
     ```
   
     @class DocsDemo
@@ -92891,24 +91060,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     @yield {Component} demo.snippet
     @yield {Component} demo.liveExample
   */
-  _dec = (0, _component2.tagName)(''), _dec2 = (0, _object.computed)('activeSnippet', 'snippetRegistrations.[]'), _dec(_class = (_class2 = class DocsDemo extends _component.default {
+  let DocsDemo = (_class = class DocsDemo extends _component2.default {
     constructor() {
       super(...arguments);
 
-      _defineProperty(this, "snippetRegistrations", null);
-    }
+      _initializerDefineProperty(this, "activeSnippet", _descriptor, this);
 
-    // eslint-disable-next-line ember/classic-decorator-hooks
-    init() {
-      super.init(...arguments);
-      this.set('snippetRegistrations', (0, _array.A)());
+      _defineProperty(this, "snippetRegistrations", (0, _array.A)());
     }
-    /**
-      The snippets registered with this demo component
-       @field snippetRegistrations
-      @type Array<Object>
-    */
-
 
     /**
       The finalized snippets complete with name (or default), language,
@@ -92965,7 +91124,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         case 'hbs':
         case 'md':
           label = 'template.hbs';
-          language = 'htmlbars';
+          language = 'handlebars';
           break;
 
         default:
@@ -92989,8 +91148,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     registerSnippet(snippet) {
       this.snippetRegistrations.pushObject(snippet);
 
-      if (this.get('snippetRegistrations.length') === 1) {
-        this.set('activeSnippet', snippet.name);
+      if (this.snippetRegistrations.length === 1) {
+        this.activeSnippet = snippet.name;
       }
     }
     /**
@@ -93001,87 +91160,95 @@ lunr.QueryParser.parseBoost = function (parser) {
 
 
     selectSnippet(snippet) {
-      this.set('activeSnippet', snippet.name);
+      this.activeSnippet = snippet.name;
     }
 
-  }, (_applyDecoratedDescriptor(_class2.prototype, "snippets", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "snippets"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "registerSnippet", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "registerSnippet"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "selectSnippet", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "selectSnippet"), _class2.prototype)), _class2)) || _class);
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "activeSnippet", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "registerSnippet", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "registerSnippet"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "selectSnippet", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "selectSnippet"), _class.prototype)), _class);
   _exports.default = DocsDemo;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsDemo);
 });
-;define("ember-cli-addon-docs/components/docs-demo/x-example/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component"], function (_exports, _component, _templateFactory, _component2) {
+;define("ember-cli-addon-docs/components/docs-demo/x-example/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-
-  var _dec, _class;
-
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
+    <div id="example-{{@name}}" class="docs-p-4" ...attributes>
     {{yield}}
-  
+  </div>
   */
   {
-    "id": "v3AYetUY",
-    "block": "[[[18,1,null],[1,\"\\n\"]],[\"&default\"],false,[\"yield\"]]",
+    "id": "zeDI7Ivx",
+    "block": "[[[11,0],[16,1,[29,[\"example-\",[30,1]]]],[24,0,\"docs-p-4\"],[17,2],[12],[1,\"\\n  \"],[18,3,null],[1,\"\\n\"],[13]],[\"@name\",\"&attrs\",\"&default\"],false,[\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-demo/x-example/index.hbs",
     "isStrictMode": false
   });
 
-  let XExample = (_dec = (0, _component2.classNames)('docs-p-4'), _dec(_class = class XExample extends _component.default {
-    // eslint-disable-next-line ember/classic-decorator-hooks
-    init() {
-      super.init(...arguments);
-      this.set('elementId', 'example-' + this.name);
-    }
-
-  }) || _class);
-  _exports.default = XExample;
-  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XExample);
-});
-;define("ember-cli-addon-docs/components/docs-demo/x-snippet", ["exports", "@ember/runloop", "@ember/component"], function (_exports, _runloop, _component) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/runloop",0,"@ember/component"eaimeta@70e063a35619d71f
-
-  var _default = _component.default.extend({
-    init() {
-      this._super(...arguments);
-
-      (0, _runloop.scheduleOnce)('afterRender', () => {
-        this.get('did-init')(this.getProperties('name', 'label', 'language'));
-      });
-    }
-
-  }).reopenClass({
-    positionalParams: ['name']
-  });
+  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
 
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-header/index", ["exports", "@ember/component", "@ember/template-factory", "ember-get-config", "@ember/object", "@ember/string", "ember-cli-addon-docs/utils/computed", "@ember/service", "@ember/object/computed"], function (_exports, _component, _templateFactory, _emberGetConfig, _object, _string, _computed, _service, _computed2) {
+;define("ember-cli-addon-docs/components/docs-demo/x-snippet", ["exports", "@ember/runloop", "@glimmer/component"], function (_exports, _runloop, _component) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"ember-get-config",0,"@ember/object",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"@ember/service",0,"@ember/object/computed"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/runloop",0,"@glimmer/component"eaimeta@70e063a35619d71f
+
+  class XSnippet extends _component.default {
+    constructor() {
+      super(...arguments);
+      (0, _runloop.scheduleOnce)('afterRender', () => {
+        this.args.didInit({
+          name: this.args.name,
+          label: this.args.label,
+          language: this.args.language
+        });
+      });
+    }
+
+  }
+
+  _exports.default = XSnippet;
+});
+;define("ember-cli-addon-docs/components/docs-header/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/string", "ember-cli-addon-docs/utils/computed", "@ember/service", "@ember/object/computed", "@ember/object", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _tracking, _string, _computed, _service, _computed2, _object, _config) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _dec, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <header class="docs-shadow docs-relative docs-z-40 docs-bg-white">
+    <header class="docs-shadow docs-relative docs-z-40 docs-bg-white" ...attributes>
     <div class="docs-flex docs-items-center docs-max-w-site-container docs-mx-auto md:docs-px-2">
   
-      {{#docs-header/link "index"}}
+      <DocsHeader::Link @route="index">
         <span class="docs-leading-none docs-font-title docs-text-large-2 docs-font-normal docs-normal-case docs-block docs-mr-6">
           {{#if this.prefix}}
             <div class="docs-text-xxs">
@@ -93090,23 +91257,23 @@ lunr.QueryParser.parseBoost = function (parser) {
           {{/if}}
           {{this.name}}
         </span>
-      {{/docs-header/link}}
+      </DocsHeader::Link>
   
       <div class="docs-flex-1 docs-flex docs-items-center docs-overflow-auto docs-scrolling-touch docs-mask-image md:docs-no-mask-image">
-        {{#docs-header/link "docs"}}
+        <DocsHeader::Link @route="docs">
           Documentation
-        {{/docs-header/link}}
+        </DocsHeader::Link>
   
         {{yield (hash
           link=(component "docs-header/link")
         )}}
   
-        <DocsHeader::SearchBox @query={{this.query}} @on-input={{set this "query"}} />
+        <DocsHeader::SearchBox @query={{this.query}} @onInput={{set this "query"}} />
   
-        <DocsHeader::Link @on-click={{toggle "isShowingVersionSelector" this}}>
+        <DocsHeader::Link @onClick={{toggle "isShowingVersionSelector" this}}>
           <span data-test-id="current-version" data-version-selector class="docs-flex docs-items-center">
   
-            {{#if (eq this.currentVersion.key this.latestVersionName)}}
+            {{#if (eq this.currentVersion.key this.config.latestVersionName)}}
               {{#if this.currentVersion.tag}}
                 {{this.currentVersion.tag}}
               {{else}}
@@ -93120,8 +91287,8 @@ lunr.QueryParser.parseBoost = function (parser) {
           </span>
         </DocsHeader::Link>
   
-        {{#if this.projectHref}}
-          <DocsHeader::Link @href={{this.projectHref}}>
+        {{#if this.config.projectHref}}
+          <DocsHeader::Link @href={{this.config.projectHref}}>
             <span class="docs-flex">
               {{svg-jar "github" width=24 height=24}}
             </span>
@@ -93135,26 +91302,21 @@ lunr.QueryParser.parseBoost = function (parser) {
   </header>
   
   {{#if this.query}}
-    <DocsHeader::SearchResults @query={{this.query}} @on-visit={{action "didVisitPage"}} />
+    <DocsHeader::SearchResults @query={{this.query}} @onClose={{set this "query" null}} @onVisit={{this.didVisitPage}} />
   {{/if}}
   
   {{#if this.isShowingVersionSelector}}
-    <DocsHeader::VersionSelector @on-close={{set this "isShowingVersionSelector" false}} />
+    <DocsHeader::VersionSelector @onClose={{set this "isShowingVersionSelector" false}} />
   {{/if}}
   
   */
   {
-    "id": "iqxtGdc6",
-    "block": "[[[10,\"header\"],[14,0,\"docs-shadow docs-relative docs-z-40 docs-bg-white\"],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-flex docs-items-center docs-max-w-site-container docs-mx-auto md:docs-px-2\"],[12],[1,\"\\n\\n\"],[6,[39,0],[\"index\"],null,[[\"default\"],[[[[1,\"      \"],[10,1],[14,0,\"docs-leading-none docs-font-title docs-text-large-2 docs-font-normal docs-normal-case docs-block docs-mr-6\"],[12],[1,\"\\n\"],[41,[30,0,[\"prefix\"]],[[[1,\"          \"],[10,0],[14,0,\"docs-text-xxs\"],[12],[1,\"\\n            \"],[1,[30,0,[\"prefix\"]]],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]],null],[1,\"        \"],[1,[30,0,[\"name\"]]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]]]],[1,\"\\n    \"],[10,0],[14,0,\"docs-flex-1 docs-flex docs-items-center docs-overflow-auto docs-scrolling-touch docs-mask-image md:docs-no-mask-image\"],[12],[1,\"\\n\"],[6,[39,0],[\"docs\"],null,[[\"default\"],[[[[1,\"        Documentation\\n\"]],[]]]]],[1,\"\\n      \"],[18,1,[[28,[37,3],null,[[\"link\"],[[50,\"docs-header/link\",0,null,null]]]]]],[1,\"\\n\\n      \"],[8,[39,5],null,[[\"@query\",\"@on-input\"],[[30,0,[\"query\"]],[28,[37,6],[[30,0],\"query\"],null]]],null],[1,\"\\n\\n      \"],[8,[39,0],null,[[\"@on-click\"],[[28,[37,7],[\"isShowingVersionSelector\",[30,0]],null]]],[[\"default\"],[[[[1,\"\\n        \"],[10,1],[14,\"data-test-id\",\"current-version\"],[14,\"data-version-selector\",\"\"],[14,0,\"docs-flex docs-items-center\"],[12],[1,\"\\n\\n\"],[41,[28,[37,8],[[30,0,[\"currentVersion\",\"key\"]],[30,0,[\"latestVersionName\"]]],null],[[[41,[30,0,[\"currentVersion\",\"tag\"]],[[[1,\"              \"],[1,[30,0,[\"currentVersion\",\"tag\"]]],[1,\"\\n\"]],[]],[[[1,\"              Latest\\n\"]],[]]]],[]],[[[1,\"            \"],[1,[30,0,[\"currentVersion\",\"name\"]]],[1,\"\\n\"]],[]]],[1,\"\\n          \"],[1,[28,[35,9],[\"caret\"],[[\"height\",\"width\"],[12,12]]]],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,0,[\"projectHref\"]],[[[1,\"        \"],[8,[39,0],null,[[\"@href\"],[[30,0,[\"projectHref\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[10,1],[14,0,\"docs-flex\"],[12],[1,\"\\n            \"],[1,[28,[35,9],[\"github\"],[[\"width\",\"height\"],[24,24]]]],[1,\"\\n          \"],[13],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[1,\"      \"],[10,0],[14,0,\"docs-h-px docs-px-3 sm:docs-hidden\"],[12],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[41,[30,0,[\"query\"]],[[[1,\"  \"],[8,[39,10],null,[[\"@query\",\"@on-visit\"],[[30,0,[\"query\"]],[28,[37,11],[[30,0],\"didVisitPage\"],null]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"isShowingVersionSelector\"]],[[[1,\"  \"],[8,[39,12],null,[[\"@on-close\"],[[28,[37,6],[[30,0],\"isShowingVersionSelector\",false],null]]],null],[1,\"\\n\"]],[]],null]],[\"&default\"],false,[\"docs-header/link\",\"if\",\"yield\",\"hash\",\"component\",\"docs-header/search-box\",\"set\",\"toggle\",\"eq\",\"svg-jar\",\"docs-header/search-results\",\"action\",\"docs-header/version-selector\"]]",
+    "id": "gtJpbxW/",
+    "block": "[[[11,\"header\"],[24,0,\"docs-shadow docs-relative docs-z-40 docs-bg-white\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-flex docs-items-center docs-max-w-site-container docs-mx-auto md:docs-px-2\"],[12],[1,\"\\n\\n    \"],[8,[39,0],null,[[\"@route\"],[\"index\"]],[[\"default\"],[[[[1,\"\\n      \"],[10,1],[14,0,\"docs-leading-none docs-font-title docs-text-large-2 docs-font-normal docs-normal-case docs-block docs-mr-6\"],[12],[1,\"\\n\"],[41,[30,0,[\"prefix\"]],[[[1,\"          \"],[10,0],[14,0,\"docs-text-xxs\"],[12],[1,\"\\n            \"],[1,[30,0,[\"prefix\"]]],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]],null],[1,\"        \"],[1,[30,0,[\"name\"]]],[1,\"\\n      \"],[13],[1,\"\\n    \"]],[]]]]],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-flex-1 docs-flex docs-items-center docs-overflow-auto docs-scrolling-touch docs-mask-image md:docs-no-mask-image\"],[12],[1,\"\\n      \"],[8,[39,0],null,[[\"@route\"],[\"docs\"]],[[\"default\"],[[[[1,\"\\n        Documentation\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[18,2,[[28,[37,3],null,[[\"link\"],[[50,\"docs-header/link\",0,null,null]]]]]],[1,\"\\n\\n      \"],[8,[39,5],null,[[\"@query\",\"@onInput\"],[[30,0,[\"query\"]],[28,[37,6],[[30,0],\"query\"],null]]],null],[1,\"\\n\\n      \"],[8,[39,0],null,[[\"@onClick\"],[[28,[37,7],[\"isShowingVersionSelector\",[30,0]],null]]],[[\"default\"],[[[[1,\"\\n        \"],[10,1],[14,\"data-test-id\",\"current-version\"],[14,\"data-version-selector\",\"\"],[14,0,\"docs-flex docs-items-center\"],[12],[1,\"\\n\\n\"],[41,[28,[37,8],[[30,0,[\"currentVersion\",\"key\"]],[30,0,[\"config\",\"latestVersionName\"]]],null],[[[41,[30,0,[\"currentVersion\",\"tag\"]],[[[1,\"              \"],[1,[30,0,[\"currentVersion\",\"tag\"]]],[1,\"\\n\"]],[]],[[[1,\"              Latest\\n\"]],[]]]],[]],[[[1,\"            \"],[1,[30,0,[\"currentVersion\",\"name\"]]],[1,\"\\n\"]],[]]],[1,\"\\n          \"],[1,[28,[35,9],[\"caret\"],[[\"height\",\"width\"],[12,12]]]],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,0,[\"config\",\"projectHref\"]],[[[1,\"        \"],[8,[39,0],null,[[\"@href\"],[[30,0,[\"config\",\"projectHref\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[10,1],[14,0,\"docs-flex\"],[12],[1,\"\\n            \"],[1,[28,[35,9],[\"github\"],[[\"width\",\"height\"],[24,24]]]],[1,\"\\n          \"],[13],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[1,\"      \"],[10,0],[14,0,\"docs-h-px docs-px-3 sm:docs-hidden\"],[12],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[41,[30,0,[\"query\"]],[[[1,\"  \"],[8,[39,10],null,[[\"@query\",\"@onClose\",\"@onVisit\"],[[30,0,[\"query\"]],[28,[37,6],[[30,0],\"query\",null],null],[30,0,[\"didVisitPage\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"isShowingVersionSelector\"]],[[[1,\"  \"],[8,[39,11],null,[[\"@onClose\"],[[28,[37,6],[[30,0],\"isShowingVersionSelector\",false],null]]],null],[1,\"\\n\"]],[]],null]],[\"&attrs\",\"&default\"],false,[\"docs-header/link\",\"if\",\"yield\",\"hash\",\"component\",\"docs-header/search-box\",\"set\",\"toggle\",\"eq\",\"svg-jar\",\"docs-header/search-results\",\"docs-header/version-selector\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/index.hbs",
     "isStrictMode": false
   });
 
-  const {
-    projectName,
-    projectHref,
-    latestVersionName
-  } = _emberGetConfig.default['ember-cli-addon-docs'];
   /**
     Render a header showing a link to your documentation, your project logo, a
     search bar, and a link to your repo on GitHub.
@@ -93163,11 +91325,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     header links.
   
     ```hbs
-    {{#docs-header as |header|}}
-      {{#header.link 'sandbox'}}
+    <DocsHeader as |header|>
+      <header.link @route="sandbox">
         Sandbox
-      {{/header.link}}
-    {{/docs-header}}
+      </header.link>
+    </DocsHeader>
     ```
   
     @class DocsHeader
@@ -93175,128 +91337,88 @@ lunr.QueryParser.parseBoost = function (parser) {
     @yield {Hash} header
     @yield {Component} header.link
   */
+  let DocsHeader = (_dec = (0, _computed2.reads)('projectVersion.currentVersion'), (_class = class DocsHeader extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    projectVersion: (0, _service.inject)(),
-    projectHref,
-    latestVersionName,
+      _initializerDefineProperty(this, "projectVersion", _descriptor, this);
 
-    didInsertElement() {
-      this._super(...arguments);
+      _initializerDefineProperty(this, "config", _descriptor2, this);
+
+      _initializerDefineProperty(this, "query", _descriptor3, this);
+
+      _initializerDefineProperty(this, "currentVersion", _descriptor4, this);
 
       this.projectVersion.loadAvailableVersions();
-    },
-
-    logo: (0, _string.classify)((0, _computed.addonLogo)(projectName)),
-
+    }
     /**
       The prefix of your project, typically "Ember", "EmberCLI" or "EmberData".
        By default the prefix will be autodiscovered from the `name` field of your addon's package.json.
        ```hbs
-      {{docs-header prefix='EmberData'}}
+      <DocsHeader @prefix="EmberData"/>
       ```
        @argument prefix
       @type String?
     */
-    prefix: (0, _computed.addonPrefix)(projectName),
 
+
+    get prefix() {
+      return this.args.prefix ?? (0, _computed.addonPrefix)(this.config.projectName);
+    }
     /**
       The name of your project (without the "ember", "ember-cli" or "ember-data" prefix).
        By default the name will be autodiscovered from the `name` field of your addon's package.json.
        ```hbs
-      {{docs-header name='MyProject'}}
+      <DocsHeader @name="MyProject"/>
       ```
        @argument name
       @type String?
     */
-    name: (0, _object.computed)(function () {
-      let name = projectName;
-      name = name.replace('ember-data-', '');
-      name = name.replace('ember-cli-', '');
-      name = name.replace('ember-', '');
-      return (0, _string.classify)(name);
-    }),
-    currentVersion: (0, _computed2.reads)('projectVersion.currentVersion'),
-    actions: {
-      didVisitPage() {
-        this.set('query', null);
-        let search = document.querySelector('[data-search-box-input]');
-        search.blur();
+
+
+    get name() {
+      if (this.args.name) {
+        return this.args.name;
+      } else {
+        let name = this.config.projectName;
+        name = name.replace('ember-data-', '');
+        name = name.replace('ember-cli-', '');
+        name = name.replace('ember-', '');
+        return (0, _string.classify)(name);
       }
-
     }
-  }));
 
-  _exports.default = _default;
+    didVisitPage() {
+      this.query = null;
+      let search = document.querySelector('[data-search-box-input]');
+      search.blur();
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "projectVersion", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "query", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "currentVersion", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "didVisitPage", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "didVisitPage"), _class.prototype)), _class));
+  _exports.default = DocsHeader;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeader);
 });
-;define("ember-cli-addon-docs/components/docs-header/link/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@ember/object"], function (_exports, _component, _templateFactory, _service, _object) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/service",0,"@ember/object"eaimeta@70e063a35619d71f
-
-  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
-  /*
-    {{#if @href}}
-  
-    <a href={{@href}}
-      class="
-        docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold
-        docs-text-grey-darkest docs-no-underline hover:docs-text-brand
-        {{if this.push "docs-ml-auto"}}
-      "
-      data-test-id={{this.data-test-id}}>
-      {{yield}}
-    </a>
-  
-  {{else if @on-click}}
-  
-    <a {{action @on-click}}
-      href="#"
-      class="
-        docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold
-        docs-text-grey-darkest docs-no-underline hover:docs-text-brand
-        {{if this.push "docs-ml-auto"}}
-      "
-      data-test-id={{this.data-test-id}}>
-      {{yield}}
-    </a>
-  
-  {{else}}
-  
-    <LinkTo @route={{@route}} class={{concat "docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs
-        docs-font-bold docs-no-underline " (if (not (eq @route "index")) (if this.isActive "docs-text-brand" "docs-text-grey-darkest hover:docs-text-brand") "docs-text-grey-darkest")}} data-test-id={{this.data-test-id}}>
-      {{yield}}
-    </LinkTo>
-  
-  {{/if}}
-  
-  */
-  {
-    "id": "UOipbGny",
-    "block": "[[[41,[30,1],[[[1,\"\\n  \"],[10,3],[15,6,[30,1]],[15,0,[29,[\"\\n      docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold\\n      docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[52,[30,0,[\"push\"]],\"docs-ml-auto\"],\"\\n    \"]]],[15,\"data-test-id\",[30,0,[\"data-test-id\"]]],[12],[1,\"\\n    \"],[18,4,null],[1,\"\\n  \"],[13],[1,\"\\n\\n\"]],[]],[[[41,[30,2],[[[1,\"\\n  \"],[11,3],[24,6,\"#\"],[16,0,[29,[\"\\n      docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold\\n      docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[52,[30,0,[\"push\"]],\"docs-ml-auto\"],\"\\n    \"]]],[16,\"data-test-id\",[30,0,[\"data-test-id\"]]],[4,[38,2],[[30,0],[30,2]],null],[12],[1,\"\\n    \"],[18,4,null],[1,\"\\n  \"],[13],[1,\"\\n\\n\"]],[]],[[[1,\"\\n  \"],[8,[39,3],[[16,0,[28,[37,4],[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs\\n      docs-font-bold docs-no-underline \",[52,[28,[37,5],[[28,[37,6],[[30,3],\"index\"],null]],null],[52,[30,0,[\"isActive\"]],\"docs-text-brand\",\"docs-text-grey-darkest hover:docs-text-brand\"],\"docs-text-grey-darkest\"]],null]],[16,\"data-test-id\",[30,0,[\"data-test-id\"]]]],[[\"@route\"],[[30,3]]],[[\"default\"],[[[[1,\"\\n    \"],[18,4,null],[1,\"\\n  \"]],[]]]]],[1,\"\\n\\n\"]],[]]]],[]]]],[\"@href\",\"@on-click\",\"@route\",\"&default\"],false,[\"if\",\"yield\",\"action\",\"link-to\",\"concat\",\"not\",\"eq\"]]",
-    "moduleName": "ember-cli-addon-docs/components/docs-header/link/index.hbs",
-    "isStrictMode": false
-  });
-
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    router: (0, _service.inject)(),
-    isActive: (0, _object.computed)('router.currentRouteName', 'route', function () {
-      // Naive isActive check. Replace with router service when updated.
-      return this.get('router.currentRouteName').indexOf(this.route) === 0;
-    })
-  }).reopenClass({
-    positionalParams: ['route']
-  }));
-
-  _exports.default = _default;
-});
-;define("ember-cli-addon-docs/components/docs-header/search-box/index", ["exports", "@ember/component", "@ember/template-factory", "ember-concurrency", "@ember/application", "@ember/object", "@ember/service", "@ember-decorators/component", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _emberConcurrency, _application, _object, _service, _component2, _keyboardConfig) {
+;define("ember-cli-addon-docs/components/docs-header/link/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@ember/service"], function (_exports, _component, _templateFactory, _component2, _service) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -93304,9 +91426,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _class, _class2, _descriptor;
+  var _class, _descriptor;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"ember-concurrency",0,"@ember/application",0,"@ember/object",0,"@ember/service",0,"@ember-decorators/component",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/service"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -93318,70 +91440,160 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <div class="docs-relative docs-text-grey-darkest" data-search-box>
-    {{svg-jar
-      "search"
-      width=12
-      height=12
-      class="docs-absolute docs-top-0 docs-h-full docs-ml-1"
-    }}
+    {{#if @href}}
   
-    {{!--
-      This is a dumb input - so why not use the {{input}} helper? Because apparently
-      it takes over enter and ctrl+n/p keys. We are using those for our own shortcuts
-      so we stick with the dumb html element. Maybe there's a way to disable them
-      and get the convenient two-way binding.
-     --}}
-    <input
-      oninput={{action @on-input value="target.value"}}
-      value={{@query}}
-      type="text"
-      disabled={{this.fetchProject.isRunning}}
-      placeholder="SEARCH"
-      class="docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter outline-none"
-      data-search-box-input
-      data-test-search-box-input
-      aria-label="search"
-    />
+    <a
+      href={{@href}}
+      class="docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold docs-text-grey-darkest docs-no-underline hover:docs-text-brand
+        {{if @push 'docs-ml-auto'}}
+        "
+      ...attributes
+    >
+      {{yield}}
+    </a>
+  
+  {{else if @onClick}}
+  
+    <a
+      {{on "click" @onClick}}
+      href="#"
+      class="docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold docs-text-grey-darkest docs-no-underline hover:docs-text-brand
+        {{if @push 'docs-ml-auto'}}"
+      ...attributes
+    >
+      {{yield}}
+    </a>
+  
+  {{else}}
+  
+    <LinkTo
+      @route={{@route}}
+      class={{concat
+        "docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs
+        docs-font-bold docs-no-underline "
+        (if
+          (not (eq @route "index"))
+          (if
+            this.isActive
+            "docs-text-brand"
+            "docs-text-grey-darkest hover:docs-text-brand"
+          )
+          "docs-text-grey-darkest"
+        )
+      }}
+      ...attributes
+    >
+      {{yield}}
+    </LinkTo>
+  
+  {{/if}}
+  */
+  {
+    "id": "A5cbh0pa",
+    "block": "[[[41,[30,1],[[[1,\"\\n  \"],[11,3],[16,6,[30,1]],[16,0,[29,[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[52,[30,2],\"docs-ml-auto\"],\"\\n      \"]]],[17,3],[12],[1,\"\\n    \"],[18,6,null],[1,\"\\n  \"],[13],[1,\"\\n\\n\"]],[]],[[[41,[30,4],[[[1,\"\\n  \"],[11,3],[24,6,\"#\"],[16,0,[29,[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[52,[30,2],\"docs-ml-auto\"]]]],[17,3],[4,[38,2],[\"click\",[30,4]],null],[12],[1,\"\\n    \"],[18,6,null],[1,\"\\n  \"],[13],[1,\"\\n\\n\"]],[]],[[[1,\"\\n  \"],[8,[39,3],[[16,0,[28,[37,4],[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs\\n      docs-font-bold docs-no-underline \",[52,[28,[37,5],[[28,[37,6],[[30,5],\"index\"],null]],null],[52,[30,0,[\"isActive\"]],\"docs-text-brand\",\"docs-text-grey-darkest hover:docs-text-brand\"],\"docs-text-grey-darkest\"]],null]],[17,3]],[[\"@route\"],[[30,5]]],[[\"default\"],[[[[1,\"\\n    \"],[18,6,null],[1,\"\\n  \"]],[]]]]],[1,\"\\n\\n\"]],[]]]],[]]]],[\"@href\",\"@push\",\"&attrs\",\"@onClick\",\"@route\",\"&default\"],false,[\"if\",\"yield\",\"on\",\"link-to\",\"concat\",\"not\",\"eq\"]]",
+    "moduleName": "ember-cli-addon-docs/components/docs-header/link/index.hbs",
+    "isStrictMode": false
+  });
+
+  let DocsHeaderLink = (_class = class DocsHeaderLink extends _component2.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "router", _descriptor, this);
+    }
+
+    get isActive() {
+      return this.router.isActive(this.args.route);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class);
+  _exports.default = DocsHeaderLink;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderLink);
+});
+;define("ember-cli-addon-docs/components/docs-header/search-box/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "ember-concurrency", "@ember/object", "@ember/service", "ember-cli-addon-docs/keyboard-config", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _emberConcurrency, _object, _service, _keyboardConfig, _config) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _class, _descriptor, _descriptor2;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-concurrency",0,"@ember/object",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <div class="docs-ml-auto" ...attributes>
+    <div class="docs-relative docs-text-grey-darkest" data-search-box>
+      {{svg-jar
+        "search"
+        width=12
+        height=12
+        class="docs-absolute docs-top-0 docs-h-full docs-ml-1"
+      }}
+  
+      {{!--
+        This is a dumb input - so why not use the <Input/> helper? Because apparently
+        it takes over enter and ctrl+n/p keys. We are using those for our own shortcuts
+        so we stick with the dumb html element. Maybe there's a way to disable them
+        and get the convenient two-way binding.
+      --}}
+      <input
+        {{on "input" this.handleInput}}
+        value={{@query}}
+        type="text"
+        disabled={{this.fetchProject.isRunning}}
+        placeholder="SEARCH"
+        class="outline-none docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter"
+        data-search-box-input
+        data-test-search-box-input
+        aria-label="search"
+      />
+    </div>
   </div>
   
   {{on-key "/" this.focusSearch event="keyup"}}
   {{on-key "Escape" this.unfocusSearch event="keyup"}}
   */
   {
-    "id": "Ss81/Ydi",
-    "block": "[[[10,0],[14,0,\"docs-relative docs-text-grey-darkest\"],[14,\"data-search-box\",\"\"],[12],[1,\"\\n  \"],[1,[28,[35,0],[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-top-0 docs-h-full docs-ml-1\"]]]],[1,\"\\n\\n\"],[1,\"  \"],[10,\"input\"],[15,\"oninput\",[28,[37,1],[[30,0],[30,1]],[[\"value\"],[\"target.value\"]]]],[15,2,[30,2]],[15,\"disabled\",[30,0,[\"fetchProject\",\"isRunning\"]]],[14,\"placeholder\",\"SEARCH\"],[14,0,\"docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter outline-none\"],[14,\"data-search-box-input\",\"\"],[14,\"data-test-search-box-input\",\"\"],[14,\"aria-label\",\"search\"],[14,4,\"text\"],[12],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[1,[28,[35,2],[\"/\",[30,0,[\"focusSearch\"]]],[[\"event\"],[\"keyup\"]]]],[1,\"\\n\"],[1,[28,[35,2],[\"Escape\",[30,0,[\"unfocusSearch\"]]],[[\"event\"],[\"keyup\"]]]]],[\"@on-input\",\"@query\"],false,[\"svg-jar\",\"action\",\"on-key\"]]",
+    "id": "NUre4rTE",
+    "block": "[[[11,0],[24,0,\"docs-ml-auto\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-relative docs-text-grey-darkest\"],[14,\"data-search-box\",\"\"],[12],[1,\"\\n    \"],[1,[28,[35,0],[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-top-0 docs-h-full docs-ml-1\"]]]],[1,\"\\n\\n\"],[1,\"    \"],[11,\"input\"],[16,2,[30,2]],[16,\"disabled\",[30,0,[\"fetchProject\",\"isRunning\"]]],[24,\"placeholder\",\"SEARCH\"],[24,0,\"outline-none docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter\"],[24,\"data-search-box-input\",\"\"],[24,\"data-test-search-box-input\",\"\"],[24,\"aria-label\",\"search\"],[24,4,\"text\"],[4,[38,1],[\"input\",[30,0,[\"handleInput\"]]],null],[12],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[1,[28,[35,2],[\"/\",[30,0,[\"focusSearch\"]]],[[\"event\"],[\"keyup\"]]]],[1,\"\\n\"],[1,[28,[35,2],[\"Escape\",[30,0,[\"unfocusSearch\"]]],[[\"event\"],[\"keyup\"]]]]],[\"&attrs\",\"@query\"],false,[\"svg-jar\",\"on\",\"on-key\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/search-box/index.hbs",
     "isStrictMode": false
   });
 
-  let DocsHeaderSearchBoxComponent = (_dec = (0, _component2.classNames)('docs-ml-auto'), _dec(_class = (_class2 = class DocsHeaderSearchBoxComponent extends _component.default {
+  let DocsHeaderSearchBox = (_class = class DocsHeaderSearchBox extends _component2.default {
     constructor() {
       super(...arguments);
 
       _initializerDefineProperty(this, "store", _descriptor, this);
 
-      _defineProperty(this, "query", null);
+      _initializerDefineProperty(this, "config", _descriptor2, this);
 
-      const config = (0, _application.getOwner)(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-      const {
-        projectName
-      } = config;
-      this.set('projectName', projectName);
+      this.fetchProject.perform();
     }
 
-    didInsertElement() {
-      super.didInsertElement(...arguments);
-      this.fetchProject.perform();
-    } // TODO: The searchbox doesn't work without the project being fetched.
+    // TODO: The searchbox doesn't work without the project being fetched.
     // We should move this logic (and everywhere else in the code that's fetching
     // the project) within a new addonDocs service that wires all that up together.
     // I think it's fine if our Docs-* components assume there is a single global
     // project.
-
-
     *fetchProject() {
-      yield this.store.findRecord('project', this.projectName);
+      yield this.store.findRecord('project', this.config.projectName);
     }
 
     focusSearch() {
@@ -93391,57 +91603,79 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     unfocusSearch() {
-      this.get('on-input')(null);
+      this.args.onInput?.(null);
     }
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "store", [_service.inject], {
+    handleInput(event) {
+      this.args.onInput?.(event.target.value);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "store", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "fetchProject", [_emberConcurrency.task], Object.getOwnPropertyDescriptor(_class2.prototype, "fetchProject"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "focusSearch", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "focusSearch"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "unfocusSearch", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "unfocusSearch"), _class2.prototype)), _class2)) || _class);
-  _exports.default = DocsHeaderSearchBoxComponent;
-  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchBoxComponent);
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "fetchProject", [_emberConcurrency.task], Object.getOwnPropertyDescriptor(_class.prototype, "fetchProject"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "focusSearch", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "focusSearch"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "unfocusSearch", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "unfocusSearch"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "handleInput", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "handleInput"), _class.prototype)), _class);
+  _exports.default = DocsHeaderSearchBox;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchBox);
 });
-;define("ember-cli-addon-docs/components/docs-header/search-result/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/object/computed"], function (_exports, _component, _templateFactory, _object, _computed) {
+;define("ember-cli-addon-docs/components/docs-header/search-result/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "tracked-toolbox", "@ember/object/computed"], function (_exports, _component, _templateFactory, _component2, _trackedToolbox, _computed) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/object",0,"@ember/object/computed"eaimeta@70e063a35619d71f
+
+  var _dec, _class, _descriptor;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox",0,"@ember/object/computed"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <div {{on 'click' this.onClick}} {{on 'mouseenter' this.onMouseEnter}} data-test-search-result>
+    <div
+    {{on "click" @onClick}}
+    {{on "mouseenter" @onMouseEnter}}
+    data-test-search-result
+    ...attributes
+  >
     <LinkTo
-      class={{
-        concat
-        'docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter '
-        (if @selected 'docs-bg-grey-lighter')
-      }}
+      class="docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter
+        {{if @selected 'docs-bg-grey-lighter'}}"
       @route={{this.linkArgs.route}}
       @models={{this.linkArgs.models}}
     >
-      <div class='docs-flex docs-items-center'>
+      <div class="docs-flex docs-items-center">
         {{svg-jar
           this.icon
           height=28
           width=28
-          class='docs-mr-2 docs-flex-no-shrink'
+          class="docs-mr-2 docs-flex-no-shrink"
         }}
-        <span class='docs-truncate'>
+        <span class="docs-truncate">
           {{#if this.titleMatchesQuery}}
             {{{this.highlightedTitle}}}
           {{else}}
-            {{this.result.document.title}}
+            {{@result.document.title}}
           {{/if}}
         </span>
       </div>
   
       {{#if (not this.titleMatchesQuery)}}
-        <small class='docs-text-grey-dark docs-inline-block'>
+        <small class="docs-text-grey-dark docs-inline-block">
           {{{this.bestMatch}}}
         </small>
       {{/if}}
@@ -93449,50 +91683,52 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "D62Kw4dM",
-    "block": "[[[11,0],[24,\"data-test-search-result\",\"\"],[4,[38,0],[\"click\",[30,0,[\"onClick\"]]],null],[4,[38,0],[\"mouseenter\",[30,0,[\"onMouseEnter\"]]],null],[12],[1,\"\\n  \"],[8,[39,1],[[16,0,[28,[37,2],[\"docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter \",[52,[30,1],\"docs-bg-grey-lighter\"]],null]]],[[\"@route\",\"@models\"],[[30,0,[\"linkArgs\",\"route\"]],[30,0,[\"linkArgs\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[14,0,\"docs-flex docs-items-center\"],[12],[1,\"\\n      \"],[1,[28,[35,4],[[30,0,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[28,28,\"docs-mr-2 docs-flex-no-shrink\"]]]],[1,\"\\n      \"],[10,1],[14,0,\"docs-truncate\"],[12],[1,\"\\n\"],[41,[30,0,[\"titleMatchesQuery\"]],[[[1,\"          \"],[2,[30,0,[\"highlightedTitle\"]]],[1,\"\\n\"]],[]],[[[1,\"          \"],[1,[30,0,[\"result\",\"document\",\"title\"]]],[1,\"\\n\"]],[]]],[1,\"      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n\"],[41,[28,[37,5],[[30,0,[\"titleMatchesQuery\"]]],null],[[[1,\"      \"],[10,\"small\"],[14,0,\"docs-text-grey-dark docs-inline-block\"],[12],[1,\"\\n        \"],[2,[30,0,[\"bestMatch\"]]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"  \"]],[]]]]],[1,\"\\n\"],[13]],[\"@selected\"],false,[\"on\",\"link-to\",\"concat\",\"if\",\"svg-jar\",\"not\"]]",
+    "id": "9lzAGxfI",
+    "block": "[[[11,0],[24,\"data-test-search-result\",\"\"],[17,1],[4,[38,0],[\"click\",[30,2]],null],[4,[38,0],[\"mouseenter\",[30,3]],null],[12],[1,\"\\n  \"],[8,[39,1],[[16,0,[29,[\"docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter\\n      \",[52,[30,4],\"docs-bg-grey-lighter\"]]]]],[[\"@route\",\"@models\"],[[30,0,[\"linkArgs\",\"route\"]],[30,0,[\"linkArgs\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[14,0,\"docs-flex docs-items-center\"],[12],[1,\"\\n      \"],[1,[28,[35,3],[[30,0,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[28,28,\"docs-mr-2 docs-flex-no-shrink\"]]]],[1,\"\\n      \"],[10,1],[14,0,\"docs-truncate\"],[12],[1,\"\\n\"],[41,[30,0,[\"titleMatchesQuery\"]],[[[1,\"          \"],[2,[30,0,[\"highlightedTitle\"]]],[1,\"\\n\"]],[]],[[[1,\"          \"],[1,[30,5,[\"document\",\"title\"]]],[1,\"\\n\"]],[]]],[1,\"      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n\"],[41,[28,[37,4],[[30,0,[\"titleMatchesQuery\"]]],null],[[[1,\"      \"],[10,\"small\"],[14,0,\"docs-text-grey-dark docs-inline-block\"],[12],[1,\"\\n        \"],[2,[30,0,[\"bestMatch\"]]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"  \"]],[]]]]],[1,\"\\n\"],[13]],[\"&attrs\",\"@onClick\",\"@onMouseEnter\",\"@selected\",\"@result\"],false,[\"on\",\"link-to\",\"if\",\"svg-jar\",\"not\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/search-result/index.hbs",
     "isStrictMode": false
   });
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    result: null,
+  let DocsHeaderSearchResult = (_dec = (0, _computed.bool)('highlightedTitle'), (_class = class DocsHeaderSearchResult extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-    onClick() {},
+      _initializerDefineProperty(this, "titleMatchesQuery", _descriptor, this);
+    }
 
-    onMouseEnter() {},
-
-    linkArgs: (0, _object.computed)('result.document.{route,type}', 'result.model.routingId', function () {
-      let type = this.get('result.document.type');
+    get linkArgs() {
+      let type = this.args.result.document.type;
 
       if (type === 'template') {
         return {
-          route: this.get('result.document.route'),
+          route: this.args.result.document.route,
           models: []
         };
       } else {
         return {
           route: 'docs.api.item',
-          models: [this.get('result.model.routingId')]
+          models: [this.args.result.model.routingId]
         };
       }
-    }),
-    icon: (0, _object.computed)('result.document.type', function () {
-      if (this.get('result.document.type') === 'template') {
+    }
+
+    get icon() {
+      if (this.args.result.document.type === 'template') {
         return 'guide';
       } else {
         return 'api-item';
       }
-    }),
-    matches: (0, _object.computed)('query', 'result.document.{keywords,text}', 'result.resultInfo.matchData.metadata', function () {
-      let metadata = this.get('result.resultInfo.matchData.metadata');
+    }
+
+    get matches() {
+      let metadata = this.args.result.resultInfo.matchData.metadata;
       return Object.keys(metadata).reduce((matches, term) => {
         let match = metadata[term];
-        let query = this.query;
+        let query = this.args.query;
         let normalizedQuery = query.toLowerCase();
         Object.keys(match).forEach(key => {
           if (key === 'text') {
-            let text = this.get('result.document.text');
+            let text = this.args.result.document.text;
             let spaceIndices = text.split('').map((char, index) => char === ' ' ? index : null).filter(val => val > 0);
             match.text.position.forEach(_ref => {
               let [wordStart, length] = _ref;
@@ -93507,7 +91743,7 @@ lunr.QueryParser.parseBoost = function (parser) {
             });
           } else {
             let normalizedTerm = term.toLowerCase();
-            this.get('result.document.keywords').forEach(keyword => {
+            this.args.result.document.keywords.forEach(keyword => {
               let normalizedKeyword = keyword.toLowerCase();
 
               if (keyword.toLowerCase().indexOf(normalizedTerm) !== -1) {
@@ -93519,32 +91755,40 @@ lunr.QueryParser.parseBoost = function (parser) {
         });
         return matches;
       }, []);
-    }),
-    bestMatch: (0, _object.computed)('matches.[]', function () {
+    }
+
+    get bestMatch() {
       // Right now this is arbitrarily returning the first match. Needs more work to find the "best" match on the page.
       return this.matches[0];
-    }),
-    highlightedTitle: (0, _object.computed)('query.length', 'result.document.title', function () {
-      let title = this.result.document.title || '';
-      let match = title.match(new RegExp(this.query, 'i'));
+    }
+
+    get highlightedTitle() {
+      let title = this.args.result.document.title || '';
+      let match = title.match(new RegExp(this.args.query, 'i'));
 
       if (match) {
         let start = match.index;
-        let length = this.query.length;
+        let length = this.args.query.length;
         return `${title.slice(0, start)}<span class='docs-border-b-2 docs-border-brand'>${title.slice(start, start + length)}</span>${title.slice(start + length)}`;
       }
-    }),
-    titleMatchesQuery: (0, _computed.bool)('highlightedTitle'),
+
+      return null;
+    }
 
     _highlight(text, start, length) {
       return `${text.slice(0, start)}<span class='docs-border-b-2 docs-border-brand'>${text.slice(start, start + length)}</span>${text.slice(start + length)}`;
     }
 
-  }));
-
-  _exports.default = _default;
+  }, (_applyDecoratedDescriptor(_class.prototype, "matches", [_trackedToolbox.cached], Object.getOwnPropertyDescriptor(_class.prototype, "matches"), _class.prototype), _descriptor = _applyDecoratedDescriptor(_class.prototype, "titleMatchesQuery", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = DocsHeaderSearchResult;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchResult);
 });
-;define("ember-cli-addon-docs/components/docs-header/search-results/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@ember/object", "ember-keyboard", "ember-concurrency", "@ember/application"], function (_exports, _component, _templateFactory, _service, _object, _emberKeyboard, _emberConcurrency, _application) {
+;define("ember-cli-addon-docs/components/docs-header/search-results/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@glimmer/tracking", "@ember/object", "ember-keyboard", "ember-concurrency", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _service, _component2, _tracking, _object, _emberKeyboard, _emberConcurrency, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -93552,9 +91796,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3;
+  var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@ember/component",0,"@ember/object",0,"ember-keyboard",0,"@ember/object",0,"ember-concurrency",0,"@ember/application"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"ember-keyboard",0,"ember-concurrency",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -93566,57 +91810,54 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
+    <div {{did-insert (perform this.search)}} {{did-update (perform this.search) @query}} ...attributes>
     {{#if (and this.trimmedQuery this.search.isIdle)}}
-    <ModalDialog
-      @tetherTarget="[data-search-box]"
-      @attachment="top left"
-      @clickOutsideToClose={{true}}
-      @onClose={{this.clearSearch}}
-      @targetAttachment="bottom left"
-      @constraints={{array (hash to="window" attachment="together" pin=true)}}
-    >
-      <ul
-        class="docs-w-76 docs-bg-white docs-shadow-md"
-        data-test-search-result-list
+      <ModalDialog
+        @tetherTarget="[data-search-box]"
+        @attachment="top left"
+        @clickOutsideToClose={{true}}
+        @onClose={{@onClose}}
+        @targetAttachment="bottom left"
+        @constraints={{array (hash to="window" attachment="together" pin=true)}}
       >
-        {{#each (take 5 this.searchResults) as |result index|}}
-          <li>
-            <DocsHeader::SearchResult
-              @result={{result}}
-              @query={{@query}}
-              @selected={{eq index this.selectedIndex}}
-              @onMouseEnter={{fn this.selectResult index}}
-              @onClick={{this.clearSearch}}
-            />
-          </li>
-        {{else}}
-          <li
-            class="docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline"
-          >
-            No results.
-          </li>
-        {{/each}}
-      </ul>
-    </ModalDialog>
-  {{/if}}
+        <ul
+          class="docs-w-76 docs-bg-white docs-shadow-md"
+          data-test-search-result-list
+        >
+          {{#each (take 5 this.searchResults) as |result index|}}
+            <li>
+              <DocsHeader::SearchResult
+                @result={{result}}
+                @query={{@query}}
+                @selected={{eq index this.selectedIndex}}
+                @onMouseEnter={{fn this.selectResult index}}
+                @onClick={{@onClose}}
+              />
+            </li>
+          {{else}}
+            <li
+              class="docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline"
+            >
+              No results.
+            </li>
+          {{/each}}
+        </ul>
+      </ModalDialog>
+    {{/if}}
+  </div>
   */
   {
-    "id": "/fZzCBvt",
-    "block": "[[[41,[28,[37,1],[[30,0,[\"trimmedQuery\"]],[30,0,[\"search\",\"isIdle\"]]],null],[[[1,\"  \"],[8,[39,2],null,[[\"@tetherTarget\",\"@attachment\",\"@clickOutsideToClose\",\"@onClose\",\"@targetAttachment\",\"@constraints\"],[\"[data-search-box]\",\"top left\",true,[30,0,[\"clearSearch\"]],\"bottom left\",[28,[37,3],[[28,[37,4],null,[[\"to\",\"attachment\",\"pin\"],[\"window\",\"together\",true]]]],null]]],[[\"default\"],[[[[1,\"\\n    \"],[10,\"ul\"],[14,0,\"docs-w-76 docs-bg-white docs-shadow-md\"],[14,\"data-test-search-result-list\",\"\"],[12],[1,\"\\n\"],[42,[28,[37,6],[[28,[37,6],[[28,[37,7],[5,[30,0,[\"searchResults\"]]],null]],null]],null],null,[[[1,\"        \"],[10,\"li\"],[12],[1,\"\\n          \"],[8,[39,8],null,[[\"@result\",\"@query\",\"@selected\",\"@onMouseEnter\",\"@onClick\"],[[30,1],[30,3],[28,[37,9],[[30,2],[30,0,[\"selectedIndex\"]]],null],[28,[37,10],[[30,0,[\"selectResult\"]],[30,2]],null],[30,0,[\"clearSearch\"]]]],null],[1,\"\\n        \"],[13],[1,\"\\n\"]],[1,2]],[[[1,\"        \"],[10,\"li\"],[14,0,\"docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline\"],[12],[1,\"\\n          No results.\\n        \"],[13],[1,\"\\n\"]],[]]],[1,\"    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null]],[\"result\",\"index\",\"@query\"],false,[\"if\",\"and\",\"modal-dialog\",\"array\",\"hash\",\"each\",\"-track-array\",\"take\",\"docs-header/search-result\",\"eq\",\"fn\"]]",
+    "id": "wtB+Asgk",
+    "block": "[[[11,0],[17,1],[4,[38,0],[[28,[37,1],[[30,0,[\"search\"]]],null]],null],[4,[38,2],[[28,[37,1],[[30,0,[\"search\"]]],null],[30,2]],null],[12],[1,\"\\n\"],[41,[28,[37,4],[[30,0,[\"trimmedQuery\"]],[30,0,[\"search\",\"isIdle\"]]],null],[[[1,\"    \"],[8,[39,5],null,[[\"@tetherTarget\",\"@attachment\",\"@clickOutsideToClose\",\"@onClose\",\"@targetAttachment\",\"@constraints\"],[\"[data-search-box]\",\"top left\",true,[30,3],\"bottom left\",[28,[37,6],[[28,[37,7],null,[[\"to\",\"attachment\",\"pin\"],[\"window\",\"together\",true]]]],null]]],[[\"default\"],[[[[1,\"\\n      \"],[10,\"ul\"],[14,0,\"docs-w-76 docs-bg-white docs-shadow-md\"],[14,\"data-test-search-result-list\",\"\"],[12],[1,\"\\n\"],[42,[28,[37,9],[[28,[37,9],[[28,[37,10],[5,[30,0,[\"searchResults\"]]],null]],null]],null],null,[[[1,\"          \"],[10,\"li\"],[12],[1,\"\\n            \"],[8,[39,11],null,[[\"@result\",\"@query\",\"@selected\",\"@onMouseEnter\",\"@onClick\"],[[30,4],[30,2],[28,[37,12],[[30,5],[30,0,[\"selectedIndex\"]]],null],[28,[37,13],[[30,0,[\"selectResult\"]],[30,5]],null],[30,3]]],null],[1,\"\\n          \"],[13],[1,\"\\n\"]],[4,5]],[[[1,\"          \"],[10,\"li\"],[14,0,\"docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline\"],[12],[1,\"\\n            No results.\\n          \"],[13],[1,\"\\n\"]],[]]],[1,\"      \"],[13],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]],null],[13]],[\"&attrs\",\"@query\",\"@onClose\",\"result\",\"index\"],false,[\"did-insert\",\"perform\",\"did-update\",\"if\",\"and\",\"modal-dialog\",\"array\",\"hash\",\"each\",\"-track-array\",\"take\",\"docs-header/search-result\",\"eq\",\"fn\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/search-results/index.hbs",
     "isStrictMode": false
   });
-  /* eslint-disable ember/require-computed-property-dependencies */
 
-
-  let DocsHeaderSearchResultsComponent = (_dec = (0, _object.computed)('query'), _dec2 = (0, _emberConcurrency.task)({
-    restartable: true
-  }), _dec3 = (0, _object.computed)('project.navigationIndex', 'rawSearchResults.[]'), _dec4 = (0, _emberKeyboard.onKey)('Enter', {
+  let DocsHeaderSearchResults = (_dec = (0, _emberKeyboard.onKey)('Enter', {
     event: 'keyup'
-  }), _dec5 = (0, _emberKeyboard.onKey)('ctrl+KeyN'), _dec6 = (0, _emberKeyboard.onKey)('ArrowDown'), _dec7 = (0, _emberKeyboard.onKey)('ctrl+KeyP'), _dec8 = (0, _emberKeyboard.onKey)('ArrowUp'), (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsHeaderSearchResultsComponent extends _component.default {
-    // passed in
+  }), _dec2 = (0, _emberKeyboard.onKey)('ctrl+KeyN'), _dec3 = (0, _emberKeyboard.onKey)('ArrowDown'), _dec4 = (0, _emberKeyboard.onKey)('ctrl+KeyP'), _dec5 = (0, _emberKeyboard.onKey)('ArrowUp'), (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsHeaderSearchResults extends _component2.default {
     constructor() {
-      super(...arguments);
+      super(...arguments); // Start downloading the search index immediately
 
       _initializerDefineProperty(this, "docsSearch", _descriptor, this);
 
@@ -93624,34 +91865,21 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       _initializerDefineProperty(this, "store", _descriptor3, this);
 
-      _defineProperty(this, "query", null);
+      _initializerDefineProperty(this, "selectedIndex", _descriptor4, this);
 
-      _defineProperty(this, "selectedIndex", null);
+      _initializerDefineProperty(this, "rawSearchResults", _descriptor5, this);
 
-      const config = (0, _application.getOwner)(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-      const {
-        projectName
-      } = config;
-      this.set('projectName', projectName);
-    }
-
-    didInsertElement() {
-      super.didInsertElement(...arguments); // Start downloading the search index immediately
+      _initializerDefineProperty(this, "config", _descriptor6, this);
 
       this.docsSearch.loadSearchIndex();
     }
 
-    didReceiveAttrs() {
-      super.didReceiveAttrs(...arguments);
-      this.search.perform();
-    }
-
     get project() {
-      return this.store.peekRecord('project', this.projectName);
+      return this.store.peekRecord('project', this.config.projectName);
     }
 
     get trimmedQuery() {
-      return this.query.trim();
+      return this.args.query.trim();
     }
 
     *search() {
@@ -93661,8 +91889,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         results = yield this.docsSearch.search(this.trimmedQuery);
       }
 
-      this.set('selectedIndex', results.length ? 0 : null);
-      this.set('rawSearchResults', results);
+      this.selectedIndex = results.length ? 0 : null;
+      this.rawSearchResults = results;
     }
 
     get searchResults() {
@@ -93697,7 +91925,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           } = _ref3;
 
           if (document.type === 'module') {
-            let navigableModules = this.get('project.navigationIndex').find(section => section.type === 'modules');
+            let navigableModules = this.project.navigationIndex.find(section => section.type === 'modules');
             let navigableModuleIds = navigableModules ? navigableModules.items.map(item => item.id) : [];
             return navigableModuleIds.includes(document.title);
           } else {
@@ -93728,37 +91956,33 @@ lunr.QueryParser.parseBoost = function (parser) {
         if (selectedResult.document.type === 'template') {
           this.router.transitionTo(selectedResult.document.route);
         } else {
-          this.router.transitionTo('docs.api.item', selectedResult.model.get('routingId'));
+          this.router.transitionTo('docs.api.item', selectedResult.model.routingId);
         }
       }
 
-      this.get('on-visit')();
+      this.args.onVisit?.();
     }
 
     nextSearchResult() {
-      let hasSearchResults = this.get('searchResults.length');
-      let lastResultIsSelected = this.selectedIndex + 1 === this.get('searchResults.length');
+      let hasSearchResults = this.searchResults.length;
+      let lastResultIsSelected = this.selectedIndex + 1 === this.searchResults.length;
 
       if (hasSearchResults && !lastResultIsSelected) {
-        this.incrementProperty('selectedIndex');
+        this.selectedIndex = this.selectedIndex + 1;
       }
     }
 
     previousSearchResult() {
-      let hasSearchResults = this.get('searchResults.length');
+      let hasSearchResults = this.searchResults.length;
       let firstResultIsSelected = this.selectedIndex === 0;
 
       if (hasSearchResults && !firstResultIsSelected) {
-        this.decrementProperty('selectedIndex');
+        this.selectedIndex = this.selectedIndex - 1;
       }
     }
 
-    clearSearch() {
-      this.set('query', null);
-    }
-
     selectResult(index) {
-      this.set('selectedIndex', index);
+      this.selectedIndex = index;
     }
 
   }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "docsSearch", [_service.inject], {
@@ -93776,33 +92000,75 @@ lunr.QueryParser.parseBoost = function (parser) {
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "trimmedQuery", [_dec], Object.getOwnPropertyDescriptor(_class2.prototype, "trimmedQuery"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "search", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "search"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "searchResults", [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "searchResults"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "gotoSelectedItem", [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "gotoSelectedItem"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "nextSearchResult", [_dec5, _dec6], Object.getOwnPropertyDescriptor(_class2.prototype, "nextSearchResult"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "previousSearchResult", [_dec7, _dec8], Object.getOwnPropertyDescriptor(_class2.prototype, "previousSearchResult"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "clearSearch", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "clearSearch"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "selectResult", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "selectResult"), _class2.prototype)), _class2)) || _class);
-  _exports.default = DocsHeaderSearchResultsComponent;
-  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchResultsComponent);
+  }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "selectedIndex", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return null;
+    }
+  }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "rawSearchResults", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return [];
+    }
+  }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class2.prototype, "search", [_emberConcurrency.restartableTask], Object.getOwnPropertyDescriptor(_class2.prototype, "search"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "gotoSelectedItem", [_dec], Object.getOwnPropertyDescriptor(_class2.prototype, "gotoSelectedItem"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "nextSearchResult", [_dec2, _dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "nextSearchResult"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "previousSearchResult", [_dec4, _dec5], Object.getOwnPropertyDescriptor(_class2.prototype, "previousSearchResult"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "selectResult", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "selectResult"), _class2.prototype)), _class2)) || _class);
+  _exports.default = DocsHeaderSearchResults;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchResults);
 });
-;define("ember-cli-addon-docs/components/docs-header/version-selector/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@ember/object/computed", "@ember/object", "@ember/array", "@ember/application"], function (_exports, _component, _templateFactory, _service, _computed, _object, _array, _application) {
+;define("ember-cli-addon-docs/components/docs-header/version-selector/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@ember/service", "@ember/object/computed", "@ember/object", "@ember/array", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _service, _computed, _object, _array, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"@ember/array",0,"@ember/application"eaimeta@70e063a35619d71f
+
+  var _dec, _class, _descriptor, _descriptor2, _descriptor3;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"@ember/array",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <ModalDialog @tetherTarget="[data-version-selector]" @attachment="top right" @clickOutsideToClose={{true}} @onClose={{action @on-close}} @targetAttachment="bottom right">
-    <ul class="docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10">
+    <ModalDialog
+    @tetherTarget="[data-version-selector]"
+    @attachment="top right"
+    @clickOutsideToClose={{true}}
+    @onClose={{@onClose}}
+    @targetAttachment="bottom right"
+    ...attributes
+  >
+    <ul
+      class="docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10"
+    >
       {{#each this.sortedVersions as |version|}}
         <li data-test-id="version">
-          <a {{action "changeVersion" version}} href="#"
+          <a
+            {{on "click" (fn this.changeVersion version)}}
+            href="#"
             class={{concat
               "docs-text-black docs-no-underline docs-flex docs-items-center
               docs-px-4 docs-py-3 hover:docs-bg-brand hover:docs-text-white group "
               (if (eq version this.sortedVersions.firstObject) "docs-rounded-t")
               (if (eq version this.sortedVersions.lastObject) "docs-rounded-b")
-            }}>
-            <span class="docs-w-6 flex">
+            }}
+          >
+            <span class="flex docs-w-6">
               {{#if (eq version.key this.currentVersion.key)}}
                 {{svg-jar "check" height=16 width=16}}
               {{/if}}
@@ -93811,15 +92077,31 @@ lunr.QueryParser.parseBoost = function (parser) {
               {{version.name}}
             </span>
   
-            <span class="docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100">
-              {{#if (or (eq version.key this.latestVersionName) (eq version.key this.primaryBranch))}}
-                {{svg-jar (if version.tag "git-tag" "git-sha") height=16 width=16}}
+            <span
+              class="docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100"
+            >
+              {{#if
+                (or
+                  (eq version.key this.config.latestVersionName)
+                  (eq version.key this.config.primaryBranch)
+                )
+              }}
+                {{svg-jar
+                  (if version.tag "git-tag" "git-sha")
+                  height=16
+                  width=16
+                }}
               {{else}}
                 {{svg-jar "git-sha" height=16 width=16}}
               {{/if}}
   
               <span class="docs-text-xxs docs-font-mono docs-pl-1">
-                {{#if (or (eq version.key this.latestVersionName) (eq version.key this.primaryBranch))}}
+                {{#if
+                  (or
+                    (eq version.key this.config.latestVersionName)
+                    (eq version.key this.config.primaryBranch)
+                  )
+                }}
                   {{#if version.tag}}
                     {{version.tag}}
                   {{else}}
@@ -93835,37 +92117,29 @@ lunr.QueryParser.parseBoost = function (parser) {
       {{/each}}
     </ul>
   </ModalDialog>
-  
   */
   {
-    "id": "5WJ7B5qr",
-    "block": "[[[8,[39,0],null,[[\"@tetherTarget\",\"@attachment\",\"@clickOutsideToClose\",\"@onClose\",\"@targetAttachment\"],[\"[data-version-selector]\",\"top right\",true,[28,[37,1],[[30,0],[30,1]],null],\"bottom right\"]],[[\"default\"],[[[[1,\"\\n  \"],[10,\"ul\"],[14,0,\"docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10\"],[12],[1,\"\\n\"],[42,[28,[37,3],[[28,[37,3],[[30,0,[\"sortedVersions\"]]],null]],null],null,[[[1,\"      \"],[10,\"li\"],[14,\"data-test-id\",\"version\"],[12],[1,\"\\n        \"],[11,3],[24,6,\"#\"],[16,0,[28,[37,4],[\"docs-text-black docs-no-underline docs-flex docs-items-center\\n            docs-px-4 docs-py-3 hover:docs-bg-brand hover:docs-text-white group \",[52,[28,[37,6],[[30,2],[30,0,[\"sortedVersions\",\"firstObject\"]]],null],\"docs-rounded-t\"],[52,[28,[37,6],[[30,2],[30,0,[\"sortedVersions\",\"lastObject\"]]],null],\"docs-rounded-b\"]],null]],[4,[38,1],[[30,0],\"changeVersion\",[30,2]],null],[12],[1,\"\\n          \"],[10,1],[14,0,\"docs-w-6 flex\"],[12],[1,\"\\n\"],[41,[28,[37,6],[[30,2,[\"key\"]],[30,0,[\"currentVersion\",\"key\"]]],null],[[[1,\"              \"],[1,[28,[35,7],[\"check\"],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]],null],[1,\"          \"],[13],[1,\"\\n          \"],[10,1],[14,0,\"docs-font-medium\"],[12],[1,\"\\n            \"],[1,[30,2,[\"name\"]]],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,1],[14,0,\"docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100\"],[12],[1,\"\\n\"],[41,[28,[37,8],[[28,[37,6],[[30,2,[\"key\"]],[30,0,[\"latestVersionName\"]]],null],[28,[37,6],[[30,2,[\"key\"]],[30,0,[\"primaryBranch\"]]],null]],null],[[[1,\"              \"],[1,[28,[35,7],[[52,[30,2,[\"tag\"]],\"git-tag\",\"git-sha\"]],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[1,[28,[35,7],[\"git-sha\"],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]]],[1,\"\\n            \"],[10,1],[14,0,\"docs-text-xxs docs-font-mono docs-pl-1\"],[12],[1,\"\\n\"],[41,[28,[37,8],[[28,[37,6],[[30,2,[\"key\"]],[30,0,[\"latestVersionName\"]]],null],[28,[37,6],[[30,2,[\"key\"]],[30,0,[\"primaryBranch\"]]],null]],null],[[[41,[30,2,[\"tag\"]],[[[1,\"                  \"],[1,[30,2,[\"tag\"]]],[1,\"\\n\"]],[]],[[[1,\"                  \"],[1,[30,2,[\"truncatedSha\"]]],[1,\"\\n\"]],[]]]],[]],[[[1,\"                \"],[1,[30,2,[\"truncatedSha\"]]],[1,\"\\n\"]],[]]],[1,\"            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[2]],null],[1,\"  \"],[13],[1,\"\\n\"]],[]]]]],[1,\"\\n\"]],[\"@on-close\",\"version\"],false,[\"modal-dialog\",\"action\",\"each\",\"-track-array\",\"concat\",\"if\",\"eq\",\"svg-jar\",\"or\"]]",
+    "id": "OT6zNk71",
+    "block": "[[[8,[39,0],[[17,1]],[[\"@tetherTarget\",\"@attachment\",\"@clickOutsideToClose\",\"@onClose\",\"@targetAttachment\"],[\"[data-version-selector]\",\"top right\",true,[30,2],\"bottom right\"]],[[\"default\"],[[[[1,\"\\n  \"],[10,\"ul\"],[14,0,\"docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10\"],[12],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,0,[\"sortedVersions\"]]],null]],null],null,[[[1,\"      \"],[10,\"li\"],[14,\"data-test-id\",\"version\"],[12],[1,\"\\n        \"],[11,3],[24,6,\"#\"],[16,0,[28,[37,3],[\"docs-text-black docs-no-underline docs-flex docs-items-center\\n            docs-px-4 docs-py-3 hover:docs-bg-brand hover:docs-text-white group \",[52,[28,[37,5],[[30,3],[30,0,[\"sortedVersions\",\"firstObject\"]]],null],\"docs-rounded-t\"],[52,[28,[37,5],[[30,3],[30,0,[\"sortedVersions\",\"lastObject\"]]],null],\"docs-rounded-b\"]],null]],[4,[38,6],[\"click\",[28,[37,7],[[30,0,[\"changeVersion\"]],[30,3]],null]],null],[12],[1,\"\\n          \"],[10,1],[14,0,\"flex docs-w-6\"],[12],[1,\"\\n\"],[41,[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"currentVersion\",\"key\"]]],null],[[[1,\"              \"],[1,[28,[35,8],[\"check\"],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]],null],[1,\"          \"],[13],[1,\"\\n          \"],[10,1],[14,0,\"docs-font-medium\"],[12],[1,\"\\n            \"],[1,[30,3,[\"name\"]]],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,1],[14,0,\"docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100\"],[12],[1,\"\\n\"],[41,[28,[37,9],[[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"latestVersionName\"]]],null],[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"primaryBranch\"]]],null]],null],[[[1,\"              \"],[1,[28,[35,8],[[52,[30,3,[\"tag\"]],\"git-tag\",\"git-sha\"]],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[1,[28,[35,8],[\"git-sha\"],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]]],[1,\"\\n            \"],[10,1],[14,0,\"docs-text-xxs docs-font-mono docs-pl-1\"],[12],[1,\"\\n\"],[41,[28,[37,9],[[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"latestVersionName\"]]],null],[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"primaryBranch\"]]],null]],null],[[[41,[30,3,[\"tag\"]],[[[1,\"                  \"],[1,[30,3,[\"tag\"]]],[1,\"\\n\"]],[]],[[[1,\"                  \"],[1,[30,3,[\"truncatedSha\"]]],[1,\"\\n\"]],[]]]],[]],[[[1,\"                \"],[1,[30,3,[\"truncatedSha\"]]],[1,\"\\n\"]],[]]],[1,\"            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[3]],null],[1,\"  \"],[13],[1,\"\\n\"]],[]]]]]],[\"&attrs\",\"@onClose\",\"version\"],false,[\"modal-dialog\",\"each\",\"-track-array\",\"concat\",\"if\",\"eq\",\"on\",\"fn\",\"svg-jar\",\"or\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/version-selector/index.hbs",
     "isStrictMode": false
   });
 
-  // const { latestVersionName, primaryBranch } = config['ember-cli-addon-docs'];
-  //
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    projectVersion: (0, _service.inject)(),
+  let VersionSelector = (_dec = (0, _computed.reads)('projectVersion.currentVersion'), (_class = class VersionSelector extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-    init() {
-      this._super(...arguments);
+      _initializerDefineProperty(this, "projectVersion", _descriptor, this);
 
-      const config = (0, _application.getOwner)(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-      this.set('latestVersionName', config.latestVersionName);
-      this.set('primaryBranch', config.primaryBranch);
-    },
+      _initializerDefineProperty(this, "config", _descriptor2, this);
 
-    'on-close'() {},
+      _initializerDefineProperty(this, "currentVersion", _descriptor3, this);
+    }
 
-    currentVersion: (0, _computed.reads)('projectVersion.currentVersion'),
-    sortedVersions: (0, _object.computed)('projectVersion.versions', 'latestVersionName', 'primaryBranch', function () {
-      let latestVersionName = this.latestVersionName;
-      let primaryBranch = this.primaryBranch;
-      let versions = (0, _array.A)(this.get('projectVersion.versions'));
-      let latest = versions.findBy('key', latestVersionName);
-      let primary = versions.findBy('key', primaryBranch);
+    get sortedVersions() {
+      let versions = (0, _array.A)(this.projectVersion.versions);
+      let latest = versions.findBy('key', this.config.latestVersionName);
+      let primary = versions.findBy('key', this.config.primaryBranch);
       let otherTags = versions.reject(v => [latest, primary].includes(v)).sort((tagA, tagB) => {
         let keyA = tagA.key;
         let keyB = tagB.key;
@@ -93882,18 +92156,32 @@ lunr.QueryParser.parseBoost = function (parser) {
         return 0;
       });
       return [latest, primary, ...otherTags].filter(Boolean);
-    }),
-    actions: {
-      changeVersion(version) {
-        this.projectVersion.redirectTo(version);
-      }
-
     }
-  }));
 
-  _exports.default = _default;
+    changeVersion(version) {
+      this.projectVersion.redirectTo(version);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "projectVersion", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "currentVersion", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "changeVersion", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "changeVersion"), _class.prototype)), _class));
+  _exports.default = VersionSelector;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, VersionSelector);
 });
-;define("ember-cli-addon-docs/components/docs-hero/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "ember-cli-addon-docs/utils/computed", "@ember/application", "@ember/string"], function (_exports, _component, _templateFactory, _component2, _tracking, _computed, _application, _string) {
+;define("ember-cli-addon-docs/components/docs-hero/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "ember-cli-addon-docs/utils/computed", "@ember/string", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _computed, _string, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -93901,9 +92189,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _class, _descriptor, _descriptor2;
+  var _class, _descriptor;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"ember-cli-addon-docs/utils/computed",0,"@ember/application",0,"@ember/string"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-cli-addon-docs/utils/computed",0,"@ember/string",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -93980,27 +92268,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     constructor() {
       super(...arguments);
 
-      _initializerDefineProperty(this, "projectDescription", _descriptor, this);
-
-      _initializerDefineProperty(this, "projectName", _descriptor2, this);
-
-      const config = (0, _application.getOwner)(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-      const {
-        projectDescription,
-        projectName
-      } = config;
-      this.projectDescription = projectDescription;
-      this.projectName = projectName;
+      _initializerDefineProperty(this, "config", _descriptor, this);
     }
+
     /**
       The prefix to show, typically of: 'Ember', 'EmberCLI', or 'EmberData'
        @argument prefix
       @type String
     */
-
-
     get prefix() {
-      return this.args.prefix ?? (0, _computed.addonPrefix)(this.projectName);
+      return this.args.prefix ?? (0, _computed.addonPrefix)(this.config.projectName);
     }
     /**
       The logo's main heading
@@ -94010,7 +92287,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
 
     get heading() {
-      return this.args.heading ?? (0, _string.classify)((0, _computed.unprefixedAddonName)(this.projectName));
+      return this.args.heading ?? (0, _string.classify)((0, _computed.unprefixedAddonName)(this.config.projectName));
     }
     /**
       Byline for the logo
@@ -94020,15 +92297,10 @@ lunr.QueryParser.parseBoost = function (parser) {
 
 
     get byline() {
-      return this.args.byline ?? this.projectDescription;
+      return this.args.byline ?? this.config.projectDescription;
     }
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "projectDescription", [_tracking.tracked], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "projectName", [_tracking.tracked], {
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -94037,7 +92309,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeroComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeroComponent);
 });
-;define("ember-cli-addon-docs/components/docs-keyboard-shortcuts/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/runloop", "ember-keyboard", "@ember/service", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _object, _runloop, _emberKeyboard, _service, _keyboardConfig) {
+;define("ember-cli-addon-docs/components/docs-keyboard-shortcuts/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/runloop", "ember-keyboard", "@ember/service", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _component2, _tracking, _object, _runloop, _emberKeyboard, _service, _keyboardConfig) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94045,9 +92317,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor;
+  var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component",0,"@ember/object",0,"@ember/runloop",0,"ember-keyboard",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"@ember/runloop",0,"ember-keyboard",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -94066,6 +92338,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @wrapperClass="docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade"
       @clickOutsideToClose={{true}}
       @onClose={{this.toggleKeyboardShortcuts}}
+      ...attributes
     >
       <div class="docs-fullscreen-modal__header">
         <h2 class="docs-fullscreen-modal__title">
@@ -94248,8 +92521,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{/if}}
   */
   {
-    "id": "RNHsOr2u",
-    "block": "[[[41,[30,0,[\"isShowingKeyboardShortcuts\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@animatable\",\"@overlay\",\"@wrapperClass\",\"@clickOutsideToClose\",\"@onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[30,0,[\"toggleKeyboardShortcuts\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[14,0,\"docs-fullscreen-modal__header\"],[12],[1,\"\\n      \"],[10,\"h2\"],[14,0,\"docs-fullscreen-modal__title\"],[12],[1,\"\\n        Keyboard shortcuts\\n      \"],[13],[1,\"\\n      \"],[11,3],[24,6,\"#\"],[24,0,\"docs-fullscreen-modal__close-button\"],[4,[38,2],[\"click\",[30,0,[\"toggleKeyboardShortcuts\"]]],null],[12],[1,\"\\n        ×\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-fullscreen-modal__body\"],[12],[1,\"\\n      \"],[10,\"table\"],[14,0,\"docs-keyboard-shortcut-modal\"],[12],[1,\"\\n        \"],[10,\"tbody\"],[12],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Site wide shortcuts\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                g\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                h\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Go to Home\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                g\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                d\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Go to Docs\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ?\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Bring up this help dialog\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                esc\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Hide this help dialog\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Docs search\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                /\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                s\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Focus search bar\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ctrl\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                n\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ↓\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Select next search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ctrl\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                p\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ↑\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Select previous search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                enter\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to selected search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Docs nav\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                j\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                →\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to next page\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                k\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ←\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to previous page\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null]],[],false,[\"if\",\"modal-dialog\",\"on\"]]",
+    "id": "2VQtiK+I",
+    "block": "[[[41,[30,0,[\"isShowingKeyboardShortcuts\"]],[[[1,\"  \"],[8,[39,1],[[17,1]],[[\"@animatable\",\"@overlay\",\"@wrapperClass\",\"@clickOutsideToClose\",\"@onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[30,0,[\"toggleKeyboardShortcuts\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[14,0,\"docs-fullscreen-modal__header\"],[12],[1,\"\\n      \"],[10,\"h2\"],[14,0,\"docs-fullscreen-modal__title\"],[12],[1,\"\\n        Keyboard shortcuts\\n      \"],[13],[1,\"\\n      \"],[11,3],[24,6,\"#\"],[24,0,\"docs-fullscreen-modal__close-button\"],[4,[38,2],[\"click\",[30,0,[\"toggleKeyboardShortcuts\"]]],null],[12],[1,\"\\n        ×\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-fullscreen-modal__body\"],[12],[1,\"\\n      \"],[10,\"table\"],[14,0,\"docs-keyboard-shortcut-modal\"],[12],[1,\"\\n        \"],[10,\"tbody\"],[12],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Site wide shortcuts\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                g\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                h\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Go to Home\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                g\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                d\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Go to Docs\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ?\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Bring up this help dialog\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                esc\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Hide this help dialog\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Docs search\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                /\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                s\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Focus search bar\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ctrl\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                n\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ↓\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Select next search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ctrl\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                p\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ↑\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Select previous search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                enter\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to selected search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Docs nav\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                j\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                →\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to next page\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                k\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ←\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to previous page\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null]],[\"&attrs\"],false,[\"if\",\"modal-dialog\",\"on\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-keyboard-shortcuts/index.hbs",
     "isStrictMode": false
   });
@@ -94271,13 +92544,13 @@ lunr.QueryParser.parseBoost = function (parser) {
     event: 'keyup'
   }), _dec5 = (0, _emberKeyboard.onKey)('Escape', {
     event: 'keyup'
-  }), (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsKeyboardShortcutsComponent extends _component.default {
+  }), (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsKeyboardShortcutsComponent extends _component2.default {
     constructor() {
       super(...arguments);
 
       _initializerDefineProperty(this, "router", _descriptor, this);
 
-      _defineProperty(this, "isShowingKeyboardShortcuts", false);
+      _initializerDefineProperty(this, "isShowingKeyboardShortcuts", _descriptor2, this);
     }
 
     goto() {
@@ -94307,18 +92580,18 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     toggleKeyboardShortcutsWithKeyboard() {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        this.toggleProperty('isShowingKeyboardShortcuts');
+        this.isShowingKeyboardShortcuts = !this.isShowingKeyboardShortcuts;
       }
     }
 
     hideKeyboardShortcuts() {
       if (!(0, _keyboardConfig.formElementHasFocus)() && this.isShowingKeyboardShortcuts) {
-        this.set('isShowingKeyboardShortcuts', false);
+        this.isShowingKeyboardShortcuts = false;
       }
     }
 
     toggleKeyboardShortcuts() {
-      this.toggleProperty('isShowingKeyboardShortcuts');
+      this.isShowingKeyboardShortcuts = !this.isShowingKeyboardShortcuts;
     }
 
   }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "router", [_service.inject], {
@@ -94326,37 +92599,95 @@ lunr.QueryParser.parseBoost = function (parser) {
     enumerable: true,
     writable: true,
     initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "isShowingKeyboardShortcuts", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return false;
+    }
   }), _applyDecoratedDescriptor(_class2.prototype, "goto", [_dec], Object.getOwnPropertyDescriptor(_class2.prototype, "goto"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "gotoDocs", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "gotoDocs"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "gotoHome", [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "gotoHome"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "toggleKeyboardShortcutsWithKeyboard", [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "toggleKeyboardShortcutsWithKeyboard"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "hideKeyboardShortcuts", [_dec5], Object.getOwnPropertyDescriptor(_class2.prototype, "hideKeyboardShortcuts"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "toggleKeyboardShortcuts", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "toggleKeyboardShortcuts"), _class2.prototype)), _class2)) || _class);
   _exports.default = DocsKeyboardShortcutsComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsKeyboardShortcutsComponent);
 });
-;define("ember-cli-addon-docs/components/docs-link", ["exports", "@ember-decorators/component", "@ember/legacy-built-in-components"], function (_exports, _component, _legacyBuiltInComponents) {
+;define("ember-cli-addon-docs/components/docs-link/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component"], function (_exports, _component, _templateFactory, _component2) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component"eaimeta@70e063a35619d71f
 
-  var _dec, _class;
+  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
+  /*
+    {{#let
+    (if
+      this.isRouteOnly
+      (component "link-to" route=@route)
+      (if
+        this.isRouteAndModelOnly
+        (component "link-to" route=@route model=@model)
+        (if
+          this.isRouteAndModelsOnly
+          (component "link-to" route=@route models=@models)
+          (component "link-to")
+        )
+      )
+    )
+    as |DocsLinkTo|
+  ~}}
+    <DocsLinkTo
+      class="docs-md__a"
+      @query={{or @query (hash)}}
+      @disabled={{@disabled}}
+      @activeClass={{@activeClass}}
+      @current-when={{@current-when}}
+      ...attributes
+    >
+      {{~yield~}}
+    </DocsLinkTo>
+  {{~/let}}
+  */
+  {
+    "id": "i/HQ3rDz",
+    "block": "[[[44,[[52,[30,0,[\"isRouteOnly\"]],[50,\"link-to\",0,null,[[\"route\"],[[30,1]]]],[52,[30,0,[\"isRouteAndModelOnly\"]],[50,\"link-to\",0,null,[[\"route\",\"model\"],[[30,1],[30,2]]]],[52,[30,0,[\"isRouteAndModelsOnly\"]],[50,\"link-to\",0,null,[[\"route\",\"models\"],[[30,1],[30,3]]]],[50,\"link-to\",0,null,null]]]]],[[[8,[30,4],[[24,0,\"docs-md__a\"],[17,5]],[[\"@query\",\"@disabled\",\"@activeClass\",\"@current-when\"],[[28,[37,3],[[30,6],[28,[37,4],null,null]],null],[30,7],[30,8],[30,9]]],[[\"default\"],[[[[18,10,null]],[]]]]]],[4]]]],[\"@route\",\"@model\",\"@models\",\"DocsLinkTo\",\"&attrs\",\"@query\",\"@disabled\",\"@activeClass\",\"@current-when\",\"&default\"],false,[\"let\",\"if\",\"component\",\"or\",\"hash\",\"yield\"]]",
+    "moduleName": "ember-cli-addon-docs/components/docs-link/index.hbs",
+    "isStrictMode": false
+  });
 
-  0; //eaimeta@70e063a35619d71f0,"@ember-decorators/component",0,"@ember/legacy-built-in-components"eaimeta@70e063a35619d71f
-
-  let DocsLink = (
   /**
-    Just a styled subclass of LinkComponent. Comes in handy when rending links in Markdown templates:
+    A `<LinkTo>` styled alternative. See [ember docs](https://api.emberjs.com/ember/release/classes/Ember.Templates.components/methods/input?anchor=LinkTo) on how to use it.
   
-    ```md
-    Here I am, telling you about <DocsLink @route="docs.x-foo">another page</DocsLink>
+  
+    ```hbs
+    <DocsLink @route="post" @model={{post.id}}>
+      Go to post
+    </DocsLink>
     ```
   
     @class DocsLink
     @public
   */
-  _dec = (0, _component.classNames)('docs-md__a'), _dec(_class = class DocsLink extends _legacyBuiltInComponents.LinkComponent {}) || _class);
+  class DocsLink extends _component2.default {
+    get isRouteOnly() {
+      return 'route' in this.args && !('model' in this.args) && !('models' in this.args);
+    }
+
+    get isRouteAndModelOnly() {
+      return 'route' in this.args && 'model' in this.args && !('models' in this.args);
+    }
+
+    get isRouteAndModelsOnly() {
+      return 'route' in this.args && !('model' in this.args) && 'models' in this.args;
+    }
+
+  }
+
   _exports.default = DocsLink;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsLink);
 });
-;define("ember-cli-addon-docs/components/docs-logo/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component", "@ember/object/computed", "@ember/debug"], function (_exports, _component, _templateFactory, _component2, _computed, _debug) {
+;define("ember-cli-addon-docs/components/docs-logo/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object/computed", "@ember/debug", "@glimmer/component", "tracked-toolbox"], function (_exports, _component, _templateFactory, _computed, _debug, _component2, _trackedToolbox) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94364,9 +92695,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3;
+  var _dec, _dec2, _dec3, _dec4, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/object/computed",0,"@ember/debug",0,"@ember/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object/computed",0,"@ember/debug",0,"@glimmer/component",0,"tracked-toolbox"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -94378,63 +92709,74 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    {{svg-jar logo class="docs-h-full docs-w-auto docs-max-w-full docs-fill-current"}}
+    {{svg-jar this.logo class="docs-h-full docs-w-auto docs-max-w-full docs-fill-current"}}
   
   */
   {
-    "id": "vjWhY79f",
-    "block": "[[[1,[28,[35,0],[[31,1]],[[\"class\"],[\"docs-h-full docs-w-auto docs-max-w-full docs-fill-current\"]]]],[1,\"\\n\"]],[],false,[\"svg-jar\",\"logo\"]]",
+    "id": "5IENwFYG",
+    "block": "[[[1,[28,[35,0],[[30,0,[\"logo\"]]],[[\"class\"],[\"docs-h-full docs-w-auto docs-max-w-full docs-fill-current\"]]]],[1,\"\\n\"]],[],false,[\"svg-jar\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-logo/index.hbs",
     "isStrictMode": false
   });
 
-  let DocsLogo = (
   /**
     A simple component to render an Ember, Ember CLI or Ember Data logo.
   
     @class DocsLogo
     @public
   */
-  _dec = (0, _component2.tagName)(''), _dec2 = (0, _computed.equal)('logo', 'ember'), _dec3 = (0, _computed.equal)('logo', 'ember-cli'), _dec4 = (0, _computed.equal)('logo', 'ember-data'), _dec(_class = (_class2 = class DocsLogo extends _component.default {
+  let DocsLogo = (_dec = (0, _trackedToolbox.localCopy)('args.logo', 'ember'), _dec2 = (0, _computed.equal)('logo', 'ember'), _dec3 = (0, _computed.equal)('logo', 'ember-cli'), _dec4 = (0, _computed.equal)('logo', 'ember-data'), (_class = class DocsLogo extends _component2.default {
+    /**
+      Render either the 'ember', 'ember-cli' or 'ember-data' logo:
+       ```handlebars
+      {{docs-logo logo='ember'}}
+      {{docs-logo logo='ember-cli'}}
+      {{docs-logo logo='ember-data'}}
+      ```
+       @argument logo
+      @type String
+    */
     constructor() {
       super(...arguments);
 
-      _defineProperty(this, "logo", 'ember');
+      _initializerDefineProperty(this, "logo", _descriptor, this);
 
-      _initializerDefineProperty(this, "showEmber", _descriptor, this);
+      _initializerDefineProperty(this, "showEmber", _descriptor2, this);
 
-      _initializerDefineProperty(this, "showEmberCli", _descriptor2, this);
+      _initializerDefineProperty(this, "showEmberCli", _descriptor3, this);
 
-      _initializerDefineProperty(this, "showEmberData", _descriptor3, this);
-    }
+      _initializerDefineProperty(this, "showEmberData", _descriptor4, this);
 
-    didReceiveAttrs() {
-      super.didReceiveAttrs(...arguments);
       let logo = this.logo;
       let validLogos = ['ember', 'ember-cli', 'ember-data'];
       (false && !(validLogos.includes(logo)) && (0, _debug.assert)(`You passed "${logo}" to the docs-logo component, but the only valid options are [${validLogos}].`, validLogos.includes(logo)));
     }
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "showEmber", [_dec2], {
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "logo", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "showEmberCli", [_dec3], {
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "showEmber", [_dec2], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "showEmberData", [_dec4], {
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "showEmberCli", [_dec3], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  })), _class2)) || _class);
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "showEmberData", [_dec4], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
   _exports.default = DocsLogo;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsLogo);
 });
-;define("ember-cli-addon-docs/components/docs-snippet/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component"], function (_exports, _component, _templateFactory, _component2) {
+;define("ember-cli-addon-docs/components/docs-snippet/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "tracked-toolbox"], function (_exports, _component, _templateFactory, _component2, _trackedToolbox) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94442,11 +92784,17 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _class;
+  var _dec, _dec2, _class, _descriptor, _descriptor2;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
@@ -94466,7 +92814,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       docs-relative docs-subpixel-antialiased
       {{if @title "docs-rounded-b" "docs-rounded"}}
     "
-    data-test-id={{or this.data-test-id @name}}
+    data-test-id={{or @data-test-id @name}}
+    ...attributes
   >
     {{#let (get-code-snippet @name unindent=this.unindent) as |snippet|}}
       {{#if this.showCopy}}
@@ -94488,97 +92837,46 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "r7qBQpe7",
-    "block": "[[[41,[30,1],[[[1,\"  \"],[10,0],[14,0,\"\\n    docs-bg-black docs-text-grey-lighter docs-text-xs\\n    docs-font-medium docs-py-2 docs-px-4 docs-rounded-t\\n    docs-border-b docs-border-grey-darkest\\n    docs-subpixel-antialiased\\n  \"],[12],[1,\"\\n    \"],[1,[30,1]],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[10,0],[15,0,[29,[\"\\n    docs-text-xs docs-px-2 docs-py-1 docs-bg-code-base\\n    docs-relative docs-subpixel-antialiased\\n    \",[52,[30,1],\"docs-rounded-b\",\"docs-rounded\"],\"\\n  \"]]],[15,\"data-test-id\",[28,[37,1],[[30,0,[\"data-test-id\"]],[30,2]],null]],[12],[1,\"\\n\"],[44,[[28,[37,3],[[30,2]],[[\"unindent\"],[[30,0,[\"unindent\"]]]]]],[[[41,[30,0,[\"showCopy\"]],[[[1,\"      \"],[8,[39,4],[[24,0,\"\\n          docs-absolute docs-top-0 docs-right-0 docs-bg-transparent hover:docs-bg-transparent\\n          docs-border-none docs-opacity-50 hover:docs-opacity-100 docs-p-3 docs-text-white\\n        \"]],[[\"@clipboardText\",\"@title\"],[[30,3,[\"source\"]],\"copy to clipboard\"]],[[\"default\"],[[[[1,\"\\n        Copy\\n      \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[8,[39,5],null,[[\"@language\"],[[30,4]]],[[\"default\"],[[[[1,[30,3,[\"source\"]]]],[]]]]],[1,\"\\n\"]],[3]]],[13],[1,\"\\n\"]],[\"@title\",\"@name\",\"snippet\",\"@language\"],false,[\"if\",\"or\",\"let\",\"get-code-snippet\",\"copy-button\",\"docs-code-highlight\"]]",
+    "id": "Na/rrRHA",
+    "block": "[[[41,[30,1],[[[1,\"  \"],[10,0],[14,0,\"\\n    docs-bg-black docs-text-grey-lighter docs-text-xs\\n    docs-font-medium docs-py-2 docs-px-4 docs-rounded-t\\n    docs-border-b docs-border-grey-darkest\\n    docs-subpixel-antialiased\\n  \"],[12],[1,\"\\n    \"],[1,[30,1]],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[11,0],[16,0,[29,[\"\\n    docs-text-xs docs-px-2 docs-py-1 docs-bg-code-base\\n    docs-relative docs-subpixel-antialiased\\n    \",[52,[30,1],\"docs-rounded-b\",\"docs-rounded\"],\"\\n  \"]]],[16,\"data-test-id\",[28,[37,1],[[30,2],[30,3]],null]],[17,4],[12],[1,\"\\n\"],[44,[[28,[37,3],[[30,3]],[[\"unindent\"],[[30,0,[\"unindent\"]]]]]],[[[41,[30,0,[\"showCopy\"]],[[[1,\"      \"],[8,[39,4],[[24,0,\"\\n          docs-absolute docs-top-0 docs-right-0 docs-bg-transparent hover:docs-bg-transparent\\n          docs-border-none docs-opacity-50 hover:docs-opacity-100 docs-p-3 docs-text-white\\n        \"]],[[\"@clipboardText\",\"@title\"],[[30,5,[\"source\"]],\"copy to clipboard\"]],[[\"default\"],[[[[1,\"\\n        Copy\\n      \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[8,[39,5],null,[[\"@language\"],[[30,6]]],[[\"default\"],[[[[1,[30,5,[\"source\"]]]],[]]]]],[1,\"\\n\"]],[5]]],[13],[1,\"\\n\"]],[\"@title\",\"@data-test-id\",\"@name\",\"&attrs\",\"snippet\",\"@language\"],false,[\"if\",\"or\",\"let\",\"get-code-snippet\",\"copy-button\",\"docs-code-highlight\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-snippet/index.hbs",
     "isStrictMode": false
   });
 
-  let DocsSnippet = (
   /**
     A snippet component for demonstrating some code
   
     ```hbs
-    {{docs-snippet name=snippet.name unindent=true language=snippet.language}}
+    <DocsSnippet @name={{snippet.name}} @unindent={{true}} @language={{snippet.language}} />
     ```
   
     @class DocsSnippet
     @public
   */
-  _dec = (0, _component2.tagName)(''), _dec(_class = class DocsSnippet extends _component.default {
+  let DocsSnippet = (_dec = (0, _trackedToolbox.localCopy)('args.showCopy', true), _dec2 = (0, _trackedToolbox.localCopy)('args.unindent', true), (_class = class DocsSnippet extends _component2.default {
     constructor() {
       super(...arguments);
 
-      _defineProperty(this, "name", null);
+      _initializerDefineProperty(this, "showCopy", _descriptor, this);
 
-      _defineProperty(this, "language", null);
-
-      _defineProperty(this, "title", null);
-
-      _defineProperty(this, "showCopy", true);
-
-      _defineProperty(this, "unindent", true);
+      _initializerDefineProperty(this, "unindent", _descriptor2, this);
     }
 
-  }) || _class);
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "showCopy", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "unindent", [_dec2], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
   _exports.default = DocsSnippet;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsSnippet);
 });
-;define("ember-cli-addon-docs/components/docs-svg-icon/index", ["exports", "@ember/component", "@ember/template-factory"], function (_exports, _component, _templateFactory) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component"eaimeta@70e063a35619d71f
-
-  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
-  /*
-    {{svg-jar icon height=height width=width class="docs-svg-icon"}}
-  
-  */
-  {
-    "id": "peEEaLtR",
-    "block": "[[[1,[28,[35,0],[[31,1]],[[\"height\",\"width\",\"class\"],[[31,2],[31,3],\"docs-svg-icon\"]]]],[1,\"\\n\"]],[],false,[\"svg-jar\",\"icon\",\"height\",\"width\"]]",
-    "moduleName": "ember-cli-addon-docs/components/docs-svg-icon/index.hbs",
-    "isStrictMode": false
-  });
-
-  /**
-    The standard icon class used in AddonDocs
-  
-    @class DocsSvgIcon
-    @public
-  */
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-
-    /**
-      @argument icon
-      @type String
-      @required
-    */
-    icon: null,
-
-    /**
-      @argument height
-      @type Number
-    */
-    height: 16,
-
-    /**
-      @argument width
-      @type Number
-    */
-    width: 16
-  }).reopenClass({
-    positionalParams: ['icon']
-  }));
-
-  _exports.default = _default;
-});
-;define("ember-cli-addon-docs/components/docs-viewer/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "ember-keyboard", "@ember-decorators/component", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _service, _emberKeyboard, _component2, _keyboardConfig) {
+;define("ember-cli-addon-docs/components/docs-viewer/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@glimmer/tracking", "ember-keyboard", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _service, _component2, _tracking, _emberKeyboard, _keyboardConfig) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94586,9 +92884,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2;
+  var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@ember/component",0,"ember-keyboard",0,"@ember-decorators/component",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"ember-keyboard",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -94600,19 +92898,22 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
+    <div class="docs-viewer docs-flex docs-flex-1" ...attributes>
     <div class="md:docs-flex docs-w-full">
-    {{yield (hash
-      nav=(component "docs-viewer/x-nav")
-      main=(component "docs-viewer/x-main" onReindex=(set this "pageIndex"))
-    )}}
+      {{yield
+        (hash
+          nav=(component "docs-viewer/x-nav")
+          main=(component "docs-viewer/x-main" onReindex=(set this "pageIndex"))
+        )
+      }}
   
-    <DocsViewer::XCurrentPageIndex @pageIndex={{this.pageIndex}} />
+      <DocsViewer::XCurrentPageIndex @pageIndex={{this.pageIndex}} />
+    </div>
   </div>
-  
   */
   {
-    "id": "m+gqxBQk",
-    "block": "[[[10,0],[14,0,\"md:docs-flex docs-w-full\"],[12],[1,\"\\n  \"],[18,1,[[28,[37,1],null,[[\"nav\",\"main\"],[[50,\"docs-viewer/x-nav\",0,null,null],[50,\"docs-viewer/x-main\",0,null,[[\"onReindex\"],[[28,[37,3],[[30,0],\"pageIndex\"],null]]]]]]]]],[1,\"\\n\\n  \"],[8,[39,4],null,[[\"@pageIndex\"],[[30,0,[\"pageIndex\"]]]],null],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&default\"],false,[\"yield\",\"hash\",\"component\",\"set\",\"docs-viewer/x-current-page-index\"]]",
+    "id": "Y8f188GN",
+    "block": "[[[11,0],[24,0,\"docs-viewer docs-flex docs-flex-1\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"md:docs-flex docs-w-full\"],[12],[1,\"\\n    \"],[18,2,[[28,[37,1],null,[[\"nav\",\"main\"],[[50,\"docs-viewer/x-nav\",0,null,null],[50,\"docs-viewer/x-main\",0,null,[[\"onReindex\"],[[28,[37,3],[[30,0],\"pageIndex\"],null]]]]]]]]],[1,\"\\n\\n    \"],[8,[39,4],null,[[\"@pageIndex\"],[[30,0,[\"pageIndex\"]]]],null],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\",\"set\",\"docs-viewer/x-current-page-index\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/index.hbs",
     "isStrictMode": false
   });
@@ -94623,19 +92924,19 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   
     ```hbs
-    {{#docs-viewer as |viewer|}}
-      {{#viewer.nav as |nav|}}
-        {{nav.item 'Introduction' 'docs.index'}}
+    <DocsViewer as |viewer|>
+      <viewer.nav as |nav|>
+        <nav.item @label="Introduction" @route="docs.index"/>
   
-        {{#nav.subnav as |nav|}}
-          {{nav.item 'Subitem' 'docs.items.subitem'}}
-        {{/nav.subnav}}
-      {{/viewer.nav}}
+        <nav.subnav as |nav|>
+          <nav.item @label="Subitem" @route="docs.items.subitem"/>
+        </nav.subnav>
+      </viewer.nav>
   
-      {{#viewer.main}}
+      <viewer.main>
         {{outlet}}
-      {{/viewer.main}}
-    {{/docs-viewer}}
+      </viewer.main>
+    </DocsViewer>
     ```
   
     @class DocsViewer
@@ -94644,27 +92945,29 @@ lunr.QueryParser.parseBoost = function (parser) {
     @yield {Component} viewer.main
     @public
   */
-  _dec = (0, _component2.classNames)('docs-viewer docs-flex docs-flex-1'), _dec2 = (0, _emberKeyboard.onKey)('KeyJ'), _dec3 = (0, _emberKeyboard.onKey)('ArrowRight'), _dec4 = (0, _emberKeyboard.onKey)('KeyK'), _dec5 = (0, _emberKeyboard.onKey)('ArrowLeft'), _dec(_class = (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsViewerComponent extends _component.default {
+  _dec = (0, _emberKeyboard.onKey)('KeyJ'), _dec2 = (0, _emberKeyboard.onKey)('ArrowRight'), _dec3 = (0, _emberKeyboard.onKey)('KeyK'), _dec4 = (0, _emberKeyboard.onKey)('ArrowLeft'), (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsViewerComponent extends _component2.default {
     constructor() {
-      super(...arguments);
+      super(...arguments); // for some reason the glimmer willDestroy hook was not
+      // being ran when switching to the sandbox app but the contructor was.
+      // If we're rendering a new docs-viewer, it's safe to assume we want
+      // to reset the doc routes
 
       _initializerDefineProperty(this, "docsRoutes", _descriptor, this);
 
       _initializerDefineProperty(this, "router", _descriptor2, this);
-    }
 
-    willDestroyElement() {
-      super.willDestroyElement(...arguments);
+      _initializerDefineProperty(this, "pageIndex", _descriptor3, this);
+
       this.docsRoutes.resetState();
     }
 
     nextPage() {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        if (this.get('docsRoutes.next')) {
+        if (this.docsRoutes.next) {
           const {
             route,
             model
-          } = this.get('docsRoutes.next');
+          } = this.docsRoutes.next;
           this.router.transitionTo(route, model);
         }
       }
@@ -94672,11 +92975,11 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     previousPage() {
       if (!(0, _keyboardConfig.formElementHasFocus)()) {
-        if (this.get('docsRoutes.previous')) {
+        if (this.docsRoutes.previous) {
           const {
             route,
             model
-          } = this.get('docsRoutes.previous');
+          } = this.docsRoutes.previous;
           this.router.transitionTo(route, model);
         }
       }
@@ -94692,11 +92995,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "nextPage", [_dec2, _dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "nextPage"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "previousPage", [_dec4, _dec5], Object.getOwnPropertyDescriptor(_class2.prototype, "previousPage"), _class2.prototype)), _class2)) || _class) || _class);
+  }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "pageIndex", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class2.prototype, "nextPage", [_dec, _dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "nextPage"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "previousPage", [_dec3, _dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "previousPage"), _class2.prototype)), _class2)) || _class);
   _exports.default = DocsViewerComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsViewerComponent);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component", "@ember/object", "@ember/service", "@ember/object/computed", "lodash"], function (_exports, _component, _templateFactory, _component2, _object, _service, _computed, _lodash) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@ember/object/computed", "@glimmer/component", "lodash"], function (_exports, _component, _templateFactory, _service, _computed, _component2, _lodash) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94704,9 +93012,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2;
+  var _dec, _class, _descriptor, _descriptor2;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/object",0,"@ember/service",0,"@ember/object/computed",0,"@ember/component",0,"lodash"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@ember/object/computed",0,"@glimmer/component",0,"lodash"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -94719,33 +93027,39 @@ lunr.QueryParser.parseBoost = function (parser) {
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#if (gt @project.modules.length 0)}}
-    {{docs-viewer/x-section "API Reference" style="large"}}
+    <DocsViewer::XSection @label="API Reference" @style="large" />
   
     {{#each this.resolvedTypeSections as |section|}}
-      {{docs-viewer/x-section section.type}}
+      <DocsViewer::XSection @label={{section.type}} />
   
       {{#each section.items as |item|}}
-        {{docs-viewer/x-nav-item (break-on item.name "/") (concat @root ".api.item") item.path}}
+        <DocsViewer::XNavItem
+          @label={{break-on item.name "/"}}
+          @route={{concat @root ".api.item"}}
+          @model={{item.path}}
+        />
       {{/each}}
     {{/each}}
   
     {{#if this.moduleIndex}}
-      {{docs-viewer/x-section "Modules"}}
+      <DocsViewer::XSection @label="Modules" />
   
-      <DocsViewer::XAutogeneratedApiDocs::ModuleNav @node={{this.moduleIndex}} @root={{@root}} />
+      <DocsViewer::XAutogeneratedApiDocs::ModuleNav
+        @node={{this.moduleIndex}}
+        @root={{@root}}
+      />
     {{/if}}
   
   {{/if}}
-  
   */
   {
-    "id": "uPDd2hSi",
-    "block": "[[[41,[28,[37,1],[[30,1,[\"modules\",\"length\"]],0],null],[[[1,\"  \"],[1,[28,[35,2],[\"API Reference\"],[[\"style\"],[\"large\"]]]],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"resolvedTypeSections\"]]],null]],null],null,[[[1,\"    \"],[1,[28,[35,2],[[30,2,[\"type\"]]],null]],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,2,[\"items\"]]],null]],null],null,[[[1,\"      \"],[1,[28,[35,5],[[28,[37,6],[[30,3,[\"name\"]],\"/\"],null],[28,[37,7],[[30,4],\".api.item\"],null],[30,3,[\"path\"]]],null]],[1,\"\\n\"]],[3]],null]],[2]],null],[1,\"\\n\"],[41,[30,0,[\"moduleIndex\"]],[[[1,\"    \"],[1,[28,[35,2],[\"Modules\"],null]],[1,\"\\n\\n    \"],[8,[39,8],null,[[\"@node\",\"@root\"],[[30,0,[\"moduleIndex\"]],[30,4]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"]],[]],null]],[\"@project\",\"section\",\"item\",\"@root\"],false,[\"if\",\"gt\",\"docs-viewer/x-section\",\"each\",\"-track-array\",\"docs-viewer/x-nav-item\",\"break-on\",\"concat\",\"docs-viewer/x-autogenerated-api-docs/module-nav\"]]",
+    "id": "UDGjIPfh",
+    "block": "[[[41,[28,[37,1],[[30,1,[\"modules\",\"length\"]],0],null],[[[1,\"  \"],[8,[39,2],null,[[\"@label\",\"@style\"],[\"API Reference\",\"large\"]],null],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"resolvedTypeSections\"]]],null]],null],null,[[[1,\"    \"],[8,[39,2],null,[[\"@label\"],[[30,2,[\"type\"]]]],null],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,2,[\"items\"]]],null]],null],null,[[[1,\"      \"],[8,[39,5],null,[[\"@label\",\"@route\",\"@model\"],[[28,[37,6],[[30,3,[\"name\"]],\"/\"],null],[28,[37,7],[[30,4],\".api.item\"],null],[30,3,[\"path\"]]]],null],[1,\"\\n\"]],[3]],null]],[2]],null],[1,\"\\n\"],[41,[30,0,[\"moduleIndex\"]],[[[1,\"    \"],[8,[39,2],null,[[\"@label\"],[\"Modules\"]],null],[1,\"\\n\\n    \"],[8,[39,8],null,[[\"@node\",\"@root\"],[[30,0,[\"moduleIndex\"]],[30,4]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"]],[]],null]],[\"@project\",\"section\",\"item\",\"@root\"],false,[\"if\",\"gt\",\"docs-viewer/x-section\",\"each\",\"-track-array\",\"docs-viewer/x-nav-item\",\"break-on\",\"concat\",\"docs-viewer/x-autogenerated-api-docs/module-nav\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/index.hbs",
     "isStrictMode": false
   });
 
-  let XAutogeneratedApiDocs = (_dec = (0, _component2.tagName)(''), _dec2 = (0, _computed.readOnly)('project.navigationIndex'), _dec3 = (0, _object.computed)('sections'), _dec4 = (0, _object.computed)('sections'), _dec(_class = (_class2 = class XAutogeneratedApiDocs extends _component.default {
+  let XAutogeneratedApiDocs = (_dec = (0, _computed.readOnly)('args.project.navigationIndex'), (_class = class XAutogeneratedApiDocs extends _component2.default {
     constructor() {
       super(...arguments);
 
@@ -94842,94 +93156,84 @@ lunr.QueryParser.parseBoost = function (parser) {
       return null;
     }
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "store", [_service.inject], {
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "store", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "sections", [_dec2], {
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "sections", [_dec], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "resolvedTypeSections", [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "resolvedTypeSections"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "moduleIndex", [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "moduleIndex"), _class2.prototype)), _class2)) || _class);
+  })), _class));
   _exports.default = XAutogeneratedApiDocs;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XAutogeneratedApiDocs);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component"], function (_exports, _component, _templateFactory, _component2) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-
-  var _dec, _class;
-
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <DocsViewer::XNavList @class='docs-ml-4' as |subnav|>
-    <DocsViewer::XSection @style='subsection'>
-      {{this.node.name}}
+    <DocsViewer::XNavList @class="docs-ml-4" ...attributes as |subnav|>
+    <DocsViewer::XSection @style="subsection">
+      {{@node.name}}
     </DocsViewer::XSection>
   
-    {{#each this.node.children as |child|}}
+    {{#each @node.children as |child|}}
       {{#if child.children}}
         <DocsViewer::XAutogeneratedApiDocs::ModuleNav
           @node={{child}}
           @root={{@root}}
         />
       {{else}}
-        {{subnav.item
-          child.name
-          (concat @root '.api.item')
-          (concat 'modules/' child.id)
-        }}
+        <subnav.item
+          @label={{child.name}}
+          @route={{concat @root ".api.item"}}
+          @model={{concat "modules/" child.id}}
+        />
       {{/if}}
     {{/each}}
   </DocsViewer::XNavList>
   */
   {
-    "id": "LI0JvhgS",
-    "block": "[[[8,[39,0],null,[[\"@class\"],[\"docs-ml-4\"]],[[\"default\"],[[[[1,\"\\n  \"],[8,[39,1],null,[[\"@style\"],[\"subsection\"]],[[\"default\"],[[[[1,\"\\n    \"],[1,[30,0,[\"node\",\"name\"]]],[1,\"\\n  \"]],[]]]]],[1,\"\\n\\n\"],[42,[28,[37,3],[[28,[37,3],[[30,0,[\"node\",\"children\"]]],null]],null],null,[[[41,[30,2,[\"children\"]],[[[1,\"      \"],[8,[39,5],null,[[\"@node\",\"@root\"],[[30,2],[30,3]]],null],[1,\"\\n\"]],[]],[[[1,\"      \"],[1,[28,[30,1,[\"item\"]],[[30,2,[\"name\"]],[28,[37,6],[[30,3],\".api.item\"],null],[28,[37,6],[\"modules/\",[30,2,[\"id\"]]],null]],null]],[1,\"\\n\"]],[]]]],[2]],null]],[1]]]]]],[\"subnav\",\"child\",\"@root\"],false,[\"docs-viewer/x-nav-list\",\"docs-viewer/x-section\",\"each\",\"-track-array\",\"if\",\"docs-viewer/x-autogenerated-api-docs/module-nav\",\"concat\"]]",
+    "id": "z9rvl8M7",
+    "block": "[[[8,[39,0],[[17,1]],[[\"@class\"],[\"docs-ml-4\"]],[[\"default\"],[[[[1,\"\\n  \"],[8,[39,1],null,[[\"@style\"],[\"subsection\"]],[[\"default\"],[[[[1,\"\\n    \"],[1,[30,3,[\"name\"]]],[1,\"\\n  \"]],[]]]]],[1,\"\\n\\n\"],[42,[28,[37,3],[[28,[37,3],[[30,3,[\"children\"]]],null]],null],null,[[[41,[30,4,[\"children\"]],[[[1,\"      \"],[8,[39,5],null,[[\"@node\",\"@root\"],[[30,4],[30,5]]],null],[1,\"\\n\"]],[]],[[[1,\"      \"],[8,[30,2,[\"item\"]],null,[[\"@label\",\"@route\",\"@model\"],[[30,4,[\"name\"]],[28,[37,6],[[30,5],\".api.item\"],null],[28,[37,6],[\"modules/\",[30,4,[\"id\"]]],null]]],null],[1,\"\\n\"]],[]]]],[4]],null]],[2]]]]]],[\"&attrs\",\"subnav\",\"@node\",\"child\",\"@root\"],false,[\"docs-viewer/x-nav-list\",\"docs-viewer/x-section\",\"each\",\"-track-array\",\"if\",\"docs-viewer/x-autogenerated-api-docs/module-nav\",\"concat\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/index.hbs",
     "isStrictMode": false
   });
 
-  let ModuleNav = (
-  /*
-    A component used to recursively render a nested structure of module nodes.
-  */
-  _dec = (0, _component2.tagName)(''), _dec(_class = class ModuleNav extends _component.default {}) || _class);
-  _exports.default = ModuleNav;
-  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, ModuleNav);
+  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
+
+  _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-current-page-index/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component"], function (_exports, _component, _templateFactory, _component2) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-current-page-index/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-
-  var _dec, _class;
-
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <nav class="AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto" data-test-current-page-index>
+    <nav class="AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto" data-test-current-page-index ...attributes>
     <div class="docs-sticky docs-top-0 docs-pt-4 docs-pb-8 docs-pr-8 docs-max-h-screen docs-overflow-y-scroll">
       <ul class="docs-border-l docs-border-grey-lighter docs-pl-6 docs-leading-normal">
-        {{#if this.pageIndex.length}}
+        {{#if @pageIndex.length}}
           <li class="docs-mt-12 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs">
             On This Page
           </li>
         {{/if}}
   
-        {{#each this.pageIndex as |item|}}
+        {{#each @pageIndex as |item|}}
           <li class="
             docs-leading-tight docs-tracking-tight
             {{if item.indent (concat "docs-ml-" item.indent)}}
@@ -94953,17 +93257,17 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "QVctpf9S",
-    "block": "[[[10,\"nav\"],[14,0,\"AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto\"],[14,\"data-test-current-page-index\",\"\"],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-sticky docs-top-0 docs-pt-4 docs-pb-8 docs-pr-8 docs-max-h-screen docs-overflow-y-scroll\"],[12],[1,\"\\n    \"],[10,\"ul\"],[14,0,\"docs-border-l docs-border-grey-lighter docs-pl-6 docs-leading-normal\"],[12],[1,\"\\n\"],[41,[30,0,[\"pageIndex\",\"length\"]],[[[1,\"        \"],[10,\"li\"],[14,0,\"docs-mt-12 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[12],[1,\"\\n          On This Page\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,0,[\"pageIndex\"]]],null]],null],null,[[[1,\"        \"],[10,\"li\"],[15,0,[29,[\"\\n          docs-leading-tight docs-tracking-tight\\n          \",[52,[30,1,[\"indent\"]],[28,[37,3],[\"docs-ml-\",[30,1,[\"indent\"]]],null]],\"\\n          \",[52,[30,1,[\"marginTop\"]],[28,[37,3],[\"docs-mt-\",[30,1,[\"marginTop\"]]],null]],\"\\n          \",[52,[30,1,[\"marginBottom\"]],[28,[37,3],[\"docs-mt-\",[30,1,[\"marginBottom\"]]],null]],\"\\n        \"]]],[14,\"data-test-index-item\",\"\"],[12],[1,\"\\n          \"],[10,3],[15,6,[29,[\"#\",[30,1,[\"id\"]]]]],[15,0,[29,[\"docs-text-grey-dark docs-font-semibold docs-no-underline hover:docs-underline docs-text-\",[30,1,[\"size\"]]]]],[12],[1,\"\\n            \"],[1,[30,1,[\"text\"]]],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[1]],null],[1,\"    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"item\"],false,[\"if\",\"each\",\"-track-array\",\"concat\"]]",
+    "id": "1nkNVfqE",
+    "block": "[[[11,\"nav\"],[24,0,\"AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto\"],[24,\"data-test-current-page-index\",\"\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-sticky docs-top-0 docs-pt-4 docs-pb-8 docs-pr-8 docs-max-h-screen docs-overflow-y-scroll\"],[12],[1,\"\\n    \"],[10,\"ul\"],[14,0,\"docs-border-l docs-border-grey-lighter docs-pl-6 docs-leading-normal\"],[12],[1,\"\\n\"],[41,[30,2,[\"length\"]],[[[1,\"        \"],[10,\"li\"],[14,0,\"docs-mt-12 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[12],[1,\"\\n          On This Page\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,2]],null]],null],null,[[[1,\"        \"],[10,\"li\"],[15,0,[29,[\"\\n          docs-leading-tight docs-tracking-tight\\n          \",[52,[30,3,[\"indent\"]],[28,[37,3],[\"docs-ml-\",[30,3,[\"indent\"]]],null]],\"\\n          \",[52,[30,3,[\"marginTop\"]],[28,[37,3],[\"docs-mt-\",[30,3,[\"marginTop\"]]],null]],\"\\n          \",[52,[30,3,[\"marginBottom\"]],[28,[37,3],[\"docs-mt-\",[30,3,[\"marginBottom\"]]],null]],\"\\n        \"]]],[14,\"data-test-index-item\",\"\"],[12],[1,\"\\n          \"],[10,3],[15,6,[29,[\"#\",[30,3,[\"id\"]]]]],[15,0,[29,[\"docs-text-grey-dark docs-font-semibold docs-no-underline hover:docs-underline docs-text-\",[30,3,[\"size\"]]]]],[12],[1,\"\\n            \"],[1,[30,3,[\"text\"]]],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[3]],null],[1,\"    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"@pageIndex\",\"item\"],false,[\"if\",\"each\",\"-track-array\",\"concat\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-current-page-index/index.hbs",
     "isStrictMode": false
   });
 
-  let XCurrentPageIndex = (_dec = (0, _component2.tagName)(''), _dec(_class = class XCurrentPageIndex extends _component.default {}) || _class);
-  _exports.default = XCurrentPageIndex;
-  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XCurrentPageIndex);
+  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
+
+  _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-main/index", ["exports", "@ember/component", "@ember/template-factory", "@ember-decorators/component", "@ember/object", "@ember/service", "@ember/runloop", "ember-cli-addon-docs/app-files", "ember-cli-addon-docs/addon-files", "ember-get-config", "@ember/application"], function (_exports, _component, _templateFactory, _component2, _object, _service, _runloop, _appFiles, _addonFiles, _emberGetConfig, _application) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-main/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/service", "@glimmer/component", "@ember/runloop", "ember-cli-addon-docs/app-files", "ember-cli-addon-docs/addon-files", "@ember/application", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _object, _service, _component2, _runloop, _appFiles, _addonFiles, _application, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94971,9 +93275,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2;
+  var _class, _descriptor, _descriptor2, _descriptor3;
 
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember-decorators/component",0,"@ember/object",0,"@ember/service",0,"@ember/component",0,"@ember/runloop",0,"ember-cli-addon-docs/app-files",0,"ember-cli-addon-docs/addon-files",0,"ember-get-config",0,"@ember/application"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/service",0,"@glimmer/component",0,"@ember/runloop",0,"ember-cli-addon-docs/app-files",0,"ember-cli-addon-docs/addon-files",0,"@ember/application",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -94985,62 +93289,65 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    {{! template-lint-disable no-unknown-arguments-for-builtin-components }}
-  <div data-current-page-index-target>
-    {{yield}}
-  
-    {{#if this.editCurrentPageUrl}}
-      <div class='docs-mt-16 docs-mb-8' data-test-edit-page-link>
-        <a
-          href={{this.editCurrentPageUrl}}
-          class='docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs
-          hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest'
-        >
-          Edit this page
-        </a>
-      </div>
-    {{/if}}
-  </div>
-  
-  <div
-    class='docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex'
+    <main
+    class="docs-px-4 md:docs-px-8 lg:docs-px-20 docs-mx-auto md:docs-mx-0 docs-mt-6 md:docs-mt-12 md:docs-min-w-0 md:docs-flex-1"
+    {{did-insert this.setupElement}}
+    {{will-destroy this.teardownElement}}
+    ...attributes
   >
-    <div class='docs-w-1/2'>
-      {{#if this.docsRoutes.previous}}
-        <div class='docs-text-xs docs-text-grey-dark'>
-          Previous
+    <div data-current-page-index-target>
+      {{yield}}
+  
+      {{#if this.editCurrentPageUrl}}
+        <div class="docs-mt-16 docs-mb-8" data-test-edit-page-link>
+          <a
+            href={{this.editCurrentPageUrl}}
+            class="docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest"
+          >
+            Edit this page
+          </a>
         </div>
-        <LinkTo
-          class='docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline
-          docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition'
-          @route={{this.docsRoutes.previous.route}}
-          @models={{this.docsRoutes.previous.models}}
-        >
-          {{this.docsRoutes.previous.label}}
-        </LinkTo>
       {{/if}}
     </div>
   
-    <div class='docs-w-1/2 docs-text-right' data-test-next-link>
-      {{#if this.docsRoutes.next}}
-        <div class='docs-text-xs docs-text-grey-dark'>
-          Next
-        </div>
-        <LinkTo
-          class='docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline
-          docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition'
-          @route={{this.docsRoutes.next.route}}
-          @models={{this.docsRoutes.next.models}}
-        >
-          {{this.docsRoutes.next.label}}
-        </LinkTo>
-      {{/if}}
+    <div
+      class="docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex"
+    >
+      <div class="docs-w-1/2">
+        {{#if this.docsRoutes.previous}}
+          <div class="docs-text-xs docs-text-grey-dark">
+            Previous
+          </div>
+          <LinkTo
+            class="docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition"
+            @route={{this.docsRoutes.previous.route}}
+            @models={{this.docsRoutes.previous.models}}
+          >
+            {{this.docsRoutes.previous.label}}
+          </LinkTo>
+        {{/if}}
+      </div>
+  
+      <div class="docs-w-1/2 docs-text-right" data-test-next-link>
+        {{#if this.docsRoutes.next}}
+          <div class="docs-text-xs docs-text-grey-dark">
+            Next
+          </div>
+          <LinkTo
+            class="docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition"
+            @route={{this.docsRoutes.next.route}}
+            @models={{this.docsRoutes.next.models}}
+          >
+            {{this.docsRoutes.next.label}}
+          </LinkTo>
+        {{/if}}
+      </div>
     </div>
-  </div>
+  </main>
   */
   {
-    "id": "ylDVdXGj",
-    "block": "[[[10,0],[14,\"data-current-page-index-target\",\"\"],[12],[1,\"\\n  \"],[18,1,null],[1,\"\\n\\n\"],[41,[30,0,[\"editCurrentPageUrl\"]],[[[1,\"    \"],[10,0],[14,0,\"docs-mt-16 docs-mb-8\"],[14,\"data-test-edit-page-link\",\"\"],[12],[1,\"\\n      \"],[10,3],[15,6,[30,0,[\"editCurrentPageUrl\"]]],[14,0,\"docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs\\n        hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest\"],[12],[1,\"\\n        Edit this page\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\"]],[]],null],[13],[1,\"\\n\\n\"],[10,0],[14,0,\"docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex\"],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-w-1/2\"],[12],[1,\"\\n\"],[41,[30,0,[\"docsRoutes\",\"previous\"]],[[[1,\"      \"],[10,0],[14,0,\"docs-text-xs docs-text-grey-dark\"],[12],[1,\"\\n        Previous\\n      \"],[13],[1,\"\\n      \"],[8,[39,2],[[24,0,\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline\\n        docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],[[\"@route\",\"@models\"],[[30,0,[\"docsRoutes\",\"previous\",\"route\"]],[30,0,[\"docsRoutes\",\"previous\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n        \"],[1,[30,0,[\"docsRoutes\",\"previous\",\"label\"]]],[1,\"\\n      \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"  \"],[13],[1,\"\\n\\n  \"],[10,0],[14,0,\"docs-w-1/2 docs-text-right\"],[14,\"data-test-next-link\",\"\"],[12],[1,\"\\n\"],[41,[30,0,[\"docsRoutes\",\"next\"]],[[[1,\"      \"],[10,0],[14,0,\"docs-text-xs docs-text-grey-dark\"],[12],[1,\"\\n        Next\\n      \"],[13],[1,\"\\n      \"],[8,[39,2],[[24,0,\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline\\n        docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],[[\"@route\",\"@models\"],[[30,0,[\"docsRoutes\",\"next\",\"route\"]],[30,0,[\"docsRoutes\",\"next\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n        \"],[1,[30,0,[\"docsRoutes\",\"next\",\"label\"]]],[1,\"\\n      \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"  \"],[13],[1,\"\\n\"],[13]],[\"&default\"],false,[\"yield\",\"if\",\"link-to\"]]",
+    "id": "A3e/TqHv",
+    "block": "[[[11,\"main\"],[24,0,\"docs-px-4 md:docs-px-8 lg:docs-px-20 docs-mx-auto md:docs-mx-0 docs-mt-6 md:docs-mt-12 md:docs-min-w-0 md:docs-flex-1\"],[17,1],[4,[38,0],[[30,0,[\"setupElement\"]]],null],[4,[38,1],[[30,0,[\"teardownElement\"]]],null],[12],[1,\"\\n  \"],[10,0],[14,\"data-current-page-index-target\",\"\"],[12],[1,\"\\n    \"],[18,2,null],[1,\"\\n\\n\"],[41,[30,0,[\"editCurrentPageUrl\"]],[[[1,\"      \"],[10,0],[14,0,\"docs-mt-16 docs-mb-8\"],[14,\"data-test-edit-page-link\",\"\"],[12],[1,\"\\n        \"],[10,3],[15,6,[30,0,[\"editCurrentPageUrl\"]]],[14,0,\"docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest\"],[12],[1,\"\\n          Edit this page\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"  \"],[13],[1,\"\\n\\n  \"],[10,0],[14,0,\"docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex\"],[12],[1,\"\\n    \"],[10,0],[14,0,\"docs-w-1/2\"],[12],[1,\"\\n\"],[41,[30,0,[\"docsRoutes\",\"previous\"]],[[[1,\"        \"],[10,0],[14,0,\"docs-text-xs docs-text-grey-dark\"],[12],[1,\"\\n          Previous\\n        \"],[13],[1,\"\\n        \"],[8,[39,4],[[24,0,\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],[[\"@route\",\"@models\"],[[30,0,[\"docsRoutes\",\"previous\",\"route\"]],[30,0,[\"docsRoutes\",\"previous\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[1,[30,0,[\"docsRoutes\",\"previous\",\"label\"]]],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"    \"],[13],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-w-1/2 docs-text-right\"],[14,\"data-test-next-link\",\"\"],[12],[1,\"\\n\"],[41,[30,0,[\"docsRoutes\",\"next\"]],[[[1,\"        \"],[10,0],[14,0,\"docs-text-xs docs-text-grey-dark\"],[12],[1,\"\\n          Next\\n        \"],[13],[1,\"\\n        \"],[8,[39,4],[[24,0,\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],[[\"@route\",\"@models\"],[[30,0,[\"docsRoutes\",\"next\",\"route\"]],[30,0,[\"docsRoutes\",\"next\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[1,[30,0,[\"docsRoutes\",\"next\",\"label\"]]],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"did-insert\",\"will-destroy\",\"yield\",\"if\",\"link-to\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-main/index.hbs",
     "isStrictMode": false
   });
@@ -95061,18 +93368,19 @@ lunr.QueryParser.parseBoost = function (parser) {
     H2: '0',
     H3: '0'
   };
-  let XMain = (_dec = (0, _component2.tagName)('main'), _dec2 = (0, _component2.classNames)('docs-px-4', 'md:docs-px-8', 'lg:docs-px-20', 'docs-mx-auto', 'md:docs-mx-0', 'docs-mt-6', 'md:docs-mt-12', 'md:docs-min-w-0', 'md:docs-flex-1'), _dec3 = (0, _object.computed)('router.currentRouteName'), _dec(_class = _dec2(_class = (_class2 = class XMain extends _component.default {
+  let XMain = (_class = class XMain extends _component2.default {
     constructor() {
       super(...arguments);
 
       _initializerDefineProperty(this, "router", _descriptor, this);
 
       _initializerDefineProperty(this, "docsRoutes", _descriptor2, this);
+
+      _initializerDefineProperty(this, "config", _descriptor3, this);
     }
 
-    didInsertElement() {
-      super.didInsertElement(...arguments);
-      let target = this.element.querySelector('[data-current-page-index-target]');
+    setupElement(element) {
+      let target = element.querySelector('[data-current-page-index-target]');
       this._mutationObserver = new MutationObserver((0, _runloop.bind)(this, this.reindex, target));
 
       this._mutationObserver.observe(target, {
@@ -95083,15 +93391,13 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.reindex(target);
     }
 
-    willDestroyElement() {
-      super.willDestroyElement(...arguments);
-
+    teardownElement() {
       this._mutationObserver.disconnect();
     }
 
     reindex(target) {
       let headers = Array.from(target.querySelectorAll('.docs-h2, .docs-h3, .docs-md__h2, .docs-md__h3'));
-      this.onReindex(headers.map(header => {
+      this.args.onReindex(headers.map(header => {
         return {
           id: header.id,
           text: header.dataset.text || header.textContent,
@@ -95104,7 +93410,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     get editCurrentPageUrl() {
-      let path = this.get('router.currentRouteName');
+      let path = this.router.currentRouteName;
 
       if (!path) {
         // `router` doesn't exist for old ember versions via ember-try
@@ -95119,7 +93425,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           addonPathInRepo,
           docsAppPathInRepo,
           primaryBranch
-        } = _emberGetConfig.default['ember-cli-addon-docs'];
+        } = this.config;
         let parts = [projectHref, 'edit', primaryBranch];
 
         if (match.inTree === 'addon') {
@@ -95141,9 +93447,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (path === 'docs/api/item') {
         let {
           projectName
-        } = _emberGetConfig.default['ember-cli-addon-docs'];
+        } = this.config;
         let model = (0, _application.getOwner)(this).lookup('route:application').modelFor('docs.api.item');
-        let filename = model.get('file').replace(new RegExp(`^${projectName}/`), '');
+        let filename = model.file.replace(new RegExp(`^${projectName}/`), '');
 
         let file = _addonFiles.default.find(f => f.match(filename));
 
@@ -95165,32 +93471,48 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "router", [_service.inject], {
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "docsRoutes", [_service.inject], {
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "docsRoutes", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "editCurrentPageUrl", [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "editCurrentPageUrl"), _class2.prototype)), _class2)) || _class) || _class);
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "setupElement", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "setupElement"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "teardownElement", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "teardownElement"), _class.prototype)), _class);
   _exports.default = XMain;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XMain);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-nav-item/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@ember/runloop"], function (_exports, _component, _templateFactory, _service, _runloop) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav-item/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@ember/runloop"], function (_exports, _component, _templateFactory, _service, _component2, _runloop) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@ember/component",0,"@ember/runloop"eaimeta@70e063a35619d71f
+
+  var _class, _descriptor;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@ember/runloop"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <li class="docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm">
+    <li class="docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm" ...attributes>
     {{#if @model}}
       <LinkTo @route={{@route}} @model={{@model}} class="docs-text-grey-darker docs-no-underline hover:docs-underline" @activeClass="docs-text-brand docs-font-medium" data-test-id="nav-item" data-test-label={{@label}}>
         {{@label}}
@@ -95204,37 +93526,70 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "6EL6Dx/a",
-    "block": "[[[10,\"li\"],[14,0,\"docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm\"],[12],[1,\"\\n\"],[41,[30,1],[[[1,\"    \"],[8,[39,1],[[24,0,\"docs-text-grey-darker docs-no-underline hover:docs-underline\"],[24,\"data-test-id\",\"nav-item\"],[16,\"data-test-label\",[30,2]]],[[\"@route\",\"@model\",\"@activeClass\"],[[30,3],[30,1],\"docs-text-brand docs-font-medium\"]],[[\"default\"],[[[[1,\"\\n      \"],[1,[30,2]],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,1],[[24,0,\"docs-text-grey-darker docs-no-underline hover:docs-underline\"],[24,\"data-test-id\",\"nav-item\"],[16,\"data-test-label\",[30,2]]],[[\"@route\",\"@activeClass\"],[[30,3],\"docs-text-brand docs-font-medium\"]],[[\"default\"],[[[[1,\"\\n      \"],[1,[30,2]],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"@model\",\"@label\",\"@route\"],false,[\"if\",\"link-to\"]]",
+    "id": "wMrlgoOT",
+    "block": "[[[11,\"li\"],[24,0,\"docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm\"],[17,1],[12],[1,\"\\n\"],[41,[30,2],[[[1,\"    \"],[8,[39,1],[[24,0,\"docs-text-grey-darker docs-no-underline hover:docs-underline\"],[24,\"data-test-id\",\"nav-item\"],[16,\"data-test-label\",[30,3]]],[[\"@route\",\"@model\",\"@activeClass\"],[[30,4],[30,2],\"docs-text-brand docs-font-medium\"]],[[\"default\"],[[[[1,\"\\n      \"],[1,[30,3]],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,1],[[24,0,\"docs-text-grey-darker docs-no-underline hover:docs-underline\"],[24,\"data-test-id\",\"nav-item\"],[16,\"data-test-label\",[30,3]]],[[\"@route\",\"@activeClass\"],[[30,4],\"docs-text-brand docs-font-medium\"]],[[\"default\"],[[[[1,\"\\n      \"],[1,[30,3]],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"&attrs\",\"@model\",\"@label\",\"@route\"],false,[\"if\",\"link-to\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav-item/index.hbs",
     "isStrictMode": false
   });
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    docsRoutes: (0, _service.inject)(),
+  let XNavItem = (_class = class XNavItem extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-    didInsertElement() {
-      this._super(...arguments);
+      _initializerDefineProperty(this, "docsRoutes", _descriptor, this);
 
-      let model = this.model;
+      let model = this.args.model;
 
       if (typeof model === 'string' && model.includes('#')) {
         return;
       }
 
       (0, _runloop.next)(() => {
-        this.get('docsRoutes.items').addObject(this);
+        this.docsRoutes.items.addObject(this);
       });
     }
 
-  }).reopenClass({
-    positionalParams: ['label', 'route', 'model']
-  }));
+    willDestroy() {
+      super.willDestroy(...arguments);
+      this.docsRoutes.items.removeObject(this);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "docsRoutes", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class);
+  _exports.default = XNavItem;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XNavItem);
+});
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav-list/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+
+  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <ul ...attributes>
+    {{yield (hash item=(component "docs-viewer/x-nav-item"))}}
+  </ul>
+  */
+  {
+    "id": "xW1Ao/Tw",
+    "block": "[[[11,\"ul\"],[17,1],[12],[1,\"\\n  \"],[18,2,[[28,[37,1],null,[[\"item\"],[[50,\"docs-viewer/x-nav-item\",0,null,null]]]]]],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
+    "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav-list/index.hbs",
+    "isStrictMode": false
+  });
+
+  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
 
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-nav-list/index", ["exports", "@ember/template-factory", "@ember-decorators/component", "@ember/component"], function (_exports, _templateFactory, _component, _component2) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@glimmer/tracking", "tracked-toolbox", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _service, _component2, _tracking, _trackedToolbox, _string, _computed, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -95242,34 +93597,17 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _dec, _dec2, _class;
+  var _dec, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
 
-  0; //eaimeta@70e063a35619d71f0,"@ember-decorators/component",0,"@ember/component",0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"tracked-toolbox",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
 
-  let XNavList = (_dec = (0, _component.tagName)('ul'), _dec2 = (0, _component.layout)((0, _templateFactory.createTemplateFactory)(
-  /*
-    
-    {{yield (hash
-      item=(component 'docs-viewer/x-nav-item')
-    )}}
-  
-  */
-  {
-    "id": "jShvEfBT",
-    "block": "[[[1,\"\\n  \"],[18,1,[[28,[37,1],null,[[\"item\"],[[50,\"docs-viewer/x-nav-item\",0,null,null]]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
-    "moduleName": "(unknown template module)",
-    "isStrictMode": false
-  })), _dec(_class = _dec2(_class = class XNavList extends _component2.default {}) || _class) || _class);
-  _exports.default = XNavList;
-});
-;define("ember-cli-addon-docs/components/docs-viewer/x-nav/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/service", "ember-get-config", "@ember/string", "ember-cli-addon-docs/utils/computed"], function (_exports, _component, _templateFactory, _object, _service, _emberGetConfig, _string, _computed) {
-  "use strict";
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/service",0,"@ember/component",0,"ember-get-config",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
@@ -95282,10 +93620,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     </div>
   {{/if}}
   
-  <div class="AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink">
-    <nav onclick={{set this "isShowingMenu" false}}
+  <div class="AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink" ...attributes>
+    <nav {{on "click" (set this "isShowingMenu" false)}}
       class="
-        docs-absolute docs-right-0 md:docs-relative docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2
+        docs-absolute docs-right-0 docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2
         docs-max-w-xs docs-w-90% md:docs-w-72 docs-z-10 docs-transition md:docs-sticky md:docs-top-0
         {{if this.media.isMobile
           (if this.isShowingMenu "docs-opacity-100 docs-bg-white" "docs-opacity-0 docs-pointer-events-none")
@@ -95294,7 +93632,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       <div class="docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll">
         {{#if this.media.isMobile}}
           <div class="absolute top-0 docs-text-right right-4">
-            <button onclick={{set this "isShowingMenu" false}}
+            <button {{on "click" (set this "isShowingMenu" false)}}>
               class="docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline">
               &times;
             </button>
@@ -95327,58 +93665,100 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "pdsU5S36",
-    "block": "[[[41,[30,0,[\"media\",\"isMobile\"]],[[[1,\"  \"],[10,0],[14,0,\"docs-text-right docs-px-4 md:docs-px-6 docs-mt-4\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"docs-text-grey-darkest docs-py-2 docs-text-xs docs-rounded docs-uppercase docs-font-medium\"],[4,[38,1],[\"click\",[28,[37,2],[\"isShowingMenu\",[30,0]],null]],null],[12],[1,\"\\n      ☰ Menu\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[10,0],[14,0,\"AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink\"],[12],[1,\"\\n  \"],[10,\"nav\"],[15,\"onclick\",[28,[37,3],[[30,0],\"isShowingMenu\",false],null]],[15,0,[29,[\"\\n      docs-absolute docs-right-0 md:docs-relative docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2\\n      docs-max-w-xs docs-w-90% md:docs-w-72 docs-z-10 docs-transition md:docs-sticky md:docs-top-0\\n      \",[52,[30,0,[\"media\",\"isMobile\"]],[52,[30,0,[\"isShowingMenu\"]],\"docs-opacity-100 docs-bg-white\",\"docs-opacity-0 docs-pointer-events-none\"]],\"\\n    \"]]],[12],[1,\"\\n    \"],[10,0],[14,0,\"docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll\"],[12],[1,\"\\n\"],[41,[30,0,[\"media\",\"isMobile\"]],[[[1,\"        \"],[10,0],[14,0,\"absolute top-0 docs-text-right right-4\"],[12],[1,\"\\n          \"],[10,\"button\"],[15,\"onclick\",[28,[37,3],[[30,0],\"isShowingMenu\",false],null]],[14,0,\"docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline\"],[12],[1,\"\\n            ×\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n      \"],[8,[39,4],null,null,[[\"default\"],[[[[1,\"\\n        \"],[18,1,[[28,[37,6],null,[[\"section\",\"item\",\"subnav\"],[[50,\"docs-viewer/x-section\",0,null,null],[50,\"docs-viewer/x-nav-item\",0,null,null],[50,\"docs-viewer/x-nav-list\",0,null,[[\"class\"],[\"docs-ml-4\"]]]]]]]],[1,\"\\n\\n        \"],[8,[39,8],null,[[\"@root\",\"@project\"],[[30,0,[\"root\"]],[30,0,[\"project\"]]]],null],[1,\"\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[10,0],[14,0,\"docs-mt-16 lg:docs-mb-16 docs-mr-2 docs-text-xxs docs-rounded\"],[12],[1,\"\\n        \"],[10,3],[14,6,\"https://github.com/ember-learn/ember-cli-addon-docs\"],[14,0,\"docs-opacity-50 hover:docs-opacity-100 docs-transition docs-no-underline docs-text-inherit docs-flex docs-items-center docs-text-grey-darkest\"],[12],[1,\"\\n          \"],[1,[28,[35,9],[\"addon-docs-pen\"],[[\"width\",\"height\",\"class\"],[22,16,\"docs-mr-2\"]]]],[1,\"\\n          \"],[10,0],[12],[1,\"\\n            Powered by\\n            \"],[10,1],[14,0,\"docs-font-bold\"],[12],[1,\"AddonDocs\"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&default\"],false,[\"if\",\"on\",\"toggle\",\"set\",\"docs-viewer/x-nav-list\",\"yield\",\"hash\",\"component\",\"docs-viewer/x-autogenerated-api-docs\",\"svg-jar\"]]",
+    "id": "O3sdtNFy",
+    "block": "[[[41,[30,0,[\"media\",\"isMobile\"]],[[[1,\"  \"],[10,0],[14,0,\"docs-text-right docs-px-4 md:docs-px-6 docs-mt-4\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"docs-text-grey-darkest docs-py-2 docs-text-xs docs-rounded docs-uppercase docs-font-medium\"],[4,[38,1],[\"click\",[28,[37,2],[\"isShowingMenu\",[30,0]],null]],null],[12],[1,\"\\n      ☰ Menu\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[11,0],[24,0,\"AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink\"],[17,1],[12],[1,\"\\n  \"],[11,\"nav\"],[16,0,[29,[\"\\n      docs-absolute docs-right-0 docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2\\n      docs-max-w-xs docs-w-90% md:docs-w-72 docs-z-10 docs-transition md:docs-sticky md:docs-top-0\\n      \",[52,[30,0,[\"media\",\"isMobile\"]],[52,[30,0,[\"isShowingMenu\"]],\"docs-opacity-100 docs-bg-white\",\"docs-opacity-0 docs-pointer-events-none\"]],\"\\n    \"]]],[4,[38,1],[\"click\",[28,[37,3],[[30,0],\"isShowingMenu\",false],null]],null],[12],[1,\"\\n    \"],[10,0],[14,0,\"docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll\"],[12],[1,\"\\n\"],[41,[30,0,[\"media\",\"isMobile\"]],[[[1,\"        \"],[10,0],[14,0,\"absolute top-0 docs-text-right right-4\"],[12],[1,\"\\n          \"],[11,\"button\"],[4,[38,1],[\"click\",[28,[37,3],[[30,0],\"isShowingMenu\",false],null]],null],[12],[1,\"\\n            class=\\\"docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline\\\">\\n            ×\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n      \"],[8,[39,4],null,null,[[\"default\"],[[[[1,\"\\n        \"],[18,2,[[28,[37,6],null,[[\"section\",\"item\",\"subnav\"],[[50,\"docs-viewer/x-section\",0,null,null],[50,\"docs-viewer/x-nav-item\",0,null,null],[50,\"docs-viewer/x-nav-list\",0,null,[[\"class\"],[\"docs-ml-4\"]]]]]]]],[1,\"\\n\\n        \"],[8,[39,8],null,[[\"@root\",\"@project\"],[[30,0,[\"root\"]],[30,0,[\"project\"]]]],null],[1,\"\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[10,0],[14,0,\"docs-mt-16 lg:docs-mb-16 docs-mr-2 docs-text-xxs docs-rounded\"],[12],[1,\"\\n        \"],[10,3],[14,6,\"https://github.com/ember-learn/ember-cli-addon-docs\"],[14,0,\"docs-opacity-50 hover:docs-opacity-100 docs-transition docs-no-underline docs-text-inherit docs-flex docs-items-center docs-text-grey-darkest\"],[12],[1,\"\\n          \"],[1,[28,[35,9],[\"addon-docs-pen\"],[[\"width\",\"height\",\"class\"],[22,16,\"docs-mr-2\"]]]],[1,\"\\n          \"],[10,0],[12],[1,\"\\n            Powered by\\n            \"],[10,1],[14,0,\"docs-font-bold\"],[12],[1,\"AddonDocs\"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"&default\"],false,[\"if\",\"on\",\"toggle\",\"set\",\"docs-viewer/x-nav-list\",\"yield\",\"hash\",\"component\",\"docs-viewer/x-autogenerated-api-docs\",\"svg-jar\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav/index.hbs",
     "isStrictMode": false
   });
 
-  const projectName = _emberGetConfig.default['ember-cli-addon-docs'].projectName;
+  let XNav = (_dec = (0, _trackedToolbox.localCopy)('args.root', 'docs'), (_class = class XNav extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    root: 'docs',
-    store: (0, _service.inject)(),
-    media: (0, _service.inject)(),
-    addonLogo: (0, _computed.addonLogo)(projectName),
-    addonTitle: (0, _object.computed)('addonLogo', function () {
+      _initializerDefineProperty(this, "config", _descriptor, this);
+
+      _initializerDefineProperty(this, "root", _descriptor2, this);
+
+      _initializerDefineProperty(this, "store", _descriptor3, this);
+
+      _initializerDefineProperty(this, "media", _descriptor4, this);
+
+      _initializerDefineProperty(this, "isShowingMenu", _descriptor5, this);
+    }
+
+    get addonLogo() {
+      return (0, _computed.addonLogo)(this.config.projectName);
+    }
+
+    get addonTitle() {
       let logo = this.addonLogo;
-      return (0, _string.classify)(projectName.replace(`${logo}-`, ''));
-    }),
+      return (0, _string.classify)(this.config.projectName.replace(`${logo}-`, ''));
+    }
 
-    /*
-      This is overwritten for the Sandbox.
-    */
-    project: (0, _object.computed)({
-      get() {
-        return this.store.peekRecord('project', projectName);
-      },
-
-      set(key, val) {
-        return val;
+    get project() {
+      if (this.args.project) {
+        return this.args.project;
       }
 
-    })
-  }));
+      return this.store.peekRecord('project', this.config.projectName);
+    }
 
-  _exports.default = _default;
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "root", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "store", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "media", [_service.inject], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "isShowingMenu", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = XNav;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XNav);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-section/index", ["exports", "@ember/component", "@ember/template-factory"], function (_exports, _component, _templateFactory) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-section/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "tracked-toolbox"], function (_exports, _component, _templateFactory, _component2, _trackedToolbox) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component"eaimeta@70e063a35619d71f
+
+  var _dec, _class, _descriptor;
+
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <li class="
     {{if (eq this.style "regular") "docs-mt-8 docs-capitalize"}}
     {{if (eq this.style "large") "docs-mt-8 docs--mb-4 docs-text-xs docs-uppercase"}}
-    {{if (eq this.style "subsection") "docs-mt-2 docs-text-sm"}}
-  ">
+    {{if (eq this.style "subsection") "docs-mt-2 docs-text-sm"}}"
+    ...attributes>
     {{#if (has-block)}}
       {{yield}}
     {{else}}
@@ -95388,20 +93768,27 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "B8xpkclU",
-    "block": "[[[10,\"li\"],[15,0,[29,[\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"regular\"],null],\"docs-mt-8 docs-capitalize\"],\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"large\"],null],\"docs-mt-8 docs--mb-4 docs-text-xs docs-uppercase\"],\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"subsection\"],null],\"docs-mt-2 docs-text-sm\"],\"\\n\"]]],[12],[1,\"\\n\"],[41,[48,[30,2]],[[[1,\"    \"],[18,2,null],[1,\"\\n\"]],[]],[[[1,\"    \"],[1,[30,1]],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"@label\",\"&default\"],false,[\"if\",\"eq\",\"has-block\",\"yield\"]]",
+    "id": "I8ZrbXgf",
+    "block": "[[[11,\"li\"],[16,0,[29,[\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"regular\"],null],\"docs-mt-8 docs-capitalize\"],\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"large\"],null],\"docs-mt-8 docs--mb-4 docs-text-xs docs-uppercase\"],\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"subsection\"],null],\"docs-mt-2 docs-text-sm\"]]]],[17,1],[12],[1,\"\\n\"],[41,[48,[30,3]],[[[1,\"    \"],[18,3,null],[1,\"\\n\"]],[]],[[[1,\"    \"],[1,[30,2]],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"&attrs\",\"@label\",\"&default\"],false,[\"if\",\"eq\",\"has-block\",\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-section/index.hbs",
     "isStrictMode": false
   });
 
-  var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, _component.default.extend({
-    tagName: '',
-    style: 'regular'
-  }).reopenClass({
-    positionalParams: ['label']
-  }));
+  let XSection = (_dec = (0, _trackedToolbox.localCopy)('args.style', 'regular'), (_class = class XSection extends _component2.default {
+    constructor() {
+      super(...arguments);
 
-  _exports.default = _default;
+      _initializerDefineProperty(this, "style", _descriptor, this);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "style", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = XSection;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XSection);
 });
 ;define("ember-cli-addon-docs/components/modal-dialog", ["exports", "ember-modal-dialog/components/modal-dialog", "@ember/application"], function (_exports, _modalDialog, _application) {
   "use strict";
@@ -95412,38 +93799,16 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-modal-dialog/components/modal-dialog",0,"@ember/application"eaimeta@70e063a35619d71f
 
-  var _default = _modalDialog.default.extend({
+  class DocsModalDialog extends _modalDialog.default {
     init() {
-      this._super(...arguments);
-
+      super.init(...arguments);
       const config = (0, _application.getOwner)(this).resolveRegistration('config:environment');
       this.set('renderInPlace', config.environment === 'test');
     }
 
-  });
+  }
 
-  _exports.default = _default;
-});
-;define("ember-cli-addon-docs/controllers/docs/api/class", ["exports", "@ember/object", "@ember/controller"], function (_exports, _object, _controller) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/object",0,"@ember/controller"eaimeta@70e063a35619d71f
-
-  var _default = _controller.default.extend({
-    methodParams: (0, _object.computed)('model.methods', function () {
-      return this.get('model.methods').reduce((allParams, method) => {
-        let params = method.params ? method.params.map(m => m.name) : [];
-        allParams[method.name] = params.join(', ');
-        return allParams;
-      }, {});
-    })
-  });
-
-  _exports.default = _default;
+  _exports.default = DocsModalDialog;
 });
 ;define("ember-cli-addon-docs/helpers/break-on", ["exports", "@ember/component/helper"], function (_exports, _helper) {
   "use strict";
@@ -95643,127 +94008,511 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
+
+  var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36;
+
   0; //eaimeta@70e063a35619d71f0,"@ember-data/model",0,"@ember/object/computed",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
 
-  var _default = _model.default.extend({
-    parentClass: (0, _model.belongsTo)('class', {
-      async: false,
-      inverse: null
-    }),
-    isClass: true,
-    name: (0, _model.attr)(),
-    file: (0, _model.attr)(),
-    exportType: (0, _model.attr)(),
-    description: (0, _model.attr)(),
-    lineNumber: (0, _model.attr)(),
-    access: (0, _model.attr)(),
-    accessors: (0, _model.attr)(),
-    methods: (0, _model.attr)(),
-    fields: (0, _model.attr)(),
-    tags: (0, _model.attr)(),
-    publicAccessors: (0, _computed.filterBy)('accessors', 'access', 'public'),
-    publicMethods: (0, _computed.filterBy)('methods', 'access', 'public'),
-    publicFields: (0, _computed.filterBy)('fields', 'access', 'public'),
-    privateAccessors: (0, _computed.filterBy)('accessors', 'access', 'private'),
-    privateMethods: (0, _computed.filterBy)('methods', 'access', 'private'),
-    privateFields: (0, _computed.filterBy)('fields', 'access', 'private'),
-    protectedAccessors: (0, _computed.filterBy)('accessors', 'access', 'protected'),
-    protectedMethods: (0, _computed.filterBy)('methods', 'access', 'protected'),
-    protectedFields: (0, _computed.filterBy)('fields', 'access', 'protected'),
-    allPublicAccessors: (0, _computed2.memberUnion)('parentClass.allPublicAccessors', 'publicAccessors'),
-    allPublicMethods: (0, _computed2.memberUnion)('parentClass.allPublicMethods', 'publicMethods'),
-    allPublicFields: (0, _computed2.memberUnion)('parentClass.allPublicFields', 'publicFields'),
-    allPrivateAccessors: (0, _computed2.memberUnion)('parentClass.allPrivateAccessors', 'privateAccessors'),
-    allPrivateMethods: (0, _computed2.memberUnion)('parentClass.allPrivateMethods', 'privateMethods'),
-    allPrivateFields: (0, _computed2.memberUnion)('parentClass.allPrivateFields', 'privateFields'),
-    allProtectedAccessors: (0, _computed2.memberUnion)('parentClass.allProtectedAccessors', 'protectedAccessors'),
-    allProtectedMethods: (0, _computed2.memberUnion)('parentClass.allProtectedMethods', 'protectedMethods'),
-    allProtectedFields: (0, _computed2.memberUnion)('parentClass.allProtectedFields', 'protectedFields'),
-    allAccessors: (0, _computed.union)('allPublicAccessors', 'allPrivateAccessors', 'allProtectedAccessors'),
-    allMethods: (0, _computed.union)('allPublicMethods', 'allPrivateMethods', 'allProtectedMethods'),
-    allFields: (0, _computed.union)('allPublicFields', 'allPrivateFields', 'allProtectedFields'),
-    hasInherited: (0, _computed.or)('parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'),
-    hasPrivate: (0, _computed.or)('allPrivateAccessors.length', 'allPrivateMethods.length', 'allPrivateFields.length'),
-    hasProtected: (0, _computed.or)('allProtectedAccessors.length', 'allProtectedMethods.length', 'allProtectedFields.length'),
-    hasDeprecated: (0, _computed2.hasMemberType)('allFields', 'allAccessors', 'allMethods', function (member) {
-      return member.tags && member.tags.find(t => t.name === 'deprecated');
-    })
-  });
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
-  _exports.default = _default;
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let Class = (_dec = (0, _model.belongsTo)('class', {
+    async: false,
+    inverse: null
+  }), _dec2 = (0, _computed.filterBy)('accessors', 'access', 'public'), _dec3 = (0, _computed.filterBy)('methods', 'access', 'public'), _dec4 = (0, _computed.filterBy)('fields', 'access', 'public'), _dec5 = (0, _computed.filterBy)('accessors', 'access', 'private'), _dec6 = (0, _computed.filterBy)('methods', 'access', 'private'), _dec7 = (0, _computed.filterBy)('fields', 'access', 'private'), _dec8 = (0, _computed.filterBy)('accessors', 'access', 'protected'), _dec9 = (0, _computed.filterBy)('methods', 'access', 'protected'), _dec10 = (0, _computed.filterBy)('fields', 'access', 'protected'), _dec11 = (0, _computed2.memberUnion)('parentClass.allPublicAccessors', 'publicAccessors'), _dec12 = (0, _computed2.memberUnion)('parentClass.allPublicMethods', 'publicMethods'), _dec13 = (0, _computed2.memberUnion)('parentClass.allPublicFields', 'publicFields'), _dec14 = (0, _computed2.memberUnion)('parentClass.allPrivateAccessors', 'privateAccessors'), _dec15 = (0, _computed2.memberUnion)('parentClass.allPrivateMethods', 'privateMethods'), _dec16 = (0, _computed2.memberUnion)('parentClass.allPrivateFields', 'privateFields'), _dec17 = (0, _computed2.memberUnion)('parentClass.allProtectedAccessors', 'protectedAccessors'), _dec18 = (0, _computed2.memberUnion)('parentClass.allProtectedMethods', 'protectedMethods'), _dec19 = (0, _computed2.memberUnion)('parentClass.allProtectedFields', 'protectedFields'), _dec20 = (0, _computed.union)('allPublicAccessors', 'allPrivateAccessors', 'allProtectedAccessors'), _dec21 = (0, _computed.union)('allPublicMethods', 'allPrivateMethods', 'allProtectedMethods'), _dec22 = (0, _computed.union)('allPublicFields', 'allPrivateFields', 'allProtectedFields'), _dec23 = (0, _computed.or)('parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'), _dec24 = (0, _computed.or)('allPrivateAccessors.length', 'allPrivateMethods.length', 'allPrivateFields.length'), _dec25 = (0, _computed.or)('allProtectedAccessors.length', 'allProtectedMethods.length', 'allProtectedFields.length'), _dec26 = (0, _computed2.hasMemberType)('allFields', 'allAccessors', 'allMethods', function (member) {
+    return member.tags && member.tags.find(t => t.name === 'deprecated');
+  }), (_class = class Class extends _model.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "parentClass", _descriptor, this);
+
+      _defineProperty(this, "isClass", true);
+
+      _initializerDefineProperty(this, "name", _descriptor2, this);
+
+      _initializerDefineProperty(this, "file", _descriptor3, this);
+
+      _initializerDefineProperty(this, "exportType", _descriptor4, this);
+
+      _initializerDefineProperty(this, "description", _descriptor5, this);
+
+      _initializerDefineProperty(this, "lineNumber", _descriptor6, this);
+
+      _initializerDefineProperty(this, "access", _descriptor7, this);
+
+      _initializerDefineProperty(this, "accessors", _descriptor8, this);
+
+      _initializerDefineProperty(this, "methods", _descriptor9, this);
+
+      _initializerDefineProperty(this, "fields", _descriptor10, this);
+
+      _initializerDefineProperty(this, "tags", _descriptor11, this);
+
+      _initializerDefineProperty(this, "publicAccessors", _descriptor12, this);
+
+      _initializerDefineProperty(this, "publicMethods", _descriptor13, this);
+
+      _initializerDefineProperty(this, "publicFields", _descriptor14, this);
+
+      _initializerDefineProperty(this, "privateAccessors", _descriptor15, this);
+
+      _initializerDefineProperty(this, "privateMethods", _descriptor16, this);
+
+      _initializerDefineProperty(this, "privateFields", _descriptor17, this);
+
+      _initializerDefineProperty(this, "protectedAccessors", _descriptor18, this);
+
+      _initializerDefineProperty(this, "protectedMethods", _descriptor19, this);
+
+      _initializerDefineProperty(this, "protectedFields", _descriptor20, this);
+
+      _initializerDefineProperty(this, "allPublicAccessors", _descriptor21, this);
+
+      _initializerDefineProperty(this, "allPublicMethods", _descriptor22, this);
+
+      _initializerDefineProperty(this, "allPublicFields", _descriptor23, this);
+
+      _initializerDefineProperty(this, "allPrivateAccessors", _descriptor24, this);
+
+      _initializerDefineProperty(this, "allPrivateMethods", _descriptor25, this);
+
+      _initializerDefineProperty(this, "allPrivateFields", _descriptor26, this);
+
+      _initializerDefineProperty(this, "allProtectedAccessors", _descriptor27, this);
+
+      _initializerDefineProperty(this, "allProtectedMethods", _descriptor28, this);
+
+      _initializerDefineProperty(this, "allProtectedFields", _descriptor29, this);
+
+      _initializerDefineProperty(this, "allAccessors", _descriptor30, this);
+
+      _initializerDefineProperty(this, "allMethods", _descriptor31, this);
+
+      _initializerDefineProperty(this, "allFields", _descriptor32, this);
+
+      _initializerDefineProperty(this, "hasInherited", _descriptor33, this);
+
+      _initializerDefineProperty(this, "hasPrivate", _descriptor34, this);
+
+      _initializerDefineProperty(this, "hasProtected", _descriptor35, this);
+
+      _initializerDefineProperty(this, "hasDeprecated", _descriptor36, this);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "parentClass", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "name", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "file", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "exportType", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "description", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "lineNumber", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "access", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "accessors", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "methods", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, "fields", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, "tags", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor12 = _applyDecoratedDescriptor(_class.prototype, "publicAccessors", [_dec2], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, "publicMethods", [_dec3], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, "publicFields", [_dec4], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, "privateAccessors", [_dec5], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor16 = _applyDecoratedDescriptor(_class.prototype, "privateMethods", [_dec6], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor17 = _applyDecoratedDescriptor(_class.prototype, "privateFields", [_dec7], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor18 = _applyDecoratedDescriptor(_class.prototype, "protectedAccessors", [_dec8], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor19 = _applyDecoratedDescriptor(_class.prototype, "protectedMethods", [_dec9], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor20 = _applyDecoratedDescriptor(_class.prototype, "protectedFields", [_dec10], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor21 = _applyDecoratedDescriptor(_class.prototype, "allPublicAccessors", [_dec11], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor22 = _applyDecoratedDescriptor(_class.prototype, "allPublicMethods", [_dec12], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor23 = _applyDecoratedDescriptor(_class.prototype, "allPublicFields", [_dec13], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor24 = _applyDecoratedDescriptor(_class.prototype, "allPrivateAccessors", [_dec14], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor25 = _applyDecoratedDescriptor(_class.prototype, "allPrivateMethods", [_dec15], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor26 = _applyDecoratedDescriptor(_class.prototype, "allPrivateFields", [_dec16], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor27 = _applyDecoratedDescriptor(_class.prototype, "allProtectedAccessors", [_dec17], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor28 = _applyDecoratedDescriptor(_class.prototype, "allProtectedMethods", [_dec18], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor29 = _applyDecoratedDescriptor(_class.prototype, "allProtectedFields", [_dec19], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor30 = _applyDecoratedDescriptor(_class.prototype, "allAccessors", [_dec20], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, "allMethods", [_dec21], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor32 = _applyDecoratedDescriptor(_class.prototype, "allFields", [_dec22], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor33 = _applyDecoratedDescriptor(_class.prototype, "hasInherited", [_dec23], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor34 = _applyDecoratedDescriptor(_class.prototype, "hasPrivate", [_dec24], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor35 = _applyDecoratedDescriptor(_class.prototype, "hasProtected", [_dec25], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor36 = _applyDecoratedDescriptor(_class.prototype, "hasDeprecated", [_dec26], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = Class;
 });
-;define("ember-cli-addon-docs/models/component", ["exports", "@ember-data/model", "@ember/object/computed", "@ember/string", "@ember/object", "ember-cli-addon-docs/models/class", "ember-cli-addon-docs/utils/computed"], function (_exports, _model, _computed, _string, _object, _class, _computed2) {
+;define("ember-cli-addon-docs/models/component", ["exports", "@ember-data/model", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/models/class", "ember-cli-addon-docs/utils/computed"], function (_exports, _model, _computed, _string, _class3, _computed2) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/model",0,"@ember/object/computed",0,"@ember/string",0,"@ember/object",0,"ember-cli-addon-docs/models/class",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
 
-  var _default = _class.default.extend({
-    isComponent: true,
-    yields: (0, _model.attr)(),
-    arguments: (0, _model.attr)(),
-    overloadedYields: (0, _computed.or)('yields', 'inheritedYields'),
-    publicArguments: (0, _computed.filterBy)('arguments', 'access', 'public'),
-    privateArguments: (0, _computed.filterBy)('arguments', 'access', 'private'),
-    protectedArguments: (0, _computed.filterBy)('arguments', 'access', 'protected'),
-    allPublicArguments: (0, _computed2.memberUnion)('parentClass.allPublicArguments', 'publicArguments'),
-    allPrivateArguments: (0, _computed2.memberUnion)('parentClass.allPrivateArguments', 'privateArguments'),
-    allProtectedArguments: (0, _computed2.memberUnion)('parentClass.allProtectedArguments', 'protectedArguments'),
-    allArguments: (0, _computed2.memberUnion)('parentClass.allArguments', 'arguments'),
-    hasInherited: (0, _computed.or)('parentClass.overloadedYields.length', 'parentClass.allArguments.length', 'parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'),
-    hasInternal: (0, _computed.or)('allAccessors.length', 'allMethods.length', 'allFields.length'),
-    hasPrivate: (0, _computed.or)('allPrivateAccessors.length', 'allPrivateArguments.length', 'allPrivateMethods.length', 'allPrivateFields.length'),
-    hasProtected: (0, _computed.or)('allProtectedAccessors.length', 'allProtectedArguments.length', 'allProtectedMethods.length', 'allProtectedFields.length'),
-    hasDeprecated: (0, _computed2.hasMemberType)('allAccessors', 'allArguments', 'allMethods', 'allFields', function (member) {
-      return member.tags && member.tags.find(t => t.name === 'deprecated');
-    }),
+  var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15;
+
+  0; //eaimeta@70e063a35619d71f0,"@ember-data/model",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/models/class",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let Component = (_dec = (0, _computed.or)('yields', 'inheritedYields'), _dec2 = (0, _computed.filterBy)('arguments', 'access', 'public'), _dec3 = (0, _computed.filterBy)('arguments', 'access', 'private'), _dec4 = (0, _computed.filterBy)('arguments', 'access', 'protected'), _dec5 = (0, _computed2.memberUnion)('parentClass.allPublicArguments', 'publicArguments'), _dec6 = (0, _computed2.memberUnion)('parentClass.allPrivateArguments', 'privateArguments'), _dec7 = (0, _computed2.memberUnion)('parentClass.allProtectedArguments', 'protectedArguments'), _dec8 = (0, _computed2.memberUnion)('parentClass.allArguments', 'arguments'), _dec9 = (0, _computed.or)('parentClass.overloadedYields.length', 'parentClass.allArguments.length', 'parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'), _dec10 = (0, _computed.or)('allAccessors.length', 'allMethods.length', 'allFields.length'), _dec11 = (0, _computed.or)('allPrivateAccessors.length', 'allPrivateArguments.length', 'allPrivateMethods.length', 'allPrivateFields.length'), _dec12 = (0, _computed.or)('allProtectedAccessors.length', 'allProtectedArguments.length', 'allProtectedMethods.length', 'allProtectedFields.length'), _dec13 = (0, _computed2.hasMemberType)('allAccessors', 'allArguments', 'allMethods', 'allFields', function (member) {
+    return member.tags && member.tags.find(t => t.name === 'deprecated');
+  }), (_class = class Component extends _class3.default {
+    constructor() {
+      super(...arguments);
+
+      _defineProperty(this, "isComponent", true);
+
+      _initializerDefineProperty(this, "yields", _descriptor, this);
+
+      _initializerDefineProperty(this, "arguments", _descriptor2, this);
+
+      _initializerDefineProperty(this, "overloadedYields", _descriptor3, this);
+
+      _initializerDefineProperty(this, "publicArguments", _descriptor4, this);
+
+      _initializerDefineProperty(this, "privateArguments", _descriptor5, this);
+
+      _initializerDefineProperty(this, "protectedArguments", _descriptor6, this);
+
+      _initializerDefineProperty(this, "allPublicArguments", _descriptor7, this);
+
+      _initializerDefineProperty(this, "allPrivateArguments", _descriptor8, this);
+
+      _initializerDefineProperty(this, "allProtectedArguments", _descriptor9, this);
+
+      _initializerDefineProperty(this, "allArguments", _descriptor10, this);
+
+      _initializerDefineProperty(this, "hasInherited", _descriptor11, this);
+
+      _initializerDefineProperty(this, "hasInternal", _descriptor12, this);
+
+      _initializerDefineProperty(this, "hasPrivate", _descriptor13, this);
+
+      _initializerDefineProperty(this, "hasProtected", _descriptor14, this);
+
+      _initializerDefineProperty(this, "hasDeprecated", _descriptor15, this);
+    }
 
     /*
       This gives us a way to link to a model, since we don't always link by the actual ID:
-         {{link-to 'item' model.routingId}}
+         <LinkTo @route="item" @model={{model.routingId}}>
+          Go to item
+        </LinkTo>
        Possible refactoring is to always link by actual ID, and implement redirects.
     */
-    routingId: (0, _object.computed)('name', function () {
+    get routingId() {
       return `components/${(0, _string.dasherize)(this.name)}`;
-    })
-  });
+    }
 
-  _exports.default = _default;
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "yields", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "arguments", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "overloadedYields", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "publicArguments", [_dec2], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "privateArguments", [_dec3], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "protectedArguments", [_dec4], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "allPublicArguments", [_dec5], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "allPrivateArguments", [_dec6], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "allProtectedArguments", [_dec7], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, "allArguments", [_dec8], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, "hasInherited", [_dec9], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor12 = _applyDecoratedDescriptor(_class.prototype, "hasInternal", [_dec10], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, "hasPrivate", [_dec11], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, "hasProtected", [_dec12], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, "hasDeprecated", [_dec13], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = Component;
 });
-;define("ember-cli-addon-docs/models/module", ["exports", "@ember-data/model", "@ember/object"], function (_exports, _model, _object) {
+;define("ember-cli-addon-docs/models/module", ["exports", "@ember-data/model"], function (_exports, _model) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/model",0,"@ember/object"eaimeta@70e063a35619d71f
 
-  var _default = _model.default.extend({
-    file: (0, _model.attr)(),
-    variables: (0, _model.attr)(),
-    functions: (0, _model.attr)(),
-    classes: (0, _model.hasMany)('class', {
-      async: false
-    }),
-    components: (0, _model.hasMany)('class', {
-      async: false
-    }),
+  var _dec, _dec2, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+
+  0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let Module = (_dec = (0, _model.hasMany)('class', {
+    async: false
+  }), _dec2 = (0, _model.hasMany)('class', {
+    async: false
+  }), (_class = class Module extends _model.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "file", _descriptor, this);
+
+      _initializerDefineProperty(this, "variables", _descriptor2, this);
+
+      _initializerDefineProperty(this, "functions", _descriptor3, this);
+
+      _initializerDefineProperty(this, "classes", _descriptor4, this);
+
+      _initializerDefineProperty(this, "components", _descriptor5, this);
+    }
 
     /*
       This gives us a way to link to a model, since we don't always link by the actual ID:
-         {{link-to 'item' model.routingId}}
+         <LinkTo @route="item" @model={{model.routingId}}>
+          Go to item
+        </LinkTo>
        Possible refactoring is to always link by actual ID, and implement redirects.
     */
-    routingId: (0, _object.computed)('id', function () {
+    get routingId() {
       return `modules/${this.id}`;
-    })
-  });
+    }
 
-  _exports.default = _default;
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "file", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "variables", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "functions", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "classes", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "components", [_dec2], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = Module;
 });
 ;define("ember-cli-addon-docs/models/project", ["exports", "@ember-data/model"], function (_exports, _model) {
   "use strict";
@@ -95772,19 +94521,63 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
+
+  var _dec, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+
   0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
 
-  var _default = _model.default.extend({
-    name: (0, _model.attr)(),
-    githubUrl: (0, _model.attr)(),
-    version: (0, _model.attr)(),
-    navigationIndex: (0, _model.attr)(),
-    modules: (0, _model.hasMany)('module', {
-      async: false
-    })
-  });
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
-  _exports.default = _default;
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let Project = (_dec = (0, _model.hasMany)('module', {
+    async: false
+  }), (_class = class Project extends _model.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "name", _descriptor, this);
+
+      _initializerDefineProperty(this, "githubUrl", _descriptor2, this);
+
+      _initializerDefineProperty(this, "version", _descriptor3, this);
+
+      _initializerDefineProperty(this, "navigationIndex", _descriptor4, this);
+
+      _initializerDefineProperty(this, "modules", _descriptor5, this);
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "name", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "githubUrl", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "version", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "navigationIndex", [_model.attr], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "modules", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class));
+  _exports.default = Project;
 });
 ;define("ember-cli-addon-docs/router", ["exports", "@ember/routing/router"], function (_exports, _router) {
   "use strict";
@@ -95805,10 +94598,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     import AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
     import config from './config/environment';
   
-    const Router = AddonDocsRouter.extend({
-      location: config.locationType,
-      rootURL: config.rootURL,
-    });
+    class Router extends AddonDocsRouter {
+      location = config.locationType;
+      rootURL = config.rootURL;
+    }
     ```
   
     @class AddonDocsRouter
@@ -95850,7 +94643,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
   }
 });
-;define("ember-cli-addon-docs/routes/docs", ["exports", "@ember/routing/route", "@ember/service", "ember-get-config"], function (_exports, _route, _service, _emberGetConfig) {
+;define("ember-cli-addon-docs/routes/docs", ["exports", "@ember/routing/route", "@ember/service", "ember-cli-addon-docs/-private/config"], function (_exports, _route, _service, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -95860,7 +94653,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   var _class, _descriptor;
 
-  0; //eaimeta@70e063a35619d71f0,"@ember/routing/route",0,"@ember/service",0,"ember-get-config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/routing/route",0,"@ember/service",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -95870,7 +94663,6 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  const projectName = _emberGetConfig.default['ember-cli-addon-docs'].projectName;
   let DocsRoute = (_class = class DocsRoute extends _route.default {
     constructor() {
       super(...arguments);
@@ -95879,7 +94671,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     model() {
-      return this.store.findRecord('project', projectName);
+      return this.store.findRecord('project', (0, _config.getAddonDocsConfig)(this).projectName);
     }
 
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "store", [_service.inject], {
@@ -95963,14 +94755,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer"eaimeta@70e063a35619d71f
 
-  var _default = _serializer.default.extend({
+  class AddonDocsSerializer extends _serializer.default {
     normalizeResponse(store, primaryModelClass, payload) {
       return payload;
     }
 
-  });
+  }
 
-  _exports.default = _default;
+  _exports.default = AddonDocsSerializer;
 });
 ;define("ember-cli-addon-docs/serializers/class", ["exports", "ember-cli-addon-docs/serializers/-addon-docs"], function (_exports, _addonDocs) {
   "use strict";
@@ -96028,50 +94820,63 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/serializers/-addon-docs"eaimeta@70e063a35619d71f
 });
-;define("ember-cli-addon-docs/services/docs-routes", ["exports", "@ember/object", "@ember/array", "@ember/service", "@ember/debug"], function (_exports, _object, _array, _service, _debug) {
+;define("ember-cli-addon-docs/services/docs-routes", ["exports", "@ember/array", "@ember/service", "@ember/debug", "@glimmer/tracking", "tracked-toolbox"], function (_exports, _array, _service, _debug, _tracking, _trackedToolbox) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/object",0,"@ember/array",0,"@ember/service",0,"@ember/debug"eaimeta@70e063a35619d71f
 
-  var _default = _service.default.extend({
-    router: (0, _service.inject)('-routing'),
+  var _dec, _class, _descriptor, _descriptor2;
 
-    init() {
-      this._super(...arguments);
+  0; //eaimeta@70e063a35619d71f0,"@ember/array",0,"@ember/service",0,"@ember/debug",0,"@glimmer/tracking",0,"tracked-toolbox"eaimeta@70e063a35619d71f
 
-      this.resetState();
-    },
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let DocsRoutesService = (_dec = (0, _service.inject)('-routing'), (_class = class DocsRoutesService extends _service.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "router", _descriptor, this);
+
+      _initializerDefineProperty(this, "items", _descriptor2, this);
+    }
 
     resetState() {
-      this.set('items', (0, _array.A)());
-    },
+      this.items = (0, _array.A)();
+    } // Each routeParam is [ routeName, model ] where model is optional
 
-    // Each routeParam is [ routeName, model ] where model is optional
-    routes: (0, _object.computed)('items.[]', function () {
+
+    get routes() {
       return this.items.map(item => {
-        let routeParams = [item.route];
+        let routeParams = [item.args.route];
 
-        if (item.model) {
-          routeParams.push(item.model);
+        if (item.args.model) {
+          routeParams.push(item.args.model);
         }
 
         return routeParams;
       });
-    }),
-    routeUrls: (0, _object.computed)('routes.[]', function () {
+    }
+
+    get routeUrls() {
       return this.routes.map(_ref => {
         let [routeName, model] = _ref;
         return this.router.generateURL(routeName, model ? [model] : []);
       });
-    }),
-    currentRouteIndex: (0, _object.computed)('router.router.url', 'routeUrls.[]', function () {
-      if (this.get('routeUrls.length')) {
-        let router = this.get('router.router');
-        let currentURL = router.get('rootURL') + router.get('url');
+    }
+
+    get currentRouteIndex() {
+      if (this.routeUrls.length) {
+        let router = this.router.router;
+        let currentURL = router.rootURL + router.url;
         currentURL = currentURL.replace('//', '/'); // dedup slashes
 
         let longestIndex, longestPrefix;
@@ -96084,78 +94889,103 @@ lunr.QueryParser.parseBoost = function (parser) {
         (false && !(longestIndex != null) && (0, _debug.assert)(`DocsRoutes wasn't able to correctly detect the current route. The current url is ${currentURL}`, longestIndex != null));
         return longestIndex;
       }
-    }),
-    next: (0, _object.computed)('currentRouteIndex', 'items', 'routes.[]', function () {
+
+      return null;
+    }
+
+    get next() {
       let currentIndex = this.currentRouteIndex;
 
-      if (currentIndex < this.get('routes.length') - 1) {
+      if (currentIndex < this.routes.length - 1) {
         let nextRouteIndex = currentIndex + 1;
         let route = this.items.objectAt(nextRouteIndex);
         return {
-          route: route.get('route'),
-          models: route.get('model') ? [route.get('model')] : [],
-          label: route.get('label')
+          route: route.args.route,
+          models: route.args.model ? [route.args.model] : [],
+          label: route.args.label
         };
       }
-    }),
-    previous: (0, _object.computed)('currentRouteIndex', 'items', 'routes.[]', function () {
+
+      return null;
+    }
+
+    get previous() {
       let currentIndex = this.currentRouteIndex;
 
       if (currentIndex > 0) {
         let previousRouteIndex = currentIndex - 1;
         let route = this.items.objectAt(previousRouteIndex);
         return {
-          route: route.get('route'),
-          models: route.get('model') ? [route.get('model')] : [],
-          label: route.get('label')
+          route: route.args.route,
+          models: route.args.model ? [route.args.model] : [],
+          label: route.args.label
         };
       }
-    })
-  });
 
-  _exports.default = _default;
+      return null;
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "router", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "items", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: function () {
+      return (0, _array.A)();
+    }
+  }), _applyDecoratedDescriptor(_class.prototype, "routes", [_trackedToolbox.cached], Object.getOwnPropertyDescriptor(_class.prototype, "routes"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "routeUrls", [_trackedToolbox.cached], Object.getOwnPropertyDescriptor(_class.prototype, "routeUrls"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "currentRouteIndex", [_trackedToolbox.cached], Object.getOwnPropertyDescriptor(_class.prototype, "currentRouteIndex"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "next", [_trackedToolbox.cached], Object.getOwnPropertyDescriptor(_class.prototype, "next"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "previous", [_trackedToolbox.cached], Object.getOwnPropertyDescriptor(_class.prototype, "previous"), _class.prototype)), _class));
+  _exports.default = DocsRoutesService;
 });
-;define("ember-cli-addon-docs/services/docs-search", ["exports", "@ember/service", "@ember/application", "@ember/object", "lunr", "ember-get-config", "fetch"], function (_exports, _service, _application, _object, _lunr, _emberGetConfig, _fetch) {
+;define("ember-cli-addon-docs/services/docs-search", ["exports", "@ember/service", "lunr", "fetch", "ember-concurrency", "ember-cli-addon-docs/-private/config"], function (_exports, _service, _lunr, _fetch, _emberConcurrency, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/service",0,"@ember/application",0,"@ember/object",0,"lunr",0,"ember-get-config",0,"fetch"eaimeta@70e063a35619d71f
+
+  var _class;
+
+  0; //eaimeta@70e063a35619d71f0,"@ember/service",0,"lunr",0,"fetch",0,"ember-concurrency",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
   const {
     Index,
     Query
   } = _lunr.default;
-
-  var _default = _service.default.extend({
-    search(phrase) {
-      return this.loadSearchIndex().then(_ref => {
-        let {
-          index,
-          documents
-        } = _ref;
-        let words = phrase.toLowerCase().split(new RegExp(_emberGetConfig.default['ember-cli-addon-docs'].searchTokenSeparator));
-        let results = index.query(query => {
-          // In the future we could boost results based on the field they come from
-          for (let word of words) {
-            query.term(index.pipeline.runString(word)[0], {
-              wildcard: Query.wildcard.LEADING | Query.wildcard.TRAILING
-            });
-          }
-        });
-        return results.map(resultInfo => {
-          let document = documents[resultInfo.ref];
-          return {
-            resultInfo,
-            document
-          };
-        });
+  let DocsSearch = (_class = class DocsSearch extends _service.default {
+    async search(phrase) {
+      const {
+        searchTokenSeparator
+      } = (0, _config.getAddonDocsConfig)(this);
+      let {
+        index,
+        documents
+      } = await this.loadSearchIndex();
+      let words = phrase.toLowerCase().split(new RegExp(searchTokenSeparator));
+      let results = index.query(query => {
+        // In the future we could boost results based on the field they come from
+        for (let word of words) {
+          query.term(index.pipeline.runString(word)[0], {
+            wildcard: Query.wildcard.LEADING | Query.wildcard.TRAILING
+          });
+        }
       });
-    },
+      return results.map(resultInfo => {
+        let document = documents[resultInfo.ref];
+        return {
+          resultInfo,
+          document
+        };
+      });
+    } // temporary; just useful for tuning search config for now
 
-    // temporary; just useful for tuning search config for now
+
     searchAndLog(phrase) {
       /* eslint-disable no-console */
       this.search(phrase).then(results => {
@@ -96204,28 +95034,31 @@ lunr.QueryParser.parseBoost = function (parser) {
         console.groupEnd();
       });
       /* eslint-enable no-console */
-    },
+    }
 
     loadSearchIndex() {
+      return this._loadSearchIndex.perform();
+    }
+
+    *_loadSearchIndex() {
       if (!this._searchIndex) {
-        this._searchIndex = (0, _fetch.default)(this._indexURL).then(response => response.json()).then(json => {
-          return {
-            index: Index.load(json.index),
-            documents: json.documents
-          };
-        });
+        let response = yield (0, _fetch.default)(this._indexURL);
+        let json = yield response.json();
+        this._searchIndex = {
+          index: Index.load(json.index),
+          documents: json.documents
+        };
       }
 
       return this._searchIndex;
-    },
+    }
 
-    _indexURL: (0, _object.computed)(function () {
-      let config = (0, _application.getOwner)(this).resolveRegistration('config:environment');
-      return `${config.rootURL}ember-cli-addon-docs/search-index.json`;
-    })
-  });
+    get _indexURL() {
+      return `${(0, _config.getRootURL)(this)}ember-cli-addon-docs/search-index.json`;
+    }
 
-  _exports.default = _default;
+  }, (_applyDecoratedDescriptor(_class.prototype, "_loadSearchIndex", [_emberConcurrency.enqueueTask], Object.getOwnPropertyDescriptor(_class.prototype, "_loadSearchIndex"), _class.prototype)), _class);
+  _exports.default = DocsSearch;
 
   function logSnippet(doc, key, position) {
     let field = doc[key];
@@ -96245,21 +95078,36 @@ lunr.QueryParser.parseBoost = function (parser) {
     /* eslint-enable no-console */
   }
 });
-;define("ember-cli-addon-docs/services/project-version", ["exports", "@ember/service", "@ember/application", "@ember/object", "ember-concurrency", "ember-get-config", "fetch"], function (_exports, _service, _application, _object, _emberConcurrency, _emberGetConfig, _fetch) {
+;define("ember-cli-addon-docs/services/project-version", ["exports", "@ember/service", "ember-concurrency", "fetch", "@glimmer/tracking", "ember-cli-addon-docs/-private/config"], function (_exports, _service, _emberConcurrency, _fetch, _tracking, _config) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/service",0,"@ember/application",0,"@ember/object",0,"ember-concurrency",0,"ember-get-config",0,"fetch"eaimeta@70e063a35619d71f
 
-  const {
-    latestVersionName
-  } = _emberGetConfig.default['ember-cli-addon-docs'];
+  var _class, _descriptor, _descriptor2;
 
-  var _default = _service.default.extend({
-    _loadAvailableVersions: (0, _emberConcurrency.task)(function* () {
+  0; //eaimeta@70e063a35619d71f0,"@ember/service",0,"ember-concurrency",0,"fetch",0,"@glimmer/tracking",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
+  let ProjectVersionService = (_class = class ProjectVersionService extends _service.default {
+    constructor() {
+      super(...arguments);
+
+      _initializerDefineProperty(this, "versions", _descriptor, this);
+
+      _initializerDefineProperty(this, "config", _descriptor2, this);
+    }
+
+    *_loadAvailableVersions() {
       let response = yield (0, _fetch.default)(`${this.root}versions.json`);
       let json;
 
@@ -96267,56 +95115,67 @@ lunr.QueryParser.parseBoost = function (parser) {
         json = yield response.json();
       } else {
         json = {
-          [latestVersionName]: Object.assign({}, this.currentVersion)
+          [this.config.latestVersionName]: Object.assign({}, this.currentVersion)
         };
       }
 
-      this.set('versions', Object.keys(json).map(key => {
+      this.versions = Object.keys(json).map(key => {
         let version = json[key];
         version.truncatedSha = version.sha.substr(0, 5);
         version.key = key;
         return version;
-      }));
-    }),
+      });
+    }
 
     redirectTo(version) {
       window.location.href = `${this.root}${version.path}`;
-    },
+    }
 
     loadAvailableVersions() {
       return this._loadAvailableVersions.perform();
-    },
+    }
 
-    root: (0, _object.computed)('currentVersion.path', function () {
-      let rootURL = (0, _application.getOwner)(this).resolveRegistration('config:environment').rootURL;
-      return rootURL.replace(`/${this.get('currentVersion.path')}/`, '/');
-    }),
-    currentVersion: (0, _object.computed)({
-      get() {
-        let config = (0, _application.getOwner)(this).resolveRegistration('config:environment')['ember-cli-addon-docs'];
-        let currentVersion = config.deployVersion; // In development, this token won't have been replaced replaced
+    get root() {
+      return (0, _config.getRootURL)(this).replace(`/${this.currentVersion.path}/`, '/');
+    }
 
-        if (currentVersion === 'ADDON_DOCS_DEPLOY_VERSION') {
-          currentVersion = {
-            key: latestVersionName,
-            name: latestVersionName,
-            tag: config.projectTag,
-            path: '',
-            sha: 'abcde'
-          };
-        }
-
-        return currentVersion;
-      },
-
-      set(key, val) {
-        return val;
+    get currentVersion() {
+      if (this._currentVersion) {
+        return this._currentVersion;
       }
 
-    })
-  });
+      let currentVersion = this.config.deployVersion; // In development, this token won't have been replaced replaced
 
-  _exports.default = _default;
+      if (currentVersion === 'ADDON_DOCS_DEPLOY_VERSION') {
+        currentVersion = {
+          key: this.config.latestVersionName,
+          name: this.config.latestVersionName,
+          tag: this.config.projectTag,
+          path: '',
+          sha: 'abcde'
+        };
+      }
+
+      return currentVersion;
+    } // only used for tests
+
+
+    set currentVersion(val) {
+      this._currentVersion = val;
+    }
+
+  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "versions", [_tracking.tracked], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class.prototype, "_loadAvailableVersions", [_emberConcurrency.task], Object.getOwnPropertyDescriptor(_class.prototype, "_loadAvailableVersions"), _class.prototype)), _class);
+  _exports.default = ProjectVersionService;
 });
 ;define("ember-cli-addon-docs/styles/tailwind.config", [], function () {
   "use strict";
@@ -97095,7 +95954,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   };
 });
-;define("ember-cli-addon-docs/utils/compile-markdown", ["exports", "marked", "highlight.js/lib/core", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/htmlbars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript"], function (_exports, _marked, _core, _javascript, _css, _handlebars, _htmlbars, _json, _xml, _diff, _shell, _typescript) {
+;define("ember-cli-addon-docs/utils/compile-markdown", ["exports", "marked", "node-html-parser", "@handlebars/parser", "line-column", "highlight.js/lib/core", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript"], function (_exports, _marked, _nodeHtmlParser, _parser, _lineColumn, _core, _javascript, _css, _handlebars, _json, _xml, _diff, _shell, _typescript) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -97103,7 +95962,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = compileMarkdown;
   _exports.highlightCode = highlightCode;
-  0; //eaimeta@70e063a35619d71f0,"marked",0,"highlight.js/lib/core",0,"highlight.js/lib/languages/javascript",0,"highlight.js/lib/languages/css",0,"highlight.js/lib/languages/handlebars",0,"highlight.js/lib/languages/htmlbars",0,"highlight.js/lib/languages/json",0,"highlight.js/lib/languages/xml",0,"highlight.js/lib/languages/diff",0,"highlight.js/lib/languages/shell",0,"highlight.js/lib/languages/typescript"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"marked",0,"node-html-parser",0,"@handlebars/parser",0,"line-column",0,"highlight.js/lib/core",0,"highlight.js/lib/languages/javascript",0,"highlight.js/lib/languages/css",0,"highlight.js/lib/languages/handlebars",0,"highlight.js/lib/languages/json",0,"highlight.js/lib/languages/xml",0,"highlight.js/lib/languages/diff",0,"highlight.js/lib/languages/shell",0,"highlight.js/lib/languages/typescript"eaimeta@70e063a35619d71f
 
   _core.default.registerLanguage('javascript', _javascript.default);
 
@@ -97113,9 +95972,9 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _core.default.registerLanguage('handlebars', _handlebars.default);
 
-  _core.default.registerLanguage('htmlbars', _htmlbars.default);
+  _core.default.registerLanguage('hbs', _handlebars.default);
 
-  _core.default.registerLanguage('hbs', _htmlbars.default);
+  _core.default.registerLanguage('htmlbars', _handlebars.default);
 
   _core.default.registerLanguage('json', _json.default);
 
@@ -97130,6 +95989,89 @@ lunr.QueryParser.parseBoost = function (parser) {
   _core.default.registerLanguage('typescript', _typescript.default);
 
   _core.default.registerLanguage('ts', _typescript.default);
+
+  const htmlComponent = {
+    name: 'htmlComponent',
+    level: 'block',
+
+    start(src) {
+      // stop text tokenizer at the next potential match.
+      // we're only interested in html blocks that begin in a new line
+      let match = src.match(/\n<[^/^\s>]/);
+      return match && match.index;
+    },
+
+    tokenizer(src) {
+      let openingRule = /^<([^/^\s>]+)\s?[\s\S]*?>/;
+      let openingMatch = openingRule.exec(src);
+
+      if (openingMatch) {
+        let openingTag = openingMatch[1];
+        let root = (0, _nodeHtmlParser.parse)(src);
+
+        for (let el of root.childNodes) {
+          if (el.rawTagName === openingTag) {
+            let finalMatch = src.substring(el.range[0], el.range[1]);
+            return {
+              type: 'htmlComponent',
+              raw: finalMatch,
+              text: finalMatch,
+              tokens: []
+            };
+          }
+        }
+      }
+    },
+
+    renderer(token) {
+      return `\n<p>${token.text}</p>\n`;
+    }
+
+  };
+  const hbsComponent = {
+    name: 'hbsComponent',
+    level: 'block',
+
+    start(src) {
+      // stop text tokenizer at the next potential match.
+      // we're only interested in hbs blocks that begin in a new line
+      let match = src.match(/\n{{#\S/);
+      return match && match.index;
+    },
+
+    tokenizer(src) {
+      let openingRule = /^{{#([A-Za-z-]+)[\S\s]+?}}/;
+      let openingMatch = openingRule.exec(src);
+
+      if (openingMatch) {
+        let openingTag = openingMatch[1];
+        let root = (0, _parser.parse)(src);
+
+        for (let el of root.body) {
+          if (el.path && el.path.original === openingTag) {
+            let start = (0, _lineColumn.default)(src).toIndex([el.loc.start.line, el.loc.start.column]);
+            let end = (0, _lineColumn.default)(src).toIndex([el.loc.end.line, el.loc.end.column]);
+            let finalMatch = src.substring(start, end + 1);
+            return {
+              type: 'hbsComponent',
+              raw: finalMatch,
+              text: finalMatch,
+              tokens: []
+            };
+          }
+        }
+      }
+    },
+
+    renderer(token) {
+      return `\n<p>${token.text}</p>\n`;
+    }
+
+  };
+
+  _marked.marked.use({
+    extensions: [htmlComponent, hbsComponent]
+  });
   /**
     This function is used when `compileMarkdown` encounters code blocks while
     rendering Markdown source.
@@ -97139,23 +96081,23 @@ lunr.QueryParser.parseBoost = function (parser) {
     user interaction.
   
     ```js
-    import Component from '@ember/component';
+    import Component from '@glimmer/component';
     import dedent from 'dedent';
     import { highlightCode } from 'ember-cli-addon-docs/utils/compile-markdown';
   
-    export default Component.extend({
-      snippet: dedent`
+    export default class MyComponent extends Component {
+      snippet = dedent`
         let { foo } = bar;
-      `,
+      `;
   
-      highlightedSnippet: computed(function() {
+      get highlightedSnippet() {
         return highlightCode(this.snippet, 'js');
-      })
-    });
+      }
+    }
     ```
   
     ```hbs
-    <div class='docs-bg-code-base text-grey overflow-x-scroll'>
+    <div class="docs-bg-code-base text-grey overflow-x-scroll">
       <div class="p-4 w-full">
         <pre>{{{highlightedSnippet}}}</pre>
       </div>
@@ -97185,15 +96127,15 @@ lunr.QueryParser.parseBoost = function (parser) {
     fetched at runtime from an API:
   
     ```js
-    import Component from '@ember/component';
+    import Component from '@glimmer/component';
     import compileMarkdown from 'ember-cli-addon-docs/utils/compile-markdown';
     import { htmlSafe } from '@ember/template';
   
-    export default Component.extend({
-      htmlBody: computed('post.body', function() {
+    export default class MyComponent extends Component {
+      get htmlBody() {
         return htmlSafe(compileMarkdown(this.post.body));
-      });
-    });
+      }
+    }
     ```
   
     @function compileMarkdown
@@ -97204,66 +96146,14 @@ lunr.QueryParser.parseBoost = function (parser) {
 
 
   function compileMarkdown(source, config) {
-    let tokens = _marked.default.lexer(source);
-
     let markedOptions = {
       highlight: highlightCode,
       renderer: new HBSRenderer(config)
     };
-
-    if (config && config.targetHandlebars) {
-      tokens = compactParagraphs(tokens);
-    }
-
-    return `<div class="docs-md">${_marked.default.parser(tokens, markedOptions).trim()}</div>`;
-  } // Whitespace can imply paragraphs in Markdown, which can result
-  // in interleaving between <p> tags and block component invocations,
-  // so this scans the Marked tokens to turn things like this:
-  //    <p>{{#my-component}}<p>
-  //    <p>{{/my-component}}</p>
-  // Into this:
-  //    <p>{{#my-component}} {{/my-component}}</p>
-
-
-  function compactParagraphs(tokens) {
-    let compacted = [];
-    compacted.links = tokens.links;
-    let balance = 0;
-
-    for (let token of tokens) {
-      if (balance === 0) {
-        compacted.push(token);
-      } else if (token.text) {
-        let last = compacted[compacted.length - 1];
-        last.text = `${last.text} ${token.text}`;
-      }
-
-      let tokenText = token.text || '';
-      let textWithoutCode = tokenText.replace(/`[\s\S]*?`/g, '');
-
-      if (token.type === 'code') {
-        textWithoutCode = '';
-      }
-
-      balance += count(/{{#/g, textWithoutCode);
-      balance += count(/<[A-Z]/g, textWithoutCode);
-      balance -= count(/[A-Z][^<>]+\/>/g, textWithoutCode);
-      balance -= count(/{{\//g, textWithoutCode);
-      balance -= count(/<\/[A-Z]/g, textWithoutCode);
-    }
-
-    return compacted;
+    return `<div class="docs-md">${_marked.marked.parse(source, markedOptions)}</div>`;
   }
 
-  function count(regex, string) {
-    let total = 0;
-
-    while (regex.exec(string)) total++;
-
-    return total;
-  }
-
-  class HBSRenderer extends _marked.default.Renderer {
+  class HBSRenderer extends _marked.marked.Renderer {
     constructor(config) {
       super();
       this.config = config || {};
@@ -97334,8 +96224,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     tablecell(content, flags) {
-      const type = flags.header ? 'th' : 'td';
-      const tag = flags.align ? '<' + type + ' align="' + flags.align + '" class="docs-border docs-px-4 docs-py-2">' : '<' + type + ' class="docs-border docs-px-4 docs-py-2">';
+      let type = flags.header ? 'th' : 'td';
+      let tag = flags.align ? '<' + type + ' align="' + flags.align + '" class="docs-border docs-px-4 docs-py-2">' : '<' + type + ' class="docs-border docs-px-4 docs-py-2">';
       return tag + content + '</' + type + '>\n';
     }
 
@@ -97348,7 +96238,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     link(href, title, text) {
-      const titleAttribute = title ? `title="${title}"` : '';
+      let titleAttribute = title ? `title="${title}"` : '';
       return `<a href="${href}" ${titleAttribute} class="docs-md__a">${text}</a>`;
     }
 
@@ -97374,8 +96264,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   */
   function memberUnion(parentMembersKey, childMembersKey) {
     return (0, _object.computed)(`${parentMembersKey}.[]`, `${childMembersKey}.[]`, function () {
-      let parentMembers = this.get(parentMembersKey);
-      let childMembers = this.get(childMembersKey);
+      let parentMembers = (0, _object.get)(this, parentMembersKey);
+      let childMembers = (0, _object.get)(this, childMembersKey);
 
       if (!parentMembers) {
         return childMembers;
@@ -97418,7 +96308,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function memberFilter(classKey, memberType) {
     return (0, _object.computed)(classKey, 'showInherited', 'showInternal', 'showProtected', 'showPrivate', 'showDeprecated', function () {
-      let klass = this.get(classKey);
+      let klass = (0, _object.get)(this, classKey);
       let showInternal = this.showInternal;
       let showInherited = this.showInherited;
       let showProtected = this.showProtected;
@@ -97468,7 +96358,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return (0, _object.computed)(...memberKeys.map(k => `${k}.[]`), {
       get() {
         return memberKeys.some(memberKey => {
-          return this.get(memberKey).some(member => filter(member, memberKey));
+          return (0, _object.get)(this, memberKey).some(member => filter(member, memberKey));
         });
       }
 
@@ -105960,19 +104850,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = serializeQueryParams;
   _exports.default = _default;
 });
-;define("ember-get-config/index", ["exports", "dummy/config/environment"], function (_exports, _environment) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _environment.default;
-    }
-  });
-});
 ;define("ember-inflector/index", ["exports", "ember-inflector/lib/system"], function (_exports, _system) {
   "use strict";
 
@@ -107841,1380 +106718,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   }]];
   _exports.default = _default;
 });
-;define("ember-keyboard/decorators/key-responder", ["exports", "@ember/service"], function (_exports, _service) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = keyResponder;
-
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
-  function populateKeyboardHandlers(responder) {
-    responder.keyboardHandlers = responder.keyboardHandlers || {};
-
-    if (!responder.keyboardHandlerNames) {
-      responder.keyboardHandlerNames = {};
-
-      for (let propertyName in responder) {
-        let propertyValue = responder[propertyName];
-
-        if (typeof propertyValue === 'function' && propertyValue._emberKeyboardOnKeyDecoratorData) {
-          for (let listenerName of propertyValue._emberKeyboardOnKeyDecoratorData.listenerNames || []) {
-            responder.keyboardHandlerNames[listenerName] = propertyName;
-          }
-        }
-      }
-    }
-
-    for (let [listenerName, methodName] of Object.entries(responder.keyboardHandlerNames || {})) {
-      responder.keyboardHandlers[listenerName] = responder[methodName].bind(responder);
-    }
-  }
-
-  function keyResponder() {
-    let opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    const createClass = function (DecoratedClass) {
-      var _class, _descriptor, _class2;
-
-      if (opts.priority === undefined) {
-        opts.priority = 0;
-      }
-
-      if (opts.activated === undefined) {
-        opts.activated = true;
-      }
-
-      return _class = (_class2 = class ClassAsKeyResponder extends DecoratedClass {
-        get keyboardPriority() {
-          if (super.keyboardPriority === undefined) {
-            return opts.priority;
-          }
-
-          return super.keyboardPriority;
-        }
-
-        set keyboardPriority(val) {
-          super.keyboardPriority = val;
-        }
-
-        get keyboardActivated() {
-          if (super.keyboardActivated === undefined) {
-            return opts.activated;
-          }
-
-          return super.keyboardActivated;
-        }
-
-        set keyboardActivated(val) {
-          super.keyboardActivated = val;
-        }
-
-        constructor() {
-          super(...arguments);
-
-          _initializerDefineProperty(this, "keyboard", _descriptor, this);
-
-          populateKeyboardHandlers(this);
-          this.keyboard.register(this);
-        }
-
-        willDestroy() {
-          this.keyboard.unregister(this);
-          super.willDestroy(...arguments);
-        }
-
-      }, _defineProperty(_class2, "name", `${DecoratedClass.name}WithKeyResponder`), _class2), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "keyboard", [_service.inject], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: null
-      })), _class;
-    };
-
-    if (typeof opts === 'function') {
-      return createClass(opts);
-    } else {
-      return function (DecoratedClass) {
-        return createClass(DecoratedClass);
-      };
-    }
-  }
-});
-;define("ember-keyboard/decorators/on-key", ["exports", "ember-keyboard/utils/listener-name"], function (_exports, _listenerName) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = onKey;
-  const DEFAULT_EVENT_NAME = 'keydown';
-
-  function onKey(keyCombo) {
-    let opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    if (typeof arguments[1] === 'function') {
-      return onKeyClassic(keyCombo, {
-        event: DEFAULT_EVENT_NAME
-      }, arguments[1]);
-    }
-
-    if (!opts.event) {
-      opts.event = DEFAULT_EVENT_NAME;
-    }
-
-    if (typeof arguments[2] === 'function') {
-      return onKeyClassic(keyCombo, opts, arguments[2]);
-    } else {
-      return onKeyDecorator(keyCombo, opts);
-    }
-  }
-
-  function onKeyDecorator(keyCombo, opts) {
-    // ES6 class
-    return function (target, property, descriptor) {
-      if (!Object.prototype.hasOwnProperty.call(target, 'keyboardHandlerNames')) {
-        let parentKeyboardHandlerNames = target.parentKeyboardHandlerNames; // we need to assign because of the way mixins copy actions down when inheriting
-
-        target.keyboardHandlerNames = parentKeyboardHandlerNames ? Object.assign({}, parentKeyboardHandlerNames) : {};
-      }
-
-      target.keyboardHandlerNames[(0, _listenerName.default)(opts.event, keyCombo)] = property;
-      return descriptor;
-    };
-  }
-
-  function onKeyClassic(keyCombo, opts, handler) {
-    if (!handler._emberKeyboardOnKeyDecoratorData) {
-      handler._emberKeyboardOnKeyDecoratorData = {
-        listenerNames: []
-      };
-    }
-
-    handler._emberKeyboardOnKeyDecoratorData.listenerNames.push((0, _listenerName.default)(opts.event, keyCombo));
-
-    return handler;
-  }
-});
-;define("ember-keyboard/fixtures/key-maps", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.SHIFT_KEY_MAP = _exports.MAC_SHIFT_ALT_KEY_MAP = _exports.MAC_ALT_KEY_MAP = void 0;
-  const SHIFT_KEY_MAP = {
-    A: 'a',
-    B: 'b',
-    C: 'c',
-    D: 'd',
-    E: 'e',
-    F: 'f',
-    G: 'g',
-    H: 'h',
-    I: 'i',
-    J: 'j',
-    K: 'k',
-    L: 'l',
-    M: 'm',
-    N: 'n',
-    O: 'o',
-    P: 'p',
-    Q: 'q',
-    R: 'r',
-    S: 's',
-    T: 't',
-    U: 'u',
-    V: 'v',
-    W: 'w',
-    X: 'x',
-    Y: 'y',
-    Z: 'z',
-    '!': '1',
-    '@': '2',
-    '#': '3',
-    $: '4',
-    '%': '5',
-    '^': '6',
-    '&': '7',
-    '*': '8',
-    '(': '9',
-    ')': '0',
-    _: '-',
-    '+': '=',
-    '<': ',',
-    '>': '.',
-    '?': '/',
-    ':': ';',
-    '"': "'",
-    '~': '`',
-    '{': '[',
-    '}': ']',
-    '|': '\\'
-  };
-  _exports.SHIFT_KEY_MAP = SHIFT_KEY_MAP;
-  const MAC_ALT_KEY_MAP = {
-    å: 'a',
-    b: 'b',
-    ç: 'c',
-    '∂': 'd',
-    // 'Dead': 'e',
-    ƒ: 'f',
-    '©': 'g',
-    '˙': 'h',
-    // 'Dead': 'i',
-    '∆': 'j',
-    '˚': 'k',
-    '¬': 'l',
-    µ: 'm',
-    // 'Dead': 'n',
-    ø: 'o',
-    π: 'p',
-    œ: 'q',
-    '®': 'r',
-    ß: 's',
-    '†': 't',
-    // 'Dead': 'u',
-    '√': 'v',
-    '∑': 'w',
-    '≈': 'x',
-    '¥': 'y',
-    Ω: 'z',
-    '¡': '1',
-    '™': '2',
-    '£': '3',
-    '¢': '4',
-    '∞': '5',
-    '§': '6',
-    '¶': '7',
-    '•': '8',
-    ª: '9',
-    º: '0',
-    '–': '-',
-    '≠': '=',
-    '≤': ',',
-    '≥': '.',
-    '÷': '/',
-    '…': ';',
-    æ: "'",
-    // 'Dead': '`',
-    '“': '[',
-    '‘': ']',
-    '«': '\\'
-  };
-  _exports.MAC_ALT_KEY_MAP = MAC_ALT_KEY_MAP;
-  const MAC_SHIFT_ALT_KEY_MAP = {
-    Å: 'a',
-    ı: 'b',
-    // 'Dead': 'c',
-    Î: 'd',
-    // 'Dead': 'e',
-    Ï: 'f',
-    '˝': 'g',
-    Ó: 'h',
-    ˆ: 'i',
-    Ô: 'j',
-    '': 'k',
-    Ò: 'l',
-    Â: 'm',
-    '˜': 'n',
-    Ø: 'o',
-    // 'Dead': 'p',
-    Œ: 'q',
-    '‰': 'r',
-    Í: 's',
-    ˇ: 't',
-    '¨': 'u',
-    '◊': 'v',
-    '„': 'w',
-    '˛': 'x',
-    Á: 'y',
-    '¸': 'z',
-    '⁄': '1',
-    '€': '2',
-    '‹': '3',
-    '›': '4',
-    ﬁ: '5',
-    ﬂ: '6',
-    '‡': '7',
-    '°': '8',
-    '·': '9',
-    '‚': '0',
-    '—': '-',
-    '±': '=',
-    '¯': ',',
-    '˘': '.',
-    '¿': '/',
-    Ú: ';',
-    Æ: "'",
-    '`': '`',
-    '”': '[',
-    '’': ']',
-    '»': '\\'
-  };
-  _exports.MAC_SHIFT_ALT_KEY_MAP = MAC_SHIFT_ALT_KEY_MAP;
-});
-;define("ember-keyboard/fixtures/modifiers-array", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _default = ['alt', 'ctrl', 'meta', 'shift', 'cmd'];
-  _exports.default = _default;
-});
-;define("ember-keyboard/fixtures/mouse-buttons-array", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _default = ['left', 'middle', 'right'];
-  _exports.default = _default;
-});
-;define("ember-keyboard/helpers/if-key", ["exports", "@ember/component/helper", "ember-keyboard/utils/is-key", "ember-keyboard/utils/listener-name", "@ember/debug"], function (_exports, _helper, _isKey, _listenerName, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = (0, _helper.helper)(function ifKey(_ref
-  /*, named*/
-  ) {
-    let [keyCombo, callback] = _ref;
-    return function (event) {
-      (false && !(typeof callback === 'function') && (0, _debug.assert)('ember-keyboard: You must pass a function as the second argument to the `if-key` helper', typeof callback === 'function'));
-      (false && !(event instanceof KeyboardEvent) && (0, _debug.assert)('ember-keyboard: The `if-key` helper expects to be invoked with a KeyboardEvent', event instanceof KeyboardEvent));
-
-      if ((0, _isKey.default)((0, _listenerName.default)(event.type, keyCombo), event)) {
-        callback(event);
-      }
-    };
-  });
-
-  _exports.default = _default;
-});
-;define("ember-keyboard/helpers/on-key", ["exports", "@ember/component/helper", "@ember/service", "ember-keyboard/utils/listener-name", "@ember/debug"], function (_exports, _helper, _service, _listenerName, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _class2, _descriptor;
-
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
-  let _class = (_class2 = class _class2 extends _helper.default {
-    constructor() {
-      super(...arguments);
-
-      _initializerDefineProperty(this, "keyboard", _descriptor, this);
-
-      _defineProperty(this, "keyCombo", void 0);
-
-      _defineProperty(this, "callback", void 0);
-
-      _defineProperty(this, "keyboardActivated", true);
-
-      _defineProperty(this, "keyboardPriority", 0);
-
-      _defineProperty(this, "eventName", 'keydown');
-
-      _defineProperty(this, "keyboardHandlers", void 0);
-    }
-
-    compute(_ref, _ref2) {
-      let [keyCombo, callback] = _ref;
-      let {
-        event = 'keydown',
-        activated = true,
-        priority = 0
-      } = _ref2;
-      (false && !(typeof callback === 'function') && (0, _debug.assert)('ember-keyboard: You must pass a function as the second argument to the `on-key` helper', typeof callback === 'function'));
-      this.keyCombo = keyCombo;
-      this.callback = callback;
-      this.eventName = event;
-      this.keyboardActivated = activated;
-      this.keyboardPriority = priority;
-      this.keyboardHandlers = {};
-      this.keyboardHandlers[(0, _listenerName.default)(event, keyCombo)] = callback;
-      this.keyboard.register(this);
-    }
-
-    willDestroy() {
-      this.keyboard.unregister(this);
-      super.willDestroy(...arguments);
-    }
-
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "keyboard", [_service.inject], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  })), _class2);
-
-  _exports.default = _class;
-});
-;define("ember-keyboard/index", ["exports", "ember-keyboard/utils/get-mouse-code", "ember-keyboard/decorators/key-responder", "ember-keyboard/decorators/on-key", "ember-keyboard/listeners/key-events", "ember-keyboard/listeners/mouse-events", "ember-keyboard/listeners/touch-events", "ember-keyboard/utils/trigger-event"], function (_exports, _getMouseCode, _keyResponder, _onKey, _keyEvents, _mouseEvents, _touchEvents, _triggerEvent) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "click", {
-    enumerable: true,
-    get: function () {
-      return _mouseEvents.click;
-    }
-  });
-  _exports.getCode = getCode;
-  _exports.getKeyCode = getKeyCode;
-  Object.defineProperty(_exports, "getMouseCode", {
-    enumerable: true,
-    get: function () {
-      return _getMouseCode.default;
-    }
-  });
-  Object.defineProperty(_exports, "keyDown", {
-    enumerable: true,
-    get: function () {
-      return _keyEvents.keyDown;
-    }
-  });
-  Object.defineProperty(_exports, "keyPress", {
-    enumerable: true,
-    get: function () {
-      return _keyEvents.keyPress;
-    }
-  });
-  Object.defineProperty(_exports, "keyResponder", {
-    enumerable: true,
-    get: function () {
-      return _keyResponder.default;
-    }
-  });
-  Object.defineProperty(_exports, "keyUp", {
-    enumerable: true,
-    get: function () {
-      return _keyEvents.keyUp;
-    }
-  });
-  Object.defineProperty(_exports, "mouseDown", {
-    enumerable: true,
-    get: function () {
-      return _mouseEvents.mouseDown;
-    }
-  });
-  Object.defineProperty(_exports, "mouseUp", {
-    enumerable: true,
-    get: function () {
-      return _mouseEvents.mouseUp;
-    }
-  });
-  Object.defineProperty(_exports, "onKey", {
-    enumerable: true,
-    get: function () {
-      return _onKey.default;
-    }
-  });
-  Object.defineProperty(_exports, "touchEnd", {
-    enumerable: true,
-    get: function () {
-      return _touchEvents.touchEnd;
-    }
-  });
-  Object.defineProperty(_exports, "touchStart", {
-    enumerable: true,
-    get: function () {
-      return _touchEvents.touchStart;
-    }
-  });
-  Object.defineProperty(_exports, "triggerKeyDown", {
-    enumerable: true,
-    get: function () {
-      return _triggerEvent.triggerKeyDown;
-    }
-  });
-  Object.defineProperty(_exports, "triggerKeyPress", {
-    enumerable: true,
-    get: function () {
-      return _triggerEvent.triggerKeyPress;
-    }
-  });
-  Object.defineProperty(_exports, "triggerKeyUp", {
-    enumerable: true,
-    get: function () {
-      return _triggerEvent.triggerKeyUp;
-    }
-  });
-
-  function getCode() {
-    throw new Error('ember-keyboard: `getCode` has been removed. There is no longer a need for this function as you can directly specify `key` and/or `code` values');
-  }
-
-  function getKeyCode() {
-    throw new Error('ember-keyboard: `getKeyCode` has been removed. There is no longer a need for this function as you can directly specify `key` and/or `code` values');
-  }
-});
-;define("ember-keyboard/listeners/key-events", ["exports", "ember-keyboard/utils/listener-name"], function (_exports, _listenerName) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.keyDown = keyDown;
-  _exports.keyPress = keyPress;
-  _exports.keyUp = keyUp;
-
-  function keyDown(keyCombo) {
-    return (0, _listenerName.default)('keydown', keyCombo);
-  }
-
-  function keyPress(keyCombo) {
-    return (0, _listenerName.default)('keypress', keyCombo);
-  }
-
-  function keyUp(keyCombo) {
-    return (0, _listenerName.default)('keyup', keyCombo);
-  }
-});
-;define("ember-keyboard/listeners/mouse-events", ["exports", "ember-keyboard/utils/listener-name", "ember-keyboard/fixtures/mouse-buttons-array", "ember-keyboard/fixtures/modifiers-array"], function (_exports, _listenerName, _mouseButtonsArray, _modifiersArray) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.click = click;
-  _exports.mouseDown = mouseDown;
-  _exports.mouseUp = mouseUp;
-
-  const validKeys = _mouseButtonsArray.default.concat(_modifiersArray.default);
-
-  const validateKeys = function validateKeys(keys) {
-    keys.forEach(key => {
-      if (validKeys.indexOf(key) === -1) {
-        /* eslint no-console: ["error", { allow: ["error"] }] */
-        console.error(`\`${key}\` is not a valid key name`);
-      }
-    });
-  };
-
-  const formattedListener = function formattedListener(type, keysString) {
-    const keys = keysString !== undefined ? keysString.split('+') : [];
-    validateKeys(keys);
-    return (0, _listenerName.default)(type, keys);
-  };
-
-  function click(keys) {
-    return formattedListener('click', keys);
-  }
-
-  function mouseDown(keys) {
-    return formattedListener('mousedown', keys);
-  }
-
-  function mouseUp(keys) {
-    return formattedListener('mouseup', keys);
-  }
-});
-;define("ember-keyboard/listeners/touch-events", ["exports", "ember-keyboard/utils/listener-name", "ember-keyboard/fixtures/modifiers-array"], function (_exports, _listenerName, _modifiersArray) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.touchEnd = touchEnd;
-  _exports.touchStart = touchStart;
-
-  function validateKeys(keysString) {
-    const keys = keysString !== undefined ? keysString.split('+') : [];
-    keys.forEach(key => {
-      if (_modifiersArray.default.indexOf(key) === -1) {
-        /* eslint no-console: ["error", { allow: ["error"] }] */
-        console.error(`\`${key}\` is not a valid key name`);
-      }
-    });
-  }
-
-  const formattedListener = function formattedListener(type, keysString) {
-    validateKeys(keysString);
-    return (0, _listenerName.default)(type, keysString);
-  };
-
-  function touchEnd(keys) {
-    return formattedListener('touchEnd', keys);
-  }
-
-  function touchStart(keys) {
-    return formattedListener('touchstart', keys);
-  }
-});
-;define("ember-keyboard/modifiers/on-key", ["exports", "ember-modifier", "@ember/service", "@ember/object", "ember-keyboard/utils/listener-name", "ember-keyboard/utils/is-key"], function (_exports, _emberModifier, _service, _object, _listenerName, _isKey) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _class, _descriptor;
-
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
-  const ONLY_WHEN_FOCUSED_TAG_NAMES = ['input', 'select', 'textarea'];
-  /* This is an element modifier to trigger some behavior when
-   * specified key combo is pressed. When used with a form element
-   * (input, textarea, or select), the action fires only when element
-   * has focus. When used with another element type, it will trigger the
-   * passed action, OR if no action is passed, it will trigger a `click`
-   * on the element. This allows for easy declaration of keyboard shortcuts
-   * for anything clickable: In the following example, we trigger a
-   * click on the button when the B key is pressed:
-   *
-   * <button
-   *    type="button"
-   *    {{on-key 'b'}}>
-   *   Click me, or press "B"
-   * </button>
-   */
-
-  let OnKeyModifier = (_class = class OnKeyModifier extends _emberModifier.default {
-    constructor() {
-      super(...arguments);
-
-      _initializerDefineProperty(this, "keyboard", _descriptor, this);
-
-      _defineProperty(this, "keyboardPriority", 0);
-
-      _defineProperty(this, "activatedParamValue", true);
-
-      _defineProperty(this, "eventName", 'keydown');
-
-      _defineProperty(this, "onlyWhenFocused", true);
-
-      _defineProperty(this, "listenerName", void 0);
-    }
-
-    didReceiveArguments() {
-      let [keyCombo, callback] = this.args.positional;
-      let {
-        activated,
-        event,
-        priority
-      } = this.args.named;
-      this.keyCombo = keyCombo;
-      this.callback = callback;
-      this.eventName = event || 'keydown';
-      this.activatedParamValue = Object.keys(this.args.named).includes('activated') ? !!activated : undefined;
-      this.keyboardPriority = priority ? parseInt(priority, 10) : 0;
-      this.listenerName = (0, _listenerName.default)(this.eventName, this.keyCombo);
-
-      if (this.args.named.onlyWhenFocused !== undefined) {
-        this.onlyWhenFocused = this.args.named.onlyWhenFocused;
-      } else {
-        this.onlyWhenFocused = ONLY_WHEN_FOCUSED_TAG_NAMES.includes(this.element.tagName.toLowerCase());
-      }
-    }
-
-    didInstall() {
-      this.keyboard.register(this);
-
-      if (this.onlyWhenFocused) {
-        this.element.addEventListener('click', this.onFocus, true);
-        this.element.addEventListener('focus', this.onFocus, true);
-        this.element.addEventListener('focusout', this.onFocusOut, true);
-      }
-    }
-
-    willRemove() {
-      if (this.onlyWhenFocused) {
-        this.element.removeEventListener('click', this.onFocus, true);
-        this.element.removeEventListener('focus', this.onFocus, true);
-        this.element.removeEventListener('focusout', this.onFocusOut, true);
-      }
-
-      this.keyboard.unregister(this);
-    }
-
-    onFocus() {
-      this.isFocused = true;
-    }
-
-    onFocusOut() {
-      this.isFocused = false;
-    }
-
-    get keyboardActivated() {
-      if (this.activatedParamValue === false) {
-        return false;
-      }
-
-      if (this.onlyWhenFocused) {
-        return this.isFocused;
-      }
-
-      return true;
-    }
-
-    get keyboardFirstResponder() {
-      if (this.onlyWhenFocused) {
-        return this.isFocused;
-      }
-
-      return false;
-    }
-
-    canHandleKeyboardEvent(event) {
-      return (0, _isKey.default)(this.listenerName, event);
-    }
-
-    handleKeyboardEvent(event, ekEvent) {
-      if ((0, _isKey.default)(this.listenerName, event)) {
-        if (this.callback) {
-          this.callback(event, ekEvent);
-        } else {
-          this.element.click();
-        }
-      }
-    }
-
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "keyboard", [_service.inject], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  }), _applyDecoratedDescriptor(_class.prototype, "onFocus", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "onFocus"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "onFocusOut", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "onFocusOut"), _class.prototype)), _class);
-  _exports.default = OnKeyModifier;
-});
-;define("ember-keyboard/services/keyboard", ["exports", "@ember/service", "@ember/application", "@ember/object", "@ember/runloop", "ember-keyboard/listeners/key-events", "ember-keyboard/utils/handle-key-event", "ember-keyboard/utils/sort"], function (_exports, _service, _application, _object, _runloop, _keyEvents, _handleKeyEvent, _sort) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _class;
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  let KeyboardService = (_class = class KeyboardService extends _service.default {
-    get activeResponders() {
-      let {
-        registeredResponders
-      } = this;
-      return Array.from(registeredResponders).filter(r => r.keyboardActivated);
-    }
-
-    get sortedResponders() {
-      return this.activeResponders.sort((a, b) => {
-        return (0, _sort.reverseCompareProp)(a, b, 'keyboardPriority');
-      });
-    }
-
-    get firstResponders() {
-      return this.sortedResponders.filter(r => r.keyboardFirstResponder);
-    }
-
-    get normalResponders() {
-      return this.sortedResponders.filter(r => !r.keyboardFirstResponder);
-    }
-
-    constructor() {
-      super(...arguments);
-
-      _defineProperty(this, "registeredResponders", new Set());
-
-      if (typeof FastBoot !== 'undefined') {
-        return;
-      }
-
-      const config = (0, _application.getOwner)(this).resolveRegistration('config:environment') || {};
-      let emberKeyboardConfig = config.emberKeyboard || {};
-
-      if (emberKeyboardConfig.disableOnInputFields) {
-        this._disableOnInput = true;
-      }
-
-      this._listeners = emberKeyboardConfig.listeners || ['keyUp', 'keyDown', 'keyPress'];
-      this._listeners = this._listeners.map(listener => listener.toLowerCase());
-
-      this._listeners.forEach(type => {
-        document.addEventListener(type, this._respond);
-      });
-    }
-
-    willDestroy() {
-      super.willDestroy(...arguments);
-
-      if (typeof FastBoot !== 'undefined') {
-        return;
-      }
-
-      this._listeners.forEach(type => {
-        document.removeEventListener(type, this._respond);
-      });
-    }
-
-    _respond(event) {
-      if (this._disableOnInput && event.target) {
-        const tag = event.target.tagName;
-        const isContentEditable = event.target.getAttribute && event.target.getAttribute('contenteditable') != null;
-
-        if (isContentEditable || tag === 'TEXTAREA' || tag === 'INPUT') {
-          return;
-        }
-      }
-
-      (0, _runloop.run)(() => {
-        let {
-          firstResponders,
-          normalResponders
-        } = this;
-        (0, _handleKeyEvent.handleKeyEventWithPropagation)(event, {
-          firstResponders,
-          normalResponders
-        });
-      });
-    }
-
-    register(responder) {
-      this.registeredResponders.add(responder);
-    }
-
-    unregister(responder) {
-      this.registeredResponders.delete(responder);
-    }
-
-    keyDown() {
-      return (0, _keyEvents.keyDown)(...arguments);
-    }
-
-    keyPress() {
-      return (0, _keyEvents.keyPress)(...arguments);
-    }
-
-    keyUp() {
-      return (0, _keyEvents.keyUp)(...arguments);
-    }
-
-  }, (_applyDecoratedDescriptor(_class.prototype, "_respond", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "_respond"), _class.prototype)), _class);
-  _exports.default = KeyboardService;
-});
-;define("ember-keyboard/utils/get-cmd-key", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = _default;
-
-  function _default(platform) {
-    if (typeof FastBoot === 'undefined') {
-      if (platform === undefined) {
-        platform = navigator.platform;
-      }
-
-      if (platform.indexOf('Mac') > -1) {
-        return 'meta';
-      } else {
-        return 'ctrl';
-      }
-    }
-  }
-});
-;define("ember-keyboard/utils/get-mouse-code", ["exports", "@ember/utils"], function (_exports, _utils) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = getMouseName;
-
-  function getMouseName(buttonCode) {
-    if ((0, _utils.isNone)(buttonCode)) return;
-
-    switch (buttonCode) {
-      case 'left':
-        return 0;
-
-      case 'middle':
-        return 1;
-
-      case 'right':
-        return 2;
-    }
-  }
-});
-;define("ember-keyboard/utils/get-mouse-name", ["exports", "@ember/utils"], function (_exports, _utils) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = getMouseName;
-
-  function getMouseName(buttonCode) {
-    if ((0, _utils.isNone)(buttonCode)) return;
-
-    switch (buttonCode) {
-      case 0:
-        return 'left';
-
-      case 1:
-        return 'middle';
-
-      case 2:
-        return 'right';
-    }
-  }
-});
-;define("ember-keyboard/utils/handle-key-event", ["exports", "ember-keyboard/utils/is-key"], function (_exports, _isKey) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.handleKeyEventWithPropagation = handleKeyEventWithPropagation;
-
-  function handleKeyEventWithPropagation(event, _ref) {
-    let {
-      firstResponders,
-      normalResponders
-    } = _ref;
-    let isImmediatePropagationStopped = false;
-    let isPropagationStopped = false;
-    const ekEvent = {
-      stopImmediatePropagation() {
-        isImmediatePropagationStopped = true;
-      },
-
-      stopPropagation() {
-        isPropagationStopped = true;
-      }
-
-    };
-
-    for (const responder of firstResponders) {
-      triggerResponderListener(responder, event, ekEvent);
-
-      if (isImmediatePropagationStopped) {
-        break;
-      }
-    }
-
-    if (isPropagationStopped) {
-      return;
-    }
-
-    isImmediatePropagationStopped = false;
-    let previousPriorityLevel = Number.POSITIVE_INFINITY;
-
-    for (const responder of normalResponders) {
-      const currentPriorityLevel = Number(responder.keyboardPriority);
-
-      if (isImmediatePropagationStopped && currentPriorityLevel === previousPriorityLevel) {
-        continue;
-      }
-
-      if (currentPriorityLevel < previousPriorityLevel) {
-        if (isPropagationStopped) {
-          return;
-        }
-
-        isImmediatePropagationStopped = false;
-        previousPriorityLevel = currentPriorityLevel;
-      }
-
-      triggerResponderListener(responder, event, ekEvent);
-    }
-    /* eslint-enable no-unused-vars */
-
-  }
-
-  function triggerResponderListener(responder, event) {
-    let ekEvent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-    if (responder.handleKeyboardEvent) {
-      if (responder.canHandleKeyboardEvent && !responder.canHandleKeyboardEvent(event)) {
-        return;
-      }
-
-      responder.handleKeyboardEvent(event, ekEvent);
-      return;
-    }
-
-    if (responder.keyboardHandlers) {
-      Object.keys(responder.keyboardHandlers).forEach(responderListenerName => {
-        if ((0, _isKey.default)(responderListenerName, event)) {
-          if (ekEvent) {
-            responder.keyboardHandlers[responderListenerName](event, ekEvent);
-          } else {
-            responder.keyboardHandlers[responderListenerName](event);
-          }
-        }
-      });
-      return;
-    }
-
-    throw new Error('A responder registered with the ember-keyboard service must implement either `keyboardHandlers` (property returning a dictionary of listenerNames to handler functions), or `handleKeyboardEvent(event)`)');
-  }
-});
-;define("ember-keyboard/utils/is-key", ["exports", "ember-keyboard/utils/keyboard-listener", "ember-keyboard/utils/platform", "ember-keyboard/fixtures/key-maps", "ember-keyboard/fixtures/modifiers-array", "ember-keyboard/utils/get-mouse-name"], function (_exports, _keyboardListener, _platform, _keyMaps, _modifiersArray, _getMouseName) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = isKey;
-  const ALL_SYMBOL = '_all';
-
-  function isKey(listenerOrListenerName, event) {
-    let platform = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : (0, _platform.default)();
-    let listener;
-
-    if (listenerOrListenerName instanceof _keyboardListener.default) {
-      listener = listenerOrListenerName;
-    } else if (typeof listenerOrListenerName === 'string') {
-      listener = _keyboardListener.default.parse(listenerOrListenerName, platform);
-    } else {
-      throw new Error('Expected a `string` or `KeyCombo` as `keyComboOrKeyComboString` argument to `isKey`');
-    }
-
-    if (listener.type !== event.type) {
-      return false;
-    }
-
-    if (isAll(listener)) {
-      return true;
-    }
-
-    if (modifiersMatch(listener, event) && (keyOrCodeMatches(listener, event) || mouseButtonMatches(listener, event))) {
-      return true;
-    }
-
-    return specialCaseMatches(listener, event, platform);
-  }
-
-  function isAll(listener) {
-    return listener.keyOrCode === ALL_SYMBOL && listener.altKey === false && listener.ctrlKey === false && listener.metaKey === false && listener.shiftKey === false;
-  }
-
-  function modifiersMatch(listener, keyboardEvent) {
-    return listener.type === keyboardEvent.type && listener.altKey === keyboardEvent.altKey && listener.ctrlKey === keyboardEvent.ctrlKey && listener.metaKey === keyboardEvent.metaKey && listener.shiftKey === keyboardEvent.shiftKey;
-  }
-
-  function keyOrCodeMatches(listener, keyboardEvent) {
-    if (!(keyboardEvent instanceof KeyboardEvent)) {
-      return false;
-    }
-
-    if (listener.keyOrCode === ALL_SYMBOL) {
-      return true;
-    }
-
-    return listener.keyOrCode === keyboardEvent.code || listener.keyOrCode === keyboardEvent.key;
-  }
-
-  function mouseButtonMatches(listener, mouseEvent) {
-    if (!(mouseEvent instanceof MouseEvent)) {
-      return false;
-    }
-
-    if (listener.keyOrCode === ALL_SYMBOL) {
-      return true;
-    }
-
-    return listener.keyOrCode === (0, _getMouseName.default)(mouseEvent.button);
-  }
-
-  function specialCaseMatches(keyboardListener, keyboardEvent, platform) {
-    if (onlyModifiers([], keyboardListener) && onlyModifiers(['shift'], keyboardEvent)) {
-      return keyboardEvent.key === keyboardListener.keyOrCode;
-    }
-
-    if (onlyModifiers(['shift'], keyboardListener) && onlyModifiers(['shift'], keyboardEvent)) {
-      return rootKeyForShiftKey(keyboardEvent.key) === keyboardListener.keyOrCode;
-    }
-
-    if (platform === 'Macintosh' && onlyModifiers(['alt'], keyboardListener) && onlyModifiers(['alt'], keyboardEvent)) {
-      return rootKeyForMacAltKey(keyboardEvent.key) === keyboardListener.keyOrCode;
-    }
-
-    if (platform === 'Macintosh' && onlyModifiers(['shift', 'alt'], keyboardListener) && onlyModifiers(['shift', 'alt'], keyboardEvent)) {
-      return rootKeyForMacShiftAltKey(keyboardEvent.key) === keyboardListener.keyOrCode;
-    }
-
-    return false;
-  }
-
-  const ALL_MODIFIERS_EXCEPT_CMD = _modifiersArray.default.filter(m => m != 'cmd');
-
-  function onlyModifiers(names, obj) {
-    for (let modifier of ALL_MODIFIERS_EXCEPT_CMD) {
-      if (names.includes(modifier) && !obj[`${modifier}Key`]) {
-        return false;
-      }
-
-      if (!names.includes(modifier) && obj[`${modifier}Key`]) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  function rootKeyForShiftKey(key) {
-    return _keyMaps.SHIFT_KEY_MAP[key] || key;
-  }
-
-  function rootKeyForMacAltKey(key) {
-    return _keyMaps.MAC_ALT_KEY_MAP[key] || key;
-  }
-
-  function rootKeyForMacShiftAltKey(key) {
-    return _keyMaps.MAC_SHIFT_ALT_KEY_MAP[key] || key;
-  }
-});
-;define("ember-keyboard/utils/keyboard-listener", ["exports", "ember-keyboard/utils/platform"], function (_exports, _platform) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  const ALT_REGEX = /^alt$/i;
-  const SHIFT_REGEX = /^shift$/i;
-  const CTRL_REGEX = /^ctrl$/i;
-  const META_REGEX = /^meta$/i;
-  const CMD_REGEX = /^cmd$/i;
-
-  class KeyboardListener {
-    // keydown, keyup, keypress
-    constructor() {
-      let platform = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _platform.default)();
-
-      _defineProperty(this, "type", void 0);
-
-      _defineProperty(this, "altKey", false);
-
-      _defineProperty(this, "ctrlKey", false);
-
-      _defineProperty(this, "shiftKey", false);
-
-      _defineProperty(this, "metaKey", false);
-
-      _defineProperty(this, "keyOrCode", void 0);
-
-      _defineProperty(this, "platform", void 0);
-
-      this.platform = platform;
-    }
-
-    static parse(s) {
-      let platform = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (0, _platform.default)();
-      let keyboardListener = new KeyboardListener(platform);
-      let [eventType, keyCombo] = s.split(':');
-      keyboardListener.type = eventType;
-
-      if (keyCombo === '+') {
-        keyboardListener.keyOrCode = keyCombo;
-        return keyboardListener;
-      }
-
-      keyCombo.split('+').forEach(part => {
-        if (ALT_REGEX.test(part)) {
-          keyboardListener.altKey = true;
-        } else if (CTRL_REGEX.test(part)) {
-          keyboardListener.ctrlKey = true;
-        } else if (META_REGEX.test(part)) {
-          keyboardListener.metaKey = true;
-        } else if (SHIFT_REGEX.test(part)) {
-          keyboardListener.shiftKey = true;
-        } else if (CMD_REGEX.test(part)) {
-          if (platform.indexOf('Mac') > -1) {
-            keyboardListener.metaKey = true;
-          } else {
-            keyboardListener.ctrlKey = true;
-          }
-        } else {
-          keyboardListener.keyOrCode = part;
-        }
-      });
-      return keyboardListener;
-    }
-
-    createMatchingKeyboardEvent() {
-      let opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      return new KeyboardEvent(this.type, Object.assign({
-        // one of these next two will be incorrect. For test usage, if usually
-        // doesn't matter, but you can pass in correct values via opts if needed.
-        key: this.keyOrCode,
-        code: this.keyOrCode,
-        altKey: this.altKey,
-        ctrlKey: this.ctrlKey,
-        metaKey: this.metaKey,
-        shiftKey: this.shiftKey
-      }, opts));
-    }
-
-  }
-
-  _exports.default = KeyboardListener;
-});
-;define("ember-keyboard/utils/listener-name", ["exports", "ember-keyboard/utils/get-cmd-key"], function (_exports, _getCmdKey) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = listenerName;
-
-  function sortedKeys(keyArray) {
-    return keyArray.sort().join('+');
-  }
-
-  function listenerName(type) {
-    let keyArrayOrString = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    let keyArray = keyArrayOrString;
-
-    if (typeof keyArrayOrString === 'string') {
-      keyArray = keyArrayOrString.split('+');
-    }
-
-    if (keyArray.indexOf('cmd') > -1) {
-      keyArray[keyArray.indexOf('cmd')] = (0, _getCmdKey.default)();
-    }
-
-    let keys = sortedKeys(keyArray || []);
-
-    if (keys === '') {
-      keys = '_all';
-    }
-
-    return `${type}:${keys}`;
-  }
-});
-;define("ember-keyboard/utils/platform", ["exports", "@ember/debug"], function (_exports, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = getPlatform;
-  let platform;
-
-  function getPlatform() {
-    let userAgent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : navigator.userAgent;
-    // allow mocking of userAgent in tests, memoize for speed in production
-    (0, _debug.runInDebug)(() => {
-      platform = null;
-    });
-
-    if (!platform) {
-      let osName = 'Unknown OS';
-      if (userAgent.indexOf('Win') != -1) osName = 'Windows';
-      if (userAgent.indexOf('Mac') != -1) osName = 'Macintosh';
-      if (userAgent.indexOf('Linux') != -1) osName = 'Linux';
-      if (userAgent.indexOf('Android') != -1) osName = 'Android';
-      if (userAgent.indexOf('like Mac') != -1) osName = 'iOS';
-      platform = osName;
-    }
-
-    return platform;
-  }
-});
-;define("ember-keyboard/utils/sort", ["exports", "@ember/object"], function (_exports, _object) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.compare = compare;
-  _exports.compareProp = compareProp;
-  _exports.reverseCompareProp = reverseCompareProp;
-
-  function compare(a, b) {
-    let diff = a - b;
-    return (diff > 0) - (diff < 0);
-  }
-
-  function compareProp(a, b, propName, convertValue) {
-    return compare(convertValue ? convertValue((0, _object.get)(a, propName)) : (0, _object.get)(a, propName), convertValue ? convertValue((0, _object.get)(b, propName)) : (0, _object.get)(b, propName));
-  }
-
-  function reverseCompareProp(a, b, propName) {
-    let convertValue = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-    return compareProp(b, a, propName, convertValue);
-  }
-});
-;define("ember-keyboard/utils/trigger-event", ["exports", "ember-keyboard/utils/keyboard-listener"], function (_exports, _keyboardListener) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.triggerKeyUp = _exports.triggerKeyPress = _exports.triggerKeyDown = void 0;
-
-  const triggerKeyEvent = function triggerKeyEvent(eventType, keyCombo, element) {
-    let keyboardListener = _keyboardListener.default.parse(`${eventType}:${keyCombo}`);
-
-    const event = keyboardListener.createMatchingKeyboardEvent();
-    element.dispatchEvent(event);
-  };
-
-  const triggerKeyDown = function triggerKeyDown(keyCombo) {
-    let element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
-    triggerKeyEvent('keydown', keyCombo, element);
-  };
-
-  _exports.triggerKeyDown = triggerKeyDown;
-
-  const triggerKeyPress = function triggerKeyPress(keyCombo) {
-    let element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
-    triggerKeyEvent('keypress', keyCombo, element);
-  };
-
-  _exports.triggerKeyPress = triggerKeyPress;
-
-  const triggerKeyUp = function triggerKeyUp(keyCombo) {
-    let element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
-    triggerKeyEvent('keyup', keyCombo, element);
-  };
-
-  _exports.triggerKeyUp = triggerKeyUp;
-});
 ;define("ember-load-initializers/index", ["exports", "require"], function (_exports, _require) {
   "use strict";
 
@@ -109308,7 +106811,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  let BasicDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_basicDialog.default), _dec3 = (0, _service.inject)('modal-dialog'), _dec4 = (0, _object.computed)('containerClassNames.[]', 'targetAttachmentClass', 'attachmentClass', 'containerClass'), _dec5 = (0, _object.computed)('overlayClassNames.[]', 'overlayClass', 'translucentOverlay'), _dec6 = (0, _object.computed)('wrapperClassNames.[]', 'targetAttachmentClass', 'variantWrapperClass', 'wrapperClass'), _dec7 = (0, _object.computed)('overlayPosition'), _dec8 = (0, _object.computed)('targetAttachment'), _dec(_class = _dec2(_class = (_class2 = class BasicDialog extends _component2.default {
+  let BasicDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_basicDialog.default), _dec3 = (0, _service.inject)('modal-dialog'), _dec4 = (0, _object.computed)('attachmentClass', 'containerClass', 'containerClassNames.{[],join}', 'targetAttachmentClass'), _dec5 = (0, _object.computed)('overlayClass', 'overlayClassNames.{[],join}', 'translucentOverlay'), _dec6 = (0, _object.computed)('targetAttachmentClass', 'variantWrapperClass', 'wrapperClass', 'wrapperClassNames.{[],join}'), _dec7 = (0, _object.computed)('overlayPosition'), _dec8 = (0, _object.computed)('targetAttachment'), _dec(_class = _dec2(_class = (_class2 = class BasicDialog extends _component2.default {
     constructor() {
       super(...arguments);
 
@@ -109344,15 +106847,18 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     get containerClassNamesString() {
-      return ['ember-modal-dialog', this.containerClassNames?.join(' '), this.targetAttachmentClass, this.attachmentClass, this.containerClass].filter(className => !(0, _utils.isEmpty)(className)).join(' ');
+      let classNames = this.containerClassNames?.join && this.containerClassNames?.join(' ') || this.containerClassNames;
+      return ['ember-modal-dialog', classNames, this.targetAttachmentClass, this.attachmentClass, this.containerClass].filter(className => !(0, _utils.isEmpty)(className)).join(' ');
     }
 
     get overlayClassNamesString() {
-      return ['ember-modal-overlay', this.overlayClassNames?.join(' '), this.translucentOverlay ? 'translucent' : null, this.overlayClass].filter(className => !(0, _utils.isEmpty)(className)).join(' ');
+      let classNames = this.overlayClassNames?.join && this.overlayClassNames?.join(' ') || this.overlayClassNames;
+      return ['ember-modal-overlay', classNames, this.translucentOverlay ? 'translucent' : null, this.overlayClass].filter(className => !(0, _utils.isEmpty)(className)).join(' ');
     }
 
     get wrapperClassNamesString() {
-      return ['ember-modal-wrapper', this.wrapperClassNames?.join(' '), this.targetAttachmentClass.replace('emd-', 'emd-wrapper-'), this.variantWrapperClass, this.wrapperClass].filter(className => !(0, _utils.isEmpty)(className)).join(' ');
+      let classNames = this.wrapperClassNames?.join && this.wrapperClassNames?.join(' ') || this.wrapperClassNames;
+      return ['ember-modal-wrapper', classNames, this.targetAttachmentClass.replace('emd-', 'emd-wrapper-'), this.variantWrapperClass, this.wrapperClass].filter(className => !(0, _utils.isEmpty)(className)).join(' ');
     }
 
     get isOverlaySibling() {
@@ -109478,7 +106984,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     get containerClassNamesString() {
-      return this.containerClassNames?.join(' ') ?? '';
+      return this.containerClassNames?.join && this.containerClassNames?.join(' ') || this.containerClassNames || '';
     }
 
   }) || _class) || _class);
@@ -109578,7 +107084,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }, (_applyDecoratedDescriptor(_class2.prototype, "targetAttachmentClass", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "targetAttachmentClass"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "tetherClassPrefix", [_object.computed], Object.getOwnPropertyDescriptor(_class2.prototype, "tetherClassPrefix"), _class2.prototype)), _class2)) || _class);
   _exports.default = LiquidTetherDialog;
 });
-;define("ember-modal-dialog/components/modal-dialog", ["exports", "@ember-decorators/component", "@ember/object", "@ember/service", "@ember/object/computed", "@ember/component", "@ember/string", "@ember/utils", "ember-modal-dialog/templates/components/modal-dialog", "@ember/debug", "@embroider/util"], function (_exports, _component, _object, _service, _computed, _component2, _string, _utils, _modalDialog, _debug, _util) {
+;define("ember-modal-dialog/components/modal-dialog", ["exports", "@embroider/macros/es-compat", "@ember-decorators/component", "@ember/object", "@ember/service", "@ember/object/computed", "@ember/component", "@ember/string", "@ember/utils", "ember-modal-dialog/templates/components/modal-dialog", "@ember/debug", "@embroider/util"], function (_exports, _esCompat, _component, _object, _service, _computed, _component2, _string, _utils, _modalDialog, _debug, _util) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -109597,47 +107103,52 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
   const VALID_OVERLAY_POSITIONS = ['parent', 'sibling'];
-  let ModalDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_modalDialog.default), _dec3 = (0, _service.inject)('modal-dialog'), _dec4 = (0, _object.computed)('renderInPlace', 'tetherTarget', 'animatable', 'hasLiquidWormhole', 'hasLiquidTether'), _dec5 = (0, _computed.readOnly)('modalService.hasLiquidWormhole'), _dec6 = (0, _computed.readOnly)('modalService.hasLiquidTether'), _dec7 = (0, _computed.oneWay)('elementId'), _dec8 = (0, _object.computed)('attachment'), _dec(_class = _dec2(_class = (_class2 = class ModalDialog extends _component2.default {
+  let ModalDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_modalDialog.default), _dec3 = (0, _service.inject)('modal-dialog'), _dec4 = (0, _computed.readOnly)('modalService.hasLiquidWormhole'), _dec5 = (0, _computed.readOnly)('modalService.hasLiquidTether'), _dec6 = (0, _computed.oneWay)('elementId'), _dec7 = (0, _object.computed)('attachment'), _dec8 = (0, _object.computed)('renderInPlace', 'tetherTarget', 'animatable', 'hasLiquidWormhole', 'hasLiquidTether'), _dec(_class = _dec2(_class = (_class2 = class ModalDialog extends _component2.default {
     constructor() {
       super(...arguments);
 
       _initializerDefineProperty(this, "modalService", _descriptor, this);
 
+      _defineProperty(this, "animatable", null);
+
+      _defineProperty(this, "clickOutsideToClose", false);
+
       _defineProperty(this, "destinationElementId", null);
 
-      _defineProperty(this, "animatable", null);
+      _defineProperty(this, "hasOverlay", true);
+
+      _defineProperty(this, "overlayPosition", 'parent');
+
+      _defineProperty(this, "renderInPlace", false);
+
+      _defineProperty(this, "targetAttachment", 'middle center');
+
+      _defineProperty(this, "tetherClassPrefix", null);
+
+      _defineProperty(this, "tetherTarget", null);
+
+      _defineProperty(this, "translucentOverlay", false);
+
+      _defineProperty(this, "value", 0);
 
       _initializerDefineProperty(this, "hasLiquidWormhole", _descriptor2, this);
 
       _initializerDefineProperty(this, "hasLiquidTether", _descriptor3, this);
 
-      _defineProperty(this, "hasOverlay", true);
-
-      _defineProperty(this, "translucentOverlay", false);
-
-      _defineProperty(this, "overlayPosition", 'parent');
-
-      _defineProperty(this, "clickOutsideToClose", false);
-
-      _defineProperty(this, "renderInPlace", false);
-
-      _defineProperty(this, "tetherTarget", null);
-
       _initializerDefineProperty(this, "stack", _descriptor4, this);
-
-      _defineProperty(this, "value", 0);
-
-      _defineProperty(this, "targetAttachment", 'middle center');
-
-      _defineProperty(this, "tetherClassPrefix", null);
     }
 
-    init() {
-      super.init(...arguments);
+    // pass a `stack` string to set a "stack" to be passed to liquid-wormhole / liquid-tether
+    get attachmentClass() {
+      let attachment = this.attachment;
 
-      if (!this.destinationElementId) {
-        (0, _object.set)(this, 'destinationElementId', this.modalService.destinationElementId);
+      if ((0, _utils.isEmpty)(attachment)) {
+        return undefined;
       }
+
+      return attachment.split(' ').map(attachmentPart => {
+        return `emd-attachment-${(0, _string.dasherize)(attachmentPart)}`;
+      }).join(' ');
     }
 
     get whichModalDialogComponent() {
@@ -109647,22 +107158,28 @@ lunr.QueryParser.parseBoost = function (parser) {
         hasLiquidWormhole,
         tetherTarget
       } = this;
-      let componentName = 'basic-dialog';
+      let module = (0, _esCompat.default)(require("ember-modal-dialog/components/basic-dialog"));
 
       if (this.renderInPlace) {
-        componentName = 'in-place-dialog';
+        module = (0, _esCompat.default)(require("ember-modal-dialog/components/in-place-dialog"));
       } else if (tetherTarget && hasLiquidTether && hasLiquidWormhole && animatable === true) {
-        componentName = 'liquid-tether-dialog';
+        module = (0, _esCompat.default)(require("ember-modal-dialog/components/liquid-tether-dialog"));
       } else if (tetherTarget) {
         this.ensureEmberTetherPresent();
-        componentName = 'tether-dialog';
+        module = (0, _esCompat.default)(require("ember-modal-dialog/components/tether-dialog"));
       } else if (hasLiquidWormhole && animatable === true) {
-        componentName = 'liquid-dialog';
+        module = (0, _esCompat.default)(require("ember-modal-dialog/components/liquid-dialog"));
       }
 
-      let module = require(`ember-modal-dialog/components/${componentName}`);
-
       return (0, _util.ensureSafeComponent)(module.default, this);
+    }
+
+    init() {
+      super.init(...arguments);
+
+      if (!this.destinationElementId) {
+        (0, _object.set)(this, 'destinationElementId', this.modalService.destinationElementId);
+      }
     }
 
     didReceiveAttrs() {
@@ -109683,18 +107200,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           id: 'ember-modal-dialog.validate-overlay-position'
         }));
       }
-    }
-
-    get attachmentClass() {
-      let attachment = this.attachment;
-
-      if ((0, _utils.isEmpty)(attachment)) {
-        return undefined;
-      }
-
-      return attachment.split(' ').map(attachmentPart => {
-        return `emd-attachment-${(0, _string.dasherize)(attachmentPart)}`;
-      }).join(' ');
     }
 
     ensureEmberTetherPresent() {
@@ -109732,22 +107237,22 @@ lunr.QueryParser.parseBoost = function (parser) {
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "whichModalDialogComponent", [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "whichModalDialogComponent"), _class2.prototype), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "hasLiquidWormhole", [_dec5], {
+  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "hasLiquidWormhole", [_dec4], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "hasLiquidTether", [_dec6], {
+  }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "hasLiquidTether", [_dec5], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "stack", [_dec7], {
+  }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "stack", [_dec6], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "attachmentClass", [_dec8], Object.getOwnPropertyDescriptor(_class2.prototype, "attachmentClass"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "onCloseAction", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "onCloseAction"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "onClickOverlayAction", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "onClickOverlayAction"), _class2.prototype)), _class2)) || _class) || _class);
+  }), _applyDecoratedDescriptor(_class2.prototype, "attachmentClass", [_dec7], Object.getOwnPropertyDescriptor(_class2.prototype, "attachmentClass"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "whichModalDialogComponent", [_dec8], Object.getOwnPropertyDescriptor(_class2.prototype, "whichModalDialogComponent"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "onCloseAction", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "onCloseAction"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "onClickOverlayAction", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "onClickOverlayAction"), _class2.prototype)), _class2)) || _class) || _class);
   _exports.default = ModalDialog;
 });
 ;define("ember-modal-dialog/components/positioned-container", ["exports", "@ember/debug", "@ember/utils", "@ember/component", "@ember/string", "@ember/object", "@ember/object/evented"], function (_exports, _debug, _utils, _component, _string, _object, _evented) {
@@ -110007,7 +107512,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   _exports.default = _default;
 });
-;define("ember-modal-dialog/instance-initializers/add-modals-container", ["exports", "ember-modal-dialog/utils/config-utils"], function (_exports, _configUtils) {
+;define("ember-modal-dialog/instance-initializers/add-modals-container", ["exports", "ember-modal-dialog/utils/config-utils", "@ember/application"], function (_exports, _configUtils, _application) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -110034,8 +107539,13 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function _default(instance) {
     let config = instance.resolveRegistration('config:environment');
-    let modalContainerElId = (0, _configUtils.getDestinationElementIdFromConfig)(config);
-    appendContainerElement(instance.rootElement, modalContainerElId);
+    let modalContainerElId = (0, _configUtils.getDestinationElementIdFromConfig)(config); // As there is only a single `Router` across the whole app, which is owned
+    // by the root `Application`, this reliably finds the root `Application`
+    // from an `Application` or `Engine`.
+    // eslint-disable-next-line ember/no-private-routing-service
+
+    let app = (0, _application.getOwner)(instance.lookup('router:main'));
+    appendContainerElement(app.rootElement, modalContainerElId);
   }
 });
 ;define("ember-modal-dialog/templates/components/basic-dialog", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -111558,10 +109068,7 @@ define("ember-resolver/features", [], function () {
       super(...arguments);
 
       _initializerDefineProperty(this, "media", _descriptor, this);
-    }
 
-    init() {
-      super.init(...arguments);
       this.media.on('mediaChanged', () => {
         this.recompute();
       });
@@ -111714,21 +109221,13 @@ define("ember-resolver/features", [], function () {
   * @extends   Ember.Object
   */
   let MediaService = (_class = class MediaService extends _service.default.extend(_evented.default) {
-    constructor() {
-      super(...arguments);
+    // Ember only sets Ember.testing when tests are starting
+    // eslint-disable-next-line ember/no-ember-testing-in-module-scope
 
-      _defineProperty(this, "_mocked", _ember.default.testing);
-
-      _defineProperty(this, "_mockedBreakpoint", 'desktop');
-
-      _initializerDefineProperty(this, "_matches", _descriptor, this);
-
-      _defineProperty(this, "listeners", {});
-
-      _defineProperty(this, "matchers", {});
-
-      _defineProperty(this, "mql", detectMatchMedia());
-    }
+    /**
+    * @property  _matches
+    * @type      Array
+    */
 
     /**
     * A set of matching matchers.
@@ -111761,8 +109260,21 @@ define("ember-resolver/features", [], function () {
      * @method init
      *
      */
-    init() {
-      super.init(...arguments);
+    constructor() {
+      super(...arguments);
+
+      _defineProperty(this, "_mocked", _ember.default.testing);
+
+      _defineProperty(this, "_mockedBreakpoint", 'desktop');
+
+      _initializerDefineProperty(this, "_matches", _descriptor, this);
+
+      _defineProperty(this, "listeners", {});
+
+      _defineProperty(this, "matchers", {});
+
+      _defineProperty(this, "mql", detectMatchMedia());
+
       const breakpoints = (0, _application.getOwner)(this).lookup('breakpoints:main');
 
       if (breakpoints) {
