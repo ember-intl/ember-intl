@@ -4,7 +4,7 @@ import { next } from '@ember/runloop';
 import { isHTMLSafe } from '@ember/template';
 import { settled } from '@ember/test-helpers';
 import type { TOptions } from 'ember-intl/services/intl';
-import type { TestContext } from 'ember-intl/test-support';
+import { getIntlService, TestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
@@ -32,6 +32,12 @@ module('service:init initialization', function (hooks) {
 module('service:intl', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks, LOCALE, {}, { missingMessage: false });
+
+  test('getIntlService returns the intl service', function (assert) {
+    const service = this.owner.lookup('service:intl');
+    assert.strictEqual(getIntlService(), service);
+    assert.strictEqual(getIntlService(this.owner), service);
+  });
 
   test('should return a number if the translation is a number', function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, {
