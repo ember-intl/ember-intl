@@ -64,9 +64,9 @@ type RelativeTimeFormatStyle = 'long' | 'short' | 'narrow';
  * [Specification](https://tc39.es/ecma402/#sec-InitializeRelativeTimeFormat).
  */
 export interface RelativeTimeFormatOptions {
-  unit?: RelativeTimeFormatUnit;
-  numeric?: RelativeTimeFormatNumeric;
-  style?: RelativeTimeFormatStyle;
+  unit?: RelativeTimeFormatUnit | undefined;
+  numeric?: RelativeTimeFormatNumeric | undefined;
+  style?: RelativeTimeFormatStyle | undefined;
 }
 
 const RELATIVE_TIME_OPTIONS = ['numeric', 'style', 'unit'] as readonly (keyof RelativeTimeFormatOptions)[];
