@@ -21,6 +21,7 @@
     "baseUrl": ".",
     "module": "es6",
     "experimentalDecorators": true,
+    "exactOptionalPropertyTypes": true,
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
