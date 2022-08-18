@@ -18,4 +18,4 @@ EmptyObject.prototype = proto;
  * @private
  * @hide
  */
-export default (EmptyObject as unknown) as { new (): Record<string, unknown> };
+export default EmptyObject as unknown as { new (): Record<string, unknown> };

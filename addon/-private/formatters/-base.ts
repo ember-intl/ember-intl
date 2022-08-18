@@ -47,7 +47,7 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
   }
 
   get options(): readonly (keyof KnownOptions)[] {
-    return ([] as unknown[]) as readonly (keyof KnownOptions)[];
+    return [] as unknown[] as readonly (keyof KnownOptions)[];
   }
 
   /**
@@ -66,9 +66,8 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
     const found = {} as { [K in keyof O & keyof KnownOptions]: O[K] };
 
     for (const key in options) {
-      if (this.options.includes((key as unknown) as keyof O & keyof KnownOptions)) {
-        found[(key as unknown) as keyof O & keyof KnownOptions] =
-          options[(key as unknown) as keyof O & keyof KnownOptions];
+      if (this.options.includes(key as unknown as keyof O & keyof KnownOptions)) {
+        found[key as unknown as keyof O & keyof KnownOptions] = options[key as unknown as keyof O & keyof KnownOptions];
       }
     }
 
