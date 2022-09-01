@@ -238,5 +238,11 @@
     "name": "v6.0.0-beta.2",
     "sha": "f1fb7d113329d5bbf4da9c7997e6158fe5b8c476",
     "tag": "v6.0.0-beta.2"
+  },
+  "v6.0.0-beta.4": {
+    "path": "versions/v6.0.0-beta.4",
+    "name": "v6.0.0-beta.4",
+    "sha": "407acceed154903e96bcf15355f4b03509b82da7",
+    "tag": "v6.0.0-beta.4"
   }
 }
