@@ -76,6 +76,8 @@
     "@embroider/test-setup": "^1.8.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@glint/core": "^0.9.4",
+    "@glint/environment-ember-loose": "^0.9.4",
     "@types/ember-qunit": "^5.0.0",
     "@types/ember-resolver": "^5.0.11",
     "@types/ember__application": "^4.0.0",
