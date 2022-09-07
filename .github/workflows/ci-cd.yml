@@ -1,6 +1,6 @@
 name: CI/CD
 
-on: 
+on:
   push:
     branches:
       - main
@@ -35,6 +35,9 @@ jobs:
 
       - name: Lint
         run: yarn lint
+
+      - name: Glint
+        run: yarn glint
 
 
   test-addon:
