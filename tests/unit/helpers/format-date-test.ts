@@ -27,7 +27,7 @@ module('format-date', function (hooks) {
   test('should render empty string for a null value', async function (assert) {
     assert.expect(1);
     await render(hbs`
-      {{! @glint-expect-error }}
+      {{~! @glint-expect-error ~}}
       {{format-date null}}`);
     assert.strictEqual(this.element.textContent, '');
   });
@@ -47,7 +47,7 @@ module('format-date', function (hooks) {
   test('should render epoch date for a null value when allow empty is false', async function (assert) {
     assert.expect(1);
     await render(hbs`
-      {{! @glint-expect-error }}
+      {{~! @glint-expect-error ~}}
       {{format-date null allowEmpty=false}}`);
     assert.strictEqual(this.element.textContent, new Intl.DateTimeFormat(locale).format(0));
   });
