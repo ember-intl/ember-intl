@@ -4,7 +4,7 @@ import IntlService from '../services/intl';
 
 export interface BaseHelperSignature<Value, Options extends Record<string, unknown>> {
   Args: {
-    Positional: [Value] | [Value, Options] | [];
+    Positional: [Value?, Options?];
     Named?: Options & { allowEmpty?: boolean };
   };
   Return: string;
