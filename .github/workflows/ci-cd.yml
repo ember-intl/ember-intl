@@ -85,7 +85,6 @@ jobs:
   try-scenarios:
     name: Try scenarios
     runs-on: ubuntu-latest
-    needs: [lint, test-addon]
     strategy:
       fail-fast: false
       matrix:

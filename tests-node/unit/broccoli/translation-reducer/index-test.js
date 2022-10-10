@@ -3,6 +3,7 @@
 const path = require('path');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
+const hasUnicode = require('has-unicode');
 const { createBuilder, createTempDir } = require('broccoli-test-helper');
 const TranslationReducer = require('../../../../lib/broccoli/translation-reducer');
 
@@ -322,10 +323,13 @@ describe('translation-reducer', function () {
       });
 
       return build(createBuilder(subject), () => {
-        expect(logs).to.have.lengthOf(1);
-        expect(logs).to.deep.equal([
-          `🇦🇰  ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.`,
-        ]);
+        const supportsUnicode = hasUnicode();
+
+        const expectedValue = supportsUnicode
+          ? ['🇦🇰  ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.']
+          : ['ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.'];
+
+        expect(logs).to.deep.equal(expectedValue);
       });
     });
 
