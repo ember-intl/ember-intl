@@ -103,7 +103,7 @@ this.intl.t('a_key_that_is_missing', {
 computed properties. For example:
 
 ```js
-import Component from '@ember/component':
+import Component from '@ember/component';
 import { t } from 'ember-intl';
 
 export default Component.extend({
@@ -130,7 +130,7 @@ the `raw` function like in
 [`ember-macro-helpers`](https://github.com/kellyselden/ember-macro-helpers#raw).
 
 ```js
-import Component from '@ember/component':
+import Component from '@ember/component';
 import { raw, t } from 'ember-intl';
 
 export default Component.extend({
@@ -155,7 +155,7 @@ correct `raw` with `ember-intl` and `ember-awesome-macros` / `ember-macro-helper
 directly to access other methods from the `intl` service. It looks like this:
 
 ```js
-import Component from '@ember/component':
+import Component from '@ember/component';
 import { intl } from 'ember-intl';
 
 export default Component.extend({
