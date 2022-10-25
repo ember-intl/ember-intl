@@ -19,7 +19,6 @@ module('format-list-test', function (hooks) {
     assert.expect(1);
     this.set('example', ['foo', 'bar']);
 
-    // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
     await render(hbs`{{format-list this.example}}`);
     assert.strictEqual(this.element.textContent, 'foo and bar');
   });
