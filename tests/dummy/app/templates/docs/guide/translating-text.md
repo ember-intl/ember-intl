@@ -164,7 +164,7 @@ export default Component.extend({
 
   nowFormatted: intl('now', 'dateFormat', function(intl/*, propertyKey, instance */) {
     return intl.formatDate(this.now, {
-      format: this.format
+      format: this.dateFormat
     });
   })
 });
