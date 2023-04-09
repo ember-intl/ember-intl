@@ -89,6 +89,13 @@ describe('wrapWithNamespaceIfNeeded', function () {
       '/tmp/broccoli_debug-output_path-l4iBcmcT',
       ['@a-scoped/addon', 'other-addon', 'an-addon'],
     ],
+    [
+      { a: true, b: false },
+      { a: true, b: false },
+      `/tmp/broccoli_debug-output_path-l4iBcmcT/${enums.addonNamespace}/foo-bar/en-us.json`,
+      '/tmp/broccoli_debug-output_path-l4iBcmcT',
+      ['foo', 'foo-bar'],
+    ],
   ].forEach(([object, expected, filepath, inputPath, addonNames]) => {
     it(`${JSON.stringify(object)} -> ${JSON.stringify(expected)}`, function () {
       expect(wrapWithNamespaceIfNeeded(object, filepath, inputPath, addonNames)).to.deep.equal(expected);
