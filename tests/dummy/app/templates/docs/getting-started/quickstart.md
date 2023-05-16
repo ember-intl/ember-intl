@@ -71,10 +71,10 @@ export default class ApplicationRoute extends Route {
 ### Configure your template linter
 
 If your app uses `ember-cli-template-lint` (which is installed by default since ember-cli v3.4.1),
-it is strongly recommanded that you add the `no-bare-strings` rule to your template linter.
+it is strongly recommended that you add the `no-bare-strings` rule to your template linter.
 This rule will prevent you from using plain text strings in your templates (because they cannot be translated).
 
-To enabled the template linter rule, edit the file `.template-lintrc.js` as follow:
+To enable the template linter rule, edit the file `.template-lintrc.js` as follow:
 
 ```js
 // .template-lintrc.js
