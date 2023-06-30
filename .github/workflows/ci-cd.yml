@@ -60,6 +60,9 @@ jobs:
       - name: Test
         run: yarn test
 
+      - name: Test (Node)
+        run: yarn test:node
+
 
   test-floating-dependencies:
     name: Test floating dependencies
