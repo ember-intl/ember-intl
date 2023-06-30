@@ -9,7 +9,7 @@ describe('translations', function () {
         entity: {
           name: 'fr-fr',
         },
-      })
+      }),
     ).to.be.an('undefined');
   });
 

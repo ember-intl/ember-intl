@@ -38,7 +38,9 @@ describe('traverse', function () {
   });
 
   it('{product} will cost {price, number, USD} if ordered by {deadline, date, time}', function () {
-    let ast = parse(`{product} will cost {price, number, USD} if ordered by {deadline, date, time}`);
+    let ast = parse(
+      `{product} will cost {price, number, USD} if ordered by {deadline, date, time}`,
+    );
     let result = count(ast);
 
     expect(result).to.deep.equal({
@@ -55,7 +57,7 @@ describe('traverse', function () {
 
   it('{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.', function () {
     let ast = parse(
-      `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`
+      `{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {takenDate, date, long}.`,
     );
     let result = count(ast);
 
@@ -72,7 +74,9 @@ describe('traverse', function () {
   });
 
   it('{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }', function () {
-    let ast = parse(`{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`);
+    let ast = parse(
+      `{ gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs} }`,
+    );
     let result = count(ast);
 
     expect(result).to.deep.equal({
@@ -94,7 +98,7 @@ describe('traverse', function () {
         =1 {You are alone here}
         one {You and # trainer}
         other {You and # trainers}
-      }`
+      }`,
     );
     let result = count(ast);
 
@@ -117,7 +121,7 @@ describe('traverse', function () {
         two {#nd}
         few {#rd}
         other {#th}
-    } birthday!`
+    } birthday!`,
     );
     let result = count(ast);
 

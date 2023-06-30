@@ -20,6 +20,8 @@ describe('findLocalesMissingTranslation', function () {
       ['en', ['bar']],
     ];
 
-    expect(findLocalesMissingTranslation(key, localeKeys)).to.deep.equal(['en']);
+    expect(findLocalesMissingTranslation(key, localeKeys)).to.deep.equal([
+      'en',
+    ]);
   });
 });

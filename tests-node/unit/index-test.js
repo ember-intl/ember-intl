@@ -16,6 +16,8 @@ describe('index', function () {
     const addonConfig = subject.createOptions();
 
     expect(addonConfig.requiresTranslation).to.be.a('function');
-    expect(logs).to.deep.equal(['Configured `requiresTranslation` is not a function. Using default implementation.']);
+    expect(logs).to.deep.equal([
+      'Configured `requiresTranslation` is not a function. Using default implementation.',
+    ]);
   });
 });

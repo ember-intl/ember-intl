@@ -1,5 +1,3 @@
-import 'qunit-dom';
-
 import { setApplication } from '@ember/test-helpers';
 import Application from 'dummy/app';
 import config from 'dummy/config/environment';

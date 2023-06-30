@@ -8,7 +8,10 @@ import type { IntlShape } from '@formatjs/intl';
 
 import type { Formats } from '../../types';
 
-export type ValueOf<ObjectType, ValueType extends keyof ObjectType = keyof ObjectType> = ObjectType[ValueType];
+export type ValueOf<
+  ObjectType,
+  ValueType extends keyof ObjectType = keyof ObjectType,
+> = ObjectType[ValueType];
 
 export interface FormatterConfig {
   getIntl: (locale: string | string[]) => IntlShape<string>;
@@ -33,11 +36,11 @@ export default abstract class FormatterBase<KnownOptions extends {}> {
   abstract format<T>(
     intl: IntlShape<string>,
     value: T,
-    formatOptions?: KnownOptions & BaseOptions
+    formatOptions?: KnownOptions & BaseOptions,
   ): string | SafeString;
   abstract format(
     intl: IntlShape<string>,
     value: unknown,
-    formatOptions?: KnownOptions & BaseOptions
+    formatOptions?: KnownOptions & BaseOptions,
   ): string | SafeString;
 }

@@ -7,7 +7,9 @@ import type IntlService from '../services/intl';
 import type { TOptions } from '../services/intl';
 import intl from './intl';
 
-function partitionDynamicValuesAndStaticValues(options: Record<string, string | Raw<string>>) {
+function partitionDynamicValuesAndStaticValues(
+  options: Record<string, string | Raw<string>>,
+) {
   const dynamicValues = new EmptyObject() as Record<string, string>;
   const staticValues = new EmptyObject() as Record<string, string>;
 
@@ -23,10 +25,10 @@ function partitionDynamicValuesAndStaticValues(options: Record<string, string | 
   return [dynamicValues, staticValues] as const;
 }
 
-function mapPropertiesByHash<O extends Record<string, unknown>, H extends Record<string, keyof O>>(
-  object: O,
-  hash: H
-): { [K in keyof H]: O[H[K]] } {
+function mapPropertiesByHash<
+  O extends Record<string, unknown>,
+  H extends Record<string, keyof O>,
+>(object: O, hash: H): { [K in keyof H]: O[H[K]] } {
   const result = new EmptyObject() as { [K in keyof H]: O[H[K]] };
 
   (Object.keys(hash) as (keyof H)[]).forEach((key) => {
@@ -76,16 +78,19 @@ type MacroOptions = {
 
 export default function createTranslatedComputedProperty(
   translationKey: string,
-  options?: MacroOptions
+  options?: MacroOptions,
 ): ComputedProperty<ReturnType<IntlService['t']>> {
   const hash = options || new EmptyObject();
   const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(
-    hash as Record<string, string | Raw<string>>
+    hash as Record<string, string | Raw<string>>,
   );
   const dependentKeys = Object.values(dynamicValues);
 
   // @ts-expect-error TS2556: Can't deal with leading rest arguments
   return intl(...dependentKeys, (intl, propertyKey, ctx) =>
-    intl.t(translationKey, { ...staticValues, ...mapPropertiesByHash(ctx as Record<string, unknown>, dynamicValues) })
+    intl.t(translationKey, {
+      ...staticValues,
+      ...mapPropertiesByHash(ctx as Record<string, unknown>, dynamicValues),
+    }),
   );
 }

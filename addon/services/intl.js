@@ -161,7 +161,9 @@ export default class extends Service {
     }
 
     if (translation === undefined && options.resilient !== true) {
-      const missingMessage = this._owner.resolveRegistration('util:intl/missing-message');
+      const missingMessage = this._owner.resolveRegistration(
+        'util:intl/missing-message',
+      );
 
       return missingMessage.call(this, key, localeNames, options);
     }
@@ -213,7 +215,7 @@ export default class extends Service {
         onError: this.onIntlError,
         messages,
       },
-      this._cache
+      this._cache,
     );
   }
 
@@ -221,7 +223,7 @@ export default class extends Service {
     return keys.forEach((key) => {
       assert(
         `[ember-intl] expected translation key "${key}" to be of type String but received: "${typeof key}"`,
-        typeof key === 'string'
+        typeof key === 'string',
       );
     });
   }
@@ -260,7 +262,7 @@ export default class extends Service {
             id: key,
             defaultMessage: message,
           },
-          options
+          options,
         );
       }
     }
@@ -270,16 +272,21 @@ export default class extends Service {
   exists(key, localeName) {
     const localeNames = this._localeWithDefault(localeName);
 
-    assert(`[ember-intl] locale is unset, cannot lookup '${key}'`, Array.isArray(localeNames) && localeNames.length);
+    assert(
+      `[ember-intl] locale is unset, cannot lookup '${key}'`,
+      Array.isArray(localeNames) && localeNames.length,
+    );
 
-    return localeNames.some((localeName) => key in (this.getIntl(localeName)?.messages || {}));
+    return localeNames.some(
+      (localeName) => key in (this.getIntl(localeName)?.messages || {}),
+    );
   }
 
   /** @public */
   setLocale(locale) {
     assert(
       `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
-      locale
+      locale,
     );
 
     this.locale = locale;

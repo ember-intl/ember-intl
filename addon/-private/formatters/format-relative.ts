@@ -30,18 +30,28 @@ export default class FormatRelative extends Formatter<RelativeTimeFormatOptions>
   format(
     intl: IntlShape<string>,
     value: Parameters<IntlShape<string>['formatRelativeTime']>[0],
-    formatOptions: RelativeTimeFormatOptions
+    formatOptions: RelativeTimeFormatOptions,
   ): string {
     assert(`[ember-intl] FormatRelative: Missing option`, formatOptions);
 
     const { format } = formatOptions;
     let unit = formatOptions.unit;
     let opts: RelativeTimeFormatOptions | undefined = formatOptions;
-    if (!unit && format && intl.formats.relative && (opts = intl.formats.relative[format])) {
+    if (
+      !unit &&
+      format &&
+      intl.formats.relative &&
+      (opts = intl.formats.relative[format])
+    ) {
       unit = opts.unit;
     }
 
-    assert(`[ember-intl] FormatRelative: 'formatOptions' are missing a 'unit'. ${JSON.stringify(formatOptions)}`, unit);
+    assert(
+      `[ember-intl] FormatRelative: 'formatOptions' are missing a 'unit'. ${JSON.stringify(
+        formatOptions,
+      )}`,
+      unit,
+    );
 
     return intl.formatRelativeTime(value, unit, opts);
   }

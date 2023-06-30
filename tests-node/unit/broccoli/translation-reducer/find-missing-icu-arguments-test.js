@@ -12,7 +12,9 @@ describe('findMissingICUArguments', function () {
       en: { foo: ['aa'] },
     };
 
-    expect(findMissingICUArguments(key, allIcuArguments, locales, icuArguments)).to.deep.equal([]);
+    expect(
+      findMissingICUArguments(key, allIcuArguments, locales, icuArguments),
+    ).to.deep.equal([]);
   });
 
   it('finds missing icu arguments', function () {
@@ -24,7 +26,9 @@ describe('findMissingICUArguments', function () {
       en: { baz: ['arg1', 'arg2'] },
     };
 
-    expect(findMissingICUArguments(key, allIcuArguments, locales, icuArguments)).to.deep.equal([
+    expect(
+      findMissingICUArguments(key, allIcuArguments, locales, icuArguments),
+    ).to.deep.equal([
       ['de', ['arg1']],
       ['en', ['arg0']],
     ]);

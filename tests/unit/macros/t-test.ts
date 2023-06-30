@@ -42,7 +42,10 @@ module('Unit | Macros | t', function (hooks) {
   });
 
   test('defines a computed property that translates without interpolations', function (this: TestContext, assert) {
-    assert.strictEqual(this.object.get('tMacroProperty1'), 'text with no interpolations');
+    assert.strictEqual(
+      this.object.get('tMacroProperty1'),
+      'text with no interpolations',
+    );
   });
 
   test('defines a computed property that translates with interpolations', function (this: TestContext, assert) {
@@ -77,9 +80,15 @@ module('Unit | Macros | t', function (hooks) {
       'no.interpolations': 'texto sin interpolaciones',
     });
 
-    assert.strictEqual(this.object.get('tMacroProperty1'), 'text with no interpolations');
+    assert.strictEqual(
+      this.object.get('tMacroProperty1'),
+      'text with no interpolations',
+    );
     run(() => this.intl.setLocale(['es']));
-    assert.strictEqual(this.object.get('tMacroProperty1'), 'texto sin interpolaciones');
+    assert.strictEqual(
+      this.object.get('tMacroProperty1'),
+      'texto sin interpolaciones',
+    );
   });
 
   test('defines a computed property that accepts static and dynamic values', function (this: TestContext, assert) {
@@ -105,15 +114,27 @@ module('Unit | Macros | t', function (hooks) {
 
     setOwner(object, {
       lookup: (name: string) => {
-        assert.strictEqual(name, 'service:intl', 'looks up the service through the owner');
+        assert.strictEqual(
+          name,
+          'service:intl',
+          'looks up the service through the owner',
+        );
         return this.intl;
       },
     });
 
-    assert.strictEqual(object.get('macroProperty'), 'text with no interpolations', 'translates the text');
+    assert.strictEqual(
+      object.get('macroProperty'),
+      'text with no interpolations',
+      'translates the text',
+    );
 
     run(() => this.intl.setLocale(['es']));
 
-    assert.strictEqual(object.get('macroProperty'), 'texto sin interpolaciones', 'updates, when the locale changes');
+    assert.strictEqual(
+      object.get('macroProperty'),
+      'texto sin interpolaciones',
+      'updates, when the locale changes',
+    );
   });
 });

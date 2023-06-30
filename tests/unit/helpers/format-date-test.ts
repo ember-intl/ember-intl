@@ -21,7 +21,10 @@ module('format-date', function (hooks) {
   test('invoke the formatDate directly', function (assert) {
     assert.expect(1);
     const service = this.owner.lookup('service:intl') as IntlService;
-    assert.strictEqual(service.formatDate(date, { timeZone: 'UTC', locale }), '1/23/2014');
+    assert.strictEqual(
+      service.formatDate(date, { timeZone: 'UTC', locale }),
+      '1/23/2014',
+    );
   });
 
   test('should render empty string for a null value', async function (assert) {
@@ -49,7 +52,10 @@ module('format-date', function (hooks) {
     await render(hbs`
       {{~! @glint-expect-error ~}}
       {{format-date null allowEmpty=false}}`);
-    assert.strictEqual(this.element.textContent, new Intl.DateTimeFormat(locale).format(0));
+    assert.strictEqual(
+      this.element.textContent,
+      new Intl.DateTimeFormat(locale).format(0),
+    );
   });
 
   test('should support allowEmpty', async function (assert) {
@@ -76,7 +82,9 @@ module('format-date', function (hooks) {
 
   test('it should return a formatted string of just the date', async function (assert) {
     assert.expect(1);
-    await render(hbs`{{format-date this.date hour='numeric' minute='numeric' timeZone='UTC'}}`);
+    await render(
+      hbs`{{format-date this.date hour='numeric' minute='numeric' timeZone='UTC'}}`,
+    );
     this.set('date', date);
     assert.strictEqual(this.element.textContent, '11:00 PM');
   });
@@ -84,6 +92,9 @@ module('format-date', function (hooks) {
   test('it should format the epoch timestamp', async function (assert) {
     assert.expect(1);
     await render(hbs`{{format-date 0}}`);
-    assert.strictEqual(this.element.textContent, new Intl.DateTimeFormat(locale).format(0));
+    assert.strictEqual(
+      this.element.textContent,
+      new Intl.DateTimeFormat(locale).format(0),
+    );
   });
 });

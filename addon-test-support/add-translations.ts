@@ -12,7 +12,7 @@ import pickLastLocale from './-private/pick-last-locale';
 function addTranslations(
   intl: IntlService,
   localeNameOrTranslations: string | Translations,
-  translations?: Translations
+  translations?: Translations,
 ) {
   if (typeof localeNameOrTranslations === 'object') {
     translations = localeNameOrTranslations;

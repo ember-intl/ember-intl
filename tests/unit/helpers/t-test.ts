@@ -37,7 +37,7 @@ module('t', function (hooks) {
           },
         },
       },
-    }
+    },
   );
 
   test('exists', function (this: TestContext, assert) {
@@ -59,21 +59,28 @@ module('t', function (hooks) {
 
   test('should escape attributes but not the translation string', async function (this: TestContext, assert) {
     assert.expect(3);
-    await render(hbs`{{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}`);
+    await render(
+      hbs`{{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}`,
+    );
     assert.strictEqual(this.element.querySelectorAll('strong').length, 1);
     assert.strictEqual(this.element.querySelectorAll('em').length, 0);
     assert.strictEqual(
       (this.element as HTMLElement).innerHTML,
-      `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`
+      `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`,
     );
   });
 
   test('should support legacy HTML escaping', async function (this: TestContext, assert) {
     assert.expect(3);
-    await render(hbs`{{t 'html.legacy' htmlSafe=true text="<em>Jason</em>" href="/foo"}}`);
+    await render(
+      hbs`{{t 'html.legacy' htmlSafe=true text="<em>Jason</em>" href="/foo"}}`,
+    );
     assert.strictEqual(this.element.querySelectorAll('a').length, 1);
     assert.strictEqual(this.element.querySelectorAll('em').length, 0);
-    assert.strictEqual((this.element as HTMLElement).innerHTML, `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`);
+    assert.strictEqual(
+      (this.element as HTMLElement).innerHTML,
+      `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`,
+    );
   });
 
   test('should support optional positional options object argument', async function (this: TestContext, assert) {
@@ -81,7 +88,9 @@ module('t', function (hooks) {
     await render(hbs`
       {{t 'html.greeting' (hash name="Jason" count=42)}}
     `);
-    assert.true(this.element.textContent?.includes('<strong>Hello Jason 42</strong>'));
+    assert.true(
+      this.element.textContent?.includes('<strong>Hello Jason 42</strong>'),
+    );
   });
 
   test('should overried optional positional options argument properties with named arguments', async function (this: TestContext, assert) {
@@ -89,7 +98,9 @@ module('t', function (hooks) {
     await render(hbs`
       {{t 'html.greeting' (hash name="Jason" count=42) count=39.99}}
     `);
-    assert.true(this.element.textContent?.includes('<strong>Hello Jason 39.99</strong>'));
+    assert.true(
+      this.element.textContent?.includes('<strong>Hello Jason 39.99</strong>'),
+    );
   });
 
   test('should render a TextNode', async function (this: TestContext, assert) {
@@ -132,7 +143,10 @@ module('t', function (hooks) {
   test('can inline locale for missing locale', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(hbs`{{t 'foo.bar' locale='fr'}}`);
-    assert.strictEqual(this.element.textContent, 'Missing translation "foo.bar" for locale "fr"');
+    assert.strictEqual(
+      this.element.textContent,
+      'Missing translation "foo.bar" for locale "fr"',
+    );
   });
 
   test('warns when no locale has been set', async function (this: TestContext, assert) {
@@ -141,13 +155,15 @@ module('t', function (hooks) {
       () =>
         // @ts-expect-error This is undesired private behavior.
         this.intl.setLocale(null),
-      /no locale has been set/
+      /no locale has been set/,
     );
   });
 
   test('should cascade translation keys', async function (this: TestContext, assert) {
     assert.expect(1);
-    this.intl.addTranslations('en-us', { happy_birthday: 'You are {age, number} years old!' });
+    this.intl.addTranslations('en-us', {
+      happy_birthday: 'You are {age, number} years old!',
+    });
     await render(hbs`{{t 'does.not.exist' default='happy_birthday' age=10}}`);
     assert.strictEqual(this.element.textContent, 'You are 10 years old!');
   });

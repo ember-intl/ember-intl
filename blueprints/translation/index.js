@@ -13,7 +13,9 @@ module.exports = {
 
   normalizeEntityName(locale) {
     if (!locale) {
-      throw new SilentError('[ember-intl] no locale provided. Usage: `ember g translation en-us`');
+      throw new SilentError(
+        '[ember-intl] no locale provided. Usage: `ember g translation en-us`',
+      );
     }
 
     return locale;

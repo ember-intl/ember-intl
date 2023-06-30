@@ -18,6 +18,8 @@ export type ConditionalKeys<Base, Condition> = NonNullable<
   }[keyof Base]
 >;
 
-export type RemoveFirstFromTuple<T extends any[]> = ((...b: T) => void) extends (a: unknown, ...b: infer I) => void
+export type RemoveFirstFromTuple<T extends any[]> = ((
+  ...b: T
+) => void) extends (a: unknown, ...b: infer I) => void
   ? I
   : [];

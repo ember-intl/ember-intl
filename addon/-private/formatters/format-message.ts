@@ -22,7 +22,9 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
     return;
   }
 
-  const escapedOpts = {} as { [K in keyof T]: T[K] extends SafeString ? string : T[K] };
+  const escapedOpts = {} as {
+    [K in keyof T]: T[K] extends SafeString ? string : T[K];
+  };
 
   (Object.keys(object) as (keyof T)[]).forEach((key) => {
     const val = object[key];
@@ -61,23 +63,29 @@ export default class FormatMessage extends Formatter<any> {
   // evade my knowledge. ¯\_(ツ)_/¯
   // For this reason these types need to be manually copied over to the
   // `IntlService#formatMessage`.
-  format(intl: IntlShape<string>, stringOrDesc: string, options: MessageFormatOptions & { htmlSafe: true }): SafeString;
+  format(
+    intl: IntlShape<string>,
+    stringOrDesc: string,
+    options: MessageFormatOptions & { htmlSafe: true },
+  ): SafeString;
   format(
     intl: IntlShape<string>,
     stringOrDesc: MessageDescriptor,
-    options?: MessageFormatOptions & { htmlSafe: boolean }
+    options?: MessageFormatOptions & { htmlSafe: boolean },
   ): SafeString;
   format(
     intl: IntlShape<string>,
     stringOrDesc: MessageDescriptor | string,
-    options?: MessageFormatOptions & { htmlSafe?: boolean }
+    options?: MessageFormatOptions & { htmlSafe?: boolean },
   ): string | SafeString {
     const isHTMLSafe = options && options.htmlSafe;
     // Empty string is considered an err in ember-intl
     // if (typeof stringOrDesc === 'string' && !stringOrDesc) {
     //   return stringOrDesc;
     // }
-    const escapedOptions: MessageFormatOptions | undefined = isHTMLSafe ? escapeOptions(options) : options;
+    const escapedOptions: MessageFormatOptions | undefined = isHTMLSafe
+      ? escapeOptions(options)
+      : options;
     const desc =
       stringOrDesc && typeof stringOrDesc === 'object'
         ? stringOrDesc
@@ -85,7 +93,9 @@ export default class FormatMessage extends Formatter<any> {
             id: stringOrDesc,
             defaultMessage: stringOrDesc,
           };
-    const result = intl.formatMessage(desc, escapedOptions, { ignoreTag: true });
+    const result = intl.formatMessage(desc, escapedOptions, {
+      ignoreTag: true,
+    });
 
     return isHTMLSafe ? htmlSafe(result) : result;
   }

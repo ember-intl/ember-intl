@@ -4,14 +4,13 @@ template: |
   $CHANGES
 
 categories:
-  - label: feature
-    title: 🚀 Features
-  - label: fix
-    title: 🐛 Bug Fixes
-  - label: docs
-    title: 📖 Documentation
-  - label: test
-    title: 🧪 Tests
-  - label: chore
-    title: 🧹 Housekeeping
-
+  - label: "breaking"
+    title: Breaking Change
+  - label: "bug"
+    title: Bug Fix
+  - label: "enhance: code"
+    title: Enhancement
+  - label: "enhance: dependency"
+    title: Internal
+  - label: "enhance: documentation"
+    title: Documentation

@@ -98,7 +98,9 @@ describe('wrapWithNamespaceIfNeeded', function () {
     ],
   ].forEach(([object, expected, filepath, inputPath, addonNames]) => {
     it(`${JSON.stringify(object)} -> ${JSON.stringify(expected)}`, function () {
-      expect(wrapWithNamespaceIfNeeded(object, filepath, inputPath, addonNames)).to.deep.equal(expected);
+      expect(
+        wrapWithNamespaceIfNeeded(object, filepath, inputPath, addonNames),
+      ).to.deep.equal(expected);
     });
   });
 });

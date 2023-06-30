@@ -106,17 +106,24 @@ module('service:intl', function (hooks) {
     });
 
     assert.strictEqual(
-      this.intl.t('modernStyle', { htmlSafe: true, name: '<em>Tom</em>' }).toString(),
-      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>'
+      this.intl
+        .t('modernStyle', { htmlSafe: true, name: '<em>Tom</em>' })
+        .toString(),
+      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>',
     );
     assert.strictEqual(
-      this.intl.t('legacyStyle', { htmlSafe: true, name: '<em>Tom</em>' }).toString(),
-      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>'
+      this.intl
+        .t('legacyStyle', { htmlSafe: true, name: '<em>Tom</em>' })
+        .toString(),
+      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>',
     );
   });
 
   test('lookup() should return undefined for missing translations ', function (this: TestContext, assert) {
-    assert.strictEqual(this.intl.lookup('missing', undefined, { resilient: true }), undefined);
+    assert.strictEqual(
+      this.intl.lookup('missing', undefined, { resilient: true }),
+      undefined,
+    );
   });
 
   test('`t` should display last missing translation key when using default', function (this: TestContext, assert) {
@@ -124,24 +131,27 @@ module('service:intl', function (hooks) {
       this.intl.t('x', {
         default: ['y', 'z'],
       }),
-      `Missing translation "z" for locale "en-us"`
+      `Missing translation "z" for locale "en-us"`,
     );
   });
 
   test('`t` should pass `key`, `locales`, `options` through to `missing-message` util', function (this: TestContext, assert) {
     assert.expect(3);
 
-    this.owner.register('util:intl/missing-message', (key: string, locales: string[], options: TOptions) => {
-      assert.strictEqual(key, 'should_also_not_exist');
-      assert.deepEqual(locales, [LOCALE]);
-      assert.deepEqual(options, {
-        default: ['also.does.not.exist', 'should_also_not_exist'],
-        resilient: false,
-        someVariable: 'hello',
-      });
+    this.owner.register(
+      'util:intl/missing-message',
+      (key: string, locales: string[], options: TOptions) => {
+        assert.strictEqual(key, 'should_also_not_exist');
+        assert.deepEqual(locales, [LOCALE]);
+        assert.deepEqual(options, {
+          default: ['also.does.not.exist', 'should_also_not_exist'],
+          resilient: false,
+          someVariable: 'hello',
+        });
 
-      return '';
-    });
+        return '';
+      },
+    );
 
     this.intl.t('does.not.exist', {
       default: ['also.does.not.exist', 'should_also_not_exist'],
@@ -152,7 +162,10 @@ module('service:intl', function (hooks) {
   test('waits for translations to load', async function (this: TestContext, assert) {
     assert.expect(1);
     await settled();
-    assert.strictEqual(this.intl.t('smoke.parent.child', { locale: 'en-us' }), 'Hello world!');
+    assert.strictEqual(
+      this.intl.t('smoke.parent.child', { locale: 'en-us' }),
+      'Hello world!',
+    );
   });
 
   test('it does not mutate t options hash', function (this: TestContext, assert) {
@@ -211,7 +224,10 @@ module('service:intl', function (hooks) {
       'b.b': 'Root key with double period.',
     });
 
-    assert.strictEqual(this.intl.t('a.b.c.d.d.e.e'), 'Periods within a key work are now valid.');
+    assert.strictEqual(
+      this.intl.t('a.b.c.d.d.e.e'),
+      'Periods within a key work are now valid.',
+    );
     assert.strictEqual(this.intl.t('b.b'), 'Root key with double period.');
   });
 
@@ -219,7 +235,8 @@ module('service:intl', function (hooks) {
     assert.expect(1);
 
     this.intl.addTranslations(LOCALE, {
-      html_safe_translation: "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
+      html_safe_translation:
+        "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
     });
 
     const out = this.intl.t('html_safe_translation', {
@@ -235,7 +252,8 @@ module('service:intl', function (hooks) {
     assert.expect(1);
 
     this.intl.addTranslations(LOCALE, {
-      html_safe_translation: "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
+      html_safe_translation:
+        "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
     });
 
     const out = this.intl.t('html_safe_translation', {

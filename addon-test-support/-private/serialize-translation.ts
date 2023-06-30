@@ -12,7 +12,8 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = (obj: Record<string, unknown>) => JSON.stringify(obj, Object.keys(obj).sort());
+const stringifyDeterministically = (obj: Record<string, unknown>) =>
+  JSON.stringify(obj, Object.keys(obj).sort());
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -44,7 +45,9 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @return {string}
  */
 const stringifyOptions = (options: Record<string, unknown> = {}) =>
-  replaceInterpolators(stringifyDeterministically(omit(options, INTERNAL_OPTIONS)));
+  replaceInterpolators(
+    stringifyDeterministically(omit(options, INTERNAL_OPTIONS)),
+  );
 
 /**
  * Serializes a translation invocation deterministically.
@@ -56,8 +59,10 @@ const stringifyOptions = (options: Record<string, unknown> = {}) =>
  * @return {string}
  * @hide
  */
-export const serializeTranslation = (key: string, options: Record<string, unknown>) =>
-  `t:${key}:${stringifyOptions(options)}`;
+export const serializeTranslation = (
+  key: string,
+  options: Record<string, unknown>,
+) => `t:${key}:${stringifyOptions(options)}`;
 
 /**
  * Used to overwrite the default `intl/missing-message` implementation in order
@@ -72,5 +77,8 @@ export const serializeTranslation = (key: string, options: Record<string, unknow
  * @return {string}
  * @hide
  */
-export const missingMessage = (key: string, _locales: string[], options: Record<string, unknown>) =>
-  serializeTranslation(key, options);
+export const missingMessage = (
+  key: string,
+  _locales: string[],
+  options: Record<string, unknown>,
+) => serializeTranslation(key, options);
