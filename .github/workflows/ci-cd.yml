@@ -82,7 +82,7 @@ jobs:
         run: yarn install --no-lockfile
 
       - name: Test
-        run: yarn test:ember
+        run: yarn test
 
 
   try-scenarios:
@@ -115,7 +115,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Test
-        run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn test:ember
+        run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn test
 
 
   deploy-documentation:
