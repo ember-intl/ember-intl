@@ -10,16 +10,16 @@
     "ember",
     "internationalization"
   ],
-  "author": "jason.mitchell.w@gmail.com",
-  "license": "MIT",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
   "homepage": "https://ember-intl.github.io/ember-intl/",
   "repository": {
     "type": "git",
     "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "license": "MIT",
+  "author": "jason.mitchell.w@gmail.com",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
   },
   "scripts": {
     "build": "ember build --environment=production",
@@ -38,6 +38,31 @@
     "test:ember": "ember test",
     "test:ember-compatibility": "./node_modules/.bin/ember try:one",
     "test:node": "mocha \"tests-node/**/*.js\""
+  },
+  "resolutions": {
+    "@types/ember": "^4.0.0",
+    "@types/ember-qunit": "^5.0.0",
+    "@types/ember-resolver": "^5.0.11",
+    "@types/ember__application": "^4.0.0",
+    "@types/ember__array": "^4.0.1",
+    "@types/ember__component": "^4.0.8",
+    "@types/ember__controller": "^4.0.0",
+    "@types/ember__debug": "^4.0.1",
+    "@types/ember__engine": "^4.0.0",
+    "@types/ember__error": "^4.0.0",
+    "@types/ember__object": "^4.0.2",
+    "@types/ember__polyfills": "^4.0.0",
+    "@types/ember__routing": "^4.0.7",
+    "@types/ember__runloop": "^4.0.1",
+    "@types/ember__service": "^4.0.0",
+    "@types/ember__string": "^3.0.9",
+    "@types/ember__template": "^4.0.0",
+    "@types/ember__test": "^4.0.0",
+    "@types/ember__test-helpers": "^2.6.1",
+    "@types/ember__utils": "^4.0.0",
+    "@types/htmlbars-inline-precompile": "^3.0.0",
+    "@types/qunit": "^2.19.1",
+    "@types/rsvp": "^4.0.4"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.1.3",
@@ -66,9 +91,6 @@
     "lodash.omit": "^4.5.0",
     "mkdirp": "^1.0.4",
     "silent-error": "^1.1.1"
-  },
-  "peerDependencies": {
-    "typescript": "4"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -145,35 +167,13 @@
     "typescript": "^4.7.4",
     "webpack": "^5.72.1"
   },
+  "peerDependencies": {
+    "typescript": "4"
+  },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
     }
-  },
-  "resolutions": {
-    "@types/ember": "^4.0.0",
-    "@types/ember-qunit": "^5.0.0",
-    "@types/ember-resolver": "^5.0.11",
-    "@types/ember__application": "^4.0.0",
-    "@types/ember__array": "^4.0.1",
-    "@types/ember__component": "^4.0.8",
-    "@types/ember__controller": "^4.0.0",
-    "@types/ember__debug": "^4.0.1",
-    "@types/ember__engine": "^4.0.0",
-    "@types/ember__error": "^4.0.0",
-    "@types/ember__object": "^4.0.2",
-    "@types/ember__polyfills": "^4.0.0",
-    "@types/ember__routing": "^4.0.7",
-    "@types/ember__runloop": "^4.0.1",
-    "@types/ember__service": "^4.0.0",
-    "@types/ember__string": "^3.0.9",
-    "@types/ember__template": "^4.0.0",
-    "@types/ember__test": "^4.0.0",
-    "@types/ember__test-helpers": "^2.6.1",
-    "@types/ember__utils": "^4.0.0",
-    "@types/htmlbars-inline-precompile": "^3.0.0",
-    "@types/qunit": "^2.19.1",
-    "@types/rsvp": "^4.0.4"
   },
   "engines": {
     "node": "14.* || >= 16"
