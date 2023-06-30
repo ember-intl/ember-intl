@@ -8,7 +8,9 @@ import { module, test } from 'qunit';
 
 module('format-message (html)', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us', { foo: { bar: 'foo bar baz', baz: 'baz baz baz' } });
+  setupIntl(hooks, 'en-us', {
+    foo: { bar: 'foo bar baz', baz: 'baz baz baz' },
+  });
 
   test('invoke the formatMessage directly', function (this: TestContext, assert) {
     assert.expect(1);
@@ -20,7 +22,7 @@ module('format-message (html)', function (hooks) {
           count: 42000,
         })
         .toString(),
-      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>'
+      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>',
     );
   });
 
@@ -34,7 +36,7 @@ module('format-message (html)', function (hooks) {
           name: htmlSafe('<em>Alexander</em>'),
         })
         .toString(),
-      '<strong>Welcome <em>Alexander</em>!</strong>'
+      '<strong>Welcome <em>Alexander</em>!</strong>',
     );
 
     assert.strictEqual(
@@ -44,7 +46,7 @@ module('format-message (html)', function (hooks) {
           name: htmlSafe('<em>Alexander</em>'),
         })
         .toString(),
-      '<strong>Welcome <em>Alexander</em>!</strong>'
+      '<strong>Welcome <em>Alexander</em>!</strong>',
     );
   });
 
@@ -62,7 +64,7 @@ module('format-message (html)', function (hooks) {
 
     assert.strictEqual(
       escape(output),
-      '%3Cstrong%3EHello%20%26lt%3Bem%26gt%3BJason%26lt%3B/em%26gt%3B%2042.000%3C/strong%3E'
+      '%3Cstrong%3EHello%20%26lt%3Bem%26gt%3BJason%26lt%3B/em%26gt%3B%2042.000%3C/strong%3E',
     );
   });
 
@@ -76,7 +78,7 @@ module('format-message (html)', function (hooks) {
           link: 'http://formatjs.io',
         })
         .toString(),
-      '<a href="http://formatjs.io">text</a>'
+      '<a href="http://formatjs.io">text</a>',
     );
 
     assert.strictEqual(
@@ -86,7 +88,7 @@ module('format-message (html)', function (hooks) {
           link: 'http://formatjs.io',
         })
         .toString(),
-      '<a href="http://formatjs.io">text</a>'
+      '<a href="http://formatjs.io">text</a>',
     );
   });
 
@@ -95,20 +97,26 @@ module('format-message (html)', function (hooks) {
 
     assert.strictEqual(
       this.intl
-        .formatMessage(`Fields marked '<'strong class="primary"'>'*'</strong>' are required`, {
-          htmlSafe: true,
-        })
+        .formatMessage(
+          `Fields marked '<'strong class="primary"'>'*'</strong>' are required`,
+          {
+            htmlSafe: true,
+          },
+        )
         .toString(),
-      'Fields marked <strong class="primary">*</strong> are required'
+      'Fields marked <strong class="primary">*</strong> are required',
     );
 
     assert.strictEqual(
       this.intl
-        .formatMessage(`Fields marked <strong class="primary">*</strong> are required`, {
-          htmlSafe: true,
-        })
+        .formatMessage(
+          `Fields marked <strong class="primary">*</strong> are required`,
+          {
+            htmlSafe: true,
+          },
+        )
         .toString(),
-      'Fields marked <strong class="primary">*</strong> are required'
+      'Fields marked <strong class="primary">*</strong> are required',
     );
   });
 
@@ -116,37 +124,65 @@ module('format-message (html)', function (hooks) {
     assert.expect(1);
 
     const output = this.intl
-      .formatMessage(`Fields marked '<strong class="primary">*</strong>' are required`, {
-        htmlSafe: true,
-      })
+      .formatMessage(
+        `Fields marked '<strong class="primary">*</strong>' are required`,
+        {
+          htmlSafe: true,
+        },
+      )
       .toString();
 
-    assert.strictEqual(output, 'Fields marked <strong class="primary">*</strong> are required');
+    assert.strictEqual(
+      output,
+      'Fields marked <strong class="primary">*</strong> are required',
+    );
   });
 
   test('message is formatted correctly with argument', async function (this: TestContext, assert) {
     assert.expect(1);
-    await render(hbs`{{format-message "Hello {name}" name="Jason" htmlSafe=true}}`);
+    await render(
+      hbs`{{format-message "Hello {name}" name="Jason" htmlSafe=true}}`,
+    );
     assert.strictEqual(this.element.textContent, 'Hello Jason');
   });
 
   test('should allow for inlined html in the value', async function (this: TestContext, assert) {
     assert.expect(1);
-    await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="Jason" htmlSafe=true}}`);
-    assert.strictEqual((this.element as HTMLElement).innerHTML, '<strong>Hello Jason</strong>');
+    await render(
+      hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="Jason" htmlSafe=true}}`,
+    );
+    assert.strictEqual(
+      (this.element as HTMLElement).innerHTML,
+      '<strong>Hello Jason</strong>',
+    );
   });
 
   test('should escape arguments', async function (this: TestContext, assert) {
     assert.expect(1);
-    await render(hbs`{{format-message "{foo}" foo="<em>BAR</em>" htmlSafe=true}}`);
-    assert.strictEqual((this.element as HTMLElement).innerHTML, '&lt;em&gt;BAR&lt;/em&gt;');
+    await render(
+      hbs`{{format-message "{foo}" foo="<em>BAR</em>" htmlSafe=true}}`,
+    );
+    assert.strictEqual(
+      (this.element as HTMLElement).innerHTML,
+      '&lt;em&gt;BAR&lt;/em&gt;',
+    );
   });
 
   test('should allow for inlined html in the value but escape arguments', async function (this: TestContext, assert) {
     assert.expect(2);
-    await render(hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="<em>Jason</em>" htmlSafe=true}}`);
-    assert.strictEqual((this.element as HTMLElement).innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
-    await render(hbs`{{format-message "<strong>Hello {name}</strong>" name="<em>Jason</em>" htmlSafe=true}}`);
-    assert.strictEqual((this.element as HTMLElement).innerHTML, '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>');
+    await render(
+      hbs`{{format-message "'<strong>'Hello {name}'</strong>'" name="<em>Jason</em>" htmlSafe=true}}`,
+    );
+    assert.strictEqual(
+      (this.element as HTMLElement).innerHTML,
+      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>',
+    );
+    await render(
+      hbs`{{format-message "<strong>Hello {name}</strong>" name="<em>Jason</em>" htmlSafe=true}}`,
+    );
+    assert.strictEqual(
+      (this.element as HTMLElement).innerHTML,
+      '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>',
+    );
   });
 });

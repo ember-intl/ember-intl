@@ -21,7 +21,7 @@ module('format-time-test', function (hooks) {
           example: { timeZone: 'utc', timeZoneName: 'short' },
         },
       },
-    }
+    },
   );
 
   test('exists', function (this: TestContext, assert) {
@@ -32,23 +32,37 @@ module('format-time-test', function (hooks) {
   test('invoke formatTime directly', function (this: TestContext, assert) {
     assert.expect(1);
 
-    const output = this.intl.formatTime(date, { timeZone: 'UTC', locale: 'fr-fr' });
+    const output = this.intl.formatTime(date, {
+      timeZone: 'UTC',
+      locale: 'fr-fr',
+    });
 
     // Try both for browser Intl data inconsistencies
     assert.strictEqual(
       output,
-      new Intl.DateTimeFormat('fr-fr', { hour: 'numeric', minute: 'numeric', timeZone: 'UTC' }).format(date)
+      new Intl.DateTimeFormat('fr-fr', {
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'UTC',
+      }).format(date),
     );
   });
 
   test('invoke formatTime directly with format', function (this: TestContext, assert) {
     assert.expect(1);
-    const output = this.intl.formatTime(date, { format: 'test', locale: 'fr-fr' });
+    const output = this.intl.formatTime(date, {
+      format: 'test',
+      locale: 'fr-fr',
+    });
 
     // Try both for browser Intl because of data inconsistencies between implementations
     assert.strictEqual(
       output,
-      new Intl.DateTimeFormat('fr-fr', { hour: 'numeric', minute: 'numeric', timeZone: 'UTC' }).format(date)
+      new Intl.DateTimeFormat('fr-fr', {
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'UTC',
+      }).format(date),
     );
   });
 
@@ -83,7 +97,9 @@ module('format-time-test', function (hooks) {
     this.set('dateString', 'Thu Jan 23 2014 18:00:44 GMT-0500 (EST)');
 
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`{{format-time this.dateString locale='de' format='example'}}`);
+    await render(
+      hbs`{{format-time this.dateString locale='de' format='example'}}`,
+    );
     assert.strictEqual(this.element.textContent, '23:00 UTC');
   });
 
@@ -99,7 +115,9 @@ module('format-time-test', function (hooks) {
   test('it should return a formatted string of just the time', async function (this: TestContext, assert) {
     assert.expect(1);
     this.set('date', date);
-    await render(hbs`{{format-time this.date hour='numeric' minute='numeric' timeZone='UTC'}}`);
+    await render(
+      hbs`{{format-time this.date hour='numeric' minute='numeric' timeZone='UTC'}}`,
+    );
     assert.strictEqual(this.element.textContent, '11:00 PM');
   });
 
@@ -108,7 +126,10 @@ module('format-time-test', function (hooks) {
     await render(hbs`{{format-time 0}}`);
     assert.strictEqual(
       this.element.textContent,
-      new Intl.DateTimeFormat('en-us', { hour: 'numeric', minute: 'numeric' }).format(0)
+      new Intl.DateTimeFormat('en-us', {
+        hour: 'numeric',
+        minute: 'numeric',
+      }).format(0),
     );
   });
 
@@ -117,12 +138,24 @@ module('format-time-test', function (hooks) {
 
     this.intl.setLocale(['en-ie']);
 
-    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test2"}}`);
+    await render(
+      hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test2"}}`,
+    );
 
-    assert.strictEqual(this.element.textContent, '00:00', 'en-ie time format defaults to h23');
+    assert.strictEqual(
+      this.element.textContent,
+      '00:00',
+      'en-ie time format defaults to h23',
+    );
 
-    await render(hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test2" hourCycle="h12"}}`);
+    await render(
+      hbs`{{format-time "2020-04-30T00:00:00.000Z" format="test2" hourCycle="h12"}}`,
+    );
 
-    assert.strictEqual(this.element.textContent, '12:00 a.m.', 'en-ie hourCycle overridden');
+    assert.strictEqual(
+      this.element.textContent,
+      '12:00 a.m.',
+      'en-ie hourCycle overridden',
+    );
   });
 });

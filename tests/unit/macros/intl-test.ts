@@ -30,13 +30,25 @@ module('Unit | Macros | intl', function (hooks) {
     assert.expect(3);
 
     const object = this.ContainerObject.extend({
-      property: intl((intl) => assert.strictEqual(intl, this.intl, 'service is accessible in CP callback')),
+      property: intl((intl) =>
+        assert.strictEqual(
+          intl,
+          this.intl,
+          'service is accessible in CP callback',
+        ),
+      ),
     }).create();
 
     get(object, 'property');
 
-    assert.ok(Object.getOwnPropertyNames(object).includes(__intlInjectionName), 'service is injected');
-    assert.notOk(Object.keys(object).includes(__intlInjectionName), 'service is non-enumerable');
+    assert.ok(
+      Object.getOwnPropertyNames(object).includes(__intlInjectionName),
+      'service is injected',
+    );
+    assert.notOk(
+      Object.keys(object).includes(__intlInjectionName),
+      'service is non-enumerable',
+    );
   });
 
   test('does not use or clobber the pre-existing intl injection', function (this: TestContext, assert) {
@@ -96,25 +108,40 @@ module('Unit | Macros | intl', function (hooks) {
 
   test('accpets further dependent keys', function (this: TestContext, assert) {
     const dependencies = { dependencyA: 1, dependencyB: 2, dependencyC: 3 };
-    const dependencyKeys = Object.keys(dependencies) as (keyof typeof dependencies)[];
+    const dependencyKeys = Object.keys(
+      dependencies,
+    ) as (keyof typeof dependencies)[];
 
     const object = this.ContainerObject.extend({
       ...dependencies,
       // ! TypeScript can't deal with spreading here, so we specify the keys explicitly
-      property: intl('dependencyA', 'dependencyB', 'dependencyC', (_intl, _propertyKey, ctx) =>
-        getProperties(ctx as any, ...dependencyKeys)
+      property: intl(
+        'dependencyA',
+        'dependencyB',
+        'dependencyC',
+        (_intl, _propertyKey, ctx) =>
+          getProperties(ctx as any, ...dependencyKeys),
       ),
     }).create();
 
     assert.deepEqual(get(object, 'property'), dependencies);
 
     run(() => set(object, 'dependencyA', 4));
-    assert.deepEqual(get(object, 'property'), getProperties(object, ...dependencyKeys));
+    assert.deepEqual(
+      get(object, 'property'),
+      getProperties(object, ...dependencyKeys),
+    );
 
     run(() => set(object, 'dependencyB', 5));
-    assert.deepEqual(get(object, 'property'), getProperties(object, ...dependencyKeys));
+    assert.deepEqual(
+      get(object, 'property'),
+      getProperties(object, ...dependencyKeys),
+    );
 
     run(() => set(object, 'dependencyC', 6));
-    assert.deepEqual(get(object, 'property'), getProperties(object, ...dependencyKeys));
+    assert.deepEqual(
+      get(object, 'property'),
+      getProperties(object, ...dependencyKeys),
+    );
   });
 });

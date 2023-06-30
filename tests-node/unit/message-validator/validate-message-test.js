@@ -34,7 +34,10 @@ describe('validateMessage', function () {
     });
   });
 
-  let invalidSyntax = ['hello {world!', `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`];
+  let invalidSyntax = [
+    'hello {world!',
+    `{name} took {numPhotos, plural, # photos} on {takenDate, date, long}.`,
+  ];
 
   invalidSyntax.forEach((message) => {
     it(`throws SyntaxError for "${message}"`, function () {
@@ -86,7 +89,9 @@ describe('validateMessage', function () {
 
   unknownCategory.forEach((item) => {
     it(`throws unknown category error for "${item.message}" with locale "${item.locale}"`, function () {
-      expect(() => validateMessage(item.message, item.locale)).to.throw(item.error);
+      expect(() => validateMessage(item.message, item.locale)).to.throw(
+        item.error,
+      );
     });
   });
 
@@ -97,7 +102,9 @@ describe('validateMessage', function () {
 
   missingOther.forEach((message) => {
     it(`throws missing other error for "${message}"`, function () {
-      expect(() => validateMessage(message, 'en-us')).to.throw('MISSING_OTHER_CLAUSE');
+      expect(() => validateMessage(message, 'en-us')).to.throw(
+        'MISSING_OTHER_CLAUSE',
+      );
     });
   });
 });

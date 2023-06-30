@@ -21,7 +21,9 @@ export interface SetupIntlOptions {
    *
    * @defaultValue true
    */
-  missingMessage?: boolean | ((key: string, locales: string[], options: TOptions) => string);
+  missingMessage?:
+    | boolean
+    | ((key: string, locales: string[], options: TOptions) => string);
 }
 
 /**
@@ -44,18 +46,25 @@ export default function setupIntl(
   hooks: NestedHooks,
   locale: string | string[],
   translations?: Translations,
-  options?: SetupIntlOptions
+  options?: SetupIntlOptions,
 ): void;
-export default function setupIntl(hooks: NestedHooks, translations?: Translations, options?: SetupIntlOptions): void;
+export default function setupIntl(
+  hooks: NestedHooks,
+  translations?: Translations,
+  options?: SetupIntlOptions,
+): void;
 export default function setupIntl(
   hooks: NestedHooks,
   localeOrTranslations?: string | string[] | Translations,
   translationsOrOptions?: Translations | SetupIntlOptions,
-  options?: SetupIntlOptions
+  options?: SetupIntlOptions,
 ) {
   let locale: string | string[] | undefined;
   let translations: Translations | undefined;
-  if (typeof localeOrTranslations === 'object' && !Array.isArray(localeOrTranslations)) {
+  if (
+    typeof localeOrTranslations === 'object' &&
+    !Array.isArray(localeOrTranslations)
+  ) {
     translations = localeOrTranslations;
     localeOrTranslations = undefined;
     if (typeof translationsOrOptions === 'object') {

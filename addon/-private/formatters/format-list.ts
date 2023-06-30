@@ -13,7 +13,10 @@ import Formatter from './-base';
  */
 export default class FormatList extends Formatter<FormatListOptions> {
   static readonly type = 'list';
-  format(intl: IntlShape<string>, ...[value, opts]: Parameters<IntlShape<string>['formatList']>): string {
+  format(
+    intl: IntlShape<string>,
+    ...[value, opts]: Parameters<IntlShape<string>['formatList']>
+  ): string {
     return intl.formatList(value, opts);
   }
 }

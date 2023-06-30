@@ -14,9 +14,12 @@ describe('linting', function () {
     this.icuFixture = {
       de: {
         greeting: 'Hallo {who}',
-        sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}',
-        missingArg: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
-        select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
+        sameArgumentDifferentContent:
+          'You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}',
+        missingArg:
+          'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
+        select:
+          '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
         deep: {
           nested: {
             ok: 'Account created {reason}',
@@ -26,9 +29,11 @@ describe('linting', function () {
       },
       en: {
         greeting: 'Hello {whos}',
-        sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
+        sameArgumentDifferentContent:
+          'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
         missingArg: 'You have photos',
-        select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
+        select:
+          '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
         deep: {
           nested: {
             ok: 'Account created {reason}',
@@ -41,8 +46,10 @@ describe('linting', function () {
 
     this.brokenIcuFixture = {
       en: {
-        brokenSyntax: 'You have {count, plural, =0 {one {cat} other {several cats}}.',
-        validSyntax: 'You have {count, plural, =0 {one cat} other {several cats}.}',
+        brokenSyntax:
+          'You have {count, plural, =0 {one {cat} other {several cats}}.',
+        validSyntax:
+          'You have {count, plural, =0 {one cat} other {several cats}.}',
       },
     };
 
@@ -106,7 +113,11 @@ describe('linting', function () {
 
   it('requiresTranslation allows to ignore missing translations', function () {
     this.linter = new Linter({
-      requiresTranslation: (key, locale) => !((key === 'nested.translation.key' && locale === 'fr') || key === 'baz'),
+      requiresTranslation: (key, locale) =>
+        !(
+          (key === 'nested.translation.key' && locale === 'fr') ||
+          key === 'baz'
+        ),
     });
 
     let { missingTranslations: missing } = this.linter.lint(this.fixture);
@@ -126,7 +137,7 @@ describe('linting', function () {
     const brokenString = this.brokenIcuFixture.en.brokenSyntax;
 
     expect(() => this.linter.lint(this.brokenIcuFixture)).throws(
-      `An error occurred (${expectedParserError}) when extracting ICU arguments for '${brokenString}'`
+      `An error occurred (${expectedParserError}) when extracting ICU arguments for '${brokenString}'`,
     );
   });
 
@@ -172,7 +183,9 @@ describe('linting', function () {
       },
     });
 
-    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['timestamp']]]]]);
+    expect(results.icuMismatch).to.deep.equal([
+      ['key', [['en', ['timestamp']]]],
+    ]);
   });
 
   it('detects time arguments', function () {
@@ -185,7 +198,9 @@ describe('linting', function () {
       },
     });
 
-    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['timestamp']]]]]);
+    expect(results.icuMismatch).to.deep.equal([
+      ['key', [['en', ['timestamp']]]],
+    ]);
   });
 
   it('detects select arguments', function () {
@@ -211,7 +226,9 @@ describe('linting', function () {
       },
     });
 
-    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['numPhotos']]]]]);
+    expect(results.icuMismatch).to.deep.equal([
+      ['key', [['en', ['numPhotos']]]],
+    ]);
   });
 
   it('detects arguments within plural arguments', function () {
@@ -227,7 +244,9 @@ describe('linting', function () {
       },
     });
 
-    expect(results.icuMismatch).to.deep.equal([['key', [['en', ['count', 'model']]]]]);
+    expect(results.icuMismatch).to.deep.equal([
+      ['key', [['en', ['count', 'model']]]],
+    ]);
     expect(results.missingTranslations).to.deep.equal([]);
   });
 });

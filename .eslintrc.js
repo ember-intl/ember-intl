@@ -7,7 +7,12 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['ember', '@typescript-eslint', 'simple-import-sort', 'typescript-sort-keys'],
+  plugins: [
+    'ember',
+    '@typescript-eslint',
+    'simple-import-sort',
+    'typescript-sort-keys',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
@@ -36,7 +41,10 @@ module.exports = {
     // TypeScript files
     {
       files: ['**/*.{gts,ts}'],
-      extends: ['plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended'],
+      extends: [
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+      ],
       rules: {
         '@typescript-eslint/array-type': 'error',
         '@typescript-eslint/no-empty-interface': 'off',
@@ -57,7 +65,10 @@ module.exports = {
         ],
         'import/no-duplicates': 'error',
         'import/no-named-as-default-member': 'off',
-        'import/no-unresolved': ['error', { ignore: ['^@ember', '^dummy/', '^ember', 'fetch'] }],
+        'import/no-unresolved': [
+          'error',
+          { ignore: ['^@ember', '^dummy/', '^ember', 'fetch'] },
+        ],
       },
     },
     // Node files

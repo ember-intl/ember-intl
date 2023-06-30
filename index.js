@@ -46,7 +46,11 @@ module.exports = {
   cacheKeyForTree(treeType) {
     const paths = this.package.paths || this.package.treePaths;
 
-    return calculateCacheKeyForTree(treeType, this, paths ? paths[treeType] : this.package.root);
+    return calculateCacheKeyForTree(
+      treeType,
+      this,
+      paths ? paths[treeType] : this.package.root,
+    );
   },
 
   generateTranslationTree(options = {}) {
@@ -65,7 +69,7 @@ module.exports = {
     const [translationTree, addonsWithTranslations] = buildTranslationTree(
       this.project,
       this.configOptions.inputPath,
-      this.treeGenerator
+      this.treeGenerator,
     );
 
     return new TranslationReducer([translationTree], {
@@ -101,21 +105,27 @@ module.exports = {
         },
       });
 
-      const flattenedTranslationTree = new BroccoliMergeFiles([translationTree], {
-        outputFileName: 'translations.js',
-        merge: (entries) => {
-          const output = entries.map(([locale, translations]) => {
-            return [locale, JSON.parse(translations)];
-          });
+      const flattenedTranslationTree = new BroccoliMergeFiles(
+        [translationTree],
+        {
+          outputFileName: 'translations.js',
+          merge: (entries) => {
+            const output = entries.map(([locale, translations]) => {
+              return [locale, JSON.parse(translations)];
+            });
 
-          return 'export default ' + stringify(output);
+            return 'export default ' + stringify(output);
+          },
         },
-      });
+      );
 
       trees.push(flattenedTranslationTree);
     }
 
-    return this._super.treeForAddon.call(this, mergeTrees(trees, { overwrite: true }));
+    return this._super.treeForAddon.call(
+      this,
+      mergeTrees(trees, { overwrite: true }),
+    );
   },
 
   treeForPublic() {
@@ -152,12 +162,16 @@ module.exports = {
     };
 
     if (typeof config.requiresTranslation !== 'function') {
-      this.logger.warn('Configured `requiresTranslation` is not a function. Using default implementation.');
+      this.logger.warn(
+        'Configured `requiresTranslation` is not a function. Using default implementation.',
+      );
       config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
     }
 
     OBSOLETE_OPTIONS.filter((option) => option in config).forEach((option) => {
-      this.logger.warn(`\`${option}\` is obsolete and can be removed from config/ember-intl.js.`);
+      this.logger.warn(
+        `\`${option}\` is obsolete and can be removed from config/ember-intl.js.`,
+      );
     });
 
     return config;

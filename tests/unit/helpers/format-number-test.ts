@@ -18,10 +18,14 @@ module('format-number', function (hooks) {
         number: {
           digits: { minimumFractionDigits: 2 },
           currency: { style: 'currency', minimumFractionDigits: 2 },
-          currency2: { style: 'currency', currency: 'USD', minimumFractionDigits: 3 },
+          currency2: {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 3,
+          },
         },
       },
-    }
+    },
   );
 
   test('exists', function (this: TestContext, assert) {
@@ -135,8 +139,14 @@ module('format-number', function (hooks) {
 
   test('should be able to combine hash options with format options', async function (this: TestContext, assert) {
     assert.expect(1);
-    await render(hbs`{{format-number 1 format="digits" minimumIntegerDigits=10}}`);
-    assert.strictEqual(this.element.textContent, '0,000,000,001.00', 'should return a string formatted to a percent');
+    await render(
+      hbs`{{format-number 1 format="digits" minimumIntegerDigits=10}}`,
+    );
+    assert.strictEqual(
+      this.element.textContent,
+      '0,000,000,001.00',
+      'should return a string formatted to a percent',
+    );
   });
 
   // v4 -> v5 regression
@@ -144,21 +154,32 @@ module('format-number', function (hooks) {
   test('hash options take precedence over named format options', async function (this: TestContext, assert) {
     assert.expect(1);
     await render(
-      hbs`{{format-number 1 format="currency2"}} / {{format-number 1 format="currency2" minimumFractionDigits=0}}`
+      hbs`{{format-number 1 format="currency2"}} / {{format-number 1 format="currency2" minimumFractionDigits=0}}`,
     );
-    assert.strictEqual(this.element.textContent, '$1.000 / $1', '`minimumFractionDigits` overrides named format');
+    assert.strictEqual(
+      this.element.textContent,
+      '$1.000 / $1',
+      '`minimumFractionDigits` overrides named format',
+    );
   });
 
   test('used to format percentages', async function (this: TestContext, assert) {
     assert.expect(2);
     await render(hbs`{{format-number 400 style="percent"}}`);
-    assert.strictEqual(this.element.textContent, '40,000%', 'should return a string formatted to a percent');
+    assert.strictEqual(
+      this.element.textContent,
+      '40,000%',
+      'should return a string formatted to a percent',
+    );
 
     run(() => this.intl.setLocale('de-de'));
     await render(hbs`{{format-number 400 style="percent"}}`);
 
     const value = escape(this.element.textContent!);
-    assert.ok(['40%2C000%25', '40.000%A0%25'].indexOf(value) > -1, 'de should return a string formatted to a percent');
+    assert.ok(
+      ['40%2C000%25', '40.000%A0%25'].indexOf(value) > -1,
+      'de should return a string formatted to a percent',
+    );
   });
 
   test('should function within an `each` block helper', async function (this: TestContext, assert) {
@@ -170,13 +191,13 @@ module('format-number', function (hooks) {
         { AMOUNT: 3, CURRENCY: 'USD' },
         { AMOUNT: 8, CURRENCY: 'EUR' },
         { AMOUNT: 10, CURRENCY: 'JPY' },
-      ])
+      ]),
     );
 
     await render(
       hbs`
       {{#each this.currencies as |currency|}}{{format-number currency.AMOUNT format="currency" style="currency" currency=currency.CURRENCY}}{{/each}}
-      `
+      `,
     );
 
     assert.strictEqual(this.element.textContent!.trim(), '$3.00€8.00¥10.00');

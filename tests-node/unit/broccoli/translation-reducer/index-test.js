@@ -77,7 +77,7 @@ describe('translation-reducer', function () {
       return expect(
         build(createBuilder(subject), () => {
           throw new Error('Should have have been reached.');
-        })
+        }),
       ).to.eventually.rejectedWith(/"greet" was not found in "de-de"/);
     });
 
@@ -240,18 +240,21 @@ describe('translation-reducer', function () {
           foo: 'Hallo {who}',
           sameArgumentDifferentContent:
             'You have {numPhotos, plural, =0 {no photos.} =1 {one photo.} other {# photos.}}',
-          missingArg: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
+          missingArg:
+            'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
           date: '{datetime, date}',
           time: '{datetime, time, short}',
           deep: { nested: { ok: 'Response was ok {reason}' } },
         },
         en: {
           foo: 'Hello {whos}',
-          sameArgumentDifferentContent: 'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
+          sameArgumentDifferentContent:
+            'You have {numPhotos, plural, =0 {foo} =1 {bar} other {# baz}}',
           missingArg: 'You have photos',
           date: '{datetime, date, long}',
           time: '{datetime, time, short}',
-          select: '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
+          select:
+            '{gender, select, male {He avoids bugs} female {She avoids bugs} other {They avoid bugs}}',
           deep: { nested: { ok: 'Response was ok {reason}, {code}' } },
         },
       };
@@ -304,7 +307,7 @@ describe('translation-reducer', function () {
           '"io" was not found in "de", "it"',
           '"baz" was not found in "de", "en", "it"',
           '"nested.translation.lock" was not found in "de", "en", "it"',
-        ].every((bit) => string.includes(bit))
+        ].every((bit) => string.includes(bit)),
       );
     });
 
@@ -326,8 +329,12 @@ describe('translation-reducer', function () {
         const supportsUnicode = hasUnicode();
 
         const expectedValue = supportsUnicode
-          ? ['🇦🇰  ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.']
-          : ['ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.'];
+          ? [
+              '🇦🇰  ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.',
+            ]
+          : [
+              'ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.',
+            ];
 
         expect(logs).to.deep.equal(expectedValue);
       });
@@ -342,7 +349,8 @@ describe('translation-reducer', function () {
         },
       });
 
-      expect(() => subject.handleLintResult(subject.linter.lint(this.fixture))).throws(`Missing translations:
+      expect(() => subject.handleLintResult(subject.linter.lint(this.fixture)))
+        .throws(`Missing translations:
 - "foo" was not found in "it"
 - "bar" was not found in "en", "fr", "it"
 - "nested.translation.key" was not found in "en", "fr", "it"
@@ -360,23 +368,37 @@ describe('translation-reducer', function () {
         },
       });
 
-      expect(() => subject.handleLintResult(subject.linter.lint(this.icuFixture))).throws(`ICU arguments mismatch:
+      expect(() =>
+        subject.handleLintResult(subject.linter.lint(this.icuFixture)),
+      ).throws(`ICU arguments mismatch:
 - "foo" ICU argument mismatch: "de": "whos", "en": "who"
 - "missingArg" ICU argument mismatch: "en": "numPhotos"
 - "deep.nested.ok" ICU argument mismatch: "de": "code"`);
     });
 
     describe('mergeTranslations', function () {
-      const testDirectory = path.join(__dirname, '../../../fixtures/strip-empty-translations');
-      const listFiles = ['de-de.yml', 'en-us.yml'].map((file) => path.join(testDirectory, file));
+      const testDirectory = path.join(
+        __dirname,
+        '../../../fixtures/strip-empty-translations',
+      );
+      const listFiles = ['de-de.yml', 'en-us.yml'].map((file) =>
+        path.join(testDirectory, file),
+      );
 
       it('strips empty translations if enabled', function () {
-        const subject = new TranslationReducer(this.input, { stripEmptyTranslations: true });
+        const subject = new TranslationReducer(this.input, {
+          stripEmptyTranslations: true,
+        });
         const translations = subject.mergeTranslations(listFiles);
 
         expect(translations).to.deep.equal({
           'de-de': { sample_translation: { translation_1: 'Lorem ipsum' } },
-          'en-us': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: 'dolor sit amet' } },
+          'en-us': {
+            sample_translation: {
+              translation_1: 'Lorem ipsum',
+              translation_2: 'dolor sit amet',
+            },
+          },
         });
       });
 
@@ -386,8 +408,19 @@ describe('translation-reducer', function () {
         const translations = subject.mergeTranslations(listFiles);
 
         expect(translations).to.deep.equal({
-          'de-de': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: '', translation_3: null } },
-          'en-us': { sample_translation: { translation_1: 'Lorem ipsum', translation_2: 'dolor sit amet' } },
+          'de-de': {
+            sample_translation: {
+              translation_1: 'Lorem ipsum',
+              translation_2: '',
+              translation_3: null,
+            },
+          },
+          'en-us': {
+            sample_translation: {
+              translation_1: 'Lorem ipsum',
+              translation_2: 'dolor sit amet',
+            },
+          },
         });
       });
     });

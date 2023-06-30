@@ -17,11 +17,16 @@ export default class AbstractHelper extends Helper {
   constructor() {
     super(...arguments);
     if (this.constructor === AbstractHelper) {
-      throw new Error('FormatHelper is an abstract class, can not be instantiated directly.');
+      throw new Error(
+        'FormatHelper is an abstract class, can not be instantiated directly.',
+      );
     }
 
     this.intl = getOwner(this).lookup('service:intl');
-    this.unsubscribeLocaleChanged = this.intl.onLocaleChanged(this.recompute, this);
+    this.unsubscribeLocaleChanged = this.intl.onLocaleChanged(
+      this.recompute,
+      this,
+    );
   }
 
   format() {
@@ -29,7 +34,9 @@ export default class AbstractHelper extends Helper {
   }
 
   compute([value, positionalOptions], namedOptions) {
-    const options = positionalOptions ? Object.assign({}, positionalOptions, namedOptions) : namedOptions;
+    const options = positionalOptions
+      ? Object.assign({}, positionalOptions, namedOptions)
+      : namedOptions;
 
     if (isEmpty(value)) {
       if (options.allowEmpty ?? this.allowEmpty) {

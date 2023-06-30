@@ -13,7 +13,7 @@ module('format-relative', function (hooks) {
     {},
     {
       formats: { relative: { yearShort: { unit: 'year', style: 'short' } } },
-    }
+    },
   );
 
   test('exists', function (this: TestContext, assert) {
@@ -23,7 +23,10 @@ module('format-relative', function (hooks) {
 
   test('invoke the formatRelative directly', function (this: TestContext, assert) {
     assert.expect(1);
-    assert.strictEqual(this.intl.formatRelative(-1, { unit: 'days' }), '1 day ago');
+    assert.strictEqual(
+      this.intl.formatRelative(-1, { unit: 'days' }),
+      '1 day ago',
+    );
   });
 
   skip('should throw if called with out a value', function (/*assert*/) {
