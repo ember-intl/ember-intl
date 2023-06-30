@@ -82,7 +82,7 @@ jobs:
         run: yarn install --no-lockfile
 
       - name: Test
-        run: yarn test:ember
+        run: yarn test
 
 
   try-scenarios:
@@ -98,8 +98,8 @@ jobs:
           - 'ember-beta'
           - 'ember-canary'
           - 'ember-classic'
-          # - 'embroider-safe'
-          # - 'embroider-optimized'
+          - 'embroider-safe'
+          - 'embroider-optimized'
     timeout-minutes: 10
     steps:
       - name: Check out a copy of the repo
@@ -115,7 +115,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Test
-        run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn test:ember
+        run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn test
 
 
   deploy-documentation:
