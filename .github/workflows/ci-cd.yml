@@ -8,8 +8,6 @@ on:
     tags:
       - '*'
   pull_request:
-  schedule:
-    - cron: '0 6 * * SUN'
 
 env:
   CI: true
@@ -17,9 +15,9 @@ env:
 
 jobs:
   lint:
-    name: Lint files
+    name: Lint
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v3
@@ -36,14 +34,11 @@ jobs:
       - name: Lint
         run: yarn lint
 
-      - name: Glint
-        run: yarn glint
 
-
-  test-addon:
-    name: Test addon
+  test:
+    name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v3
@@ -60,33 +55,9 @@ jobs:
       - name: Test
         run: yarn test
 
-      - name: Test (Node)
-        run: yarn test:node
 
-
-  test-floating-dependencies:
-    name: Test floating dependencies
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out a copy of the repo
-        uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install dependencies
-        run: yarn install --no-lockfile
-
-      - name: Test
-        run: yarn test
-
-
-  try-scenarios:
-    name: Try scenarios
+  test-compatibility:
+    name: Test compatibility
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -94,13 +65,16 @@ jobs:
         scenario:
           - 'ember-lts-3.24'
           - 'ember-lts-3.28'
+          - 'ember-lts-4.4'
+          - 'ember-lts-4.8'
+          - 'ember-lts-4.12'
           - 'ember-release'
           - 'ember-beta'
           - 'ember-canary'
           - 'ember-classic'
           - 'embroider-safe'
           - 'embroider-optimized'
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v3
@@ -118,11 +92,53 @@ jobs:
         run: yarn test:ember-compatibility ${{ matrix.scenario }} --- yarn test
 
 
+  test-floating-dependencies:
+    name: Test (Floating dependencies)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --no-lockfile
+
+      - name: Test
+        run: yarn test
+
+
+  test-node:
+    name: Test (Node)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn test:node
+
+
   deploy-documentation:
     name: Deploy documentation
     runs-on: ubuntu-latest
-    needs: [lint, test-addon, test-floating-dependencies, try-scenarios]
-    timeout-minutes: 10
+    needs: [lint, test, test-compatibility, test-floating-dependencies, test-node]
+    timeout-minutes: 5
     # Only run on pushes to the main branch or a tag (i.e. ignore pull requests and cron)
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
     steps:
