@@ -1,19 +1,24 @@
-import { render, settled } from '@ember/test-helpers';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import {
+  render,
+  settled,
+  type TestContext as BaseTestContext,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { gte } from 'ember-compatibility-helpers';
-import tHelper from 'ember-intl/helpers/t';
-import type { TestContext } from 'ember-intl/test-support';
+import type IntlService from 'ember-intl/services/intl';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-const DEFAULT_LOCALE = 'en-us';
+interface TestContext extends BaseTestContext {
+  intl: IntlService;
+}
 
-module('t', function (hooks) {
+module('Integration | Helper | t', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(
     hooks,
-    DEFAULT_LOCALE,
+    'en-us',
     {
       html: {
         greeting: "'<strong>'Hello {name} {count, number}'</strong>'",
@@ -40,132 +45,160 @@ module('t', function (hooks) {
     },
   );
 
-  test('exists', function (this: TestContext, assert) {
-    assert.expect(1);
-    assert.ok(tHelper);
+  hooks.beforeEach(function (this: TestContext) {
+    this.intl = this.owner.lookup('service:intl') as IntlService;
   });
 
   test('should return nothing if key does not exist and allowEmpty is set to true', async function (this: TestContext, assert) {
-    assert.expect(1);
-    this.intl.addTranslations(DEFAULT_LOCALE, { empty: '' });
-    await render(hbs`{{t 'does.not.exist' default='empty'}}`);
-    assert.strictEqual(this.element.textContent, '');
+    this.intl.addTranslations('en-us', {
+      empty: '',
+    });
+
+    await render(hbs`
+      {{t 'does.not.exist' default='empty'}}
+    `);
+
+    assert.dom().hasText('');
   });
 
-  test('should return a number string if translation is a number', async function (this: TestContext, assert) {
-    await render(hbs`{{t 'number'}}`);
-    assert.strictEqual(this.element.textContent, '2');
+  test('should return a number string if translation is a number', async function (assert) {
+    await render(hbs`
+      {{t 'number'}}
+    `);
+
+    assert.dom().hasText('2');
   });
 
   test('should escape attributes but not the translation string', async function (this: TestContext, assert) {
-    assert.expect(3);
-    await render(
-      hbs`{{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}`,
-    );
-    assert.strictEqual(this.element.querySelectorAll('strong').length, 1);
-    assert.strictEqual(this.element.querySelectorAll('em').length, 0);
+    await render(hbs`
+      {{t 'html.greeting' htmlSafe=true name="<em>Jason</em>" count=42000}}
+    `);
+
+    assert.dom('strong').exists({ count: 1 });
+    assert.dom('em').exists({ count: 0 });
+
     assert.strictEqual(
-      (this.element as HTMLElement).innerHTML,
+      // @ts-ignore: this.element exists
+      (this.element as HTMLElement).innerHTML.trim(),
       `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`,
     );
   });
 
   test('should support legacy HTML escaping', async function (this: TestContext, assert) {
-    assert.expect(3);
-    await render(
-      hbs`{{t 'html.legacy' htmlSafe=true text="<em>Jason</em>" href="/foo"}}`,
-    );
-    assert.strictEqual(this.element.querySelectorAll('a').length, 1);
-    assert.strictEqual(this.element.querySelectorAll('em').length, 0);
+    await render(hbs`
+      {{t 'html.legacy' htmlSafe=true text="<em>Jason</em>" href="/foo"}}
+    `);
+
+    assert.dom('a').exists({ count: 1 });
+    assert.dom('em').exists({ count: 0 });
+
     assert.strictEqual(
-      (this.element as HTMLElement).innerHTML,
+      // @ts-ignore: this.element exists
+      (this.element as HTMLElement).innerHTML.trim(),
       `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`,
     );
   });
 
   test('should support optional positional options object argument', async function (this: TestContext, assert) {
-    assert.expect(1);
     await render(hbs`
       {{t 'html.greeting' (hash name="Jason" count=42)}}
     `);
-    assert.true(
-      this.element.textContent?.includes('<strong>Hello Jason 42</strong>'),
+
+    assert.strictEqual(
+      // @ts-ignore: this.element exists
+      (this.element as HTMLElement).textContent.trim(),
+      `<strong>Hello Jason 42</strong>`,
     );
   });
 
   test('should overried optional positional options argument properties with named arguments', async function (this: TestContext, assert) {
-    assert.expect(1);
     await render(hbs`
       {{t 'html.greeting' (hash name="Jason" count=42) count=39.99}}
     `);
-    assert.true(
-      this.element.textContent?.includes('<strong>Hello Jason 39.99</strong>'),
+
+    assert.strictEqual(
+      // @ts-ignore: this.element exists
+      (this.element as HTMLElement).textContent.trim(),
+      `<strong>Hello Jason 39.99</strong>`,
     );
   });
 
   test('should render a TextNode', async function (this: TestContext, assert) {
-    assert.expect(2);
-    await render(hbs`{{t 'html.greeting' name="<em>Jason</em>" count=42000}}`);
-    assert.strictEqual(this.element.querySelectorAll('em').length, 0);
-    assert.strictEqual(this.element.querySelectorAll('strong').length, 0);
+    await render(hbs`
+      {{t 'html.greeting' name="<em>Jason</em>" count=42000}}
+    `);
+
+    assert.dom('em').exists({ count: 0 });
+    assert.dom('strong').exists({ count: 0 });
   });
 
   test('should support allowEmpty', async function (this: TestContext, assert) {
-    assert.expect(1);
-    await render(hbs`{{t allowEmpty=true}}`);
-    assert.strictEqual(this.element.textContent, '');
+    await render(hbs`
+      {{t allowEmpty=true}}
+    `);
+
+    assert.dom().hasText('');
   });
 
   test('locale can add message to intl service and read it', async function (this: TestContext, assert) {
-    assert.expect(1);
+    this.intl.addTranslations('en-us', {
+      oh: 'hai!',
+    });
 
-    this.intl.addTranslations(DEFAULT_LOCALE, { oh: 'hai!' });
-    await render(hbs`{{t 'oh'}}`);
-    assert.strictEqual(this.element.textContent, 'hai!');
+    await render(hbs`
+      {{t 'oh'}}
+    `);
+
+    assert.dom().hasText('hai!');
   });
 
   test('translation value can be an empty string', async function (this: TestContext, assert) {
-    assert.expect(1);
+    this.intl.addTranslations('en-us', {
+      empty_translation: '',
+    });
 
-    this.intl.addTranslations(DEFAULT_LOCALE, { empty_translation: '' });
-    await render(hbs`{{t 'empty_translation'}}`);
-    assert.strictEqual(this.element.textContent, '');
+    await render(hbs`
+      {{t 'empty_translation'}}
+    `);
+
+    assert.dom().hasText('');
   });
 
   test('locale can add messages object and can read it', async function (this: TestContext, assert) {
-    assert.expect(1);
+    this.intl.addTranslations('en-us', {
+      bulk_add: 'bulk add works',
+    });
 
-    this.intl.addTranslations(DEFAULT_LOCALE, { bulk_add: 'bulk add works' });
-    await render(hbs`{{t 'bulk_add'}}`);
-    assert.strictEqual(this.element.textContent, 'bulk add works');
+    await render(hbs`
+      {{t 'bulk_add'}}
+    `);
+
+    assert.dom().hasText('bulk add works');
   });
 
   test('can inline locale for missing locale', async function (this: TestContext, assert) {
-    assert.expect(1);
-    await render(hbs`{{t 'foo.bar' locale='fr'}}`);
-    assert.strictEqual(
-      this.element.textContent,
-      'Missing translation "foo.bar" for locale "fr"',
-    );
+    await render(hbs`
+      {{t 'foo.bar' locale='fr'}}
+    `);
+
+    assert.dom().hasText('Missing translation "foo.bar" for locale "fr"');
   });
 
   test('warns when no locale has been set', async function (this: TestContext, assert) {
-    assert.expect(1);
-    assert.throws(
-      () =>
-        // @ts-expect-error This is undesired private behavior.
-        this.intl.setLocale(null),
-      /no locale has been set/,
-    );
+    // @ts-expect-error This is undesired private behavior.
+    assert.throws(() => this.intl.setLocale(null), /no locale has been set/);
   });
 
   test('should cascade translation keys', async function (this: TestContext, assert) {
-    assert.expect(1);
     this.intl.addTranslations('en-us', {
       happy_birthday: 'You are {age, number} years old!',
     });
-    await render(hbs`{{t 'does.not.exist' default='happy_birthday' age=10}}`);
-    assert.strictEqual(this.element.textContent, 'You are 10 years old!');
+
+    await render(hbs`
+      {{t 'does.not.exist' default='happy_birthday' age=10}}
+    `);
+
+    assert.dom().hasText('You are 10 years old!');
   });
 
   test('should throw when unknown key type is provided', async function (this: TestContext, assert) {
@@ -180,7 +213,7 @@ module('t', function (hooks) {
         error = e;
       }
 
-      assert.ok(error.message.includes('expected translation key'));
+      assert.true(error.message.includes('expected translation key'));
     };
 
     assertInvalidTranslationKey(null);
@@ -192,25 +225,27 @@ module('t', function (hooks) {
   });
 
   // Autotracking was added in Ember 3.13, so this test isn't applicable to earlier versions
-  if (gte('3.13.0')) {
-    test('current locale entangles with autotracking', async function (this: TestContext, assert) {
-      this.intl.addTranslations('en-us', { greeting: 'Hello' });
-      this.intl.addTranslations('fr-fr', { greeting: 'Bonjour' });
+  test('current locale entangles with autotracking', async function (this: TestContext, assert) {
+    this.intl.addTranslations('en-us', { greeting: 'Hello' });
+    this.intl.addTranslations('fr-fr', { greeting: 'Bonjour' });
 
-      // Define a native getter that calls intl.t()
-      Object.defineProperty(this, 'translatedGreeting', {
-        get() {
-          return this.intl.t('greeting');
-        },
-      });
-
-      this.intl.setLocale(['en-us']);
-      await render(hbs`{{this.translatedGreeting}}`);
-      assert.strictEqual(this.element.textContent, 'Hello');
-
-      this.intl.setLocale(['fr-fr']);
-      await settled();
-      assert.strictEqual(this.element.textContent, 'Bonjour');
+    // Define a native getter that calls intl.t()
+    Object.defineProperty(this, 'translatedGreeting', {
+      get() {
+        return this.intl.t('greeting');
+      },
     });
-  }
+
+    this.intl.setLocale(['en-us']);
+
+    await render(hbs`{{this.translatedGreeting}}`);
+
+    assert.dom().hasText('Hello');
+
+    this.intl.setLocale(['fr-fr']);
+
+    await settled();
+
+    assert.dom().hasText('Bonjour');
+  });
 });
