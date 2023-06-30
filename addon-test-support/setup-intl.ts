@@ -14,14 +14,14 @@ export interface IntlTestContext {
 export interface TestContext extends IntlTestContext, BaseTestContext {}
 
 export interface SetupIntlOptions {
+  formats?: Formats;
+
   /**
    * Whether to install the special `missing-message` handler.
    *
    * @defaultValue true
    */
   missingMessage?: boolean | ((key: string, locales: string[], options: TOptions) => string);
-
-  formats?: Formats;
 }
 
 /**
