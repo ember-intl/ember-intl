@@ -13,6 +13,22 @@ module.exports = {
     {
       files: ['tests/**/*-test.{js,ts}'],
       rules: {
+        'no-curly-component-invocation': {
+          allow: [
+            'format-date',
+            'format-message',
+            'format-number',
+            'format-relative',
+            'format-time',
+            't',
+          ],
+        },
+        prettier: 'off',
+      },
+    },
+    {
+      files: ['tests/dummy/app/snippets/**'],
+      rules: {
         prettier: 'off',
       },
     },
