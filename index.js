@@ -7,8 +7,8 @@
 
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+const { existsSync } = require('node:fs');
+const { dirname, isAbsolute, join } = require('node:path');
 const mergeTrees = require('broccoli-merge-trees');
 const { BroccoliMergeFiles } = require('broccoli-merge-files');
 const stringify = require('json-stable-stringify');
@@ -141,14 +141,14 @@ module.exports = {
   readConfig(environment, project) {
     // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
     // while older ember-cli versions return path relative to project root
-    let configPath = path.dirname(project.configPath());
-    let config = path.join(configPath, 'ember-intl.js');
+    let configPath = dirname(project.configPath());
+    let config = join(configPath, 'ember-intl.js');
 
-    if (!path.isAbsolute(config)) {
-      config = path.join(project.root, config);
+    if (!isAbsolute(config)) {
+      config = join(project.root, config);
     }
 
-    if (fs.existsSync(config)) {
+    if (existsSync(config)) {
       return require(config)(environment);
     }
 

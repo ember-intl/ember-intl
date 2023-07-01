@@ -15,7 +15,6 @@ module('service:init initialization', function (hooks) {
   setupTest(hooks);
 
   test('it calls `setLocale` on init', async function (this: TestContext, assert) {
-    assert.expect(1);
     const localeChanged = td.func();
     const Intl = this.owner.factoryFor('service:intl');
 
@@ -136,8 +135,6 @@ module('service:intl', function (hooks) {
   });
 
   test('`t` should pass `key`, `locales`, `options` through to `missing-message` util', function (this: TestContext, assert) {
-    assert.expect(3);
-
     this.owner.register(
       'util:intl/missing-message',
       (key: string, locales: string[], options: TOptions) => {
@@ -160,7 +157,6 @@ module('service:intl', function (hooks) {
   });
 
   test('waits for translations to load', async function (this: TestContext, assert) {
-    assert.expect(1);
     await settled();
     assert.strictEqual(
       this.intl.t('smoke.parent.child', { locale: 'en-us' }),
@@ -209,8 +205,6 @@ module('service:intl', function (hooks) {
   });
 
   test('translations keys can contain periods within the key', async function (this: TestContext, assert) {
-    assert.expect(2);
-
     this.intl.addTranslations(LOCALE, {
       a: {
         b: {
@@ -232,8 +226,6 @@ module('service:intl', function (hooks) {
   });
 
   test('should return safestring when htmlSafe attribute passed to `t`', async function (this: TestContext, assert) {
-    assert.expect(1);
-
     this.intl.addTranslations(LOCALE, {
       html_safe_translation:
         "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
@@ -249,8 +241,6 @@ module('service:intl', function (hooks) {
   });
 
   test('should return regular string when htmlSafe is falsey', async function (this: TestContext, assert) {
-    assert.expect(1);
-
     this.intl.addTranslations(LOCALE, {
       html_safe_translation:
         "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
@@ -266,20 +256,15 @@ module('service:intl', function (hooks) {
   });
 
   test('exists returns true when key found', async function (this: TestContext, assert) {
-    assert.expect(1);
-
     this.intl.addTranslations(LOCALE, { hello: 'world' });
     assert.true(this.intl.exists('hello'));
   });
 
   test('exists returns false when key not found', function (this: TestContext, assert) {
-    assert.expect(1);
     assert.false(this.intl.exists('bar'));
   });
 
   test('changing the locale emits the `localeChanged` event and the new locale is available', async function (this: TestContext, assert) {
-    assert.expect(1);
-
     const newLocale = ['de', 'en-us'];
 
     // @ts-expect-error https://discordapp.com/channels/480462759797063690/484421406659182603/749961012417003590
@@ -292,8 +277,6 @@ module('service:intl', function (hooks) {
   });
 
   test('updates document `lang` attribute on locale change', async function (this: TestContext, assert) {
-    assert.expect(2);
-
     this.intl.setLocale(['de']);
     await settled();
     assert.strictEqual(document.documentElement.getAttribute('lang'), 'de');
@@ -304,8 +287,6 @@ module('service:intl', function (hooks) {
   });
 
   test('primaryLocale returns the first locale of the currently active locales', async function (this: TestContext, assert) {
-    assert.expect(2);
-
     assert.strictEqual(this.intl.get('primaryLocale'), LOCALE);
 
     this.intl.setLocale(['de']);

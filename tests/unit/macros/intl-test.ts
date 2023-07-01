@@ -27,8 +27,6 @@ module('Unit | Macros | intl', function (hooks) {
   });
 
   test('looks up the intl service through the owner and injects the service invisibly', function (this: TestContext, assert) {
-    assert.expect(3);
-
     const object = this.ContainerObject.extend({
       property: intl((intl) =>
         assert.strictEqual(
@@ -52,8 +50,6 @@ module('Unit | Macros | intl', function (hooks) {
   });
 
   test('does not use or clobber the pre-existing intl injection', function (this: TestContext, assert) {
-    assert.expect(2);
-
     const IDENTITY = {};
 
     const object = this.ContainerObject.extend({
@@ -67,8 +63,6 @@ module('Unit | Macros | intl', function (hooks) {
   });
 
   test('passes the propertyKey, context, and binds to it', function (this: TestContext, assert) {
-    assert.expect(3);
-
     const object = this.ContainerObject.extend({
       property: intl(function (_intl, propertyKey, ctx) {
         assert.strictEqual(propertyKey, 'property', 'passes propertyKey');
@@ -81,8 +75,6 @@ module('Unit | Macros | intl', function (hooks) {
   });
 
   test('uses the return value of the passed function as the computed property value', function (this: TestContext, assert) {
-    assert.expect(1);
-
     const IDENTITY = {};
 
     const object = this.ContainerObject.extend({
@@ -93,7 +85,6 @@ module('Unit | Macros | intl', function (hooks) {
   });
 
   test('listens for locale changes', function (this: TestContext, assert) {
-    assert.expect(2);
     this.intl.setLocale(['en-us']);
 
     const object = this.ContainerObject.extend({

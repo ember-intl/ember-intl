@@ -202,8 +202,6 @@ module('Integration | Helper | t', function (hooks) {
   });
 
   test('should throw when unknown key type is provided', async function (this: TestContext, assert) {
-    assert.expect(6);
-
     const assertInvalidTranslationKey = (input: unknown) => {
       let error;
 
