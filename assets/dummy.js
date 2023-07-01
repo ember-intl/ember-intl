@@ -2465,7 +2465,7 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-composable-helpers/helpers/sort-by"eaimeta@70e063a35619d71f
 });
-;define("dummy/helpers/svg-jar", ["exports", "ember-svg-jar/utils/make-helper", "ember-svg-jar/utils/make-svg"], function (_exports, _makeHelper, _makeSvg) {
+;define("dummy/helpers/svg-jar", ["exports", "@ember/component/helper", "ember-svg-jar/utils/make-svg"], function (_exports, _helper, _makeSvg) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -2473,7 +2473,7 @@
   });
   _exports.default = void 0;
   _exports.svgJar = svgJar;
-  0; //eaimeta@70e063a35619d71f0,"ember-svg-jar/utils/make-helper",0,"ember-svg-jar/utils/make-svg"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/component/helper",0,"ember-svg-jar/utils/make-svg"eaimeta@70e063a35619d71f
 
   function getInlineAsset(assetId) {
     try {
@@ -2488,7 +2488,10 @@
     return (0, _makeSvg.default)(assetId, svgAttrs, getInlineAsset);
   }
 
-  var _default = (0, _makeHelper.default)(svgJar);
+  var _default = (0, _helper.helper)(function svgJarHelper(_ref, svgAttrs) {
+    let [assetId] = _ref;
+    return svgJar(assetId, svgAttrs);
+  });
 
   _exports.default = _default;
 });
@@ -3031,6 +3034,20 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/models/project"eaimeta@70e063a35619d71f
+});
+;define("dummy/modifiers/clipboard", ["exports", "ember-cli-clipboard/modifiers/clipboard"], function (_exports, _clipboard) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _clipboard.default;
+    }
+  });
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-clipboard/modifiers/clipboard"eaimeta@70e063a35619d71f
 });
 ;define("dummy/modifiers/did-insert", ["exports", "@ember/render-modifiers/modifiers/did-insert"], function (_exports, _didInsert) {
   "use strict";
