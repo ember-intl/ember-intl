@@ -108615,6 +108615,8 @@ define("ember-resolver/features", [], function () {
    *
    */
 
+  /* eslint-disable ember/no-classic-classes */
+
 
   var _default = _containerDebugAdapter.default.extend({
     _moduleRegistry: null,
@@ -108711,6 +108713,8 @@ define("ember-resolver/features", [], function () {
   _exports.default = _exports.ModuleRegistry = void 0;
 
   /* globals requirejs, require */
+
+  /* eslint-disable ember/no-classic-classes */
   if (typeof requirejs.entries === 'undefined') {
     requirejs.entries = requirejs._eak_seen;
   }
@@ -108804,7 +108808,7 @@ define("ember-resolver/features", [], function () {
     }
 
     let fullNameWithoutType = name;
-    let namespace = (0, _object.get)(this, 'namespace');
+    let namespace = this.namespace;
     let root = namespace;
     return {
       parsedName: true,
@@ -108870,6 +108874,15 @@ define("ember-resolver/features", [], function () {
       }
 
       this._deprecatedPodModulePrefix = false;
+      /**
+        A listing of functions to test for moduleName's based on the provided
+       `parsedName`. This allows easy customization of additional module based
+       lookup patterns.
+        @property moduleNameLookupPatterns
+       @returns {Ember.Array}
+      */
+
+      this.moduleNameLookupPatterns = [this.podBasedModuleName, this.podBasedComponentsInSubdir, this.mainModuleName, this.defaultModuleName, this.nestedColocationComponentModuleName];
     },
 
     normalize(fullName) {
@@ -109002,19 +109015,8 @@ define("ember-resolver/features", [], function () {
       return tmpPrefix;
     },
 
-    /**
-      A listing of functions to test for moduleName's based on the provided
-     `parsedName`. This allows easy customization of additional module based
-     lookup patterns.
-      @property moduleNameLookupPatterns
-     @returns {Ember.Array}
-     */
-    moduleNameLookupPatterns: (0, _object.computed)(function () {
-      return [this.podBasedModuleName, this.podBasedComponentsInSubdir, this.mainModuleName, this.defaultModuleName, this.nestedColocationComponentModuleName];
-    }).readOnly(),
-
     findModuleName(parsedName, loggingDisabled) {
-      let moduleNameLookupPatterns = this.get('moduleNameLookupPatterns');
+      let moduleNameLookupPatterns = this.moduleNameLookupPatterns;
       let moduleName;
 
       for (let index = 0, length = moduleNameLookupPatterns.length; index < length; index++) {
