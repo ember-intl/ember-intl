@@ -3,11 +3,9 @@
 /tmp/
 
 # dependencies
-/bower_components/
 /tests-node/
 
 # misc
-/.bowerrc
 /.editorconfig
 /.ember-cli
 /.env*
@@ -20,17 +18,13 @@
 /.prettierignore
 /.prettierrc.js
 /.template-lintrc.js
-/.travis.yml
 /.watchmanconfig
-/bower.json
 /config/ember-try.js
 /CONTRIBUTING.md
 /ember-cli-build.js
 /testem.js
 /tests/
-/yarn-error.log
-/yarn.lock
-/jsconfig.json
+/.pnpm-debug.log
 .gitkeep
 
 # ember-cli-addon-docs
@@ -38,7 +32,6 @@
 
 # ember-try
 /.node_modules.ember-try/
-/bower.json.ember-try
 /npm-shrinkwrap.json.ember-try
 /package.json.ember-try
 /package-lock.json.ember-try

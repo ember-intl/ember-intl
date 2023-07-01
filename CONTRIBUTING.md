@@ -4,12 +4,12 @@
 
 * `git clone git@github.com:ember-intl/ember-intl.git`
 * `cd ember-intl`
-* `yarn install`
+* `pnpm install`
 
 ## Linting
 
-* `yarn lint`
-* `yarn lint:fix`
+* `pnpm lint`
+* `pnpm lint:fix`
 
 ## Running tests
 
