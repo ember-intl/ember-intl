@@ -1,13 +1,27 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const { maybeEmbroider } = require('@embroider/test-setup');
 
 module.exports = function (defaults) {
-  let project = defaults.project;
-  let options = {
+  const { project } = defaults;
+
+  const options = {
+    autoImport: {
+      webpack: {
+        node: {
+          global: true,
+        },
+      },
+    },
+
     'ember-fetch': {
       preferNative: true,
     },
+
+    // Code snippets for ember-cli-addon-docs
+    snippetExtensions: ['css', 'hbs', 'js', 'json', 'ts', 'yaml'],
+
     vendorFiles: {
       'app-shims.js': null,
     },
@@ -17,18 +31,7 @@ module.exports = function (defaults) {
     options.vendorFiles['jquery.js'] = null;
   }
 
-  options.autoImport = {
-    webpack: {
-      node: {
-        global: true,
-      },
-    },
-  };
-
-  // Code snippets for ember-cli-addon-docs
-  options.snippetExtensions = ['css', 'hbs', 'js', 'json', 'ts', 'yaml'];
-
-  let app = new EmberAddon(defaults, options);
+  const app = new EmberAddon(defaults, options);
 
   /*
     This build file specifies the options for the dummy test app of this
@@ -37,7 +40,6 @@ module.exports = function (defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  const { maybeEmbroider } = require('@embroider/test-setup');
   return maybeEmbroider(app, {
     skipBabel: [
       {
