@@ -1,5 +1,36 @@
 # Changelog
 
+## 6.0.0-beta.5 (2023-07-01)
+
+### Bug Fix
+* [#1758](https://github.com/ember-intl/ember-intl/pull/1758) Replaced the slash character with path.sep (account for Windows) ([@ijlee2](https://github.com/ijlee2))
+* [#1748](https://github.com/ember-intl/ember-intl/pull/1748) fix: Filepath matching is overly-eager when namespace wrapping ([@prsethre](https://github.com/prsethre))
+* [#1725](https://github.com/ember-intl/ember-intl/pull/1725) Allow nested folder structure on Windows ([@ijlee2](https://github.com/ijlee2))
+
+### Enhancement
+* [#1719](https://github.com/ember-intl/ember-intl/pull/1719) Add Glint types ([@jamescdavis](https://github.com/jamescdavis))
+
+### Internal
+* [#1759](https://github.com/ember-intl/ember-intl/pull/1759) Addressed failing CI ([@ijlee2](https://github.com/ijlee2))
+* [#1755](https://github.com/ember-intl/ember-intl/pull/1755) Update lint-related packages ([@ijlee2](https://github.com/ijlee2))
+* [#1754](https://github.com/ember-intl/ember-intl/pull/1754) Added lerna-changelog and concurrently ([@ijlee2](https://github.com/ijlee2))
+
+### Documentation
+* [#1760](https://github.com/ember-intl/ember-intl/pull/1760) Documented Glint support ([@ijlee2](https://github.com/ijlee2))
+* [#1756](https://github.com/ember-intl/ember-intl/pull/1756) Checked compatibilities with Ember 4.4, 4.8, and 4.12 ([@ijlee2](https://github.com/ijlee2))
+* [#1730](https://github.com/ember-intl/ember-intl/pull/1730) chore: remove time-zone comment in format-list test ([@jahrock](https://github.com/jahrock))
+* [#1733](https://github.com/ember-intl/ember-intl/pull/1733) feat: update runtime requirements screenshots ([@jahrock](https://github.com/jahrock))
+* [#1749](https://github.com/ember-intl/ember-intl/pull/1749) Enable embroider test scenarios (with allowedToFail set to true) ([@dbendaou](https://github.com/dbendaou))
+* [#1729](https://github.com/ember-intl/ember-intl/pull/1729) fix: typos in docs ([@jahrock](https://github.com/jahrock))
+
+### Committers: 5
+- Djamel B. ([@dbendaou](https://github.com/dbendaou))
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+- Jah Rock ([@jahrock](https://github.com/jahrock))
+- James C. Davis ([@jamescdavis](https://github.com/jamescdavis))
+- Paul Sethre ([@prsethre](https://github.com/prsethre))
+
+
 ## v6.0.0-beta.4 (2022-09-01)
 
 ### Breaking Change
