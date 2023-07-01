@@ -89081,12 +89081,8 @@ lunr.QueryParser.parseBoost = function (parser) {
 
   function initializeRuntimeMacrosConfig() {
     return {
-      "packages": {},
-      "global": {
-        "@embroider/macros": {
-          "isTesting": false
-        }
-      }
+      packages: {},
+      global: {}
     };
   }
 
@@ -89239,7 +89235,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function handleString(name, thingWithOwner) {
     (false && !(false) && (0, _debug.deprecate)(`You're trying to invoke the component "${name}" by passing its name as a string. This won't work under Embroider.`, false, {
       id: 'ensure-safe-component.string',
-      url: 'https://github.com/embroider-build/embroider/blob/main/REPLACING-COMPONENT-HELPER.md#when-youre-passing-a-component-to-someone-else',
+      url: 'https://github.com/embroider-build/embroider/blob/main/docs/replacing-component-helper.md#when-youre-passing-a-component-to-someone-else',
       until: 'embroider',
       for: '@embroider/util',
       since: '0.27.0'
@@ -90301,7 +90297,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "EiBnW/TC",
+    "id": "JFEWYmOP",
     "block": "[[[10,\"h1\"],[14,0,\"docs-h1\"],[14,\"data-test-class-name\",\"\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-class-description\",\"\"],[12],[2,[30,1,[\"description\"]]],[13],[1,\"\\n\\n\"],[41,[28,[37,1],[[28,[37,2],[[30,1,[\"exportType\"]],[30,0,[\"config\",\"showImportPaths\"]]],null],[30,0,[\"hasToggles\"]]],null],[[[1,\"  \"],[8,[39,3],null,null,[[\"default\"],[[[[1,\"\\n\"],[41,[30,1,[\"exportType\"]],[[[1,\"      \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n        Import Path\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[8,[39,4],null,[[\"@item\"],[[30,1]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,3],[[[1,\"      \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n        Show\\n      \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,3],[[[1,\"        \"],[8,[39,5],null,[[\"@toggles\"],[[28,[37,6],null,[[\"inherited\",\"protected\",\"private\",\"deprecated\"],[[52,[30,1,[\"hasInherited\"]],[30,0,[\"showInherited\"]]],[52,[30,1,[\"hasProtected\"]],[30,0,[\"showProtected\"]]],[52,[30,1,[\"hasPrivate\"]],[30,0,[\"showPrivate\"]]],[52,[30,1,[\"hasDeprecated\"]],[30,0,[\"showDeprecated\"]]]]]]]],null],[1,\"\\n\"]],[]],null]],[]],null],[1,\"  \"]],[2]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"hasContents\"]],[[[1,\"  \"],[8,[39,7],null,[[\"@sections\"],[[28,[37,6],null,[[\"constructors\",\"fields\",\"accessors\",\"methods\"],[[30,1,[\"constructors\"]],[30,1,[\"fields\"]],[30,1,[\"accessors\"]],[30,1,[\"methods\"]]]]]]],null],[1,\"\\n\"]],[]],null]],[\"@class\",\"panel\",\"@hasToggles\"],false,[\"if\",\"or\",\"and\",\"api/x-meta-panel\",\"api/x-import-path\",\"api/x-toggles\",\"hash\",\"api/x-sections\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-class/index.hbs",
     "isStrictMode": false
@@ -90460,7 +90456,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "xFF46oG0",
+    "id": "U6TZZDbq",
     "block": "[[[10,\"h1\"],[14,0,\"docs-h1\"],[14,\"data-test-component-name\",\"\"],[12],[1,[30,1,[\"name\"]]],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-component-name\",\"\"],[12],[2,[30,1,[\"description\"]]],[13],[1,\"\\n\\n\"],[41,[30,0,[\"hasToggles\"]],[[[1,\"  \"],[8,[39,1],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[30,2,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n      Show\\n    \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,0,[\"hasToggles\"]],[[[1,\"      \"],[8,[39,2],null,[[\"@toggles\",\"@onToggle\"],[[28,[37,3],null,[[\"inherited\",\"internal\",\"protected\",\"private\",\"deprecated\"],[[52,[30,1,[\"hasInherited\"]],[30,0,[\"showInherited\"]]],[52,[30,1,[\"hasInternal\"]],[30,0,[\"showInternal\"]]],[52,[30,1,[\"hasProtected\"]],[30,0,[\"showProtected\"]]],[52,[30,1,[\"hasPrivate\"]],[30,0,[\"showPrivate\"]]],[52,[30,1,[\"hasDeprecated\"]],[30,0,[\"showDeprecated\"]]]]]],[30,0,[\"updateFilter\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"  \"]],[2]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\\n\"],[41,[30,0,[\"hasContents\"]],[[[1,\"  \"],[8,[39,4],null,[[\"@sections\"],[[28,[37,3],null,[[\"constructors\",\"yields\",\"arguments\",\"fields\",\"accessors\",\"methods\"],[[30,0,[\"constructors\"]],[30,0,[\"yields\"]],[30,0,[\"arguments\"]],[30,0,[\"fields\"]],[30,0,[\"accessors\"]],[30,0,[\"methods\"]]]]]]],null],[1,\"\\n\"]],[]],null]],[\"@component\",\"panel\"],false,[\"if\",\"api/x-meta-panel\",\"api/x-toggles\",\"hash\",\"api/x-sections\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-component/index.hbs",
     "isStrictMode": false
@@ -90607,7 +90603,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "wdNBnYzQ",
+    "id": "cTtMMTE/",
     "block": "[[[11,0],[24,0,\"import-path docs-mb-6\"],[24,\"data-test-import-path\",\"\"],[17,1],[12],[1,\"\\n  \"],[10,\"pre\"],[14,0,\"docs-md__code docs-whitespace-no-wrap\"],[12],[1,\"    \"],[10,1],[14,0,\"hljs-keyword\"],[12],[1,\"\\n      import\\n    \"],[13],[1,\"\\n\\n\"],[41,[28,[37,1],[[30,2,[\"exportType\"]],\"default\"],null],[[[1,\"      \"],[1,[30,2,[\"name\"]]],[1,\"\\n\"]],[]],[[[1,\"      { \"],[1,[30,2,[\"name\"]]],[1,\" }\\n\"]],[]]],[1,\"\\n    \"],[10,1],[14,0,\"hljs-keyword\"],[12],[1,\"\\n      from\\n    \"],[13],[1,\"\\n    \"],[10,1],[14,0,\"hljs-string\"],[12],[1,\"'\"],[1,[30,2,[\"file\"]]],[1,\"'\"],[13],[1,\";\\n  \"],[13],[1,\"\\n\"],[13]],[\"&attrs\",\"@item\"],false,[\"if\",\"eq\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-import-path.hbs",
     "isStrictMode": false
@@ -90633,7 +90629,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       </h4>
   */
   {
-    "id": "GuyXYhYq",
+    "id": "osnTTt2i",
     "block": "[[[1,\"    \"],[11,\"h4\"],[24,0,\"docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[17,1],[12],[1,\"\\n      \"],[18,2,null],[1,\"\\n    \"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-meta-panel/header.hbs",
     "isStrictMode": false
@@ -90661,7 +90657,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       </div>
   */
   {
-    "id": "pckEfFe6",
+    "id": "6d6HWZV4",
     "block": "[[[1,\"    \"],[11,0],[24,0,\"docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs\"],[17,1],[12],[1,\"\\n      \"],[18,2,[[28,[37,1],null,[[\"header\"],[[50,\"api/x-meta-panel/header\",0,null,null]]]]]],[1,\"\\n    \"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-meta-panel/index.hbs",
     "isStrictMode": false
@@ -90694,7 +90690,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   />
   */
   {
-    "id": "2ABA3q5e",
+    "id": "8vqJOol0",
     "block": "[[[8,[39,0],[[17,1]],[[\"@sections\"],[[28,[37,1],null,[[\"classes\",\"components\",\"functions\",\"variables\"],[[30,2,[\"classes\"]],[30,2,[\"components\"]],[30,2,[\"functions\"]],[30,2,[\"variables\"]]]]]]],null]],[\"&attrs\",\"@module\"],false,[\"api/x-sections\",\"hash\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-module/index.hbs",
     "isStrictMode": false
@@ -90787,7 +90783,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "uZNpL6SJ",
+    "id": "0og8AKw0",
     "block": "[[[11,0],[24,\"data-test-item\",\"\"],[24,0,\"docs-pb-8\"],[17,1],[12],[1,\"\\n  \"],[10,\"h3\"],[15,1,[30,2,[\"name\"]]],[15,\"data-text\",[30,2,[\"name\"]]],[14,\"data-test-item-header\",\"\"],[14,0,\"docs-h3 docs-font-mono docs-font-normal\"],[12],[1,\"\\n\"],[41,[28,[37,1],[[30,2,[\"exportType\"]],\"default\"],null],[[[1,\"      \"],[10,1],[14,0,\"docs-border docs-border-grey-light docs-align-text-top docs-leading-loose docs-text-xxs docs-pl-2 docs-mr-2 docs-py-1 docs-rounded\"],[12],[1,\"\\n        Default\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[28,[37,2],[[30,2,[\"isClass\"]],[30,2,[\"isComponent\"]]],null],[[[1,\"      \"],[8,[39,3],[[24,0,\"hover:underline\"]],[[\"@route\",\"@model\"],[\"docs.api.item\",[28,[37,4],[\"modules/\",[30,2,[\"id\"]]],null]]],[[\"default\"],[[[[1,\"\\n        \"],[10,\"strong\"],[12],[1,[30,2,[\"name\"]]],[13],[1,\"\\n      \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"      \"],[10,3],[15,6,[29,[\"#\",[30,2,[\"name\"]]]]],[14,0,\"heading-anchor\"],[12],[1,\"\\n        \"],[1,[28,[35,5],[[30,2]],null]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]],[1,\"  \"],[13],[1,\"\\n\\n  \"],[10,2],[14,\"data-test-item-description\",\"\"],[12],[1,\"\\n    \"],[2,[30,2,[\"description\"]]],[1,\"\\n  \"],[13],[1,\"\\n\\n\"],[41,[28,[37,2],[[28,[37,6],[[30,2,[\"exportType\"]],[30,0,[\"config\",\"showImportPaths\"]]],null],[30,0,[\"shouldDisplayParams\"]]],null],[[[1,\"    \"],[8,[39,7],null,null,[[\"default\"],[[[[1,\"\\n\"],[41,[30,2,[\"exportType\"]],[[[1,\"        \"],[8,[30,3,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n          Import Path\\n        \"]],[]]]]],[1,\"\\n\\n        \"],[8,[39,8],null,[[\"@item\"],[[30,2]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"shouldDisplayParams\"]],[[[1,\"        \"],[8,[30,3,[\"header\"]],null,null,[[\"default\"],[[[[1,\"\\n          Params\\n        \"]],[]]]]],[1,\"\\n\\n        \"],[10,\"table\"],[14,0,\"docs-mb-6\"],[14,\"data-test-item-params\",\"\"],[12],[1,\"\\n          \"],[10,\"tbody\"],[12],[1,\"\\n\"],[42,[28,[37,10],[[28,[37,10],[[30,2,[\"params\"]]],null]],null],null,[[[1,\"              \"],[10,\"tr\"],[14,\"data-test-item-param\",\"\"],[12],[1,\"\\n                \"],[10,\"td\"],[12],[10,1],[14,0,\"docs-font-mono docs-font-bold docs-border-r docs-border-grey-light docs-pr-2\"],[12],[1,[30,4,[\"name\"]]],[13],[13],[1,\"\\n                \"],[10,\"td\"],[12],[10,1],[14,0,\"docs-font-mono docs-border-r docs-border-grey-light docs-px-2\"],[12],[1,[30,4,[\"type\"]]],[13],[13],[1,\"\\n                \"],[10,\"td\"],[14,0,\"docs-pl-2\"],[12],[1,[30,4,[\"description\"]]],[13],[1,\"\\n              \"],[13],[1,\"\\n\"]],[4]],null],[1,\"          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"    \"]],[3]]]]],[1,\"\\n\"]],[]],null],[13],[1,\"\\n\"]],[\"&attrs\",\"@item\",\"panel\",\"param\"],false,[\"if\",\"eq\",\"or\",\"link-to\",\"concat\",\"type-signature\",\"and\",\"api/x-meta-panel\",\"api/x-import-path\",\"each\",\"-track-array\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-section/index.hbs",
     "isStrictMode": false
@@ -90851,7 +90847,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{/each-in}}
   */
   {
-    "id": "1JgQDNOa",
+    "id": "C8xY70lK",
     "block": "[[[42,[28,[37,1],[[30,1]],null],null,[[[41,[30,2],[[[1,\"    \"],[10,\"section\"],[14,\"data-test-api-section\",\"\"],[14,0,\"item-section\"],[12],[1,\"\\n      \"],[10,\"h2\"],[15,\"data-test-section-header\",[30,3]],[14,0,\"docs-h2\"],[12],[1,\"\\n        \"],[1,[28,[35,3],[[30,3]],null]],[1,\"\\n      \"],[13],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,2]],null]],null],null,[[[1,\"        \"],[8,[39,5],null,[[\"@item\"],[[30,4]]],null],[1,\"\\n\"]],[4]],null],[1,\"    \"],[13],[1,\"\\n\"]],[]],null]],[2,3]],null]],[\"@sections\",\"items\",\"sectionName\",\"item\"],false,[\"each\",\"-each-in\",\"if\",\"capitalize\",\"-track-array\",\"api/x-section\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-sections.hbs",
     "isStrictMode": false
@@ -90892,7 +90888,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "tcDaMzOH",
+    "id": "2OTs/kyz",
     "block": "[[[11,\"ul\"],[24,0,\"docs-mb-6\"],[17,1],[12],[1,\"\\n\"],[42,[28,[37,1],[[30,2]],null],null,[[[41,[28,[37,3],[[30,3],[27]],null],[[[1,\"      \"],[10,\"li\"],[14,0,\"docs-inline docs-ml-4\"],[12],[1,\"\\n        \"],[10,\"label\"],[14,\"data-test-toggle\",\"\"],[12],[1,\"\\n          \"],[10,\"input\"],[15,\"checked\",[30,3]],[15,\"onclick\",[28,[37,4],[[30,5],[30,4]],null]],[14,0,\"docs-mr-1\"],[14,4,\"checkbox\"],[12],[13],[1,\"\\n\\n          \"],[1,[28,[35,5],[[30,4]],null]],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null]],[3,4]],null],[13],[1,\"\\n\"]],[\"&attrs\",\"@toggles\",\"toggle\",\"key\",\"@onToggle\"],false,[\"each\",\"-each-in\",\"if\",\"not-eq\",\"fn\",\"capitalize\"]]",
     "moduleName": "ember-cli-addon-docs/components/api/x-toggles.hbs",
     "isStrictMode": false
@@ -90920,7 +90916,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   >{{yield}}</pre>
   */
   {
-    "id": "9H6zZ0TG",
+    "id": "cbpaTHEj",
     "block": "[[[11,\"pre\"],[16,0,[30,1]],[17,2],[4,[38,0],[[30,0,[\"setupElement\"]]],null],[12],[18,3,null],[13]],[\"@language\",\"&attrs\",\"&default\"],false,[\"did-insert\",\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-code-highlight/index.hbs",
     "isStrictMode": false
@@ -91030,7 +91026,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "gKpG5lJh",
+    "id": "qGOhVh7Q",
     "block": "[[[11,0],[24,0,\"docs-rounded docs-border docs-border-grey-lighter docs-my-8\"],[17,1],[12],[1,\"\\n\\n  \"],[18,4,[[28,[37,1],null,[[\"example\",\"snippet\"],[[50,\"docs-demo/x-example\",0,null,null],[50,\"docs-demo/x-snippet\",0,null,[[\"didInit\",\"activeSnippet\"],[[30,0,[\"registerSnippet\"]],[30,0,[\"activeSnippet\"]]]]]]]]]],[1,\"\\n\\n  \"],[10,0],[12],[1,\"\\n\"],[41,[28,[37,4],[[30,0,[\"snippets\"]],[28,[37,5],[[30,0,[\"snippets\",\"length\"]],1],null]],null],[[[1,\"      \"],[10,\"nav\"],[14,0,\"\\n        docs-demo__snippets-nav docs-py-2 docs-px-4 docs-font-medium\\n        docs-bg-black docs-tracking-tight docs-border-b\\n        docs-border-grey-darkest\\n      \"],[12],[1,\"\\n\"],[42,[28,[37,7],[[28,[37,7],[[30,0,[\"snippets\"]]],null]],null],null,[[[1,\"          \"],[11,\"button\"],[16,0,[29,[\"\\n              docs-mr-4 docs-text-xs docs-no-underline outline-none\\n              hover:docs-text-grey-lighter\\n              \",[52,[30,2,[\"isActive\"]],\"docs-text-grey-lighter\",\"docs-text-grey-dark\"],\"\\n            \"]]],[4,[38,8],[\"click\",[28,[37,9],[[30,0,[\"selectSnippet\"]],[30,2]],null]],null],[12],[1,\"\\n            \"],[1,[30,2,[\"label\"]]],[1,\"\\n          \"],[13],[1,\"\\n\"]],[2]],null],[1,\"      \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[42,[28,[37,7],[[28,[37,7],[[30,0,[\"snippets\"]]],null]],null],null,[[[41,[30,3,[\"isActive\"]],[[[1,\"        \"],[10,0],[14,0,\"\\n          docs-demo__snippet-wrapper docs-bg-code-base docs-rounded-b\\n        \"],[12],[1,\"\\n          \"],[8,[39,10],null,[[\"@name\",\"@unindent\",\"@language\"],[[30,3,[\"name\"]],true,[30,3,[\"language\"]]]],null],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null]],[3]],null],[1,\"  \"],[13],[1,\"\\n\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"snippet\",\"snippet\",\"&default\"],false,[\"yield\",\"hash\",\"component\",\"if\",\"and\",\"gt\",\"each\",\"-track-array\",\"on\",\"fn\",\"docs-snippet\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-demo/index.hbs",
     "isStrictMode": false
@@ -91188,7 +91184,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "zeDI7Ivx",
+    "id": "WqS/BMxo",
     "block": "[[[11,0],[16,1,[29,[\"example-\",[30,1]]]],[24,0,\"docs-p-4\"],[17,2],[12],[1,\"\\n  \"],[18,3,null],[1,\"\\n\"],[13]],[\"@name\",\"&attrs\",\"&default\"],false,[\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-demo/x-example/index.hbs",
     "isStrictMode": false
@@ -91311,7 +91307,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "gtJpbxW/",
+    "id": "p8XoN5Fj",
     "block": "[[[11,\"header\"],[24,0,\"docs-shadow docs-relative docs-z-40 docs-bg-white\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-flex docs-items-center docs-max-w-site-container docs-mx-auto md:docs-px-2\"],[12],[1,\"\\n\\n    \"],[8,[39,0],null,[[\"@route\"],[\"index\"]],[[\"default\"],[[[[1,\"\\n      \"],[10,1],[14,0,\"docs-leading-none docs-font-title docs-text-large-2 docs-font-normal docs-normal-case docs-block docs-mr-6\"],[12],[1,\"\\n\"],[41,[30,0,[\"prefix\"]],[[[1,\"          \"],[10,0],[14,0,\"docs-text-xxs\"],[12],[1,\"\\n            \"],[1,[30,0,[\"prefix\"]]],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]],null],[1,\"        \"],[1,[30,0,[\"name\"]]],[1,\"\\n      \"],[13],[1,\"\\n    \"]],[]]]]],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-flex-1 docs-flex docs-items-center docs-overflow-auto docs-scrolling-touch docs-mask-image md:docs-no-mask-image\"],[12],[1,\"\\n      \"],[8,[39,0],null,[[\"@route\"],[\"docs\"]],[[\"default\"],[[[[1,\"\\n        Documentation\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[18,2,[[28,[37,3],null,[[\"link\"],[[50,\"docs-header/link\",0,null,null]]]]]],[1,\"\\n\\n      \"],[8,[39,5],null,[[\"@query\",\"@onInput\"],[[30,0,[\"query\"]],[28,[37,6],[[30,0],\"query\"],null]]],null],[1,\"\\n\\n      \"],[8,[39,0],null,[[\"@onClick\"],[[28,[37,7],[\"isShowingVersionSelector\",[30,0]],null]]],[[\"default\"],[[[[1,\"\\n        \"],[10,1],[14,\"data-test-id\",\"current-version\"],[14,\"data-version-selector\",\"\"],[14,0,\"docs-flex docs-items-center\"],[12],[1,\"\\n\\n\"],[41,[28,[37,8],[[30,0,[\"currentVersion\",\"key\"]],[30,0,[\"config\",\"latestVersionName\"]]],null],[[[41,[30,0,[\"currentVersion\",\"tag\"]],[[[1,\"              \"],[1,[30,0,[\"currentVersion\",\"tag\"]]],[1,\"\\n\"]],[]],[[[1,\"              Latest\\n\"]],[]]]],[]],[[[1,\"            \"],[1,[30,0,[\"currentVersion\",\"name\"]]],[1,\"\\n\"]],[]]],[1,\"\\n          \"],[1,[28,[35,9],[\"caret\"],[[\"height\",\"width\"],[12,12]]]],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]]]]],[1,\"\\n\\n\"],[41,[30,0,[\"config\",\"projectHref\"]],[[[1,\"        \"],[8,[39,0],null,[[\"@href\"],[[30,0,[\"config\",\"projectHref\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[10,1],[14,0,\"docs-flex\"],[12],[1,\"\\n            \"],[1,[28,[35,9],[\"github\"],[[\"width\",\"height\"],[24,24]]]],[1,\"\\n          \"],[13],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[1,\"      \"],[10,0],[14,0,\"docs-h-px docs-px-3 sm:docs-hidden\"],[12],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[41,[30,0,[\"query\"]],[[[1,\"  \"],[8,[39,10],null,[[\"@query\",\"@onClose\",\"@onVisit\"],[[30,0,[\"query\"]],[28,[37,6],[[30,0],\"query\",null],null],[30,0,[\"didVisitPage\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[41,[30,0,[\"isShowingVersionSelector\"]],[[[1,\"  \"],[8,[39,11],null,[[\"@onClose\"],[[28,[37,6],[[30,0],\"isShowingVersionSelector\",false],null]]],null],[1,\"\\n\"]],[]],null]],[\"&attrs\",\"&default\"],false,[\"docs-header/link\",\"if\",\"yield\",\"hash\",\"component\",\"docs-header/search-box\",\"set\",\"toggle\",\"eq\",\"svg-jar\",\"docs-header/search-results\",\"docs-header/version-selector\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/index.hbs",
     "isStrictMode": false
@@ -91489,7 +91485,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{/if}}
   */
   {
-    "id": "A5cbh0pa",
+    "id": "sN9vAp6v",
     "block": "[[[41,[30,1],[[[1,\"\\n  \"],[11,3],[16,6,[30,1]],[16,0,[29,[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[52,[30,2],\"docs-ml-auto\"],\"\\n      \"]]],[17,3],[12],[1,\"\\n    \"],[18,6,null],[1,\"\\n  \"],[13],[1,\"\\n\\n\"]],[]],[[[41,[30,4],[[[1,\"\\n  \"],[11,3],[24,6,\"#\"],[16,0,[29,[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs docs-font-bold docs-text-grey-darkest docs-no-underline hover:docs-text-brand\\n      \",[52,[30,2],\"docs-ml-auto\"]]]],[17,3],[4,[38,2],[\"click\",[30,4]],null],[12],[1,\"\\n    \"],[18,6,null],[1,\"\\n  \"],[13],[1,\"\\n\\n\"]],[]],[[[1,\"\\n  \"],[8,[39,3],[[16,0,[28,[37,4],[\"docs-px-4 docs-py-5 docs-transition docs-uppercase docs-text-xxs\\n      docs-font-bold docs-no-underline \",[52,[28,[37,5],[[28,[37,6],[[30,5],\"index\"],null]],null],[52,[30,0,[\"isActive\"]],\"docs-text-brand\",\"docs-text-grey-darkest hover:docs-text-brand\"],\"docs-text-grey-darkest\"]],null]],[17,3]],[[\"@route\"],[[30,5]]],[[\"default\"],[[[[1,\"\\n    \"],[18,6,null],[1,\"\\n  \"]],[]]]]],[1,\"\\n\\n\"]],[]]]],[]]]],[\"@href\",\"@push\",\"&attrs\",\"@onClick\",\"@route\",\"&default\"],false,[\"if\",\"yield\",\"on\",\"link-to\",\"concat\",\"not\",\"eq\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/link/index.hbs",
     "isStrictMode": false
@@ -91570,7 +91566,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{on-key "Escape" this.unfocusSearch event="keyup"}}
   */
   {
-    "id": "NUre4rTE",
+    "id": "T2KvT/zz",
     "block": "[[[11,0],[24,0,\"docs-ml-auto\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-relative docs-text-grey-darkest\"],[14,\"data-search-box\",\"\"],[12],[1,\"\\n    \"],[1,[28,[35,0],[\"search\"],[[\"width\",\"height\",\"class\"],[12,12,\"docs-absolute docs-top-0 docs-h-full docs-ml-1\"]]]],[1,\"\\n\\n\"],[1,\"    \"],[11,\"input\"],[16,2,[30,2]],[16,\"disabled\",[30,0,[\"fetchProject\",\"isRunning\"]]],[24,\"placeholder\",\"SEARCH\"],[24,0,\"outline-none docs-w-24 docs-text-xxs docs-p-2 docs-pl-6 docs-rounded focus:docs-bg-grey-lighter\"],[24,\"data-search-box-input\",\"\"],[24,\"data-test-search-box-input\",\"\"],[24,\"aria-label\",\"search\"],[24,4,\"text\"],[4,[38,1],[\"input\",[30,0,[\"handleInput\"]]],null],[12],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[1,[28,[35,2],[\"/\",[30,0,[\"focusSearch\"]]],[[\"event\"],[\"keyup\"]]]],[1,\"\\n\"],[1,[28,[35,2],[\"Escape\",[30,0,[\"unfocusSearch\"]]],[[\"event\"],[\"keyup\"]]]]],[\"&attrs\",\"@query\"],false,[\"svg-jar\",\"on\",\"on-key\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/search-box/index.hbs",
     "isStrictMode": false
@@ -91683,7 +91679,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "9lzAGxfI",
+    "id": "r+bDyyZE",
     "block": "[[[11,0],[24,\"data-test-search-result\",\"\"],[17,1],[4,[38,0],[\"click\",[30,2]],null],[4,[38,0],[\"mouseenter\",[30,3]],null],[12],[1,\"\\n  \"],[8,[39,1],[[16,0,[29,[\"docs-block docs-py-2 docs-px-3 docs-text-black docs-no-underline hover:docs-bg-grey-lighter\\n      \",[52,[30,4],\"docs-bg-grey-lighter\"]]]]],[[\"@route\",\"@models\"],[[30,0,[\"linkArgs\",\"route\"]],[30,0,[\"linkArgs\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[14,0,\"docs-flex docs-items-center\"],[12],[1,\"\\n      \"],[1,[28,[35,3],[[30,0,[\"icon\"]]],[[\"height\",\"width\",\"class\"],[28,28,\"docs-mr-2 docs-flex-no-shrink\"]]]],[1,\"\\n      \"],[10,1],[14,0,\"docs-truncate\"],[12],[1,\"\\n\"],[41,[30,0,[\"titleMatchesQuery\"]],[[[1,\"          \"],[2,[30,0,[\"highlightedTitle\"]]],[1,\"\\n\"]],[]],[[[1,\"          \"],[1,[30,5,[\"document\",\"title\"]]],[1,\"\\n\"]],[]]],[1,\"      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n\"],[41,[28,[37,4],[[30,0,[\"titleMatchesQuery\"]]],null],[[[1,\"      \"],[10,\"small\"],[14,0,\"docs-text-grey-dark docs-inline-block\"],[12],[1,\"\\n        \"],[2,[30,0,[\"bestMatch\"]]],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"  \"]],[]]]]],[1,\"\\n\"],[13]],[\"&attrs\",\"@onClick\",\"@onMouseEnter\",\"@selected\",\"@result\"],false,[\"on\",\"link-to\",\"if\",\"svg-jar\",\"not\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/search-result/index.hbs",
     "isStrictMode": false
@@ -91847,7 +91843,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "wtB+Asgk",
+    "id": "J57fXFEC",
     "block": "[[[11,0],[17,1],[4,[38,0],[[28,[37,1],[[30,0,[\"search\"]]],null]],null],[4,[38,2],[[28,[37,1],[[30,0,[\"search\"]]],null],[30,2]],null],[12],[1,\"\\n\"],[41,[28,[37,4],[[30,0,[\"trimmedQuery\"]],[30,0,[\"search\",\"isIdle\"]]],null],[[[1,\"    \"],[8,[39,5],null,[[\"@tetherTarget\",\"@attachment\",\"@clickOutsideToClose\",\"@onClose\",\"@targetAttachment\",\"@constraints\"],[\"[data-search-box]\",\"top left\",true,[30,3],\"bottom left\",[28,[37,6],[[28,[37,7],null,[[\"to\",\"attachment\",\"pin\"],[\"window\",\"together\",true]]]],null]]],[[\"default\"],[[[[1,\"\\n      \"],[10,\"ul\"],[14,0,\"docs-w-76 docs-bg-white docs-shadow-md\"],[14,\"data-test-search-result-list\",\"\"],[12],[1,\"\\n\"],[42,[28,[37,9],[[28,[37,9],[[28,[37,10],[5,[30,0,[\"searchResults\"]]],null]],null]],null],null,[[[1,\"          \"],[10,\"li\"],[12],[1,\"\\n            \"],[8,[39,11],null,[[\"@result\",\"@query\",\"@selected\",\"@onMouseEnter\",\"@onClick\"],[[30,4],[30,2],[28,[37,12],[[30,5],[30,0,[\"selectedIndex\"]]],null],[28,[37,13],[[30,0,[\"selectResult\"]],[30,5]],null],[30,3]]],null],[1,\"\\n          \"],[13],[1,\"\\n\"]],[4,5]],[[[1,\"          \"],[10,\"li\"],[14,0,\"docs-block docs-py-1 docs-px-3 docs-text-grey-dark docs-no-underline\"],[12],[1,\"\\n            No results.\\n          \"],[13],[1,\"\\n\"]],[]]],[1,\"      \"],[13],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]],null],[13]],[\"&attrs\",\"@query\",\"@onClose\",\"result\",\"index\"],false,[\"did-insert\",\"perform\",\"did-update\",\"if\",\"and\",\"modal-dialog\",\"array\",\"hash\",\"each\",\"-track-array\",\"take\",\"docs-header/search-result\",\"eq\",\"fn\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/search-results/index.hbs",
     "isStrictMode": false
@@ -92119,7 +92115,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </ModalDialog>
   */
   {
-    "id": "OT6zNk71",
+    "id": "uShGQMT3",
     "block": "[[[8,[39,0],[[17,1]],[[\"@tetherTarget\",\"@attachment\",\"@clickOutsideToClose\",\"@onClose\",\"@targetAttachment\"],[\"[data-version-selector]\",\"top right\",true,[30,2],\"bottom right\"]],[[\"default\"],[[[[1,\"\\n  \"],[10,\"ul\"],[14,0,\"docs-mt-2 docs-bg-white docs-shadow-md docs-text-xs docs-rounded docs-z-10\"],[12],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,0,[\"sortedVersions\"]]],null]],null],null,[[[1,\"      \"],[10,\"li\"],[14,\"data-test-id\",\"version\"],[12],[1,\"\\n        \"],[11,3],[24,6,\"#\"],[16,0,[28,[37,3],[\"docs-text-black docs-no-underline docs-flex docs-items-center\\n            docs-px-4 docs-py-3 hover:docs-bg-brand hover:docs-text-white group \",[52,[28,[37,5],[[30,3],[30,0,[\"sortedVersions\",\"firstObject\"]]],null],\"docs-rounded-t\"],[52,[28,[37,5],[[30,3],[30,0,[\"sortedVersions\",\"lastObject\"]]],null],\"docs-rounded-b\"]],null]],[4,[38,6],[\"click\",[28,[37,7],[[30,0,[\"changeVersion\"]],[30,3]],null]],null],[12],[1,\"\\n          \"],[10,1],[14,0,\"flex docs-w-6\"],[12],[1,\"\\n\"],[41,[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"currentVersion\",\"key\"]]],null],[[[1,\"              \"],[1,[28,[35,8],[\"check\"],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]],null],[1,\"          \"],[13],[1,\"\\n          \"],[10,1],[14,0,\"docs-font-medium\"],[12],[1,\"\\n            \"],[1,[30,3,[\"name\"]]],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,1],[14,0,\"docs-ml-auto docs-pl-8 docs-flex docs-items-center docs-opacity-50 group-hover:docs-opacity-100\"],[12],[1,\"\\n\"],[41,[28,[37,9],[[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"latestVersionName\"]]],null],[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"primaryBranch\"]]],null]],null],[[[1,\"              \"],[1,[28,[35,8],[[52,[30,3,[\"tag\"]],\"git-tag\",\"git-sha\"]],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]],[[[1,\"              \"],[1,[28,[35,8],[\"git-sha\"],[[\"height\",\"width\"],[16,16]]]],[1,\"\\n\"]],[]]],[1,\"\\n            \"],[10,1],[14,0,\"docs-text-xxs docs-font-mono docs-pl-1\"],[12],[1,\"\\n\"],[41,[28,[37,9],[[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"latestVersionName\"]]],null],[28,[37,5],[[30,3,[\"key\"]],[30,0,[\"config\",\"primaryBranch\"]]],null]],null],[[[41,[30,3,[\"tag\"]],[[[1,\"                  \"],[1,[30,3,[\"tag\"]]],[1,\"\\n\"]],[]],[[[1,\"                  \"],[1,[30,3,[\"truncatedSha\"]]],[1,\"\\n\"]],[]]]],[]],[[[1,\"                \"],[1,[30,3,[\"truncatedSha\"]]],[1,\"\\n\"]],[]]],[1,\"            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[3]],null],[1,\"  \"],[13],[1,\"\\n\"]],[]]]]]],[\"&attrs\",\"@onClose\",\"version\"],false,[\"modal-dialog\",\"each\",\"-track-array\",\"concat\",\"if\",\"eq\",\"on\",\"fn\",\"svg-jar\",\"or\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-header/version-selector/index.hbs",
     "isStrictMode": false
@@ -92244,7 +92240,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "ISLkSCWj",
+    "id": "/tV4kgYF",
     "block": "[[[11,0],[24,0,\"\\n  docs-bg-brand docs-text-white\\n  docs-px-4 docs-py-16 docs-text-center\\n\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-max-w-sm docs-mx-auto\"],[12],[1,\"\\n    \"],[10,\"h1\"],[14,0,\"\\n      docs-font-title docs-font-normal docs-text-jumbo-1 md:docs-text-jumbo-2 xl:docs-text-jumbo-3\\n      docs-leading-none docs-tracking-tight\\n    \"],[12],[1,\"\\n\"],[41,[30,0,[\"prefix\"]],[[[1,\"        \"],[10,1],[14,0,\"docs-block docs-text-large-5 md:docs-text-large-6 xl:docs-text-large-7\"],[12],[1,\"\\n          \"],[1,[30,0,[\"prefix\"]]],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n      \"],[1,[30,0,[\"heading\"]]],[1,\"\\n    \"],[13],[1,\"\\n\\n    \"],[10,2],[14,0,\"\\n      docs-mt-4 xl:docs-mt-6 docs-mb-2 docs-leading-small docs-mx-auto docs-tracking-tight\\n      docs-text-large-1 md:docs-text-large-2 xl:docs-text-large-3\\n    \"],[12],[1,\"\\n      \"],[1,[30,0,[\"byline\"]]],[1,\"\\n    \"],[13],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-mt-8\"],[12],[1,\"\\n      \"],[8,[39,1],[[24,0,\"\\n        docs-no-underline docs-bg-white docs-text-brand docs-text-xs docs-px-3 docs-py-2\\n        docs-rounded docs-mt-4 docs-shadow-md hover:docs-shadow-lg\\n        docs-transition hover:docs-nudge-t docs-font-bold docs-inline-block docs-uppercase\\n      \"]],[[\"@route\"],[\"docs\"]],[[\"default\"],[[[[1,\"\\n        Read the docs\\n      \"]],[]]]]],[1,\"\\n    \"],[13],[1,\"\\n\\n    \"],[18,2,null],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"&default\"],false,[\"if\",\"link-to\",\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-hero/index.hbs",
     "isStrictMode": false
@@ -92521,7 +92517,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{/if}}
   */
   {
-    "id": "2VQtiK+I",
+    "id": "jmKT9/vy",
     "block": "[[[41,[30,0,[\"isShowingKeyboardShortcuts\"]],[[[1,\"  \"],[8,[39,1],[[17,1]],[[\"@animatable\",\"@overlay\",\"@wrapperClass\",\"@clickOutsideToClose\",\"@onClose\"],[true,true,\"docs-fullscreen-modal docs-keyboard-shortcuts-modal modal-fade\",true,[30,0,[\"toggleKeyboardShortcuts\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[14,0,\"docs-fullscreen-modal__header\"],[12],[1,\"\\n      \"],[10,\"h2\"],[14,0,\"docs-fullscreen-modal__title\"],[12],[1,\"\\n        Keyboard shortcuts\\n      \"],[13],[1,\"\\n      \"],[11,3],[24,6,\"#\"],[24,0,\"docs-fullscreen-modal__close-button\"],[4,[38,2],[\"click\",[30,0,[\"toggleKeyboardShortcuts\"]]],null],[12],[1,\"\\n        ×\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-fullscreen-modal__body\"],[12],[1,\"\\n      \"],[10,\"table\"],[14,0,\"docs-keyboard-shortcut-modal\"],[12],[1,\"\\n        \"],[10,\"tbody\"],[12],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Site wide shortcuts\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                g\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                h\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Go to Home\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                g\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                d\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Go to Docs\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ?\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Bring up this help dialog\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                esc\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Hide this help dialog\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Docs search\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                /\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                s\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Focus search bar\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ctrl\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                n\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ↓\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Select next search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ctrl\\n              \"],[13],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                p\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ↑\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Select previous search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                enter\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to selected search result\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"th\"],[12],[13],[1,\"\\n            \"],[10,\"th\"],[12],[1,\"\\n              \"],[10,\"h3\"],[14,0,\"docs-fullscreen-modal__subtitle\"],[12],[1,\"\\n                Docs nav\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                j\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                →\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to next page\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                k\\n              \"],[13],[1,\"\\n              or\\n              \"],[10,\"code\"],[14,0,\"docs__keyboard-key\"],[12],[1,\"\\n                ←\\n              \"],[13],[1,\"\\n            \"],[13],[1,\"\\n            \"],[10,\"td\"],[12],[1,\"\\n              Navigate to previous page\\n            \"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null]],[\"&attrs\"],false,[\"if\",\"modal-dialog\",\"on\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-keyboard-shortcuts/index.hbs",
     "isStrictMode": false
@@ -92650,7 +92646,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{~/let}}
   */
   {
-    "id": "i/HQ3rDz",
+    "id": "Ql+ylxZl",
     "block": "[[[44,[[52,[30,0,[\"isRouteOnly\"]],[50,\"link-to\",0,null,[[\"route\"],[[30,1]]]],[52,[30,0,[\"isRouteAndModelOnly\"]],[50,\"link-to\",0,null,[[\"route\",\"model\"],[[30,1],[30,2]]]],[52,[30,0,[\"isRouteAndModelsOnly\"]],[50,\"link-to\",0,null,[[\"route\",\"models\"],[[30,1],[30,3]]]],[50,\"link-to\",0,null,null]]]]],[[[8,[30,4],[[24,0,\"docs-md__a\"],[17,5]],[[\"@query\",\"@disabled\",\"@activeClass\",\"@current-when\"],[[28,[37,3],[[30,6],[28,[37,4],null,null]],null],[30,7],[30,8],[30,9]]],[[\"default\"],[[[[18,10,null]],[]]]]]],[4]]]],[\"@route\",\"@model\",\"@models\",\"DocsLinkTo\",\"&attrs\",\"@query\",\"@disabled\",\"@activeClass\",\"@current-when\",\"&default\"],false,[\"let\",\"if\",\"component\",\"or\",\"hash\",\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-link/index.hbs",
     "isStrictMode": false
@@ -92713,7 +92709,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "5IENwFYG",
+    "id": "D1hlYcCB",
     "block": "[[[1,[28,[35,0],[[30,0,[\"logo\"]]],[[\"class\"],[\"docs-h-full docs-w-auto docs-max-w-full docs-fill-current\"]]]],[1,\"\\n\"]],[],false,[\"svg-jar\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-logo/index.hbs",
     "isStrictMode": false
@@ -92837,7 +92833,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "Na/rrRHA",
+    "id": "VjqVEv/s",
     "block": "[[[41,[30,1],[[[1,\"  \"],[10,0],[14,0,\"\\n    docs-bg-black docs-text-grey-lighter docs-text-xs\\n    docs-font-medium docs-py-2 docs-px-4 docs-rounded-t\\n    docs-border-b docs-border-grey-darkest\\n    docs-subpixel-antialiased\\n  \"],[12],[1,\"\\n    \"],[1,[30,1]],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[11,0],[16,0,[29,[\"\\n    docs-text-xs docs-px-2 docs-py-1 docs-bg-code-base\\n    docs-relative docs-subpixel-antialiased\\n    \",[52,[30,1],\"docs-rounded-b\",\"docs-rounded\"],\"\\n  \"]]],[16,\"data-test-id\",[28,[37,1],[[30,2],[30,3]],null]],[17,4],[12],[1,\"\\n\"],[44,[[28,[37,3],[[30,3]],[[\"unindent\"],[[30,0,[\"unindent\"]]]]]],[[[41,[30,0,[\"showCopy\"]],[[[1,\"      \"],[8,[39,4],[[24,0,\"\\n          docs-absolute docs-top-0 docs-right-0 docs-bg-transparent hover:docs-bg-transparent\\n          docs-border-none docs-opacity-50 hover:docs-opacity-100 docs-p-3 docs-text-white\\n        \"]],[[\"@clipboardText\",\"@title\"],[[30,5,[\"source\"]],\"copy to clipboard\"]],[[\"default\"],[[[[1,\"\\n        Copy\\n      \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[8,[39,5],null,[[\"@language\"],[[30,6]]],[[\"default\"],[[[[1,[30,5,[\"source\"]]]],[]]]]],[1,\"\\n\"]],[5]]],[13],[1,\"\\n\"]],[\"@title\",\"@data-test-id\",\"@name\",\"&attrs\",\"snippet\",\"@language\"],false,[\"if\",\"or\",\"let\",\"get-code-snippet\",\"copy-button\",\"docs-code-highlight\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-snippet/index.hbs",
     "isStrictMode": false
@@ -92912,7 +92908,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </div>
   */
   {
-    "id": "Y8f188GN",
+    "id": "hCeY4DvT",
     "block": "[[[11,0],[24,0,\"docs-viewer docs-flex docs-flex-1\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"md:docs-flex docs-w-full\"],[12],[1,\"\\n    \"],[18,2,[[28,[37,1],null,[[\"nav\",\"main\"],[[50,\"docs-viewer/x-nav\",0,null,null],[50,\"docs-viewer/x-main\",0,null,[[\"onReindex\"],[[28,[37,3],[[30,0],\"pageIndex\"],null]]]]]]]]],[1,\"\\n\\n    \"],[8,[39,4],null,[[\"@pageIndex\"],[[30,0,[\"pageIndex\"]]]],null],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\",\"set\",\"docs-viewer/x-current-page-index\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/index.hbs",
     "isStrictMode": false
@@ -93053,7 +93049,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {{/if}}
   */
   {
-    "id": "UDGjIPfh",
+    "id": "WCsDh5XP",
     "block": "[[[41,[28,[37,1],[[30,1,[\"modules\",\"length\"]],0],null],[[[1,\"  \"],[8,[39,2],null,[[\"@label\",\"@style\"],[\"API Reference\",\"large\"]],null],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"resolvedTypeSections\"]]],null]],null],null,[[[1,\"    \"],[8,[39,2],null,[[\"@label\"],[[30,2,[\"type\"]]]],null],[1,\"\\n\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,2,[\"items\"]]],null]],null],null,[[[1,\"      \"],[8,[39,5],null,[[\"@label\",\"@route\",\"@model\"],[[28,[37,6],[[30,3,[\"name\"]],\"/\"],null],[28,[37,7],[[30,4],\".api.item\"],null],[30,3,[\"path\"]]]],null],[1,\"\\n\"]],[3]],null]],[2]],null],[1,\"\\n\"],[41,[30,0,[\"moduleIndex\"]],[[[1,\"    \"],[8,[39,2],null,[[\"@label\"],[\"Modules\"]],null],[1,\"\\n\\n    \"],[8,[39,8],null,[[\"@node\",\"@root\"],[[30,0,[\"moduleIndex\"]],[30,4]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n\"]],[]],null]],[\"@project\",\"section\",\"item\",\"@root\"],false,[\"if\",\"gt\",\"docs-viewer/x-section\",\"each\",\"-track-array\",\"docs-viewer/x-nav-item\",\"break-on\",\"concat\",\"docs-viewer/x-autogenerated-api-docs/module-nav\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/index.hbs",
     "isStrictMode": false
@@ -93203,7 +93199,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </DocsViewer::XNavList>
   */
   {
-    "id": "z9rvl8M7",
+    "id": "xCKtlFEW",
     "block": "[[[8,[39,0],[[17,1]],[[\"@class\"],[\"docs-ml-4\"]],[[\"default\"],[[[[1,\"\\n  \"],[8,[39,1],null,[[\"@style\"],[\"subsection\"]],[[\"default\"],[[[[1,\"\\n    \"],[1,[30,3,[\"name\"]]],[1,\"\\n  \"]],[]]]]],[1,\"\\n\\n\"],[42,[28,[37,3],[[28,[37,3],[[30,3,[\"children\"]]],null]],null],null,[[[41,[30,4,[\"children\"]],[[[1,\"      \"],[8,[39,5],null,[[\"@node\",\"@root\"],[[30,4],[30,5]]],null],[1,\"\\n\"]],[]],[[[1,\"      \"],[8,[30,2,[\"item\"]],null,[[\"@label\",\"@route\",\"@model\"],[[30,4,[\"name\"]],[28,[37,6],[[30,5],\".api.item\"],null],[28,[37,6],[\"modules/\",[30,4,[\"id\"]]],null]]],null],[1,\"\\n\"]],[]]]],[4]],null]],[2]]]]]],[\"&attrs\",\"subnav\",\"@node\",\"child\",\"@root\"],false,[\"docs-viewer/x-nav-list\",\"docs-viewer/x-section\",\"each\",\"-track-array\",\"if\",\"docs-viewer/x-autogenerated-api-docs/module-nav\",\"concat\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/index.hbs",
     "isStrictMode": false
@@ -93257,7 +93253,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "1nkNVfqE",
+    "id": "4A7VoRHG",
     "block": "[[[11,\"nav\"],[24,0,\"AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto\"],[24,\"data-test-current-page-index\",\"\"],[17,1],[12],[1,\"\\n  \"],[10,0],[14,0,\"docs-sticky docs-top-0 docs-pt-4 docs-pb-8 docs-pr-8 docs-max-h-screen docs-overflow-y-scroll\"],[12],[1,\"\\n    \"],[10,\"ul\"],[14,0,\"docs-border-l docs-border-grey-lighter docs-pl-6 docs-leading-normal\"],[12],[1,\"\\n\"],[41,[30,2,[\"length\"]],[[[1,\"        \"],[10,\"li\"],[14,0,\"docs-mt-12 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs\"],[12],[1,\"\\n          On This Page\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,2]],null]],null],null,[[[1,\"        \"],[10,\"li\"],[15,0,[29,[\"\\n          docs-leading-tight docs-tracking-tight\\n          \",[52,[30,3,[\"indent\"]],[28,[37,3],[\"docs-ml-\",[30,3,[\"indent\"]]],null]],\"\\n          \",[52,[30,3,[\"marginTop\"]],[28,[37,3],[\"docs-mt-\",[30,3,[\"marginTop\"]]],null]],\"\\n          \",[52,[30,3,[\"marginBottom\"]],[28,[37,3],[\"docs-mt-\",[30,3,[\"marginBottom\"]]],null]],\"\\n        \"]]],[14,\"data-test-index-item\",\"\"],[12],[1,\"\\n          \"],[10,3],[15,6,[29,[\"#\",[30,3,[\"id\"]]]]],[15,0,[29,[\"docs-text-grey-dark docs-font-semibold docs-no-underline hover:docs-underline docs-text-\",[30,3,[\"size\"]]]]],[12],[1,\"\\n            \"],[1,[30,3,[\"text\"]]],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[3]],null],[1,\"    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"@pageIndex\",\"item\"],false,[\"if\",\"each\",\"-track-array\",\"concat\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-current-page-index/index.hbs",
     "isStrictMode": false
@@ -93346,7 +93342,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </main>
   */
   {
-    "id": "A3e/TqHv",
+    "id": "9ScVOPnj",
     "block": "[[[11,\"main\"],[24,0,\"docs-px-4 md:docs-px-8 lg:docs-px-20 docs-mx-auto md:docs-mx-0 docs-mt-6 md:docs-mt-12 md:docs-min-w-0 md:docs-flex-1\"],[17,1],[4,[38,0],[[30,0,[\"setupElement\"]]],null],[4,[38,1],[[30,0,[\"teardownElement\"]]],null],[12],[1,\"\\n  \"],[10,0],[14,\"data-current-page-index-target\",\"\"],[12],[1,\"\\n    \"],[18,2,null],[1,\"\\n\\n\"],[41,[30,0,[\"editCurrentPageUrl\"]],[[[1,\"      \"],[10,0],[14,0,\"docs-mt-16 docs-mb-8\"],[14,\"data-test-edit-page-link\",\"\"],[12],[1,\"\\n        \"],[10,3],[15,6,[30,0,[\"editCurrentPageUrl\"]]],[14,0,\"docs-transition docs-text-grey-darkest docs-opacity-50 docs-text-xs hover:docs-opacity-75 docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest\"],[12],[1,\"\\n          Edit this page\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"  \"],[13],[1,\"\\n\\n  \"],[10,0],[14,0,\"docs-mt-16 docs-pb-16 docs-border-t docs-border-grey-lighter docs-pt-4 docs-flex\"],[12],[1,\"\\n    \"],[10,0],[14,0,\"docs-w-1/2\"],[12],[1,\"\\n\"],[41,[30,0,[\"docsRoutes\",\"previous\"]],[[[1,\"        \"],[10,0],[14,0,\"docs-text-xs docs-text-grey-dark\"],[12],[1,\"\\n          Previous\\n        \"],[13],[1,\"\\n        \"],[8,[39,4],[[24,0,\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],[[\"@route\",\"@models\"],[[30,0,[\"docsRoutes\",\"previous\",\"route\"]],[30,0,[\"docsRoutes\",\"previous\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[1,[30,0,[\"docsRoutes\",\"previous\",\"label\"]]],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"    \"],[13],[1,\"\\n\\n    \"],[10,0],[14,0,\"docs-w-1/2 docs-text-right\"],[14,\"data-test-next-link\",\"\"],[12],[1,\"\\n\"],[41,[30,0,[\"docsRoutes\",\"next\"]],[[[1,\"        \"],[10,0],[14,0,\"docs-text-xs docs-text-grey-dark\"],[12],[1,\"\\n          Next\\n        \"],[13],[1,\"\\n        \"],[8,[39,4],[[24,0,\"docs-text-grey-darkest docs-text-large-4 docs-font-light docs-no-underline docs-border-b docs-border-grey hover:docs-border-grey-darkest docs-transition\"]],[[\"@route\",\"@models\"],[[30,0,[\"docsRoutes\",\"next\",\"route\"]],[30,0,[\"docsRoutes\",\"next\",\"models\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[1,[30,0,[\"docsRoutes\",\"next\",\"label\"]]],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]],null],[1,\"    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"did-insert\",\"will-destroy\",\"yield\",\"if\",\"link-to\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-main/index.hbs",
     "isStrictMode": false
@@ -93526,7 +93522,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "wMrlgoOT",
+    "id": "cUeTRH+D",
     "block": "[[[11,\"li\"],[24,0,\"docs-mt-2 docs-ml-4 docs-mb-1 docs-flex docs-items-center docs-text-sm\"],[17,1],[12],[1,\"\\n\"],[41,[30,2],[[[1,\"    \"],[8,[39,1],[[24,0,\"docs-text-grey-darker docs-no-underline hover:docs-underline\"],[24,\"data-test-id\",\"nav-item\"],[16,\"data-test-label\",[30,3]]],[[\"@route\",\"@model\",\"@activeClass\"],[[30,4],[30,2],\"docs-text-brand docs-font-medium\"]],[[\"default\"],[[[[1,\"\\n      \"],[1,[30,3]],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,1],[[24,0,\"docs-text-grey-darker docs-no-underline hover:docs-underline\"],[24,\"data-test-id\",\"nav-item\"],[16,\"data-test-label\",[30,3]]],[[\"@route\",\"@activeClass\"],[[30,4],\"docs-text-brand docs-font-medium\"]],[[\"default\"],[[[[1,\"\\n      \"],[1,[30,3]],[1,\"\\n    \"]],[]]]]],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"&attrs\",\"@model\",\"@label\",\"@route\"],false,[\"if\",\"link-to\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav-item/index.hbs",
     "isStrictMode": false
@@ -93579,7 +93575,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   </ul>
   */
   {
-    "id": "xW1Ao/Tw",
+    "id": "Bjfn/ei7",
     "block": "[[[11,\"ul\"],[17,1],[12],[1,\"\\n  \"],[18,2,[[28,[37,1],null,[[\"item\"],[[50,\"docs-viewer/x-nav-item\",0,null,null]]]]]],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav-list/index.hbs",
     "isStrictMode": false
@@ -93665,7 +93661,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "O3sdtNFy",
+    "id": "0szpUzHA",
     "block": "[[[41,[30,0,[\"media\",\"isMobile\"]],[[[1,\"  \"],[10,0],[14,0,\"docs-text-right docs-px-4 md:docs-px-6 docs-mt-4\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"docs-text-grey-darkest docs-py-2 docs-text-xs docs-rounded docs-uppercase docs-font-medium\"],[4,[38,1],[\"click\",[28,[37,2],[\"isShowingMenu\",[30,0]],null]],null],[12],[1,\"\\n      ☰ Menu\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n\"],[11,0],[24,0,\"AddonDocs-DocsViewer-Nav docs-bg-grey-lightest docs-border-r docs-flex-no-shrink\"],[17,1],[12],[1,\"\\n  \"],[11,\"nav\"],[16,0,[29,[\"\\n      docs-absolute docs-right-0 docs-shadow-lg md:docs-shadow-none docs-mr-2 md:docs-mr-0 md:docs-pl-2\\n      docs-max-w-xs docs-w-90% md:docs-w-72 docs-z-10 docs-transition md:docs-sticky md:docs-top-0\\n      \",[52,[30,0,[\"media\",\"isMobile\"]],[52,[30,0,[\"isShowingMenu\"]],\"docs-opacity-100 docs-bg-white\",\"docs-opacity-0 docs-pointer-events-none\"]],\"\\n    \"]]],[4,[38,1],[\"click\",[28,[37,3],[[30,0],\"isShowingMenu\",false],null]],null],[12],[1,\"\\n    \"],[10,0],[14,0,\"docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll\"],[12],[1,\"\\n\"],[41,[30,0,[\"media\",\"isMobile\"]],[[[1,\"        \"],[10,0],[14,0,\"absolute top-0 docs-text-right right-4\"],[12],[1,\"\\n          \"],[11,\"button\"],[4,[38,1],[\"click\",[28,[37,3],[[30,0],\"isShowingMenu\",false],null]],null],[12],[1,\"\\n            class=\\\"docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline\\\">\\n            ×\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"\\n      \"],[8,[39,4],null,null,[[\"default\"],[[[[1,\"\\n        \"],[18,2,[[28,[37,6],null,[[\"section\",\"item\",\"subnav\"],[[50,\"docs-viewer/x-section\",0,null,null],[50,\"docs-viewer/x-nav-item\",0,null,null],[50,\"docs-viewer/x-nav-list\",0,null,[[\"class\"],[\"docs-ml-4\"]]]]]]]],[1,\"\\n\\n        \"],[8,[39,8],null,[[\"@root\",\"@project\"],[[30,0,[\"root\"]],[30,0,[\"project\"]]]],null],[1,\"\\n      \"]],[]]]]],[1,\"\\n\\n      \"],[10,0],[14,0,\"docs-mt-16 lg:docs-mb-16 docs-mr-2 docs-text-xxs docs-rounded\"],[12],[1,\"\\n        \"],[10,3],[14,6,\"https://github.com/ember-learn/ember-cli-addon-docs\"],[14,0,\"docs-opacity-50 hover:docs-opacity-100 docs-transition docs-no-underline docs-text-inherit docs-flex docs-items-center docs-text-grey-darkest\"],[12],[1,\"\\n          \"],[1,[28,[35,9],[\"addon-docs-pen\"],[[\"width\",\"height\",\"class\"],[22,16,\"docs-mr-2\"]]]],[1,\"\\n          \"],[10,0],[12],[1,\"\\n            Powered by\\n            \"],[10,1],[14,0,\"docs-font-bold\"],[12],[1,\"AddonDocs\"],[13],[1,\"\\n          \"],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&attrs\",\"&default\"],false,[\"if\",\"on\",\"toggle\",\"set\",\"docs-viewer/x-nav-list\",\"yield\",\"hash\",\"component\",\"docs-viewer/x-autogenerated-api-docs\",\"svg-jar\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav/index.hbs",
     "isStrictMode": false
@@ -93768,7 +93764,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   */
   {
-    "id": "I8ZrbXgf",
+    "id": "tZRGRzSW",
     "block": "[[[11,\"li\"],[16,0,[29,[\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"regular\"],null],\"docs-mt-8 docs-capitalize\"],\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"large\"],null],\"docs-mt-8 docs--mb-4 docs-text-xs docs-uppercase\"],\"\\n  \",[52,[28,[37,1],[[30,0,[\"style\"]],\"subsection\"],null],\"docs-mt-2 docs-text-sm\"]]]],[17,1],[12],[1,\"\\n\"],[41,[48,[30,3]],[[[1,\"    \"],[18,3,null],[1,\"\\n\"]],[]],[[[1,\"    \"],[1,[30,2]],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"&attrs\",\"@label\",\"&default\"],false,[\"if\",\"eq\",\"has-block\",\"yield\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-section/index.hbs",
     "isStrictMode": false
@@ -107561,8 +107557,49 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "ueEDwSsb",
+  var _default = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <EmberWormhole @to={{this.destinationElementId}}>
+    {{#if this.isOverlaySibling}}
+      <div class="{{this.wrapperClassNamesString}} {{this.wrapperClass}}">
+        {{#if this.hasOverlay}}
+          <div
+            class={{this.overlayClassNamesString}}
+            onclick={{action this.onClickOverlay}}
+            tabindex="-1"
+            data-emd-overlay
+          >
+          </div>
+        {{/if}}
+        <EmberModalDialogPositionedContainer @class={{this.containerClassNamesString}} @targetAttachment={{this.targetAttachment}} @target={{this.legacyTarget}}>
+          {{yield}}
+        </EmberModalDialogPositionedContainer>
+      </div>
+    {{else}}
+      <div class="{{this.wrapperClassNamesString}} {{this.wrapperClass}}">
+        {{#if this.hasOverlay}}
+          <div
+            class={{this.overlayClassNamesString}}
+            onclick={{action (ignore-children this.onClickOverlay)}}
+            tabindex="-1"
+            data-emd-overlay
+          >
+            <EmberModalDialogPositionedContainer @class={{this.containerClassNamesString}} @targetAttachment={{this.targetAttachment}} @target={{this.legacyTarget}}>
+              {{yield}}
+            </EmberModalDialogPositionedContainer>
+          </div>
+        {{else}}
+          <EmberModalDialogPositionedContainer @class={{this.containerClassNamesString}} @targetAttachment={{this.targetAttachment}} @target={{this.legacyTarget}}>
+            {{yield}}
+          </EmberModalDialogPositionedContainer>
+        {{/if}}
+      </div>
+    {{/if}}
+  </EmberWormhole>
+  
+  */
+  {
+    "id": "wT0PngaM",
     "block": "[[[8,[39,0],null,[[\"@to\"],[[30,0,[\"destinationElementId\"]]]],[[\"default\"],[[[[1,\"\\n\"],[41,[30,0,[\"isOverlaySibling\"]],[[[1,\"    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"      \"],[8,[39,3],null,[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n        \"],[18,1,null],[1,\"\\n      \"]],[]]]]],[1,\"\\n    \"],[13],[1,\"\\n\"]],[]],[[[1,\"    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[28,[37,5],[[30,0,[\"onClickOverlay\"]]],null]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n          \"],[8,[39,3],null,[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n            \"],[18,1,null],[1,\"\\n          \"]],[]]]]],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],[[[1,\"        \"],[8,[39,3],null,[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[18,1,null],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]]],[1,\"    \"],[13],[1,\"\\n\"]],[]]]],[]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"ember-wormhole\",\"if\",\"action\",\"ember-modal-dialog-positioned-container\",\"yield\",\"ignore-children\"]]",
     "moduleName": "ember-modal-dialog/templates/components/basic-dialog.hbs",
     "isStrictMode": false
@@ -107578,8 +107615,17 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "Kzes2A7b",
+  var _default = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <div
+    class={{concat this.containerClassNamesString " " this.attachmentClass " " this.containerClass}}
+  >
+    {{yield}}
+  </div>
+  
+  */
+  {
+    "id": "xn5jMzm3",
     "block": "[[[10,0],[15,0,[28,[37,0],[[30,0,[\"containerClassNamesString\"]],\" \",[30,0,[\"attachmentClass\"]],\" \",[30,0,[\"containerClass\"]]],null]],[12],[1,\"\\n  \"],[18,1,null],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&default\"],false,[\"concat\",\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/in-place-dialog.hbs",
     "isStrictMode": false
@@ -107595,8 +107641,49 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "YcZSIoQ3",
+  var _default = (0, _templateFactory.createTemplateFactory)(
+  /*
+    {{#if this.isOverlaySibling}}
+    <LiquidWormhole @stack={{this.stack}} @value={{this.value}} @class={{concat "liquid-dialog-container " this.wrapperClassNamesString " " this.wrapperClass}}>
+      <div class="{{this.wrapperClassNamesString}} {{this.wrapperClass}}">
+        {{#if this.hasOverlay}}
+          <div
+            class={{this.overlayClassNamesString}}
+            onclick={{action this.onClickOverlay}}
+            tabindex="-1"
+            data-emd-overlay
+          >
+          </div>
+        {{/if}}
+        <div class={{this.containerClassNamesString}}>
+          {{yield}}
+        </div>
+      </div>
+    </LiquidWormhole>
+  {{else}}
+    <LiquidWormhole @stack={{this.stack}} @value={{this.value}} @class={{concat "liquid-dialog-container " this.wrapperClassNamesString " " this.wrapperClass}}>
+      {{#if this.hasOverlay}}
+        <div
+          class={{this.overlayClassNamesString}}
+          onclick={{action (ignore-children this.onClickOverlay)}}
+          tabindex="-1"
+          data-emd-overlay
+        >
+          <div class={{this.containerClassNamesString}}>
+            {{yield}}
+          </div>
+        </div>
+      {{else}}
+        <div class={{this.containerClassNamesString}}>
+          {{yield}}
+        </div>
+      {{/if}}
+    </LiquidWormhole>
+  {{/if}}
+  
+  */
+  {
+    "id": "pAAOfYTY",
     "block": "[[[41,[30,0,[\"isOverlaySibling\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@value\",\"@class\"],[[30,0,[\"stack\"]],[30,0,[\"value\"]],[28,[37,2],[\"liquid-dialog-container \",[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]],null]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,3],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"      \"],[10,0],[15,0,[30,0,[\"containerClassNamesString\"]]],[12],[1,\"\\n        \"],[18,1,null],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@value\",\"@class\"],[[30,0,[\"stack\"]],[30,0,[\"value\"]],[28,[37,2],[\"liquid-dialog-container \",[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]],null]]],[[\"default\"],[[[[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"      \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,3],[[30,0],[28,[37,5],[[30,0,[\"onClickOverlay\"]]],null]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[10,0],[15,0,[30,0,[\"containerClassNamesString\"]]],[12],[1,\"\\n          \"],[18,1,null],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],[[[1,\"      \"],[10,0],[15,0,[30,0,[\"containerClassNamesString\"]]],[12],[1,\"\\n        \"],[18,1,null],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]],[1,\"  \"]],[]]]]],[1,\"\\n\"]],[]]]],[\"&default\"],false,[\"if\",\"liquid-wormhole\",\"concat\",\"action\",\"yield\",\"ignore-children\"]]",
     "moduleName": "ember-modal-dialog/templates/components/liquid-dialog.hbs",
     "isStrictMode": false
@@ -107612,8 +107699,26 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "aAk96s8p",
+  var _default = (0, _templateFactory.createTemplateFactory)(
+  /*
+    {{#if this.hasOverlay}}
+    <LiquidWormhole @stack="modal-overlay" @class="liquid-dialog-container">
+      <div
+        class={{this.overlayClassNamesString}}
+        onclick={{action this.onClickOverlay}}
+        tabindex="-1"
+        data-emd-overlay
+      >
+      </div>
+    </LiquidWormhole>
+  {{/if}}
+  <LiquidTether @class={{this.containerClassNamesString}} @target={{this.tetherTarget}} @attachment={{this.attachment}} @targetAttachment={{this.targetAttachment}} @targetModifier={{this.targetModifier}} @classPrefix={{this.tetherClassPrefix}} @offset={{this.offset}} @targetOffset={{this.targetOffset}} @constraints={{this.constraints}} @stack={{this.stack}} @value={{this.value}}>
+    {{yield}}
+  </LiquidTether>
+  
+  */
+  {
+    "id": "/vfQ+7Qb",
     "block": "[[[41,[30,0,[\"hasOverlay\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@class\"],[\"modal-overlay\",\"liquid-dialog-container\"]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null],[8,[39,3],null,[[\"@class\",\"@target\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@classPrefix\",\"@offset\",\"@targetOffset\",\"@constraints\",\"@stack\",\"@value\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"offset\"]],[30,0,[\"targetOffset\"]],[30,0,[\"constraints\"]],[30,0,[\"stack\"]],[30,0,[\"value\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,1,null],[1,\"\\n\"]],[]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"if\",\"liquid-wormhole\",\"action\",\"liquid-tether\",\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/liquid-tether-dialog.hbs",
     "isStrictMode": false
@@ -107629,8 +107734,40 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "r9m57cPM",
+  var _default = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <this.whichModalDialogComponent
+    @wrapperClass={{this.wrapperClass}}
+    @wrapperClassNames={{this.wrapperClassNames}}
+    @overlayClass={{this.overlayClass}}
+    @overlayClassNames={{this.overlayClassNames}}
+    @containerClass={{this.containerClass}}
+    @containerClassNames={{this.containerClassNames}}
+    @hasOverlay={{this.hasOverlay}}
+    @translucentOverlay={{this.translucentOverlay}}
+    @clickOutsideToClose={{this.clickOutsideToClose}}
+    @destinationElementId={{this.destinationElementId}}
+    @overlayPosition={{this.overlayPosition}}
+    @tetherTarget={{this.tetherTarget}}
+    @legacyTarget={{this.target}}
+    @attachment={{this.attachment}}
+    @targetAttachment={{this.targetAttachment}}
+    @targetModifier={{this.targetModifier}}
+    @targetOffset={{this.targetOffset}}
+    @offset={{this.offset}}
+    @tetherClassPrefix={{this.tetherClassPrefix}}
+    @constraints={{this.constraints}}
+    @attachmentClass={{this.attachmentClass}}
+    @stack={{this.stack}}
+    @value={{this.value}}
+    @onClickOverlay={{this.onClickOverlayAction}}
+    @onClose={{this.onCloseAction}}
+  >
+    {{yield}}
+  </this.whichModalDialogComponent>
+  */
+  {
+    "id": "qUWCsT/n",
     "block": "[[[8,[30,0,[\"whichModalDialogComponent\"]],null,[[\"@wrapperClass\",\"@wrapperClassNames\",\"@overlayClass\",\"@overlayClassNames\",\"@containerClass\",\"@containerClassNames\",\"@hasOverlay\",\"@translucentOverlay\",\"@clickOutsideToClose\",\"@destinationElementId\",\"@overlayPosition\",\"@tetherTarget\",\"@legacyTarget\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@targetOffset\",\"@offset\",\"@tetherClassPrefix\",\"@constraints\",\"@attachmentClass\",\"@stack\",\"@value\",\"@onClickOverlay\",\"@onClose\"],[[30,0,[\"wrapperClass\"]],[30,0,[\"wrapperClassNames\"]],[30,0,[\"overlayClass\"]],[30,0,[\"overlayClassNames\"]],[30,0,[\"containerClass\"]],[30,0,[\"containerClassNames\"]],[30,0,[\"hasOverlay\"]],[30,0,[\"translucentOverlay\"]],[30,0,[\"clickOutsideToClose\"]],[30,0,[\"destinationElementId\"]],[30,0,[\"overlayPosition\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"target\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"targetOffset\"]],[30,0,[\"offset\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"constraints\"]],[30,0,[\"attachmentClass\"]],[30,0,[\"stack\"]],[30,0,[\"value\"]],[30,0,[\"onClickOverlayAction\"]],[30,0,[\"onCloseAction\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,1,null],[1,\"\\n\"]],[]]]]]],[\"&default\"],false,[\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/modal-dialog.hbs",
     "isStrictMode": false
@@ -107646,8 +107783,26 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
 
-  var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "IP8gvejt",
+  var _default = (0, _templateFactory.createTemplateFactory)(
+  /*
+    {{#if this.hasOverlay}}
+    <EmberWormhole @to={{this.destinationElementId}}>
+      <div
+        class={{this.overlayClassNamesString}}
+        onclick={{action this.onClickOverlay}}
+        tabindex="-1"
+        data-emd-overlay
+      >
+      </div>
+    </EmberWormhole>
+  {{/if}}
+  <EmberTether @class={{this.containerClassNamesString}} @target={{this.tetherTarget}} @attachment={{this.attachment}} @targetAttachment={{this.targetAttachment}} @targetModifier={{this.targetModifier}} @classPrefix={{this.tetherClassPrefix}} @offset={{this.offset}} @targetOffset={{this.targetOffset}} @constraints={{this.constraints}}>
+    {{yield}}
+  </EmberTether>
+  
+  */
+  {
+    "id": "81S3SYWS",
     "block": "[[[41,[30,0,[\"hasOverlay\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@to\"],[[30,0,[\"destinationElementId\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null],[8,[39,3],null,[[\"@class\",\"@target\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@classPrefix\",\"@offset\",\"@targetOffset\",\"@constraints\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"offset\"]],[30,0,[\"targetOffset\"]],[30,0,[\"constraints\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,1,null],[1,\"\\n\"]],[]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"if\",\"ember-wormhole\",\"action\",\"ember-tether\",\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/tether-dialog.hbs",
     "isStrictMode": false
