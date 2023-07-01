@@ -133,6 +133,27 @@ jobs:
         run: yarn test:node
 
 
+  test-node-windows:
+    name: Test (Node, Windows)
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn test:node
+
+
   deploy-documentation:
     name: Deploy documentation
     runs-on: ubuntu-latest
