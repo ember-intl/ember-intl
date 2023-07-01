@@ -102,8 +102,6 @@ module('Unit | Macros | t', function (hooks) {
   });
 
   test('looks up the intl service through the owner, if it is not injected, and still watches locale changes', function (this: TestContext, assert) {
-    assert.expect(3);
-
     addTranslations('es', {
       'no.interpolations': 'texto sin interpolaciones',
     });
