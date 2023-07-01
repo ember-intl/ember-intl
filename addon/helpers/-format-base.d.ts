@@ -1,6 +1,6 @@
 import Helper from '@ember/component/helper';
 
-import IntlService from '../services/intl';
+import type IntlService from '../services/intl';
 
 export interface BaseHelperSignature<
   Value,

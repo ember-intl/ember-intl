@@ -1,10 +1,10 @@
-import { EmberRunTimer } from '@ember/runloop/types';
+import type { EmberRunTimer } from '@ember/runloop/types';
 import Service from '@ember/service';
 import type { SafeString } from '@ember/template/-private/handlebars';
-import FormatList from 'ember-intl/-private/formatters/format-list';
 
-import {
+import type {
   FormatDate,
+  FormatList,
   FormatMessage,
   FormatNumber,
   FormatRelative,
