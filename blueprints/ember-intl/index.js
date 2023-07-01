@@ -4,7 +4,7 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-let path = require('path');
+const { join } = require('node:path');
 
 module.exports = {
   description: 'Setup ember-intl',
@@ -15,17 +15,17 @@ module.exports = {
     return {
       __app__(options) {
         if (options.inAddon) {
-          return path.join('tests', 'dummy', 'app');
-        } else {
-          return path.join('app');
+          return join('tests', 'dummy', 'app');
         }
+
+        return 'app';
       },
       __config__(options) {
         if (options.inAddon) {
-          return path.join('tests', 'dummy', 'config');
-        } else {
-          return path.join('config');
+          return join('tests', 'dummy', 'config');
         }
+
+        return 'config';
       },
     };
   },

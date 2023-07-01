@@ -1,6 +1,6 @@
 'use strict';
 
-const path = require('path');
+const { join } = require('node:path');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const hasUnicode = require('has-unicode');
@@ -377,12 +377,12 @@ describe('translation-reducer', function () {
     });
 
     describe('mergeTranslations', function () {
-      const testDirectory = path.join(
+      const testDirectory = join(
         __dirname,
         '../../../fixtures/strip-empty-translations',
       );
       const listFiles = ['de-de.yml', 'en-us.yml'].map((file) =>
-        path.join(testDirectory, file),
+        join(testDirectory, file),
       );
 
       it('strips empty translations if enabled', function () {
