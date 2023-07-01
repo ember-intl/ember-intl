@@ -137,7 +137,7 @@ jobs:
   test-node-windows:
     name: Test (Node, Windows)
     runs-on: windows-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v3
@@ -149,7 +149,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --network-timeout 100000
 
       - name: Test
         run: yarn test:node
