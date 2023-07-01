@@ -1,5 +1,5 @@
-import IntlService from '../services/intl';
-import BaseHelper, { BaseHelperSignature } from './-format-base';
+import type IntlService from '../services/intl';
+import BaseHelper, { type BaseHelperSignature } from './-format-base';
 
 type Params = Parameters<IntlService['formatRelative']>;
 
