@@ -1,25 +1,101 @@
-# How To Contribute
+# Contributing to ember-intl
 
-## Installation
+## Local development
 
-* `git clone git@github.com:ember-intl/ember-intl.git`
-* `cd ember-intl`
-* `yarn install`
+<details>
 
-## Linting
+<summary>Install dependencies</summary>
 
-* `yarn lint`
-* `yarn lint:fix`
+1. Fork and clone this repo.
 
-## Running tests
+    ```sh
+    git clone git@github.com:<your GitHub handle>/ember-intl.git
+    ```
 
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
+1. Change directory.
 
-## Running the dummy application
+    ```sh
+    cd ember-intl
+    ```
 
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+1. Use `yarn` to install dependencies.
 
-For more information on using ember-cli, visit [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/).
+    ```sh
+    yarn install
+    ```
+
+</details>
+
+
+<details>
+
+<summary>Run the docs-app</summary>
+
+1. Once dependencies have been installed, you can run the docs-app.
+
+    ```sh
+    yarn start
+    ```
+
+1. Open the app at [http://localhost:4200](http://localhost:4200).
+
+</details>
+
+
+<details>
+
+<summary>Lint files</summary>
+
+1. When you write code, please check that it meets the linting rules.
+
+    ```sh
+    yarn lint
+    ```
+
+1. You can run `lint:fix` to automatically fix linting errors.
+
+    ```sh
+    yarn lint:fix
+    ```
+
+</details>
+
+
+<details>
+
+<summary>Run tests</summary>
+
+1. When you write code, please check that all tests continue to pass.
+
+    ```sh
+    # Ember tests
+    yarn test
+
+    # Node tests
+    yarn test:node
+    ```
+
+</details>
+
+
+<details>
+
+<summary>Publish packages (for admins)</summary>
+
+1. Generate a [personal access token](https://github.com/settings/tokens/) in GitHub, with default values for scopes (none selected).
+
+1. Create a pull request, in which you update the package version and `CHANGELOG`.
+
+    ```sh
+    GITHUB_AUTH=<YOUR_PERSONAL_ACCESS_TOKEN> yarn changelog
+    ```
+
+1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) such as `v1.0.0` (the name satisfies the regular expression `^v\d+\.\d+\.\d+`).
+
+1. Publish the package.
+
+    ```sh
+    npm publish
+    ```
+
+</details>
