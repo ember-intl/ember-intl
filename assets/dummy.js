@@ -94,22 +94,17 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/application",0,"dummy/config/environment",0,"ember-load-initializers",0,"ember-resolver"eaimeta@70e063a35619d71f
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class App extends _application.default {
     constructor() {
       super(...arguments);
-
       _defineProperty(this, "modulePrefix", _environment.default.modulePrefix);
-
       _defineProperty(this, "podModulePrefix", _environment.default.podModulePrefix);
-
       _defineProperty(this, "Resolver", _emberResolver.default);
     }
-
   }
-
   _exports.default = App;
   (0, _emberLoadInitializers.default)(App, _environment.default.modulePrefix);
 });
@@ -121,7 +116,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-
   var _default = {
     mobile: '(max-width: 767px)',
     tablet: '(min-width: 768px) and (max-width: 991px)',
@@ -739,19 +733,14 @@
     value: true
   });
   _exports.default = void 0;
-
   var _class, _descriptor;
-
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/service",0,"@glimmer/component"eaimeta@70e063a35619d71f
-
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <ul class="locale-switcher container" role="toolbar">
@@ -802,18 +791,14 @@
     "moduleName": "dummy/components/locale-switcher.hbs",
     "isStrictMode": false
   });
-
   let LocaleSwitcherComponent = (_class = class LocaleSwitcherComponent extends _component2.default {
     constructor() {
       super(...arguments);
-
       _initializerDefineProperty(this, "intl", _descriptor, this);
     }
-
     updateLocale(locale) {
       this.intl.setLocale(locale);
     }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "intl", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -845,20 +830,16 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/controller"eaimeta@70e063a35619d71f
-
   class DocsHelpersFormatDateController extends _controller.default {
     get today() {
       return new Date();
     }
-
     get yesterday() {
       const today = new Date();
       const yesterday = today.setDate(today.getDate() - 1);
       return yesterday;
     }
-
   }
-
   _exports.default = DocsHelpersFormatDateController;
 });
 ;define("dummy/controllers/docs/helpers/format-list", ["exports", "@ember/controller"], function (_exports, _controller) {
@@ -869,14 +850,11 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/controller"eaimeta@70e063a35619d71f
-
   class DocsHelpersFormatListController extends _controller.default {
     get fruits() {
       return ['apples', 'bananas', 'oranges'];
     }
-
   }
-
   _exports.default = DocsHelpersFormatListController;
 });
 ;define("dummy/controllers/docs/helpers/format-message", ["exports", "@ember/controller"], function (_exports, _controller) {
@@ -887,28 +865,23 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/controller"eaimeta@70e063a35619d71f
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class DocsHelpersFormatMessageController extends _controller.default {
     constructor() {
       super(...arguments);
-
       _defineProperty(this, "customMessage", '{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}.');
     }
-
     get today() {
       return new Date();
     }
-
     get yesterday() {
       const today = new Date();
       const yesterday = today.setDate(today.getDate() - 1);
       return yesterday;
     }
-
   }
-
   _exports.default = DocsHelpersFormatMessageController;
 });
 ;define("dummy/controllers/docs/helpers/format-time", ["exports", "@ember/controller"], function (_exports, _controller) {
@@ -919,14 +892,11 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/controller"eaimeta@70e063a35619d71f
-
   class DocsHelpersFormatTimeController extends _controller.default {
     get today() {
       return new Date();
     }
-
   }
-
   _exports.default = DocsHelpersFormatTimeController;
 });
 ;define("dummy/controllers/docs/helpers/t", ["exports", "@ember/controller", "@ember/object", "@glimmer/tracking"], function (_exports, _controller, _object, _tracking) {
@@ -936,38 +906,28 @@
     value: true
   });
   _exports.default = void 0;
-
   var _class, _descriptor;
-
   0; //eaimeta@70e063a35619d71f0,"@ember/controller",0,"@ember/object",0,"@glimmer/tracking"eaimeta@70e063a35619d71f
-
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let DocsHelpersTController = (_class = class DocsHelpersTController extends _controller.default {
     constructor() {
       super(...arguments);
-
       _initializerDefineProperty(this, "numPhotos", _descriptor, this);
     }
-
     addPhoto() {
       this.numPhotos++;
     }
-
     deletePhoto() {
       if (this.numPhotos === 0) {
         return;
       }
-
       this.numPhotos--;
     }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "numPhotos", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
@@ -985,30 +945,22 @@
     value: true
   });
   _exports.default = void 0;
-
   var _class, _descriptor;
-
   0; //eaimeta@70e063a35619d71f0,"@ember/controller",0,"@ember/service"eaimeta@70e063a35619d71f
-
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let SmokeController = (_class = class SmokeController extends _controller.default {
     constructor() {
       super(...arguments);
-
       _initializerDefineProperty(this, "intl", _descriptor, this);
     }
-
     get areNestedTranslationsWorking() {
       return this.intl.exists('smoke.parent.child');
     }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "intl", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -1039,7 +991,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-
   const hhmmss = {
     hour: 'numeric',
     minute: 'numeric',
@@ -1462,6 +1413,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/format-date"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/format-list", ["exports", "ember-intl/helpers/format-list"], function (_exports, _formatList) {
   "use strict";
@@ -1476,6 +1431,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/format-list"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/format-message", ["exports", "ember-intl/helpers/format-message"], function (_exports, _formatMessage) {
   "use strict";
@@ -1490,6 +1449,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/format-message"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/format-number", ["exports", "ember-intl/helpers/format-number"], function (_exports, _formatNumber) {
   "use strict";
@@ -1504,6 +1467,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/format-number"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/format-relative", ["exports", "ember-intl/helpers/format-relative"], function (_exports, _formatRelative) {
   "use strict";
@@ -1518,6 +1485,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/format-relative"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/format-time", ["exports", "ember-intl/helpers/format-time"], function (_exports, _formatTime) {
   "use strict";
@@ -1532,6 +1503,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/format-time"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/from-entries", ["exports", "ember-composable-helpers/helpers/from-entries"], function (_exports, _fromEntries) {
   "use strict";
@@ -2237,7 +2212,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-inflector/lib/helpers/pluralize"eaimeta@70e063a35619d71f
-
   var _default = _pluralize.default;
   _exports.default = _default;
 });
@@ -2433,7 +2407,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-inflector/lib/helpers/singularize"eaimeta@70e063a35619d71f
-
   var _default = _singularize.default;
   _exports.default = _default;
 });
@@ -2474,7 +2447,6 @@
   _exports.default = void 0;
   _exports.svgJar = svgJar;
   0; //eaimeta@70e063a35619d71f0,"@ember/component/helper",0,"ember-svg-jar/utils/make-svg"eaimeta@70e063a35619d71f
-
   function getInlineAsset(assetId) {
     try {
       /* eslint-disable global-require */
@@ -2483,16 +2455,13 @@
       return null;
     }
   }
-
   function svgJar(assetId, svgAttrs) {
     return (0, _makeSvg.default)(assetId, svgAttrs, getInlineAsset);
   }
-
   var _default = (0, _helper.helper)(function svgJarHelper(_ref, svgAttrs) {
     let [assetId] = _ref;
     return svgJar(assetId, svgAttrs);
   });
-
   _exports.default = _default;
 });
 ;define("dummy/helpers/t", ["exports", "ember-intl/helpers/t"], function (_exports, _t) {
@@ -2508,6 +2477,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/helpers/t"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/helpers/take", ["exports", "ember-composable-helpers/helpers/take"], function (_exports, _take) {
   "use strict";
@@ -2787,15 +2760,12 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-resolver/resolvers/classic/container-debug-adapter"eaimeta@70e063a35619d71f
-
   var _default = {
     name: 'container-debug-adapter',
-
     initialize() {
       let app = arguments[1] || arguments[0];
       app.register('container-debug-adapter:main', _containerDebugAdapter.default);
     }
-
   };
   _exports.default = _default;
 });
@@ -2821,7 +2791,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-data",0,"ember-data/setup-container"eaimeta@70e063a35619d71f
-
   /*
     This code initializes EmberData in an Ember application.
   */
@@ -2839,63 +2808,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-responsive/initializers/responsive"eaimeta@70e063a35619d71f
-
   var _default = _responsive.default;
-  _exports.default = _default;
-});
-;define("dummy/initializers/export-application-global", ["exports", "ember", "dummy/config/environment"], function (_exports, _ember, _environment) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _exports.initialize = initialize;
-  0; //eaimeta@70e063a35619d71f0,"ember",0,"dummy/config/environment"eaimeta@70e063a35619d71f
-
-  function initialize() {
-    var application = arguments[1] || arguments[0];
-
-    if (_environment.default.exportApplicationGlobal !== false) {
-      var theGlobal;
-
-      if (typeof window !== 'undefined') {
-        theGlobal = window;
-      } else if (typeof global !== 'undefined') {
-        theGlobal = global;
-      } else if (typeof self !== 'undefined') {
-        theGlobal = self;
-      } else {
-        // no reasonable global, just bail
-        return;
-      }
-
-      var value = _environment.default.exportApplicationGlobal;
-      var globalName;
-
-      if (typeof value === 'string') {
-        globalName = value;
-      } else {
-        globalName = _ember.default.String.classify(_environment.default.modulePrefix);
-      }
-
-      if (!theGlobal[globalName]) {
-        theGlobal[globalName] = application;
-        application.reopen({
-          willDestroy: function () {
-            this._super.apply(this, arguments);
-
-            delete theGlobal[globalName];
-          }
-        });
-      }
-    }
-  }
-
-  var _default = {
-    name: 'export-application-global',
-    initialize: initialize
-  };
   _exports.default = _default;
 });
 ;define("dummy/initializers/route-anchor-jump", ["exports", "ember-cli-addon-docs/initializers/route-anchor-jump"], function (_exports, _routeAnchorJump) {
@@ -2926,18 +2839,14 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"dummy/config/environment",0,"ember-modal-dialog/instance-initializers/add-modals-container"eaimeta@70e063a35619d71f
-
   var _default = {
     name: 'add-modals-container',
-
     initialize(appInstance) {
       if (_environment.default.environment === 'test') {
         return;
       }
-
       return (0, _addModalsContainer.default)(appInstance);
     }
-
   };
   _exports.default = _default;
 });
@@ -2949,13 +2858,10 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-
   /* exists only for things that historically used "after" or "before" */
   var _default = {
     name: 'ember-data',
-
     initialize() {}
-
   };
   _exports.default = _default;
 });
@@ -3113,20 +3019,16 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"dummy/config/environment",0,"ember-cli-addon-docs/router"eaimeta@70e063a35619d71f
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class Router extends _router.default {
     constructor() {
       super(...arguments);
-
       _defineProperty(this, "location", _environment.default.locationType);
-
       _defineProperty(this, "rootURL", _environment.default.rootURL);
     }
-
   }
-
   _exports.default = Router;
   Router.map(function () {
     (0, _router.docsRoute)(this, function () {
@@ -3183,30 +3085,22 @@
     value: true
   });
   _exports.default = void 0;
-
   var _class, _descriptor;
-
   0; //eaimeta@70e063a35619d71f0,"@ember/routing/route",0,"@ember/service"eaimeta@70e063a35619d71f
-
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let ApplicationRoute = (_class = class ApplicationRoute extends _route.default {
     constructor() {
       super(...arguments);
-
       _initializerDefineProperty(this, "intl", _descriptor, this);
     }
-
     beforeModel() {
       this.intl.setLocale(['en-us']);
     }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "intl", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -3410,6 +3304,10 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-intl/services/intl"eaimeta@70e063a35619d71f
+  /**
+   * Copyright 2015, Yahoo! Inc.
+   * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+   */
 });
 ;define("dummy/services/keyboard", ["exports", "ember-keyboard/services/keyboard.js"], function (_exports, _keyboard) {
   "use strict";
@@ -3433,7 +3331,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-responsive/services/media"eaimeta@70e063a35619d71f
-
   var _default = _media.default;
   _exports.default = _default;
 });
@@ -3445,13 +3342,11 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/object",0,"@ember/service",0,"dummy/config/environment",0,"ember-modal-dialog/utils/config-utils"eaimeta@70e063a35619d71f
-
   function computedFromConfig(prop) {
     return (0, _object.computed)(function () {
       return _environment.default['ember-modal-dialog'] && _environment.default['ember-modal-dialog'][prop];
     });
   }
-
   var _default = _service.default.extend({
     hasEmberTether: computedFromConfig('hasEmberTether'),
     hasLiquidWormhole: computedFromConfig('hasLiquidWormhole'),
@@ -3460,7 +3355,6 @@
       return (0, _configUtils.getDestinationElementIdFromConfig)(_environment.default);
     })
   });
-
   _exports.default = _default;
 });
 ;define("dummy/services/project-version", ["exports", "ember-cli-addon-docs/services/project-version"], function (_exports, _projectVersion) {
@@ -3527,21 +3421,18 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@glimmer/component"eaimeta@70e063a35619d71f
-
+  // BEGIN-SNIPPET docs__helpers__format-date__example-1__my-component.js
   class MyComponent extends _component.default {
     get today() {
       return new Date();
     }
-
     get yesterday() {
       const today = new Date();
       const yesterday = today.setDate(today.getDate() - 1);
       return yesterday;
     }
-
-  } // END-SNIPPET
-
-
+  }
+  // END-SNIPPET
   _exports.default = MyComponent;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3552,7 +3443,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-date__example-1__my-component.hbs --}}
@@ -3566,7 +3456,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-date/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-2/component", ["exports", "@glimmer/component"], function (_exports, _component) {
@@ -3577,15 +3466,13 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@glimmer/component"eaimeta@70e063a35619d71f
-
+  // BEGIN-SNIPPET docs__helpers__format-date__example-2__my-component.js
   class MyComponent extends _component.default {
     get today() {
       return new Date();
     }
-
-  } // END-SNIPPET
-
-
+  }
+  // END-SNIPPET
   _exports.default = MyComponent;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-2/format", ["exports"], function (_exports) {
@@ -3596,7 +3483,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-
   // BEGIN-SNIPPET docs__helpers__format-date__example-2__app__format.js
   var _default = {
     date: {
@@ -3613,7 +3499,6 @@
       /* ... */
     }
   }; // END-SNIPPET
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-2/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3624,7 +3509,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-date__example-2__my-component.hbs --}}
@@ -3637,7 +3521,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-date/example-2/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-list/example-1/component", ["exports", "@glimmer/component"], function (_exports, _component) {
@@ -3648,15 +3531,13 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@glimmer/component"eaimeta@70e063a35619d71f
-
+  // BEGIN-SNIPPET docs__helpers__format-list__example-1__my-component.js
   class MyComponent extends _component.default {
     get fruits() {
       return ['apples', 'bananas', 'oranges'];
     }
-
-  } // END-SNIPPET
-
-
+  }
+  // END-SNIPPET
   _exports.default = MyComponent;
 });
 ;define("dummy/snippets/docs/helpers/format-list/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3667,7 +3548,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-list__example-1__my-component.hbs --}}
@@ -3681,7 +3561,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-list/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-message/example-1/component", ["exports", "@glimmer/controller"], function (_exports, _controller) {
@@ -3692,29 +3571,24 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@glimmer/controller"eaimeta@70e063a35619d71f
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); } // BEGIN-SNIPPET docs__helpers__format-message__example-1__my-component.js
   class DocsHelpersFormatMessageComponent extends _controller.default {
     constructor() {
       super(...arguments);
-
       _defineProperty(this, "customMessage", '{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}.');
     }
-
     get today() {
       return new Date();
     }
-
     get yesterday() {
       const today = new Date();
       const yesterday = today.setDate(today.getDate() - 1);
       return yesterday;
     }
-
-  } // END-SNIPPET
-
-
+  }
+  // END-SNIPPET
   _exports.default = DocsHelpersFormatMessageComponent;
 });
 ;define("dummy/snippets/docs/helpers/format-message/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3725,7 +3599,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-message__example-1__my-component.hbs --}}
@@ -3763,7 +3636,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-message/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-number/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3774,7 +3646,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-number__example-1__my-component.hbs --}}
@@ -3788,7 +3659,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-number/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-relative/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3799,7 +3669,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-relative__example-1__my-component.hbs --}}
@@ -3814,7 +3683,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-relative/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-time/example-1/component", ["exports", "@glimmer/component"], function (_exports, _component) {
@@ -3825,15 +3693,13 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@glimmer/component"eaimeta@70e063a35619d71f
-
+  // BEGIN-SNIPPET docs__helpers__format-time__example-1__my-component.js
   class MyComponent extends _component.default {
     get today() {
       return new Date();
     }
-
-  } // END-SNIPPET
-
-
+  }
+  // END-SNIPPET
   _exports.default = MyComponent;
 });
 ;define("dummy/snippets/docs/helpers/format-time/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3844,7 +3710,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-time__example-1__my-component.hbs --}}
@@ -3857,7 +3722,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-time/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/t/example-1/component", ["exports", "@ember/object", "@glimmer/component", "@glimmer/tracking"], function (_exports, _object, _component, _tracking) {
@@ -3867,38 +3731,28 @@
     value: true
   });
   _exports.default = void 0;
-
-  var _class, _descriptor;
-
+  var _class, _descriptor; // BEGIN-SNIPPET docs__helpers__t__example-1__my-component.js
   0; //eaimeta@70e063a35619d71f0,"@ember/object",0,"@glimmer/component",0,"@glimmer/tracking"eaimeta@70e063a35619d71f
-
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let MyComponent = (_class = class MyComponent extends _component.default {
     constructor() {
       super(...arguments);
-
       _initializerDefineProperty(this, "numPhotos", _descriptor, this);
     }
-
     addPhoto() {
       this.numPhotos++;
     }
-
     deletePhoto() {
       if (this.numPhotos === 0) {
         return;
       }
-
       this.numPhotos--;
     }
-
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "numPhotos", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
@@ -3907,7 +3761,6 @@
       return 0;
     }
   }), _applyDecoratedDescriptor(_class.prototype, "addPhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "addPhoto"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "deletePhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "deletePhoto"), _class.prototype)), _class); // END-SNIPPET
-
   _exports.default = MyComponent;
 });
 ;define("dummy/snippets/docs/helpers/t/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3918,7 +3771,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__t__example-1__my-component.hbs --}}
@@ -3945,7 +3797,6 @@
     "moduleName": "dummy/snippets/docs/helpers/t/example-1/template.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/application", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3956,7 +3807,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
@@ -3972,7 +3822,6 @@
     "moduleName": "dummy/templates/application.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -3983,7 +3832,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
@@ -4134,7 +3982,6 @@
     "moduleName": "dummy/templates/docs.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/advanced/addon-support", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4145,7 +3992,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4182,7 +4028,6 @@
     "moduleName": "dummy/templates/docs/advanced/addon-support.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/api/item", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4193,7 +4038,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#if this.model.isComponent}}
@@ -4210,7 +4054,6 @@
     "moduleName": "dummy/templates/docs/api/item.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/cookbook/common-errors", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4221,7 +4064,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4238,7 +4080,6 @@
     "moduleName": "dummy/templates/docs/cookbook/common-errors.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/getting-started/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4249,7 +4090,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4292,7 +4132,6 @@
     "moduleName": "dummy/templates/docs/getting-started/index.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/getting-started/quickstart", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4303,7 +4142,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4379,7 +4217,6 @@
     "moduleName": "dummy/templates/docs/getting-started/quickstart.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/getting-started/runtime-requirements", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4390,7 +4227,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4486,7 +4322,6 @@
     "moduleName": "dummy/templates/docs/getting-started/runtime-requirements.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/addon-configs", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4497,7 +4332,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4608,7 +4442,6 @@
     "moduleName": "dummy/templates/docs/guide/addon-configs.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/asynchronously-loading-translations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4619,7 +4452,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4693,7 +4525,6 @@
     "moduleName": "dummy/templates/docs/guide/asynchronously-loading-translations.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/migration-4-0-to-5-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4704,7 +4535,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4756,7 +4586,6 @@
     "moduleName": "dummy/templates/docs/guide/migration-4-0-to-5-0.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/missing-translations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4767,7 +4596,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4846,7 +4674,6 @@
     "moduleName": "dummy/templates/docs/guide/missing-translations.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/service-api", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -4857,7 +4684,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -4997,7 +4823,6 @@
     "moduleName": "dummy/templates/docs/guide/service-api.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/testing", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5008,7 +4833,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5262,7 +5086,6 @@
     "moduleName": "dummy/templates/docs/guide/testing.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/translating-text", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5273,7 +5096,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5435,7 +5257,6 @@
     "moduleName": "dummy/templates/docs/guide/translating-text.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-date", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5446,7 +5267,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5536,7 +5356,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-date.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-list", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5547,7 +5366,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5611,7 +5429,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-list.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-message", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5622,7 +5439,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5710,7 +5526,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-message.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-number", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5721,7 +5536,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5771,7 +5585,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-number.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-relative", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5782,7 +5595,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5852,7 +5664,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-relative.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-time", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5863,7 +5674,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5900,7 +5710,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-time.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5911,7 +5720,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -5932,7 +5740,6 @@
     "moduleName": "dummy/templates/docs/helpers/index.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/t", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -5943,7 +5750,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6047,7 +5853,6 @@
     "moduleName": "dummy/templates/docs/helpers/t.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/integrations/ember-cp-validations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6058,7 +5863,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6072,7 +5876,6 @@
     "moduleName": "dummy/templates/docs/integrations/ember-cp-validations.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/integrations/visual-studio-code", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6083,7 +5886,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6097,7 +5899,6 @@
     "moduleName": "dummy/templates/docs/integrations/visual-studio-code.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/migration-2-0-to-3-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6108,7 +5909,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6160,7 +5960,6 @@
     "moduleName": "dummy/templates/docs/legacy/migration-2-0-to-3-0.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/migration-3-0-to-4-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6171,7 +5970,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6198,7 +5996,6 @@
     "moduleName": "dummy/templates/docs/legacy/migration-3-0-to-4-0.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/v2", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6209,7 +6006,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6223,7 +6019,6 @@
     "moduleName": "dummy/templates/docs/legacy/v2.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6234,7 +6029,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
@@ -6287,7 +6081,6 @@
     "moduleName": "dummy/templates/index.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/not-found", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6298,7 +6091,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
@@ -6315,7 +6107,6 @@
     "moduleName": "dummy/templates/not-found.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/templates/smoke", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
@@ -6326,7 +6117,6 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <h1>Smoke</h1>
@@ -6386,7 +6176,6 @@
     "moduleName": "dummy/templates/smoke.hbs",
     "isStrictMode": false
   });
-
   _exports.default = _default;
 });
 ;define("dummy/transforms/boolean", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
