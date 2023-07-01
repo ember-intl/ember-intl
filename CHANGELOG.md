@@ -1,5 +1,24 @@
 # Changelog
 
+## 6.0.0-beta.6 (2023-07-01)
+
+### Breaking Change
+* [#1763](https://github.com/ember-intl/ember-intl/pull/1763) Deprecate Ember 3.24 and Node 14 ([@ijlee2](https://github.com/ijlee2))
+
+### Enhancement
+* [#1768](https://github.com/ember-intl/ember-intl/pull/1768) Refactor code assuming Node 16 ([@ijlee2](https://github.com/ijlee2))
+
+### Internal
+* [#1771](https://github.com/ember-intl/ember-intl/pull/1771) Updated ember-source to v4.12 (docs-app) ([@ijlee2](https://github.com/ijlee2))
+* [#1770](https://github.com/ember-intl/ember-intl/pull/1770) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+* [#1769](https://github.com/ember-intl/ember-intl/pull/1769) Updated ember-cli-typescript and @types packages ([@ijlee2](https://github.com/ijlee2))
+* [#1768](https://github.com/ember-intl/ember-intl/pull/1768) Refactor code assuming Node 16 ([@ijlee2](https://github.com/ijlee2))
+* [#1761](https://github.com/ember-intl/ember-intl/pull/1761) Update test-related packages ([@ijlee2](https://github.com/ijlee2))
+
+### Committers: 1
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+
+
 ## 6.0.0-beta.5 (2023-07-01)
 
 ### Bug Fix
