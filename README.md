@@ -55,6 +55,12 @@ ember install ember-intl
 - [4.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v4.4.0/)
 
 
+## Compatibility
+
+* Ember.js v3.28 or above
+* Node.js v16 or above
+
+
 ## Migrating from ember-i18n
 
 There's an [ember-i18n-to-intl-migrator tool](https://github.com/DockYard/ember-i18n-to-intl-migrator) that is used to convert your translations files and application code to ember-intl.

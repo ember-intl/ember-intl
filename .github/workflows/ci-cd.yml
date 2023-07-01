@@ -11,7 +11,7 @@ on:
 
 env:
   CI: true
-  NODE_VERSION: 14
+  NODE_VERSION: 16
 
 jobs:
   lint:
@@ -63,7 +63,6 @@ jobs:
       fail-fast: false
       matrix:
         scenario:
-          - 'ember-lts-3.24'
           - 'ember-lts-3.28'
           - 'ember-lts-4.4'
           - 'ember-lts-4.8'
