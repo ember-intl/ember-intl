@@ -1,10 +1,39 @@
-# ember-intl
-
-[![npm Version][npm-badge]][npm]
-![Ember Version][ember-version]
-[![CI/CD](https://github.com/ember-intl/ember-intl/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/ember-intl/ember-intl/actions/workflows/ci-cd.yml)
+[![This project uses GitHub Actions for continuous integration.](https://github.com/ember-intl/ember-intl/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/ember-intl/ember-intl/actions/workflows/ci-cd.yml)
 [![npm](https://img.shields.io/npm/dm/ember-intl.svg)](https://www.npmjs.com/package/ember-intl)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
+
+# ember-intl
+
+
+## Installation
+
+```sh
+ember install ember-intl
+```
+
+<details>
+<summary>Use Glint? ✨</summary>
+
+- Update your template registry to extend this addon's. Check the [Glint documentation](https://typed-ember.gitbook.io/glint/using-glint/ember/using-addons#using-glint-enabled-addons) for more information.
+
+    ```ts
+    /* types/index.d.ts */
+
+    import '@glint/environment-ember-loose';
+
+    import type EmberIntlRegistry from 'ember-intl/template-registry';
+
+    declare module '@glint/environment-ember-loose/registry' {
+      export default interface Registry extends EmberIntlRegistry, /* other addon registries */ {
+        // local entries
+      }
+    }
+    ```
+
+  If you are on `ember-intl@v5`, use the types provided by [@gavant/glint-template-types](https://github.com/Gavant/glint-template-types/tree/v0.3.4/types/ember-intl/helpers).
+
+</details>
+
 
 ## Notable Features
 
