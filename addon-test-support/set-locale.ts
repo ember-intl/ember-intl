@@ -1,4 +1,4 @@
-import makeIntlHelper from './-private/make-intl-helper';
+import { makeIntlHelper } from './-private/make-intl-helper';
 
 /**
  * Invokes the `setLocale` method of the `intl` service.

@@ -1,4 +1,4 @@
-import makeIntlHelper from './-private/make-intl-helper';
+import { makeIntlHelper } from './-private/make-intl-helper';
 
 /**
  * Invokes the `t` method of the `intl` service.
