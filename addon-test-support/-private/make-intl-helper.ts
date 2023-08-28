@@ -48,5 +48,3 @@ export function makeIntlHelper(
     return fn(intl, ...args);
   };
 }
-
-export default makeIntlHelper;
