@@ -1,9 +1,7 @@
-import {
-  render,
-  type TestContext as BaseTestContext,
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import type IntlService from 'ember-intl/services/intl';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
@@ -11,7 +9,6 @@ import { module, test } from 'qunit';
 interface TestContext extends BaseTestContext {
   date: number;
   dateString: string;
-  intl: IntlService;
 }
 
 module('Integration | Helper | format-time', function (hooks) {
@@ -78,7 +75,7 @@ module('Integration | Helper | format-time', function (hooks) {
 
   test('it should return a formatted string from a date string', async function (this: TestContext, assert) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-time this.dateString timeZone='UTC'}}
     `);
 
@@ -87,7 +84,7 @@ module('Integration | Helper | format-time', function (hooks) {
 
   test('it should return a formatted string formatted with formatConfig key', async function (this: TestContext, assert) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-time this.dateString format='example'}}
     `);
 
@@ -96,7 +93,7 @@ module('Integration | Helper | format-time', function (hooks) {
 
   test('it should return a formatted string formatted using formatConfig key with inline locale', async function (this: TestContext, assert) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-time this.dateString locale='de' format='example'}}
     `);
 
@@ -105,7 +102,7 @@ module('Integration | Helper | format-time', function (hooks) {
 
   test('it should return a formatted string from a timestamp', async function (this: TestContext, assert) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-time this.date timeZone='UTC'}}
     `);
 
@@ -113,7 +110,7 @@ module('Integration | Helper | format-time', function (hooks) {
   });
 
   test('it should return a formatted string of just the time', async function (this: TestContext, assert) {
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-time this.date hour='numeric' minute='numeric' timeZone='UTC'}}
     `);
 

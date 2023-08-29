@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
-  render,
-  settled,
-  type TestContext as BaseTestContext,
-} from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import type IntlService from 'ember-intl/services/intl';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 interface TestContext extends BaseTestContext {
-  intl: IntlService;
+  translatedGreeting?: string;
 }
 
 module('Integration | Helper | t', function (hooks) {
@@ -236,7 +233,7 @@ module('Integration | Helper | t', function (hooks) {
 
     this.intl.setLocale(['en-us']);
 
-    await render(hbs`{{this.translatedGreeting}}`);
+    await render<TestContext>(hbs`{{this.translatedGreeting}}`);
 
     assert.dom().hasText('Hello');
 

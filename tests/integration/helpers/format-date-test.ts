@@ -78,7 +78,7 @@ module('Integration | Helper | format-date', function (hooks) {
 
   test('it should return a formatted string from a date string', async function (this: TestContext, assert) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-date this.dateString timeZone='UTC'}}
     `);
 
@@ -87,7 +87,7 @@ module('Integration | Helper | format-date', function (hooks) {
 
   test('it should return a formatted string from a timestamp', async function (this: TestContext, assert) {
     // Must provide `timeZone` because: https://github.com/ember-intl/ember-intl/issues/21
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-date this.date timeZone='UTC'}}
     `);
 
@@ -95,7 +95,7 @@ module('Integration | Helper | format-date', function (hooks) {
   });
 
   test('it should return a formatted string of just the date', async function (this: TestContext, assert) {
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-date
         this.date
         hour="numeric"
