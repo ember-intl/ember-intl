@@ -1,4 +1,4 @@
-import { createIntl, OnErrorFn } from '@formatjs/intl';
+import { createIntl, type OnErrorFn } from '@formatjs/intl';
 import FormatRelative from 'ember-intl/-private/formatters/format-relative';
 import { module, test } from 'qunit';
 
