@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore We don't want to bring along extra baggage, when installed in a
-// host project.
+// @ts-expect-error We don't want to bring along extra baggage, when installed
+// in a host project.
 import omit from 'lodash.omit';
 
 /**

@@ -111,8 +111,7 @@ module('Unit | Macros | t', function (hooks) {
     }).create();
 
     setOwner(object, {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Type 'IntlService' is not assignable to type 'DIRegistry[Type][Name]'.
+      // @ts-expect-error: Type 'IntlService' is not assignable to type 'DIRegistry[Type][Name]'.
       lookup: (name: string) => {
         assert.strictEqual(
           name,
