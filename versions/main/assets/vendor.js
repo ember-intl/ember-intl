@@ -94138,8 +94138,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @private
    * @hide
    */
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore If the consuming project uses `--isolatedModules`, `const enums`
+  // If the consuming project uses `--isolatedModules`, `const enums`
   // may not be used. Since `ember-cli-babel` does not care for `const enums`
   // _anyway_ , this is not an issue.
   const MISSING_INTL_API = _intlMessageformat.ErrorCode.MISSING_INTL_API;
@@ -94279,14 +94278,12 @@ lunr.QueryParser.parseBoost = function (parser) {
         // formatter won't know what to do with it. Instead, we cast
         // the SafeString to a regular string using `toHTML`.
         // Since it was already marked as safe we should *not* escape it.
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error: see comment above
         escapedOpts[key] = val.toHTML();
       } else if (typeof val === 'string') {
         escapedOpts[key] = escapeExpression(val);
       } else {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error: see comment above
         escapedOpts[key] = val; // copy as-is
       }
     });
@@ -94948,8 +94945,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return (0, _object.computed)(`${__intlInjectionName}.locale`, ...dependentKeys, function (propertyKey) {
       if (!this[__intlInjectionName]) {
         (0, _object.defineProperty)(this, __intlInjectionName, {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore: https://github.com/typed-ember/ember-cli-typescript/issues/1471
+          // @ts-expect-error: https://github.com/typed-ember/ember-cli-typescript/issues/1471
           value: (0, _application.getOwner)(this).lookup('service:intl'),
           enumerable: false
         });
