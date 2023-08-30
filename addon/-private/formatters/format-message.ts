@@ -35,14 +35,12 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
       // formatter won't know what to do with it. Instead, we cast
       // the SafeString to a regular string using `toHTML`.
       // Since it was already marked as safe we should *not* escape it.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error: see comment above
       escapedOpts[key] = val.toHTML();
     } else if (typeof val === 'string') {
       escapedOpts[key] = escapeExpression(val);
     } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error: see comment above
       escapedOpts[key] = val; // copy as-is
     }
   });

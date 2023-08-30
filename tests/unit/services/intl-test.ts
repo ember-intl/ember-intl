@@ -18,8 +18,7 @@ module('service:init initialization', function (hooks) {
     const localeChanged = td.func();
     const Intl = this.owner.factoryFor('service:intl');
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: https://github.com/typed-ember/ember-cli-typescript/issues/1471
+    // @ts-expect-error: https://github.com/typed-ember/ember-cli-typescript/issues/1471
     const unsubscribe = Intl.create().onLocaleChanged(localeChanged);
     next(() => {
       assert.verify(localeChanged());

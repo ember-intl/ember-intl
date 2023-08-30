@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { htmlSafe } from '@ember/template';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -147,7 +146,7 @@ module('Integration | Helper | format-message (HTML)', function (hooks) {
     `);
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).innerHTML.trim(),
       '<strong>Hello Jason</strong>',
     );
@@ -159,7 +158,7 @@ module('Integration | Helper | format-message (HTML)', function (hooks) {
     `);
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).innerHTML.trim(),
       '&lt;em&gt;BAR&lt;/em&gt;',
     );
@@ -171,7 +170,7 @@ module('Integration | Helper | format-message (HTML)', function (hooks) {
     `);
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).innerHTML.trim(),
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>',
     );
@@ -181,7 +180,7 @@ module('Integration | Helper | format-message (HTML)', function (hooks) {
     `);
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).innerHTML.trim(),
       '<strong>Hello &lt;em&gt;Jason&lt;/em&gt;</strong>',
     );

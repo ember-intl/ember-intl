@@ -166,8 +166,7 @@ module('Integration | Helper | format-number', function (hooks) {
     this.intl.setLocale('de-de');
     await rerender();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: this.element exists
+    // @ts-expect-error: this.element exists
     const value = escape(this.element.textContent!.trim());
 
     assert.true(

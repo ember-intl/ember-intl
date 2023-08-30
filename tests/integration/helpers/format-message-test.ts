@@ -1,10 +1,20 @@
 import { findAll, render, rerender } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
-import type { TestContext } from 'ember-intl/test-support';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+
+interface TestContext extends BaseTestContext {
+  census_date?: number;
+  city?: string;
+  harvests?: { count: number; person: string }[];
+  instance?: SomeClass;
+  population?: number;
+  timeZone?: string;
+  translation?: string;
+}
 
 class SomeClass {
   @tracked someCondition = true;
@@ -85,7 +95,7 @@ module('Integration | Helper | format-message', function (hooks) {
         '{city} has a population of {population, number, integer} as of {census_date, date, long}.',
     });
 
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-message
         this.translation
         city=this.city
@@ -112,7 +122,7 @@ module('Integration | Helper | format-message', function (hooks) {
         '{city} hat eine Bevölkerung von {population, number, integer} zum {census_date, date, long}.',
     });
 
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-message
         this.translation
         city=this.city
@@ -139,7 +149,7 @@ module('Integration | Helper | format-message', function (hooks) {
         '{person} harvested {count, plural, one {# apple} other {# apples}}.',
     });
 
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{#each this.harvests as |harvest|}}
         <div data-test-output>
           {{format-message this.translation person=harvest.person count=harvest.count}}
@@ -200,7 +210,7 @@ module('Integration | Helper | format-message', function (hooks) {
   }, assert) {
     this.instance = new SomeClass();
 
-    await render(hbs`
+    await render<TestContext>(hbs`
       {{format-message this.instance.translation}}
     `);
 

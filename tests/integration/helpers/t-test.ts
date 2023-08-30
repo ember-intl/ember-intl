@@ -1,17 +1,13 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
-  render,
-  settled,
-  type TestContext as BaseTestContext,
-} from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import type IntlService from 'ember-intl/services/intl';
+import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 interface TestContext extends BaseTestContext {
-  intl: IntlService;
+  translatedGreeting?: string;
 }
 
 module('Integration | Helper | t', function (hooks) {
@@ -78,7 +74,7 @@ module('Integration | Helper | t', function (hooks) {
     assert.dom('em').exists({ count: 0 });
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).innerHTML.trim(),
       `<strong>Hello &lt;em&gt;Jason&lt;/em&gt; 42,000</strong>`,
     );
@@ -93,7 +89,7 @@ module('Integration | Helper | t', function (hooks) {
     assert.dom('em').exists({ count: 0 });
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).innerHTML.trim(),
       `<a href="/foo">&lt;em&gt;Jason&lt;/em&gt;</a>`,
     );
@@ -105,7 +101,7 @@ module('Integration | Helper | t', function (hooks) {
     `);
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).textContent.trim(),
       `<strong>Hello Jason 42</strong>`,
     );
@@ -117,7 +113,7 @@ module('Integration | Helper | t', function (hooks) {
     `);
 
     assert.strictEqual(
-      // @ts-ignore: this.element exists
+      // @ts-expect-error: this.element exists
       (this.element as HTMLElement).textContent.trim(),
       `<strong>Hello Jason 39.99</strong>`,
     );
@@ -236,7 +232,7 @@ module('Integration | Helper | t', function (hooks) {
 
     this.intl.setLocale(['en-us']);
 
-    await render(hbs`{{this.translatedGreeting}}`);
+    await render<TestContext>(hbs`{{this.translatedGreeting}}`);
 
     assert.dom().hasText('Hello');
 
