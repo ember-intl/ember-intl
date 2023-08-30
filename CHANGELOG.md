@@ -1,5 +1,21 @@
 # Changelog
 
+## 6.0.0-beta.7 (2023-08-30)
+
+### Breaking Change
+* [#1776](https://github.com/ember-intl/ember-intl/pull/1776) Limited TypeScript v4 support to 4.8 and 4.9 ([@Techn1x](https://github.com/Techn1x))
+
+### Enhancement
+* [#1776](https://github.com/ember-intl/ember-intl/pull/1776) Expanded TS support to 5.x ([@Techn1x](https://github.com/Techn1x))
+
+### Internal
+* [#1777](https://github.com/ember-intl/ember-intl/pull/1777) Temporarily skipped embroider-safe and embroider-optimized scenarios ([@ijlee2](https://github.com/ijlee2))
+
+### Committers: 2
+- Brad Overton ([@Techn1x](https://github.com/Techn1x))
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+
+
 ## 6.0.0-beta.6 (2023-07-01)
 
 ### Breaking Change
@@ -24,7 +40,7 @@
 ### Bug Fix
 * [#1758](https://github.com/ember-intl/ember-intl/pull/1758) Replaced the slash character with path.sep (account for Windows) ([@ijlee2](https://github.com/ijlee2))
 * [#1748](https://github.com/ember-intl/ember-intl/pull/1748) fix: Filepath matching is overly-eager when namespace wrapping ([@prsethre](https://github.com/prsethre))
-* [#1725](https://github.com/ember-intl/ember-intl/pull/1725) Allow nested folder structure on Windows ([@ijlee2](https://github.com/ijlee2))
+* [#1725](https://github.com/ember-intl/ember-intl/pull/1725) Allow nested folder structure on Windows ([@tfloxolodeiro](https://github.com/tfloxolodeiro))
 
 ### Enhancement
 * [#1719](https://github.com/ember-intl/ember-intl/pull/1719) Add Glint types ([@jamescdavis](https://github.com/jamescdavis))
@@ -58,7 +74,7 @@
 ### Bug Fix
 * [#1696](https://github.com/ember-intl/ember-intl/pull/1696) set importsNotUsedAsValues ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
 * [#1678](https://github.com/ember-intl/ember-intl/pull/1678) Updated test-related packages. Imported TestContext from @ember/test-helpers.  ([@ijlee2](https://github.com/ijlee2))
-* [#1677](https://github.com/ember-intl/ember-intl/pull/1677) Correct usages of @formatjs/icu-messageformat-parser ([@ijlee2](https://github.com/ijlee2))
+* [#1677](https://github.com/ember-intl/ember-intl/pull/1677) Correct usages of @formatjs/icu-messageformat-parser ([@charlesfries](https://github.com/charlesfries))
 * [#1635](https://github.com/ember-intl/ember-intl/pull/1635) fix(types): fix `Formats` declaration as type ([@hadiwina](https://github.com/hadiwina))
 
 ### Internal
@@ -119,7 +135,6 @@
 - Chris Krycho ([@chriskrycho](https://github.com/chriskrycho))
 - Jon Johnson ([@jrjohnson](https://github.com/jrjohnson))
 - Yoav M. Franco ([@yoavfranco](https://github.com/yoavfranco))
-✨  Done in 5.42s.
 
 
 ## v6.0.0-beta.1 (2021-07-08)
