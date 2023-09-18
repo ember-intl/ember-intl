@@ -9,6 +9,9 @@
 !.*
 .*/
 
+# ember-try
+/.node_modules.ember-try/
+
 # ember-template-imports
 /**/*.gjs
 /**/*.gts
