@@ -48,6 +48,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/array-type': 'error',
         '@typescript-eslint/no-empty-interface': 'off',
+        '@typescript-eslint/no-explicit-any': 'warn',
         'n/no-missing-import': 'off',
       },
     },
