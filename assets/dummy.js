@@ -98,8 +98,8 @@
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class App extends _application.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "modulePrefix", _environment.default.modulePrefix);
       _defineProperty(this, "podModulePrefix", _environment.default.podModulePrefix);
       _defineProperty(this, "Resolver", _emberResolver.default);
@@ -792,8 +792,8 @@
     "isStrictMode": false
   });
   let LocaleSwitcherComponent = (_class = class LocaleSwitcherComponent extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "intl", _descriptor, this);
     }
     updateLocale(locale) {
@@ -869,8 +869,8 @@
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class DocsHelpersFormatMessageController extends _controller.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "customMessage", '{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}.');
     }
     get today() {
@@ -915,8 +915,8 @@
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let DocsHelpersTController = (_class = class DocsHelpersTController extends _controller.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "numPhotos", _descriptor, this);
     }
     addPhoto() {
@@ -954,8 +954,8 @@
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let SmokeController = (_class = class SmokeController extends _controller.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "intl", _descriptor, this);
     }
     get areNestedTranslationsWorking() {
@@ -2458,8 +2458,7 @@
   function svgJar(assetId, svgAttrs) {
     return (0, _makeSvg.default)(assetId, svgAttrs, getInlineAsset);
   }
-  var _default = (0, _helper.helper)(function svgJarHelper(_ref, svgAttrs) {
-    let [assetId] = _ref;
+  var _default = (0, _helper.helper)(function svgJarHelper([assetId], svgAttrs) {
     return svgJar(assetId, svgAttrs);
   });
   _exports.default = _default;
@@ -3023,8 +3022,8 @@
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class Router extends _router.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "location", _environment.default.locationType);
       _defineProperty(this, "rootURL", _environment.default.rootURL);
     }
@@ -3094,8 +3093,8 @@
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let ApplicationRoute = (_class = class ApplicationRoute extends _route.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "intl", _descriptor, this);
     }
     beforeModel() {
@@ -3575,8 +3574,8 @@
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); } // BEGIN-SNIPPET docs__helpers__format-message__example-1__my-component.js
   class DocsHelpersFormatMessageComponent extends _controller.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "customMessage", '{name} took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}} on {timestamp, date, long}.');
     }
     get today() {
@@ -3740,8 +3739,8 @@
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let MyComponent = (_class = class MyComponent extends _component.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "numPhotos", _descriptor, this);
     }
     addPhoto() {

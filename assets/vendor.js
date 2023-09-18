@@ -521,10 +521,7 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
    @class Container
    */
   class Container {
-    constructor(registry, options) {
-      if (options === void 0) {
-        options = {};
-      }
+    constructor(registry, options = {}) {
       this.registry = registry;
       this.owner = options.owner || null;
       this.cache = (0, _utils.dictionary)(options.cache || null);
@@ -684,10 +681,7 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
   function isInstantiatable(container, fullName) {
     return container.registry.getOption(fullName, 'instantiate') !== false;
   }
-  function lookup(container, fullName, options) {
-    if (options === void 0) {
-      options = {};
-    }
+  function lookup(container, fullName, options = {}) {
     var normalizedName = fullName;
     if (options.singleton === true || options.singleton === undefined && isSingleton(container, fullName)) {
       var cached = container.cache[normalizedName];
@@ -716,32 +710,28 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
     container.factoryManagerCache[normalizedName] = manager;
     return manager;
   }
-  function isSingletonClass(container, fullName, _ref) {
-    var {
-      instantiate,
-      singleton
-    } = _ref;
+  function isSingletonClass(container, fullName, {
+    instantiate,
+    singleton
+  }) {
     return singleton !== false && !instantiate && isSingleton(container, fullName) && !isInstantiatable(container, fullName);
   }
-  function isSingletonInstance(container, fullName, _ref2) {
-    var {
-      instantiate,
-      singleton
-    } = _ref2;
+  function isSingletonInstance(container, fullName, {
+    instantiate,
+    singleton
+  }) {
     return singleton !== false && instantiate !== false && (singleton === true || isSingleton(container, fullName)) && isInstantiatable(container, fullName);
   }
-  function isFactoryClass(container, fullname, _ref3) {
-    var {
-      instantiate,
-      singleton
-    } = _ref3;
+  function isFactoryClass(container, fullname, {
+    instantiate,
+    singleton
+  }) {
     return instantiate === false && (singleton === false || !isSingleton(container, fullname)) && !isInstantiatable(container, fullname);
   }
-  function isFactoryInstance(container, fullName, _ref4) {
-    var {
-      instantiate,
-      singleton
-    } = _ref4;
+  function isFactoryInstance(container, fullName, {
+    instantiate,
+    singleton
+  }) {
     return instantiate !== false && (singleton === false || !isSingleton(container, fullName)) && isInstantiatable(container, fullName);
   }
   function instantiateFactory(container, normalizedName, fullName, options) {
@@ -867,10 +857,7 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
    @since 1.11.0
   */
   class Registry {
-    constructor(options) {
-      if (options === void 0) {
-        options = {};
-      }
+    constructor(options = {}) {
       this.fallback = options.fallback || null;
       this.resolver = options.resolver || null;
       this.registrations = (0, _utils.dictionary)(options.registrations || null);
@@ -927,10 +914,7 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
     container(options) {
       return new Container(this, options);
     }
-    register(fullName, factory, options) {
-      if (options === void 0) {
-        options = {};
-      }
+    register(fullName, factory, options = {}) {
       (false && !(this.isValidFullName(fullName)) && (0, _debug.assert)('fullName must be a proper full name', this.isValidFullName(fullName)));
       (false && !(factory !== undefined) && (0, _debug.assert)(`Attempting to register an unknown factory: '${fullName}'`, factory !== undefined));
       var normalizedName = this.normalize(fullName);
@@ -1246,8 +1230,7 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
   }
   var privateNames = (0, _utils.dictionary)(null);
   var privateSuffix = `${Math.random()}${Date.now()}`.replace('.', '');
-  function privatize(_ref5) {
-    var [fullName] = _ref5;
+  function privatize([fullName]) {
     (false && !(arguments.length === 1 && fullName) && (0, _debug.assert)('has a single string argument', arguments.length === 1 && fullName));
     var name = privateNames[fullName];
     if (name) {
@@ -3281,8 +3264,8 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     if (false /* DEBUG */) {
       makeClosureAction(context, (0, _reference.valueForRef)(targetRef), (0, _reference.valueForRef)(actionRef), processArgs, debugKey);
     }
-    return function () {
-      return makeClosureAction(context, (0, _reference.valueForRef)(targetRef), (0, _reference.valueForRef)(actionRef), processArgs, debugKey)(...arguments);
+    return (...args) => {
+      return makeClosureAction(context, (0, _reference.valueForRef)(targetRef), (0, _reference.valueForRef)(actionRef), processArgs, debugKey)(...args);
     };
   }
   function makeClosureAction(context, target, action$$1, processArgs, debugKey) {
@@ -3299,10 +3282,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     } else {
       (false && !(false) && (0, _debug.assert)(`An action could not be made for \`${debugKey || action$$1}\` in ${target}. Please confirm that you are using either a quoted action name (i.e. \`(action '${debugKey || 'myAction'}')\`) or a function available in ${target}.`, false));
     }
-    return function () {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    return (...args) => {
       var payload = {
         target: self,
         args,
@@ -3498,10 +3478,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
      * features like exposed by view mixins like ChildViewSupport, ActionSupport,
      * etc.
      */
-    create(owner, ComponentClass, args, _ref, dynamicScope, callerSelfRef, hasBlock) {
-      var {
-        isInteractive
-      } = _ref;
+    create(owner, ComponentClass, args, {
+      isInteractive
+    }, dynamicScope, callerSelfRef, hasBlock) {
       // Get the nearest concrete component instance from the scope. "Virtual"
       // components will be skipped.
       var parentView = dynamicScope.view;
@@ -3576,19 +3555,17 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var _a;
       return definition.fullName || definition.normalizedName || ((_a = definition.class) === null || _a === void 0 ? void 0 : _a.name) || definition.name;
     }
-    getSelf(_ref2) {
-      var {
-        rootRef
-      } = _ref2;
+    getSelf({
+      rootRef
+    }) {
       return rootRef;
     }
-    didCreateElement(_ref3, element, operations) {
-      var {
-        component,
-        classRef,
-        isInteractive,
-        rootRef
-      } = _ref3;
+    didCreateElement({
+      component,
+      classRef,
+      isInteractive,
+      rootRef
+    }, element, operations) {
       (0, _views.setViewElement)(component, element);
       (0, _views.setElementView)(element, component);
       var {
@@ -3631,11 +3608,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       bucket.component[BOUNDS] = bounds;
       bucket.finalize();
     }
-    didCreate(_ref4) {
-      var {
-        component,
-        isInteractive
-      } = _ref4;
+    didCreate({
+      component,
+      isInteractive
+    }) {
       if (isInteractive) {
         component._transitionTo('inDOM');
         component.trigger('didInsertElement');
@@ -3674,11 +3650,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     didUpdateLayout(bucket) {
       bucket.finalize();
     }
-    didUpdate(_ref5) {
-      var {
-        component,
-        isInteractive
-      } = _ref5;
+    didUpdate({
+      component,
+      isInteractive
+    }) {
       if (isInteractive) {
         component.trigger('didUpdate');
         component.trigger('didRender');
@@ -4067,17 +4042,15 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         args
       };
     }
-    getDestroyable(_ref6) {
-      var {
-        instance
-      } = _ref6;
+    getDestroyable({
+      instance
+    }) {
       return instance;
     }
-    getValue(_ref7) {
-      var {
-        instance,
-        args
-      } = _ref7;
+    getValue({
+      instance,
+      args
+    }) {
       var {
         positional,
         named
@@ -4344,10 +4317,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       }
       return state;
     }
-    getDebugName(_ref8) {
-      var {
-        name
-      } = _ref8;
+    getDebugName({
+      name
+    }) {
       return name;
     }
     getDebugCustomRenderTree(definition, state, args) {
@@ -4385,10 +4357,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     getCapabilities() {
       return CAPABILITIES$1;
     }
-    getSelf(_ref9) {
-      var {
-        self
-      } = _ref9;
+    getSelf({
+      self
+    }) {
       return self;
     }
     didCreate() {}
@@ -4403,10 +4374,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   }
   var OUTLET_MANAGER = new OutletComponentManager();
   class OutletComponentDefinition {
-    constructor(state, manager) {
-      if (manager === void 0) {
-        manager = OUTLET_MANAGER;
-      }
+    constructor(state, manager = OUTLET_MANAGER) {
       this.state = state;
       this.manager = manager;
       // handle is not used by this custom definition
@@ -4448,10 +4416,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       super();
       this.component = component;
     }
-    create(_owner, _state, _args, _ref10, dynamicScope) {
-      var {
-        isInteractive
-      } = _ref10;
+    create(_owner, _state, _args, {
+      isInteractive
+    }, dynamicScope) {
       var component = this.component;
       var finalizer = (0, _instrumentation._instrumentStart)('render.component', initialRenderInstrumentDetails, component);
       dynamicScope.view = component;
@@ -4665,10 +4632,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       this.inner = inner;
     }
   }
-  var eachIn = internalHelper(_ref11 => {
-    var {
-      positional
-    } = _ref11;
+  var eachIn = internalHelper(({
+    positional
+  }) => {
     var inner = positional[0];
     (false && !(inner) && (0, _debug.assert)('expected at least one positional arg', inner));
     return (0, _reference.createComputeRef)(() => {
@@ -5003,11 +4969,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   /**
   @module ember
   */
-  var disallowDynamicResolution = internalHelper(_ref12 => {
-    var {
-      positional,
-      named
-    } = _ref12;
+  var disallowDynamicResolution = internalHelper(({
+    positional,
+    named
+  }) => {
     var nameOrValueRef = positional[0];
     (false && !(positional.length === 1 && nameOrValueRef) && (0, _debug.assert)(`[BUG] wrong number of positional arguments, expecting 1, got ${positional.length}`, positional.length === 1 && nameOrValueRef));
     var typeRef = named['type'];
@@ -5050,10 +5015,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     };
   }
   var inElementNullCheckHelper = internalHelper(helper$1);
-  var normalizeClassHelper = internalHelper(_ref13 => {
-    var {
-      positional
-    } = _ref13;
+  var normalizeClassHelper = internalHelper(({
+    positional
+  }) => {
     return (0, _reference.createComputeRef)(() => {
       var classNameArg = positional[0];
       var valueArg = positional[1];
@@ -5071,10 +5035,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       }
     });
   });
-  var resolve = internalHelper((_ref14, owner) => {
-    var {
-      positional
-    } = _ref14;
+  var resolve = internalHelper(({
+    positional
+  }, owner) => {
     var _a;
     // why is this allowed to be undefined in the first place?
     (false && !(owner) && (0, _debug.assert)('[BUG] missing owner', owner));
@@ -5099,10 +5062,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     updates to `{{each}}` when it changes. It is put into place by a template
     transform at build time, similar to the (-each-in) helper
   */
-  var trackArray = internalHelper(_ref15 => {
-    var {
-      positional
-    } = _ref15;
+  var trackArray = internalHelper(({
+    positional
+  }) => {
     var inner = positional[0];
     (false && !(inner) && (0, _debug.assert)('expected at least one positional arg', inner));
     return (0, _reference.createComputeRef)(() => {
@@ -5190,10 +5152,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @for Ember.Templates.helpers
     @public
   */
-  var mut = internalHelper(_ref16 => {
-    var {
-      positional
-    } = _ref16;
+  var mut = internalHelper(({
+    positional
+  }) => {
     var ref = positional[0];
     (false && !(ref) && (0, _debug.assert)('expected at least one positional arg', ref)); // TODO: Improve this error message. This covers at least two distinct
     // cases:
@@ -5326,10 +5287,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @for Ember.Templates.helpers
     @private
   */
-  var readonly = internalHelper(_ref17 => {
-    var {
-      positional
-    } = _ref17;
+  var readonly = internalHelper(({
+    positional
+  }) => {
     var firstArg = positional[0];
     (false && !(firstArg) && (0, _debug.assert)('has first arg', firstArg));
     return (0, _reference.createReadOnlyRef)(firstArg);
@@ -5365,11 +5325,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @for Ember.Templates.helpers
     @public
   */
-  var unbound = internalHelper(_ref18 => {
-    var {
-      positional,
-      named
-    } = _ref18;
+  var unbound = internalHelper(({
+    positional,
+    named
+  }) => {
     (false && !(positional.length === 1 && Object.keys(named).length === 0) && (0, _debug.assert)('unbound helper cannot be called with multiple params or hash params', positional.length === 1 && Object.keys(named).length === 0));
     return (0, _reference.createUnboundRef)((0, _reference.valueForRef)(positional[0]), '(result of an `unbound` helper)');
   });
@@ -5526,11 +5485,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     }
   }
   class ActionModifierManager {
-    create(owner, element, _state, _ref19) {
-      var {
-        named,
-        positional
-      } = _ref19;
+    create(owner, element, _state, {
+      named,
+      positional
+    }) {
       var actionArgs = [];
       // The first two arguments are (1) `this` and (2) the action name.
       // Everything else is a param.
@@ -5629,10 +5587,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     getOwner(state) {
       return state.engine;
     }
-    create(owner, _ref20, args, env) {
-      var {
-        name
-      } = _ref20;
+    create(owner, {
+      name
+    }, args, env) {
       // TODO
       // mount is a runtime helper, this shouldn't use dynamic layout
       // we should resolve the engine app template in the helper
@@ -5676,10 +5633,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       }
       return bucket;
     }
-    getDebugName(_ref21) {
-      var {
-        name
-      } = _ref21;
+    getDebugName({
+      name
+    }) {
       return name;
     }
     getDebugCustomRenderTree(definition, state, args, templateModuleName) {
@@ -5698,10 +5654,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         template: templateModuleName
       }];
     }
-    getSelf(_ref22) {
-      var {
-        self
-      } = _ref22;
+    getSelf({
+      self
+    }) {
       return self;
     }
     getDestroyable(bucket) {
@@ -6356,10 +6311,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var builder = owner.lookup('service:-dom-builder');
       return new this(owner, document, env, rootTemplate, _viewRegistry, builder);
     }
-    constructor(owner, document, env, rootTemplate, viewRegistry, builder) {
-      if (builder === void 0) {
-        builder = _runtime.clientBuilder;
-      }
+    constructor(owner, document, env, rootTemplate, viewRegistry, builder = _runtime.clientBuilder) {
       this._inRenderTransaction = false;
       this._lastRevision = -1;
       this._destroyed = false;
@@ -7021,10 +6973,7 @@ define("@ember/-internals/meta/lib/meta", ["exports", "@ember/-internals/utils",
       this.pushListener(eventName, target, method, 2 /* ListenerKind.REMOVE */);
     }
 
-    pushListener(event, target, method, kind, sync) {
-      if (sync === void 0) {
-        sync = false;
-      }
+    pushListener(event, target, method, kind, sync = false) {
       var listeners = this.writableListeners();
       var i = indexOfListener(listeners, event, target, method);
       // remove if found listener was inherited
@@ -7392,10 +7341,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @param {Boolean} once A flag whether a function should only be called once
     @public
   */
-  function addListener(obj, eventName, target, method, once, sync) {
-    if (sync === void 0) {
-      sync = true;
-    }
+  function addListener(obj, eventName, target, method, once, sync = true) {
     (false && !(Boolean(obj) && Boolean(eventName)) && (0, _debug.assert)('You must pass at least an object and event name to addListener', Boolean(obj) && Boolean(eventName)));
     if (!method && 'function' === typeof target) {
       method = target;
@@ -7520,10 +7466,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @return {Function} the listener function, passed as last argument to on(...)
     @public
   */
-  function on() {
-    for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
+  function on(...args) {
     var func = args.pop();
     var events = args;
     (false && !(typeof func === 'function') && (0, _debug.assert)('on expects function as last argument', typeof func === 'function'));
@@ -7553,10 +7496,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @public
   */
   _exports.ASYNC_OBSERVERS = ASYNC_OBSERVERS;
-  function addObserver(obj, path, target, method, sync) {
-    if (sync === void 0) {
-      sync = SYNC_DEFAULT;
-    }
+  function addObserver(obj, path, target, method, sync = SYNC_DEFAULT) {
     var eventName = changeEvent(path);
     addListener(obj, eventName, target, method, false, sync);
     var meta$$1 = (0, _meta2.peekMeta)(obj);
@@ -7574,10 +7514,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @param {Function|String} [method]
     @public
   */
-  function removeObserver(obj, path, target, method, sync) {
-    if (sync === void 0) {
-      sync = SYNC_DEFAULT;
-    }
+  function removeObserver(obj, path, target, method, sync = SYNC_DEFAULT) {
     var eventName = changeEvent(path);
     var meta$$1 = (0, _meta2.peekMeta)(obj);
     if (meta$$1 === null || !(meta$$1.isPrototypeMeta(obj) || meta$$1.isInitializing())) {
@@ -7593,10 +7530,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     }
     return observerMap.get(target);
   }
-  function activateObserver(target, eventName, sync) {
-    if (sync === void 0) {
-      sync = false;
-    }
+  function activateObserver(target, eventName, sync = false) {
     var activeObservers = getOrCreateActiveObserversFor(target, sync);
     if (activeObservers.has(eventName)) {
       activeObservers.get(eventName).count++;
@@ -7614,10 +7548,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   }
   var DEACTIVATE_SUSPENDED = false;
   var SCHEDULED_DEACTIVATE = [];
-  function deactivateObserver(target, eventName, sync) {
-    if (sync === void 0) {
-      sync = false;
-    }
+  function deactivateObserver(target, eventName, sync = false) {
     if (DEACTIVATE_SUSPENDED === true) {
       SCHEDULED_DEACTIVATE.push([target, eventName, sync]);
       return;
@@ -7667,10 +7598,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     }
   }
   var lastKnownRevision = 0;
-  function flushAsyncObservers(shouldSchedule) {
-    if (shouldSchedule === void 0) {
-      shouldSchedule = true;
-    }
+  function flushAsyncObservers(shouldSchedule = true) {
     var currentRevision = (0, _validator.valueForTag)(_validator.CURRENT_TAG);
     if (lastKnownRevision === currentRevision) {
       return;
@@ -7734,10 +7662,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
 
   // This is exported for `@tracked`, but should otherwise be avoided. Use `tagForObject`.
   var SELF_TAG = (0, _utils.symbol)('SELF_TAG');
-  function tagForProperty(obj, propertyKey, addMandatorySetter, meta$$1) {
-    if (addMandatorySetter === void 0) {
-      addMandatorySetter = false;
-    }
+  function tagForProperty(obj, propertyKey, addMandatorySetter = false, meta$$1) {
     var customTagFor = (0, _manager.getCustomTagFor)(obj);
     if (customTagFor !== undefined) {
       return customTagFor(obj, propertyKey, addMandatorySetter);
@@ -7870,10 +7795,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     sendEvent(array, '@array:before', [array, startIdx, removeAmt, addAmt]);
     return array;
   }
-  function arrayContentDidChange(array, startIdx, removeAmt, addAmt, notify) {
-    if (notify === void 0) {
-      notify = true;
-    }
+  function arrayContentDidChange(array, startIdx, removeAmt, addAmt, notify = true) {
     // if no args are passed assume everything changes
     if (startIdx === undefined) {
       startIdx = 0;
@@ -7927,10 +7849,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   function isMutableArray(obj) {
     return obj != null && typeof obj.replace === 'function';
   }
-  function replace(array, start, deleteCount, items) {
-    if (items === void 0) {
-      items = EMPTY_ARRAY;
-    }
+  function replace(array, start, deleteCount, items = EMPTY_ARRAY) {
     if (isMutableArray(array)) {
       array.replace(start, deleteCount, items);
     } else {
@@ -8229,10 +8148,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @param {function} decorator the value to mark as a decorator
     @private
   */
-  function setClassicDecorator(dec, value) {
-    if (value === void 0) {
-      value = true;
-    }
+  function setClassicDecorator(dec, value = true) {
     DECORATOR_DESCRIPTOR_MAP.set(dec, value);
   }
 
@@ -8553,14 +8469,11 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
         }
       }
     }
-    _property() {
+    _property(...passedArgs) {
       var args = [];
       function addArg(property) {
         (false && !(DEEP_EACH_REGEX.test(property) === false) && (0, _debug.assert)(`Dependent keys containing @each only work one level deep. ` + `You used the key "${property}" which is invalid. ` + `Please create an intermediary computed property or ` + `switch to using tracked properties.`, DEEP_EACH_REGEX.test(property) === false));
         args.push(property);
-      }
-      for (var _len2 = arguments.length, passedArgs = new Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
-        passedArgs[_key3] = arguments[_key3];
       }
       for (var arg of passedArgs) {
         expandProperties(arg, addArg);
@@ -8811,10 +8724,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       descriptorForDecorator(this).enumerable = value;
     }
   }
-  function computed() {
-    for (var _len3 = arguments.length, args = new Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
-      args[_key4] = arguments[_key4];
-    }
+  function computed(...args) {
     (false && !(!(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true)) && (0, _debug.assert)(`@computed can only be used directly as a native decorator. If you're using tracked in classic classes, add parenthesis to call it like a function: computed()`, !(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true)));
     if (isElementDescriptor(args)) {
       // SAFETY: We passed in the impl for this class
@@ -8824,10 +8734,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     // SAFETY: We passed in the impl for this class
     return makeComputedDecorator(new ComputedProperty(args), ComputedDecoratorImpl);
   }
-  function autoComputed() {
-    for (var _len4 = arguments.length, config = new Array(_len4), _key5 = 0; _key5 < _len4; _key5++) {
-      config[_key5] = arguments[_key5];
-    }
+  function autoComputed(...config) {
     // SAFETY: We passed in the impl for this class
     return makeComputedDecorator(new AutoComputedProperty(config), ComputedDecoratorImpl);
   }
@@ -8939,10 +8846,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     // pass the decorator function forward for backwards compat
     return desc;
   }
-  function defineValue(obj, keyName, value, wasDescriptor, enumerable) {
-    if (enumerable === void 0) {
-      enumerable = true;
-    }
+  function defineValue(obj, keyName, value, wasDescriptor, enumerable = true) {
     if (wasDescriptor === true || enumerable === false) {
       Object.defineProperty(obj, keyName, {
         configurable: true,
@@ -9398,13 +9302,10 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   if (false /* DEBUG */) {
     _exports.DEBUG_INJECTION_FUNCTIONS = DEBUG_INJECTION_FUNCTIONS = new WeakMap();
   }
-  function inject(type) {
+  function inject(type, ...args) {
     (false && !(typeof type === 'string') && (0, _debug.assert)('a string type must be provided to inject', typeof type === 'string'));
     var elementDescriptor;
     var name;
-    for (var _len5 = arguments.length, args = new Array(_len5 > 1 ? _len5 - 1 : 0), _key6 = 1; _key6 < _len5; _key6++) {
-      args[_key6 - 1] = arguments[_key6];
-    }
     if (isElementDescriptor(args)) {
       elementDescriptor = args;
     } else if (typeof args[0] === 'string') {
@@ -9433,10 +9334,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       return decorator;
     }
   }
-  function tracked() {
-    for (var _len6 = arguments.length, args = new Array(_len6), _key7 = 0; _key7 < _len6; _key7++) {
-      args[_key7] = arguments[_key7];
-    }
+  function tracked(...args) {
     (false && !(!(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true)) && (0, _debug.assert)(`@tracked can only be used directly as a native decorator. If you're using tracked in classic classes, add parenthesis to call it like a function: tracked()`, !(isElementDescriptor(args.slice(0, 3)) && args.length === 5 && args[4] === true)));
     if (!isElementDescriptor(args)) {
       var propertyDesc = args[0];
@@ -9465,8 +9363,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     // error in development so we need it to treat it like one
     setClassicDecorator(tracked);
   }
-  function descriptorForField(_ref) {
-    var [target, key, desc] = _ref;
+  function descriptorForField([target, key, desc]) {
     (false && !(!desc || !desc.value && !desc.get && !desc.set) && (0, _debug.assert)(`You attempted to use @tracked on ${key}, but that element is not a class field. @tracked is only usable on class fields. Native getters and setters will autotrack add any tracked fields they encounter, so there is no need mark getters and setters with @tracked.`, !desc || !desc.value && !desc.get && !desc.set));
     var {
       getter,
@@ -9513,10 +9410,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   // NOTE: copied from: https://github.com/glimmerjs/glimmer.js/pull/358
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _exports.TrackedDescriptor = TrackedDescriptor;
-  var cached = function () {
-    for (var _len7 = arguments.length, args = new Array(_len7), _key8 = 0; _key8 < _len7; _key8++) {
-      args[_key8] = arguments[_key8];
-    }
+  var cached = (...args) => {
     var [target, key, descriptor] = args;
     // Error on `@cached()`, `@cached(...args)`, and `@cached propName = value;`
     if (false /* DEBUG */ && target === undefined) throwCachedExtraneousParens();
@@ -9542,10 +9436,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   function throwCachedGetterOnlyError(key) {
     throw new Error(`The @cached decorator must be applied to getters. '${key}' is not a getter.`);
   }
-  function throwCachedInvalidArgsError(args) {
-    if (args === void 0) {
-      args = [];
-    }
+  function throwCachedInvalidArgsError(args = []) {
     throw new Error(`You attempted to use @cached on with ${args.length > 1 ? 'arguments' : 'an argument'} ( @cached(${args.map(d => `'${d}'`).join(', ')}), which is not supported. Dependencies are automatically tracked, so you can just use ${'`@cached`'}`);
   }
 
@@ -10249,10 +10140,7 @@ define("@ember/-internals/runtime/lib/mixins/action_handler", ["exports", "@embe
       @param {*} context a context to send with the action
       @public
     */
-    send(actionName) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
+    send(actionName, ...args) {
       (false && !(!this.isDestroying && !this.isDestroyed) && (0, _debug.assert)(`Attempted to call .send() with the action '${actionName}' on the destroyed object '${this}'.`, !this.isDestroying && !this.isDestroyed));
       if (this.actions && this.actions[actionName]) {
         var shouldBubble = this.actions[actionName].apply(this, args) === true;
@@ -10402,12 +10290,12 @@ define("@ember/-internals/runtime/lib/mixins/registry_proxy", ["exports", "@embe
     inject: registryAlias('injection')
   });
   function registryAlias(name) {
-    return function () {
+    return function (...args) {
       // We need this cast because `Parameters` is deferred so that it is not
       // possible for TS to see it will always produce the right type. However,
       // since `AnyFn` has a rest type, it is allowed. See discussion on [this
       // issue](https://github.com/microsoft/TypeScript/issues/47615).
-      return this.__registry__[name](...arguments);
+      return this.__registry__[name](...args);
     };
   }
   var _default = RegistryProxyMixin;
@@ -10489,10 +10377,7 @@ define("@ember/-internals/runtime/lib/mixins/target_action_support", ["exports",
     @return {Boolean} true if the action was sent successfully and did not return false
     @private
     */
-    triggerAction(opts) {
-      if (opts === void 0) {
-        opts = {};
-      }
+    triggerAction(opts = {}) {
       var {
         action,
         target,
@@ -10804,10 +10689,7 @@ define("@ember/-internals/utils/index", ["exports", "@glimmer/util", "@ember/deb
     @return {String} the guid
   */
   _exports.GUID_KEY = GUID_KEY;
-  function generateGuid(obj, prefix) {
-    if (prefix === void 0) {
-      prefix = GUID_PREFIX;
-    }
+  function generateGuid(obj, prefix = GUID_PREFIX) {
     var guid = prefix + uuid().toString();
     if (isObject(obj)) {
       OBJECT_GUIDS.set(obj, guid);
@@ -11111,10 +10993,7 @@ define("@ember/-internals/utils/index", ["exports", "@glimmer/util", "@ember/deb
     }
   }
   class Cache {
-    constructor(limit, func, store) {
-      if (store === void 0) {
-        store = new Map();
-      }
+    constructor(limit, func, store = new Map()) {
       this.limit = limit;
       this.func = func;
       this.store = store;
@@ -11459,10 +11338,7 @@ define("@ember/-internals/views/lib/mixins/action_support", ["exports", "@ember/
   */
 
   var ActionSupport = _mixin.default.create({
-    send(actionName) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
+    send(actionName, ...args) {
       (false && !(!this.isDestroying && !this.isDestroyed) && (0, _debug.assert)(`Attempted to call .send() with the action '${actionName}' on the destroyed object '${this}'.`, !this.isDestroying && !this.isDestroyed));
       var action = this.actions && this.actions[actionName];
       if (action) {
@@ -12544,10 +12420,7 @@ define("@ember/-internals/views/lib/views/core_view", ["exports", "@ember/-inter
       @private
     */
     // Changed to `trigger` on init
-    _trigger(name) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
+    _trigger(name, ...args) {
       this._superTrigger(name, ...args);
       var method = this[name];
       if (typeof method === 'function') {
@@ -12929,10 +12802,7 @@ define("@ember/application/index", ["exports", "@ember/owner", "@ember/-internal
       @method buildInstance
       @return {ApplicationInstance} the application instance
     */
-    buildInstance(options) {
-      if (options === void 0) {
-        options = {};
-      }
+    buildInstance(options = {}) {
       (false && !(!this.isDestroyed) && (0, _debug.assert)('You cannot build new instances of this application since it has already been destroyed', !this.isDestroyed));
       (false && !(!this.isDestroying) && (0, _debug.assert)('You cannot build new instances of this application since it is being destroyed', !this.isDestroying));
       return _instance.default.create(Object.assign(Object.assign({}, options), {
@@ -13721,10 +13591,7 @@ define("@ember/application/instance", ["exports", "@ember/object", "@ember/-inte
      @param {Registry} registry
      @param {BootOptions} options
     */
-    static setupRegistry(registry, options) {
-      if (options === void 0) {
-        options = {};
-      }
+    static setupRegistry(registry, options = {}) {
       var coptions = options instanceof _BootOptions ? options : new _BootOptions(options);
       registry.register('-environment:main', coptions.toEnvironment(), {
         instantiate: false
@@ -13758,10 +13625,7 @@ define("@ember/application/instance", ["exports", "@ember/object", "@ember/-inte
     @public
   */
   class _BootOptions {
-    constructor(options) {
-      if (options === void 0) {
-        options = {};
-      }
+    constructor(options = {}) {
       /**
         If present, overrides the router's `location` property with this
         value. This is useful for environments where trying to modify the
@@ -13998,10 +13862,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
 
   var EMPTY_ARRAY = Object.freeze([]);
   var identityFunction = item => item;
-  function uniqBy(array, keyOrFunc) {
-    if (keyOrFunc === void 0) {
-      keyOrFunc = identityFunction;
-    }
+  function uniqBy(array, keyOrFunc = identityFunction) {
     (false && !(isArray(array)) && (0, _debug.assert)(`first argument passed to \`uniqBy\` should be array`, isArray(array)));
     var ret = A();
     var seen = new Set();
@@ -14015,10 +13876,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
     });
     return ret;
   }
-  function iter() {
-    for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
+  function iter(...args) {
     var valueProvided = args.length === 2;
     var [key, value] = args;
     return valueProvided ? item => value === (0, _object.get)(item, key) : item => Boolean((0, _object.get)(item, key));
@@ -14034,33 +13892,21 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
     }
     return -1;
   }
-  function find(array, callback, target) {
-    if (target === void 0) {
-      target = null;
-    }
+  function find(array, callback, target = null) {
     var predicate = callback.bind(target);
     var index = findIndex(array, predicate, 0);
     return index === -1 ? undefined : (0, _metal.objectAt)(array, index);
   }
-  function any(array, callback, target) {
-    if (target === void 0) {
-      target = null;
-    }
+  function any(array, callback, target = null) {
     var predicate = callback.bind(target);
     return findIndex(array, predicate, 0) !== -1;
   }
-  function every(array, callback, target) {
-    if (target === void 0) {
-      target = null;
-    }
+  function every(array, callback, target = null) {
     var cb = callback.bind(target);
     var predicate = (item, index, array) => !cb(item, index, array);
     return findIndex(array, predicate, 0) === -1;
   }
-  function indexOf(array, val, startAt, withNaNCheck) {
-    if (startAt === void 0) {
-      startAt = 0;
-    }
+  function indexOf(array, val, startAt = 0, withNaNCheck) {
     var len = array.length;
     if (startAt < 0) {
       startAt += len;
@@ -14171,10 +14017,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       return (0, _metal.objectAt)(this, this.length - 1);
     }).readOnly(),
     // Add any extra methods to EmberArray that are native to the built-in Array.
-    slice(beginIndex, endIndex) {
-      if (beginIndex === void 0) {
-        beginIndex = 0;
-      }
+    slice(beginIndex = 0, endIndex) {
       var ret = A();
       var length = this.length;
       if (beginIndex < 0) {
@@ -14211,10 +14054,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       }
       return -1;
     },
-    forEach(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    forEach(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`forEach` expects a function as first argument.', typeof callback === 'function'));
       var length = this.length;
       for (var index = 0; index < length; index++) {
@@ -14227,20 +14067,14 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
     setEach(key, value) {
       return this.forEach(item => (0, _object.set)(item, key, value));
     },
-    map(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    map(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`map` expects a function as first argument.', typeof callback === 'function'));
       var ret = A();
       this.forEach((x, idx, i) => ret[idx] = callback.call(target, x, idx, i));
       return ret;
     },
     mapBy,
-    filter(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    filter(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`filter` expects a function as first argument.', typeof callback === 'function'));
       var ret = A();
       this.forEach((x, idx, i) => {
@@ -14250,10 +14084,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       });
       return ret;
     },
-    reject(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    reject(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`reject` expects a function as first argument.', typeof callback === 'function'));
       return this.filter(function () {
         // @ts-expect-error TS doesn't like us using arguments like this
@@ -14268,10 +14099,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       // @ts-expect-error TS doesn't like the ...arguments spread here.
       return this.reject(iter(...arguments));
     },
-    find(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    find(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`find` expects a function as first argument.', typeof callback === 'function'));
       return find(this, callback, target);
     },
@@ -14280,10 +14108,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       var callback = iter(...arguments);
       return find(this, callback);
     },
-    every(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    every(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`every` expects a function as first argument.', typeof callback === 'function'));
       return every(this, callback, target);
     },
@@ -14292,10 +14117,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       var callback = iter(...arguments);
       return every(this, callback);
     },
-    any(callback, target) {
-      if (target === void 0) {
-        target = null;
-      }
+    any(callback, target = null) {
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`any` expects a function as first argument.', typeof callback === 'function'));
       return any(this, callback, target);
     },
@@ -14313,10 +14135,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       }, this);
       return ret;
     },
-    invoke(methodName) {
-      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key3 = 1; _key3 < _len2; _key3++) {
-        args[_key3 - 1] = arguments[_key3];
-      }
+    invoke(methodName, ...args) {
       var ret = A();
       // SAFETY: This is not entirely safe and the code will not work with Ember proxies
       this.forEach(item => {
@@ -14468,10 +14287,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
       return this[idx];
     },
     // primitive for array support.
-    replace(start, deleteCount, items) {
-      if (items === void 0) {
-        items = EMPTY_ARRAY;
-      }
+    replace(start, deleteCount, items = EMPTY_ARRAY) {
       (false && !(Array.isArray(items)) && (0, _debug.assert)('The third argument to replace needs to be an array.', Array.isArray(items)));
       (0, _metal.replaceInNativeArray)(this, start, deleteCount, items);
       return this;
@@ -14974,7 +14790,7 @@ define("@ember/controller/index", ["exports", "@ember/-internals/owner", "@ember
       var value = (0, _object.get)(controller, prop);
       delegate(prop, value);
     },
-    transitionToRoute() {
+    transitionToRoute(...args) {
       var _a;
       (0, _internals2.deprecateTransitionMethods)('controller', 'transitionToRoute');
       // target may be either another controller or a router
@@ -14983,12 +14799,9 @@ define("@ember/controller/index", ["exports", "@ember/-internals/owner", "@ember
       // mock out an object that only has the single method. Since this is deprecated, I think it's
       // ok to be a little less than proper here.
       var method = (_a = target.transitionToRoute) !== null && _a !== void 0 ? _a : target.transitionTo;
-      for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
       return method.apply(target, (0, _internals2.prefixRouteNameArg)(this, args));
     },
-    replaceRoute() {
+    replaceRoute(...args) {
       var _a;
       (0, _internals2.deprecateTransitionMethods)('controller', 'replaceRoute');
       // target may be either another controller or a router
@@ -14997,19 +14810,13 @@ define("@ember/controller/index", ["exports", "@ember/-internals/owner", "@ember
       // mock out an object that only has the single method. Since this is deprecated, I think it's
       // ok to be a little less than proper here.
       var method = (_a = target.replaceRoute) !== null && _a !== void 0 ? _a : target.replaceWith;
-      for (var _len2 = arguments.length, args = new Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
       return method.apply(target, (0, _internals2.prefixRouteNameArg)(this, args));
     }
   });
   _exports.ControllerMixin = ControllerMixin;
   class Controller extends _internals.FrameworkObject.extend(ControllerMixin) {}
   _exports.default = Controller;
-  function inject() {
-    for (var _len3 = arguments.length, args = new Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
-      args[_key4] = arguments[_key4];
-    }
+  function inject(...args) {
     return (0, _metal.inject)('controller', ...args);
   }
 });
@@ -15816,17 +15623,11 @@ define("@ember/debug/index", ["exports", "@ember/-internals/browser-environment"
       @return {Function} A new function that wraps the original function with a deprecation warning
       @private
     */
-    setDebugFunction('deprecateFunc', function deprecateFunc() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    setDebugFunction('deprecateFunc', function deprecateFunc(...args) {
       if (args.length === 3) {
         var [message, options, func] = args;
-        return function () {
+        return function (...args) {
           deprecate(message, false, options);
-          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-          }
           return func.apply(this, args);
         };
       } else {
@@ -16781,10 +16582,7 @@ define("@ember/engine/index", ["exports", "@ember/engine/lib/engine-parent", "@e
       @method buildInstance
       @return {EngineInstance} the engine instance
     */
-    buildInstance(options) {
-      if (options === void 0) {
-        options = {};
-      }
+    buildInstance(options = {}) {
       this.ensureInitializers();
       return _instance.default.create(Object.assign(Object.assign({}, options), {
         base: this
@@ -17221,10 +17019,7 @@ define("@ember/engine/instance", ["exports", "@ember/object", "@ember/-internals
       this._booted = true;
       return this;
     }
-    setupRegistry(options) {
-      if (options === void 0) {
-        options = this.__container__.lookup('-environment:main');
-      }
+    setupRegistry(options = this.__container__.lookup('-environment:main')) {
       this.constructor.setupRegistry(this.__registry__, options);
     }
     /**
@@ -17250,10 +17045,7 @@ define("@ember/engine/instance", ["exports", "@ember/object", "@ember/-internals
       @param options {Object} options provided to the engine instance.
       @return {EngineInstance,Error}
     */
-    buildChildEngineInstance(name, options) {
-      if (options === void 0) {
-        options = {};
-      }
+    buildChildEngineInstance(name, options = {}) {
       var ChildEngine = this.lookup(`engine:${name}`);
       if (!ChildEngine) {
         throw new Error(`You attempted to mount the engine '${name}', but it is not registered with its parent.`);
@@ -17781,10 +17573,7 @@ define("@ember/object/compat", ["exports", "@ember/-internals/metal", "@ember/de
     }
     return desc;
   };
-  function dependentKeyCompat() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+  function dependentKeyCompat(...args) {
     if ((0, _metal.isElementDescriptor)(args)) {
       var [target, key, desc] = args;
       (false && !(desc != null && (typeof desc.get === 'function' || typeof desc.set === 'function')) && (0, _debug.assert)('The @dependentKeyCompat decorator must be applied to getters/setters when used in native classes', desc != null && (typeof desc.get === 'function' || typeof desc.set === 'function')));
@@ -18149,10 +17938,7 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
         return self;
       }
     }
-    reopen() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    reopen(...args) {
       (0, _mixin.applyMixin)(this, args);
       return this;
     }
@@ -18392,18 +18178,12 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
       var extension = hasToStringExtension(this) ? `:${this.toStringExtension()}` : '';
       return `<${(0, _container.getFactoryFor)(this) || '(unknown)'}:${(0, _utils.guidFor)(this)}${extension}>`;
     }
-    static extend() {
+    static extend(...mixins) {
       var Class = class extends this {};
-      for (var _len2 = arguments.length, mixins = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        mixins[_key2] = arguments[_key2];
-      }
       reopen.apply(Class.PrototypeMixin, mixins);
       return Class;
     }
-    static create() {
-      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
+    static create(...args) {
       var props = args[0];
       var instance;
       if (props !== undefined) {
@@ -18455,11 +18235,8 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
       @static
       @public
     */
-    static reopen() {
+    static reopen(...args) {
       this.willReopen();
-      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-        args[_key4] = arguments[_key4];
-      }
       reopen.apply(this.PrototypeMixin, args);
       return this;
     }
@@ -18522,10 +18299,7 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
       @static
       @public
     */
-    static reopenClass() {
-      for (var _len5 = arguments.length, mixins = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-        mixins[_key5] = arguments[_key5];
-      }
+    static reopenClass(...mixins) {
       (0, _mixin.applyMixin)(this, mixins);
       return this;
     }
@@ -18583,10 +18357,7 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
       @param {Object} binding
       @private
     */
-    static eachComputedProperty(callback, binding) {
-      if (binding === void 0) {
-        binding = this;
-      }
+    static eachComputedProperty(callback, binding = this) {
       this.proto(); // ensure prototype is initialized
       var empty = {};
       (0, _meta2.meta)(this.prototype).forEachDescriptors((name, descriptor) => {
@@ -18631,11 +18402,8 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
   }
   CoreObject.isClass = true;
   CoreObject.isMethod = false;
-  function flattenProps() {
+  function flattenProps(...props) {
     var initProperties = {};
-    for (var _len6 = arguments.length, props = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-      props[_key6] = arguments[_key6];
-    }
     for (var properties of props) {
       (false && !(!(properties instanceof _mixin.default)) && (0, _debug.assert)('EmberObject.create no longer supports mixing in other ' + 'definitions, use .extend & .create separately instead.', !(properties instanceof _mixin.default)));
       var keyNames = Object.keys(properties);
@@ -18719,10 +18487,7 @@ define("@ember/object/evented", ["exports", "@ember/-internals/metal", "@ember/o
       (0, _metal.addListener)(this, name, target, method, true);
       return this;
     },
-    trigger(name) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
+    trigger(name, ...args) {
       (0, _metal.sendEvent)(this, name, args);
     },
     off(name, target, method) {
@@ -18969,11 +18734,8 @@ define("@ember/object/index", ["exports", "@ember/debug", "@ember/-internals/env
       }
     };
   }
-  function action() {
+  function action(...args) {
     var actionFn;
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
     if (!(0, _metal.isElementDescriptor)(args)) {
       actionFn = args[0];
       var decorator = function (target, key, _desc, _meta, isClassicDecorator) {
@@ -19016,10 +18778,7 @@ define("@ember/object/index", ["exports", "@ember/debug", "@ember/-internals/env
     @public
     @static
   */
-  function observer() {
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
+  function observer(...args) {
     var funcOrDef = args.pop();
     (false && !(typeof funcOrDef === 'function' || typeof funcOrDef === 'object' && funcOrDef !== null) && (0, _debug.assert)('observer must be provided a function or an observer definition', typeof funcOrDef === 'function' || typeof funcOrDef === 'object' && funcOrDef !== null));
     var func;
@@ -19104,10 +18863,7 @@ define("@ember/object/lib/computed/computed_macros", ["exports", "@ember/-intern
     return expandedProperties;
   }
   function generateComputedWithPredicate(name, predicate) {
-    return function (dependentKey) {
-      for (var _len = arguments.length, additionalDependentKeys = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        additionalDependentKeys[_key - 1] = arguments[_key];
-      }
+    return (dependentKey, ...additionalDependentKeys) => {
       var properties = [dependentKey, ...additionalDependentKeys];
       (false && !(!(0, _metal.isElementDescriptor)(properties)) && (0, _debug.assert)(`You attempted to use @${name} as a decorator directly, but it requires at least one dependent key parameter`, !(0, _metal.isElementDescriptor)(properties)));
       var dependentKeys = expandPropertiesToArray(name, properties);
@@ -20227,10 +19983,7 @@ define("@ember/object/lib/computed/reduce_computed_macros", ["exports", "@ember/
     unique elements from the dependent array
     @public
   */
-  function uniq(dependentKey) {
-    for (var _len = arguments.length, additionalDependentKeys = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      additionalDependentKeys[_key - 1] = arguments[_key];
-    }
+  function uniq(dependentKey, ...additionalDependentKeys) {
     (false && !(!(0, _metal.isElementDescriptor)(Array.prototype.slice.call(arguments))) && (0, _debug.assert)('You attempted to use @uniq/@union as a decorator directly, but it requires atleast one dependent key parameter', !(0, _metal.isElementDescriptor)(Array.prototype.slice.call(arguments))));
     var args = [dependentKey, ...additionalDependentKeys];
     return multiArrayMacro(args, function (dependentKeys) {
@@ -20377,10 +20130,7 @@ define("@ember/object/lib/computed/reduce_computed_macros", ["exports", "@ember/
     @public
   */
   _exports.union = union;
-  function intersect(dependentKey) {
-    for (var _len2 = arguments.length, additionalDependentKeys = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      additionalDependentKeys[_key2 - 1] = arguments[_key2];
-    }
+  function intersect(dependentKey, ...additionalDependentKeys) {
     (false && !(!(0, _metal.isElementDescriptor)(Array.prototype.slice.call(arguments))) && (0, _debug.assert)('You attempted to use @intersect as a decorator directly, but it requires atleast one dependent key parameter', !(0, _metal.isElementDescriptor)(Array.prototype.slice.call(arguments))));
     var args = [dependentKey, ...additionalDependentKeys];
     return multiArrayMacro(args, function (dependentKeys) {
@@ -20498,10 +20248,7 @@ define("@ember/object/lib/computed/reduce_computed_macros", ["exports", "@ember/
     in properties to an array.
     @public
   */
-  function collect(dependentKey) {
-    for (var _len3 = arguments.length, additionalDependentKeys = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-      additionalDependentKeys[_key3 - 1] = arguments[_key3];
-    }
+  function collect(dependentKey, ...additionalDependentKeys) {
     (false && !(!(0, _metal.isElementDescriptor)(Array.prototype.slice.call(arguments))) && (0, _debug.assert)('You attempted to use @collect as a decorator directly, but it requires atleast one dependent key parameter', !(0, _metal.isElementDescriptor)(Array.prototype.slice.call(arguments))));
     var dependentKeys = [dependentKey, ...additionalDependentKeys];
     return multiArrayMacro(dependentKeys, function () {
@@ -20845,10 +20592,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
       }
     }
   }
-  function applyMixin(obj, mixins, _hideKeys) {
-    if (_hideKeys === void 0) {
-      _hideKeys = false;
-    }
+  function applyMixin(obj, mixins, _hideKeys = false) {
     var descs = Object.create(null);
     var values = Object.create(null);
     var meta = (0, _meta.meta)(obj);
@@ -20887,10 +20631,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
     @return obj
     @private
   */
-  function mixin(obj) {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
+  function mixin(obj, ...args) {
     applyMixin(obj, args);
     return obj;
   }
@@ -21007,12 +20748,9 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
       @param arguments*
       @public
     */
-    static create() {
+    static create(...args) {
       (0, _metal.setUnprocessedMixins)();
       var M = this;
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
       return new M(args, undefined);
     }
     // returns the mixins currently applied to the specified object
@@ -21038,10 +20776,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
       @private
       @internal
     */
-    reopen() {
-      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
+    reopen(...args) {
       if (args.length === 0) {
         return;
       }
@@ -21062,10 +20797,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
       @private
       @internal
     */
-    apply(obj, _hideKeys) {
-      if (_hideKeys === void 0) {
-        _hideKeys = false;
-      }
+    apply(obj, _hideKeys = false) {
       // Ember.NativeArray is a normal Ember.Mixin that we mix into `Array.prototype` when prototype extensions are enabled
       // mutating a native object prototype like this should _not_ result in enumerable properties being added (or we have significant
       // issues with things like deep equality checks from test frameworks, or things like jQuery.extend(true, [], [])).
@@ -21098,11 +20830,8 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
       return meta.hasMixin(this);
     }
     /** @internal */
-    without() {
+    without(...args) {
       var ret = new Mixin([this]);
-      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-        args[_key4] = arguments[_key4];
-      }
       ret._without = args;
       return ret;
     }
@@ -21146,10 +20875,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
   if (false /* DEBUG */) {
     Object.seal(Mixin.prototype);
   }
-  function _detect(curMixin, targetMixin, seen) {
-    if (seen === void 0) {
-      seen = new Set();
-    }
+  function _detect(curMixin, targetMixin, seen = new Set()) {
     if (seen.has(curMixin)) {
       return false;
     }
@@ -21163,13 +20889,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
     }
     return false;
   }
-  function _keys(mixin, ret, seen) {
-    if (ret === void 0) {
-      ret = new Set();
-    }
-    if (seen === void 0) {
-      seen = new Set();
-    }
+  function _keys(mixin, ret = new Set(), seen = new Set()) {
     if (seen.has(mixin)) {
       return;
     }
@@ -21200,10 +20920,7 @@ define("@ember/object/observable", ["exports", "@ember/-internals/meta", "@ember
     get(keyName) {
       return (0, _object.get)(this, keyName);
     },
-    getProperties() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    getProperties(...args) {
       return (0, _object.getProperties)(this, ...args);
     },
     set(keyName, value) {
@@ -21270,17 +20987,11 @@ define("@ember/object/observable", ["exports", "@ember/-internals/meta", "@ember
     hasObserverFor(key) {
       return (0, _metal.hasListeners)(this, `${key}:change`);
     },
-    incrementProperty(keyName, increment) {
-      if (increment === void 0) {
-        increment = 1;
-      }
+    incrementProperty(keyName, increment = 1) {
       (false && !(!isNaN(parseFloat(String(increment))) && isFinite(increment)) && (0, _debug.assert)('Must pass a numeric value to incrementProperty', !isNaN(parseFloat(String(increment))) && isFinite(increment)));
       return (0, _object.set)(this, keyName, (parseFloat((0, _object.get)(this, keyName)) || 0) + increment);
     },
-    decrementProperty(keyName, decrement) {
-      if (decrement === void 0) {
-        decrement = 1;
-      }
+    decrementProperty(keyName, decrement = 1) {
       (false && !((typeof decrement === 'number' || !isNaN(parseFloat(decrement))) && isFinite(decrement)) && (0, _debug.assert)('Must pass a numeric value to decrementProperty', (typeof decrement === 'number' || !isNaN(parseFloat(decrement))) && isFinite(decrement)));
       return (0, _object.set)(this, keyName, ((0, _object.get)(this, keyName) || 0) - decrement);
     },
@@ -21372,13 +21083,13 @@ define("@ember/object/promise-proxy-mixin", ["exports", "@ember/object", "@ember
     finally: promiseAlias('finally')
   });
   function promiseAlias(name) {
-    return function () {
+    return function (...args) {
       var promise = (0, _object.get)(this, 'promise');
       // We need this cast because `Parameters` is deferred so that it is not
       // possible for TS to see it will always produce the right type. However,
       // since `AnyFn` has a rest type, it is allowed. See discussion on [this
       // issue](https://github.com/microsoft/TypeScript/issues/47615).
-      return promise[name](...arguments);
+      return promise[name](...args);
     };
   }
   var _default = PromiseProxyMixin;
@@ -21544,7 +21255,7 @@ define("@ember/polyfills/lib/assign", ["exports", "@ember/debug"], function (_ex
     @public
     @static
   */
-  function assign(target) {
+  function assign(target, ...rest) {
     (false && !(false) && (0, _debug.deprecate)('Use of `assign` has been deprecated. Please use `Object.assign` or the spread operator instead.', false, {
       id: 'ember-polyfills.deprecate-assign',
       until: '5.0.0',
@@ -21555,9 +21266,6 @@ define("@ember/polyfills/lib/assign", ["exports", "@ember/debug"], function (_ex
         enabled: '4.0.0'
       }
     }));
-    for (var _len = arguments.length, rest = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      rest[_key - 1] = arguments[_key];
-    }
     return Object.assign(target, ...rest);
   }
 });
@@ -21748,7 +21456,7 @@ define("@ember/routing/auto-location", ["exports", "@ember/-internals/browser-en
     cancelRouterSetup: false
   });
   function delegateToConcreteImplementation(methodName) {
-    return function () {
+    return function (...args) {
       var _a;
       var {
         concreteImplementation
@@ -21757,9 +21465,6 @@ define("@ember/routing/auto-location", ["exports", "@ember/-internals/browser-en
       // possible for TS to see it will always produce the right type. However,
       // since `AnyFn` has a rest type, it is allowed. See discussion on [this
       // issue](https://github.com/microsoft/TypeScript/issues/47615).
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
       return (_a = concreteImplementation[methodName]) === null || _a === void 0 ? void 0 : _a.call(concreteImplementation, ...args);
     };
   }
@@ -22364,10 +22069,7 @@ define("@ember/routing/lib/dsl", ["exports", "@ember/debug"], function (_exports
     return value !== null && typeof value === 'object';
   }
   class DSLImpl {
-    constructor(name, options) {
-      if (name === void 0) {
-        name = null;
-      }
+    constructor(name = null, options) {
       this.explicitIndex = false;
       this.parent = name;
       this.enableLoadingSubstates = Boolean(options && options.enableLoadingSubstates);
@@ -22456,10 +22158,7 @@ define("@ember/routing/lib/dsl", ["exports", "@ember/debug"], function (_exports
         }
       };
     }
-    mount(_name, options) {
-      if (options === void 0) {
-        options = {};
-      }
+    mount(_name, options = {}) {
       var engineRouteMap = this.options.resolveRouteMap(_name);
       var name = _name;
       if (options.as) {
@@ -22541,10 +22240,7 @@ define("@ember/routing/lib/dsl", ["exports", "@ember/debug"], function (_exports
       return name;
     }
   }
-  function createRoute(dsl, name, options, callback) {
-    if (options === void 0) {
-      options = {};
-    }
+  function createRoute(dsl, name, options = {}, callback) {
     var fullName = getFullName(dsl, name, options.resetNamespace);
     if (typeof options.path !== 'string') {
       options.path = `/${name}`;
@@ -22731,10 +22427,7 @@ define("@ember/routing/lib/query_params", ["exports"], function (_exports) {
   });
   _exports.default = void 0;
   class QueryParams {
-    constructor(values) {
-      if (values === void 0) {
-        values = null;
-      }
+    constructor(values = null) {
       this.isQueryParams = true;
       this.values = values;
     }
@@ -22978,10 +22671,7 @@ define("@ember/routing/lib/utils", ["exports", "@ember/-internals/metal", "@embe
   /*
     Stolen from Controller
   */
-  function calculateCacheKey(prefix, parts, values) {
-    if (parts === void 0) {
-      parts = [];
-    }
+  function calculateCacheKey(prefix, parts = [], values) {
     var suffixes = '';
     for (var part of parts) {
       var cacheValuePrefix = _calculateCacheValuePrefix(prefix, part);
@@ -23554,8 +23244,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       var fullName = route.fullRouteName;
       var params = Object.assign({}, state.params[fullName]);
       var queryParams = getQueryParamsFor(route, state);
-      return Object.entries(queryParams).reduce((params, _ref) => {
-        var [key, value] = _ref;
+      return Object.entries(queryParams).reduce((params, [key, value]) => {
         (false && !(!params[key]) && (0, _debug.assert)(`The route '${this.routeName}' has both a dynamic segment and query param with name '${key}'. Please rename one to avoid collisions.`, !params[key]));
         params[key] = value;
         return params;
@@ -23858,11 +23547,8 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       @deprecated Use transitionTo from the Router service instead.
       @public
     */
-    transitionTo() {
+    transitionTo(...args) {
       (0, _utils3.deprecateTransitionMethods)('route', 'transitionTo');
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
       return this._router.transitionTo(...(0, _utils3.prefixRouteNameArg)(this, args));
     }
     /**
@@ -23880,10 +23566,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       @since 1.2.0
       @public
      */
-    intermediateTransitionTo() {
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
+    intermediateTransitionTo(...args) {
       var [name, ...preparedArgs] = (0, _utils3.prefixRouteNameArg)(this, args);
       this._router.intermediateTransitionTo(name, ...preparedArgs);
     }
@@ -23945,11 +23628,8 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       @deprecated Use replaceWith from the Router service instead.
       @public
     */
-    replaceWith() {
+    replaceWith(...args) {
       (0, _utils3.deprecateTransitionMethods)('route', 'replaceWith');
-      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
       return this._router.replaceWith(...(0, _utils3.prefixRouteNameArg)(this, args));
     }
     /**
@@ -24148,8 +23828,8 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       @param {Object} value the value passed to find
       @private
     */
-    findModel() {
-      return (0, _object.get)(this, 'store').find(...arguments);
+    findModel(...args) {
+      return (0, _object.get)(this, 'store').find(...args);
     }
     /**
       A hook you can use to setup the controller for the current route.
@@ -24208,10 +23888,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
         (0, _object.set)(controller, 'model', context);
       }
     }
-    controllerFor(name, _skipAssert) {
-      if (_skipAssert === void 0) {
-        _skipAssert = false;
-      }
+    controllerFor(name, _skipAssert = false) {
       var owner = (0, _owner.getOwner)(this);
       (false && !(owner) && (0, _debug.assert)('Route is unexpectedly missing an owner', owner));
       var route = owner.lookup(`route:${name}`);
@@ -24495,10 +24172,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     var routeInfo = routeInfoFor(route, route._router._routerMicrolib.state.routeInfos, -1);
     return routeInfo && routeInfo.route;
   }
-  function routeInfoFor(route, routeInfos, offset) {
-    if (offset === void 0) {
-      offset = 0;
-    }
+  function routeInfoFor(route, routeInfos, offset = 0) {
     if (!routeInfos) {
       return;
     }
@@ -24698,10 +24372,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     queryParams: {},
     templateName: null,
     controllerName: null,
-    send() {
-      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-        args[_key4] = arguments[_key4];
-      }
+    send(...args) {
       (false && !(!this.isDestroying && !this.isDestroyed) && (0, _debug.assert)(`Attempted to call .send() with the action '${args[0]}' on the destroyed route '${this.routeName}'.`, !this.isDestroying && !this.isDestroyed));
       if (this._router && this._router._routerMicrolib || !(0, _debug.isTesting)()) {
         this._router.send(...args);
@@ -24935,10 +24606,7 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
          attempted transition
        @public
      */
-    transitionTo() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    transitionTo(...args) {
       if ((0, _utils.resemblesURL)(args[0])) {
         // NOTE: this `args[0] as string` cast is safe and TS correctly infers it
         // in 3.6+, so it can be removed when TS is upgraded.
@@ -24982,8 +24650,8 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
          attempted transition
        @public
      */
-    replaceWith() {
-      return this.transitionTo(...arguments).method('replace');
+    replaceWith(...args) {
+      return this.transitionTo(...args).method('replace');
     }
     /**
       Generate a URL based on the supplied route name and optionally a model. The
@@ -25042,11 +24710,8 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
        @return {String} the string representing the generated URL
        @public
      */
-    urlFor(routeName) {
+    urlFor(routeName, ...args) {
       this._router.setupRouter();
-      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
-      }
       return this._router.generate(routeName, ...args);
     }
     /**
@@ -25086,10 +24751,7 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
        @return {boolean} true if the provided routeName/models/queryParams are active
        @public
      */
-    isActive() {
-      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
+    isActive(...args) {
       var {
         routeName,
         models,
@@ -25809,10 +25471,7 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
         attempted transition
       @public
     */
-    transitionTo() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    transitionTo(...args) {
       if ((0, _utils.resemblesURL)(args[0])) {
         (false && !(!this.isDestroying && !this.isDestroyed) && (0, _debug.assert)(`A transition was attempted from '${this.currentRouteName}' to '${args[0]}' but the application instance has already been destroyed.`, !this.isDestroying && !this.isDestroyed));
         return this._doURLTransition('transitionTo', args[0]);
@@ -25825,10 +25484,7 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
       (false && !(!this.isDestroying && !this.isDestroyed) && (0, _debug.assert)(`A transition was attempted from '${this.currentRouteName}' to '${routeName}' but the application instance has already been destroyed.`, !this.isDestroying && !this.isDestroyed));
       return this._doTransition(routeName, models, queryParams);
     }
-    intermediateTransitionTo(name) {
-      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
-      }
+    intermediateTransitionTo(name, ...args) {
       this._routerMicrolib.intermediateTransitionTo(name, ...args);
       updatePaths(this);
       if (false /* DEBUG */) {
@@ -25855,13 +25511,10 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
         attempted transition
       @public
     */
-    replaceWith() {
-      return this.transitionTo(...arguments).method('replace');
+    replaceWith(...args) {
+      return this.transitionTo(...args).method('replace');
     }
-    generate(name) {
-      for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        args[_key3 - 1] = arguments[_key3];
-      }
+    generate(name, ...args) {
       var url = this._routerMicrolib.generate(name, ...args);
       (false && !(typeof this.location !== 'string') && (0, _debug.assert)('expected non-string location', typeof this.location !== 'string'));
       return this.location.formatURL(url);
@@ -25891,10 +25544,7 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
     isActiveIntent(routeName, models, queryParams) {
       return this.currentState.isActiveIntent(routeName, models, queryParams);
     }
-    send(name) {
-      for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        args[_key4 - 1] = arguments[_key4];
-      }
+    send(name, ...args) {
       /*name, context*/
       this._routerMicrolib.trigger(name, ...args);
     }
@@ -26355,12 +26005,11 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
     _clearHandledError(error) {
       this._handledErrors.delete(error);
     }
-    _getEngineInstance(_ref) {
-      var {
-        name,
-        instanceId,
-        mountPoint
-      } = _ref;
+    _getEngineInstance({
+      name,
+      instanceId,
+      mountPoint
+    }) {
       var engineInstances = this._engineInstances;
       var namedInstances = engineInstances[name];
       if (!namedInstances) {
@@ -26694,10 +26343,9 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
       ownState
     };
   }
-  function representEmptyRoute(liveRoutes, defaultParentState, _ref2) {
-    var {
-      routeName
-    } = _ref2;
+  function representEmptyRoute(liveRoutes, defaultParentState, {
+    routeName
+  }) {
     // the route didn't render anything
     var alreadyAppended = findLiveRoute(liveRoutes, routeName);
     if (alreadyAppended) {
@@ -26814,20 +26462,14 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
     flush
   });
   _exports._backburner = _backburner;
-  function run() {
+  function run(...args) {
     // @ts-expect-error TS doesn't like our spread args
-    return _backburner.run(...arguments);
+    return _backburner.run(...args);
   }
-  function join(methodOrTarget, methodOrArg) {
-    for (var _len = arguments.length, additionalArgs = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-      additionalArgs[_key - 2] = arguments[_key];
-    }
+  function join(methodOrTarget, methodOrArg, ...additionalArgs) {
     return _backburner.join(methodOrTarget, methodOrArg, ...additionalArgs);
   }
-  function bind() {
-    for (var _len2 = arguments.length, curried = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      curried[_key2] = arguments[_key2];
-    }
+  function bind(...curried) {
     (false && !(function (methodOrTarget, methodOrArg) {
       // Applies the same logic as backburner parseArgs for detecting if a method
       // is actually being passed.
@@ -26855,12 +26497,7 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
         return typeof methodOrArg === 'function' || methodOrTarget !== null && typeof methodOrArg === 'string' && methodOrArg in methodOrTarget || typeof methodOrTarget === 'function';
       }
     }(...curried))); // @ts-expect-error TS doesn't like our spread args
-    return function () {
-      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
-      return join(...curried.concat(args));
-    };
+    return (...args) => join(...curried.concat(args));
   }
   /**
     Begins a new RunLoop. Any deferred actions invoked after the begin will
@@ -26906,9 +26543,9 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   function end() {
     _backburner.end();
   }
-  function schedule() {
+  function schedule(...args) {
     // @ts-expect-error TS doesn't like the rest args here
-    return _backburner.schedule(...arguments);
+    return _backburner.schedule(...args);
   }
   // Used by global test teardown
   function _hasScheduledTimers() {
@@ -26918,24 +26555,18 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   function _cancelTimers() {
     _backburner.cancelTimers();
   }
-  function later() {
-    return _backburner.later(...arguments);
+  function later(...args) {
+    return _backburner.later(...args);
   }
-  function once() {
-    for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
-    }
+  function once(...args) {
     // @ts-expect-error TS doesn't like the rest args here
     return _backburner.scheduleOnce('actions', ...args);
   }
-  function scheduleOnce() {
+  function scheduleOnce(...args) {
     // @ts-expect-error TS doesn't like the rest args here
-    return _backburner.scheduleOnce(...arguments);
+    return _backburner.scheduleOnce(...args);
   }
-  function next() {
-    for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-      args[_key5] = arguments[_key5];
-    }
+  function next(...args) {
     return _backburner.later(...args, 1);
   }
   /**
@@ -27008,13 +26639,13 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   function cancel(timer) {
     return _backburner.cancel(timer);
   }
-  function debounce() {
+  function debounce(...args) {
     // @ts-expect-error TS doesn't like the rest args here
-    return _backburner.debounce(...arguments);
+    return _backburner.debounce(...args);
   }
-  function throttle() {
+  function throttle(...args) {
     // @ts-expect-error TS doesn't like the rest args here
-    return _backburner.throttle(...arguments);
+    return _backburner.throttle(...args);
   }
 });
 define("@ember/service/index", ["exports", "@ember/object/-internals", "@ember/-internals/metal"], function (_exports, _internals, _metal) {
@@ -27026,16 +26657,10 @@ define("@ember/service/index", ["exports", "@ember/object/-internals", "@ember/-
   _exports.default = void 0;
   _exports.inject = inject;
   _exports.service = service;
-  function inject() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+  function inject(...args) {
     return (0, _metal.inject)('service', ...args);
   }
-  function service() {
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
+  function service(...args) {
     return (0, _metal.inject)('service', ...args);
   }
   /**
@@ -27291,10 +26916,7 @@ define("@ember/string/index", ["exports", "@ember/string/lib/string_registry", "
       url: 'https://deprecations.emberjs.com/v4.x/#toc_ember-string-add-package'
     }));
   }
-  function deprecateImportFromString(name, message) {
-    if (message === void 0) {
-      message = `Importing ${name} from '@ember/string' is deprecated. Please import ${name} from '@ember/template' instead.`;
-    }
+  function deprecateImportFromString(name, message = `Importing ${name} from '@ember/string' is deprecated. Please import ${name} from '@ember/template' instead.`) {
     (false && !(false) && (0, _debug.deprecate)(message, false, {
       id: 'ember-string.htmlsafe-ishtmlsafe',
       for: 'ember-source',
@@ -28106,10 +27728,7 @@ define("@glimmer/destroyable", ["exports", "@glimmer/util", "@glimmer/global-con
     childMeta.parents = push(childMeta.parents, parent);
     return child;
   }
-  function registerDestructor(destroyable, destructor, eager) {
-    if (eager === void 0) {
-      eager = false;
-    }
+  function registerDestructor(destroyable, destructor, eager = false) {
     if (false /* DEBUG */ && isDestroying(destroyable)) {
       throw new Error('Attempted to register a destructor with an object that is already destroying or destroyed');
     }
@@ -28118,10 +27737,7 @@ define("@glimmer/destroyable", ["exports", "@glimmer/util", "@glimmer/global-con
     meta[destructorsKey] = push(meta[destructorsKey], destructor);
     return destructor;
   }
-  function unregisterDestructor(destroyable, destructor, eager) {
-    if (eager === void 0) {
-      eager = false;
-    }
+  function unregisterDestructor(destroyable, destructor, eager = false) {
     if (false /* DEBUG */ && isDestroying(destroyable)) {
       throw new Error('Attempted to unregister a destructor with an object that is already destroying or destroyed');
     }
@@ -28500,10 +28116,7 @@ define("@glimmer/low-level", ["exports"], function (_exports) {
   }
   _exports.Storage = Storage;
   class Stack {
-    constructor(vec) {
-      if (vec === void 0) {
-        vec = [];
-      }
+    constructor(vec = []) {
       this.vec = vec;
     }
     clone() {
@@ -28764,10 +28377,7 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
       };
     };
   }
-  function helperCapabilities(managerAPI, options) {
-    if (options === void 0) {
-      options = {};
-    }
+  function helperCapabilities(managerAPI, options = {}) {
     if (false /* DEBUG */ && managerAPI !== '3.23') {
       throw new Error('Invalid helper manager compatibility specified');
     }
@@ -28865,11 +28475,10 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
         args
       };
     }
-    getValue(_ref) {
-      var {
-        fn,
-        args
-      } = _ref;
+    getValue({
+      fn,
+      args
+    }) {
       if (Object.keys(args.named).length > 0) {
         var argsForFn = [...args.positional, args.named];
         return fn(...argsForFn);
@@ -29006,10 +28615,7 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
     willDestroy: false,
     hasSubOwner: false
   };
-  function componentCapabilities(managerAPI, options) {
-    if (options === void 0) {
-      options = {};
-    }
+  function componentCapabilities(managerAPI, options = {}) {
     if (false /* DEBUG */ && managerAPI !== '3.13') {
       throw new Error('Invalid component manager compatibility specified');
     }
@@ -29102,31 +28708,28 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
         delegate.updateComponent(component, args);
       }
     }
-    didCreate(_ref2) {
-      var {
-        component,
-        delegate
-      } = _ref2;
+    didCreate({
+      component,
+      delegate
+    }) {
       if (hasAsyncLifeCycleCallbacks(delegate)) {
         delegate.didCreateComponent(component);
       }
     }
-    didUpdate(_ref3) {
-      var {
-        component,
-        delegate
-      } = _ref3;
+    didUpdate({
+      component,
+      delegate
+    }) {
       if (hasAsyncUpdateHook(delegate)) {
         delegate.didUpdateComponent(component);
       }
     }
     didRenderLayout() {}
     didUpdateLayout() {}
-    getSelf(_ref4) {
-      var {
-        component,
-        delegate
-      } = _ref4;
+    getSelf({
+      component,
+      delegate
+    }) {
       return (0, _reference.createConstRef)(delegate.getContext(component), 'this');
     }
     getDestroyable(bucket) {
@@ -29157,10 +28760,7 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
       this.args = args;
     }
   }
-  function modifierCapabilities(managerAPI, optionalFeatures) {
-    if (optionalFeatures === void 0) {
-      optionalFeatures = {};
-    }
+  function modifierCapabilities(managerAPI, optionalFeatures = {}) {
     if (false /* DEBUG */ && managerAPI !== '3.22') {
       throw new Error('Invalid modifier manager compatibility specified');
     }
@@ -29235,25 +28835,22 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
       (0, _destroyable.registerDestructor)(state, () => delegate.destroyModifier(instance, args));
       return state;
     }
-    getDebugName(_ref5) {
-      var {
-        debugName
-      } = _ref5;
+    getDebugName({
+      debugName
+    }) {
       return debugName;
     }
-    getTag(_ref6) {
-      var {
-        tag
-      } = _ref6;
+    getTag({
+      tag
+    }) {
       return tag;
     }
-    install(_ref7) {
-      var {
-        element,
-        args,
-        modifier,
-        delegate
-      } = _ref7;
+    install({
+      element,
+      args,
+      modifier,
+      delegate
+    }) {
       var {
         capabilities
       } = delegate;
@@ -29263,12 +28860,11 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
         delegate.installModifier(modifier, element, args);
       }
     }
-    update(_ref8) {
-      var {
-        args,
-        modifier,
-        delegate
-      } = _ref8;
+    update({
+      args,
+      modifier,
+      delegate
+    }) {
       var {
         capabilities
       } = delegate;
@@ -29444,10 +29040,7 @@ define("@glimmer/node", ["exports", "@glimmer/runtime", "@simple-dom/document"],
       }
       return super.openElement(tag);
     }
-    pushRemoteElement(element, cursorId, insertBefore) {
-      if (insertBefore === void 0) {
-        insertBefore = null;
-      }
+    pushRemoteElement(element, cursorId, insertBefore = null) {
       var {
         dom
       } = this;
@@ -29633,8 +29226,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * <Foo @arg={{true}} />
    */
 
-  function resolveComponent(resolver, constants, meta, _ref) {
-    var [, expr, then] = _ref;
+  function resolveComponent(resolver, constants, meta, [, expr, then]) {
     var type = expr[0];
     if (false /* DEBUG */ && expr[0] === 31
     /* GetStrictFree */) {
@@ -29666,8 +29258,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * (helper arg)
    */
 
-  function resolveHelper(resolver, constants, meta, _ref2) {
-    var [, expr, then] = _ref2;
+  function resolveHelper(resolver, constants, meta, [, expr, then]) {
     var type = expr[0];
     if (type === 32
     /* GetTemplateSymbol */) {
@@ -29698,8 +29289,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * <Foo {{modifier}}/>
    */
 
-  function resolveModifier(resolver, constants, meta, _ref3) {
-    var [, expr, then] = _ref3;
+  function resolveModifier(resolver, constants, meta, [, expr, then]) {
     var type = expr[0];
     if (type === 32
     /* GetTemplateSymbol */) {
@@ -29736,11 +29326,10 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * {{component-or-helper arg}}
    */
 
-  function resolveComponentOrHelper(resolver, constants, meta, _ref4) {
-    var [, expr, {
-      ifComponent,
-      ifHelper
-    }] = _ref4;
+  function resolveComponentOrHelper(resolver, constants, meta, [, expr, {
+    ifComponent,
+    ifHelper
+  }]) {
     var type = expr[0];
     if (type === 32
     /* GetTemplateSymbol */) {
@@ -29784,10 +29373,9 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * <Foo @arg={{helper}}>
    */
 
-  function resolveOptionalHelper(resolver, constants, meta, _ref5) {
-    var [, expr, {
-      ifHelper
-    }] = _ref5;
+  function resolveOptionalHelper(resolver, constants, meta, [, expr, {
+    ifHelper
+  }]) {
     var {
       upvars,
       owner
@@ -29802,12 +29390,11 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * {{maybeHelperOrComponent}}
    */
 
-  function resolveOptionalComponentOrHelper(resolver, constants, meta, _ref6) {
-    var [, expr, {
-      ifComponent,
-      ifHelper,
-      ifValue
-    }] = _ref6;
+  function resolveOptionalComponentOrHelper(resolver, constants, meta, [, expr, {
+    ifComponent,
+    ifHelper,
+    ifValue
+  }]) {
     var type = expr[0];
     if (type === 32
     /* GetTemplateSymbol */) {
@@ -29882,8 +29469,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   }
   var EXPRESSIONS = new Compilers();
   EXPRESSIONS.add(29
-  /* Concat */, (op, _ref7) => {
-    var [, parts] = _ref7;
+  /* Concat */, (op, [, parts]) => {
     for (var part of parts) {
       expr(op, part);
     }
@@ -29891,8 +29477,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     /* Concat */, parts.length);
   });
   EXPRESSIONS.add(28
-  /* Call */, (op, _ref8) => {
-    var [, expression, positional, named] = _ref8;
+  /* Call */, (op, [, expression, positional, named]) => {
     if (isGetFreeHelper(expression)) {
       op(1005
       /* ResolveHelper */, expression, handle => {
@@ -29904,20 +29489,17 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   });
   EXPRESSIONS.add(50
-  /* Curry */, (op, _ref9) => {
-    var [, expr$$1, type, positional, named] = _ref9;
+  /* Curry */, (op, [, expr$$1, type, positional, named]) => {
     Curry(op, type, expr$$1, positional, named);
   });
   EXPRESSIONS.add(30
-  /* GetSymbol */, (op, _ref10) => {
-    var [, sym, path] = _ref10;
+  /* GetSymbol */, (op, [, sym, path]) => {
     op(21
     /* GetVariable */, sym);
     withPath(op, path);
   });
   EXPRESSIONS.add(32
-  /* GetTemplateSymbol */, (op, _ref11) => {
-    var [, sym, path] = _ref11;
+  /* GetTemplateSymbol */, (op, [, sym, path]) => {
     op(1011
     /* ResolveTemplateLocal */, sym, handle => {
       op(29
@@ -29926,8 +29508,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     });
   });
   EXPRESSIONS.add(31
-  /* GetStrictFree */, (op, _ref12) => {
-    var [, sym, _path] = _ref12;
+  /* GetStrictFree */, (op, [, sym, _path]) => {
     op(1009
     /* ResolveFree */, sym, _handle => {// TODO: Implement in strict mode
     });
@@ -29981,16 +29562,14 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   EXPRESSIONS.add(27
   /* Undefined */, op => PushPrimitiveReference(op, undefined));
   EXPRESSIONS.add(48
-  /* HasBlock */, (op, _ref13) => {
-    var [, block] = _ref13;
+  /* HasBlock */, (op, [, block]) => {
     expr(op, block);
     op(25
     /* HasBlock */);
   });
 
   EXPRESSIONS.add(49
-  /* HasBlockParams */, (op, _ref14) => {
-    var [, block] = _ref14;
+  /* HasBlockParams */, (op, [, block]) => {
     expr(op, block);
     op(24
     /* SpreadBlock */);
@@ -30003,8 +29582,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   EXPRESSIONS.add(52
-  /* IfInline */, (op, _ref15) => {
-    var [, condition, truthy, falsy] = _ref15;
+  /* IfInline */, (op, [, condition, truthy, falsy]) => {
     // Push in reverse order
     expr(op, falsy);
     expr(op, truthy);
@@ -30014,24 +29592,21 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   EXPRESSIONS.add(51
-  /* Not */, (op, _ref16) => {
-    var [, value] = _ref16;
+  /* Not */, (op, [, value]) => {
     expr(op, value);
     op(110
     /* Not */);
   });
 
   EXPRESSIONS.add(53
-  /* GetDynamicVar */, (op, _ref17) => {
-    var [, expression] = _ref17;
+  /* GetDynamicVar */, (op, [, expression]) => {
     expr(op, expression);
     op(111
     /* GetDynamicVar */);
   });
 
   EXPRESSIONS.add(54
-  /* Log */, (op, _ref18) => {
-    var [, positional] = _ref18;
+  /* Log */, (op, [, positional]) => {
     op(0
     /* PushFrame */);
 
@@ -30658,15 +30233,14 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
       /* Label */, 'ELSE');
     });
   }
-  function InvokeStaticComponent(op, _ref19) {
-    var {
-      capabilities,
-      layout,
-      elementBlock,
-      positional,
-      named,
-      blocks
-    } = _ref19;
+  function InvokeStaticComponent(op, {
+    capabilities,
+    layout,
+    elementBlock,
+    positional,
+    named,
+    blocks
+  }) {
     var {
       symbolTable
     } = layout;
@@ -30854,16 +30428,15 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     op(35
     /* Load */, _vm.$s0);
   }
-  function InvokeNonStaticComponent(op, _ref20) {
-    var {
-      capabilities,
-      elementBlock,
-      positional,
-      named,
-      atNames,
-      blocks: namedBlocks$$1,
-      layout
-    } = _ref20;
+  function InvokeNonStaticComponent(op, {
+    capabilities,
+    elementBlock,
+    positional,
+    named,
+    atNames,
+    blocks: namedBlocks$$1,
+    layout
+  }) {
     var bindableBlocks = !!namedBlocks$$1;
     var bindableAtNames = capabilities === true || (0, _manager.hasCapability)(capabilities, 4
     /* PrepareArgs */) || !!(named && named[0].length !== 0);
@@ -30945,10 +30518,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     /* StopLabels */);
   }
 
-  function invokePreparedComponent(op, hasBlock, bindableBlocks, bindableAtNames, populateLayout) {
-    if (populateLayout === void 0) {
-      populateLayout = null;
-    }
+  function invokePreparedComponent(op, hasBlock, bindableBlocks, bindableAtNames, populateLayout = null) {
     op(97
     /* BeginComponentTransaction */, _vm.$s0);
     op(59
@@ -31086,8 +30656,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   /* FlushElement */));
 
   STATEMENTS.add(4
-  /* Modifier */, (op, _ref21) => {
-    var [, expression, positional, named] = _ref21;
+  /* Modifier */, (op, [, expression, positional, named]) => {
     if (isGetFreeModifier(expression)) {
       op(1003
       /* ResolveModifier */, expression, handle => {
@@ -31117,54 +30686,46 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   STATEMENTS.add(14
-  /* StaticAttr */, (op, _ref22) => {
-    var [, name, value, namespace] = _ref22;
+  /* StaticAttr */, (op, [, name, value, namespace]) => {
     op(51
     /* StaticAttr */, inflateAttrName(name), value, namespace !== null && namespace !== void 0 ? namespace : null);
   });
   STATEMENTS.add(24
-  /* StaticComponentAttr */, (op, _ref23) => {
-    var [, name, value, namespace] = _ref23;
+  /* StaticComponentAttr */, (op, [, name, value, namespace]) => {
     op(105
     /* StaticComponentAttr */, inflateAttrName(name), value, namespace !== null && namespace !== void 0 ? namespace : null);
   });
   STATEMENTS.add(15
-  /* DynamicAttr */, (op, _ref24) => {
-    var [, name, value, namespace] = _ref24;
+  /* DynamicAttr */, (op, [, name, value, namespace]) => {
     expr(op, value);
     op(52
     /* DynamicAttr */, inflateAttrName(name), false, namespace !== null && namespace !== void 0 ? namespace : null);
   });
   STATEMENTS.add(22
-  /* TrustingDynamicAttr */, (op, _ref25) => {
-    var [, name, value, namespace] = _ref25;
+  /* TrustingDynamicAttr */, (op, [, name, value, namespace]) => {
     expr(op, value);
     op(52
     /* DynamicAttr */, inflateAttrName(name), true, namespace !== null && namespace !== void 0 ? namespace : null);
   });
   STATEMENTS.add(16
-  /* ComponentAttr */, (op, _ref26) => {
-    var [, name, value, namespace] = _ref26;
+  /* ComponentAttr */, (op, [, name, value, namespace]) => {
     expr(op, value);
     op(53
     /* ComponentAttr */, inflateAttrName(name), false, namespace !== null && namespace !== void 0 ? namespace : null);
   });
   STATEMENTS.add(23
-  /* TrustingComponentAttr */, (op, _ref27) => {
-    var [, name, value, namespace] = _ref27;
+  /* TrustingComponentAttr */, (op, [, name, value, namespace]) => {
     expr(op, value);
     op(53
     /* ComponentAttr */, inflateAttrName(name), true, namespace !== null && namespace !== void 0 ? namespace : null);
   });
   STATEMENTS.add(10
-  /* OpenElement */, (op, _ref28) => {
-    var [, tag] = _ref28;
+  /* OpenElement */, (op, [, tag]) => {
     op(48
     /* OpenElement */, inflateTagName(tag));
   });
   STATEMENTS.add(11
-  /* OpenElementWithSplat */, (op, _ref29) => {
-    var [, tag] = _ref29;
+  /* OpenElementWithSplat */, (op, [, tag]) => {
     op(89
     /* PutComponentOperations */);
 
@@ -31172,8 +30733,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     /* OpenElement */, inflateTagName(tag));
   });
   STATEMENTS.add(8
-  /* Component */, (op, _ref30) => {
-    var [, expr$$1, elementBlock, named, blocks] = _ref30;
+  /* Component */, (op, [, expr$$1, elementBlock, named, blocks]) => {
     if (isGetFreeComponent(expr$$1)) {
       op(1004
       /* ResolveComponent */, expr$$1, component => {
@@ -31186,24 +30746,14 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   });
   STATEMENTS.add(18
-  /* Yield */, (op, _ref31) => {
-    var [, to, params] = _ref31;
-    return YieldBlock(op, to, params);
-  });
+  /* Yield */, (op, [, to, params]) => YieldBlock(op, to, params));
   STATEMENTS.add(17
-  /* AttrSplat */, (op, _ref32) => {
-    var [, to] = _ref32;
-    return YieldBlock(op, to, null);
-  });
+  /* AttrSplat */, (op, [, to]) => YieldBlock(op, to, null));
   STATEMENTS.add(26
-  /* Debugger */, (op, _ref33) => {
-    var [, evalInfo] = _ref33;
-    return op(103
-    /* Debugger */, evalSymbolsOperand(), evalInfo);
-  });
+  /* Debugger */, (op, [, evalInfo]) => op(103
+  /* Debugger */, evalSymbolsOperand(), evalInfo));
   STATEMENTS.add(1
-  /* Append */, (op, _ref34) => {
-    var [, value] = _ref34;
+  /* Append */, (op, [, value]) => {
     // Special case for static values
     if (!Array.isArray(value)) {
       op(41
@@ -31302,8 +30852,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   STATEMENTS.add(2
-  /* TrustingAppend */, (op, _ref35) => {
-    var [, value] = _ref35;
+  /* TrustingAppend */, (op, [, value]) => {
     if (!Array.isArray(value)) {
       op(41
       /* Text */, value === null || value === undefined ? '' : String(value));
@@ -31320,8 +30869,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   STATEMENTS.add(6
-  /* Block */, (op, _ref36) => {
-    var [, expr$$1, positional, named, blocks] = _ref36;
+  /* Block */, (op, [, expr$$1, positional, named, blocks]) => {
     if (isGetFreeComponent(expr$$1)) {
       op(1004
       /* ResolveComponent */, expr$$1, component => {
@@ -31332,8 +30880,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   });
   STATEMENTS.add(40
-  /* InElement */, (op, _ref37) => {
-    var [, block, guid, destination, insertBefore] = _ref37;
+  /* InElement */, (op, [, block, guid, destination, insertBefore]) => {
     ReplayableIf(op, () => {
       expr(op, guid);
       if (insertBefore === undefined) {
@@ -31356,72 +30903,65 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   STATEMENTS.add(41
-  /* If */, (op, _ref38) => {
-    var [, condition, block, inverse] = _ref38;
-    return ReplayableIf(op, () => {
-      expr(op, condition);
-      op(71
-      /* ToBoolean */);
+  /* If */, (op, [, condition, block, inverse]) => ReplayableIf(op, () => {
+    expr(op, condition);
+    op(71
+    /* ToBoolean */);
 
-      return 1;
-    }, () => {
-      InvokeStaticBlock(op, block);
-    }, inverse ? () => {
-      InvokeStaticBlock(op, inverse);
-    } : undefined);
-  });
+    return 1;
+  }, () => {
+    InvokeStaticBlock(op, block);
+  }, inverse ? () => {
+    InvokeStaticBlock(op, inverse);
+  } : undefined));
   STATEMENTS.add(42
-  /* Each */, (op, _ref39) => {
-    var [, value, key, block, inverse] = _ref39;
-    return Replayable(op, () => {
-      if (key) {
-        expr(op, key);
-      } else {
-        PushPrimitiveReference(op, null);
-      }
-      expr(op, value);
-      return 2;
-    }, () => {
-      op(72
-      /* EnterList */, labelOperand('BODY'), labelOperand('ELSE'));
-      op(0
-      /* PushFrame */);
+  /* Each */, (op, [, value, key, block, inverse]) => Replayable(op, () => {
+    if (key) {
+      expr(op, key);
+    } else {
+      PushPrimitiveReference(op, null);
+    }
+    expr(op, value);
+    return 2;
+  }, () => {
+    op(72
+    /* EnterList */, labelOperand('BODY'), labelOperand('ELSE'));
+    op(0
+    /* PushFrame */);
 
-      op(33
-      /* Dup */, _vm.$fp, 1);
-      op(6
-      /* ReturnTo */, labelOperand('ITER'));
-      op(1000
-      /* Label */, 'ITER');
-      op(74
-      /* Iterate */, labelOperand('BREAK'));
-      op(1000
-      /* Label */, 'BODY');
-      InvokeStaticBlockWithStack(op, block, 2);
-      op(34
-      /* Pop */, 2);
-      op(4
-      /* Jump */, labelOperand('FINALLY'));
-      op(1000
-      /* Label */, 'BREAK');
-      op(1
-      /* PopFrame */);
+    op(33
+    /* Dup */, _vm.$fp, 1);
+    op(6
+    /* ReturnTo */, labelOperand('ITER'));
+    op(1000
+    /* Label */, 'ITER');
+    op(74
+    /* Iterate */, labelOperand('BREAK'));
+    op(1000
+    /* Label */, 'BODY');
+    InvokeStaticBlockWithStack(op, block, 2);
+    op(34
+    /* Pop */, 2);
+    op(4
+    /* Jump */, labelOperand('FINALLY'));
+    op(1000
+    /* Label */, 'BREAK');
+    op(1
+    /* PopFrame */);
 
-      op(73
-      /* ExitList */);
+    op(73
+    /* ExitList */);
 
-      op(4
-      /* Jump */, labelOperand('FINALLY'));
-      op(1000
-      /* Label */, 'ELSE');
-      if (inverse) {
-        InvokeStaticBlock(op, inverse);
-      }
-    });
-  });
+    op(4
+    /* Jump */, labelOperand('FINALLY'));
+    op(1000
+    /* Label */, 'ELSE');
+    if (inverse) {
+      InvokeStaticBlock(op, inverse);
+    }
+  }));
   STATEMENTS.add(43
-  /* With */, (op, _ref40) => {
-    var [, value, block, inverse] = _ref40;
+  /* With */, (op, [, value, block, inverse]) => {
     ReplayableIf(op, () => {
       expr(op, value);
       op(33
@@ -31439,14 +30979,12 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     });
   });
   STATEMENTS.add(44
-  /* Let */, (op, _ref41) => {
-    var [, positional, block] = _ref41;
+  /* Let */, (op, [, positional, block]) => {
     var count = CompilePositional(op, positional);
     InvokeStaticBlockWithStack(op, block, count);
   });
   STATEMENTS.add(45
-  /* WithDynamicVars */, (op, _ref42) => {
-    var [, named, block] = _ref42;
+  /* WithDynamicVars */, (op, [, named, block]) => {
     if (named) {
       var [names, expressions] = named;
       CompilePositional(op, expressions);
@@ -31458,8 +30996,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   });
   STATEMENTS.add(46
-  /* InvokeComponent */, (op, _ref43) => {
-    var [, expr$$1, positional, named, blocks] = _ref43;
+  /* InvokeComponent */, (op, [, expr$$1, positional, named, blocks]) => {
     if (isGetFreeComponent(expr$$1)) {
       op(1004
       /* ResolveComponent */, expr$$1, component => {
@@ -31480,10 +31017,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     // Part of CompilableTemplate
     symbolTable,
     // Used for debugging
-    moduleName) {
-      if (moduleName === void 0) {
-        moduleName = 'plain block';
-      }
+    moduleName = 'plain block') {
       this.statements = statements;
       this.meta = meta$$1;
       this.symbolTable = symbolTable;
@@ -31523,10 +31057,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
         resolver
       }
     } = context;
-    function pushOp() {
-      for (var _len = arguments.length, op = new Array(_len), _key = 0; _key < _len; _key++) {
-        op[_key] = arguments[_key];
-      }
+    function pushOp(...op) {
       encodeOp(encoder, constants, resolver, meta$$1, op);
     }
     for (var i = 0; i < statements.length; i++) {
@@ -31659,7 +31190,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
         return handle;
       }
     }
-    push(constants, type) {
+    push(constants, type, ...args) {
       var {
         heap
       } = this;
@@ -31669,12 +31200,12 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
       }
       var machine = (0, _vm.isMachineOp)(type) ? 1024
       /* MACHINE_MASK */ : 0;
-      var first = type | machine | (arguments.length <= 2 ? 0 : arguments.length - 2) << 8
+      var first = type | machine | args.length << 8
       /* ARG_SHIFT */;
 
       heap.push(first);
-      for (var i = 0; i < (arguments.length <= 2 ? 0 : arguments.length - 2); i++) {
-        var op = i + 2 < 2 || arguments.length <= i + 2 ? undefined : arguments[i + 2];
+      for (var i = 0; i < args.length; i++) {
+        var op = args[i];
         heap.push(this.operand(constants, op));
       }
     }
@@ -31855,10 +31386,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
       resolver
     } = program;
     var encoder = new EncoderImpl(heap, STDLIB_META);
-    function pushOp() {
-      for (var _len2 = arguments.length, op = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        op[_key2] = arguments[_key2];
-      }
+    function pushOp(...op) {
       encodeOp(encoder, constants, resolver, STDLIB_META, op);
     }
     callback(pushOp);
@@ -31871,11 +31399,10 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   }
   class CompileTimeCompilationContextImpl {
-    constructor(_ref44, resolver) {
-      var {
-        constants,
-        heap
-      } = _ref44;
+    constructor({
+      constants,
+      heap
+    }, resolver) {
       this.resolver = resolver;
       this.constants = constants;
       this.heap = heap;
@@ -31948,10 +31475,7 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
           resolver
         }
       } = context;
-      function pushOp() {
-        for (var _len3 = arguments.length, op = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-          op[_key3] = arguments[_key3];
-        }
+      function pushOp(...op) {
         encodeOp(encoder, constants, resolver, m, op);
       }
       WrappedComponent(pushOp, this.layout, this.attrsBlockNumber);
@@ -31975,14 +31499,13 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
    * of the template.
    */
   _exports.templateCacheCounters = templateCacheCounters;
-  function templateFactory(_ref45) {
-    var {
-      id: templateId,
-      moduleName,
-      block,
-      scope,
-      isStrictMode
-    } = _ref45;
+  function templateFactory({
+    id: templateId,
+    moduleName,
+    block,
+    scope,
+    isStrictMode
+  }) {
     // TODO(template-refactors): This should be removed in the near future, as it
     // appears that id is unused. It is currently kept for backwards compat reasons.
     var id = templateId || `client-${clientId++}`; // TODO: This caches JSON serialized output once in case a template is
@@ -32184,10 +31707,7 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
     }
     helper(definitionState,
     // TODO: Add a way to expose resolved name for debugging
-    _resolvedName, isOptional) {
-      if (_resolvedName === void 0) {
-        _resolvedName = null;
-      }
+    _resolvedName = null, isOptional) {
       var handle = this.helperDefinitionCache.get(definitionState);
       if (handle === undefined) {
         var managerOrHelper = (0, _manager.getInternalHelperManager)(definitionState, isOptional);
@@ -32202,10 +31722,7 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
       }
       return handle;
     }
-    modifier(definitionState, resolvedName, isOptional) {
-      if (resolvedName === void 0) {
-        resolvedName = null;
-      }
+    modifier(definitionState, resolvedName = null, isOptional) {
       var handle = this.modifierDefinitionCache.get(definitionState);
       if (handle === undefined) {
         var manager = (0, _manager.getInternalModifierManager)(definitionState, isOptional);
@@ -32487,10 +32004,7 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
       }
       this.offset = this.offset - compactedSize;
     }
-    capture(offset) {
-      if (offset === void 0) {
-        offset = this.offset;
-      }
+    capture(offset = this.offset) {
       // Only called in eager mode
       var buffer = slice(this.heap, 0, offset).buffer;
       return {
@@ -32611,13 +32125,7 @@ define("@glimmer/reference", ["exports", "@glimmer/global-context", "@glimmer/ut
     }
     return ref;
   }
-  function createComputeRef(compute, update, debugLabel) {
-    if (update === void 0) {
-      update = null;
-    }
-    if (debugLabel === void 0) {
-      debugLabel = 'unknown';
-    }
+  function createComputeRef(compute, update = null, debugLabel = 'unknown') {
     var ref = new ReferenceImpl(1
     /* Compute */);
 
@@ -33020,10 +32528,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       this.evalScope = evalScope;
       this.partialMap = partialMap;
     }
-    static root(self, size, owner) {
-      if (size === void 0) {
-        size = 0;
-      }
+    static root(self, size = 0, owner) {
       var refs = new Array(size + 1);
       for (var i = 0; i <= size; i++) {
         refs[i] = _reference.UNDEFINED_REFERENCE;
@@ -33032,20 +32537,16 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
         self
       });
     }
-    static sized(size, owner) {
-      if (size === void 0) {
-        size = 0;
-      }
+    static sized(size = 0, owner) {
       var refs = new Array(size + 1);
       for (var i = 0; i <= size; i++) {
         refs[i] = _reference.UNDEFINED_REFERENCE;
       }
       return new PartialScopeImpl(refs, owner, null, null, null);
     }
-    init(_ref) {
-      var {
-        self
-      } = _ref;
+    init({
+      self
+    }) {
       this.slots[0] = self;
       return this;
     }
@@ -33370,10 +32871,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
     return str;
   }
-  function dynamicAttribute(element, attr, namespace, isTrusting) {
-    if (isTrusting === void 0) {
-      isTrusting = false;
-    }
+  function dynamicAttribute(element, attr, namespace, isTrusting = false) {
     var {
       tagName,
       namespaceURI
@@ -33654,10 +33152,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     pushBlockList(list) {
       return this.pushLiveBlock(new LiveBlockList(this.element, list));
     }
-    pushLiveBlock(block, isRemote) {
-      if (isRemote === void 0) {
-        isRemote = false;
-      }
+    pushLiveBlock(block, isRemote = false) {
       var current = this.blockStack.current;
       if (current !== null) {
         if (!isRemote) {
@@ -33719,10 +33214,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       this.popBlock();
       this.popElement();
     }
-    pushElement(element, nextSibling) {
-      if (nextSibling === void 0) {
-        nextSibling = null;
-      }
+    pushElement(element, nextSibling = null) {
       this[CURSOR_STACK].push(new CursorImpl(element, nextSibling));
     }
     pushModifiers(modifiers) {
@@ -33955,10 +33447,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       this.evaluateOpcode = (0, _util.fillNulls)(104
       /* Size */).slice();
     }
-    add(name, evaluate, kind) {
-      if (kind === void 0) {
-        kind = 'syscall';
-      }
+    add(name, evaluate, kind = 'syscall') {
       this.evaluateOpcode[name] = {
         syscall: kind !== 'machine',
         evaluate
@@ -34025,10 +33514,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   }
   class CurriedValue {
     /** @internal */
-    constructor(type, inner, owner, args, resolved) {
-      if (resolved === void 0) {
-        resolved = false;
-      }
+    constructor(type, inner, owner, args, resolved = false) {
       CURRIED_VALUES.add(this);
       this[TYPE] = type;
       this[INNER] = inner;
@@ -34080,10 +33566,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       named
     };
   }
-  function curry(type, spec, owner, args, resolved) {
-    if (resolved === void 0) {
-      resolved = false;
-    }
+  function curry(type, spec, owner, args, resolved = false) {
     return new CurriedValue(type, spec, owner, args, resolved);
   }
   function createCurryRef(type, inner, owner, args, resolver, isStrict) {
@@ -34326,10 +33809,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     has(name) {
       return this.names.indexOf(name) !== -1;
     }
-    get(name, atNames) {
-      if (atNames === void 0) {
-        atNames = false;
-      }
+    get(name, atNames = false) {
       var {
         base,
         stack
@@ -34524,11 +34004,10 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   var EMPTY_ARGS = createCapturedArgs(EMPTY_NAMED, EMPTY_POSITIONAL);
   _exports.EMPTY_ARGS = EMPTY_ARGS;
   APPEND_OPCODES.add(77
-  /* Curry */, (vm, _ref2) => {
-    var {
-      op1: type,
-      op2: _isStrict
-    } = _ref2;
+  /* Curry */, (vm, {
+    op1: type,
+    op2: _isStrict
+  }) => {
     var stack = vm.stack;
     var definition = stack.pop();
     var capturedArgs = stack.pop();
@@ -34595,10 +34074,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     return constants.getValue(handle);
   }
   APPEND_OPCODES.add(16
-  /* Helper */, (vm, _ref3) => {
-    var {
-      op1: handle
-    } = _ref3;
+  /* Helper */, (vm, {
+    op1: handle
+  }) => {
     var stack = vm.stack;
     var helper = vm[CONSTANTS].getValue(handle);
     var args = stack.pop();
@@ -34609,36 +34087,32 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.loadValue(_vm2.$v0, value);
   });
   APPEND_OPCODES.add(21
-  /* GetVariable */, (vm, _ref4) => {
-    var {
-      op1: symbol$$1
-    } = _ref4;
+  /* GetVariable */, (vm, {
+    op1: symbol$$1
+  }) => {
     var expr = vm.referenceForSymbol(symbol$$1);
     vm.stack.push(expr);
   });
   APPEND_OPCODES.add(19
-  /* SetVariable */, (vm, _ref5) => {
-    var {
-      op1: symbol$$1
-    } = _ref5;
+  /* SetVariable */, (vm, {
+    op1: symbol$$1
+  }) => {
     var expr = vm.stack.pop();
     vm.scope().bindSymbol(symbol$$1, expr);
   });
   APPEND_OPCODES.add(20
-  /* SetBlock */, (vm, _ref6) => {
-    var {
-      op1: symbol$$1
-    } = _ref6;
+  /* SetBlock */, (vm, {
+    op1: symbol$$1
+  }) => {
     var handle = vm.stack.pop();
     var scope = vm.stack.pop();
     var table = vm.stack.pop();
     vm.scope().bindBlock(symbol$$1, [handle, scope, table]);
   });
   APPEND_OPCODES.add(102
-  /* ResolveMaybeLocal */, (vm, _ref7) => {
-    var {
-      op1: _name
-    } = _ref7;
+  /* ResolveMaybeLocal */, (vm, {
+    op1: _name
+  }) => {
     var name = vm[CONSTANTS].getValue(_name);
     var locals = vm.scope().getPartialMap();
     var ref = locals[name];
@@ -34648,26 +34122,23 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.stack.push(ref);
   });
   APPEND_OPCODES.add(37
-  /* RootScope */, (vm, _ref8) => {
-    var {
-      op1: symbols
-    } = _ref8;
+  /* RootScope */, (vm, {
+    op1: symbols
+  }) => {
     vm.pushRootScope(symbols, vm.getOwner());
   });
   APPEND_OPCODES.add(22
-  /* GetProperty */, (vm, _ref9) => {
-    var {
-      op1: _key
-    } = _ref9;
+  /* GetProperty */, (vm, {
+    op1: _key
+  }) => {
     var key = vm[CONSTANTS].getValue(_key);
     var expr = vm.stack.pop();
     vm.stack.push((0, _reference.childRefFor)(expr, key));
   });
   APPEND_OPCODES.add(23
-  /* GetBlock */, (vm, _ref10) => {
-    var {
-      op1: _block
-    } = _ref10;
+  /* GetBlock */, (vm, {
+    op1: _block
+  }) => {
     var {
       stack
     } = vm;
@@ -34716,10 +34187,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.stack.push(hasBlockParams ? _reference.TRUE_REFERENCE : _reference.FALSE_REFERENCE);
   });
   APPEND_OPCODES.add(27
-  /* Concat */, (vm, _ref11) => {
-    var {
-      op1: count
-    } = _ref11;
+  /* Concat */, (vm, {
+    op1: count
+  }) => {
     var out = new Array(count);
     for (var i = count; i > 0; i--) {
       var offset = i - 1;
@@ -34799,24 +34269,21 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   APPEND_OPCODES.add(60
   /* PopDynamicScope */, vm => vm.popDynamicScope());
   APPEND_OPCODES.add(28
-  /* Constant */, (vm, _ref12) => {
-    var {
-      op1: other
-    } = _ref12;
+  /* Constant */, (vm, {
+    op1: other
+  }) => {
     vm.stack.push(vm[CONSTANTS].getValue((0, _util.decodeHandle)(other)));
   });
   APPEND_OPCODES.add(29
-  /* ConstantReference */, (vm, _ref13) => {
-    var {
-      op1: other
-    } = _ref13;
+  /* ConstantReference */, (vm, {
+    op1: other
+  }) => {
     vm.stack.push((0, _reference.createConstRef)(vm[CONSTANTS].getValue((0, _util.decodeHandle)(other)), false));
   });
   APPEND_OPCODES.add(30
-  /* Primitive */, (vm, _ref14) => {
-    var {
-      op1: primitive
-    } = _ref14;
+  /* Primitive */, (vm, {
+    op1: primitive
+  }) => {
     var stack = vm.stack;
     if ((0, _util.isHandle)(primitive)) {
       // it is a handle which does not already exist on the stack
@@ -34846,48 +34313,42 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     stack.push(ref);
   });
   APPEND_OPCODES.add(33
-  /* Dup */, (vm, _ref15) => {
-    var {
-      op1: register,
-      op2: offset
-    } = _ref15;
+  /* Dup */, (vm, {
+    op1: register,
+    op2: offset
+  }) => {
     var position = vm.fetchValue(register) - offset;
     vm.stack.dup(position);
   });
   APPEND_OPCODES.add(34
-  /* Pop */, (vm, _ref16) => {
-    var {
-      op1: count
-    } = _ref16;
+  /* Pop */, (vm, {
+    op1: count
+  }) => {
     vm.stack.pop(count);
   });
   APPEND_OPCODES.add(35
-  /* Load */, (vm, _ref17) => {
-    var {
-      op1: register
-    } = _ref17;
+  /* Load */, (vm, {
+    op1: register
+  }) => {
     vm.load(register);
   });
   APPEND_OPCODES.add(36
-  /* Fetch */, (vm, _ref18) => {
-    var {
-      op1: register
-    } = _ref18;
+  /* Fetch */, (vm, {
+    op1: register
+  }) => {
     vm.fetch(register);
   });
   APPEND_OPCODES.add(58
-  /* BindDynamicScope */, (vm, _ref19) => {
-    var {
-      op1: _names
-    } = _ref19;
+  /* BindDynamicScope */, (vm, {
+    op1: _names
+  }) => {
     var names = vm[CONSTANTS].getArray(_names);
     vm.bindDynamicScope(names);
   });
   APPEND_OPCODES.add(69
-  /* Enter */, (vm, _ref20) => {
-    var {
-      op1: args
-    } = _ref20;
+  /* Enter */, (vm, {
+    op1: args
+  }) => {
     vm.enter(args);
   });
   APPEND_OPCODES.add(70
@@ -34895,10 +34356,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.exit();
   });
   APPEND_OPCODES.add(63
-  /* PushSymbolTable */, (vm, _ref21) => {
-    var {
-      op1: _table
-    } = _ref21;
+  /* PushSymbolTable */, (vm, {
+    op1: _table
+  }) => {
     var stack = vm.stack;
     stack.push(vm[CONSTANTS].getValue(_table));
   });
@@ -34949,10 +34409,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.call(handle);
   });
   APPEND_OPCODES.add(65
-  /* JumpIf */, (vm, _ref22) => {
-    var {
-      op1: target
-    } = _ref22;
+  /* JumpIf */, (vm, {
+    op1: target
+  }) => {
     var reference = vm.stack.pop();
     var value = Boolean((0, _reference.valueForRef)(reference));
     if ((0, _reference.isConstRef)(reference)) {
@@ -34967,10 +34426,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   });
   APPEND_OPCODES.add(66
-  /* JumpUnless */, (vm, _ref23) => {
-    var {
-      op1: target
-    } = _ref23;
+  /* JumpUnless */, (vm, {
+    op1: target
+  }) => {
     var reference = vm.stack.pop();
     var value = Boolean((0, _reference.valueForRef)(reference));
     if ((0, _reference.isConstRef)(reference)) {
@@ -34985,11 +34443,10 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   });
   APPEND_OPCODES.add(67
-  /* JumpEq */, (vm, _ref24) => {
-    var {
-      op1: target,
-      op2: comparison
-    } = _ref24;
+  /* JumpEq */, (vm, {
+    op1: target,
+    op2: comparison
+  }) => {
     var other = vm.stack.peek();
     if (other === comparison) {
       vm.goto(target);
@@ -35088,24 +34545,21 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   }
   APPEND_OPCODES.add(41
-  /* Text */, (vm, _ref25) => {
-    var {
-      op1: text
-    } = _ref25;
+  /* Text */, (vm, {
+    op1: text
+  }) => {
     vm.elements().appendText(vm[CONSTANTS].getValue(text));
   });
   APPEND_OPCODES.add(42
-  /* Comment */, (vm, _ref26) => {
-    var {
-      op1: text
-    } = _ref26;
+  /* Comment */, (vm, {
+    op1: text
+  }) => {
     vm.elements().appendComment(vm[CONSTANTS].getValue(text));
   });
   APPEND_OPCODES.add(48
-  /* OpenElement */, (vm, _ref27) => {
-    var {
-      op1: tag
-    } = _ref27;
+  /* OpenElement */, (vm, {
+    op1: tag
+  }) => {
     vm.elements().openElement(vm[CONSTANTS].getValue(tag));
   });
   APPEND_OPCODES.add(49
@@ -35162,10 +34616,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   });
   APPEND_OPCODES.add(57
-  /* Modifier */, (vm, _ref28) => {
-    var {
-      op1: handle
-    } = _ref28;
+  /* Modifier */, (vm, {
+    op1: handle
+  }) => {
     if (vm.env.isInteractive === false) {
       return;
     }
@@ -35331,24 +34784,22 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   }
   APPEND_OPCODES.add(51
-  /* StaticAttr */, (vm, _ref29) => {
-    var {
-      op1: _name,
-      op2: _value,
-      op3: _namespace
-    } = _ref29;
+  /* StaticAttr */, (vm, {
+    op1: _name,
+    op2: _value,
+    op3: _namespace
+  }) => {
     var name = vm[CONSTANTS].getValue(_name);
     var value = vm[CONSTANTS].getValue(_value);
     var namespace = _namespace ? vm[CONSTANTS].getValue(_namespace) : null;
     vm.elements().setStaticAttribute(name, value, namespace);
   });
   APPEND_OPCODES.add(52
-  /* DynamicAttr */, (vm, _ref30) => {
-    var {
-      op1: _name,
-      op2: _trusting,
-      op3: _namespace
-    } = _ref30;
+  /* DynamicAttr */, (vm, {
+    op1: _name,
+    op2: _trusting,
+    op3: _namespace
+  }) => {
     var name = vm[CONSTANTS].getValue(_name);
     var trusting = vm[CONSTANTS].getValue(_trusting);
     var reference = vm.stack.pop();
@@ -35377,10 +34828,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   }
   APPEND_OPCODES.add(78
-  /* PushComponentDefinition */, (vm, _ref31) => {
-    var {
-      op1: handle
-    } = _ref31;
+  /* PushComponentDefinition */, (vm, {
+    op1: handle
+  }) => {
     var definition = vm[CONSTANTS].getValue(handle);
     var {
       manager,
@@ -35398,10 +34848,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.stack.push(instance);
   });
   APPEND_OPCODES.add(80
-  /* ResolveDynamicComponent */, (vm, _ref32) => {
-    var {
-      op1: _isStrict
-    } = _ref32;
+  /* ResolveDynamicComponent */, (vm, {
+    op1: _isStrict
+  }) => {
     var stack = vm.stack;
     var component = (0, _reference.valueForRef)(stack.pop());
     var constants = vm[CONSTANTS];
@@ -35466,12 +34915,11 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     });
   });
   APPEND_OPCODES.add(82
-  /* PushArgs */, (vm, _ref33) => {
-    var {
-      op1: _names,
-      op2: _blockNames,
-      op3: flags
-    } = _ref33;
+  /* PushArgs */, (vm, {
+    op1: _names,
+    op2: _blockNames,
+    op3: flags
+  }) => {
     var stack = vm.stack;
     var names = vm[CONSTANTS].getArray(_names);
     var positionalCount = flags >> 4;
@@ -35495,10 +34943,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     stack.push(capturedArgs);
   });
   APPEND_OPCODES.add(85
-  /* PrepareArgs */, (vm, _ref34) => {
-    var {
-      op1: _state
-    } = _ref34;
+  /* PrepareArgs */, (vm, {
+    op1: _state
+  }) => {
     var stack = vm.stack;
     var instance = vm.fetchValue(_state);
     var args = stack.pop();
@@ -35576,11 +35023,10 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     stack.push(args);
   });
   APPEND_OPCODES.add(87
-  /* CreateComponent */, (vm, _ref35) => {
-    var {
-      op1: flags,
-      op2: _state
-    } = _ref35;
+  /* CreateComponent */, (vm, {
+    op1: flags,
+    op2: _state
+  }) => {
     var instance = vm.fetchValue(_state);
     var {
       definition,
@@ -35620,10 +35066,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   });
   APPEND_OPCODES.add(88
-  /* RegisterComponentDestructor */, (vm, _ref36) => {
-    var {
-      op1: _state
-    } = _ref36;
+  /* RegisterComponentDestructor */, (vm, {
+    op1: _state
+  }) => {
     var {
       manager,
       state,
@@ -35637,10 +35082,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     if (d) vm.associateDestroyable(d);
   });
   APPEND_OPCODES.add(97
-  /* BeginComponentTransaction */, (vm, _ref37) => {
-    var {
-      op1: _state
-    } = _ref37;
+  /* BeginComponentTransaction */, (vm, {
+    op1: _state
+  }) => {
     var _a;
     var name;
     if (false /* DEBUG */) {
@@ -35658,12 +35102,11 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.loadValue(_vm2.$t0, new ComponentElementOperations());
   });
   APPEND_OPCODES.add(53
-  /* ComponentAttr */, (vm, _ref38) => {
-    var {
-      op1: _name,
-      op2: _trusting,
-      op3: _namespace
-    } = _ref38;
+  /* ComponentAttr */, (vm, {
+    op1: _name,
+    op2: _trusting,
+    op3: _namespace
+  }) => {
     var name = vm[CONSTANTS].getValue(_name);
     var trusting = vm[CONSTANTS].getValue(_trusting);
     var reference = vm.stack.pop();
@@ -35671,12 +35114,11 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.fetchValue(_vm2.$t0).setAttribute(name, reference, trusting, namespace);
   });
   APPEND_OPCODES.add(105
-  /* StaticComponentAttr */, (vm, _ref39) => {
-    var {
-      op1: _name,
-      op2: _value,
-      op3: _namespace
-    } = _ref39;
+  /* StaticComponentAttr */, (vm, {
+    op1: _name,
+    op2: _value,
+    op3: _namespace
+  }) => {
     var name = vm[CONSTANTS].getValue(_name);
     var value = vm[CONSTANTS].getValue(_value);
     var namespace = _namespace ? vm[CONSTANTS].getValue(_namespace) : null;
@@ -35753,10 +35195,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
     return true;
   }
-  function setDeferredAttr(vm, name, value, namespace, trusting) {
-    if (trusting === void 0) {
-      trusting = false;
-    }
+  function setDeferredAttr(vm, name, value, namespace, trusting = false) {
     if (typeof value === 'string') {
       vm.elements().setStaticAttribute(name, value, namespace);
     } else {
@@ -35767,10 +35206,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   }
   APPEND_OPCODES.add(99
-  /* DidCreateElement */, (vm, _ref40) => {
-    var {
-      op1: _state
-    } = _ref40;
+  /* DidCreateElement */, (vm, {
+    op1: _state
+  }) => {
     var {
       definition,
       state
@@ -35782,11 +35220,10 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     manager.didCreateElement(state, vm.elements().constructing, operations);
   });
   APPEND_OPCODES.add(90
-  /* GetComponentSelf */, (vm, _ref41) => {
-    var {
-      op1: _state,
-      op2: _names
-    } = _ref41;
+  /* GetComponentSelf */, (vm, {
+    op1: _state,
+    op2: _names
+  }) => {
     var _a;
     var instance = vm.fetchValue(_state);
     var {
@@ -35858,10 +35295,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.stack.push(selfRef);
   });
   APPEND_OPCODES.add(91
-  /* GetComponentTagName */, (vm, _ref42) => {
-    var {
-      op1: _state
-    } = _ref42;
+  /* GetComponentTagName */, (vm, {
+    op1: _state
+  }) => {
     var {
       definition,
       state
@@ -35875,10 +35311,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   }); // Dynamic Invocation Only
 
   APPEND_OPCODES.add(92
-  /* GetComponentLayout */, (vm, _ref43) => {
-    var {
-      op1: _state
-    } = _ref43;
+  /* GetComponentLayout */, (vm, {
+    op1: _state
+  }) => {
     var instance = vm.fetchValue(_state);
     var {
       manager,
@@ -35909,10 +35344,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     stack.push(handle);
   });
   APPEND_OPCODES.add(75
-  /* Main */, (vm, _ref44) => {
-    var {
-      op1: register
-    } = _ref44;
+  /* Main */, (vm, {
+    op1: register
+  }) => {
     var definition = vm.stack.pop();
     var invocation = vm.stack.pop();
     var {
@@ -35931,10 +35365,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.loadValue(register, state);
   });
   APPEND_OPCODES.add(95
-  /* PopulateLayout */, (vm, _ref45) => {
-    var {
-      op1: _state
-    } = _ref45;
+  /* PopulateLayout */, (vm, {
+    op1: _state
+  }) => {
     var {
       stack
     } = vm; // In DEBUG handles could be ErrHandle objects
@@ -35946,10 +35379,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     state.table = table;
   });
   APPEND_OPCODES.add(38
-  /* VirtualRootScope */, (vm, _ref46) => {
-    var {
-      op1: _state
-    } = _ref46;
+  /* VirtualRootScope */, (vm, {
+    op1: _state
+  }) => {
     var {
       table,
       manager,
@@ -35978,10 +35410,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.pushRootScope(table.symbols.length + 1, owner);
   });
   APPEND_OPCODES.add(94
-  /* SetupForEval */, (vm, _ref47) => {
-    var {
-      op1: _state
-    } = _ref47;
+  /* SetupForEval */, (vm, {
+    op1: _state
+  }) => {
     var state = vm.fetchValue(_state);
     if (state.table.hasEval) {
       var lookup = state.lookup = (0, _util.dict)();
@@ -35989,10 +35420,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   });
   APPEND_OPCODES.add(17
-  /* SetNamedVariables */, (vm, _ref48) => {
-    var {
-      op1: _state
-    } = _ref48;
+  /* SetNamedVariables */, (vm, {
+    op1: _state
+  }) => {
     var state = vm.fetchValue(_state);
     var scope = vm.scope();
     var args = vm.stack.peek();
@@ -36012,10 +35442,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     if (state.lookup) state.lookup[symbolName] = block;
   }
   APPEND_OPCODES.add(18
-  /* SetBlocks */, (vm, _ref49) => {
-    var {
-      op1: _state
-    } = _ref49;
+  /* SetBlocks */, (vm, {
+    op1: _state
+  }) => {
     var state = vm.fetchValue(_state);
     var {
       blocks
@@ -36026,18 +35455,16 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   }); // Dynamic Invocation Only
 
   APPEND_OPCODES.add(96
-  /* InvokeComponentLayout */, (vm, _ref50) => {
-    var {
-      op1: _state
-    } = _ref50;
+  /* InvokeComponentLayout */, (vm, {
+    op1: _state
+  }) => {
     var state = vm.fetchValue(_state);
     vm.call(state.handle);
   });
   APPEND_OPCODES.add(100
-  /* DidRenderLayout */, (vm, _ref51) => {
-    var {
-      op1: _state
-    } = _ref51;
+  /* DidRenderLayout */, (vm, {
+    op1: _state
+  }) => {
     var instance = vm.fetchValue(_state);
     var {
       manager,
@@ -36300,22 +35727,20 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   }
   APPEND_OPCODES.add(103
-  /* Debugger */, (vm, _ref52) => {
-    var {
-      op1: _symbols,
-      op2: _evalInfo
-    } = _ref52;
+  /* Debugger */, (vm, {
+    op1: _symbols,
+    op2: _evalInfo
+  }) => {
     var symbols = vm[CONSTANTS].getArray(_symbols);
     var evalInfo = vm[CONSTANTS].getArray((0, _util.decodeHandle)(_evalInfo));
     var inspector = new ScopeInspector(vm.scope(), symbols, evalInfo);
     callback((0, _reference.valueForRef)(vm.getSelf()), path => (0, _reference.valueForRef)(inspector.get(path)));
   });
   APPEND_OPCODES.add(72
-  /* EnterList */, (vm, _ref53) => {
-    var {
-      op1: relativeStart,
-      op2: elseTarget
-    } = _ref53;
+  /* EnterList */, (vm, {
+    op1: relativeStart,
+    op2: elseTarget
+  }) => {
     var stack = vm.stack;
     var listRef = stack.pop();
     var keyRef = stack.pop();
@@ -36337,10 +35762,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.exitList();
   });
   APPEND_OPCODES.add(74
-  /* Iterate */, (vm, _ref54) => {
-    var {
-      op1: breaks
-    } = _ref54;
+  /* Iterate */, (vm, {
+    op1: breaks
+  }) => {
     var stack = vm.stack;
     var iterator = stack.peek();
     var item = iterator.next();
@@ -36369,10 +35793,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     getCapabilities() {
       return CAPABILITIES;
     }
-    getDebugName(_ref55) {
-      var {
-        name
-      } = _ref55;
+    getDebugName({
+      name
+    }) {
       return name;
     }
     getSelf() {
@@ -36386,13 +35809,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   var TEMPLATE_ONLY_COMPONENT_MANAGER = new TemplateOnlyComponentManager(); // This is only exported for types, don't use this class directly
   _exports.TEMPLATE_ONLY_COMPONENT_MANAGER = TEMPLATE_ONLY_COMPONENT_MANAGER;
   class TemplateOnlyComponentDefinition {
-    constructor(moduleName, name) {
-      if (moduleName === void 0) {
-        moduleName = '@glimmer/component/template-only';
-      }
-      if (name === void 0) {
-        name = '(unknown template-only component)';
-      }
+    constructor(moduleName = '@glimmer/component/template-only', name = '(unknown template-only component)') {
       this.moduleName = moduleName;
       this.name = name;
     }
@@ -36665,10 +36082,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       createElementNS(namespace, tag) {
         return this.document.createElementNS(namespace, tag);
       }
-      setAttribute(element, name, value, namespace) {
-        if (namespace === void 0) {
-          namespace = null;
-        }
+      setAttribute(element, name, value, namespace = null) {
         if (namespace) {
           element.setAttributeNS(namespace, name, value);
         } else {
@@ -36857,10 +36271,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
         children
       };
     }
-    captureTemplate(_ref56) {
-      var {
-        template
-      } = _ref56;
+    captureTemplate({
+      template
+    }) {
       return template || null;
     }
     captureBounds(node) {
@@ -37149,10 +36562,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
   }
   class UpdatingVMImpl {
-    constructor(env, _ref57) {
-      var {
-        alwaysRevalidate = false
-      } = _ref57;
+    constructor(env, {
+      alwaysRevalidate = false
+    }) {
       this.frameStack = new _util.Stack();
       this.env = env;
       this.dom = env.getDOM();
@@ -37475,12 +36887,11 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       (0, _destroyable2.associateDestroyableChild)(this, drop);
       (0, _destroyable2.registerDestructor)(this, () => clear(this.bounds));
     }
-    rerender(_temp) {
-      var {
-        alwaysRevalidate = false
-      } = _temp === void 0 ? {
-        alwaysRevalidate: false
-      } : _temp;
+    rerender({
+      alwaysRevalidate = false
+    } = {
+      alwaysRevalidate: false
+    }) {
       var {
         env,
         updating
@@ -37505,10 +36916,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   }
   class EvaluationStackImpl {
     // fp -> sp
-    constructor(stack, registers) {
-      if (stack === void 0) {
-        stack = [];
-      }
+    constructor(stack = [], registers) {
       this.stack = stack;
       this[REGISTERS] = registers;
     }
@@ -37518,39 +36926,24 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     push(value) {
       this.stack[++this[REGISTERS][_vm2.$sp]] = value;
     }
-    dup(position) {
-      if (position === void 0) {
-        position = this[REGISTERS][_vm2.$sp];
-      }
+    dup(position = this[REGISTERS][_vm2.$sp]) {
       this.stack[++this[REGISTERS][_vm2.$sp]] = this.stack[position];
     }
     copy(from, to) {
       this.stack[to] = this.stack[from];
     }
-    pop(n) {
-      if (n === void 0) {
-        n = 1;
-      }
+    pop(n = 1) {
       var top = this.stack[this[REGISTERS][_vm2.$sp]];
       this[REGISTERS][_vm2.$sp] -= n;
       return top;
     }
-    peek(offset) {
-      if (offset === void 0) {
-        offset = 0;
-      }
+    peek(offset = 0) {
       return this.stack[this[REGISTERS][_vm2.$sp] - offset];
     }
-    get(offset, base) {
-      if (base === void 0) {
-        base = this[REGISTERS][_vm2.$fp];
-      }
+    get(offset, base = this[REGISTERS][_vm2.$fp]) {
       return this.stack[base + offset];
     }
-    set(value, offset, base) {
-      if (base === void 0) {
-        base = this[REGISTERS][_vm2.$fp];
-      }
+    set(value, offset, base = this[REGISTERS][_vm2.$fp]) {
       this.stack[base + offset] = value;
     }
     slice(start, end) {
@@ -37582,13 +36975,12 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     /**
      * End of migrated.
      */
-    constructor(runtime, _ref58, elementStack, context) {
-      var {
-        pc,
-        scope,
-        dynamicScope,
-        stack
-      } = _ref58;
+    constructor(runtime, {
+      pc,
+      scope,
+      dynamicScope,
+      stack
+    }, elementStack, context) {
       this.runtime = runtime;
       this.elementStack = elementStack;
       this.context = context;
@@ -37710,28 +37102,26 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     return() {
       this[INNER_VM].return();
     }
-    static initial(runtime, context, _ref59) {
-      var {
-        handle,
-        self,
-        dynamicScope,
-        treeBuilder,
-        numSymbols,
-        owner
-      } = _ref59;
+    static initial(runtime, context, {
+      handle,
+      self,
+      dynamicScope,
+      treeBuilder,
+      numSymbols,
+      owner
+    }) {
       var scope = PartialScopeImpl.root(self, numSymbols, owner);
       var state = vmState(runtime.program.heap.getaddr(handle), scope, dynamicScope);
       var vm = initVM(context)(runtime, state, treeBuilder);
       vm.pushUpdating();
       return vm;
     }
-    static empty(runtime, _ref60, context) {
-      var {
-        handle,
-        treeBuilder,
-        dynamicScope,
-        owner
-      } = _ref60;
+    static empty(runtime, {
+      handle,
+      treeBuilder,
+      dynamicScope,
+      owner
+    }, context) {
       var vm = initVM(context)(runtime, vmState(runtime.program.heap.getaddr(handle), PartialScopeImpl.root(_reference.UNDEFINED_REFERENCE, 0, owner), dynamicScope), treeBuilder);
       vm.pushUpdating();
       return vm;
@@ -37746,10 +37136,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     get env() {
       return this.runtime.env;
     }
-    captureState(args, pc) {
-      if (pc === void 0) {
-        pc = this[INNER_VM].fetchRegister(_vm2.$pc);
-      }
+    captureState(args, pc = this[INNER_VM].fetchRegister(_vm2.$pc)) {
       return {
         pc,
         scope: this.scope(),
@@ -37757,10 +37144,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
         stack: this.stack.capture(args)
       };
     }
-    capture(args, pc) {
-      if (pc === void 0) {
-        pc = this[INNER_VM].fetchRegister(_vm2.$pc);
-      }
+    capture(args, pc = this[INNER_VM].fetchRegister(_vm2.$pc)) {
       return new ResumableVMStateImpl(this.captureState(args, pc), this.resume);
     }
     beginCacheGroup(name) {
@@ -37785,12 +37169,11 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       var tryOpcode = new TryOpcode(state, this.runtime, block, updating);
       this.didEnter(tryOpcode);
     }
-    enterItem(_ref61) {
-      var {
-        key,
-        value,
-        memo
-      } = _ref61;
+    enterItem({
+      key,
+      value,
+      memo
+    }) {
       var {
         stack
       } = this;
@@ -37831,10 +37214,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       this.exit();
       this[STACKS].list.pop();
     }
-    pushUpdating(list) {
-      if (list === void 0) {
-        list = [];
-      }
+    pushUpdating(list = []) {
       this[STACKS].updating.push(list);
     }
     popUpdating() {
@@ -37996,10 +37376,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     inTransaction(env, () => result = iterator.sync());
     return result;
   }
-  function renderMain(runtime, context, owner, self, treeBuilder, layout, dynamicScope) {
-    if (dynamicScope === void 0) {
-      dynamicScope = new DynamicScopeImpl();
-    }
+  function renderMain(runtime, context, owner, self, treeBuilder, layout, dynamicScope = new DynamicScopeImpl()) {
     var handle = (0, _util.unwrapHandle)(layout.compile(context));
     var numSymbols = layout.symbolTable.symbols.length;
     var vm = VM.initial(runtime, context, {
@@ -38018,10 +37395,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     var argList = Object.keys(args).map(key => [key, args[key]]);
     var blockNames = ['main', 'else', 'attrs']; // Prefix argument names with `@` symbol
 
-    var argNames = argList.map(_ref62 => {
-      var [name] = _ref62;
-      return `@${name}`;
-    });
+    var argNames = argList.map(([name]) => `@${name}`);
     var reified = vm[CONSTANTS].component(definition, owner);
     vm.pushFrame(); // Push blocks on to the stack, three stack values per block
 
@@ -38030,8 +37404,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     }
     vm.stack.push(null); // For each argument, push its backing reference on to the stack
 
-    argList.forEach(_ref63 => {
-      var [, reference] = _ref63;
+    argList.forEach(([, reference]) => {
       vm.stack.push(reference);
     }); // Configure VM based on blocks and args just pushed on to the stack.
 
@@ -38049,13 +37422,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     vm.stack.push(reified);
     return new TemplateIteratorImpl(vm);
   }
-  function renderComponent(runtime, treeBuilder, context, owner, definition, args, dynamicScope) {
-    if (args === void 0) {
-      args = {};
-    }
-    if (dynamicScope === void 0) {
-      dynamicScope = new DynamicScopeImpl();
-    }
+  function renderComponent(runtime, treeBuilder, context, owner, definition, args = {}, dynamicScope = new DynamicScopeImpl()) {
     var vm = VM.empty(runtime, {
       treeBuilder,
       handle: context.stdlib.main,
@@ -38149,10 +37516,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       currentCursor.candidate = candidate;
       currentCursor.nextSibling = null;
     }
-    pushElement(element, nextSibling) {
-      if (nextSibling === void 0) {
-        nextSibling = null;
-      }
+    pushElement(element, nextSibling = null) {
       var cursor = new RehydratingCursor(element, nextSibling, this.blockDepth || 0);
       /**
        * <div>   <---------------  currentCursor.element
@@ -38510,10 +37874,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     return (0, _validator.getValue)(false /* DEBUG */ ? ARGS_CACHES.get(proxy) : proxy.argsCache);
   }
   class SimpleArgsProxy {
-    constructor(context, computeArgs) {
-      if (computeArgs === void 0) {
-        computeArgs = () => EMPTY_ARGS;
-      }
+    constructor(context, computeArgs = () => EMPTY_ARGS) {
       var argsCache = (0, _validator.createCache)(() => computeArgs(context));
       if (false /* DEBUG */) {
         ARGS_CACHES.set(this, argsCache);
@@ -38633,19 +37994,15 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     @public
   */
 
-  var fn = internalHelper(_ref64 => {
-    var {
-      positional
-    } = _ref64;
+  var fn = internalHelper(({
+    positional
+  }) => {
     var callbackRef = positional[0];
     if (false /* DEBUG */) assertCallbackIsFn(callbackRef);
     return (0, _reference.createComputeRef)(() => {
-      return function () {
+      return (...invocationArgs) => {
         var [fn, ...args] = (0, _runtime.reifyPositional)(positional);
         if (false /* DEBUG */) assertCallbackIsFn(callbackRef);
-        for (var _len = arguments.length, invocationArgs = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
-          invocationArgs[_key2] = arguments[_key2];
-        }
         if ((0, _reference.isInvokableRef)(callbackRef)) {
           var value = args.length > 0 ? args[0] : invocationArgs[0];
           return (0, _reference.updateRef)(callbackRef, value);
@@ -38712,10 +38069,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
      @public
    */
 
-  var hash = internalHelper(_ref65 => {
-    var {
-      named
-    } = _ref65;
+  var hash = internalHelper(({
+    named
+  }) => {
     var ref = (0, _reference.createComputeRef)(() => {
       var hash = (0, _runtime.reifyNamed)(named);
       if (false /* DEBUG */ && _util.HAS_NATIVE_PROXY) {
@@ -38767,10 +38123,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
      @public
    */
   _exports.hash = hash;
-  var array = internalHelper(_ref66 => {
-    var {
-      positional
-    } = _ref66;
+  var array = internalHelper(({
+    positional
+  }) => {
     return (0, _reference.createComputeRef)(() => (0, _runtime.reifyPositional)(positional), null, 'array');
   });
 
@@ -38852,10 +38207,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     @method get
    */
   _exports.array = array;
-  var get = internalHelper(_ref67 => {
-    var {
-      positional
-    } = _ref67;
+  var get = internalHelper(({
+    positional
+  }) => {
     var _a, _b;
     var sourceRef = (_a = positional[0]) !== null && _a !== void 0 ? _a : _reference.UNDEFINED_REFERENCE;
     var pathRef = (_b = positional[1]) !== null && _b !== void 0 ? _b : _reference.UNDEFINED_REFERENCE;
@@ -38902,10 +38256,9 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     @method concat
   */
 
-  var concat = internalHelper(_ref68 => {
-    var {
-      positional
-    } = _ref68;
+  var concat = internalHelper(({
+    positional
+  }) => {
     return (0, _reference.createComputeRef)(() => (0, _runtime.reifyPositional)(positional).map(normalizeTextValue).join(''), null, 'concat');
   });
   _exports.concat = concat;
@@ -39375,10 +38728,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
     return typeof u === 'function' || typeof u === 'object' && u !== null;
   }
   class StackImpl {
-    constructor(values) {
-      if (values === void 0) {
-        values = [];
-      }
+    constructor(values = []) {
       this.current = null;
       this.stack = values;
     }
@@ -39507,32 +38857,21 @@ define("@glimmer/util", ["exports"], function (_exports) {
     if (val === null || val === undefined) throw new Error(message);
     return val;
   }
-  function unreachable(message) {
-    if (message === void 0) {
-      message = 'unreachable';
-    }
+  function unreachable(message = 'unreachable') {
     return new Error(message);
   }
   function exhausted(value) {
     throw new Error(`Exhausted ${value}`);
   }
-  var tuple = function () {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return args;
-  };
+  var tuple = (...args) => args;
   _exports.tuple = tuple;
   function enumerableSymbol(key) {
     return intern(`__${key}${Math.floor(Math.random() * Date.now())}__`);
   }
   var symbol = HAS_NATIVE_SYMBOL ? Symbol : enumerableSymbol;
   _exports.symbol = symbol;
-  function strip(strings) {
+  function strip(strings, ...args) {
     var out = '';
-    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      args[_key2 - 1] = arguments[_key2];
-    }
     for (var i = 0; i < strings.length; i++) {
       var string = strings[i];
       var dynamic = args[i] !== undefined ? String(args[i]) : '';
@@ -39564,10 +38903,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
     /* ENCODED_UNDEFINED_HANDLE */;
   }
 
-  function constants() {
-    for (var _len3 = arguments.length, values = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      values[_key3] = arguments[_key3];
-    }
+  function constants(...values) {
     return [false, true, null, undefined, ...values];
   }
   function isSmallInt(value) {
@@ -39739,10 +39075,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
       return null;
     }
   }
-  function assertPresent(list, message) {
-    if (message === void 0) {
-      message = `unexpected empty list`;
-    }
+  function assertPresent(list, message = `unexpected empty list`) {
     if (!isPresent(list)) {
       throw new Error(message);
     }
@@ -39849,10 +39182,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
   _exports.LOCAL_LOGGER = LOCAL_LOGGER;
   var LOGGER = console;
   _exports.LOGGER = LOGGER;
-  function assertNever(value, desc) {
-    if (desc === void 0) {
-      desc = 'unexpected unreachable branch';
-    }
+  function assertNever(value, desc = 'unexpected unreachable branch') {
     LOGGER.log('unreachable', value);
     LOGGER.log(`${desc} :: ${JSON.stringify(value)} (${value})`);
     throw new Error(`code reached unreachable`);
@@ -40004,10 +39334,7 @@ define("@glimmer/validator", ["exports", "@glimmer/global-context"], function (_
         }
       }
     };
-    var nthIndex = function (str, pattern, n, startingPos) {
-      if (startingPos === void 0) {
-        startingPos = -1;
-      }
+    var nthIndex = (str, pattern, n, startingPos = -1) => {
       var i = startingPos;
       while (n-- > 0 && i++ < str.length) {
         i = str.indexOf(pattern, i);
@@ -41106,10 +40433,7 @@ define("backburner", ["exports"], function (_exports) {
     }
     return index;
   }
-  function getQueueItems(items, queueItemLength, queueItemPositionOffset) {
-    if (queueItemPositionOffset === void 0) {
-      queueItemPositionOffset = 0;
-    }
+  function getQueueItems(items, queueItemLength, queueItemPositionOffset = 0) {
     var queueItems = [];
     for (var i = 0; i < items.length; i += queueItemLength) {
       var maybeError = items[i + 3 /* stack */ + queueItemPositionOffset];
@@ -41145,13 +40469,7 @@ define("backburner", ["exports"], function (_exports) {
   }
   var QUEUE_ITEM_LENGTH = 4;
   class Queue {
-    constructor(name, options, globalOptions) {
-      if (options === void 0) {
-        options = {};
-      }
-      if (globalOptions === void 0) {
-        globalOptions = {};
-      }
+    constructor(name, options = {}, globalOptions = {}) {
       this._queueBeingFlushed = [];
       this.targetQueues = new Map();
       this.index = 0;
@@ -41236,11 +40554,10 @@ define("backburner", ["exports"], function (_exports) {
     hasWork() {
       return this._queueBeingFlushed.length > 0 || this._queue.length > 0;
     }
-    cancel(_ref) {
-      var {
-        target,
-        method
-      } = _ref;
+    cancel({
+      target,
+      method
+    }) {
       var queue = this._queue;
       var targetQueueMap = this.targetQueues.get(target);
       if (targetQueueMap !== undefined) {
@@ -41318,10 +40635,7 @@ define("backburner", ["exports"], function (_exports) {
     }
   }
   class DeferredActionQueues {
-    constructor(queueNames, options) {
-      if (queueNames === void 0) {
-        queueNames = [];
-      }
+    constructor(queueNames = [], options) {
       this.queues = {};
       this.queueNameIndex = 0;
       this.queueNames = queueNames;
@@ -41362,10 +40676,7 @@ define("backburner", ["exports"], function (_exports) {
      * @method flush
      * @param {Boolean} fromAutorun
      */
-    flush(fromAutorun) {
-      if (fromAutorun === void 0) {
-        fromAutorun = false;
-      }
+    flush(fromAutorun = false) {
       var queue;
       var queueName;
       var numberOfQueues = this.queueNames.length;
@@ -41655,18 +40966,12 @@ define("backburner", ["exports"], function (_exports) {
     /**
      * @deprecated please use schedule instead.
      */
-    defer(queueName, target, method) {
+    defer(queueName, target, method, ...args) {
       deferCount++;
-      for (var _len = arguments.length, args = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
-        args[_key - 3] = arguments[_key];
-      }
       return this.schedule(queueName, target, method, ...args);
     }
-    schedule(queueName) {
+    schedule(queueName, ..._args) {
       scheduleCount++;
-      for (var _len2 = arguments.length, _args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        _args[_key2 - 1] = arguments[_key2];
-      }
       var [target, method, args] = parseArgs(..._args);
       var stack = this.DEBUG ? new Error() : undefined;
       return this._ensureInstance().schedule(queueName, target, method, args, false, stack);
@@ -41686,18 +40991,12 @@ define("backburner", ["exports"], function (_exports) {
     /**
      * @deprecated please use scheduleOnce instead.
      */
-    deferOnce(queueName, target, method) {
+    deferOnce(queueName, target, method, ...args) {
       deferOnceCount++;
-      for (var _len3 = arguments.length, args = new Array(_len3 > 3 ? _len3 - 3 : 0), _key3 = 3; _key3 < _len3; _key3++) {
-        args[_key3 - 3] = arguments[_key3];
-      }
       return this.scheduleOnce(queueName, target, method, ...args);
     }
-    scheduleOnce(queueName) {
+    scheduleOnce(queueName, ..._args) {
       scheduleOnceCount++;
-      for (var _len4 = arguments.length, _args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        _args[_key4 - 1] = arguments[_key4];
-      }
       var [target, method, args] = parseArgs(..._args);
       var stack = this.DEBUG ? new Error() : undefined;
       return this._ensureInstance().schedule(queueName, target, method, args, true, stack);
@@ -42403,13 +41702,14 @@ define("ember-babel", ["exports"], function (_exports) {
     return i.next.bind(i);
   }
 });
-define("ember/index", ["exports", "require", "@ember/-internals/environment", "@ember/-internals/utils", "@ember/-internals/container", "@ember/instrumentation", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/canary-features", "@ember/debug", "backburner", "@ember/controller", "@ember/string", "@ember/service", "@ember/object", "@ember/object/-internals", "@ember/object/compat", "@ember/object/computed", "@ember/object/events", "@ember/-internals/runtime", "@ember/-internals/glimmer", "ember/version", "@ember/-internals/views", "@ember/debug/container-debug-adapter", "@ember/debug/data-adapter", "@ember/error", "@ember/runloop", "@ember/-internals/error-handling", "@ember/array", "@ember/array/mutable", "@ember/array/proxy", "@ember/application", "@ember/application/instance", "@ember/application/namespace", "@ember/component", "@ember/component/helper", "@ember/engine", "@ember/engine/instance", "@ember/enumerable", "@ember/enumerable/mutable", "@ember/object/core", "@ember/object/evented", "@ember/object/mixin", "@ember/object/observable", "@ember/object/observers", "@ember/object/proxy", "@ember/object/promise-proxy-mixin", "@ember/polyfills", "@ember/routing/auto-location", "@ember/routing/hash-location", "@ember/routing/history-location", "@ember/routing/none-location", "@ember/routing/location", "@ember/routing/route", "@ember/routing/router", "@ember/routing/-internals", "@ember/utils", "@glimmer/runtime", "@glimmer/manager", "@ember/destroyable"], function (_exports, _require, _environment, utils, _container, instrumentation, _meta, metal, _canaryFeatures, EmberDebug, _backburner, _controller, _string, _service, _object, _internals, _compat, _computed, _events, _runtime, _glimmer, _version, views, _containerDebugAdapter, _dataAdapter, _error, _runloop, _errorHandling, _array, _mutable, _proxy, _application, _instance, _namespace, _component, _helper, _engine, _instance2, _enumerable, _mutable2, _core, _evented, _mixin, _observable, _observers, _proxy2, _promiseProxyMixin, _polyfills, _autoLocation, _hashLocation, _historyLocation, _noneLocation, _location, _route, _router, _internals2, _utils2, glimmerRuntime, _manager, _destroyable) {
+define("ember/index", ["exports", "require", "@ember/-internals/environment", "@ember/-internals/utils", "@ember/-internals/container", "@ember/instrumentation", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/canary-features", "@ember/debug", "backburner", "@ember/controller", "@ember/string", "@ember/service", "@ember/object", "@ember/object/-internals", "@ember/object/compat", "@ember/object/computed", "@ember/object/events", "@ember/-internals/runtime", "@ember/-internals/glimmer", "ember/version", "@ember/-internals/views", "@ember/debug/container-debug-adapter", "@ember/debug/data-adapter", "@ember/error", "@ember/runloop", "@ember/-internals/error-handling", "@ember/array", "@ember/array/mutable", "@ember/array/proxy", "@ember/application", "@ember/application/instance", "@ember/application/namespace", "@ember/component", "@ember/component/helper", "@ember/engine", "@ember/engine/instance", "@ember/enumerable", "@ember/enumerable/mutable", "@ember/object/core", "@ember/object/evented", "@ember/object/mixin", "@ember/object/observable", "@ember/object/observers", "@ember/object/proxy", "@ember/object/promise-proxy-mixin", "@ember/polyfills", "@ember/routing/auto-location", "@ember/routing/hash-location", "@ember/routing/history-location", "@ember/routing/none-location", "@ember/routing/location", "@ember/routing/route", "@ember/routing/router", "@ember/routing/-internals", "@ember/utils", "@glimmer/runtime", "@glimmer/manager", "@ember/destroyable"], function (_exports, _require, _environment, utils, _container, instrumentation, _meta, metal, _canaryFeatures, _debug, _backburner, _controller, _string, _service, _object, _internals, _compat, _computed, _events, _runtime, _glimmer, _version, views, _containerDebugAdapter, _dataAdapter, _error, _runloop, _errorHandling, _array, _mutable, _proxy, _application, _instance, _namespace, _component, _helper, _engine, _instance2, _enumerable, _mutable2, _core, _evented, _mixin, _observable, _observers, _proxy2, _promiseProxyMixin, _polyfills, _autoLocation, _hashLocation, _historyLocation, _noneLocation, _location, _route, _router, _internals2, _utils2, glimmerRuntime, _manager, _destroyable) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
+  var EmberDebug = _debug;
   /**
   @module ember
   */
@@ -42423,7 +41723,7 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
     @public
   */
   function inject() {
-    (false && !(false) && (0, EmberDebug.assert)(`Injected properties must be created through helpers, see '${Object.keys(inject).map(k => `'inject.${k}'`).join(' or ')}'`));
+    (false && !(false) && (0, _debug.assert)(`Injected properties must be created through helpers, see '${Object.keys(inject).map(k => `'inject.${k}'`).join(' or ')}'`));
   }
   // ****@ember/controller****
   inject.controller = _controller.inject;
@@ -42508,7 +41808,7 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
     Controller: _controller.default,
     ControllerMixin: _controller.ControllerMixin,
     // ****@ember/debug****
-    _captureRenderTree: EmberDebug.captureRenderTree,
+    _captureRenderTree: _debug.captureRenderTree,
     assert: EmberDebug.assert,
     warn: EmberDebug.warn,
     debug: EmberDebug.debug,
@@ -42727,7 +42027,7 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
     enumerable: false
   });
   function deprecateStringUseOnEmberModule() {
-    (false && !(false) && (0, EmberDebug.deprecate)('Using `Ember.String` is deprecated. Please import methods directly from `@ember/string`.', false, {
+    (false && !(false) && (0, _debug.deprecate)('Using `Ember.String` is deprecated. Please import methods directly from `@ember/string`.', false, {
       id: 'ember-string.from-ember-module',
       for: 'ember-source',
       since: {
@@ -43628,12 +42928,9 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
   /**
     @private
    */
-  function log(router) {
+  function log(router, ...args) {
     if (!router.log) {
       return;
-    }
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
     }
     if (args.length === 2) {
       var [sequence, msg] = args;
@@ -43724,13 +43021,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
    */
   _exports.QUERY_PARAMS_SYMBOL = QUERY_PARAMS_SYMBOL;
   class Transition {
-    constructor(router, intent, state, error, previousTransition) {
-      if (error === void 0) {
-        error = undefined;
-      }
-      if (previousTransition === void 0) {
-        previousTransition = undefined;
-      }
+    constructor(router, intent, state, error = undefined, previousTransition = undefined) {
       this.from = null;
       this.to = undefined;
       this.isAborted = false;
@@ -43952,10 +43243,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
       return this;
     }
     // Alias 'trigger' as 'send'
-    send(ignoreFailure, _name, err, transition, handler) {
-      if (ignoreFailure === void 0) {
-        ignoreFailure = false;
-      }
+    send(ignoreFailure = false, _name, err, transition, handler) {
       this.trigger(ignoreFailure, _name, err, transition, handler);
     }
     /**
@@ -43968,17 +43256,11 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
       @param {String} name the name of the event to fire
       @public
      */
-    trigger(ignoreFailure, name) {
-      if (ignoreFailure === void 0) {
-        ignoreFailure = false;
-      }
+    trigger(ignoreFailure = false, name, ...args) {
       // TODO: Deprecate the current signature
       if (typeof ignoreFailure === 'string') {
         name = ignoreFailure;
         ignoreFailure = false;
-      }
-      for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-        args[_key2 - 2] = arguments[_key2];
       }
       this.router.triggerEvent(this[STATE_SYMBOL].routeInfos.slice(0, this.resolveIndex + 1), ignoreFailure, name, args);
     }
@@ -44032,13 +43314,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
     return obj;
   }
   var ROUTE_INFOS = new WeakMap();
-  function toReadOnlyRouteInfo(routeInfos, queryParams, includeAttributes) {
-    if (queryParams === void 0) {
-      queryParams = {};
-    }
-    if (includeAttributes === void 0) {
-      includeAttributes = false;
-    }
+  function toReadOnlyRouteInfo(routeInfos, queryParams = {}, includeAttributes = false) {
     return routeInfos.map((info, i) => {
       var {
         name,
@@ -44421,10 +43697,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
     return true;
   }
   class TransitionIntent {
-    constructor(router, data) {
-      if (data === void 0) {
-        data = {};
-      }
+    constructor(router, data = {}) {
       this.router = router;
       this.data = data;
     }
@@ -44514,13 +43787,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
   }
   _exports.TransitionError = TransitionError;
   class NamedTransitionIntent extends TransitionIntent {
-    constructor(router, name, pivotHandler, contexts, queryParams, data) {
-      if (contexts === void 0) {
-        contexts = [];
-      }
-      if (queryParams === void 0) {
-        queryParams = {};
-      }
+    constructor(router, name, pivotHandler, contexts = [], queryParams = {}, data) {
       super(router, data);
       this.preTransitionState = undefined;
       this.name = name;
@@ -44906,13 +44173,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
     @param {Array[Object]} args arguments passed to transitionTo,
       replaceWith, or handleURL
     */
-    doTransition(name, modelsArray, isIntermediate) {
-      if (modelsArray === void 0) {
-        modelsArray = [];
-      }
-      if (isIntermediate === void 0) {
-        isIntermediate = false;
-      }
+    doTransition(name, modelsArray = [], isIntermediate = false) {
       var lastArg = modelsArray[modelsArray.length - 1];
       var queryParams = {};
       if (lastArg && Object.prototype.hasOwnProperty.call(lastArg, 'queryParams')) {
@@ -45268,10 +44529,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
         newTransition.from = fromInfos[fromInfos.length - 1] || null;
       }
     }
-    toInfos(newTransition, newRouteInfos, includeAttributes) {
-      if (includeAttributes === void 0) {
-        includeAttributes = false;
-      }
+    toInfos(newTransition, newRouteInfos, includeAttributes = false) {
       if (newTransition !== undefined && newRouteInfos.length > 0) {
         var toInfos = toReadOnlyRouteInfo(newRouteInfos, Object.assign({}, newTransition[QUERY_PARAMS_SYMBOL]), includeAttributes);
         newTransition.to = toInfos[toInfos.length - 1] || null;
@@ -45340,20 +44598,14 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
       that are no longer represented by the target route.
          @param {String} name the name of the route
     */
-    transitionTo(name) {
-      for (var _len3 = arguments.length, contexts = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        contexts[_key3 - 1] = arguments[_key3];
-      }
+    transitionTo(name, ...contexts) {
       if (typeof name === 'object') {
         contexts.push(name);
         return this.doTransition(undefined, contexts, false);
       }
       return this.doTransition(name, contexts);
     }
-    intermediateTransitionTo(name) {
-      for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        args[_key4 - 1] = arguments[_key4];
-      }
+    intermediateTransitionTo(name, ...args) {
       return this.doTransition(name, args, true);
     }
     refresh(pivotRoute) {
@@ -45390,10 +44642,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
       @param {...Object} objects a list of objects to serialize
          @return {String} a URL
     */
-    generate(routeName) {
-      for (var _len5 = arguments.length, args = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-        args[_key5 - 1] = arguments[_key5];
-      }
+    generate(routeName, ...args) {
       var partitionedArgs = extractQueryParams(args),
         suppliedParams = partitionedArgs[0],
         queryParams = partitionedArgs[1];
@@ -45456,17 +44705,11 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
       }
       return routesEqual && !getChangelist(activeQPsOnNewHandler, queryParams);
     }
-    isActive(routeName) {
-      for (var _len6 = arguments.length, args = new Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
-        args[_key6 - 1] = arguments[_key6];
-      }
+    isActive(routeName, ...args) {
       var [contexts, queryParams] = extractQueryParams(args);
       return this.isActiveIntent(routeName, contexts, queryParams);
     }
-    trigger(name) {
-      for (var _len7 = arguments.length, args = new Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
-        args[_key7 - 1] = arguments[_key7];
-      }
+    trigger(name, ...args) {
       this.triggerEvent(this.currentRouteInfos, false, name, args);
     }
   }
@@ -47050,10 +46293,7 @@ define("rsvp", ["exports"], function (_exports) {
     return Promise.race(array, label);
   }
   class PromiseHash extends Enumerator {
-    constructor(Constructor, object, abortOnReject, label) {
-      if (abortOnReject === void 0) {
-        abortOnReject = true;
-      }
+    constructor(Constructor, object, abortOnReject = true, label) {
       super(Constructor, object, abortOnReject, label);
     }
     _init(Constructor, object) {
@@ -52010,8 +51250,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @class AdapterError
     @public
   */
-  function AdapterError(errors) {
-    let message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Adapter operation failed';
+  function AdapterError(errors, message = 'Adapter operation failed') {
     this.isAdapterError = true;
     let error = Error.call(this, message);
     if (error) {
@@ -52029,10 +51268,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     }];
   }
   function extendFn(ErrorClass) {
-    return function () {
-      let {
-        message: defaultMessage
-      } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return function ({
+      message: defaultMessage
+    } = {}) {
       return extend(ErrorClass, defaultMessage);
     };
   }
@@ -52538,8 +51776,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @extends Ember.EmberObject
   */
   let Adapter = (_class = class Adapter extends _object.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "store", _descriptor, this);
     }
     /**
@@ -53249,8 +52487,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @extends RESTAdapter
   */
   class JSONAPIAdapter extends _rest.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       this._defaultContentType = 'application/vnd.api+json';
     }
     /**
@@ -53261,8 +52499,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {Object} options
       @return {Object}
     */
-    ajaxOptions(url, type) {
-      let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    ajaxOptions(url, type, options = {}) {
       let hash = super.ajaxOptions(url, type, options);
       hash.headers['Accept'] = hash.headers['Accept'] || 'application/vnd.api+json';
       return hash;
@@ -53629,8 +52866,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @uses BuildURLMixin
   */
   let RESTAdapter = (_dec = (0, _object.computed)(), (_class = class RESTAdapter extends _indexF54121ea.A.extend(_buildUrlMixin18db8c8b.B) {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       /**
         This property allows ajax to still be used instead when `false`.
          @property useFetch
@@ -54248,8 +53485,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {Object} options
       @return {Promise} promise
     */
-    async ajax(url, type) {
-      let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    async ajax(url, type, options = {}) {
       let adapter = this;
       let requestData = {
         url: url,
@@ -54822,10 +54058,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   function setupFastboot(fastBootRequest) {
     REQUEST = fastBootRequest;
   }
-  function serializeIntoHash(store, modelClass, snapshot) {
-    let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {
-      includeId: true
-    };
+  function serializeIntoHash(store, modelClass, snapshot, options = {
+    includeId: true
+  }) {
     const serializer = store.serializerFor(modelClass.modelName);
     (false && !(serializer) && (0, _debug.assert)(`Cannot serialize record, no serializer defined`, serializer));
     if (typeof serializer.serializeIntoHash === 'function') {
@@ -55590,8 +54825,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     return false;
   }
-  function upgradeDefinition(graph, identifier, propertyName) {
-    let isImplicit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  function upgradeDefinition(graph, identifier, propertyName, isImplicit = false) {
     const cache = graph._definitionCache;
     const storeWrapper = graph.store;
     const polymorphicLookup = graph._potentialPolymorphicTypes;
@@ -56261,8 +55495,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     localState.splice(index, 1);
     removeFromInverse(graph, value, relationship.definition.inverseKey, record, isRemote);
   }
-  function replaceRelatedRecord(graph, op) {
-    let isRemote = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  function replaceRelatedRecord(graph, op, isRemote = false) {
     const relationship = graph.get(op.record, op.field);
     (false && !(isBelongsTo(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a belongsTo relationship. ${op.record.type}.${op.field} is a ${relationship.definition.kind}`, isBelongsTo(relationship)));
     if (isRemote) {
@@ -56703,8 +55936,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * Local state changes
      */
 
-    update(op) {
-      let isRemote = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    update(op, isRemote = false) {
       (false && !(op.op === 'deleteRecord' || op.op === 'mergeIdentifiers' || !isImplicit(this.get(op.record, op.field))) && (0, _debug.assert)(`Cannot update an implicit relationship`, op.op === 'deleteRecord' || op.op === 'mergeIdentifiers' || !isImplicit(this.get(op.record, op.field))));
       switch (op.op) {
         case 'mergeIdentifiers':
@@ -58029,8 +57261,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     const isEmpty = cacheIsEmpty(peeked);
     return (!isNew || isDeleted) && isEmpty;
   }
-  function recordIsLoaded(cached) {
-    let filterDeleted = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  function recordIsLoaded(cached, filterDeleted = false) {
     if (!cached) {
       return false;
     }
@@ -58271,7 +57502,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/legacy-compat/fetch-manager-9ea525ca", ["exports", "@embroider/macros/es-compat", "@ember/debug", "@ember-data/store/-private", "@ember-data/request"], function (_exports, _esCompat, _debug, _private, _request) {
+;define("@ember-data/legacy-compat/fetch-manager-9ea525ca", ["exports", "@ember/debug", "@ember-data/store/-private", "@ember-data/request", "@embroider/macros/es-compat2"], function (_exports, _debug, _private, _request, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -58294,8 +57525,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @class SnapshotRecordArray
     @public
-  */
-  class SnapshotRecordArray {
+  */class SnapshotRecordArray {
     /**
       SnapshotRecordArray is not directly instantiable.
       Instances are provided to consuming application's
@@ -58307,8 +57537,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {string} type
       @param options
      */
-    constructor(store, type) {
-      let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    constructor(store, type, options = {}) {
       this.__store = store;
       /**
         An array of snapshots
@@ -58452,10 +57681,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     });
   }
-  function _bind(fn) {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
+  function _bind(fn, ...args) {
     return function () {
       return fn.apply(undefined, args);
     };
@@ -58979,8 +58205,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.requestCache = store.getRequestStateService();
       this.isDestroyed = false;
     }
-    createSnapshot(identifier) {
-      let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    createSnapshot(identifier, options = {}) {
       return new Snapshot(options, identifier, this._store);
     }
 
@@ -59109,9 +58334,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._pendingFetch.forEach((fetchItem, type) => _flushPendingFetchForType(store, fetchItem, type));
       this._pendingFetch.clear();
     }
-    fetchDataIfNeededForIdentifier(identifier) {
-      let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      let request = arguments.length > 2 ? arguments[2] : undefined;
+    fetchDataIfNeededForIdentifier(identifier, options = {}, request) {
       // pre-loading will change the isEmpty value
       const isEmpty = _isEmpty(this._store._instanceCache, identifier);
       const isLoading = _isLoading(this._store._instanceCache, identifier);
@@ -59155,9 +58378,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
 
   // this function helps resolve whether we have a pending request that we should use instead
-  function isSameRequest() {
-    let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    let existingOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  function isSameRequest(options = {}, existingOptions = {}) {
     let includedMatches = !options.include || options.include === existingOptions.include;
     let adapterOptionsMatches = options.adapterOptions === existingOptions.adapterOptions;
     return includedMatches && adapterOptionsMatches;
@@ -59570,11 +58791,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return false;
   }
-  function fixRelationshipData(relationshipData, relationshipKind, _ref) {
-    let {
-      id,
-      type
-    } = _ref;
+  function fixRelationshipData(relationshipData, relationshipKind, {
+    id,
+    type
+  }) {
     let parentRelationshipData = {
       id,
       type
@@ -59601,13 +58821,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return payload;
   }
-  function validateRelationshipEntry(_ref2, _ref3) {
-    let {
-      id
-    } = _ref2;
-    let {
-      id: parentModelID
-    } = _ref3;
+  function validateRelationshipEntry({
+    id
+  }, {
+    id: parentModelID
+  }) {
     return id && id.toString() === parentModelID;
   }
   const PotentialLegacyOperations = new Set(['findRecord', 'findAll', 'query', 'queryRecord', 'findBelongsTo', 'findHasMany', 'updateRecord', 'createRecord', 'deleteRecord']);
@@ -60131,7 +59349,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
   }
 });
-;define("@ember-data/model/has-many-5e2df095", ["exports", "@embroider/macros/es-compat", "@ember/debug", "@ember/object", "@ember-data/store", "@ember-data/store/-private", "@ember/string", "@ember/array", "ember-inflector", "@ember/object/compat", "@ember/runloop", "@glimmer/tracking", "ember", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@ember/array/proxy", "@ember/object/computed", "@ember/object/internals", "@ember-data/tracking/-private"], function (_exports, _esCompat, _debug, _object, _store, _private, _string, _array, _emberInflector, _compat, _runloop, _tracking, _ember, _promiseProxyMixin, _proxy, _proxy2, _computed, _internals, _private2) {
+;define("@ember-data/model/has-many-5e2df095", ["exports", "@ember/debug", "@ember/object", "@ember-data/store", "@ember-data/store/-private", "@ember/string", "@ember/array", "ember-inflector", "@ember/object/compat", "@ember/runloop", "@glimmer/tracking", "ember", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@ember/array/proxy", "@ember/object/computed", "@ember/object/internals", "@ember-data/tracking/-private", "@embroider/macros/es-compat2"], function (_exports, _debug, _object, _store, _private, _string, _array, _emberInflector, _compat, _runloop, _tracking, _ember, _promiseProxyMixin, _proxy, _proxy2, _computed, _internals, _private2, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -60155,12 +59373,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     );
   }
   function computedMacroWithOptionalParams(fn) {
-    return function () {
-      for (var _len = arguments.length, maybeDesc = new Array(_len), _key = 0; _key < _len; _key++) {
-        maybeDesc[_key] = arguments[_key];
-      }
-      return isElementDescriptor(maybeDesc) ? fn()(...maybeDesc) : fn(...maybeDesc);
-    };
+    return (...maybeDesc) => isElementDescriptor(maybeDesc) ? fn()(...maybeDesc) : fn(...maybeDesc);
   }
 
   /**
@@ -60474,8 +59687,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @extends Ember.ArrayProxy
    */
   let Errors = (_dec$1 = (0, _object.computed)(), _dec2 = (0, _computed.mapBy)('content', 'message'), _dec3 = (0, _object.computed)(), _dec4 = (0, _computed.not)('length'), (_class$6 = class Errors extends ArrayProxyWithCustomOverrides {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       /**
         An array containing all of the error messages for this
         record. This is useful for displaying all errors to the user.
@@ -61337,11 +60550,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       this.promise = tapPromise(this, promise);
     }
-    static create(_ref) {
-      let {
-        promise,
-        content
-      } = _ref;
+    static create({
+      promise,
+      content
+    }) {
       return new this(promise, content);
     }
   }, (_descriptor$4 = _applyDecoratedDescriptor(_class$4.prototype, "content", [_tracking.tracked], {
@@ -61382,7 +60594,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }), _applyDecoratedDescriptor(_class$4.prototype, "links", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class$4.prototype, "links"), _class$4.prototype), _applyDecoratedDescriptor(_class$4.prototype, "meta", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class$4.prototype, "meta"), _class$4.prototype)), _class$4);
   _exports.c = PromiseManyArray;
   {
-    PromiseManyArray.prototype.createRecord = function createRecord() {
+    PromiseManyArray.prototype.createRecord = function createRecord(...args) {
       (false && !(false) && (0, _debug.deprecate)(`The createRecord method on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
         id: 'ember-data:deprecate-promise-many-array-behaviors',
         until: '5.0',
@@ -61393,7 +60605,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         for: 'ember-data'
       }));
       (false && !(this.content) && (0, _debug.assert)('You are trying to createRecord on an async manyArray before it has been created', this.content));
-      return this.content.createRecord(...arguments);
+      return this.content.createRecord(...args);
     };
     Object.defineProperty(PromiseManyArray.prototype, 'firstObject', {
       get() {
@@ -61446,7 +60658,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   {
     const EmberObjectMethods = ['addObserver', 'cacheFor', 'decrementProperty', 'get', 'getProperties', 'incrementProperty', 'notifyPropertyChange', 'removeObserver', 'set', 'setProperties', 'toggleProperty'];
     EmberObjectMethods.forEach(method => {
-      PromiseManyArray.prototype[method] = function delegatedMethod() {
+      PromiseManyArray.prototype[method] = function delegatedMethod(...args) {
         (false && !(false) && (0, _debug.deprecate)(`The ${method} method on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
           id: 'ember-data:deprecate-promise-many-array-behaviors',
           until: '5.0',
@@ -61456,9 +60668,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           },
           for: 'ember-data'
         }));
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
-        }
         return _ember.default[method](this, ...args);
       };
     });
@@ -61466,7 +60675,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     // TODO update RFC to note objectAt was deprecated (forEach was left for iteration)
     'objectAt', 'objectsAt', 'popObject', 'pushObject', 'pushObjects', 'reduce', 'reject', 'rejectBy', 'removeArrayObserver', 'removeAt', 'removeObject', 'removeObjects', 'replace', 'reverseObjects', 'setEach', 'setObjects', 'shiftObject', 'slice', 'sortBy', 'toArray', 'uniq', 'uniqBy', 'unshiftObject', 'unshiftObjects', 'without'];
     InheritedProxyMethods.forEach(method => {
-      PromiseManyArray.prototype[method] = function proxiedMethod() {
+      PromiseManyArray.prototype[method] = function proxiedMethod(...args) {
         (false && !(false) && (0, _debug.deprecate)(`The ${method} method on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
           id: 'ember-data:deprecate-promise-many-array-behaviors',
           until: '5.0',
@@ -61477,7 +60686,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           for: 'ember-data'
         }));
         (false && !(this.content) && (0, _debug.assert)(`Cannot call ${method} before content is assigned.`, this.content));
-        return this.content[method](...arguments);
+        return this.content[method](...args);
       };
     });
   }
@@ -62773,8 +61982,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       return reference;
     }
-    _findHasManyByJsonApiResource(resource, parentIdentifier, relationship) {
-      let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    _findHasManyByJsonApiResource(resource, parentIdentifier, relationship, options = {}) {
       {
         if (!resource) {
           return;
@@ -62846,8 +62054,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       (false && !(false) && (0, _debug.assert)(`hasMany only works with the @ember-data/json-api package`));
     }
-    _findBelongsToByJsonApiResource(resource, parentIdentifier, relationship) {
-      let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    _findBelongsToByJsonApiResource(resource, parentIdentifier, relationship, options = {}) {
       if (!resource) {
         return Promise.resolve(null);
       }
@@ -63649,8 +62856,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @extends Ember.EmberObject
   */
   let Model = (_class = (_class2 = class Model extends _object.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       this.___private_notifications = void 0;
       /**
         If `true` the store is attempting to reload the record from the adapter.
@@ -63667,8 +62874,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       */
       _initializerDefineProperty(this, "isReloading", _descriptor, this);
     }
-    init() {
-      let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    init(options = {}) {
       const createProps = options._createProps;
       const _secretInit = options._secretInit;
       options._createProps = null;
@@ -64359,8 +63565,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       adapter returns successfully or rejected if the adapter returns
       with an error.
     */
-    reload() {
-      let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    reload(options = {}) {
       options.isReloading = true;
       options.reload = true;
       const identifier = (0, _store.recordIdentifierFor)(this);
@@ -67423,8 +66628,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @extends Ember.EmberObject
   */
   let _class = (_class2 = class _class2 extends _object.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "store", _descriptor, this);
     }
     /**
@@ -70363,7 +69568,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/store/index-757cf686", ["exports", "@embroider/macros/es-compat", "@ember/debug", "@ember/string", "@ember/application", "@ember/object", "@ember/runloop", "@glimmer/tracking", "@ember-data/tracking/-private", "@ember/-internals/metal", "@ember/object/compat", "@ember/utils", "@glimmer/validator", "ember", "@ember/object/computed", "@ember/array/proxy", "@ember/object/promise-proxy-mixin", "@ember/object/proxy"], function (_exports, _esCompat, _debug, _string, _application, _object, _runloop, _tracking, _private, _metal, _compat, _utils, _validator, _ember, _computed, _proxy, _promiseProxyMixin, _proxy2) {
+;define("@ember-data/store/index-757cf686", ["exports", "@ember/debug", "@ember/string", "@ember/application", "@ember/object", "@ember/runloop", "@glimmer/tracking", "@ember-data/tracking/-private", "@ember/-internals/metal", "@ember/object/compat", "@ember/utils", "@glimmer/validator", "ember", "@ember/object/computed", "@ember/array/proxy", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@embroider/macros/es-compat2"], function (_exports, _debug, _string, _application, _object, _runloop, _tracking, _private, _metal, _compat, _utils, _validator, _ember, _computed, _proxy, _promiseProxyMixin, _proxy2, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -70390,6 +69595,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   /**
     @module @ember-data/store
   */
+
   /**
    This method normalizes a modelName into the format Ember Data uses
    internally by dasherizing it.
@@ -70401,8 +69607,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @for @ember-data/store
     @param {String} modelName
     @return {String} normalizedModelName
-  */
-  function normalizeModelName$1(modelName) {
+  */function normalizeModelName$1(modelName) {
     return (0, _string.dasherize)(modelName);
   }
   function _initializerDefineProperty(target, property, descriptor, context) {
@@ -70468,8 +69673,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       _classPrivateFieldBase(this, _store$1)[_store$1] = store;
       this.identifier = identifier;
     }
-    fetch() {
-      let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    fetch(options = {}) {
       (false && !(this.links?.self) && (0, _debug.assert)(`No self link`, this.links?.self));
       options.cacheOptions = options.cacheOptions || {};
       options.cacheOptions.key = this.identifier?.lid;
@@ -70525,8 +69729,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     writable: true,
     initializer: null
   })), _class$3);
-  async function _request2(link) {
-    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  async function _request2(link, options = {}) {
     const href = this.links?.[link];
     if (!href) {
       return null;
@@ -70921,7 +70124,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     (false && !(false) && (0, _debug.assert)(`Unknown bucket ${bucket}`, false));
   }
-  function defaultEmptyCallback() {}
+  function defaultEmptyCallback(...args) {}
   let DEBUG_MAP;
   /**
    * Each instance of {Store} receives a unique instance of a IdentifierCache.
@@ -70971,8 +70174,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @private
      */
 
-    _getRecordIdentifier(resource) {
-      let shouldGenerate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    _getRecordIdentifier(resource, shouldGenerate = false) {
       // short circuit if we're already the stable version
       if (isStableIdentifier(resource)) {
         return resource;
@@ -71257,8 +70459,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return typeIndex;
   }
-  function makeStableRecordIdentifier(id, type, lid, bucket) {
-    let clientOriginated = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  function makeStableRecordIdentifier(id, type, lid, bucket, clientOriginated = false) {
     let recordIdentifier = {
       lid,
       id,
@@ -72268,8 +71469,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param propertyName
      * @returns resource relationship object
      */
-    getRelationship(identifier, propertyName) {
-      let isCollection = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    getRelationship(identifier, propertyName, isCollection = false) {
       const cache = _classPrivateFieldBase(this, _cache)[_cache];
       if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
         let isBelongsTo = !isCollection;
@@ -73123,11 +72323,10 @@ lunr.QueryParser.parseBoost = function (parser) {
         return keptIdentifier;
       });
     }
-    peek(_ref) {
-      let {
-        identifier,
-        bucket
-      } = _ref;
+    peek({
+      identifier,
+      bucket
+    }) {
       return this.__instances[bucket]?.get(identifier);
     }
     getRecord(identifier, properties) {
@@ -73201,8 +72400,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       return reference;
     }
-    recordIsLoaded(identifier) {
-      let filterDeleted = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    recordIsLoaded(identifier, filterDeleted = false) {
       const cache = this.__instances.resourceCache.get(identifier) || this.cache;
       if (!cache) {
         return false;
@@ -73854,8 +73052,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @uses Ember.PromiseProxyMixin
   */
   let PromiseArray = (_dec = (0, _computed.reads)('content.meta'), (_class$1 = class PromiseArray extends PromiseArrayProxy {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "meta", _descriptor$1, this);
     }
   }, _descriptor$1 = _applyDecoratedDescriptor(_class$1.prototype, "meta", [_dec], {
@@ -74450,7 +73648,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     Collection.prototype.DEPRECATED_CLASS_NAME = 'RecordArray';
     const EmberObjectMethods = ['addObserver', 'cacheFor', 'decrementProperty', 'get', 'getProperties', 'incrementProperty', 'notifyPropertyChange', 'removeObserver', 'set', 'setProperties', 'toggleProperty'];
     EmberObjectMethods.forEach(method => {
-      IdentifierArray.prototype[method] = function delegatedMethod() {
+      IdentifierArray.prototype[method] = function delegatedMethod(...args) {
         (false && !(false) && (0, _debug.deprecate)(`The EmberObject ${method} method on the class ${this.DEPRECATED_CLASS_NAME} is deprecated. Use dot-notation javascript get/set access instead.`, false, {
           id: 'ember-data:deprecate-array-like',
           until: '5.0',
@@ -74460,9 +73658,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           },
           for: 'ember-data'
         }));
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
         return _ember.default[method](this, ...args);
       };
     });
@@ -74626,10 +73821,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return Boolean((0, _object.get)(record, key));
       });
     };
-    IdentifierArray.prototype.sortBy = function () {
-      for (var _len2 = arguments.length, sortKeys = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        sortKeys[_key2] = arguments[_key2];
-      }
+    IdentifierArray.prototype.sortBy = function (...sortKeys) {
       deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'sortBy', '.slice().sort');
       return this.slice().sort((a, b) => {
         for (let i = 0; i < sortKeys.length; i++) {
@@ -74647,10 +73839,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     };
 
     // @ts-expect-error
-    IdentifierArray.prototype.invoke = function (key) {
-      for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        args[_key3 - 1] = arguments[_key3];
-      }
+    IdentifierArray.prototype.invoke = function (key, ...args) {
       deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'invoke', 'forEach');
       return this.map(value => value[key](...args));
     };
@@ -74677,10 +73866,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     IdentifierArray.prototype.reject = function (callback, target) {
       deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'reject', 'filter');
       (false && !(typeof callback === 'function') && (0, _debug.assert)('`reject` expects a function as first argument.', typeof callback === 'function'));
-      return this.filter(function () {
-        for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-          args[_key4] = arguments[_key4];
-        }
+      return this.filter((...args) => {
         return !callback.apply(target, args);
       });
     };
@@ -76718,8 +75904,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {Object} options
       @return {Promise} promise
     */
-    findAll(modelName) {
-      let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    findAll(modelName, options = {}) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's findAll method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
       const promise = this.request({
@@ -77051,8 +76236,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param options
      * @returns {Promise<RecordInstance>}
      */
-    saveRecord(record) {
-      let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    saveRecord(record, options = {}) {
       (false && !(storeFor(record)) && (0, _debug.assert)(`Unable to initate save for a record in a disconnected state`, storeFor(record)));
       let identifier = recordIdentifierFor(record);
       const cache = identifier && this._instanceCache.peek({
@@ -77330,8 +76514,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function isDSModel(record) {
     return !!record && 'constructor' in record && 'isModel' in record.constructor && record.constructor.isModel === true;
   }
-  function normalizeProperties(store, identifier, properties) {
-    let isForV1 = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  function normalizeProperties(store, identifier, properties, isForV1 = false) {
     // assert here
     if (properties !== undefined) {
       if ('id' in properties) {
@@ -77387,12 +76570,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }()));
   }
-  function extractIdentifiersFromRecords(records) {
-    let isForV1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  function extractIdentifiersFromRecords(records, isForV1 = false) {
     return records.map(record => extractIdentifierFromRecord(record, isForV1));
   }
-  function extractIdentifierFromRecord(recordOrPromiseRecord) {
-    let isForV1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  function extractIdentifierFromRecord(recordOrPromiseRecord, isForV1 = false) {
     if (!recordOrPromiseRecord) {
       return null;
     }
@@ -77651,9 +76832,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @returns a function that will invoke method in a transaction with any provided args and return its result
    */
   function memoTransact(method) {
-    return function () {
+    return function (...args) {
       createTransaction();
-      const ret = method(...arguments);
+      const ret = method(...args);
       flushTransaction();
       return ret;
     };
@@ -77710,8 +76891,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @function
     @param {string} name? - The name of the attribute to bind the value to if it is truthy
   */
-  const attribute = (0, _decorator.decoratorWithParams)(function (target, key, desc) {
-    let params = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  const attribute = (0, _decorator.decoratorWithParams)((target, key, desc, params = []) => {
     (false && !(params.length <= 1) && (0, _debug.assert)(`The @attribute decorator may take up to one parameter, the bound attribute name. Received: ${params.length}`, params.length <= 1));
     (false && !(params.every(s => typeof s === 'string')) && (0, _debug.assert)(`The @attribute decorator may only receive strings as parameters. Received: ${params}`, params.every(s => typeof s === 'string')));
     (0, _collapseProto.default)(target);
@@ -77752,8 +76932,7 @@ lunr.QueryParser.parseBoost = function (parser) {
                                  is falsy.
   */
   _exports.attribute = attribute;
-  const className = (0, _decorator.decoratorWithParams)(function (target, key, desc) {
-    let params = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  const className = (0, _decorator.decoratorWithParams)((target, key, desc, params = []) => {
     (false && !(params.length <= 2) && (0, _debug.assert)(`The @className decorator may take up to two parameters, the truthy class and falsy class for the class binding. Received: ${params.length}`, params.length <= 2));
     (false && !(params.every(s => typeof s === 'string')) && (0, _debug.assert)(`The @className decorator may only receive strings as parameters. Received: ${params}`, params.every(s => typeof s === 'string')));
     (0, _collapseProto.default)(target);
@@ -77866,18 +77045,13 @@ lunr.QueryParser.parseBoost = function (parser) {
     @param {TemplateFactory} template - The compiled template to be used for the component
   */
   _exports.tagName = tagName;
-  const layout = function () {
-    for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
-      params[_key] = arguments[_key];
-    }
-    return target => {
-      let [template] = params;
-      (false && !(params.length === 1) && (0, _debug.assert)(`The @layout decorator must be provided exactly one argument, received: ${params.length}`, params.length === 1));
-      (false && !(typeof template !== 'string') && (0, _debug.assert)(`The @layout decorator must be provided a template, received: ${template}. If you want to compile strings to templates, be sure to use 'htmlbars-inline-precompile'`, typeof template !== 'string'));
-      (false && !(typeof template === 'function' || typeof template === 'object' && typeof template.indexOf === 'undefined') && (0, _debug.assert)(`The @layout decorator must be provided a template, received: ${template}`, typeof template === 'function' || typeof template === 'object' && typeof template.indexOf === 'undefined'));
-      target.prototype.layout = template;
-      return target;
-    };
+  const layout = (...params) => target => {
+    let [template] = params;
+    (false && !(params.length === 1) && (0, _debug.assert)(`The @layout decorator must be provided exactly one argument, received: ${params.length}`, params.length === 1));
+    (false && !(typeof template !== 'string') && (0, _debug.assert)(`The @layout decorator must be provided a template, received: ${template}. If you want to compile strings to templates, be sure to use 'htmlbars-inline-precompile'`, typeof template !== 'string'));
+    (false && !(typeof template === 'function' || typeof template === 'object' && typeof template.indexOf === 'undefined') && (0, _debug.assert)(`The @layout decorator must be provided a template, received: ${template}`, typeof template === 'function' || typeof template === 'object' && typeof template.indexOf === 'undefined'));
+    target.prototype.layout = template;
+    return target;
   };
   _exports.layout = layout;
 });
@@ -78069,20 +77243,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @param {Function} fn - decorator function
    */
   function decoratorWithParams(fn) {
-    return function () {
-      for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
-        params[_key] = arguments[_key];
-      }
+    return function (...params) {
       // determine if user called as @computed('blah', 'blah') or @computed
       if ((0, _classFieldDescriptor.isDescriptor)(params)) {
         return fn(...params);
       } else {
-        return function () {
-          for (var _len2 = arguments.length, desc = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            desc[_key2] = arguments[_key2];
-          }
-          return fn(...desc, params);
-        };
+        return (...desc) => fn(...desc, params);
       }
     };
   }
@@ -78105,17 +77271,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @param {Function} fn - decorator function
    */
   function decoratorWithRequiredParams(fn, name) {
-    return function () {
-      for (var _len3 = arguments.length, params = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        params[_key3] = arguments[_key3];
-      }
+    return function (...params) {
       (false && !(!(0, _classFieldDescriptor.isDescriptor)(params) && params.length > 0) && (0, _debug.assert)(`The @${name || fn.name} decorator requires parameters`, !(0, _classFieldDescriptor.isDescriptor)(params) && params.length > 0));
-      return function () {
-        for (var _len4 = arguments.length, desc = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-          desc[_key4] = arguments[_key4];
-        }
-        return fn(...desc, params);
-      };
+      return (...desc) => fn(...desc, params);
     };
   }
 });
@@ -78175,11 +77333,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       disableAutoTracking: true
     }),
     createModifier() {},
-    installModifier(_state, element, _ref) {
-      let {
-        positional: [fn, ...args],
-        named
-      } = _ref;
+    installModifier(_state, element, {
+      positional: [fn, ...args],
+      named
+    }) {
       fn(element, args, named);
     },
     updateModifier() {},
@@ -78187,7 +77344,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }), class DidInsertModifier {});
   _exports.default = _default;
 });
-;define("@ember/render-modifiers/modifiers/did-update", ["exports", "@embroider/macros/es-compat", "@ember/modifier"], function (_exports, _esCompat, _modifier) {
+;define("@ember/render-modifiers/modifiers/did-update", ["exports", "@ember/modifier", "@embroider/macros/es-compat2"], function (_exports, _modifier, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78278,10 +77435,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         args.named && Object.values(args.named);
       }
     },
-    updateModifier(_ref, args) {
-      let {
-        element
-      } = _ref;
+    updateModifier({
+      element
+    }, args) {
       let [fn, ...positional] = args.positional;
       {
         // Consume individual properties to entangle tracking.
@@ -78356,10 +77512,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       state.element = element;
     },
     updateModifier() {},
-    destroyModifier(_ref, args) {
-      let {
-        element
-      } = _ref;
+    destroyModifier({
+      element
+    }, args) {
       let [fn, ...positional] = args.positional;
       fn(element, positional, args.named);
     }
@@ -78680,9 +77835,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       this.nextToken = nextToken || getNextToken;
     }
-    beginAsync() {
-      let token = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.nextToken();
-      let label = arguments.length > 1 ? arguments[1] : undefined;
+    beginAsync(token = this.nextToken(), label) {
       this._register();
       if (this.items.has(token)) {
         throw new Error(`beginAsync called for ${token} but it is already pending.`);
@@ -78944,10 +78097,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = waitFor;
-  function waitFor() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+  function waitFor(...args) {
     let isFunction = args.length < 3;
     if (isFunction) {
       let [fn, label] = args;
@@ -78966,10 +78116,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     if (!false /* DEBUG */) {
       return fn;
     }
-    return function () {
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
+    return function (...args) {
       let result = fn.call(this, ...args);
       if (isThenable(result)) {
         return (0, _waitForPromise.default)(result, label);
@@ -78999,10 +78146,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
     return {
-      next() {
+      next(...args) {
         let hasErrored = true;
         try {
-          let val = generator.next(...arguments);
+          let val = generator.next(...args);
           hasErrored = false;
           if (val.done) {
             stopWaiting();
@@ -79019,13 +78166,13 @@ lunr.QueryParser.parseBoost = function (parser) {
           }
         }
       },
-      return() {
+      return(...args) {
         stopWaiting();
-        return generator.return(...arguments);
+        return generator.return(...args);
       },
-      throw() {
+      throw(...args) {
         stopWaiting();
-        return generator.throw(...arguments);
+        return generator.throw(...args);
       }
     };
   }
@@ -79159,7 +78306,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return state.pending > 0;
   }
 });
-;define("@embroider/macros/es-compat", ["exports"], function (_exports) {
+;define("@embroider/macros/es-compat2", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -79168,7 +78315,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = esCompat;
   function esCompat(m) {
     return m?.__esModule ? m : {
-      default: m
+      default: m,
+      ...m
     };
   }
 });
@@ -79268,7 +78416,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 });
-;define("@embroider/util/ember-private-api", ["exports", "@embroider/macros/es-compat"], function (_exports, _esCompat) {
+;define("@embroider/util/ember-private-api", ["exports", "@embroider/macros/es-compat2"], function (_exports, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -79354,8 +78502,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
   class EnsureSafeComponentHelper extends _helper.default {
-    compute(_ref) {
-      let [value] = _ref;
+    compute([value]) {
       return ensureSafeComponent(value, this);
     }
   }
@@ -79393,13 +78540,12 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class EnsureRegisteredService extends _service.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "classNonces", new WeakMap());
       _defineProperty(this, "nonceCounter", 0);
     }
-    register(klass) {
-      let owner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (0, _application.getOwner)(this);
+    register(klass, owner = (0, _application.getOwner)(this)) {
       let nonce = this.classNonces.get(klass);
       if (nonce == null) {
         nonce = `-ensure${this.nonceCounter++}`;
@@ -79643,6 +78789,30 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param args
      */
     constructor(owner, args) {
+      /**
+       * Named arguments passed to the component from its parent component.
+       * They can be accessed in JavaScript via `this.args.argumentName` and in the template via `@argumentName`.
+       *
+       * Say you have the following component, which will have two `args`, `firstName` and `lastName`:
+       *
+       * ```hbs
+       * <my-component @firstName="Arthur" @lastName="Dent" />
+       * ```
+       *
+       * If you needed to calculate `fullName` by combining both of them, you would do:
+       *
+       * ```ts
+       * didInsertElement() {
+       *   console.log(`Hi, my full name is ${this.args.firstName} ${this.args.lastName}`);
+       * }
+       * ```
+       *
+       * While in the template you could do:
+       *
+       * ```hbs
+       * <p>Welcome, {{@firstName}} {{@lastName}}!</p>
+       * ```
+       */
       _defineProperty(this, "args", void 0);
       if (false /* DEBUG */ && !(owner !== null && typeof owner === 'object' && ARGS_SET.has(args))) {
         throw new Error(`You must pass both the owner and args to super() in your component: ${this.constructor.name}. You can pass them directly, or use ...arguments to pass all arguments through.`);
@@ -79650,32 +78820,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.args = args;
       (0, _owner.setOwner)(this, owner);
     }
-
-    /**
-     * Named arguments passed to the component from its parent component.
-     * They can be accessed in JavaScript via `this.args.argumentName` and in the template via `@argumentName`.
-     *
-     * Say you have the following component, which will have two `args`, `firstName` and `lastName`:
-     *
-     * ```hbs
-     * <my-component @firstName="Arthur" @lastName="Dent" />
-     * ```
-     *
-     * If you needed to calculate `fullName` by combining both of them, you would do:
-     *
-     * ```ts
-     * didInsertElement() {
-     *   console.log(`Hi, my full name is ${this.args.firstName} ${this.args.lastName}`);
-     * }
-     * ```
-     *
-     * While in the template you could do:
-     *
-     * ```hbs
-     * <p>Welcome, {{@firstName}} {{@lastName}}!</p>
-     * ```
-     */
-
     get isDestroying() {
       return (0, _destroyables.isDestroying)(this);
     }
@@ -80118,10 +79262,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
   //https://github.com/emberjs/ember.js/blob/d1ad76a2b22ce470639df3dfc6efb6864a70f588/packages/%40ember/-internals/metal/lib/decorator.ts
 
-  function isElementDescriptor() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+  function isElementDescriptor(...args) {
     const [maybeTarget, maybeKey, maybeDesc] = args;
     return (
       // Ensure we have the right number of args
@@ -80186,18 +79327,12 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     };
   }
-  function arg() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+  function arg(...args) {
     if ((0, _isElementDescriptor.default)(...args)) {
       return createGetter(...args);
     }
     const [validator] = args;
-    return function argument() {
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
+    return function argument(...args) {
       return createGetter(...[...args, validator]);
     };
   }
@@ -80236,10 +79371,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.cached = cached;
-  function cached() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+  function cached(...args) {
     const [target, key, descriptor] = args;
 
     // Error on `@cached()`, `@cached(...args)`, and `@cached propName = value;`
@@ -80329,8 +79461,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   class AddonDocsAdapter extends _adapter.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "defaultSerializer", '-addon-docs');
     }
     get namespace() {
@@ -80511,8 +79643,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let XClass = (_dec = (0, _computed2.memberFilter)('args.class', 'accessors'), _dec2 = (0, _computed2.memberFilter)('args.class', 'methods'), _dec3 = (0, _computed2.memberFilter)('args.class', 'fields'), _dec4 = (0, _computed.or)('component.hasInherited', 'component.hasProtected', 'component.hasPrivate', 'component.hasDeprecated'), (_class = class XClass extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "config", _descriptor, this);
       _initializerDefineProperty(this, "showInherited", _descriptor2, this);
       _initializerDefineProperty(this, "showProtected", _descriptor3, this);
@@ -80527,12 +79659,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       let klass = this.args.class;
       return klass.allFields.length > 0 || klass.allAccessors.length > 0 || klass.allMethods.length > 0;
     }
-    updateFilter(filter, _ref) {
-      let {
-        target: {
-          checked
-        }
-      } = _ref;
+    updateFilter(filter, {
+      target: {
+        checked
+      }
+    }) {
       this[`show${(0, _string.capitalize)(filter)}`] = checked;
     }
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "config", [_config.addonDocsConfig], {
@@ -80652,8 +79783,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let XComponent = (_dec = (0, _computed.alias)('args.component.overloadedYields'), _dec2 = (0, _computed2.memberFilter)('args.component', 'arguments'), _dec3 = (0, _computed2.memberFilter)('args.component', 'accessors'), _dec4 = (0, _computed2.memberFilter)('args.component', 'methods'), _dec5 = (0, _computed2.memberFilter)('args.component', 'fields'), _dec6 = (0, _computed.or)('args.component.hasInherited', 'args.component.hasInternal', 'args.component.hasProtected', 'args.component.hasPrivate', 'args.component.hasDeprecated'), (_class = class XComponent extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "showInherited", _descriptor, this);
       _initializerDefineProperty(this, "showInternal", _descriptor2, this);
       _initializerDefineProperty(this, "showProtected", _descriptor3, this);
@@ -80670,12 +79801,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       let component = this.args.component;
       return component.overloadedYields.length > 0 || component.arguments.length > 0 || component.fields.length > 0 || component.accessors.length > 0 || component.methods.length > 0;
     }
-    updateFilter(filter, _ref) {
-      let {
-        target: {
-          checked
-        }
-      } = _ref;
+    updateFilter(filter, {
+      target: {
+        checked
+      }
+    }) {
       this[`show${(0, _string.capitalize)(filter)}`] = checked;
     }
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "showInherited", [_tracking.tracked], {
@@ -80951,8 +80081,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @hide
   */
   let XSection = (_class = class XSection extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "config", _descriptor, this);
     }
     /**
@@ -81185,16 +80315,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     @yield {Component} demo.liveExample
   */
   let DocsDemo = (_class = class DocsDemo extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "activeSnippet", _descriptor, this);
+      /**
+        The snippets registered with this demo component
+         @field snippetRegistrations
+        @type Array<Object>
+      */
       _defineProperty(this, "snippetRegistrations", (0, _array.A)());
     }
-    /**
-      The snippets registered with this demo component
-       @field snippetRegistrations
-      @type Array<Object>
-    */
     /**
       The finalized snippets complete with name (or default), language,
       and whether or not it is active.
@@ -81205,12 +80335,11 @@ lunr.QueryParser.parseBoost = function (parser) {
      */
     get snippets() {
       let activeSnippet = this.activeSnippet;
-      return this.snippetRegistrations.map(_ref => {
-        let {
-          name,
-          label,
-          language
-        } = _ref;
+      return this.snippetRegistrations.map(({
+        name,
+        label,
+        language
+      }) => {
         let defaults = this.defaultsFromName(name);
         return {
           name,
@@ -81584,8 +80713,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let DocsHeaderLink = (_class = class DocsHeaderLink extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "router", _descriptor, this);
     }
     get isActive() {
@@ -81755,8 +80884,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let DocsHeaderSearchResult = (_dec = (0, _computed.bool)('highlightedTitle'), (_class = class DocsHeaderSearchResult extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "titleMatchesQuery", _descriptor, this);
     }
     get linkArgs() {
@@ -81790,8 +80919,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           if (key === 'text') {
             let text = this.args.result.document.text;
             let spaceIndices = text.split('').map((char, index) => char === ' ' ? index : null).filter(val => val > 0);
-            match.text.position.forEach(_ref => {
-              let [wordStart, length] = _ref;
+            match.text.position.forEach(([wordStart, length]) => {
               let spaceAfterWord = spaceIndices.find(i => i > wordStart);
               let indexOfSpaceAfterWord = spaceIndices.indexOf(spaceAfterWord);
               let indexOfSpaceBeforeWord = indexOfSpaceAfterWord - 1;
@@ -81936,10 +81064,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (rawSearchResults) {
         return this.rawSearchResults
         // If the doc has a route, ensure it exists
-        .filter(_ref => {
-          let {
-            document
-          } = _ref;
+        .filter(({
+          document
+        }) => {
           if (document.route) {
             let routeExists = routerMicrolib.recognizer.names[document.route];
             return routeExists && document.route !== 'not-found' && document.route !== 'application';
@@ -81949,19 +81076,17 @@ lunr.QueryParser.parseBoost = function (parser) {
         })
 
         // Filter out the templates of the API items' pages, since we handle them separately
-        .filter(_ref2 => {
-          let {
-            document
-          } = _ref2;
+        .filter(({
+          document
+        }) => {
           let isApiItemTemplate = document.route === 'docs.api.item' && document.type === 'template';
           return !isApiItemTemplate;
         })
 
         // Filter out modules that are not in the navigationIndex
-        .filter(_ref3 => {
-          let {
-            document
-          } = _ref3;
+        .filter(({
+          document
+        }) => {
           if (document.type === 'module') {
             let navigableModules = this.project.navigationIndex.find(section => section.type === 'modules');
             let navigableModuleIds = navigableModules ? navigableModules.items.map(item => item.id) : [];
@@ -82148,8 +81273,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let VersionSelector = (_dec = (0, _computed.reads)('projectVersion.currentVersion'), (_class = class VersionSelector extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "projectVersion", _descriptor, this);
       _initializerDefineProperty(this, "config", _descriptor2, this);
       _initializerDefineProperty(this, "currentVersion", _descriptor3, this);
@@ -82276,8 +81401,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     @public
   */
   let DocsHeroComponent = (_class = class DocsHeroComponent extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "config", _descriptor, this);
     }
     /**
@@ -82544,8 +81669,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   }), _dec5 = (0, _emberKeyboard.onKey)('Escape', {
     event: 'keyup'
   }), (0, _emberKeyboard.keyResponder)(_class = (_class2 = class DocsKeyboardShortcutsComponent extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "router", _descriptor, this);
       _initializerDefineProperty(this, "isShowingKeyboardShortcuts", _descriptor2, this);
     }
@@ -82704,19 +81829,18 @@ lunr.QueryParser.parseBoost = function (parser) {
     @public
   */
   let DocsLogo = (_dec = (0, _trackedToolbox.localCopy)('args.logo', 'ember'), _dec2 = (0, _computed.equal)('logo', 'ember'), _dec3 = (0, _computed.equal)('logo', 'ember-cli'), _dec4 = (0, _computed.equal)('logo', 'ember-data'), (_class = class DocsLogo extends _component2.default {
-    /**
-      Render either the 'ember', 'ember-cli' or 'ember-data' logo:
-       ```handlebars
-      {{docs-logo logo='ember'}}
-      {{docs-logo logo='ember-cli'}}
-      {{docs-logo logo='ember-data'}}
-      ```
-       @argument logo
-      @type String
-    */
-
     constructor() {
       super(...arguments);
+      /**
+        Render either the 'ember', 'ember-cli' or 'ember-data' logo:
+         ```handlebars
+        {{docs-logo logo='ember'}}
+        {{docs-logo logo='ember-cli'}}
+        {{docs-logo logo='ember-data'}}
+        ```
+         @argument logo
+        @type String
+      */
       _initializerDefineProperty(this, "logo", _descriptor, this);
       _initializerDefineProperty(this, "showEmber", _descriptor2, this);
       _initializerDefineProperty(this, "showEmberCli", _descriptor3, this);
@@ -82821,38 +81945,38 @@ lunr.QueryParser.parseBoost = function (parser) {
     @public
   */
   let DocsSnippet = (_dec = (0, _trackedToolbox.localCopy)('args.showCopy', true), _dec2 = (0, _trackedToolbox.localCopy)('args.unindent', true), (_class = class DocsSnippet extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
+      /**
+        The name of the snippet
+         @argument name
+        @type String?
+      */
+      /**
+        The language of the snippet
+         @argument language
+        @type String?
+      */
+      /**
+        The title of the snippet
+         @argument title
+        @type String?
+      */
+      /**
+        Whether or not to show the copy button for this snippet
+         @argument showCopy
+        @type Boolean
+        @default true
+      */
       _initializerDefineProperty(this, "showCopy", _descriptor, this);
+      /**
+        Whether or not the snippet should be unindented
+         @argument unindent
+        @type Boolean
+        @default true
+      */
       _initializerDefineProperty(this, "unindent", _descriptor2, this);
     }
-    /**
-      The name of the snippet
-       @argument name
-      @type String?
-    */
-    /**
-      The language of the snippet
-       @argument language
-      @type String?
-    */
-    /**
-      The title of the snippet
-       @argument title
-      @type String?
-    */
-    /**
-      Whether or not to show the copy button for this snippet
-       @argument showCopy
-      @type Boolean
-      @default true
-    */
-    /**
-      Whether or not the snippet should be unindented
-       @argument unindent
-      @type Boolean
-      @default true
-    */
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "showCopy", [_dec], {
     configurable: true,
     enumerable: true,
@@ -83033,8 +82157,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let XAutogeneratedApiDocs = (_dec = (0, _computed.readOnly)('args.project.navigationIndex'), (_class = class XAutogeneratedApiDocs extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "store", _descriptor, this);
       _initializerDefineProperty(this, "sections", _descriptor2, this);
     }
@@ -83319,8 +82443,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     H3: '0'
   };
   let XMain = (_class = class XMain extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "router", _descriptor, this);
       _initializerDefineProperty(this, "docsRoutes", _descriptor2, this);
       _initializerDefineProperty(this, "config", _descriptor3, this);
@@ -83580,8 +82704,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let XNav = (_dec = (0, _trackedToolbox.localCopy)('args.root', 'docs'), (_class = class XNav extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "config", _descriptor, this);
       _initializerDefineProperty(this, "root", _descriptor2, this);
       _initializerDefineProperty(this, "store", _descriptor3, this);
@@ -83667,8 +82791,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     "isStrictMode": false
   });
   let XSection = (_dec = (0, _trackedToolbox.localCopy)('args.style', 'regular'), (_class = class XSection extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "style", _descriptor, this);
     }
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "style", [_dec], {
@@ -83714,8 +82838,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @function
     @hide
   */
-  function breakOn(_ref) {
-    let [string, breakChar] = _ref;
+  function breakOn([string, breakChar]) {
     return string.replace(new RegExp(breakChar, 'g'), `${breakChar}\u200B`);
   }
   var _default = (0, _helper.helper)(breakOn);
@@ -83736,19 +82859,17 @@ lunr.QueryParser.parseBoost = function (parser) {
   function functionSignature(fn) {
     // Functions may have { params, typeParams, returns } directly on them, or they
     // may have a `signatures` array of hashes each with those properties.
-    let signatures = (fn.signatures || [fn]).map(_ref => {
-      let {
-        params,
-        typeParams,
-        returns
-      } = _ref;
-      let paramSignature = params.filter(p => !p.name.includes('.')).map(_ref2 => {
-        let {
-          name,
-          type,
-          isRest,
-          isOptional
-        } = _ref2;
+    let signatures = (fn.signatures || [fn]).map(({
+      params,
+      typeParams,
+      returns
+    }) => {
+      let paramSignature = params.filter(p => !p.name.includes('.')).map(({
+        name,
+        type,
+        isRest,
+        isOptional
+      }) => {
         let prefix = isRest ? '...' : '';
         let suffix = isOptional ? '?' : '';
         return `${prefix}<strong>${name}</strong>${suffix}: <em>${type}</em>`;
@@ -83762,13 +82883,12 @@ lunr.QueryParser.parseBoost = function (parser) {
     });
     return signatures.join('<br>');
   }
-  function accessorSignature(_ref3) {
-    let {
-      name,
-      type,
-      hasGetter,
-      hasSetter
-    } = _ref3;
+  function accessorSignature({
+    name,
+    type,
+    hasGetter,
+    hasSetter
+  }) {
     let accessorPrefixes = [hasGetter && 'get', hasSetter && 'set'].filter(a => a).join('/');
     (false && !(accessorPrefixes) && (0, _debug.assert)(`accessors must have either a getter or setter, but '${name}' had neither`, accessorPrefixes));
     return `${accessorPrefixes} ${variableSignature({
@@ -83776,11 +82896,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       type
     })}`;
   }
-  function variableSignature(_ref4) {
-    let {
-      name,
-      type
-    } = _ref4;
+  function variableSignature({
+    name,
+    type
+  }) {
     return `<strong>${name}:</strong> <em>${escape(type)}</em>`;
   }
 
@@ -83788,8 +82907,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @function typeSignature
     @hide
   */
-  function typeSignature(_ref5) {
-    let [typed] = _ref5;
+  function typeSignature([typed]) {
     let signature;
     if ('hasGetter' in typed || 'hasSetter' in typed) {
       signature = accessorSignature(typed);
@@ -83886,8 +83004,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   }), _dec2 = (0, _computed.filterBy)('accessors', 'access', 'public'), _dec3 = (0, _computed.filterBy)('methods', 'access', 'public'), _dec4 = (0, _computed.filterBy)('fields', 'access', 'public'), _dec5 = (0, _computed.filterBy)('accessors', 'access', 'private'), _dec6 = (0, _computed.filterBy)('methods', 'access', 'private'), _dec7 = (0, _computed.filterBy)('fields', 'access', 'private'), _dec8 = (0, _computed.filterBy)('accessors', 'access', 'protected'), _dec9 = (0, _computed.filterBy)('methods', 'access', 'protected'), _dec10 = (0, _computed.filterBy)('fields', 'access', 'protected'), _dec11 = (0, _computed2.memberUnion)('parentClass.allPublicAccessors', 'publicAccessors'), _dec12 = (0, _computed2.memberUnion)('parentClass.allPublicMethods', 'publicMethods'), _dec13 = (0, _computed2.memberUnion)('parentClass.allPublicFields', 'publicFields'), _dec14 = (0, _computed2.memberUnion)('parentClass.allPrivateAccessors', 'privateAccessors'), _dec15 = (0, _computed2.memberUnion)('parentClass.allPrivateMethods', 'privateMethods'), _dec16 = (0, _computed2.memberUnion)('parentClass.allPrivateFields', 'privateFields'), _dec17 = (0, _computed2.memberUnion)('parentClass.allProtectedAccessors', 'protectedAccessors'), _dec18 = (0, _computed2.memberUnion)('parentClass.allProtectedMethods', 'protectedMethods'), _dec19 = (0, _computed2.memberUnion)('parentClass.allProtectedFields', 'protectedFields'), _dec20 = (0, _computed.union)('allPublicAccessors', 'allPrivateAccessors', 'allProtectedAccessors'), _dec21 = (0, _computed.union)('allPublicMethods', 'allPrivateMethods', 'allProtectedMethods'), _dec22 = (0, _computed.union)('allPublicFields', 'allPrivateFields', 'allProtectedFields'), _dec23 = (0, _computed.or)('parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'), _dec24 = (0, _computed.or)('allPrivateAccessors.length', 'allPrivateMethods.length', 'allPrivateFields.length'), _dec25 = (0, _computed.or)('allProtectedAccessors.length', 'allProtectedMethods.length', 'allProtectedFields.length'), _dec26 = (0, _computed2.hasMemberType)('allFields', 'allAccessors', 'allMethods', function (member) {
     return member.tags && member.tags.find(t => t.name === 'deprecated');
   }), (_class = class Class extends _model.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "parentClass", _descriptor, this);
       _defineProperty(this, "isClass", true);
       _initializerDefineProperty(this, "name", _descriptor2, this);
@@ -84127,8 +83245,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   let Component = (_dec = (0, _computed.or)('yields', 'inheritedYields'), _dec2 = (0, _computed.filterBy)('arguments', 'access', 'public'), _dec3 = (0, _computed.filterBy)('arguments', 'access', 'private'), _dec4 = (0, _computed.filterBy)('arguments', 'access', 'protected'), _dec5 = (0, _computed2.memberUnion)('parentClass.allPublicArguments', 'publicArguments'), _dec6 = (0, _computed2.memberUnion)('parentClass.allPrivateArguments', 'privateArguments'), _dec7 = (0, _computed2.memberUnion)('parentClass.allProtectedArguments', 'protectedArguments'), _dec8 = (0, _computed2.memberUnion)('parentClass.allArguments', 'arguments'), _dec9 = (0, _computed.or)('parentClass.overloadedYields.length', 'parentClass.allArguments.length', 'parentClass.allAccessors.length', 'parentClass.allMethods.length', 'parentClass.allFields.length'), _dec10 = (0, _computed.or)('allAccessors.length', 'allMethods.length', 'allFields.length'), _dec11 = (0, _computed.or)('allPrivateAccessors.length', 'allPrivateArguments.length', 'allPrivateMethods.length', 'allPrivateFields.length'), _dec12 = (0, _computed.or)('allProtectedAccessors.length', 'allProtectedArguments.length', 'allProtectedMethods.length', 'allProtectedFields.length'), _dec13 = (0, _computed2.hasMemberType)('allAccessors', 'allArguments', 'allMethods', 'allFields', function (member) {
     return member.tags && member.tags.find(t => t.name === 'deprecated');
   }), (_class = class Component extends _class3.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "isComponent", true);
       _initializerDefineProperty(this, "yields", _descriptor, this);
       _initializerDefineProperty(this, "arguments", _descriptor2, this);
@@ -84254,8 +83372,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   }), _dec2 = (0, _model.hasMany)('class', {
     async: false
   }), (_class = class Module extends _model.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "file", _descriptor, this);
       _initializerDefineProperty(this, "variables", _descriptor2, this);
       _initializerDefineProperty(this, "functions", _descriptor3, this);
@@ -84318,8 +83436,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   let Project = (_dec = (0, _model.hasMany)('module', {
     async: false
   }), (_class = class Project extends _model.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "name", _descriptor, this);
       _initializerDefineProperty(this, "githubUrl", _descriptor2, this);
       _initializerDefineProperty(this, "version", _descriptor3, this);
@@ -84431,8 +83549,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let DocsRoute = (_class = class DocsRoute extends _route.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "store", _descriptor, this);
     }
     model() {
@@ -84462,14 +83580,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let DocsApiRoute = (_class = class DocsApiRoute extends _route.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "store", _descriptor, this);
     }
-    model(_ref) {
-      let {
-        path
-      } = _ref;
+    model({
+      path
+    }) {
       let item;
       if (path.match(/^modules\//)) {
         // Find by fully qualified id
@@ -84587,8 +83704,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let DocsRoutesService = (_dec = (0, _service.inject)('-routing'), (_class = class DocsRoutesService extends _service.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "router", _descriptor, this);
       _initializerDefineProperty(this, "items", _descriptor2, this);
     }
@@ -84607,8 +83724,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }
     get routeUrls() {
-      return this.routes.map(_ref => {
-        let [routeName, model] = _ref;
+      return this.routes.map(([routeName, model]) => {
         return this.router.generateURL(routeName, model ? [model] : []);
       });
     }
@@ -84804,8 +83920,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let ProjectVersionService = (_class = class ProjectVersionService extends _service.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "versions", _descriptor, this);
       _initializerDefineProperty(this, "config", _descriptor2, this);
     }
@@ -85984,10 +85100,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @function initialize
     @hide
   */
-  function hasMemberType() {
-    for (var _len = arguments.length, memberKeys = new Array(_len), _key = 0; _key < _len; _key++) {
-      memberKeys[_key] = arguments[_key];
-    }
+  function hasMemberType(...memberKeys) {
     let filter = memberKeys.pop();
     return (0, _object.computed)(...memberKeys.map(k => `${k}.[]`), {
       get() {
@@ -86077,8 +85190,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   // eslint-disable-next-line ember/no-classic-components
   let CopyButtonComponent = (_dec = (0, _emberArgTypes.arg)((0, _propTypes.oneOfType)([_propTypes.string, _propTypes.func])), _dec2 = (0, _emberArgTypes.arg)((0, _propTypes.oneOfType)([_propTypes.string, _propTypes.func])), _dec3 = (0, _emberArgTypes.arg)((0, _propTypes.oneOf)(['copy', 'cut'])), _dec4 = (0, _emberArgTypes.arg)(_propTypes.boolean), _dec5 = (0, _emberArgTypes.arg)((0, _propTypes.oneOfType)([_propTypes.string, _propTypes.element])), _dec6 = (0, _emberArgTypes.arg)(_propTypes.string), _dec7 = (0, _emberArgTypes.arg)(_propTypes.boolean), _dec8 = (0, _emberArgTypes.arg)(_propTypes.boolean), (0, _emberArgTypes.forbidExtraArgs)(_class = (_class2 = class CopyButtonComponent extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "guid", (0, _internals.guidFor)(this));
       _initializerDefineProperty(this, "text", _descriptor, this);
       _initializerDefineProperty(this, "target", _descriptor2, this);
@@ -86149,8 +85262,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const service = (0, _application.getOwner)(this).lookup('service:fastboot');
       this.isFastBoot = service ? service.isFastBoot : false;
     }
-    compute(_ref) {
-      let [action] = _ref;
+    compute([action]) {
       const {
         isFastBoot
       } = this;
@@ -86216,8 +85328,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = _default;
   function _default(stringFunction) {
-    return function (_ref) {
-      let [string] = _ref;
+    return function ([string]) {
       if ((0, _template.isHTMLSafe)(string)) {
         string = string.string;
       }
@@ -86298,8 +85409,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   const replacement = ' ';
 
   // The substituted value will be contained in the result variable
-  function humanize(_ref) {
-    let [string] = _ref;
+  function humanize([string]) {
     if ((0, _template.isHTMLSafe)(string)) {
       string = string.string;
     }
@@ -86356,8 +85466,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.truncate = truncate;
-  function truncate(_ref) {
-    let [string, characterLimit = 140, useEllipsis = true] = _ref;
+  function truncate([string, characterLimit = 140, useEllipsis = true]) {
     let limit = useEllipsis ? characterLimit - 3 : characterLimit;
     if ((0, _template.isHTMLSafe)(string)) {
       string = string.string;
@@ -86403,8 +85512,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.w = w;
-  function w(_ref) {
-    let [...wordStrings] = _ref;
+  function w([...wordStrings]) {
     return wordStrings.map(_string.w).reduce((words, moreWords) => {
       return words.concat(moreWords);
     }, []);
@@ -86419,8 +85527,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = lowercase;
-  function lowercase() {
-    let string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  function lowercase(string = '') {
     if (typeof string !== 'string') {
       throw new TypeError(`Expected a string, got a ${typeof string}`);
     }
@@ -86434,8 +85541,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = titleize;
-  function titleize() {
-    let string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  function titleize(string = '') {
     if (typeof string !== 'string') {
       throw new TypeError(`Expected a string, got a ${typeof string}`);
     }
@@ -86451,8 +85557,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = trim;
-  function trim() {
-    let string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  function trim(string = '') {
     if (typeof string !== 'string') {
       throw new TypeError(`Expected a string, got a ${typeof string}`);
     }
@@ -86466,8 +85571,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = uppercase;
-  function uppercase() {
-    let string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  function uppercase(string = '') {
     if (typeof string !== 'string') {
       throw new TypeError(`Expected a string, got a ${typeof string}`);
     }
@@ -86493,8 +85597,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = getSnippet;
-  function getSnippet(name) {
-    let unindent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  function getSnippet(name, unindent = true) {
     let source = name.split('/').reduce((dir, name) => dir && dir[name], _snippets.default);
     (false && !(source) && (0, _debug.assert)(`Code snippet with name "${name}" not found.`, source));
     source = source.replace(/^(\s*\n)*/, '').replace(/\s*$/, '');
@@ -86573,11 +85676,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _default = (0, _helper.helper)(function (_ref, _ref2) {
-    let [name] = _ref;
-    let {
-      unindent = true
-    } = _ref2;
+  var _default = (0, _helper.helper)(function ([name], {
+    unindent = true
+  }) {
     return (0, _emberCodeSnippet.getCodeSnippet)(name, unindent);
   });
   _exports.default = _default;
@@ -86675,8 +85776,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.append = append;
   _exports.default = void 0;
-  function append(_ref) {
-    let [...arrays] = _ref;
+  function append([...arrays]) {
     return [].concat(...arrays);
   }
   var _default = (0, _helper.helper)(append);
@@ -86703,8 +85803,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @param {Array<Function>} fn - The function to be called
    * @param {*=} thisArg - An optional `this` context
    */
-  function call(_ref) {
-    let [fn, thisArg] = _ref;
+  function call([fn, thisArg]) {
     if (fn) {
       if (thisArg) {
         return fn.apply(thisArg);
@@ -86748,8 +85847,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return result;
     }
   }
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [num, array] = _ref;
+  var _default = (0, _helper.helper)(function ([num, array]) {
     return chunk(num, array);
   });
   _exports.default = _default;
@@ -86762,8 +85860,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.compact = compact;
   _exports.default = void 0;
-  function compact(_ref) {
-    let [value] = _ref;
+  function compact([value]) {
     let array;
     if (Array.isArray(value) || (0, _array.isArray)(value)) {
       array = value;
@@ -86783,8 +85880,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.compute = compute;
   _exports.default = void 0;
-  function compute(_ref) {
-    let [action, ...params] = _ref;
+  function compute([action, ...params]) {
     return action(...params);
   }
   var _default = (0, _helper.helper)(compute);
@@ -86798,8 +85894,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.dec = dec;
   _exports.default = void 0;
-  function dec(_ref) {
-    let [step, val] = _ref;
+  function dec([step, val]) {
     if ((0, _utils.isEmpty)(val)) {
       val = step;
       step = undefined;
@@ -86824,8 +85919,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.drop = drop;
-  function drop(_ref) {
-    let [dropAmount, array] = _ref;
+  function drop([dropAmount, array]) {
     return (0, _asArray.default)(array).slice(dropAmount);
   }
   var _default = (0, _helper.helper)(drop);
@@ -86839,8 +85933,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.entries = entries;
-  function entries(_ref) {
-    let [object] = _ref;
+  function entries([object]) {
     if (!object) {
       return object;
     }
@@ -86857,8 +85950,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.filterBy = filterBy;
-  function filterBy(_ref) {
-    let [byPath, value, array] = _ref;
+  function filterBy([byPath, value, array]) {
     if (!(0, _array.isArray)(array) && (0, _array.isArray)(value)) {
       array = value;
       value = undefined;
@@ -86890,8 +85982,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.filter = filter;
-  function filter(_ref) {
-    let [callback, array] = _ref;
+  function filter([callback, array]) {
     if ((0, _utils.isEmpty)(callback) || !array) {
       return [];
     }
@@ -86908,8 +85999,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.findBy = findBy;
-  function findBy(_ref) {
-    let [byPath, value, array] = _ref;
+  function findBy([byPath, value, array]) {
     if ((0, _utils.isEmpty)(byPath)) {
       return [];
     }
@@ -86934,8 +86024,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return flattened.concat(flatten(el));
     }, []);
   }
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [array] = _ref;
+  var _default = (0, _helper.helper)(function ([array]) {
     return flatten(array);
   });
   _exports.default = _default;
@@ -86948,8 +86037,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.fromEntries = fromEntries;
-  function fromEntries(_ref) {
-    let [entries] = _ref;
+  function fromEntries([entries]) {
     if (!entries) {
       return entries;
     }
@@ -86966,8 +86054,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.groupBy = groupBy;
-  function groupBy(_ref) {
-    let [byPath, array] = _ref;
+  function groupBy([byPath, array]) {
     let groups = {};
     (0, _asArray.default)(array).forEach(item => {
       let groupName = (0, _object.get)(item, byPath);
@@ -86991,8 +86078,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.hasNext = hasNext;
-  function hasNext(currentValue, maybeArray) {
-    let useDeepEqual = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  function hasNext(currentValue, maybeArray, useDeepEqual = false) {
     let array = (0, _asArray.default)(maybeArray);
     let nextValue = (0, _next.next)(currentValue, array, useDeepEqual);
     let isNotSameValue = !(0, _isEqual.default)(nextValue, currentValue, useDeepEqual);
@@ -87016,8 +86102,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.hasPrevious = hasPrevious;
-  function hasPrevious(currentValue, maybeArray) {
-    let useDeepEqual = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  function hasPrevious(currentValue, maybeArray, useDeepEqual = false) {
     let array = (0, _asArray.default)(maybeArray);
     let previousValue = (0, _previous.previous)(currentValue, array, useDeepEqual);
     let isNotSameValue = !(0, _isEqual.default)(previousValue, currentValue, useDeepEqual);
@@ -87041,8 +86126,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.inc = inc;
-  function inc(_ref) {
-    let [step, val] = _ref;
+  function inc([step, val]) {
     if ((0, _utils.isEmpty)(val)) {
       val = step;
       step = undefined;
@@ -87077,8 +86161,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return haystackAsEmberArray.includes(needle);
     });
   }
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [needle, haystack] = _ref;
+  var _default = (0, _helper.helper)(function ([needle, haystack]) {
     return includes(needle, haystack);
   });
   _exports.default = _default;
@@ -87091,8 +86174,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.intersect = intersect;
-  function intersect(_ref) {
-    let [...arrays] = _ref;
+  function intersect([...arrays]) {
     let confirmedArrays = (0, _asArray.default)(arrays).map(array => {
       return (0, _array.isArray)(array) ? array : [];
     });
@@ -87129,8 +86211,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   const {
     all
   } = _rsvp.default;
-  function invoke(_ref) {
-    let [methodName, ...args] = _ref;
+  function invoke([methodName, ...args]) {
     let obj = args.pop();
     if ((0, _array.isArray)(obj)) {
       return function () {
@@ -87153,8 +86234,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.join = join;
-  function join(_ref) {
-    let [separator, rawArray] = _ref;
+  function join([separator, rawArray]) {
     let array = (0, _asArray.default)(rawArray);
     if ((0, _array.isArray)(separator)) {
       array = separator;
@@ -87173,8 +86253,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.keys = keys;
-  function keys(_ref) {
-    let [object] = _ref;
+  function keys([object]) {
     if (!object) {
       return object;
     }
@@ -87191,8 +86270,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.mapBy = mapBy;
-  function mapBy(_ref) {
-    let [byPath, array] = _ref;
+  function mapBy([byPath, array]) {
     if ((0, _utils.isEmpty)(byPath)) {
       return [];
     }
@@ -87209,8 +86287,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.map = map;
-  function map(_ref) {
-    let [callback, array] = _ref;
+  function map([callback, array]) {
     if ((0, _utils.isEmpty)(callback)) {
       return [];
     }
@@ -87227,8 +86304,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.next = next;
-  function next(currentValue, maybeArray) {
-    let useDeepEqual = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  function next(currentValue, maybeArray, useDeepEqual = false) {
     let array = (0, _asArray.default)(maybeArray);
     let currentIndex = (0, _getIndex.default)(array, currentValue, useDeepEqual);
     let lastIndex = array.length - 1;
@@ -87276,8 +86352,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     index = parseInt(index, 10);
     return (0, _array.A)(array).objectAt(index);
   }
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [index, array] = _ref;
+  var _default = (0, _helper.helper)(function ([index, array]) {
     return objectAt(index, array);
   });
   _exports.default = _default;
@@ -87290,8 +86365,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.optional = optional;
-  function optional(_ref) {
-    let [action] = _ref;
+  function optional([action]) {
     if (typeof action === 'function') {
       return action;
     }
@@ -87308,8 +86382,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.pick = pick;
-  function pick(_ref /*, hash*/) {
-    let [path, action] = _ref;
+  function pick([path, action] /*, hash*/) {
     return function (event) {
       let value = (0, _object.get)(event, path);
       if (!action) {
@@ -87350,12 +86423,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return curr(acc);
   }
-  function pipe() {
-    let actions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    return function () {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+  function pipe(actions = []) {
+    return function (...args) {
       return actions.reduce((acc, curr, idx) => {
         if (idx === 0) {
           return curr(...args);
@@ -87375,8 +86444,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.previous = previous;
-  function previous(currentValue, array) {
-    let useDeepEqual = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  function previous(currentValue, array, useDeepEqual = false) {
     let currentIndex = (0, _getIndex.default)(array, currentValue, useDeepEqual);
     if ((0, _utils.isEmpty)(currentIndex)) {
       return;
@@ -87401,12 +86469,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.queue = queue;
-  function queue() {
-    let actions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    return function () {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+  function queue(actions = []) {
+    return function (...args) {
       let invokeWithArgs = function (acc, curr) {
         if ((0, _isPromise.default)(acc)) {
           return acc.then(() => curr(...args));
@@ -87432,8 +86496,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.range = range;
-  function range(_ref) {
-    let [min, max, isInclusive] = _ref;
+  function range([min, max, isInclusive]) {
     isInclusive = (0, _utils.typeOf)(isInclusive) === 'boolean' ? isInclusive : false;
     let numbers = [];
     if (min < max) {
@@ -87464,8 +86527,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.reduce = reduce;
-  function reduce(_ref) {
-    let [callback, initialValue, array] = _ref;
+  function reduce([callback, initialValue, array]) {
     if ((0, _utils.isEmpty)(callback)) {
       return [];
     }
@@ -87482,8 +86544,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.rejectBy = rejectBy;
-  function rejectBy(_ref) {
-    let [byPath, value, array] = _ref;
+  function rejectBy([byPath, value, array]) {
     if (!(0, _array.isArray)(array) && (0, _array.isArray)(value)) {
       array = value;
       value = undefined;
@@ -87512,8 +86573,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.repeat = repeat;
-  function repeat(_ref) {
-    let [length, value] = _ref;
+  function repeat([length, value]) {
     if ((0, _utils.typeOf)(length) !== 'number') {
       return [value];
     }
@@ -87532,8 +86592,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.reverse = reverse;
-  function reverse(_ref) {
-    let [array] = _ref;
+  function reverse([array]) {
     if (!(0, _array.isArray)(array)) {
       return [array];
     }
@@ -87563,8 +86622,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return array;
   }
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [randomizer, array] = _ref;
+  var _default = (0, _helper.helper)(function ([randomizer, array]) {
     if (array === undefined) {
       array = randomizer;
       randomizer = undefined;
@@ -87584,8 +86642,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.slice = slice;
-  function slice(_ref) {
-    let [...args] = _ref;
+  function slice([...args]) {
     let array = args.pop();
     array = (0, _asArray.default)(array);
     return array.slice(...args);
@@ -87684,10 +86741,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return 0;
   }
   class SortBy {
-    constructor() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    constructor(...args) {
       let [array] = args;
       if (typeof array.toArray === "function") {
         array = array.toArray();
@@ -87715,8 +86769,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @extends SortBy
    */
   class BubbleSort extends SortBy {
-    perform() {
-      let keys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    perform(keys = []) {
       let swapped = false;
       let compFuncs = keys.map(key => this.comparator(key));
       let compFunc = (a, b) => {
@@ -87771,8 +86824,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.take = take;
-  function take(_ref) {
-    let [takeAmount, array] = _ref;
+  function take([takeAmount, array]) {
     return (0, _asArray.default)(array).slice(0, takeAmount);
   }
   var _default = (0, _helper.helper)(take);
@@ -87806,8 +86858,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return currentIdx + 1;
   }
-  function toggle(_ref) {
-    let [prop, obj, ...values] = _ref;
+  function toggle([prop, obj, ...values]) {
     return function () {
       let currentValue = (0, _object.get)(obj, prop);
       if ((0, _utils.isPresent)(values)) {
@@ -87829,8 +86880,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.union = union;
-  function union(_ref) {
-    let [...arrays] = _ref;
+  function union([...arrays]) {
     let items = [].concat(...arrays);
     return items.filter((value, index, array) => (0, _asArray.default)(array).indexOf(value) === index);
   }
@@ -87845,8 +86895,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   _exports.values = values;
-  function values(_ref) {
-    let [object] = _ref;
+  function values([object]) {
     if (!object) {
       return object;
     }
@@ -87877,8 +86926,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return (0, _array.A)(haystack).without(needle);
   }
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [needle, haystack] = _ref;
+  var _default = (0, _helper.helper)(function ([needle, haystack]) {
     return without(needle, haystack);
   });
   _exports.default = _default;
@@ -88260,8 +87308,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = isEqual;
-  function isEqual(firstValue, secondValue) {
-    let useDeepEqual = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  function isEqual(firstValue, secondValue, useDeepEqual = false) {
     if (useDeepEqual) {
       return JSON.stringify(firstValue) === JSON.stringify(secondValue);
     } else {
@@ -88287,8 +87334,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = isPromise;
-  function isPromiseLike() {
-    let obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  function isPromiseLike(obj = {}) {
     return (0, _utils.typeOf)(obj.then) === 'function' && (0, _utils.typeOf)(obj.catch) === 'function';
   }
   function isPromise(obj) {
@@ -88443,8 +87489,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.EmberEnvironment = _exports.EMBER_ENVIRONMENT = void 0;
   class EmberEnvironment extends _environment.Environment {
-    assert() {
-      (false && !(false) && (0, _debug.assert)(...arguments));
+    assert(...args) {
+      (false && !(false) && (0, _debug.assert)(...args));
     }
     async(callback) {
       (0, _runloop.join)(() => (0, _runloop.schedule)('actions', callback));
@@ -89113,10 +88159,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @class TaskFactory
    */
   class TaskFactory {
-    constructor() {
-      let name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '<unknown>';
-      let taskDefinition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    constructor(name = '<unknown>', taskDefinition = null, options = {}) {
       _defineProperty(this, "_debug", null);
       _defineProperty(this, "_enabledModifiers", []);
       _defineProperty(this, "_hasSetConcurrencyConstraint", false);
@@ -89343,14 +88386,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.BaseTaskInstance = void 0;
   const EXPLICIT_CANCEL_REASON = '.cancel() was explicitly called';
   class BaseTaskInstance {
-    constructor(_ref) {
-      let {
-        task,
-        args,
-        executor,
-        performType,
-        hasEnabledEvents
-      } = _ref;
+    constructor({
+      task,
+      args,
+      executor,
+      performType,
+      hasEnabledEvents
+    }) {
       this.task = task;
       this.args = args;
       this.performType = performType;
@@ -89374,18 +88416,17 @@ lunr.QueryParser.parseBoost = function (parser) {
     [_yieldables.yieldableSymbol](parentTaskInstance, resumeIndex) {
       return this.executor.onYielded(parentTaskInstance, resumeIndex);
     }
-    cancel() {
-      let cancelReason = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : EXPLICIT_CANCEL_REASON;
+    cancel(cancelReason = EXPLICIT_CANCEL_REASON) {
       this.executor.cancel(new _cancelation.CancelRequest(_cancelation.CANCEL_KIND_EXPLICIT, cancelReason));
     }
-    then() {
-      return this.executor.promise().then(...arguments);
+    then(...args) {
+      return this.executor.promise().then(...args);
     }
-    catch() {
-      return this.executor.promise().catch(...arguments);
+    catch(...args) {
+      return this.executor.promise().catch(...args);
     }
-    finally() {
-      return this.executor.promise().finally(...arguments);
+    finally(...args) {
+      return this.executor.promise().finally(...args);
     }
     toString() {
       return `${this.task} TaskInstance`;
@@ -89491,12 +88532,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     return TASK_INSTANCE_STACK[TASK_INSTANCE_STACK.length - 1];
   }
   class TaskInstanceExecutor {
-    constructor(_ref) {
-      let {
-        generatorFactory,
-        env,
-        debug
-      } = _ref;
+    constructor({
+      generatorFactory,
+      env,
+      debug
+    }) {
       this.generatorState = new _generatorState.GeneratorState(generatorFactory);
       this.state = Object.assign({}, _initialState.INITIAL_STATE);
       this.index = 1;
@@ -90018,10 +89058,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.performType = performType;
       this.linkedObject = linkedObject;
     }
-    perform() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    perform(...args) {
       return this.task._performShared(args, this.performType, this.linkedObject);
     }
   }
@@ -90310,8 +89347,8 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @instance
      * @return {Promise}
      */
-    then() {
-      return this._toPromise().then(...arguments);
+    then(...args) {
+      return this._toPromise().then(...args);
     }
 
     /**
@@ -90320,8 +89357,8 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @instance
      * @return {Promise}
      */
-    catch() {
-      return this._toPromise().catch(...arguments);
+    catch(...args) {
+      return this._toPromise().catch(...args);
     }
 
     /**
@@ -90330,8 +89367,8 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @instance
      * @return {Promise}
      */
-    finally() {
-      return this._toPromise().finally(...arguments);
+    finally(...args) {
+      return this._toPromise().finally(...args);
     }
     [yieldableSymbol](taskInstance, resumeIndex) {
       let state = new YieldableState(taskInstance, resumeIndex);
@@ -90460,13 +89497,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function taskHelperClosure(helperName, taskMethod, _args, hash) {
     let task = _args[0];
     let outerArgs = _args.slice(1);
-    return function () {
+    return function (...innerArgs) {
       if (!task || typeof task[taskMethod] !== 'function') {
         (false && !(false) && (0, _debug.assert)(`The first argument passed to the \`${helperName}\` helper should be a Task object (without quotes); you passed ${task}`, false));
         return;
-      }
-      for (var _len = arguments.length, innerArgs = new Array(_len), _key = 0; _key < _len; _key++) {
-        innerArgs[_key] = arguments[_key];
       }
       if (hash && hash.value) {
         let event = innerArgs.pop();
@@ -90498,8 +89532,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.taskGroup = _exports.task = _exports.restartableTaskGroup = _exports.restartableTask = _exports.lastValue = _exports.keepLatestTaskGroup = _exports.keepLatestTask = _exports.enqueueTaskGroup = _exports.enqueueTask = _exports.dropTaskGroup = _exports.dropTask = void 0;
-  function taskFromPropertyDescriptor(target, key, descriptor) {
-    let params = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  function taskFromPropertyDescriptor(target, key, descriptor, params = []) {
     let {
       initializer,
       get,
@@ -90529,8 +89562,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     };
   }
-  function taskGroupPropertyDescriptor(target, key, _descriptor) {
-    let params = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  function taskGroupPropertyDescriptor(target, key, _descriptor, params = []) {
     let taskGroups = new WeakMap();
     let options = params[0] || {};
     let factory = new _taskFactory.TaskFactory(key, null, options);
@@ -90554,26 +89586,16 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
 
   function decoratorWithParams(descriptorFn) {
-    return function () {
-      for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
-        params[_key] = arguments[_key];
-      }
+    return function (...params) {
       if (isFieldDescriptor(params)) {
         return descriptorFn(...params);
       } else {
-        return function () {
-          for (var _len2 = arguments.length, desc = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            desc[_key2] = arguments[_key2];
-          }
-          return descriptorFn(...desc, params);
-        };
+        return (...desc) => descriptorFn(...desc, params);
       }
     };
   }
-  function createDecorator(fn) {
-    let baseOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return decoratorWithParams(function (target, key, descriptor) {
-      let [userOptions] = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  function createDecorator(fn, baseOptions = {}) {
+    return decoratorWithParams((target, key, descriptor, [userOptions] = []) => {
       let mergedOptions = Object.assign({}, {
         ...baseOptions,
         ...userOptions
@@ -90581,8 +89603,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return fn(target, key, descriptor, [mergedOptions]);
     });
   }
-  const lastValue = decoratorWithParams(function (target, key, descriptor) {
-    let [taskName] = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+  const lastValue = decoratorWithParams((target, key, descriptor, [taskName] = []) => {
     const {
       initializer
     } = descriptor;
@@ -90955,19 +89976,19 @@ lunr.QueryParser.parseBoost = function (parser) {
       let options = this.getTaskOptions(context);
       return new _taskGroup.TaskGroup(options);
     }
-    addCancelEvents() {
+    addCancelEvents(...cancelEventNames) {
       this._cancelEventNames = this._cancelEventNames || [];
-      this._cancelEventNames.push(...arguments);
+      this._cancelEventNames.push(...cancelEventNames);
       return this;
     }
-    addObserverKeys() {
+    addObserverKeys(...keys) {
       this._observes = this._observes || [];
-      this._observes.push(...arguments);
+      this._observes.push(...keys);
       return this;
     }
-    addPerformEvents() {
+    addPerformEvents(...eventNames) {
       this._eventNames = this._eventNames || [];
-      this._eventNames.push(...arguments);
+      this._eventNames.push(...eventNames);
       return this;
     }
     getModifier(name) {
@@ -91253,7 +90274,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       // eslint-disable-next-line no-console
       console.warn(`ember-concurrency detected a potentially hazardous "self-cancel loop" between parent task ${parentName} and child task ${childName}. If you want child task ${childName} to be canceled when parent task ${parentName} is canceled, please change \`.perform()\` to \`.linked().perform()\`. If you want child task ${childName} to keep running after parent task ${parentName} is canceled, change it to \`.unlinked().perform()\``);
     }
-    triggerEvent() {
+    triggerEvent(...allArgs) {
       if (!this.hasEnabledEvents) {
         return;
       }
@@ -91262,9 +90283,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       let host = task.context;
       let eventNamespace = task && task.name;
       if (host && host.trigger && eventNamespace) {
-        for (var _len = arguments.length, allArgs = new Array(_len), _key = 0; _key < _len; _key++) {
-          allArgs[_key] = arguments[_key];
-        }
         let [eventType, ...args] = allArgs;
         host.trigger(`${eventNamespace}:${eventType}`, ...args);
       }
@@ -92052,10 +91070,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      *
      */
 
-    _perform() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    _perform(...args) {
       return this._performShared(args, _executor.PERFORM_TYPE_DEFAULT, null);
     }
     _performShared(args, performType, linkedObject) {
@@ -92087,11 +91102,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
       return taskInstance;
     }
-    _curry() {
+    _curry(...args) {
       let task = this._clone();
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
       task._curryArgs = [...(this._curryArgs || []), ...args];
       return task;
     }
@@ -92418,8 +91430,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
   class WaitForPropertyYieldable extends _utils.EmberYieldable {
-    constructor(object, key) {
-      let predicateCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Boolean;
+    constructor(object, key, predicateCallback = Boolean) {
       super();
       this.object = object;
       this.key = key;
@@ -92622,9 +91633,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   function performHelper(args, hash) {
     let perform = (0, _helpers.taskHelperClosure)('perform', 'perform', args, hash);
     if (hash && typeof hash.onError !== 'undefined') {
-      return function () {
+      return function (...innerArgs) {
         try {
-          let taskInstance = perform(...arguments);
+          let taskInstance = perform(...innerArgs);
           return taskInstance.catch(maybeReportError(hash.onError));
           // eslint-disable-next-line no-empty
         } catch {
@@ -92645,8 +91656,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  function taskHelper(_ref) {
-    let [task, ...args] = _ref;
+  function taskHelper([task, ...args]) {
     return task._curry(...args);
   }
   var _default = (0, _helper.helper)(taskHelper);
@@ -93061,7 +92071,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
 });
-;define("ember-data/index", ["exports", "@embroider/macros/es-compat", "@ember-data/adapter", "@ember-data/adapter/error", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/model", "@ember-data/serializer", "@ember-data/serializer/-private", "@ember-data/serializer/json", "@ember-data/serializer/json-api", "@ember-data/serializer/rest", "@ember-data/serializer/transform", "@ember-data/store", "ember-data/-private", "ember-data/setup-container"], function (_exports, _esCompat, _adapter, _error, _jsonApi, _rest, _model, _serializer, _private, _json, _jsonApi2, _rest2, _transform, _store, _private2, _setupContainer) {
+;define("ember-data/index", ["exports", "@ember-data/adapter", "@ember-data/adapter/error", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/model", "@ember-data/serializer", "@ember-data/serializer/-private", "@ember-data/serializer/json", "@ember-data/serializer/json-api", "@ember-data/serializer/rest", "@ember-data/serializer/transform", "@ember-data/store", "ember-data/-private", "ember-data/setup-container", "@embroider/macros/es-compat2"], function (_exports, _adapter, _error, _jsonApi, _rest, _model, _serializer, _private, _json, _jsonApi2, _rest2, _transform, _store, _private2, _setupContainer, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -93938,8 +92948,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         this._cacheUsed = true;
         return this._sCache[word] || (this._sCache[word] = this._singularize(word));
       };
-      this.pluralize = function (numberOrWord, word) {
-        let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      this.pluralize = function (numberOrWord, word, options = {}) {
         this._cacheUsed = true;
         var cacheKey = [numberOrWord, word, options.withoutCount];
         return this._pCache[cacheKey] || (this._pCache[cacheKey] = this._pluralize(numberOrWord, word, options));
@@ -94019,8 +93028,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     pluralize() {
       return this._pluralize(...arguments);
     },
-    _pluralize(wordOrCount, word) {
-      let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    _pluralize(wordOrCount, word, options = {}) {
       if (word === undefined) {
         return this.inflect(wordOrCount, this.rules.plurals, this.rules.irregular);
       }
@@ -94202,11 +93210,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @hide
    */
   class FormatDate extends _base.default {
-    format(intl) {
-      for (var _len = arguments.length, _ref = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        _ref[_key - 1] = arguments[_key];
-      }
-      let [value, opts] = _ref;
+    format(intl, ...[value, opts]) {
       return intl.formatDate(value, opts);
     }
   }
@@ -94232,11 +93236,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @hide
    */
   class FormatList extends _base.default {
-    format(intl) {
-      for (var _len = arguments.length, _ref = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        _ref[_key - 1] = arguments[_key];
-      }
-      let [value, opts] = _ref;
+    format(intl, ...[value, opts]) {
       return intl.formatList(value, opts);
     }
   }
@@ -94338,11 +93338,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @hide
    */
   class FormatNumber extends _base.default {
-    format(intl) {
-      for (var _len = arguments.length, _ref = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        _ref[_key - 1] = arguments[_key];
-      }
-      let [value, opts] = _ref;
+    format(intl, ...[value, opts]) {
       return intl.formatNumber(value, opts);
     }
   }
@@ -94413,11 +93409,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @hide
    */
   class FormatTime extends _base.default {
-    format(intl) {
-      for (var _len = arguments.length, _ref = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        _ref[_key - 1] = arguments[_key];
-      }
-      let [value, opts] = _ref;
+    format(intl, ...[value, opts]) {
       return intl.formatTime(value, opts);
     }
   }
@@ -94585,8 +93577,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @hide
    */
   function hydrate(service) {
-    _translations.default.forEach(_ref => {
-      let [locale, translations] = _ref;
+    _translations.default.forEach(([locale, translations]) => {
       service.addTranslations(locale, translations);
     });
   }
@@ -94708,8 +93699,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     format() {
       throw new Error('not implemented');
     }
-    compute(_ref, namedOptions) {
-      let [value, positionalOptions] = _ref;
+    compute([value, positionalOptions], namedOptions) {
       const options = positionalOptions ? Object.assign({}, positionalOptions, namedOptions) : namedOptions;
       if ((0, _utils.isEmpty)(value)) {
         if (options.allowEmpty ?? this.allowEmpty) {
@@ -94743,8 +93733,8 @@ lunr.QueryParser.parseBoost = function (parser) {
                                                                                                                                                                                                                                                                                                                                                                                              * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
                                                                                                                                                                                                                                                                                                                                                                                              */
   class _default extends _formatBase.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "allowEmpty", true);
     }
     format(value, options) {
@@ -94936,10 +93926,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    */
   const __intlInjectionName = `intl-${Date.now().toString(36)}`;
   _exports.__intlInjectionName = __intlInjectionName;
-  function intl() {
-    for (var _len = arguments.length, dependentKeysAndGetterFn = new Array(_len), _key = 0; _key < _len; _key++) {
-      dependentKeysAndGetterFn[_key] = arguments[_key];
-    }
+  function intl(...dependentKeysAndGetterFn) {
     const getterFn = dependentKeysAndGetterFn.pop();
     const dependentKeys = dependentKeysAndGetterFn;
     return (0, _object.computed)(`${__intlInjectionName}.locale`, ...dependentKeys, function (propertyKey) {
@@ -95085,44 +94072,33 @@ lunr.QueryParser.parseBoost = function (parser) {
     /** @public **/
 
     /** @public **/
-
-    /** @public **/
-
-    /** @public **/
-
-    /** @public **/
-
-    /** @public **/
-
-    /** @private **/
-
-    /** @private **/
-
-    /** @private **/
-
-    /** @private **/
-
-    /** @private */
-
-    /**
-     * @private
-     * @type {EventEmitter}
-     */
-
-    /** @public **/
     constructor() {
       super(...arguments);
       _defineProperty(this, "formatRelative", createFormatterProxy('relative'));
+      /** @public **/
       _defineProperty(this, "formatMessage", createFormatterProxy('message'));
+      /** @public **/
       _defineProperty(this, "formatNumber", createFormatterProxy('number'));
+      /** @public **/
       _defineProperty(this, "formatTime", createFormatterProxy('time'));
+      /** @public **/
       _defineProperty(this, "formatDate", createFormatterProxy('date'));
+      /** @public **/
       _defineProperty(this, "formatList", createFormatterProxy('list'));
+      /** @private **/
       _initializerDefineProperty(this, "_locale", _descriptor, this);
+      /** @private **/
       _defineProperty(this, "_timer", null);
+      /** @private **/
       _defineProperty(this, "_formats", null);
+      /** @private **/
       _defineProperty(this, "_formatters", null);
+      /** @private */
       _initializerDefineProperty(this, "_intls", _descriptor2, this);
+      /**
+       * @private
+       * @type {EventEmitter}
+       */
       _defineProperty(this, "_ee", null);
       _defineProperty(this, "_cache", (0, _intl.createIntlCache)());
       const initialLocale = this.locale || ['en-us'];
@@ -95150,16 +94126,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     /** @private **/
-    onError(_ref) {
-      let {
-        /* kind, */error
-      } = _ref;
+    onError({
+      /* kind, */error
+    }) {
       throw error;
     }
 
     /** @public **/
-    lookup(key, localeName) {
-      let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    lookup(key, localeName, options = {}) {
       const localeNames = this._localeWithDefault(localeName);
       let translation;
       for (let i = 0; i < localeNames.length; i++) {
@@ -95210,8 +94184,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @private
      * @param {String} locale Locale of intl obj to create
      */
-    createIntl(locale) {
-      let messages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    createIntl(locale, messages = {}) {
       const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
       return (0, _intl.createIntl)({
         locale: resolvedLocale,
@@ -95229,8 +94202,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     /** @public **/
-    t(key) {
-      let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    t(key, options = {}) {
       let keys = [key];
       if (options.default) {
         if (Array.isArray(options.default)) {
@@ -95327,10 +94299,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param {Function} fn
      * @returns {Function} unsubscribed from localeChanged
      */
-    onLocaleChanged() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    onLocaleChanged(...args) {
       this._ee.on('localeChanged', ...args);
       return () => {
         this._ee.off('localeChanged', ...args);
@@ -95500,8 +94469,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let BasicDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_basicDialog.default), _dec3 = (0, _service.inject)('modal-dialog'), _dec4 = (0, _object.computed)('attachmentClass', 'containerClass', 'containerClassNames.{[],join}', 'targetAttachmentClass'), _dec5 = (0, _object.computed)('overlayClass', 'overlayClassNames.{[],join}', 'translucentOverlay'), _dec6 = (0, _object.computed)('targetAttachmentClass', 'variantWrapperClass', 'wrapperClass', 'wrapperClassNames.{[],join}'), _dec7 = (0, _object.computed)('overlayPosition'), _dec8 = (0, _object.computed)('targetAttachment'), _dec(_class = _dec2(_class = (_class2 = class BasicDialog extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "containerClassNames", null);
       _defineProperty(this, "overlayClassNames", null);
       _defineProperty(this, "wrapperClassNames", null);
@@ -95546,10 +94515,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         return;
       }
       this.makeOverlayClickableOnIOS();
-      this.handleClick = _ref => {
-        let {
-          target
-        } = _ref;
+      this.handleClick = ({
+        target
+      }) => {
         // if the click has already resulted in the target
         // being removed or hidden, do nothing
         if (target.offsetWidth === 0 && target.offsetHeight === 0) {
@@ -95620,8 +94588,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   let InPlaceDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_inPlaceDialog.default), _dec(_class = _dec2(_class = class InPlaceDialog extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "containerClass", null);
     }
     // passed in
@@ -95649,8 +94617,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   let LiquidDialog = (_dec = (0, _component.layout)(_liquidDialog.default), _dec(_class = class LiquidDialog extends _basicDialog.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "hasOverlay", true);
       _defineProperty(this, "variantWrapperClass", 'emd-animatable');
     }
@@ -95675,8 +94643,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   let LiquidTetherDialog = (_dec = (0, _component.layout)(_liquidTetherDialog.default), _dec2 = (0, _object.computed)('targetAttachment'), _dec(_class = (_class2 = class LiquidTetherDialog extends _basicDialog.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "targetAttachment", null);
       _defineProperty(this, "attachment", null);
       _defineProperty(this, "hasOverlay", true);
@@ -95714,7 +94682,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }, (_applyDecoratedDescriptor(_class2.prototype, "targetAttachmentClass", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "targetAttachmentClass"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "tetherClassPrefix", [_object.computed], Object.getOwnPropertyDescriptor(_class2.prototype, "tetherClassPrefix"), _class2.prototype)), _class2)) || _class);
   _exports.default = LiquidTetherDialog;
 });
-;define("ember-modal-dialog/components/modal-dialog", ["exports", "@embroider/macros/es-compat", "@ember-decorators/component", "@ember/object", "@ember/service", "@ember/object/computed", "@ember/component", "@ember/string", "@ember/utils", "ember-modal-dialog/templates/components/modal-dialog", "@ember/debug", "@embroider/util"], function (_exports, _esCompat, _component, _object, _service, _computed, _component2, _string, _utils, _modalDialog, _debug, _util) {
+;define("ember-modal-dialog/components/modal-dialog", ["exports", "@ember-decorators/component", "@ember/object", "@ember/service", "@ember/object/computed", "@ember/component", "@ember/string", "@ember/utils", "ember-modal-dialog/templates/components/modal-dialog", "@ember/debug", "@embroider/util", "@embroider/macros/es-compat2"], function (_exports, _component, _object, _service, _computed, _component2, _string, _utils, _modalDialog, _debug, _util, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -95730,25 +94698,26 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   const VALID_OVERLAY_POSITIONS = ['parent', 'sibling'];
   let ModalDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_modalDialog.default), _dec3 = (0, _service.inject)('modal-dialog'), _dec4 = (0, _computed.readOnly)('modalService.hasLiquidWormhole'), _dec5 = (0, _computed.readOnly)('modalService.hasLiquidTether'), _dec6 = (0, _computed.oneWay)('elementId'), _dec7 = (0, _object.computed)('attachment'), _dec8 = (0, _object.computed)('renderInPlace', 'tetherTarget', 'animatable', 'hasLiquidWormhole', 'hasLiquidTether'), _dec(_class = _dec2(_class = (_class2 = class ModalDialog extends _component2.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "modalService", _descriptor, this);
       _defineProperty(this, "animatable", null);
       _defineProperty(this, "clickOutsideToClose", false);
       _defineProperty(this, "destinationElementId", null);
       _defineProperty(this, "hasOverlay", true);
       _defineProperty(this, "overlayPosition", 'parent');
+      // `parent` or `sibling`
       _defineProperty(this, "renderInPlace", false);
       _defineProperty(this, "targetAttachment", 'middle center');
       _defineProperty(this, "tetherClassPrefix", null);
       _defineProperty(this, "tetherTarget", null);
       _defineProperty(this, "translucentOverlay", false);
       _defineProperty(this, "value", 0);
+      // pass a `value` to set a "value" to be passed to liquid-wormhole / liquid-tether
       _initializerDefineProperty(this, "hasLiquidWormhole", _descriptor2, this);
       _initializerDefineProperty(this, "hasLiquidTether", _descriptor3, this);
       _initializerDefineProperty(this, "stack", _descriptor4, this);
-    } // `parent` or `sibling`
-    // pass a `value` to set a "value" to be passed to liquid-wormhole / liquid-tether
+    }
     // pass a `stack` string to set a "stack" to be passed to liquid-wormhole / liquid-tether
 
     get attachmentClass() {
@@ -95988,8 +94957,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   let TetherDialog = (_dec = (0, _component.layout)(_tetherDialog.default), _dec2 = (0, _object.computed)('targetAttachment'), _dec(_class = (_class2 = class TetherDialog extends _basicDialog.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _defineProperty(this, "targetAttachment", null);
       _defineProperty(this, "attachment", null);
       _defineProperty(this, "tetherTarget", null);
@@ -96054,12 +95023,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   */
-  var _default = (0, _helper.helper)(function ignoreChildren(_ref) {
-    let [nextHandler] = _ref;
-    return function () {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+  var _default = (0, _helper.helper)(function ignoreChildren([nextHandler]) {
+    return function (...args) {
       let event = args[args.length - 1];
       if (event && event.target === event.currentTarget) {
         nextHandler.apply(this, args);
@@ -96833,11 +95798,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   let consumeArgs = noop;
   _exports.consumeArgs = consumeArgs;
   if (true) {
-    _exports.consumeArgs = consumeArgs = function (_ref2) {
-      let {
-        positional,
-        named
-      } = _ref2;
+    _exports.consumeArgs = consumeArgs = function ({
+      positional,
+      named
+    }) {
       // SAFETY: TS before 4.6 does not correctly/fully resolve the type in a way
       // that allows the type checker to see that `positional` must *always* be
       // something which `extends unknown[]` here, because the underlying
@@ -97067,10 +96031,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   // uses the simplest version of the invocation possible since, for the case of
   // setting it on the modifier manager, we don't *need* any of that info, and
   // the two previous overloads capture all invocations from a type perspective.
-  function modifier(fn) {
-    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
-      eager: true
-    };
+  function modifier(fn, options = {
+    eager: true
+  }) {
     (false && !(options !== undefined) && (0, _debug.deprecate)(`ember-modifier (for ${fn.name ?? fn} at ${new Error().stack}): creating a function-based modifier without options is deprecated and will be removed at v4.0`, options !== undefined, {
       id: 'ember-modifier.function-based-options',
       for: 'ember-modifier',
@@ -97299,8 +96262,8 @@ define("ember-resolver/features", [], function () {
     has(moduleName) {
       return moduleName in this._entries;
     }
-    get() {
-      return require(...arguments);
+    get(...args) {
+      return require(...args);
     }
   }
 
@@ -97317,19 +96280,18 @@ define("ember-resolver/features", [], function () {
    */
   _exports.ModuleRegistry = ModuleRegistry;
   class Resolver extends _object.default {
-    /**
-     A listing of functions to test for moduleName's based on the provided
-     `parsedName`. This allows easy customization of additional module based
-     lookup patterns.
-      @property moduleNameLookupPatterns
-     @returns {Ember.Array}
-     */
-
     constructor() {
       super(...arguments);
       _defineProperty(this, "moduleBasedResolver", true);
       _defineProperty(this, "_deprecatedPodModulePrefix", false);
       _defineProperty(this, "_normalizeCache", Object.create(null));
+      /**
+       A listing of functions to test for moduleName's based on the provided
+       `parsedName`. This allows easy customization of additional module based
+       lookup patterns.
+        @property moduleNameLookupPatterns
+       @returns {Ember.Array}
+       */
       _defineProperty(this, "moduleNameLookupPatterns", [this.podBasedModuleName, this.podBasedComponentsInSubdir, this.mainModuleName, this.defaultModuleName, this.nestedColocationComponentModuleName]);
       if (!this._moduleRegistry) {
         this._moduleRegistry = new ModuleRegistry();
@@ -97706,8 +96668,7 @@ define("ember-resolver/features", [], function () {
         this.recompute();
       });
     }
-    compute(_ref) {
-      let [prop] = _ref;
+    compute([prop]) {
       return (0, _object.get)(this, `media.${prop}`);
     }
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "media", [_dec], {
@@ -97845,14 +96806,6 @@ define("ember-resolver/features", [], function () {
   * @extends   Ember.Object
   */
   let MediaService = (_class = class MediaService extends _service.default.extend(_evented.default) {
-    // Ember only sets Ember.testing when tests are starting
-    // eslint-disable-next-line ember/no-ember-testing-in-module-scope
-
-    /**
-    * @property  _matches
-    * @type      Array
-    */
-
     /**
     * A set of matching matchers.
     *
@@ -97877,19 +96830,6 @@ define("ember-resolver/features", [], function () {
     */
 
     /**
-     * A hash of matchers by breakpoint name
-     */
-
-    /**
-    * The matcher to use for testing media queries.
-    *
-    * @property  matcher
-    * @type      matchMedia
-    * @default   window.matchMedia
-    * @private
-    */
-
-    /**
      * Initialize the service based on the breakpoints config
      *
      * @method init
@@ -97897,11 +96837,28 @@ define("ember-resolver/features", [], function () {
      */
     constructor() {
       super(...arguments);
+      // Ember only sets Ember.testing when tests are starting
+      // eslint-disable-next-line ember/no-ember-testing-in-module-scope
       _defineProperty(this, "_mocked", _ember.default.testing);
       _defineProperty(this, "_mockedBreakpoint", 'desktop');
+      /**
+      * @property  _matches
+      * @type      Array
+      */
       _initializerDefineProperty(this, "_matches", _descriptor, this);
       _defineProperty(this, "listeners", {});
+      /**
+       * A hash of matchers by breakpoint name
+       */
       _defineProperty(this, "matchers", {});
+      /**
+      * The matcher to use for testing media queries.
+      *
+      * @property  matcher
+      * @type      matchMedia
+      * @default   window.matchMedia
+      * @private
+      */
       _defineProperty(this, "mql", detectMatchMedia());
       const breakpoints = (0, _application.getOwner)(this).lookup('breakpoints:main');
       if (breakpoints) {
@@ -98018,12 +96975,11 @@ define("ember-resolver/features", [], function () {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let RootUrl = (_class = class RootUrl extends _helper.default {
-    constructor() {
-      super(...arguments);
+    constructor(...args) {
+      super(...args);
       _initializerDefineProperty(this, "rootUrl", _descriptor, this);
     }
-    compute(_ref) {
-      let [relativeURL] = _ref;
+    compute([relativeURL]) {
       return this.rootUrl.build(relativeURL);
     }
   }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "rootUrl", [_service.inject], {
@@ -98140,9 +97096,6 @@ define("ember-resolver/features", [], function () {
       const fastboot = (0, _application.getOwner)(this).lookup('service:fastboot');
       return fastboot ? fastboot.get('isFastBoot') : false;
     }
-
-    // ember-app-scheduler properties
-
     constructor() {
       super(...arguments);
 
@@ -98153,14 +97106,15 @@ define("ember-resolver/features", [], function () {
       _defineProperty(this, "scrollElement", 'window');
       _defineProperty(this, "isFirstLoad", true);
       _defineProperty(this, "preserveScrollPosition", false);
+      // ember-app-scheduler properties
       _defineProperty(this, "scrollWhenIdle", false);
       _defineProperty(this, "scrollWhenAfterRender", false);
       (0, _emberAppScheduler.setupRouter)(this.router);
     }
 
     // eslint-disable-next-line ember/classic-decorator-hooks
-    init() {
-      super.init(...arguments);
+    init(...args) {
+      super.init(...args);
       this._loadConfig();
       (0, _object.set)(this, 'scrollMap', {
         default: {
@@ -98711,12 +97665,10 @@ define("ember-resolver/features", [], function () {
   function formatAttrs(attrs) {
     return Object.keys(attrs).filter(attr => !accessibilityElements.includes(attr)).map(key => !(0, _utils.isNone)(attrs[key]) && `${key}="${attrs[key]}"`).filter(attr => attr).join(' ');
   }
-  function symbolUseFor(assetId) {
-    let attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  function symbolUseFor(assetId, attrs = {}) {
     return `<svg ${formatAttrs(attrs)}${createAriaLabel(attrs)}><use xlink:href="${assetId}" />${createAccessibilityElements(attrs)}</svg>`;
   }
-  function inlineSvgFor(assetId, getInlineAsset) {
-    let attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  function inlineSvgFor(assetId, getInlineAsset, attrs = {}) {
     let asset = getInlineAsset(assetId);
     if (!asset) {
       // eslint-disable-next-line no-console
@@ -98734,9 +97686,7 @@ define("ember-resolver/features", [], function () {
     }
     return `<svg ${formatAttrs(svgAttrs)}${createAriaLabel(attrs)}>${createAccessibilityElements(attrs)}${asset.content}</svg>`;
   }
-  function makeSvg(assetId) {
-    let attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    let getInlineAsset = arguments.length > 2 ? arguments[2] : undefined;
+  function makeSvg(assetId, attrs = {}, getInlineAsset) {
     if (!assetId) {
       // eslint-disable-next-line no-console
       console.warn('ember-svg-jar: asset name should not be undefined or null');
@@ -98910,8 +97860,7 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = void 0;
   _exports.gt = gt;
-  function gt(_ref, hash) {
-    let [left, right] = _ref;
+  function gt([left, right], hash) {
     if (hash.forceNumber) {
       if (typeof left !== 'number') {
         left = Number(left);
@@ -98933,8 +97882,7 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = void 0;
   _exports.gte = gte;
-  function gte(_ref, hash) {
-    let [left, right] = _ref;
+  function gte([left, right], hash) {
     if (hash.forceNumber) {
       if (typeof left !== 'number') {
         left = Number(left);
@@ -98974,8 +97922,7 @@ define("ember-resolver/features", [], function () {
     value: true
   });
   _exports.default = void 0;
-  var _default = (0, _helper.helper)(function (_ref) {
-    let [obj] = _ref;
+  var _default = (0, _helper.helper)(function ([obj]) {
     return (0, _utils.isEmpty)(obj);
   });
   _exports.default = _default;
@@ -98988,8 +97935,7 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = void 0;
   _exports.isEqual = isEqual;
-  function isEqual(_ref) {
-    let [a, b] = _ref;
+  function isEqual([a, b]) {
     return (0, _utils.isEqual)(a, b);
   }
   var _default = (0, _helper.helper)(isEqual);
@@ -99003,8 +97949,7 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = void 0;
   _exports.lt = lt;
-  function lt(_ref, hash) {
-    let [left, right] = _ref;
+  function lt([left, right], hash) {
     if (hash.forceNumber) {
       if (typeof left !== 'number') {
         left = Number(left);
@@ -99026,8 +97971,7 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = void 0;
   _exports.lte = lte;
-  function lte(_ref, hash) {
-    let [left, right] = _ref;
+  function lte([left, right], hash) {
     if (hash.forceNumber) {
       if (typeof left !== 'number') {
         left = Number(left);
