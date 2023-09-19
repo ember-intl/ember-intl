@@ -1,5 +1,5 @@
 import { get } from '@ember/object';
-import type IntlService from 'ember-intl/services/intl';
+import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
 import makeIntlHelper from './-private/make-intl-helper';
