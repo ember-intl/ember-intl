@@ -22,9 +22,9 @@ Router.map(function () {
     });
 
     this.route('guide', function () {
+      this.route('migration-5-0-to-6-1');
       this.route('addon-configs');
       this.route('asynchronously-loading-translations');
-      this.route('migration-4-0-to-5-0');
       this.route('missing-translations');
       this.route('service-api');
       this.route('testing');
@@ -49,6 +49,7 @@ Router.map(function () {
     this.route('legacy', function () {
       this.route('migration-2-0-to-3-0');
       this.route('migration-3-0-to-4-0');
+      this.route('migration-4-0-to-5-0');
       this.route('v2');
     });
   });
