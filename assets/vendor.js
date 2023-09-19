@@ -75696,7 +75696,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   };
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-class/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _tracking, _computed, _string, _computed2, _config) {
+;define("ember-cli-addon-docs/components/api/x-class/index", ["exports", "@ember/component", "@glimmer/component", "@glimmer/tracking", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _component2, _tracking, _computed, _string, _computed2, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -75704,7 +75704,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -75842,7 +75842,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XClass;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XClass);
 });
-;define("ember-cli-addon-docs/components/api/x-component/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed"], function (_exports, _component, _templateFactory, _component2, _tracking, _object, _computed, _string, _computed2) {
+;define("ember-cli-addon-docs/components/api/x-component/index", ["exports", "@ember/component", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/object/computed", "@ember/string", "ember-cli-addon-docs/utils/computed", "@ember/template-factory"], function (_exports, _component, _component2, _tracking, _object, _computed, _string, _computed2, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -75850,7 +75850,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"@ember/object/computed",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -75996,14 +75996,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XComponent);
 });
-;define("ember-cli-addon-docs/components/api/x-import-path", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/api/x-import-path", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="import-path docs-mb-6" data-test-import-path ...attributes>
@@ -76034,14 +76034,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-meta-panel/header", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/api/x-meta-panel/header", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
         <h4 class="docs-mb-2 docs-text-grey docs-font-bold docs-tracking-wide docs-uppercase docs-text-xxs" ...attributes>
@@ -76057,14 +76057,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-meta-panel/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/api/x-meta-panel/index", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
         <div class="docs-px-6 docs-pt-3 docs-mt-4 docs-border docs-border-grey-light docs-rounded docs-text-xs" ...attributes>
@@ -76082,14 +76082,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-module/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/api/x-module/index", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <Api::XSections
@@ -76112,7 +76112,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-section/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _config) {
+;define("ember-cli-addon-docs/components/api/x-section/index", ["exports", "@ember/component", "@glimmer/component", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _component2, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76120,7 +76120,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -76195,6 +76195,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/api/x-section/index.hbs",
     "isStrictMode": false
   });
+
   /**
     @class Api/XSection
     @hide
@@ -76224,14 +76225,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XSection;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XSection);
 });
-;define("ember-cli-addon-docs/components/api/x-sections", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/api/x-sections", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#each-in @sections as |sectionName items|}}
@@ -76257,14 +76258,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/api/x-toggles", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/api/x-toggles", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <ul class="docs-mb-6" ...attributes>
@@ -76295,14 +76296,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-code-highlight/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "highlight.js/lib/core", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript"], function (_exports, _component, _templateFactory, _component2, _core, _javascript, _css, _handlebars, _json, _xml, _diff, _shell, _typescript) {
+;define("ember-cli-addon-docs/components/docs-code-highlight/index", ["exports", "@ember/component", "@glimmer/component", "highlight.js/lib/core", "highlight.js/lib/languages/javascript", "highlight.js/lib/languages/css", "highlight.js/lib/languages/handlebars", "highlight.js/lib/languages/json", "highlight.js/lib/languages/xml", "highlight.js/lib/languages/diff", "highlight.js/lib/languages/shell", "highlight.js/lib/languages/typescript", "@ember/template-factory"], function (_exports, _component, _component2, _core, _javascript, _css, _handlebars, _json, _xml, _diff, _shell, _typescript, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"highlight.js/lib/core",0,"highlight.js/lib/languages/javascript",0,"highlight.js/lib/languages/css",0,"highlight.js/lib/languages/handlebars",0,"highlight.js/lib/languages/json",0,"highlight.js/lib/languages/xml",0,"highlight.js/lib/languages/diff",0,"highlight.js/lib/languages/shell",0,"highlight.js/lib/languages/typescript"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"highlight.js/lib/core",0,"highlight.js/lib/languages/javascript",0,"highlight.js/lib/languages/css",0,"highlight.js/lib/languages/handlebars",0,"highlight.js/lib/languages/json",0,"highlight.js/lib/languages/xml",0,"highlight.js/lib/languages/diff",0,"highlight.js/lib/languages/shell",0,"highlight.js/lib/languages/typescript",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <pre
@@ -76341,7 +76342,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsCodeHighlight;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsCodeHighlight);
 });
-;define("ember-cli-addon-docs/components/docs-demo/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/array", "@glimmer/component", "@glimmer/tracking"], function (_exports, _component, _templateFactory, _object, _array, _component2, _tracking) {
+;define("ember-cli-addon-docs/components/docs-demo/index", ["exports", "@ember/component", "@ember/object", "@ember/array", "@glimmer/component", "@glimmer/tracking", "@ember/template-factory"], function (_exports, _component, _object, _array, _component2, _tracking, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76349,7 +76350,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/array",0,"@glimmer/component",0,"@glimmer/tracking"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/array",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -76409,6 +76410,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-demo/index.hbs",
     "isStrictMode": false
   });
+
   /**
     A demo component that can be used to demonstrate code samples. Comes
     with built in snippet handling, so you don't have to write code twice!
@@ -76535,14 +76537,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsDemo;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsDemo);
 });
-;define("ember-cli-addon-docs/components/docs-demo/x-example/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/docs-demo/x-example/index", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <div id="example-{{@name}}" class="docs-p-4" ...attributes>
@@ -76580,7 +76582,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   _exports.default = XSnippet;
 });
-;define("ember-cli-addon-docs/components/docs-header/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/string", "ember-cli-addon-docs/utils/computed", "@ember/service", "@ember/object/computed", "@ember/object", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _tracking, _string, _computed, _service, _computed2, _object, _config) {
+;define("ember-cli-addon-docs/components/docs-header/index", ["exports", "@ember/component", "@glimmer/component", "@glimmer/tracking", "@ember/string", "ember-cli-addon-docs/utils/computed", "@ember/service", "@ember/object/computed", "@ember/object", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _component2, _tracking, _string, _computed, _service, _computed2, _object, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76588,7 +76590,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -76668,6 +76670,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-header/index.hbs",
     "isStrictMode": false
   });
+
   /**
     Render a header showing a link to your documentation, your project logo, a
     search bar, and a link to your repo on GitHub.
@@ -76760,7 +76763,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeader;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeader);
 });
-;define("ember-cli-addon-docs/components/docs-header/link/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@ember/service"], function (_exports, _component, _templateFactory, _component2, _service) {
+;define("ember-cli-addon-docs/components/docs-header/link/index", ["exports", "@ember/component", "@glimmer/component", "@ember/service", "@ember/template-factory"], function (_exports, _component, _component2, _service, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76768,7 +76771,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/service"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/service",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -76848,7 +76851,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeaderLink;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderLink);
 });
-;define("ember-cli-addon-docs/components/docs-header/search-box/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "ember-concurrency", "@ember/object", "@ember/service", "ember-cli-addon-docs/keyboard-config", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _emberConcurrency, _object, _service, _keyboardConfig, _config) {
+;define("ember-cli-addon-docs/components/docs-header/search-box/index", ["exports", "@ember/component", "@glimmer/component", "ember-concurrency", "@ember/object", "@ember/service", "ember-cli-addon-docs/keyboard-config", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _component2, _emberConcurrency, _object, _service, _keyboardConfig, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76856,7 +76859,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor, _descriptor2;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-concurrency",0,"@ember/object",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-concurrency",0,"@ember/object",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -76943,7 +76946,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeaderSearchBox;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchBox);
 });
-;define("ember-cli-addon-docs/components/docs-header/search-result/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "tracked-toolbox", "@ember/object/computed"], function (_exports, _component, _templateFactory, _component2, _trackedToolbox, _computed) {
+;define("ember-cli-addon-docs/components/docs-header/search-result/index", ["exports", "@ember/component", "@glimmer/component", "tracked-toolbox", "@ember/object/computed", "@ember/template-factory"], function (_exports, _component, _component2, _trackedToolbox, _computed, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76951,7 +76954,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox",0,"@ember/object/computed"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox",0,"@ember/object/computed",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -77088,7 +77091,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeaderSearchResult;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchResult);
 });
-;define("ember-cli-addon-docs/components/docs-header/search-results/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@glimmer/tracking", "@ember/object", "ember-keyboard", "ember-concurrency", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _service, _component2, _tracking, _object, _emberKeyboard, _emberConcurrency, _config) {
+;define("ember-cli-addon-docs/components/docs-header/search-results/index", ["exports", "@ember/component", "@ember/service", "@glimmer/component", "@glimmer/tracking", "@ember/object", "ember-keyboard", "ember-concurrency", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _service, _component2, _tracking, _object, _emberKeyboard, _emberConcurrency, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -77096,7 +77099,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"ember-keyboard",0,"ember-concurrency",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"ember-keyboard",0,"ember-concurrency",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -77295,7 +77298,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeaderSearchResults;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeaderSearchResults);
 });
-;define("ember-cli-addon-docs/components/docs-header/version-selector/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@ember/service", "@ember/object/computed", "@ember/object", "@ember/array", "tracked-toolbox", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _service, _computed, _object, _array, _trackedToolbox, _config) {
+;define("ember-cli-addon-docs/components/docs-header/version-selector/index", ["exports", "@ember/component", "@glimmer/component", "@ember/service", "@ember/object/computed", "@ember/object", "@ember/array", "tracked-toolbox", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _component2, _service, _computed, _object, _array, _trackedToolbox, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -77303,7 +77306,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _class, _descriptor, _descriptor2, _descriptor3;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"@ember/array",0,"tracked-toolbox",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/service",0,"@ember/object/computed",0,"@ember/object",0,"@ember/array",0,"tracked-toolbox",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -77442,7 +77445,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = VersionSelector;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, VersionSelector);
 });
-;define("ember-cli-addon-docs/components/docs-hero/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "ember-cli-addon-docs/utils/computed", "@ember/string", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _component2, _computed, _string, _config) {
+;define("ember-cli-addon-docs/components/docs-hero/index", ["exports", "@ember/component", "@glimmer/component", "ember-cli-addon-docs/utils/computed", "@ember/string", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _component2, _computed, _string, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -77450,7 +77453,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-cli-addon-docs/utils/computed",0,"@ember/string",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"ember-cli-addon-docs/utils/computed",0,"@ember/string",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -77505,6 +77508,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-hero/index.hbs",
     "isStrictMode": false
   });
+
   /**
     A component that renders a hero banner. Useful for your docs site's homepage.
   
@@ -77559,7 +77563,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsHeroComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsHeroComponent);
 });
-;define("ember-cli-addon-docs/components/docs-keyboard-shortcuts/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/runloop", "ember-keyboard", "@ember/service", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _component2, _tracking, _object, _runloop, _emberKeyboard, _service, _keyboardConfig) {
+;define("ember-cli-addon-docs/components/docs-keyboard-shortcuts/index", ["exports", "@ember/component", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/runloop", "ember-keyboard", "@ember/service", "ember-cli-addon-docs/keyboard-config", "@ember/template-factory"], function (_exports, _component, _component2, _tracking, _object, _runloop, _emberKeyboard, _service, _keyboardConfig, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -77567,7 +77571,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"@ember/runloop",0,"ember-keyboard",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@glimmer/tracking",0,"@ember/object",0,"@ember/runloop",0,"ember-keyboard",0,"@ember/service",0,"ember-cli-addon-docs/keyboard-config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -77771,6 +77775,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-keyboard-shortcuts/index.hbs",
     "isStrictMode": false
   });
+
   /**
     A component that enables keyboard shortcuts. Press '?' to toggle the keyboard shortcuts dialog.
   
@@ -77844,14 +77849,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsKeyboardShortcutsComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsKeyboardShortcutsComponent);
 });
-;define("ember-cli-addon-docs/components/docs-link/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component"], function (_exports, _component, _templateFactory, _component2) {
+;define("ember-cli-addon-docs/components/docs-link/index", ["exports", "@ember/component", "@glimmer/component", "@ember/template-factory"], function (_exports, _component, _component2, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#let
@@ -77888,6 +77893,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-link/index.hbs",
     "isStrictMode": false
   });
+
   /**
     A `<LinkTo>` styled alternative. See [ember docs](https://api.emberjs.com/ember/release/classes/Ember.Templates.components/methods/input?anchor=LinkTo) on how to use it.
   
@@ -77915,7 +77921,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsLink;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsLink);
 });
-;define("ember-cli-addon-docs/components/docs-logo/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object/computed", "@ember/debug", "@glimmer/component", "tracked-toolbox"], function (_exports, _component, _templateFactory, _computed, _debug, _component2, _trackedToolbox) {
+;define("ember-cli-addon-docs/components/docs-logo/index", ["exports", "@ember/component", "@ember/object/computed", "@ember/debug", "@glimmer/component", "tracked-toolbox", "@ember/template-factory"], function (_exports, _component, _computed, _debug, _component2, _trackedToolbox, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -77923,7 +77929,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object/computed",0,"@ember/debug",0,"@glimmer/component",0,"tracked-toolbox"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object/computed",0,"@ember/debug",0,"@glimmer/component",0,"tracked-toolbox",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -77941,6 +77947,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-logo/index.hbs",
     "isStrictMode": false
   });
+
   /**
     A simple component to render an Ember, Ember CLI or Ember Data logo.
   
@@ -77992,7 +77999,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsLogo;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsLogo);
 });
-;define("ember-cli-addon-docs/components/docs-snippet/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "tracked-toolbox"], function (_exports, _component, _templateFactory, _component2, _trackedToolbox) {
+;define("ember-cli-addon-docs/components/docs-snippet/index", ["exports", "@ember/component", "@glimmer/component", "tracked-toolbox", "@ember/template-factory"], function (_exports, _component, _component2, _trackedToolbox, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78000,7 +78007,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _class, _descriptor, _descriptor2;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -78053,6 +78060,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-snippet/index.hbs",
     "isStrictMode": false
   });
+
   /**
     A snippet component for demonstrating some code
   
@@ -78110,7 +78118,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsSnippet;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsSnippet);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@glimmer/tracking", "ember-keyboard", "ember-cli-addon-docs/keyboard-config"], function (_exports, _component, _templateFactory, _service, _component2, _tracking, _emberKeyboard, _keyboardConfig) {
+;define("ember-cli-addon-docs/components/docs-viewer/index", ["exports", "@ember/component", "@ember/service", "@glimmer/component", "@glimmer/tracking", "ember-keyboard", "ember-cli-addon-docs/keyboard-config", "@ember/template-factory"], function (_exports, _component, _service, _component2, _tracking, _emberKeyboard, _keyboardConfig, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78118,7 +78126,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"ember-keyboard",0,"ember-cli-addon-docs/keyboard-config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"ember-keyboard",0,"ember-cli-addon-docs/keyboard-config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -78146,6 +78154,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/index.hbs",
     "isStrictMode": false
   });
+
   /**
     The main docs viewer component for EmberCLI AddonDocs. This component must be placed
   
@@ -78226,7 +78235,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = DocsViewerComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, DocsViewerComponent);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@ember/object/computed", "@glimmer/component", "lodash"], function (_exports, _component, _templateFactory, _service, _computed, _component2, _lodash) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/index", ["exports", "@ember/component", "@ember/service", "@ember/object/computed", "@glimmer/component", "lodash", "@ember/template-factory"], function (_exports, _component, _service, _computed, _component2, _lodash, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78234,7 +78243,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _class, _descriptor, _descriptor2;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@ember/object/computed",0,"@glimmer/component",0,"lodash"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@ember/object/computed",0,"@glimmer/component",0,"lodash",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -78375,14 +78384,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XAutogeneratedApiDocs;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XAutogeneratedApiDocs);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-autogenerated-api-docs/module-nav/index", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <DocsViewer::XNavList @class="docs-ml-4" ...attributes as |subnav|>
@@ -78415,14 +78424,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-current-page-index/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-current-page-index/index", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <nav class="AddonDocs-DocsViewer-CurrentPageIndex docs-hidden xl:docs-block docs-flex-no-shrink docs-mr-auto" data-test-current-page-index ...attributes>
@@ -78466,7 +78475,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-main/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/object", "@ember/service", "@glimmer/component", "@ember/runloop", "ember-cli-addon-docs/app-files", "ember-cli-addon-docs/addon-files", "@ember/application", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _object, _service, _component2, _runloop, _appFiles, _addonFiles, _application, _config) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-main/index", ["exports", "@ember/component", "@ember/object", "@ember/service", "@glimmer/component", "@ember/runloop", "ember-cli-addon-docs/app-files", "ember-cli-addon-docs/addon-files", "@ember/application", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _object, _service, _component2, _runloop, _appFiles, _addonFiles, _application, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78474,7 +78483,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor, _descriptor2, _descriptor3;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/service",0,"@glimmer/component",0,"@ember/runloop",0,"ember-cli-addon-docs/app-files",0,"ember-cli-addon-docs/addon-files",0,"@ember/application",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/object",0,"@ember/service",0,"@glimmer/component",0,"@ember/runloop",0,"ember-cli-addon-docs/app-files",0,"ember-cli-addon-docs/addon-files",0,"@ember/application",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -78662,7 +78671,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XMain;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XMain);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-nav-item/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@ember/runloop"], function (_exports, _component, _templateFactory, _service, _component2, _runloop) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav-item/index", ["exports", "@ember/component", "@ember/service", "@glimmer/component", "@ember/runloop", "@ember/template-factory"], function (_exports, _component, _service, _component2, _runloop, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78670,7 +78679,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@ember/runloop"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@ember/runloop",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -78723,14 +78732,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XNavItem;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XNavItem);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-nav-list/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/component/template-only"], function (_exports, _component, _templateFactory, _templateOnly) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav-list/index", ["exports", "@ember/component", "@ember/component/template-only", "@ember/template-factory"], function (_exports, _component, _templateOnly, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
     <ul class={{@class}} ...attributes>
@@ -78746,7 +78755,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
   _exports.default = _default;
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-nav/index", ["exports", "@ember/component", "@ember/template-factory", "@ember/service", "@glimmer/component", "@glimmer/tracking", "tracked-toolbox", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/-private/config"], function (_exports, _component, _templateFactory, _service, _component2, _tracking, _trackedToolbox, _string, _computed, _config) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-nav/index", ["exports", "@ember/component", "@ember/service", "@glimmer/component", "@glimmer/tracking", "tracked-toolbox", "@ember/string", "ember-cli-addon-docs/utils/computed", "ember-cli-addon-docs/-private/config", "@ember/template-factory"], function (_exports, _component, _service, _component2, _tracking, _trackedToolbox, _string, _computed, _config, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78754,7 +78763,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"tracked-toolbox",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-cli-addon-docs/-private/config"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/service",0,"@glimmer/component",0,"@glimmer/tracking",0,"tracked-toolbox",0,"@ember/string",0,"ember-cli-addon-docs/utils/computed",0,"ember-cli-addon-docs/-private/config",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -78873,7 +78882,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.default = XNav;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, XNav);
 });
-;define("ember-cli-addon-docs/components/docs-viewer/x-section/index", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "tracked-toolbox"], function (_exports, _component, _templateFactory, _component2, _trackedToolbox) {
+;define("ember-cli-addon-docs/components/docs-viewer/x-section/index", ["exports", "@ember/component", "@glimmer/component", "tracked-toolbox", "@ember/template-factory"], function (_exports, _component, _component2, _trackedToolbox, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -78881,7 +78890,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"tracked-toolbox",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -81269,7 +81278,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return name.replace(/ember-(cli-|data-)?/, '');
   }
 });
-;define("ember-cli-clipboard/components/copy-button", ["exports", "@ember/component", "@ember/template-factory", "@glimmer/component", "@ember/object/internals", "ember-arg-types", "prop-types"], function (_exports, _component, _templateFactory, _component2, _internals, _emberArgTypes, _propTypes) {
+;define("ember-cli-clipboard/components/copy-button", ["exports", "@ember/component", "@glimmer/component", "@ember/object/internals", "ember-arg-types", "prop-types", "@ember/template-factory"], function (_exports, _component, _component2, _internals, _emberArgTypes, _propTypes, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -81277,7 +81286,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/object/internals",0,"ember-arg-types",0,"prop-types"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@glimmer/component",0,"@ember/object/internals",0,"ember-arg-types",0,"prop-types",0,"@ember/component"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -81400,9 +81409,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-modifier",0,"clipboard",0,"@ember/utils",0,"@ember/string",0,"@ember/object/internals"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-modifier",0,"clipboard",0,"@ember/utils",0,"@ember/string",0,"@ember/object/internals",0,"@embroider/macros"eaimeta@70e063a35619d71f
   const CLIPBOARD_EVENTS = ['success', 'error'];
-  var _default = (0, _emberModifier.modifier)(function clipboard(element, params, hash) {
+  function clipboard(element, params, hash) {
     const {
       action = 'copy',
       container,
@@ -81439,7 +81448,14 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     });
     return () => clipboard.destroy();
-  });
+  }
+  let clipboardModifier;
+  {
+    clipboardModifier = (0, _emberModifier.modifier)(clipboard, {
+      eager: false
+    });
+  }
+  var _default = clipboardModifier;
   _exports.default = _default;
 });
 ;define("ember-cli-string-helpers/-private/create-string-helper", ["exports", "@ember/template"], function (_exports, _template) {
@@ -90812,23 +90828,11 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   var _dec, _dec2, _class;
-  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   let InPlaceDialog = (_dec = (0, _component.tagName)(''), _dec2 = (0, _component.layout)(_inPlaceDialog.default), _dec(_class = _dec2(_class = class InPlaceDialog extends _component2.default {
-    constructor(...args) {
-      super(...args);
-      _defineProperty(this, "containerClass", null);
-    }
-    // passed in
-
-    init() {
-      super.init(...arguments);
-      this.containerClassNames = ['ember-modal-dialog', 'ember-modal-dialog-in-place', 'emd-in-place']; // set this in a subclass definition
-    }
-
     get containerClassNamesString() {
-      return this.containerClassNames?.join && this.containerClassNames?.join(' ') || this.containerClassNames || '';
+      const addonClassNamesString = ['ember-modal-dialog', 'ember-modal-dialog-in-place', 'emd-in-place'].join(' ');
+      const containerClassNamesString = this.containerClassNames?.join && this.containerClassNames?.join(' ') || this.containerClassNames || '';
+      return `${addonClassNamesString} ${containerClassNamesString}`;
     }
   }) || _class) || _class);
   _exports.default = InPlaceDialog;
@@ -91304,46 +91308,60 @@ lunr.QueryParser.parseBoost = function (parser) {
   /*
     <EmberWormhole @to={{this.destinationElementId}}>
     {{#if this.isOverlaySibling}}
-      <div class="{{this.wrapperClassNamesString}} {{this.wrapperClass}}">
+      <div class='{{this.wrapperClassNamesString}} {{this.wrapperClass}}'>
         {{#if this.hasOverlay}}
           <div
             class={{this.overlayClassNamesString}}
             onclick={{action this.onClickOverlay}}
-            tabindex="-1"
+            tabindex='-1'
             data-emd-overlay
           >
           </div>
         {{/if}}
-        <EmberModalDialogPositionedContainer @class={{this.containerClassNamesString}} @targetAttachment={{this.targetAttachment}} @target={{this.legacyTarget}}>
+        <EmberModalDialogPositionedContainer
+          @class={{this.containerClassNamesString}}
+          @targetAttachment={{this.targetAttachment}}
+          @target={{this.legacyTarget}}
+          ...attributes
+        >
           {{yield}}
         </EmberModalDialogPositionedContainer>
       </div>
     {{else}}
-      <div class="{{this.wrapperClassNamesString}} {{this.wrapperClass}}">
+      <div class='{{this.wrapperClassNamesString}} {{this.wrapperClass}}'>
         {{#if this.hasOverlay}}
           <div
             class={{this.overlayClassNamesString}}
             onclick={{action (ignore-children this.onClickOverlay)}}
-            tabindex="-1"
+            tabindex='-1'
             data-emd-overlay
           >
-            <EmberModalDialogPositionedContainer @class={{this.containerClassNamesString}} @targetAttachment={{this.targetAttachment}} @target={{this.legacyTarget}}>
+            <EmberModalDialogPositionedContainer
+              @class={{this.containerClassNamesString}}
+              @targetAttachment={{this.targetAttachment}}
+              @target={{this.legacyTarget}}
+              ...attributes
+            >
               {{yield}}
             </EmberModalDialogPositionedContainer>
           </div>
         {{else}}
-          <EmberModalDialogPositionedContainer @class={{this.containerClassNamesString}} @targetAttachment={{this.targetAttachment}} @target={{this.legacyTarget}}>
+          <EmberModalDialogPositionedContainer
+            @class={{this.containerClassNamesString}}
+            @targetAttachment={{this.targetAttachment}}
+            @target={{this.legacyTarget}}
+            ...attributes
+          >
             {{yield}}
           </EmberModalDialogPositionedContainer>
         {{/if}}
       </div>
     {{/if}}
   </EmberWormhole>
-  
   */
   {
-    "id": "wT0PngaM",
-    "block": "[[[8,[39,0],null,[[\"@to\"],[[30,0,[\"destinationElementId\"]]]],[[\"default\"],[[[[1,\"\\n\"],[41,[30,0,[\"isOverlaySibling\"]],[[[1,\"    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"      \"],[8,[39,3],null,[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n        \"],[18,1,null],[1,\"\\n      \"]],[]]]]],[1,\"\\n    \"],[13],[1,\"\\n\"]],[]],[[[1,\"    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[28,[37,5],[[30,0,[\"onClickOverlay\"]]],null]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n          \"],[8,[39,3],null,[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n            \"],[18,1,null],[1,\"\\n          \"]],[]]]]],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],[[[1,\"        \"],[8,[39,3],null,[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[18,1,null],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]]],[1,\"    \"],[13],[1,\"\\n\"]],[]]]],[]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"ember-wormhole\",\"if\",\"action\",\"ember-modal-dialog-positioned-container\",\"yield\",\"ignore-children\"]]",
+    "id": "kahkmEdW",
+    "block": "[[[8,[39,0],null,[[\"@to\"],[[30,0,[\"destinationElementId\"]]]],[[\"default\"],[[[[1,\"\\n\"],[41,[30,0,[\"isOverlaySibling\"]],[[[1,\"    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"      \"],[8,[39,3],[[17,1]],[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n        \"],[18,2,null],[1,\"\\n      \"]],[]]]]],[1,\"\\n    \"],[13],[1,\"\\n\"]],[]],[[[1,\"    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[28,[37,5],[[30,0,[\"onClickOverlay\"]]],null]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n          \"],[8,[39,3],[[17,1]],[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n            \"],[18,2,null],[1,\"\\n          \"]],[]]]]],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],[[[1,\"        \"],[8,[39,3],[[17,1]],[[\"@class\",\"@targetAttachment\",\"@target\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"legacyTarget\"]]]],[[\"default\"],[[[[1,\"\\n          \"],[18,2,null],[1,\"\\n        \"]],[]]]]],[1,\"\\n\"]],[]]],[1,\"    \"],[13],[1,\"\\n\"]],[]]]],[]]]]]],[\"&attrs\",\"&default\"],false,[\"ember-wormhole\",\"if\",\"action\",\"ember-modal-dialog-positioned-container\",\"yield\",\"ignore-children\"]]",
     "moduleName": "ember-modal-dialog/templates/components/basic-dialog.hbs",
     "isStrictMode": false
   });
@@ -91359,15 +91377,21 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div
-    class={{concat this.containerClassNamesString " " this.attachmentClass " " this.containerClass}}
+    class={{concat
+      this.containerClassNamesString
+      ' '
+      this.attachmentClass
+      ' '
+      this.containerClass
+    }}
+    ...attributes
   >
     {{yield}}
   </div>
-  
   */
   {
-    "id": "xn5jMzm3",
-    "block": "[[[10,0],[15,0,[28,[37,0],[[30,0,[\"containerClassNamesString\"]],\" \",[30,0,[\"attachmentClass\"]],\" \",[30,0,[\"containerClass\"]]],null]],[12],[1,\"\\n  \"],[18,1,null],[1,\"\\n\"],[13],[1,\"\\n\"]],[\"&default\"],false,[\"concat\",\"yield\"]]",
+    "id": "is2Nl/Fz",
+    "block": "[[[11,0],[16,0,[28,[37,0],[[30,0,[\"containerClassNamesString\"]],\" \",[30,0,[\"attachmentClass\"]],\" \",[30,0,[\"containerClass\"]]],null]],[17,1],[12],[1,\"\\n  \"],[18,2,null],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"concat\",\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/in-place-dialog.hbs",
     "isStrictMode": false
   });
@@ -91383,47 +91407,64 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#if this.isOverlaySibling}}
-    <LiquidWormhole @stack={{this.stack}} @value={{this.value}} @class={{concat "liquid-dialog-container " this.wrapperClassNamesString " " this.wrapperClass}}>
-      <div class="{{this.wrapperClassNamesString}} {{this.wrapperClass}}">
+    <LiquidWormhole
+      @stack={{this.stack}}
+      @value={{this.value}}
+      @class={{concat
+        'liquid-dialog-container '
+        this.wrapperClassNamesString
+        ' '
+        this.wrapperClass
+      }}
+    >
+      <div class='{{this.wrapperClassNamesString}} {{this.wrapperClass}}'>
         {{#if this.hasOverlay}}
           <div
             class={{this.overlayClassNamesString}}
             onclick={{action this.onClickOverlay}}
-            tabindex="-1"
+            tabindex='-1'
             data-emd-overlay
           >
           </div>
         {{/if}}
-        <div class={{this.containerClassNamesString}}>
+        <div class={{this.containerClassNamesString}} ...attributes>
           {{yield}}
         </div>
       </div>
     </LiquidWormhole>
   {{else}}
-    <LiquidWormhole @stack={{this.stack}} @value={{this.value}} @class={{concat "liquid-dialog-container " this.wrapperClassNamesString " " this.wrapperClass}}>
+    <LiquidWormhole
+      @stack={{this.stack}}
+      @value={{this.value}}
+      @class={{concat
+        'liquid-dialog-container '
+        this.wrapperClassNamesString
+        ' '
+        this.wrapperClass
+      }}
+    >
       {{#if this.hasOverlay}}
         <div
           class={{this.overlayClassNamesString}}
           onclick={{action (ignore-children this.onClickOverlay)}}
-          tabindex="-1"
+          tabindex='-1'
           data-emd-overlay
         >
-          <div class={{this.containerClassNamesString}}>
+          <div class={{this.containerClassNamesString}} ...attributes>
             {{yield}}
           </div>
         </div>
       {{else}}
-        <div class={{this.containerClassNamesString}}>
+        <div class={{this.containerClassNamesString}} ...attributes>
           {{yield}}
         </div>
       {{/if}}
     </LiquidWormhole>
   {{/if}}
-  
   */
   {
-    "id": "pAAOfYTY",
-    "block": "[[[41,[30,0,[\"isOverlaySibling\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@value\",\"@class\"],[[30,0,[\"stack\"]],[30,0,[\"value\"]],[28,[37,2],[\"liquid-dialog-container \",[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]],null]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,3],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"      \"],[10,0],[15,0,[30,0,[\"containerClassNamesString\"]]],[12],[1,\"\\n        \"],[18,1,null],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@value\",\"@class\"],[[30,0,[\"stack\"]],[30,0,[\"value\"]],[28,[37,2],[\"liquid-dialog-container \",[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]],null]]],[[\"default\"],[[[[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"      \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,3],[[30,0],[28,[37,5],[[30,0,[\"onClickOverlay\"]]],null]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[10,0],[15,0,[30,0,[\"containerClassNamesString\"]]],[12],[1,\"\\n          \"],[18,1,null],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],[[[1,\"      \"],[10,0],[15,0,[30,0,[\"containerClassNamesString\"]]],[12],[1,\"\\n        \"],[18,1,null],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]],[1,\"  \"]],[]]]]],[1,\"\\n\"]],[]]]],[\"&default\"],false,[\"if\",\"liquid-wormhole\",\"concat\",\"action\",\"yield\",\"ignore-children\"]]",
+    "id": "Tay1Dr4p",
+    "block": "[[[41,[30,0,[\"isOverlaySibling\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@value\",\"@class\"],[[30,0,[\"stack\"]],[30,0,[\"value\"]],[28,[37,2],[\"liquid-dialog-container \",[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]],null]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[29,[[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]]]],[12],[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"        \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,3],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[1,\"      \"],[11,0],[16,0,[30,0,[\"containerClassNamesString\"]]],[17,1],[12],[1,\"\\n        \"],[18,2,null],[1,\"\\n      \"],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@value\",\"@class\"],[[30,0,[\"stack\"]],[30,0,[\"value\"]],[28,[37,2],[\"liquid-dialog-container \",[30,0,[\"wrapperClassNamesString\"]],\" \",[30,0,[\"wrapperClass\"]]],null]]],[[\"default\"],[[[[1,\"\\n\"],[41,[30,0,[\"hasOverlay\"]],[[[1,\"      \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,3],[[30,0],[28,[37,5],[[30,0,[\"onClickOverlay\"]]],null]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n        \"],[11,0],[16,0,[30,0,[\"containerClassNamesString\"]]],[17,1],[12],[1,\"\\n          \"],[18,2,null],[1,\"\\n        \"],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],[[[1,\"      \"],[11,0],[16,0,[30,0,[\"containerClassNamesString\"]]],[17,1],[12],[1,\"\\n        \"],[18,2,null],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]]],[1,\"  \"]],[]]]]],[1,\"\\n\"]],[]]]],[\"&attrs\",\"&default\"],false,[\"if\",\"liquid-wormhole\",\"concat\",\"action\",\"yield\",\"ignore-children\"]]",
     "moduleName": "ember-modal-dialog/templates/components/liquid-dialog.hbs",
     "isStrictMode": false
   });
@@ -91439,24 +91480,36 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#if this.hasOverlay}}
-    <LiquidWormhole @stack="modal-overlay" @class="liquid-dialog-container">
+    <LiquidWormhole @stack='modal-overlay' @class='liquid-dialog-container'>
       <div
         class={{this.overlayClassNamesString}}
         onclick={{action this.onClickOverlay}}
-        tabindex="-1"
+        tabindex='-1'
         data-emd-overlay
       >
       </div>
     </LiquidWormhole>
   {{/if}}
-  <LiquidTether @class={{this.containerClassNamesString}} @target={{this.tetherTarget}} @attachment={{this.attachment}} @targetAttachment={{this.targetAttachment}} @targetModifier={{this.targetModifier}} @classPrefix={{this.tetherClassPrefix}} @offset={{this.offset}} @targetOffset={{this.targetOffset}} @constraints={{this.constraints}} @stack={{this.stack}} @value={{this.value}}>
+  <LiquidTether
+    @class={{this.containerClassNamesString}}
+    @target={{this.tetherTarget}}
+    @attachment={{this.attachment}}
+    @targetAttachment={{this.targetAttachment}}
+    @targetModifier={{this.targetModifier}}
+    @classPrefix={{this.tetherClassPrefix}}
+    @offset={{this.offset}}
+    @targetOffset={{this.targetOffset}}
+    @constraints={{this.constraints}}
+    @stack={{this.stack}}
+    @value={{this.value}}
+    ...attributes
+  >
     {{yield}}
   </LiquidTether>
-  
   */
   {
-    "id": "/vfQ+7Qb",
-    "block": "[[[41,[30,0,[\"hasOverlay\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@class\"],[\"modal-overlay\",\"liquid-dialog-container\"]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null],[8,[39,3],null,[[\"@class\",\"@target\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@classPrefix\",\"@offset\",\"@targetOffset\",\"@constraints\",\"@stack\",\"@value\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"offset\"]],[30,0,[\"targetOffset\"]],[30,0,[\"constraints\"]],[30,0,[\"stack\"]],[30,0,[\"value\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,1,null],[1,\"\\n\"]],[]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"if\",\"liquid-wormhole\",\"action\",\"liquid-tether\",\"yield\"]]",
+    "id": "iywV5xgq",
+    "block": "[[[41,[30,0,[\"hasOverlay\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@stack\",\"@class\"],[\"modal-overlay\",\"liquid-dialog-container\"]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null],[8,[39,3],[[17,1]],[[\"@class\",\"@target\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@classPrefix\",\"@offset\",\"@targetOffset\",\"@constraints\",\"@stack\",\"@value\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"offset\"]],[30,0,[\"targetOffset\"]],[30,0,[\"constraints\"]],[30,0,[\"stack\"]],[30,0,[\"value\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,2,null],[1,\"\\n\"]],[]]]]]],[\"&attrs\",\"&default\"],false,[\"if\",\"liquid-wormhole\",\"action\",\"liquid-tether\",\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/liquid-tether-dialog.hbs",
     "isStrictMode": false
   });
@@ -91497,13 +91550,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     @value={{this.value}}
     @onClickOverlay={{this.onClickOverlayAction}}
     @onClose={{this.onCloseAction}}
+    ...attributes
   >
     {{yield}}
   </this.whichModalDialogComponent>
   */
   {
-    "id": "qUWCsT/n",
-    "block": "[[[8,[30,0,[\"whichModalDialogComponent\"]],null,[[\"@wrapperClass\",\"@wrapperClassNames\",\"@overlayClass\",\"@overlayClassNames\",\"@containerClass\",\"@containerClassNames\",\"@hasOverlay\",\"@translucentOverlay\",\"@clickOutsideToClose\",\"@destinationElementId\",\"@overlayPosition\",\"@tetherTarget\",\"@legacyTarget\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@targetOffset\",\"@offset\",\"@tetherClassPrefix\",\"@constraints\",\"@attachmentClass\",\"@stack\",\"@value\",\"@onClickOverlay\",\"@onClose\"],[[30,0,[\"wrapperClass\"]],[30,0,[\"wrapperClassNames\"]],[30,0,[\"overlayClass\"]],[30,0,[\"overlayClassNames\"]],[30,0,[\"containerClass\"]],[30,0,[\"containerClassNames\"]],[30,0,[\"hasOverlay\"]],[30,0,[\"translucentOverlay\"]],[30,0,[\"clickOutsideToClose\"]],[30,0,[\"destinationElementId\"]],[30,0,[\"overlayPosition\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"target\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"targetOffset\"]],[30,0,[\"offset\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"constraints\"]],[30,0,[\"attachmentClass\"]],[30,0,[\"stack\"]],[30,0,[\"value\"]],[30,0,[\"onClickOverlayAction\"]],[30,0,[\"onCloseAction\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,1,null],[1,\"\\n\"]],[]]]]]],[\"&default\"],false,[\"yield\"]]",
+    "id": "XWaFT4YJ",
+    "block": "[[[8,[30,0,[\"whichModalDialogComponent\"]],[[17,1]],[[\"@wrapperClass\",\"@wrapperClassNames\",\"@overlayClass\",\"@overlayClassNames\",\"@containerClass\",\"@containerClassNames\",\"@hasOverlay\",\"@translucentOverlay\",\"@clickOutsideToClose\",\"@destinationElementId\",\"@overlayPosition\",\"@tetherTarget\",\"@legacyTarget\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@targetOffset\",\"@offset\",\"@tetherClassPrefix\",\"@constraints\",\"@attachmentClass\",\"@stack\",\"@value\",\"@onClickOverlay\",\"@onClose\"],[[30,0,[\"wrapperClass\"]],[30,0,[\"wrapperClassNames\"]],[30,0,[\"overlayClass\"]],[30,0,[\"overlayClassNames\"]],[30,0,[\"containerClass\"]],[30,0,[\"containerClassNames\"]],[30,0,[\"hasOverlay\"]],[30,0,[\"translucentOverlay\"]],[30,0,[\"clickOutsideToClose\"]],[30,0,[\"destinationElementId\"]],[30,0,[\"overlayPosition\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"target\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"targetOffset\"]],[30,0,[\"offset\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"constraints\"]],[30,0,[\"attachmentClass\"]],[30,0,[\"stack\"]],[30,0,[\"value\"]],[30,0,[\"onClickOverlayAction\"]],[30,0,[\"onCloseAction\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,2,null],[1,\"\\n\"]],[]]]]]],[\"&attrs\",\"&default\"],false,[\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/modal-dialog.hbs",
     "isStrictMode": false
   });
@@ -91523,20 +91577,30 @@ lunr.QueryParser.parseBoost = function (parser) {
       <div
         class={{this.overlayClassNamesString}}
         onclick={{action this.onClickOverlay}}
-        tabindex="-1"
+        tabindex='-1'
         data-emd-overlay
       >
       </div>
     </EmberWormhole>
   {{/if}}
-  <EmberTether @class={{this.containerClassNamesString}} @target={{this.tetherTarget}} @attachment={{this.attachment}} @targetAttachment={{this.targetAttachment}} @targetModifier={{this.targetModifier}} @classPrefix={{this.tetherClassPrefix}} @offset={{this.offset}} @targetOffset={{this.targetOffset}} @constraints={{this.constraints}}>
+  <EmberTether
+    class={{this.containerClassNamesString}}
+    @target={{this.tetherTarget}}
+    @attachment={{this.attachment}}
+    @targetAttachment={{this.targetAttachment}}
+    @targetModifier={{this.targetModifier}}
+    @classPrefix={{this.tetherClassPrefix}}
+    @offset={{this.offset}}
+    @targetOffset={{this.targetOffset}}
+    @constraints={{this.constraints}}
+    ...attributes
+  >
     {{yield}}
   </EmberTether>
-  
   */
   {
-    "id": "81S3SYWS",
-    "block": "[[[41,[30,0,[\"hasOverlay\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@to\"],[[30,0,[\"destinationElementId\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null],[8,[39,3],null,[[\"@class\",\"@target\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@classPrefix\",\"@offset\",\"@targetOffset\",\"@constraints\"],[[30,0,[\"containerClassNamesString\"]],[30,0,[\"tetherTarget\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"offset\"]],[30,0,[\"targetOffset\"]],[30,0,[\"constraints\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,1,null],[1,\"\\n\"]],[]]]]],[1,\"\\n\"]],[\"&default\"],false,[\"if\",\"ember-wormhole\",\"action\",\"ember-tether\",\"yield\"]]",
+    "id": "GojXVlka",
+    "block": "[[[41,[30,0,[\"hasOverlay\"]],[[[1,\"  \"],[8,[39,1],null,[[\"@to\"],[[30,0,[\"destinationElementId\"]]]],[[\"default\"],[[[[1,\"\\n    \"],[10,0],[15,0,[30,0,[\"overlayClassNamesString\"]]],[15,\"onclick\",[28,[37,2],[[30,0],[30,0,[\"onClickOverlay\"]]],null]],[14,\"tabindex\",\"-1\"],[14,\"data-emd-overlay\",\"\"],[12],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[]],null],[8,[39,3],[[16,0,[30,0,[\"containerClassNamesString\"]]],[17,1]],[[\"@target\",\"@attachment\",\"@targetAttachment\",\"@targetModifier\",\"@classPrefix\",\"@offset\",\"@targetOffset\",\"@constraints\"],[[30,0,[\"tetherTarget\"]],[30,0,[\"attachment\"]],[30,0,[\"targetAttachment\"]],[30,0,[\"targetModifier\"]],[30,0,[\"tetherClassPrefix\"]],[30,0,[\"offset\"]],[30,0,[\"targetOffset\"]],[30,0,[\"constraints\"]]]],[[\"default\"],[[[[1,\"\\n  \"],[18,2,null],[1,\"\\n\"]],[]]]]]],[\"&attrs\",\"&default\"],false,[\"if\",\"ember-wormhole\",\"action\",\"ember-tether\",\"yield\"]]",
     "moduleName": "ember-modal-dialog/templates/components/tether-dialog.hbs",
     "isStrictMode": false
   });
@@ -91557,784 +91621,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     modalContainerId = modalContainerId || 'modal-overlays';
     return modalContainerId;
   }
-});
-;define("ember-modifier/-private/class/modifier-manager", ["exports", "@ember/modifier", "@ember/destroyable", "ember-modifier/-private/class/modifier", "ember-modifier/-private/compat"], function (_exports, _modifier, _destroyable, _modifier2, _compat) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-  function destroyModifier(modifier) {
-    modifier.willRemove();
-    modifier.willDestroy();
-  }
-
-  /**
-   * The state bucket used throughout the life-cycle of the modifier. Basically a
-   * state *machine*, where the framework calls us with the version we hand back
-   * to it at each phase. The two states are the two `extends` versions of this
-   * below.
-   *
-   * @internal
-   */
-
-  /**
-   * The `State` after calling `createModifier`, and therefore the state available
-   * at the start of `InstallModifier`.
-   * @internal
-   */
-
-  /**
-   * The `State` after calling `installModifier`, and therefore the state
-   * available in all `updateModifier` calls and in `destroyModifier`.
-   * @internal
-   */
-
-  // Wraps the unsafe (b/c it mutates, rather than creating new state) code that
-  // TS does not yet understand.
-  function installElement(state, element) {
-    // SAFETY: this cast represents how we are actually handling the state machine
-    // transition: from this point forward in the lifecycle of the modifier, it
-    // always behaves as `InstalledState<S>`. It is safe because, and *only*
-    // because, we immediately initialize `element`. (We cannot create a new state
-    // from the old one because the modifier manager API expects mutation of a
-    // single state bucket rather than updating it at hook calls.)
-    const installedState = state;
-    installedState.element = element;
-    return installedState;
-  }
-  function installElementOnInstance(instance, element) {
-    // SAFETY: we use the internal API for all class-based modifiers to set this
-    // in a way which lets us issue the deprecation warning for anyone accessing
-    // `element` as a getter while allowing types to continue working for any
-    // existing subclasses (see the discussion on the class definition).
-    instance[_modifier2.Element] = element;
-  }
-  function updateArgsOnInstance(instance, args) {
-    // SAFETY: we use the internal API for all class-based modifiers to set this
-    // in a way which lets us issue the deprecation warning for anyone accessing
-    // `args` as a getter while allowing types to continue working for any
-    // existing subclasses (see the discussion on the class definition).
-    instance[_modifier2.Args] = args;
-  }
-  class ClassBasedModifierManager {
-    constructor(owner) {
-      _defineProperty(this, "capabilities", (0, _modifier.capabilities)(true ? '3.22' : '3.13'));
-      this.owner = owner;
-    }
-    createModifier(factoryOrClass, args) {
-      const Modifier = (0, _compat.isFactory)(factoryOrClass) ? factoryOrClass.class : factoryOrClass;
-      const modifier = new Modifier(this.owner, args);
-      (0, _destroyable.registerDestructor)(modifier, destroyModifier);
-      return {
-        instance: modifier,
-        implementsModify: (0, _modifier2._implementsModify)(modifier),
-        element: null
-      };
-    }
-    installModifier(createdState, element, args) {
-      const state = installElement(createdState, element);
-
-      // TODO: this can be deleted entirely at v4.
-      const {
-        instance
-      } = state;
-      installElementOnInstance(instance, element);
-      if (state.implementsModify) {
-        instance.modify(element, args.positional, args.named);
-      } else {
-        // The `consumeArgs()` call provides backwards compatibility on v3 for the
-        // deprecated legacy lifecycle hooks (`didInstall`, `didReceiveArguments`,
-        // and `didUpdateArguments`), which accidentally had eager consumption
-        // semantics prior to Ember 3.22. The new, recommended `modify` hook has
-        // the updated lazy semantics associated with normal auto-tracking.
-        if (true) {
-          (0, _compat.consumeArgs)(args);
-        }
-        instance.didReceiveArguments();
-        instance.didInstall();
-      }
-    }
-    updateModifier(state, args) {
-      const {
-        instance
-      } = state;
-
-      // TODO: remove at 4.0
-      updateArgsOnInstance(state.instance, args);
-      if (state.implementsModify) {
-        instance.modify(state.element, args.positional, args.named);
-      } else {
-        // The `consumeArgs()` call provides backwards compatibility on v3 for the
-        // deprecated legacy lifecycle hooks (`didInstall`, `didReceiveArguments`,
-        // and `didUpdateArguments`), which accidentally had eager consumption
-        // semantics prior to Ember 3.22. The new, recommended `modify` hook has
-        // the updated lazy semantics associated with normal auto-tracking.
-        if (true) {
-          (0, _compat.consumeArgs)(args);
-        }
-        instance.didUpdateArguments();
-        instance.didReceiveArguments();
-      }
-    }
-    destroyModifier(state) {
-      (0, _destroyable.destroy)(state.instance);
-    }
-  }
-  _exports.default = ClassBasedModifierManager;
-});
-;define("ember-modifier/-private/class/modifier", ["exports", "@ember/application", "@ember/modifier", "ember-modifier/-private/class/modifier-manager", "@ember/destroyable", "@ember/debug"], function (_exports, _application, _modifier, _modifierManager, _destroyable, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = _exports._implementsModify = _exports._implementsLegacyHooks = _exports.Element = _exports.Args = void 0;
-  // SAFETY: these sets are dev-only code to avoid showing deprecations for the
-  // same class more than once.
-  let SEEN_CLASSES_FOR_LIFECYCLE;
-  if (false /* DEBUG */) {
-    SEEN_CLASSES_FOR_LIFECYCLE = new Set();
-  }
-  let SEEN_CLASSES_FOR_DESTROYABLES;
-  if (false /* DEBUG */) {
-    SEEN_CLASSES_FOR_DESTROYABLES = new Set();
-  }
-  let SEEN_CLASSES_FOR_ARGS;
-  if (false /* DEBUG */) {
-    SEEN_CLASSES_FOR_ARGS = new Set();
-  }
-  let SEEN_CLASSES_FOR_ELEMENTS;
-  if (false /* DEBUG */) {
-    SEEN_CLASSES_FOR_ELEMENTS = new Set();
-  }
-
-  /** @internal */
-  const _implementsModify = instance => instance.modify !== ClassBasedModifier.prototype.modify;
-
-  /** @internal */
-  _exports._implementsModify = _implementsModify;
-  const _implementsLegacyHooks = instance => instance.didInstall !== ClassBasedModifier.prototype.didInstall || instance.didUpdateArguments !== ClassBasedModifier.prototype.didUpdateArguments || instance.didReceiveArguments !== ClassBasedModifier.prototype.didReceiveArguments;
-
-  /** @internal */
-  _exports._implementsLegacyHooks = _implementsLegacyHooks;
-  const Element = Symbol('Element');
-
-  /** @internal */
-  _exports.Element = Element;
-  const Args = Symbol('Args');
-
-  // Preserve the signature on a class-based modifier so it can be plucked off
-  // later (by e.g. Glint), using interface merging with an opaque item to
-  // preserve it in the type system. The fact that it's an empty interface is
-  // actually the point: it *only* hooks the type parameter into the opaque
-  // (nominal) type. Note that this is distinct from the function-based modifier
-  // type intentionally, because it is actually the static class side of a
-  // class-based modifier which corresponds to the result of calling `modifier()`
-  // with a callback defining a function-based modifier.
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  _exports.Args = Args;
-  /**
-   * A base class for modifiers which need more capabilities than function-based
-   * modifiers. Useful if, for example:
-   *
-   * 1. You need to inject services and access them
-   * 2. You need fine-grained control of updates, either for performance or
-   *    convenience reasons, and don't want to teardown the state of your modifier
-   *    every time only to set it up again.
-   * 3. You need to store some local state within your modifier.
-   *
-   * The lifecycle hooks of class modifiers are tracked. When they run, they any
-   * values they access will be added to the modifier, and the modifier will
-   * update if any of those values change.
-   */
-  class ClassBasedModifier {
-    // Done this way with the weird combination of `declare` and `defineProperty`
-    // so that subclasses which are overriding this by writing their own `args`
-    // field type declarations continue to type check correctly. (If we introduced
-    // a getter here, existing classes defining their args via a `declare args:`
-    // would stop type checking, because TS -- correctly! -- differentiates
-    // between class fields and getters).
-    /**
-     * The arguments passed to the modifier. `args.positional` is an array of
-     * positional arguments, and `args.named` is an object containing the named
-     * arguments.
-     *
-     * @deprecated Until 4.0. Access positional and named arguments directly in
-     *   the `modify` hook instead.
-     */
-
-    // Done this way with the weird combination of `declare` and `defineProperty`
-    // so that subclasses which are overriding this by writing their own `element`
-    // field declarations continue to type check correctly.
-    /**
-     * The element the modifier is applied to.
-     *
-     * @warning `element` is ***not*** available during `constructor` or
-     *   `willDestroy`.
-     * @deprecated Until 4.0. Access the `element` as an argument in the `modify`
-     *   hook instead.
-     */
-    constructor(owner, args) {
-      (0, _application.setOwner)(this, owner);
-
-      // SAFETY: the point here is (for the period where we are providing `args`
-      // and `element`) to provide an internal-only way of setting and update the
-      // `args` for the modifier instance; we use the `InternalClassBasedModifier`
-      // interface to represent the internal-only API in a way that end users do
-      // *not* have access to when subclassing `ClassBasedModifier`.
-      this[Args] = args;
-      (false && !(!(_implementsModify(this) && _implementsLegacyHooks(this))) && (0, _debug.assert)('ember-modifier: You cannot implement both `modify` and any of the deprecated legacy lifecycle hooks (`didInstall`, `didReceiveArguments`, and `didUpdateArguments`)', !(_implementsModify(this) && _implementsLegacyHooks(this))));
-      (false && !(this.willDestroy === ClassBasedModifier.prototype.willDestroy || SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor)) && (0, _debug.deprecate)(`ember-modifier (in ${this.constructor.name} at ${new Error().stack}): \`willDestroy\`, \`isDestroyed\`, and \`isDestroyed\` are deprecated. Use the corresponding API from '@ember/destroyable' instead.`, this.willDestroy === ClassBasedModifier.prototype.willDestroy || SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor), {
-        id: 'ember-modifier.use-destroyables',
-        until: '4.0.0',
-        for: 'ember-modifier',
-        since: {
-          available: '3.2.0',
-          enabled: '3.2.0'
-        }
-      }));
-      if (false /* DEBUG */ && !SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor)) {
-        SEEN_CLASSES_FOR_DESTROYABLES.add(this.constructor);
-      }
-      (false && !(_implementsModify(this) || SEEN_CLASSES_FOR_LIFECYCLE.has(this.constructor)) && (0, _debug.deprecate)(`ember-modifier (in ${this.constructor.name} at ${new Error().stack}): The \`didInstall\`, \`didReceiveArguments\`, and \`didUpdateArguments\` hooks are deprecated. Use the new \`modify\` hook instead.`, _implementsModify(this) || SEEN_CLASSES_FOR_LIFECYCLE.has(this.constructor), {
-        id: 'ember-modifier.use-modify',
-        until: '4.0.0',
-        for: 'ember-modifier',
-        since: {
-          available: '3.2.0',
-          enabled: '3.2.0'
-        }
-      }));
-      if (false /* DEBUG */ && !SEEN_CLASSES_FOR_LIFECYCLE.has(this.constructor)) {
-        SEEN_CLASSES_FOR_LIFECYCLE.add(this.constructor);
-      }
-    }
-
-    /**
-     * Called when the modifier is installed and any time any tracked state used
-     * in the modifier changes.
-     *
-     * If you need to do first-time-only setup, create a class field representing
-     * the initialization state and check it when running the hook. That is also
-     * where and when you should use `registerDestructor` for any teardown you
-     * need to do. For example:
-     *
-     * ```js
-     * function disconnect(instance) {
-     *  instance.observer?.disconnect();
-     * }
-     *
-     * class IntersectionObserver extends Modifier {
-     *   observer;
-     *
-     *   constructor(owner, args) {
-     *     super(owner, args);
-     *     registerDestructor(this, disconnect);
-     *   }
-     *
-     *   modify(element, callback, options) {
-     *     disconnect(this);
-     *
-     *     this.observer = new IntersectionObserver(callback, options);
-     *     this.observer.observe(element);
-     *   }
-     * }
-     * ```
-     *
-     * @param element The element to which the modifier is applied.
-     * @param positional The positional arguments to the modifier.
-     * @param named The named arguments to the modifier.
-     */
-    modify( /* eslint-disable @typescript-eslint/no-unused-vars */
-    element, positional, named) {
-      /* no op, for subclassing */
-    }
-
-    /**
-     * Called when the modifier is installed **and** anytime the arguments are
-     * updated.
-     *
-     * @deprecated Until 4.0. Use `modify()`.
-     */
-    didReceiveArguments() {
-      /* no op, for subclassing */
-    }
-
-    /**
-     * Called anytime the arguments are updated but **not** on the initial
-     * install. Called before `didReceiveArguments`.
-     *
-     * @deprecated Until 4.0. Use `modify()`.
-     */
-    didUpdateArguments() {
-      /* no op, for subclassing */
-    }
-
-    /**
-     * Called when the modifier is installed on the DOM element. Called after
-     * `didReceiveArguments`.
-     *
-     * @deprecated Until 4.0. Use `modify()`.
-     */
-    didInstall() {
-      /* no op, for subclassing */
-    }
-
-    /**
-     * Called when the DOM element is about to be destroyed; use for removing
-     * event listeners on the element and other similar clean-up tasks.
-     *
-     * @deprecated since 2.0.0: prefer to use `willDestroy`, since both it and
-     *   `willRemove` can perform all the same operations, including on the
-     *   `element`.
-     */
-    willRemove() {
-      /* no op, for subclassing */
-    }
-
-    /**
-     * Called when the modifier itself is about to be destroyed; use for teardown
-     * code. Called after `willRemove`.
-     *
-     * @deprecated Until 4.0. Use `registerDestructor` from `@ember/destroyables`.
-     */
-    willDestroy() {
-      /* no op, for subclassing */
-    }
-
-    /**
-     * @deprecated Until 4.0. Use `isDestroying` from `@ember/destroyables`.
-     */
-    get isDestroying() {
-      (false && !(SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor)) && (0, _debug.deprecate)('Modifier.isDestroying is deprecated', SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor), {
-        id: 'ember-modifier.use-destroyables',
-        until: '4.0.0',
-        for: 'ember-modifier',
-        since: {
-          available: '3.2.0',
-          enabled: '3.2.0'
-        }
-      }));
-      if (false /* DEBUG */ && !SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor)) {
-        SEEN_CLASSES_FOR_DESTROYABLES.add(this.constructor);
-      }
-      return (0, _destroyable.isDestroying)(this);
-    }
-
-    /**
-     * @deprecated Until 4.0. Use `isDestroyed` from `@ember/destroyables`.
-     */
-    get isDestroyed() {
-      (false && !(SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor)) && (0, _debug.deprecate)('Modifier.isDestroyed is deprecated', SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor), {
-        id: 'ember-modifier.use-destroyables',
-        until: '4.0.0',
-        for: 'ember-modifier',
-        since: {
-          available: '3.2.0',
-          enabled: '3.2.0'
-        }
-      }));
-      if (false /* DEBUG */ && !SEEN_CLASSES_FOR_DESTROYABLES.has(this.constructor)) {
-        SEEN_CLASSES_FOR_DESTROYABLES.add(this.constructor);
-      }
-      return (0, _destroyable.isDestroyed)(this);
-    }
-  }
-
-  // We apply these here, against the prototype, so that there is only one of
-  // these, rather than one per instance. We also only issue the deprecation once
-  // per class for each of `args` and `element`.
-  _exports.default = ClassBasedModifier;
-  Object.defineProperty(ClassBasedModifier.prototype, 'args', {
-    enumerable: true,
-    get() {
-      (false && !(SEEN_CLASSES_FOR_ARGS.has(this.constructor)) && (0, _debug.deprecate)(`ember-modifier (in ${this.constructor.name} at ${new Error().stack}): using \`this.args\` is deprecated. Access positional and named arguments directly in the \`modify\` hook instead.`, SEEN_CLASSES_FOR_ARGS.has(this.constructor), {
-        id: 'ember-modifier.no-args-property',
-        for: 'ember-modifier',
-        since: {
-          available: '3.2.0',
-          enabled: '3.2.0'
-        },
-        until: '4.0.0'
-      }));
-      if (false /* DEBUG */ && !SEEN_CLASSES_FOR_ARGS.has(this.constructor)) {
-        SEEN_CLASSES_FOR_ARGS.add(this.constructor);
-      }
-      return this[Args];
-    }
-  });
-  Object.defineProperty(ClassBasedModifier.prototype, 'element', {
-    enumerable: true,
-    get() {
-      (false && !(SEEN_CLASSES_FOR_ELEMENTS.has(this.constructor)) && (0, _debug.deprecate)(`ember-modifier (in ${this.constructor.name} at ${new Error().stack}): using \`this.element\` is deprecated. Access the \`element\` as an argument in the \`modify\` hook instead.`, SEEN_CLASSES_FOR_ELEMENTS.has(this.constructor), {
-        id: 'ember-modifier.no-element-property',
-        for: 'ember-modifier',
-        since: {
-          available: '3.2.0',
-          enabled: '3.2.0'
-        },
-        until: '4.0.0'
-      }));
-      if (false /* DEBUG */ && !SEEN_CLASSES_FOR_ELEMENTS.has(this.constructor)) {
-        SEEN_CLASSES_FOR_ELEMENTS.add(this.constructor);
-      }
-      return this[Element] ?? null;
-    }
-  });
-
-  /**
-   * @internal This provides an interface we can use to backwards-compatibly set
-   *   up the element in a way that external callers will not have access to or
-   *   even see.
-   */
-
-  (0, _modifier.setModifierManager)(owner => new _modifierManager.default(owner), ClassBasedModifier);
-});
-;define("ember-modifier/-private/compat", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.consumeArgs = void 0;
-  _exports.isFactory = isFactory;
-  function isFactory(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _factoryOrClass) {
-    return !true;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const noop = () => {};
-
-  /**
-   * Consume each positional and named argument to entangle it in autotracking and
-   * enable updates.
-   *
-   * This is a temporary workaround for a change in the autotracking semantics of
-   * the args proxy introduced in `v3.22`. What changed is that arguments are no
-   * longer eagerly consumed. Didn’t use an argument? Then updates won’t be run
-   * when its value changes. This workaround reproduces the previous behaviour to
-   * avoid introducing a breaking change until a suitable transition path is made
-   * available.
-   */
-  let consumeArgs = noop;
-  _exports.consumeArgs = consumeArgs;
-  if (true) {
-    _exports.consumeArgs = consumeArgs = function ({
-      positional,
-      named
-    }) {
-      // SAFETY: TS before 4.6 does not correctly/fully resolve the type in a way
-      // that allows the type checker to see that `positional` must *always* be
-      // something which `extends unknown[]` here, because the underlying
-      // machinery is fairly complicated and relies on a fair bit of type
-      // recursion. It will stop mattering when we cut v4.0, because we won't be
-      // doing this anyway.
-      const pos = positional;
-      for (let i = 0; i < pos.length; i++) {
-        pos[i];
-      }
-
-      // SAFETY: TS 4.7 does not see that `named` will always be an object here.
-      // However, it is guaranteed to be resolved as such by the types. This *may*
-      // be a bug (https://github.com/microsoft/TypeScript/issues/48468), but it
-      // *should* also stop being relevant once we ship 4.0.
-      Object.values(named);
-    };
-  }
-});
-;define("ember-modifier/-private/function-based/modifier-manager", ["exports", "@ember/modifier", "ember-modifier/-private/compat"], function (_exports, _modifier, _compat) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-  // Wraps the unsafe (b/c it mutates, rather than creating new state) code that
-  // TS does not yet understand.
-  function installElement(state, element) {
-    // SAFETY: this cast represents how we are actually handling the state machine
-    // transition: from this point forward in the lifecycle of the modifier, it
-    // always behaves as `InstalledState<S>`. It is safe because, and *only*
-    // because, we immediately initialize `element`. (We cannot create a new state
-    // from the old one because the modifier manager API expects mutation of a
-    // single state bucket rather than updating it at hook calls.)
-    const installedState = state;
-    installedState.element = element;
-    return installedState;
-  }
-  class FunctionBasedModifierManager {
-    constructor(options) {
-      _defineProperty(this, "capabilities", (0, _modifier.capabilities)(true ? '3.22' : '3.13'));
-      _defineProperty(this, "options", void 0);
-      this.options = {
-        eager: options?.eager ?? true
-      };
-    }
-    createModifier(factoryOrClass) {
-      const instance = (0, _compat.isFactory)(factoryOrClass) ? factoryOrClass.class : factoryOrClass;
-      return {
-        element: null,
-        instance: instance
-      };
-    }
-    installModifier(createdState, element, args) {
-      const state = installElement(createdState, element);
-      const {
-        positional,
-        named
-      } = args;
-      const teardown = createdState.instance(element, positional, named);
-      if (typeof teardown === 'function') {
-        state.teardown = teardown;
-      }
-      if (true && this.options.eager) {
-        (0, _compat.consumeArgs)(args);
-      }
-    }
-    updateModifier(state, args) {
-      if (state.teardown) {
-        state.teardown();
-      }
-      const teardown = state.instance(state.element, args.positional, args.named);
-      if (typeof teardown === 'function') {
-        state.teardown = teardown;
-      }
-      if (true && this.options.eager) {
-        (0, _compat.consumeArgs)(args);
-      }
-    }
-    destroyModifier(state) {
-      if (typeof state.teardown === 'function') {
-        state.teardown();
-      }
-    }
-  }
-  _exports.default = FunctionBasedModifierManager;
-});
-;define("ember-modifier/-private/function-based/modifier", ["exports", "@ember/debug", "@ember/modifier", "ember-modifier/-private/class/modifier", "ember-modifier/-private/function-based/modifier-manager"], function (_exports, _debug, _modifier, _modifier2, _modifierManager) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = modifier;
-  // Provide a singleton manager for each of the options. (If we extend this to
-  // many more options in the future, we can revisit, but for now this means we
-  // only ever allocate two managers.)
-  const EAGER_MANAGER = new _modifierManager.default({
-    eager: true
-  });
-  const LAZY_MANAGER = new _modifierManager.default({
-    eager: false
-  });
-
-  // This type exists to provide a non-user-constructible, non-subclassable
-  // type representing the conceptual "instance type" of a function modifier.
-  // The abstract field of type `never` prevents subclassing in userspace of
-  // the value returned from `modifier()`. By extending `Modifier<S>`, any
-  // augmentations of the `Modifier` type performed by tools like Glint will
-  // also apply to function-based modifiers as well.
-  // This provides a type whose only purpose here is to represent the runtime
-  // type of a function-based modifier: a virtually opaque item. The fact that it's
-  // a bare constructor type allows `modifier()` to preserve type parameters from
-  // a generic function it's passed, and by making it abstract and impossible to
-  // subclass (see above) we prevent users from attempting to instantiate the return
-  // value from a `modifier()` call.
-  /**
-   * The (optional) return type for a modifier which needs to perform some kind of
-   * cleanup or teardown -- for example, removing an event listener from an
-   * element besides the one passed into the modifier.
-   */
-  /**
-   * An API for writing simple modifiers.
-   *
-   * This function runs the first time when the element the modifier was applied
-   * to is inserted into the DOM, and it *autotracks* while running. Any values
-   * that it accesses will be tracked, and if any of them changes, the function
-   * will run again.
-   *
-   * **Note:** this will rerun if any of its arguments change, *whether or not you
-   * access them*. This is legacy behavior and you should switch to using the
-   * `{ eager: false }` variant, which has normal auto-tracking semantics.
-   *
-   * The modifier can also optionally return a *destructor*. The destructor
-   * function will be run just before the next update, and when the element is
-   * being removed entirely. It should generally clean up the changes that the
-   * modifier made in the first place.
-   *
-   * @deprecated Until 4.0. Calling `modifier()` without an options argument is
-   *   deprecated. It is supported until 4.0 so that existing modifiers can be
-   *   migrated individually. Please update your function-based modifiers to pass
-   *   `{ eager: false }`.
-   *
-   * @param fn The function which defines the modifier.
-   */
-  // This overload allows users to write types directly on the callback passed to
-  // the `modifier` function and infer the resulting type correctly.
-  /**
-   * An API for writing simple modifiers.
-   *
-   * This function runs the first time when the element the modifier was applied
-   * to is inserted into the DOM, and it *autotracks* while running. Any values
-   * that it accesses will be tracked, and if any of them changes, the function
-   * will run again.
-   *
-   * **Note:** this will rerun if any of its arguments change, *whether or not you
-   * access them*. This is legacy behavior and you should switch to using the
-   * `{ eager: false }` variant, which has normal auto-tracking semantics.
-   *
-   * The modifier can also optionally return a *destructor*. The destructor
-   * function will be run just before the next update, and when the element is
-   * being removed entirely. It should generally clean up the changes that the
-   * modifier made in the first place.
-   *
-   * @deprecated Until 4.0. Calling `modifier()` with `{ eager: true }` is
-   *   deprecated. It is supported until 4.0 so that existing modifiers can be
-   *   migrated individually. Please update your function-based modifiers to pass
-   *   `{ eager: false }`.
-   *
-   * @param fn The function which defines the modifier.
-   * @param options Configuration for the modifier.
-   */
-  // This overload allows users to write types directly on the callback passed to
-  // the `modifier` function and infer the resulting type correctly.
-  /**
-   * An API for writing simple modifiers.
-   *
-   * This function runs the first time when the element the modifier was applied
-   * to is inserted into the DOM, and it *autotracks* while running. Any values
-   * that it accesses will be tracked, including any of its arguments that it
-   * accesses, and if any of them changes, the function will run again.
-   *
-   * **Note:** this will *not* automatically rerun because an argument changes. It
-   * will only rerun if it is *using* that argument (the same as with auto-tracked
-   * state in general).
-   *
-   * The modifier can also optionally return a *destructor*. The destructor
-   * function will be run just before the next update, and when the element is
-   * being removed entirely. It should generally clean up the changes that the
-   * modifier made in the first place.
-   *
-   * @param fn The function which defines the modifier.
-   * @param options Configuration for the modifier.
-   */
-  // This overload allows users to write types directly on the callback passed to
-  // the `modifier` function and infer the resulting type correctly.
-  /**
-   * An API for writing simple modifiers.
-   *
-   * This function runs the first time when the element the modifier was applied
-   * to is inserted into the DOM, and it *autotracks* while running. Any values
-   * that it accesses will be tracked, including any of its arguments that it
-   * accesses, and if any of them changes, the function will run again.
-   *
-   * **Note:** this will *not* automatically rerun because an argument changes. It
-   * will only rerun if it is *using* that argument (the same as with auto-tracked
-   * state in general).
-   *
-   * The modifier can also optionally return a *destructor*. The destructor
-   * function will be run just before the next update, and when the element is
-   * being removed entirely. It should generally clean up the changes that the
-   * modifier made in the first place.
-   *
-   * @param fn The function which defines the modifier.
-   * @param options Configuration for the modifier.
-   */
-  // This overload allows users to provide a `Signature` type explicitly at the
-  // modifier definition site, e.g. `modifier<Sig>((el, pos, named) => {...})`.
-  // **Note:** this overload must appear second, since TS' inference engine will
-  // not correctly infer the type of `S` here from the types on the supplied
-  // callback.
-  // This is the runtime signature; it performs no inference whatsover and just
-  // uses the simplest version of the invocation possible since, for the case of
-  // setting it on the modifier manager, we don't *need* any of that info, and
-  // the two previous overloads capture all invocations from a type perspective.
-  function modifier(fn, options = {
-    eager: true
-  }) {
-    (false && !(options !== undefined) && (0, _debug.deprecate)(`ember-modifier (for ${fn.name ?? fn} at ${new Error().stack}): creating a function-based modifier without options is deprecated and will be removed at v4.0`, options !== undefined, {
-      id: 'ember-modifier.function-based-options',
-      for: 'ember-modifier',
-      since: {
-        available: '3.2.0',
-        enabled: '3.2.0'
-      },
-      until: '4.0.0'
-    }));
-    (false && !(options?.eager === false) && (0, _debug.deprecate)(`ember-modifier (for ${fn.name ?? fn} at ${new Error().stack}): creating a function-based modifier with \`{ eager: true }\` is deprecated and will be removed at v4.0`, options?.eager === false, {
-      id: 'ember-modifier.function-based-options',
-      for: 'ember-modifier',
-      since: {
-        available: '3.2.0',
-        enabled: '3.2.0'
-      },
-      until: '4.0.0'
-    })); // SAFETY: the cast here is a *lie*, but it is a useful one. The actual return
-    // type of `setModifierManager` today is `void`; we pretend it actually
-    // returns an opaque `Modifier` type so that we can provide a result from this
-    // type which is useful to TS-aware tooling (e.g. Glint).
-    return (0, _modifier.setModifierManager)(() => options.eager ? EAGER_MANAGER : LAZY_MANAGER, fn);
-  }
-
-  /**
-   * @internal
-   */
-
-  /**
-   * @deprecated Instead of defining a function to match this type, simply define
-   *   a function-based modifier either using a `Signature` or by defining the
-   *   types on the callback passed to the `modifier`.
-   */
-});
-;define("ember-modifier/-private/interfaces", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-});
-;define("ember-modifier/-private/opaque", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-});
-;define("ember-modifier/-private/signature", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-});
-;define("ember-modifier/index", ["exports", "ember-modifier/-private/class/modifier", "ember-modifier/-private/function-based/modifier"], function (_exports, _modifier, _modifier2) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _modifier.default;
-    }
-  });
-  Object.defineProperty(_exports, "modifier", {
-    enumerable: true,
-    get: function () {
-      return _modifier2.default;
-    }
-  });
 });
 ;define("ember-resolver/container-debug-adapter", ["exports", "@ember/array", "@ember/debug/container-debug-adapter", "ember-resolver/index", "@ember/application"], function (_exports, _array, _containerDebugAdapter, _index, _application) {
   "use strict";
@@ -94138,7 +93424,7 @@ define("ember-resolver/features", [], function () {
     }
   }));
 });
-;define("ember-tether/components/ember-tether", ["exports", "@ember/component", "@ember/template-factory", "@ember/application", "@ember/runloop", "@ember/utils", "@glimmer/component", "tether", "@ember/object"], function (_exports, _component, _templateFactory, _application, _runloop, _utils, _component2, _tether2, _object) {
+;define("ember-tether/components/ember-tether", ["exports", "@ember/component", "@ember/application", "@ember/runloop", "@ember/utils", "@glimmer/component", "tether", "@ember/object", "@ember/template-factory"], function (_exports, _component, _application, _runloop, _utils, _component2, _tether2, _object, _templateFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -94146,7 +93432,7 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = void 0;
   var _class;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/application",0,"@ember/runloop",0,"@ember/utils",0,"@glimmer/component",0,"tether",0,"@ember/object"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/application",0,"@ember/runloop",0,"@ember/utils",0,"@glimmer/component",0,"tether",0,"@ember/object",0,"@ember/component"eaimeta@70e063a35619d71f
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
   function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -94268,6 +93554,25 @@ define("ember-resolver/features", [], function () {
   }
   var _default = (0, _helper.helper)(and);
   _exports.default = _default;
+});
+;define("ember-truth-helpers/helpers/eq", ["exports", "ember-truth-helpers/helpers/equal"], function (_exports, _equal) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _equal.default;
+    }
+  });
+  Object.defineProperty(_exports, "equal", {
+    enumerable: true,
+    get: function () {
+      return _equal.equal;
+    }
+  });
 });
 ;define("ember-truth-helpers/helpers/equal", ["exports", "@ember/component/helper"], function (_exports, _helper) {
   "use strict";
@@ -94415,6 +93720,25 @@ define("ember-resolver/features", [], function () {
   }
   var _default = (0, _helper.helper)(lte);
   _exports.default = _default;
+});
+;define("ember-truth-helpers/helpers/not-eq", ["exports", "ember-truth-helpers/helpers/not-equal"], function (_exports, _notEqual) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _notEqual.default;
+    }
+  });
+  Object.defineProperty(_exports, "notEqualHelper", {
+    enumerable: true,
+    get: function () {
+      return _notEqual.notEqualHelper;
+    }
+  });
 });
 ;define("ember-truth-helpers/helpers/not-equal", ["exports", "@ember/component/helper"], function (_exports, _helper) {
   "use strict";
