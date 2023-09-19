@@ -24,7 +24,7 @@
   "scripts": {
     "build": "ember build --environment=production",
     "changelog": "lerna-changelog",
-    "deploy": "ember deploy production",
+    "deploy-docs": "ember deploy production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
     "lint:glint": "glint",
