@@ -10,8 +10,7 @@ on:
   pull_request:
 
 env:
-  CI: true
-  NODE_VERSION: 16
+  NODE_VERSION: 18
 
 jobs:
   lint:
@@ -20,7 +19,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -41,7 +40,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -73,10 +72,10 @@ jobs:
           - 'ember-classic'
           # - 'embroider-safe'
           # - 'embroider-optimized'
-    timeout-minutes: 5
+    timeout-minutes: 7
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -97,7 +96,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -118,7 +117,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -142,7 +141,7 @@ jobs:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set a Git user
         run: |
