@@ -129,3 +129,10 @@ export default class IntlService extends Service {
     time: FormatTime;
   };
 }
+
+// DO NOT DELETE: this is how TypeScript knows how to look up your services.
+declare module '@ember/service' {
+  interface Registry {
+    intl: IntlService;
+  }
+}
