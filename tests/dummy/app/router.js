@@ -22,6 +22,7 @@ Router.map(function () {
     });
 
     this.route('guide', function () {
+      this.route('migration-5-0-to-6-1');
       this.route('addon-configs');
       this.route('asynchronously-loading-translations');
       this.route('missing-translations');
