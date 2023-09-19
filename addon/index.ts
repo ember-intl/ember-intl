@@ -1,2 +1,2 @@
 export * from './macros';
-export { default as Service } from './services/intl';
+export { default as IntlService } from './services/intl';
