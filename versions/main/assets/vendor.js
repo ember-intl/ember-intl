@@ -89832,13 +89832,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = _default;
+  _exports.default = isArrayEqual;
   0; //eaimeta@70e063a35619d71f0,"@ember/array"eaimeta@70e063a35619d71f
   /**
    * @private
    * @hide
    */
-  function _default(a, b) {
+  function isArrayEqual(a, b) {
     if (!(0, _array.isArray)(a) || !(0, _array.isArray)(b)) {
       return false;
     }
@@ -89880,13 +89880,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = _default;
+  _exports.default = normalizeLocale;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
   /**
    * @private
    * @hide
    */
-  function _default(localeName) {
+  function normalizeLocale(localeName) {
     if (typeof localeName === 'string') {
       return localeName.replace(/_/g, '-').toLowerCase();
     }
@@ -89898,13 +89898,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = parseString;
+  _exports.default = parse;
   0; //eaimeta@70e063a35619d71f0,"@formatjs/icu-messageformat-parser"eaimeta@70e063a35619d71f
   /**
    * @private
    * @hide
    */
-  function parseString(string) {
+  function parse(string) {
     // ! Sync with `lib/parse-options.js`
     return (0, _icuMessageformatParser.parse)(string, {
       ignoreTag: true
@@ -89976,7 +89976,7 @@ lunr.QueryParser.parseBoost = function (parser) {
                                                                                                                                                                                                                                                                                                                                                                                              * Copyright 2015, Yahoo! Inc.
                                                                                                                                                                                                                                                                                                                                                                                              * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
                                                                                                                                                                                                                                                                                                                                                                                              */
-  class _default extends _formatBase.default {
+  class FormatDateHelper extends _formatBase.default {
     constructor(...args) {
       super(...args);
       _defineProperty(this, "allowEmpty", true);
@@ -89985,7 +89985,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this.intl.formatDate(value, options);
     }
   }
-  _exports.default = _default;
+  _exports.default = FormatDateHelper;
 });
 ;define("ember-intl/helpers/format-list", ["exports", "ember-intl/helpers/-format-base"], function (_exports, _formatBase) {
   "use strict";
@@ -89999,12 +89999,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
-  class _default extends _formatBase.default {
+  class FormatListHelper extends _formatBase.default {
     format(value, options) {
       return this.intl.formatList(value, options);
     }
   }
-  _exports.default = _default;
+  _exports.default = FormatListHelper;
 });
 ;define("ember-intl/helpers/format-message", ["exports", "ember-intl/helpers/-format-base"], function (_exports, _formatBase) {
   "use strict";
@@ -90018,12 +90018,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
-  class _default extends _formatBase.default {
+  class FormatMessageHelper extends _formatBase.default {
     format(value, options) {
       return this.intl.formatMessage(value, options);
     }
   }
-  _exports.default = _default;
+  _exports.default = FormatMessageHelper;
 });
 ;define("ember-intl/helpers/format-number", ["exports", "ember-intl/helpers/-format-base"], function (_exports, _formatBase) {
   "use strict";
@@ -90037,12 +90037,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
-  class _default extends _formatBase.default {
+  class FormatNumberHelper extends _formatBase.default {
     format(value, options) {
       return this.intl.formatNumber(value, options);
     }
   }
-  _exports.default = _default;
+  _exports.default = FormatNumberHelper;
 });
 ;define("ember-intl/helpers/format-relative", ["exports", "ember-intl/helpers/-format-base"], function (_exports, _formatBase) {
   "use strict";
@@ -90056,12 +90056,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
-  class _default extends _formatBase.default {
+  class FormatRelativeHelper extends _formatBase.default {
     format(params, hash) {
       return this.intl.formatRelative(params, hash);
     }
   }
-  _exports.default = _default;
+  _exports.default = FormatRelativeHelper;
 });
 ;define("ember-intl/helpers/format-time", ["exports", "ember-intl/helpers/-format-base"], function (_exports, _formatBase) {
   "use strict";
@@ -90075,12 +90075,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
-  class _default extends _formatBase.default {
+  class FormatTimeHelper extends _formatBase.default {
     format(value, options) {
       return this.intl.formatTime(value, options);
     }
   }
-  _exports.default = _default;
+  _exports.default = FormatTimeHelper;
 });
 ;define("ember-intl/helpers/t", ["exports", "ember-intl/helpers/-format-base"], function (_exports, _formatBase) {
   "use strict";
@@ -90094,12 +90094,12 @@ lunr.QueryParser.parseBoost = function (parser) {
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
-  class _default extends _formatBase.default {
+  class THelper extends _formatBase.default {
     format(key, options) {
       return this.intl.t(key, options);
     }
   }
-  _exports.default = _default;
+  _exports.default = THelper;
 });
 ;define("ember-intl/index", ["exports", "ember-intl/macros", "ember-intl/services/intl"], function (_exports, _macros, _intl) {
   "use strict";
@@ -90108,9 +90108,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   var _exportNames = {
-    Service: true
+    IntlService: true
   };
-  Object.defineProperty(_exports, "Service", {
+  Object.defineProperty(_exports, "IntlService", {
     enumerable: true,
     get: function () {
       return _intl.default;
@@ -90268,7 +90268,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _class2, _descriptor, _descriptor2;
+  var _class, _descriptor, _descriptor2;
   /**
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -90280,7 +90280,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-  let _class = (_class2 = class _class2 extends _service.default {
+  let IntlService = (_class = class IntlService extends _service.default {
     /**
      * Returns an array of registered locale names
      *
@@ -90549,22 +90549,22 @@ lunr.QueryParser.parseBoost = function (parser) {
         this._ee.off('localeChanged', ...args);
       };
     }
-  }, (_applyDecoratedDescriptor(_class2.prototype, "locale", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class2.prototype, "locale"), _class2.prototype), _descriptor = _applyDecoratedDescriptor(_class2.prototype, "_locale", [_tracking.tracked], {
+  }, (_applyDecoratedDescriptor(_class.prototype, "locale", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "locale"), _class.prototype), _descriptor = _applyDecoratedDescriptor(_class.prototype, "_locale", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: function () {
       return null;
     }
-  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "_intls", [_tracking.tracked], {
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "_intls", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: function () {
       return null;
     }
-  })), _class2);
-  _exports.default = _class;
+  })), _class);
+  _exports.default = IntlService;
   function createFormatterProxy(name) {
     return function serviceFormatterProxy(value, formatOptions) {
       let locale;
