@@ -5,7 +5,7 @@
 
 import BaseHelper from './-format-base';
 
-export default class extends BaseHelper {
+export default class FormatMessageHelper extends BaseHelper {
   format(value, options) {
     return this.intl.formatMessage(value, options);
   }

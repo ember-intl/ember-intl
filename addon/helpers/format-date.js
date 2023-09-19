@@ -5,7 +5,7 @@
 
 import BaseHelper from './-format-base';
 
-export default class extends BaseHelper {
+export default class FormatDateHelper extends BaseHelper {
   allowEmpty = true;
 
   format(value, options) {

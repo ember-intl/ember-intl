@@ -1,9 +1,9 @@
+import { type Registry as Services } from '@ember/service';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import type IntlService from 'ember-intl/services/intl';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
@@ -25,7 +25,7 @@ module('Integration | Helper | format-date', function (hooks) {
   });
 
   test('invoke the formatDate directly', function (this: TestContext, assert) {
-    const intl = this.owner.lookup('service:intl') as IntlService;
+    const intl = this.owner.lookup('service:intl') as Services['intl'];
 
     const output = intl.formatDate(this.date, {
       locale: this.locale,

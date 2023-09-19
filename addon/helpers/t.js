@@ -5,7 +5,7 @@
 
 import BaseHelper from './-format-base';
 
-export default class extends BaseHelper {
+export default class THelper extends BaseHelper {
   format(key, options) {
     return this.intl.t(key, options);
   }

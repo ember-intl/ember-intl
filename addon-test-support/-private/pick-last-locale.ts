@@ -16,4 +16,3 @@ import last from 'lodash.last';
  */
 export const pickLastLocale = (locale: string | [string, ...string[]]) =>
   last(castArray(locale)) as string;
-export default pickLastLocale;

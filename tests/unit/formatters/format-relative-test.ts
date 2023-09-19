@@ -1,5 +1,5 @@
 import { createIntl, type OnErrorFn } from '@formatjs/intl';
-import FormatRelative from 'ember-intl/-private/formatters/format-relative';
+import { FormatRelative } from 'ember-intl/-private/formatters';
 import { module, test } from 'qunit';
 
 function getIntl(locale: string) {

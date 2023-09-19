@@ -1,10 +1,10 @@
-import { EmberRunTimer } from '@ember/runloop/types';
+import type { EmberRunTimer } from '@ember/runloop/types';
 import Service from '@ember/service';
 import type { SafeString } from '@ember/template/-private/handlebars';
-import FormatList from 'ember-intl/-private/formatters/format-list';
 
-import {
+import type {
   FormatDate,
+  FormatList,
   FormatMessage,
   FormatNumber,
   FormatRelative,
@@ -128,4 +128,11 @@ export default class IntlService extends Service {
     relative: FormatRelative;
     time: FormatTime;
   };
+}
+
+// DO NOT DELETE: this is how TypeScript knows how to look up your services.
+declare module '@ember/service' {
+  interface Registry {
+    intl: IntlService;
+  }
 }

@@ -1,6 +1,6 @@
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import type IntlService from 'ember-intl/services/intl';
+import type { IntlService } from 'ember-intl';
 import type { TestContext as BaseTestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';

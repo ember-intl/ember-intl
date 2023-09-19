@@ -4,7 +4,7 @@
  */
 import BaseHelper from './-format-base';
 
-export default class extends BaseHelper {
+export default class FormatListHelper extends BaseHelper {
   format(value, options) {
     return this.intl.formatList(value, options);
   }

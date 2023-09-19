@@ -3,7 +3,7 @@ import type Evented from '@ember/object/evented';
 import type Service from '@ember/service';
 import type { TestContext } from '@ember/test-helpers';
 import { getContext } from '@ember/test-helpers';
-import type IntlService from 'ember-intl/services/intl';
+import type { IntlService } from 'ember-intl';
 
 import type { ConditionalKeys, RemoveFirstFromTuple } from './type-utils';
 
@@ -48,5 +48,3 @@ export function makeIntlHelper(
     return fn(intl, ...args);
   };
 }
-
-export default makeIntlHelper;
