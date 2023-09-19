@@ -26,7 +26,7 @@ import hydrate from '../-private/utils/hydrate';
 import isArrayEqual from '../-private/utils/is-array-equal';
 import normalizeLocale from '../-private/utils/normalize-locale';
 
-export default class extends Service {
+export default class IntlService extends Service {
   /**
    * Returns an array of registered locale names
    *
