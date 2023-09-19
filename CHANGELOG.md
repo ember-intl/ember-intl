@@ -1,5 +1,36 @@
 # Changelog
 
+## 6.1.0 (2023-09-19)
+
+Note, `6.0.0` had been released by accident and isn't a stable version. Version `6.1.0` marks the beginning of the `6.x` series.
+
+The lists below show the known changes between `6.0.0-beta.2` and `6.1.0`.
+
+### Breaking Change
+* [#1704](https://github.com/ember-intl/ember-intl/pull/1704) Removed TypeScript3 type ([@ijlee2](https://github.com/ijlee2))
+* [#1763](https://github.com/ember-intl/ember-intl/pull/1763) Deprecate Ember 3.24 and Node 14 ([@ijlee2](https://github.com/ijlee2))
+* [#1776](https://github.com/ember-intl/ember-intl/pull/1776) Limited TypeScript v4 support to 4.8 and 4.9 ([@Techn1x](https://github.com/Techn1x))
+* [#1783](https://github.com/ember-intl/ember-intl/pull/1783) Improved DX and documentation ([@ijlee2](https://github.com/ijlee2))
+
+### Bug Fix
+* [#1607](https://github.com/ember-intl/ember-intl/pull/1607) fix: `noUncheckedIndexedAccess` issues ([@BarryThePenguin](https://github.com/BarryThePenguin))
+* [#1616](https://github.com/ember-intl/ember-intl/pull/1616) test: await settled in test `setupIntl()` to fix race condition with fake timers ([@fengb](https://github.com/fengb))
+* [#1635](https://github.com/ember-intl/ember-intl/pull/1635) fix(types): fix `Formats` declaration as type ([@hadiwina](https://github.com/hadiwina))
+* [#1677](https://github.com/ember-intl/ember-intl/pull/1677) Correct usages of @formatjs/icu-messageformat-parser ([@charlesfries](https://github.com/charlesfries))
+* [#1678](https://github.com/ember-intl/ember-intl/pull/1678) Updated test-related packages. Imported TestContext from @ember/test-helpers.  ([@ijlee2](https://github.com/ijlee2))
+* [#1696](https://github.com/ember-intl/ember-intl/pull/1696) set importsNotUsedAsValues ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#1725](https://github.com/ember-intl/ember-intl/pull/1725) Allow nested folder structure on Windows ([@tfloxolodeiro](https://github.com/tfloxolodeiro))
+* [#1748](https://github.com/ember-intl/ember-intl/pull/1748) fix: Filepath matching is overly-eager when namespace wrapping ([@prsethre](https://github.com/prsethre))
+* [#1758](https://github.com/ember-intl/ember-intl/pull/1758) Replaced the slash character with path.sep (account for Windows) ([@ijlee2](https://github.com/ijlee2))
+
+### Enhancement
+* [#1633](https://github.com/ember-intl/ember-intl/pull/1633) feat(helpers): positional options that override named options ([@jesdavpet](https://github.com/jesdavpet))
+* [#1719](https://github.com/ember-intl/ember-intl/pull/1719) Add Glint types ([@jamescdavis](https://github.com/jamescdavis))
+* [#1768](https://github.com/ember-intl/ember-intl/pull/1768) Refactor code assuming Node 16 ([@ijlee2](https://github.com/ijlee2))
+* [#1776](https://github.com/ember-intl/ember-intl/pull/1776) Expanded TS support to 5.x ([@Techn1x](https://github.com/Techn1x))
+* [#1783](https://github.com/ember-intl/ember-intl/pull/1783) Improved DX and documentation ([@ijlee2](https://github.com/ijlee2))
+
+
 ## 6.0.0-beta.7 (2023-08-30)
 
 ### Breaking Change
