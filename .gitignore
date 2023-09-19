@@ -11,6 +11,7 @@
 /.eslintcache
 /coverage/
 /npm-debug.log*
+/.pnpm-debug.log
 /testem.log
 /yarn-error.log
 
@@ -19,6 +20,7 @@
 /npm-shrinkwrap.json.ember-try
 /package.json.ember-try
 /package-lock.json.ember-try
+/pnpm-lock.yaml.ember-try
 /yarn.lock.ember-try
 
 # broccoli-debug
