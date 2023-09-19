@@ -157,6 +157,32 @@ jobs:
         run: pnpm test:node
 
 
+  test-node-windows:
+    name: Test (Node, Windows)
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out a copy of the repo
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Test
+        run: pnpm test:node
+
+
   deploy-documentation:
     name: Deploy documentation
     runs-on: ubuntu-latest
