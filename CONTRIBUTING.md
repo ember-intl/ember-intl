@@ -18,10 +18,10 @@
     cd ember-intl
     ```
 
-1. Use `yarn` to install dependencies.
+1. Use `pnpm` to install dependencies.
 
     ```sh
-    yarn install
+    pnpm install
     ```
 
 </details>
@@ -34,7 +34,7 @@
 1. Once dependencies have been installed, you can run the docs-app.
 
     ```sh
-    yarn start
+    pnpm start
     ```
 
 1. Open the app at [http://localhost:4200](http://localhost:4200).
@@ -49,13 +49,13 @@
 1. When you write code, please check that it meets the linting rules.
 
     ```sh
-    yarn lint
+    pnpm lint
     ```
 
 1. You can run `lint:fix` to automatically fix linting errors.
 
     ```sh
-    yarn lint:fix
+    pnpm lint:fix
     ```
 
 </details>
@@ -69,10 +69,10 @@
 
     ```sh
     # Ember tests
-    yarn test
+    pnpm test
 
     # Node tests
-    yarn test:node
+    pnpm test:node
     ```
 
 </details>
@@ -87,7 +87,7 @@
 1. Create a pull request, in which you update the package version and `CHANGELOG`.
 
     ```sh
-    GITHUB_AUTH=<YOUR_PERSONAL_ACCESS_TOKEN> yarn changelog
+    GITHUB_AUTH=<YOUR_PERSONAL_ACCESS_TOKEN> pnpm changelog
     ```
 
 1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) such as `v1.0.0` (the name satisfies the regular expression `^v\d+\.\d+\.\d+`).
