@@ -361,7 +361,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   4.12.3
+ * @version   5.3.0
  */
 /* eslint-disable no-var */
 /* globals global globalThis self */
@@ -466,7 +466,7 @@ define("@ember/-internals/browser-environment/index", ["exports"], function (_ex
   var isFirefox = hasDom ? /Firefox|FxiOS/.test(userAgent) : false;
   _exports.isFirefox = isFirefox;
 });
-define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner", "@ember/-internals/utils", "@ember/debug"], function (_exports, _owner, _utils, _debug) {
+define("@ember/-internals/container/index", ["exports", "@ember/-internals/utils", "@ember/debug", "@ember/-internals/owner"], function (_exports, _utils, _debug, _owner) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -824,7 +824,9 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
       if (container.isDestroyed) {
         throw new Error(`Cannot create new instances after the owner has been destroyed (you attempted to create ${this.fullName})`);
       }
-      var props = options ? Object.assign({}, options) : {};
+      var props = options ? {
+        ...options
+      } : {};
       (0, _owner.setOwner)(props, container.owner);
       setFactoryFor(props, this);
       if (false /* DEBUG */) {
@@ -1031,13 +1033,12 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
      @return {function} toString function
      */
     makeToString(factory, fullName) {
-      var _a;
       if (this.resolver !== null && this.resolver.makeToString) {
         return this.resolver.makeToString(factory, fullName);
       } else if (this.fallback !== null) {
         return this.fallback.makeToString(factory, fullName);
       } else {
-        return typeof factory === 'string' ? factory : (_a = factory.name) !== null && _a !== void 0 ? _a : '(unknown class)';
+        return typeof factory === 'string' ? factory : factory.name ?? '(unknown class)';
       }
     }
     /**
@@ -1119,28 +1120,6 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
         return this.fallback.getOption(fullName, optionName);
       }
       return undefined;
-    }
-    /**
-     This is deprecated in favor of explicit injection of dependencies.
-        Reference: https://deprecations.emberjs.com/v3.x#toc_implicit-injections
-     ```
-        @private
-     @method injection
-     @param {String} fullName
-     @param {String} property
-     @deprecated
-     */
-    injection(fullName, property) {
-      (false && !(false) && (0, _debug.deprecate)(`As of Ember 4.0.0, owner.inject no longer injects values into resolved instances, and calling the method has been deprecated. Since this method no longer does anything, it is fully safe to remove this injection. As an alternative to this API, you can refactor to explicitly inject \`${property}\` on \`${fullName}\`, or look it up directly using the \`getOwner\` API.`, false, {
-        id: 'remove-owner-inject',
-        until: '5.0.0',
-        url: 'https://deprecations.emberjs.com/v4.x#toc_implicit-injections',
-        for: 'ember-source',
-        since: {
-          available: '4.0.0',
-          enabled: '4.0.0'
-        }
-      }));
     }
     /**
      @private
@@ -1239,13 +1218,6 @@ define("@ember/-internals/container/index", ["exports", "@ember/-internals/owner
     var [type, rawName] = fullName.split(':');
     return privateNames[fullName] = (0, _utils.intern)(`${type}:${rawName}-${privateSuffix}`);
   }
-
-  /*
-  Public API for the container is still in flux.
-  The public API, specified on the application namespace should be considered the stable API.
-  // @module container
-    @private
-  */
 });
 define("@ember/-internals/environment/index", ["exports"], function (_exports) {
   "use strict";
@@ -1510,7 +1482,7 @@ define("@ember/-internals/error-handling/index", ["exports"], function (_exports
     dispatchOverride = handler;
   }
 });
-define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler", "@ember/-internals/owner", "@ember/-internals/utils", "@ember/debug", "@glimmer/manager", "@glimmer/reference", "@glimmer/validator", "@ember/-internals/metal", "@ember/object", "@ember/-internals/browser-environment", "@ember/-internals/views", "@ember/engine", "@ember/engine/instance", "@ember/instrumentation", "@ember/service", "@ember/-internals/string", "@glimmer/destroyable", "@ember/runloop", "@glimmer/util", "@glimmer/runtime", "@ember/-internals/runtime", "@ember/object/-internals", "@ember/-internals/environment", "@ember/-internals/container", "@glimmer/node", "@ember/array/-internals", "@ember/-internals/glimmer", "@ember/array", "@glimmer/global-context", "@ember/routing/-internals", "@glimmer/program", "rsvp"], function (_exports, _opcodeCompiler, _owner2, _utils, _debug, _manager2, _reference, _validator, _metal, _object, _browserEnvironment, _views, _engine, _instance, _instrumentation, _service, _string, _destroyable, _runloop, _util, _runtime, _runtime2, _internals, _environment2, _container, _node, _internals2, _glimmer, _array, _globalContext, _internals3, _program, _rsvp) {
+define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler", "@ember/-internals/browser-environment", "@ember/debug", "@ember/object", "@glimmer/reference", "@glimmer/validator", "@ember/-internals/metal", "@ember/-internals/owner", "@ember/-internals/utils", "@glimmer/manager", "@ember/-internals/views", "@ember/engine", "@ember/engine/instance", "@ember/instrumentation", "@ember/service", "@ember/-internals/runtime", "@glimmer/runtime", "@glimmer/util", "@ember/-internals/string", "@glimmer/destroyable", "@ember/runloop", "@ember/object/-internals", "@ember/-internals/container", "@ember/-internals/environment", "@glimmer/program", "rsvp", "@glimmer/node", "@glimmer/global-context", "@ember/array/-internals", "@ember/-internals/glimmer", "@ember/array", "@ember/routing/-internals"], function (_exports, _opcodeCompiler, _browserEnvironment, _debug, _object, _reference, _validator, _metal, _owner2, _utils, _manager2, _views, _engine, _instance, _instrumentation, _service, _runtime, _runtime2, _util, _string, _destroyable, _runloop, _internals, _container, _environment2, _program, _rsvp, _node, _globalContext, _internals2, _glimmer, _array, _internals3) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -1520,13 +1492,13 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   Object.defineProperty(_exports, "DOMChanges", {
     enumerable: true,
     get: function () {
-      return _runtime.DOMChanges;
+      return _runtime2.DOMChanges;
     }
   });
   Object.defineProperty(_exports, "DOMTreeConstruction", {
     enumerable: true,
     get: function () {
-      return _runtime.DOMTreeConstruction;
+      return _runtime2.DOMTreeConstruction;
     }
   });
   _exports.LinkTo = _exports.Input = _exports.Helper = void 0;
@@ -1545,16 +1517,16 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   _exports.hasTemplate = hasTemplate;
   _exports.helper = helper;
   _exports.htmlSafe = htmlSafe;
-  _exports.isHTMLSafe = isHTMLSafe$1;
+  _exports.isHTMLSafe = isHTMLSafe;
   Object.defineProperty(_exports, "isSerializationFirstNode", {
     enumerable: true,
     get: function () {
-      return _runtime.isSerializationFirstNode;
+      return _runtime2.isSerializationFirstNode;
     }
   });
   _exports.modifierCapabilities = void 0;
   _exports.renderSettled = renderSettled;
-  _exports.setComponentManager = setComponentManager$1;
+  _exports.setComponentManager = setComponentManager;
   _exports.setTemplate = setTemplate;
   _exports.setTemplates = setTemplates;
   _exports.setupApplicationRegistry = setupApplicationRegistry;
@@ -1571,6 +1543,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return _opcodeCompiler.templateCacheCounters;
     }
   });
+  _exports.uniqueId = uniqueId$1;
   var RootTemplate = (0, _opcodeCompiler.templateFactory)({
     "id": "9BtKrod8",
     "block": "[[[46,[30,0],null,null,null]],[],false,[\"component\"]]",
@@ -1995,7 +1968,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @param {Hash} options
     @public
   */
-  class Input extends AbstractInput {
+  class _Input extends AbstractInput {
     constructor() {
       super(...arguments);
       this._checked = valueFrom(this.args.named['checked']);
@@ -2065,11 +2038,11 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return supportedArguments.indexOf(name) !== -1 || super.isSupportedArgument(name);
     }
   }
-  __decorate$1([_object.action], Input.prototype, "change", null);
-  __decorate$1([_object.action], Input.prototype, "input", null);
-  __decorate$1([_object.action], Input.prototype, "checkedDidChange", null);
-  var Input$1 = opaquify(Input, InputTemplate);
-  _exports.Input = Input$1;
+  __decorate$1([_object.action], _Input.prototype, "change", null);
+  __decorate$1([_object.action], _Input.prototype, "input", null);
+  __decorate$1([_object.action], _Input.prototype, "checkedDidChange", null);
+  var Input = opaquify(_Input, InputTemplate);
+  _exports.Input = Input;
   var LinkToTemplate = (0, _opcodeCompiler.templateFactory)({
     "id": "CVwkBtGh",
     "block": "[[[11,3],[16,1,[30,0,[\"id\"]]],[16,0,[30,0,[\"class\"]]],[16,\"role\",[30,0,[\"role\"]]],[16,\"title\",[30,0,[\"title\"]]],[16,\"rel\",[30,0,[\"rel\"]]],[16,\"tabindex\",[30,0,[\"tabindex\"]]],[16,\"target\",[30,0,[\"target\"]]],[17,1],[16,6,[30,0,[\"href\"]]],[4,[38,0],[\"click\",[30,0,[\"click\"]]],null],[12],[18,2,null],[13]],[\"&attrs\",\"&default\"],false,[\"on\",\"yield\"]]",
@@ -2083,9 +2056,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
   };
-  var EMPTY_ARRAY$1 = [];
+  var EMPTY_ARRAY = [];
   var EMPTY_QUERY_PARAMS = {};
-  (0, _debug.debugFreeze)(EMPTY_ARRAY$1);
+  (0, _debug.debugFreeze)(EMPTY_ARRAY);
   (0, _debug.debugFreeze)(EMPTY_QUERY_PARAMS);
   function isMissing(value) {
     return value === null || value === undefined;
@@ -2325,7 +2298,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @see {Ember.Templates.components.LinkTo}
     @public
   **/
-  class LinkTo extends InternalComponent {
+  class _LinkTo extends InternalComponent {
     constructor() {
       super(...arguments);
       // GH #17963
@@ -2450,14 +2423,16 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       } else if ('model' in this.args.named) {
         return [this.named('model')];
       } else {
-        return EMPTY_ARRAY$1;
+        return EMPTY_ARRAY;
       }
     }
     get query() {
       if ('query' in this.args.named) {
         var query = this.named('query');
         (false && !(query !== null && typeof query === 'object') && (0, _debug.assert)('The `@query` argument to the <LinkTo> component must be an object.', query !== null && typeof query === 'object'));
-        return Object.assign({}, query);
+        return {
+          ...query
+        };
       } else {
         return EMPTY_QUERY_PARAMS;
       }
@@ -2549,11 +2524,11 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return supportedArguments.indexOf(name) !== -1 || super.isSupportedArgument(name);
     }
   }
-  __decorate$2([(0, _service.service)('-routing')], LinkTo.prototype, "routing", void 0);
-  __decorate$2([_object.action], LinkTo.prototype, "click", null);
+  __decorate$2([(0, _service.service)('-routing')], _LinkTo.prototype, "routing", void 0);
+  __decorate$2([_object.action], _LinkTo.prototype, "click", null);
   var {
     prototype
-  } = LinkTo;
+  } = _LinkTo;
   var descriptorFor = (target, property) => {
     if (target) {
       return Object.getOwnPropertyDescriptor(target, property) || descriptorFor(Object.getPrototypeOf(target), property);
@@ -2601,11 +2576,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       configurable: true,
       enumerable: false,
       get: function query() {
-        var _a;
         if ('query' in this.args.named) {
           var qp = superQueryGetter.call(this);
           if (isQueryParams(qp)) {
-            return (_a = qp.values) !== null && _a !== void 0 ? _a : EMPTY_QUERY_PARAMS;
+            return qp.values ?? EMPTY_QUERY_PARAMS;
           } else {
             return qp;
           }
@@ -2635,8 +2609,8 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       }
     });
   }
-  var LinkTo$1 = opaquify(LinkTo, LinkToTemplate);
-  _exports.LinkTo = LinkTo$1;
+  var LinkTo = opaquify(_LinkTo, LinkToTemplate);
+  _exports.LinkTo = LinkTo;
   var TextareaTemplate = (0, _opcodeCompiler.templateFactory)({
     "id": "OpzctQXz",
     "block": "[[[11,\"textarea\"],[16,1,[30,0,[\"id\"]]],[16,0,[30,0,[\"class\"]]],[17,1],[16,2,[30,0,[\"value\"]]],[4,[38,0],[\"change\",[30,0,[\"change\"]]],null],[4,[38,0],[\"input\",[30,0,[\"input\"]]],null],[4,[38,0],[\"keyup\",[30,0,[\"keyUp\"]]],null],[4,[38,0],[\"paste\",[30,0,[\"valueDidChange\"]]],null],[4,[38,0],[\"cut\",[30,0,[\"valueDidChange\"]]],null],[12],[13]],[\"&attrs\"],false,[\"on\"]]",
@@ -2781,7 +2755,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @see {Ember.Templates.components.Textarea}
     @public
   **/
-  class Textarea extends AbstractInput {
+  class _Textarea extends AbstractInput {
     static toString() {
       return 'Textarea';
     }
@@ -2800,10 +2774,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return supportedArguments.indexOf(name) !== -1 || super.isSupportedArgument(name);
     }
   }
-  __decorate$3([_object.action], Textarea.prototype, "change", null);
-  __decorate$3([_object.action], Textarea.prototype, "input", null);
-  var Textarea$1 = opaquify(Textarea, TextareaTemplate);
-  _exports.Textarea = Textarea$1;
+  __decorate$3([_object.action], _Textarea.prototype, "change", null);
+  __decorate$3([_object.action], _Textarea.prototype, "input", null);
+  var Textarea = opaquify(_Textarea, TextareaTemplate);
+  _exports.Textarea = Textarea;
   function isTemplateFactory(template) {
     return typeof template === 'function';
   }
@@ -3208,7 +3182,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @for Ember.Templates.helpers
     @public
   */
-  var action$1 = internalHelper(args => {
+  var action = internalHelper(args => {
     var {
       named,
       positional
@@ -3217,19 +3191,19 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     // pos[0] is the context (or `this`)
     // pos[1] is the action name or function
     // Anything else is an action argument.
-    var [context, action$$1, ...restArgs] = positional;
-    (false && !(context && action$$1) && (0, _debug.assert)('hash position arguments', context && action$$1));
-    var debugKey = action$$1.debugLabel;
+    var [context, action, ...restArgs] = positional;
+    (false && !(context && action) && (0, _debug.assert)('hash position arguments', context && action));
+    var debugKey = action.debugLabel;
     var target = 'target' in named ? named['target'] : context;
     var processArgs = makeArgsProcessor('value' in named && named['value'] || false, restArgs);
-    var fn$$1;
-    if ((0, _reference.isInvokableRef)(action$$1)) {
-      fn$$1 = makeClosureAction(action$$1, action$$1, invokeRef, processArgs, debugKey);
+    var fn;
+    if ((0, _reference.isInvokableRef)(action)) {
+      fn = makeClosureAction(action, action, invokeRef, processArgs, debugKey);
     } else {
-      fn$$1 = makeDynamicClosureAction((0, _reference.valueForRef)(context), target, action$$1, processArgs, debugKey);
+      fn = makeDynamicClosureAction((0, _reference.valueForRef)(context), target, action, processArgs, debugKey);
     }
-    ACTIONS.add(fn$$1);
-    return (0, _reference.createUnboundRef)(fn$$1, '(result of an `action` helper)');
+    ACTIONS.add(fn);
+    return (0, _reference.createUnboundRef)(fn, '(result of an `action` helper)');
   });
   function NOOP$2(args) {
     return args;
@@ -3268,19 +3242,19 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return makeClosureAction(context, (0, _reference.valueForRef)(targetRef), (0, _reference.valueForRef)(actionRef), processArgs, debugKey)(...args);
     };
   }
-  function makeClosureAction(context, target, action$$1, processArgs, debugKey) {
+  function makeClosureAction(context, target, action, processArgs, debugKey) {
     var self;
-    var fn$$1;
-    (false && !(action$$1 !== undefined && action$$1 !== null) && (0, _debug.assert)(`Action passed is null or undefined in (action) from ${target}.`, action$$1 !== undefined && action$$1 !== null));
-    if (typeof action$$1 === 'string') {
+    var fn;
+    (false && !(action !== undefined && action !== null) && (0, _debug.assert)(`Action passed is null or undefined in (action) from ${target}.`, action !== undefined && action !== null));
+    if (typeof action === 'string') {
       self = target;
-      fn$$1 = target.actions && target.actions[action$$1];
-      (false && !(Boolean(fn$$1)) && (0, _debug.assert)(`An action named '${action$$1}' was not found in ${target}`, Boolean(fn$$1)));
-    } else if (typeof action$$1 === 'function') {
+      fn = target.actions && target.actions[action];
+      (false && !(Boolean(fn)) && (0, _debug.assert)(`An action named '${action}' was not found in ${target}`, Boolean(fn)));
+    } else if (typeof action === 'function') {
       self = context;
-      fn$$1 = action$$1;
+      fn = action;
     } else {
-      (false && !(false) && (0, _debug.assert)(`An action could not be made for \`${debugKey || action$$1}\` in ${target}. Please confirm that you are using either a quoted action name (i.e. \`(action '${debugKey || 'myAction'}')\`) or a function available in ${target}.`, false));
+      (false && !(false) && (0, _debug.assert)(`An action could not be made for \`${debugKey || action}\` in ${target}. Please confirm that you are using either a quoted action name (i.e. \`(action '${debugKey || 'myAction'}')\`) or a function available in ${target}.`, false));
     }
     return (...args) => {
       var payload = {
@@ -3289,7 +3263,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         label: '@glimmer/closure-action'
       };
       return (0, _instrumentation.flaggedInstrument)('interaction.ember-action', payload, () => {
-        return (0, _runloop.join)(self, fn$$1, ...processArgs(args));
+        return (0, _runloop.join)(self, fn, ...processArgs(args));
       });
     };
   }
@@ -3337,14 +3311,6 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       (0, _reference.updateRef)(this[REF], val);
     }
   }
-  var __rest = undefined && undefined.__rest || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-    }
-    return t;
-  };
   var ARGS = (0, _utils.enumerableSymbol)('ARGS');
   var HAS_BLOCK = (0, _utils.enumerableSymbol)('HAS_BLOCK');
   var DIRTY_TAG = Symbol('DIRTY_TAG');
@@ -3423,25 +3389,26 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return CURLY_CAPABILITIES;
     }
     prepareArgs(ComponentClass, args) {
-      var _a;
       if (args.named.has('__ARGS__')) {
         (false && !(args.positional.length === 0) && (0, _debug.assert)('[BUG] cannot pass both __ARGS__ and positional arguments', args.positional.length === 0));
-        var _b = args.named.capture(),
-          {
-            __ARGS__
-          } = _b,
-          rest = __rest(_b, ["__ARGS__"]);
+        var {
+          __ARGS__,
+          ...rest
+        } = args.named.capture();
         (false && !(__ARGS__) && (0, _debug.assert)('[BUG] unexpectedly missing __ARGS__ after check', __ARGS__)); // does this need to be untracked?
         var __args__ = (0, _reference.valueForRef)(__ARGS__);
         var prepared = {
           positional: __args__.positional,
-          named: Object.assign(Object.assign({}, rest), __args__.named)
+          named: {
+            ...rest,
+            ...__args__.named
+          }
         };
         return prepared;
       }
       var {
         positionalParams
-      } = (_a = ComponentClass.class) !== null && _a !== void 0 ? _a : ComponentClass;
+      } = ComponentClass.class ?? ComponentClass;
       // early exits
       if (positionalParams === undefined || positionalParams === null || args.positional.length === 0) {
         return null;
@@ -3451,7 +3418,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         (false && !(!args.named.has(positionalParams)) && (0, _debug.assert)(`You cannot specify positional parameters and the hash argument \`${positionalParams}\`.`, !args.named.has(positionalParams)));
         var captured = args.positional.capture();
         named = {
-          [positionalParams]: (0, _reference.createComputeRef)(() => (0, _runtime.reifyPositional)(captured))
+          [positionalParams]: (0, _reference.createComputeRef)(() => (0, _runtime2.reifyPositional)(captured))
         };
         Object.assign(named, args.named.capture());
       } else if (Array.isArray(positionalParams) && positionalParams.length > 0) {
@@ -3552,8 +3519,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return bucket;
     }
     getDebugName(definition) {
-      var _a;
-      return definition.fullName || definition.normalizedName || ((_a = definition.class) === null || _a === void 0 ? void 0 : _a.name) || definition.name;
+      return definition.fullName || definition.normalizedName || definition.class?.name || definition.name;
     }
     getSelf({
       rootRef
@@ -3744,7 +3710,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
 
   // Keep track of which component classes have already been processed for lazy event setup.
   var lazyEventsProcessed = new WeakMap();
-  class Component extends _views.CoreView.extend(_views.ChildViewsSupport, _views.ViewStateSupport, _views.ClassNamesSupport, _runtime2.TargetActionSupport, _views.ActionSupport, _views.ViewMixin, {
+  class Component extends _views.CoreView.extend(_views.ChildViewsSupport, _views.ViewStateSupport, _views.ClassNamesSupport, _runtime.TargetActionSupport, _views.ActionSupport, _views.ViewMixin, {
     // These need to be overridable via extend/create but should still
     // have a default. Defining them here is the best way to achieve that.
     didReceiveAttrs() {},
@@ -3816,8 +3782,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return this.__dispatcher;
     }
     on(name, target, method) {
-      var _a;
-      (_a = this._dispatcher) === null || _a === void 0 ? void 0 : _a.setupHandlerForEmberEvent(name);
+      this._dispatcher?.setupHandlerForEmberEvent(name);
       // The `on` method here comes from the Evented mixin. Since this mixin
       // is applied to the parent of this class, however, we are still able
       // to use `super`.
@@ -3877,7 +3842,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var {
         type,
         normalized
-      } = (0, _runtime.normalizeProperty)(element, name);
+      } = (0, _runtime2.normalizeProperty)(element, name);
       if (isSVG || type === 'attr') {
         return element.getAttribute(normalized);
       }
@@ -3891,49 +3856,6 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   Component.isComponentFactory = true;
   // We continue to use reopenClass here so that positionalParams can be overridden with reopenClass in subclasses.
   Component.reopenClass({
-    /**
-     Enables components to take a list of parameters as arguments.
-      For example, a component that takes two parameters with the names
-      `name` and `age`:
-         ```app/components/my-component.js
-      import Component from '@ember/component';
-         let MyComponent = Component.extend();
-         MyComponent.reopenClass({
-        positionalParams: ['name', 'age']
-      });
-         export default MyComponent;
-      ```
-         It can then be invoked like this:
-         ```hbs
-      {{my-component "John" 38}}
-      ```
-         The parameters can be referred to just like named parameters:
-         ```hbs
-      Name: {{name}}, Age: {{age}}.
-      ```
-         Using a string instead of an array allows for an arbitrary number of
-      parameters:
-         ```app/components/my-component.js
-      import Component from '@ember/component';
-         let MyComponent = Component.extend();
-         MyComponent.reopenClass({
-        positionalParams: 'names'
-      });
-         export default MyComponent;
-      ```
-         It can then be invoked like this:
-         ```hbs
-      {{my-component "John" "Michael" "Scott"}}
-      ```
-      The parameters can then be referred to by enumerating over the list:
-         ```hbs
-      {{#each names as |name|}}{{name}}{{/each}}
-      ```
-         @static
-      @public
-      @property positionalParams
-      @since 1.13.0
-      */
     positionalParams: []
   });
   (0, _manager2.setInternalComponentManager)(CURLY_COMPONENT_MANAGER, Component);
@@ -3944,29 +3866,6 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   var _a;
   var RECOMPUTE_TAG = Symbol('RECOMPUTE_TAG');
   var IS_CLASSIC_HELPER = Symbol('IS_CLASSIC_HELPER');
-  /**
-    In many cases it is not necessary to use the full `Helper` class.
-    The `helper` method create pure-function helpers without instances.
-    For example:
-  
-    ```app/helpers/format-currency.js
-    import { helper } from '@ember/component/helper';
-  
-    export default helper(function([cents], {currency}) {
-      return `${currency}${cents * 0.01}`;
-    });
-    ```
-  
-    @static
-    @param {Function} helper The helper function
-    @method helper
-    @for @ember/component/helper
-    @public
-    @since 1.13.0
-  */
-  function helper(helperFn) {
-    return new Wrapper(helperFn);
-  }
   class Helper extends _internals.FrameworkObject {
     init(properties) {
       super.init(properties);
@@ -4009,6 +3908,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   // here, but it should definitely be reviewed and probably removed.
   /** @deprecated */
   Helper.helper = helper;
+  /* eslint-enable import/export */
   function isClassicHelper(obj) {
     return obj[IS_CLASSIC_HELPER] === true;
   }
@@ -4090,13 +3990,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       });
     }
     createHelper(definition, args) {
-      var {
-        compute
-      } = definition;
-      return () => compute.call(null, args.positional, args.named);
+      return () => definition.compute.call(null, args.positional, args.named);
     }
-    getValue(fn$$1) {
-      return fn$$1();
+    getValue(fn) {
+      return fn();
     }
     getDebugName(definition) {
       return (0, _utils.getDebugName)(definition.compute);
@@ -4104,6 +4001,29 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   }
   var SIMPLE_CLASSIC_HELPER_MANAGER = new SimpleClassicHelperManager();
   (0, _manager2.setHelperManager)(() => SIMPLE_CLASSIC_HELPER_MANAGER, Wrapper.prototype);
+  function helper(helperFn
+  // At the implementation site, we don't care about the actual underlying type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) {
+    // SAFETY: this is completely lies, in two ways:
+    //
+    // 1. `Wrapper` is a `Factory<SimpleHelper<S>>`, but from the perspective of
+    //    any external callers (i.e. Ember *users*), it is quite important that
+    //    the `Factory` relationship be hidden, because it is not public API for
+    //    an end user to call `.create()` on a helper created this way. Instead,
+    //    we provide them an `abstract new` signature (which means it cannot be
+    //    directly constructed by calling `new` on it) and which does not have the
+    //    `.create()` signature on it anymore.
+    //
+    // 2. The produced type here ends up being a subtype of `Helper`, which is not
+    //    strictly true. This is necessary for the sake of Glint, which provides
+    //    its information by way of a "declaration merge" with `Helper<S>` in the
+    //    case of items produced by `helper()`.
+    //
+    // Long-term, this entire construct can go away in favor of deprecating the
+    // `helper()` invocation in favor of using plain functions.
+    return new Wrapper(helperFn);
+  }
 
   /**
   @module @ember/template
@@ -4183,7 +4103,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     var s;
     if (typeof string !== 'string') {
       // don't escape SafeStrings, since they're already safe
-      if (isHTMLSafe$1(string)) {
+      if (isHTMLSafe(string)) {
         return string.toHTML();
       } else if (string === null || string === undefined) {
         return '';
@@ -4265,7 +4185,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     @return {Boolean} `true` if the string was decorated with `htmlSafe`, `false` otherwise.
     @public
   */
-  function isHTMLSafe$1(str) {
+  function isHTMLSafe(str) {
     return str !== null && typeof str === 'object' && 'toHTML' in str && typeof str.toHTML === 'function';
   }
   function instrumentationPayload(def) {
@@ -4329,7 +4249,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
           bucket: state.outlet,
           type: 'outlet',
           name: state.outlet.name,
-          args: _runtime.EMPTY_ARGS,
+          args: _runtime2.EMPTY_ARGS,
           instance: undefined,
           template: undefined
         });
@@ -4339,7 +4259,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
           bucket: state.engineBucket,
           type: 'engine',
           name: state.engineBucket.mountPoint,
-          args: _runtime.EMPTY_ARGS,
+          args: _runtime2.EMPTY_ARGS,
           instance: state.engine,
           template: undefined
         });
@@ -4643,7 +4563,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       if ((0, _utils.isProxy)(iterable)) {
         // this is because the each-in doesn't actually get(proxy, 'key') but bypasses it
         // and the proxy's tag is lazy updated on access
-        iterable = (0, _runtime2._contentFor)(iterable);
+        iterable = (0, _runtime._contentFor)(iterable);
       }
       return new EachInWrapper(iterable);
     });
@@ -4718,13 +4638,13 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return iterable.length > 0 ? new this(iterable) : null;
     }
     static fromForEachable(object) {
-      var array$$1 = [];
-      object.forEach(item => array$$1.push(item));
-      return this.from(array$$1);
+      var array = [];
+      object.forEach(item => array.push(item));
+      return this.from(array);
     }
-    constructor(array$$1) {
-      super(array$$1.length);
-      this.array = array$$1;
+    constructor(array) {
+      super(array.length);
+      this.array = array;
     }
     valueFor(position) {
       return this.array[position];
@@ -4734,9 +4654,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     static from(iterable) {
       return iterable.length > 0 ? new this(iterable) : null;
     }
-    constructor(array$$1) {
-      super(array$$1.length);
-      this.array = array$$1;
+    constructor(array) {
+      super(array.length);
+      this.array = array;
     }
     valueFor(position) {
       return (0, _metal.objectAt)(this.array, position);
@@ -4901,7 +4821,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     },
     warnIfStyleNotTrusted(value) {
       (false && (0, _debug.warn)((0, _views.constructStyleDeprecationMessage)(String(value)), (() => {
-        if (value === null || value === undefined || isHTMLSafe$1(value)) {
+        if (value === null || value === undefined || isHTMLSafe(value)) {
           return true;
         }
         return false;
@@ -4910,15 +4830,13 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       }));
     },
     assert(test, msg, options) {
-      var _a;
       if (false /* DEBUG */) {
-        var id = options === null || options === void 0 ? void 0 : options.id;
+        var id = options?.id;
         var override = VM_ASSERTION_OVERRIDES.filter(o => o.id === id)[0];
-        (false && !(test) && (0, _debug.assert)((_a = override === null || override === void 0 ? void 0 : override.message) !== null && _a !== void 0 ? _a : msg, test));
+        (false && !(test) && (0, _debug.assert)(override?.message ?? msg, test));
       }
     },
     deprecate(msg, test, options) {
-      var _a;
       if (false /* DEBUG */) {
         var {
           id
@@ -4930,15 +4848,15 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         if (!override) throw new Error(`deprecation override for ${id} not found`);
         // allow deprecations to be disabled in the VM_DEPRECATION_OVERRIDES array below
         if (!override.disabled) {
-          (false && !(Boolean(test)) && (0, _debug.deprecate)((_a = override.message) !== null && _a !== void 0 ? _a : msg, Boolean(test), override));
+          (false && !(Boolean(test)) && (0, _debug.deprecate)(override.message ?? msg, Boolean(test), override));
         }
       }
     }
   });
   if (false /* DEBUG */) {
-    _validator.setTrackingTransactionEnv === null || _validator.setTrackingTransactionEnv === void 0 ? void 0 : (0, _validator.setTrackingTransactionEnv)({
+    (0, _validator.setTrackingTransactionEnv)?.({
       debugMessage(obj, keyName) {
-        var dirtyString = keyName ? `\`${keyName}\` on \`${_utils.getDebugName === null || _utils.getDebugName === void 0 ? void 0 : (0, _utils.getDebugName)(obj)}\`` : `\`${_utils.getDebugName === null || _utils.getDebugName === void 0 ? void 0 : (0, _utils.getDebugName)(obj)}\``;
+        var dirtyString = keyName ? `\`${keyName}\` on \`${(0, _utils.getDebugName)?.(obj)}\`` : `\`${(0, _utils.getDebugName)?.(obj)}\``;
         return `You attempted to update ${dirtyString}, but it had already been used previously in the same computation.  Attempting to update a value after using it in a computation can cause logical errors, infinite revalidation bugs, and performance issues, and is not supported.`;
       }
     });
@@ -5038,7 +4956,6 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   var resolve = internalHelper(({
     positional
   }, owner) => {
-    var _a;
     // why is this allowed to be undefined in the first place?
     (false && !(owner) && (0, _debug.assert)('[BUG] missing owner', owner));
     (false && !(positional.length === 1) && (0, _debug.assert)(`[BUG] wrong number of positional arguments, expecting 1, got ${positional.length}`, positional.length === 1));
@@ -5051,7 +4968,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var [type, name] = fullName.split(':');
       (false && !(owner.hasRegistration(fullName)) && (0, _debug.assert)(`Attempted to invoke \`(-resolve "${fullName}")\`, but ${name} was not a valid ${type} name.`, owner.hasRegistration(fullName)));
     }
-    return (0, _reference.createConstRef)((_a = owner.factoryFor(fullName)) === null || _a === void 0 ? void 0 : _a.class, `(-resolve "${fullName}")`);
+    return (0, _reference.createConstRef)(owner.factoryFor(fullName)?.class, `(-resolve "${fullName}")`);
   });
 
   /**
@@ -5405,9 +5322,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     }
     getEventName() {
       var {
-        on: on$$1
+        on
       } = this.namedArgs;
-      return on$$1 !== undefined ? (0, _reference.valueForRef)(on$$1) : 'click';
+      return on !== undefined ? (0, _reference.valueForRef)(on) : 'click';
     }
     getActionArgs() {
       var result = new Array(this.actionArgs.length);
@@ -5550,7 +5467,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     ensureEventSetup(actionState) {
       var dispatcher = actionState.owner.lookup('event_dispatcher:main');
       (false && !(dispatcher instanceof _views.EventDispatcher) && (0, _debug.assert)('Expected dispatcher to be an EventDispatcher', dispatcher instanceof _views.EventDispatcher));
-      dispatcher === null || dispatcher === void 0 ? void 0 : dispatcher.setupHandlerForEmberEvent(actionState.eventName);
+      dispatcher?.setupHandlerForEmberEvent(actionState.eventName);
     }
     getTag(actionState) {
       return actionState.tag;
@@ -5578,8 +5495,8 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   };
   class MountManager {
     getDynamicLayout(state) {
-      var templateFactory$$1 = state.engine.lookup('template:application');
-      return (0, _util.unwrapTemplate)(templateFactory$$1(state.engine)).asLayout();
+      var templateFactory = state.engine.lookup('template:application');
+      return (0, _util.unwrapTemplate)(templateFactory(state.engine)).asLayout();
     }
     getCapabilities() {
       return CAPABILITIES$2;
@@ -5741,7 +5658,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var extra = keys.filter(k => k !== 'model');
       (false && !(extra.length === 0) && (0, _debug.assert)('You can only pass a `model` argument to the {{mount}} helper, ' + 'e.g. {{mount "profile-engine" model=this.profile}}. ' + `You passed ${extra.join(',')}.`, extra.length === 0));
     }
-    captured = (0, _runtime.createCapturedArgs)(args.named, _runtime.EMPTY_POSITIONAL);
+    captured = (0, _runtime2.createCapturedArgs)(args.named, _runtime2.EMPTY_POSITIONAL);
     var lastName, lastDef;
     return (0, _reference.createComputeRef)(() => {
       var name = (0, _reference.valueForRef)(nameRef);
@@ -5751,7 +5668,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         }
         (false && !(owner.hasRegistration(`engine:${name}`)) && (0, _debug.assert)(`You used \`{{mount '${name}'}}\`, but the engine '${name}' can not be found.`, owner.hasRegistration(`engine:${name}`)));
         lastName = name;
-        lastDef = (0, _runtime.curry)(0 /* CurriedType.Component */, new MountDefinition(name), owner, captured, true);
+        lastDef = (0, _runtime2.curry)(0 /* CurriedType.Component */, new MountDefinition(name), owner, captured, true);
         return lastDef;
       } else {
         (false && !(name === null || name === undefined) && (0, _debug.assert)(`Invalid engine name '${name}' specified, engine name must be either a string, null or undefined.`, name === null || name === undefined));
@@ -5797,7 +5714,6 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     var lastState = null;
     var definition = null;
     return (0, _reference.createComputeRef)(() => {
-      var _a, _b;
       var outletState = (0, _reference.valueForRef)(outletRef);
       var state = stateFor(outletRef, outletState);
       if (!validate(state, lastState)) {
@@ -5823,8 +5739,8 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
           if (false /* DEBUG */) {
             named['model'] = (0, _reference.createDebugAliasRef)('@model', named['model']);
           }
-          var args = (0, _runtime.createCapturedArgs)(named, _runtime.EMPTY_POSITIONAL);
-          definition = (0, _runtime.curry)(0 /* CurriedType.Component */, new OutletComponentDefinition(state), (_b = (_a = outletState === null || outletState === void 0 ? void 0 : outletState.render) === null || _a === void 0 ? void 0 : _a.owner) !== null && _b !== void 0 ? _b : owner, args, true);
+          var args = (0, _runtime2.createCapturedArgs)(named, _runtime2.EMPTY_POSITIONAL);
+          definition = (0, _runtime2.curry)(0 /* CurriedType.Component */, new OutletComponentDefinition(state), outletState?.render?.owner ?? owner, args, true);
         } else {
           definition = null;
         }
@@ -5896,11 +5812,11 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     }
   }
   var BUILTIN_KEYWORD_HELPERS = {
-    action: action$1,
+    action,
     mut,
     readonly,
     unbound,
-    '-hash': _runtime.hash,
+    '-hash': _runtime2.hash,
     '-each-in': eachIn,
     '-normalize-class': normalizeClassHelper,
     '-resolve': resolve,
@@ -5909,14 +5825,15 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     '-outlet': outletHelper,
     '-in-el-null': inElementNullCheckHelper
   };
-  var BUILTIN_HELPERS = Object.assign(Object.assign({}, BUILTIN_KEYWORD_HELPERS), {
-    array: _runtime.array,
-    concat: _runtime.concat,
-    fn: _runtime.fn,
-    get: _runtime.get,
-    hash: _runtime.hash,
+  var BUILTIN_HELPERS = {
+    ...BUILTIN_KEYWORD_HELPERS,
+    array: _runtime2.array,
+    concat: _runtime2.concat,
+    fn: _runtime2.fn,
+    get: _runtime2.get,
+    hash: _runtime2.hash,
     'unique-id': uniqueId
-  });
+  };
   if (false /* DEBUG */) {
     BUILTIN_HELPERS['-disallow-dynamic-resolution'] = disallowDynamicResolution;
   } else {
@@ -5933,9 +5850,10 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   var BUILTIN_KEYWORD_MODIFIERS = {
     action: actionModifier
   };
-  var BUILTIN_MODIFIERS = Object.assign(Object.assign({}, BUILTIN_KEYWORD_MODIFIERS), {
-    on: _runtime.on
-  });
+  var BUILTIN_MODIFIERS = {
+    ...BUILTIN_KEYWORD_MODIFIERS,
+    on: _runtime2.on
+  };
   var CLASSIC_HELPER_MANAGER_ASSOCIATED = new _util._WeakSet();
   class ResolverImpl {
     constructor() {
@@ -5946,9 +5864,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     }
     lookupHelper(name, owner) {
       (false && !(!(BUILTIN_HELPERS[name] && owner.hasRegistration(`helper:${name}`))) && (0, _debug.assert)(`You attempted to overwrite the built-in helper "${name}" which is not allowed. Please rename the helper.`, !(BUILTIN_HELPERS[name] && owner.hasRegistration(`helper:${name}`))));
-      var helper$$1 = BUILTIN_HELPERS[name];
-      if (helper$$1 !== undefined) {
-        return helper$$1;
+      var helper = BUILTIN_HELPERS[name];
+      if (helper !== undefined) {
+        return helper;
       }
       var factory = owner.factoryFor(`helper:${name}`);
       if (factory === undefined) {
@@ -5977,8 +5895,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return definition;
     }
     lookupBuiltInHelper(name) {
-      var _a;
-      return (_a = BUILTIN_KEYWORD_HELPERS[name]) !== null && _a !== void 0 ? _a : null;
+      return BUILTIN_KEYWORD_HELPERS[name] ?? null;
     }
     lookupModifier(name, owner) {
       var builtin = BUILTIN_MODIFIERS[name];
@@ -5992,8 +5909,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       return modifier.class || null;
     }
     lookupBuiltInModifier(name) {
-      var _a;
-      return (_a = BUILTIN_KEYWORD_MODIFIERS[name]) !== null && _a !== void 0 ? _a : null;
+      return BUILTIN_KEYWORD_MODIFIERS[name] ?? null;
     }
     lookupComponent(name, owner) {
       var pair = lookupComponentPair(owner, name);
@@ -6020,8 +5936,8 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       if (pair.component === null) {
         if (_environment2.ENV._TEMPLATE_ONLY_GLIMMER_COMPONENTS) {
           definition = {
-            state: (0, _runtime.templateOnlyComponent)(undefined, name),
-            manager: _runtime.TEMPLATE_ONLY_COMPONENT_MANAGER,
+            state: (0, _runtime2.templateOnlyComponent)(undefined, name),
+            manager: _runtime2.TEMPLATE_ONLY_COMPONENT_MANAGER,
             template
           };
         } else {
@@ -6073,11 +5989,11 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var {
         environment: _environment,
         application: namespace,
-        template: templateFactory$$1
+        template: templateFactory
       } = options;
       var owner = (0, _owner2.getOwner)(options);
       (false && !(owner) && (0, _debug.assert)('OutletView is unexpectedly missing an owner', owner));
-      var template = templateFactory$$1(owner);
+      var template = templateFactory(owner);
       return new OutletView(_environment, owner, template, namespace);
     }
     constructor(_environment, owner, template, namespace) {
@@ -6161,18 +6077,18 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
   // This wrapper logic prevents us from rerendering in case of a hard failure
   // during render. This prevents infinite revalidation type loops from occuring,
   // and ensures that errors are not swallowed by subsequent follow on failures.
-  function errorLoopTransaction(fn$$1) {
+  function errorLoopTransaction(fn) {
     if (false /* DEBUG */) {
       return () => {
         var didError = true;
         try {
-          fn$$1();
+          fn();
           didError = false;
         } finally {
           if (didError) {
             // Noop the function so that we won't keep calling it and causing
             // infinite looping failures;
-            fn$$1 = () => {
+            fn = () => {
               // eslint-disable-next-line no-console
               console.warn('Attempted to rerender, but the Ember application has had an unrecoverable error occur during render. You should reload the application after fixing the cause of the error.');
             };
@@ -6180,7 +6096,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
         }
       };
     } else {
-      return fn$$1;
+      return fn;
     }
   }
   class RootState {
@@ -6193,7 +6109,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       this.destroyed = false;
       this.render = errorLoopTransaction(() => {
         var layout = (0, _util.unwrapTemplate)(template).asLayout();
-        var iterator = (0, _runtime.renderMain)(runtime, context, owner, self, builder(runtime.env, {
+        var iterator = (0, _runtime2.renderMain)(runtime, context, owner, self, builder(runtime.env, {
           element: parentElement,
           nextSibling: null
         }), layout, dynamicScope);
@@ -6228,7 +6144,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
            transaction exists already.
          * When roots are being destroyed during `Renderer#destroy`, no transaction exists
                 */
-        (0, _runtime.inTransaction)(env, () => (0, _destroyable.destroy)(result));
+        (0, _runtime2.inTransaction)(env, () => (0, _destroyable.destroy)(result));
       }
     }
   }
@@ -6311,7 +6227,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var builder = owner.lookup('service:-dom-builder');
       return new this(owner, document, env, rootTemplate, _viewRegistry, builder);
     }
-    constructor(owner, document, env, rootTemplate, viewRegistry, builder = _runtime.clientBuilder) {
+    constructor(owner, document, env, rootTemplate, viewRegistry, builder = _runtime2.clientBuilder) {
       this._inRenderTransaction = false;
       this._lastRevision = -1;
       this._destroyed = false;
@@ -6327,9 +6243,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var sharedArtifacts = (0, _program.artifacts)();
       this._context = (0, _opcodeCompiler.programCompilationContext)(sharedArtifacts, resolver);
       var runtimeEnvironmentDelegate = new EmberEnvironmentDelegate(owner, env.isInteractive);
-      this._runtime = (0, _runtime.runtimeContext)({
-        appendOperations: env.hasDOM ? new _runtime.DOMTreeConstruction(document) : new _node.NodeDOMTreeConstruction(document),
-        updateOperations: new _runtime.DOMChanges(document)
+      this._runtime = (0, _runtime2.runtimeContext)({
+        appendOperations: env.hasDOM ? new _runtime2.DOMTreeConstruction(document) : new _node.NodeDOMTreeConstruction(document),
+        updateOperations: new _runtime2.DOMChanges(document)
       }, runtimeEnvironmentDelegate, sharedArtifacts, resolver);
     }
     get debugRenderTree() {
@@ -6342,11 +6258,11 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     // renderer HOOKS
     appendOutletView(view, target) {
       var definition = createRootOutlet(view);
-      this._appendDefinition(view, (0, _runtime.curry)(0 /* CurriedType.Component */, definition, view.owner, null, true), target);
+      this._appendDefinition(view, (0, _runtime2.curry)(0 /* CurriedType.Component */, definition, view.owner, null, true), target);
     }
     appendTo(view, target) {
       var definition = new RootComponentDefinition(view);
-      this._appendDefinition(view, (0, _runtime.curry)(0 /* CurriedType.Component */, definition, this._owner, null, true), target);
+      this._appendDefinition(view, (0, _runtime2.curry)(0 /* CurriedType.Component */, definition, this._owner, null, true), target);
     }
     _appendDefinition(root, definition, target) {
       var self = (0, _reference.createConstRef)(definition, 'this');
@@ -6438,7 +6354,7 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
       var initialRootsLength;
       do {
         initialRootsLength = roots.length;
-        (0, _runtime.inTransaction)(runtime.env, () => {
+        (0, _runtime2.inTransaction)(runtime.env, () => {
           // ensure that for the first iteration of the loop
           // each root is processed
           for (var i = 0; i < roots.length; i++) {
@@ -6557,9 +6473,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
           case 'serialize':
             return _node.serializeBuilder.bind(null);
           case 'rehydrate':
-            return _runtime.rehydrationBuilder.bind(null);
+            return _runtime2.rehydrationBuilder.bind(null);
           default:
-            return _runtime.clientBuilder.bind(null);
+            return _runtime2.clientBuilder.bind(null);
         }
       }
     });
@@ -6575,9 +6491,9 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
     registry.optionsForType('helper', {
       instantiate: false
     });
-    registry.register('component:input', Input$1);
-    registry.register('component:link-to', LinkTo$1);
-    registry.register('component:textarea', Textarea$1);
+    registry.register('component:input', Input);
+    registry.register('component:link-to', LinkTo);
+    registry.register('component:textarea', Textarea);
     if (!_environment2.ENV._TEMPLATE_ONLY_GLIMMER_COMPONENTS) {
       registry.register((0, _container.privatize)`component:-default`, Component);
     }
@@ -6594,94 +6510,13 @@ define("@ember/-internals/glimmer/index", ["exports", "@glimmer/opcode-compiler"
      @return {Object} the same object passed in
      @public
     */
-  function setComponentManager$1(manager, obj) {
+  function setComponentManager(manager, obj) {
     return (0, _manager2.setComponentManager)(manager, obj);
   }
-  var componentCapabilities$1 = _manager2.componentCapabilities;
-  _exports.componentCapabilities = componentCapabilities$1;
-  var modifierCapabilities$1 = _manager2.modifierCapabilities;
-
-  /**
-    [Glimmer](https://github.com/tildeio/glimmer) is a templating engine used by Ember.js that is compatible with a subset of the [Handlebars](http://handlebarsjs.com/) syntax.
-  
-    ### Showing a property
-  
-    Templates manage the flow of an application's UI, and display state (through
-    the DOM) to a user. For example, given a component with the property "name",
-    that component's template can use the name in several ways:
-  
-    ```app/components/person-profile.js
-    import Component from '@ember/component';
-  
-    export default Component.extend({
-      name: 'Jill'
-    });
-    ```
-  
-    ```app/components/person-profile.hbs
-    {{this.name}}
-    <div>{{this.name}}</div>
-    <span data-name={{this.name}}></span>
-    ```
-  
-    Any time the "name" property on the component changes, the DOM will be
-    updated.
-  
-    Properties can be chained as well:
-  
-    ```handlebars
-    {{@aUserModel.name}}
-    <div>{{@listOfUsers.firstObject.name}}</div>
-    ```
-  
-    ### Using Ember helpers
-  
-    When content is passed in mustaches `{{}}`, Ember will first try to find a helper
-    or component with that name. For example, the `if` helper:
-  
-    ```app/components/person-profile.hbs
-    {{if this.name "I have a name" "I have no name"}}
-    <span data-has-name={{if this.name true}}></span>
-    ```
-  
-    The returned value is placed where the `{{}}` is called. The above style is
-    called "inline". A second style of helper usage is called "block". For example:
-  
-    ```handlebars
-    {{#if this.name}}
-      I have a name
-    {{else}}
-      I have no name
-    {{/if}}
-    ```
-  
-    The block form of helpers allows you to control how the UI is created based
-    on the values of properties.
-    A third form of helper is called "nested". For example here the concat
-    helper will add " Doe" to a displayed name if the person has no last name:
-  
-    ```handlebars
-    <span data-name={{concat this.firstName (
-      if this.lastName (concat " " this.lastName) "Doe"
-    )}}></span>
-    ```
-  
-    Ember's built-in helpers are described under the [Ember.Templates.helpers](/ember/release/classes/Ember.Templates.helpers)
-    namespace. Documentation on creating custom helpers can be found under
-    [helper](/ember/release/functions/@ember%2Fcomponent%2Fhelper/helper) (or
-    under [Helper](/ember/release/classes/Helper) if a helper requires access to
-    dependency injection).
-  
-    ### Invoking a Component
-  
-    Ember components represent state to the UI of an application. Further
-    reading on components can be found under [Component](/ember/release/classes/Component).
-  
-    @module @ember/component
-    @main @ember/component
-    @public
-   */
-  _exports.modifierCapabilities = modifierCapabilities$1;
+  var componentCapabilities = _manager2.componentCapabilities;
+  _exports.componentCapabilities = componentCapabilities;
+  var modifierCapabilities = _manager2.modifierCapabilities;
+  _exports.modifierCapabilities = modifierCapabilities;
 });
 define("@ember/-internals/meta/index", ["exports", "@ember/-internals/meta/lib/meta"], function (_exports, _meta) {
   "use strict";
@@ -7221,7 +7056,7 @@ define("@ember/-internals/meta/lib/meta", ["exports", "@ember/-internals/utils",
     return -1;
   }
 });
-define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@ember/-internals/utils", "@ember/debug", "@ember/-internals/environment", "@ember/runloop", "@glimmer/destroyable", "@glimmer/validator", "@glimmer/manager", "@glimmer/util", "@ember/array/-internals", "ember/version", "@ember/-internals/owner"], function (_exports, _meta2, _utils, _debug, _environment, _runloop, _destroyable, _validator, _manager, _util, _internals, _version, _owner) {
+define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@ember/-internals/utils", "@ember/debug", "@glimmer/destroyable", "@glimmer/validator", "@glimmer/util", "@ember/-internals/environment", "@ember/runloop", "@glimmer/manager", "@ember/array/-internals", "ember/version", "@ember/-internals/owner"], function (_exports, _meta3, _utils, _debug, _destroyable, _validator, _util, _environment, _runloop, _manager, _internals, _version, _owner) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -7347,7 +7182,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       method = target;
       target = null;
     }
-    (0, _meta2.meta)(obj).addToListeners(eventName, target, method, once === true, sync);
+    (0, _meta3.meta)(obj).addToListeners(eventName, target, method, once === true, sync);
   }
   /**
     Remove an event listener
@@ -7373,7 +7208,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       target = null;
       method = targetOrFunction;
     }
-    var m = (0, _meta2.meta)(obj);
+    var m = (0, _meta3.meta)(obj);
     m.removeFromListeners(eventName, target, method);
   }
   /**
@@ -7393,8 +7228,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   */
   function sendEvent(obj, eventName, params, actions, _meta) {
     if (actions === undefined) {
-      var meta$$1 = _meta === undefined ? (0, _meta2.peekMeta)(obj) : _meta;
-      actions = meta$$1 !== null ? meta$$1.matchingListeners(eventName) : undefined;
+      var _meta2 = _meta === undefined ? (0, _meta3.peekMeta)(obj) : _meta;
+      actions = _meta2 !== null ? _meta2.matchingListeners(eventName) : undefined;
     }
     if (actions === undefined || actions.length === 0) {
       return false;
@@ -7431,11 +7266,11 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @return {Boolean} if `obj` has listeners for event `eventName`
   */
   function hasListeners(obj, eventName) {
-    var meta$$1 = (0, _meta2.peekMeta)(obj);
-    if (meta$$1 === null) {
+    var meta = (0, _meta3.peekMeta)(obj);
+    if (meta === null) {
       return false;
     }
-    var matched = meta$$1.matchingListeners(eventName);
+    var matched = meta.matchingListeners(eventName);
     return matched !== undefined && matched.length > 0;
   }
   /**
@@ -7499,8 +7334,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   function addObserver(obj, path, target, method, sync = SYNC_DEFAULT) {
     var eventName = changeEvent(path);
     addListener(obj, eventName, target, method, false, sync);
-    var meta$$1 = (0, _meta2.peekMeta)(obj);
-    if (meta$$1 === null || !(meta$$1.isPrototypeMeta(obj) || meta$$1.isInitializing())) {
+    var meta = (0, _meta3.peekMeta)(obj);
+    if (meta === null || !(meta.isPrototypeMeta(obj) || meta.isInitializing())) {
       activateObserver(obj, eventName, sync);
     }
   }
@@ -7516,8 +7351,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   */
   function removeObserver(obj, path, target, method, sync = SYNC_DEFAULT) {
     var eventName = changeEvent(path);
-    var meta$$1 = (0, _meta2.peekMeta)(obj);
-    if (meta$$1 === null || !(meta$$1.isPrototypeMeta(obj) || meta$$1.isInitializing())) {
+    var meta = (0, _meta3.peekMeta)(obj);
+    if (meta === null || !(meta.isPrototypeMeta(obj) || meta.isInitializing())) {
       deactivateObserver(obj, eventName, sync);
     }
     removeListener(obj, eventName, target, method);
@@ -7536,7 +7371,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       activeObservers.get(eventName).count++;
     } else {
       var path = eventName.substring(0, eventName.lastIndexOf(':'));
-      var tag = getChainTagsForKey(target, path, (0, _validator.tagMetaFor)(target), (0, _meta2.peekMeta)(target));
+      var tag = getChainTagsForKey(target, path, (0, _validator.tagMetaFor)(target), (0, _meta3.peekMeta)(target));
       activeObservers.set(eventName, {
         count: 1,
         path,
@@ -7586,13 +7421,13 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   function revalidateObservers(target) {
     if (ASYNC_OBSERVERS.has(target)) {
       ASYNC_OBSERVERS.get(target).forEach(observer => {
-        observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta2.peekMeta)(target));
+        observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta3.peekMeta)(target));
         observer.lastRevision = (0, _validator.valueForTag)(observer.tag);
       });
     }
     if (SYNC_OBSERVERS.has(target)) {
       SYNC_OBSERVERS.get(target).forEach(observer => {
-        observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta2.peekMeta)(target));
+        observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta3.peekMeta)(target));
         observer.lastRevision = (0, _validator.valueForTag)(observer.tag);
       });
     }
@@ -7605,14 +7440,14 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     }
     lastKnownRevision = currentRevision;
     ASYNC_OBSERVERS.forEach((activeObservers, target) => {
-      var meta$$1 = (0, _meta2.peekMeta)(target);
+      var meta = (0, _meta3.peekMeta)(target);
       activeObservers.forEach((observer, eventName) => {
         if (!(0, _validator.validateTag)(observer.tag, observer.lastRevision)) {
           var sendObserver = () => {
             try {
-              sendEvent(target, eventName, [target, observer.path], undefined, meta$$1);
+              sendEvent(target, eventName, [target, observer.path], undefined, meta);
             } finally {
-              observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta2.peekMeta)(target));
+              observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta3.peekMeta)(target));
               observer.lastRevision = (0, _validator.valueForTag)(observer.tag);
             }
           };
@@ -7630,14 +7465,14 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     // only do this during a notifyPropertyChange), so there's no reason to check
     // a global revision.
     SYNC_OBSERVERS.forEach((activeObservers, target) => {
-      var meta$$1 = (0, _meta2.peekMeta)(target);
+      var meta = (0, _meta3.peekMeta)(target);
       activeObservers.forEach((observer, eventName) => {
         if (!observer.suspended && !(0, _validator.validateTag)(observer.tag, observer.lastRevision)) {
           try {
             observer.suspended = true;
-            sendEvent(target, eventName, [target, observer.path], undefined, meta$$1);
+            sendEvent(target, eventName, [target, observer.path], undefined, meta);
           } finally {
-            observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta2.peekMeta)(target));
+            observer.tag = getChainTagsForKey(target, observer.path, (0, _validator.tagMetaFor)(target), (0, _meta3.peekMeta)(target));
             observer.lastRevision = (0, _validator.valueForTag)(observer.tag);
             observer.suspended = false;
           }
@@ -7662,12 +7497,12 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
 
   // This is exported for `@tracked`, but should otherwise be avoided. Use `tagForObject`.
   var SELF_TAG = (0, _utils.symbol)('SELF_TAG');
-  function tagForProperty(obj, propertyKey, addMandatorySetter = false, meta$$1) {
+  function tagForProperty(obj, propertyKey, addMandatorySetter = false, meta) {
     var customTagFor = (0, _manager.getCustomTagFor)(obj);
     if (customTagFor !== undefined) {
       return customTagFor(obj, propertyKey, addMandatorySetter);
     }
-    var tag = (0, _validator.tagFor)(obj, propertyKey, meta$$1);
+    var tag = (0, _validator.tagFor)(obj, propertyKey, meta);
     if (false /* DEBUG */ && addMandatorySetter) {
       (0, _utils.setupMandatorySetter)(tag, obj, propertyKey);
     }
@@ -7716,8 +7551,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     @public
   */
   function notifyPropertyChange(obj, keyName, _meta, value) {
-    var meta$$1 = _meta === undefined ? (0, _meta2.peekMeta)(obj) : _meta;
-    if (meta$$1 !== null && (meta$$1.isInitializing() || meta$$1.isPrototypeMeta(obj))) {
+    var meta = _meta === undefined ? (0, _meta3.peekMeta)(obj) : _meta;
+    if (meta !== null && (meta.isInitializing() || meta.isPrototypeMeta(obj))) {
       return;
     }
     markObjectAsDirty(obj, keyName);
@@ -7808,29 +7643,29 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
         addAmt = -1;
       }
     }
-    var meta$$1 = (0, _meta2.peekMeta)(array);
+    var meta = (0, _meta3.peekMeta)(array);
     if (notify) {
       if (addAmt < 0 || removeAmt < 0 || addAmt - removeAmt !== 0) {
-        notifyPropertyChange(array, 'length', meta$$1);
+        notifyPropertyChange(array, 'length', meta);
       }
-      notifyPropertyChange(array, '[]', meta$$1);
+      notifyPropertyChange(array, '[]', meta);
     }
     sendEvent(array, '@array:change', [array, startIdx, removeAmt, addAmt]);
-    if (meta$$1 !== null) {
+    if (meta !== null) {
       var length = array.length;
       var addedAmount = addAmt === -1 ? 0 : addAmt;
       var removedAmount = removeAmt === -1 ? 0 : removeAmt;
       var delta = addedAmount - removedAmount;
       var previousLength = length - delta;
       var normalStartIdx = startIdx < 0 ? previousLength + startIdx : startIdx;
-      if (meta$$1.revisionFor('firstObject') !== undefined && normalStartIdx === 0) {
-        notifyPropertyChange(array, 'firstObject', meta$$1);
+      if (meta.revisionFor('firstObject') !== undefined && normalStartIdx === 0) {
+        notifyPropertyChange(array, 'firstObject', meta);
       }
-      if (meta$$1.revisionFor('lastObject') !== undefined) {
+      if (meta.revisionFor('lastObject') !== undefined) {
         var previousLastIndex = previousLength - 1;
         var lastAffectedIndex = normalStartIdx + removedAmount;
         if (previousLastIndex < lastAffectedIndex) {
-          notifyPropertyChange(array, 'lastObject', meta$$1);
+          notifyPropertyChange(array, 'lastObject', meta);
         }
       }
     }
@@ -7874,7 +7709,6 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     arrayContentDidChange(array, start, deleteCount, items.length);
   }
   function arrayObserversHelper(obj, target, opts, operation) {
-    var _a;
     var {
       willChange,
       didChange
@@ -7885,7 +7719,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
      * Array proxies have a `_revalidate` method which must be called to set
      * up their internal array observation systems.
      */
-    (_a = obj._revalidate) === null || _a === void 0 ? void 0 : _a.call(obj);
+    obj._revalidate?.();
     return obj;
   }
   function addArrayObserver(array, target, opts) {
@@ -7895,32 +7729,32 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     return arrayObserversHelper(array, target, opts, removeListener);
   }
   var CHAIN_PASS_THROUGH = new _util._WeakSet();
-  function finishLazyChains(meta$$1, key, value) {
-    var lazyTags = meta$$1.readableLazyChainsFor(key);
+  function finishLazyChains(meta, key, value) {
+    var lazyTags = meta.readableLazyChainsFor(key);
     if (lazyTags === undefined) {
       return;
     }
     if ((0, _utils.isObject)(value)) {
       for (var [tag, deps] of lazyTags) {
-        (0, _validator.updateTag)(tag, getChainTagsForKey(value, deps, (0, _validator.tagMetaFor)(value), (0, _meta2.peekMeta)(value)));
+        (0, _validator.updateTag)(tag, getChainTagsForKey(value, deps, (0, _validator.tagMetaFor)(value), (0, _meta3.peekMeta)(value)));
       }
     }
     lazyTags.length = 0;
   }
-  function getChainTagsForKeys(obj, keys, tagMeta, meta$$1) {
+  function getChainTagsForKeys(obj, keys, tagMeta, meta) {
     var tags = [];
     for (var key of keys) {
-      getChainTags(tags, obj, key, tagMeta, meta$$1);
+      getChainTags(tags, obj, key, tagMeta, meta);
     }
     return (0, _validator.combine)(tags);
   }
-  function getChainTagsForKey(obj, key, tagMeta, meta$$1) {
-    return (0, _validator.combine)(getChainTags([], obj, key, tagMeta, meta$$1));
+  function getChainTagsForKey(obj, key, tagMeta, meta) {
+    return (0, _validator.combine)(getChainTags([], obj, key, tagMeta, meta));
   }
-  function getChainTags(chainTags, obj, path, tagMeta, meta$$1) {
+  function getChainTags(chainTags, obj, path, tagMeta, meta$1) {
     var current = obj;
     var currentTagMeta = tagMeta;
-    var currentMeta = meta$$1;
+    var currentMeta = meta$1;
     var pathLength = path.length;
     var segmentEnd = -1;
     // prevent closures
@@ -7961,7 +7795,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
           if (item) {
             (false && !(typeof item === 'object') && (0, _debug.assert)(`When using @each to observe the array \`${current.toString()}\`, the items in the array must be objects`, typeof item === 'object'));
             chainTags.push(tagForProperty(item, segment, true));
-            currentMeta = (0, _meta2.peekMeta)(item);
+            currentMeta = (0, _meta3.peekMeta)(item);
             descriptor = currentMeta !== null ? currentMeta.peekDescriptors(segment) : undefined;
             // If the key is an alias, we need to bootstrap it
             if (descriptor !== undefined && typeof descriptor.altKey === 'string') {
@@ -8004,7 +7838,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
         // the CP is still valid, and if so we use the cached value. If not, then
         // we create a lazy chain lookup, and the next time the CP is calculated,
         // it will update that lazy chain.
-        var instanceMeta = currentMeta.source === current ? currentMeta : (0, _meta2.meta)(current);
+        var instanceMeta = currentMeta.source === current ? currentMeta : (0, _meta3.meta)(current);
         var lastRevision = instanceMeta.revisionFor(segment);
         if (lastRevision !== undefined && (0, _validator.validateTag)(propertyTag, lastRevision)) {
           current = instanceMeta.valueFor(segment);
@@ -8023,7 +7857,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
         break;
       }
       currentTagMeta = (0, _validator.tagMetaFor)(current);
-      currentMeta = (0, _meta2.peekMeta)(current);
+      currentMeta = (0, _meta3.peekMeta)(current);
     }
     return chainTags;
   }
@@ -8061,11 +7895,11 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       this._dependentKeys = undefined;
       this._meta = undefined;
     }
-    setup(_obj, keyName, _propertyDesc, meta$$1) {
-      meta$$1.writeDescriptors(keyName, this);
+    setup(_obj, keyName, _propertyDesc, meta) {
+      meta.writeDescriptors(keyName, this);
     }
-    teardown(_obj, keyName, meta$$1) {
-      meta$$1.removeDescriptors(keyName);
+    teardown(_obj, keyName, meta) {
+      meta.removeDescriptors(keyName);
     }
   }
   _exports.ComputedDescriptor = ComputedDescriptor;
@@ -8093,8 +7927,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   function makeComputedDecorator(desc, DecoratorClass) {
     var decorator = function COMPUTED_DECORATOR(target, key, propertyDesc, maybeMeta, isClassicDecorator) {
       (false && !(isClassicDecorator || !propertyDesc || !propertyDesc.get || !COMPUTED_GETTERS.has(propertyDesc.get)) && (0, _debug.assert)(`Only one computed property decorator can be applied to a class field or accessor, but '${key}' was decorated twice. You may have added the decorator to both a getter and setter, which is unnecessary.`, isClassicDecorator || !propertyDesc || !propertyDesc.get || !COMPUTED_GETTERS.has(propertyDesc.get)));
-      var meta$$1 = arguments.length === 3 ? (0, _meta2.meta)(target) : maybeMeta;
-      desc.setup(target, key, propertyDesc, meta$$1);
+      var meta$1 = arguments.length === 3 ? (0, _meta3.meta)(target) : maybeMeta;
+      desc.setup(target, key, propertyDesc, meta$1);
       var computedDesc = {
         enumerable: desc.enumerable,
         configurable: desc.configurable,
@@ -8122,9 +7956,9 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     (false && !(obj !== null) && (0, _debug.assert)('Cannot call `descriptorForProperty` on null', obj !== null));
     (false && !(obj !== undefined) && (0, _debug.assert)('Cannot call `descriptorForProperty` on undefined', obj !== undefined));
     (false && !(typeof obj === 'object' || typeof obj === 'function') && (0, _debug.assert)(`Cannot call \`descriptorForProperty\` on ${typeof obj}`, typeof obj === 'object' || typeof obj === 'function'));
-    var meta$$1 = _meta === undefined ? (0, _meta2.peekMeta)(obj) : _meta;
-    if (meta$$1 !== null) {
-      return meta$$1.peekDescriptors(keyName);
+    var meta = _meta === undefined ? (0, _meta3.peekMeta)(obj) : _meta;
+    if (meta !== null) {
+      return meta.peekDescriptors(keyName);
     }
   }
   function descriptorForDecorator(dec) {
@@ -8444,8 +8278,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
         this._property(...args);
       }
     }
-    setup(obj, keyName, propertyDesc, meta$$1) {
-      super.setup(obj, keyName, propertyDesc, meta$$1);
+    setup(obj, keyName, propertyDesc, meta) {
+      super.setup(obj, keyName, propertyDesc, meta);
       (false && !(!(propertyDesc && typeof propertyDesc.value === 'function')) && (0, _debug.assert)(`@computed can only be used on accessors or fields, attempted to use it with ${keyName} but that was a method. Try converting it to a getter (e.g. \`get ${keyName}() {}\`)`, !(propertyDesc && typeof propertyDesc.value === 'function')));
       (false && !(!propertyDesc || !propertyDesc.initializer) && (0, _debug.assert)(`@computed can only be used on empty fields. ${keyName} has an initial value (e.g. \`${keyName} = someValue\`)`, !propertyDesc || !propertyDesc.initializer));
       (false && !(!(this._hasConfig && propertyDesc && (typeof propertyDesc.get === 'function' || typeof propertyDesc.set === 'function'))) && (0, _debug.assert)(`Attempted to apply a computed property that already has a getter/setter to a ${keyName}, but it is a method or an accessor. If you passed @computed a function or getter/setter (e.g. \`@computed({ get() { ... } })\`), then it must be applied to a field`, !(this._hasConfig && propertyDesc && (typeof propertyDesc.get === 'function' || typeof propertyDesc.set === 'function'))));
@@ -8481,13 +8315,13 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       this._dependentKeys = args;
     }
     get(obj, keyName) {
-      var meta$$1 = (0, _meta2.meta)(obj);
+      var meta$1 = (0, _meta3.meta)(obj);
       var tagMeta = (0, _validator.tagMetaFor)(obj);
       var propertyTag = (0, _validator.tagFor)(obj, keyName, tagMeta);
       var ret;
-      var revision = meta$$1.revisionFor(keyName);
+      var revision = meta$1.revisionFor(keyName);
       if (revision !== undefined && (0, _validator.validateTag)(propertyTag, revision)) {
-        ret = meta$$1.valueFor(keyName);
+        ret = meta$1.valueFor(keyName);
       } else {
         // For backwards compatibility, we only throw if the CP has any dependencies. CPs without dependencies
         // should be allowed, even after the object has been destroyed, which is why we check _dependentKeys.
@@ -8501,14 +8335,14 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
           ret = _getter.call(obj, keyName);
         });
         if (_dependentKeys !== undefined) {
-          (0, _validator.updateTag)(propertyTag, getChainTagsForKeys(obj, _dependentKeys, tagMeta, meta$$1));
+          (0, _validator.updateTag)(propertyTag, getChainTagsForKeys(obj, _dependentKeys, tagMeta, meta$1));
           if (false /* DEBUG */) {
             _validator.ALLOW_CYCLES.set(propertyTag, true);
           }
         }
-        meta$$1.setValueFor(keyName, ret);
-        meta$$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
-        finishLazyChains(meta$$1, keyName, ret);
+        meta$1.setValueFor(keyName, ret);
+        meta$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
+        finishLazyChains(meta$1, keyName, ret);
       }
       (0, _validator.consumeTag)(propertyTag);
       // Add the tag of the returned value if it is an array, since arrays
@@ -8523,7 +8357,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
         this._throwReadOnlyError(obj, keyName);
       }
       (false && !(this._setter !== undefined) && (0, _debug.assert)(`Cannot override the computed property \`${keyName}\` on ${(0, _utils.toString)(obj)}.`, this._setter !== undefined));
-      var meta$$1 = (0, _meta2.meta)(obj);
+      var meta$1 = (0, _meta3.meta)(obj);
       // ensure two way binding works when the component has defined a computed
       // property with both a setter and dependent keys, in that scenario without
       // the sync observer added below the caller's value will never be updated
@@ -8531,7 +8365,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       // See GH#18147 / GH#19028 for details.
       if (
       // ensure that we only run this once, while the component is being instantiated
-      meta$$1.isInitializing() && this._dependentKeys !== undefined && this._dependentKeys.length > 0 && typeof obj[PROPERTY_DID_CHANGE] === 'function' && obj.isComponent) {
+      meta$1.isInitializing() && this._dependentKeys !== undefined && this._dependentKeys.length > 0 && typeof obj[PROPERTY_DID_CHANGE] === 'function' && obj.isComponent) {
         // It's redundant to do this here, but we don't want to check above so we can avoid an extra function call in prod.
         (false && !(hasPropertyDidChange(obj)) && (0, _debug.assert)('property did change hook is invalid', hasPropertyDidChange(obj)));
         addObserver(obj, keyName, () => {
@@ -8541,20 +8375,20 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       var ret;
       try {
         beginPropertyChanges();
-        ret = this._set(obj, keyName, value, meta$$1);
-        finishLazyChains(meta$$1, keyName, ret);
+        ret = this._set(obj, keyName, value, meta$1);
+        finishLazyChains(meta$1, keyName, ret);
         var tagMeta = (0, _validator.tagMetaFor)(obj);
         var propertyTag = (0, _validator.tagFor)(obj, keyName, tagMeta);
         var {
           _dependentKeys
         } = this;
         if (_dependentKeys !== undefined) {
-          (0, _validator.updateTag)(propertyTag, getChainTagsForKeys(obj, _dependentKeys, tagMeta, meta$$1));
+          (0, _validator.updateTag)(propertyTag, getChainTagsForKeys(obj, _dependentKeys, tagMeta, meta$1));
           if (false /* DEBUG */) {
             _validator.ALLOW_CYCLES.set(propertyTag, true);
           }
         }
-        meta$$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
+        meta$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
       } finally {
         endPropertyChanges();
       }
@@ -8563,9 +8397,9 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     _throwReadOnlyError(obj, keyName) {
       throw new Error(`Cannot set read-only property "${keyName}" on object: ${(0, _debug.inspect)(obj)}`);
     }
-    _set(obj, keyName, value, meta$$1) {
-      var hadCachedValue = meta$$1.revisionFor(keyName) !== undefined;
-      var cachedValue = meta$$1.valueFor(keyName);
+    _set(obj, keyName, value, meta) {
+      var hadCachedValue = meta.revisionFor(keyName) !== undefined;
+      var cachedValue = meta.valueFor(keyName);
       var ret;
       var {
         _setter
@@ -8580,29 +8414,29 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       if (hadCachedValue && cachedValue === ret) {
         return ret;
       }
-      meta$$1.setValueFor(keyName, ret);
-      notifyPropertyChange(obj, keyName, meta$$1, value);
+      meta.setValueFor(keyName, ret);
+      notifyPropertyChange(obj, keyName, meta, value);
       return ret;
     }
     /* called before property is overridden */
-    teardown(obj, keyName, meta$$1) {
-      if (meta$$1.revisionFor(keyName) !== undefined) {
-        meta$$1.setRevisionFor(keyName, undefined);
-        meta$$1.setValueFor(keyName, undefined);
+    teardown(obj, keyName, meta) {
+      if (meta.revisionFor(keyName) !== undefined) {
+        meta.setRevisionFor(keyName, undefined);
+        meta.setValueFor(keyName, undefined);
       }
-      super.teardown(obj, keyName, meta$$1);
+      super.teardown(obj, keyName, meta);
     }
   }
   _exports.ComputedProperty = ComputedProperty;
   class AutoComputedProperty extends ComputedProperty {
     get(obj, keyName) {
-      var meta$$1 = (0, _meta2.meta)(obj);
+      var meta$1 = (0, _meta3.meta)(obj);
       var tagMeta = (0, _validator.tagMetaFor)(obj);
       var propertyTag = (0, _validator.tagFor)(obj, keyName, tagMeta);
       var ret;
-      var revision = meta$$1.revisionFor(keyName);
+      var revision = meta$1.revisionFor(keyName);
       if (revision !== undefined && (0, _validator.validateTag)(propertyTag, revision)) {
-        ret = meta$$1.valueFor(keyName);
+        ret = meta$1.valueFor(keyName);
       } else {
         (false && !(!(0, _destroyable.isDestroyed)(obj)) && (0, _debug.assert)(`Attempted to access the computed ${obj}.${keyName} on a destroyed object, which is not allowed`, !(0, _destroyable.isDestroyed)(obj)));
         var {
@@ -8613,9 +8447,9 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
           ret = _getter.call(obj, keyName);
         });
         (0, _validator.updateTag)(propertyTag, tag);
-        meta$$1.setValueFor(keyName, ret);
-        meta$$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
-        finishLazyChains(meta$$1, keyName, ret);
+        meta$1.setValueFor(keyName, ret);
+        meta$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
+        finishLazyChains(meta$1, keyName, ret);
       }
       (0, _validator.consumeTag)(propertyTag);
       // Add the tag of the returned value if it is an array, since arrays
@@ -8665,50 +8499,12 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       desc._readOnly = true;
       return this;
     }
-    /**
-      In some cases, you may want to annotate computed properties with additional
-      metadata about how they function or what values they operate on. For example,
-      computed property functions may close over variables that are then no longer
-      available for introspection. You can pass a hash of these values to a
-      computed property.
-         Example:
-         ```javascript
-      import { computed } from '@ember/object';
-      import Person from 'my-app/utils/person';
-         class Store {
-        @computed().meta({ type: Person })
-        get person() {
-          let personId = this.personId;
-          return Person.create({ id: personId });
-        }
-      }
-      ```
-         Classic Class Example:
-         ```javascript
-      import { computed } from '@ember/object';
-      import Person from 'my-app/utils/person';
-         const Store = EmberObject.extend({
-        person: computed(function() {
-          let personId = this.get('personId');
-          return Person.create({ id: personId });
-        }).meta({ type: Person })
-      });
-      ```
-         The hash that you pass to the `meta()` function will be saved on the
-      computed property descriptor under the `_meta` key. Ember runtime
-      exposes a public API for retrieving these values from classes,
-      via the `metaForProperty()` function.
-         @method meta
-      @param {Object} meta
-      @chainable
-      @public
-    */
-    meta(meta$$1) {
+    meta(meta) {
       var prop = descriptorForDecorator(this);
       if (arguments.length === 0) {
         return prop._meta || {};
       } else {
-        prop._meta = meta$$1;
+        prop._meta = meta;
         return this;
       }
     }
@@ -8755,9 +8551,9 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     return Boolean(descriptorForProperty(obj, key));
   }
   function getCachedValueFor(obj, key) {
-    var meta$$1 = (0, _meta2.peekMeta)(obj);
-    if (meta$$1) {
-      return meta$$1.valueFor(key);
+    var meta = (0, _meta3.peekMeta)(obj);
+    if (meta) {
+      return meta.valueFor(key);
     } else {
       return undefined;
     }
@@ -8815,14 +8611,14 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       become the explicit value of this property.
   */
   function defineProperty(obj, keyName, desc, data, _meta) {
-    var meta$$1 = _meta === undefined ? (0, _meta2.meta)(obj) : _meta;
-    var previousDesc = descriptorForProperty(obj, keyName, meta$$1);
+    var meta$1 = _meta === undefined ? (0, _meta3.meta)(obj) : _meta;
+    var previousDesc = descriptorForProperty(obj, keyName, meta$1);
     var wasDescriptor = previousDesc !== undefined;
     if (wasDescriptor) {
-      previousDesc.teardown(obj, keyName, meta$$1);
+      previousDesc.teardown(obj, keyName, meta$1);
     }
     if (isClassicDecorator(desc)) {
-      defineDecorator(obj, keyName, desc, meta$$1);
+      defineDecorator(obj, keyName, desc, meta$1);
     } else if (desc === null || desc === undefined) {
       defineValue(obj, keyName, data, wasDescriptor, true);
     } else {
@@ -8831,16 +8627,16 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     }
     // if key is being watched, override chains that
     // were initialized with the prototype
-    if (!meta$$1.isPrototypeMeta(obj)) {
+    if (!meta$1.isPrototypeMeta(obj)) {
       revalidateObservers(obj);
     }
   }
-  function defineDecorator(obj, keyName, desc, meta$$1) {
+  function defineDecorator(obj, keyName, desc, meta) {
     var propertyDesc;
     if (false /* DEBUG */) {
-      propertyDesc = desc(obj, keyName, undefined, meta$$1, true);
+      propertyDesc = desc(obj, keyName, undefined, meta, true);
     } else {
-      propertyDesc = desc(obj, keyName, undefined, meta$$1);
+      propertyDesc = desc(obj, keyName, undefined, meta);
     }
     Object.defineProperty(obj, keyName, propertyDesc);
     // pass the decorator function forward for backwards compat
@@ -9069,12 +8865,12 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       descriptorForDecorator(this).oneWay();
       return this;
     }
-    meta(meta$$1) {
+    meta(meta) {
       var prop = descriptorForDecorator(this);
       if (arguments.length === 0) {
         return prop._meta || {};
       } else {
-        prop._meta = meta$$1;
+        prop._meta = meta;
       }
     }
   }
@@ -9083,14 +8879,14 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       super();
       this.altKey = altKey;
     }
-    setup(obj, keyName, propertyDesc, meta$$1) {
+    setup(obj, keyName, propertyDesc, meta) {
       (false && !(this.altKey !== keyName) && (0, _debug.assert)(`Setting alias '${keyName}' on self`, this.altKey !== keyName));
-      super.setup(obj, keyName, propertyDesc, meta$$1);
+      super.setup(obj, keyName, propertyDesc, meta);
       CHAIN_PASS_THROUGH.add(this);
     }
     get(obj, keyName) {
       var ret;
-      var meta$$1 = (0, _meta2.meta)(obj);
+      var meta$1 = (0, _meta3.meta)(obj);
       var tagMeta = (0, _validator.tagMetaFor)(obj);
       var propertyTag = (0, _validator.tagFor)(obj, keyName, tagMeta);
       // We don't use the tag since CPs are not automatic, we just want to avoid
@@ -9098,11 +8894,11 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       (0, _validator.untrack)(() => {
         ret = get(obj, this.altKey);
       });
-      var lastRevision = meta$$1.revisionFor(keyName);
+      var lastRevision = meta$1.revisionFor(keyName);
       if (lastRevision === undefined || !(0, _validator.validateTag)(propertyTag, lastRevision)) {
-        (0, _validator.updateTag)(propertyTag, getChainTagsForKey(obj, this.altKey, tagMeta, meta$$1));
-        meta$$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
-        finishLazyChains(meta$$1, keyName, ret);
+        (0, _validator.updateTag)(propertyTag, getChainTagsForKey(obj, this.altKey, tagMeta, meta$1));
+        meta$1.setRevisionFor(keyName, (0, _validator.valueForTag)(propertyTag));
+        finishLazyChains(meta$1, keyName, ret);
       }
       (0, _validator.consumeTag)(propertyTag);
       return ret;
@@ -9253,38 +9049,13 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       propertyNames = Array.from(arguments);
     }
     for (; i < propertyNames.length; i++) {
-      ret[propertyNames[i]] = get(obj, propertyNames[i]);
+      // SAFETY: we are just walking the list of property names, so we know the
+      // index access never produces `undefined`.
+      var name = propertyNames[i];
+      ret[name] = get(obj, name);
     }
     return ret;
   }
-
-  /**
-   @module @ember/object
-  */
-  /**
-    Set a list of properties on an object. These properties are set inside
-    a single `beginPropertyChanges` and `endPropertyChanges` batch, so
-    observers will be buffered.
-  
-    ```javascript
-    import EmberObject from '@ember/object';
-    let anObject = EmberObject.create();
-  
-    anObject.setProperties({
-      firstName: 'Stanley',
-      lastName: 'Stuart',
-      age: 21
-    });
-    ```
-  
-    @method setProperties
-    @static
-    @for @ember/object
-    @param obj
-    @param {Object} properties
-    @return properties
-    @public
-  */
   function setProperties(obj, properties) {
     if (properties === null || typeof properties !== 'object') {
       return properties;
@@ -9292,6 +9063,9 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
     changeProperties(() => {
       var props = Object.keys(properties);
       for (var propertyName of props) {
+        // SAFETY: casting `properties` this way is safe because any object in JS
+        // can be indexed this way, and the result will be `unknown`, making it
+        // safe for callers.
         set(obj, propertyName, properties[propertyName]);
       }
     });
@@ -9346,8 +9120,8 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       }
       var initializer = propertyDesc ? propertyDesc.initializer : undefined;
       var value = propertyDesc ? propertyDesc.value : undefined;
-      var decorator = function (target, key, _desc, _meta, isClassicDecorator$$1) {
-        (false && !(isClassicDecorator$$1) && (0, _debug.assert)(`You attempted to set a default value for ${key} with the @tracked({ value: 'default' }) syntax. You can only use this syntax with classic classes. For native classes, you can use class initializers: @tracked field = 'default';`, isClassicDecorator$$1));
+      var decorator = function (target, key, _desc, _meta, isClassicDecorator) {
+        (false && !(isClassicDecorator) && (0, _debug.assert)(`You attempted to set a default value for ${key} with the @tracked({ value: 'default' }) syntax. You can only use this syntax with classic classes. For native classes, you can use class initializers: @tracked field = 'default';`, isClassicDecorator));
         var fieldDesc = {
           initializer: initializer || (() => value)
         };
@@ -9390,7 +9164,7 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       set
     };
     COMPUTED_SETTERS.add(set);
-    (0, _meta2.meta)(target).writeDescriptors(key, new TrackedDescriptor(get, set));
+    (0, _meta3.meta)(target).writeDescriptors(key, new TrackedDescriptor(get, set));
     return newDesc;
   }
   class TrackedDescriptor {
@@ -9439,126 +9213,6 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   function throwCachedInvalidArgsError(args = []) {
     throw new Error(`You attempted to use @cached on with ${args.length > 1 ? 'arguments' : 'an argument'} ( @cached(${args.map(d => `'${d}'`).join(', ')}), which is not supported. Dependencies are automatically tracked, so you can just use ${'`@cached`'}`);
   }
-
-  /**
-    Ember uses caching based on trackable values to avoid updating large portions
-    of the application. This caching is exposed via a cache primitive that can be
-    used to cache a specific computation, so that it will not update and will
-    return the cached value until a tracked value used in its computation has
-    updated.
-  
-    @module @glimmer/tracking/primitives/cache
-    @public
-  */
-  /**
-    Receives a function, and returns a wrapped version of it that memoizes based on
-    _autotracking_. The function will only rerun whenever any tracked values used
-    within it have changed. Otherwise, it will return the previous value.
-  
-    ```js
-    import { tracked } from '@glimmer/tracking';
-    import { createCache, getValue } from '@glimmer/tracking/primitives/cache';
-  
-    class State {
-      @tracked value;
-    }
-  
-    let state = new State();
-    let computeCount = 0;
-  
-    let counter = createCache(() => {
-      // consume the state. Now, `counter` will
-      // only rerun if `state.value` changes.
-      state.value;
-  
-      return ++computeCount;
-    });
-  
-    getValue(counter); // 1
-  
-    // returns the same value because no tracked state has changed
-    getValue(counter); // 1
-  
-    state.value = 'foo';
-  
-    // reruns because a tracked value used in the function has changed,
-    // incermenting the counter
-    getValue(counter); // 2
-    ```
-  
-    @method createCache
-    @static
-    @for @glimmer/tracking/primitives/cache
-    @public
-  */
-  /**
-    Gets the value of a cache created with `createCache`.
-  
-    ```js
-    import { tracked } from '@glimmer/tracking';
-    import { createCache, getValue } from '@glimmer/tracking/primitives/cache';
-  
-    let computeCount = 0;
-  
-    let counter = createCache(() => {
-      return ++computeCount;
-    });
-  
-    getValue(counter); // 1
-    ```
-  
-    @method getValue
-    @static
-    @for @glimmer/tracking/primitives/cache
-    @public
-  */
-  /**
-    Can be used to check if a memoized function is _constant_. If no tracked state
-    was used while running a memoized function, it will never rerun, because nothing
-    can invalidate its result. `isConst` can be used to determine if a memoized
-    function is constant or not, in order to optimize code surrounding that
-    function.
-  
-    ```js
-    import { tracked } from '@glimmer/tracking';
-    import { createCache, getValue, isConst } from '@glimmer/tracking/primitives/cache';
-  
-    class State {
-      @tracked value;
-    }
-  
-    let state = new State();
-    let computeCount = 0;
-  
-    let counter = createCache(() => {
-      // consume the state
-      state.value;
-  
-      return computeCount++;
-    });
-  
-    let constCounter = createCache(() => {
-      return computeCount++;
-    });
-  
-    getValue(counter);
-    getValue(constCounter);
-  
-    isConst(counter); // false
-    isConst(constCounter); // true
-    ```
-  
-    If called on a cache that hasn't been accessed yet, it will throw an
-    error. This is because there's no way to know if the function will be constant
-    or not yet, and so this helps prevent missing an optimization opportunity on
-    accident.
-  
-    @method isConst
-    @static
-    @for @glimmer/tracking/primitives/cache
-    @public
-  */
-
   var hasOwnProperty = Object.prototype.hasOwnProperty;
   var searchDisabled = false;
   var flags = {
@@ -9689,16 +9343,6 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
       // continue
     }
   }
-});
-define("@ember/-internals/overrides/index", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.onEmberGlobalAccess = void 0;
-  var onEmberGlobalAccess;
-  _exports.onEmberGlobalAccess = onEmberGlobalAccess;
 });
 define("@ember/-internals/owner/index", ["exports", "@glimmer/owner"], function (_exports, _owner) {
   "use strict";
@@ -9963,9 +9607,7 @@ define("@ember/-internals/runtime/lib/mixins/-proxy", ["exports", "@ember/-inter
     }),
     unknownProperty(key) {
       var content = contentFor(this);
-      if (content) {
-        return (0, _metal.get)(content, key);
-      }
+      return content ? (0, _metal.get)(content, key) : undefined;
     },
     setUnknownProperty(key, value) {
       var m = (0, _meta.meta)(this);
@@ -10246,48 +9888,7 @@ define("@ember/-internals/runtime/lib/mixins/registry_proxy", ["exports", "@embe
     registerOptions: registryAlias('options'),
     registeredOptions: registryAlias('getOptions'),
     registerOptionsForType: registryAlias('optionsForType'),
-    registeredOptionsForType: registryAlias('getOptionsForType'),
-    /**
-      Define a dependency injection onto a specific factory or all factories
-      of a type.
-         When Ember instantiates a controller, view, or other framework component
-      it can attach a dependency to that component. This is often used to
-      provide services to a set of framework components.
-         An example of providing a session object to all controllers:
-         ```javascript
-      import { alias } from '@ember/object/computed';
-      import Application from '@ember/application';
-      import Controller from '@ember/controller';
-      import EmberObject from '@ember/object';
-         let App = Application.create();
-      let Session = EmberObject.extend({ isAuthenticated: false });
-         // A factory must be registered before it can be injected
-      App.register('session:main', Session);
-         // Inject 'session:main' onto all factories of the type 'controller'
-      // with the name 'session'
-      App.inject('controller', 'session', 'session:main');
-         App.IndexController = Controller.extend({
-        isLoggedIn: alias('session.isAuthenticated')
-      });
-      ```
-         Injections can also be performed on specific factories.
-         ```javascript
-      App.inject(<full_name or type>, <property name>, <full_name>)
-      App.inject('route', 'source', 'source:main')
-      App.inject('route:application', 'email', 'model:email')
-      ```
-         It is important to note that injections can only be performed on
-      classes that are instantiated by Ember itself. Instantiating a class
-      directly (via `create` or `new`) bypasses the dependency injection
-      system.
-         @public
-      @method inject
-      @param  factoryNameOrType {String}
-      @param  property {String}
-      @param  injectionName {String}
-      @deprecated
-    **/
-    inject: registryAlias('injection')
+    registeredOptionsForType: registryAlias('getOptionsForType')
   });
   function registryAlias(name) {
     return function (...args) {
@@ -10529,6 +10130,9 @@ define("@ember/-internals/utility-types/index", ["exports"], function (_exports)
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
+  _exports.Opaque = void 0;
+  class Opaque {}
+  _exports.Opaque = Opaque;
 });
 define("@ember/-internals/utils/index", ["exports", "@glimmer/util", "@ember/debug"], function (_exports, _util, _debug) {
   "use strict";
@@ -11118,17 +10722,6 @@ define("@ember/-internals/utils/index", ["exports", "@glimmer/util", "@ember/deb
       }
     };
   }
-
-  /*
-   This package will be eagerly parsed and should have no dependencies on external
-   packages.
-  
-   It is intended to be used to share utility methods that will be needed
-   by every Ember application (and is **not** a dumping ground of useful utilities).
-  
-   Utility methods that are needed in < 80% of cases should be placed
-   elsewhere (so they can be lazily evaluated / parsed).
-  */
 });
 define("@ember/-internals/views/index", ["exports", "@ember/-internals/views/lib/system/utils", "@ember/-internals/views/lib/system/event_dispatcher", "@ember/-internals/views/lib/component_lookup", "@ember/-internals/views/lib/views/core_view", "@ember/-internals/views/lib/mixins/class_names_support", "@ember/-internals/views/lib/mixins/child_views_support", "@ember/-internals/views/lib/mixins/view_state_support", "@ember/-internals/views/lib/mixins/view_support", "@ember/-internals/views/lib/mixins/action_support", "@ember/-internals/views/lib/compat/attrs", "@ember/-internals/views/lib/system/action_manager"], function (_exports, _utils, _event_dispatcher, _component_lookup, _core_view, _class_names_support, _child_views_support, _view_state_support, _view_support, _action_support, _attrs, _action_manager) {
   "use strict";
@@ -11961,7 +11554,6 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
       @param addedEvents {Object}
     */
     setup(addedEvents, _rootElement) {
-      var _a;
       (false && !((() => {
         var owner = (0, _owner.getOwner)(this);
         (false && !(owner) && (0, _debug.assert)('[BUG] Missing owner', owner)); // SAFETY: This is not guaranteed to be safe, but this is what we expect to be returned.
@@ -11973,12 +11565,16 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
         var environment = owner.lookup('-environment:main');
         return environment.isInteractive;
       })()));
-      var events = this.finalEventNameMapping = Object.assign(Object.assign({}, (0, _metal.get)(this, 'events')), addedEvents);
+      var events = this.finalEventNameMapping = {
+        ...(0, _metal.get)(this, 'events'),
+        ...addedEvents
+      };
       this._reverseEventNameMapping = Object.keys(events).reduce((result, key) => {
         var eventName = events[key];
-        return eventName ? Object.assign(Object.assign({}, result), {
+        return eventName ? {
+          ...result,
           [eventName]: key
-        }) : result;
+        } : result;
       }, {});
       var lazyEvents = this.lazyEvents;
       if (_rootElement !== undefined && _rootElement !== null) {
@@ -12014,7 +11610,7 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
       // setup event listeners for the non-lazily setup events
       for (var event in events) {
         if (Object.prototype.hasOwnProperty.call(events, event)) {
-          lazyEvents.set(event, (_a = events[event]) !== null && _a !== void 0 ? _a : null);
+          lazyEvents.set(event, events[event] ?? null);
         }
       }
       this._didSetup = true;
@@ -12026,10 +11622,9 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
       @param event the name of the event in the browser
     */
     setupHandlerForBrowserEvent(event) {
-      var _a;
       (false && !(this.finalEventNameMapping) && (0, _debug.assert)('[BUG] Expected finalEventNameMapping to be set', this.finalEventNameMapping));
       (false && !(this._sanitizedRootElement) && (0, _debug.assert)('[BUG] Expected _santizedRootElement to be set', this._sanitizedRootElement));
-      this.setupHandler(this._sanitizedRootElement, event, (_a = this.finalEventNameMapping[event]) !== null && _a !== void 0 ? _a : null);
+      this.setupHandler(this._sanitizedRootElement, event, this.finalEventNameMapping[event] ?? null);
     }
     /**
       Setup event listeners for the given Ember event name (camel case)
@@ -12038,9 +11633,8 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
       @param eventName
     */
     setupHandlerForEmberEvent(eventName) {
-      var _a;
       (false && !(this._sanitizedRootElement) && (0, _debug.assert)('[BUG] Expected _sanitizedRootElement to be set', this._sanitizedRootElement));
-      var event = (_a = this._reverseEventNameMapping) === null || _a === void 0 ? void 0 : _a[eventName];
+      var event = this._reverseEventNameMapping?.[eventName];
       if (event) {
         this.setupHandler(this._sanitizedRootElement, event, eventName);
       }
@@ -12063,8 +11657,6 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
       }
 
       var viewHandler = (target, event) => {
-        // SAFETY: SimpleElement is supposed to be a subset of Element so this _should_ be safe.
-        // However, the types are more specific in some places which necessitates the `as`.
         var view = (0, _views.getElementView)(target);
         var result = true;
         if (view) {
@@ -12118,8 +11710,6 @@ define("@ember/-internals/views/lib/system/event_dispatcher", ["exports", "@embe
         var target = event.target;
         (false && !(target instanceof Element) && (0, _debug.assert)(`[BUG] Received event without an Element target: ${event.type}, ${target}`, target instanceof Element));
         do {
-          // SAFETY: SimpleElement is supposed to be a subset of Element so this _should_ be safe.
-          // However, the types are more specific in some places which necessitates the `as`.
           if ((0, _views.getElementView)(target)) {
             if (viewHandler(target, event) === false) {
               event.preventDefault();
@@ -12392,7 +11982,6 @@ define("@ember/-internals/views/lib/views/core_view", ["exports", "@ember/-inter
       this.isView = true;
     }
     init(properties) {
-      var _a;
       super.init(properties);
       // Handle methods from Evented
       // The native class inheritance will not work for mixins. To work around this,
@@ -12402,7 +11991,7 @@ define("@ember/-internals/views/lib/views/core_view", ["exports", "@ember/-inter
       this.trigger = this._trigger;
       this._superHas = this.has;
       this.has = this._has;
-      (_a = this.parentView) !== null && _a !== void 0 ? _a : this.parentView = null;
+      this.parentView ??= null;
       this._state = 'preRender';
       this._currentState = this._states.preRender;
     }
@@ -12459,8 +12048,11 @@ define("@ember/-internals/views/lib/views/states", ["exports", "@ember/-internal
     rerender() {},
     destroy() {}
   });
-  var PRE_RENDER = Object.freeze(Object.assign({}, DEFAULT));
-  var HAS_ELEMENT = Object.freeze(Object.assign(Object.assign({}, DEFAULT), {
+  var PRE_RENDER = Object.freeze({
+    ...DEFAULT
+  });
+  var HAS_ELEMENT = Object.freeze({
+    ...DEFAULT,
     rerender(view) {
       view.renderer.rerender();
     },
@@ -12482,9 +12074,10 @@ define("@ember/-internals/views/lib/views/states", ["exports", "@ember/-internal
         return true; // continue event propagation
       }
     }
-  }));
+  });
 
-  var IN_DOM = Object.freeze(Object.assign(Object.assign({}, HAS_ELEMENT), {
+  var IN_DOM = Object.freeze({
+    ...HAS_ELEMENT,
     enter(view) {
       // Register the view for event handling. This hash is used by
       // Ember.EventDispatcher to dispatch incoming events.
@@ -12507,15 +12100,16 @@ define("@ember/-internals/views/lib/views/states", ["exports", "@ember/-internal
         });
       }
     }
-  }));
-  var DESTROYING = Object.freeze(Object.assign(Object.assign({}, DEFAULT), {
+  });
+  var DESTROYING = Object.freeze({
+    ...DEFAULT,
     appendChild() {
       throw new Error("You can't call appendChild on a view being destroyed");
     },
     rerender() {
       throw new Error("You can't call rerender on a view being destroyed");
     }
-  }));
+  });
   /*
     Describe how the specified actions should behave in the various
     states that a view can exist in. Possible states:
@@ -12540,7 +12134,7 @@ define("@ember/-internals/views/lib/views/states", ["exports", "@ember/-internal
   var _default = states;
   _exports.default = _default;
 });
-define("@ember/application/index", ["exports", "@ember/owner", "@ember/-internals/utils", "@ember/-internals/environment", "@ember/-internals/browser-environment", "@ember/debug", "@ember/runloop", "@ember/-internals/metal", "@ember/application/lib/lazy_load", "@ember/-internals/runtime", "@ember/-internals/views", "@ember/routing/route", "@ember/routing/router", "@ember/routing/auto-location", "@ember/routing/hash-location", "@ember/routing/history-location", "@ember/routing/none-location", "@ember/routing/-internals", "@ember/application/instance", "@ember/engine", "@ember/-internals/container", "@ember/-internals/glimmer", "@ember/routing/router-service"], function (_exports, _owner, _utils, _environment, _browserEnvironment, _debug, _runloop, _metal, _lazy_load, _runtime, _views, _route, _router, _autoLocation, _hashLocation, _historyLocation, _noneLocation, _internals, _instance, _engine, _container, _glimmer, _routerService) {
+define("@ember/application/index", ["exports", "@ember/owner", "@ember/-internals/utils", "@ember/-internals/environment", "@ember/-internals/browser-environment", "@ember/debug", "@ember/runloop", "@ember/-internals/metal", "@ember/application/lib/lazy_load", "@ember/-internals/runtime", "@ember/-internals/views", "@ember/routing/route", "@ember/routing/router", "@ember/routing/hash-location", "@ember/routing/history-location", "@ember/routing/none-location", "@ember/routing/-internals", "@ember/application/instance", "@ember/engine", "@ember/-internals/container", "@ember/-internals/glimmer", "@ember/routing/router-service"], function (_exports, _owner, _utils, _environment, _browserEnvironment, _debug, _runloop, _metal, _lazy_load, _runtime, _views, _route, _router, _hashLocation, _historyLocation, _noneLocation, _internals, _instance, _engine, _container, _glimmer, _routerService) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -12767,20 +12361,19 @@ define("@ember/application/index", ["exports", "@ember/owner", "@ember/-internal
       return registry;
     }
     init(properties) {
-      var _a, _b, _c, _d, _e, _f, _g, _h;
       super.init(properties);
-      (_a = this.rootElement) !== null && _a !== void 0 ? _a : this.rootElement = 'body';
-      (_b = this._document) !== null && _b !== void 0 ? _b : this._document = null;
-      (_c = this.eventDispatcher) !== null && _c !== void 0 ? _c : this.eventDispatcher = null;
-      (_d = this.customEvents) !== null && _d !== void 0 ? _d : this.customEvents = null;
-      (_e = this.autoboot) !== null && _e !== void 0 ? _e : this.autoboot = true;
-      (_f = this._document) !== null && _f !== void 0 ? _f : this._document = _browserEnvironment.hasDOM ? window.document : null;
-      (_g = this._globalsMode) !== null && _g !== void 0 ? _g : this._globalsMode = true;
+      this.rootElement ??= 'body';
+      this._document ??= null;
+      this.eventDispatcher ??= null;
+      this.customEvents ??= null;
+      this.autoboot ??= true;
+      this._document ??= _browserEnvironment.hasDOM ? window.document : null;
+      this._globalsMode ??= true;
       if (false /* DEBUG */) {
         if (_environment.ENV.LOG_VERSION) {
           // we only need to see this once per Application#init
           _environment.ENV.LOG_VERSION = false;
-          (_h = _metal.libraries.logVersions) === null || _h === void 0 ? void 0 : _h.call(_metal.libraries);
+          _metal.libraries.logVersions?.();
         }
       }
       // Start off the number of deferrals at 1. This will be decremented by
@@ -12805,10 +12398,11 @@ define("@ember/application/index", ["exports", "@ember/owner", "@ember/-internal
     buildInstance(options = {}) {
       (false && !(!this.isDestroyed) && (0, _debug.assert)('You cannot build new instances of this application since it has already been destroyed', !this.isDestroyed));
       (false && !(!this.isDestroying) && (0, _debug.assert)('You cannot build new instances of this application since it is being destroyed', !this.isDestroying));
-      return _instance.default.create(Object.assign(Object.assign({}, options), {
+      return _instance.default.create({
+        ...options,
         base: this,
         application: this
-      }));
+      });
     }
     /**
       Start tracking an ApplicationInstance for this application.
@@ -13353,7 +12947,6 @@ define("@ember/application/index", ["exports", "@ember/owner", "@ember/-internal
     });
     registry.register('route:basic', _route.default);
     registry.register('event_dispatcher:main', _views.EventDispatcher);
-    registry.register('location:auto', _autoLocation.default);
     registry.register('location:hash', _hashLocation.default);
     registry.register('location:history', _historyLocation.default);
     registry.register('location:none', _noneLocation.default);
@@ -13675,13 +13268,14 @@ define("@ember/application/instance", ["exports", "@ember/object", "@ember/-inte
     }
     toEnvironment() {
       // Do we really want to assign all of this!?
-      return Object.assign(Object.assign({}, environment), {
+      return {
+        ...environment,
         // For compatibility with existing code
         hasDOM: this.isBrowser,
         isInteractive: this.isInteractive,
         _renderMode: this._renderMode,
         options: this
-      });
+      };
     }
   }
   var _default = ApplicationInstance;
@@ -13728,9 +13322,8 @@ define("@ember/application/lib/lazy_load", ["exports", "@ember/-internals/enviro
   */
   _exports._loaded = _loaded;
   function onLoad(name, callback) {
-    var _a;
     var object = loaded[name];
-    var hooks = (_a = loadHooks[name]) !== null && _a !== void 0 ? _a : loadHooks[name] = [];
+    var hooks = loadHooks[name] ??= [];
     hooks.push(callback);
     if (object) {
       callback(object);
@@ -13748,7 +13341,6 @@ define("@ember/application/lib/lazy_load", ["exports", "@ember/-internals/enviro
     @private
   */
   function runLoadHooks(name, object) {
-    var _a;
     loaded[name] = object;
     if (_browserEnvironment.window && typeof CustomEvent === 'function') {
       var event = new CustomEvent(name, {
@@ -13756,7 +13348,7 @@ define("@ember/application/lib/lazy_load", ["exports", "@ember/-internals/enviro
       });
       _browserEnvironment.window.dispatchEvent(event);
     }
-    (_a = loadHooks[name]) === null || _a === void 0 ? void 0 : _a.forEach(callback => callback(object));
+    loadHooks[name]?.forEach(callback => callback(object));
   }
 });
 define("@ember/application/namespace", ["exports", "@ember/-internals/metal", "@ember/object", "@ember/-internals/utils", "@ember/debug"], function (_exports, _metal, _object, _utils, _debug) {
@@ -13917,7 +13509,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
   }
   function removeAt(array, index, len) {
     (false && !(index > -1 && index < array.length) && (0, _debug.assert)(`\`removeAt\` index provided is out of range`, index > -1 && index < array.length));
-    (0, _metal.replace)(array, index, len !== null && len !== void 0 ? len : 1, EMPTY_ARRAY);
+    (0, _metal.replace)(array, index, len ?? 1, EMPTY_ARRAY);
     return array;
   }
   function insertAt(array, index, item) {
@@ -14138,10 +13730,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
     invoke(methodName, ...args) {
       var ret = A();
       // SAFETY: This is not entirely safe and the code will not work with Ember proxies
-      this.forEach(item => {
-        var _a, _b;
-        return ret.push((_b = (_a = item)[methodName]) === null || _b === void 0 ? void 0 : _b.call(_a, ...args));
-      });
+      this.forEach(item => ret.push(item[methodName]?.(...args)));
       return ret;
     },
     toArray() {
@@ -14319,7 +13908,7 @@ define("@ember/array/index", ["exports", "@ember/-internals/metal", "@ember/obje
         return arr;
       } else {
         // SAFETY: This will return an NativeArray but TS can't infer that.
-        return NativeArray.apply(arr !== null && arr !== void 0 ? arr : []);
+        return NativeArray.apply(arr ?? []);
       }
     };
   }
@@ -14509,7 +14098,6 @@ define("@ember/array/proxy", ["exports", "@ember/-internals/metal", "@ember/obje
     }
     _addArrangedContentArrayObserver(arrangedContent) {
       if (arrangedContent && !arrangedContent.isDestroyed) {
-        // @ts-expect-error This check is still good for ensuring correctness
         (false && !(arrangedContent !== this) && (0, _debug.assert)("Can't set ArrayProxy's content to itself", arrangedContent !== this));
         (false && !(function (arr) {
           return Array.isArray(arr) || _array.default.detect(arr);
@@ -14715,14 +14303,29 @@ define("@ember/component/template-only", ["exports", "@glimmer/runtime"], functi
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _runtime.templateOnlyComponent;
-    }
-  });
+  _exports.default = void 0;
+  /**
+    @module @ember/component/template-only
+    @public
+  */
+
+  // NOTES:
+  //
+  // 1. The generic here is for a *signature: a way to hang information for tools
+  //    like Glint which can provide typey checking for component templates using
+  //    information supplied via this generic. While it may appear useless on this
+  //    class definition and extension, it is used by external tools and should
+  //    not be removed.
+  // 2. SAFETY: this cast is *throwing away* information that is not part of the
+  //    public API and replacing it with something which has the same calling
+  //    contract, but much less information (since we do not want to expose the
+  //    internal APIs like `moduleName` etc.).
+  // prettier-ignore
+  var templateOnly = _runtime.templateOnlyComponent;
+  var _default = templateOnly;
+  _exports.default = _default;
 });
-define("@ember/controller/index", ["exports", "@ember/-internals/owner", "@ember/object", "@ember/object/-internals", "@ember/-internals/metal", "@ember/object/mixin", "@ember/routing/-internals", "@ember/-internals/runtime", "@ember/-internals/utils"], function (_exports, _owner, _object, _internals, _metal, _mixin, _internals2, _runtime, _utils) {
+define("@ember/controller/index", ["exports", "@ember/-internals/owner", "@ember/object", "@ember/object/-internals", "@ember/-internals/metal", "@ember/object/mixin", "@ember/-internals/runtime", "@ember/-internals/utils"], function (_exports, _owner, _object, _internals, _metal, _mixin, _runtime, _utils) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -14789,28 +14392,6 @@ define("@ember/controller/index", ["exports", "@ember/-internals/owner", "@ember
       var delegate = controller._qpDelegate;
       var value = (0, _object.get)(controller, prop);
       delegate(prop, value);
-    },
-    transitionToRoute(...args) {
-      var _a;
-      (0, _internals2.deprecateTransitionMethods)('controller', 'transitionToRoute');
-      // target may be either another controller or a router
-      var target = (0, _object.get)(this, 'target');
-      // SAFETY: We can't actually assert that this is a full Controller or Router since some tests
-      // mock out an object that only has the single method. Since this is deprecated, I think it's
-      // ok to be a little less than proper here.
-      var method = (_a = target.transitionToRoute) !== null && _a !== void 0 ? _a : target.transitionTo;
-      return method.apply(target, (0, _internals2.prefixRouteNameArg)(this, args));
-    },
-    replaceRoute(...args) {
-      var _a;
-      (0, _internals2.deprecateTransitionMethods)('controller', 'replaceRoute');
-      // target may be either another controller or a router
-      var target = (0, _object.get)(this, 'target');
-      // SAFETY: We can't actually assert that this is a full Controller or Router since some tests
-      // mock out an object that only has the single method. Since this is deprecated, I think it's
-      // ok to be a little less than proper here.
-      var method = (_a = target.replaceRoute) !== null && _a !== void 0 ? _a : target.replaceWith;
-      return method.apply(target, (0, _internals2.prefixRouteNameArg)(this, args));
     }
   });
   _exports.ControllerMixin = ControllerMixin;
@@ -15465,6 +15046,8 @@ define("@ember/debug/index", ["exports", "@ember/-internals/browser-environment"
   _exports.warn = void 0;
   // These are the default production build versions:
   var noop = () => {};
+  // SAFETY: these casts are just straight-up lies, but the point is that they do
+  // not do anything in production builds.
   var assert = noop;
   _exports.assert = assert;
   var info = noop;
@@ -15539,39 +15122,13 @@ define("@ember/debug/index", ["exports", "@ember/-internals/browser-environment"
   @module @ember/debug
   */
   if (false /* DEBUG */) {
-    /**
-      Verify that a certain expectation is met, or throw a exception otherwise.
-         This is useful for communicating assumptions in the code to other human
-      readers as well as catching bugs that accidentally violates these
-      expectations.
-         Assertions are removed from production builds, so they can be freely added
-      for documentation and debugging purposes without worries of incuring any
-      performance penalty. However, because of that, they should not be used for
-      checks that could reasonably fail during normal usage. Furthermore, care
-      should be taken to avoid accidentally relying on side-effects produced from
-      evaluating the condition itself, since the code will not run in production.
-         ```javascript
-      import { assert } from '@ember/debug';
-         // Test for truthiness
-      assert('Must pass a string', typeof str === 'string');
-         // Fail unconditionally
-      assert('This code path should never be run');
-      ```
-         @method assert
-      @static
-      @for @ember/debug
-      @param {String} description Describes the expectation. This will become the
-        text of the Error thrown if the assertion fails.
-      @param {any} condition Must be truthy for the assertion to pass. If
-        falsy, an exception will be thrown.
-      @public
-      @since 1.0.0
-    */
-    setDebugFunction('assert', function assert(desc, test) {
+    // eslint-disable-next-line no-inner-declarations
+    function _assert(desc, test) {
       if (!test) {
         throw new Error(`Assertion Failed: ${desc}`);
       }
-    });
+    }
+    setDebugFunction('assert', _assert);
     /**
       Display a debug notice.
          Calls to this function are not invoked in production builds.
@@ -15795,13 +15352,13 @@ define("@ember/debug/lib/deprecate", ["exports", "@ember/-internals/environment"
     };
     var formatMessage = function formatMessage(_message, options) {
       var message = _message;
-      if (options === null || options === void 0 ? void 0 : options.id) {
+      if (options?.id) {
         message = message + ` [deprecation id: ${options.id}]`;
       }
-      if (options === null || options === void 0 ? void 0 : options.until) {
+      if (options?.until) {
         message = message + ` This will be removed in ${options.for} ${options.until}.`;
       }
-      if (options === null || options === void 0 ? void 0 : options.url) {
+      if (options?.url) {
         message += ` See ${options.url} for more details.`;
       }
       return message;
@@ -15818,6 +15375,7 @@ define("@ember/debug/lib/deprecate", ["exports", "@ember/-internals/environment"
       captureErrorForStack = () => {
         try {
           __fail__.fail();
+          return;
         } catch (e) {
           return e;
         }
@@ -16188,6 +15746,7 @@ define("@ember/debug/lib/warn", ["exports", "@ember/debug/index", "@ember/debug/
       }
       (0, _index.assert)(missingOptionsDeprecation, Boolean(options));
       (0, _index.assert)(missingOptionsIdDeprecation, Boolean(options && options.id));
+      // SAFETY: we checked this by way of the `arguments` check above.
       (0, _handlers.invoke)('warn', message, test, options);
     };
   }
@@ -16584,9 +16143,10 @@ define("@ember/engine/index", ["exports", "@ember/engine/lib/engine-parent", "@e
     */
     buildInstance(options = {}) {
       this.ensureInitializers();
-      return _instance.default.create(Object.assign(Object.assign({}, options), {
+      return _instance.default.create({
+        ...options,
         base: this
-      }));
+      });
     }
     /**
       Build and configure the registry for the current engine.
@@ -16961,11 +16521,10 @@ define("@ember/engine/instance", ["exports", "@ember/object", "@ember/-internals
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     static setupRegistry(_registry, _options) {}
     init(properties) {
-      var _a;
       super.init(properties);
       // Ensure the guid gets setup for this instance
       (0, _utils.guidFor)(this);
-      (_a = this.base) !== null && _a !== void 0 ? _a : this.base = this.application;
+      this.base ??= this.application;
       // Create a per-instance registry that will use the application's registry
       // as a fallback for resolving registrations.
       var registry = this.__registry__ = new _container.Registry({
@@ -17149,102 +16708,488 @@ define("@ember/enumerable/mutable", ["exports", "@ember/enumerable", "@ember/obj
   var _default = MutableEnumerable;
   _exports.default = _default;
 });
-define("@ember/error/index", ["exports", "@ember/debug"], function (_exports, _debug) {
+define("@ember/helper/index", ["exports", "@glimmer/manager", "@glimmer/runtime", "@ember/-internals/glimmer"], function (_exports, _manager, _runtime, _glimmer) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
+  _exports.uniqueId = _exports.setHelperManager = _exports.invokeHelper = _exports.hash = _exports.get = _exports.fn = _exports.concat = _exports.capabilities = _exports.array = void 0;
   /**
-    The JavaScript Error object used by Ember.assert.
-  
-    @class Error
-    @namespace Ember
-    @extends Error
-    @constructor
-    @public
-    @deprecated
+  @module @ember/helper
   */
-  var EmberError;
-  if (false /* DEBUG */) {
-    // eslint-disable-next-line no-inner-declarations
-    function EmberDebugConstructor(message) {
-      (false && !(false) && (0, _debug.deprecate)('The @ember/error package merely re-exported the native Error and is deprecated. Please use a native Error directly instead.', false, {
-        id: 'deprecate-ember-error',
-        until: '5.0.0',
-        url: 'https://deprecations.emberjs.com/v4.x/#toc_deprecate-ember-error',
-        for: 'ember-source',
-        since: {
-          available: '4.10.0',
-          enabled: '4.10.0'
-        }
-      }));
-      return new Error(message);
-    }
-    EmberDebugConstructor.prototype = Error.prototype;
-    // SAFETY: We need this cast since our EmberDebugConstructor doesn't define a type for `new` even though it will work with `new`.
-    EmberError = EmberDebugConstructor;
-  } else {
-    EmberError = Error;
-  }
-  var _default = EmberError;
-  _exports.default = _default;
-});
-define("@ember/helper/index", ["exports", "@glimmer/manager", "@glimmer/runtime"], function (_exports, _manager, _runtime) {
-  "use strict";
 
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "array", {
-    enumerable: true,
-    get: function () {
-      return _runtime.array;
+  /**
+    `capabilities` returns a capabilities configuration which can be used to modify
+    the behavior of the manager. Manager capabilities _must_ be provided using the
+    `capabilities` function, as the underlying implementation can change over time.
+  
+    The first argument to capabilities is a version string, which is the version of
+    Ember that the capabilities were defined in. Ember can add new versions at any
+    time, and these may have entirely different behaviors, but it will not remove
+    old versions until the next major version.
+  
+    ```js
+    capabilities('3.23');
+    ```
+  
+    The second argument is an object of capabilities and boolean values indicating
+    whether they are enabled or disabled.
+  
+    ```js
+    capabilities('3.23', {
+      hasValue: true,
+      hasDestructor: true,
+    });
+    ```
+  
+    If no value is specified, then the default value will be used.
+  
+    ### `3.23` capabilities
+  
+    #### `hasDestroyable`
+  
+    - Default value: false
+  
+    Determines if the helper has a destroyable to include in the destructor
+    hierarchy. If enabled, the `getDestroyable` hook will be called, and its result
+    will be associated with the destroyable parent block.
+  
+    #### `hasValue`
+  
+    - Default value: false
+  
+    Determines if the helper has a value which can be used externally. The helper's
+    `getValue` hook will be run whenever the value of the helper is accessed if this
+    capability is enabled.
+  
+    @method capabilities
+    @for @ember/helper
+    @static
+    @param {String} managerApiVersion The version of capabilities that are being used
+    @param options The capabilities values
+    @return {Capabilities} The capabilities object instance
+    @public
+  */
+  var capabilities = _manager.helperCapabilities;
+  /**
+    Sets the helper manager for an object or function.
+  
+    ```js
+    setHelperManager((owner) => new ClassHelperManager(owner), Helper)
+    ```
+  
+    When a value is used as a helper in a template, the helper manager is looked up
+    on the object by walking up its prototype chain and finding the first helper
+    manager. This manager then receives the value and can create and manage an
+    instance of a helper from it. This provides a layer of indirection that allows
+    users to design high-level helper APIs, without Ember needing to worry about the
+    details. High-level APIs can be experimented with and iterated on while the
+    core of Ember helpers remains stable, and new APIs can be introduced gradually
+    over time to existing code bases.
+  
+    `setHelperManager` receives two arguments:
+  
+    1. A factory function, which receives the `owner` and returns an instance of a
+      helper manager.
+    2. A helper definition, which is the object or function to associate the factory function with.
+  
+    The first time the object is looked up, the factory function will be called to
+    create the helper manager. It will be cached, and in subsequent lookups the
+    cached helper manager will be used instead.
+  
+    Only one helper manager is guaranteed to exist per `owner` and per usage of
+    `setHelperManager`, so many helpers will end up using the same instance of the
+    helper manager. As such, you should only store state that is related to the
+    manager itself. If you want to store state specific to a particular helper
+    definition, you should assign a unique helper manager to that helper. In
+    general, most managers should either be stateless, or only have the `owner` they
+    were created with as state.
+  
+    Helper managers must fulfill the following interface (This example uses
+    [TypeScript interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+    for precision, you do not need to write helper managers using TypeScript):
+  
+    ```ts
+    interface HelperManager<HelperStateBucket> {
+      capabilities: HelperCapabilities;
+  
+      createHelper(definition: HelperDefinition, args: TemplateArgs): HelperStateBucket;
+  
+      getValue?(bucket: HelperStateBucket): unknown;
+  
+      runEffect?(bucket: HelperStateBucket): void;
+  
+      getDestroyable?(bucket: HelperStateBucket): object;
     }
-  });
-  Object.defineProperty(_exports, "capabilities", {
-    enumerable: true,
-    get: function () {
-      return _manager.helperCapabilities;
+    ```
+  
+    The capabilities property _must_ be provided using the `capabilities()` function
+    imported from the same module as `setHelperManager`:
+  
+    ```js
+    import { capabilities } from '@ember/helper';
+  
+    class MyHelperManager {
+      capabilities = capabilities('3.21.0', { hasValue: true });
+  
+      // ...snip...
     }
-  });
-  Object.defineProperty(_exports, "concat", {
-    enumerable: true,
-    get: function () {
-      return _runtime.concat;
+    ```
+  
+    Below is a description of each of the methods on the interface and their
+    functions.
+  
+    #### `createHelper`
+  
+    `createHelper` is a required hook on the HelperManager interface. The hook is
+    passed the definition of the helper that is currently being created, and is
+    expected to return a _state bucket_. This state bucket is what represents the
+    current state of the helper, and will be passed to the other lifecycle hooks at
+    appropriate times. It is not necessarily related to the definition of the
+    helper itself - for instance, you could return an object _containing_ an
+    instance of the helper:
+  
+    ```js
+    class MyManager {
+      createHelper(Definition, args) {
+        return {
+          instance: new Definition(args);
+        };
+      }
     }
-  });
-  Object.defineProperty(_exports, "fn", {
-    enumerable: true,
-    get: function () {
-      return _runtime.fn;
+    ```
+  
+    This allows the manager to store metadata that it doesn't want to expose to the
+    user.
+  
+    This hook is _not_ autotracked - changes to tracked values used within this hook
+    will _not_ result in a call to any of the other lifecycle hooks. This is because
+    it is unclear what should happen if it invalidates, and rather than make a
+    decision at this point, the initial API is aiming to allow as much expressivity
+    as possible. This could change in the future with changes to capabilities and
+    their behaviors.
+  
+    If users do want to autotrack some values used during construction, they can
+    either create the instance of the helper in `runEffect` or `getValue`, or they
+    can use the `cache` API to autotrack the `createHelper` hook themselves. This
+    provides maximum flexibility and expressiveness to manager authors.
+  
+    This hook has the following timing semantics:
+  
+    **Always**
+    - called as discovered during DOM construction
+    - called in definition order in the template
+  
+    #### `getValue`
+  
+    `getValue` is an optional hook that should return the value of the helper. This
+    is the value that is returned from the helper and passed into the template.
+  
+    This hook is called when the value is requested from the helper (e.g. when the
+    template is rendering and the helper value is needed). The hook is autotracked,
+    and will rerun whenever any tracked values used inside of it are updated.
+    Otherwise it does not rerun.
+  
+    > Note: This means that arguments which are not _consumed_ within the hook will
+    > not trigger updates.
+  
+    This hook is only called for helpers with the `hasValue` capability enabled.
+    This hook has the following timing semantics:
+  
+    **Always**
+    - called the first time the helper value is requested
+    - called after autotracked state has changed
+  
+    **Never**
+    - called if the `hasValue` capability is disabled
+  
+    #### `runEffect`
+  
+    `runEffect` is an optional hook that should run the effect that the helper is
+    applying, setting it up or updating it.
+  
+    This hook is scheduled to be called some time after render and prior to paint.
+    There is not a guaranteed, 1-to-1 relationship between a render pass and this
+    hook firing. For instance, multiple render passes could occur, and the hook may
+    only trigger once. It may also never trigger if it was dirtied in one render
+    pass and then destroyed in the next.
+  
+    The hook is autotracked, and will rerun whenever any tracked values used inside
+    of it are updated. Otherwise it does not rerun.
+  
+    The hook is also run during a time period where state mutations are _disabled_
+    in Ember. Any tracked state mutation will throw an error during this time,
+    including changes to tracked properties, changes made using `Ember.set`, updates
+    to computed properties, etc. This is meant to prevent infinite rerenders and
+    other antipatterns.
+  
+    This hook is only called for helpers with the `hasScheduledEffect` capability
+    enabled. This hook is also not called in SSR currently, though this could be
+    added as a capability in the future. It has the following timing semantics:
+  
+    **Always**
+    - called after the helper was first created, if the helper has not been
+      destroyed since creation
+    - called after autotracked state has changed, if the helper has not been
+      destroyed during render
+  
+    **Never**
+    - called if the `hasScheduledEffect` capability is disabled
+    - called in SSR
+  
+    #### `getDestroyable`
+  
+    `getDestroyable` is an optional hook that users can use to register a
+    destroyable object for the helper. This destroyable will be registered to the
+    containing block or template parent, and will be destroyed when it is destroyed.
+    See the [Destroyables RFC](https://github.com/emberjs/rfcs/blob/master/text/0580-destroyables.md)
+    for more details.
+  
+    `getDestroyable` is only called if the `hasDestroyable` capability is enabled.
+  
+    This hook has the following timing semantics:
+  
+    **Always**
+    - called immediately after the `createHelper` hook is called
+  
+    **Never**
+    - called if the `hasDestroyable` capability is disabled
+  
+    @method setHelperManager
+    @for @ember/helper
+    @static
+    @param {Function} factory A factory function which receives an optional owner, and returns a helper manager
+    @param {object} definition The definition to associate the manager factory with
+    @return {object} The definition passed into setHelperManager
+    @public
+  */
+  _exports.capabilities = capabilities;
+  var setHelperManager = _manager.setHelperManager;
+  /**
+    The `invokeHelper` function can be used to create a helper instance in
+    JavaScript.
+  
+    To access a helper's value you have to use `getValue` from
+    `@glimmer/tracking/primitives/cache`.
+  
+    ```js
+    // app/components/data-loader.js
+    import Component from '@glimmer/component';
+    import { getValue } from '@glimmer/tracking/primitives/cache';
+    import Helper from '@ember/component/helper';
+    import { invokeHelper } from '@ember/helper';
+  
+    class PlusOne extends Helper {
+      compute([number]) {
+        return number + 1;
+      }
     }
-  });
-  Object.defineProperty(_exports, "get", {
-    enumerable: true,
-    get: function () {
-      return _runtime.get;
+  
+    export default class PlusOneComponent extends Component {
+      plusOne = invokeHelper(this, PlusOne, () => {
+        return {
+          positional: [this.args.number],
+        };
+      });
+  
+      get value() {
+        return getValue(this.plusOne);
+      }
     }
-  });
-  Object.defineProperty(_exports, "hash", {
-    enumerable: true,
-    get: function () {
-      return _runtime.hash;
-    }
-  });
-  Object.defineProperty(_exports, "invokeHelper", {
-    enumerable: true,
-    get: function () {
-      return _runtime.invokeHelper;
-    }
-  });
-  Object.defineProperty(_exports, "setHelperManager", {
-    enumerable: true,
-    get: function () {
-      return _manager.setHelperManager;
-    }
-  });
+    ```
+    ```js
+    {{this.value}}
+    ```
+  
+    It receives three arguments:
+  
+    * `context`: The parent context of the helper. When the parent is torn down and
+      removed, the helper will be as well.
+    * `definition`: The definition of the helper.
+    * `computeArgs`: An optional function that produces the arguments to the helper.
+      The function receives the parent context as an argument, and must return an
+      object with a `positional` property that is an array and/or a `named`
+      property that is an object.
+  
+    And it returns a Cache instance that contains the most recent value of the
+    helper. You can access the helper using `getValue()` like any other cache. The
+    cache is also destroyable, and using the `destroy()` function on it will cause
+    the helper to be torn down.
+  
+    Note that using `getValue()` on helpers that have scheduled effects will not
+    trigger the effect early. Effects will continue to run at their scheduled time.
+  
+    @method invokeHelper
+    @for @ember/helper
+    @static
+    @param {object} context The parent context of the helper
+    @param {object} definition The helper definition
+    @param {Function} computeArgs An optional function that produces args
+    @returns
+    @public
+  */
+  _exports.setHelperManager = setHelperManager;
+  var invokeHelper = _runtime.invokeHelper;
+  // SAFETY: we need to provide interfaces that Glint can declaration-merge with
+  // to provide appropriate completions. In each case, the imported item is
+  // currently typed only as `object`, and we are replacing it with a similarly
+  // low-information interface type: these are empty objects which are simply able
+  // to be distinguished so that Glint can provide the relevant extensions.
+  /* eslint-disable @typescript-eslint/no-empty-interface */
+  /**
+   * Using the `{{hash}}` helper, you can pass objects directly from the template
+   * as an argument to your components.
+   *
+   * ```
+   * import { hash } from '@ember/helper';
+   *
+   * <template>
+   *   {{#each-in (hash givenName='Jen' familyName='Weber') as |key value|}}
+   *     <p>{{key}}: {{value}}</p>
+   *   {{/each-in}}
+   * </template>
+   * ```
+   *
+   * **NOTE:** this example uses the experimental `<template>` feature, which is
+   * the only place you need to import `hash` to use it (it is a built-in when
+   * writing standalone `.hbs` files).
+   */
+  _exports.invokeHelper = invokeHelper;
+  var hash = _runtime.hash;
+  /**
+   * Using the `{{array}}` helper, you can pass arrays directly from the template
+   * as an argument to your components.
+   *
+   * ```js
+   * import { array } from '@ember/helper';
+   *
+   * <template>
+   *   <ul>
+   *   {{#each (array 'Tom Dale' 'Yehuda Katz' @anotherPerson) as |person|}}
+   *     <li>{{person}}</li>
+   *   {{/each}}
+   *   </ul>
+   * </template>
+   *
+   * **NOTE:** this example uses the experimental `<template>` feature, which is
+   * the only place you need to import `array` to use it (it is a built-in when
+   * writing standalone `.hbs` files).
+   * ```
+   */
+  _exports.hash = hash;
+  var array = _runtime.array;
+  /**
+   * The `{{concat}}` helper makes it easy to dynamically send a number of
+   * parameters to a component or helper as a single parameter in the format of a
+   * concatenated string.
+   *
+   * For example:
+   *
+   * ```js
+   * import { concat } from '@ember/helper';
+   *
+   * <template>
+   *   {{get @foo (concat "item" @index)}}
+   * </template>
+   * ```
+   *
+   * This will display the result of `@foo.item1` when `index` is `1`, and
+   * `this.foo.item2` when `index` is `2`, etc.
+   *
+   * **NOTE:** this example uses the experimental `<template>` feature, which is
+   * the only place you need to import `concat` to use it (it is a built-in when
+   * writing standalone `.hbs` files).
+   */
+  _exports.array = array;
+  var concat = _runtime.concat;
+  /**
+   * The `{{get}}` helper makes it easy to dynamically look up a property on an
+   * object or an element in an array. The second argument to `{{get}}` can be a
+   * string or a number, depending on the object being accessed.
+   *
+   * To access a property on an object with a string key:
+   *
+   * ```js
+   * import { get } from '@ember/helper';
+   *
+   * <template>
+   *   {{get @someObject "objectKey"}}
+   * </template>
+   * ```
+   *
+   * To access the first element in an array:
+   *
+   * ```js
+   * import { get } from '@ember/helper';
+   *
+   * <template>
+   *   {{get @someArray 0}}
+   * </template>
+   * ```
+   *
+   * To access a property on an object with a dynamic key:
+   *
+   * ```js
+   * import { get } from '@ember/helper';
+   *
+   * <template>
+   *   {{get @address @field}}
+   * </template>
+   * ```
+   *
+   * This will display the result of `@foo.item1` when `index` is `1`, and
+   * `this.foo.item2` when `index` is `2`, etc.
+   *
+   * **NOTE:** this example uses the experimental `<template>` feature, which is
+   * the only place you need to import `concat` to use it (it is a built-in when
+   * writing standalone `.hbs` files).
+   */
+  _exports.concat = concat;
+  var get = _runtime.get;
+  /**
+   * `{{fn}}` is a helper that receives a function and some arguments, and returns
+   * a new function that combines. This allows you to pass parameters along to
+   * functions in your templates:
+   *
+   * ```js
+   * import { fn } from '@ember/helper';
+   *
+   * function showAlert(message) {
+   *   alert(`The message is: '${message}'`);
+   * }
+   *
+   * <template>
+   *   <button type="button" {{on "click" (fn showAlert "Hello!")}}>
+   *     Click me!
+   *   </button>
+   * </template>
+   * ```
+   */
+  _exports.get = get;
+  var fn = _runtime.fn;
+  /**
+   * Use the {{uniqueId}} helper to generate a unique ID string suitable for use as
+   * an ID attribute in the DOM.
+   *
+   * Each invocation of {{uniqueId}} will return a new, unique ID string.
+   * You can use the `let` helper to create an ID that can be reused within a template.
+   *
+   * ```js
+   * import { uniqueId } from '@ember/helper';
+   *
+   * <template>
+   *   {{#let (uniqueId) as |emailId|}}
+   *     <label for={{emailId}}>Email address</label>
+   *     <input id={{emailId}} type="email" />
+   *   {{/let}}
+   * </template>
+   * ```
+   */
+  _exports.fn = fn;
+  var uniqueId = _glimmer.uniqueId;
+  /* eslint-enable @typescript-eslint/no-empty-interface */
+  _exports.uniqueId = uniqueId;
 });
 define("@ember/instrumentation/index", ["exports", "@ember/-internals/environment", "@ember/debug"], function (_exports, _environment, _debug) {
   "use strict";
@@ -17481,7 +17426,7 @@ define("@ember/instrumentation/index", ["exports", "@ember/-internals/environmen
     cache = {};
   }
 });
-define("@ember/modifier/index", ["exports", "@glimmer/manager", "@ember/-internals/glimmer", "@glimmer/runtime"], function (_exports, _manager, _glimmer, _runtime) {
+define("@ember/modifier/index", ["exports", "@glimmer/runtime", "@glimmer/manager", "@ember/-internals/glimmer"], function (_exports, _runtime, _manager, _glimmer) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -17493,18 +17438,17 @@ define("@ember/modifier/index", ["exports", "@glimmer/manager", "@ember/-interna
       return _glimmer.modifierCapabilities;
     }
   });
-  Object.defineProperty(_exports, "on", {
-    enumerable: true,
-    get: function () {
-      return _runtime.on;
-    }
-  });
-  Object.defineProperty(_exports, "setModifierManager", {
-    enumerable: true,
-    get: function () {
-      return _manager.setModifierManager;
-    }
-  });
+  _exports.setModifierManager = _exports.on = void 0;
+  // SAFETY: at the time of writing, the cast here is from `{}` to `OnModifier`,
+  // which makes it strictly safer to use outside this module because it is not
+  // usable as "any non-null item", which is what `{}` means, without loss of any
+  // information from the type itself.
+  var on = _runtime.on;
+  // NOTE: this uses assignment to *require* that the `glimmerSetModifierManager`
+  // is legally assignable to this type, i.e. that variance is properly upheld.
+  _exports.on = on;
+  var setModifierManager = _manager.setModifierManager;
+  _exports.setModifierManager = setModifierManager;
 });
 define("@ember/object/-internals", ["exports", "@ember/-internals/metal", "@ember/-internals/utils", "@ember/debug", "@ember/object"], function (_exports, _metal, _utils, _debug, _object) {
   "use strict";
@@ -17851,6 +17795,9 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
       var mergedProperties = obj.mergedProperties;
       var keyNames = Object.keys(properties);
       for (var keyName of keyNames) {
+        // SAFETY: this cast as a Record is safe because all object types can be
+        // indexed in JS, and we explicitly type it as returning `unknown`, so the
+        // result *must* be checked below.
         var value = properties[keyName];
         (false && !(!(0, _metal.isClassicDecorator)(value)) && (0, _debug.assert)('EmberObject.create no longer supports defining computed ' + 'properties. Define computed properties using extend() or reopen() ' + 'before calling create().', !(0, _metal.isClassicDecorator)(value)));
         (false && !(!(typeof value === 'function' && value.toString().indexOf('._super') !== -1)) && (0, _debug.assert)('EmberObject.create no longer supports defining methods that call _super.', !(typeof value === 'function' && value.toString().indexOf('._super') !== -1)));
@@ -18207,6 +18154,8 @@ define("@ember/object/core", ["exports", "@ember/-internals/container", "@ember/
       } else {
         initialize(instance, flattenProps.apply(this, args));
       }
+      // SAFETY: The `initialize` call is responsible to merge the prototype chain
+      // so that this holds.
       return instance;
     }
     /**
@@ -18747,7 +18696,7 @@ define("@ember/object/index", ["exports", "@ember/debug", "@ember/-internals/env
       return decorator;
     }
     var [target, key, desc] = args;
-    actionFn = desc === null || desc === void 0 ? void 0 : desc.value;
+    actionFn = desc?.value;
     (false && !(typeof actionFn === 'function') && (0, _debug.assert)('The @action decorator must be applied to methods when used in native classes', typeof actionFn === 'function')); // SAFETY: TS types are weird with decorators. This should work.
     return setupAction(target, key, actionFn);
   }
@@ -20778,7 +20727,7 @@ define("@ember/object/mixin", ["exports", "@ember/-internals/container", "@ember
     */
     reopen(...args) {
       if (args.length === 0) {
-        return;
+        return this;
       }
       if (this.properties) {
         var currentMixin = new Mixin(undefined, this.properties);
@@ -21000,9 +20949,7 @@ define("@ember/object/observable", ["exports", "@ember/-internals/meta", "@ember
     },
     cacheFor(keyName) {
       var meta = (0, _meta.peekMeta)(this);
-      if (meta !== null) {
-        return meta.valueFor(keyName);
-      }
+      return meta !== null ? meta.valueFor(keyName) : undefined;
     }
   });
   var _default = Observable;
@@ -21106,6 +21053,7 @@ define("@ember/object/proxy", ["exports", "@ember/object/-internals", "@ember/-i
   @module @ember/object/proxy
   */
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   class ObjectProxy extends _internals.FrameworkObject {}
   ObjectProxy.PrototypeMixin.reopen(_runtime._ProxyMixin);
   var _default = ObjectProxy;
@@ -21211,64 +21159,6 @@ define("@ember/owner/index", ["exports", "@ember/-internals/owner"], function (_
   var getOwner = _owner.getOwner;
   _exports.getOwner = getOwner;
 });
-define("@ember/polyfills/index", ["exports", "@ember/polyfills/lib/assign"], function (_exports, _assign) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "assign", {
-    enumerable: true,
-    get: function () {
-      return _assign.assign;
-    }
-  });
-  _exports.hasPropertyAccessors = void 0;
-  var hasPropertyAccessors = true;
-  _exports.hasPropertyAccessors = hasPropertyAccessors;
-});
-define("@ember/polyfills/lib/assign", ["exports", "@ember/debug"], function (_exports, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.assign = assign;
-  /**
-    Copy properties from a source object to a target object. Source arguments remain unchanged.
-  
-    ```javascript
-    import { assign } from '@ember/polyfills';
-  
-    var a = { first: 'Yehuda' };
-    var b = { last: 'Katz' };
-    var c = { company: 'Other Company' };
-    var d = { company: 'Tilde Inc.' };
-    assign(a, b, c, d); // a === { first: 'Yehuda', last: 'Katz', company: 'Tilde Inc.' };
-    ```
-  
-    @method assign
-    @for @ember/polyfills
-    @param {Object} target The object to assign into
-    @param {Object} ...args The objects to copy properties from
-    @return {Object}
-    @public
-    @static
-  */
-  function assign(target, ...rest) {
-    (false && !(false) && (0, _debug.deprecate)('Use of `assign` has been deprecated. Please use `Object.assign` or the spread operator instead.', false, {
-      id: 'ember-polyfills.deprecate-assign',
-      until: '5.0.0',
-      url: 'https://deprecations.emberjs.com/v4.x/#toc_ember-polyfills-deprecate-assign',
-      for: 'ember-source',
-      since: {
-        available: '4.0.0',
-        enabled: '4.0.0'
-      }
-    }));
-    return Object.assign(target, ...rest);
-  }
-});
 define("@ember/renderer/index", ["exports", "@ember/-internals/glimmer"], function (_exports, _glimmer) {
   "use strict";
 
@@ -21318,12 +21208,6 @@ define("@ember/routing/-internals", ["exports", "@ember/routing/lib/router_state
       return _controller_for.default;
     }
   });
-  Object.defineProperty(_exports, "deprecateTransitionMethods", {
-    enumerable: true,
-    get: function () {
-      return _utils.deprecateTransitionMethods;
-    }
-  });
   Object.defineProperty(_exports, "generateController", {
     enumerable: true,
     get: function () {
@@ -21342,235 +21226,6 @@ define("@ember/routing/-internals", ["exports", "@ember/routing/lib/router_state
       return _utils.prefixRouteNameArg;
     }
   });
-});
-define("@ember/routing/auto-location", ["exports", "@ember/-internals/browser-environment", "@ember/-internals/owner", "@ember/object", "@ember/debug", "@ember/routing/lib/location-utils"], function (_exports, _browserEnvironment, _owner, _object, _debug, _locationUtils) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _exports.getHashPath = getHashPath;
-  _exports.getHistoryPath = getHistoryPath;
-  /**
-  @module @ember/routing/auto-location
-  */
-  /**
-    AutoLocation will select the best location option based off browser
-    support with the priority order: history, hash, none.
-  
-    Clean pushState paths accessed by hashchange-only browsers will be redirected
-    to the hash-equivalent and vice versa so future transitions are consistent.
-  
-    Keep in mind that since some of your users will use `HistoryLocation`, your
-    server must serve the Ember app at all the routes you define.
-  
-    Browsers that support the `history` API will use `HistoryLocation`, those that
-    do not, but still support the `hashchange` event will use `HashLocation`, and
-    in the rare case neither is supported will use `NoneLocation`.
-  
-    Example:
-  
-    ```app/router.js
-    Router.map(function() {
-      this.route('posts', function() {
-        this.route('new');
-      });
-    });
-  
-    Router.reopen({
-      location: 'auto'
-    });
-    ```
-  
-    This will result in a posts.new url of `/posts/new` for modern browsers that
-    support the `history` api or `/#/posts/new` for older ones, like Internet
-    Explorer 9 and below.
-  
-    When a user visits a link to your application, they will be automatically
-    upgraded or downgraded to the appropriate `Location` class, with the URL
-    transformed accordingly, if needed.
-  
-    Keep in mind that since some of your users will use `HistoryLocation`, your
-    server must serve the Ember app at all the routes you define.
-  
-    @class AutoLocation
-    @static
-    @protected
-  */
-  class AutoLocation extends _object.default {
-    constructor() {
-      super(...arguments);
-      this.implementation = 'auto';
-    }
-    /**
-     Called by the router to instruct the location to do any feature detection
-     necessary. In the case of AutoLocation, we detect whether to use history
-     or hash concrete implementations.
-        @private
-    */
-    detect() {
-      var rootURL = this.rootURL;
-      (false && !(rootURL.charAt(rootURL.length - 1) === '/') && (0, _debug.assert)('rootURL must end with a trailing forward slash e.g. "/app/"', rootURL.charAt(rootURL.length - 1) === '/'));
-      var implementation = detectImplementation({
-        location: this.location,
-        history: this.history,
-        userAgent: this.userAgent,
-        rootURL,
-        documentMode: this.documentMode,
-        global: this.global
-      });
-      if (implementation === false) {
-        (0, _object.set)(this, 'cancelRouterSetup', true);
-        implementation = 'none';
-      }
-      var owner = (0, _owner.getOwner)(this);
-      (false && !(owner) && (0, _debug.assert)('AutoLocation is unexpectedly missing an owner', owner));
-      var concrete = owner.lookup(`location:${implementation}`);
-      (false && !(concrete !== undefined) && (0, _debug.assert)(`Could not find location '${implementation}'.`, concrete !== undefined));
-      (0, _object.set)(concrete, 'rootURL', rootURL);
-      (0, _object.set)(this, 'concreteImplementation', concrete);
-    }
-    willDestroy() {
-      var {
-        concreteImplementation
-      } = this;
-      if (concreteImplementation) {
-        concreteImplementation.destroy();
-      }
-    }
-  }
-  _exports.default = AutoLocation;
-  AutoLocation.reopen({
-    rootURL: '/',
-    initState: delegateToConcreteImplementation('initState'),
-    getURL: delegateToConcreteImplementation('getURL'),
-    setURL: delegateToConcreteImplementation('setURL'),
-    replaceURL: delegateToConcreteImplementation('replaceURL'),
-    onUpdateURL: delegateToConcreteImplementation('onUpdateURL'),
-    formatURL: delegateToConcreteImplementation('formatURL'),
-    location: _browserEnvironment.location,
-    history: _browserEnvironment.history,
-    global: _browserEnvironment.window,
-    userAgent: _browserEnvironment.userAgent,
-    cancelRouterSetup: false
-  });
-  function delegateToConcreteImplementation(methodName) {
-    return function (...args) {
-      var _a;
-      var {
-        concreteImplementation
-      } = this;
-      (false && !(concreteImplementation) && (0, _debug.assert)("AutoLocation's detect() method should be called before calling any other hooks.", concreteImplementation)); // We need this cast because `Parameters` is deferred so that it is not
-      // possible for TS to see it will always produce the right type. However,
-      // since `AnyFn` has a rest type, it is allowed. See discussion on [this
-      // issue](https://github.com/microsoft/TypeScript/issues/47615).
-      return (_a = concreteImplementation[methodName]) === null || _a === void 0 ? void 0 : _a.call(concreteImplementation, ...args);
-    };
-  }
-  function detectImplementation(options) {
-    var {
-      location,
-      userAgent,
-      history,
-      documentMode,
-      global,
-      rootURL
-    } = options;
-    var implementation = 'none';
-    var cancelRouterSetup = false;
-    var currentPath = (0, _locationUtils.getFullPath)(location);
-    if ((0, _locationUtils.supportsHistory)(userAgent, history)) {
-      var historyPath = getHistoryPath(rootURL, location);
-      // If the browser supports history and we have a history path, we can use
-      // the history location with no redirects.
-      if (currentPath === historyPath) {
-        implementation = 'history';
-      } else if (currentPath.substring(0, 2) === '/#') {
-        history.replaceState({
-          path: historyPath
-        }, '', historyPath);
-        implementation = 'history';
-      } else {
-        cancelRouterSetup = true;
-        (0, _locationUtils.replacePath)(location, historyPath);
-      }
-    } else if ((0, _locationUtils.supportsHashChange)(documentMode, global)) {
-      var hashPath = getHashPath(rootURL, location);
-      // Be sure we're using a hashed path, otherwise let's switch over it to so
-      // we start off clean and consistent. We'll count an index path with no
-      // hash as "good enough" as well.
-      if (currentPath === hashPath || currentPath === '/' && hashPath === '/#/') {
-        implementation = 'hash';
-      } else {
-        // Our URL isn't in the expected hash-supported format, so we want to
-        // cancel the router setup and replace the URL to start off clean
-        cancelRouterSetup = true;
-        (0, _locationUtils.replacePath)(location, hashPath);
-      }
-    }
-    if (cancelRouterSetup) {
-      return false;
-    }
-    return implementation;
-  }
-  /**
-    @private
-  
-    Returns the current path as it should appear for HistoryLocation supported
-    browsers. This may very well differ from the real current path (e.g. if it
-    starts off as a hashed URL)
-  */
-  function getHistoryPath(rootURL, location) {
-    var path = (0, _locationUtils.getPath)(location);
-    var hash = (0, _locationUtils.getHash)(location);
-    var query = (0, _locationUtils.getQuery)(location);
-    var rootURLIndex = path.indexOf(rootURL);
-    var routeHash;
-    var hashParts;
-    (false && !(rootURLIndex === 0) && (0, _debug.assert)(`Path ${path} does not start with the provided rootURL ${rootURL}`, rootURLIndex === 0)); // By convention, Ember.js routes using HashLocation are required to start
-    // with `#/`. Anything else should NOT be considered a route and should
-    // be passed straight through, without transformation.
-    if (hash.substring(0, 2) === '#/') {
-      // There could be extra hash segments after the route
-      hashParts = hash.substring(1).split('#');
-      // The first one is always the route url
-      routeHash = hashParts.shift();
-      // If the path already has a trailing slash, remove the one
-      // from the hashed route so we don't double up.
-      if (path.charAt(path.length - 1) === '/') {
-        routeHash = routeHash.substring(1);
-      }
-      // This is the "expected" final order
-      path += routeHash + query;
-      if (hashParts.length) {
-        path += `#${hashParts.join('#')}`;
-      }
-    } else {
-      path += query + hash;
-    }
-    return path;
-  }
-  /**
-    @private
-  
-    Returns the current path as it should appear for HashLocation supported
-    browsers. This may very well differ from the real current path.
-  
-    @method _getHashPath
-  */
-  function getHashPath(rootURL, location) {
-    var path = rootURL;
-    var historyPath = getHistoryPath(rootURL, location);
-    var routePath = historyPath.substring(rootURL.length);
-    if (routePath !== '') {
-      if (routePath[0] !== '/') {
-        routePath = `/${routePath}`;
-      }
-      path += `#${routePath}`;
-    }
-    return path;
-  }
 });
 define("@ember/routing/hash-location", ["exports", "@ember/object", "@ember/runloop", "@ember/routing/lib/location-utils"], function (_exports, _object, _runloop, _locationUtils) {
   "use strict";
@@ -21613,11 +21268,10 @@ define("@ember/routing/hash-location", ["exports", "@ember/object", "@ember/runl
   class HashLocation extends _object.default {
     constructor() {
       super(...arguments);
-      this.implementation = 'hash';
       this.lastSetURL = null;
     }
     init() {
-      (0, _object.set)(this, 'location', this._location || window.location);
+      this.location = this._location ?? window.location;
       this._hashchangeHandler = undefined;
     }
     /**
@@ -21662,7 +21316,7 @@ define("@ember/routing/hash-location", ["exports", "@ember/object", "@ember/runl
     */
     setURL(path) {
       this.location.hash = path;
-      (0, _object.set)(this, 'lastSetURL', path);
+      this.lastSetURL = path;
     }
     /**
       Uses location.replace to update the url without a page reload
@@ -21673,7 +21327,7 @@ define("@ember/routing/hash-location", ["exports", "@ember/object", "@ember/runl
     */
     replaceURL(path) {
       this.location.replace(`#${path}`);
-      (0, _object.set)(this, 'lastSetURL', path);
+      this.lastSetURL = path;
     }
     /**
       Register a callback to be invoked when the hash changes. These
@@ -21690,7 +21344,7 @@ define("@ember/routing/hash-location", ["exports", "@ember/object", "@ember/runl
         if (this.lastSetURL === path) {
           return;
         }
-        (0, _object.set)(this, 'lastSetURL', null);
+        this.lastSetURL = null;
         callback(path);
       });
       window.addEventListener('hashchange', this._hashchangeHandler);
@@ -21723,7 +21377,7 @@ define("@ember/routing/hash-location", ["exports", "@ember/object", "@ember/runl
   }
   _exports.default = HashLocation;
 });
-define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/routing/lib/location-utils"], function (_exports, _object, _locationUtils) {
+define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/debug", "@ember/routing/lib/location-utils"], function (_exports, _object, _debug, _locationUtils) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -21785,7 +21439,6 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
   class HistoryLocation extends _object.default {
     constructor() {
       super(...arguments);
-      this.implementation = 'history';
       /**
         Will be pre-pended to path upon state change
                @property rootURL
@@ -21803,15 +21456,14 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
       return (0, _locationUtils.getHash)(this.location);
     }
     init() {
-      var _a;
       this._super(...arguments);
       var base = document.querySelector('base');
       var baseURL = '';
       if (base !== null && base.hasAttribute('href')) {
-        baseURL = (_a = base.getAttribute('href')) !== null && _a !== void 0 ? _a : '';
+        baseURL = base.getAttribute('href') ?? '';
       }
-      (0, _object.set)(this, 'baseURL', baseURL);
-      (0, _object.set)(this, 'location', this.location || window.location);
+      this.baseURL = baseURL;
+      this.location = this.location ?? window.location;
       this._popstateHandler = undefined;
     }
     /**
@@ -21820,8 +21472,8 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
       @method initState
     */
     initState() {
-      var history = this.history || window.history;
-      (0, _object.set)(this, 'history', history);
+      var history = this.history ?? window.history;
+      this.history = history;
       var {
         state
       } = history;
@@ -21863,6 +21515,7 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
       @param path {String}
     */
     setURL(path) {
+      (false && !(this.history) && (0, _debug.assert)('HistoryLocation.history is unexpectedly missing', this.history));
       var {
         state
       } = this.history;
@@ -21879,6 +21532,7 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
       @param path {String}
     */
     replaceURL(path) {
+      (false && !(this.history) && (0, _debug.assert)('HistoryLocation.history is unexpectedly missing', this.history));
       var {
         state
       } = this.history;
@@ -21898,7 +21552,8 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
         path,
         uuid: _uuid()
       };
-      this.history.pushState(state, null, path);
+      (false && !(this.history) && (0, _debug.assert)('HistoryLocation.history is unexpectedly missing', this.history));
+      this.history.pushState(state, '', path);
       // used for webkit workaround
       this._previousURL = this.getURL();
     }
@@ -21913,7 +21568,8 @@ define("@ember/routing/history-location", ["exports", "@ember/object", "@ember/r
         path,
         uuid: _uuid()
       };
-      this.history.replaceState(state, null, path);
+      (false && !(this.history) && (0, _debug.assert)('HistoryLocation.history is unexpectedly missing', this.history));
+      this.history.replaceState(state, '', path);
       // used for webkit workaround
       this._previousURL = this.getURL();
     }
@@ -22329,8 +21985,6 @@ define("@ember/routing/lib/location-utils", ["exports"], function (_exports) {
   _exports.getPath = getPath;
   _exports.getQuery = getQuery;
   _exports.replacePath = replacePath;
-  _exports.supportsHashChange = supportsHashChange;
-  _exports.supportsHistory = supportsHistory;
   /**
     @private
   
@@ -22376,38 +22030,6 @@ define("@ember/routing/lib/location-utils", ["exports"], function (_exports) {
       }
     }
     return origin;
-  }
-  /*
-    `documentMode` only exist in Internet Explorer, and it's tested because IE8 running in
-    IE7 compatibility mode claims to support `onhashchange` but actually does not.
-  
-    `global` is an object that may have an `onhashchange` property.
-  
-    @private
-    @function supportsHashChange
-  */
-  function supportsHashChange(documentMode, global) {
-    return Boolean(global && 'onhashchange' in global && (documentMode === undefined || documentMode > 7));
-  }
-  /*
-    `userAgent` is a user agent string. We use user agent testing here, because
-    the stock Android browser is known to have buggy versions of the History API,
-    in some Android versions.
-  
-    @private
-    @function supportsHistory
-  */
-  function supportsHistory(userAgent, history) {
-    // Boosted from Modernizr: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/history.js
-    // The stock browser on Android 2.2 & 2.3, and 4.0.x returns positive on history support
-    // Unfortunately support is really buggy and there is no clean way to detect
-    // these bugs, so we fall back to a user agent sniff :(
-    // We only want Android 2 and 4.0, stock browser, and not Chrome which identifies
-    // itself as 'Mobile Safari' as well, nor Windows Phone.
-    if ((userAgent.indexOf('Android 2.') !== -1 || userAgent.indexOf('Android 4.0') !== -1) && userAgent.indexOf('Mobile Safari') !== -1 && userAgent.indexOf('Chrome') === -1 && userAgent.indexOf('Windows Phone') === -1) {
-      return false;
-    }
-    return Boolean(history && 'pushState' in history);
   }
   /**
     Replaces the current location, making sure we explicitly include the origin
@@ -22583,7 +22205,6 @@ define("@ember/routing/lib/utils", ["exports", "@ember/-internals/metal", "@embe
     value: true
   });
   _exports.calculateCacheKey = calculateCacheKey;
-  _exports.deprecateTransitionMethods = deprecateTransitionMethods;
   _exports.extractRouteArgs = extractRouteArgs;
   _exports.getActiveTargetName = getActiveTargetName;
   _exports.normalizeControllerQueryParams = normalizeControllerQueryParams;
@@ -22645,7 +22266,6 @@ define("@ember/routing/lib/utils", ["exports", "@ember/-internals/metal", "@embe
       }
       _routeInfo['_names'] = names;
       var route = _routeInfo.route;
-      // SAFETY: This cast should be idential. I don't understand why it is needed.
       route._stashNames(_routeInfo, dynamicParent);
     }
     routeInfos['_namesStashed'] = true;
@@ -22745,7 +22365,10 @@ define("@ember/routing/lib/utils", ["exports", "@ember/-internals/metal", "@embe
         as: null,
         scope: 'model'
       };
-      var val = Object.assign(Object.assign({}, partialVal), singleDesc);
+      var val = {
+        ...partialVal,
+        ...singleDesc
+      };
       accum[key] = val;
     }
   }
@@ -22797,18 +22420,6 @@ define("@ember/routing/lib/utils", ["exports", "@ember/-internals/metal", "@embe
     }
     return aCount === bCount;
   }
-  function deprecateTransitionMethods(frameworkClass, methodName) {
-    (false && !(false) && (0, _debug.deprecate)(`Calling ${methodName} on a ${frameworkClass} is deprecated. Use the RouterService instead.`, false, {
-      id: 'routing.transition-methods',
-      for: 'ember-source',
-      since: {
-        available: '3.26.0',
-        enabled: '3.26.0'
-      },
-      until: '5.0.0',
-      url: 'https://deprecations.emberjs.com/v3.x/#toc_routing-transition-methods'
-    }));
-  }
   function isRouteOptions(value) {
     if (value && typeof value === 'object') {
       var qps = value.queryParams;
@@ -22819,114 +22430,12 @@ define("@ember/routing/lib/utils", ["exports", "@ember/-internals/metal", "@embe
     return false;
   }
 });
-define("@ember/routing/location", ["exports", "@ember/debug"], function (_exports, _debug) {
+define("@ember/routing/location", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.default = void 0;
-  /**
-  @module @ember/routing/location
-  */
-  /**
-    Location returns an instance of the correct implementation of
-    the `location` API.
-  
-    ## Implementations
-  
-    You can pass an implementation name (`hash`, `history`, `none`, `auto`) to force a
-    particular implementation to be used in your application.
-  
-    See [HashLocation](/ember/release/classes/HashLocation).
-    See [HistoryLocation](/ember/release/classes/HistoryLocation).
-    See [NoneLocation](/ember/release/classes/NoneLocation).
-    See [AutoLocation](/ember/release/classes/AutoLocation).
-  
-    ## Location API
-  
-    Each location implementation must provide the following methods:
-  
-    * implementation: returns the string name used to reference the implementation.
-    * getURL: returns the current URL.
-    * setURL(path): sets the current URL.
-    * replaceURL(path): replace the current URL (optional).
-    * onUpdateURL(callback): triggers the callback when the URL changes.
-    * formatURL(url): formats `url` to be placed into `href` attribute.
-    * detect() (optional): instructs the location to do any feature detection
-        necessary. If the location needs to redirect to a different URL, it
-        can cancel routing by setting the `cancelRouterSetup` property on itself
-        to `false`.
-  
-    Calling setURL or replaceURL will not trigger onUpdateURL callbacks.
-  
-    ## Custom implementation
-  
-    Ember scans `app/locations/*` for extending the Location API.
-  
-    Example:
-  
-    ```javascript
-    import HistoryLocation from '@ember/routing/history-location';
-  
-    export default class MyHistory {
-      implementation = 'my-custom-history';
-  
-      constructor() {
-        this._history = HistoryLocation.create(...arguments);
-      }
-  
-      create() {
-        return new this(...arguments);
-      }
-  
-      pushState(path) {
-         this._history.pushState(path);
-      }
-    }
-    ```
-  
-    @class Location
-    @private
-  */
-  var _default = {
-    /**
-     This is deprecated in favor of using the container to lookup the location
-     implementation as desired.
-        For example:
-        ```javascript
-     // Given a location registered as follows:
-     container.register('location:history-test', HistoryTestLocation);
-        // You could create a new instance via:
-     container.lookup('location:history-test');
-     ```
-         @method create
-      @param {Object} options
-      @return {Object} an instance of an implementation of the `location` API
-      @deprecated Use the container to lookup the location implementation that you
-      need.
-      @private
-    */
-    create(options) {
-      var implementation = options === null || options === void 0 ? void 0 : options.implementation;
-      (false && !(implementation) && (0, _debug.assert)("Location.create: you must specify a 'implementation' option", implementation));
-      var implementationClass = this.implementations[implementation];
-      (false && !(implementationClass) && (0, _debug.assert)(`Location.create: ${implementation} is not a valid implementation`, implementationClass));
-      (false && !(false) && (0, _debug.deprecate)("Calling `create` on Location class is deprecated. Instead, use `container.lookup('location:my-location')` to lookup the location you need.", false, {
-        id: 'deprecate-auto-location',
-        until: '5.0.0',
-        url: 'https://emberjs.com/deprecations/v4.x#toc_deprecate-auto-location',
-        for: 'ember-source',
-        since: {
-          available: '4.1.0',
-          enabled: '4.1.0'
-        }
-      }));
-      return implementationClass.create(...arguments);
-    },
-    implementations: {}
-  };
-  _exports.default = _default;
 });
 define("@ember/routing/none-location", ["exports", "@ember/object", "@ember/debug"], function (_exports, _object, _debug) {
   "use strict";
@@ -22953,10 +22462,6 @@ define("@ember/routing/none-location", ["exports", "@ember/object", "@ember/debu
     @protected
   */
   class NoneLocation extends _object.default {
-    constructor() {
-      super(...arguments);
-      this.implementation = 'none';
-    }
     initState() {
       this._super(...arguments);
       var {
@@ -22991,7 +22496,7 @@ define("@ember/routing/none-location", ["exports", "@ember/object", "@ember/debu
       @param path {String}
     */
     setURL(path) {
-      (0, _object.set)(this, 'path', path);
+      this.path = path;
     }
     /**
       Register a callback to be invoked when the path changes. These
@@ -23011,8 +22516,10 @@ define("@ember/routing/none-location", ["exports", "@ember/object", "@ember/debu
       @param url {String}
     */
     handleURL(url) {
-      (0, _object.set)(this, 'path', url);
-      this.updateCallback(url);
+      this.path = url;
+      if (this.updateCallback) {
+        this.updateCallback(url);
+      }
     }
     /**
       Given a URL, formats it to be placed into the page as part
@@ -23021,7 +22528,7 @@ define("@ember/routing/none-location", ["exports", "@ember/object", "@ember/debu
       to generate a URL based on an event.
          @private
       @method formatURL
-      @param url {String}
+      @param {String} url
       @return {String} url
     */
     formatURL(url) {
@@ -23064,12 +22571,20 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
   };
+  function isStoreLike(store) {
+    return typeof store === 'object' && store !== null && typeof store.find === 'function';
+  }
   var ROUTE_CONNECTIONS = new WeakMap();
   _exports.ROUTE_CONNECTIONS = ROUTE_CONNECTIONS;
   var RENDER = Symbol('render');
   class Route extends _object.default.extend(_runtime.ActionHandler, _evented.default) {
     constructor(owner) {
       super(owner);
+      // These properties will end up appearing in the public interface because we
+      // `implements IRoute` from `router.js`, which has them as part of *its*
+      // public contract. We mark them as `@internal` so they at least signal to
+      // people subclassing `Route` that they should not use them.
+      /** @internal */
       this.context = {};
       if (owner) {
         var router = owner.lookup('router:main');
@@ -23242,7 +22757,9 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       var transition = this._router._routerMicrolib.activeTransition;
       var state = transition ? transition[_router_js.STATE_SYMBOL] : this._router._routerMicrolib.state;
       var fullName = route.fullRouteName;
-      var params = Object.assign({}, state.params[fullName]);
+      var params = {
+        ...state.params[fullName]
+      };
       var queryParams = getQueryParamsFor(route, state);
       return Object.entries(queryParams).reduce((params, [key, value]) => {
         (false && !(!params[key]) && (0, _debug.assert)(`The route '${this.routeName}' has both a dynamic segment and query param with name '${key}'. Please rename one to avoid collisions.`, !params[key]));
@@ -23316,6 +22833,9 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       @public
     */
     resetController(_controller, _isExiting, _transition) {
+      // We document that subclasses do not have to return *anything* and in fact
+      // do not even have to call super, so whiel we *do* return `this`, we need
+      // to be explicit in the types that our return type is *effectively* `void`.
       return this;
     }
     /**
@@ -23398,160 +22918,6 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     */
     activate(_transition) {}
     /**
-      Transition the application into another route. The route may
-      be either a single route or route path:
-         ```javascript
-      this.transitionTo('blogPosts');
-      this.transitionTo('blogPosts.recentEntries');
-      ```
-         Optionally supply a model for the route in question. The model
-      will be serialized into the URL using the `serialize` hook of
-      the route:
-         ```javascript
-      this.transitionTo('blogPost', aPost);
-      ```
-         If a literal is passed (such as a number or a string), it will
-      be treated as an identifier instead. In this case, the `model`
-      hook of the route will be triggered:
-         ```javascript
-      this.transitionTo('blogPost', 1);
-      ```
-         Multiple models will be applied last to first recursively up the
-      route tree.
-         ```app/routes.js
-      // ...
-         Router.map(function() {
-        this.route('blogPost', { path:':blogPostId' }, function() {
-          this.route('blogComment', { path: ':blogCommentId' });
-        });
-      });
-         export default Router;
-      ```
-         ```javascript
-      this.transitionTo('blogComment', aPost, aComment);
-      this.transitionTo('blogComment', 1, 13);
-      ```
-         It is also possible to pass a URL (a string that starts with a
-      `/`).
-         ```javascript
-      this.transitionTo('/');
-      this.transitionTo('/blog/post/1/comment/13');
-      this.transitionTo('/blog/posts?sort=title');
-      ```
-         An options hash with a `queryParams` property may be provided as
-      the final argument to add query parameters to the destination URL.
-         ```javascript
-      this.transitionTo('blogPost', 1, {
-        queryParams: { showComments: 'true' }
-      });
-         // if you just want to transition the query parameters without changing the route
-      this.transitionTo({ queryParams: { sort: 'date' } });
-      ```
-         See also [replaceWith](#method_replaceWith).
-         Simple Transition Example
-         ```app/routes.js
-      // ...
-         Router.map(function() {
-        this.route('index');
-        this.route('secret');
-        this.route('fourOhFour', { path: '*:' });
-      });
-         export default Router;
-      ```
-         ```app/routes/index.js
-      import Route from '@ember/routing/route';
-      import { action } from '@ember/object';
-         export default class IndexRoute extends Route {
-        @action
-        moveToSecret(context) {
-          if (authorized()) {
-            this.transitionTo('secret', context);
-          } else {
-            this.transitionTo('fourOhFour');
-          }
-        }
-      }
-      ```
-         Transition to a nested route
-         ```app/router.js
-      // ...
-         Router.map(function() {
-        this.route('articles', { path: '/articles' }, function() {
-          this.route('new');
-        });
-      });
-         export default Router;
-      ```
-         ```app/routes/index.js
-      import Route from '@ember/routing/route';
-      import { action } from '@ember/object';
-         export default class IndexRoute extends Route {
-        @action
-        transitionToNewArticle() {
-          this.transitionTo('articles.new');
-        }
-      }
-      ```
-         Multiple Models Example
-         ```app/router.js
-      // ...
-         Router.map(function() {
-        this.route('index');
-           this.route('breakfast', { path: ':breakfastId' }, function() {
-          this.route('cereal', { path: ':cerealId' });
-        });
-      });
-         export default Router;
-      ```
-         ```app/routes/index.js
-      import Route from '@ember/routing/route';
-      import { action } from '@ember/object';
-         export default class IndexRoute extends Route {
-        @action
-        moveToChocolateCereal() {
-          let cereal = { cerealId: 'ChocolateYumminess' };
-          let breakfast = { breakfastId: 'CerealAndMilk' };
-             this.transitionTo('breakfast.cereal', breakfast, cereal);
-        }
-      }
-      ```
-         Nested Route with Query String Example
-         ```app/routes.js
-      // ...
-         Router.map(function() {
-        this.route('fruits', function() {
-          this.route('apples');
-        });
-      });
-         export default Router;
-      ```
-         ```app/routes/index.js
-      import Route from '@ember/routing/route';
-         export default class IndexRoute extends Route {
-        @action
-        transitionToApples() {
-          this.transitionTo('fruits.apples', { queryParams: { color: 'red' } });
-        }
-      }
-      ```
-         @method transitionTo
-      @param {String} [name] the name of the route or a URL.
-      @param {...Object} [models] the model(s) or identifier(s) to be used while
-        transitioning to the route.
-      @param {Object} [options] optional hash with a queryParams property
-        containing a mapping of query parameters. May be supplied as the only
-        parameter to trigger a query-parameter-only transition.
-      @return {Transition} the transition object associated with this
-        attempted transition
-      @since 1.0.0
-      @deprecated Use transitionTo from the Router service instead.
-      @public
-    */
-    transitionTo(...args) {
-      (0, _utils3.deprecateTransitionMethods)('route', 'transitionTo');
-      return this._router.transitionTo(...(0, _utils3.prefixRouteNameArg)(this, args));
-    }
-    /**
       Perform a synchronous transition into another route without attempting
       to resolve promises, update the URL, or abort any currently active
       asynchronous transitions (i.e. regular transitions caused by
@@ -23593,46 +22959,6 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       return this._router._routerMicrolib.refresh(this);
     }
     /**
-      Transition into another route while replacing the current URL, if possible.
-      This will replace the current history entry instead of adding a new one.
-      Beside that, it is identical to `transitionTo` in all other respects. See
-      'transitionTo' for additional information regarding multiple models.
-         Example
-         ```app/router.js
-      // ...
-         Router.map(function() {
-        this.route('index');
-        this.route('secret');
-      });
-         export default Router;
-      ```
-         ```app/routes/secret.js
-      import Route from '@ember/routing/route';
-         export default class SecretRoute Route {
-        afterModel() {
-          if (!authorized()){
-            this.replaceWith('index');
-          }
-        }
-      }
-      ```
-         @method replaceWith
-      @param {String} name the name of the route or a URL
-      @param {...Object} models the model(s) or identifier(s) to be used while
-        transitioning to the route.
-      @param {Object} [options] optional hash with a queryParams property
-        containing a mapping of query parameters
-      @return {Transition} the transition object associated with this
-        attempted transition
-      @since 1.0.0
-      @deprecated Use replaceWith from the Router service instead.
-      @public
-    */
-    replaceWith(...args) {
-      (0, _utils3.deprecateTransitionMethods)('route', 'replaceWith');
-      return this._router.replaceWith(...(0, _utils3.prefixRouteNameArg)(this, args));
-    }
-    /**
       This hook is the entry point for router.js
          @private
       @method setup
@@ -23640,7 +22966,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     setup(context, transition) {
       var controllerName = this.controllerName || this.routeName;
       var definedController = this.controllerFor(controllerName, true);
-      var controller = definedController !== null && definedController !== void 0 ? definedController : this.generateController(controllerName);
+      var controller = definedController ?? this.generateController(controllerName);
       // SAFETY: Since `_qp` is protected we can't infer the type
       var queryParams = (0, _object.get)(this, '_qp');
       // Assign the route's controller so that it can more easily be
@@ -23732,12 +23058,6 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       });
          export default Router;
       ```
-         The model for the `post` route is `store.findRecord('post', params.post_id)`.
-         By default, if your route has a dynamic segment ending in `_id`:
-         * The model class is determined from the segment (`post_id`'s
-        class is `App.Post`)
-      * The find method is called on the model class with the value of
-        the dynamic segment.
          Note that for routes with dynamic segments, this hook is not always
       executed. If the route is entered through a transition (e.g. when
       using the `link-to` Handlebars helper or the `transitionTo` method
@@ -23763,11 +23083,18 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       described in the documentation for `beforeModel`. In particular,
       if a promise returned from `model` fails, the error will be
       handled by the `error` hook on `Route`.
+         Note that the legacy behavior of automatically defining a model
+      hook when a dynamic segment ending in `_id` is present is
+      [deprecated](https://deprecations.emberjs.com/v5.x#toc_deprecate-implicit-route-model).
+      You should explicitly define a model hook whenever any segments are
+      present.
          Example
          ```app/routes/post.js
       import Route from '@ember/routing/route';
+      import { service } from '@ember/service';
          export default class PostRoute extends Route {
-        model(params) {
+        @service store;
+           model(params) {
           return this.store.findRecord('post', params.post_id);
         }
       }
@@ -23828,8 +23155,20 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       @param {Object} value the value passed to find
       @private
     */
-    findModel(...args) {
-      return (0, _object.get)(this, 'store').find(...args);
+    findModel(type, value) {
+      (false && !(false) && (0, _debug.deprecate)(`The implicit model loading behavior for routes is deprecated. ` + `Please define an explicit model hook for ${this.fullRouteName}.`, false, {
+        id: 'deprecate-implicit-route-model',
+        for: 'ember-source',
+        since: {
+          available: '5.3.0',
+          enabled: '5.3.0'
+        },
+        until: '6.0.0',
+        url: 'https://deprecations.emberjs.com/v5.x/#toc_deprecate-implicit-route-model'
+      }));
+      var store = 'store' in this ? this.store : (0, _object.get)(this, '_store');
+      (false && !(isStoreLike(store)) && (0, _debug.assert)('Expected route to have a store with a find method', isStoreLike(store))); // SAFETY: We don't actually know it will return this, but this code path is also deprecated.
+      return store.find(type, value);
     }
     /**
       A hook you can use to setup the controller for the current route.
@@ -23843,8 +23182,10 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       `super`:
          ```app/routes/photos.js
       import Route from '@ember/routing/route';
+      import { service } from '@ember/service';
          export default class PhotosRoute extends Route {
-        model() {
+        @service store;
+           model() {
           return this.store.findAll('photo');
         }
            setupController(controller, model) {
@@ -23979,7 +23320,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
           return transition.resolvedModels[modelLookupName];
         }
       }
-      return route === null || route === void 0 ? void 0 : route.currentModel;
+      return route?.currentModel;
     }
     /**
       `this[RENDER]` is used to render a template into a region of another template
@@ -24024,17 +23365,8 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       }
       return params;
     }
-    /**
-      Store property provides a hook for data persistence libraries to inject themselves.
-         By default, this store property provides the exact same functionality previously
-      in the model hook.
-         Currently, the required interface is:
-         `store.find(modelName, findArguments)`
-         @property store
-      @type {Object}
-      @private
-    */
-    get store() {
+    /** @deprecated Manually define your own store, such as with `@service store` */
+    get _store() {
       var owner = (0, _owner.getOwner)(this);
       (false && !(owner) && (0, _debug.assert)('Route is unexpectedly missing an owner', owner));
       var routeName = this.routeName;
@@ -24050,9 +23382,6 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
           return modelClass.find(value);
         }
       };
-    }
-    set store(value) {
-      (0, _metal.defineProperty)(this, 'store', null, value);
     }
     /**
       @private
@@ -24166,7 +23495,7 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     }
   }
   Route.isRouteFactory = true;
-  __decorate([_object.computed], Route.prototype, "store", null);
+  __decorate([_object.computed], Route.prototype, "_store", null);
   __decorate([_object.computed], Route.prototype, "_qp", null);
   function parentRoute(route) {
     var routeInfo = routeInfoFor(route, route._router._routerMicrolib.state.routeInfos, -1);
@@ -24195,7 +23524,10 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
         _name = route.templateName || route.routeName;
         options = nameOrOptions;
       } else {
-        (false && !(!(0, _utils.isEmpty)(nameOrOptions)) && (0, _debug.assert)('The name in the given arguments is undefined or empty string', !(0, _utils.isEmpty)(nameOrOptions)));
+        (false && !(!(0, _utils.isEmpty)(nameOrOptions)) && (0, _debug.assert)('The name in the given arguments is undefined or empty string', !(0, _utils.isEmpty)(nameOrOptions))); // SAFETY: the check for `nameOrOptions` above should be validating this,
+        // and as of TS 5.1.0-dev.2023-0417 it is *not*. This cast can go away if
+        // TS validates it correctly *or* if we refactor this entire function to
+        // be less wildly dynamic in its argument handling.
         _name = nameOrOptions;
       }
     }
@@ -24266,7 +23598,9 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       return state.fullQueryParams;
     }
     var haveAllRouteInfosResolved = state.routeInfos.every(routeInfo => routeInfo.route);
-    var fullQueryParamsState = Object.assign({}, state.queryParams);
+    var fullQueryParamsState = {
+      ...state.queryParams
+    };
     router._deserializeQueryParams(state.routeInfos, fullQueryParamsState);
     // only cache query params state if all routeinfos have resolved; it's possible
     // for lazy routes to not have resolved when `getFullQueryParams` is called, so
@@ -24322,7 +23656,10 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       if (!Object.prototype.hasOwnProperty.call(controllerQP, cqpName)) {
         continue;
       }
-      qps[cqpName] = Object.assign(Object.assign({}, controllerQP[cqpName]), routeQP[cqpName]);
+      qps[cqpName] = {
+        ...controllerQP[cqpName],
+        ...routeQP[cqpName]
+      };
       // allows us to skip this QP when we check route QPs.
       keysAlreadyMergedOrSkippable[cqpName] = true;
     }
@@ -24332,7 +23669,10 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
       if (!Object.prototype.hasOwnProperty.call(routeQP, rqpName) || keysAlreadyMergedOrSkippable[rqpName]) {
         continue;
       }
-      qps[rqpName] = Object.assign(Object.assign({}, routeQP[rqpName]), controllerQP[rqpName]);
+      qps[rqpName] = {
+        ...routeQP[rqpName],
+        ...controllerQP[rqpName]
+      };
     }
     return qps;
   }
@@ -24632,10 +23972,12 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
           Usage example:
           ```app/routes/application.js
        import Route from '@ember/routing/route';
+       import { service } from '@ember/service';
           export default class extends Route {
+         @service router;
          beforeModel() {
            if (!authorized()){
-             this.replaceWith('unauthorized');
+             this.router.replaceWith('unauthorized');
            }
          }
        });
@@ -24972,8 +24314,6 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
       var owner = (0, _owner.getOwner)(this);
       (false && !(owner) && (0, _debug.assert)('RouterService is unexpectedly missing an owner', owner));
       var pivotRoute = owner.lookup(`route:${pivotRouteName}`);
-      // R could be instantiated with a different sub-type
-      // @ts-ignore
       return this._router._routerMicrolib.refresh(pivotRoute);
     }
   }
@@ -24984,7 +24324,7 @@ define("@ember/routing/router-service", ["exports", "@ember/-internals/owner", "
   __decorate([(0, _computed.readOnly)('_router.rootURL')], RouterService.prototype, "rootURL", void 0);
   __decorate([(0, _computed.readOnly)('_router.currentRoute')], RouterService.prototype, "currentRoute", void 0);
 });
-define("@ember/routing/router", ["exports", "@ember/-internals/container", "@ember/object", "@ember/owner", "@ember/routing/-internals", "@ember/routing/lib/utils", "@ember/routing/location", "@ember/array", "@ember/utils", "@ember/object/evented", "@ember/debug", "@ember/runloop", "@ember/routing/route", "router_js", "@ember/engine/instance"], function (_exports, _container, _object, _owner, _internals, _utils, _location, _array, _utils2, _evented, _debug, _runloop, _route, _router_js, _instance) {
+define("@ember/routing/router", ["exports", "@ember/-internals/container", "@ember/object", "@ember/owner", "@ember/routing/-internals", "@ember/routing/lib/utils", "@ember/array", "@ember/utils", "@ember/object/evented", "@ember/debug", "@ember/runloop", "@ember/routing/route", "router_js", "@ember/engine/instance"], function (_exports, _container, _object, _owner, _internals, _utils, _array, _utils2, _evented, _debug, _runloop, _route, _router_js, _instance) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -25627,49 +24967,12 @@ define("@ember/routing/router", ["exports", "@ember/-internals/container", "@emb
       (false && !(owner) && (0, _debug.assert)('Router is unexpectedly missing an owner', owner));
       if ('string' === typeof location) {
         var resolvedLocation = owner.lookup(`location:${location}`);
-        if (location === 'auto') {
-          (false && !(false) && (0, _debug.deprecate)("Router location 'auto' is deprecated. Most users will want to set `locationType` to 'history' in config/environment.js for no change in behavior. See deprecation docs for details.", false, {
-            id: 'deprecate-auto-location',
-            until: '5.0.0',
-            url: 'https://emberjs.com/deprecations/v4.x#toc_deprecate-auto-location',
-            for: 'ember-source',
-            since: {
-              available: '4.1.0',
-              enabled: '4.1.0'
-            }
-          }));
-        }
-        if (resolvedLocation !== undefined) {
-          location = (0, _object.set)(this, 'location', resolvedLocation);
-        } else {
-          // Allow for deprecated registration of custom location API's
-          var options = {
-            implementation: location
-          };
-          location = (0, _object.set)(this, 'location', _location.default.create(options));
-        }
+        (false && !(resolvedLocation) && (0, _debug.assert)(`Could not resolve a location class at 'location:${location}'`, resolvedLocation));
+        location = (0, _object.set)(this, 'location', resolvedLocation);
       }
       if (location !== null && typeof location === 'object') {
         if (rootURL) {
           (0, _object.set)(location, 'rootURL', rootURL);
-        }
-        // Allow the location to do any feature detection, such as AutoLocation
-        // detecting history support. This gives it a chance to set its
-        // `cancelRouterSetup` property which aborts routing.
-        if (typeof location.detect === 'function') {
-          if (this.location !== 'auto') {
-            (false && !(false) && (0, _debug.deprecate)('The `detect` method on the Location object is deprecated. If you need detection you can run your detection code in app.js, before setting the location type.', false, {
-              id: 'deprecate-auto-location',
-              until: '5.0.0',
-              url: 'https://emberjs.com/deprecations/v4.x#toc_deprecate-auto-location',
-              for: 'ember-source',
-              since: {
-                available: '4.1.0',
-                enabled: '4.1.0'
-              }
-            }));
-          }
-          location.detect();
         }
         // ensure that initState is called AFTER the rootURL is set on
         // the location instance
@@ -26391,7 +25694,14 @@ define("@ember/routing/transition", ["exports"], function (_exports) {
     value: true
   });
 });
-define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/error-handling", "@ember/-internals/metal", "backburner"], function (_exports, _debug, _errorHandling, _metal, _backburner2) {
+define("@ember/runloop/-private/backburner", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+});
+define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/error-handling", "@ember/-internals/metal", "backburner.js"], function (_exports, _debug, _errorHandling, _metal, _backburner2) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -26452,6 +25762,10 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
   // used to re-throw unhandled RSVP rejection errors specifically in this
   // position to avoid breaking anything rendered in the other sections
   _rsvpErrorQueue];
+  /**
+   * @internal
+   * @private
+   */
   _exports._queues = _queues;
   var _backburner = new _backburner2.default(_queues, {
     defaultQueue: 'actions',
@@ -26632,7 +25946,7 @@ define("@ember/runloop/index", ["exports", "@ember/debug", "@ember/-internals/er
     @method cancel
     @static
     @for @ember/runloop
-    @param {Object} timer Timer object to cancel
+    @param {Object} [timer] Timer object to cancel
     @return {Boolean} true if canceled or false/undefined if it wasn't found
     @public
   */
@@ -26670,304 +25984,9 @@ define("@ember/service/index", ["exports", "@ember/object/-internals", "@ember/-
     @public
   */
   class Service extends _internals.FrameworkObject {}
-  _exports.default = Service;
   Service.isServiceFactory = true;
-});
-define("@ember/string/index", ["exports", "@ember/string/lib/string_registry", "@ember/-internals/utils", "@ember/debug", "@ember/-internals/glimmer"], function (_exports, _string_registry, _utils, _debug, _glimmer) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "_getStrings", {
-    enumerable: true,
-    get: function () {
-      return _string_registry.getStrings;
-    }
-  });
-  Object.defineProperty(_exports, "_setStrings", {
-    enumerable: true,
-    get: function () {
-      return _string_registry.setStrings;
-    }
-  });
-  _exports.camelize = camelize;
-  _exports.capitalize = capitalize;
-  _exports.classify = classify;
-  _exports.dasherize = dasherize;
-  _exports.decamelize = decamelize;
-  _exports.htmlSafe = htmlSafe;
-  _exports.isHTMLSafe = isHTMLSafe;
-  _exports.underscore = underscore;
-  _exports.w = w;
-  /**
-  This module is deprecated and should not be used.
-  See [the deprecations guide](https://deprecations.emberjs.com/v4.x#toc_ember-string-from-ember-module)
-  for more details.
-  
-  @module @ember/string
-  */
-
-  var STRING_DASHERIZE_REGEXP = /[ _]/g;
-  var STRING_DASHERIZE_CACHE = new _utils.Cache(1000, key => decamelize(key).replace(STRING_DASHERIZE_REGEXP, '-'));
-  var STRING_CAMELIZE_REGEXP_1 = /(-|_|\.|\s)+(.)?/g;
-  var STRING_CAMELIZE_REGEXP_2 = /(^|\/)([A-Z])/g;
-  var CAMELIZE_CACHE = new _utils.Cache(1000, key => key.replace(STRING_CAMELIZE_REGEXP_1, (_match, _separator, chr) => chr ? chr.toUpperCase() : '').replace(STRING_CAMELIZE_REGEXP_2, (match /*, separator, chr */) => match.toLowerCase()));
-  var STRING_CLASSIFY_REGEXP_1 = /^(-|_)+(.)?/;
-  var STRING_CLASSIFY_REGEXP_2 = /(.)(-|_|\.|\s)+(.)?/g;
-  var STRING_CLASSIFY_REGEXP_3 = /(^|\/|\.)([a-z])/g;
-  var CLASSIFY_CACHE = new _utils.Cache(1000, str => {
-    var replace1 = (_match, _separator, chr) => chr ? `_${chr.toUpperCase()}` : '';
-    var replace2 = (_match, initialChar, _separator, chr) => initialChar + (chr ? chr.toUpperCase() : '');
-    var parts = str.split('/');
-    for (var i = 0; i < parts.length; i++) {
-      parts[i] = parts[i].replace(STRING_CLASSIFY_REGEXP_1, replace1).replace(STRING_CLASSIFY_REGEXP_2, replace2);
-    }
-    return parts.join('/').replace(STRING_CLASSIFY_REGEXP_3, (match /*, separator, chr */) => match.toUpperCase());
-  });
-  var STRING_UNDERSCORE_REGEXP_1 = /([a-z\d])([A-Z]+)/g;
-  var STRING_UNDERSCORE_REGEXP_2 = /-|\s+/g;
-  var UNDERSCORE_CACHE = new _utils.Cache(1000, str => str.replace(STRING_UNDERSCORE_REGEXP_1, '$1_$2').replace(STRING_UNDERSCORE_REGEXP_2, '_').toLowerCase());
-  var STRING_CAPITALIZE_REGEXP = /(^|\/)([a-z\u00C0-\u024F])/g;
-  var CAPITALIZE_CACHE = new _utils.Cache(1000, str => str.replace(STRING_CAPITALIZE_REGEXP, (match /*, separator, chr */) => match.toUpperCase()));
-  var STRING_DECAMELIZE_REGEXP = /([a-z\d])([A-Z])/g;
-  var DECAMELIZE_CACHE = new _utils.Cache(1000, str => str.replace(STRING_DECAMELIZE_REGEXP, '$1_$2').toLowerCase());
-  /**
-    Defines string helper methods including string formatting and localization.
-  
-    @class String
-    @public
-    @deprecated Add the package `@ember/string` to your project to use in place of this module.
-  */
-  /**
-    Splits a string into separate units separated by spaces, eliminating any
-    empty strings in the process.
-  
-    ```javascript
-    import { w } from '@ember/string';
-  
-    w("alpha beta gamma").forEach(function(key) {
-      console.log(key);
-    });
-  
-    // > alpha
-    // > beta
-    // > gamma
-    ```
-  
-    @method w
-    @param {String} str The string to split
-    @return {Array} array containing the split strings
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function w(str) {
-    deprecateImportFromInternalString();
-    return str.split(/\s+/);
-  }
-  /**
-    Converts a camelized string into all lower case separated by underscores.
-  
-    ```javascript
-    import { decamelize } from '@ember/string';
-  
-    decamelize('innerHTML');          // 'inner_html'
-    decamelize('action_name');        // 'action_name'
-    decamelize('css-class-name');     // 'css-class-name'
-    decamelize('my favorite items');  // 'my favorite items'
-    ```
-  
-    @method decamelize
-    @param {String} str The string to decamelize.
-    @return {String} the decamelized string.
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function decamelize(str) {
-    deprecateImportFromInternalString();
-    return DECAMELIZE_CACHE.get(str);
-  }
-  /**
-    Replaces underscores, spaces, or camelCase with dashes.
-  
-    ```javascript
-    import { dasherize } from '@ember/string';
-  
-    dasherize('innerHTML');                // 'inner-html'
-    dasherize('action_name');              // 'action-name'
-    dasherize('css-class-name');           // 'css-class-name'
-    dasherize('my favorite items');        // 'my-favorite-items'
-    dasherize('privateDocs/ownerInvoice';  // 'private-docs/owner-invoice'
-    ```
-  
-    @method dasherize
-    @param {String} str The string to dasherize.
-    @return {String} the dasherized string.
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function dasherize(str) {
-    deprecateImportFromInternalString();
-    return STRING_DASHERIZE_CACHE.get(str);
-  }
-  /**
-    Returns the lowerCamelCase form of a string.
-  
-    ```javascript
-    import { camelize } from '@ember/string';
-  
-    camelize('innerHTML');                   // 'innerHTML'
-    camelize('action_name');                 // 'actionName'
-    camelize('css-class-name');              // 'cssClassName'
-    camelize('my favorite items');           // 'myFavoriteItems'
-    camelize('My Favorite Items');           // 'myFavoriteItems'
-    camelize('private-docs/owner-invoice');  // 'privateDocs/ownerInvoice'
-    ```
-  
-    @method camelize
-    @param {String} str The string to camelize.
-    @return {String} the camelized string.
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function camelize(str) {
-    deprecateImportFromInternalString();
-    return CAMELIZE_CACHE.get(str);
-  }
-  /**
-    Returns the UpperCamelCase form of a string.
-  
-    ```javascript
-    import { classify } from '@ember/string';
-  
-    classify('innerHTML');                   // 'InnerHTML'
-    classify('action_name');                 // 'ActionName'
-    classify('css-class-name');              // 'CssClassName'
-    classify('my favorite items');           // 'MyFavoriteItems'
-    classify('private-docs/owner-invoice');  // 'PrivateDocs/OwnerInvoice'
-    ```
-  
-    @method classify
-    @param {String} str the string to classify
-    @return {String} the classified string
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function classify(str) {
-    deprecateImportFromInternalString();
-    return CLASSIFY_CACHE.get(str);
-  }
-  /**
-    More general than decamelize. Returns the lower\_case\_and\_underscored
-    form of a string.
-  
-    ```javascript
-    import { underscore } from '@ember/string';
-  
-    underscore('innerHTML');                 // 'inner_html'
-    underscore('action_name');               // 'action_name'
-    underscore('css-class-name');            // 'css_class_name'
-    underscore('my favorite items');         // 'my_favorite_items'
-    underscore('privateDocs/ownerInvoice');  // 'private_docs/owner_invoice'
-    ```
-  
-    @method underscore
-    @param {String} str The string to underscore.
-    @return {String} the underscored string.
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function underscore(str) {
-    deprecateImportFromInternalString();
-    return UNDERSCORE_CACHE.get(str);
-  }
-  /**
-    Returns the Capitalized form of a string
-  
-    ```javascript
-    import { capitalize } from '@ember/string';
-  
-    capitalize('innerHTML')                 // 'InnerHTML'
-    capitalize('action_name')               // 'Action_name'
-    capitalize('css-class-name')            // 'Css-class-name'
-    capitalize('my favorite items')         // 'My favorite items'
-    capitalize('privateDocs/ownerInvoice'); // 'PrivateDocs/ownerInvoice'
-    ```
-  
-    @method capitalize
-    @param {String} str The string to capitalize.
-    @return {String} The capitalized string.
-    @public
-    @deprecated Add `@ember/string` to your package.json
-  */
-  function capitalize(str) {
-    deprecateImportFromInternalString();
-    return CAPITALIZE_CACHE.get(str);
-  }
-  function deprecateImportFromInternalString() {
-    (false && !(false) && (0, _debug.deprecate)('Importing from `@ember/string` without having the `@ember/string` package in your project is deprecated. Please add `@ember/string` to your `package.json', false, {
-      id: 'ember-string.add-package',
-      for: 'ember-source',
-      since: {
-        available: '4.10',
-        enabled: '4.10'
-      },
-      until: '5.0.0',
-      url: 'https://deprecations.emberjs.com/v4.x/#toc_ember-string-add-package'
-    }));
-  }
-  function deprecateImportFromString(name, message = `Importing ${name} from '@ember/string' is deprecated. Please import ${name} from '@ember/template' instead.`) {
-    (false && !(false) && (0, _debug.deprecate)(message, false, {
-      id: 'ember-string.htmlsafe-ishtmlsafe',
-      for: 'ember-source',
-      since: {
-        available: '4.10',
-        enabled: '4.10'
-      },
-      until: '5.0.0',
-      url: 'https://deprecations.emberjs.com/v3.x/#toc_ember-string-htmlsafe-ishtmlsafe'
-    }));
-  }
-  function htmlSafe(str) {
-    deprecateImportFromString('htmlSafe');
-    return (0, _glimmer.htmlSafe)(str);
-  }
-  function isHTMLSafe(str) {
-    deprecateImportFromString('isHTMLSafe');
-    return (0, _glimmer.isHTMLSafe)(str);
-  }
-});
-define("@ember/string/lib/string_registry", ["exports", "@ember/debug"], function (_exports, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.getStrings = getStrings;
-  _exports.setStrings = setStrings;
-  // STATE within a module is frowned upon, this exists
-  // to support Ember.STRINGS but shield ember internals from this legacy global
-  // API.
-  var STRINGS = {};
-  function setStrings(strings) {
-    deprecateEmberStrings();
-    STRINGS = strings;
-  }
-  function getStrings() {
-    deprecateEmberStrings();
-    return STRINGS;
-  }
-  function deprecateEmberStrings() {
-    (false && !(false) && (0, _debug.deprecate)('Ember.STRINGS is deprecated. It is no longer used by Ember.', false, {
-      id: 'ember-strings',
-      for: 'ember-source',
-      since: {
-        available: '4.10',
-        enabled: '4.10.'
-      },
-      until: '5.0.0'
-    }));
-  }
+  var _default = Service;
+  _exports.default = _default;
 });
 define("@ember/template-compilation/index", ["exports", "ember-template-compiler"], function (_exports, _emberTemplateCompiler) {
   "use strict";
@@ -27050,9 +26069,11 @@ define("@ember/test/index", ["exports", "require"], function (_exports, _require
   var unregisterWaiter;
   _exports.unregisterWaiter = unregisterWaiter;
   if ((0, _require.has)('ember-testing')) {
-    var {
-      Test
-    } = (0, _require.default)("ember-testing");
+    // SAFETY: since `require` is opaque to TS, we need to inform it that this is
+    // the actual type of what we import. This `require` needs to stay in sync
+    // with the `import type` statement above. (This cast *increases* safety,
+    // because the result of `require` is `any`.)
+    var Test = (0, _require.default)("ember-testing").Test;
     _exports.registerAsyncHelper = registerAsyncHelper = Test.registerAsyncHelper;
     _exports.registerHelper = registerHelper = Test.registerHelper;
     _exports.registerWaiter = registerWaiter = Test.registerWaiter;
@@ -28149,7 +27170,7 @@ define("@glimmer/low-level", ["exports"], function (_exports) {
   }
   _exports.Stack = Stack;
 });
-define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@glimmer/validator", "@glimmer/destroyable", "@glimmer/global-context"], function (_exports, _util, _reference, _validator, _destroyable, _globalContext) {
+define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/global-context", "@glimmer/destroyable", "@glimmer/reference", "@glimmer/validator"], function (_exports, _util, _globalContext, _destroyable, _reference, _validator) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -28580,24 +27601,18 @@ define("@glimmer/manager", ["exports", "@glimmer/util", "@glimmer/reference", "@
   } ///////////
 
   function hasInternalComponentManager(definition) {
-    return hasDefaultComponentManager(definition) || getManager(COMPONENT_MANAGERS, definition) !== undefined;
+    return getManager(COMPONENT_MANAGERS, definition) !== undefined;
   }
   function hasInternalHelperManager(definition) {
     return hasDefaultHelperManager(definition) || getManager(HELPER_MANAGERS, definition) !== undefined;
   }
   function hasInternalModifierManager(definition) {
-    return hasDefaultModifierManager(definition) || getManager(MODIFIER_MANAGERS, definition) !== undefined;
-  }
-  function hasDefaultComponentManager(_definition) {
-    return false;
+    return getManager(MODIFIER_MANAGERS, definition) !== undefined;
   }
   function hasDefaultHelperManager(definition) {
     if (_globalContext.FEATURE_DEFAULT_HELPER_MANAGER) {
       return typeof definition === 'function';
     }
-    return false;
-  }
-  function hasDefaultModifierManager(_definition) {
     return false;
   }
   var CAPABILITIES = {
@@ -29054,7 +28069,7 @@ define("@glimmer/node", ["exports", "@glimmer/runtime", "@simple-dom/document"],
     return SerializeBuilder.forInitialRender(env, cursor);
   }
 });
-define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "@glimmer/global-context", "@glimmer/manager", "@glimmer/encoder"], function (_exports, _util, _vm, _globalContext, _manager, _encoder) {
+define("@glimmer/opcode-compiler", ["exports", "@glimmer/vm", "@glimmer/manager", "@glimmer/util", "@glimmer/global-context", "@glimmer/encoder"], function (_exports, _vm, _manager, _util, _globalContext, _encoder) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -29489,8 +28504,8 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   });
   EXPRESSIONS.add(50
-  /* Curry */, (op, [, expr$$1, type, positional, named]) => {
-    Curry(op, type, expr$$1, positional, named);
+  /* Curry */, (op, [, expr, type, positional, named]) => {
+    Curry(op, type, expr, positional, named);
   });
   EXPRESSIONS.add(30
   /* GetSymbol */, (op, [, sym, path]) => {
@@ -29522,12 +28537,12 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     throw new Error('unimplemented opcode');
   });
   EXPRESSIONS.add(36
-  /* GetFreeAsHelperHeadOrThisFallback */, (op, expr$$1) => {
+  /* GetFreeAsHelperHeadOrThisFallback */, (op, expr) => {
     // <div id={{baz}}>
     op(1010
-    /* ResolveLocal */, expr$$1[1], _name => {
+    /* ResolveLocal */, expr[1], _name => {
       op(1006
-      /* ResolveOptionalHelper */, expr$$1, {
+      /* ResolveOptionalHelper */, expr, {
         ifHelper: handle => {
           Call(op, handle, null, null);
         }
@@ -29535,15 +28550,15 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     });
   });
   EXPRESSIONS.add(99
-  /* GetFreeAsDeprecatedHelperHeadOrThisFallback */, (op, expr$$1) => {
+  /* GetFreeAsDeprecatedHelperHeadOrThisFallback */, (op, expr) => {
     // <Foo @bar={{baz}}>
     op(1010
-    /* ResolveLocal */, expr$$1[1], _name => {
+    /* ResolveLocal */, expr[1], _name => {
       op(1006
-      /* ResolveOptionalHelper */, expr$$1, {
+      /* ResolveOptionalHelper */, expr, {
         ifHelper: (handle, name, moduleName) => {
-          (false && (0, _globalContext.assert)(expr$$1[2] && expr$$1[2].length === 1, '[BUG] Missing argument name'));
-          var arg = expr$$1[2][0];
+          (false && (0, _globalContext.assert)(expr[2] && expr[2].length === 1, '[BUG] Missing argument name'));
+          var arg = expr[2][0];
           (false && !(false) && (0, _globalContext.deprecate)(`The \`${name}\` helper was used in the \`${moduleName}\` template as \`${arg}={{${name}}}\`. ` + `This is ambigious between wanting the \`${arg}\` argument to be the \`${name}\` helper itself, ` + `or the result of invoking the \`${name}\` helper (current behavior). ` + `This implicit invocation behavior has been deprecated.\n\n` + `Instead, please explicitly invoke the helper with parenthesis, i.e. \`${arg}={{(${name})}}\`.\n\n` + `Note: the parenthesis are only required in this exact scenario where an ambiguity is present – where ` + `\`${name}\` referes to a global helper (as opposed to a local variable), AND ` + `the \`${name}\` helper invocation does not take any arguments, AND ` + `this occurs in a named argument position of a component invocation.\n\n` + `We expect this combination to be quite rare, as most helpers require at least one argument. ` + `There is no need to refactor helper invocations in cases where this deprecation was not triggered.`, false, {
             id: 'argument-less-helper-paren-less-invocation'
           }));
@@ -30434,13 +29449,13 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     positional,
     named,
     atNames,
-    blocks: namedBlocks$$1,
+    blocks: namedBlocks,
     layout
   }) {
-    var bindableBlocks = !!namedBlocks$$1;
+    var bindableBlocks = !!namedBlocks;
     var bindableAtNames = capabilities === true || (0, _manager.hasCapability)(capabilities, 4
     /* PrepareArgs */) || !!(named && named[0].length !== 0);
-    var blocks = namedBlocks$$1.with('attrs', elementBlock);
+    var blocks = namedBlocks.with('attrs', elementBlock);
     op(36
     /* Fetch */, _vm.$s0);
     op(33
@@ -30733,16 +29748,16 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     /* OpenElement */, inflateTagName(tag));
   });
   STATEMENTS.add(8
-  /* Component */, (op, [, expr$$1, elementBlock, named, blocks]) => {
-    if (isGetFreeComponent(expr$$1)) {
+  /* Component */, (op, [, expr, elementBlock, named, blocks]) => {
+    if (isGetFreeComponent(expr)) {
       op(1004
-      /* ResolveComponent */, expr$$1, component => {
+      /* ResolveComponent */, expr, component => {
         InvokeComponent(op, component, elementBlock, null, named, blocks);
       });
     } else {
       // otherwise, the component name was an expression, so resolve the expression
       // and invoke it as a dynamic component
-      InvokeDynamicComponent(op, expr$$1, elementBlock, null, named, blocks, true, true);
+      InvokeDynamicComponent(op, expr, elementBlock, null, named, blocks, true, true);
     }
   });
   STATEMENTS.add(18
@@ -30869,14 +29884,14 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   });
 
   STATEMENTS.add(6
-  /* Block */, (op, [, expr$$1, positional, named, blocks]) => {
-    if (isGetFreeComponent(expr$$1)) {
+  /* Block */, (op, [, expr, positional, named, blocks]) => {
+    if (isGetFreeComponent(expr)) {
       op(1004
-      /* ResolveComponent */, expr$$1, component => {
+      /* ResolveComponent */, expr, component => {
         InvokeComponent(op, component, null, positional, hashToArgs(named), blocks);
       });
     } else {
-      InvokeDynamicComponent(op, expr$$1, null, positional, named, blocks, false, false);
+      InvokeDynamicComponent(op, expr, null, positional, named, blocks, false, false);
     }
   });
   STATEMENTS.add(40
@@ -30996,14 +30011,14 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     }
   });
   STATEMENTS.add(46
-  /* InvokeComponent */, (op, [, expr$$1, positional, named, blocks]) => {
-    if (isGetFreeComponent(expr$$1)) {
+  /* InvokeComponent */, (op, [, expr, positional, named, blocks]) => {
+    if (isGetFreeComponent(expr)) {
       op(1004
-      /* ResolveComponent */, expr$$1, component => {
+      /* ResolveComponent */, expr, component => {
         InvokeComponent(op, component, null, positional, hashToArgs(named), blocks);
       });
     } else {
-      InvokeDynamicComponent(op, expr$$1, null, positional, named, blocks, false, false);
+      InvokeDynamicComponent(op, expr, null, positional, named, blocks, false, false);
     }
   });
   function hashToArgs(hash) {
@@ -31013,13 +30028,13 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
   }
   var PLACEHOLDER_HANDLE = -1;
   class CompilableTemplateImpl {
-    constructor(statements, meta$$1,
+    constructor(statements, meta,
     // Part of CompilableTemplate
     symbolTable,
     // Used for debugging
     moduleName = 'plain block') {
       this.statements = statements;
-      this.meta = meta$$1;
+      this.meta = meta;
       this.symbolTable = symbolTable;
       this.moduleName = moduleName;
       this.compiled = null;
@@ -31041,15 +30056,15 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
     compilable.compiled = PLACEHOLDER_HANDLE;
     var {
       statements,
-      meta: meta$$1
+      meta
     } = compilable;
-    var result = compileStatements(statements, meta$$1, context);
+    var result = compileStatements(statements, meta, context);
     compilable.compiled = result;
     return result;
   }
-  function compileStatements(statements, meta$$1, syntaxContext) {
+  function compileStatements(statements, meta, syntaxContext) {
     var sCompiler = STATEMENTS;
-    var context = templateCompilationContext(syntaxContext, meta$$1);
+    var context = templateCompilationContext(syntaxContext, meta);
     var {
       encoder,
       program: {
@@ -31058,12 +30073,12 @@ define("@glimmer/opcode-compiler", ["exports", "@glimmer/util", "@glimmer/vm", "
       }
     } = context;
     function pushOp(...op) {
-      encodeOp(encoder, constants, resolver, meta$$1, op);
+      encodeOp(encoder, constants, resolver, meta, op);
     }
     for (var i = 0; i < statements.length; i++) {
       sCompiler.compile(pushOp, statements[i]);
     }
-    var handle = context.encoder.commit(meta$$1.size);
+    var handle = context.encoder.commit(meta.size);
     return handle;
   }
   function compilableBlock(block, containing) {
@@ -31751,14 +30766,14 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
           return null;
         }
         var capabilities = (0, _manager.capabilityFlagsFrom)(manager.getCapabilities(definitionState));
-        var templateFactory$$1 = (0, _manager.getComponentTemplate)(definitionState);
+        var _templateFactory = (0, _manager.getComponentTemplate)(definitionState);
         var compilable = null;
         var template;
         if (!(0, _manager.managerHasCapability)(manager, capabilities, 1
         /* DynamicLayout */)) {
-          template = (_a = templateFactory$$1 === null || templateFactory$$1 === void 0 ? void 0 : templateFactory$$1(owner)) !== null && _a !== void 0 ? _a : this.defaultTemplate;
+          template = (_a = _templateFactory === null || _templateFactory === void 0 ? void 0 : _templateFactory(owner)) !== null && _a !== void 0 ? _a : this.defaultTemplate;
         } else {
-          template = templateFactory$$1 === null || templateFactory$$1 === void 0 ? void 0 : templateFactory$$1(owner);
+          template = _templateFactory === null || _templateFactory === void 0 ? void 0 : _templateFactory(owner);
         }
         if (template !== undefined) {
           template = (0, _util.unwrapTemplate)(template);
@@ -31882,7 +30897,7 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
       return this.heap[address];
     }
     sizeof(handle) {
-      return sizeof(this.table, handle);
+      return sizeof(this.table);
     }
   }
   _exports.RuntimeHeapImpl = RuntimeHeapImpl;
@@ -31954,7 +30969,7 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
       return this.handleTable[handle];
     }
     sizeof(handle) {
-      return sizeof(this.handleTable, handle);
+      return sizeof(this.handleTable);
     }
     free(handle) {
       this.handleState[handle] = 1
@@ -32016,8 +31031,8 @@ define("@glimmer/program", ["exports", "@glimmer/util", "@glimmer/manager", "@gl
   }
   _exports.HeapImpl = HeapImpl;
   class RuntimeProgramImpl {
-    constructor(constants$$1, heap) {
-      this.constants = constants$$1;
+    constructor(constants, heap) {
+      this.constants = constants;
       this.heap = heap;
       this._opcode = new RuntimeOpImpl(this.heap);
     }
@@ -32440,7 +31455,7 @@ define("@glimmer/reference", ["exports", "@glimmer/global-context", "@glimmer/ut
     }
   }
 });
-define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@glimmer/global-context", "@glimmer/destroyable", "@glimmer/vm", "@glimmer/validator", "@glimmer/manager", "@glimmer/program", "@glimmer/owner", "@glimmer/runtime"], function (_exports, _util, _reference, _globalContext, _destroyable2, _vm2, _validator, _manager5, _program, _owner2, _runtime) {
+define("@glimmer/runtime", ["exports", "@glimmer/reference", "@glimmer/util", "@glimmer/vm", "@glimmer/destroyable", "@glimmer/global-context", "@glimmer/validator", "@glimmer/manager", "@glimmer/program", "@glimmer/owner", "@glimmer/runtime"], function (_exports, _reference, _util, _vm2, _destroyable2, _globalContext, _validator, _manager5, _program, _owner2, _runtime) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -32486,8 +31501,8 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   });
   _exports.rehydrationBuilder = rehydrationBuilder;
   _exports.reifyArgs = reifyArgs;
-  _exports.reifyNamed = reifyNamed$1;
-  _exports.reifyPositional = reifyPositional$1;
+  _exports.reifyNamed = reifyNamed;
+  _exports.reifyPositional = reifyPositional;
   _exports.renderComponent = renderComponent;
   _exports.renderMain = renderMain;
   _exports.renderSync = renderSync;
@@ -32553,11 +31568,11 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     getSelf() {
       return this.get(0);
     }
-    getSymbol(symbol$$1) {
-      return this.get(symbol$$1);
+    getSymbol(symbol) {
+      return this.get(symbol);
     }
-    getBlock(symbol$$1) {
-      var block = this.get(symbol$$1);
+    getBlock(symbol) {
+      var block = this.get(symbol);
       return block === _reference.UNDEFINED_REFERENCE ? null : block;
     }
     getEvalScope() {
@@ -32566,17 +31581,17 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     getPartialMap() {
       return this.partialMap;
     }
-    bind(symbol$$1, value) {
-      this.set(symbol$$1, value);
+    bind(symbol, value) {
+      this.set(symbol, value);
     }
     bindSelf(self) {
       this.set(0, self);
     }
-    bindSymbol(symbol$$1, value) {
-      this.set(symbol$$1, value);
+    bindSymbol(symbol, value) {
+      this.set(symbol, value);
     }
-    bindBlock(symbol$$1, value) {
-      this.set(symbol$$1, value);
+    bindBlock(symbol, value) {
+      this.set(symbol, value);
     }
     bindEvalScope(map) {
       this.evalScope = map;
@@ -33981,20 +32996,20 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
       positional
     };
   }
-  function reifyNamed$1(named) {
+  function reifyNamed(named) {
     var reified = (0, _util.dict)();
     for (var key in named) {
       reified[key] = (0, _reference.valueForRef)(named[key]);
     }
     return reified;
   }
-  function reifyPositional$1(positional) {
+  function reifyPositional(positional) {
     return positional.map(_reference.valueForRef);
   }
   function reifyArgs(args) {
     return {
-      named: reifyNamed$1(args.named),
-      positional: reifyPositional$1(args.positional)
+      named: reifyNamed(args.named),
+      positional: reifyPositional(args.positional)
     };
   }
   var EMPTY_NAMED = Object.freeze(Object.create(null));
@@ -34088,26 +33103,26 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
   });
   APPEND_OPCODES.add(21
   /* GetVariable */, (vm, {
-    op1: symbol$$1
+    op1: symbol
   }) => {
-    var expr = vm.referenceForSymbol(symbol$$1);
+    var expr = vm.referenceForSymbol(symbol);
     vm.stack.push(expr);
   });
   APPEND_OPCODES.add(19
   /* SetVariable */, (vm, {
-    op1: symbol$$1
+    op1: symbol
   }) => {
     var expr = vm.stack.pop();
-    vm.scope().bindSymbol(symbol$$1, expr);
+    vm.scope().bindSymbol(symbol, expr);
   });
   APPEND_OPCODES.add(20
   /* SetBlock */, (vm, {
-    op1: symbol$$1
+    op1: symbol
   }) => {
     var handle = vm.stack.pop();
     var scope = vm.stack.pop();
     var table = vm.stack.pop();
-    vm.scope().bindBlock(symbol$$1, [handle, scope, table]);
+    vm.scope().bindBlock(symbol, [handle, scope, table]);
   });
   APPEND_OPCODES.add(102
   /* ResolveMaybeLocal */, (vm, {
@@ -34234,7 +33249,7 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     } = vm.stack.pop().capture();
     vm.loadValue(_vm2.$v0, (0, _reference.createComputeRef)(() => {
       // eslint-disable-next-line no-console
-      console.log(...reifyPositional$1(positional));
+      console.log(...reifyPositional(positional));
     }));
   });
   function resolveComponent(resolver, constants, name, owner) {
@@ -35429,16 +34444,16 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     var callerNames = args.named.atNames;
     for (var i = callerNames.length - 1; i >= 0; i--) {
       var atName = callerNames[i];
-      var symbol$$1 = state.table.symbols.indexOf(callerNames[i]);
+      var _symbol = state.table.symbols.indexOf(callerNames[i]);
       var value = args.named.get(atName, true);
-      if (symbol$$1 !== -1) scope.bindSymbol(symbol$$1 + 1, value);
+      if (_symbol !== -1) scope.bindSymbol(_symbol + 1, value);
       if (state.lookup) state.lookup[atName] = value;
     }
   });
   function bindBlock(symbolName, blockName, state, blocks, vm) {
-    var symbol$$1 = state.table.symbols.indexOf(symbolName);
+    var symbol = state.table.symbols.indexOf(symbolName);
     var block = blocks.get(blockName);
-    if (symbol$$1 !== -1) vm.scope().bindBlock(symbol$$1 + 1, block);
+    if (symbol !== -1) vm.scope().bindBlock(symbol + 1, block);
     if (state.lookup) state.lookup[symbolName] = block;
   }
   APPEND_OPCODES.add(18
@@ -37274,8 +36289,8 @@ define("@glimmer/runtime", ["exports", "@glimmer/util", "@glimmer/reference", "@
     getSelf() {
       return this.scope().getSelf();
     }
-    referenceForSymbol(symbol$$1) {
-      return this.scope().getSymbol(symbol$$1);
+    referenceForSymbol(symbol) {
+      return this.scope().getSymbol(symbol);
     } /// EXECUTION
 
     execute(initialize) {
@@ -38634,7 +37649,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
     value: true
   });
   _exports._WeakSet = _exports.Stack = _exports.SERIALIZATION_FIRST_NODE_STRING = _exports.LOGGER = _exports.LOCAL_LOGGER = _exports.HAS_NATIVE_SYMBOL = _exports.HAS_NATIVE_PROXY = _exports.EMPTY_STRING_ARRAY = _exports.EMPTY_NUMBER_ARRAY = _exports.EMPTY_ARRAY = void 0;
-  _exports.assert = debugAssert$$1;
+  _exports.assert = debugAssert;
   _exports.assertNever = assertNever;
   _exports.assertPresent = assertPresent;
   _exports.beginTestSteps = _exports.assign = void 0;
@@ -38649,7 +37664,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
   _exports.decodeImmediate = decodeImmediate;
   _exports.decodeNegative = decodeNegative;
   _exports.decodePositive = decodePositive;
-  _exports.deprecate = deprecate$$1;
+  _exports.deprecate = deprecate;
   _exports.dict = dict;
   _exports.emptyArray = emptyArray;
   _exports.encodeHandle = encodeHandle;
@@ -38706,7 +37721,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
 
   // import Logger from './logger';
 
-  function debugAssert$$1(test, msg) {
+  function debugAssert(test, msg) {
     // if (!alreadyWarned) {
     //   alreadyWarned = true;
     //   Logger.warn("Don't leave debug assertions on in public builds");
@@ -38715,7 +37730,7 @@ define("@glimmer/util", ["exports"], function (_exports) {
       throw new Error(msg || 'assertion failure');
     }
   }
-  function deprecate$$1(desc) {
+  function deprecate(desc) {
     LOCAL_LOGGER.warn(`DEPRECATION: ${desc}`);
   }
   function dict() {
@@ -40346,7 +39361,7 @@ define("@simple-dom/document", ["exports"], function (_exports) {
   var _default = createHTMLDocument;
   _exports.default = _default;
 });
-define("backburner", ["exports"], function (_exports) {
+define("backburner.js", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -41702,7 +40717,7 @@ define("ember-babel", ["exports"], function (_exports) {
     return i.next.bind(i);
   }
 });
-define("ember/index", ["exports", "require", "@ember/-internals/environment", "@ember/-internals/utils", "@ember/-internals/container", "@ember/instrumentation", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/canary-features", "@ember/debug", "backburner", "@ember/controller", "@ember/string", "@ember/service", "@ember/object", "@ember/object/-internals", "@ember/object/compat", "@ember/object/computed", "@ember/object/events", "@ember/-internals/runtime", "@ember/-internals/glimmer", "ember/version", "@ember/-internals/views", "@ember/debug/container-debug-adapter", "@ember/debug/data-adapter", "@ember/error", "@ember/runloop", "@ember/-internals/error-handling", "@ember/array", "@ember/array/mutable", "@ember/array/proxy", "@ember/application", "@ember/application/instance", "@ember/application/namespace", "@ember/component", "@ember/component/helper", "@ember/engine", "@ember/engine/instance", "@ember/enumerable", "@ember/enumerable/mutable", "@ember/object/core", "@ember/object/evented", "@ember/object/mixin", "@ember/object/observable", "@ember/object/observers", "@ember/object/proxy", "@ember/object/promise-proxy-mixin", "@ember/polyfills", "@ember/routing/auto-location", "@ember/routing/hash-location", "@ember/routing/history-location", "@ember/routing/none-location", "@ember/routing/location", "@ember/routing/route", "@ember/routing/router", "@ember/routing/-internals", "@ember/utils", "@glimmer/runtime", "@glimmer/manager", "@ember/destroyable"], function (_exports, _require, _environment, utils, _container, instrumentation, _meta, metal, _canaryFeatures, _debug, _backburner, _controller, _string, _service, _object, _internals, _compat, _computed, _events, _runtime, _glimmer, _version, views, _containerDebugAdapter, _dataAdapter, _error, _runloop, _errorHandling, _array, _mutable, _proxy, _application, _instance, _namespace, _component, _helper, _engine, _instance2, _enumerable, _mutable2, _core, _evented, _mixin, _observable, _observers, _proxy2, _promiseProxyMixin, _polyfills, _autoLocation, _hashLocation, _historyLocation, _noneLocation, _location, _route, _router, _internals2, _utils2, glimmerRuntime, _manager, _destroyable) {
+define("ember/index", ["exports", "require", "@ember/-internals/environment", "@ember/-internals/utils", "@ember/-internals/container", "@ember/instrumentation", "@ember/-internals/meta", "@ember/-internals/metal", "@ember/canary-features", "@ember/debug", "backburner.js", "@ember/controller", "@ember/service", "@ember/object", "@ember/object/-internals", "@ember/object/compat", "@ember/object/computed", "@ember/object/events", "@ember/-internals/runtime", "@ember/-internals/glimmer", "ember/version", "@ember/-internals/views", "@ember/debug/container-debug-adapter", "@ember/debug/data-adapter", "@ember/runloop", "@ember/-internals/error-handling", "@ember/array", "@ember/array/mutable", "@ember/array/proxy", "@ember/application", "@ember/application/instance", "@ember/application/namespace", "@ember/component", "@ember/component/helper", "@ember/engine", "@ember/engine/instance", "@ember/enumerable", "@ember/enumerable/mutable", "@ember/object/core", "@ember/object/evented", "@ember/object/mixin", "@ember/object/observable", "@ember/object/observers", "@ember/object/proxy", "@ember/object/promise-proxy-mixin", "@ember/routing/hash-location", "@ember/routing/history-location", "@ember/routing/none-location", "@ember/routing/route", "@ember/routing/router", "@ember/routing/-internals", "@ember/utils", "@glimmer/runtime", "@glimmer/manager", "@ember/destroyable"], function (_exports, _require, _environment, utils, _container, instrumentation, _meta, metal, _canaryFeatures, _debug, _backburner, _controller, _service, _object, _internals, _compat, _computed, _events, _runtime, _glimmer, _version, views, _containerDebugAdapter, _dataAdapter, _runloop, _errorHandling, _array, _mutable, _proxy, _application, _instance, _namespace, _component, _helper, _engine, _instance2, _enumerable, _mutable2, _core, _evented, _mixin, _observable, _observers, _proxy2, _promiseProxyMixin, _hashLocation, _historyLocation, _noneLocation, _route, _router, _internals2, _utils2, glimmerRuntime, _manager, _destroyable) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -41714,229 +40729,207 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
   @module ember
   */
 
-  /**
-    Namespace for injection helper methods.
-  
-    @class inject
-    @namespace Ember
-    @static
-    @public
-  */
-  function inject() {
-    (false && !(false) && (0, _debug.assert)(`Injected properties must be created through helpers, see '${Object.keys(inject).map(k => `'inject.${k}'`).join(' or ')}'`));
-  }
-  // ****@ember/controller****
-  inject.controller = _controller.inject;
-  // ****@ember/service****
-  inject.service = _service.service;
-  var PartialEmber = {
-    isNamespace: true,
-    toString() {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  var Ember;
+  (function (Ember) {
+    Ember.isNamespace = true;
+    function toString() {
       return 'Ember';
-    },
+    }
+    Ember.toString = toString;
     // ****@ember/-internals/container****
-    Container: _container.Container,
-    Registry: _container.Registry,
+    Ember.Container = _container.Container;
+    Ember.Registry = _container.Registry;
     // ****@ember/-internals/glimmer****
     // Partially re-exported from @glimmer/manager
-    _setComponentManager: _glimmer.setComponentManager,
-    _componentManagerCapabilities: _glimmer.componentCapabilities,
-    _modifierManagerCapabilities: _glimmer.modifierCapabilities,
+    Ember._setComponentManager = _glimmer.setComponentManager;
+    Ember._componentManagerCapabilities = _glimmer.componentCapabilities;
+    Ember._modifierManagerCapabilities = _glimmer.modifierCapabilities;
     // ****@ember/-internals/meta****
-    meta: _meta.meta,
+    Ember.meta = _meta.meta;
     // ****@ember/-internals/metal****
-    _createCache: metal.createCache,
-    _cacheGetValue: metal.getValue,
-    _cacheIsConst: metal.isConst,
-    _descriptor: metal.nativeDescDecorator,
-    _getPath: metal._getPath,
-    _setClassicDecorator: metal.setClassicDecorator,
-    _tracked: metal.tracked,
-    beginPropertyChanges: metal.beginPropertyChanges,
-    changeProperties: metal.changeProperties,
-    endPropertyChanges: metal.endPropertyChanges,
-    hasListeners: metal.hasListeners,
-    libraries: metal.libraries,
+    Ember._createCache = metal.createCache; // Also @glimmer/validator
+    Ember._cacheGetValue = metal.getValue; // Also @glimmer/validator
+    Ember._cacheIsConst = metal.isConst; // Also @glimmer/validator
+    Ember._descriptor = metal.nativeDescDecorator;
+    Ember._getPath = metal._getPath;
+    Ember._setClassicDecorator = metal.setClassicDecorator;
+    Ember._tracked = metal.tracked; // Also exported from @glimmer/tracking
+    Ember.beginPropertyChanges = metal.beginPropertyChanges;
+    Ember.changeProperties = metal.changeProperties;
+    Ember.endPropertyChanges = metal.endPropertyChanges;
+    Ember.hasListeners = metal.hasListeners;
+    Ember.libraries = metal.libraries;
     // ****@ember/-internals/runtime****
-    _ContainerProxyMixin: _runtime.ContainerProxyMixin,
-    _ProxyMixin: _runtime._ProxyMixin,
-    _RegistryProxyMixin: _runtime.RegistryProxyMixin,
-    ActionHandler: _runtime.ActionHandler,
-    Comparable: _runtime.Comparable,
-    RSVP: _runtime.RSVP,
+    Ember._ContainerProxyMixin = _runtime.ContainerProxyMixin;
+    Ember._ProxyMixin = _runtime._ProxyMixin;
+    Ember._RegistryProxyMixin = _runtime.RegistryProxyMixin;
+    Ember.ActionHandler = _runtime.ActionHandler;
+    Ember.Comparable = _runtime.Comparable;
+    // This syntax is namespace-specific: `import` in a namespace is aliasing one
+    // namespace to another, while `export` marks the item public on the namespace
+    // (as with the rest of the exported items).
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Ember.RSVP = _runtime.RSVP;
     // ****@ember/-internals/view****
-    ComponentLookup: views.ComponentLookup,
-    EventDispatcher: views.EventDispatcher,
+    Ember.ComponentLookup = views.ComponentLookup;
+    Ember.EventDispatcher = views.EventDispatcher;
     // ****@ember/-internals/utils****
-    _Cache: utils.Cache,
-    GUID_KEY: utils.GUID_KEY,
-    canInvoke: utils.canInvoke,
-    generateGuid: utils.generateGuid,
-    guidFor: utils.guidFor,
-    uuid: utils.uuid,
-    wrap: utils.wrap,
+    Ember._Cache = utils.Cache;
+    Ember.GUID_KEY = utils.GUID_KEY;
+    Ember.canInvoke = utils.canInvoke;
+    Ember.generateGuid = utils.generateGuid;
+    Ember.guidFor = utils.guidFor;
+    Ember.uuid = utils.uuid;
+    Ember.wrap = utils.wrap;
     // ****@ember/application****
-    getOwner: _application.getOwner,
-    onLoad: _application.onLoad,
-    runLoadHooks: _application.runLoadHooks,
-    setOwner: _application.setOwner,
-    Application: _application.default,
+    Ember.getOwner = _application.getOwner;
+    Ember.onLoad = _application.onLoad;
+    Ember.runLoadHooks = _application.runLoadHooks;
+    Ember.setOwner = _application.setOwner;
+    Ember.Application = _application.default;
     // ****@ember/application/instance****
-    ApplicationInstance: _instance.default,
-    // ****@ember/application/namespace****
-    Namespace: _namespace.default,
+    Ember.ApplicationInstance = _instance.default;
+    // // ****@ember/application/namespace****
+    Ember.Namespace = _namespace.default;
     // ****@ember/array****
-    A: _array.A,
-    Array: _array.default,
-    NativeArray: _array.NativeArray,
-    isArray: _array.isArray,
-    makeArray: _array.makeArray,
+    Ember.A = _array.A;
+    Ember.Array = _array.default;
+    Ember.NativeArray = _array.NativeArray;
+    Ember.isArray = _array.isArray;
+    Ember.makeArray = _array.makeArray;
     // ****@ember/array/mutable****
-    MutableArray: _mutable.default,
+    Ember.MutableArray = _mutable.default;
     // ****@ember/array/proxy****
-    ArrayProxy: _proxy.default,
+    Ember.ArrayProxy = _proxy.default;
     // ****@ember/canary-features****
-    FEATURES: Object.assign({
-      isEnabled: _canaryFeatures.isEnabled
-    }, _canaryFeatures.FEATURES),
+    Ember.FEATURES = {
+      isEnabled: _canaryFeatures.isEnabled,
+      ..._canaryFeatures.FEATURES
+    };
     // ****@ember/component****
-    _Input: _component.Input,
-    Component: _component.default,
-    // ****@ember/component/helper****
-    Helper: _helper.default,
+    Ember._Input = _component.Input;
+    Ember.Component = _component.default;
+    // // ****@ember/component/helper****
+    Ember.Helper = _helper.default;
     // ****@ember/controller****
-    Controller: _controller.default,
-    ControllerMixin: _controller.ControllerMixin,
+    Ember.Controller = _controller.default;
+    Ember.ControllerMixin = _controller.ControllerMixin;
     // ****@ember/debug****
-    _captureRenderTree: _debug.captureRenderTree,
-    assert: EmberDebug.assert,
-    warn: EmberDebug.warn,
-    debug: EmberDebug.debug,
-    deprecate: EmberDebug.deprecate,
-    deprecateFunc: EmberDebug.deprecateFunc,
-    runInDebug: EmberDebug.runInDebug,
-    inspect: EmberDebug.inspect,
-    Debug: {
+    Ember._captureRenderTree = _debug.captureRenderTree;
+    Ember.assert = EmberDebug.assert;
+    Ember.warn = EmberDebug.warn;
+    Ember.debug = EmberDebug.debug;
+    Ember.deprecate = EmberDebug.deprecate;
+    Ember.deprecateFunc = EmberDebug.deprecateFunc;
+    Ember.runInDebug = EmberDebug.runInDebug;
+    Ember.inspect = EmberDebug.inspect;
+    Ember.Debug = {
       registerDeprecationHandler: EmberDebug.registerDeprecationHandler,
       registerWarnHandler: EmberDebug.registerWarnHandler,
       // ****@ember/-internals/metal****
       isComputed: metal.isComputed
-    },
+    };
     // ****@ember/debug/container-debug-adapter****
-    ContainerDebugAdapter: _containerDebugAdapter.default,
+    Ember.ContainerDebugAdapter = _containerDebugAdapter.default;
     // ****@ember/debug/data-adapter****
-    DataAdapter: _dataAdapter.default,
+    Ember.DataAdapter = _dataAdapter.default;
     // ****@ember/destroyable****
-    _assertDestroyablesDestroyed: _destroyable.assertDestroyablesDestroyed,
-    _associateDestroyableChild: _destroyable.associateDestroyableChild,
-    _enableDestroyableTracking: _destroyable.enableDestroyableTracking,
-    _isDestroying: _destroyable.isDestroying,
-    _isDestroyed: _destroyable.isDestroyed,
-    _registerDestructor: _destroyable.registerDestructor,
-    _unregisterDestructor: _destroyable.unregisterDestructor,
-    destroy: _destroyable.destroy,
+    Ember._assertDestroyablesDestroyed = _destroyable.assertDestroyablesDestroyed;
+    Ember._associateDestroyableChild = _destroyable.associateDestroyableChild;
+    Ember._enableDestroyableTracking = _destroyable.enableDestroyableTracking;
+    Ember._isDestroying = _destroyable.isDestroying;
+    Ember._isDestroyed = _destroyable.isDestroyed;
+    Ember._registerDestructor = _destroyable.registerDestructor;
+    Ember._unregisterDestructor = _destroyable.unregisterDestructor;
+    Ember.destroy = _destroyable.destroy;
     // ****@ember/engine****
-    Engine: _engine.default,
+    Ember.Engine = _engine.default;
     // ****@ember/engine/instance****
-    EngineInstance: _instance2.default,
+    Ember.EngineInstance = _instance2.default;
     // ****@ember/enumerable****
-    Enumerable: _enumerable.default,
+    Ember.Enumerable = _enumerable.default;
     // ****@ember/enumerable/mutable****
-    MutableEnumerable: _mutable2.default,
-    // ****@ember/error****
-    Error: _error.default,
+    Ember.MutableEnumerable = _mutable2.default;
     // ****@ember/instrumentation****
-    instrument: instrumentation.instrument,
-    subscribe: instrumentation.subscribe,
-    Instrumentation: {
+    /** @private */
+    Ember.instrument = instrumentation.instrument;
+    /** @private */
+    Ember.subscribe = instrumentation.subscribe;
+    /** @private */
+    Ember.Instrumentation = {
       instrument: instrumentation.instrument,
       subscribe: instrumentation.subscribe,
       unsubscribe: instrumentation.unsubscribe,
       reset: instrumentation.reset
-    },
+    };
     // ****@ember/object****
-    Object: _object.default,
-    _action: _object.action,
-    computed: _object.computed,
-    defineProperty: _object.defineProperty,
-    get: _object.get,
-    getProperties: _object.getProperties,
-    notifyPropertyChange: _object.notifyPropertyChange,
-    observer: _object.observer,
-    set: _object.set,
-    trySet: _object.trySet,
-    setProperties: _object.setProperties,
+    Ember.Object = _object.default;
+    Ember._action = _object.action;
+    Ember.computed = _object.computed;
+    Ember.defineProperty = _object.defineProperty;
+    Ember.get = _object.get;
+    Ember.getProperties = _object.getProperties;
+    Ember.notifyPropertyChange = _object.notifyPropertyChange;
+    Ember.observer = _object.observer;
+    Ember.set = _object.set;
+    Ember.trySet = _object.trySet;
+    Ember.setProperties = _object.setProperties;
     // ****@ember/object/-internals****
-    cacheFor: _internals.cacheFor,
+    Ember.cacheFor = _internals.cacheFor;
     // ****@ember/object/compat****
-    _dependentKeyCompat: _compat.dependentKeyCompat,
+    Ember._dependentKeyCompat = _compat.dependentKeyCompat;
     // ****@ember/object/computed****
-    ComputedProperty: _computed.default,
-    expandProperties: _computed.expandProperties,
+    Ember.ComputedProperty = _computed.default;
+    Ember.expandProperties = _computed.expandProperties;
     // ****@ember/object/core****
-    CoreObject: _core.default,
+    Ember.CoreObject = _core.default;
     // ****@ember/object/evented****
-    Evented: _evented.default,
-    on: _evented.on,
+    Ember.Evented = _evented.default;
+    Ember.on = _evented.on;
     // ****@ember/object/events****
-    addListener: _events.addListener,
-    removeListener: _events.removeListener,
-    sendEvent: _events.sendEvent,
+    Ember.addListener = _events.addListener;
+    Ember.removeListener = _events.removeListener;
+    Ember.sendEvent = _events.sendEvent;
     // ****@ember/object/mixin****
-    Mixin: _mixin.default,
-    mixin: _mixin.mixin,
+    Ember.Mixin = _mixin.default;
+    Ember.mixin = _mixin.mixin;
     // ****@ember/object/observable****
-    Observable: _observable.default,
+    Ember.Observable = _observable.default;
     // ****@ember/object/observers****
-    addObserver: _observers.addObserver,
-    removeObserver: _observers.removeObserver,
+    Ember.addObserver = _observers.addObserver;
+    Ember.removeObserver = _observers.removeObserver;
     // ****@ember/object/promise-proxy-mixin****
-    PromiseProxyMixin: _promiseProxyMixin.default,
+    Ember.PromiseProxyMixin = _promiseProxyMixin.default;
     // ****@ember/object/proxy****
-    ObjectProxy: _proxy2.default,
-    // ****@ember/polyfills****
-    assign: _polyfills.assign,
+    Ember.ObjectProxy = _proxy2.default;
     // ****@ember/routing/-internals****
-    RouterDSL: _internals2.DSL,
-    controllerFor: _internals2.controllerFor,
-    generateController: _internals2.generateController,
-    generateControllerFactory: _internals2.generateControllerFactory,
-    // ****@ember/routing/auto-location****
-    AutoLocation: _autoLocation.default,
+    Ember.RouterDSL = _internals2.DSL;
+    Ember.controllerFor = _internals2.controllerFor;
+    Ember.generateController = _internals2.generateController;
+    Ember.generateControllerFactory = _internals2.generateControllerFactory;
     // ****@ember/routing/hash-location****
-    HashLocation: _hashLocation.default,
+    Ember.HashLocation = _hashLocation.default;
     // ****@ember/routing/history-location****
-    HistoryLocation: _historyLocation.default,
-    // ****@ember/routing/location****
-    Location: _location.default,
+    Ember.HistoryLocation = _historyLocation.default;
     // ****@ember/routing/none-location****
-    NoneLocation: _noneLocation.default,
+    Ember.NoneLocation = _noneLocation.default;
     // ****@ember/routing/route****
-    Route: _route.default,
+    Ember.Route = _route.default;
     // ****@ember/routing/router****
-    Router: _router.default,
-    // ****@ember/runloop****
-    run: _runloop.run,
-    // ****@ember/service****
-    Service: _service.default,
-    // ****@ember/string****
-    String: {
-      camelize: _string.camelize,
-      capitalize: _string.capitalize,
-      classify: _string.classify,
-      decamelize: _string.decamelize,
-      dasherize: _string.dasherize,
-      underscore: _string.underscore,
-      w: _string.w
-    },
+    Ember.Router = _router.default;
+    // // ****@ember/runloop****
+    Ember.run = _runloop.run;
+    // // ****@ember/service****
+    Ember.Service = _service.default;
     // ****@ember/utils****
-    compare: _utils2.compare,
-    isBlank: _utils2.isBlank,
-    isEmpty: _utils2.isEmpty,
-    isEqual: _utils2.isEqual,
-    isNone: _utils2.isNone,
-    isPresent: _utils2.isPresent,
-    typeOf: _utils2.typeOf,
+    Ember.compare = _utils2.compare;
+    Ember.isBlank = _utils2.isBlank;
+    Ember.isEmpty = _utils2.isEmpty;
+    Ember.isEqual = _utils2.isEqual;
+    Ember.isNone = _utils2.isNone;
+    Ember.isPresent = _utils2.isPresent;
+    Ember.typeOf = _utils2.typeOf;
     // ****@ember/version****
     /**
       The semantic version
@@ -41944,8 +40937,8 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
       @type String
       @public
     */
-    VERSION: _version.default,
-    ViewUtils: {
+    Ember.VERSION = _version.default;
+    Ember.ViewUtils = {
       // ****@ember/-internals/views****
       getChildViews: views.getChildViews,
       getElementView: views.getElementView,
@@ -41957,39 +40950,48 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
       isSimpleClick: views.isSimpleClick,
       // ****@ember/-internals/glimmer****
       isSerializationFirstNode: _glimmer.isSerializationFirstNode
-    },
+    };
     // ****@glimmer/manager****
-    _getComponentTemplate: _manager.getComponentTemplate,
-    _helperManagerCapabilities: _manager.helperCapabilities,
-    _setComponentTemplate: _manager.setComponentTemplate,
-    _setHelperManager: _manager.setHelperManager,
-    _setModifierManager: _manager.setModifierManager,
+    Ember._getComponentTemplate = _manager.getComponentTemplate;
+    Ember._helperManagerCapabilities = _manager.helperCapabilities;
+    Ember._setComponentTemplate = _manager.setComponentTemplate;
+    Ember._setHelperManager = _manager.setHelperManager;
+    Ember._setModifierManager = _manager.setModifierManager;
     // ****@glimmer/runtime****
-    _templateOnlyComponent: glimmerRuntime.templateOnlyComponent,
-    _invokeHelper: glimmerRuntime.invokeHelper,
-    _hash: glimmerRuntime.hash,
-    _array: glimmerRuntime.array,
-    _concat: glimmerRuntime.concat,
-    _get: glimmerRuntime.get,
-    _on: glimmerRuntime.on,
-    _fn: glimmerRuntime.fn,
+    Ember._templateOnlyComponent = glimmerRuntime.templateOnlyComponent;
+    Ember._invokeHelper = glimmerRuntime.invokeHelper;
+    Ember._hash = glimmerRuntime.hash;
+    Ember._array = glimmerRuntime.array;
+    Ember._concat = glimmerRuntime.concat;
+    Ember._get = glimmerRuntime.get;
+    Ember._on = glimmerRuntime.on;
+    Ember._fn = glimmerRuntime.fn;
     // Backburner
-    _Backburner: _backburner.default,
-    // ****@ember/controller, @ember/service****
-    inject,
-    // Non-imported
-    platform: {
-      defineProperty: true,
-      hasPropertyAccessors: true
-    },
-    __loader: {
+    Ember._Backburner = _backburner.default;
+    // // ****@ember/controller, @ember/service****
+    /**
+      Namespace for injection helper methods.
+         @class inject
+      @namespace Ember
+      @static
+      @public
+    */
+    function inject() {
+      // uses `globalThis` to avoid clobbering with `Ember.Object` in TS namespace
+      (false && !(false) && (0, _debug.assert)(`Injected properties must be created through helpers, see '${globalThis.Object.keys(inject).map(k => `'inject.${k}'`).join(' or ')}'`));
+    }
+    Ember.inject = inject;
+    // ****@ember/controller****
+    inject.controller = _controller.inject;
+    // ****@ember/service****
+    inject.service = _service.service;
+    Ember.__loader = {
       require: _require.default,
       define,
       // @ts-expect-error These properties don't appear as being defined
       registry: typeof requirejs !== 'undefined' ? requirejs.entries : _require.default.entries
-    }
-  };
-  var Ember = PartialEmber;
+    };
+  })(Ember || (Ember = {}));
   Object.defineProperty(Ember, 'ENV', {
     get: _environment.getENV,
     enumerable: false
@@ -42009,11 +41011,6 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
     set: EmberDebug.setTesting,
     enumerable: false
   });
-  Object.defineProperty(Ember, 'STRINGS', {
-    configurable: false,
-    get: _string._getStrings,
-    set: _string._setStrings
-  });
   Object.defineProperty(Ember, 'BOOTED', {
     configurable: false,
     enumerable: false,
@@ -42025,36 +41022,6 @@ define("ember/index", ["exports", "require", "@ember/-internals/environment", "@
     set: _glimmer.setTemplates,
     configurable: false,
     enumerable: false
-  });
-  function deprecateStringUseOnEmberModule() {
-    (false && !(false) && (0, _debug.deprecate)('Using `Ember.String` is deprecated. Please import methods directly from `@ember/string`.', false, {
-      id: 'ember-string.from-ember-module',
-      for: 'ember-source',
-      since: {
-        available: '4.10',
-        enabled: '4.10.'
-      },
-      until: '5.0.0',
-      url: 'https://deprecations.emberjs.com/v4.x/#toc_ember-string-from-ember-module'
-    }));
-  }
-  Object.defineProperty(Ember, 'String', {
-    enumerable: true,
-    configurable: true,
-    get() {
-      deprecateStringUseOnEmberModule();
-      return {
-        camelize: _string.camelize,
-        capitalize: _string.capitalize,
-        classify: _string.classify,
-        dasherize: _string.dasherize,
-        decamelize: _string.decamelize,
-        underscore: _string.underscore,
-        w: _string.w,
-        htmlSafe: _glimmer.htmlSafe,
-        isHTMLSafe: _glimmer.isHTMLSafe
-      };
-    }
   });
   Object.defineProperty(Ember, 'TEMPLATES', {
     get: _glimmer.getTemplates,
@@ -42157,7 +41124,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "4.12.3";
+  var _default = "5.3.0";
   _exports.default = _default;
 });
 define("route-recognizer", ["exports"], function (_exports) {
@@ -42840,7 +41807,7 @@ define("route-recognizer", ["exports"], function (_exports) {
   var _default = RouteRecognizer;
   _exports.default = _default;
 });
-define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports, _rsvp, _routeRecognizer) {
+define("router_js", ["exports", "route-recognizer", "rsvp"], function (_exports, _routeRecognizer, _rsvp) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -44548,7 +43515,7 @@ define("router_js", ["exports", "rsvp", "route-recognizer"], function (_exports,
         if (!newRouteInfo || oldHandler.name !== newRouteInfo.name) {
           break;
         }
-        if (!newRouteInfo.isResolved) {}
+        if (!newRouteInfo.isResolved) ;
       }
       this.triggerEvent(oldRouteInfos, true, 'willTransition', [newTransition]);
       this.routeWillChange(newTransition);
@@ -45033,7 +44000,7 @@ define("rsvp", ["exports"], function (_exports) {
     @return {Promise} a promise that will become fulfilled with the given
     `value`
   */
-  function resolve$$1(object, label) {
+  function resolve(object, label) {
     /*jshint validthis:true */
     var Constructor = this;
     if (object && typeof object === 'object' && object.constructor === Constructor) {
@@ -45054,17 +44021,17 @@ define("rsvp", ["exports"], function (_exports) {
   var PENDING = void 0;
   var FULFILLED = 1;
   var REJECTED = 2;
-  function tryThen(then$$1, value, fulfillmentHandler, rejectionHandler) {
+  function tryThen(then, value, fulfillmentHandler, rejectionHandler) {
     try {
-      then$$1.call(value, fulfillmentHandler, rejectionHandler);
+      then.call(value, fulfillmentHandler, rejectionHandler);
     } catch (e) {
       return e;
     }
   }
-  function handleForeignThenable(promise, thenable, then$$1) {
+  function handleForeignThenable(promise, thenable, then) {
     config.async(promise => {
       var sealed = false;
-      var error = tryThen(then$$1, thenable, value => {
+      var error = tryThen(then, thenable, value => {
         if (sealed) {
           return;
         }
@@ -45103,12 +44070,12 @@ define("rsvp", ["exports"], function (_exports) {
       }, reason => reject(promise, reason));
     }
   }
-  function handleMaybeThenable(promise, maybeThenable, then$$1) {
-    var isOwnThenable = maybeThenable.constructor === promise.constructor && then$$1 === then && promise.constructor.resolve === resolve$$1;
+  function handleMaybeThenable(promise, maybeThenable, then$1) {
+    var isOwnThenable = maybeThenable.constructor === promise.constructor && then$1 === then && promise.constructor.resolve === resolve;
     if (isOwnThenable) {
       handleOwnThenable(promise, maybeThenable);
-    } else if (typeof then$$1 === 'function') {
-      handleForeignThenable(promise, maybeThenable, then$$1);
+    } else if (typeof then$1 === 'function') {
+      handleForeignThenable(promise, maybeThenable, then$1);
     } else {
       fulfill(promise, maybeThenable);
     }
@@ -45117,14 +44084,14 @@ define("rsvp", ["exports"], function (_exports) {
     if (promise === value) {
       fulfill(promise, value);
     } else if (objectOrFunction(value)) {
-      var then$$1;
+      var _then;
       try {
-        then$$1 = value.then;
+        _then = value.then;
       } catch (error) {
         reject(promise, error);
         return;
       }
-      handleMaybeThenable(promise, value, then$$1);
+      handleMaybeThenable(promise, value, _then);
     } else {
       fulfill(promise, value);
     }
@@ -45206,9 +44173,7 @@ define("rsvp", ["exports"], function (_exports) {
     } else {
       value = result;
     }
-    if (promise._state !== PENDING) {
-      // noop
-    } else if (value === promise) {
+    if (promise._state !== PENDING) ;else if (value === promise) {
       reject(promise, withOwnPromise());
     } else if (succeeded === false) {
       reject(promise, error);
@@ -45265,7 +44230,7 @@ define("rsvp", ["exports"], function (_exports) {
       this.promise = new Constructor(noop, label);
       this._abortOnReject = abortOnReject;
       this._isUsingOwnPromise = Constructor === Promise;
-      this._isUsingOwnResolve = Constructor.resolve === resolve$$1;
+      this._isUsingOwnResolve = Constructor.resolve === resolve;
       this._init(...arguments);
     }
     _init(Constructor, input) {
@@ -45293,26 +44258,26 @@ define("rsvp", ["exports"], function (_exports) {
     _settleMaybeThenable(entry, i, firstPass) {
       var c = this._instanceConstructor;
       if (this._isUsingOwnResolve) {
-        var then$$1,
+        var then$1,
           error,
           succeeded = true;
         try {
-          then$$1 = entry.then;
+          then$1 = entry.then;
         } catch (e) {
           succeeded = false;
           error = e;
         }
-        if (then$$1 === then && entry._state !== PENDING) {
+        if (then$1 === then && entry._state !== PENDING) {
           entry._onError = null;
           this._settledAt(entry._state, i, entry._result, firstPass);
-        } else if (typeof then$$1 !== 'function') {
+        } else if (typeof then$1 !== 'function') {
           this._settledAt(FULFILLED, i, entry, firstPass);
         } else if (this._isUsingOwnPromise) {
           var promise = new c(noop);
           if (succeeded === false) {
             reject(promise, error);
           } else {
-            handleMaybeThenable(promise, entry, then$$1);
+            handleMaybeThenable(promise, entry, then$1);
             this._willSettleAt(promise, i, firstPass);
           }
         } else {
@@ -45774,10 +44739,10 @@ define("rsvp", ["exports"], function (_exports) {
     }
   }
   _exports.Promise = Promise;
-  Promise.cast = resolve$$1; // deprecated
+  Promise.cast = resolve; // deprecated
   Promise.all = all;
   Promise.race = race;
-  Promise.resolve = resolve$$1;
+  Promise.resolve = resolve;
   Promise.reject = reject$1;
   Promise.prototype._guidKey = guidKey;
 
@@ -50613,7 +49578,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 })();
 
 })((function(){ function newDefine(){ var args = Array.prototype.slice.call(arguments); args.unshift("lunr"); return define.apply(null, args); }; newDefine.amd = true; return newDefine; })());
-;define("@ember-data/adapter/-private", ["exports", "@ember-data/adapter/serialize-into-hash-b9092b25", "@ember-data/adapter/build-url-mixin-18db8c8b"], function (_exports, _serializeIntoHashB9092b, _buildUrlMixin18db8c8b) {
+;define("@ember-data/adapter/-private", ["exports", "@ember/debug", "@ember-data/adapter/build-url-mixin-18db8c8b"], function (_exports, _debug, _buildUrlMixin18db8c8b) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -50625,42 +49590,214 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _buildUrlMixin18db8c8b.B;
     }
   });
-  Object.defineProperty(_exports, "determineBodyPromise", {
-    enumerable: true,
-    get: function () {
-      return _serializeIntoHashB9092b.d;
+  _exports.determineBodyPromise = determineBodyPromise;
+  _exports.fetch = getFetchFunction;
+  _exports.parseResponseHeaders = parseResponseHeaders;
+  _exports.serializeIntoHash = serializeIntoHash;
+  _exports.serializeQueryParams = serializeQueryParams;
+  _exports.setupFastboot = setupFastboot;
+  const newline = /\r?\n/;
+  function parseResponseHeaders(headersString) {
+    const headers = Object.create(null);
+    if (!headersString) {
+      return headers;
     }
-  });
-  Object.defineProperty(_exports, "fetch", {
-    enumerable: true,
-    get: function () {
-      return _serializeIntoHashB9092b.g;
+    const headerPairs = headersString.split(newline);
+    for (let i = 0; i < headerPairs.length; i++) {
+      let header = headerPairs[i];
+      let j = 0;
+      let foundSep = false;
+      for (; j < header.length; j++) {
+        if (header.charCodeAt(j) === 58 /* ':' */) {
+          foundSep = true;
+          break;
+        }
+      }
+      if (foundSep === false) {
+        continue;
+      }
+      let field = header.substring(0, j).trim();
+      let value = header.substring(j + 1, header.length).trim();
+      if (value) {
+        let lowerCasedField = field.toLowerCase();
+        headers[lowerCasedField] = value;
+        headers[field] = value;
+      }
     }
-  });
-  Object.defineProperty(_exports, "parseResponseHeaders", {
-    enumerable: true,
-    get: function () {
-      return _serializeIntoHashB9092b.p;
+    return headers;
+  }
+  function continueOnReject(promise) {
+    return Promise.resolve(promise).catch(e => e);
+  }
+
+  /*
+   * Function that always attempts to parse the response as json, and if an error is thrown,
+   * returns `undefined` if the response is successful and has a status code of 204 (No Content),
+   * or 205 (Reset Content) or if the request method was 'HEAD', and the plain payload otherwise.
+   */
+  function _determineContent(response, requestData, payload) {
+    let ret = payload;
+    let error = null;
+    if (!response.ok) {
+      return payload;
     }
-  });
-  Object.defineProperty(_exports, "serializeIntoHash", {
-    enumerable: true,
-    get: function () {
-      return _serializeIntoHashB9092b.b;
+    let status = response.status;
+    let payloadIsEmpty = payload === '' || payload === null;
+    let statusIndicatesEmptyResponse = status === 204 || status === 205 || requestData.method === 'HEAD';
+    if (response.ok && (statusIndicatesEmptyResponse || payloadIsEmpty)) {
+      return;
     }
-  });
-  Object.defineProperty(_exports, "serializeQueryParams", {
-    enumerable: true,
-    get: function () {
-      return _serializeIntoHashB9092b.s;
+    try {
+      ret = JSON.parse(payload);
+    } catch (e) {
+      if (!(e instanceof SyntaxError)) {
+        return e;
+      }
+      e.payload = payload;
+      error = e;
     }
-  });
-  Object.defineProperty(_exports, "setupFastboot", {
-    enumerable: true,
-    get: function () {
-      return _serializeIntoHashB9092b.a;
+    if (error) {
+      return error;
     }
-  });
+    return ret;
+  }
+  function determineBodyPromise(response, requestData) {
+    // response.text() may resolve or reject
+    // it is a native promise, may not have finally
+    return continueOnReject(response.text()).then(payload => _determineContent(response, requestData, payload));
+  }
+  const RBRACKET = /\[\]$/;
+  function isPlainObject(obj) {
+    return Object.prototype.toString.call(obj) === '[object Object]';
+  }
+
+  /*
+   * Helper function that turns the data/body of a request into a query param string.
+   * This is directly copied from jQuery.param.
+   */
+  function serializeQueryParams(queryParamsObject) {
+    let s = [];
+    function buildParams(prefix, obj) {
+      let i, len, key;
+      if (prefix) {
+        if (Array.isArray(obj)) {
+          for (i = 0, len = obj.length; i < len; i++) {
+            if (RBRACKET.test(prefix)) {
+              add(s, prefix, obj[i]);
+            } else {
+              buildParams(prefix + '[' + (typeof obj[i] === 'object' && obj[i] !== null ? i : '') + ']', obj[i]);
+            }
+          }
+        } else if (isPlainObject(obj)) {
+          for (key in obj) {
+            buildParams(prefix + '[' + key + ']', obj[key]);
+          }
+        } else {
+          add(s, prefix, obj);
+        }
+      } else if (Array.isArray(obj)) {
+        for (i = 0, len = obj.length; i < len; i++) {
+          add(s, obj[i].name, obj[i].value);
+        }
+      } else {
+        for (key in obj) {
+          buildParams(key, obj[key]);
+        }
+      }
+      return s;
+    }
+    return buildParams('', queryParamsObject).join('&');
+  }
+
+  /*
+   * Part of the `serializeQueryParams` helper function.
+   */
+  function add(s, k, v) {
+    // Strip out keys with undefined value and replace null values with
+    // empty strings (mimics jQuery.ajax)
+    if (v === undefined) {
+      return;
+    } else if (v === null) {
+      v = '';
+    }
+    v = typeof v === 'function' ? v() : v;
+    s[s.length] = `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
+  }
+  let _fetch = null;
+  let REQUEST = null;
+  function getFetchFunction() {
+    // return cached fetch function
+    if (_fetch !== null) {
+      return _fetch();
+    }
+
+    // grab browser native fetch if available, or global fetch if otherwise configured
+    if (typeof fetch === 'function') {
+      // fallback to using global fetch
+      _fetch = () => fetch;
+
+      /* global FastBoot */
+      // grab fetch from node-fetch
+    } else if (typeof FastBoot !== 'undefined') {
+      try {
+        const nodeFetch = FastBoot.require('node-fetch');
+        const httpRegex = /^https?:\/\//;
+        const protocolRelativeRegex = /^\/\//;
+
+        // eslint-disable-next-line no-inner-declarations
+        function parseRequest(request) {
+          if (request === null) {
+            throw new Error("Trying to fetch with relative url but the application hasn't finished loading FastBootInfo, see details at https://github.com/ember-cli/ember-fetch#relative-url");
+          }
+          // Old Prember version is not sending protocol
+          const protocol = request.protocol === 'undefined:' ? 'http:' : request.protocol;
+          return [request.get('host'), protocol];
+        }
+
+        // eslint-disable-next-line no-inner-declarations
+        function buildAbsoluteUrl(url) {
+          if (protocolRelativeRegex.test(url)) {
+            let [host] = parseRequest(REQUEST);
+            url = host + url;
+          } else if (!httpRegex.test(url)) {
+            let [host, protocol] = parseRequest(REQUEST);
+            url = protocol + '//' + host + url;
+          }
+          return url;
+        }
+
+        // eslint-disable-next-line no-inner-declarations
+        function patchedFetch(input, options) {
+          if (input && input.href) {
+            input.url = buildAbsoluteUrl(input.href);
+          } else if (typeof input === 'string') {
+            input = buildAbsoluteUrl(input);
+          }
+          return nodeFetch(input, options);
+        }
+        _fetch = () => patchedFetch;
+      } catch (e) {
+        throw new Error(`Unable to create a compatible 'fetch' for FastBoot with node-fetch`);
+      }
+    }
+    (false && !(_fetch) && (0, _debug.assert)(`Cannot find a 'fetch' global and did not detect FastBoot.`, _fetch));
+    return _fetch();
+  }
+  function setupFastboot(fastBootRequest) {
+    REQUEST = fastBootRequest;
+  }
+  function serializeIntoHash(store, modelClass, snapshot, options = {
+    includeId: true
+  }) {
+    const serializer = store.serializerFor(modelClass.modelName);
+    (false && !(serializer) && (0, _debug.assert)(`Cannot serialize record, no serializer defined`, serializer));
+    if (typeof serializer.serializeIntoHash === 'function') {
+      const data = {};
+      serializer.serializeIntoHash(data, modelClass, snapshot, options);
+      return data;
+    }
+    return serializer.serialize(snapshot, options);
+  }
 });
 ;define("@ember-data/adapter/build-url-mixin-18db8c8b", ["exports", "@ember/object/mixin", "@ember/string", "ember-inflector"], function (_exports, _mixin, _string, _emberInflector) {
   "use strict";
@@ -51180,8 +50317,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.UnauthorizedError = _exports.TimeoutError = _exports.ServerError = _exports.NotFoundError = _exports.InvalidError = _exports.ForbiddenError = _exports.ConflictError = _exports.AbortError = void 0;
   _exports.default = AdapterError;
-  _exports.errorsArrayToHash = errorsArrayToHash;
-  _exports.errorsHashToArray = errorsHashToArray;
+  /**
+    @module @ember-data/adapter/error
+   */
   /**
     ## Overview
   
@@ -51519,162 +50657,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   const ServerError = extend(AdapterError, 'The adapter operation failed due to a server error');
   _exports.ServerError = ServerError;
   ServerError.prototype.code = 'ServerError';
-  function makeArray(value) {
-    return Array.isArray(value) ? value : [value];
-  }
-  const SOURCE_POINTER_REGEXP = /^\/?data\/(attributes|relationships)\/(.*)/;
-  const SOURCE_POINTER_PRIMARY_REGEXP = /^\/?data/;
-  const PRIMARY_ATTRIBUTE_KEY = 'base';
-  /**
-    Convert an hash of errors into an array with errors in JSON-API format.
-     ```javascript
-     import { errorsHashToArray } from '@ember-data/adapter/error';
-  
-     let errors = {
-      base: 'Invalid attributes on saving this record',
-      name: 'Must be present',
-      age: ['Must be present', 'Must be a number']
-    };
-     let errorsArray = errorsHashToArray(errors);
-    // [
-    //   {
-    //     title: "Invalid Document",
-    //     detail: "Invalid attributes on saving this record",
-    //     source: { pointer: "/data" }
-    //   },
-    //   {
-    //     title: "Invalid Attribute",
-    //     detail: "Must be present",
-    //     source: { pointer: "/data/attributes/name" }
-    //   },
-    //   {
-    //     title: "Invalid Attribute",
-    //     detail: "Must be present",
-    //     source: { pointer: "/data/attributes/age" }
-    //   },
-    //   {
-    //     title: "Invalid Attribute",
-    //     detail: "Must be a number",
-    //     source: { pointer: "/data/attributes/age" }
-    //   }
-    // ]
-    ```
-    @method errorsHashToArray
-    @for @ember-data/adapter/error
-    @static
-    @deprecated
-    @public
-    @param {Object} errors hash with errors as properties
-    @return {Array} array of errors in JSON-API format
-  */
-  function errorsHashToArray(errors) {
-    {
-      (false && !(false) && (0, _debug.deprecate)(`errorsHashToArray helper has been deprecated.`, false, {
-        id: 'ember-data:deprecate-errors-hash-to-array-helper',
-        for: 'ember-data',
-        until: '5.0',
-        since: {
-          available: '4.7',
-          enabled: '4.7'
-        }
-      }));
-      let out = [];
-      if (errors) {
-        Object.keys(errors).forEach(key => {
-          let messages = makeArray(errors[key]);
-          for (let i = 0; i < messages.length; i++) {
-            let title = 'Invalid Attribute';
-            let pointer = `/data/attributes/${key}`;
-            if (key === PRIMARY_ATTRIBUTE_KEY) {
-              title = 'Invalid Document';
-              pointer = `/data`;
-            }
-            out.push({
-              title: title,
-              detail: messages[i],
-              source: {
-                pointer: pointer
-              }
-            });
-          }
-        });
-      }
-      return out;
-    }
-    (false && !(false) && (0, _debug.assert)(`errorsHashToArray helper has been removed`));
-  }
-
-  /**
-    Convert an array of errors in JSON-API format into an object.
-  
-    ```javascript
-    import { errorsArrayToHash } from '@ember-data/adapter/error';
-  
-    let errorsArray = [
-      {
-        title: 'Invalid Attribute',
-        detail: 'Must be present',
-        source: { pointer: '/data/attributes/name' }
-      },
-      {
-        title: 'Invalid Attribute',
-        detail: 'Must be present',
-        source: { pointer: '/data/attributes/age' }
-      },
-      {
-        title: 'Invalid Attribute',
-        detail: 'Must be a number',
-        source: { pointer: '/data/attributes/age' }
-      }
-    ];
-  
-    let errors = errorsArrayToHash(errorsArray);
-    // {
-    //   "name": ["Must be present"],
-    //   "age":  ["Must be present", "must be a number"]
-    // }
-    ```
-  
-    @method errorsArrayToHash
-    @static
-    @for @ember-data/adapter/error
-    @deprecated
-    @public
-    @param {Array} errors array of errors in JSON-API format
-    @return {Object}
-  */
-  function errorsArrayToHash(errors) {
-    {
-      (false && !(false) && (0, _debug.deprecate)(`errorsArrayToHash helper has been deprecated.`, false, {
-        id: 'ember-data:deprecate-errors-array-to-hash-helper',
-        for: 'ember-data',
-        until: '5.0',
-        since: {
-          available: '4.7',
-          enabled: '4.7'
-        }
-      }));
-      let out = {};
-      if (errors) {
-        errors.forEach(error => {
-          if (error.source && error.source.pointer) {
-            let key = error.source.pointer.match(SOURCE_POINTER_REGEXP);
-            if (key) {
-              key = key[2];
-            } else if (error.source.pointer.search(SOURCE_POINTER_PRIMARY_REGEXP) !== -1) {
-              key = PRIMARY_ATTRIBUTE_KEY;
-            }
-            if (key) {
-              out[key] = out[key] || [];
-              out[key].push(error.detail || error.title);
-            }
-          }
-        });
-      }
-      return out;
-    }
-    (false && !(false) && (0, _debug.assert)(`errorsArrayToHash helper has been removed`));
-  }
 });
 ;define("@ember-data/adapter/index-f54121ea", ["exports", "@ember/object", "@ember/service"], function (_exports, _object, _service) {
   "use strict";
@@ -52331,7 +51313,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/adapter/json-api", ["exports", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/adapter/serialize-into-hash-b9092b25", "@ember-data/adapter/rest"], function (_exports, _debug, _string, _emberInflector, _serializeIntoHashB9092b, _rest) {
+;define("@ember-data/adapter/json-api", ["exports", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/adapter/-private", "@ember-data/adapter/rest"], function (_exports, _debug, _string, _emberInflector, _private, _rest) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -52575,7 +51557,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return (0, _emberInflector.pluralize)(dasherized);
     }
     updateRecord(store, schema, snapshot) {
-      const data = (0, _serializeIntoHashB9092b.b)(store, schema, snapshot);
+      const data = (0, _private.serializeIntoHash)(store, schema, snapshot);
       const type = snapshot.modelName;
       const id = snapshot.id;
       (false && !(typeof id === 'string' && id.length > 0) && (0, _debug.assert)(`Attempted to update the ${type} record, but the record has no id`, typeof id === 'string' && id.length > 0));
@@ -52587,7 +51569,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   _exports.default = JSONAPIAdapter;
 });
-;define("@ember-data/adapter/rest", ["exports", "@ember-data/adapter/index-f54121ea", "@ember/application", "@ember/debug", "@ember/object", "@ember/runloop", "@ember-data/adapter/serialize-into-hash-b9092b25", "@ember-data/adapter/build-url-mixin-18db8c8b", "@ember-data/adapter/error"], function (_exports, _indexF54121ea, _application, _debug, _object, _runloop, _serializeIntoHashB9092b, _buildUrlMixin18db8c8b, _error) {
+;define("@ember-data/adapter/rest", ["exports", "@ember-data/adapter/index-f54121ea", "@ember/application", "@ember/debug", "@ember/object", "@ember/runloop", "@ember-data/adapter/-private", "@ember-data/adapter/build-url-mixin-18db8c8b", "@ember-data/adapter/error"], function (_exports, _indexF54121ea, _application, _debug, _object, _runloop, _private, _buildUrlMixin18db8c8b, _error) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -53263,7 +52245,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     createRecord(store, type, snapshot) {
       let url = this.buildURL(type.modelName, null, snapshot, 'createRecord');
-      const data = (0, _serializeIntoHashB9092b.b)(store, type, snapshot);
+      const data = (0, _private.serializeIntoHash)(store, type, snapshot);
       return this.ajax(url, 'POST', {
         data
       });
@@ -53284,7 +52266,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {Promise} promise
     */
     updateRecord(store, schema, snapshot) {
-      const data = (0, _serializeIntoHashB9092b.b)(store, schema, snapshot, {});
+      const data = (0, _private.serializeIntoHash)(store, schema, snapshot, {});
       const type = snapshot.modelName;
       const id = snapshot.id;
       (false && !(typeof id === 'string' && id.length > 0) && (0, _debug.assert)(`Attempted to update the ${type} record, but the record has no id`, typeof id === 'string' && id.length > 0));
@@ -53494,7 +52476,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (this.useFetch) {
         let hash = adapter.ajaxOptions(url, type, options);
         let response = await this._fetchRequest(hash);
-        let payload = await (0, _serializeIntoHashB9092b.d)(response, requestData);
+        let payload = await (0, _private.determineBodyPromise)(response, requestData);
         if (response.ok && !(payload instanceof Error)) {
           return fetchSuccessHandler(adapter, payload, response, requestData);
         } else {
@@ -53526,7 +52508,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       typeof jQuery !== 'undefined' && jQuery.ajax(options);
     }
     _fetchRequest(options) {
-      let fetchFunction = (0, _serializeIntoHashB9092b.g)();
+      let fetchFunction = (0, _private.fetch)();
       return fetchFunction(options.url, options);
     }
     _ajax(options) {
@@ -53784,7 +52766,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return {
       status: jqXHR.status,
       textStatus: jqXHR.statusText,
-      headers: (0, _serializeIntoHashB9092b.p)(jqXHR.getAllResponseHeaders())
+      headers: (0, _private.parseResponseHeaders)(jqXHR.getAllResponseHeaders())
     };
   }
   function headersToObject(headers) {
@@ -53814,7 +52796,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         if (Object.keys(options.data).length && options.url) {
           // Test if there are already query params in the url (mimics jQuey.ajax).
           const queryParamDelimiter = options.url.indexOf('?') > -1 ? '&' : '?';
-          options.url += `${queryParamDelimiter}${(0, _serializeIntoHashB9092b.s)(options.data)}`;
+          options.url += `${queryParamDelimiter}${(0, _private.serializeQueryParams)(options.data)}`;
         }
       } else {
         // NOTE: a request's body cannot be an object, so we stringify it if it is.
@@ -53856,229 +52838,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     return options;
   }
 });
-;define("@ember-data/adapter/serialize-into-hash-b9092b25", ["exports", "@ember/debug"], function (_exports, _debug) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.a = setupFastboot;
-  _exports.b = serializeIntoHash;
-  _exports.d = determineBodyPromise;
-  _exports.g = getFetchFunction;
-  _exports.p = parseResponseHeaders;
-  _exports.s = serializeQueryParams;
-  const newline = /\r?\n/;
-  function parseResponseHeaders(headersString) {
-    const headers = Object.create(null);
-    if (!headersString) {
-      return headers;
-    }
-    const headerPairs = headersString.split(newline);
-    for (let i = 0; i < headerPairs.length; i++) {
-      let header = headerPairs[i];
-      let j = 0;
-      let foundSep = false;
-      for (; j < header.length; j++) {
-        if (header.charCodeAt(j) === 58 /* ':' */) {
-          foundSep = true;
-          break;
-        }
-      }
-      if (foundSep === false) {
-        continue;
-      }
-      let field = header.substring(0, j).trim();
-      let value = header.substring(j + 1, header.length).trim();
-      if (value) {
-        let lowerCasedField = field.toLowerCase();
-        headers[lowerCasedField] = value;
-        headers[field] = value;
-      }
-    }
-    return headers;
-  }
-  function continueOnReject(promise) {
-    return Promise.resolve(promise).catch(e => e);
-  }
-
-  /*
-   * Function that always attempts to parse the response as json, and if an error is thrown,
-   * returns `undefined` if the response is successful and has a status code of 204 (No Content),
-   * or 205 (Reset Content) or if the request method was 'HEAD', and the plain payload otherwise.
-   */
-  function _determineContent(response, requestData, payload) {
-    let ret = payload;
-    let error = null;
-    if (!response.ok) {
-      return payload;
-    }
-    let status = response.status;
-    let payloadIsEmpty = payload === '' || payload === null;
-    let statusIndicatesEmptyResponse = status === 204 || status === 205 || requestData.method === 'HEAD';
-    if (response.ok && (statusIndicatesEmptyResponse || payloadIsEmpty)) {
-      return;
-    }
-    try {
-      ret = JSON.parse(payload);
-    } catch (e) {
-      if (!(e instanceof SyntaxError)) {
-        return e;
-      }
-      e.payload = payload;
-      error = e;
-    }
-    if (error) {
-      return error;
-    }
-    return ret;
-  }
-  function determineBodyPromise(response, requestData) {
-    // response.text() may resolve or reject
-    // it is a native promise, may not have finally
-    return continueOnReject(response.text()).then(payload => _determineContent(response, requestData, payload));
-  }
-  const RBRACKET = /\[\]$/;
-  function isPlainObject(obj) {
-    return Object.prototype.toString.call(obj) === '[object Object]';
-  }
-
-  /*
-   * Helper function that turns the data/body of a request into a query param string.
-   * This is directly copied from jQuery.param.
-   */
-  function serializeQueryParams(queryParamsObject) {
-    let s = [];
-    function buildParams(prefix, obj) {
-      let i, len, key;
-      if (prefix) {
-        if (Array.isArray(obj)) {
-          for (i = 0, len = obj.length; i < len; i++) {
-            if (RBRACKET.test(prefix)) {
-              add(s, prefix, obj[i]);
-            } else {
-              buildParams(prefix + '[' + (typeof obj[i] === 'object' && obj[i] !== null ? i : '') + ']', obj[i]);
-            }
-          }
-        } else if (isPlainObject(obj)) {
-          for (key in obj) {
-            buildParams(prefix + '[' + key + ']', obj[key]);
-          }
-        } else {
-          add(s, prefix, obj);
-        }
-      } else if (Array.isArray(obj)) {
-        for (i = 0, len = obj.length; i < len; i++) {
-          add(s, obj[i].name, obj[i].value);
-        }
-      } else {
-        for (key in obj) {
-          buildParams(key, obj[key]);
-        }
-      }
-      return s;
-    }
-    return buildParams('', queryParamsObject).join('&');
-  }
-
-  /*
-   * Part of the `serializeQueryParams` helper function.
-   */
-  function add(s, k, v) {
-    // Strip out keys with undefined value and replace null values with
-    // empty strings (mimics jQuery.ajax)
-    if (v === undefined) {
-      return;
-    } else if (v === null) {
-      v = '';
-    }
-    v = typeof v === 'function' ? v() : v;
-    s[s.length] = `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
-  }
-  let _fetch = null;
-  let REQUEST = null;
-  function getFetchFunction() {
-    // return cached fetch function
-    if (_fetch !== null) {
-      return _fetch();
-    }
-
-    // grab browser native fetch if available, or global fetch if otherwise configured
-    if (typeof fetch === 'function') {
-      // fallback to using global fetch
-      _fetch = () => fetch;
-
-      /* global FastBoot */
-      // grab fetch from node-fetch
-    } else if (typeof FastBoot !== 'undefined') {
-      try {
-        const nodeFetch = FastBoot.require('node-fetch');
-        const httpRegex = /^https?:\/\//;
-        const protocolRelativeRegex = /^\/\//;
-
-        // eslint-disable-next-line no-inner-declarations
-        function parseRequest(request) {
-          if (request === null) {
-            throw new Error("Trying to fetch with relative url but the application hasn't finished loading FastBootInfo, see details at https://github.com/ember-cli/ember-fetch#relative-url");
-          }
-          // Old Prember version is not sending protocol
-          const protocol = request.protocol === 'undefined:' ? 'http:' : request.protocol;
-          return [request.get('host'), protocol];
-        }
-
-        // eslint-disable-next-line no-inner-declarations
-        function buildAbsoluteUrl(url) {
-          if (protocolRelativeRegex.test(url)) {
-            let [host] = parseRequest(REQUEST);
-            url = host + url;
-          } else if (!httpRegex.test(url)) {
-            let [host, protocol] = parseRequest(REQUEST);
-            url = protocol + '//' + host + url;
-          }
-          return url;
-        }
-
-        // eslint-disable-next-line no-inner-declarations
-        function patchedFetch(input, options) {
-          if (input && input.href) {
-            input.url = buildAbsoluteUrl(input.href);
-          } else if (typeof input === 'string') {
-            input = buildAbsoluteUrl(input);
-          }
-          return nodeFetch(input, options);
-        }
-        _fetch = () => patchedFetch;
-      } catch (e) {
-        throw new Error(`Unable to create a compatible 'fetch' for FastBoot with node-fetch`);
-      }
-    }
-    (false && !(_fetch) && (0, _debug.assert)(`Cannot find a 'fetch' global and did not detect FastBoot.`, _fetch));
-    return _fetch();
-  }
-  function setupFastboot(fastBootRequest) {
-    REQUEST = fastBootRequest;
-  }
-  function serializeIntoHash(store, modelClass, snapshot, options = {
-    includeId: true
-  }) {
-    const serializer = store.serializerFor(modelClass.modelName);
-    (false && !(serializer) && (0, _debug.assert)(`Cannot serialize record, no serializer defined`, serializer));
-    if (typeof serializer.serializeIntoHash === 'function') {
-      const data = {};
-      serializer.serializeIntoHash(data, modelClass, snapshot, options);
-      return data;
-    }
-    return serializer.serialize(snapshot, options);
-  }
-});
-;define("@ember-data/debug/index", ["exports", "@ember/array", "@ember/debug", "@ember/debug/data-adapter", "@ember/object/observers", "@ember/service", "@ember/string", "@ember/runloop", "@ember-data/debug/setup"], function (_exports, _array, _debug, _dataAdapter, _observers, _service, _string, _runloop, _setup) {
+;define("@ember-data/debug/index", ["exports", "@ember/array", "@ember/debug", "@ember/debug/data-adapter", "@ember/object/observers", "@ember/service", "@ember/string"], function (_exports, _array, _debug, _dataAdapter, _observers, _service, _string) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"@ember/array",0,"@ember/debug",0,"@ember/debug/data-adapter",0,"@ember/object/observers",0,"@ember/service",0,"@ember/string",0,"@ember/runloop",0,"@ember-data/debug/setup"eaimeta@70e063a35619d71f
+  var _dec, _class2, _descriptor;
   /**
     # Overview
   
@@ -54104,6 +52871,20 @@ lunr.QueryParser.parseBoost = function (parser) {
     @module @ember-data/debug
     @main @ember-data/debug
   */
+  0; //eaimeta@70e063a35619d71f0,"@ember/array",0,"@ember/debug",0,"@ember/debug/data-adapter",0,"@ember/object/observers",0,"@ember/service",0,"@ember/string"eaimeta@70e063a35619d71f
+  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
+  const StoreTypesMap = new WeakMap();
+  function typesMapFor(store) {
+    let typesMap = StoreTypesMap.get(store);
+    if (typesMap === undefined) {
+      typesMap = new Map();
+      StoreTypesMap.set(store, typesMap);
+    }
+    return typesMap;
+  }
+
   /**
     Implements `@ember/debug/data-adapter` with for EmberData
     integration with the ember-inspector.
@@ -54112,8 +52893,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     @extends DataAdapter
     @private
   */
-  var _default = _dataAdapter.default.extend({
-    store: (0, _service.inject)('store'),
+  let _class = (_dec = (0, _service.inject)('store'), (_class2 = class _class2 extends _dataAdapter.default {
+    constructor(...args) {
+      super(...args);
+      _initializerDefineProperty(this, "store", _descriptor, this);
+    }
     /**
       Specifies how records can be filtered based on the state of the record
       Records returned will need to have a `filterValues`
@@ -54134,10 +52918,11 @@ lunr.QueryParser.parseBoost = function (parser) {
         name: 'isClean',
         desc: 'Clean'
       }];
-    },
+    }
     _nameToClass(type) {
       return this.store.modelFor(type);
-    },
+    }
+
     /**
       Fetch the model types and observe them for changes.
       Maintains the list of model types without needing the Model package for detection.
@@ -54153,21 +52938,24 @@ lunr.QueryParser.parseBoost = function (parser) {
       const {
         store
       } = this;
+      const unsub = store.notifications.subscribe('resource', (identifier, notificationType) => {
+        if (notificationType === 'added') {
+          this.watchTypeIfUnseen(store, discoveredTypes, identifier.type, typesAdded, typesUpdated, _releaseMethods);
+        }
+      });
       const __getResourceCache = store._instanceCache.getResourceCache;
-      const _releaseMethods = [];
-      const discoveredTypes = (0, _setup.typesMapFor)(store);
+      const _releaseMethods = [() => {
+        store.notifications.unsubscribe(unsub);
+      }];
+      const discoveredTypes = typesMapFor(store);
+      Object.keys(store.identifierCache._cache.types).forEach(type => {
+        discoveredTypes.set(type, false);
+      });
 
       // Add any models that were added during initialization of the app, before the inspector was opened
       discoveredTypes.forEach((_, type) => {
         this.watchTypeIfUnseen(store, discoveredTypes, type, typesAdded, typesUpdated, _releaseMethods);
       });
-
-      // Overwrite _createRecordData so newly added models will get added to the list
-      store._instanceCache.getResourceCache = identifier => {
-        // defer to ensure first-create does not result in an infinite loop, see https://github.com/emberjs/data/issues/8006
-        (0, _runloop.next)(() => this.watchTypeIfUnseen(store, discoveredTypes, identifier.type, typesAdded, typesUpdated, _releaseMethods));
-        return __getResourceCache.call(store._instanceCache, identifier);
-      };
       let release = () => {
         _releaseMethods.forEach(fn => fn());
         store._instanceCache.getResourceCache = __getResourceCache;
@@ -54181,7 +52969,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       };
       this.releaseMethods.pushObject(release);
       return release;
-    },
+    }
+
     /**
      * Loop over the discovered types and use the callbacks from watchModelTypes to notify
      * the consumer of this adapter about the mdoels.
@@ -54203,7 +52992,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         typesAdded([wrapped]);
         discoveredTypes.set(type, true);
       }
-    },
+    }
+
     /**
       Creates a human readable string used for column headers
        @method columnNameToDesc
@@ -54213,7 +53003,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     columnNameToDesc(name) {
       return (0, _string.capitalize)((0, _string.underscore)(name).replace(/_/g, ' ').trim());
-    },
+    }
+
     /**
       Get the columns for a given model type
        @method columnsForType
@@ -54241,7 +53032,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         });
       });
       return columns;
-    },
+    }
+
     /**
       Fetches all loaded records for a given type
        @method getRecords
@@ -54265,7 +53057,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       (false && !(!!modelName) && (0, _debug.assert)('Cannot find model name. Please upgrade to Ember.js >= 1.13 for Ember Inspector support', !!modelName));
       return this.store.peekAll(modelName);
-    },
+    }
+
     /**
       Gets the values for each column
       This is the attribute values for a given record
@@ -54286,7 +53079,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         columnValues[key] = record[key];
       });
       return columnValues;
-    },
+    }
+
     /**
       Returns keywords to match when searching records
        @method getRecordKeywords
@@ -54300,7 +53094,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       record.eachAttribute(key => keys.push(key));
       keys.forEach(key => keywords.push(record[key]));
       return keywords;
-    },
+    }
+
     /**
       Returns the values of filters defined by `getFilters`
       These reflect the state of the record
@@ -54315,7 +53110,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         isModified: record.hasDirtyAttributes && !record.isNew,
         isClean: !record.hasDirtyAttributes
       };
-    },
+    }
+
     /**
       Returns a color that represents the record's state
       Possible colors: black, blue, green
@@ -54332,7 +53128,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         color = 'blue';
       }
       return color;
-    },
+    }
+
     /**
       Observes all relevant properties and re-sends the wrapped record
       when a change occurs
@@ -54361,62 +53158,13 @@ lunr.QueryParser.parseBoost = function (parser) {
       };
       return release;
     }
-  });
-  _exports.default = _default;
-});
-;define("@ember-data/debug/setup", ["exports", "@ember-data/store"], function (_exports, _store) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _exports.typesMapFor = typesMapFor;
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/store"eaimeta@70e063a35619d71f
-  // dirty hack to add the known models to the typesMap
-  const StoreTypesMap = new WeakMap();
-  function typesMapFor(store) {
-    let typesMap = StoreTypesMap.get(store);
-    if (typesMap === undefined) {
-      typesMap = new Map();
-      StoreTypesMap.set(store, typesMap);
-    }
-    return typesMap;
-  }
-
-  // EmberData 4.7+
-  Object.defineProperty(_store.default.prototype, '_instanceCache', {
-    get() {
-      return this.__instanceCache;
-    },
-    set(value) {
-      const getResourceCache = value.getResourceCache;
-      const store = this;
-      value.getResourceCache = function (identifier) {
-        const typesMap = typesMapFor(store);
-        if (!typesMap.has(identifier.type)) {
-          typesMap.set(identifier.type, false);
-        }
-        return getResourceCache.call(this, identifier);
-      };
-      this.__instanceCache = value;
-    }
-  });
-
-  // EmberData <= 4.6
-  const __createRecordData = _store.default.prototype._createRecordData;
-  _store.default.prototype._createRecordData = function (identifier) {
-    const typesMap = typesMapFor(this);
-    if (!typesMap.has(identifier.type)) {
-      typesMap.set(identifier.type, false);
-    }
-    return __createRecordData.call(this, identifier);
-  };
-  var _default = {
-    name: '@ember-data/data-adapter',
-    initialize() {}
-  };
-  _exports.default = _default;
+  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "store", [_dec], {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    initializer: null
+  })), _class2));
+  _exports.default = _class;
 });
 ;define("@ember-data/graph/-private", ["exports", "@ember/debug", "@ember-data/store/-private"], function (_exports, _debug, _private) {
   "use strict";
@@ -54605,7 +53353,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(!Array.isArray(data)) && (0, _debug.assert)(`A ${identifier.type} record was pushed into the store with the value of ${meta.key} being '${JSON.stringify(data)}', but ${meta.key} is a belongsTo relationship so the value must not be an array. You should probably check your data payload or serializer.`, !Array.isArray(data)));
     (false && !(data === null || typeof data.type === 'string' && data.type.length) && (0, _debug.assert)(`Encountered a relationship identifier without a type for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, expected an identifier with type '${meta.type}' but found\n\n'${JSON.stringify(data, null, 2)}'\n\nPlease check your serializer and make sure it is serializing the relationship payload into a JSON API format.`, data === null || typeof data.type === 'string' && data.type.length));
     (false && !(data === null || !!coerceId(data.id)) && (0, _debug.assert)(`Encountered a relationship identifier without an id for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, expected an identifier but found\n\n'${JSON.stringify(data, null, 2)}'\n\nPlease check your serializer and make sure it is serializing the relationship payload into a JSON API format.`, data === null || !!coerceId(data.id)));
-    (false && !(data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Encountered a relationship identifier with type '${data.type}' for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, Expected an identifier with type '${meta.type}'. No model was found for '${data.type}'.`, data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)));
+    if (data?.type === meta.type) {
+      (false && !(store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Missing Schema: Encountered a relationship identifier { type: '${data.type}', id: '${data.id}' } for the '${identifier.type}.${meta.key}' ${meta.kind} relationship on <${identifier.type}:${identifier.id}>, but no schema exists for that type.`, store.getSchemaDefinitionService().doesTypeExist(data.type)));
+    } else {
+      (false && !(data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Missing Schema: Encountered a relationship identifier with type '${data.type}' for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, Expected an identifier with type '${meta.type}'. No schema was found for '${data.type}'.`, data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)));
+    }
   }
   function createState() {
     return {
@@ -54859,7 +53611,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       // CASE: We don't have a relationship at all
       // we should only hit this in prod
-      (false && !(meta) && (0, _debug.assert)(`Expected to find a relationship definition for ${type}.${propertyName} but none was found.`, meta));
+      (false && !(meta) && (0, _debug.assert)(`Expected a relationship schema for '${type}.${propertyName}', but no relationship schema was found.`, meta));
       cache[type][propertyName] = null;
       return null;
     }
@@ -54905,7 +53657,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         });
         (false && !(inverseDefinitions) && (0, _debug.assert)(`Expected to have a relationship definition for ${inverseType} but none was found.`, inverseDefinitions));
         let meta = inverseDefinitions[inverseKey];
-        (false && !(meta) && (0, _debug.assert)(`Expected to find a relationship definition for ${inverseType}.${inverseKey} but none was found.`, meta));
+        (false && !(meta) && (0, _debug.assert)(`Expected a relationship schema for '${inverseType}.${inverseKey}' to match the inverse of '${type}.${propertyName}', but no relationship schema was found.`, meta));
         inverseDefinition = upgradeMeta(meta);
       }
     }
@@ -55009,19 +53761,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     expandingSet(cache, inverseType, inverseKey, info);
     return info;
   }
-  function metaIsRelationshipDefinition(meta) {
-    return typeof meta._inverseKey === 'function';
-  }
   function inverseForRelationship(store, identifier, key) {
     const definition = store.getSchemaDefinitionService().relationshipsDefinitionFor(identifier)[key];
     if (!definition) {
       return null;
-    }
-    {
-      if (metaIsRelationshipDefinition(definition)) {
-        const modelClass = store.modelFor(identifier.type);
-        return definition._inverseKey(store, modelClass);
-      }
     }
     (false && !(definition.options?.inverse === null || typeof definition.options?.inverse === 'string' && definition.options.inverse.length > 0) && (0, _debug.assert)(`Expected the relationship defintion to specify the inverse type or null.`, definition.options?.inverse === null || typeof definition.options?.inverse === 'string' && definition.options.inverse.length > 0));
     return definition.options.inverse;
@@ -55804,11 +54547,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       let relationship = relationships[propertyName];
       if (!relationship) {
         const info = upgradeDefinition(this, identifier, propertyName);
-        (false && !(info !== null) && (0, _debug.assert)(`Could not determine relationship information for ${identifier.type}.${propertyName}`, info !== null)); // if (info.rhs_definition?.kind === 'implicit') {
-        //   // we should possibly also do this
-        //   // but it would result in being extremely permissive for other relationships by accident
-        //   // this.registerPolymorphicType(info.rhs_baseModelName, identifier.type);
-        // }
+        (false && !(info !== null) && (0, _debug.assert)(`Could not determine relationship information for ${identifier.type}.${propertyName}`, info !== null));
+        if (info.rhs_definition?.kind === 'implicit') ;
         const meta = isLHS(info, identifier.type, propertyName) ? info.lhs_definition : info.rhs_definition;
         if (meta.kind !== 'implicit') {
           const Klass = meta.kind === 'hasMany' ? ManyRelationship : BelongsToRelationship;
@@ -55881,6 +54621,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       const keys = Object.keys(relationships);
       for (let i = 0; i < keys.length; i++) {
         const relationship = relationships[keys[i]];
+        // account for previously unloaded relationships
+        // typically from a prior deletion of a record that pointed to this one implicitly
+        if (relationship === undefined) {
+          continue;
+        }
         (false && !(relationship) && (0, _debug.assert)(`Expected a relationship`, relationship));
         if (relationship.definition.inverseIsAsync) {
           return false;
@@ -55900,6 +54645,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           }
           destroyRelationship(this, rel, silenceNotifications);
           if (isImplicit(rel)) {
+            // @ts-expect-error
             relationships[key] = undefined;
           }
         });
@@ -55963,6 +54709,7 @@ lunr.QueryParser.parseBoost = function (parser) {
                   return;
                 }
                 // works together with the has check
+                // @ts-expect-error
                 relationships[key] = undefined;
                 removeCompletelyFromInverse(this, rel);
               });
@@ -56321,6 +55068,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @public
      */
     put(doc) {
+      (false && !(doc instanceof Error || typeof doc.content === 'object' && doc.content !== null) && (0, _debug.assert)(`Expected a JSON:API Document as the content provided to the cache, received ${doc.content}`, doc instanceof Error || typeof doc.content === 'object' && doc.content !== null));
       if (isErrorDocument(doc)) {
         return this._putDocument(doc);
       } else if (isMetaDocument(doc)) {
@@ -56348,7 +55096,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (jsonApiDoc.data === null) {
         return this._putDocument(doc, null);
       }
-      (false && !(typeof jsonApiDoc.data === 'object') && (0, _debug.assert)(`Expected an object in the 'data' property in a call to 'push', but was ${typeof jsonApiDoc.data}`, typeof jsonApiDoc.data === 'object'));
+      (false && !(typeof jsonApiDoc.data === 'object') && (0, _debug.assert)(`Expected a resource object in the 'data' property in the document provided to the cache, but was ${typeof jsonApiDoc.data}`, typeof jsonApiDoc.data === 'object'));
       let identifier = putOne(this, identifierCache, jsonApiDoc.data);
       return this._putDocument(doc, identifier);
     }
@@ -56953,7 +55701,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      *
      * @method changedAttrs
      * @public
-     * @deprecated
      * @param identifier
      * @returns { <field>: [<old>, <new>] }
      */
@@ -57338,6 +56085,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     return hasAppliedPatch;
   }
   function putOne(cache, identifiers, resource) {
+    (false && !(resource.id !== null && resource.id !== undefined && resource.id !== '') && (0, _debug.assert)(`You must include an 'id' for the resource data ${resource.type}`, resource.id !== null && resource.id !== undefined && resource.id !== ''));
+    (false && !(cache.__storeWrapper.getSchemaDefinitionService().doesTypeExist(resource.type)) && (0, _debug.assert)(`Missing Resource Type: received resource data with a type '${resource.type}' but no schema could be found with that name.`, cache.__storeWrapper.getSchemaDefinitionService().doesTypeExist(resource.type)));
     let identifier = identifiers.peekRecordIdentifier(resource);
     if (identifier) {
       identifier = identifiers.updateRecordIdentifier(identifier, resource);
@@ -57433,7 +56182,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return array;
   }
   function isMetaDocument(doc) {
-    return !(doc instanceof Error) && !('data' in doc.content) && !('included' in doc.content) && 'meta' in doc.content;
+    return !(doc instanceof Error) && doc.content && !('data' in doc.content) && !('included' in doc.content) && 'meta' in doc.content;
   }
   function isErrorDocument(doc) {
     return doc instanceof Error;
@@ -57471,53 +56220,22 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 });
-;define("@ember-data/legacy-compat/-private", ["exports", "@ember-data/legacy-compat/fetch-manager-9ea525ca"], function (_exports, _fetchManager9ea525ca) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "FetchManager", {
-    enumerable: true,
-    get: function () {
-      return _fetchManager9ea525ca.F;
-    }
-  });
-  Object.defineProperty(_exports, "SaveOp", {
-    enumerable: true,
-    get: function () {
-      return _fetchManager9ea525ca.a;
-    }
-  });
-  Object.defineProperty(_exports, "Snapshot", {
-    enumerable: true,
-    get: function () {
-      return _fetchManager9ea525ca.b;
-    }
-  });
-  Object.defineProperty(_exports, "SnapshotRecordArray", {
-    enumerable: true,
-    get: function () {
-      return _fetchManager9ea525ca.S;
-    }
-  });
-});
-;define("@ember-data/legacy-compat/fetch-manager-9ea525ca", ["exports", "@ember/debug", "@ember-data/store/-private", "@ember-data/request", "@embroider/macros/es-compat2"], function (_exports, _debug, _private, _request, _esCompat) {
+;define("@ember-data/legacy-compat/-private-60665ff2", ["exports", "@ember-data/store/-private", "@ember/debug", "@ember-data/request", "@embroider/macros/es-compat2"], function (_exports, _private, _debug, _request, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.S = _exports.F = void 0;
-  _exports._ = _objectIsAlive;
-  _exports.b = _exports.a = void 0;
-  _exports.c = _guard;
-  _exports.d = _bind;
-  _exports.e = assertIdentifierHasId;
-  _exports.g = guardDestroyedStore;
+  _exports.a = assertIdentifierHasId;
+  _exports.c = _exports.b = void 0;
   _exports.i = iterateData;
   _exports.n = normalizeResponseHelper;
   _exports.p = payloadIsNotBlank;
+  /**
+    @module @ember-data/legacy-compat
+  */
+
   /**
     SnapshotRecordArray is not directly instantiable.
     Instances are provided to consuming application's
@@ -57657,64 +56375,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this._snapshots;
     }
   }
-  _exports.S = SnapshotRecordArray;
-  {
-    /**
-      The type of the underlying records for the snapshots in the array, as a Model
-       @deprecated
-      @property type
-      @public
-      @type {Model}
-    */
-    Object.defineProperty(SnapshotRecordArray.prototype, 'type', {
-      get() {
-        (false && !(false) && (0, _debug.deprecate)(`Using SnapshotRecordArray.type to access the ModelClass for a record is deprecated. Use store.modelFor(<modelName>) instead.`, false, {
-          id: 'ember-data:deprecate-snapshot-model-class-access',
-          until: '5.0',
-          for: 'ember-data',
-          since: {
-            available: '4.5.0',
-            enabled: '4.5.0'
-          }
-        })); // @ts-expect-error
-        return this._recordArray.type;
-      }
-    });
-  }
-  function _bind(fn, ...args) {
-    return function () {
-      return fn.apply(undefined, args);
-    };
-  }
-  function _guard(promise, test) {
-    let guarded = promise.finally(() => {
-      if (!test()) {
-        guarded._subscribers ? guarded._subscribers.length = 0 : null;
-      }
-    });
-    return guarded;
-  }
-  function _objectIsAlive(object) {
-    return !(object.isDestroyed || object.isDestroying);
-  }
-  function guardDestroyedStore(promise, store) {
-    return promise.then(_v => {
-      if (!_objectIsAlive(store)) {
-        {
-          (false && !(false) && (0, _debug.deprecate)(`A Promise did not resolve by the time the store was destroyed. This will error in a future release.`, false, {
-            id: 'ember-data:rsvp-unresolved-async',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.5',
-              enabled: '4.5'
-            }
-          }));
-        }
-      }
-      return _v;
-    });
-  }
+  _exports.b = SnapshotRecordArray;
   function assertIdentifierHasId(identifier) {
     (false && !(identifier.id !== null) && (0, _debug.assert)(`Attempted to schedule a fetch for a record without an id.`, identifier.id !== null));
   }
@@ -57778,10 +56439,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._belongsToIds = Object.create(null);
       this._hasManyRelationships = Object.create(null);
       this._hasManyIds = Object.create(null);
-      const hasRecord = !!store._instanceCache.peek({
-        identifier,
-        bucket: 'record'
-      });
+      const hasRecord = !!store._instanceCache.peek(identifier);
       this.modelName = identifier.type;
 
       /**
@@ -57841,7 +56499,7 @@ lunr.QueryParser.parseBoost = function (parser) {
        */
       this.modelName = identifier.type;
       if (hasRecord) {
-        const cache = this._store._instanceCache.getResourceCache(identifier);
+        const cache = this._store.cache;
         this._changedAttributes = cache.changedAttrs(identifier);
       }
     }
@@ -57869,26 +56527,14 @@ lunr.QueryParser.parseBoost = function (parser) {
         identifier
       } = this;
       const attrs = Object.keys(this._store.getSchemaDefinitionService().attributesDefinitionFor(identifier));
-      const cache = this._store._instanceCache.getResourceCache(identifier);
+      const cache = this._store.cache;
       attrs.forEach(keyName => {
         attributes[keyName] = cache.getAttr(identifier, keyName);
       });
       return attributes;
     }
-
-    /**
-     The type of the underlying record for this snapshot, as a Model.
-      @property type
-      @public
-      @deprecated
-     @type {Model}
-     */
-
     get isNew() {
-      const cache = this._store._instanceCache.peek({
-        identifier: this.identifier,
-        bucket: 'resourceCache'
-      });
+      const cache = this._store.cache;
       return cache?.isNew(this.identifier) || false;
     }
 
@@ -58012,7 +56658,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       let data = value && value.data;
       let inverseIdentifier = data ? store.identifierCache.getOrCreateRecordIdentifier(data) : null;
       if (value && value.data !== undefined) {
-        const cache = inverseIdentifier && store._instanceCache.getResourceCache(inverseIdentifier);
+        const cache = store.cache;
         if (inverseIdentifier && !cache.isDeleted(inverseIdentifier)) {
           if (returnModeIsId) {
             result = inverseIdentifier.id;
@@ -58086,7 +56732,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         results = [];
         value.data.forEach(member => {
           let inverseIdentifier = store.identifierCache.getOrCreateRecordIdentifier(member);
-          const cache = store._instanceCache.getResourceCache(inverseIdentifier);
+          const cache = store.cache;
           if (!cache.isDeleted(inverseIdentifier)) {
             if (returnModeIsIds) {
               results.push(inverseIdentifier.id);
@@ -58176,25 +56822,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       return serializer.serialize(this, options);
     }
   }
-  _exports.b = Snapshot;
-  {
-    Object.defineProperty(Snapshot.prototype, 'type', {
-      get() {
-        (false && !(false) && (0, _debug.deprecate)(`Using Snapshot.type to access the ModelClass for a record is deprecated. Use store.modelFor(<modelName>) instead.`, false, {
-          id: 'ember-data:deprecate-snapshot-model-class-access',
-          until: '5.0',
-          for: 'ember-data',
-          since: {
-            available: '4.5.0',
-            enabled: '4.5.0'
-          }
-        }));
-        return this._store.modelFor(this.identifier.type);
-      }
-    });
-  }
+  _exports.c = Snapshot;
   const SaveOp = Symbol('SaveOp');
-  _exports.a = SaveOp;
+  _exports.S = SaveOp;
   class FetchManager {
     // fetches pending in the runloop, waiting to be coalesced
 
@@ -58278,10 +56908,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return identifier;
       }, error => {
         (false && !(!store.isDestroyed) && (0, _debug.assert)(`Async Leak Detected: Expected the store to not be destroyed`, !store.isDestroyed));
-        const cache = store._instanceCache.peek({
-          identifier,
-          bucket: 'resourceCache'
-        });
+        const cache = store.cache;
         if (!cache || cache.isEmpty(identifier) || isInitialLoad) {
           let isReleasable = true;
           {
@@ -58307,20 +56934,27 @@ lunr.QueryParser.parseBoost = function (parser) {
           this.flushAllPendingFetches();
         });
       }
-      let fetches = this._pendingFetch;
-      if (!fetches.has(modelName)) {
-        fetches.set(modelName, []);
+      let fetchesByType = this._pendingFetch;
+      let fetchesById = fetchesByType.get(modelName);
+      if (!fetchesById) {
+        fetchesById = new Map();
+        fetchesByType.set(modelName, fetchesById);
       }
-      fetches.get(modelName).push(pendingFetchItem);
+      let requestsForIdentifier = fetchesById.get(identifier);
+      if (!requestsForIdentifier) {
+        requestsForIdentifier = [];
+        fetchesById.set(identifier, requestsForIdentifier);
+      }
+      requestsForIdentifier.push(pendingFetchItem);
       pendingFetchItem.promise = promise;
       return promise;
     }
     getPendingFetch(identifier, options) {
-      let pendingFetches = this._pendingFetch.get(identifier.type);
+      let pendingFetches = this._pendingFetch.get(identifier.type)?.get(identifier);
 
       // We already have a pending fetch for this
       if (pendingFetches) {
-        let matchingPendingFetch = pendingFetches.find(fetch => fetch.identifier === identifier && isSameRequest(options, fetch.options));
+        let matchingPendingFetch = pendingFetches.find(fetch => isSameRequest(options, fetch.options));
         if (matchingPendingFetch) {
           return matchingPendingFetch.promise;
         }
@@ -58359,7 +56993,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   _exports.F = FetchManager;
   function _isEmpty(instanceCache, identifier) {
-    const cache = instanceCache.__instances.resourceCache.get(identifier);
+    const cache = instanceCache.cache;
     if (!cache) {
       return true;
     }
@@ -58376,12 +57010,41 @@ lunr.QueryParser.parseBoost = function (parser) {
     // fulfilled === null &&
     req.getPendingRequestsForRecord(identifier).some(req => req.type === 'query');
   }
+  function includesSatisfies(current, existing) {
+    // if we have no includes we are good
+    if (!current?.length) {
+      return true;
+    }
+
+    // if we are here we have includes,
+    // and if existing has no includes then we will need a new request
+    if (!existing?.length) {
+      return false;
+    }
+    const arrCurrent = (Array.isArray(current) ? current : current.split(',')).sort();
+    const arrExisting = (Array.isArray(existing) ? existing : existing.split(',')).sort();
+
+    // includes are identical
+    if (arrCurrent.join(',') === arrExisting.join(',')) {
+      return true;
+    }
+
+    // if all of current includes are in existing includes then we are good
+    // so if we find one that is not in existing then we need a new request
+    for (let i = 0; i < arrCurrent.length; i++) {
+      if (!arrExisting.includes(arrCurrent[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  function optionsSatisfies(current, existing) {
+    return !current || current === existing || Object.keys(current).length === 0;
+  }
 
   // this function helps resolve whether we have a pending request that we should use instead
   function isSameRequest(options = {}, existingOptions = {}) {
-    let includedMatches = !options.include || options.include === existingOptions.include;
-    let adapterOptionsMatches = options.adapterOptions === existingOptions.adapterOptions;
-    return includedMatches && adapterOptionsMatches;
+    return optionsSatisfies(options.adapterOptions, existingOptions.adapterOptions) && includesSatisfies(options.include, existingOptions.include);
   }
   function _findMany(store, adapter, modelName, snapshots) {
     let modelClass = store.modelFor(modelName); // `adapter.findMany` gets the modelClass still
@@ -58393,7 +57056,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       (false && !(ret !== undefined) && (0, _debug.assert)('adapter.findMany returned undefined, this was very likely a mistake', ret !== undefined));
       return ret;
     });
-    promise = guardDestroyedStore(promise, store);
     return promise.then(adapterPayload => {
       (false && !(!!payloadIsNotBlank(adapterPayload)) && (0, _debug.assert)(`You made a 'findMany' request for '${modelName}' records with ids '[${snapshots.map(s => s.id).join(',')}]', but the adapter's response did not have any data`, !!payloadIsNotBlank(adapterPayload)));
       let serializer = store.serializerFor(modelName);
@@ -58483,7 +57145,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return adapter.findRecord(store, klass, identifier.id, snapshot);
     });
     promise = promise.then(adapterPayload => {
-      (false && !(_objectIsAlive(store)) && (0, _debug.assert)(`Async Leak Detected: Expected the store to not be destroyed`, _objectIsAlive(store)));
+      (false && !(!(store.isDestroyed || store.isDestroying)) && (0, _debug.assert)(`Async Leak Detected: Expected the store to not be destroyed`, !(store.isDestroyed || store.isDestroying)));
       (false && !(!!payloadIsNotBlank(adapterPayload)) && (0, _debug.assert)(`You made a 'findRecord' request for a '${modelName}' with id '${id}', but the adapter's response did not have any data`, !!payloadIsNotBlank(adapterPayload)));
       let serializer = store.serializerFor(modelName);
       let payload = normalizeResponseHelper(serializer, store, klass, adapterPayload, id, 'findRecord');
@@ -58509,32 +57171,47 @@ lunr.QueryParser.parseBoost = function (parser) {
       (false && !(false) && (0, _debug.assert)("You cannot return an empty array from adapter's method groupRecordsForFindMany", false));
     }
   }
-  function _flushPendingFetchForType(store, pendingFetchItems, modelName) {
+  function _flushPendingFetchForType(store, pendingFetchMap, modelName) {
     let adapter = store.adapterFor(modelName);
     let shouldCoalesce = !!adapter.findMany && adapter.coalesceFindRequests;
-    let totalItems = pendingFetchItems.length;
     if (shouldCoalesce) {
-      let snapshots = new Array(totalItems);
-      let fetchMap = new Map();
-      for (let i = 0; i < totalItems; i++) {
-        let fetchItem = pendingFetchItems[i];
-        snapshots[i] = store._fetchManager.createSnapshot(fetchItem.identifier, fetchItem.options);
-        fetchMap.set(snapshots[i], fetchItem);
-      }
-      let groups;
-      if (adapter.groupRecordsForFindMany) {
-        groups = adapter.groupRecordsForFindMany(store, snapshots);
-      } else {
-        groups = [snapshots];
-      }
-      for (let i = 0, l = groups.length; i < l; i++) {
-        _processCoalescedGroup(store, fetchMap, groups[i], adapter, modelName);
-      }
-    } else {
-      for (let i = 0; i < totalItems; i++) {
-        void _fetchRecord(store, adapter, pendingFetchItems[i]);
+      const pendingFetchItems = [];
+      pendingFetchMap.forEach((requestsForIdentifier, identifier) => {
+        if (requestsForIdentifier.length > 1) {
+          return;
+        }
+
+        // remove this entry from the map so it's not processed again
+        pendingFetchMap.delete(identifier);
+        pendingFetchItems.push(requestsForIdentifier[0]);
+      });
+      let totalItems = pendingFetchItems.length;
+      if (totalItems > 1) {
+        let snapshots = new Array(totalItems);
+        let fetchMap = new Map();
+        for (let i = 0; i < totalItems; i++) {
+          let fetchItem = pendingFetchItems[i];
+          snapshots[i] = store._fetchManager.createSnapshot(fetchItem.identifier, fetchItem.options);
+          fetchMap.set(snapshots[i], fetchItem);
+        }
+        let groups;
+        if (adapter.groupRecordsForFindMany) {
+          groups = adapter.groupRecordsForFindMany(store, snapshots);
+        } else {
+          groups = [snapshots];
+        }
+        for (let i = 0, l = groups.length; i < l; i++) {
+          _processCoalescedGroup(store, fetchMap, groups[i], adapter, modelName);
+        }
+      } else if (totalItems === 1) {
+        void _fetchRecord(store, adapter, pendingFetchItems[0]);
       }
     }
+    pendingFetchMap.forEach(pendingFetchItems => {
+      pendingFetchItems.forEach(pendingFetchItem => {
+        void _fetchRecord(store, adapter, pendingFetchItem);
+      });
+    });
   }
   function _flushPendingSave(store, pending) {
     const {
@@ -58547,27 +57224,12 @@ lunr.QueryParser.parseBoost = function (parser) {
     const operation = options[SaveOp];
     let modelName = snapshot.modelName;
     let modelClass = store.modelFor(modelName);
-    const record = store._instanceCache.getRecord(identifier);
     (false && !(adapter) && (0, _debug.assert)(`You tried to update a record but you have no adapter (for ${modelName})`, adapter));
     (false && !(typeof adapter[operation] === 'function') && (0, _debug.assert)(`You tried to update a record but your adapter (for ${modelName}) does not implement '${operation}'`, typeof adapter[operation] === 'function'));
     let promise = Promise.resolve().then(() => adapter[operation](store, modelClass, snapshot));
     let serializer = store.serializerFor(modelName);
     (false && !(promise !== undefined) && (0, _debug.assert)(`Your adapter's '${operation}' method must return a value, but it returned 'undefined'`, promise !== undefined));
     promise = promise.then(adapterPayload => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      if (!_objectIsAlive(record)) {
-        {
-          (false && !(false) && (0, _debug.deprecate)(`A Promise while saving ${modelName} did not resolve by the time your model was destroyed. This will error in a future release.`, false, {
-            id: 'ember-data:rsvp-unresolved-async',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.5',
-              enabled: '4.5'
-            }
-          }));
-        }
-      }
       if (adapterPayload) {
         return normalizeResponseHelper(serializer, store, modelClass, adapterPayload, snapshot.id, operation);
       }
@@ -58575,7 +57237,38 @@ lunr.QueryParser.parseBoost = function (parser) {
     resolver.resolve(promise);
   }
 });
-;define("@ember-data/legacy-compat/index", ["exports", "@ember/debug", "@ember-data/legacy-compat/fetch-manager-9ea525ca"], function (_exports, _debug, _fetchManager9ea525ca) {
+;define("@ember-data/legacy-compat/-private", ["exports", "@ember-data/legacy-compat/-private-60665ff2"], function (_exports, _private60665ff) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "FetchManager", {
+    enumerable: true,
+    get: function () {
+      return _private60665ff.F;
+    }
+  });
+  Object.defineProperty(_exports, "SaveOp", {
+    enumerable: true,
+    get: function () {
+      return _private60665ff.S;
+    }
+  });
+  Object.defineProperty(_exports, "Snapshot", {
+    enumerable: true,
+    get: function () {
+      return _private60665ff.c;
+    }
+  });
+  Object.defineProperty(_exports, "SnapshotRecordArray", {
+    enumerable: true,
+    get: function () {
+      return _private60665ff.b;
+    }
+  });
+});
+;define("@ember-data/legacy-compat/index", ["exports", "@ember/debug", "@ember-data/legacy-compat/-private-60665ff2"], function (_exports, _debug, _private60665ff) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -58589,34 +57282,15 @@ lunr.QueryParser.parseBoost = function (parser) {
       let relatedLink = useLink ? link : link.href;
       return adapter.findHasMany(store, snapshot, relatedLink, relationship);
     });
-    promise = (0, _fetchManager9ea525ca.g)(promise, store);
     promise = promise.then(adapterPayload => {
-      const record = store._instanceCache.getRecord(identifier);
-      if (!(0, _fetchManager9ea525ca._)(record)) {
-        {
-          (false && !(false) && (0, _debug.deprecate)(`A Promise for fetching ${relationship.type} did not resolve by the time your model was destroyed. This will error in a future release.`, false, {
-            id: 'ember-data:rsvp-unresolved-async',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.5',
-              enabled: '4.5'
-            }
-          }));
-        }
-      }
-      (false && !((0, _fetchManager9ea525ca.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findHasMany' request for a ${identifier.type}'s '${relationship.key}' relationship, using link '${link}' , but the adapter's response did not have any data`, (0, _fetchManager9ea525ca.p)(adapterPayload)));
+      (false && !((0, _private60665ff.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findHasMany' request for a ${identifier.type}'s '${relationship.key}' relationship, using link '${link}' , but the adapter's response did not have any data`, (0, _private60665ff.p)(adapterPayload)));
       const modelClass = store.modelFor(relationship.type);
       let serializer = store.serializerFor(relationship.type);
-      let payload = (0, _fetchManager9ea525ca.n)(serializer, store, modelClass, adapterPayload, null, 'findHasMany');
+      let payload = (0, _private60665ff.n)(serializer, store, modelClass, adapterPayload, null, 'findHasMany');
       (false && !('data' in payload && Array.isArray(payload.data)) && (0, _debug.assert)(`fetched the hasMany relationship '${relationship.name}' for ${identifier.type}:${identifier.id} with link '${link}', but no data member is present in the response. If no data exists, the response should set { data: [] }`, 'data' in payload && Array.isArray(payload.data)));
       payload = syncRelationshipDataFromLink(store, payload, identifier, relationship);
       return store._push(payload, true);
     }, null, `DS: Extract payload of '${identifier.type}' : hasMany '${relationship.type}'`);
-    {
-      const record = store._instanceCache.getRecord(identifier);
-      promise = (0, _fetchManager9ea525ca.c)(promise, (0, _fetchManager9ea525ca.d)(_fetchManager9ea525ca._, record));
-    }
     return promise;
   }
   function _findBelongsTo(store, identifier, link, relationship, options) {
@@ -58629,29 +57303,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       let relatedLink = useLink ? link : link.href;
       return adapter.findBelongsTo(store, snapshot, relatedLink, relationship);
     });
-    {
-      const record = store._instanceCache.getRecord(identifier);
-      promise = (0, _fetchManager9ea525ca.g)(promise, store);
-      promise = (0, _fetchManager9ea525ca.c)(promise, (0, _fetchManager9ea525ca.d)(_fetchManager9ea525ca._, record));
-    }
     promise = promise.then(adapterPayload => {
-      {
-        const record = store._instanceCache.getRecord(identifier);
-        if (!(0, _fetchManager9ea525ca._)(record)) {
-          (false && !(false) && (0, _debug.deprecate)(`A Promise for fetching ${relationship.type} did not resolve by the time your model was destroyed. This will error in a future release.`, false, {
-            id: 'ember-data:rsvp-unresolved-async',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.5',
-              enabled: '4.5'
-            }
-          }));
-        }
-      }
       let modelClass = store.modelFor(relationship.type);
       let serializer = store.serializerFor(relationship.type);
-      let payload = (0, _fetchManager9ea525ca.n)(serializer, store, modelClass, adapterPayload, null, 'findBelongsTo');
+      let payload = (0, _private60665ff.n)(serializer, store, modelClass, adapterPayload, null, 'findBelongsTo');
       (false && !('data' in payload && (payload.data === null || typeof payload.data === 'object' && !Array.isArray(payload.data))) && (0, _debug.assert)(`fetched the belongsTo relationship '${relationship.name}' for ${identifier.type}:${identifier.id} with link '${link}', but no data member is present in the response. If no data exists, the response should set { data: null }`, 'data' in payload && (payload.data === null || typeof payload.data === 'object' && !Array.isArray(payload.data))));
       if (!payload.data && !payload.links && !payload.meta) {
         return null;
@@ -58671,7 +57326,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function syncRelationshipDataFromLink(store, payload, parentIdentifier, relationship) {
     // ensure the right hand side (incoming payload) points to the parent record that
     // requested this relationship
-    let relationshipData = payload.data ? (0, _fetchManager9ea525ca.i)(payload.data, (data, index) => {
+    let relationshipData = payload.data ? (0, _private60665ff.i)(payload.data, (data, index) => {
       const {
         id,
         type
@@ -58732,19 +57387,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
   }
-  function metaIsRelationshipDefinition(meta) {
-    return typeof meta._inverseKey === 'function';
-  }
   function inverseForRelationship(store, identifier, key) {
     const definition = store.getSchemaDefinitionService().relationshipsDefinitionFor(identifier)[key];
     if (!definition) {
       return null;
-    }
-    {
-      if (metaIsRelationshipDefinition(definition)) {
-        const modelClass = store.modelFor(identifier.type);
-        return definition._inverseKey(store, modelClass);
-      }
     }
     (false && !(definition.options?.inverse === null || typeof definition.options?.inverse === 'string' && definition.options.inverse.length > 0) && (0, _debug.assert)(`Expected the relationship defintion to specify the inverse type or null.`, definition.options?.inverse === null || typeof definition.options?.inverse === 'string' && definition.options.inverse.length > 0));
     return definition.options.inverse;
@@ -58839,7 +57485,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         store
       } = context.request;
       if (!store._fetchManager) {
-        store._fetchManager = new _fetchManager9ea525ca.F(store);
+        store._fetchManager = new _private60665ff.F(store);
       }
       switch (context.request.op) {
         case 'findRecord':
@@ -58891,7 +57537,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     (false && !(Array.isArray(identifiers) && identifiers.length === 1) && (0, _debug.assert)(`Expected an identifier`, Array.isArray(identifiers) && identifiers.length === 1));
     const manager = store._fetchManager;
-    (0, _fetchManager9ea525ca.e)(identifier);
+    (0, _private60665ff.a)(identifier);
     return options.reload ? manager.scheduleFetch(identifier, options, context.request) : manager.fetchDataIfNeededForIdentifier(identifier, options, context.request);
   }
   function findHasMany(context) {
@@ -58932,7 +57578,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     for (let i = 0; i < identifiers.length; i++) {
       let identifier = identifiers[i];
       // TODO we probably can be lenient here and return from cache for the isNew case
-      (0, _fetchManager9ea525ca.e)(identifier);
+      (0, _private60665ff.a)(identifier);
       fetches[i] = options.reload ? manager.scheduleFetch(identifier, options, context.request) : manager.fetchDataIfNeededForIdentifier(identifier, options, context.request);
     }
     return Promise.all(fetches);
@@ -58948,7 +57594,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       record: identifier
     } = data;
     const saveOptions = Object.assign({
-      [_fetchManager9ea525ca.a]: operation
+      [_private60665ff.S]: operation
     }, options);
     const fetchManagerPromise = store._fetchManager.scheduleSave(identifier, saveOptions);
     return fetchManagerPromise.then(payload => {
@@ -58964,18 +57610,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       call to `store._push`;
       */
       store._join(() => {
-        //We first make sure the primary data has been updated
-        const cache = store._instanceCache.getResourceCache(identifier);
-        result = cache.didCommit(identifier, {
+        result = store.cache.didCommit(identifier, {
           request: context.request,
           content: payload
         });
-        if (payload && payload.included) {
-          store._push({
-            data: null,
-            included: payload.included
-          }, true);
-        }
       });
       return store.peekRecord(result.data);
     }).catch(e => {
@@ -59000,7 +57638,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         error.errors = errorsHashToArray(errorsHash);
       }
     }
-    const cache = store._instanceCache.getResourceCache(identifier);
+    const cache = store.cache;
     if (error.errors) {
       (false && !(typeof cache.getErrors === 'function') && (0, _debug.assert)(`Expected the cache in use by resource ${String(identifier)} to have a getErrors(identifier) method for retreiving errors.`, typeof cache.getErrors === 'function'));
       let jsonApiErrors = error.errors;
@@ -59063,7 +57701,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       // Refetch if the reload option is passed
     } else if (options.reload) {
-      (0, _fetchManager9ea525ca.e)(identifier);
+      (0, _private60665ff.a)(identifier);
       promise = store._fetchManager.scheduleFetch(identifier, options, context.request);
     } else {
       let snapshot = null;
@@ -59071,7 +57709,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       // Refetch the record if the adapter thinks the record is stale
       if (typeof options.reload === 'undefined' && adapter.shouldReloadRecord && adapter.shouldReloadRecord(store, snapshot = store._fetchManager.createSnapshot(identifier, options))) {
-        (0, _fetchManager9ea525ca.e)(identifier);
+        (0, _private60665ff.a)(identifier);
         {
           options.reload = true;
           promise = store._fetchManager.scheduleFetch(identifier, options, context.request);
@@ -59079,7 +57717,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         // Trigger the background refetch if backgroundReload option is passed
         if (options.backgroundReload !== false && (options.backgroundReload || !adapter.shouldBackgroundReloadRecord || adapter.shouldBackgroundReloadRecord(store, snapshot = snapshot || store._fetchManager.createSnapshot(identifier, options)))) {
-          (0, _fetchManager9ea525ca.e)(identifier);
+          (0, _private60665ff.a)(identifier);
           {
             options.backgroundReload = true;
             void store._fetchManager.scheduleFetch(identifier, options, context.request);
@@ -59105,7 +57743,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(adapter) && (0, _debug.assert)(`You tried to load all records but you have no adapter (for ${type})`, adapter));
     (false && !(typeof adapter.findAll === 'function') && (0, _debug.assert)(`You tried to load all records but your adapter does not implement 'findAll'`, typeof adapter.findAll === 'function')); // avoid initializing the liveArray just to set `isUpdating`
     const maybeRecordArray = store.recordArrayManager._live.get(type);
-    const snapshotArray = new _fetchManager9ea525ca.S(store, type, options);
+    const snapshotArray = new _private60665ff.b(store, type, options);
     const shouldReload = options.reload || options.reload !== false && (adapter.shouldReloadAll && adapter.shouldReloadAll(store, snapshotArray) || !adapter.shouldReloadAll && snapshotArray.length === 0);
     let fetch;
     if (shouldReload) {
@@ -59123,11 +57761,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _findAll(adapter, store, type, snapshotArray, request, isAsyncFlush) {
     const schema = store.modelFor(type);
     let promise = Promise.resolve().then(() => adapter.findAll(store, schema, null, snapshotArray));
-    promise = (0, _fetchManager9ea525ca.g)(promise, store);
     promise = promise.then(adapterPayload => {
-      (false && !((0, _fetchManager9ea525ca.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findAll' request for '${type}' records, but the adapter's response did not have any data`, (0, _fetchManager9ea525ca.p)(adapterPayload)));
+      (false && !((0, _private60665ff.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findAll' request for '${type}' records, but the adapter's response did not have any data`, (0, _private60665ff.p)(adapterPayload)));
       const serializer = store.serializerFor(type);
-      const payload = (0, _fetchManager9ea525ca.n)(serializer, store, schema, adapterPayload, null, 'findAll');
+      const payload = (0, _private60665ff.n)(serializer, store, schema, adapterPayload, null, 'findAll');
       store._push(payload, isAsyncFlush);
       snapshotArray._recordArray.isUpdating = false;
       return snapshotArray._recordArray;
@@ -59158,10 +57795,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     const schema = store.modelFor(type);
     let promise = Promise.resolve().then(() => adapter.query(store, schema, query, recordArray, options));
-    promise = (0, _fetchManager9ea525ca.g)(promise, store);
     return promise.then(adapterPayload => {
       const serializer = store.serializerFor(type);
-      const payload = (0, _fetchManager9ea525ca.n)(serializer, store, schema, adapterPayload, null, 'query');
+      const payload = (0, _private60665ff.n)(serializer, store, schema, adapterPayload, null, 'query');
       const identifiers = store._push(payload, true);
       (false && !(Array.isArray(identifiers)) && (0, _debug.assert)('The response to store.query is expected to be an array but it was a single record. Please wrap your response in an array or use `store.queryRecord` to query for a single record.', Array.isArray(identifiers)));
       store.recordArrayManager.populateManagedArray(recordArray, identifiers, payload);
@@ -59186,17 +57822,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(typeof adapter.queryRecord === 'function') && (0, _debug.assert)(`You tried to make a query but your adapter does not implement 'queryRecord'`, typeof adapter.queryRecord === 'function'));
     const schema = store.modelFor(type);
     let promise = Promise.resolve().then(() => adapter.queryRecord(store, schema, query, options));
-    promise = (0, _fetchManager9ea525ca.g)(promise, store);
     return promise.then(adapterPayload => {
       const serializer = store.serializerFor(type);
-      const payload = (0, _fetchManager9ea525ca.n)(serializer, store, schema, adapterPayload, null, 'queryRecord');
+      const payload = (0, _private60665ff.n)(serializer, store, schema, adapterPayload, null, 'queryRecord');
       assertSingleResourceDocument(payload);
       const identifier = store._push(payload, true);
       return identifier ? store.peekRecord(identifier) : null;
     });
   }
 });
-;define("@ember-data/model/-private", ["exports", "@ember-data/model/has-many-5e2df095", "@ember/application"], function (_exports, _hasMany5e2df, _application) {
+;define("@ember-data/model/-private", ["exports", "@ember-data/model/index-372d2028", "@ember/application"], function (_exports, _index372d, _application) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -59205,57 +57840,56 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "Errors", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.E;
+      return _index372d.E;
     }
   });
   Object.defineProperty(_exports, "LEGACY_SUPPORT", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.L;
+      return _index372d.L;
     }
   });
   Object.defineProperty(_exports, "ManyArray", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.R;
+      return _index372d.R;
     }
   });
   Object.defineProperty(_exports, "Model", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.M;
+      return _index372d.M;
     }
   });
   Object.defineProperty(_exports, "PromiseBelongsTo", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.P;
+      return _index372d.P;
     }
   });
   Object.defineProperty(_exports, "PromiseManyArray", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.c;
+      return _index372d.c;
     }
   });
   _exports._modelForMixin = modelForMixin;
   Object.defineProperty(_exports, "attr", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.a;
+      return _index372d.a;
     }
   });
   Object.defineProperty(_exports, "belongsTo", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.b;
+      return _index372d.b;
     }
   });
-  _exports.diffArray = diffArray;
   Object.defineProperty(_exports, "hasMany", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.h;
+      return _index372d.h;
     }
   });
   /*
@@ -59282,7 +57916,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     let MaybeMixin = owner.factoryFor(`mixin:${normalizedModelName}`);
     let mixin = MaybeMixin && MaybeMixin.class;
     if (mixin) {
-      let ModelForMixin = _hasMany5e2df.M.extend(mixin);
+      let ModelForMixin = _index372d.M.extend(mixin);
       ModelForMixin.__isMixin = true;
       ModelForMixin.__mixin = mixin;
       //Cache the class as a model
@@ -59290,66 +57924,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return owner.factoryFor(`model:${normalizedModelName}`);
   }
-
-  /**
-    @module @ember-data/model
-  */
-
-  /**
-    @method diffArray
-    @internal
-    @param {Array} oldArray the old array
-    @param {Array} newArray the new array
-    @return {hash} {
-        firstChangeIndex: <integer>,  // null if no change
-        addedCount: <integer>,        // 0 if no change
-        removedCount: <integer>       // 0 if no change
-      }
-  */
-  function diffArray(oldArray, newArray) {
-    const oldLength = oldArray.length;
-    const newLength = newArray.length;
-    const shortestLength = Math.min(oldLength, newLength);
-    let firstChangeIndex = null; // null signifies no changes
-
-    // find the first change
-    for (let i = 0; i < shortestLength; i++) {
-      // compare each item in the array
-      if (oldArray[i] !== newArray[i]) {
-        firstChangeIndex = i;
-        break;
-      }
-    }
-    if (firstChangeIndex === null && newLength !== oldLength) {
-      // no change found in the overlapping block
-      // and array lengths differ,
-      // so change starts at end of overlap
-      firstChangeIndex = shortestLength;
-    }
-    let addedCount = 0;
-    let removedCount = 0;
-    if (firstChangeIndex !== null) {
-      // we found a change, find the end of the change
-      let unchangedEndBlockLength = shortestLength - firstChangeIndex;
-      // walk back from the end of both arrays until we find a change
-      for (let i = 1; i <= shortestLength; i++) {
-        // compare each item in the array
-        if (oldArray[oldLength - i] !== newArray[newLength - i]) {
-          unchangedEndBlockLength = i - 1;
-          break;
-        }
-      }
-      addedCount = newLength - unchangedEndBlockLength - firstChangeIndex;
-      removedCount = oldLength - unchangedEndBlockLength - firstChangeIndex;
-    }
-    return {
-      firstChangeIndex,
-      addedCount,
-      removedCount
-    };
-  }
 });
-;define("@ember-data/model/has-many-5e2df095", ["exports", "@ember/debug", "@ember/object", "@ember-data/store", "@ember-data/store/-private", "@ember/string", "@ember/array", "ember-inflector", "@ember/object/compat", "@ember/runloop", "@glimmer/tracking", "ember", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@ember/array/proxy", "@ember/object/computed", "@ember/object/internals", "@ember-data/tracking/-private", "@embroider/macros/es-compat2"], function (_exports, _debug, _object, _store, _private, _string, _array, _emberInflector, _compat, _runloop, _tracking, _ember, _promiseProxyMixin, _proxy, _proxy2, _computed, _internals, _private2, _esCompat) {
+;define("@ember-data/model/index-372d2028", ["exports", "@ember/debug", "@ember/object", "@ember-data/store", "@ember-data/store/-private", "@ember/string", "@ember/object/compat", "@ember/runloop", "@glimmer/tracking", "ember", "@ember/array", "@ember/array/proxy", "@ember/object/computed", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@ember/object/internals", "@ember-data/tracking/-private", "ember-inflector", "@embroider/macros/es-compat2"], function (_exports, _debug, _object, _store, _private, _string, _compat, _runloop, _tracking, _ember, _array, _proxy, _computed, _promiseProxyMixin, _proxy2, _internals, _private2, _emberInflector, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -59544,62 +58120,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return desc;
   }
-  const PromiseObject = _proxy.default.extend(_promiseProxyMixin.default);
-  function promiseObject(promise) {
-    return PromiseObject.create({
-      promise
-    });
-  }
-
-  // constructor is accessed in some internals but not including it in the copyright for the deprecation
-  const ALLOWABLE_METHODS = ['constructor', 'then', 'catch', 'finally'];
-  const ALLOWABLE_PROPS = ['__ec_yieldable__', '__ec_cancel__'];
-  const PROXIED_OBJECT_PROPS = ['content', 'isPending', 'isSettled', 'isRejected', 'isFulfilled', 'promise', 'reason'];
-  const ProxySymbolString = String(Symbol.for('PROXY_CONTENT'));
-  function deprecatedPromiseObject(promise) {
-    const promiseObjectProxy = promiseObject(promise);
-    {
-      return promiseObjectProxy;
-    }
-    const handler = {
-      get(target, prop, receiver) {
-        if (typeof prop === 'symbol') {
-          if (String(prop) === ProxySymbolString) {
-            return;
-          }
-          return Reflect.get(target, prop, receiver);
-        }
-        if (prop === 'constructor') {
-          return target.constructor;
-        }
-        if (ALLOWABLE_PROPS.includes(prop)) {
-          return target[prop];
-        }
-        if (!ALLOWABLE_METHODS.includes(prop)) {
-          (false && !(false) && (0, _debug.deprecate)(`Accessing ${prop} is deprecated. The return type is being changed from PromiseObjectProxy to a Promise. The only available methods to access on this promise are .then, .catch and .finally`, false, {
-            id: 'ember-data:model-save-promise',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.4',
-              enabled: '4.4'
-            }
-          }));
-        } else {
-          return target[prop].bind(target);
-        }
-        if (PROXIED_OBJECT_PROPS.includes(prop)) {
-          return target[prop];
-        }
-        const value = (0, _object.get)(target, prop);
-        if (value && typeof value === 'function' && typeof value.bind === 'function') {
-          return value.bind(receiver);
-        }
-        return undefined;
-      }
-    };
-    return new Proxy(promiseObjectProxy, handler);
-  }
   var _dec$1, _dec2, _dec3, _dec4, _class$6, _descriptor$5, _descriptor2$2;
 
   /**
@@ -59609,7 +58129,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   // we force the type here to our own construct because mixin and extend patterns
   // lose generic signatures. We also do this because we need to Omit `clear` from
   // the type of ArrayProxy as we override it's signature.
-  const ArrayProxyWithCustomOverrides = _proxy2.default;
+  const ArrayProxyWithCustomOverrides = _proxy.default;
 
   /**
     Holds validation errors for a given record, organized by attribute names.
@@ -59972,6 +58492,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   })), _class$6));
 
   /**
+    @module @ember-data/store
+  */
+  /**
     A `ManyArray` is a `MutableArray` that represents the contents of a has-many
     relationship.
   
@@ -60244,6 +58767,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.push(record);
       return record;
     }
+    destroy() {
+      super.destroy(false);
+    }
   }
   _exports.R = RelatedCollection;
   RelatedCollection.prototype.isAsync = false;
@@ -60274,29 +58800,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     return records.map(extractIdentifierFromRecord$1);
   }
   function extractIdentifierFromRecord$1(recordOrPromiseRecord) {
-    {
-      if (isPromiseRecord$1(recordOrPromiseRecord)) {
-        let content = recordOrPromiseRecord.content;
-        (false && !(content !== undefined && content !== null) && (0, _debug.assert)('You passed in a promise that did not originate from an EmberData relationship. You can only pass promises that come from a belongsTo relationship.', content !== undefined && content !== null));
-        (false && !(false) && (0, _debug.deprecate)(`You passed in a PromiseProxy to a Relationship API that now expects a resolved value. await the value before setting it.`, false, {
-          id: 'ember-data:deprecate-promise-proxies',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        assertRecordPassedToHasMany(content);
-        return (0, _private.recordIdentifierFor)(content);
-      }
-    }
     assertRecordPassedToHasMany(recordOrPromiseRecord);
     return (0, _private.recordIdentifierFor)(recordOrPromiseRecord);
   }
-  function isPromiseRecord$1(record) {
-    return !!record.then;
-  }
+  const PromiseObject = _proxy2.default.extend(_promiseProxyMixin.default);
   var _dec, _class$5;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -60348,7 +58855,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   }, (_applyDecoratedDescriptor(_class$5.prototype, "id", [cached], Object.getOwnPropertyDescriptor(_class$5.prototype, "id"), _class$5.prototype), _applyDecoratedDescriptor(_class$5.prototype, "meta", [_dec], Object.getOwnPropertyDescriptor(_class$5.prototype, "meta"), _class$5.prototype)), _class$5));
   _exports.P = PromiseBelongsTo;
   var _class$4, _descriptor$4, _descriptor2$1, _descriptor3, _descriptor4, _descriptor5;
-
   /**
    @module @ember-data/model
    */
@@ -60369,8 +58875,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     @public
   */
   let PromiseManyArray = (_class$4 = class PromiseManyArray {
-    // @deprecated (isDestroyed is not deprecated)
-
     constructor(promise, content) {
       //---- Methods/Properties on ArrayProxy that we will keep as our API
       _initializerDefineProperty(this, "content", _descriptor$4, this);
@@ -60405,25 +58909,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       _initializerDefineProperty(this, "isSettled", _descriptor5, this);
       this._update(promise, content);
       this.isDestroyed = false;
-      this.isDestroying = false;
-      {
-        const meta = _ember.default.meta(this);
-        meta.hasMixin = mixin => {
-          (false && !(false) && (0, _debug.deprecate)(`Do not use A() on an EmberData PromiseManyArray`, false, {
-            id: 'ember-data:no-a-with-array-like',
-            until: '5.0',
-            since: {
-              enabled: '4.7',
-              available: '4.7'
-            },
-            for: 'ember-data'
-          })); // @ts-expect-error ArrayMixin is more than a type
-          if (mixin === _array.NativeArray || mixin === _array.default) {
-            return true;
-          }
-          return false;
-        };
-      }
     }
     /**
      * Retrieve the length of the content
@@ -60516,7 +59001,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     //---- Methods on EmberObject that we should keep
 
     destroy() {
-      this.isDestroying = true;
       this.isDestroyed = true;
       this.content = null;
       this.promise = null;
@@ -60593,49 +59077,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }), _applyDecoratedDescriptor(_class$4.prototype, "links", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class$4.prototype, "links"), _class$4.prototype), _applyDecoratedDescriptor(_class$4.prototype, "meta", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class$4.prototype, "meta"), _class$4.prototype)), _class$4);
   _exports.c = PromiseManyArray;
-  {
-    PromiseManyArray.prototype.createRecord = function createRecord(...args) {
-      (false && !(false) && (0, _debug.deprecate)(`The createRecord method on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
-        id: 'ember-data:deprecate-promise-many-array-behaviors',
-        until: '5.0',
-        since: {
-          enabled: '4.7',
-          available: '4.7'
-        },
-        for: 'ember-data'
-      }));
-      (false && !(this.content) && (0, _debug.assert)('You are trying to createRecord on an async manyArray before it has been created', this.content));
-      return this.content.createRecord(...args);
-    };
-    Object.defineProperty(PromiseManyArray.prototype, 'firstObject', {
-      get() {
-        (false && !(false) && (0, _debug.deprecate)(`The firstObject property on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
-          id: 'ember-data:deprecate-promise-many-array-behaviors',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        return this.content ? this.content.firstObject : undefined;
-      }
-    });
-    Object.defineProperty(PromiseManyArray.prototype, 'lastObject', {
-      get() {
-        (false && !(false) && (0, _debug.deprecate)(`The lastObject property on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
-          id: 'ember-data:deprecate-promise-many-array-behaviors',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        return this.content ? this.content.lastObject : undefined;
-      }
-    });
-  }
   function tapPromise(proxy, promise) {
     proxy.isPending = true;
     proxy.isSettled = false;
@@ -60653,41 +59094,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       proxy.isRejected = true;
       proxy.isSettled = true;
       throw error;
-    });
-  }
-  {
-    const EmberObjectMethods = ['addObserver', 'cacheFor', 'decrementProperty', 'get', 'getProperties', 'incrementProperty', 'notifyPropertyChange', 'removeObserver', 'set', 'setProperties', 'toggleProperty'];
-    EmberObjectMethods.forEach(method => {
-      PromiseManyArray.prototype[method] = function delegatedMethod(...args) {
-        (false && !(false) && (0, _debug.deprecate)(`The ${method} method on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
-          id: 'ember-data:deprecate-promise-many-array-behaviors',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        return _ember.default[method](this, ...args);
-      };
-    });
-    const InheritedProxyMethods = ['addArrayObserver', 'addObject', 'addObjects', 'any', 'arrayContentDidChange', 'arrayContentWillChange', 'clear', 'compact', 'every', 'filter', 'filterBy', 'find', 'findBy', 'getEach', 'includes', 'indexOf', 'insertAt', 'invoke', 'isAny', 'isEvery', 'lastIndexOf', 'map', 'mapBy',
-    // TODO update RFC to note objectAt was deprecated (forEach was left for iteration)
-    'objectAt', 'objectsAt', 'popObject', 'pushObject', 'pushObjects', 'reduce', 'reject', 'rejectBy', 'removeArrayObserver', 'removeAt', 'removeObject', 'removeObjects', 'replace', 'reverseObjects', 'setEach', 'setObjects', 'shiftObject', 'slice', 'sortBy', 'toArray', 'uniq', 'uniqBy', 'unshiftObject', 'unshiftObjects', 'without'];
-    InheritedProxyMethods.forEach(method => {
-      PromiseManyArray.prototype[method] = function proxiedMethod(...args) {
-        (false && !(false) && (0, _debug.deprecate)(`The ${method} method on ember-data's PromiseManyArray is deprecated. await the promise and work with the ManyArray directly.`, false, {
-          id: 'ember-data:deprecate-promise-many-array-behaviors',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        (false && !(this.content) && (0, _debug.assert)(`Cannot call ${method} before content is assigned.`, this.content));
-        return this.content[method](...args);
-      };
     });
   }
 
@@ -60919,7 +59325,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     _resource() {
       this._ref; // subscribe
-      const cache = this.store._instanceCache.getResourceCache(this.___identifier);
+      const cache = this.store.cache;
       return cache.getRelationship(this.___identifier, this.key);
     }
 
@@ -61003,27 +59409,11 @@ lunr.QueryParser.parseBoost = function (parser) {
      ```
       @method push
       @public
-     @param {Object|Promise} objectOrPromise a promise that resolves to a JSONAPI document object describing the new value of this relationship.
+     @param {Object} object a JSONAPI document object describing the new value of this relationship.
      @return {Promise<record>} A promise that resolves with the new value in this belongs-to relationship.
      */
-    async push(data) {
+    push(data) {
       let jsonApiDoc = data;
-      {
-        if (data.then) {
-          jsonApiDoc = await data;
-          if (jsonApiDoc !== data) {
-            (false && !(false) && (0, _debug.deprecate)(`You passed in a Promise to a Reference API that now expects a resolved value. await the value before setting it.`, false, {
-              id: 'ember-data:deprecate-promise-proxies',
-              until: '5.0',
-              since: {
-                enabled: '4.7',
-                available: '4.7'
-              },
-              for: 'ember-data'
-            }));
-          }
-        }
-      }
       let record = this.store.push(jsonApiDoc);
       const {
         identifier
@@ -61036,7 +59426,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           value: (0, _private.recordIdentifierFor)(record)
         });
       });
-      return record;
+      return Promise.resolve(record);
     }
 
     /**
@@ -61281,7 +59671,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return [];
     }
     _resource() {
-      const cache = this.store._instanceCache.getResourceCache(this.___identifier);
+      const cache = this.store.cache;
       return cache.getRelationship(this.___identifier, this.key);
     }
 
@@ -61497,22 +59887,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      */
     async push(objectOrPromise) {
       let payload = objectOrPromise;
-      {
-        if (objectOrPromise.then) {
-          payload = await objectOrPromise;
-          if (payload !== objectOrPromise) {
-            (false && !(false) && (0, _debug.deprecate)(`You passed in a Promise to a Reference API that now expects a resolved value. await the value before setting it.`, false, {
-              id: 'ember-data:deprecate-promise-proxies',
-              until: '5.0',
-              since: {
-                enabled: '4.7',
-                available: '4.7'
-              },
-              for: 'ember-data'
-            }));
-          }
-        }
-      }
       let array;
       if (!Array.isArray(payload) && typeof payload === 'object' && Array.isArray(payload.data)) {
         array = payload.data;
@@ -61822,7 +60196,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       true);
     }
     _getCurrentState(identifier, field) {
-      let jsonApi = this.cache.getRelationship(identifier, field, true);
+      let jsonApi = this.cache.getRelationship(identifier, field);
       const cache = this.store._instanceCache;
       let identifiers = [];
       if (jsonApi.data) {
@@ -62202,30 +60576,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     relationship.state.isStale = false;
     return isHasMany || !value ? value : recordExt.store.peekRecord(value);
   }
-  function extractIdentifierFromRecord(recordOrPromiseRecord) {
-    if (!recordOrPromiseRecord) {
+  function extractIdentifierFromRecord(record) {
+    if (!record) {
       return null;
     }
-    {
-      if (isPromiseRecord(recordOrPromiseRecord)) {
-        let content = recordOrPromiseRecord.content;
-        (false && !(content !== undefined) && (0, _debug.assert)('You passed in a promise that did not originate from an EmberData relationship. You can only pass promises that come from a belongsTo or hasMany relationship to the get call.', content !== undefined));
-        (false && !(false) && (0, _debug.deprecate)(`You passed in a PromiseProxy to a Relationship API that now expects a resolved value. await the value before setting it.`, false, {
-          id: 'ember-data:deprecate-promise-proxies',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        return content ? (0, _private.recordIdentifierFor)(content) : null;
-      }
-    }
-    return (0, _private.recordIdentifierFor)(recordOrPromiseRecord);
-  }
-  function isPromiseRecord(record) {
-    return !!record.then;
+    return (0, _private.recordIdentifierFor)(record);
   }
   function anyUnloaded(store, relationship) {
     let state = relationship.localState;
@@ -62301,7 +60656,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   function notifyAttribute(store, identifier, key, record) {
     let currentValue = (0, _internals.cacheFor)(record, key);
-    const cache = (0, _private.peekCache)(record);
+    const cache = store.cache;
     if (currentValue !== cache.getAttr(identifier, key)) {
       record.notifyPropertyChange(key);
     }
@@ -62441,7 +60796,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const identity = (0, _private.recordIdentifierFor)(record);
       this.identifier = identity;
       this.record = record;
-      this.cache = (0, _private.peekCache)(record);
+      this.cache = store.cache;
       this.pendingCount = 0;
       this.fulfilledCount = 0;
       this.rejectedCount = 0;
@@ -62702,75 +61057,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     state.notify('isValid');
     state.notify('isError');
     state.notify('adapterError');
-  }
-  function typeForRelationshipMeta(meta) {
-    let modelName = (0, _string.dasherize)(meta.type || meta.key);
-    if (meta.kind === 'hasMany') {
-      modelName = (0, _emberInflector.singularize)(modelName);
-    }
-    return modelName;
-  }
-  function shouldFindInverse(relationshipMeta) {
-    let options = relationshipMeta.options;
-    return !(options && options.inverse === null);
-  }
-  class RelationshipDefinition {
-    constructor(meta) {
-      this._type = '';
-      this.__inverseKey = '';
-      this.__hasCalculatedInverse = false;
-      this.parentModelName = meta.parentModelName;
-      this.meta = meta;
-    }
-
-    /**
-     * @internal
-     * @deprecated
-     */
-    get key() {
-      return this.meta.key;
-    }
-    get kind() {
-      return this.meta.kind;
-    }
-    get type() {
-      if (this._type) {
-        return this._type;
-      }
-      this._type = typeForRelationshipMeta(this.meta);
-      return this._type;
-    }
-    get options() {
-      return this.meta.options;
-    }
-    get name() {
-      return this.meta.name;
-    }
-    _inverseKey(store, modelClass) {
-      if (this.__hasCalculatedInverse === false) {
-        this._calculateInverse(store, modelClass);
-      }
-      return this.__inverseKey;
-    }
-    _calculateInverse(store, modelClass) {
-      this.__hasCalculatedInverse = true;
-      let inverseKey;
-      let inverse = null;
-      if (shouldFindInverse(this.meta)) {
-        inverse = modelClass.inverseFor(this.key, store);
-      }
-      // TODO make this error again for the non-polymorphic case
-
-      if (inverse) {
-        inverseKey = inverse.name;
-      } else {
-        inverseKey = null;
-      }
-      this.__inverseKey = inverseKey;
-    }
-  }
-  function relationshipFromMeta(meta) {
-    return new RelationshipDefinition(meta);
   }
   var _class, _descriptor, _class2;
   const {
@@ -63536,9 +61822,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         promise = (0, _store.storeFor)(this).saveRecord(this, options);
       }
-      {
-        return deprecatedPromiseObject(promise);
-      }
       return promise;
     }
 
@@ -63583,9 +61866,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       }).then(() => this).finally(() => {
         this.isReloading = false;
       });
-      {
-        return deprecatedPromiseObject(promise);
-      }
       return promise;
     }
     attr() {
@@ -63819,32 +62099,12 @@ lunr.QueryParser.parseBoost = function (parser) {
      @return {Model} the type of the relationship, or undefined
      */
     static typeForRelationship(name, store) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let relationship = this.relationshipsByName.get(name);
       return relationship && store.modelFor(relationship.type);
     }
     static get inverseMap() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       return Object.create(null);
     }
 
@@ -63875,17 +62135,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @return {Object} the inverse relationship, or null
      */
     static inverseFor(name, store) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let inverseMap = this.inverseMap;
       if (inverseMap[name]) {
         return inverseMap[name];
@@ -63898,17 +62148,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     //Calculate the inverse, ignoring the cache
     static _findInverseFor(name, store) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       const relationship = this.relationshipsByName.get(name);
       const {
         options
@@ -64002,17 +62242,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      */
 
     static get relationships() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let map = new Map();
       let relationshipsByName = this.relationshipsByName;
 
@@ -64058,17 +62288,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @readOnly
      */
     static get relationshipNames() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let names = {
         hasMany: [],
         belongsTo: []
@@ -64108,17 +62328,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @readOnly
      */
     static get relatedTypes() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let types = [];
       let rels = this.relationshipsObject;
       let relationships = Object.keys(rels);
@@ -64166,17 +62376,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @readOnly
      */
     static get relationshipsByName() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let map = new Map();
       let rels = this.relationshipsObject;
       let relationships = Object.keys(rels);
@@ -64188,17 +62388,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return map;
     }
     static get relationshipsObject() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let relationships = Object.create(null);
       let modelName = this.modelName;
       this.eachComputedProperty((name, meta) => {
@@ -64206,7 +62396,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           meta.key = name;
           meta.name = name;
           meta.parentModelName = modelName;
-          relationships[name] = relationshipFromMeta(meta);
+          relationships[name] = meta;
           (false && !(!(meta.options.inverse === null && meta.options.as?.length > 0)) && (0, _debug.assert)(`You should not specify both options.as and options.inverse as null on ${modelName}.${meta.name}, as if there is no inverse field there is no abstract type to conform to. You may have intended for this relationship to be polymorphic, or you may have mistakenly set inverse to null.`, !(meta.options.inverse === null && meta.options.as?.length > 0)));
         }
       });
@@ -64247,17 +62437,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @readOnly
      */
     static get fields() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let map = new Map();
       this.eachComputedProperty((name, meta) => {
         // TODO end reliance on these booleans and stop leaking them in the spec
@@ -64281,17 +62461,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @param {any} binding the value to which the callback's `this` should be bound
      */
     static eachRelationship(callback, binding) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       this.relationshipsByName.forEach((relationship, name) => {
         callback.call(binding, name, relationship);
       });
@@ -64309,17 +62479,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @param {any} binding the value to which the callback's `this` should be bound
      */
     static eachRelatedType(callback, binding) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let relationshipTypes = this.relatedTypes;
       for (let i = 0; i < relationshipTypes.length; i++) {
         let type = relationshipTypes[i];
@@ -64327,17 +62487,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
     static determineRelationshipType(knownSide, store) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let knownKey = knownSide.key;
       let knownKind = knownSide.kind;
       let inverse = this.inverseFor(knownKey, store);
@@ -64388,17 +62538,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @readOnly
      */
     static get attributes() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let map = new Map();
       this.eachComputedProperty((name, meta) => {
         if (meta.isAttribute) {
@@ -64442,17 +62582,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @readOnly
      */
     static get transformedAttributes() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       let map = new Map();
       this.eachAttribute((key, meta) => {
         if (meta.type) {
@@ -64497,17 +62627,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @static
      */
     static eachAttribute(callback, binding) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       this.attributes.forEach((meta, name) => {
         callback.call(binding, name, meta);
       });
@@ -64549,17 +62669,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @static
      */
     static eachTransformedAttribute(callback, binding) {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       this.transformedAttributes.forEach((type, name) => {
         callback.call(binding, name, type);
       });
@@ -64572,17 +62682,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      @static
      */
     static toString() {
-      {
-        (false && !(this.modelName) && (0, _debug.deprecate)(`Accessing schema information on Models without looking up the model via the store is deprecated. Use store.modelFor (or better Snapshots or the store.getSchemaDefinitionService() apis) instead.`, this.modelName, {
-          id: 'ember-data:deprecate-early-static',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          }
-        }));
-      }
+      (false && !(this.modelName) && (0, _debug.assert)(`Accessing schema information on Models without looking up the model via the store is disallowed.`, this.modelName));
       return `model:${this.modelName}`;
     }
   }, _class2.isModel = true, _class2.modelName = null, _class2), (_applyDecoratedDescriptor(_class.prototype, "isEmpty", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isEmpty"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isLoading", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isLoading"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isLoaded", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isLoaded"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "hasDirtyAttributes", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "hasDirtyAttributes"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isSaving", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isSaving"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isDeleted", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isDeleted"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isNew", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isNew"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isValid", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isValid"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "dirtyType", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "dirtyType"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "isError", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class.prototype, "isError"), _class.prototype), _descriptor = _applyDecoratedDescriptor(_class.prototype, "isReloading", [_tracking.tracked], {
@@ -64598,11 +62698,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   Model.prototype._createProps = null;
   Model.prototype._secretInit = null;
   function normalizeType$1(type) {
-    {
-      if (!type) {
-        return;
-      }
-    }
     return (0, _string.dasherize)(type);
   }
   /**
@@ -64702,61 +62797,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function belongsTo(modelName, options) {
     let opts = options;
     let userEnteredModelName = modelName;
-    {
-      if (typeof modelName !== 'string' || !modelName.length) {
-        (false && !(false) && (0, _debug.deprecate)('belongsTo() must specify the string type of the related resource as the first parameter', false, {
-          id: 'ember-data:deprecate-non-strict-relationships',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-        if (typeof modelName === 'object') {
-          opts = modelName;
-          userEnteredModelName = undefined;
-        } else {
-          opts = options;
-          userEnteredModelName = modelName;
-        }
-        (false && !(typeof userEnteredModelName === 'string' || typeof userEnteredModelName === 'undefined') && (0, _debug.assert)('The first argument to belongsTo must be a string representing a model type key, not an instance of ' + typeof userEnteredModelName + ". E.g., to define a relation to the Person model, use belongsTo('person')", typeof userEnteredModelName === 'string' || typeof userEnteredModelName === 'undefined'));
-      }
-    }
-    {
-      if (!opts || typeof opts.async !== 'boolean') {
-        opts = opts || {};
-        if (!('async' in opts)) {
-          opts.async = true;
-        }
-        (false && !(false) && (0, _debug.deprecate)('belongsTo(<type>, <options>) must specify options.async as either `true` or `false`.', false, {
-          id: 'ember-data:deprecate-non-strict-relationships',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      } else {
-        (false && !(opts && typeof opts.async === 'boolean') && (0, _debug.assert)(`Expected belongsTo options.async to be a boolean`, opts && typeof opts.async === 'boolean'));
-      }
-    }
-    {
-      if (opts.inverse !== null && (typeof opts.inverse !== 'string' || opts.inverse.length === 0)) {
-        (false && !(false) && (0, _debug.deprecate)('belongsTo(<type>, <options>) must specify options.inverse as either `null` or the name of the field on the related resource type.', false, {
-          id: 'ember-data:deprecate-non-strict-relationships',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      } else {
-        (false && !(opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0) && (0, _debug.assert)(`Expected belongsTo options.inverse to be either null or the string type of the related resource.`, opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0));
-      }
-    }
+    (false && !(opts && typeof opts.async === 'boolean') && (0, _debug.assert)(`Expected belongsTo options.async to be a boolean`, opts && typeof opts.async === 'boolean'));
+    (false && !(opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0) && (0, _debug.assert)(`Expected belongsTo options.inverse to be either null or the string type of the related resource.`, opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0));
     let meta = {
       type: normalizeType$1(userEnteredModelName),
       isRelationship: true,
@@ -64788,11 +62830,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   var belongsTo$1 = computedMacroWithOptionalParams(belongsTo);
   _exports.b = belongsTo$1;
   function normalizeType(type) {
-    {
-      if (!type) {
-        return;
-      }
-    }
     return (0, _emberInflector.singularize)((0, _string.dasherize)(type));
   }
 
@@ -64938,58 +62975,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @return {Ember.computed} relationship
   */
   function hasMany(type, options) {
-    {
-      if (typeof type !== 'string' || !type.length) {
-        (false && !(false) && (0, _debug.deprecate)('hasMany(<type>, <options>) must specify the string type of the related resource as the first parameter', false, {
-          id: 'ember-data:deprecate-non-strict-relationships',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-        if (typeof type === 'object') {
-          options = type;
-          type = undefined;
-        }
-        (false && !(typeof type === 'string' || typeof type === 'undefined') && (0, _debug.assert)(`The first argument to hasMany must be a string representing a model type key, not an instance of ${(0, _debug.inspect)(type)}. E.g., to define a relation to the Comment model, use hasMany('comment')`, typeof type === 'string' || typeof type === 'undefined'));
-      }
-    }
-    {
-      if (!options || typeof options.async !== 'boolean') {
-        options = options || {};
-        if (!('async' in options)) {
-          options.async = true;
-        }
-        (false && !(false) && (0, _debug.deprecate)('hasMany(<type>, <options>) must specify options.async as either `true` or `false`.', false, {
-          id: 'ember-data:deprecate-non-strict-relationships',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      } else {
-        (false && !(options && typeof options.async === 'boolean') && (0, _debug.assert)(`Expected hasMany options.async to be a boolean`, options && typeof options.async === 'boolean'));
-      }
-    }
-    {
-      if (options.inverse !== null && (typeof options.inverse !== 'string' || options.inverse.length === 0)) {
-        (false && !(false) && (0, _debug.deprecate)('hasMany(<type>, <options>) must specify options.inverse as either `null` or the name of the field on the related resource type.', false, {
-          id: 'ember-data:deprecate-non-strict-relationships',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-    }
-
-    // Metadata about relationships is stored on the meta of
+    (false && !(options && typeof options.async === 'boolean') && (0, _debug.assert)(`Expected hasMany options.async to be a boolean`, options && typeof options.async === 'boolean')); // Metadata about relationships is stored on the meta of
     // the relationship. This is used for introspection and
     // serialization. Note that `key` is populated lazily
     // the first time the CP is called.
@@ -65022,7 +63008,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var hasMany$1 = computedMacroWithOptionalParams(hasMany);
   _exports.h = hasMany$1;
 });
-;define("@ember-data/model/index", ["exports", "@ember-data/model/has-many-5e2df095"], function (_exports, _hasMany5e2df) {
+;define("@ember-data/model/index", ["exports", "@ember-data/model/index-372d2028"], function (_exports, _index372d) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -65031,25 +63017,25 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "attr", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.a;
+      return _index372d.a;
     }
   });
   Object.defineProperty(_exports, "belongsTo", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.b;
+      return _index372d.b;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.M;
+      return _index372d.M;
     }
   });
   Object.defineProperty(_exports, "hasMany", {
     enumerable: true,
     get: function () {
-      return _hasMany5e2df.h;
+      return _index372d.h;
     }
   });
 });
@@ -69423,193 +67409,26 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/store/-private", ["exports", "@ember-data/store/index-757cf686"], function (_exports, _index757cf) {
+;define("@ember-data/store/-private", ["exports", "@ember/application", "@ember/debug", "@ember/object", "@ember/runloop", "@glimmer/tracking", "@ember/string", "@ember-data/tracking/-private", "@ember/-internals/metal", "@ember/object/compat", "@glimmer/validator", "ember", "@embroider/macros/es-compat2"], function (_exports, _application, _debug, _object, _runloop, _tracking, _string, _private, _metal, _compat, _validator, _ember, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "AdapterPopulatedRecordArray", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.f;
-    }
-  });
-  Object.defineProperty(_exports, "CacheHandler", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.C;
-    }
-  });
-  Object.defineProperty(_exports, "IDENTIFIER_ARRAY_TAG", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.j;
-    }
-  });
-  Object.defineProperty(_exports, "IdentifierArray", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.I;
-    }
-  });
-  Object.defineProperty(_exports, "MUTATE", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.M;
-    }
-  });
-  Object.defineProperty(_exports, "RecordArray", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.I;
-    }
-  });
-  Object.defineProperty(_exports, "RecordArrayManager", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.R;
-    }
-  });
-  Object.defineProperty(_exports, "SOURCE", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.h;
-    }
-  });
-  Object.defineProperty(_exports, "Store", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.S;
-    }
-  });
-  Object.defineProperty(_exports, "_clearCaches", {
-    enumerable: true,
-    get: function () {
-      return _index757cf._;
-    }
-  });
-  Object.defineProperty(_exports, "coerceId", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.e;
-    }
-  });
-  Object.defineProperty(_exports, "fastPush", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.k;
-    }
-  });
-  Object.defineProperty(_exports, "isStableIdentifier", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.i;
-    }
-  });
-  Object.defineProperty(_exports, "normalizeModelName", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.n;
-    }
-  });
-  Object.defineProperty(_exports, "notifyArray", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.g;
-    }
-  });
-  Object.defineProperty(_exports, "peekCache", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.p;
-    }
-  });
-  Object.defineProperty(_exports, "recordIdentifierFor", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.r;
-    }
-  });
-  Object.defineProperty(_exports, "removeRecordDataFor", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.l;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierForgetMethod", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.c;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierGenerationMethod", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.a;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierResetMethod", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.d;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierUpdateMethod", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.b;
-    }
-  });
-  Object.defineProperty(_exports, "storeFor", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.s;
-    }
-  });
-});
-;define("@ember-data/store/index-757cf686", ["exports", "@ember/debug", "@ember/string", "@ember/application", "@ember/object", "@ember/runloop", "@glimmer/tracking", "@ember-data/tracking/-private", "@ember/-internals/metal", "@ember/object/compat", "@ember/utils", "@glimmer/validator", "ember", "@ember/object/computed", "@ember/array/proxy", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@embroider/macros/es-compat2"], function (_exports, _debug, _string, _application, _object, _runloop, _tracking, _private, _metal, _compat, _utils, _validator, _ember, _computed, _proxy, _promiseProxyMixin, _proxy2, _esCompat) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.S = _exports.R = _exports.M = _exports.I = _exports.C = void 0;
-  _exports._ = _clearCaches;
-  _exports.a = setIdentifierGenerationMethod;
-  _exports.b = setIdentifierUpdateMethod;
-  _exports.c = setIdentifierForgetMethod;
-  _exports.d = setIdentifierResetMethod;
-  _exports.e = coerceId;
-  _exports.f = void 0;
-  _exports.g = notifyArray;
-  _exports.h = void 0;
-  _exports.i = isStableIdentifier;
-  _exports.j = void 0;
-  _exports.k = fastPush;
-  _exports.l = removeRecordDataFor;
-  _exports.n = normalizeModelName;
-  _exports.p = peekCache;
-  _exports.r = recordIdentifierFor;
-  _exports.s = storeFor;
-  /**
-    @module @ember-data/store
-  */
-
-  /**
-   This method normalizes a modelName into the format Ember Data uses
-   internally by dasherizing it.
-  
-    @method normalizeModelName
-    @static
-    @public
-    @deprecated
-    @for @ember-data/store
-    @param {String} modelName
-    @return {String} normalizedModelName
-  */function normalizeModelName$1(modelName) {
-    return (0, _string.dasherize)(modelName);
-  }
+  _exports.Store = _exports.SOURCE = _exports.RecordArrayManager = _exports.RecordArray = _exports.MUTATE = _exports.IdentifierArray = _exports.IDENTIFIER_ARRAY_TAG = _exports.CacheHandler = _exports.AdapterPopulatedRecordArray = void 0;
+  _exports._clearCaches = _clearCaches;
+  _exports.coerceId = coerceId;
+  _exports.fastPush = fastPush;
+  _exports.isStableIdentifier = isStableIdentifier;
+  _exports.notifyArray = notifyArray;
+  _exports.peekCache = peekCache;
+  _exports.recordIdentifierFor = recordIdentifierFor;
+  _exports.removeRecordDataFor = removeRecordDataFor;
+  _exports.setIdentifierForgetMethod = setIdentifierForgetMethod;
+  _exports.setIdentifierGenerationMethod = setIdentifierGenerationMethod;
+  _exports.setIdentifierResetMethod = setIdentifierResetMethod;
+  _exports.setIdentifierUpdateMethod = setIdentifierUpdateMethod;
+  _exports.storeFor = storeFor;
   function _initializerDefineProperty(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -69652,25 +67471,25 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return desc;
   }
-  var _class$3, _descriptor$3, _descriptor2$1, _descriptor3, _descriptor4, _store$1, _request;
+  var _class$2, _descriptor$2, _descriptor2$1, _descriptor3, _descriptor4, _store, _request;
   function urlFromLink(link) {
     if (typeof link === 'string') return link;
     return link.href;
   }
-  let Document = (_class$3 = (_store$1 = /*#__PURE__*/_classPrivateFieldKey("store"), _request = /*#__PURE__*/_classPrivateFieldKey("request"), class Document {
+  let Document = (_class$2 = (_store = /*#__PURE__*/_classPrivateFieldKey("store"), _request = /*#__PURE__*/_classPrivateFieldKey("request"), class Document {
     constructor(store, identifier) {
       Object.defineProperty(this, _request, {
         value: _request2
       });
-      _initializerDefineProperty(this, "links", _descriptor$3, this);
+      _initializerDefineProperty(this, "links", _descriptor$2, this);
       _initializerDefineProperty(this, "data", _descriptor2$1, this);
       _initializerDefineProperty(this, "errors", _descriptor3, this);
       _initializerDefineProperty(this, "meta", _descriptor4, this);
-      Object.defineProperty(this, _store$1, {
+      Object.defineProperty(this, _store, {
         writable: true,
         value: void 0
       });
-      _classPrivateFieldBase(this, _store$1)[_store$1] = store;
+      _classPrivateFieldBase(this, _store)[_store] = store;
       this.identifier = identifier;
     }
     fetch(options = {}) {
@@ -69708,33 +67527,33 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       return data;
     }
-  }), (_descriptor$3 = _applyDecoratedDescriptor(_class$3.prototype, "links", [_tracking.tracked], {
+  }), (_descriptor$2 = _applyDecoratedDescriptor(_class$2.prototype, "links", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor2$1 = _applyDecoratedDescriptor(_class$3.prototype, "data", [_tracking.tracked], {
+  }), _descriptor2$1 = _applyDecoratedDescriptor(_class$2.prototype, "data", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor3 = _applyDecoratedDescriptor(_class$3.prototype, "errors", [_tracking.tracked], {
+  }), _descriptor3 = _applyDecoratedDescriptor(_class$2.prototype, "errors", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  }), _descriptor4 = _applyDecoratedDescriptor(_class$3.prototype, "meta", [_tracking.tracked], {
+  }), _descriptor4 = _applyDecoratedDescriptor(_class$2.prototype, "meta", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  })), _class$3);
+  })), _class$2);
   async function _request2(link, options = {}) {
     const href = this.links?.[link];
     if (!href) {
       return null;
     }
-    const response = await _classPrivateFieldBase(this, _store$1)[_store$1].request(Object.assign(options, {
+    const response = await _classPrivateFieldBase(this, _store)[_store].request(Object.assign(options, {
       url: urlFromLink(href)
     }));
     return response.content;
@@ -69940,7 +67759,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }, peeked.content, true) : peeked.content);
     }
   };
-  _exports.C = CacheHandler;
+  _exports.CacheHandler = CacheHandler;
   function copyDocumentProperties(target, source) {
     if ('links' in source) {
       target.links = source.links;
@@ -70014,6 +67833,9 @@ lunr.QueryParser.parseBoost = function (parser) {
   const DEBUG_IDENTIFIER_BUCKET = Symbol('identifier-bucket');
   function isNonEmptyString(str) {
     return str && typeof str === 'string';
+  }
+  function normalizeModelName(modelName) {
+    return (0, _string.dasherize)(modelName);
   }
 
   /**
@@ -70109,7 +67931,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         } = data;
         // TODO: add test for id not a string
         if (isNonEmptyString(coerceId(id))) {
-          return `@lid:${normalizeModelName$1(type)}-${id}`;
+          return `@lid:${normalizeModelName(type)}-${id}`;
         }
       }
       return uuidv4();
@@ -70192,7 +68014,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       // `type` must always be present
       (false && !('type' in resource && isNonEmptyString(resource.type)) && (0, _debug.assert)('resource.type needs to be a string', 'type' in resource && isNonEmptyString(resource.type)));
-      let type = resource.type && normalizeModelName$1(resource.type);
+      let type = resource.type && normalizeModelName(resource.type);
       let id = coerceId(resource.id);
       let keyOptions = getTypeIndex(this._cache.types, type);
 
@@ -70368,7 +68190,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (!existingIdentifier) {
         // If the incoming type does not match the identifier type, we need to create an identifier for the incoming
         // data so we can merge the incoming data with the existing identifier, see #7325 and #7363
-        if (data.type && identifier.type !== normalizeModelName$1(data.type)) {
+        if (data.type && identifier.type !== normalizeModelName(data.type)) {
           let incomingDataResource = {
             ...data
           };
@@ -70492,7 +68314,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       let existingIdentifier = keyOptions.id.get(newId);
       return existingIdentifier !== undefined ? existingIdentifier : false;
     } else {
-      let newType = data.type && normalizeModelName$1(data.type);
+      let newType = data.type && normalizeModelName(data.type);
 
       // If the ids and type are the same but lid is not the same, we should trigger a merge of the identifiers
       if (id !== null && id === newId && newType === type && data.lid && data.lid !== lid) {
@@ -70507,7 +68329,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return false;
   }
-  var _class$2, _descriptor$2;
+  var _class$1, _descriptor$1;
 
   /**
     @module @ember-data/store
@@ -70523,13 +68345,13 @@ lunr.QueryParser.parseBoost = function (parser) {
      @public
      @extends Reference
   */
-  let RecordReference = (_class$2 = class RecordReference {
+  let RecordReference = (_class$1 = class RecordReference {
     // unsubscribe token given to us by the notification manager
 
     constructor(store, identifier) {
       this.___token = void 0;
       this.___identifier = void 0;
-      _initializerDefineProperty(this, "_ref", _descriptor$2, this);
+      _initializerDefineProperty(this, "_ref", _descriptor$1, this);
       this.store = store;
       this.___identifier = identifier;
       this.___token = store.notifications.subscribe(identifier, (_, bucket, notifiedKey) => {
@@ -70697,1413 +68519,20 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       (false && !(false) && (0, _debug.assert)(`Unable to fetch record of type ${this.type} without an id`));
     }
-  }, _descriptor$2 = _applyDecoratedDescriptor(_class$2.prototype, "_ref", [_tracking.tracked], {
+  }, _descriptor$1 = _applyDecoratedDescriptor(_class$1.prototype, "_ref", [_tracking.tracked], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: function () {
       return 0;
     }
-  }), _class$2);
-  function legacyCachePut(store, doc) {
-    const jsonApiDoc = doc.content;
-    let ret;
-    store._join(() => {
-      let included = jsonApiDoc.included;
-      let i, length;
-      if (included) {
-        for (i = 0, length = included.length; i < length; i++) {
-          store._instanceCache.loadData(included[i]);
-        }
-      }
-      if (Array.isArray(jsonApiDoc.data)) {
-        length = jsonApiDoc.data.length;
-        let identifiers = [];
-        for (i = 0; i < length; i++) {
-          identifiers.push(store._instanceCache.loadData(jsonApiDoc.data[i]));
-        }
-        ret = {
-          data: identifiers
-        };
-        return;
-      }
-      if (jsonApiDoc.data === null) {
-        ret = {
-          data: null
-        };
-        return;
-      }
-      (false && !(typeof jsonApiDoc.data === 'object') && (0, _debug.assert)(`Expected an object in the 'data' property in a call to 'push', but was ${typeof jsonApiDoc.data}`, typeof jsonApiDoc.data === 'object'));
-      ret = {
-        data: store._instanceCache.loadData(jsonApiDoc.data)
-      };
-      return;
-    });
-    return ret;
-  }
-
-  /**
-   * The CacheManager wraps a Cache enforcing that only
-   * the public API surface area is exposed.
-   *
-   * Hence, it is the value of `Store.cache`, wrapping
-   * the cache instance returned by `Store.createCache`.
-   *
-   * This class is the the return value of both the
-   * `recordDataFor` function supplied to the store
-   * hook `instantiateRecord`, and the `recordDataFor`
-   * method on the `CacheStoreWrapper`. It is not
-   * directly instantiatable.
-   *
-   * It handles translating between cache versions when
-   * necessary, for instance when a Store is configured
-   * to use both a v1 and a v2 cache depending on some
-   * heuristic.
-   *
-   * Starting with the v2 spec, the cache is designed such
-   * that it must be implemented as a singleton. However,
-   * because the v1 spec was not designed for this whenever
-   * we encounter any v1 cache we must wrap all caches, even
-   * singletons, in non-singleton managers to preserve v1
-   * compatibility.
-   *
-   * To avoid this performance penalty being paid by all
-   * applications, singleton behavior may be opted-in via
-   * the configuration supplied to your Ember application
-   * at build time. This effectively removes support for
-   * v1 caches.
-   *
-   * ```js
-   * let app = new EmberApp(defaults, {
-   *   emberData: {
-   *     useSingletonManager: true
-   *   },
-   * });
-   * ```
-   *
-   * @class CacheManager
-   * @public
-   */
-  var _store = /*#__PURE__*/_classPrivateFieldKey("store");
-  var _cache = /*#__PURE__*/_classPrivateFieldKey("cache");
-  var _identifier = /*#__PURE__*/_classPrivateFieldKey("identifier");
-  var _isDeprecated = /*#__PURE__*/_classPrivateFieldKey("isDeprecated");
-  class NonSingletonCacheManager {
-    get managedVersion() {
-      return _classPrivateFieldBase(this, _cache)[_cache].version || '1';
-    }
-    constructor(store, _cache2, identifier) {
-      Object.defineProperty(this, _isDeprecated, {
-        value: _isDeprecated2
-      });
-      this.version = '2';
-      Object.defineProperty(this, _store, {
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, _cache, {
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, _identifier, {
-        writable: true,
-        value: void 0
-      });
-      _classPrivateFieldBase(this, _store)[_store] = store;
-      _classPrivateFieldBase(this, _cache)[_cache] = _cache2;
-      _classPrivateFieldBase(this, _identifier)[_identifier] = identifier;
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](_cache2)) {
-        (false && !(false) && (0, _debug.deprecate)(`This RecordData uses the deprecated V1 RecordData Spec. Upgrade to V2 to maintain compatibility.`, false, {
-          id: 'ember-data:deprecate-v1-cache',
-          until: '5.0',
-          since: {
-            available: '4.7',
-            enabled: '4.7'
-          },
-          for: 'ember-data'
-        }));
-      }
-    }
-    // Cache Management
-    // ================
-    /**
-     * Cache the response to a request
-     *
-     * Unlike `store.push` which has UPSERT
-     * semantics, `put` has `replace` semantics similar to
-     * the `http` method `PUT`
-     *
-     * the individually cacheabl
-     * e resource data it may contain
-     * should upsert, but the document data surrounding it should
-     * fully replace any existing information
-     *
-     * Note that in order to support inserting arbitrary data
-     * to the cache that did not originate from a request `put`
-     * should expect to sometimes encounter a document with only
-     * a `content` member and therefor must not assume the existence
-     * of `request` and `response` on the document.
-     *
-     * @method put
-     * @param {StructuredDocument} doc
-     * @returns {ResourceDocument}
-     * @public
-     */
-    put(doc) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        if (doc instanceof Error) {
-          // in legacy we don't know how to handle this
-          throw doc;
-        }
-        return legacyCachePut(_classPrivateFieldBase(this, _store)[_store], doc);
-      }
-      return cache.put(doc);
-    }
-
-    /**
-     * Perform an operation on the cache to update the remote state.
-     *
-     * Note: currently the only valid operation is a MergeOperation
-     * which occurs when a collision of identifiers is detected.
-     *
-     * @method patch
-     * @public
-     * @param op the operation to perform
-     * @returns {void}
-     */
-    patch(op) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return;
-      }
-      cache.patch(op);
-    }
-
-    /**
-     * Update resource data with a local mutation. Currently supports operations
-     * on relationships only.
-     *
-     * @method mutate
-     * @public
-     * @param mutation
-     */
-    // isResource is only needed for interop with v1 cache
-    mutate(mutation, isResource) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        const instanceCache = _classPrivateFieldBase(this, _store)[_store]._instanceCache;
-        switch (mutation.op) {
-          case 'addToRelatedRecords':
-            cache.addToHasMany(mutation.field, mutation.value.map(i => instanceCache.getResourceCache(i)), mutation.index);
-            return;
-          case 'removeFromRelatedRecords':
-            cache.removeFromHasMany(mutation.field, mutation.value.map(i => instanceCache.getResourceCache(i)));
-            return;
-          case 'replaceRelatedRecords':
-            cache.setDirtyHasMany(mutation.field, mutation.value.map(i => instanceCache.getResourceCache(i)));
-            return;
-          case 'replaceRelatedRecord':
-            if (isResource) {
-              cache.setDirtyBelongsTo(mutation.field, mutation.value ? instanceCache.getResourceCache(mutation.value) : null);
-              return;
-            }
-            cache.removeFromHasMany(mutation.field, [instanceCache.getResourceCache(mutation.prior)]);
-            cache.addToHasMany(mutation.field, [instanceCache.getResourceCache(mutation.value)], mutation.index);
-            return;
-          case 'sortRelatedRecords':
-            return;
-          default:
-            return;
-        }
-      } else {
-        cache.mutate(mutation);
-      }
-    }
-
-    /**
-     * Peek resource data from the Cache.
-     *
-     * In development, if the return value
-     * is JSON the return value
-     * will be deep-cloned and deep-frozen
-     * to prevent mutation thereby enforcing cache
-     * Immutability.
-     *
-     * This form of peek is useful for implementations
-     * that want to feed raw-data from cache to the UI
-     * or which want to interact with a blob of data
-     * directly from the presentation cache.
-     *
-     * An implementation might want to do this because
-     * de-referencing records which read from their own
-     * blob is generally safer because the record does
-     * not require retainining connections to the Store
-     * and Cache to present data on a per-field basis.
-     *
-     * This generally takes the place of `getAttr` as
-     * an API and may even take the place of `getRelationship`
-     * depending on implementation specifics, though this
-     * latter usage is less recommended due to the advantages
-     * of the Graph handling necessary entanglements and
-     * notifications for relational data.
-     *
-     * @method peek
-     * @public
-     * @param {StableRecordIdentifier | StableDocumentIdentifier} identifier
-     * @returns {ResourceDocument | ResourceBlob | null} the known resource data
-     */
-
-    peek(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement peek`);
-      }
-      return cache.peek(identifier);
-    }
-
-    /**
-     * Peek the Cache for the existing request data associated with
-     * a cacheable request
-     *
-     * @method peekRequest
-     * @param {StableDocumentIdentifier}
-     * @returns {StableDocumentIdentifier | null}
-     * @public
-     */
-    peekRequest(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement peekRequest`);
-      }
-      return cache.peekRequest(identifier);
-    }
-
-    /**
-     * Push resource data from a remote source into the cache for this identifier
-     *
-     * @method upsert
-     * @public
-     * @param identifier
-     * @param data
-     * @param hasRecord
-     * @returns {void | string[]} if `hasRecord` is true then calculated key changes should be returned
-     */
-    upsert(identifier, data, hasRecord) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      // called by something V1
-      if (!isStableIdentifier(identifier)) {
-        data = identifier;
-        hasRecord = data;
-        identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      }
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return cache.pushData(data, hasRecord);
-      }
-      return cache.upsert(identifier, data, hasRecord);
-    }
-
-    // Cache Forking Support
-    // =====================
-
-    /**
-     * Create a fork of the cache from the current state.
-     *
-     * Applications should typically not call this method themselves,
-     * preferring instead to fork at the Store level, which will
-     * utilize this method to fork the cache.
-     *
-     * @method fork
-     * @public
-     * @returns Promise<Cache>
-     */
-    fork() {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement fork`);
-      }
-      return cache.fork();
-    }
-
-    /**
-     * Merge a fork back into a parent Cache.
-     *
-     * Applications should typically not call this method themselves,
-     * preferring instead to merge at the Store level, which will
-     * utilize this method to merge the caches.
-     *
-     * @method merge
-     * @param {Cache} cache
-     * @public
-     * @returns Promise<void>
-     */
-    merge(updates) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement merge`);
-      }
-      return cache.merge(updates);
-    }
-
-    /**
-     * Generate the list of changes applied to all
-     * record in the store.
-     *
-     * Each individual resource or document that has
-     * been mutated should be described as an individual
-     * `Change` entry in the returned array.
-     *
-     * A `Change` is described by an object containing up to
-     * three properties: (1) the `identifier` of the entity that
-     * changed; (2) the `op` code of that change being one of
-     * `upsert` or `remove`, and if the op is `upsert` a `patch`
-     * containing the data to merge into the cache for the given
-     * entity.
-     *
-     * This `patch` is opaque to the Store but should be understood
-     * by the Cache and may expect to be utilized by an Adapter
-     * when generating data during a `save` operation.
-     *
-     * It is generally recommended that the `patch` contain only
-     * the updated state, ignoring fields that are unchanged
-     *
-     * ```ts
-     * interface Change {
-     *  identifier: StableRecordIdentifier | StableDocumentIdentifier;
-     *  op: 'upsert' | 'remove';
-     *  patch?: unknown;
-     * }
-     * ```
-     *
-     * @method diff
-     * @public
-     */
-    diff() {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement diff`);
-      }
-      return cache.diff();
-    }
-
-    // SSR Support
-    // ===========
-
-    /**
-     * Serialize the entire contents of the Cache into a Stream
-     * which may be fed back into a new instance of the same Cache
-     * via `cache.hydrate`.
-     *
-     * @method dump
-     * @returns {Promise<ReadableStream>}
-     * @public
-     */
-    dump() {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement dump`);
-      }
-      return cache.dump();
-    }
-
-    /**
-     * hydrate a Cache from a Stream with content previously serialized
-     * from another instance of the same Cache, resolving when hydration
-     * is complete.
-     *
-     * This method should expect to be called both in the context of restoring
-     * the Cache during application rehydration after SSR **AND** at unknown
-     * times during the lifetime of an already booted application when it is
-     * desired to bulk-load additional information into the cache. This latter
-     * behavior supports optimizing pre/fetching of data for route transitions
-     * via data-only SSR modes.
-     *
-     * @method hydrate
-     * @param {ReadableStream} stream
-     * @returns {Promise<void>}
-     * @public
-     */
-    hydrate(stream) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        throw new Error(`Expected cache to implement hydrate`);
-      }
-      return cache.hydrate(stream);
-    }
-
-    // Cache
-    // =====
-
-    /**
-     * Retrieve the identifier for this v1 cache
-     *
-     * DEPRECATED Caches should not be assumed to be 1:1 with resources
-     *
-     * @method getResourceIdentifier
-     * @public
-     * @deprecated
-     */
-    getResourceIdentifier() {
-      return _classPrivateFieldBase(this, _identifier)[_identifier];
-    }
-
-    /**
-     * Push resource data from a remote source into the cache for this identifier
-     *
-     * DEPRECATED Use upsert. Caches should not be assumed to be 1:1 with resources
-     *
-     * @method pushData
-     * @param data
-     * @param hasRecord
-     * @returns {void | string[]} if `hasRecord` is true then calculated key changes should be returned
-     * @public
-     * @deprecated
-     */
-    pushData(data, hasRecord) {
-      return this.upsert(_classPrivateFieldBase(this, _identifier)[_identifier], data, hasRecord);
-    }
-
-    // Resource Support
-    // ================
-
-    /**
-     * [LIFECYLCE] Signal to the cache that a new record has been instantiated on the client
-     *
-     * It returns properties from options that should be set on the record during the create
-     * process. This return value behavior is deprecated.
-     *
-     * @method clientDidCreate
-     * @public
-     * @param identifier
-     * @param options
-     */
-    clientDidCreate(identifier, options) {
-      // called by something V1
-      if (!isStableIdentifier(identifier)) {
-        options = identifier;
-        identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      }
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-
-      // TODO deprecate return value
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        cache.clientDidCreate();
-        // if a V2 is calling a V1 we need to call both methods
-        return cache._initRecordCreateOptions(options);
-      } else {
-        return cache.clientDidCreate(identifier, options);
-      }
-    }
-
-    /**
-     * Pass options to the cache that were supplied to a new record
-     * instantiated on the client.
-     *
-     * DEPRECATED: options are now passed via `clientDidCreate`
-     *
-     * @method clientDidCreate
-     * @public
-     * @deprecated
-     * @param options
-     */
-    _initRecordCreateOptions(options) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return cache._initRecordCreateOptions(options);
-      }
-    }
-
-    /**
-     * [LIFECYCLE] Signals to the cache that a resource
-     * will be part of a save transaction.
-     *
-     * @method willCommit
-     * @public
-     * @param identifier
-     */
-    willCommit(identifier, context) {
-      // called by something V1
-      if (!isStableIdentifier(identifier)) {
-        identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      }
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-
-      // TODO deprecate return value
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        cache.willCommit();
-      } else {
-        (false && !(!!context) && (0, _debug.assert)(`Cannot call a v2 cache willCommit from a v1 cache`, !!context));
-        cache.willCommit(identifier, context);
-      }
-    }
-
-    /**
-     * [LIFECYCLE] Signals to the cache that a resource
-     * was successfully updated as part of a save transaction.
-     *
-     * @method didCommit
-     * @public
-     * @param identifier
-     * @param data
-     */
-    didCommit(identifier, result) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        // called by something V1
-        if (!isStableIdentifier(identifier)) {
-          cache.didCommit(identifier);
-          return {
-            data: _classPrivateFieldBase(this, _identifier)[_identifier]
-          };
-        }
-        cache.didCommit(result.content?.data);
-        return {
-          data: _classPrivateFieldBase(this, _identifier)[_identifier]
-        };
-      } else {
-        // called by something V1
-        if (!isStableIdentifier(identifier)) {
-          cache.didCommit(_classPrivateFieldBase(this, _identifier)[_identifier], {
-            content: {
-              data: identifier
-            }
-          });
-          return {
-            data: _classPrivateFieldBase(this, _identifier)[_identifier]
-          };
-        }
-        return cache.didCommit(identifier, result);
-      }
-    }
-
-    /**
-     * [LIFECYCLE] Signals to the cache that a resource
-     * was update via a save transaction failed.
-     *
-     * @method commitWasRejected
-     * @public
-     * @param identifier
-     * @param errors
-     */
-    commitWasRejected(identifier, errors) {
-      _classPrivateFieldBase(this, _cache)[_cache].commitWasRejected(identifier || _classPrivateFieldBase(this, _identifier)[_identifier], errors);
-    }
-
-    /**
-     * [LIFECYCLE] Signals to the cache that all data for a resource
-     * should be cleared.
-     *
-     * @method unloadRecord
-     * @public
-     * @param identifier
-     */
-    unloadRecord(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        cache.unloadRecord();
-      } else {
-        cache.unloadRecord(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]);
-      }
-    }
-
-    // Granular Resource Data APIs
-    // ===========================
-
-    /**
-     * Retrieve the data for an attribute from the cache
-     *
-     * @method getAttr
-     * @public
-     * @param identifier
-     * @param propertyName
-     * @returns {unknown}
-     */
-    getAttr(identifier, propertyName) {
-      // called by something V1
-      if (!isStableIdentifier(identifier)) {
-        propertyName = identifier;
-        identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      }
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      return _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.getAttr(propertyName) : cache.getAttr(identifier, propertyName);
-    }
-
-    /**
-     * Mutate the data for an attribute in the cache
-     *
-     * @method setAttr
-     * @public
-     * @param identifier
-     * @param propertyName
-     * @param value
-     */
-    setAttr(identifier, propertyName, value) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.setDirtyAttribute(propertyName, value) : cache.setAttr(identifier, propertyName, value);
-    }
-
-    /**
-     * Mutate the data for an attribute in the cache
-     *
-     * DEPRECATED use setAttr
-     *
-     * @method setDirtyAttribute
-     * @public
-     * @deprecated
-     * @param identifier
-     * @param propertyName
-     * @param value
-     */
-    setDirtyAttribute(propertyName, value) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.setDirtyAttribute(propertyName, value) : cache.setAttr(_classPrivateFieldBase(this, _identifier)[_identifier], propertyName, value);
-    }
-
-    /**
-     * Query the cache for the changed attributes of a resource.
-     *
-     * DEPRECATED use changedAttrs
-     *
-     * @method changedAttributes
-     * @public
-     * @deprecated
-     * @param identifier
-     * @returns
-     */
-    changedAttributes() {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return cache.changedAttributes();
-      }
-      return cache.changedAttrs(_classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Query the cache for the changed attributes of a resource.
-     *
-     * @method changedAttrs
-     * @public
-     * @deprecated
-     * @param identifier
-     * @returns
-     */
-    changedAttrs(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return cache.changedAttributes();
-      }
-      return cache.changedAttrs(identifier);
-    }
-
-    /**
-     * Query the cache for whether any mutated attributes exist
-     *
-     * DEPRECATED use hasChangedAttrs
-     *
-     * @method hasChangedAttributes
-     * @public
-     * @deprecated
-     * @returns {boolean}
-     */
-    hasChangedAttributes() {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      return _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.hasChangedAttributes() : cache.hasChangedAttrs(_classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Query the cache for whether any mutated attributes exist
-     *
-     * @method hasChangedAttrs
-     * @public
-     * @param identifier
-     * @returns {boolean}
-     */
-    hasChangedAttrs(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      return _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.hasChangedAttributes() : cache.hasChangedAttrs(identifier);
-    }
-
-    /**
-     * Tell the cache to discard any uncommitted mutations to attributes
-     *
-     * DEPRECATED use rollbackAttrs
-     *
-     * @method rollbackAttributes
-     * @public
-     * @deprecated
-     * @returns
-     */
-    rollbackAttributes() {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      return _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.rollbackAttributes() : cache.rollbackAttrs(_classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Tell the cache to discard any uncommitted mutations to attributes
-     *
-     * @method rollbackAttrs
-     * @public
-     * @param identifier
-     * @returns the names of attributes that were restored
-     */
-    rollbackAttrs(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      return _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.rollbackAttributes() : cache.rollbackAttrs(identifier);
-    }
-
-    // Relationships
-    // =============
-
-    // the third arg here is "private". In a world with only V2 it is not necessary
-    // but in one in which we must convert a call from V2 -> V1 it is required to do this
-    // or else to do nasty schema lookup things
-    // @runspired has implemented this concept in relationships spikes and is confident
-    // we do not need any signal about whether a relationship is a collection or not at this
-    // boundary
-    /**
-     * Query the cache for the current state of a relationship property
-     *
-     * @method getRelationship
-     * @public
-     * @param identifier
-     * @param propertyName
-     * @returns resource relationship object
-     */
-    getRelationship(identifier, propertyName, isCollection = false) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        let isBelongsTo = !isCollection;
-        return isBelongsTo ? cache.getBelongsTo(propertyName) : cache.getHasMany(propertyName);
-      }
-      return cache.getRelationship(identifier, propertyName);
-    }
-
-    /**
-     * Query the cache for the current state of a belongsTo field
-     *
-     * DEPRECATED use `getRelationship`
-     *
-     * @method getBelongsTo
-     * @public
-     * @deprecated
-     * @param propertyName
-     * @returns single resource relationship object
-     */
-    getBelongsTo(propertyName) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return cache.getBelongsTo(propertyName);
-      } else {
-        let identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-        return cache.getRelationship(identifier, propertyName);
-      }
-    }
-
-    /**
-     * Query the cache for the current state of a hasMany field
-     *
-     * DEPRECATED use `getRelationship`
-     *
-     * @method getHasMany
-     * @public
-     * @deprecated
-     * @param propertyName
-     * @returns single resource relationship object
-     */
-    getHasMany(propertyName) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      if (_classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache)) {
-        return cache.getHasMany(propertyName);
-      } else {
-        let identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-        return cache.getRelationship(identifier, propertyName);
-      }
-    }
-
-    /**
-     * Mutate the current state of a belongsTo relationship
-     *
-     * DEPRECATED use update
-     *
-     * @method setDirtyBelongsTo
-     * @public
-     * @deprecated
-     * @param propertyName
-     * @param value
-     */
-    setDirtyBelongsTo(propertyName, value) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.setDirtyBelongsTo(propertyName, value) : cache.mutate({
-        op: 'replaceRelatedRecord',
-        record: _classPrivateFieldBase(this, _identifier)[_identifier],
-        field: propertyName,
-        value: value ? value.getResourceIdentifier() : null
-      });
-    }
-
-    /**
-     * Mutate the current state of a hasMany relationship by adding values
-     * An index may optionally be specified which the cache should use for
-     * where in the list to insert the records
-     *
-     * DEPRECATED use update
-     *
-     * @method addToHasMany
-     * @deprecated
-     * @public
-     * @param propertyName
-     * @param value
-     * @param idx
-     */
-    addToHasMany(propertyName, value, idx) {
-      const identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.addToHasMany(propertyName, value, idx) : cache.mutate({
-        op: 'addToRelatedRecords',
-        field: propertyName,
-        record: identifier,
-        value: value.map(v => v.getResourceIdentifier())
-      });
-    }
-
-    /**
-     * Mutate the current state of a hasMany relationship by removing values.
-     *
-     * DEPRECATED use update
-     *
-     * @method removeFromHasMany
-     * @deprecated
-     * @public
-     * @param propertyName
-     * @param value
-     */
-    removeFromHasMany(propertyName, value) {
-      const identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.removeFromHasMany(propertyName, value) : cache.mutate({
-        op: 'removeFromRelatedRecords',
-        record: identifier,
-        field: propertyName,
-        value: value.map(v => v.getResourceIdentifier())
-      });
-    }
-
-    /**
-     * Mutate the current state of a hasMany relationship by replacing it entirely
-     *
-     * DEPRECATED use `setHasMany`
-     *
-     * @method setDirtyHasMany
-     * @public
-     * @deprecated
-     * @param propertyName
-     * @param value
-     */
-    setDirtyHasMany(propertyName, value) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.setDirtyHasMany(propertyName, value) : cache.mutate({
-        op: 'replaceRelatedRecords',
-        record: _classPrivateFieldBase(this, _identifier)[_identifier],
-        field: propertyName,
-        value: value.map(rd => rd.getResourceIdentifier())
-      });
-    }
-
-    // Resource State
-    // ===============
-
-    /**
-     * Update the cache state for the given resource to be marked as locally deleted,
-     * or remove such a mark.
-     *
-     * @method setIsDeleted
-     * @public
-     * @param identifier
-     * @param isDeleted
-     */
-    setIsDeleted(identifier, isDeleted) {
-      if (!isStableIdentifier(identifier)) {
-        isDeleted = identifier;
-        identifier = _classPrivateFieldBase(this, _identifier)[_identifier];
-      }
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.setIsDeleted(isDeleted) : cache.setIsDeleted(identifier, isDeleted);
-    }
-
-    /**
-     * Query the cache for any validation errors applicable to the given resource.
-     *
-     * @method getErrors
-     * @public
-     * @param identifier
-     * @returns
-     */
-    getErrors(identifier) {
-      return _classPrivateFieldBase(this, _cache)[_cache].getErrors(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Query the cache for whether a given resource has any available data
-     *
-     * @method isEmpty
-     * @public
-     * @param identifier
-     * @returns {boolean}
-     */
-    isEmpty(identifier) {
-      const cache = _classPrivateFieldBase(this, _cache)[_cache];
-      return _classPrivateFieldBase(this, _isDeprecated)[_isDeprecated](cache) ? cache.isEmpty?.(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]) || false : cache.isEmpty(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Query the cache for whether a given resource was created locally and not
-     * yet persisted.
-     *
-     * @method isNew
-     * @public
-     * @param identifier
-     * @returns {boolean}
-     */
-    isNew(identifier) {
-      return _classPrivateFieldBase(this, _cache)[_cache].isNew(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Query the cache for whether a given resource is marked as deleted (but not
-     * necessarily persisted yet).
-     *
-     * @method isDeleted
-     * @public
-     * @param identifier
-     * @returns {boolean}
-     */
-    isDeleted(identifier) {
-      return _classPrivateFieldBase(this, _cache)[_cache].isDeleted(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-
-    /**
-     * Query the cache for whether a given resource has been deleted and that deletion
-     * has also been persisted.
-     *
-     * @method isDeletionCommitted
-     * @public
-     * @param identifier
-     * @returns {boolean}
-     */
-    isDeletionCommitted(identifier) {
-      return _classPrivateFieldBase(this, _cache)[_cache].isDeletionCommitted(identifier || _classPrivateFieldBase(this, _identifier)[_identifier]);
-    }
-  }
-  function _isDeprecated2(cache) {
-    let version = cache.version || '1';
-    return version !== this.version;
-  }
-  var _cache3 = /*#__PURE__*/_classPrivateFieldKey("cache");
-  class SingletonCacheManager {
-    constructor(cache) {
-      this.version = '2';
-      Object.defineProperty(this, _cache3, {
-        writable: true,
-        value: void 0
-      });
-      _classPrivateFieldBase(this, _cache3)[_cache3] = cache;
-    }
-    put(doc) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].put(doc);
-    }
-    peek(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].peek(identifier);
-    }
-    peekRequest(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].peekRequest(identifier);
-    }
-    fork() {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].fork();
-    }
-    merge(cache) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].merge(cache);
-    }
-    diff() {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].diff();
-    }
-    dump() {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].dump();
-    }
-    hydrate(stream) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].hydrate(stream);
-    }
-
-    // Cache
-    // =====
-
-    upsert(identifier, data, hasRecord) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].upsert(identifier, data, hasRecord);
-    }
-    patch(op) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].patch(op);
-    }
-    clientDidCreate(identifier, options) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].clientDidCreate(identifier, options);
-    }
-    willCommit(identifier, context) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].willCommit(identifier, context);
-    }
-    didCommit(identifier, result) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].didCommit(identifier, result);
-    }
-    commitWasRejected(identifier, errors) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].commitWasRejected(identifier, errors);
-    }
-    unloadRecord(identifier) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].unloadRecord(identifier);
-    }
-
-    // Attrs
-    // =====
-
-    getAttr(identifier, propertyName) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].getAttr(identifier, propertyName);
-    }
-    setAttr(identifier, propertyName, value) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].setAttr(identifier, propertyName, value);
-    }
-    changedAttrs(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].changedAttrs(identifier);
-    }
-    hasChangedAttrs(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].hasChangedAttrs(identifier);
-    }
-    rollbackAttrs(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].rollbackAttrs(identifier);
-    }
-    getRelationship(identifier, propertyName) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].getRelationship(identifier, propertyName);
-    }
-    mutate(mutation) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].mutate(mutation);
-    }
-
-    // State
-    // =============
-
-    setIsDeleted(identifier, isDeleted) {
-      _classPrivateFieldBase(this, _cache3)[_cache3].setIsDeleted(identifier, isDeleted);
-    }
-    getErrors(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].getErrors(identifier);
-    }
-    isEmpty(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].isEmpty(identifier);
-    }
-    isNew(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].isNew(identifier);
-    }
-    isDeleted(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].isDeleted(identifier);
-    }
-    isDeletionCommitted(identifier) {
-      return _classPrivateFieldBase(this, _cache3)[_cache3].isDeletionCommitted(identifier);
-    }
-  }
-  function constructResource(type, id, lid) {
-    if (typeof type === 'object' && type !== null) {
-      let resource = type;
-      if (isStableIdentifier(resource)) {
-        return resource;
-      }
-      if ('id' in resource) {
-        resource.id = coerceId(resource.id);
-      }
-      (false && !('id' in resource && isNonEmptyString(resource.id) || isNonEmptyString(resource.lid)) && (0, _debug.assert)('Expected either id or lid to be a valid string', 'id' in resource && isNonEmptyString(resource.id) || isNonEmptyString(resource.lid)));
-      (false && !(!('id' in resource) || typeof resource.type === 'string') && (0, _debug.assert)('if id is present, the type must be a string', !('id' in resource) || typeof resource.type === 'string'));
-      return resource;
-    } else {
-      const trueId = coerceId(id);
-      if (!isNonEmptyString(trueId)) {
-        if (isNonEmptyString(lid)) {
-          return {
-            lid
-          };
-        }
-        throw new Error('Expected either id or lid to be a valid string');
-      }
-      (false && !(typeof type === 'string') && (0, _debug.assert)('type must be a string', typeof type === 'string'));
-      if (isNonEmptyString(lid)) {
-        return {
-          type,
-          id: trueId,
-          lid
-        };
-      }
-      return {
-        type,
-        id: trueId
-      };
-    }
-  }
+  }), _class$1);
 
   /**
     @module @ember-data/store
   */
 
-  class LegacyWrapper {
-    constructor(_store) {
-      this._store = _store;
-      this._willNotify = false;
-      this._pendingNotifies = new Map();
-    }
-    get identifierCache() {
-      return this._store.identifierCache;
-    }
-    _scheduleNotification(identifier, key) {
-      let pending = this._pendingNotifies.get(identifier);
-      if (!pending) {
-        pending = new Set();
-        this._pendingNotifies.set(identifier, pending);
-      }
-      pending.add(key);
-      if (this._willNotify === true) {
-        return;
-      }
-      this._willNotify = true;
-      // it's possible a RecordData adhoc notifies us,
-      // in which case we sync flush
-      if (this._store._cbs) {
-        this._store._schedule('notify', () => this._flushNotifications());
-      } else {
-        this._flushNotifications();
-      }
-    }
-    _flushNotifications() {
-      if (this._willNotify === false) {
-        return;
-      }
-      let pending = this._pendingNotifies;
-      this._pendingNotifies = new Map();
-      this._willNotify = false;
-      pending.forEach((set, identifier) => {
-        set.forEach(key => {
-          this._store.notifications.notify(identifier, 'relationships', key);
-        });
-      });
-    }
-    notifyChange(identifier, namespace, key) {
-      (false && !(isStableIdentifier(identifier) || isDocumentIdentifier(identifier)) && (0, _debug.assert)(`Expected a stable identifier`, isStableIdentifier(identifier) || isDocumentIdentifier(identifier))); // TODO do we still get value from this?
-      if (namespace === 'relationships' && key) {
-        this._scheduleNotification(identifier, key);
-        return;
-      }
-
-      // @ts-expect-error
-      this._store.notifications.notify(identifier, namespace, key);
-    }
-    notifyErrorsChange(type, id, lid) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.notifyErrorsChange has been deprecated in favor of StoreWrapper.notifyChange`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      const resource = constructResource(type, id, lid);
-      const identifier = this.identifierCache.getOrCreateRecordIdentifier(resource);
-      this._store.notifications.notify(identifier, 'errors');
-    }
-    attributesDefinitionFor(type) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.attributesDefinitionFor has been deprecated in favor of StoreWrapper.getSchemaDefinitionService().attributesDefinitionFor`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      return this._store.getSchemaDefinitionService().attributesDefinitionFor({
-        type
-      });
-    }
-    relationshipsDefinitionFor(type) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.relationshipsDefinitionFor has been deprecated in favor of StoreWrapper.getSchemaDefinitionService().relationshipsDefinitionFor`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      return this._store.getSchemaDefinitionService().relationshipsDefinitionFor({
-        type
-      });
-    }
-    getSchemaDefinitionService() {
-      return this._store.getSchemaDefinitionService();
-    }
-    notifyPropertyChange(type, id, lid, key) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.notifyPropertyChange has been deprecated in favor of StoreWrapper.notifyChange`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      const resource = constructResource(type, id, lid);
-      const identifier = this.identifierCache.getOrCreateRecordIdentifier(resource);
-      this._store.notifications.notify(identifier, 'attributes', key);
-    }
-    notifyHasManyChange(type, id, lid, key) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.notifyHasManyChange has been deprecated in favor of StoreWrapper.notifyChange`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      const resource = constructResource(type, id, lid);
-      const identifier = this.identifierCache.getOrCreateRecordIdentifier(resource);
-      this._scheduleNotification(identifier, key);
-    }
-    notifyBelongsToChange(type, id, lid, key) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.notifyBelongsToChange has been deprecated in favor of StoreWrapper.notifyChange`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      const resource = constructResource(type, id, lid);
-      const identifier = this.identifierCache.getOrCreateRecordIdentifier(resource);
-      this._scheduleNotification(identifier, key);
-    }
-    notifyStateChange(type, id, lid, key) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.notifyStateChange has been deprecated in favor of StoreWrapper.notifyChange`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      const resource = constructResource(type, id, lid);
-      const identifier = this.identifierCache.getOrCreateRecordIdentifier(resource);
-      this._store.notifications.notify(identifier, 'state');
-    }
-    recordDataFor(type, id, lid) {
-      let identifier;
-      {
-        if (!isStableIdentifier(type)) {
-          // we also deprecate create capability. This behavior was problematic because
-          // there's no outside association between this RecordData and an Identifier.
-          // It's likely a mistake when we hit this codepath, but we said in an early
-          // RFC we'd allow this.
-          // With V2 we are enforcing someone to use the record-data and identifier-cache APIs to
-          // create a new identifier and then call clientDidCreate on the RecordData
-          // instead.
-          identifier = !id && !lid ? this.identifierCache.createIdentifierForNewRecord({
-            type: type
-          }) : this.identifierCache.getOrCreateRecordIdentifier(constructResource(type, id, lid));
-        } else {
-          identifier = type;
-        }
-      }
-      const cache = this._store._instanceCache.getResourceCache(identifier);
-      {
-        if (!id && !lid && typeof type === 'string') {
-          cache.clientDidCreate(identifier);
-          this._store.recordArrayManager.identifierAdded(identifier);
-        }
-      }
-      return cache;
-    }
-    setRecordId(type, id, lid) {
-      let identifier;
-      {
-        if (!isStableIdentifier(type)) {
-          const modelName = normalizeModelName$1(type);
-          const resource = constructResource(modelName, null, coerceId(lid));
-          identifier = this.identifierCache.peekRecordIdentifier(resource);
-        } else {
-          identifier = type;
-        }
-      }
-      (false && !(identifier) && (0, _debug.assert)(`Unable to find an identifier to update the ID for for ${String(lid)}`, identifier));
-      this._store._instanceCache.setRecordId(identifier, id);
-    }
-    isRecordInUse(type, id, lid) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.isRecordInUSe has been deprecated in favor of StoreWrapper.hasRecord`, false, {
-          id: 'ember-data:deprecate-v1cache-store-apis',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          }
-        }));
-      }
-      const resource = constructResource(type, id, lid);
-      const identifier = this.identifierCache.peekRecordIdentifier(resource);
-      const record = identifier && this._store._instanceCache.peek({
-        identifier,
-        bucket: 'record'
-      });
-      return record ? !(record.isDestroyed || record.isDestroying) : false;
-    }
-    hasRecord(identifier) {
-      return Boolean(this._store._instanceCache.peek({
-        identifier,
-        bucket: 'record'
-      }));
-    }
-    disconnectRecord(type, id, lid) {
-      let identifier;
-      {
-        if (typeof type === 'string') {
-          (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.disconnectRecord(<type>) has been deprecated in favor of StoreWrapper.disconnectRecord(<identifier>)`, false, {
-            id: 'ember-data:deprecate-v1cache-store-apis',
-            for: 'ember-data',
-            until: '5.0',
-            since: {
-              enabled: '4.7',
-              available: '4.7'
-            }
-          }));
-          let resource = constructResource(type, id, lid);
-          identifier = this.identifierCache.peekRecordIdentifier(resource);
-        } else {
-          identifier = type;
-        }
-      }
-      (false && !(isStableIdentifier(identifier)) && (0, _debug.assert)(`Expected a stable identifier`, isStableIdentifier(identifier)));
-      this._store._instanceCache.disconnect(identifier);
-      this._pendingNotifies.delete(identifier);
-    }
-  }
-  class V2CacheStoreWrapper {
+  class CacheStoreWrapper {
     constructor(_store) {
       this._store = _store;
       this._willNotify = false;
@@ -72157,30 +68586,12 @@ lunr.QueryParser.parseBoost = function (parser) {
     getSchemaDefinitionService() {
       return this._store.getSchemaDefinitionService();
     }
-    recordDataFor(identifier) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`StoreWrapper.recordDataFor is deprecated. With Singleton Cache, this method is no longer needed as the caller is its own cache reference.`, false, {
-          for: '@ember-data/store',
-          id: 'ember-data:deprecate-record-data-for',
-          since: {
-            available: '4.10',
-            enabled: '4.10'
-          },
-          until: '5.0'
-        }));
-      }
-      (false && !(isStableIdentifier(identifier)) && (0, _debug.assert)(`Expected a stable identifier`, isStableIdentifier(identifier)));
-      return this._store._instanceCache.getResourceCache(identifier);
-    }
     setRecordId(identifier, id) {
       (false && !(isStableIdentifier(identifier)) && (0, _debug.assert)(`Expected a stable identifier`, isStableIdentifier(identifier)));
       this._store._instanceCache.setRecordId(identifier, id);
     }
     hasRecord(identifier) {
-      return Boolean(this._store._instanceCache.peek({
-        identifier,
-        bucket: 'record'
-      }));
+      return Boolean(this._store._instanceCache.peek(identifier));
     }
     disconnectRecord(identifier) {
       (false && !(isStableIdentifier(identifier)) && (0, _debug.assert)(`Expected a stable identifier`, isStableIdentifier(identifier)));
@@ -72188,7 +68599,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._pendingNotifies.delete(identifier);
     }
   }
-  const CacheStoreWrapper = LegacyWrapper;
   let _peekGraph;
   {
     let __peekGraph;
@@ -72252,18 +68662,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     constructor(store) {
       this.__instances = {
         record: new Map(),
-        resourceCache: new Map(),
         reference: new WeakMap()
       };
       this.store = store;
       this._storeWrapper = new CacheStoreWrapper(this.store);
-      {
-        this.__cacheFor = resource => {
-          // TODO enforce strict
-          const identifier = this.store.identifierCache.getOrCreateRecordIdentifier(resource);
-          return this.getResourceCache(identifier);
-        };
-      }
       store.identifierCache.__configureMerge((identifier, matchedIdentifier, resourceData) => {
         let keptIdentifier = identifier;
         if (identifier.id !== matchedIdentifier.id) {
@@ -72276,8 +68678,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         // check for duplicate entities
         let keptHasRecord = this.__instances.record.has(keptIdentifier);
         let staleHasRecord = this.__instances.record.has(staleIdentifier);
-        let keptResourceCache = this.__instances.resourceCache.get(keptIdentifier) || null;
-        let staleResourceCache = this.__instances.resourceCache.get(staleIdentifier) || null;
 
         // we cannot merge entities when both have records
         // (this may not be strictly true, we could probably swap the cache data the record points at)
@@ -72291,23 +68691,11 @@ lunr.QueryParser.parseBoost = function (parser) {
           }
           (false && !(false) && (0, _debug.assert)(`Failed to update the RecordIdentifier '${identifier.type}:${String(identifier.id)} (${identifier.lid})' to merge with the detected duplicate identifier '${matchedIdentifier.type}:${String(matchedIdentifier.id)} (${String(matchedIdentifier.lid)})'`));
         }
-        let resourceCache = keptResourceCache || staleResourceCache;
-        if (resourceCache) {
-          resourceCache.patch({
-            op: 'mergeIdentifiers',
-            record: staleIdentifier,
-            value: keptIdentifier
-          });
-        } else {
-          this.store.cache.patch({
-            op: 'mergeIdentifiers',
-            record: staleIdentifier,
-            value: keptIdentifier
-          });
-        }
-        if (staleResourceCache === null) {
-          return keptIdentifier;
-        }
+        this.store.cache.patch({
+          op: 'mergeIdentifiers',
+          record: staleIdentifier,
+          value: keptIdentifier
+        });
 
         /*
         TODO @runspired consider adding this to make polymorphism even nicer
@@ -72323,73 +68711,22 @@ lunr.QueryParser.parseBoost = function (parser) {
         return keptIdentifier;
       });
     }
-    peek({
-      identifier,
-      bucket
-    }) {
-      return this.__instances[bucket]?.get(identifier);
+    peek(identifier) {
+      return this.__instances.record.get(identifier);
     }
     getRecord(identifier, properties) {
       let record = this.__instances.record.get(identifier);
       if (!record) {
         (false && !(!this.store.isDestroying && !this.store.isDestroyed) && (0, _debug.assert)(`Cannot create a new record instance while the store is being destroyed`, !this.store.isDestroying && !this.store.isDestroyed));
-        const cache = this.getResourceCache(identifier);
-        {
-          if (this.store.instantiateRecord.length > 2) {
-            (false && !(false) && (0, _debug.deprecate)(`Expected store.instantiateRecord to have an arity of 2. recordDataFor and notificationManager args have been deprecated.`, false, {
-              for: '@ember-data/store',
-              id: 'ember-data:deprecate-instantiate-record-args',
-              since: {
-                available: '4.12',
-                enabled: '4.12'
-              },
-              until: '5.0'
-            }));
-          }
-          record = this.store.instantiateRecord(identifier, properties || {},
-          // @ts-expect-error
-          this.__cacheFor, this.store.notifications);
-        }
+        const cache = this.store.cache;
+        setCacheFor(identifier, cache);
+        record = this.store.instantiateRecord(identifier, properties || {});
         setRecordIdentifier(record, identifier);
         setCacheFor(record, cache);
         StoreMap.set(record, this.store);
         this.__instances.record.set(identifier, record);
       }
       return record;
-    }
-    getResourceCache(identifier) {
-      let cache = this.__instances.resourceCache.get(identifier);
-      if (cache) {
-        return cache;
-      }
-      if (this.store.createRecordDataFor) {
-        (false && !(false) && (0, _debug.deprecate)(`Store.createRecordDataFor(<type>, <id>, <lid>, <storeWrapper>) has been deprecated in favor of Store.createCache(<storeWrapper>)`, false, {
-          id: 'ember-data:deprecate-v1-cache',
-          for: 'ember-data',
-          until: '5.0',
-          since: {
-            enabled: '4.12',
-            available: '4.12'
-          }
-        }));
-        {
-          if (this.store.createRecordDataFor.length > 2) {
-            let cacheInstance = this.store.createRecordDataFor(identifier.type, identifier.id,
-            // @ts-expect-error
-            identifier.lid, this._storeWrapper);
-            cache = new NonSingletonCacheManager(this.store, cacheInstance, identifier);
-          }
-        }
-        if (!cache) {
-          let cacheInstance = this.store.createRecordDataFor(identifier, this._storeWrapper);
-          cache = cacheInstance.version === '2' ? cacheInstance : new NonSingletonCacheManager(this.store, cacheInstance, identifier);
-        }
-      } else {
-        cache = this.store.cache;
-      }
-      setCacheFor(identifier, cache);
-      this.__instances.resourceCache.set(identifier, cache);
-      return cache;
     }
     getReference(identifier) {
       let cache = this.__instances.reference;
@@ -72401,7 +68738,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return reference;
     }
     recordIsLoaded(identifier, filterDeleted = false) {
-      const cache = this.__instances.resourceCache.get(identifier) || this.cache;
+      const cache = this.cache;
       if (!cache) {
         return false;
       }
@@ -72431,7 +68768,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
       }
       this.store.identifierCache.forgetRecordIdentifier(identifier);
-      this.__instances.resourceCache.delete(identifier);
       removeRecordDataFor(identifier);
       this.store._requestCache._clearEntries(identifier);
     }
@@ -72439,7 +68775,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       // TODO is this join still necessary?
       this.store._join(() => {
         const record = this.__instances.record.get(identifier);
-        const cache = this.__instances.resourceCache.get(identifier);
+        const cache = this.cache;
         if (record) {
           this.store.teardownRecord(record);
           this.__instances.record.delete(identifier);
@@ -72449,7 +68785,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
         if (cache) {
           cache.unloadRecord(identifier);
-          this.__instances.resourceCache.delete(identifier);
           removeRecordDataFor(identifier);
         } else {
           this.disconnect(identifier);
@@ -72468,7 +68803,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         const typeCache = cache.types;
         let identifiers = typeCache[type]?.lid;
-        // const rds = this.__instances.resourceCache;
         if (identifiers) {
           identifiers.forEach(identifier => {
             // if (rds.has(identifier)) {
@@ -72514,43 +68848,12 @@ lunr.QueryParser.parseBoost = function (parser) {
       // TODO handle consequences of identifier merge for notifications
       this.store.notifications.notify(identifier, 'identity');
     }
-
-    // TODO ths should be wrapped in a deprecation flag since cache.put
-    // handles this the rest of the time
-    loadData(data) {
-      let modelName = data.type;
-      (false && !(data.id !== null && data.id !== undefined && data.id !== '') && (0, _debug.assert)(`You must include an 'id' for ${modelName} in an object passed to 'push'`, data.id !== null && data.id !== undefined && data.id !== ''));
-      (false && !(this.store.getSchemaDefinitionService().doesTypeExist(modelName)) && (0, _debug.assert)(`You tried to push data with a type '${modelName}' but no model could be found with that name.`, this.store.getSchemaDefinitionService().doesTypeExist(modelName)));
-      const resource = constructResource(normalizeModelName$1(data.type), ensureStringId(data.id), coerceId(data.lid));
-      let identifier = this.store.identifierCache.peekRecordIdentifier(resource);
-      let isUpdate = false;
-
-      // store.push will be from empty
-      // findRecord will be from root.loading
-      // this cannot be loading state if we do not already have an identifier
-      // all else will be updates
-      if (identifier) {
-        const isLoading = _isLoading(this, identifier) || !this.recordIsLoaded(identifier);
-        isUpdate = !_isEmpty(this, identifier) && !isLoading;
-
-        // exclude store.push (root.empty) case
-        if (isUpdate || isLoading) {
-          identifier = this.store.identifierCache.updateRecordIdentifier(identifier, data);
-        }
-      } else {
-        identifier = this.store.identifierCache.getOrCreateRecordIdentifier(data);
-      }
-      const cache = this.getResourceCache(identifier);
-      const hasRecord = this.__instances.record.has(identifier);
-      cache.upsert(identifier, data, hasRecord);
-      return identifier;
-    }
   }
   function _resourceIsFullDeleted(identifier, cache) {
     return cache.isDeletionCommitted(identifier) || cache.isNew(identifier) && cache.isDeleted(identifier);
   }
   function resourceIsFullyDeleted(instanceCache, identifier) {
-    const cache = instanceCache.__instances.resourceCache.get(identifier);
+    const cache = instanceCache.cache;
     return !cache || _resourceIsFullDeleted(identifier, cache);
   }
 
@@ -72586,11 +68889,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         jsonPayload.attributes[key] = preloadValue;
       }
     });
-    const cache = store._instanceCache.getResourceCache(identifier);
-    const hasRecord = Boolean(store._instanceCache.peek({
-      identifier,
-      bucket: 'record'
-    }));
+    const cache = store.cache;
+    const hasRecord = Boolean(store._instanceCache.peek(identifier));
     cache.upsert(identifier, jsonPayload, hasRecord);
   }
   function preloadRelationship(schema, preloadValue) {
@@ -72622,24 +68922,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     // and allow identifiers to be used
     return recordIdentifierFor(value);
   }
-  function _isEmpty(instanceCache, identifier) {
-    const cache = instanceCache.__instances.resourceCache.get(identifier);
-    if (!cache) {
-      return true;
-    }
-    const isNew = cache.isNew(identifier);
-    const isDeleted = cache.isDeleted(identifier);
-    const isEmpty = cache.isEmpty(identifier);
-    return (!isNew || isDeleted) && isEmpty;
-  }
-  function _isLoading(cache, identifier) {
-    const req = cache.store.getRequestStateService();
-    // const fulfilled = req.getLastRequestForRecord(identifier);
-    const isLoaded = cache.recordIsLoaded(identifier);
-    return !isLoaded &&
-    // fulfilled === null &&
-    req.getPendingRequestsForRecord(identifier).some(req => req.type === 'query');
-  }
   function _clearCaches() {
     RecordCache.clear();
     StoreMap.clear();
@@ -72665,22 +68947,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     // Following the existing RD implementation
     attributesDefinitionFor(identifier) {
       let modelName, attributes;
-      {
-        if (typeof identifier === 'string') {
-          (false && !(false) && (0, _debug.deprecate)(`attributesDefinitionFor expects either a record identifier or an argument of shape { type: string }, received a string.`, false, {
-            id: 'ember-data:deprecate-string-arg-schemas',
-            for: 'ember-data',
-            until: '5.0',
-            since: {
-              enabled: '4.5',
-              available: '4.5'
-            }
-          }));
-          modelName = identifier;
-        } else {
-          modelName = identifier.type;
-        }
-      }
+      modelName = identifier.type;
       attributes = this._attributesDefCache[modelName];
       if (attributes === undefined) {
         let modelClass = this.store.modelFor(modelName);
@@ -72695,22 +68962,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     // Following the existing RD implementation
     relationshipsDefinitionFor(identifier) {
       let modelName, relationships;
-      {
-        if (typeof identifier === 'string') {
-          (false && !(false) && (0, _debug.deprecate)(`relationshipsDefinitionFor expects either a record identifier or an argument of shape { type: string }, received a string.`, false, {
-            id: 'ember-data:deprecate-string-arg-schemas',
-            for: 'ember-data',
-            until: '5.0',
-            since: {
-              enabled: '4.5',
-              available: '4.5'
-            }
-          }));
-          modelName = identifier;
-        } else {
-          modelName = identifier.type;
-        }
-      }
+      modelName = identifier.type;
       relationships = this._relationshipsDefCache[modelName];
       if (relationships === undefined) {
         let modelClass = this.store.modelFor(modelName);
@@ -72720,7 +68972,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return relationships;
     }
     doesTypeExist(modelName) {
-      let normalizedModelName = normalizeModelName$1(modelName);
+      let normalizedModelName = normalizeModelName(modelName);
       let factory = getModelFactory(this.store, this.store._modelFactoryCache, normalizedModelName);
       return factory !== null;
     }
@@ -72834,6 +69086,495 @@ lunr.QueryParser.parseBoost = function (parser) {
           callback.call(binding, key, attrDefs[key].type);
         }
       });
+    }
+  }
+  var _cache = /*#__PURE__*/_classPrivateFieldKey("cache");
+  /**
+   * The CacheManager wraps a Cache enforcing that only
+   * the public API surface area is exposed.
+   *
+   * Hence, it is the value of `Store.cache`, wrapping
+   * the cache instance returned by `Store.createCache`.
+   *
+   * It handles translating between cache versions when
+   * necessary, for instance when a Store is configured
+   * to use both a v1 and a v2 cache depending on some
+   * heuristic.
+   *
+   * Starting with the v2 spec, the cache is designed such
+   * that it must be implemented as a singleton.
+   *
+   * @class CacheManager
+   * @public
+   */
+  class CacheManager {
+    constructor(cache) {
+      this.version = '2';
+      Object.defineProperty(this, _cache, {
+        writable: true,
+        value: void 0
+      });
+      /**
+       * Query the cache for whether a given resource has been deleted and that deletion
+       * has also been persisted.
+       *
+       * @method isDeletionCommitted
+       * @public
+       * @param identifier
+       * @returns {boolean}
+       */
+      this.isDel = void 0;
+      _classPrivateFieldBase(this, _cache)[_cache] = cache;
+    }
+
+    // Cache Management
+    // ================
+
+    /**
+     * Cache the response to a request
+     *
+     * Unlike `store.push` which has UPSERT
+     * semantics, `put` has `replace` semantics similar to
+     * the `http` method `PUT`
+     *
+     * the individually cacheabl
+     * e resource data it may contain
+     * should upsert, but the document data surrounding it should
+     * fully replace any existing information
+     *
+     * Note that in order to support inserting arbitrary data
+     * to the cache that did not originate from a request `put`
+     * should expect to sometimes encounter a document with only
+     * a `content` member and therefor must not assume the existence
+     * of `request` and `response` on the document.
+     *
+     * @method put
+     * @param {StructuredDocument} doc
+     * @returns {ResourceDocument}
+     * @public
+     */
+    put(doc) {
+      return _classPrivateFieldBase(this, _cache)[_cache].put(doc);
+    }
+
+    /**
+     * Perform an operation on the cache to update the remote state.
+     *
+     * Note: currently the only valid operation is a MergeOperation
+     * which occurs when a collision of identifiers is detected.
+     *
+     * @method patch
+     * @public
+     * @param op the operation to perform
+     * @returns {void}
+     */
+    patch(op) {
+      _classPrivateFieldBase(this, _cache)[_cache].patch(op);
+    }
+
+    /**
+     * Update resource data with a local mutation. Currently supports operations
+     * on relationships only.
+     *
+     * @method mutate
+     * @public
+     * @param mutation
+     */
+    mutate(mutation) {
+      _classPrivateFieldBase(this, _cache)[_cache].mutate(mutation);
+    }
+
+    /**
+     * Peek resource data from the Cache.
+     *
+     * In development, if the return value
+     * is JSON the return value
+     * will be deep-cloned and deep-frozen
+     * to prevent mutation thereby enforcing cache
+     * Immutability.
+     *
+     * This form of peek is useful for implementations
+     * that want to feed raw-data from cache to the UI
+     * or which want to interact with a blob of data
+     * directly from the presentation cache.
+     *
+     * An implementation might want to do this because
+     * de-referencing records which read from their own
+     * blob is generally safer because the record does
+     * not require retainining connections to the Store
+     * and Cache to present data on a per-field basis.
+     *
+     * This generally takes the place of `getAttr` as
+     * an API and may even take the place of `getRelationship`
+     * depending on implementation specifics, though this
+     * latter usage is less recommended due to the advantages
+     * of the Graph handling necessary entanglements and
+     * notifications for relational data.
+     *
+     * @method peek
+     * @public
+     * @param {StableRecordIdentifier | StableDocumentIdentifier} identifier
+     * @returns {ResourceDocument | ResourceBlob | null} the known resource data
+     */
+
+    peek(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].peek(identifier);
+    }
+
+    /**
+     * Peek the Cache for the existing request data associated with
+     * a cacheable request
+     *
+     * @method peekRequest
+     * @param {StableDocumentIdentifier}
+     * @returns {StableDocumentIdentifier | null}
+     * @public
+     */
+    peekRequest(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].peekRequest(identifier);
+    }
+
+    /**
+     * Push resource data from a remote source into the cache for this identifier
+     *
+     * @method upsert
+     * @public
+     * @param identifier
+     * @param data
+     * @param hasRecord
+     * @returns {void | string[]} if `hasRecord` is true then calculated key changes should be returned
+     */
+    upsert(identifier, data, hasRecord) {
+      return _classPrivateFieldBase(this, _cache)[_cache].upsert(identifier, data, hasRecord);
+    }
+
+    // Cache Forking Support
+    // =====================
+
+    /**
+     * Create a fork of the cache from the current state.
+     *
+     * Applications should typically not call this method themselves,
+     * preferring instead to fork at the Store level, which will
+     * utilize this method to fork the cache.
+     *
+     * @method fork
+     * @public
+     * @returns Promise<Cache>
+     */
+    fork() {
+      return _classPrivateFieldBase(this, _cache)[_cache].fork();
+    }
+
+    /**
+     * Merge a fork back into a parent Cache.
+     *
+     * Applications should typically not call this method themselves,
+     * preferring instead to merge at the Store level, which will
+     * utilize this method to merge the caches.
+     *
+     * @method merge
+     * @param {Cache} cache
+     * @public
+     * @returns Promise<void>
+     */
+    merge(cache) {
+      return _classPrivateFieldBase(this, _cache)[_cache].merge(cache);
+    }
+
+    /**
+     * Generate the list of changes applied to all
+     * record in the store.
+     *
+     * Each individual resource or document that has
+     * been mutated should be described as an individual
+     * `Change` entry in the returned array.
+     *
+     * A `Change` is described by an object containing up to
+     * three properties: (1) the `identifier` of the entity that
+     * changed; (2) the `op` code of that change being one of
+     * `upsert` or `remove`, and if the op is `upsert` a `patch`
+     * containing the data to merge into the cache for the given
+     * entity.
+     *
+     * This `patch` is opaque to the Store but should be understood
+     * by the Cache and may expect to be utilized by an Adapter
+     * when generating data during a `save` operation.
+     *
+     * It is generally recommended that the `patch` contain only
+     * the updated state, ignoring fields that are unchanged
+     *
+     * ```ts
+     * interface Change {
+     *  identifier: StableRecordIdentifier | StableDocumentIdentifier;
+     *  op: 'upsert' | 'remove';
+     *  patch?: unknown;
+     * }
+     * ```
+     *
+     * @method diff
+     * @public
+     */
+    diff() {
+      return _classPrivateFieldBase(this, _cache)[_cache].diff();
+    }
+
+    // SSR Support
+    // ===========
+
+    /**
+     * Serialize the entire contents of the Cache into a Stream
+     * which may be fed back into a new instance of the same Cache
+     * via `cache.hydrate`.
+     *
+     * @method dump
+     * @returns {Promise<ReadableStream>}
+     * @public
+     */
+    dump() {
+      return _classPrivateFieldBase(this, _cache)[_cache].dump();
+    }
+
+    /**
+     * hydrate a Cache from a Stream with content previously serialized
+     * from another instance of the same Cache, resolving when hydration
+     * is complete.
+     *
+     * This method should expect to be called both in the context of restoring
+     * the Cache during application rehydration after SSR **AND** at unknown
+     * times during the lifetime of an already booted application when it is
+     * desired to bulk-load additional information into the cache. This latter
+     * behavior supports optimizing pre/fetching of data for route transitions
+     * via data-only SSR modes.
+     *
+     * @method hydrate
+     * @param {ReadableStream} stream
+     * @returns {Promise<void>}
+     * @public
+     */
+    hydrate(stream) {
+      return _classPrivateFieldBase(this, _cache)[_cache].hydrate(stream);
+    }
+
+    // Cache
+    // =====
+
+    // Resource Support
+    // ================
+
+    /**
+     * [LIFECYLCE] Signal to the cache that a new record has been instantiated on the client
+     *
+     * It returns properties from options that should be set on the record during the create
+     * process. This return value behavior is deprecated.
+     *
+     * @method clientDidCreate
+     * @public
+     * @param identifier
+     * @param options
+     */
+    clientDidCreate(identifier, options) {
+      return _classPrivateFieldBase(this, _cache)[_cache].clientDidCreate(identifier, options);
+    }
+
+    /**
+     * [LIFECYCLE] Signals to the cache that a resource
+     * will be part of a save transaction.
+     *
+     * @method willCommit
+     * @public
+     * @param identifier
+     */
+    willCommit(identifier, context) {
+      _classPrivateFieldBase(this, _cache)[_cache].willCommit(identifier, context);
+    }
+
+    /**
+     * [LIFECYCLE] Signals to the cache that a resource
+     * was successfully updated as part of a save transaction.
+     *
+     * @method didCommit
+     * @public
+     * @param identifier
+     * @param data
+     */
+    didCommit(identifier, result) {
+      return _classPrivateFieldBase(this, _cache)[_cache].didCommit(identifier, result);
+    }
+
+    /**
+     * [LIFECYCLE] Signals to the cache that a resource
+     * was update via a save transaction failed.
+     *
+     * @method commitWasRejected
+     * @public
+     * @param identifier
+     * @param errors
+     */
+    commitWasRejected(identifier, errors) {
+      _classPrivateFieldBase(this, _cache)[_cache].commitWasRejected(identifier, errors);
+    }
+
+    /**
+     * [LIFECYCLE] Signals to the cache that all data for a resource
+     * should be cleared.
+     *
+     * @method unloadRecord
+     * @public
+     * @param identifier
+     */
+    unloadRecord(identifier) {
+      _classPrivateFieldBase(this, _cache)[_cache].unloadRecord(identifier);
+    }
+
+    // Granular Resource Data APIs
+    // ===========================
+
+    /**
+     * Retrieve the data for an attribute from the cache
+     *
+     * @method getAttr
+     * @public
+     * @param identifier
+     * @param propertyName
+     * @returns {unknown}
+     */
+    getAttr(identifier, propertyName) {
+      return _classPrivateFieldBase(this, _cache)[_cache].getAttr(identifier, propertyName);
+    }
+
+    /**
+     * Mutate the data for an attribute in the cache
+     *
+     * @method setAttr
+     * @public
+     * @param identifier
+     * @param propertyName
+     * @param value
+     */
+    setAttr(identifier, propertyName, value) {
+      _classPrivateFieldBase(this, _cache)[_cache].setAttr(identifier, propertyName, value);
+    }
+
+    /**
+     * Query the cache for the changed attributes of a resource.
+     *
+     * @method changedAttrs
+     * @public
+     * @param identifier
+     * @returns
+     */
+    changedAttrs(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].changedAttrs(identifier);
+    }
+
+    /**
+     * Query the cache for whether any mutated attributes exist
+     *
+     * @method hasChangedAttrs
+     * @public
+     * @param identifier
+     * @returns {boolean}
+     */
+    hasChangedAttrs(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].hasChangedAttrs(identifier);
+    }
+
+    /**
+     * Tell the cache to discard any uncommitted mutations to attributes
+     *
+     * @method rollbackAttrs
+     * @public
+     * @param identifier
+     * @returns the names of attributes that were restored
+     */
+    rollbackAttrs(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].rollbackAttrs(identifier);
+    }
+
+    // Relationships
+    // =============
+
+    /**
+     * Query the cache for the current state of a relationship property
+     *
+     * @method getRelationship
+     * @public
+     * @param identifier
+     * @param propertyName
+     * @returns resource relationship object
+     */
+    getRelationship(identifier, propertyName) {
+      return _classPrivateFieldBase(this, _cache)[_cache].getRelationship(identifier, propertyName);
+    }
+
+    // Resource State
+    // ===============
+
+    /**
+     * Update the cache state for the given resource to be marked as locally deleted,
+     * or remove such a mark.
+     *
+     * @method setIsDeleted
+     * @public
+     * @param identifier
+     * @param isDeleted
+     */
+    setIsDeleted(identifier, isDeleted) {
+      _classPrivateFieldBase(this, _cache)[_cache].setIsDeleted(identifier, isDeleted);
+    }
+
+    /**
+     * Query the cache for any validation errors applicable to the given resource.
+     *
+     * @method getErrors
+     * @public
+     * @param identifier
+     * @returns
+     */
+    getErrors(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].getErrors(identifier);
+    }
+
+    /**
+     * Query the cache for whether a given resource has any available data
+     *
+     * @method isEmpty
+     * @public
+     * @param identifier
+     * @returns {boolean}
+     */
+    isEmpty(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].isEmpty(identifier);
+    }
+
+    /**
+     * Query the cache for whether a given resource was created locally and not
+     * yet persisted.
+     *
+     * @method isNew
+     * @public
+     * @param identifier
+     * @returns {boolean}
+     */
+    isNew(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].isNew(identifier);
+    }
+
+    /**
+     * Query the cache for whether a given resource is marked as deleted (but not
+     * necessarily persisted yet).
+     *
+     * @method isDeleted
+     * @public
+     * @param identifier
+     * @returns {boolean}
+     */
+    isDeleted(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].isDeleted(identifier);
+    }
+    isDeletionCommitted(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].isDeletionCommitted(identifier);
     }
   }
   let tokenId = 0;
@@ -73012,153 +69753,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._cache.clear();
     }
   }
-  const PromiseArrayProxy = _proxy.default.extend(_promiseProxyMixin.default);
-  const PromiseObjectProxy = _proxy2.default.extend(_promiseProxyMixin.default);
-  var _dec, _class$1, _descriptor$1;
-
-  /**
-    @module @ember-data/store
-  */
-
-  /**
-    A `PromiseArray` is an object that acts like both an `Ember.Array`
-    and a promise. When the promise is resolved the resulting value
-    will be set to the `PromiseArray`'s `content` property. This makes
-    it easy to create data bindings with the `PromiseArray` that will be
-    updated when the promise resolves.
-  
-    This class should not be imported and instantiated directly.
-  
-    For more information see the [Ember.PromiseProxyMixin
-    documentation](/ember/release/classes/PromiseProxyMixin).
-  
-    Example
-  
-    ```javascript
-    let promiseArray = PromiseArray.create({
-      promise: $.getJSON('/some/remote/data.json')
-    });
-  
-    promiseArray.length; // 0
-  
-    promiseArray.then(function() {
-      promiseArray.length; // 100
-    });
-    ```
-  
-    @class PromiseArray
-    @public
-    @extends Ember.ArrayProxy
-    @uses Ember.PromiseProxyMixin
-  */
-  let PromiseArray = (_dec = (0, _computed.reads)('content.meta'), (_class$1 = class PromiseArray extends PromiseArrayProxy {
-    constructor(...args) {
-      super(...args);
-      _initializerDefineProperty(this, "meta", _descriptor$1, this);
-    }
-  }, _descriptor$1 = _applyDecoratedDescriptor(_class$1.prototype, "meta", [_dec], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  }), _class$1));
-  function _promiseObject(promise) {
-    return PromiseObjectProxy.create({
-      promise
-    });
-  }
-  function _promiseArray(promise) {
-    return PromiseArray.create({
-      promise
-    });
-  }
-
-  // constructor is accessed in some internals but not including it in the copyright for the deprecation
-  const ALLOWABLE_METHODS = ['constructor', 'then', 'catch', 'finally'];
-  const ALLOWABLE_PROPS = ['__ec_yieldable__', '__ec_cancel__'];
-  const PROXIED_ARRAY_PROPS = ['length', '[]', 'firstObject', 'lastObject', 'meta', 'content', 'isPending', 'isSettled', 'isRejected', 'isFulfilled', 'promise', 'reason'];
-  const PROXIED_OBJECT_PROPS = ['content', 'isPending', 'isSettled', 'isRejected', 'isFulfilled', 'promise', 'reason'];
-  function promiseArray(promise) {
-    const promiseObjectProxy = _promiseArray(promise);
-    {
-      return promiseObjectProxy;
-    }
-    const handler = {
-      get(target, prop, receiver) {
-        if (typeof prop === 'symbol') {
-          return Reflect.get(target, prop, receiver);
-        }
-        if (ALLOWABLE_PROPS.includes(prop)) {
-          return target[prop];
-        }
-        if (!ALLOWABLE_METHODS.includes(prop)) {
-          (false && !(false) && (0, _debug.deprecate)(`Accessing ${prop} on this PromiseArray is deprecated. The return type is being changed from PromiseArray to a Promise. The only available methods to access on this promise are .then, .catch and .finally`, false, {
-            id: 'ember-data:deprecate-promise-proxies',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.7',
-              enabled: '4.7'
-            }
-          }));
-        }
-        const value = target[prop];
-        if (value && typeof value === 'function' && typeof value.bind === 'function') {
-          return value.bind(target);
-        }
-        if (PROXIED_ARRAY_PROPS.includes(prop)) {
-          return value;
-        }
-        return undefined;
-      }
-    };
-    return new Proxy(promiseObjectProxy, handler);
-  }
-  const ProxySymbolString = String(Symbol.for('PROXY_CONTENT'));
-  function promiseObject(promise) {
-    const promiseObjectProxy = _promiseObject(promise);
-    {
-      return promiseObjectProxy;
-    }
-    const handler = {
-      get(target, prop, receiver) {
-        if (typeof prop === 'symbol') {
-          if (String(prop) === ProxySymbolString) {
-            return;
-          }
-          return Reflect.get(target, prop, receiver);
-        }
-        if (prop === 'constructor') {
-          return target.constructor;
-        }
-        if (ALLOWABLE_PROPS.includes(prop)) {
-          return target[prop];
-        }
-        if (!ALLOWABLE_METHODS.includes(prop)) {
-          (false && !(false) && (0, _debug.deprecate)(`Accessing ${prop} on this PromiseObject is deprecated. The return type is being changed from PromiseObject to a Promise. The only available methods to access on this promise are .then, .catch and .finally`, false, {
-            id: 'ember-data:deprecate-promise-proxies',
-            until: '5.0',
-            for: '@ember-data/store',
-            since: {
-              available: '4.7',
-              enabled: '4.7'
-            }
-          }));
-        } else {
-          return target[prop].bind(target);
-        }
-        if (PROXIED_OBJECT_PROPS.includes(prop)) {
-          return target[prop];
-        }
-        const value = (0, _object.get)(target, prop);
-        if (value && typeof value === 'function' && typeof value.bind === 'function') {
-          return value.bind(receiver);
-        }
-        return undefined;
-      }
-    };
-    return new Proxy(promiseObjectProxy, handler);
-  }
   var _class, _descriptor, _class3, _descriptor2;
   const ARRAY_GETTER_METHODS = new Set([Symbol.iterator, 'concat', 'entries', 'every', 'fill', 'filter', 'find', 'findIndex', 'flat', 'flatMap', 'forEach', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'map', 'reduce', 'reduceRight', 'slice', 'some', 'values']);
   const ARRAY_SETTER_METHODS = new Set(['push', 'pop', 'unshift', 'shift', 'splice', 'sort']);
@@ -73170,11 +69764,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     return ARRAY_SETTER_METHODS.has(prop);
   }
   const IDENTIFIER_ARRAY_TAG = Symbol('#tag');
-  _exports.j = IDENTIFIER_ARRAY_TAG;
+  _exports.IDENTIFIER_ARRAY_TAG = IDENTIFIER_ARRAY_TAG;
   const SOURCE = Symbol('#source');
-  _exports.h = SOURCE;
+  _exports.SOURCE = SOURCE;
   const MUTATE = Symbol('#update');
-  _exports.M = MUTATE;
+  _exports.MUTATE = MUTATE;
   const NOTIFY = Symbol('#notify');
   const IS_COLLECTION = Symbol.for('Collection');
   function notifyArray(arr) {
@@ -73210,17 +69804,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       return null;
     }
   }), _class);
-  function deprecateArrayLike(className, fnName, replName) {
-    (false && !(false) && (0, _debug.deprecate)(`The \`${fnName}\` method on the class ${className} is deprecated. Use the native array method \`${replName}\` instead.`, false, {
-      id: 'ember-data:deprecate-array-like',
-      until: '5.0',
-      since: {
-        enabled: '4.7',
-        available: '4.7'
-      },
-      for: 'ember-data'
-    }));
-  }
   function safeForEach(instance, arr, store, callback, target) {
     if (target === undefined) {
       target = null;
@@ -73271,27 +69854,19 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     /**
-     The modelClass represented by this record array.
-      @property type
-      @public
-      @deprecated
-     @type {subclass of Model}
-     */
-
-    /**
       The store that created this record array.
        @property store
       @private
       @type Store
       */
 
-    destroy() {
-      this.isDestroying = true;
+    destroy(clear) {
+      this.isDestroying = !clear;
       // changing the reference breaks the Proxy
       // this[SOURCE] = [];
       this[SOURCE].length = 0;
       this[NOTIFY]();
-      this.isDestroyed = true;
+      this.isDestroyed = !clear;
     }
 
     // length must be on self for proxied methods to work properly
@@ -73406,15 +69981,6 @@ lunr.QueryParser.parseBoost = function (parser) {
             return fn;
           }
           if (prop in self) {
-            {
-              if (prop === 'firstObject') {
-                deprecateArrayLike(self.DEPRECATED_CLASS_NAME, prop, '[0]');
-                return receiver[0];
-              } else if (prop === 'lastObject') {
-                deprecateArrayLike(self.DEPRECATED_CLASS_NAME, prop, 'at(-1)');
-                return receiver[receiver.length - 1];
-              }
-            }
             if (prop === NOTIFY || prop === IDENTIFIER_ARRAY_TAG || prop === SOURCE) {
               return self[prop];
             }
@@ -73490,24 +70056,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           return IdentifierArray.prototype;
         }
       });
-      {
-        const meta = _ember.default.meta(this);
-        meta.hasMixin = mixin => {
-          (false && !(false) && (0, _debug.deprecate)(`Do not call A() on EmberData RecordArrays`, false, {
-            id: 'ember-data:no-a-with-array-like',
-            until: '5.0',
-            since: {
-              enabled: '4.7',
-              available: '4.7'
-            },
-            for: 'ember-data'
-          })); // @ts-expect-error ArrayMixin is more than a type
-          if (mixin === NativeArray || mixin === ArrayMixin) {
-            return true;
-          }
-          return false;
-        };
-      }
       this[NOTIFY] = this[NOTIFY].bind(proxy);
       return proxy;
     }
@@ -73568,13 +70116,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       ```
        @method save
       @public
-      @return {PromiseArray} promise
+      @return {Promise<IdentifierArray>} promise
     */
     save() {
       let promise = Promise.all(this.map(record => this.store.saveRecord(record))).then(() => this);
-      {
-        return promiseArray(promise);
-      }
       return promise;
     }
   }, (_descriptor2 = _applyDecoratedDescriptor(_class3.prototype, "isUpdating", [_tracking.tracked], {
@@ -73585,27 +70130,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return false;
     }
   }), _applyDecoratedDescriptor(_class3.prototype, "length", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class3.prototype, "length"), _class3.prototype)), _class3);
-  _exports.I = IdentifierArray;
-  {
-    Object.defineProperty(IdentifierArray.prototype, 'type', {
-      get() {
-        (false && !(false) && (0, _debug.deprecate)(`Using RecordArray.type to access the ModelClass for a record is deprecated. Use store.modelFor(<modelName>) instead.`, false, {
-          id: 'ember-data:deprecate-snapshot-model-class-access',
-          until: '5.0',
-          for: 'ember-data',
-          since: {
-            available: '4.5.0',
-            enabled: '4.5.0'
-          }
-        })); // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (!this.modelName) {
-          return null;
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        return this.store.modelFor(this.modelName);
-      }
-    });
-  }
+  _exports.RecordArray = _exports.IdentifierArray = IdentifierArray;
   class Collection extends IdentifierArray {
     constructor(options) {
       super(options);
@@ -73625,303 +70150,20 @@ lunr.QueryParser.parseBoost = function (parser) {
       const promise = store.query(this.modelName, query, {
         _recordArray: this
       });
-      {
-        return promiseArray(promise);
-      }
       return promise;
     }
-    destroy() {
-      super.destroy();
+    destroy(clear) {
+      super.destroy(clear);
       this._manager._managed.delete(this);
       this._manager._pending.delete(this);
     }
   }
   // trick the proxy "in" check
-  _exports.f = Collection;
+  _exports.AdapterPopulatedRecordArray = Collection;
   Collection.prototype.query = null;
 
   // Ensure instanceof works correctly
   //Object.setPrototypeOf(IdentifierArray.prototype, Array.prototype);
-
-  {
-    IdentifierArray.prototype.DEPRECATED_CLASS_NAME = 'RecordArray';
-    Collection.prototype.DEPRECATED_CLASS_NAME = 'RecordArray';
-    const EmberObjectMethods = ['addObserver', 'cacheFor', 'decrementProperty', 'get', 'getProperties', 'incrementProperty', 'notifyPropertyChange', 'removeObserver', 'set', 'setProperties', 'toggleProperty'];
-    EmberObjectMethods.forEach(method => {
-      IdentifierArray.prototype[method] = function delegatedMethod(...args) {
-        (false && !(false) && (0, _debug.deprecate)(`The EmberObject ${method} method on the class ${this.DEPRECATED_CLASS_NAME} is deprecated. Use dot-notation javascript get/set access instead.`, false, {
-          id: 'ember-data:deprecate-array-like',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        return _ember.default[method](this, ...args);
-      };
-    });
-    IdentifierArray.prototype.addObject = function (obj) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'addObject', 'push');
-      let index = this.indexOf(obj);
-      if (index === -1) {
-        this.push(obj);
-      }
-      return this;
-    };
-    IdentifierArray.prototype.addObjects = function (objs) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'addObjects', 'push');
-      objs.forEach(obj => {
-        let index = this.indexOf(obj);
-        if (index === -1) {
-          this.push(obj);
-        }
-      });
-      return this;
-    };
-    IdentifierArray.prototype.popObject = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'popObject', 'pop');
-      return this.pop();
-    };
-    IdentifierArray.prototype.pushObject = function (obj) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'pushObject', 'push');
-      this.push(obj);
-      return obj;
-    };
-    IdentifierArray.prototype.pushObjects = function (objs) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'pushObjects', 'push');
-      this.push(...objs);
-      return this;
-    };
-    IdentifierArray.prototype.shiftObject = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'shiftObject', 'shift');
-      return this.shift();
-    };
-    IdentifierArray.prototype.unshiftObject = function (obj) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'unshiftObject', 'unshift');
-      this.unshift(obj);
-      return obj;
-    };
-    IdentifierArray.prototype.unshiftObjects = function (objs) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'unshiftObjects', 'unshift');
-      this.unshift(...objs);
-      return this;
-    };
-    IdentifierArray.prototype.objectAt = function (index) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'objectAt', 'at');
-      //For negative index values go back from the end of the array
-      let arrIndex = Math.sign(index) === -1 ? this.length + index : index;
-      return this[arrIndex];
-    };
-    IdentifierArray.prototype.objectsAt = function (indeces) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'objectsAt', 'at');
-      return indeces.map(index => this.objectAt(index));
-    };
-    IdentifierArray.prototype.removeAt = function (index) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'removeAt', 'splice');
-      this.splice(index, 1);
-      return this;
-    };
-    IdentifierArray.prototype.insertAt = function (index, obj) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'insertAt', 'splice');
-      this.splice(index, 0, obj);
-      return this;
-    };
-    IdentifierArray.prototype.removeObject = function (obj) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'removeObject', 'splice');
-      const index = this.indexOf(obj);
-      if (index !== -1) {
-        this.splice(index, 1);
-      }
-      return this;
-    };
-    IdentifierArray.prototype.removeObjects = function (objs) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'removeObjects', 'splice');
-      objs.forEach(obj => {
-        const index = this.indexOf(obj);
-        if (index !== -1) {
-          this.splice(index, 1);
-        }
-      });
-      return this;
-    };
-    IdentifierArray.prototype.toArray = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'toArray', 'slice');
-      return this.slice();
-    };
-    IdentifierArray.prototype.replace = function (idx, amt, objects) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'replace', 'splice');
-      if (objects) {
-        this.splice(idx, amt, ...objects);
-      } else {
-        this.splice(idx, amt);
-      }
-    };
-    IdentifierArray.prototype.clear = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'clear', 'length = 0');
-      this.splice(0, this.length);
-      return this;
-    };
-    IdentifierArray.prototype.setObjects = function (objects) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'setObjects', '`arr.length = 0; arr.push(objects);`');
-      (false && !(Array.isArray(objects)) && (0, _debug.assert)(`${this.DEPRECATED_CLASS_NAME}.setObjects expects to receive an array as its argument`, Array.isArray(objects)));
-      this.splice(0, this.length);
-      this.push(...objects);
-      return this;
-    };
-    IdentifierArray.prototype.reverseObjects = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'reverseObjects', 'reverse');
-      this.reverse();
-      return this;
-    };
-    IdentifierArray.prototype.compact = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'compact', 'filter');
-      return this.filter(v => v !== null && v !== undefined);
-    };
-    IdentifierArray.prototype.any = function (callback, target) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'any', 'some');
-      return this.some(callback, target);
-    };
-    IdentifierArray.prototype.isAny = function (prop, value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'isAny', 'some');
-      let hasValue = arguments.length === 2;
-      return this.some(v => hasValue ? v[prop] === value : v[prop] === true);
-    };
-    IdentifierArray.prototype.isEvery = function (prop, value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'isEvery', 'every');
-      let hasValue = arguments.length === 2;
-      return this.every(v => hasValue ? v[prop] === value : v[prop] === true);
-    };
-    IdentifierArray.prototype.getEach = function (key) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'getEach', 'map');
-      return this.map(value => (0, _object.get)(value, key));
-    };
-    IdentifierArray.prototype.mapBy = function (key) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'mapBy', 'map');
-      return this.map(value => (0, _object.get)(value, key));
-    };
-    IdentifierArray.prototype.findBy = function (key, value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'findBy', 'find');
-      if (arguments.length === 2) {
-        return this.find(val => {
-          return (0, _object.get)(val, key) === value;
-        });
-      } else {
-        return this.find(val => Boolean((0, _object.get)(val, key)));
-      }
-    };
-    IdentifierArray.prototype.filterBy = function (key, value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'filterBy', 'filter');
-      if (arguments.length === 2) {
-        return this.filter(record => {
-          return (0, _object.get)(record, key) === value;
-        });
-      }
-      return this.filter(record => {
-        return Boolean((0, _object.get)(record, key));
-      });
-    };
-    IdentifierArray.prototype.sortBy = function (...sortKeys) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'sortBy', '.slice().sort');
-      return this.slice().sort((a, b) => {
-        for (let i = 0; i < sortKeys.length; i++) {
-          let key = sortKeys[i];
-          let propA = (0, _object.get)(a, key);
-          let propB = (0, _object.get)(b, key);
-          // return 1 or -1 else continue to the next sortKey
-          let compareValue = (0, _utils.compare)(propA, propB);
-          if (compareValue) {
-            return compareValue;
-          }
-        }
-        return 0;
-      });
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.invoke = function (key, ...args) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'invoke', 'forEach');
-      return this.map(value => value[key](...args));
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.addArrayObserver = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'addArrayObserver', 'derived state or reacting at the change source');
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.removeArrayObserver = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'removeArrayObserver', 'derived state or reacting at the change source');
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.arrayContentWillChange = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'arrayContentWillChange', 'derived state or reacting at the change source');
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.arrayContentDidChange = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'arrayContentDidChange', 'derived state or reacting at the change source.');
-    };
-    IdentifierArray.prototype.reject = function (callback, target) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'reject', 'filter');
-      (false && !(typeof callback === 'function') && (0, _debug.assert)('`reject` expects a function as first argument.', typeof callback === 'function'));
-      return this.filter((...args) => {
-        return !callback.apply(target, args);
-      });
-    };
-    IdentifierArray.prototype.rejectBy = function (key, value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'rejectBy', 'filter');
-      if (arguments.length === 2) {
-        return this.filter(record => {
-          return (0, _object.get)(record, key) !== value;
-        });
-      }
-      return this.filter(record => {
-        return !(0, _object.get)(record, key);
-      });
-    };
-    IdentifierArray.prototype.setEach = function (key, value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'setEach', 'forEach');
-      this.forEach(item => (0, _object.set)(item, key, value));
-    };
-    IdentifierArray.prototype.uniq = function () {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'uniq', 'filter');
-      // all current managed arrays are already enforced as unique
-      return this.slice();
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.uniqBy = function (key) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'uniqBy', 'filter');
-      // all current managed arrays are already enforced as unique
-      let seen = new Set();
-      let result = [];
-      this.forEach(item => {
-        let value = (0, _object.get)(item, key);
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
-        result.push(item);
-      });
-      return result;
-    };
-    IdentifierArray.prototype.without = function (value) {
-      deprecateArrayLike(this.DEPRECATED_CLASS_NAME, 'without', 'slice');
-      const newArr = this.slice();
-      const index = this.indexOf(value);
-      if (index !== -1) {
-        newArr.splice(index, 1);
-      }
-      return newArr;
-    };
-
-    // @ts-expect-error
-    IdentifierArray.prototype.firstObject = null;
-    // @ts-expect-error
-    IdentifierArray.prototype.lastObject = null;
-  }
   function assertRecordPassedToHasMany(record) {
     (false && !(function () {
       try {
@@ -73939,26 +70181,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }()));
   }
-  function extractIdentifierFromRecord$1(recordOrPromiseRecord) {
-    if (!recordOrPromiseRecord) {
+  function extractIdentifierFromRecord$1(record) {
+    if (!record) {
       return null;
     }
-    if (isPromiseRecord$1(recordOrPromiseRecord)) {
-      let content = recordOrPromiseRecord.content;
-      (false && !(content !== undefined && content !== null) && (0, _debug.assert)('You passed in a promise that did not originate from an EmberData relationship. You can only pass promises that come from a belongsTo relationship.', content !== undefined && content !== null));
-      assertRecordPassedToHasMany(content);
-      return recordIdentifierFor(content);
-    }
-    assertRecordPassedToHasMany(recordOrPromiseRecord);
-    return recordIdentifierFor(recordOrPromiseRecord);
-  }
-  function isPromiseRecord$1(record) {
-    return !!record.then;
+    assertRecordPassedToHasMany(record);
+    return recordIdentifierFor(record);
   }
 
   /**
     @module @ember-data/store
   */
+
   const FAKE_ARR = {};
   const SLICE_BATCH_SIZE = 1200;
   /**
@@ -74025,10 +70259,14 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._staged = new Map();
       this._keyedArrays = new Map();
       this._identifiers = new Map();
+      this._set = new Map();
+      this._visibilitySet = new Map();
       this._subscription = this.store.notifications.subscribe('resource', (identifier, type) => {
         if (type === 'added') {
+          this._visibilitySet.set(identifier, true);
           this.identifierAdded(identifier);
         } else if (type === 'removed') {
+          this._visibilitySet.set(identifier, false);
           this.identifierRemoved(identifier);
         } else if (type === 'state') {
           this.identifierChanged(identifier);
@@ -74040,7 +70278,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (!pending || this.isDestroying || this.isDestroyed) {
         return;
       }
-      sync(array, pending);
+      sync(array, pending, this._set.get(array));
       this._pending.delete(array);
     }
 
@@ -74073,6 +70311,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           manager: this
         });
         this._live.set(type, array);
+        this._set.set(array, new Set(identifiers));
       }
       return array;
     }
@@ -74090,6 +70329,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       };
       let array = new Collection(options);
       this._managed.add(array);
+      this._set.set(array, new Set(options.identifiers || []));
       if (config.identifiers) {
         associate(this._identifiers, array, config.identifiers);
       }
@@ -74161,6 +70401,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const old = source.slice();
       source.length = 0;
       fastPush(source, identifiers);
+      this._set.set(array, new Set(identifiers));
       notifyArray(array);
       array.meta = payload.meta || null;
       array.links = payload.links || null;
@@ -74198,28 +70439,37 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     identifierChanged(identifier) {
       let newState = this.store._instanceCache.recordIsLoaded(identifier, true);
+
+      // if the change matches the most recent direct added/removed
+      // state, then we can ignore it
+      if (this._visibilitySet.get(identifier) === newState) {
+        return;
+      }
       if (newState) {
         this.identifierAdded(identifier);
       } else {
         this.identifierRemoved(identifier);
       }
     }
-    clear() {
-      this._live.forEach(array => array.destroy());
-      this._managed.forEach(array => array.destroy());
+    clear(isClear = true) {
+      this._live.forEach(array => array.destroy(isClear));
+      this._managed.forEach(array => array.destroy(isClear));
       this._managed.clear();
       this._identifiers.clear();
+      this._pending.clear();
+      this._set.forEach(set => set.clear());
+      this._visibilitySet.clear();
     }
     destroy() {
       this.isDestroying = true;
-      this.clear();
+      this.clear(false);
       this._live.clear();
       this.isDestroyed = true;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.store.notifications.unsubscribe(this._subscription);
     }
   }
-  _exports.R = RecordArrayManager;
+  _exports.RecordArrayManager = RecordArrayManager;
   function associate(ArraysCache, array, identifiers) {
     for (let i = 0; i < identifiers.length; i++) {
       let identifier = identifiers[i];
@@ -74242,19 +70492,20 @@ lunr.QueryParser.parseBoost = function (parser) {
       cache.delete(array);
     }
   }
-  function sync(array, changes) {
+  function sync(array, changes, arraySet) {
     let state = array[SOURCE];
     const adds = [];
     const removes = [];
     changes.forEach((value, key) => {
       if (value === 'add') {
         // likely we want to keep a Set along-side
-        if (state.includes(key)) {
+        if (arraySet.has(key)) {
           return;
         }
         adds.push(key);
+        arraySet.add(key);
       } else {
-        if (state.includes(key)) {
+        if (arraySet.has(key)) {
           removes.push(key);
         }
       }
@@ -74262,6 +70513,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     if (removes.length) {
       if (removes.length === state.length) {
         state.length = 0;
+        arraySet.clear();
         // changing the reference breaks the Proxy
         // state = array[SOURCE] = [];
       } else {
@@ -74269,6 +70521,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           const index = state.indexOf(i);
           if (index !== -1) {
             state.splice(index, 1);
+            arraySet.delete(i);
           }
         });
       }
@@ -74482,6 +70735,42 @@ lunr.QueryParser.parseBoost = function (parser) {
       return null;
     }
   }
+  function constructResource(type, id, lid) {
+    if (typeof type === 'object' && type !== null) {
+      let resource = type;
+      if (isStableIdentifier(resource)) {
+        return resource;
+      }
+      if ('id' in resource) {
+        resource.id = coerceId(resource.id);
+      }
+      (false && !('id' in resource && isNonEmptyString(resource.id) || isNonEmptyString(resource.lid)) && (0, _debug.assert)('Expected either id or lid to be a valid string', 'id' in resource && isNonEmptyString(resource.id) || isNonEmptyString(resource.lid)));
+      (false && !(!('id' in resource) || typeof resource.type === 'string') && (0, _debug.assert)('if id is present, the type must be a string', !('id' in resource) || typeof resource.type === 'string'));
+      return resource;
+    } else {
+      const trueId = coerceId(id);
+      if (!isNonEmptyString(trueId)) {
+        if (isNonEmptyString(lid)) {
+          return {
+            lid
+          };
+        }
+        throw new Error('Expected either id or lid to be a valid string');
+      }
+      (false && !(typeof type === 'string') && (0, _debug.assert)('type must be a string', typeof type === 'string'));
+      if (isNonEmptyString(lid)) {
+        return {
+          type,
+          id: trueId,
+          lid
+        };
+      }
+      return {
+        type,
+        id: trueId
+      };
+    }
+  }
 
   /**
     @module @ember-data/store
@@ -74652,17 +70941,19 @@ lunr.QueryParser.parseBoost = function (parser) {
     _run(cb) {
       (false && !(!this._cbs) && (0, _debug.assert)(`EmberData should never encounter a nested run`, !this._cbs));
       const _cbs = this._cbs = {};
-      cb();
-      if (_cbs.coalesce) {
-        _cbs.coalesce();
+      {
+        cb();
+        if (_cbs.coalesce) {
+          _cbs.coalesce();
+        }
+        if (_cbs.sync) {
+          _cbs.sync();
+        }
+        if (_cbs.notify) {
+          _cbs.notify();
+        }
+        this._cbs = null;
       }
-      if (_cbs.sync) {
-        _cbs.sync();
-      }
-      if (_cbs.notify) {
-        _cbs.notify();
-      }
-      this._cbs = null;
     }
     _join(cb) {
       if (this._cbs) {
@@ -74756,7 +71047,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     instantiateRecord(identifier, createRecordArgs) {
       {
         let modelName = identifier.type;
-        const cache = this._instanceCache.getResourceCache(identifier);
+        const cache = this.cache;
         // TODO deprecate allowing unknown args setting
         let createOptions = {
           _createProps: createRecordArgs,
@@ -74951,7 +71242,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's modelFor method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
       {
-        let normalizedModelName = normalizeModelName$1(modelName);
+        let normalizedModelName = normalizeModelName(modelName);
         let maybeFactory = getModelFactory(this, this._modelFactoryCache, normalizedModelName);
 
         // for factorFor factory/class split
@@ -75002,7 +71293,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       let record;
       _runloop._backburner.join(() => {
         this._join(() => {
-          let normalizedModelName = normalizeModelName$1(modelName);
+          let normalizedModelName = normalizeModelName(modelName);
           let properties = {
             ...inputProperties
           };
@@ -75032,8 +71323,8 @@ lunr.QueryParser.parseBoost = function (parser) {
             (false && !(!identifier) && (0, _debug.assert)(`The id ${properties.id} has already been used with another '${normalizedModelName}' record.`, !identifier));
           }
           const identifier = this.identifierCache.createIdentifierForNewRecord(resource);
-          const cache = this._instanceCache.getResourceCache(identifier);
-          const createOptions = normalizeProperties(this, identifier, properties, cache.managedVersion === '1');
+          const cache = this.cache;
+          const createOptions = normalizeProperties(this, identifier, properties);
           const resultProps = cache.clientDidCreate(identifier, createOptions);
           record = this._instanceCache.getRecord(identifier, resultProps);
         });
@@ -75056,11 +71347,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     deleteRecord(record) {
       const identifier = peekRecordIdentifier(record);
-      const cache = identifier && this._instanceCache.peek({
-        identifier,
-        bucket: 'resourceCache'
-      });
-      (false && !(cache) && (0, _debug.assert)(`expected a cache instance to exist for the record`, cache));
+      const cache = this.cache;
+      (false && !(identifier) && (0, _debug.assert)(`expected the record to be connected to a cache`, identifier));
       this._join(() => {
         cache.setIsDeleted(identifier, true);
         if (cache.isNew(identifier)) {
@@ -75089,40 +71377,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (identifier) {
         this._instanceCache.unloadRecord(identifier);
       }
-    }
-
-    /**
-      @method find
-      @param {String} modelName
-      @param {String|Integer} id
-      @param {Object} options
-      @return {Promise} promise
-      @deprecated
-      @private
-    */
-    find(modelName, id, options) {
-      // The default `model` hook in Route calls `find(modelName, id)`,
-      // that's why we have to keep this method around even though `findRecord` is
-      // the public way to get a record by modelName and id.
-      (false && !(arguments.length !== 1) && (0, _debug.assert)(`Using store.find(type) has been removed. Use store.findAll(modelName) to retrieve all records for a given type.`, arguments.length !== 1));
-      (false && !(!options) && (0, _debug.assert)(`Calling store.find(modelName, id, { preload: preload }) is no longer supported. Use store.findRecord(modelName, id, { preload: preload }) instead.`, !options));
-      (false && !(arguments.length === 2) && (0, _debug.assert)(`You need to pass the model name and id to the store's find method`, arguments.length === 2));
-      (false && !(typeof id === 'string' || typeof id === 'number') && (0, _debug.assert)(`You cannot pass '${id}' as id to the store's find method`, typeof id === 'string' || typeof id === 'number'));
-      (false && !(typeof id !== 'object') && (0, _debug.assert)(`Calling store.find() with a query object is no longer supported. Use store.query() instead.`, typeof id !== 'object'));
-      (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-      {
-        (false && !(false) && (0, _debug.deprecate)(`Using store.find is deprecated, use store.findRecord instead. Likely this means you are relying on the implicit store fetching behavior of routes unknowingly.`, false, {
-          id: 'ember-data:deprecate-store-find',
-          since: {
-            available: '4.5',
-            enabled: '4.5'
-          },
-          for: 'ember-data',
-          until: '5.0'
-        }));
-        return this.findRecord(modelName, id);
-      }
-      (false && !(false) && (0, _debug.assert)(`store.find has been removed. Use store.findRecord instead.`));
     }
 
     /**
@@ -75413,7 +71667,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         options = id;
       } else {
         (false && !(typeof resource === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${resource}`, typeof resource === 'string'));
-        const type = normalizeModelName$1(resource);
+        const type = normalizeModelName(resource);
         const normalizedId = ensureStringId(id);
         resource = constructResource(type, normalizedId);
       }
@@ -75440,11 +71694,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           [SkipCache]: true
         }
       });
-      {
-        return promiseObject(promise.then(document => {
-          return document.content;
-        }));
-      }
       return promise.then(document => {
         return document.content;
       });
@@ -75485,7 +71734,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (arguments.length === 1 && isMaybeIdentifier(resource)) {
         resourceIdentifier = resource;
       } else {
-        const type = normalizeModelName$1(resource);
+        const type = normalizeModelName(resource);
         const normalizedId = ensureStringId(id);
         resourceIdentifier = constructResource(type, normalizedId);
       }
@@ -75539,7 +71788,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       (false && !(identifier) && (0, _debug.assert)(`You need to pass a model name to the store's peekRecord method`, identifier));
       (false && !(typeof identifier === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${identifier}`, typeof identifier === 'string'));
-      const type = normalizeModelName$1(identifier);
+      const type = normalizeModelName(identifier);
       const normalizedId = ensureStringId(id);
       const resource = {
         type,
@@ -75548,49 +71797,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       const stableIdentifier = this.identifierCache.peekRecordIdentifier(resource);
       const isLoaded = stableIdentifier && this._instanceCache.recordIsLoaded(stableIdentifier);
       return isLoaded ? this._instanceCache.getRecord(stableIdentifier) : null;
-    }
-
-    /**
-     This method returns true if a record for a given modelName and id is already
-     loaded in the store. Use this function to know beforehand if a findRecord()
-     will result in a request or that it will be a cache hit.
-      Example
-      ```javascript
-     store.hasRecordForId('post', 1); // false
-     store.findRecord('post', 1).then(function() {
-       store.hasRecordForId('post', 1); // true
-     });
-     ```
-       @method hasRecordForId
-      @deprecated
-      @public
-      @param {String} modelName
-      @param {(String|Integer)} id
-      @return {Boolean}
-    */
-    hasRecordForId(modelName, id) {
-      {
-        (false && !(false) && (0, _debug.deprecate)(`store.hasRecordForId has been deprecated in favor of store.peekRecord`, false, {
-          id: 'ember-data:deprecate-has-record-for-id',
-          since: {
-            available: '4.5',
-            enabled: '4.5'
-          },
-          until: '5.0',
-          for: 'ember-data'
-        }));
-        (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's hasRecordForId method`, modelName));
-        (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-        const type = normalizeModelName$1(modelName);
-        const trueId = ensureStringId(id);
-        const resource = {
-          type,
-          id: trueId
-        };
-        const identifier = this.identifierCache.peekRecordIdentifier(resource);
-        return Boolean(identifier && this._instanceCache.recordIsLoaded(identifier));
-      }
-      (false && !(false) && (0, _debug.assert)(`store.hasRecordForId has been removed`));
     }
 
     /**
@@ -75637,7 +71843,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const promise = this.request({
         op: 'query',
         data: {
-          type: normalizeModelName$1(modelName),
+          type: normalizeModelName(modelName),
           query,
           options: options || {}
         },
@@ -75645,9 +71851,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           [SkipCache]: true
         }
       });
-      {
-        return promiseArray(promise.then(document => document.content));
-      }
       return promise.then(document => document.content);
     }
 
@@ -75739,7 +71942,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const promise = this.request({
         op: 'queryRecord',
         data: {
-          type: normalizeModelName$1(modelName),
+          type: normalizeModelName(modelName),
           query,
           options: options || {}
         },
@@ -75747,9 +71950,6 @@ lunr.QueryParser.parseBoost = function (parser) {
           [SkipCache]: true
         }
       });
-      {
-        return promiseObject(promise.then(document => document.content));
-      }
       return promise.then(document => document.content);
     }
 
@@ -75910,16 +72110,13 @@ lunr.QueryParser.parseBoost = function (parser) {
       const promise = this.request({
         op: 'findAll',
         data: {
-          type: normalizeModelName$1(modelName),
+          type: normalizeModelName(modelName),
           options: options || {}
         },
         cacheOptions: {
           [SkipCache]: true
         }
       });
-      {
-        return promiseArray(promise.then(document => document.content));
-      }
       return promise.then(document => document.content);
     }
 
@@ -75946,7 +72143,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     peekAll(modelName) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's peekAll method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-      let type = normalizeModelName$1(modelName);
+      let type = normalizeModelName(modelName);
       return this.recordArrayManager.liveArrayFor(type);
     }
 
@@ -75971,16 +72168,15 @@ lunr.QueryParser.parseBoost = function (parser) {
           // during unload
           {
             const peekGraph = (0, _esCompat.default)(require("@ember-data/graph/-private")).peekGraph;
-            let graph = peekGraph(this);
+            const graph = peekGraph(this);
             if (graph) {
               graph.identifiers.clear();
             }
           }
-          this.notifications.destroy();
           this.recordArrayManager.clear();
           this._instanceCache.clear();
         } else {
-          let normalizedModelName = normalizeModelName$1(modelName);
+          let normalizedModelName = normalizeModelName(modelName);
           this._instanceCache.clear(normalizedModelName);
         }
       });
@@ -76143,11 +72339,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       let ret;
       this._join(() => {
-        {
-          ret = legacyCachePut(this, {
-            content: jsonApiDoc
-          });
-        }
+        ret = this.cache.put({
+          content: jsonApiDoc
+        });
       });
       this._enableAsyncFlush = null;
       return ret.data;
@@ -76207,7 +72401,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         payload = inputPayload;
         (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-        let normalizedModelName = normalizeModelName$1(modelName);
+        let normalizedModelName = normalizeModelName(modelName);
         serializer = this.serializerFor(normalizedModelName);
       }
       (false && !(serializer.pushPayload) && (0, _debug.assert)(`You must define a pushPayload method in your serializer in order to call store.pushPayload`, serializer.pushPayload));
@@ -76239,17 +72433,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     saveRecord(record, options = {}) {
       (false && !(storeFor(record)) && (0, _debug.assert)(`Unable to initate save for a record in a disconnected state`, storeFor(record)));
       let identifier = recordIdentifierFor(record);
-      const cache = identifier && this._instanceCache.peek({
-        identifier,
-        bucket: 'resourceCache'
-      });
-      if (!cache) {
+      const cache = this.cache;
+      if (!identifier) {
         // this commonly means we're disconnected
         // but just in case we reject here to prevent bad things.
         return Promise.reject(`Record Is Disconnected`);
       }
       // TODO we used to check if the record was destroyed here
-      (false && !(cache && this._instanceCache.recordIsLoaded(identifier)) && (0, _debug.assert)(`Cannot initiate a save request for an unloaded record: ${identifier}`, cache && this._instanceCache.recordIsLoaded(identifier)));
+      (false && !(this._instanceCache.recordIsLoaded(identifier)) && (0, _debug.assert)(`Cannot initiate a save request for an unloaded record: ${identifier}`, this._instanceCache.recordIsLoaded(identifier)));
       if (resourceIsFullyDeleted(this._instanceCache, identifier)) {
         return Promise.resolve(record);
       }
@@ -76323,20 +72514,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     /**
-     * [DEPRECATED] use Store.createCache
-     *
-     * Instantiation hook allowing applications or addons to configure the store
-     * to utilize a custom RecordData implementation.
-     *
-     * @method createRecordDataFor (hook)
-     * @deprecated
-     * @public
-     * @param identifier
-     * @param storeWrapper
-     * @returns {Cache}
-     */
-
-    /**
       `normalize` converts a json payload into the normalized form that
       [push](../methods/push?anchor=push) expects.
        Example
@@ -76357,7 +72534,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     normalize(modelName, payload) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's normalize method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${typeof modelName}`, typeof modelName === 'string'));
-      let normalizedModelName = normalizeModelName$1(modelName);
+      let normalizedModelName = normalizeModelName(modelName);
       let serializer = this.serializerFor(normalizedModelName);
       let model = this.modelFor(normalizedModelName);
       (false && !(serializer?.normalize) && (0, _debug.assert)(`You must define a normalize method in your serializer in order to call store.normalize`, serializer?.normalize));
@@ -76379,7 +72556,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     adapterFor(modelName) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's adapterFor method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store.adapterFor has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-      let normalizedModelName = normalizeModelName$1(modelName);
+      let normalizedModelName = normalizeModelName(modelName);
       let {
         _adapterCache
       } = this;
@@ -76403,25 +72580,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         _adapterCache.application = adapter;
         return adapter;
       }
-      {
-        // final fallback, no model specific adapter, no application adapter, no
-        // `adapter` property on store: use json-api adapter
-        adapter = _adapterCache['-json-api'] || owner.lookup('adapter:-json-api');
-        if (adapter !== undefined) {
-          (false && !(false) && (0, _debug.deprecate)(`Your application is utilizing a deprecated hidden fallback adapter (-json-api). Please implement an application adapter to function as your fallback.`, false, {
-            id: 'ember-data:deprecate-secret-adapter-fallback',
-            for: 'ember-data',
-            until: '5.0',
-            since: {
-              available: '4.5',
-              enabled: '4.5'
-            }
-          }));
-          _adapterCache[normalizedModelName] = adapter;
-          _adapterCache['-json-api'] = adapter;
-          return adapter;
-        }
-      }
       (false && !(false) && (0, _debug.assert)(`No adapter was found for '${modelName}' and no 'application' adapter was found as a fallback.`));
     }
 
@@ -76442,7 +72600,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     serializerFor(modelName) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's serializerFor method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store.serializerFor has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-      let normalizedModelName = normalizeModelName$1(modelName);
+      let normalizedModelName = normalizeModelName(modelName);
       let {
         _serializerCache
       } = this;
@@ -76496,6 +72654,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           graph.destroy();
         }
       }
+      this.notifications.destroy();
       this.recordArrayManager.destroy();
       this.identifierCache.destroy();
       this.unloadAll();
@@ -76505,7 +72664,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return new this(args);
     }
   }
-  _exports.S = Store;
+  _exports.Store = Store;
   let assertDestroyingStore;
   let assertDestroyedStoreOnly;
   function isMaybeIdentifier(maybeIdentifier) {
@@ -76514,7 +72673,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function isDSModel(record) {
     return !!record && 'constructor' in record && 'isModel' in record.constructor && record.constructor.isModel === true;
   }
-  function normalizeProperties(store, identifier, properties, isForV1 = false) {
+  function normalizeProperties(store, identifier, properties) {
     // assert here
     if (properties !== undefined) {
       if ('id' in properties) {
@@ -76537,9 +72696,9 @@ lunr.QueryParser.parseBoost = function (parser) {
           let def = defs[prop];
           if (def !== undefined) {
             if (def.kind === 'hasMany') {
-              relationshipValue = extractIdentifiersFromRecords(properties[prop], isForV1);
+              relationshipValue = extractIdentifiersFromRecords(properties[prop]);
             } else {
-              relationshipValue = extractIdentifierFromRecord(properties[prop], isForV1);
+              relationshipValue = extractIdentifierFromRecord(properties[prop]);
             }
             properties[prop] = relationshipValue;
           }
@@ -76570,57 +72729,23 @@ lunr.QueryParser.parseBoost = function (parser) {
       });
     }()));
   }
-  function extractIdentifiersFromRecords(records, isForV1 = false) {
-    return records.map(record => extractIdentifierFromRecord(record, isForV1));
+  function extractIdentifiersFromRecords(records) {
+    return records.map(record => extractIdentifierFromRecord(record));
   }
-  function extractIdentifierFromRecord(recordOrPromiseRecord, isForV1 = false) {
+  function extractIdentifierFromRecord(recordOrPromiseRecord) {
     if (!recordOrPromiseRecord) {
       return null;
     }
-    const extract = isForV1 ? peekCache : recordIdentifierFor;
-    {
-      if (isPromiseRecord(recordOrPromiseRecord)) {
-        let content = recordOrPromiseRecord.content;
-        (false && !(content !== undefined) && (0, _debug.assert)('You passed in a promise that did not originate from an EmberData relationship. You can only pass promises that come from a belongsTo or hasMany relationship to the get call.', content !== undefined));
-        (false && !(false) && (0, _debug.deprecate)(`You passed in a PromiseProxy to a Relationship API that now expects a resolved value. await the value before setting it.`, false, {
-          id: 'ember-data:deprecate-promise-proxies',
-          until: '5.0',
-          since: {
-            enabled: '4.7',
-            available: '4.7'
-          },
-          for: 'ember-data'
-        }));
-        return content ? extract(content) : null;
-      }
-    }
+    const extract = recordIdentifierFor;
     return extract(recordOrPromiseRecord);
-  }
-  function isPromiseRecord(record) {
-    return !!record.then;
   }
   function secretInit(record, cache, identifier, store) {
     setRecordIdentifier(record, identifier);
     StoreMap.set(record, store);
     setCacheFor(record, cache);
   }
-  function normalizeModelName(modelName) {
-    {
-      (false && !(false) && (0, _debug.deprecate)(`the helper function normalizeModelName is deprecated. You should use model names that are already normalized, or use string helpers of your own. This function is primarily an alias for dasherize from @ember/string.`, false, {
-        id: 'ember-data:deprecate-normalize-modelname-helper',
-        for: 'ember-data',
-        until: '5.0',
-        since: {
-          available: '4.7',
-          enabled: '4.7'
-        }
-      }));
-      return normalizeModelName$1(modelName);
-    }
-    (false && !(false) && (0, _debug.assert)(`normalizeModelName support has been removed`));
-  }
 });
-;define("@ember-data/store/index", ["exports", "@ember-data/store/index-757cf686"], function (_exports, _index757cf) {
+;define("@ember-data/store/index", ["exports", "@ember-data/store/-private"], function (_exports, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -76629,55 +72754,49 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "CacheHandler", {
     enumerable: true,
     get: function () {
-      return _index757cf.C;
+      return _private.CacheHandler;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
     get: function () {
-      return _index757cf.S;
-    }
-  });
-  Object.defineProperty(_exports, "normalizeModelName", {
-    enumerable: true,
-    get: function () {
-      return _index757cf.n;
+      return _private.Store;
     }
   });
   Object.defineProperty(_exports, "recordIdentifierFor", {
     enumerable: true,
     get: function () {
-      return _index757cf.r;
+      return _private.recordIdentifierFor;
     }
   });
   Object.defineProperty(_exports, "setIdentifierForgetMethod", {
     enumerable: true,
     get: function () {
-      return _index757cf.c;
+      return _private.setIdentifierForgetMethod;
     }
   });
   Object.defineProperty(_exports, "setIdentifierGenerationMethod", {
     enumerable: true,
     get: function () {
-      return _index757cf.a;
+      return _private.setIdentifierGenerationMethod;
     }
   });
   Object.defineProperty(_exports, "setIdentifierResetMethod", {
     enumerable: true,
     get: function () {
-      return _index757cf.d;
+      return _private.setIdentifierResetMethod;
     }
   });
   Object.defineProperty(_exports, "setIdentifierUpdateMethod", {
     enumerable: true,
     get: function () {
-      return _index757cf.b;
+      return _private.setIdentifierUpdateMethod;
     }
   });
   Object.defineProperty(_exports, "storeFor", {
     enumerable: true,
     get: function () {
-      return _index757cf.s;
+      return _private.storeFor;
     }
   });
 });
@@ -81281,8 +77400,8 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     get sortedVersions() {
       let versions = (0, _array.A)(this.projectVersion.versions);
-      let latest = versions.findBy('key', this.config.latestVersionName);
-      let primary = versions.findBy('key', this.config.primaryBranch);
+      let latest = versions.find(version => version.key === this.config.latestVersionName);
+      let primary = versions.find(version => version.key === this.config.primaryBranch);
       let otherTags = versions.reject(v => [latest, primary].includes(v)).sort((tagA, tagB) => {
         let keyA = tagA.key;
         let keyB = tagB.key;
@@ -82614,13 +78733,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/component/template-only"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <ul ...attributes>
+    <ul class={{@class}} ...attributes>
     {{yield (hash item=(component "docs-viewer/x-nav-item"))}}
   </ul>
   */
   {
-    "id": "Bjfn/ei7",
-    "block": "[[[11,\"ul\"],[17,1],[12],[1,\"\\n  \"],[18,2,[[28,[37,1],null,[[\"item\"],[[50,\"docs-viewer/x-nav-item\",0,null,null]]]]]],[1,\"\\n\"],[13]],[\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
+    "id": "0oWkQpa2",
+    "block": "[[[11,\"ul\"],[16,0,[30,1]],[17,2],[12],[1,\"\\n  \"],[18,3,[[28,[37,1],null,[[\"item\"],[[50,\"docs-viewer/x-nav-item\",0,null,null]]]]]],[1,\"\\n\"],[13]],[\"@class\",\"&attrs\",\"&default\"],false,[\"yield\",\"hash\",\"component\"]]",
     "moduleName": "ember-cli-addon-docs/components/docs-viewer/x-nav-list/index.hbs",
     "isStrictMode": false
   });
@@ -83368,9 +79487,11 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let Module = (_dec = (0, _model.hasMany)('class', {
-    async: false
+    async: false,
+    inverse: null
   }), _dec2 = (0, _model.hasMany)('class', {
-    async: false
+    async: false,
+    inverse: null
   }), (_class = class Module extends _model.default {
     constructor(...args) {
       super(...args);
@@ -83434,7 +79555,8 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
   let Project = (_dec = (0, _model.hasMany)('module', {
-    async: false
+    async: false,
+    inverse: null
   }), (_class = class Project extends _model.default {
     constructor(...args) {
       super(...args);
@@ -83571,7 +79693,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     value: true
   });
   _exports.default = void 0;
-  var _class, _descriptor;
+  var _class2, _descriptor;
   0; //eaimeta@70e063a35619d71f0,"@ember/routing/route",0,"@ember/service",0,"@ember/debug"eaimeta@70e063a35619d71f
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
   function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -83579,7 +79701,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let DocsApiRoute = (_class = class DocsApiRoute extends _route.default {
+  let DocsApiRoute = (_class2 = class DocsApiRoute extends _route.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "store", _descriptor, this);
@@ -83593,7 +79715,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         let itemId = path.replace(/^modules\//, '');
         let [moduleId] = itemId.split(/~|#/);
         let module = this.store.peekRecord('module', moduleId);
-        item = module.get('components').findBy('id', itemId) || module.get('classes').findBy('id', itemId) || module;
+        item = module.get('components').find(component => component.id === itemId) || module.get('classes').find(_class => _class.id === itemId) || module;
       } else {
         // Create a regex that will match modules by either the path, or the
         // pod-path (/component, /route, etc)
@@ -83604,17 +79726,17 @@ lunr.QueryParser.parseBoost = function (parser) {
         let module = matches[0];
         (false && !(matches.length > 0) && (0, _debug.assert)(`no modules match the path '${path}'`, matches.length > 0));
         (false && !(matches.length <= 1) && (0, _debug.assert)(`multiple modules match the path '${path}', ids: ${matches.mapBy('id').join(', ')}`, matches.length <= 1));
-        item = module.get('components').findBy('exportType', 'default') || module.get('classes').findBy('exportType', 'default') || module;
+        item = module.get('components').find(component => component.exportType === 'default') || module.get('classes').find(_class => _class.exportType === 'default') || module;
       }
       (false && !(item) && (0, _debug.assert)(`item not found for path '${path}'`, item));
       return item;
     }
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "store", [_service.inject], {
+  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "store", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
     initializer: null
-  })), _class);
+  })), _class2);
   _exports.default = DocsApiRoute;
 });
 ;define("ember-cli-addon-docs/serializers/-addon-docs", ["exports", "@ember-data/serializer"], function (_exports, _serializer) {
@@ -87341,6 +83463,30 @@ lunr.QueryParser.parseBoost = function (parser) {
     return (0, _isObject.default)(obj) && isPromiseLike(obj);
   }
 });
+;define("ember-concurrency/-private/async-arrow-runtime", ["exports", "ember-concurrency/-private/task-factory"], function (_exports, _taskFactory) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.buildTask = buildTask;
+  /**
+   * This builder function is called by the transpiled code from
+   * `task(async () => {})`. See lib/babel-plugin-transform-ember-concurrency-async-tasks.js
+   *
+   * @private
+   */
+  function buildTask(contextFn, options, taskName, bufferPolicyName) {
+    let optionsWithBufferPolicy = options;
+    if (bufferPolicyName) {
+      optionsWithBufferPolicy = Object.assign({}, optionsWithBufferPolicy);
+      optionsWithBufferPolicy[bufferPolicyName] = true;
+    }
+    const result = contextFn();
+    const taskFactory = new _taskFactory.TaskFactory(taskName || '<unknown>', result.generator, optionsWithBufferPolicy);
+    return taskFactory.createTask(result.context);
+  }
+});
 ;define("ember-concurrency/-private/cancelable-promise-helpers", ["exports", "@ember/debug", "rsvp", "ember-concurrency/-private/task-instance", "ember-concurrency/-private/external/yieldables"], function (_exports, _debug, _rsvp, _taskInstance, _yieldables) {
   "use strict";
 
@@ -87521,15 +83667,37 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.Environment = void 0;
+  _exports.Environment = _exports.DEFAULT_ENVIRONMENT = void 0;
   class Environment {
     assert() {}
-    async() {}
-    reportUncaughtRejection() {}
-    defer() {}
-    globalDebuggingEnabled() {}
+    async(callback) {
+      Promise.resolve().then(callback);
+    }
+    reportUncaughtRejection() {
+      this.async(error => {
+        throw error;
+      });
+    }
+    defer() {
+      let deferable = {
+        promise: null,
+        resolve: null,
+        reject: null
+      };
+      let promise = new Promise((resolve, reject) => {
+        deferable.resolve = resolve;
+        deferable.reject = reject;
+      });
+      deferable.promise = promise;
+      return deferable;
+    }
+    globalDebuggingEnabled() {
+      return false;
+    }
   }
   _exports.Environment = Environment;
+  const DEFAULT_ENVIRONMENT = new Environment();
+  _exports.DEFAULT_ENVIRONMENT = DEFAULT_ENVIRONMENT;
 });
 ;define("ember-concurrency/-private/external/generator-state", ["exports"], function (_exports) {
   "use strict";
@@ -88071,7 +84239,114 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = RefreshState;
   _exports.default = _default;
 });
-;define("ember-concurrency/-private/external/task-factory", ["exports", "ember-concurrency/-private/external/scheduler/scheduler", "ember-concurrency/-private/external/scheduler/policies/unbounded-policy", "ember-concurrency/-private/external/scheduler/policies/enqueued-policy", "ember-concurrency/-private/external/scheduler/policies/drop-policy", "ember-concurrency/-private/external/scheduler/policies/keep-latest-policy", "ember-concurrency/-private/external/scheduler/policies/restartable-policy", "ember-concurrency/-private/external/task/task", "ember-concurrency/-private/external/task/task-group"], function (_exports, _scheduler, _unboundedPolicy, _enqueuedPolicy, _dropPolicy, _keepLatestPolicy, _restartablePolicy, _task, _taskGroup) {
+;define("ember-concurrency/-private/external/task-decorators", ["exports", "ember-concurrency/-private/external/task-factory"], function (_exports, _taskFactory) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.createTaskDecorator = createTaskDecorator;
+  _exports.createTaskGroupDecorator = createTaskGroupDecorator;
+  _exports.decoratorWithParams = decoratorWithParams;
+  _exports.lastValue = void 0;
+  function taskFromPropertyDescriptor(target, key, descriptor, params = [], factoryClass = _taskFactory.TaskFactory) {
+    let {
+      initializer,
+      get,
+      value
+    } = descriptor;
+    let taskFn;
+    if (initializer) {
+      taskFn = initializer.call(undefined);
+    } else if (get) {
+      taskFn = get.call(undefined);
+    } else if (value) {
+      taskFn = value;
+    }
+    taskFn.displayName = `${key} (task)`;
+    let tasks = new WeakMap();
+    let options = params[0] || {};
+    let factory = new factoryClass(key, taskFn, options);
+    factory._setupEmberKVO(target);
+    return {
+      get() {
+        let task = tasks.get(this);
+        if (!task) {
+          task = factory.createTask(this);
+          tasks.set(this, task);
+        }
+        return task;
+      }
+    };
+  }
+  function taskGroupPropertyDescriptor(_target, key, _descriptor, params = [], factoryClass = _taskFactory.TaskFactory) {
+    let taskGroups = new WeakMap();
+    let options = params[0] || {};
+    let factory = new factoryClass(key, null, options);
+    return {
+      get() {
+        let task = taskGroups.get(this);
+        if (!task) {
+          task = factory.createTaskGroup(this);
+          taskGroups.set(this, task);
+        }
+        return task;
+      }
+    };
+  }
+
+  // Cribbed from @ember-decorators/utils
+  function isFieldDescriptor(possibleDesc) {
+    let [target, key, desc] = possibleDesc;
+    return possibleDesc.length === 3 && typeof target === 'object' && target !== null && typeof key === 'string' && (typeof desc === 'object' && desc !== null && 'enumerable' in desc && 'configurable' in desc || desc === undefined) // TS compatibility ???
+    ;
+  }
+
+  function decoratorWithParams(descriptorFn) {
+    return function (...params) {
+      if (isFieldDescriptor(params)) {
+        return descriptorFn(...params);
+      } else {
+        return (...desc) => descriptorFn(...desc, params);
+      }
+    };
+  }
+  function createDecorator(fn, baseOptions = {}, factoryClass = _taskFactory.TaskFactory) {
+    return decoratorWithParams((target, key, descriptor, [userOptions] = []) => {
+      let mergedOptions = Object.assign({}, {
+        ...baseOptions,
+        ...userOptions
+      });
+      return fn(target, key, descriptor, [mergedOptions], factoryClass);
+    });
+  }
+  function createTaskDecorator(baseOptions = {}, factoryClass = _taskFactory.TaskFactory) {
+    return createDecorator(taskFromPropertyDescriptor, baseOptions, factoryClass);
+  }
+  function createTaskGroupDecorator(baseOptions = {}, factoryClass = _taskFactory.TaskFactory) {
+    return createDecorator(taskGroupPropertyDescriptor, baseOptions, factoryClass);
+  }
+  const lastValue = decoratorWithParams((_target, _key, descriptor, [taskName] = []) => {
+    const {
+      initializer
+    } = descriptor;
+    delete descriptor.initializer;
+    return {
+      get() {
+        let lastInstance = this[taskName].lastSuccessful;
+        if (lastInstance) {
+          return lastInstance.value;
+        }
+        if (initializer) {
+          return initializer.call(this);
+        }
+        return undefined;
+      }
+    };
+  });
+  _exports.lastValue = lastValue;
+});
+;define("ember-concurrency/-private/external/task-factory", ["exports", "ember-concurrency/-private/external/scheduler/scheduler", "ember-concurrency/-private/external/scheduler/policies/unbounded-policy", "ember-concurrency/-private/external/scheduler/policies/enqueued-policy", "ember-concurrency/-private/external/scheduler/policies/drop-policy", "ember-concurrency/-private/external/scheduler/policies/keep-latest-policy", "ember-concurrency/-private/external/scheduler/policies/restartable-policy", "ember-concurrency/-private/external/task/task", "ember-concurrency/-private/external/task/task-group", "ember-concurrency/-private/external/environment"], function (_exports, _scheduler, _unboundedPolicy, _enqueuedPolicy, _dropPolicy, _keepLatestPolicy, _restartablePolicy, _task, _taskGroup, _environment) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88160,6 +84435,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    */
   class TaskFactory {
     constructor(name = '<unknown>', taskDefinition = null, options = {}) {
+      _defineProperty(this, "env", _environment.DEFAULT_ENVIRONMENT);
       _defineProperty(this, "_debug", null);
       _defineProperty(this, "_enabledModifiers", []);
       _defineProperty(this, "_hasSetConcurrencyConstraint", false);
@@ -88260,6 +84536,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return {
         context,
         debug: this._debug,
+        env: this.env,
         name: this.name,
         group,
         scheduler,
@@ -88366,6 +84643,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this;
     }
     _processModifierOptions(options) {
+      if (!options) {
+        return;
+      }
       for (let key of Object.keys(options)) {
         let value = options[key];
         let modifier = this.getModifier(key);
@@ -89078,7 +85358,60 @@ lunr.QueryParser.parseBoost = function (parser) {
     unlinked() {
       return new TaskLinkProxy(this, _executor.PERFORM_TYPE_UNLINKED, null);
     }
-    _perform() {}
+    toString() {
+      return `<Task:${this.name}>`;
+    }
+    _clone() {
+      return new Task({
+        context: this.context,
+        debug: this.debug,
+        env: this.env,
+        generatorFactory: this.generatorFactory,
+        group: this.group,
+        hasEnabledEvents: this.hasEnabledEvents,
+        name: this.name,
+        onStateCallback: this.onStateCallback,
+        scheduler: this.scheduler
+      });
+    }
+    _curry(...args) {
+      let task = this._clone();
+      task._curryArgs = [...(this._curryArgs || []), ...args];
+      return task;
+    }
+    _perform(...args) {
+      return this._performShared(args, _executor.PERFORM_TYPE_DEFAULT, null);
+    }
+    _performShared(args, performType, linkedObject) {
+      let fullArgs = this._curryArgs ? [...this._curryArgs, ...args] : args;
+      let taskInstance = this._taskInstanceFactory(fullArgs, performType, linkedObject);
+      if (performType === _executor.PERFORM_TYPE_LINKED) {
+        linkedObject._expectsLinkedYield = true;
+      }
+      if (!this._isAlive) {
+        // a task linked to a dead lifetime should immediately cancel.
+        taskInstance.cancel();
+      }
+      this.scheduler.perform(taskInstance);
+      return taskInstance;
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    _taskInstanceOptions(args, performType, _linkedObject) {
+      let generatorFactory = () => this.generatorFactory(args);
+      let taskInstanceOptions = {
+        task: this,
+        args,
+        executor: new _executor.TaskInstanceExecutor({
+          generatorFactory,
+          env: this.env,
+          debug: this.debug
+        }),
+        performType,
+        hasEnabledEvents: this.hasEnabledEvents
+      };
+      return taskInstanceOptions;
+    }
   }
   _exports.Task = Task;
 });
@@ -89098,6 +85431,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.context = options.context;
       this.debug = options.debug || false;
       this.enabledModifiers = options.enabledModifiers;
+      this.env = options.env;
       this.group = options.group;
       this.hasEnabledEvents = options.hasEnabledEvents;
       this.modifierOptions = options.modifierOptions;
@@ -89124,6 +85458,9 @@ lunr.QueryParser.parseBoost = function (parser) {
           this._resetState();
         }
       });
+    }
+    get _isAlive() {
+      return true;
     }
     _resetState() {
       this.setState(_defaultState.DEFAULT_STATE);
@@ -89525,117 +85862,32 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = EmberScheduler;
   _exports.default = _default;
 });
-;define("ember-concurrency/-private/task-decorators", ["exports", "@ember/object", "ember-concurrency/-private/task-factory", "ember-concurrency/-private/utils"], function (_exports, _object, _taskFactory, _utils) {
+;define("ember-concurrency/-private/task-decorators", ["exports", "@ember/object", "ember-concurrency/-private/external/task-decorators", "ember-concurrency/-private/task-factory", "ember-concurrency/-private/utils"], function (_exports, _object, _taskDecorators, _taskFactory, _utils) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.taskGroup = _exports.task = _exports.restartableTaskGroup = _exports.restartableTask = _exports.lastValue = _exports.keepLatestTaskGroup = _exports.keepLatestTask = _exports.enqueueTaskGroup = _exports.enqueueTask = _exports.dropTaskGroup = _exports.dropTask = void 0;
-  function taskFromPropertyDescriptor(target, key, descriptor, params = []) {
-    let {
-      initializer,
-      get,
-      value
-    } = descriptor;
-    let taskFn;
-    if (initializer) {
-      taskFn = initializer.call(undefined);
-    } else if (get) {
-      taskFn = get.call(undefined);
-    } else if (value) {
-      taskFn = value;
-    }
-    taskFn.displayName = `${key} (task)`;
-    let tasks = new WeakMap();
-    let options = params[0] || {};
-    let factory = new _taskFactory.TaskFactory(key, taskFn, options);
-    factory._setupEmberKVO(target);
-    return {
-      get() {
-        let task = tasks.get(this);
-        if (!task) {
-          task = factory.createTask(this);
-          tasks.set(this, task);
-        }
-        return task;
-      }
-    };
-  }
-  function taskGroupPropertyDescriptor(target, key, _descriptor, params = []) {
-    let taskGroups = new WeakMap();
-    let options = params[0] || {};
-    let factory = new _taskFactory.TaskFactory(key, null, options);
-    return {
-      get() {
-        let task = taskGroups.get(this);
-        if (!task) {
-          task = factory.createTaskGroup(this);
-          taskGroups.set(this, task);
-        }
-        return task;
-      }
-    };
-  }
-
-  // Cribbed from @ember-decorators/utils
-  function isFieldDescriptor(possibleDesc) {
-    let [target, key, desc] = possibleDesc;
-    return possibleDesc.length === 3 && typeof target === 'object' && target !== null && typeof key === 'string' && (typeof desc === 'object' && desc !== null && 'enumerable' in desc && 'configurable' in desc || desc === undefined) // TS compatibility ???
-    ;
-  }
-
-  function decoratorWithParams(descriptorFn) {
-    return function (...params) {
-      if (isFieldDescriptor(params)) {
-        return descriptorFn(...params);
-      } else {
-        return (...desc) => descriptorFn(...desc, params);
-      }
-    };
-  }
-  function createDecorator(fn, baseOptions = {}) {
-    return decoratorWithParams((target, key, descriptor, [userOptions] = []) => {
-      let mergedOptions = Object.assign({}, {
-        ...baseOptions,
-        ...userOptions
-      });
-      return fn(target, key, descriptor, [mergedOptions]);
-    });
-  }
-  const lastValue = decoratorWithParams((target, key, descriptor, [taskName] = []) => {
+  const computedLastValue = (0, _taskDecorators.decoratorWithParams)((target, key, descriptor, [taskName] = []) => {
     const {
       initializer
     } = descriptor;
     delete descriptor.initializer;
-    if (_utils.USE_TRACKED) {
-      return {
-        get() {
-          let lastInstance = this[taskName].lastSuccessful;
-          if (lastInstance) {
-            return lastInstance.value;
-          }
-          if (initializer) {
-            return initializer.call(this);
-          }
-          return undefined;
-        }
-      };
-    } else {
-      let cp = (0, _object.computed)(`${taskName}.lastSuccessful`, function () {
-        let lastInstance = (0, _object.get)(this, `${taskName}.lastSuccessful`);
-        if (lastInstance) {
-          // eslint-disable-next-line ember/no-get
-          return (0, _object.get)(lastInstance, 'value');
-        }
-        if (initializer) {
-          return initializer.call(this);
-        }
-        return undefined;
-      });
-      return cp(target, key, descriptor);
-    }
+    let cp = (0, _object.computed)(`${taskName}.lastSuccessful`, function () {
+      let lastInstance = (0, _object.get)(this, `${taskName}.lastSuccessful`);
+      if (lastInstance) {
+        // eslint-disable-next-line ember/no-get
+        return (0, _object.get)(lastInstance, 'value');
+      }
+      if (initializer) {
+        return initializer.call(this);
+      }
+      return undefined;
+    });
+    return cp(target, key, descriptor);
   });
+  const lastValue = _utils.USE_TRACKED ? _taskDecorators.lastValue : computedLastValue;
 
   /**
    * A Task is a cancelable, restartable, asynchronous operation that
@@ -89688,7 +85940,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {Task}
    */
   _exports.lastValue = lastValue;
-  const task = createDecorator(taskFromPropertyDescriptor);
+  const task = (0, _taskDecorators.createTaskDecorator)({}, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated generator function into a task and applies the
@@ -89720,9 +85972,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {Task}
    */
   _exports.task = task;
-  const dropTask = createDecorator(taskFromPropertyDescriptor, {
+  const dropTask = (0, _taskDecorators.createTaskDecorator)({
     drop: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated generator function into a task and applies the
@@ -89754,9 +86006,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {Task}
    */
   _exports.dropTask = dropTask;
-  const enqueueTask = createDecorator(taskFromPropertyDescriptor, {
+  const enqueueTask = (0, _taskDecorators.createTaskDecorator)({
     enqueue: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated generator function into a task and applies the
@@ -89788,9 +86040,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {Task}
    */
   _exports.enqueueTask = enqueueTask;
-  const keepLatestTask = createDecorator(taskFromPropertyDescriptor, {
+  const keepLatestTask = (0, _taskDecorators.createTaskDecorator)({
     keepLatest: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated generator function into a task and applies the
@@ -89822,9 +86074,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {Task}
    */
   _exports.keepLatestTask = keepLatestTask;
-  const restartableTask = createDecorator(taskFromPropertyDescriptor, {
+  const restartableTask = (0, _taskDecorators.createTaskDecorator)({
     restartable: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * "Task Groups" provide a means for applying
@@ -89858,7 +86110,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {TaskGroup}
    */
   _exports.restartableTask = restartableTask;
-  const taskGroup = createDecorator(taskGroupPropertyDescriptor);
+  const taskGroup = (0, _taskDecorators.createTaskGroupDecorator)({}, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated property into a task group and applies the
@@ -89872,9 +86124,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {TaskGroup}
    */
   _exports.taskGroup = taskGroup;
-  const dropTaskGroup = createDecorator(taskGroupPropertyDescriptor, {
+  const dropTaskGroup = (0, _taskDecorators.createTaskGroupDecorator)({
     drop: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated property into a task group and applies the
@@ -89888,9 +86140,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {TaskGroup}
    */
   _exports.dropTaskGroup = dropTaskGroup;
-  const enqueueTaskGroup = createDecorator(taskGroupPropertyDescriptor, {
+  const enqueueTaskGroup = (0, _taskDecorators.createTaskGroupDecorator)({
     enqueue: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated property into a task group and applies the
@@ -89904,9 +86156,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {TaskGroup}
    */
   _exports.enqueueTaskGroup = enqueueTaskGroup;
-  const keepLatestTaskGroup = createDecorator(taskGroupPropertyDescriptor, {
+  const keepLatestTaskGroup = (0, _taskDecorators.createTaskGroupDecorator)({
     keepLatest: true
-  });
+  }, _taskFactory.TaskFactory);
 
   /**
    * Turns the decorated property into a task group and applies the
@@ -89920,18 +86172,21 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @return {TaskGroup}
    */
   _exports.keepLatestTaskGroup = keepLatestTaskGroup;
-  const restartableTaskGroup = createDecorator(taskGroupPropertyDescriptor, {
+  const restartableTaskGroup = (0, _taskDecorators.createTaskGroupDecorator)({
     restartable: true
-  });
+  }, _taskFactory.TaskFactory);
   _exports.restartableTaskGroup = restartableTaskGroup;
 });
-;define("ember-concurrency/-private/task-factory", ["exports", "@ember/debug", "@ember/object", "@ember/object/events", "@ember/object/observers", "@ember/runloop", "ember-concurrency/-private/external/task-factory", "ember-concurrency/-private/task", "ember-concurrency/-private/task-properties", "ember-concurrency/-private/task-group", "ember-concurrency/-private/scheduler/ember-scheduler"], function (_exports, _debug, _object, _events, _observers, _runloop, _taskFactory, _task, _taskProperties, _taskGroup, _emberScheduler) {
+;define("ember-concurrency/-private/task-factory", ["exports", "@ember/debug", "@ember/object", "@ember/object/events", "@ember/object/observers", "@ember/runloop", "ember-concurrency/-private/external/task-factory", "ember-concurrency/-private/task", "ember-concurrency/-private/task-properties", "ember-concurrency/-private/task-group", "ember-concurrency/-private/scheduler/ember-scheduler", "ember-concurrency/-private/ember-environment"], function (_exports, _debug, _object, _events, _observers, _runloop, _taskFactory, _task, _taskProperties, _taskGroup, _emberScheduler, _emberEnvironment) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.TaskFactory = void 0;
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   let handlerCounter = 0;
   function registerOnPrototype(addListenerOrObserver, proto, names, taskName, taskMethod, once) {
     if (names && names.length > 0) {
@@ -89958,6 +86213,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   (0, _taskFactory.registerModifier)('observes', (factory, propertyPaths) => factory.addObserverKeys(...ensureArray(propertyPaths)));
   (0, _taskFactory.registerModifier)('on', (factory, eventNames) => factory.addPerformEvents(...ensureArray(eventNames)));
   class TaskFactory extends _taskFactory.TaskFactory {
+    constructor(...args) {
+      super(...args);
+      _defineProperty(this, "env", _emberEnvironment.EMBER_ENVIRONMENT);
+    }
     createTask(context) {
       (false && !(this.taskDefinition) && (0, _debug.assert)(`Cannot create task if a task definition is not provided as generator function or encapsulated task.`, this.taskDefinition));
       let options = this.getTaskOptions(context);
@@ -90460,17 +86719,17 @@ lunr.QueryParser.parseBoost = function (parser) {
     Object.defineProperties(TaskInstance.prototype, _trackedState.TRACKED_INITIAL_INSTANCE_STATE);
   }
 });
-;define("ember-concurrency/-private/task-properties", ["exports", "ember", "@ember/object", "@ember/object/computed", "ember-concurrency/-private/external/scheduler/policies/enqueued-policy", "ember-concurrency/-private/external/scheduler/policies/drop-policy", "ember-concurrency/-private/external/scheduler/policies/keep-latest-policy", "ember-concurrency/-private/external/scheduler/policies/restartable-policy", "ember-concurrency/-private/task-decorators", "ember-concurrency/-private/task-factory"], function (_exports, _ember, _object, _computed, _enqueuedPolicy, _dropPolicy, _keepLatestPolicy, _restartablePolicy, _taskDecorators, _taskFactory) {
+;define("ember-concurrency/-private/task-properties", ["exports", "ember", "@ember/object", "@ember/object/computed", "ember-concurrency/-private/external/scheduler/policies/enqueued-policy", "ember-concurrency/-private/external/scheduler/policies/drop-policy", "ember-concurrency/-private/external/scheduler/policies/keep-latest-policy", "ember-concurrency/-private/external/scheduler/policies/restartable-policy"], function (_exports, _ember, _object, _computed, _enqueuedPolicy, _dropPolicy, _keepLatestPolicy, _restartablePolicy) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.propertyModifiers = _exports.TaskProperty = _exports.TaskGroupProperty = void 0;
-  _exports.task = task;
   _exports.taskComputed = taskComputed;
-  _exports.taskGroup = taskGroup;
+  _exports.taskFactorySymbol = void 0;
   let taskFactorySymbol = '__ec_task_factory';
+  _exports.taskFactorySymbol = taskFactorySymbol;
   const propertyModifiers = {
     /**
      * Configures the task to cancel old currently task instances
@@ -90630,19 +86889,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this;
     }
   };
-  _exports.propertyModifiers = propertyModifiers;
-  function isDecoratorOptions(possibleOptions) {
-    if (!possibleOptions) {
-      return false;
-    }
-    if (typeof possibleOptions === 'function') {
-      return false;
-    }
-    if (typeof possibleOptions === 'object' && 'perform' in possibleOptions && typeof possibleOptions.perform === 'function') {
-      return false;
-    }
-    return Object.getPrototypeOf(possibleOptions) === Object.prototype;
-  }
 
   /**
     A {@link TaskProperty} is the Computed Property-like object returned
@@ -90659,6 +86905,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   
     @class TaskProperty
   */
+  _exports.propertyModifiers = propertyModifiers;
   let TaskProperty;
   _exports.TaskProperty = TaskProperty;
   let TaskGroupProperty;
@@ -90768,8 +87015,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return (0, _object.computed)(fn);
     }
   }
+});
+;define("ember-concurrency/-private/task-public-api", ["exports", "ember-concurrency/-private/task-factory", "ember-concurrency/-private/task-properties", "ember-concurrency/-private/task-decorators", "@ember/debug"], function (_exports, _taskFactory, _taskProperties, _taskDecorators, _debug) {
+  "use strict";
 
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.task = task;
+  _exports.taskGroup = taskGroup;
   /**
+   * TODO: update docs to reflect both old and new ES6 styles
+   *
    * A Task is a cancelable, restartable, asynchronous operation that
    * is driven by a generator function. Tasks are automatically canceled
    * when the object they live on is destroyed (e.g. a Component
@@ -90815,18 +87072,32 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @returns {TaskProperty}
    */
   function task(taskFnOrProtoOrDecoratorOptions, key, descriptor) {
+    (false && !(!isUntranspiledAsyncFn(arguments[arguments.length - 1])) && (0, _debug.assert)(`It appears you're attempting to use the new task(async () => { ... }) syntax, but the async arrow task function you've provided is not being properly compiled by Babel.\n\nPossible causes / remedies:\n\n1. You must pass the async function expression directly to the task() function (it is not currently supported to pass in a variable containing the async arrow fn, or any other kind of indirection)\n2. The new task syntax is only supported by native classes. Ensure that this is one.\n3. If this code is in an addon, please ensure the addon specifies ember-concurrency "2.3.0" or higher in "dependencies" (not "devDependencies")\n4. Ensure that there is only one version of ember-concurrency v2.3.0+ being used in your project (including nested dependencies) and consider using npm/yarn/pnpm resolutions to enforce a single version is used`, !isUntranspiledAsyncFn(arguments[arguments.length - 1])));
     if (isDecoratorOptions(taskFnOrProtoOrDecoratorOptions) || key && descriptor) {
       return (0, _taskDecorators.task)(...arguments);
     } else {
-      let tp = taskComputed(function () {
-        tp[taskFactorySymbol].setTaskDefinition(tp.taskFn);
-        return tp[taskFactorySymbol].createTask(this);
-      });
-      tp.taskFn = taskFnOrProtoOrDecoratorOptions;
-      tp[taskFactorySymbol] = new _taskFactory.TaskFactory();
-      Object.setPrototypeOf(tp, TaskProperty.prototype);
-      return tp;
+      return buildClassicTaskProperty(taskFnOrProtoOrDecoratorOptions);
     }
+  }
+  function isUntranspiledAsyncFn(obj) {
+    return obj && obj.constructor && obj.constructor.name === 'AsyncFunction';
+  }
+
+  /**
+   * Build and return a "classic" TaskProperty, which is essentially a subclass of a Computed Property
+   * descriptor that can be used to define Tasks on classic Ember.Objects.
+   *
+   * @private
+   */
+  function buildClassicTaskProperty(taskFn) {
+    const taskProperty = (0, _taskProperties.taskComputed)(function () {
+      taskProperty[_taskProperties.taskFactorySymbol].setTaskDefinition(taskProperty.taskFn);
+      return taskProperty[_taskProperties.taskFactorySymbol].createTask(this);
+    });
+    taskProperty.taskFn = taskFn;
+    taskProperty[_taskProperties.taskFactorySymbol] = new _taskFactory.TaskFactory();
+    Object.setPrototypeOf(taskProperty, _taskProperties.TaskProperty.prototype);
+    return taskProperty;
   }
 
   /**
@@ -90854,17 +87125,29 @@ lunr.QueryParser.parseBoost = function (parser) {
     if (isDecoratorOptions(possibleDecoratorOptions) || key && descriptor) {
       return (0, _taskDecorators.taskGroup)(...arguments);
     } else {
-      let tp = taskComputed(function (key) {
-        tp[taskFactorySymbol].setName(key);
-        return tp[taskFactorySymbol].createTaskGroup(this);
+      let tp = (0, _taskProperties.taskComputed)(function (key) {
+        tp[_taskProperties.taskFactorySymbol].setName(key);
+        return tp[_taskProperties.taskFactorySymbol].createTaskGroup(this);
       });
-      tp[taskFactorySymbol] = new _taskFactory.TaskFactory();
-      Object.setPrototypeOf(tp, TaskGroupProperty.prototype);
+      tp[_taskProperties.taskFactorySymbol] = new _taskFactory.TaskFactory();
+      Object.setPrototypeOf(tp, _taskProperties.TaskGroupProperty.prototype);
       return tp;
     }
   }
+  function isDecoratorOptions(possibleOptions) {
+    if (!possibleOptions) {
+      return false;
+    }
+    if (typeof possibleOptions === 'function') {
+      return false;
+    }
+    if (typeof possibleOptions === 'object' && 'perform' in possibleOptions && typeof possibleOptions.perform === 'function') {
+      return false;
+    }
+    return Object.getPrototypeOf(possibleOptions) === Object.prototype;
+  }
 });
-;define("ember-concurrency/-private/task", ["exports", "@ember/application", "@ember/object", "@ember/destroyable", "ember-concurrency/-private/external/task/task", "ember-concurrency/-private/task-instance", "ember-concurrency/-private/external/task-instance/executor", "ember-concurrency/-private/ember-environment", "ember-concurrency/-private/taskable-mixin", "ember-concurrency/-private/tracked-state", "ember-concurrency/-private/external/task-instance/cancelation"], function (_exports, _application, _object, _destroyable, _task, _taskInstance, _executor, _emberEnvironment, _taskableMixin, _trackedState, _cancelation) {
+;define("ember-concurrency/-private/task", ["exports", "@ember/application", "@ember/object", "@ember/destroyable", "ember-concurrency/-private/external/task/task", "ember-concurrency/-private/task-instance", "ember-concurrency/-private/external/task-instance/executor", "ember-concurrency/-private/taskable-mixin", "ember-concurrency/-private/tracked-state", "ember-concurrency/-private/external/task-instance/cancelation"], function (_exports, _application, _object, _destroyable, _task, _taskInstance, _executor, _taskableMixin, _trackedState, _cancelation) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -91070,47 +87353,19 @@ lunr.QueryParser.parseBoost = function (parser) {
      *
      */
 
-    _perform(...args) {
-      return this._performShared(args, _executor.PERFORM_TYPE_DEFAULT, null);
+    get _isAlive() {
+      return !(0, _destroyable.isDestroying)(this.context);
     }
-    _performShared(args, performType, linkedObject) {
-      let fullArgs = this._curryArgs ? [...this._curryArgs, ...args] : args;
-      let taskInstance = this._taskInstanceFactory(fullArgs, performType, linkedObject);
-      if (performType === _executor.PERFORM_TYPE_LINKED) {
-        linkedObject._expectsLinkedYield = true;
-      }
-      if ((0, _destroyable.isDestroying)(this.context)) {
-        // TODO: express this in terms of lifetimes; a task linked to
-        // a dead lifetime should immediately cancel.
-        taskInstance.cancel();
-      }
-      this.scheduler.perform(taskInstance);
+    _taskInstanceFactory(args, performType, linkedObject) {
+      let options = this._taskInstanceOptions(args, performType, linkedObject);
+      let taskInstance = new _taskInstance.TaskInstance(options);
       return taskInstance;
-    }
-    _taskInstanceFactory(args, performType) {
-      let generatorFactory = () => this.generatorFactory(args);
-      let taskInstance = new _taskInstance.TaskInstance({
-        task: this,
-        args,
-        executor: new _executor.TaskInstanceExecutor({
-          generatorFactory,
-          env: _emberEnvironment.EMBER_ENVIRONMENT,
-          debug: this.debug
-        }),
-        performType,
-        hasEnabledEvents: this.hasEnabledEvents
-      });
-      return taskInstance;
-    }
-    _curry(...args) {
-      let task = this._clone();
-      task._curryArgs = [...(this._curryArgs || []), ...args];
-      return task;
     }
     _clone() {
       return new Task({
         context: this.context,
         debug: this.debug,
+        env: this.env,
         generatorFactory: this.generatorFactory,
         group: this.group,
         hasEnabledEvents: this.hasEnabledEvents,
@@ -91118,9 +87373,6 @@ lunr.QueryParser.parseBoost = function (parser) {
         onStateCallback: this.onStateCallback,
         scheduler: this.scheduler
       });
-    }
-    toString() {
-      return `<Task:${this.name}>`;
     }
   }
   _exports.Task = Task;
@@ -91162,7 +87414,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         args,
         executor: new _executor.TaskInstanceExecutor({
           generatorFactory,
-          env: _emberEnvironment.EMBER_ENVIRONMENT,
+          env: this.env,
           debug: this.debug
         }),
         performType,
@@ -91662,7 +87914,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = (0, _helper.helper)(taskHelper);
   _exports.default = _default;
 });
-;define("ember-concurrency/index", ["exports", "ember-concurrency/-private/utils", "ember-concurrency/-private/task-properties", "ember-concurrency/-private/task-instance", "ember-concurrency/-private/cancelable-promise-helpers", "ember-concurrency/-private/wait-for", "ember-concurrency/-private/external/task-instance/cancelation", "ember-concurrency/-private/external/yieldables", "ember-concurrency/-private/task", "ember-concurrency/-private/task-group", "ember-concurrency/-private/task-decorators", "ember-concurrency/-private/external/task-factory"], function (_exports, _utils, _taskProperties, _taskInstance, _cancelablePromiseHelpers, _waitFor, _cancelation, _yieldables, _task, _taskGroup, _taskDecorators, _taskFactory) {
+;define("ember-concurrency/index", ["exports", "ember-concurrency/-private/utils", "ember-concurrency/-private/task-properties", "ember-concurrency/-private/task-public-api", "ember-concurrency/-private/task-instance", "ember-concurrency/-private/cancelable-promise-helpers", "ember-concurrency/-private/wait-for", "ember-concurrency/-private/external/task-instance/cancelation", "ember-concurrency/-private/external/yieldables", "ember-concurrency/-private/task", "ember-concurrency/-private/task-group", "ember-concurrency/-private/task-decorators", "ember-concurrency/-private/external/task-factory"], function (_exports, _utils, _taskProperties, _taskPublicApi, _taskInstance, _cancelablePromiseHelpers, _waitFor, _cancelation, _yieldables, _task, _taskGroup, _taskDecorators, _taskFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -91833,13 +88085,13 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "task", {
     enumerable: true,
     get: function () {
-      return _taskProperties.task;
+      return _taskPublicApi.task;
     }
   });
   Object.defineProperty(_exports, "taskGroup", {
     enumerable: true,
     get: function () {
-      return _taskProperties.taskGroup;
+      return _taskPublicApi.taskGroup;
     }
   });
   Object.defineProperty(_exports, "timeout", {
@@ -91928,10 +88180,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     enumerable: true,
     get: () => Private$2.coerceId
   });
-  Object.defineProperty(exports, 'normalizeModelName', {
-    enumerable: true,
-    get: () => Private$2.normalizeModelName
-  });
   exports.DS = DS;
   exports.PromiseArray = PromiseArray;
   exports.PromiseObject = PromiseObject;
@@ -92015,18 +88263,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _error.UnauthorizedError;
     }
   });
-  Object.defineProperty(_exports, "errorsArrayToHash", {
-    enumerable: true,
-    get: function () {
-      return _error.errorsArrayToHash;
-    }
-  });
-  Object.defineProperty(_exports, "errorsHashToArray", {
-    enumerable: true,
-    get: function () {
-      return _error.errorsHashToArray;
-    }
-  });
   0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter/error"eaimeta@70e063a35619d71f
 });
 ;define("ember-data/adapters/json-api", ["exports", "@ember-data/adapter/json-api"], function (_exports, _jsonApi) {
@@ -92071,14 +88307,14 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
 });
-;define("ember-data/index", ["exports", "@ember-data/adapter", "@ember-data/adapter/error", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/model", "@ember-data/serializer", "@ember-data/serializer/-private", "@ember-data/serializer/json", "@ember-data/serializer/json-api", "@ember-data/serializer/rest", "@ember-data/serializer/transform", "@ember-data/store", "ember-data/-private", "ember-data/setup-container", "@embroider/macros/es-compat2"], function (_exports, _adapter, _error, _jsonApi, _rest, _model, _serializer, _private, _json, _jsonApi2, _rest2, _transform, _store, _private2, _setupContainer, _esCompat) {
+;define("ember-data/index", ["exports", "@ember-data/adapter", "@ember-data/adapter/error", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/model", "@ember-data/serializer", "@ember-data/serializer/-private", "@ember-data/serializer/json", "@ember-data/serializer/json-api", "@ember-data/serializer/rest", "@ember-data/serializer/transform", "ember-data/-private", "ember-data/setup-container", "@embroider/macros/es-compat2"], function (_exports, _adapter, _error, _jsonApi, _rest, _model, _serializer, _private, _json, _jsonApi2, _rest2, _transform, _private2, _setupContainer, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-inflector",0,"@embroider/macros",0,"@ember-data/adapter",0,"@ember-data/adapter/error",0,"@ember-data/adapter/json-api",0,"@ember-data/adapter/rest",0,"@ember-data/model",0,"@ember-data/serializer",0,"@ember-data/serializer/-private",0,"@ember-data/serializer/json",0,"@ember-data/serializer/json-api",0,"@ember-data/serializer/rest",0,"@ember-data/serializer/transform",0,"@ember-data/store",0,"ember-data/-private",0,"ember-data/setup-container",0,"@ember-data/debug"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-inflector",0,"@embroider/macros",0,"@ember-data/adapter",0,"@ember-data/adapter/error",0,"@ember-data/adapter/json-api",0,"@ember-data/adapter/rest",0,"@ember-data/model",0,"@ember-data/serializer",0,"@ember-data/serializer/-private",0,"@ember-data/serializer/json",0,"@ember-data/serializer/json-api",0,"@ember-data/serializer/rest",0,"@ember-data/serializer/transform",0,"ember-data/-private",0,"ember-data/setup-container",0,"@ember-data/debug"eaimeta@70e063a35619d71f
   /**
    <p align="center">
     <img
@@ -92260,8 +88496,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   _private2.DS.NotFoundError = _error.NotFoundError;
   _private2.DS.ConflictError = _error.ConflictError;
   _private2.DS.ServerError = _error.ServerError;
-  _private2.DS.errorsHashToArray = _error.errorsHashToArray;
-  _private2.DS.errorsArrayToHash = _error.errorsArrayToHash;
   _private2.DS.Serializer = _serializer.default;
   {
     _private2.DS.DebugAdapter = (0, _esCompat.default)(require("@ember-data/debug")).default;
@@ -92283,12 +88517,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   _private2.DS.belongsTo = _model.belongsTo;
   _private2.DS.hasMany = _model.hasMany;
   _private2.DS._setupContainer = _setupContainer.default;
-  Object.defineProperty(_private2.DS, 'normalizeModelName', {
-    enumerable: true,
-    writable: false,
-    configurable: false,
-    value: _store.normalizeModelName
-  });
   var _default = _private2.DS;
   _exports.default = _default;
 });
@@ -92452,7 +88680,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-  var _default = "4.12.1";
+  var _default = "5.2.0";
   _exports.default = _default;
 });
 ;define("ember-fetch/errors", ["exports"], function (_exports) {
@@ -96108,41 +92336,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;/*
- * This is a stub file, it must be on disk b/c babel-plugin-debug-macros
- * does not strip the module require when the transpiled variable usage is
- * stripped.
- */
-define("ember-resolver/features", [], function () {
-  "use strict";
-});
-;define("ember-resolver/index", ["exports", "ember-resolver/resolvers/classic"], function (_exports, _classic) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _classic.default;
-    }
-  });
-});
-;define("ember-resolver/resolver", ["exports", "ember-resolver/resolvers/classic"], function (_exports, _classic) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _classic.default;
-    }
-  });
-});
-;define("ember-resolver/resolvers/classic/container-debug-adapter", ["exports", "@ember/array", "@ember/debug/container-debug-adapter", "ember-resolver/resolvers/classic/index", "@ember/application"], function (_exports, _array, _containerDebugAdapter, _index, _application) {
+;define("ember-resolver/container-debug-adapter", ["exports", "@ember/array", "@ember/debug/container-debug-adapter", "ember-resolver/index", "@ember/application"], function (_exports, _array, _containerDebugAdapter, _index, _application) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -96239,7 +92433,15 @@ define("ember-resolver/features", [], function () {
   });
   _exports.default = _default;
 });
-;define("ember-resolver/resolvers/classic/index", ["exports", "ember", "@ember/debug", "@ember/object", "@ember/string", "ember-resolver/utils/class-factory"], function (_exports, _ember, _debug, _object, _string, _classFactory) {
+;/*
+ * This is a stub file, it must be on disk b/c babel-plugin-debug-macros
+ * does not strip the module require when the transpiled variable usage is
+ * stripped.
+ */
+define("ember-resolver/features", [], function () {
+  "use strict";
+});
+;define("ember-resolver/index", ["exports", "ember", "@ember/debug", "@ember/object", "ember-resolver/string", "ember-resolver/utils/class-factory"], function (_exports, _ember, _debug, _object, _string, _classFactory) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -96370,7 +92572,7 @@ define("ember-resolver/features", [], function () {
         fullNameWithoutType: fullNameWithoutType,
         name: name,
         root: root,
-        resolveMethodName: "resolve" + (0, _string.classify)(type)
+        resolveMethodName: 'resolve' + (0, _string.classify)(type)
       };
     }
     resolveOther(parsedName) {
@@ -96626,6 +92828,179 @@ define("ember-resolver/features", [], function () {
   _defineProperty(Resolver, "moduleBasedResolver", true);
   var _default = Resolver;
   _exports.default = _default;
+});
+;define("ember-resolver/string/cache", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  class Cache {
+    constructor(limit, func, store) {
+      this.limit = limit;
+      this.func = func;
+      this.store = store;
+      this.size = 0;
+      this.misses = 0;
+      this.hits = 0;
+      this.store = store || new Map();
+    }
+    get(key) {
+      let value = this.store.get(key);
+      if (this.store.has(key)) {
+        this.hits++;
+        return this.store.get(key);
+      } else {
+        this.misses++;
+        value = this.set(key, this.func(key));
+      }
+      return value;
+    }
+    set(key, value) {
+      if (this.limit > this.size) {
+        this.size++;
+        this.store.set(key, value);
+      }
+      return value;
+    }
+    purge() {
+      this.store.clear();
+      this.size = 0;
+      this.hits = 0;
+      this.misses = 0;
+    }
+  }
+  _exports.default = Cache;
+});
+;define("ember-resolver/string/index", ["exports", "ember-resolver/string/cache"], function (_exports, _cache) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.classify = classify;
+  _exports.dasherize = dasherize;
+  _exports.decamelize = decamelize;
+  _exports.getString = getString;
+  _exports.getStrings = getStrings;
+  _exports.setStrings = setStrings;
+  _exports.underscore = underscore;
+  /* eslint-disable no-useless-escape */
+
+  let STRINGS = {};
+  function setStrings(strings) {
+    STRINGS = strings;
+  }
+  function getStrings() {
+    return STRINGS;
+  }
+  function getString(name) {
+    return STRINGS[name];
+  }
+  const STRING_DASHERIZE_REGEXP = /[ _]/g;
+  const STRING_DASHERIZE_CACHE = new _cache.default(1000, key => decamelize(key).replace(STRING_DASHERIZE_REGEXP, '-'));
+  const STRING_CLASSIFY_REGEXP_1 = /^(\-|_)+(.)?/;
+  const STRING_CLASSIFY_REGEXP_2 = /(.)(\-|\_|\.|\s)+(.)?/g;
+  const STRING_CLASSIFY_REGEXP_3 = /(^|\/|\.)([a-z])/g;
+  const CLASSIFY_CACHE = new _cache.default(1000, str => {
+    const replace1 = (_match, _separator, chr) => chr ? `_${chr.toUpperCase()}` : '';
+    const replace2 = (_match, initialChar, _separator, chr) => initialChar + (chr ? chr.toUpperCase() : '');
+    const parts = str.split('/');
+    for (let i = 0; i < parts.length; i++) {
+      parts[i] = parts[i].replace(STRING_CLASSIFY_REGEXP_1, replace1).replace(STRING_CLASSIFY_REGEXP_2, replace2);
+    }
+    return parts.join('/').replace(STRING_CLASSIFY_REGEXP_3, (match /*, separator, chr */) => match.toUpperCase());
+  });
+  const STRING_UNDERSCORE_REGEXP_1 = /([a-z\d])([A-Z]+)/g;
+  const STRING_UNDERSCORE_REGEXP_2 = /\-|\s+/g;
+  const UNDERSCORE_CACHE = new _cache.default(1000, str => str.replace(STRING_UNDERSCORE_REGEXP_1, '$1_$2').replace(STRING_UNDERSCORE_REGEXP_2, '_').toLowerCase());
+  const STRING_DECAMELIZE_REGEXP = /([a-z\d])([A-Z])/g;
+  const DECAMELIZE_CACHE = new _cache.default(1000, str => str.replace(STRING_DECAMELIZE_REGEXP, '$1_$2').toLowerCase());
+  /**
+    Converts a camelized string into all lower case separated by underscores.
+  
+    ```javascript
+    import { decamelize } from '@ember/string';
+  
+    decamelize('innerHTML');          // 'inner_html'
+    decamelize('action_name');        // 'action_name'
+    decamelize('css-class-name');     // 'css-class-name'
+    decamelize('my favorite items');  // 'my favorite items'
+    ```
+  
+    @method decamelize
+    @param {String} str The string to decamelize.
+    @return {String} the decamelized string.
+    @public
+  */
+  function decamelize(str) {
+    return DECAMELIZE_CACHE.get(str);
+  }
+  /**
+    Replaces underscores, spaces, or camelCase with dashes.
+  
+    ```javascript
+    import { dasherize } from '@ember/string';
+  
+    dasherize('innerHTML');                // 'inner-html'
+    dasherize('action_name');              // 'action-name'
+    dasherize('css-class-name');           // 'css-class-name'
+    dasherize('my favorite items');        // 'my-favorite-items'
+    dasherize('privateDocs/ownerInvoice';  // 'private-docs/owner-invoice'
+    ```
+  
+    @method dasherize
+    @param {String} str The string to dasherize.
+    @return {String} the dasherized string.
+    @public
+  */
+  function dasherize(str) {
+    return STRING_DASHERIZE_CACHE.get(str);
+  }
+  /**
+    Returns the UpperCamelCase form of a string.
+  
+    ```javascript
+    import { classify } from '@ember/string';
+  
+    classify('innerHTML');                   // 'InnerHTML'
+    classify('action_name');                 // 'ActionName'
+    classify('css-class-name');              // 'CssClassName'
+    classify('my favorite items');           // 'MyFavoriteItems'
+    classify('private-docs/owner-invoice');  // 'PrivateDocs/OwnerInvoice'
+    ```
+  
+    @method classify
+    @param {String} str the string to classify
+    @return {String} the classified string
+    @public
+  */
+  function classify(str) {
+    return CLASSIFY_CACHE.get(str);
+  }
+  /**
+    More general than decamelize. Returns the lower\_case\_and\_underscored
+    form of a string.
+  
+    ```javascript
+    import { underscore } from '@ember/string';
+  
+    underscore('innerHTML');                 // 'inner_html'
+    underscore('action_name');               // 'action_name'
+    underscore('css-class-name');            // 'css_class_name'
+    underscore('my favorite items');         // 'my_favorite_items'
+    underscore('privateDocs/ownerInvoice');  // 'private_docs/owner_invoice'
+    ```
+  
+    @method underscore
+    @param {String} str The string to underscore.
+    @return {String} the underscored string.
+    @public
+  */
+  function underscore(str) {
+    return UNDERSCORE_CACHE.get(str);
+  }
 });
 ;define("ember-resolver/utils/class-factory", ["exports"], function (_exports) {
   "use strict";
@@ -97295,6 +93670,36 @@ define("ember-resolver/features", [], function () {
   var _default = (0, _helper.helper)(set);
   _exports.default = _default;
 });
+;define("ember-svg-jar/helpers/svg-jar", ["exports", "@ember/component/helper", "ember-svg-jar/utils/make-svg", "@embroider/macros/es-compat2"], function (_exports, _helper, _makeSvg, _esCompat) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _exports.svgJar = svgJar;
+  function getInlineAsset(assetId) {
+    let result = null;
+    try {
+      result = require(`ember-svg-jar/inlined/${assetId}`).default;
+    } catch (err) {
+      // skip
+    }
+    try {
+      result = (0, _esCompat.default)(require(`../inlined/${assetId}`)).default;
+    } catch (err) {
+      // skip
+    }
+    return result;
+  }
+  function svgJar(assetId, svgAttrs) {
+    return (0, _makeSvg.default)(assetId, svgAttrs, getInlineAsset);
+  }
+  var _default = (0, _helper.helper)(function svgJarHelper([assetId], svgAttrs) {
+    return svgJar(assetId, svgAttrs);
+  });
+  _exports.default = _default;
+});
 ;define("ember-svg-jar/inlined/addon-docs-pen", ["exports"], function (_exports) {
   "use strict";
 
@@ -97582,7 +93987,7 @@ define("ember-resolver/features", [], function () {
   };
   _exports.default = _default;
 });
-;define("ember-svg-jar/utils/make-svg", ["exports", "@ember/utils", "@ember/template", "@ember/object/internals"], function (_exports, _utils, _template, _internals) {
+;define("ember-svg-jar/utils/make-svg", ["exports", "@ember/utils", "@ember/template"], function (_exports, _utils, _template) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -97596,6 +94001,15 @@ define("ember-resolver/features", [], function () {
   _exports.inlineSvgFor = inlineSvgFor;
   _exports.sanitizeAttrs = sanitizeAttrs;
   _exports.symbolUseFor = symbolUseFor;
+  /**
+   * This taken from https://github.com/emberjs/ember.js/blob/089a021b1b5c5f8ea1cb574fcd841a73af7b2031/packages/%40ember/-internals/glimmer/lib/helpers/unique-id.ts#L44
+   * In the future it should be possible to import this function like
+   * `import { uniqueId } from '@ember/helper`
+   * see https://github.com/emberjs/ember.js/pull/20165
+   */
+  function uniqueId() {
+    return ([3e7] + -1e3 + -4e3 + -2e3 + -1e11).replace(/[0-3]/g, a => (a * 4 ^ Math.random() * 16 >> (a & 2)).toString(16));
+  }
   const accessibilityElements = ['title', 'desc'];
   const ESC = {
     '"': '&quot;',
@@ -97625,15 +94039,15 @@ define("ember-resolver/features", [], function () {
   function generateAccessibilityIds(attrs) {
     if (attrs.title) {
       attrs.title = {
+        id: uniqueId(),
         text: attrs.title
       };
-      attrs.title.id = (0, _internals.guidFor)(attrs.title);
     }
     if (attrs.desc) {
       attrs.desc = {
+        id: uniqueId(),
         text: attrs.desc
       };
-      attrs.desc.id = (0, _internals.guidFor)(attrs.desc);
     }
     return attrs;
   }
@@ -97724,40 +94138,57 @@ define("ember-resolver/features", [], function () {
     }
   }));
 });
-;define("ember-tether/components/ember-tether", ["exports", "@ember/application", "@ember/runloop", "@ember/object", "@ember/utils", "@ember/component", "tether"], function (_exports, _application, _runloop, _object, _utils, _component, _tether2) {
+;define("ember-tether/components/ember-tether", ["exports", "@ember/component", "@ember/template-factory", "@ember/application", "@ember/runloop", "@ember/utils", "@glimmer/component", "tether", "@ember/object"], function (_exports, _component, _templateFactory, _application, _runloop, _utils, _component2, _tether2, _object) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  var _default = _component.default.extend({
-    classNames: ['ember-tether'],
-    classPrefix: 'ember-tether',
-    target: null,
-    attachment: null,
-    targetAttachment: null,
-    offset: null,
-    targetOffset: null,
-    targetModifier: null,
-    constraints: null,
-    optimizations: null,
-    emberTetherConfig: (0, _object.computed)(function () {
+  var _class;
+  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars",0,"@ember/application",0,"@ember/runloop",0,"@ember/utils",0,"@glimmer/component",0,"tether",0,"@ember/object"eaimeta@70e063a35619d71f
+  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
+  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <div
+    class="ember-tether"
+    {{did-insert this.addTether}}
+    {{did-update this.updateTether @classPrefix @target @attachment @targetAttachment @offset @targetOffset @targetModifier @constraints @optimizations}}
+    ...attributes
+  >
+    {{yield}}
+  </div>
+  */
+  {
+    "id": "bTN8eCJa",
+    "block": "[[[11,0],[24,0,\"ember-tether\"],[17,1],[4,[38,0],[[30,0,[\"addTether\"]]],null],[4,[38,1],[[30,0,[\"updateTether\"]],[30,2],[30,3],[30,4],[30,5],[30,6],[30,7],[30,8],[30,9],[30,10]],null],[12],[1,\"\\n  \"],[18,11,null],[1,\"\\n\"],[13]],[\"&attrs\",\"@classPrefix\",\"@target\",\"@attachment\",\"@targetAttachment\",\"@offset\",\"@targetOffset\",\"@targetModifier\",\"@constraints\",\"@optimizations\",\"&default\"],false,[\"did-insert\",\"did-update\",\"yield\"]]",
+    "moduleName": "ember-tether/components/ember-tether.hbs",
+    "isStrictMode": false
+  });
+  let EmberTetherComponent = (_class = class EmberTetherComponent extends _component2.default {
+    constructor(...args) {
+      super(...args);
+      _defineProperty(this, "_tether", void 0);
+      _defineProperty(this, "element", void 0);
+    }
+    get classPrefix() {
+      return this.args.classPrefix || 'ember-tether';
+    }
+    get emberTetherConfig() {
       return ((0, _application.getOwner)(this).resolveRegistration('config:environment') || {})['ember-tether'];
-    }),
-    bodyElement: (0, _object.computed)(function () {
-      let config = (0, _object.get)(this, 'emberTetherConfig');
+    }
+    get bodyElement() {
+      let config = this.emberTetherConfig;
       if (config && config.bodyElementId) {
         return document.getElementById(config.bodyElementId);
       }
-    }),
-    attributeBindings: ['aria-atomic', 'aria-busy', 'aria-controls', 'aria-current', 'aria-describedby', 'aria-details', 'aria-disabled', 'aria-errormessage', 'aria-flowto', 'aria-haspopup', 'aria-hidden', 'aria-invalid', 'aria-keyshortcuts', 'aria-label', 'aria-labelledby', 'aria-live', 'aria-owns', 'aria-relevant', 'aria-roledescription'],
-    didInsertElement() {
-      this._super(...arguments);
-      this.addTether();
-    },
-    willDestroyElement() {
-      this._super(...arguments);
+      return undefined;
+    }
+    willDestroy() {
+      super.willDestroy(...arguments);
       if (!this._tether) return;
       let {
         _tether,
@@ -97767,57 +94198,57 @@ define("ember-resolver/features", [], function () {
         this.removeElement(element);
         this.removeTether(_tether);
       });
-    },
-    didRender() {
-      this._super(...arguments);
-      this.positionTether();
-    },
-    tetherDidChange: (0, _object.observer)('classPrefix', 'target', 'attachment', 'targetAttachment', 'offset', 'targetOffset', 'targetModifier', 'constraints', 'optimizations', function () {
+    }
+    updateTether() {
       this.removeTether(this._tether);
       this.addTether();
-    }),
+    }
     positionTether() {
-      if (this._tether) {
-        this._tether.position();
+      this._tether?.position();
+    }
+    addTether(el = null) {
+      // when called from did-insert modifier, el will be passed
+      if (el) {
+        this.element = el;
       }
-    },
-    addTether() {
-      if ((0, _object.get)(this, '_tetherTarget')) {
-        this._tether = new _tether2.default(this._tetherOptions());
+      if (this._tetherTarget) {
+        this._tether = new _tether2.default(this._tetherOptions);
+        this.positionTether();
       }
-    },
+    }
     removeTether(tether) {
-      if (tether) {
-        tether.destroy();
-      }
-    },
+      tether?.destroy();
+    }
     removeElement(element) {
-      if (element.parentNode) {
-        element.parentNode.removeChild(element);
-      }
-    },
-    _tetherTarget: (0, _object.computed)('target', function () {
-      let t = (0, _object.get)(this, 'target');
+      element.parentNode?.removeChild(element);
+    }
+    get _tetherTarget() {
+      let t = this.args.target;
       if (t && t.element) {
         t = t.element;
       }
       return t;
-    }),
-    _tetherOptions() {
+    }
+    get _tetherOptions() {
       let options = {
         element: this.element,
-        target: (0, _object.get)(this, '_tetherTarget')
+        target: this._tetherTarget,
+        classPrefix: this.classPrefix
       };
-      ['classPrefix', 'attachment', 'targetAttachment', 'offset', 'targetOffset', 'targetModifier', 'constraints', 'optimizations', 'bodyElement'].forEach(k => {
-        let v = (0, _object.get)(this, k);
+      if (this.bodyElement) {
+        options.bodyElement = this.bodyElement;
+      }
+      ['attachment', 'targetAttachment', 'offset', 'targetOffset', 'targetModifier', 'constraints', 'optimizations'].forEach(k => {
+        let v = this.args[k];
         if (!(0, _utils.isNone)(v)) {
           options[k] = v;
         }
       });
       return options;
     }
-  });
-  _exports.default = _default;
+  }, (_applyDecoratedDescriptor(_class.prototype, "updateTether", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateTether"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "positionTether", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "positionTether"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "addTether", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "addTether"), _class.prototype)), _class);
+  _exports.default = EmberTetherComponent;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, EmberTetherComponent);
 });
 ;define("ember-truth-helpers/helpers/and", ["exports", "@ember/component/helper", "ember-truth-helpers/utils/truth-convert"], function (_exports, _helper, _truthConvert) {
   "use strict";
