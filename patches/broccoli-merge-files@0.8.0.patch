@@ -1,0 +1,29 @@
+diff --git a/index.js b/index.js
+index 8844cc54ceb34b77e2ca652eb85452d49db6ab7f..ecfd7eeb45dd96eeb7e05456ef3affa5886fa197 100644
+--- a/index.js
++++ b/index.js
+@@ -44,7 +44,7 @@ class BroccoliMergeFiles extends broccoli_plugin_1.default {
+     async readFiles() {
+         const streams = this.inputPaths.map((path) => [
+             path,
+-            fast_glob_1.default.stream(this.options.patterns, Object.assign({}, this.options.globOptions, { cwd: path, absolute: false, unique: true, onlyFiles: true, onlyDirectories: false, transform: null, stats: false }))
++            fast_glob_1.default.stream(this.options.patterns, Object.assign({}, this.options.globOptions, { cwd: path, absolute: false, unique: true, onlyFiles: true, onlyDirectories: false, stats: false }))
+         ]);
+         const waiters = [];
+         const entries = [];
+diff --git a/jest.config.js b/jest.config.js
+deleted file mode 100644
+index eef6b07c6be6d8442c6410145b933abb143348b7..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index b93edac0e3bb84ef5116b41bb225b6e5c07bd70e..b7c431989ed54d049d6dfaa6b32722a2ae14a7ae 100644
+--- a/package.json
++++ b/package.json
+@@ -35,7 +35,7 @@
+   ],
+   "dependencies": {
+     "broccoli-plugin": "^1.3.0",
+-    "fast-glob": "^2.2.6",
++    "fast-glob": "^3.3.1",
+     "lodash.defaults": "^4.2.0",
+     "p-event": "^2.3.1"
+   },
