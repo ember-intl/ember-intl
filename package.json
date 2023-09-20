@@ -131,8 +131,6 @@
     "prettier": "^3.0.3",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
-    "testdouble": "^3.19.0",
-    "testdouble-qunit": "^3.0.3",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2"
   },
