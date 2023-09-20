@@ -228,9 +228,6 @@ devDependencies:
   ember-maybe-import-regenerator-for-testing:
     specifier: ^1.0.0
     version: 1.0.0(@babel/core@7.22.20)
-  ember-open-browser:
-    specifier: ^1.0.0
-    version: 1.0.0
   ember-qunit:
     specifier: ^8.0.1
     version: 8.0.1(@ember/test-helpers@3.1.0)(ember-source@5.3.0)(qunit@2.19.4)
@@ -7875,16 +7872,6 @@ packages:
       - supports-color
     dev: true
 
-  /ember-open-browser@1.0.0:
-    resolution: {integrity: sha512-N1kr/tp6DS+Yf9101M3jEssOmghjwtD39y5fXcCiUbbTQs6oCkOFnKPUVW2O978HnFyXCIzeyHaNMRS9A7HihQ==}
-    engines: {node: '>= 4'}
-    dependencies:
-      chalk: 2.4.2
-      clean-base-url: 1.0.0
-      cross-spawn: 6.0.5
-      opn: 5.5.0
-    dev: true
-
   /ember-qunit@8.0.1(@ember/test-helpers@3.1.0)(ember-source@5.3.0)(qunit@2.19.4):
     resolution: {integrity: sha512-13PtywHNPTQKkDW4o8QRkJvcdsZr8hRyvh6xh/YLAX8+HaRLd3nPL8mBF4O/Kur/DAj3QWLvjzktZ2uRNGSh3A==}
     peerDependencies:
@@ -10658,11 +10645,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /is-wsl@1.1.0:
-    resolution: {integrity: sha512-gfygJYZ2gLTDlmbWMI0CE2MwnFzSN/2SZfkMlItC4K/JBlsWVDB0bO6XhqcY13YXE7iMcAJnzTCJjPiTeJJ0Mw==}
-    engines: {node: '>=4'}
-    dev: true
-
   /is-wsl@2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
     engines: {node: '>=8'}
@@ -12151,13 +12133,6 @@ packages:
       define-lazy-prop: 3.0.0
       is-inside-container: 1.0.0
       is-wsl: 2.2.0
-    dev: true
-
-  /opn@5.5.0:
-    resolution: {integrity: sha512-PqHpggC9bLV0VeWcdKhkpxY+3JTzetLSqTCWL/z/tFIbI6G8JCjondXklT1JinczLz2Xib62sSp0T/gKT4KksA==}
-    engines: {node: '>=4'}
-    dependencies:
-      is-wsl: 1.1.0
     dev: true
 
   /optionator@0.9.3:
