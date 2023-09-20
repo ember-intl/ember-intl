@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.1.1 (2023-09-20)
+
+### Internal
+* [#1786](https://github.com/ember-intl/ember-intl/pull/1786) Remove unused and unnecessary development dependencies ([@ijlee2](https://github.com/ijlee2))
+* [#1785](https://github.com/ember-intl/ember-intl/pull/1785) [Security] Patched broccoli-merge-files so that the latest version of fast-glob may be installed ([@ijlee2](https://github.com/ijlee2))
+
+### Committers: 1
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+
+
 ## 6.1.0 (2023-09-19)
 
 Note, `6.0.0` had been released by accident and isn't a stable version. Version `6.1.0` marks the beginning of the `6.x` series.
