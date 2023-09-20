@@ -75678,7 +75678,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-  var _default = ["app.ts", "components/.gitkeep", "components/locale-switcher.hbs", "components/locale-switcher.js", "config/environment.d.ts", "controllers/docs/helpers/format-date.ts", "controllers/docs/helpers/format-list.ts", "controllers/docs/helpers/format-message.ts", "controllers/docs/helpers/format-time.ts", "controllers/docs/helpers/t.ts", "controllers/smoke.ts", "formats.ts", "index.html", "instance-initializers/add-modals-container.js", "router.js", "routes/application.ts", "snippets/docs/helpers/format-date/example-1/component.js", "snippets/docs/helpers/format-date/example-1/template.hbs", "snippets/docs/helpers/format-date/example-2/component.js", "snippets/docs/helpers/format-date/example-2/format.js", "snippets/docs/helpers/format-date/example-2/template.hbs", "snippets/docs/helpers/format-list/example-1/component.js", "snippets/docs/helpers/format-list/example-1/template.hbs", "snippets/docs/helpers/format-message/example-1/component.js", "snippets/docs/helpers/format-message/example-1/template.hbs", "snippets/docs/helpers/format-number/example-1/template.hbs", "snippets/docs/helpers/format-relative/example-1/template.hbs", "snippets/docs/helpers/format-time/example-1/component.js", "snippets/docs/helpers/format-time/example-1/template.hbs", "snippets/docs/helpers/t/example-1/component.js", "snippets/docs/helpers/t/example-1/template.hbs", "snippets/docs/helpers/t/example-1/translations.yaml", "styles/app.css", "templates/.gitkeep", "templates/application.hbs", "templates/docs.hbs", "templates/docs/advanced/addon-support.md", "templates/docs/cookbook/common-errors.md", "templates/docs/getting-started/index.md", "templates/docs/getting-started/quickstart.md", "templates/docs/getting-started/runtime-requirements.md", "templates/docs/guide/addon-configs.md", "templates/docs/guide/asynchronously-loading-translations.md", "templates/docs/guide/migration-5-0-to-6-1.md", "templates/docs/guide/missing-translations.md", "templates/docs/guide/service-api.md", "templates/docs/guide/testing.md", "templates/docs/guide/translating-text.md", "templates/docs/helpers/format-date.md", "templates/docs/helpers/format-list.md", "templates/docs/helpers/format-message.md", "templates/docs/helpers/format-number.md", "templates/docs/helpers/format-relative.md", "templates/docs/helpers/format-time.md", "templates/docs/helpers/index.md", "templates/docs/helpers/t.md", "templates/docs/integrations/ember-cp-validations.md", "templates/docs/integrations/visual-studio-code.md", "templates/docs/legacy/migration-2-0-to-3-0.md", "templates/docs/legacy/migration-3-0-to-4-0.md", "templates/docs/legacy/migration-4-0-to-5-0.md", "templates/docs/legacy/v2.md", "templates/index.md", "templates/not-found.hbs", "templates/smoke.hbs"];
+  var _default = ["app.ts", "components/.gitkeep", "components/locale-switcher.hbs", "components/locale-switcher.js", "config/environment.d.ts", "controllers/docs/helpers/format-date.ts", "controllers/docs/helpers/format-list.ts", "controllers/docs/helpers/format-message.ts", "controllers/docs/helpers/format-time.ts", "controllers/docs/helpers/t.ts", "controllers/smoke.ts", "formats.ts", "helpers/root-url.ts", "index.html", "instance-initializers/add-modals-container.js", "router.js", "routes/application.ts", "snippets/docs/helpers/format-date/example-1/component.js", "snippets/docs/helpers/format-date/example-1/template.hbs", "snippets/docs/helpers/format-date/example-2/component.js", "snippets/docs/helpers/format-date/example-2/format.js", "snippets/docs/helpers/format-date/example-2/template.hbs", "snippets/docs/helpers/format-list/example-1/component.js", "snippets/docs/helpers/format-list/example-1/template.hbs", "snippets/docs/helpers/format-message/example-1/component.js", "snippets/docs/helpers/format-message/example-1/template.hbs", "snippets/docs/helpers/format-number/example-1/template.hbs", "snippets/docs/helpers/format-relative/example-1/template.hbs", "snippets/docs/helpers/format-time/example-1/component.js", "snippets/docs/helpers/format-time/example-1/template.hbs", "snippets/docs/helpers/t/example-1/component.js", "snippets/docs/helpers/t/example-1/template.hbs", "snippets/docs/helpers/t/example-1/translations.yaml", "styles/app.css", "templates/.gitkeep", "templates/application.hbs", "templates/docs.hbs", "templates/docs/advanced/addon-support.md", "templates/docs/cookbook/common-errors.md", "templates/docs/getting-started/index.md", "templates/docs/getting-started/quickstart.md", "templates/docs/getting-started/runtime-requirements.md", "templates/docs/guide/addon-configs.md", "templates/docs/guide/asynchronously-loading-translations.md", "templates/docs/guide/migration-5-0-to-6-1.md", "templates/docs/guide/missing-translations.md", "templates/docs/guide/service-api.md", "templates/docs/guide/testing.md", "templates/docs/guide/translating-text.md", "templates/docs/helpers/format-date.md", "templates/docs/helpers/format-list.md", "templates/docs/helpers/format-message.md", "templates/docs/helpers/format-number.md", "templates/docs/helpers/format-relative.md", "templates/docs/helpers/format-time.md", "templates/docs/helpers/index.md", "templates/docs/helpers/t.md", "templates/docs/integrations/ember-cp-validations.md", "templates/docs/integrations/visual-studio-code.md", "templates/docs/legacy/migration-2-0-to-3-0.md", "templates/docs/legacy/migration-3-0-to-4-0.md", "templates/docs/legacy/migration-4-0-to-5-0.md", "templates/docs/legacy/v2.md", "templates/index.md", "templates/not-found.hbs", "templates/smoke.hbs"];
   _exports.default = _default;
 });
 ;define("ember-cli-addon-docs/breakpoints", ["exports"], function (_exports) {
@@ -92620,51 +92620,6 @@ define("ember-resolver/features", [], function () {
     }
     return _nullMatchMedia.default;
   }
-});
-;define("ember-root-url/helpers/root-url", ["exports", "@ember/component/helper", "@ember/service"], function (_exports, _helper, _service) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _class, _descriptor;
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let RootUrl = (_class = class RootUrl extends _helper.default {
-    constructor(...args) {
-      super(...args);
-      _initializerDefineProperty(this, "rootUrl", _descriptor, this);
-    }
-    compute([relativeURL]) {
-      return this.rootUrl.build(relativeURL);
-    }
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "rootUrl", [_service.inject], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  })), _class);
-  _exports.default = RootUrl;
-});
-;define("ember-root-url/services/root-url", ["exports", "@ember/application", "@ember/service"], function (_exports, _application, _service) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  class RootUrlService extends _service.default {
-    build(relativeURL) {
-      let ENV = (0, _application.getOwner)(this).resolveRegistration('config:environment');
-      return `${ENV.rootURL}${relativeURL.replace(/^\//, '')}`;
-    }
-  }
-  _exports.default = RootUrlService;
 });
 ;define("ember-router-scroll/instance-initializers/ember-router-scroll", ["exports"], function (_exports) {
   "use strict";

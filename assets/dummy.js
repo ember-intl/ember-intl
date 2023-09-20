@@ -4691,19 +4691,26 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-composable-helpers/helpers/reverse"eaimeta@70e063a35619d71f
 });
-;define("dummy/helpers/root-url", ["exports", "ember-root-url/helpers/root-url"], function (_exports, _rootUrl) {
+;define("dummy/helpers/root-url", ["exports", "@ember/application", "@ember/component/helper"], function (_exports, _application, _helper) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _rootUrl.default;
+  _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"@ember/application",0,"@ember/component/helper"eaimeta@70e063a35619d71f
+  class RootUrl extends _helper.default {
+    build(relativeURL) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore Property `resolveRegistration` does not exist on type `Owner`
+      const ENV = (0, _application.getOwner)(this).resolveRegistration('config:environment');
+      return `${ENV.rootURL}${relativeURL.replace(/^\//, '')}`;
     }
-  });
-  0; //eaimeta@70e063a35619d71f0,"ember-root-url/helpers/root-url"eaimeta@70e063a35619d71f
+    compute([relativeURL]) {
+      return this.build(relativeURL);
+    }
+  }
+  _exports.default = RootUrl;
 });
 ;define("dummy/helpers/route-idle", ["exports", "ember-app-scheduler/helpers/route-idle"], function (_exports, _routeIdle) {
   "use strict";
@@ -5776,20 +5783,6 @@
     }
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/services/project-version"eaimeta@70e063a35619d71f
-});
-;define("dummy/services/root-url", ["exports", "ember-root-url/services/root-url"], function (_exports, _rootUrl) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _rootUrl.default;
-    }
-  });
-  0; //eaimeta@70e063a35619d71f0,"ember-root-url/services/root-url"eaimeta@70e063a35619d71f
 });
 ;define("dummy/services/router-scroll", ["exports", "ember-router-scroll/services/router-scroll"], function (_exports, _routerScroll) {
   "use strict";
