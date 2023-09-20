@@ -108,7 +108,6 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-data": "~5.2.0",
     "ember-load-initializers": "^2.1.2",
-    "ember-maybe-import-regenerator-for-testing": "^1.0.0",
     "ember-qunit": "^8.0.1",
     "ember-resolver": "^11.0.1",
     "ember-root-url": "^1.0.1",
