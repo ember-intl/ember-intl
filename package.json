@@ -40,23 +40,6 @@
     "test:ember-compatibility": "./node_modules/.bin/ember try:one",
     "test:node": "mocha \"tests-node/**/*.js\""
   },
-  "resolutions": {
-    "@types/ember": "^4.0.4",
-    "@types/ember__application": "^4.0.7",
-    "@types/ember__array": "^4.0.5",
-    "@types/ember__component": "^4.0.16",
-    "@types/ember__controller": "^4.0.6",
-    "@types/ember__debug": "^4.0.4",
-    "@types/ember__engine": "^4.0.6",
-    "@types/ember__object": "^4.0.7",
-    "@types/ember__routing": "^4.0.14",
-    "@types/ember__runloop": "^4.0.5",
-    "@types/ember__service": "^4.0.3",
-    "@types/ember__template": "^4.0.2",
-    "@types/ember__utils": "^4.0.3",
-    "@types/htmlbars-inline-precompile": "^3.0.0",
-    "@types/qunit": "^2.19.1"
-  },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.6.2",
     "@formatjs/intl": "^2.9.3",
@@ -183,5 +166,28 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "demoURL": "https://ember-intl.github.io/ember-intl/"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/ember": "^4.0.4",
+      "@types/ember__application": "^4.0.7",
+      "@types/ember__array": "^4.0.5",
+      "@types/ember__component": "^4.0.16",
+      "@types/ember__controller": "^4.0.6",
+      "@types/ember__debug": "^4.0.4",
+      "@types/ember__engine": "^4.0.6",
+      "@types/ember__object": "^4.0.7",
+      "@types/ember__routing": "^4.0.14",
+      "@types/ember__runloop": "^4.0.5",
+      "@types/ember__service": "^4.0.3",
+      "@types/ember__template": "^4.0.2",
+      "@types/ember__utils": "^4.0.3",
+      "@types/htmlbars-inline-precompile": "^3.0.0",
+      "@types/qunit": "^2.19.1",
+      "broccoli-merge-files>fast-glob": "^3.3.1"
+    },
+    "patchedDependencies": {
+      "broccoli-merge-files@0.8.0": "patches/broccoli-merge-files@0.8.0.patch"
+    }
   }
 }
