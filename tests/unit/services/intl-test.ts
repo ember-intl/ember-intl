@@ -8,21 +8,26 @@ import type { TestContext } from 'ember-intl/test-support';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
-import td from 'testdouble';
+
 const LOCALE = 'en-us';
 
 module('service:init initialization', function (hooks) {
   setupTest(hooks);
 
   test('it calls `setLocale` on init', async function (this: TestContext, assert) {
-    const localeChanged = td.func();
+    const localeChanged = () => {
+      assert.step('localeChanged');
+    };
+
     const Intl = this.owner.factoryFor('service:intl');
 
     // @ts-expect-error: https://github.com/typed-ember/ember-cli-typescript/issues/1471
     const unsubscribe = Intl.create().onLocaleChanged(localeChanged);
+
     next(() => {
-      assert.verify(localeChanged());
       unsubscribe();
+
+      assert.verifySteps(['localeChanged']);
     });
   });
 });
