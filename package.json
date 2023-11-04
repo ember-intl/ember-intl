@@ -165,6 +165,7 @@
   },
   "pnpm": {
     "overrides": {
+      "@babel/core": "^7.23.2",
       "@types/ember": "^4.0.8",
       "@types/ember__application": "^4.0.9",
       "@types/ember__array": "^4.0.7",
@@ -179,7 +180,8 @@
       "@types/ember__template": "^4.0.4",
       "@types/ember__utils": "^4.0.5",
       "@types/htmlbars-inline-precompile": "^3.0.1",
-      "@types/qunit": "^2.19.7"
+      "@types/qunit": "^2.19.7",
+      "fast-glob": "^3.3.1"
     }
   }
 }
