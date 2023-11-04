@@ -16,20 +16,6 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/adapters/-addon-docs"eaimeta@70e063a35619d71f
 });
-;define("dummy/adapters/-json-api", ["exports", "@ember-data/adapter/json-api"], function (_exports, _jsonApi) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _jsonApi.default;
-    }
-  });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter/json-api"eaimeta@70e063a35619d71f
-});
 ;define("dummy/adapters/class", ["exports", "ember-cli-addon-docs/adapters/class"], function (_exports, _class) {
   "use strict";
 
@@ -5169,20 +5155,27 @@
   });
   _exports.default = _default;
 });
-;define("dummy/initializers/ember-data", ["exports", "ember-data", "ember-data/setup-container"], function (_exports, _emberData, _setupContainer) {
+;define("dummy/initializers/ember-data", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-data",0,"ember-data/setup-container"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
   /*
     This code initializes EmberData in an Ember application.
   */
   var _default = {
     name: 'ember-data',
-    initialize: _setupContainer.default
+    initialize(application) {
+      application.registerOptionsForType('serializer', {
+        singleton: false
+      });
+      application.registerOptionsForType('adapter', {
+        singleton: false
+      });
+    }
   };
   _exports.default = _default;
 });
@@ -5233,21 +5226,6 @@
       }
       return (0, _addModalsContainer.default)(appInstance);
     }
-  };
-  _exports.default = _default;
-});
-;define("dummy/instance-initializers/ember-data", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-  /* exists only for things that historically used "after" or "before" */
-  var _default = {
-    name: 'ember-data',
-    initialize() {}
   };
   _exports.default = _default;
 });
@@ -5564,48 +5542,6 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-cli-addon-docs/serializers/-addon-docs"eaimeta@70e063a35619d71f
 });
-;define("dummy/serializers/-default", ["exports", "@ember-data/serializer/json"], function (_exports, _json) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _json.default;
-    }
-  });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/json"eaimeta@70e063a35619d71f
-});
-;define("dummy/serializers/-json-api", ["exports", "@ember-data/serializer/json-api"], function (_exports, _jsonApi) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _jsonApi.default;
-    }
-  });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/json-api"eaimeta@70e063a35619d71f
-});
-;define("dummy/serializers/-rest", ["exports", "@ember-data/serializer/rest"], function (_exports, _rest) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _rest.default;
-    }
-  });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/rest"eaimeta@70e063a35619d71f
-});
 ;define("dummy/serializers/class", ["exports", "ember-cli-addon-docs/serializers/class"], function (_exports, _class) {
   "use strict";
 
@@ -5798,7 +5734,7 @@
   });
   0; //eaimeta@70e063a35619d71f0,"ember-router-scroll/services/router-scroll"eaimeta@70e063a35619d71f
 });
-;define("dummy/services/store", ["exports", "ember-data/store"], function (_exports, _store) {
+;define("dummy/services/store", ["exports", "@ember/debug", "ember-data/store"], function (_exports, _debug, _store) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -5810,7 +5746,16 @@
       return _store.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"ember-data/store"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"ember-data/store"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)("You are relying on ember-data auto-magically installing the store service. Use `export { default } from 'ember-data/store';` in app/services/store.js instead", false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
 ;define("dummy/smoke", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8790,7 +8735,7 @@
   });
   _exports.default = _default;
 });
-;define("dummy/transforms/boolean", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+;define("dummy/transforms/boolean", ["exports", "@ember/debug", "@ember-data/serializer/-private"], function (_exports, _debug, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -8802,9 +8747,18 @@
       return _private.BooleanTransform;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)("You are relying on ember-data auto-magically installing the BooleanTransform. Use `export { BooleanTransform as default } from 'ember-data/serializer/transform';` in app/transforms/boolean.js instead", false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("dummy/transforms/date", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+;define("dummy/transforms/date", ["exports", "@ember/debug", "@ember-data/serializer/-private"], function (_exports, _debug, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -8816,9 +8770,18 @@
       return _private.DateTransform;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)("You are relying on ember-data auto-magically installing the DateTransform. Use `export { DateTransform as default } from 'ember-data/serializer/transform';` in app/transforms/date.js instead", false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("dummy/transforms/number", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+;define("dummy/transforms/number", ["exports", "@ember/debug", "@ember-data/serializer/-private"], function (_exports, _debug, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -8830,9 +8793,18 @@
       return _private.NumberTransform;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)("You are relying on ember-data auto-magically installing the NumberTransform. Use `export { NumberTransform as default } from 'ember-data/serializer/transform';` in app/transforms/number.js instead", false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("dummy/transforms/string", ["exports", "@ember-data/serializer/-private"], function (_exports, _private) {
+;define("dummy/transforms/string", ["exports", "@ember/debug", "@ember-data/serializer/-private"], function (_exports, _debug, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -8844,7 +8816,16 @@
       return _private.StringTransform;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/-private"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)("You are relying on ember-data auto-magically installing the StringTransform. Use `export { StringTransform as default } from 'ember-data/serializer/transform';` in app/transforms/string.js instead", false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
 ;define("dummy/utils/intl/missing-message", ["exports", "ember-intl/-private/utils/missing-message"], function (_exports, _missingMessage) {
   "use strict";

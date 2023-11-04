@@ -361,7 +361,7 @@ var runningTests = false;
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   5.3.0
+ * @version   5.4.0
  */
 /* eslint-disable no-var */
 /* globals global globalThis self */
@@ -9182,7 +9182,95 @@ define("@ember/-internals/metal/index", ["exports", "@ember/-internals/meta", "@
   }
 
   // NOTE: copied from: https://github.com/glimmerjs/glimmer.js/pull/358
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /**
+   * @decorator
+   *
+    Gives the getter a caching behavior. The return value of the getter
+    will be cached until any of the properties it is entangled with
+    are invalidated. This is useful when a getter is expensive and
+    used very often.
+  
+    For instance, in this `GuestList` class, we have the `sortedGuests`
+    getter that sorts the guests alphabetically:
+  
+    ```javascript
+      import { tracked } from '@glimmer/tracking';
+  
+      class GuestList {
+        @tracked guests = ['Zoey', 'Tomster'];
+  
+        get sortedGuests() {
+          return this.guests.slice().sort()
+        }
+      }
+    ```
+  
+    Every time `sortedGuests` is accessed, a new array will be created and sorted,
+    because JavaScript getters do not cache by default. When the guest list
+    is small, like the one in the example, this is not a problem. However, if
+    the guest list were to grow very large, it would mean that we would be doing
+    a large amount of work each time we accessed `sortedGuests`. With `@cached`,
+    we can cache the value instead:
+  
+    ```javascript
+      import { tracked, cached } from '@glimmer/tracking';
+  
+      class GuestList {
+        @tracked guests = ['Zoey', 'Tomster'];
+  
+        @cached
+        get sortedGuests() {
+          return this.guests.slice().sort()
+        }
+      }
+    ```
+  
+    Now the `sortedGuests` getter will be cached based on autotracking.
+    It will only rerun and create a new sorted array when the guests tracked
+    property is updated.
+  
+  
+    ### Tradeoffs
+  
+    Overuse is discouraged.
+  
+    In general, you should avoid using `@cached` unless you have confirmed that
+    the getter you are decorating is computationally expensive, since `@cached`
+    adds a small amount of overhead to the getter.
+    While the individual costs are small, a systematic use of the `@cached`
+    decorator can add up to a large impact overall in your app.
+    Many getters and tracked properties are only accessed once during rendering,
+    and then never rerendered, so adding `@cached` when unnecessary can
+    negatively impact performance.
+  
+    Also, `@cached` may rerun even if the values themselves have not changed,
+    since tracked properties will always invalidate.
+    For example updating an integer value from `5` to an other `5` will trigger
+    a rerun of the cached properties building from this integer.
+  
+    Avoiding a cache invalidation in this case is not something that can
+    be achieved on the `@cached` decorator itself, but rather when updating
+    the underlying tracked values, by applying some diff checking mechanisms:
+  
+    ```javascript
+    if (nextValue !== this.trackedProp) {
+      this.trackedProp = nextValue;
+    }
+    ```
+  
+    Here equal values won't update the property, therefore not triggering
+    the subsequent cache invalidations of the `@cached` properties who were
+    using this `trackedProp`.
+  
+    Remember that setting tracked data should only be done during initialization,
+    or as the result of a user action. Setting tracked data during render
+    (such as in a getter), is not supported.
+  
+    @method cached
+    @static
+    @for @glimmer/tracking
+    @public
+   */
   _exports.TrackedDescriptor = TrackedDescriptor;
   var cached = (...args) => {
     var [target, key, descriptor] = args;
@@ -13158,7 +13246,7 @@ define("@ember/application/instance", ["exports", "@ember/object", "@ember/-inte
         }
       };
       var handleTransitionReject = error => {
-        if (error.error) {
+        if (error.error && error.error instanceof Error) {
           throw error.error;
         } else if (error.name === 'TransitionAborted' && router._routerMicrolib.activeTransition) {
           return router._routerMicrolib.activeTransition.then(handleTransitionResolve, handleTransitionReject);
@@ -21697,7 +21785,7 @@ define("@ember/routing/lib/controller_for", ["exports"], function (_exports) {
   });
   _exports.default = controllerFor;
   /**
-    @module ember/routing
+    @module @ember/routing
   */
   /**
     Finds a controller instance.
@@ -21920,7 +22008,7 @@ define("@ember/routing/lib/generate_controller", ["exports", "@ember/-internals/
   _exports.default = generateController;
   _exports.generateControllerFactory = generateControllerFactory;
   /**
-   @module ember/routing
+   @module @ember/routing
   */
   /**
     Generates a controller factory
@@ -23021,11 +23109,11 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
     afterModel(_resolvedModel, _transition) {}
     /**
       A hook you can implement to optionally redirect to another route.
-         Calling `this.transitionTo` from inside of the `redirect` hook will
+         Calling `this.router.transitionTo` from inside of the `redirect` hook will
       abort the current transition (into the route that has implemented `redirect`).
          `redirect` and `afterModel` behave very similarly and are
       called almost at the same time, but they have an important
-      distinction when calling `this.transitionTo` to a child route
+      distinction when calling `this.router.transitionTo` to a child route
       of the current route. From `afterModel`, this new transition
       invalidates the current transition, causing `beforeModel`,
       `model`, and `afterModel` hooks to be called again. But the
@@ -23068,16 +23156,16 @@ define("@ember/routing/route", ["exports", "@ember/-internals/container", "@embe
          Routes without dynamic segments will always execute the model hook.
          ```javascript
       // no dynamic segment, model hook always called
-      this.transitionTo('posts');
+      this.router.transitionTo('posts');
          // model passed in, so model hook not called
       thePost = store.findRecord('post', 1);
-      this.transitionTo('post', thePost);
+      this.router.transitionTo('post', thePost);
          // integer passed in, model hook is called
-      this.transitionTo('post', 1);
+      this.router.transitionTo('post', 1);
          // model id passed in, model hook is called
       // useful for forcing the hook to execute
       thePost = store.findRecord('post', 1);
-      this.transitionTo('post', thePost.id);
+      this.router.transitionTo('post', thePost.id);
       ```
          This hook follows the asynchronous/promise semantics
       described in the documentation for `beforeModel`. In particular,
@@ -37340,8 +37428,10 @@ define("@glimmer/runtime", ["exports", "@glimmer/reference", "@glimmer/util", "@
         this.capture = capture;
         this.shouldUpdate = true;
       }
-      var options;
-      if (once || passive || capture) {
+      var options; // we want to handle both `true` and `false` because both have a meaning:
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=770208
+
+      if (once !== undefined || passive !== undefined || capture !== undefined) {
         options = this.options = {
           once,
           passive,
@@ -41124,7 +41214,7 @@ define("ember/version", ["exports"], function (_exports) {
     value: true
   });
   _exports.default = void 0;
-  var _default = "5.3.0";
+  var _default = "5.4.0";
   _exports.default = _default;
 });
 define("route-recognizer", ["exports"], function (_exports) {
@@ -49578,7 +49668,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 })();
 
 })((function(){ function newDefine(){ var args = Array.prototype.slice.call(arguments); args.unshift("lunr"); return define.apply(null, args); }; newDefine.amd = true; return newDefine; })());
-;define("@ember-data/adapter/-private", ["exports", "@ember/debug", "@ember-data/adapter/build-url-mixin-18db8c8b"], function (_exports, _debug, _buildUrlMixin18db8c8b) {
+;define("@ember-data/adapter/-private", ["exports", "@ember-data/adapter/serialize-into-hash-b9092b25", "@ember-data/adapter/build-url-mixin-18db8c8b"], function (_exports, _serializeIntoHashB9092b, _buildUrlMixin18db8c8b) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -49590,214 +49680,42 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _buildUrlMixin18db8c8b.B;
     }
   });
-  _exports.determineBodyPromise = determineBodyPromise;
-  _exports.fetch = getFetchFunction;
-  _exports.parseResponseHeaders = parseResponseHeaders;
-  _exports.serializeIntoHash = serializeIntoHash;
-  _exports.serializeQueryParams = serializeQueryParams;
-  _exports.setupFastboot = setupFastboot;
-  const newline = /\r?\n/;
-  function parseResponseHeaders(headersString) {
-    const headers = Object.create(null);
-    if (!headersString) {
-      return headers;
+  Object.defineProperty(_exports, "determineBodyPromise", {
+    enumerable: true,
+    get: function () {
+      return _serializeIntoHashB9092b.d;
     }
-    const headerPairs = headersString.split(newline);
-    for (let i = 0; i < headerPairs.length; i++) {
-      let header = headerPairs[i];
-      let j = 0;
-      let foundSep = false;
-      for (; j < header.length; j++) {
-        if (header.charCodeAt(j) === 58 /* ':' */) {
-          foundSep = true;
-          break;
-        }
-      }
-      if (foundSep === false) {
-        continue;
-      }
-      let field = header.substring(0, j).trim();
-      let value = header.substring(j + 1, header.length).trim();
-      if (value) {
-        let lowerCasedField = field.toLowerCase();
-        headers[lowerCasedField] = value;
-        headers[field] = value;
-      }
+  });
+  Object.defineProperty(_exports, "fetch", {
+    enumerable: true,
+    get: function () {
+      return _serializeIntoHashB9092b.g;
     }
-    return headers;
-  }
-  function continueOnReject(promise) {
-    return Promise.resolve(promise).catch(e => e);
-  }
-
-  /*
-   * Function that always attempts to parse the response as json, and if an error is thrown,
-   * returns `undefined` if the response is successful and has a status code of 204 (No Content),
-   * or 205 (Reset Content) or if the request method was 'HEAD', and the plain payload otherwise.
-   */
-  function _determineContent(response, requestData, payload) {
-    let ret = payload;
-    let error = null;
-    if (!response.ok) {
-      return payload;
+  });
+  Object.defineProperty(_exports, "parseResponseHeaders", {
+    enumerable: true,
+    get: function () {
+      return _serializeIntoHashB9092b.p;
     }
-    let status = response.status;
-    let payloadIsEmpty = payload === '' || payload === null;
-    let statusIndicatesEmptyResponse = status === 204 || status === 205 || requestData.method === 'HEAD';
-    if (response.ok && (statusIndicatesEmptyResponse || payloadIsEmpty)) {
-      return;
+  });
+  Object.defineProperty(_exports, "serializeIntoHash", {
+    enumerable: true,
+    get: function () {
+      return _serializeIntoHashB9092b.b;
     }
-    try {
-      ret = JSON.parse(payload);
-    } catch (e) {
-      if (!(e instanceof SyntaxError)) {
-        return e;
-      }
-      e.payload = payload;
-      error = e;
+  });
+  Object.defineProperty(_exports, "serializeQueryParams", {
+    enumerable: true,
+    get: function () {
+      return _serializeIntoHashB9092b.s;
     }
-    if (error) {
-      return error;
+  });
+  Object.defineProperty(_exports, "setupFastboot", {
+    enumerable: true,
+    get: function () {
+      return _serializeIntoHashB9092b.a;
     }
-    return ret;
-  }
-  function determineBodyPromise(response, requestData) {
-    // response.text() may resolve or reject
-    // it is a native promise, may not have finally
-    return continueOnReject(response.text()).then(payload => _determineContent(response, requestData, payload));
-  }
-  const RBRACKET = /\[\]$/;
-  function isPlainObject(obj) {
-    return Object.prototype.toString.call(obj) === '[object Object]';
-  }
-
-  /*
-   * Helper function that turns the data/body of a request into a query param string.
-   * This is directly copied from jQuery.param.
-   */
-  function serializeQueryParams(queryParamsObject) {
-    let s = [];
-    function buildParams(prefix, obj) {
-      let i, len, key;
-      if (prefix) {
-        if (Array.isArray(obj)) {
-          for (i = 0, len = obj.length; i < len; i++) {
-            if (RBRACKET.test(prefix)) {
-              add(s, prefix, obj[i]);
-            } else {
-              buildParams(prefix + '[' + (typeof obj[i] === 'object' && obj[i] !== null ? i : '') + ']', obj[i]);
-            }
-          }
-        } else if (isPlainObject(obj)) {
-          for (key in obj) {
-            buildParams(prefix + '[' + key + ']', obj[key]);
-          }
-        } else {
-          add(s, prefix, obj);
-        }
-      } else if (Array.isArray(obj)) {
-        for (i = 0, len = obj.length; i < len; i++) {
-          add(s, obj[i].name, obj[i].value);
-        }
-      } else {
-        for (key in obj) {
-          buildParams(key, obj[key]);
-        }
-      }
-      return s;
-    }
-    return buildParams('', queryParamsObject).join('&');
-  }
-
-  /*
-   * Part of the `serializeQueryParams` helper function.
-   */
-  function add(s, k, v) {
-    // Strip out keys with undefined value and replace null values with
-    // empty strings (mimics jQuery.ajax)
-    if (v === undefined) {
-      return;
-    } else if (v === null) {
-      v = '';
-    }
-    v = typeof v === 'function' ? v() : v;
-    s[s.length] = `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
-  }
-  let _fetch = null;
-  let REQUEST = null;
-  function getFetchFunction() {
-    // return cached fetch function
-    if (_fetch !== null) {
-      return _fetch();
-    }
-
-    // grab browser native fetch if available, or global fetch if otherwise configured
-    if (typeof fetch === 'function') {
-      // fallback to using global fetch
-      _fetch = () => fetch;
-
-      /* global FastBoot */
-      // grab fetch from node-fetch
-    } else if (typeof FastBoot !== 'undefined') {
-      try {
-        const nodeFetch = FastBoot.require('node-fetch');
-        const httpRegex = /^https?:\/\//;
-        const protocolRelativeRegex = /^\/\//;
-
-        // eslint-disable-next-line no-inner-declarations
-        function parseRequest(request) {
-          if (request === null) {
-            throw new Error("Trying to fetch with relative url but the application hasn't finished loading FastBootInfo, see details at https://github.com/ember-cli/ember-fetch#relative-url");
-          }
-          // Old Prember version is not sending protocol
-          const protocol = request.protocol === 'undefined:' ? 'http:' : request.protocol;
-          return [request.get('host'), protocol];
-        }
-
-        // eslint-disable-next-line no-inner-declarations
-        function buildAbsoluteUrl(url) {
-          if (protocolRelativeRegex.test(url)) {
-            let [host] = parseRequest(REQUEST);
-            url = host + url;
-          } else if (!httpRegex.test(url)) {
-            let [host, protocol] = parseRequest(REQUEST);
-            url = protocol + '//' + host + url;
-          }
-          return url;
-        }
-
-        // eslint-disable-next-line no-inner-declarations
-        function patchedFetch(input, options) {
-          if (input && input.href) {
-            input.url = buildAbsoluteUrl(input.href);
-          } else if (typeof input === 'string') {
-            input = buildAbsoluteUrl(input);
-          }
-          return nodeFetch(input, options);
-        }
-        _fetch = () => patchedFetch;
-      } catch (e) {
-        throw new Error(`Unable to create a compatible 'fetch' for FastBoot with node-fetch`);
-      }
-    }
-    (false && !(_fetch) && (0, _debug.assert)(`Cannot find a 'fetch' global and did not detect FastBoot.`, _fetch));
-    return _fetch();
-  }
-  function setupFastboot(fastBootRequest) {
-    REQUEST = fastBootRequest;
-  }
-  function serializeIntoHash(store, modelClass, snapshot, options = {
-    includeId: true
-  }) {
-    const serializer = store.serializerFor(modelClass.modelName);
-    (false && !(serializer) && (0, _debug.assert)(`Cannot serialize record, no serializer defined`, serializer));
-    if (typeof serializer.serializeIntoHash === 'function') {
-      const data = {};
-      serializer.serializeIntoHash(data, modelClass, snapshot, options);
-      return data;
-    }
-    return serializer.serialize(snapshot, options);
-  }
+  });
 });
 ;define("@ember-data/adapter/build-url-mixin-18db8c8b", ["exports", "@ember/object/mixin", "@ember/string", "ember-inflector"], function (_exports, _mixin, _string, _emberInflector) {
   "use strict";
@@ -51313,7 +51231,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/adapter/json-api", ["exports", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/adapter/-private", "@ember-data/adapter/rest"], function (_exports, _debug, _string, _emberInflector, _private, _rest) {
+;define("@ember-data/adapter/json-api", ["exports", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/adapter/serialize-into-hash-b9092b25", "@ember-data/adapter/rest"], function (_exports, _debug, _string, _emberInflector, _serializeIntoHashB9092b, _rest) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -51557,7 +51475,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return (0, _emberInflector.pluralize)(dasherized);
     }
     updateRecord(store, schema, snapshot) {
-      const data = (0, _private.serializeIntoHash)(store, schema, snapshot);
+      const data = (0, _serializeIntoHashB9092b.b)(store, schema, snapshot);
       const type = snapshot.modelName;
       const id = snapshot.id;
       (false && !(typeof id === 'string' && id.length > 0) && (0, _debug.assert)(`Attempted to update the ${type} record, but the record has no id`, typeof id === 'string' && id.length > 0));
@@ -51569,7 +51487,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   _exports.default = JSONAPIAdapter;
 });
-;define("@ember-data/adapter/rest", ["exports", "@ember-data/adapter/index-f54121ea", "@ember/application", "@ember/debug", "@ember/object", "@ember/runloop", "@ember-data/adapter/-private", "@ember-data/adapter/build-url-mixin-18db8c8b", "@ember-data/adapter/error"], function (_exports, _indexF54121ea, _application, _debug, _object, _runloop, _private, _buildUrlMixin18db8c8b, _error) {
+;define("@ember-data/adapter/rest", ["exports", "@ember-data/adapter/index-f54121ea", "@ember/application", "@ember/debug", "@ember/object", "@ember-data/adapter/serialize-into-hash-b9092b25", "@ember-data/adapter/build-url-mixin-18db8c8b", "@ember-data/adapter/error"], function (_exports, _indexF54121ea, _application, _debug, _object, _serializeIntoHashB9092b, _buildUrlMixin18db8c8b, _error) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -52245,7 +52163,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     createRecord(store, type, snapshot) {
       let url = this.buildURL(type.modelName, null, snapshot, 'createRecord');
-      const data = (0, _private.serializeIntoHash)(store, type, snapshot);
+      const data = (0, _serializeIntoHashB9092b.b)(store, type, snapshot);
       return this.ajax(url, 'POST', {
         data
       });
@@ -52266,7 +52184,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {Promise} promise
     */
     updateRecord(store, schema, snapshot) {
-      const data = (0, _private.serializeIntoHash)(store, schema, snapshot, {});
+      const data = (0, _serializeIntoHashB9092b.b)(store, schema, snapshot, {});
       const type = snapshot.modelName;
       const id = snapshot.id;
       (false && !(typeof id === 'string' && id.length > 0) && (0, _debug.assert)(`Attempted to update the ${type} record, but the record has no id`, typeof id === 'string' && id.length > 0));
@@ -52333,35 +52251,18 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     groupRecordsForFindMany(store, snapshots) {
       let groups = new Map();
-      let adapter = this;
       let maxURLLength = this.maxURLLength;
       snapshots.forEach(snapshot => {
-        let baseUrl = adapter._stripIDFromURL(store, snapshot);
+        let baseUrl = this._stripIDFromURL(store, snapshot);
         if (!groups.has(baseUrl)) {
           groups.set(baseUrl, []);
         }
         groups.get(baseUrl).push(snapshot);
       });
-      function splitGroupToFitInUrl(group, maxURLLength, paramNameLength) {
-        let idsSize = 0;
-        let baseUrl = adapter._stripIDFromURL(store, group[0]);
-        let splitGroups = [[]];
-        group.forEach(snapshot => {
-          let additionalLength = encodeURIComponent(snapshot.id).length + paramNameLength;
-          if (baseUrl.length + idsSize + additionalLength >= maxURLLength) {
-            idsSize = 0;
-            splitGroups.push([]);
-          }
-          idsSize += additionalLength;
-          let lastGroupIndex = splitGroups.length - 1;
-          splitGroups[lastGroupIndex].push(snapshot);
-        });
-        return splitGroups;
-      }
       let groupsArray = [];
       groups.forEach((group, key) => {
         let paramNameLength = '&ids%5B%5D='.length;
-        let splitGroups = splitGroupToFitInUrl(group, maxURLLength, paramNameLength);
+        let splitGroups = splitGroupToFitInUrl(store, this, group, maxURLLength, paramNameLength);
         splitGroups.forEach(splitGroup => groupsArray.push(splitGroup));
       });
       return groupsArray;
@@ -52468,33 +52369,21 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {Promise} promise
     */
     async ajax(url, type, options = {}) {
-      let adapter = this;
       let requestData = {
         url: url,
         method: type
       };
       if (this.useFetch) {
-        let hash = adapter.ajaxOptions(url, type, options);
+        let hash = this.ajaxOptions(url, type, options);
         let response = await this._fetchRequest(hash);
-        let payload = await (0, _private.determineBodyPromise)(response, requestData);
+        let payload = await (0, _serializeIntoHashB9092b.d)(response, requestData);
         if (response.ok && !(payload instanceof Error)) {
-          return fetchSuccessHandler(adapter, payload, response, requestData);
+          return fetchSuccessHandler(this, payload, response, requestData);
         } else {
-          throw fetchErrorHandler(adapter, payload, response, null, requestData);
+          throw fetchErrorHandler(this, payload, response, null, requestData);
         }
       } else {
-        let hash = adapter.ajaxOptions(url, type, options);
-        return new Promise(function (resolve, reject) {
-          hash.success = function (payload, textStatus, jqXHR) {
-            let response = ajaxSuccessHandler(adapter, payload, jqXHR, requestData);
-            (0, _runloop.join)(null, resolve, response);
-          };
-          hash.error = function (jqXHR, textStatus, errorThrown) {
-            let error = ajaxErrorHandler(adapter, jqXHR, errorThrown, requestData);
-            (0, _runloop.join)(null, reject, error);
-          };
-          adapter._ajax(hash);
-        });
+        return execjQAjax(this, requestData, options);
       }
     }
 
@@ -52504,11 +52393,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {Object} options jQuery ajax options to be used for the ajax request
     */
     _ajaxRequest(options) {
-      // TODO add assertion that jquery is there rather then equality check
-      typeof jQuery !== 'undefined' && jQuery.ajax(options);
+      (false && !(typeof jQuery !== 'undefined') && (0, _debug.assert)('You must install jQuery globally when `useFetch` is false', typeof jQuery !== 'undefined'));
+      jQuery.ajax(options);
     }
     _fetchRequest(options) {
-      let fetchFunction = (0, _private.fetch)();
+      let fetchFunction = (0, _serializeIntoHashB9092b.g)();
       return fetchFunction(options.url, options);
     }
     _ajax(options) {
@@ -52639,6 +52528,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       let payloadContentType = headers['content-type'] || 'Empty Content-Type';
       if (payloadContentType === 'text/html' && typeof payload === 'string' && payload.length > 250) {
         shortenedPayload = '[Omitted Lengthy HTML]';
+      } else if (typeof payload === 'object' && payload !== null) {
+        shortenedPayload = JSON.stringify(payload, null, 2);
       } else {
         shortenedPayload = payload;
       }
@@ -52723,7 +52614,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   //From http://stackoverflow.com/questions/280634/endswith-in-javascript
   function endsWith(string, suffix) {
     if (typeof String.prototype.endsWith !== 'function') {
-      return string.indexOf(suffix, string.length - suffix.length) !== -1;
+      return string.includes(suffix, string.length - suffix.length);
     } else {
       return string.endsWith(suffix);
     }
@@ -52766,7 +52657,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return {
       status: jqXHR.status,
       textStatus: jqXHR.statusText,
-      headers: (0, _private.parseResponseHeaders)(jqXHR.getAllResponseHeaders())
+      headers: (0, _serializeIntoHashB9092b.p)(jqXHR.getAllResponseHeaders())
     };
   }
   function headersToObject(headers) {
@@ -52795,8 +52686,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         // If no options are passed, Ember Data sets `data` to an empty object, which we test for.
         if (Object.keys(options.data).length && options.url) {
           // Test if there are already query params in the url (mimics jQuey.ajax).
-          const queryParamDelimiter = options.url.indexOf('?') > -1 ? '&' : '?';
-          options.url += `${queryParamDelimiter}${(0, _private.serializeQueryParams)(options.data)}`;
+          const queryParamDelimiter = options.url.includes('?') ? '&' : '?';
+          options.url += `${queryParamDelimiter}${(0, _serializeIntoHashB9092b.s)(options.data)}`;
         }
       } else {
         // NOTE: a request's body cannot be an object, so we stringify it if it is.
@@ -52836,6 +52727,251 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     };
     return options;
+  }
+  function execjQAjax(adapter, requestData, options) {
+    const hash = adapter.ajaxOptions(requestData.url, requestData.method, options);
+    return new Promise((resolve, reject) => {
+      hash.success = function (payload, textStatus, jqXHR) {
+        let response = ajaxSuccessHandler(adapter, payload, jqXHR, requestData);
+        resolve(response);
+      };
+      hash.error = function (jqXHR, textStatus, errorThrown) {
+        let error = ajaxErrorHandler(adapter, jqXHR, errorThrown, requestData);
+        reject(error);
+      };
+      adapter._ajax(hash);
+    });
+  }
+  function splitGroupToFitInUrl(store, adapter, group, maxURLLength, paramNameLength) {
+    let idsSize = 0;
+    let baseUrl = adapter._stripIDFromURL(store, group[0]);
+    let splitGroups = [[]];
+    group.forEach(snapshot => {
+      let additionalLength = encodeURIComponent(snapshot.id).length + paramNameLength;
+      if (baseUrl.length + idsSize + additionalLength >= maxURLLength) {
+        idsSize = 0;
+        splitGroups.push([]);
+      }
+      idsSize += additionalLength;
+      let lastGroupIndex = splitGroups.length - 1;
+      splitGroups[lastGroupIndex].push(snapshot);
+    });
+    return splitGroups;
+  }
+});
+;define("@ember-data/adapter/serialize-into-hash-b9092b25", ["exports", "@ember/debug"], function (_exports, _debug) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.a = setupFastboot;
+  _exports.b = serializeIntoHash;
+  _exports.d = determineBodyPromise;
+  _exports.g = getFetchFunction;
+  _exports.p = parseResponseHeaders;
+  _exports.s = serializeQueryParams;
+  const newline = /\r?\n/;
+  function parseResponseHeaders(headersString) {
+    const headers = Object.create(null);
+    if (!headersString) {
+      return headers;
+    }
+    const headerPairs = headersString.split(newline);
+    for (let i = 0; i < headerPairs.length; i++) {
+      let header = headerPairs[i];
+      let j = 0;
+      let foundSep = false;
+      for (; j < header.length; j++) {
+        if (header.charCodeAt(j) === 58 /* ':' */) {
+          foundSep = true;
+          break;
+        }
+      }
+      if (foundSep === false) {
+        continue;
+      }
+      let field = header.substring(0, j).trim();
+      let value = header.substring(j + 1, header.length).trim();
+      if (value) {
+        let lowerCasedField = field.toLowerCase();
+        headers[lowerCasedField] = value;
+        headers[field] = value;
+      }
+    }
+    return headers;
+  }
+  function continueOnReject(promise) {
+    return Promise.resolve(promise).catch(e => e);
+  }
+
+  /*
+   * Function that always attempts to parse the response as json, and if an error is thrown,
+   * returns `undefined` if the response is successful and has a status code of 204 (No Content),
+   * or 205 (Reset Content) or if the request method was 'HEAD', and the plain payload otherwise.
+   */
+  function _determineContent(response, requestData, payload) {
+    let ret = payload;
+    let error = null;
+    if (!response.ok) {
+      return payload;
+    }
+    let status = response.status;
+    let payloadIsEmpty = payload === '' || payload === null;
+    let statusIndicatesEmptyResponse = status === 204 || status === 205 || requestData.method === 'HEAD';
+    if (response.ok && (statusIndicatesEmptyResponse || payloadIsEmpty)) {
+      return;
+    }
+    try {
+      ret = JSON.parse(payload);
+    } catch (e) {
+      if (!(e instanceof SyntaxError)) {
+        return e;
+      }
+      e.payload = payload;
+      error = e;
+    }
+    if (error) {
+      return error;
+    }
+    return ret;
+  }
+  function determineBodyPromise(response, requestData) {
+    // response.text() may resolve or reject
+    // it is a native promise, may not have finally
+    return continueOnReject(response.text()).then(payload => _determineContent(response, requestData, payload));
+  }
+  const RBRACKET = /\[\]$/;
+  function isPlainObject(obj) {
+    return Object.prototype.toString.call(obj) === '[object Object]';
+  }
+
+  /*
+   * Helper function that turns the data/body of a request into a query param string.
+   * This is directly copied from jQuery.param.
+   */
+  function serializeQueryParams(queryParamsObject) {
+    let s = [];
+    function buildParams(prefix, obj) {
+      let i, len, key;
+      if (prefix) {
+        if (Array.isArray(obj)) {
+          for (i = 0, len = obj.length; i < len; i++) {
+            if (RBRACKET.test(prefix)) {
+              add(s, prefix, obj[i]);
+            } else {
+              buildParams(prefix + '[' + (typeof obj[i] === 'object' && obj[i] !== null ? i : '') + ']', obj[i]);
+            }
+          }
+        } else if (isPlainObject(obj)) {
+          for (key in obj) {
+            buildParams(prefix + '[' + key + ']', obj[key]);
+          }
+        } else {
+          add(s, prefix, obj);
+        }
+      } else if (Array.isArray(obj)) {
+        for (i = 0, len = obj.length; i < len; i++) {
+          add(s, obj[i].name, obj[i].value);
+        }
+      } else {
+        for (key in obj) {
+          buildParams(key, obj[key]);
+        }
+      }
+      return s;
+    }
+    return buildParams('', queryParamsObject).join('&');
+  }
+
+  /*
+   * Part of the `serializeQueryParams` helper function.
+   */
+  function add(s, k, v) {
+    // Strip out keys with undefined value and replace null values with
+    // empty strings (mimics jQuery.ajax)
+    if (v === undefined) {
+      return;
+    } else if (v === null) {
+      v = '';
+    }
+    v = typeof v === 'function' ? v() : v;
+    s[s.length] = `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
+  }
+  let _fetch = null;
+  let REQUEST = null;
+  function getFetchFunction() {
+    // return cached fetch function
+    if (_fetch !== null) {
+      return _fetch();
+    }
+
+    // grab browser native fetch if available, or global fetch if otherwise configured
+    if (typeof fetch === 'function') {
+      // fallback to using global fetch
+      _fetch = () => fetch;
+
+      /* global FastBoot */
+      // grab fetch from node-fetch
+    } else if (typeof FastBoot !== 'undefined') {
+      try {
+        const nodeFetch = FastBoot.require('node-fetch');
+        const httpRegex = /^https?:\/\//;
+        const protocolRelativeRegex = /^\/\//;
+
+        // eslint-disable-next-line no-inner-declarations
+        function parseRequest(request) {
+          if (request === null) {
+            throw new Error("Trying to fetch with relative url but the application hasn't finished loading FastBootInfo, see details at https://github.com/ember-cli/ember-fetch#relative-url");
+          }
+          // Old Prember version is not sending protocol
+          const protocol = request.protocol === 'undefined:' ? 'http:' : request.protocol;
+          return [request.get('host'), protocol];
+        }
+
+        // eslint-disable-next-line no-inner-declarations
+        function buildAbsoluteUrl(url) {
+          if (protocolRelativeRegex.test(url)) {
+            let [host] = parseRequest(REQUEST);
+            url = host + url;
+          } else if (!httpRegex.test(url)) {
+            let [host, protocol] = parseRequest(REQUEST);
+            url = protocol + '//' + host + url;
+          }
+          return url;
+        }
+
+        // eslint-disable-next-line no-inner-declarations
+        function patchedFetch(input, options) {
+          if (input && input.href) {
+            input.url = buildAbsoluteUrl(input.href);
+          } else if (typeof input === 'string') {
+            input = buildAbsoluteUrl(input);
+          }
+          return nodeFetch(input, options);
+        }
+        _fetch = () => patchedFetch;
+      } catch (e) {
+        throw new Error(`Unable to create a compatible 'fetch' for FastBoot with node-fetch`);
+      }
+    }
+    (false && !(_fetch) && (0, _debug.assert)(`Cannot find a 'fetch' global and did not detect FastBoot.`, _fetch));
+    return _fetch();
+  }
+  function setupFastboot(fastBootRequest) {
+    REQUEST = fastBootRequest;
+  }
+  function serializeIntoHash(store, modelClass, snapshot, options = {
+    includeId: true
+  }) {
+    const serializer = store.serializerFor(modelClass.modelName);
+    (false && !(serializer) && (0, _debug.assert)(`Cannot serialize record, no serializer defined`, serializer));
+    if (typeof serializer.serializeIntoHash === 'function') {
+      const data = {};
+      serializer.serializeIntoHash(data, modelClass, snapshot, options);
+      return data;
+    }
+    return serializer.serialize(snapshot, options);
   }
 });
 ;define("@ember-data/debug/index", ["exports", "@ember/array", "@ember/debug", "@ember/debug/data-adapter", "@ember/object/observers", "@ember/service", "@ember/string"], function (_exports, _array, _debug, _dataAdapter, _observers, _service, _string) {
@@ -52948,7 +53084,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         store.notifications.unsubscribe(unsub);
       }];
       const discoveredTypes = typesMapFor(store);
-      Object.keys(store.identifierCache._cache.types).forEach(type => {
+      Object.keys(store.identifierCache._cache.resourcesByType).forEach(type => {
         discoveredTypes.set(type, false);
       });
 
@@ -53174,22 +53310,33 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.graphFor = graphFor;
   _exports.peekGraph = peekGraph;
+  // Used by the store to normalize IDs entering the store.  Despite the fact
   // that developers may provide IDs as numbers (e.g., `store.findRecord('person', 1)`),
   // it is important that internally we use strings, since IDs may be serialized
   // and lose type information.  For example, Ember's router may put a record's
   // ID into the URL, and if we later try to deserialize that URL and find the
   // corresponding record, we will not know if it is a string or a number.
   function coerceId(id) {
-    if (id === null || id === undefined || id === '') {
-      return null;
+    {
+      let normalized;
+      if (id === null || id === undefined || id === '') {
+        normalized = null;
+      } else {
+        normalized = String(id);
+      }
+      (false && !(normalized === id) && (0, _debug.deprecate)(`The resource id '<${typeof id}> ${String(id)} ' is not normalized. Update your application code to use '${JSON.stringify(normalized)}' instead.`, normalized === id, {
+        id: 'ember-data:deprecate-non-strict-id',
+        until: '6.0',
+        for: 'ember-data',
+        since: {
+          available: '5.3',
+          enabled: '5.3'
+        }
+      }));
+      return normalized;
     }
-    if (typeof id === 'string') {
-      return id;
-    }
-    if (typeof id === 'symbol') {
-      return id.toString();
-    }
-    return '' + id;
+    (false && !(id === null || typeof id === 'string' && id.length > 0) && (0, _debug.assert)(`Resource IDs must be a non-empty string or null. Received '${String(id)}'.`, id === null || typeof id === 'string' && id.length > 0));
+    return id;
   }
   function getStore(wrapper) {
     (false && !('_store' in wrapper) && (0, _debug.assert)(`expected a private _store property`, '_store' in wrapper));
@@ -53265,34 +53412,18 @@ lunr.QueryParser.parseBoost = function (parser) {
         cb(rel.localState);
       }
     } else if (isHasMany(rel)) {
-      // ensure we don't walk anything twice if an entry is
-      // in both localMembers and remoteMembers
-      let seen = new Set();
-      for (let i = 0; i < rel.localState.length; i++) {
-        const inverseIdentifier = rel.localState[i];
-        if (!seen.has(inverseIdentifier)) {
-          seen.add(inverseIdentifier);
-          cb(inverseIdentifier);
-        }
-      }
+      // TODO
+      // rel.remoteMembers.forEach(cb);
+      // might be simpler if performance is not a concern
       for (let i = 0; i < rel.remoteState.length; i++) {
         const inverseIdentifier = rel.remoteState[i];
-        if (!seen.has(inverseIdentifier)) {
-          seen.add(inverseIdentifier);
-          cb(inverseIdentifier);
-        }
+        cb(inverseIdentifier);
       }
+      rel.additions?.forEach(cb);
     } else {
-      let seen = new Set();
-      rel.localMembers.forEach(inverseIdentifier => {
-        if (!seen.has(inverseIdentifier)) {
-          seen.add(inverseIdentifier);
-          cb(inverseIdentifier);
-        }
-      });
+      rel.localMembers.forEach(cb);
       rel.remoteMembers.forEach(inverseIdentifier => {
-        if (!seen.has(inverseIdentifier)) {
-          seen.add(inverseIdentifier);
+        if (!rel.localMembers.has(inverseIdentifier)) {
           cb(inverseIdentifier);
         }
       });
@@ -53321,19 +53452,22 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     } else if (isHasMany(relationship)) {
       relationship.remoteMembers.delete(value);
-      relationship.localMembers.delete(value);
+      relationship.additions?.delete(value);
+      let wasInRemovals = relationship.removals?.delete(value);
       const canonicalIndex = relationship.remoteState.indexOf(value);
       if (canonicalIndex !== -1) {
         relationship.remoteState.splice(canonicalIndex, 1);
       }
-      const currentIndex = relationship.localState.indexOf(value);
-      if (currentIndex !== -1) {
-        relationship.localState.splice(currentIndex, 1);
-        // This allows dematerialized inverses to be rematerialized
-        // we shouldn't be notifying here though, figure out where
-        // a notification was missed elsewhere.
-        if (!silenceNotifications) {
-          notifyChange(graph, relationship.identifier, relationship.definition.key);
+      if (!wasInRemovals) {
+        const currentIndex = relationship.localState?.indexOf(value);
+        if (currentIndex !== -1 && currentIndex !== undefined) {
+          relationship.localState.splice(currentIndex, 1);
+          // This allows dematerialized inverses to be rematerialized
+          // we shouldn't be notifying here though, figure out where
+          // a notification was missed elsewhere.
+          if (!silenceNotifications) {
+            notifyChange(graph, relationship.identifier, relationship.definition.key);
+          }
         }
       }
     } else {
@@ -53351,102 +53485,12 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   function assertRelationshipData(store, identifier, data, meta) {
     (false && !(!Array.isArray(data)) && (0, _debug.assert)(`A ${identifier.type} record was pushed into the store with the value of ${meta.key} being '${JSON.stringify(data)}', but ${meta.key} is a belongsTo relationship so the value must not be an array. You should probably check your data payload or serializer.`, !Array.isArray(data)));
-    (false && !(data === null || typeof data.type === 'string' && data.type.length) && (0, _debug.assert)(`Encountered a relationship identifier without a type for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, expected an identifier with type '${meta.type}' but found\n\n'${JSON.stringify(data, null, 2)}'\n\nPlease check your serializer and make sure it is serializing the relationship payload into a JSON API format.`, data === null || typeof data.type === 'string' && data.type.length));
-    (false && !(data === null || !!coerceId(data.id)) && (0, _debug.assert)(`Encountered a relationship identifier without an id for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, expected an identifier but found\n\n'${JSON.stringify(data, null, 2)}'\n\nPlease check your serializer and make sure it is serializing the relationship payload into a JSON API format.`, data === null || !!coerceId(data.id)));
+    (false && !(data === null || 'type' in data && typeof data.type === 'string' && data.type.length) && (0, _debug.assert)(`Encountered a relationship identifier without a type for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${String(identifier.id)}>, expected an identifier with type '${meta.type}' but found\n\n'${JSON.stringify(data, null, 2)}'\n\nPlease check your serializer and make sure it is serializing the relationship payload into a JSON API format.`, data === null || 'type' in data && typeof data.type === 'string' && data.type.length));
+    (false && !(data === null || !!coerceId(data.id)) && (0, _debug.assert)(`Encountered a relationship identifier without an id for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${String(identifier.id)}>, expected an identifier but found\n\n'${JSON.stringify(data, null, 2)}'\n\nPlease check your serializer and make sure it is serializing the relationship payload into a JSON API format.`, data === null || !!coerceId(data.id)));
     if (data?.type === meta.type) {
-      (false && !(store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Missing Schema: Encountered a relationship identifier { type: '${data.type}', id: '${data.id}' } for the '${identifier.type}.${meta.key}' ${meta.kind} relationship on <${identifier.type}:${identifier.id}>, but no schema exists for that type.`, store.getSchemaDefinitionService().doesTypeExist(data.type)));
+      (false && !(store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Missing Schema: Encountered a relationship identifier { type: '${data.type}', id: '${String(data.id)}' } for the '${identifier.type}.${meta.key}' ${meta.kind} relationship on <${identifier.type}:${String(identifier.id)}>, but no schema exists for that type.`, store.getSchemaDefinitionService().doesTypeExist(data.type)));
     } else {
-      (false && !(data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Missing Schema: Encountered a relationship identifier with type '${data.type}' for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${identifier.id}>, Expected an identifier with type '${meta.type}'. No schema was found for '${data.type}'.`, data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)));
-    }
-  }
-  function createState() {
-    return {
-      hasReceivedData: false,
-      isEmpty: true,
-      isStale: false,
-      hasFailedLoadAttempt: false,
-      shouldForceReload: false,
-      hasDematerializedInverse: false
-    };
-  }
-  class BelongsToRelationship {
-    constructor(definition, identifier) {
-      this.definition = definition;
-      this.identifier = identifier;
-      this._state = null;
-      this.transactionRef = 0;
-      this.meta = null;
-      this.links = null;
-      this.localState = null;
-      this.remoteState = null;
-    }
-    get state() {
-      let {
-        _state
-      } = this;
-      if (!_state) {
-        _state = this._state = createState();
-      }
-      return _state;
-    }
-    getData() {
-      let data;
-      let payload = {};
-      if (this.localState) {
-        data = this.localState;
-      }
-      if (this.localState === null && this.state.hasReceivedData) {
-        data = null;
-      }
-      if (this.links) {
-        payload.links = this.links;
-      }
-      if (data !== undefined) {
-        payload.data = data;
-      }
-      if (this.meta) {
-        payload.meta = this.meta;
-      }
-      return payload;
-    }
-  }
-  class ManyRelationship {
-    constructor(definition, identifier) {
-      this.definition = definition;
-      this.identifier = identifier;
-      this._state = null;
-      this.transactionRef = 0;
-      this.localMembers = new Set();
-      this.remoteMembers = new Set();
-      this.meta = null;
-      this.links = null;
-
-      // persisted state
-      this.remoteState = [];
-      // local client state
-      this.localState = [];
-    }
-    get state() {
-      let {
-        _state
-      } = this;
-      if (!_state) {
-        _state = this._state = createState();
-      }
-      return _state;
-    }
-    getData() {
-      let payload = {};
-      if (this.state.hasReceivedData) {
-        payload.data = this.localState.slice();
-      }
-      if (this.links) {
-        payload.links = this.links;
-      }
-      if (this.meta) {
-        payload.meta = this.meta;
-      }
-      return payload;
+      (false && !(data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)) && (0, _debug.assert)(`Missing Schema: Encountered a relationship identifier with type '${data.type}' for the ${meta.kind} relationship '${meta.key}' on <${identifier.type}:${String(identifier.id)}>, Expected an identifier with type '${meta.type}'. No schema was found for '${data.type}'.`, data === null || !data.type || store.getSchemaDefinitionService().doesTypeExist(data.type)));
     }
   }
 
@@ -53464,6 +53508,796 @@ lunr.QueryParser.parseBoost = function (parser) {
   */
   let assertPolymorphicType;
   let assertInheritedSchema;
+  /*
+      case many:1
+      ========
+      In a bi-directional graph with Many:1 edges, adding a value
+      results in up-to 3 discrete value transitions, while removing
+      a value is only 2 transitions.
+  
+      For adding C to A
+      If: A <<-> B, C <->> D is the initial state,
+      and: B <->> A <<-> C, D is the final state
+  
+      then we would undergo the following transitions.
+  
+      add C to A
+      remove C from D
+      add A to C
+  
+      For removing B from A
+      If: A <<-> B, C <->> D is the initial state,
+      and: A, B, C <->> D is the final state
+  
+      then we would undergo the following transitions.
+  
+      remove B from A
+      remove A from B
+  
+      case many:many
+      ===========
+      In a bi-directional graph with Many:Many edges, adding or
+      removing a value requires only 2 value transitions.
+  
+      For Adding
+      If: A<<->>B, C<<->>D is the initial state (double arrows representing the many side)
+      And: D<<->>C<<->>A<<->>B is the final state
+  
+      Then we would undergo two transitions.
+  
+      add C to A.
+      add A to C
+  
+      For Removing
+      If: A<<->>B, C<<->>D is the initial state (double arrows representing the many side)
+      And: A, B, C<<->>D is the final state
+  
+      Then we would undergo two transitions.
+  
+      remove B from A
+      remove A from B
+  
+      case many:?
+      ========
+      In a uni-directional graph with Many:? edges (modeled in EmberData with `inverse:null`) with
+      artificial (implicit) inverses, replacing a value results in 2 discrete value transitions.
+      This is because a Many:? relationship is effectively Many:Many.
+    */
+  function replaceRelatedRecords(graph, op, isRemote) {
+    if (isRemote) {
+      replaceRelatedRecordsRemote(graph, op, isRemote);
+    } else {
+      replaceRelatedRecordsLocal(graph, op, isRemote);
+    }
+  }
+  function replaceRelatedRecordsLocal(graph, op, isRemote) {
+    const identifiers = op.value;
+    const relationship = graph.get(op.record, op.field);
+    (false && !(isHasMany(relationship)) && (0, _debug.assert)(`expected hasMany relationship`, isHasMany(relationship)));
+    relationship.state.hasReceivedData = true;
+    const {
+      additions,
+      removals
+    } = relationship;
+    const {
+      inverseKey,
+      type
+    } = relationship.definition;
+    const {
+      record
+    } = op;
+    const wasDirty = relationship.isDirty;
+    relationship.isDirty = false;
+    const onAdd = identifier => {
+      // Since we are diffing against the remote state, we check
+      // if our previous local state did not contain this identifier
+      const removalsHas = removals?.has(identifier);
+      if (removalsHas || !additions?.has(identifier)) {
+        if (type !== identifier.type) {
+          graph.registerPolymorphicType(type, identifier.type);
+        }
+        relationship.isDirty = true;
+        addToInverse(graph, identifier, inverseKey, op.record, isRemote);
+        if (removalsHas) {
+          removals.delete(identifier);
+        }
+      }
+    };
+    const onRemove = identifier => {
+      // Since we are diffing against the remote state, we check
+      // if our previous local state had contained this identifier
+      const additionsHas = additions?.has(identifier);
+      if (additionsHas || !removals?.has(identifier)) {
+        relationship.isDirty = true;
+        removeFromInverse(graph, identifier, inverseKey, record, isRemote);
+        if (additionsHas) {
+          additions.delete(identifier);
+        }
+      }
+    };
+    const diff = diffCollection(identifiers, relationship, onAdd, onRemove);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    relationship.isDirty || diff.changed;
+
+    // any additions no longer in the local state
+    // need to be removed from the inverse
+    if (additions && additions.size > 0) {
+      additions.forEach(identifier => {
+        if (!diff.add.has(identifier)) {
+          onRemove(identifier);
+        }
+      });
+    }
+
+    // any removals no longer in the local state
+    // need to be added back to the inverse
+    if (removals && removals.size > 0) {
+      removals.forEach(identifier => {
+        if (!diff.del.has(identifier)) {
+          onAdd(identifier);
+        }
+      });
+    }
+    relationship.additions = diff.add;
+    relationship.removals = diff.del;
+    relationship.localState = diff.finalState;
+    relationship.isDirty = wasDirty;
+    if (!wasDirty /*&& becameDirty // TODO to guard like this we need to detect reorder when diffing local */) {
+      notifyChange(graph, op.record, op.field);
+    }
+  }
+  function replaceRelatedRecordsRemote(graph, op, isRemote) {
+    const identifiers = op.value;
+    const relationship = graph.get(op.record, op.field);
+    (false && !(isHasMany(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a hasMany relationship. ${op.record.type}.${op.field} is a ${relationship.definition.kind}`, isHasMany(relationship)));
+    if (isRemote) {
+      graph._addToTransaction(relationship);
+    }
+    relationship.state.hasReceivedData = true;
+
+    // cache existing state
+    const {
+      definition
+    } = relationship;
+    const {
+      type
+    } = relationship.definition;
+    const diff = diffCollection(identifiers, relationship, identifier => {
+      if (type !== identifier.type) {
+        graph.registerPolymorphicType(type, identifier.type);
+      }
+      // commit additions
+      // TODO build this into the diff?
+      // because we are not dirty if this was a committed local addition
+      if (relationship.additions?.has(identifier)) {
+        relationship.additions.delete(identifier);
+      } else {
+        relationship.isDirty = true;
+      }
+      addToInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
+    }, identifier => {
+      // commit removals
+      // TODO build this into the diff?
+      // because we are not dirty if this was a committed local addition
+      if (relationship.removals?.has(identifier)) {
+        relationship.removals.delete(identifier);
+      } else {
+        relationship.isDirty = true;
+      }
+      removeFromInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
+    });
+
+    // replace existing state
+    relationship.remoteMembers = diff.finalSet;
+    relationship.remoteState = diff.finalState;
+
+    // changed also indicates a change in order
+    if (diff.changed) {
+      relationship.isDirty = true;
+    }
+
+    // TODO unsure if we need this but it
+    // may allow us to more efficiently patch
+    // the associated ManyArray
+    relationship._diff = diff;
+    {
+      // only do this for legacy hasMany, not collection
+      // and provide a way to incrementally migrate
+      if (relationship.definition.kind === 'hasMany' && relationship.definition.resetOnRemoteUpdate !== false) {
+        const deprecationInfo = {
+          removals: [],
+          additions: [],
+          triggered: false
+        };
+        if (relationship.removals) {
+          relationship.isDirty = true;
+          relationship.removals.forEach(identifier => {
+            deprecationInfo.triggered = true;
+            deprecationInfo.removals.push(identifier);
+            // reverse the removal
+            // if we are still in removals at this point then
+            // we were not "committed" which means we are present
+            // in the remoteMembers. So we "add back" on the inverse.
+            addToInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
+          });
+          relationship.removals = null;
+        }
+        if (relationship.additions) {
+          relationship.additions.forEach(identifier => {
+            // reverse the addition
+            // if we are still in additions at this point then
+            // we were not "committed" which means we are not present
+            // in the remoteMembers. So we "remove" from the inverse.
+            // however we only do this if we are not a "new" record.
+            if (!isNew(identifier)) {
+              deprecationInfo.triggered = true;
+              deprecationInfo.additions.push(identifier);
+              relationship.isDirty = true;
+              relationship.additions.delete(identifier);
+              removeFromInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
+            }
+          });
+          if (relationship.additions.size === 0) {
+            relationship.additions = null;
+          }
+        }
+        if (deprecationInfo.triggered) {
+          (false && !(false) && (0, _debug.deprecate)(`EmberData is changing the default semantics of updates to the remote state of relationships.\n\nThe following local state was cleared from the <${relationship.identifier.type}>.${relationship.definition.key} hasMany relationship but will not be once this deprecation is resolved by opting into the new behavior:\n\n\tAdded: [${deprecationInfo.additions.map(i => i.lid).join(', ')}]\n\tRemoved: [${deprecationInfo.removals.map(i => i.lid).join(', ')}]`, false, {
+            id: 'ember-data:deprecate-relationship-remote-update-clearing-local-state',
+            for: 'ember-data',
+            since: {
+              enabled: '5.3',
+              available: '5.3'
+            },
+            until: '6.0',
+            url: 'https://deprecations.emberjs.com/v5.x#ember-data-deprecate-relationship-remote-update-clearing-local-state'
+          }));
+        }
+      }
+    }
+    if (relationship.isDirty) {
+      flushCanonical(graph, relationship);
+    }
+  }
+  function addToInverse(graph, identifier, key, value, isRemote) {
+    const relationship = graph.get(identifier, key);
+    const {
+      type
+    } = relationship.definition;
+    if (type !== value.type) {
+      graph.registerPolymorphicType(type, value.type);
+    }
+    if (isBelongsTo(relationship)) {
+      relationship.state.hasReceivedData = true;
+      relationship.state.isEmpty = false;
+      if (isRemote) {
+        graph._addToTransaction(relationship);
+        if (relationship.remoteState !== null) {
+          removeFromInverse(graph, relationship.remoteState, relationship.definition.inverseKey, identifier, isRemote);
+        }
+        relationship.remoteState = value;
+      }
+      if (relationship.localState !== value) {
+        if (!isRemote && relationship.localState) {
+          removeFromInverse(graph, relationship.localState, relationship.definition.inverseKey, identifier, isRemote);
+        }
+        relationship.localState = value;
+        notifyChange(graph, identifier, key);
+      }
+    } else if (isHasMany(relationship)) {
+      if (isRemote) {
+        // TODO this needs to alert stuffs
+        // And patch state better
+        // This is almost definitely wrong
+        // WARNING WARNING WARNING
+
+        if (!relationship.remoteMembers.has(value)) {
+          graph._addToTransaction(relationship);
+          relationship.remoteState.push(value);
+          relationship.remoteMembers.add(value);
+          if (relationship.additions?.has(value)) {
+            relationship.additions.delete(value);
+          } else {
+            relationship.isDirty = true;
+            relationship.state.hasReceivedData = true;
+            flushCanonical(graph, relationship);
+          }
+        }
+      } else {
+        if (_addLocal(graph, identifier, relationship, value, null)) {
+          notifyChange(graph, identifier, key);
+        }
+      }
+    } else {
+      if (isRemote) {
+        if (!relationship.remoteMembers.has(value)) {
+          relationship.remoteMembers.add(value);
+          relationship.localMembers.add(value);
+        }
+      } else {
+        if (!relationship.localMembers.has(value)) {
+          relationship.localMembers.add(value);
+        }
+      }
+    }
+  }
+  function notifyInverseOfPotentialMaterialization(graph, identifier, key, value, isRemote) {
+    const relationship = graph.get(identifier, key);
+    if (isHasMany(relationship) && isRemote && relationship.remoteMembers.has(value)) {
+      notifyChange(graph, identifier, key);
+    }
+  }
+  function removeFromInverse(graph, identifier, key, value, isRemote) {
+    const relationship = graph.get(identifier, key);
+    if (isBelongsTo(relationship)) {
+      relationship.state.isEmpty = true;
+      if (isRemote) {
+        graph._addToTransaction(relationship);
+        relationship.remoteState = null;
+      }
+      if (relationship.localState === value) {
+        relationship.localState = null;
+        notifyChange(graph, identifier, key);
+      }
+    } else if (isHasMany(relationship)) {
+      if (isRemote) {
+        graph._addToTransaction(relationship);
+        if (_removeRemote(relationship, value)) {
+          notifyChange(graph, identifier, key);
+        }
+      } else {
+        if (_removeLocal(relationship, value)) {
+          notifyChange(graph, identifier, key);
+        }
+      }
+    } else {
+      if (isRemote) {
+        relationship.remoteMembers.delete(value);
+        relationship.localMembers.delete(value);
+      } else {
+        if (value && relationship.localMembers.has(value)) {
+          relationship.localMembers.delete(value);
+        }
+      }
+    }
+  }
+  function flushCanonical(graph, rel) {
+    graph._scheduleLocalSync(rel);
+  }
+  function replaceRelatedRecord(graph, op, isRemote = false) {
+    const relationship = graph.get(op.record, op.field);
+    (false && !(isBelongsTo(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a belongsTo relationship. ${op.record.type}.${op.field} is a ${relationship.definition.kind}`, isBelongsTo(relationship)));
+    if (isRemote) {
+      graph._addToTransaction(relationship);
+    }
+    const {
+      definition,
+      state
+    } = relationship;
+    const prop = isRemote ? 'remoteState' : 'localState';
+    const existingState = relationship[prop];
+
+    /*
+      case 1:1
+      ========
+      In a bi-directional graph with 1:1 edges, replacing a value
+      results in up-to 4 discrete value transitions.
+       If: A <-> B, C <-> D is the initial state,
+      and: A <-> C, B, D is the final state
+       then we would undergo the following 4 transitions.
+       remove A from B
+      add C to A
+      remove C from D
+      add A to C
+       case 1:many
+      ===========
+      In a bi-directional graph with 1:Many edges, replacing a value
+      results in up-to 3 discrete value transitions.
+       If: A<->>B<<->D, C<<->D is the initial state (double arrows representing the many side)
+      And: A<->>C<<->D, B<<->D is the final state
+       Then we would undergo three transitions.
+       remove A from B
+      add C to A.
+      add A to C
+       case 1:?
+      ========
+      In a uni-directional graph with 1:? edges (modeled in EmberData with `inverse:null`) with
+      artificial (implicit) inverses, replacing a value results in up-to 3 discrete value transitions.
+      This is because a 1:? relationship is effectively 1:many.
+       If: A->B, C->B is the initial state
+      And: A->C, C->B is the final state
+       Then we would undergo three transitions.
+       Remove A from B
+      Add C to A
+      Add A to C
+    */
+
+    // nothing for us to do
+    if (op.value === existingState) {
+      // if we were empty before but now know we are empty this needs to be true
+      state.hasReceivedData = true;
+      // if this is a remote update we still sync
+      if (isRemote) {
+        const {
+          localState
+        } = relationship;
+        // don't sync if localState is a new record and our remoteState is null
+        if (localState && isNew(localState) && !existingState) {
+          return;
+        }
+        if (existingState && localState === existingState) {
+          notifyInverseOfPotentialMaterialization(graph, existingState, definition.inverseKey, op.record, isRemote);
+        } else {
+          // if localState does not match existingState then we know
+          // we have a local mutation that has not been persisted yet
+          if (localState !== op.value && relationship.definition.resetOnRemoteUpdate !== false) {
+            relationship.localState = existingState;
+            (false && !(false) && (0, _debug.deprecate)(`EmberData is changing the default semantics of updates to the remote state of relationships.\n\nThe following local state was cleared from the <${relationship.identifier.type}>.${relationship.definition.key} belongsTo relationship but will not be once this deprecation is resolved:\n\n\t${localState ? 'Added: ' + localState.lid + '\n\t' : ''}${existingState ? 'Removed: ' + existingState.lid : ''}`, false, {
+              id: 'ember-data:deprecate-relationship-remote-update-clearing-local-state',
+              for: 'ember-data',
+              since: {
+                enabled: '5.3',
+                available: '5.3'
+              },
+              until: '6.0',
+              url: 'https://deprecations.emberjs.com/v5.x#ember-data-deprecate-relationship-remote-update-clearing-local-state'
+            }));
+            notifyChange(graph, relationship.identifier, relationship.definition.key);
+          }
+        }
+      }
+      return;
+    }
+
+    // remove this value from the inverse if required
+    if (existingState) {
+      removeFromInverse(graph, existingState, definition.inverseKey, op.record, isRemote);
+    }
+
+    // update value to the new value
+    relationship[prop] = op.value;
+    state.hasReceivedData = true;
+    state.isEmpty = op.value === null;
+    state.isStale = false;
+    state.hasFailedLoadAttempt = false;
+    if (op.value) {
+      if (definition.type !== op.value.type) {
+        // assert(
+        //   `The '<${definition.inverseType}>.${op.field}' relationship expects only '${definition.type}' records since it is not polymorphic. Received a Record of type '${op.value.type}'`,
+        //   definition.isPolymorphic
+        // );
+
+        // TODO this should now handle the deprecation warning if isPolymorphic is not set
+        // but the record does turn out to be polymorphic
+        // this should still assert if the user is relying on legacy inheritance/mixins to
+        // provide polymorphic behavior and has not yet added the polymorphic flags
+
+        graph.registerPolymorphicType(definition.type, op.value.type);
+      }
+      addToInverse(graph, op.value, definition.inverseKey, op.record, isRemote);
+    }
+    if (isRemote) {
+      const {
+        localState,
+        remoteState
+      } = relationship;
+      if (localState && isNew(localState) && !remoteState) {
+        return;
+      }
+      // when localState does not match the new remoteState and
+      // localState === existingState then we had no local mutation
+      // and we can safely sync the new remoteState to local
+      if (localState !== remoteState && localState === existingState) {
+        relationship.localState = remoteState;
+        notifyChange(graph, relationship.identifier, relationship.definition.key);
+        // But when localState does not match the new remoteState and
+        // and localState !== existingState then we know we have a local mutation
+        // that has not been persisted yet.
+      } else {
+        if (localState !== remoteState && localState !== existingState && relationship.definition.resetOnRemoteUpdate !== false) {
+          relationship.localState = existingState;
+          (false && !(false) && (0, _debug.deprecate)(`EmberData is changing the default semantics of updates to the remote state of relationships.\n\nThe following local state was cleared from the <${relationship.identifier.type}>.${relationship.definition.key} belongsTo relationship but will not be once this deprecation is resolved:\n\n\t${localState ? 'Added: ' + localState.lid + '\n\t' : ''}${existingState ? 'Removed: ' + existingState.lid : ''}`, false, {
+            id: 'ember-data:deprecate-relationship-remote-update-clearing-local-state',
+            for: 'ember-data',
+            since: {
+              enabled: '5.3',
+              available: '5.3'
+            },
+            until: '6.0',
+            url: 'https://deprecations.emberjs.com/v5.x#ember-data-deprecate-relationship-remote-update-clearing-local-state'
+          }));
+          notifyChange(graph, relationship.identifier, relationship.definition.key);
+        }
+      }
+    } else {
+      notifyChange(graph, relationship.identifier, relationship.definition.key);
+    }
+  }
+  function _deprecatedCompare(newState, newMembers, prevState, prevSet, onAdd, onDel) {
+    const newLength = newState.length;
+    const prevLength = prevState.length;
+    const iterationLength = Math.max(newLength, prevLength);
+    let changed = newMembers.size !== prevSet.size;
+    const added = new Set();
+    const removed = new Set();
+    const duplicates = new Map();
+    const finalSet = new Set();
+    const finalState = [];
+    for (let i = 0, j = 0; i < iterationLength; i++) {
+      let adv = false;
+      let member;
+
+      // accumulate anything added
+      if (i < newLength) {
+        member = newState[i];
+        if (!finalSet.has(member)) {
+          finalState[j] = member;
+          finalSet.add(member);
+          adv = true;
+          if (!prevSet.has(member)) {
+            changed = true;
+            added.add(member);
+            onAdd(member);
+          }
+        } else {
+          let list = duplicates.get(member);
+          if (list === undefined) {
+            list = [];
+            duplicates.set(member, list);
+          }
+          list.push(i);
+        }
+      }
+
+      // accumulate anything removed
+      if (i < prevLength) {
+        const prevMember = prevState[i];
+
+        // detect reordering, adjusting index for duplicates
+        // j is always less than i and so if i < prevLength, j < prevLength
+        if (member !== prevState[j]) {
+          changed = true;
+        }
+        if (!newMembers.has(prevMember)) {
+          changed = true;
+          removed.add(prevMember);
+          onDel(prevMember);
+        }
+      } else if (adv && j < prevLength && member !== prevState[j]) {
+        changed = true;
+      }
+      if (adv) {
+        j++;
+      }
+    }
+    const diff = {
+      add: added,
+      del: removed,
+      finalState,
+      finalSet,
+      changed
+    };
+    return {
+      diff,
+      duplicates
+    };
+  }
+  function _compare(finalState, finalSet, prevState, prevSet, onAdd, onDel) {
+    const finalLength = finalState.length;
+    const prevLength = prevState.length;
+    const iterationLength = Math.max(finalLength, prevLength);
+    const equalLength = finalLength === prevLength;
+    let changed = finalSet.size !== prevSet.size;
+    const added = new Set();
+    const removed = new Set();
+    for (let i = 0; i < iterationLength; i++) {
+      let member;
+
+      // accumulate anything added
+      if (i < finalLength) {
+        member = finalState[i];
+        if (!prevSet.has(member)) {
+          changed = true;
+          added.add(member);
+          onAdd(member);
+        }
+      }
+
+      // accumulate anything removed
+      if (i < prevLength) {
+        const prevMember = prevState[i];
+
+        // detect reordering
+        if (equalLength && member !== prevMember) {
+          changed = true;
+        }
+        if (!finalSet.has(prevMember)) {
+          changed = true;
+          removed.add(prevMember);
+          onDel(prevMember);
+        }
+      }
+    }
+    return {
+      add: added,
+      del: removed,
+      finalState,
+      finalSet,
+      changed
+    };
+  }
+  function diffCollection(finalState, relationship, onAdd, onDel) {
+    const finalSet = new Set(finalState);
+    const {
+      remoteState,
+      remoteMembers
+    } = relationship;
+    {
+      if (finalState.length !== finalSet.size) {
+        const {
+          diff,
+          duplicates
+        } = _deprecatedCompare(finalState, finalSet, remoteState, remoteMembers, onAdd, onDel);
+        return diff;
+      }
+    }
+    return _compare(finalState, finalSet, remoteState, remoteMembers, onAdd, onDel);
+  }
+  function computeLocalState(storage) {
+    if (!storage.isDirty) {
+      (false && !(Array.isArray(storage.localState)) && (0, _debug.assert)(`Expected localState to be present`, Array.isArray(storage.localState)));
+      return storage.localState;
+    }
+    let state = storage.remoteState.slice();
+    storage.removals?.forEach(v => {
+      let index = state.indexOf(v);
+      state.splice(index, 1);
+    });
+    storage.additions?.forEach(v => {
+      state.push(v);
+    });
+    storage.localState = state;
+    storage.isDirty = false;
+    return state;
+  }
+  function _addLocal(graph, record, relationship, value, index) {
+    const {
+      remoteMembers,
+      removals
+    } = relationship;
+    let additions = relationship.additions;
+    const hasPresence = remoteMembers.has(value) || additions?.has(value);
+    if (hasPresence && !removals?.has(value)) {
+      (false && !(hasPresence && !removals?.has(value)) && (0, _debug.assert)(`Attempted to add the resource '${value.lid}' to the collection <${relationship.identifier.type}>.${relationship.definition.key} it was already in`, hasPresence && !removals?.has(value)));
+      return false;
+    }
+    if (removals?.has(value)) {
+      removals.delete(value);
+    } else {
+      if (!additions) {
+        additions = relationship.additions = new Set();
+      }
+      relationship.state.hasReceivedData = true;
+      additions.add(value);
+      const {
+        type
+      } = relationship.definition;
+      if (type !== value.type) {
+        graph.registerPolymorphicType(value.type, type);
+      }
+    }
+
+    // if we have existing localState
+    // and we have an index
+    // apply the change, as this is more efficient
+    // than recomputing localState and
+    // it allows us to preserve local ordering
+    // to a small extend. Local ordering should not
+    // be relied upon as any remote change will blow it away
+    if (relationship.localState) {
+      if (index !== null) {
+        relationship.localState.splice(index, 0, value);
+      } else {
+        relationship.localState.push(value);
+      }
+    }
+    (false && !(relationship.localState || relationship.isDirty) && (0, _debug.assert)(`Expected relationship to be dirty when adding a local mutation`, relationship.localState || relationship.isDirty));
+    return true;
+  }
+  function _removeLocal(relationship, value) {
+    (false && !(value) && (0, _debug.assert)(`expected an identifier to remove from the collection relationship`, value));
+    const {
+      remoteMembers,
+      additions
+    } = relationship;
+    let removals = relationship.removals;
+    const hasPresence = remoteMembers.has(value) || additions?.has(value);
+    if (!hasPresence || removals?.has(value)) {
+      (false && !(!hasPresence || removals?.has(value)) && (0, _debug.assert)(`Attempted to remove the resource '${value.lid}' from the collection <${relationship.identifier.type}>.${relationship.definition.key} but it was not present`, !hasPresence || removals?.has(value)));
+      return false;
+    }
+    if (additions?.has(value)) {
+      additions.delete(value);
+    } else {
+      if (!removals) {
+        removals = relationship.removals = new Set();
+      }
+      removals.add(value);
+    }
+
+    // if we have existing localState
+    // apply the change, as this is more efficient
+    // than recomputing localState and
+    // it allows us to preserve local ordering
+    // to a small extend. Local ordering should not
+    // be relied upon as any remote change will blow it away
+    if (relationship.localState) {
+      const index = relationship.localState.indexOf(value);
+      (false && !(index !== -1) && (0, _debug.assert)(`Cannot remove a resource that is not present`, index !== -1));
+      relationship.localState.splice(index, 1);
+    }
+    (false && !(relationship.localState || relationship.isDirty) && (0, _debug.assert)(`Expected relationship to be dirty when performing a local mutation`, relationship.localState || relationship.isDirty));
+    return true;
+  }
+  function _removeRemote(relationship, value) {
+    (false && !(value) && (0, _debug.assert)(`expected an identifier to remove from the collection relationship`, value));
+    const {
+      remoteMembers,
+      additions,
+      removals,
+      remoteState
+    } = relationship;
+    (false && !(remoteMembers.has(value)) && (0, _debug.assert)(`Cannot remove a resource that is not present`, remoteMembers.has(value)));
+    if (!remoteMembers.has(value)) {
+      return false;
+    }
+
+    // remove from remote state
+    remoteMembers.delete(value);
+    let index = remoteState.indexOf(value);
+    (false && !(index !== -1) && (0, _debug.assert)(`Cannot remove a resource that is not present`, index !== -1));
+    remoteState.splice(index, 1);
+
+    // remove from removals if present
+    if (removals?.has(value)) {
+      removals.delete(value);
+
+      // nothing more to do this was our state already
+      return false;
+    }
+    (false && !(!additions?.has(value)) && (0, _debug.assert)(`Remote state indicated removal of a resource that was present only as a local mutation`, !additions?.has(value))); // if we have existing localState
+    // and we have an index
+    // apply the change, as this is more efficient
+    // than recomputing localState and
+    // it allows us to preserve local ordering
+    // to a small extend. Local ordering should not
+    // be relied upon as any remote change will blow it away
+    if (relationship.localState) {
+      index = relationship.localState.indexOf(value);
+      (false && !(index !== -1) && (0, _debug.assert)(`Cannot remove a resource that is not present`, index !== -1));
+      relationship.localState.splice(index, 1);
+    }
+    (false && !(relationship.localState || relationship.isDirty) && (0, _debug.assert)(`Expected relationship to be dirty when performing a local mutation`, relationship.localState || relationship.isDirty));
+    return true;
+  }
+  function rollbackRelationship(graph, identifier, field, relationship) {
+    if (isBelongsTo(relationship)) {
+      replaceRelatedRecord(graph, {
+        op: 'replaceRelatedRecord',
+        record: identifier,
+        field,
+        value: relationship.remoteState
+      }, false);
+    } else {
+      replaceRelatedRecords(graph, {
+        op: 'replaceRelatedRecords',
+        record: identifier,
+        field,
+        value: relationship.remoteState
+      }, false);
+    }
+  }
+
   /**
    *
    * Given RHS (Right Hand Side)
@@ -53542,6 +54376,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     definition.inverseIsCollection = inverseDefinition.isCollection;
     definition.inverseIsPolymorphic = inverseDefinition.isPolymorphic;
     definition.inverseIsImplicit = inverseDefinition.isImplicit;
+    const resetOnRemoteUpdate = definition.resetOnRemoteUpdate === false || inverseDefinition.resetOnRemoteUpdate === false ? false : true;
+    definition.resetOnRemoteUpdate = resetOnRemoteUpdate;
+    inverseDefinition.resetOnRemoteUpdate = resetOnRemoteUpdate;
   }
   function upgradeMeta(meta) {
     let niceMeta = {};
@@ -53559,6 +54396,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     niceMeta.inverseIsAsync = BOOL_LATER;
     niceMeta.inverseIsImplicit = options && options.inverse === null || BOOL_LATER;
     niceMeta.inverseIsCollection = BOOL_LATER;
+    niceMeta.resetOnRemoteUpdate = options && options.resetOnRemoteUpdate === false ? false : true;
     return niceMeta;
   }
   function assertConfiguration(info, type, key) {}
@@ -53571,7 +54409,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       type === info.lhs_baseModelName ||
       // base or non-polymorphic
       // if the other side is polymorphic then we need to scan our modelNames
-      info.rhs_isPolymorphic && info.lhs_modelNames.indexOf(type) !== -1 // polymorphic
+      info.rhs_isPolymorphic && info.lhs_modelNames.includes(type) // polymorphic
       ;
     }
 
@@ -53584,7 +54422,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     const {
       type
     } = identifier;
-    let cached = expandingGet(cache, type, propertyName);
+    let cached = /*#__NOINLINE__*/expandingGet(cache, type, propertyName);
 
     // CASE: We have a cached resolution (null if no relationship exists)
     if (cached !== undefined) {
@@ -53600,11 +54438,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (polymorphicLookup[type]) {
         const altTypes = Object.keys(polymorphicLookup[type]);
         for (let i = 0; i < altTypes.length; i++) {
-          let cached = expandingGet(cache, altTypes[i], propertyName);
-          if (cached) {
-            expandingSet(cache, type, propertyName, cached);
-            cached.rhs_modelNames.push(type);
-            return cached;
+          const _cached = expandingGet(cache, altTypes[i], propertyName);
+          if (_cached) {
+            /*#__NOINLINE__*/expandingSet(cache, type, propertyName, _cached);
+            _cached.rhs_modelNames.push(type);
+            return _cached;
           }
         }
       }
@@ -53615,7 +54453,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       cache[type][propertyName] = null;
       return null;
     }
-    const definition = upgradeMeta(meta);
+    const definition = /*#__NOINLINE__*/upgradeMeta(meta);
     let inverseDefinition;
     let inverseKey;
     const inverseType = definition.type;
@@ -53626,7 +54464,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       (false && !(getStore(storeWrapper).modelFor(inverseType)) && (0, _debug.assert)(`Expected the inverse model to exist`, getStore(storeWrapper).modelFor(inverseType)));
       inverseDefinition = null;
     } else {
-      inverseKey = inverseForRelationship(getStore(storeWrapper), identifier, propertyName);
+      inverseKey = /*#__NOINLINE__*/inverseForRelationship(getStore(storeWrapper), identifier, propertyName);
 
       // CASE: If we are polymorphic, and we declared an inverse that is non-null
       // we must assume that the lack of inverseKey means that there is no
@@ -53643,9 +54481,8 @@ lunr.QueryParser.parseBoost = function (parser) {
           isImplicit: false,
           isCollection: false,
           // this must be updated when we find the first belongsTo or hasMany definition that matches
-          isPolymorphic: false,
-          isInitialized: false // tracks whether we have seen the other side at least once
-        };
+          isPolymorphic: false
+        }; // the rest of the fields are populated by syncMeta
 
         // CASE: Inverse resolves to null
       } else if (!inverseKey) {
@@ -53656,16 +54493,16 @@ lunr.QueryParser.parseBoost = function (parser) {
           type: inverseType
         });
         (false && !(inverseDefinitions) && (0, _debug.assert)(`Expected to have a relationship definition for ${inverseType} but none was found.`, inverseDefinitions));
-        let meta = inverseDefinitions[inverseKey];
-        (false && !(meta) && (0, _debug.assert)(`Expected a relationship schema for '${inverseType}.${inverseKey}' to match the inverse of '${type}.${propertyName}', but no relationship schema was found.`, meta));
-        inverseDefinition = upgradeMeta(meta);
+        let metaFromInverse = inverseDefinitions[inverseKey];
+        (false && !(metaFromInverse) && (0, _debug.assert)(`Expected a relationship schema for '${inverseType}.${inverseKey}' to match the inverse of '${type}.${propertyName}', but no relationship schema was found.`, metaFromInverse));
+        inverseDefinition = upgradeMeta(metaFromInverse);
       }
     }
 
     // CASE: We have no inverse
     if (!inverseDefinition) {
       // polish off meta
-      inverseKey = implicitKeyFor(type, propertyName);
+      inverseKey = /*#__NOINLINE__*/implicitKeyFor(type, propertyName);
       inverseDefinition = {
         kind: 'implicit',
         key: inverseKey,
@@ -53675,7 +54512,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         isCollection: true,
         // with implicits any number of records could point at us
         isPolymorphic: false
-      };
+      }; // the rest of the fields are populated by syncMeta
+
       syncMeta(definition, inverseDefinition);
       syncMeta(inverseDefinition, definition);
       const info = {
@@ -53714,12 +54552,13 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     // CASE: We may have already discovered the inverse for the baseModelName
     // CASE: We have already discovered the inverse
+    (false && !(typeof inverseKey === 'string' && inverseKey.length > 0) && (0, _debug.assert)(`We should have determined an inverseKey by now, open an issue if this is hit`, typeof inverseKey === 'string' && inverseKey.length > 0));
     cached = expandingGet(cache, baseType, propertyName) || expandingGet(cache, inverseType, inverseKey);
     if (cached) {
       // TODO this assert can be removed if the above assert is enabled
       (false && !(cached.hasInverse !== false) && (0, _debug.assert)(`The ${inverseType}:${inverseKey} relationship declares 'inverse: null', but it was resolved as the inverse for ${type}:${propertyName}.`, cached.hasInverse !== false));
-      let isLHS = cached.lhs_baseModelName === baseType;
-      let modelNames = isLHS ? cached.lhs_modelNames : cached.rhs_modelNames;
+      let _isLHS = cached.lhs_baseModelName === baseType;
+      let modelNames = _isLHS ? cached.lhs_modelNames : cached.rhs_modelNames;
       // make this lookup easier in the future by caching the key
       modelNames.push(type);
       expandingSet(cache, type, propertyName, cached);
@@ -53769,345 +54608,98 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(definition.options?.inverse === null || typeof definition.options?.inverse === 'string' && definition.options.inverse.length > 0) && (0, _debug.assert)(`Expected the relationship defintion to specify the inverse type or null.`, definition.options?.inverse === null || typeof definition.options?.inverse === 'string' && definition.options.inverse.length > 0));
     return definition.options.inverse;
   }
+  function createState() {
+    return {
+      hasReceivedData: false,
+      isEmpty: true,
+      isStale: false,
+      hasFailedLoadAttempt: false,
+      shouldForceReload: false,
+      hasDematerializedInverse: false
+    };
+  }
+  function createCollectionEdge(definition, identifier) {
+    return {
+      definition,
+      identifier,
+      state: createState(),
+      remoteMembers: new Set(),
+      remoteState: [],
+      additions: null,
+      removals: null,
+      meta: null,
+      links: null,
+      localState: null,
+      isDirty: true,
+      transactionRef: 0,
+      _diff: undefined
+    };
+  }
+  function legacyGetCollectionRelationshipData(source) {
+    let payload = {};
+    if (source.state.hasReceivedData) {
+      payload.data = computeLocalState(source);
+    }
+    if (source.links) {
+      payload.links = source.links;
+    }
+    if (source.meta) {
+      payload.meta = source.meta;
+    }
+    return payload;
+  }
+  function createImplicitEdge(definition, identifier) {
+    return {
+      definition,
+      identifier,
+      localMembers: new Set(),
+      remoteMembers: new Set()
+    };
+  }
 
   /*
-      case many:1
-      ========
-      In a bi-directional graph with Many:1 edges, adding a value
-      results in up-to 3 discrete value transitions, while removing
-      a value is only 2 transitions.
-  
-      For adding C to A
-      If: A <<-> B, C <->> D is the initial state,
-      and: B <->> A <<-> C, D is the final state
-  
-      then we would undergo the following transitions.
-  
-      add C to A
-      remove C from D
-      add A to C
-  
-      For removing B from A
-      If: A <<-> B, C <->> D is the initial state,
-      and: A, B, C <->> D is the final state
-  
-      then we would undergo the following transitions.
-  
-      remove B from A
-      remove A from B
-  
-      case many:many
-      ===========
-      In a bi-directional graph with Many:Many edges, adding or
-      removing a value requires only 2 value transitions.
-  
-      For Adding
-      If: A<<->>B, C<<->>D is the initial state (double arrows representing the many side)
-      And: D<<->>C<<->>A<<->>B is the final state
-  
-      Then we would undergo two transitions.
-  
-      add C to A.
-      add A to C
-  
-      For Removing
-      If: A<<->>B, C<<->>D is the initial state (double arrows representing the many side)
-      And: A, B, C<<->>D is the final state
-  
-      Then we would undergo two transitions.
-  
-      remove B from A
-      remove A from B
-  
-      case many:?
-      ========
-      In a uni-directional graph with Many:? edges (modeled in EmberData with `inverse:null`) with
-      artificial (implicit) inverses, replacing a value results in 2 discrete value transitions.
-      This is because a Many:? relationship is effectively Many:Many.
-    */
-  function replaceRelatedRecords(graph, op, isRemote) {
-    if (isRemote) {
-      replaceRelatedRecordsRemote(graph, op, isRemote);
-    } else {
-      replaceRelatedRecordsLocal(graph, op, isRemote);
-    }
-  }
-  function replaceRelatedRecordsLocal(graph, op, isRemote) {
-    const identifiers = op.value;
-    const relationship = graph.get(op.record, op.field);
-    (false && !(isHasMany(relationship)) && (0, _debug.assert)(`expected hasMany relationship`, isHasMany(relationship)));
-    relationship.state.hasReceivedData = true;
+   * @module @ember-data/graph
+   *
+   * Stores the data for one side of a "single" resource relationship.
+   *
+   * @class ResourceEdge
+   * @internal
+   */
 
-    // cache existing state
-    const {
-      localState,
-      localMembers,
-      definition
-    } = relationship;
-    const newValues = new Set(identifiers);
-    const identifiersLength = identifiers.length;
-    const newState = new Array(newValues.size);
-    const newMembership = new Set();
-
-    // wipe existing state
-    relationship.localMembers = newMembership;
-    relationship.localState = newState;
-    const {
-      type
-    } = relationship.definition;
-    let changed = false;
-    const currentLength = localState.length;
-    const iterationLength = currentLength > identifiersLength ? currentLength : identifiersLength;
-    const equalLength = currentLength === identifiersLength;
-    for (let i = 0, j = 0; i < iterationLength; i++) {
-      let adv = false;
-      if (i < identifiersLength) {
-        const identifier = identifiers[i];
-        // skip processing if we encounter a duplicate identifier in the array
-        if (!newMembership.has(identifier)) {
-          if (type !== identifier.type) {
-            graph.registerPolymorphicType(type, identifier.type);
-          }
-          newState[j] = identifier;
-          adv = true;
-          newMembership.add(identifier);
-          if (!localMembers.has(identifier)) {
-            changed = true;
-            addToInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
-          }
-        }
-      }
-      if (i < currentLength) {
-        const identifier = localState[i];
-
-        // detect reordering
-        if (!newMembership.has(identifier)) {
-          if (equalLength && newState[i] !== identifier) {
-            changed = true;
-          }
-          if (!newValues.has(identifier)) {
-            changed = true;
-            removeFromInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
-          }
-        }
-      }
-      if (adv) {
-        j++;
-      }
-    }
-    if (changed) {
-      notifyChange(graph, relationship.identifier, relationship.definition.key);
-    }
+  function createResourceEdge(definition, identifier) {
+    return {
+      definition,
+      identifier,
+      state: createState(),
+      transactionRef: 0,
+      localState: null,
+      remoteState: null,
+      meta: null,
+      links: null
+    };
   }
-  function replaceRelatedRecordsRemote(graph, op, isRemote) {
-    const identifiers = op.value;
-    const relationship = graph.get(op.record, op.field);
-    (false && !(isHasMany(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a hasMany relationship. ${op.record.type}.${op.field} is a ${relationship.definition.kind}`, isHasMany(relationship)));
-    if (isRemote) {
-      graph._addToTransaction(relationship);
+  function legacyGetResourceRelationshipData(source) {
+    let data;
+    let payload = {};
+    if (source.localState) {
+      data = source.localState;
     }
-    relationship.state.hasReceivedData = true;
-
-    // cache existing state
-    const {
-      remoteState,
-      remoteMembers,
-      definition
-    } = relationship;
-    const newValues = new Set(identifiers);
-    const identifiersLength = identifiers.length;
-    const newState = new Array(newValues.size);
-    const newMembership = new Set();
-
-    // wipe existing state
-    relationship.remoteMembers = newMembership;
-    relationship.remoteState = newState;
-    const {
-      type
-    } = relationship.definition;
-    let changed = false;
-    const canonicalLength = remoteState.length;
-    const iterationLength = canonicalLength > identifiersLength ? canonicalLength : identifiersLength;
-    const equalLength = canonicalLength === identifiersLength;
-    for (let i = 0, j = 0; i < iterationLength; i++) {
-      let adv = false;
-      if (i < identifiersLength) {
-        const identifier = identifiers[i];
-        if (!newMembership.has(identifier)) {
-          if (type !== identifier.type) {
-            graph.registerPolymorphicType(type, identifier.type);
-          }
-          newState[j] = identifier;
-          newMembership.add(identifier);
-          adv = true;
-          if (!remoteMembers.has(identifier)) {
-            changed = true;
-            addToInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
-          }
-        }
-      }
-      if (i < canonicalLength) {
-        const identifier = remoteState[i];
-        if (!newMembership.has(identifier)) {
-          // detect reordering
-          if (equalLength && newState[j] !== identifier) {
-            changed = true;
-          }
-          if (!newValues.has(identifier)) {
-            changed = true;
-            removeFromInverse(graph, identifier, definition.inverseKey, op.record, isRemote);
-          }
-        }
-      }
-      if (adv) {
-        j++;
-      }
+    if (source.localState === null && source.state.hasReceivedData) {
+      data = null;
     }
-    if (changed) {
-      flushCanonical(graph, relationship);
-      /*
-      replaceRelatedRecordsLocal(
-        graph,
-        {
-          op: op.op,
-          record: op.record,
-          field: op.field,
-          value: remoteState,
-        },
-        false
-      );*/
-    } else {
-      // preserve legacy behavior we want to change but requires some sort
-      // of deprecation.
-      flushCanonical(graph, relationship);
+    if (source.links) {
+      payload.links = source.links;
     }
-  }
-  function addToInverse(graph, identifier, key, value, isRemote) {
-    const relationship = graph.get(identifier, key);
-    const {
-      type
-    } = relationship.definition;
-    if (type !== value.type) {
-      graph.registerPolymorphicType(type, value.type);
+    if (data !== undefined) {
+      payload.data = data;
     }
-    if (isBelongsTo(relationship)) {
-      relationship.state.hasReceivedData = true;
-      relationship.state.isEmpty = false;
-      if (isRemote) {
-        graph._addToTransaction(relationship);
-        if (relationship.remoteState !== null) {
-          removeFromInverse(graph, relationship.remoteState, relationship.definition.inverseKey, identifier, isRemote);
-        }
-        relationship.remoteState = value;
-      }
-      if (relationship.localState !== value) {
-        if (!isRemote && relationship.localState) {
-          removeFromInverse(graph, relationship.localState, relationship.definition.inverseKey, identifier, isRemote);
-        }
-        relationship.localState = value;
-        notifyChange(graph, relationship.identifier, relationship.definition.key);
-      }
-    } else if (isHasMany(relationship)) {
-      if (isRemote) {
-        if (!relationship.remoteMembers.has(value)) {
-          graph._addToTransaction(relationship);
-          relationship.remoteState.push(value);
-          relationship.remoteMembers.add(value);
-          relationship.state.hasReceivedData = true;
-          flushCanonical(graph, relationship);
-        }
-      } else {
-        if (!relationship.localMembers.has(value)) {
-          relationship.localState.push(value);
-          relationship.localMembers.add(value);
-          relationship.state.hasReceivedData = true;
-          notifyChange(graph, relationship.identifier, relationship.definition.key);
-        }
-      }
-    } else {
-      if (isRemote) {
-        if (!relationship.remoteMembers.has(value)) {
-          relationship.remoteMembers.add(value);
-          relationship.localMembers.add(value);
-        }
-      } else {
-        if (!relationship.localMembers.has(value)) {
-          relationship.localMembers.add(value);
-        }
-      }
+    if (source.meta) {
+      payload.meta = source.meta;
     }
-  }
-  function notifyInverseOfPotentialMaterialization(graph, identifier, key, value, isRemote) {
-    const relationship = graph.get(identifier, key);
-    if (isHasMany(relationship) && isRemote && relationship.remoteMembers.has(value)) {
-      notifyChange(graph, relationship.identifier, relationship.definition.key);
-    }
-  }
-  function removeFromInverse(graph, identifier, key, value, isRemote) {
-    const relationship = graph.get(identifier, key);
-    if (isBelongsTo(relationship)) {
-      relationship.state.isEmpty = true;
-      if (isRemote) {
-        graph._addToTransaction(relationship);
-        relationship.remoteState = null;
-      }
-      if (relationship.localState === value) {
-        relationship.localState = null;
-        notifyChange(graph, identifier, key);
-      }
-    } else if (isHasMany(relationship)) {
-      if (isRemote) {
-        graph._addToTransaction(relationship);
-        let index = relationship.remoteState.indexOf(value);
-        if (index !== -1) {
-          relationship.remoteMembers.delete(value);
-          relationship.remoteState.splice(index, 1);
-        }
-      }
-      let index = relationship.localState.indexOf(value);
-      if (index !== -1) {
-        relationship.localMembers.delete(value);
-        relationship.localState.splice(index, 1);
-      }
-      notifyChange(graph, relationship.identifier, relationship.definition.key);
-    } else {
-      if (isRemote) {
-        relationship.remoteMembers.delete(value);
-        relationship.localMembers.delete(value);
-      } else {
-        if (value && relationship.localMembers.has(value)) {
-          relationship.localMembers.delete(value);
-        }
-      }
-    }
-  }
-  function syncRemoteToLocal(graph, rel) {
-    let toSet = rel.remoteState;
-    let newIdentifiers = rel.localState.filter(identifier => isNew(identifier) && toSet.indexOf(identifier) === -1);
-    let existingState = rel.localState;
-    rel.localState = toSet.concat(newIdentifiers);
-    let localMembers = rel.localMembers = new Set();
-    rel.remoteMembers.forEach(v => localMembers.add(v));
-    for (let i = 0; i < newIdentifiers.length; i++) {
-      localMembers.add(newIdentifiers[i]);
-    }
-
-    // TODO always notifying fails only one test and we should probably do away with it
-    if (existingState.length !== rel.localState.length) {
-      notifyChange(graph, rel.identifier, rel.definition.key);
-    } else {
-      for (let i = 0; i < existingState.length; i++) {
-        if (existingState[i] !== rel.localState[i]) {
-          notifyChange(graph, rel.identifier, rel.definition.key);
-          break;
-        }
-      }
-    }
-  }
-  function flushCanonical(graph, rel) {
-    graph._scheduleLocalSync(rel);
+    return payload;
   }
   function addToRelatedRecords(graph, op, isRemote) {
+    (false && !(!isRemote) && (0, _debug.assert)(`Graph does not yet support updating the remote state of a relationship via the ${op.op} operation`, !isRemote));
     const {
       record,
       value,
@@ -54125,28 +54717,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     notifyChange(graph, relationship.identifier, relationship.definition.key);
   }
   function addRelatedRecord(graph, relationship, record, value, index, isRemote) {
-    (false && !(value) && (0, _debug.assert)(`expected an identifier to add to the relationship`, value));
-    const {
-      localMembers,
-      localState
-    } = relationship;
-    if (localMembers.has(value)) {
-      return;
+    (false && !(value) && (0, _debug.assert)(`expected an identifier to add to the collection relationship`, value));
+    if (_addLocal(graph, record, relationship, value, index ?? null)) {
+      addToInverse(graph, value, relationship.definition.inverseKey, record, isRemote);
     }
-    const {
-      type
-    } = relationship.definition;
-    if (type !== value.type) {
-      graph.registerPolymorphicType(value.type, type);
-    }
-    relationship.state.hasReceivedData = true;
-    localMembers.add(value);
-    if (index === undefined) {
-      localState.push(value);
-    } else {
-      localState.splice(index, 0, value);
-    }
-    addToInverse(graph, value, relationship.definition.inverseKey, record, isRemote);
   }
   function mergeIdentifier(graph, op, relationships) {
     Object.keys(relationships).forEach(key => {
@@ -54188,12 +54762,19 @@ lunr.QueryParser.parseBoost = function (parser) {
       rel.remoteMembers.add(op.value);
       const index = rel.remoteState.indexOf(op.record);
       rel.remoteState.splice(index, 1, op.value);
+      rel.isDirty = true;
     }
-    if (rel.localMembers.has(op.record)) {
-      rel.localMembers.delete(op.record);
-      rel.localMembers.add(op.value);
-      const index = rel.localState.indexOf(op.record);
-      rel.localState.splice(index, 1, op.value);
+    if (rel.additions?.has(op.record)) {
+      rel.additions.delete(op.record);
+      rel.additions.add(op.value);
+      rel.isDirty = true;
+    }
+    if (rel.removals?.has(op.record)) {
+      rel.removals.delete(op.record);
+      rel.removals.add(op.value);
+      rel.isDirty = true;
+    }
+    if (rel.isDirty) {
       notifyChange(graph, rel.identifier, rel.definition.key);
     }
   }
@@ -54208,12 +54789,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
   function removeFromRelatedRecords(graph, op, isRemote) {
+    (false && !(!isRemote) && (0, _debug.assert)(`Graph does not yet support updating the remote state of a relationship via the ${op.op} operation`, !isRemote));
     const {
       record,
       value
     } = op;
     const relationship = graph.get(record, op.field);
-    (false && !(isHasMany(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a hasMany relationship. ${record.type}.${op.field} is a ${relationship.definition.kind}`, isHasMany(relationship)));
+    (false && !(isHasMany(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a hasMany relationship. ${record.type}.${op.field} is a ${relationship.definition.kind}`, isHasMany(relationship))); // TODO we should potentially thread the index information through here
+    // when available as it may make it faster to remove from the local state
+    // when trying to patch more efficiently without blowing away the entire
+    // local state array
     if (Array.isArray(value)) {
       for (let i = 0; i < value.length; i++) {
         removeRelatedRecord(graph, relationship, record, value[i], isRemote);
@@ -54224,132 +54809,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     notifyChange(graph, relationship.identifier, relationship.definition.key);
   }
   function removeRelatedRecord(graph, relationship, record, value, isRemote) {
-    (false && !(value) && (0, _debug.assert)(`expected an identifier to add to the relationship`, value));
-    const {
-      localMembers,
-      localState
-    } = relationship;
-    if (!localMembers.has(value)) {
-      return;
-    }
-    localMembers.delete(value);
-    let index = localState.indexOf(value);
-    (false && !(index !== -1) && (0, _debug.assert)(`expected localMembers and localState to be in sync`, index !== -1));
-    localState.splice(index, 1);
-    removeFromInverse(graph, value, relationship.definition.inverseKey, record, isRemote);
-  }
-  function replaceRelatedRecord(graph, op, isRemote = false) {
-    const relationship = graph.get(op.record, op.field);
-    (false && !(isBelongsTo(relationship)) && (0, _debug.assert)(`You can only '${op.op}' on a belongsTo relationship. ${op.record.type}.${op.field} is a ${relationship.definition.kind}`, isBelongsTo(relationship)));
-    if (isRemote) {
-      graph._addToTransaction(relationship);
-    }
-    const {
-      definition,
-      state
-    } = relationship;
-    const prop = isRemote ? 'remoteState' : 'localState';
-    const existingState = relationship[prop];
-
-    /*
-      case 1:1
-      ========
-      In a bi-directional graph with 1:1 edges, replacing a value
-      results in up-to 4 discrete value transitions.
-       If: A <-> B, C <-> D is the initial state,
-      and: A <-> C, B, D is the final state
-       then we would undergo the following 4 transitions.
-       remove A from B
-      add C to A
-      remove C from D
-      add A to C
-       case 1:many
-      ===========
-      In a bi-directional graph with 1:Many edges, replacing a value
-      results in up-to 3 discrete value transitions.
-       If: A<->>B<<->D, C<<->D is the initial state (double arrows representing the many side)
-      And: A<->>C<<->D, B<<->D is the final state
-       Then we would undergo three transitions.
-       remove A from B
-      add C to A.
-      add A to C
-       case 1:?
-      ========
-      In a uni-directional graph with 1:? edges (modeled in EmberData with `inverse:null`) with
-      artificial (implicit) inverses, replacing a value results in up-to 3 discrete value transitions.
-      This is because a 1:? relationship is effectively 1:many.
-       If: A->B, C->B is the initial state
-      And: A->C, C->B is the final state
-       Then we would undergo three transitions.
-       Remove A from B
-      Add C to A
-      Add A to C
-    */
-
-    // nothing for us to do
-    if (op.value === existingState) {
-      // if we were empty before but now know we are empty this needs to be true
-      state.hasReceivedData = true;
-      // if this is a remote update we still sync
-      if (isRemote) {
-        const {
-          localState
-        } = relationship;
-        // don't sync if localState is a new record and our remoteState is null
-        if (localState && isNew(localState) && !existingState) {
-          return;
-        }
-        if (existingState && localState === existingState) {
-          notifyInverseOfPotentialMaterialization(graph, existingState, definition.inverseKey, op.record, isRemote);
-        } else {
-          relationship.localState = existingState;
-          notifyChange(graph, relationship.identifier, relationship.definition.key);
-        }
-      }
-      return;
-    }
-
-    // remove this value from the inverse if required
-    if (existingState) {
-      removeFromInverse(graph, existingState, definition.inverseKey, op.record, isRemote);
-    }
-
-    // update value to the new value
-    relationship[prop] = op.value;
-    state.hasReceivedData = true;
-    state.isEmpty = op.value === null;
-    state.isStale = false;
-    state.hasFailedLoadAttempt = false;
-    if (op.value) {
-      if (definition.type !== op.value.type) {
-        // assert(
-        //   `The '<${definition.inverseType}>.${op.field}' relationship expects only '${definition.type}' records since it is not polymorphic. Received a Record of type '${op.value.type}'`,
-        //   definition.isPolymorphic
-        // );
-
-        // TODO this should now handle the deprecation warning if isPolymorphic is not set
-        // but the record does turn out to be polymorphic
-        // this should still assert if the user is relying on legacy inheritance/mixins to
-        // provide polymorphic behavior and has not yet added the polymorphic flags
-
-        graph.registerPolymorphicType(definition.type, op.value.type);
-      }
-      addToInverse(graph, op.value, definition.inverseKey, op.record, isRemote);
-    }
-    if (isRemote) {
-      const {
-        localState,
-        remoteState
-      } = relationship;
-      if (localState && isNew(localState) && !remoteState) {
-        return;
-      }
-      if (localState !== remoteState) {
-        relationship.localState = remoteState;
-        notifyChange(graph, relationship.identifier, relationship.definition.key);
-      }
-    } else {
-      notifyChange(graph, relationship.identifier, relationship.definition.key);
+    (false && !(value) && (0, _debug.assert)(`expected an identifier to remove from the collection relationship`, value));
+    if (_removeLocal(relationship, value)) {
+      removeFromInverse(graph, value, relationship.definition.inverseKey, record, isRemote);
     }
   }
 
@@ -54401,20 +54863,18 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
         (false && !(Array.isArray(payload.data)) && (0, _debug.assert)(`Expected an array`, Array.isArray(payload.data)));
         const cache = graph.store.identifierCache;
-        // TODO may not need to cast to stable identifiers here since update likely does this too
         graph.update({
           op: 'replaceRelatedRecords',
           record: identifier,
           field: op.field,
-          value: payload.data.map(i => cache.getOrCreateRecordIdentifier(i))
+          value: upgradeIdentifiers(payload.data, cache)
         }, true);
       } else {
-        // TODO may not need to cast to stable identifiers here since update likely does this too
         graph.update({
           op: 'replaceRelatedRecord',
           record: identifier,
           field: op.field,
-          value: payload.data ? graph.store.identifierCache.getOrCreateRecordIdentifier(payload.data) : null
+          value: payload.data ? graph.store.identifierCache.upgradeIdentifier(payload.data) : null
         }, true);
       }
     } else if (definition.isAsync === false && !state.hasReceivedData) {
@@ -54483,7 +54943,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       // this only works when the side with just a link is a belongsTo, as we
       // don't know if a hasMany has full information or not.
       // see #7049 for context.
-      if (isCollection || !relationship.state.hasReceivedData || relationship.transactionRef === 0) {
+      if (isCollection || !relationship.state.hasReceivedData || isStaleTransaction(relationship.transactionRef, graph._transaction)) {
         relationship.state.isStale = true;
         notifyChange(graph, relationship.identifier, relationship.definition.key);
       } else {
@@ -54491,8 +54951,23 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
   }
-  const Graphs = new Map();
+  function isStaleTransaction(relationshipTransactionId, graphTransactionId) {
+    return relationshipTransactionId === 0 ||
+    // relationship has never notified
+    graphTransactionId === null ||
+    // we are not in a transaction
+    relationshipTransactionId < graphTransactionId // we are not part of the current transaction
+    ;
+  }
 
+  function upgradeIdentifiers(arr, cache) {
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = cache.upgradeIdentifier(arr[i]);
+    }
+    return arr;
+  }
+  const Graphs = new Map();
+  let transactionRef = 0;
   /*
    * Graph acts as the cache for relationship data. It allows for
    * us to ask about and update relationships for a given Identifier
@@ -54515,6 +54990,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   class Graph {
     constructor(store) {
       this._definitionCache = Object.create(null);
+      this._metaCache = Object.create(null);
       this._potentialPolymorphicTypes = Object.create(null);
       this.identifiers = new Map();
       this.store = store;
@@ -54522,13 +54998,14 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._willSyncRemote = false;
       this._willSyncLocal = false;
       this._pushedUpdates = {
-        belongsTo: [],
-        hasMany: [],
+        belongsTo: undefined,
+        hasMany: undefined,
         deletions: []
       };
       this._updatedRelationships = new Set();
       this._transaction = null;
       this._removing = null;
+      this.silenceNotifications = false;
     }
     has(identifier, propertyName) {
       let relationships = this.identifiers.get(identifier);
@@ -54536,6 +55013,22 @@ lunr.QueryParser.parseBoost = function (parser) {
         return false;
       }
       return relationships[propertyName] !== undefined;
+    }
+    getDefinition(identifier, propertyName) {
+      let defs = this._metaCache[identifier.type];
+      let meta = defs?.[propertyName];
+      if (!meta) {
+        const info = /*#__NOINLINE__*/upgradeDefinition(this, identifier, propertyName);
+        (false && !(info !== null) && (0, _debug.assert)(`Could not determine relationship information for ${identifier.type}.${propertyName}`, info !== null)); // if (info.rhs_definition?.kind === 'implicit') {
+        // we should possibly also do this
+        // but it would result in being extremely permissive for other relationships by accident
+        // this.registerPolymorphicType(info.rhs_baseModelName, identifier.type);
+        // }
+        meta = /*#__NOINLINE__*/isLHS(info, identifier.type, propertyName) ? info.lhs_definition : info.rhs_definition;
+        defs = this._metaCache[identifier.type] = defs || {};
+        defs[propertyName] = meta;
+      }
+      return meta;
     }
     get(identifier, propertyName) {
       (false && !(propertyName) && (0, _debug.assert)(`expected propertyName`, propertyName));
@@ -54546,23 +55039,25 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       let relationship = relationships[propertyName];
       if (!relationship) {
-        const info = upgradeDefinition(this, identifier, propertyName);
-        (false && !(info !== null) && (0, _debug.assert)(`Could not determine relationship information for ${identifier.type}.${propertyName}`, info !== null));
-        if (info.rhs_definition?.kind === 'implicit') ;
-        const meta = isLHS(info, identifier.type, propertyName) ? info.lhs_definition : info.rhs_definition;
-        if (meta.kind !== 'implicit') {
-          const Klass = meta.kind === 'hasMany' ? ManyRelationship : BelongsToRelationship;
-          relationship = relationships[propertyName] = new Klass(meta, identifier);
+        const meta = this.getDefinition(identifier, propertyName);
+        if (meta.kind === 'belongsTo') {
+          relationship = relationships[propertyName] = createResourceEdge(meta, identifier);
+        } else if (meta.kind === 'hasMany') {
+          relationship = relationships[propertyName] = createCollectionEdge(meta, identifier);
         } else {
-          relationship = relationships[propertyName] = {
-            definition: meta,
-            identifier,
-            localMembers: new Set(),
-            remoteMembers: new Set()
-          };
+          (false && !(meta.kind === 'implicit' && meta.isImplicit === true) && (0, _debug.assert)(`Expected kind to be implicit`, meta.kind === 'implicit' && meta.isImplicit === true));
+          relationship = relationships[propertyName] = createImplicitEdge(meta, identifier);
         }
       }
       return relationship;
+    }
+    getData(identifier, propertyName) {
+      const relationship = this.get(identifier, propertyName);
+      (false && !(!isImplicit(relationship)) && (0, _debug.assert)(`Cannot getData() on an implicit relationship`, !isImplicit(relationship)));
+      if (isBelongsTo(relationship)) {
+        return legacyGetResourceRelationshipData(relationship);
+      }
+      return legacyGetCollectionRelationshipData(relationship);
     }
 
     /*
@@ -54627,7 +55122,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           continue;
         }
         (false && !(relationship) && (0, _debug.assert)(`Expected a relationship`, relationship));
-        if (relationship.definition.inverseIsAsync) {
+        if (relationship.definition.inverseIsAsync && !isNew(identifier)) {
           return false;
         }
       }
@@ -54643,13 +55138,104 @@ lunr.QueryParser.parseBoost = function (parser) {
           if (!rel) {
             return;
           }
+          /*#__NOINLINE__*/
           destroyRelationship(this, rel, silenceNotifications);
-          if (isImplicit(rel)) {
+          if ( /*#__NOINLINE__*/isImplicit(rel)) {
             // @ts-expect-error
             relationships[key] = undefined;
           }
         });
       }
+    }
+    _isDirty(identifier, field) {
+      const relationships = this.identifiers.get(identifier);
+      if (!relationships) {
+        return false;
+      }
+      const relationship = relationships[field];
+      if (!relationship) {
+        return false;
+      }
+      if (isBelongsTo(relationship)) {
+        return relationship.localState !== relationship.remoteState;
+      } else if (isHasMany(relationship)) {
+        const hasAdditions = relationship.additions !== null && relationship.additions.size > 0;
+        const hasRemovals = relationship.removals !== null && relationship.removals.size > 0;
+        return hasAdditions || hasRemovals || isReordered(relationship);
+      }
+      return false;
+    }
+    getChanged(identifier) {
+      const relationships = this.identifiers.get(identifier);
+      const changed = new Map();
+      if (!relationships) {
+        return changed;
+      }
+      const keys = Object.keys(relationships);
+      for (let i = 0; i < keys.length; i++) {
+        const field = keys[i];
+        const relationship = relationships[field];
+        if (!relationship) {
+          continue;
+        }
+        if (isBelongsTo(relationship)) {
+          if (relationship.localState !== relationship.remoteState) {
+            changed.set(field, {
+              kind: 'resource',
+              remoteState: relationship.remoteState,
+              localState: relationship.localState
+            });
+          }
+        } else if (isHasMany(relationship)) {
+          const hasAdditions = relationship.additions !== null && relationship.additions.size > 0;
+          const hasRemovals = relationship.removals !== null && relationship.removals.size > 0;
+          const reordered = isReordered(relationship);
+          if (hasAdditions || hasRemovals || reordered) {
+            changed.set(field, {
+              kind: 'collection',
+              additions: new Set(relationship.additions) || new Set(),
+              removals: new Set(relationship.removals) || new Set(),
+              remoteState: relationship.remoteState,
+              localState: legacyGetCollectionRelationshipData(relationship).data || [],
+              reordered
+            });
+          }
+        }
+      }
+      return changed;
+    }
+    hasChanged(identifier) {
+      const relationships = this.identifiers.get(identifier);
+      if (!relationships) {
+        return false;
+      }
+      const keys = Object.keys(relationships);
+      for (let i = 0; i < keys.length; i++) {
+        if (this._isDirty(identifier, keys[i])) {
+          return true;
+        }
+      }
+      return false;
+    }
+    rollback(identifier) {
+      const relationships = this.identifiers.get(identifier);
+      const changed = [];
+      if (!relationships) {
+        return changed;
+      }
+      const keys = Object.keys(relationships);
+      for (let i = 0; i < keys.length; i++) {
+        const field = keys[i];
+        const relationship = relationships[field];
+        if (!relationship) {
+          continue;
+        }
+        if (this._isDirty(identifier, field)) {
+          rollbackRelationship(this, identifier, field, relationship);
+          changed.push(field);
+        }
+      }
+      return changed;
     }
     remove(identifier) {
       (false && !(!this._removing) && (0, _debug.assert)(`Cannot remove ${String(identifier)} while still removing ${String(this._removing)}`, !this._removing));
@@ -54665,12 +55251,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     push(op) {
       if (op.op === 'deleteRecord') {
         this._pushedUpdates.deletions.push(op);
-      } else if (op.op === 'replaceRelatedRecord') {
-        this._pushedUpdates.belongsTo.push(op);
       } else {
-        const relationship = this.get(op.record, op.field);
-        (false && !(!isImplicit(relationship)) && (0, _debug.assert)(`Cannot push a remote update for an implicit relationship`, !isImplicit(relationship)));
-        this._pushedUpdates[relationship.definition.kind].push(op);
+        const definition = this.getDefinition(op.record, op.field);
+        (false && !(definition.kind !== 'implicit') && (0, _debug.assert)(`Cannot push a remote update for an implicit relationship`, definition.kind !== 'implicit'));
+        addPending(this._pushedUpdates, definition, op);
       }
       if (!this._willSyncRemote) {
         this._willSyncRemote = true;
@@ -54689,12 +55273,13 @@ lunr.QueryParser.parseBoost = function (parser) {
           {
             const relationships = this.identifiers.get(op.record);
             if (relationships) {
-              mergeIdentifier(this, op, relationships);
+              /*#__NOINLINE__*/mergeIdentifier(this, op, relationships);
             }
             break;
           }
         case 'updateRelationship':
           (false && !(isRemote) && (0, _debug.assert)(`Can only perform the operation updateRelationship on remote state`, isRemote));
+          /*#__NOINLINE__*/
           updateRelationshipOperation(this, op);
           break;
         case 'deleteRecord':
@@ -54711,6 +55296,7 @@ lunr.QueryParser.parseBoost = function (parser) {
                 // works together with the has check
                 // @ts-expect-error
                 relationships[key] = undefined;
+                /*#__NOINLINE__*/
                 removeCompletelyFromInverse(this, rel);
               });
               this.identifiers.delete(identifier);
@@ -54718,16 +55304,22 @@ lunr.QueryParser.parseBoost = function (parser) {
             break;
           }
         case 'replaceRelatedRecord':
-          replaceRelatedRecord(this, op, isRemote);
+          /*#__NOINLINE__*/replaceRelatedRecord(this, op, isRemote);
           break;
         case 'addToRelatedRecords':
+          // we will lift this restriction once the cache is allowed to make remote updates directly
+          (false && !(!isRemote) && (0, _debug.assert)(`Can only perform the operation addToRelatedRecords on local state`, !isRemote));
+          /*#__NOINLINE__*/
           addToRelatedRecords(this, op, isRemote);
           break;
         case 'removeFromRelatedRecords':
+          // we will lift this restriction once the cache is allowed to make remote updates directly
+          (false && !(!isRemote) && (0, _debug.assert)(`Can only perform the operation removeFromRelatedRecords on local state`, !isRemote));
+          /*#__NOINLINE__*/
           removeFromRelatedRecords(this, op, isRemote);
           break;
         case 'replaceRelatedRecords':
-          replaceRelatedRecords(this, op, isRemote);
+          /*#__NOINLINE__*/replaceRelatedRecords(this, op, isRemote);
           break;
         default:
           (false && !(false) && (0, _debug.assert)(`No local relationship update operation exists for '${op.op}'`));
@@ -54744,52 +55336,63 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (!this._willSyncRemote) {
         return;
       }
-      this._transaction = new Set();
+      this._transaction = ++transactionRef;
       this._willSyncRemote = false;
+      const updates = this._pushedUpdates;
       const {
         deletions,
         hasMany,
         belongsTo
-      } = this._pushedUpdates;
-      this._pushedUpdates.deletions = [];
-      this._pushedUpdates.hasMany = [];
-      this._pushedUpdates.belongsTo = [];
+      } = updates;
+      updates.deletions = [];
+      updates.hasMany = undefined;
+      updates.belongsTo = undefined;
       for (let i = 0; i < deletions.length; i++) {
         this.update(deletions[i], true);
       }
-      for (let i = 0; i < hasMany.length; i++) {
-        this.update(hasMany[i], true);
+      if (hasMany) {
+        flushPending(this, hasMany);
       }
-      for (let i = 0; i < belongsTo.length; i++) {
-        this.update(belongsTo[i], true);
+      if (belongsTo) {
+        flushPending(this, belongsTo);
       }
-      this._finalize();
+      this._transaction = null;
     }
     _addToTransaction(relationship) {
       (false && !(this._transaction !== null) && (0, _debug.assert)(`expected a transaction`, this._transaction !== null));
-      relationship.transactionRef++;
-      this._transaction.add(relationship);
-    }
-    _finalize() {
-      if (this._transaction) {
-        this._transaction.forEach(v => v.transactionRef = 0);
-        this._transaction = null;
-      }
+      relationship.transactionRef = this._transaction;
     }
     _flushLocalQueue() {
       if (!this._willSyncLocal) {
         return;
       }
+      if (this.silenceNotifications) {
+        this.silenceNotifications = false;
+        this._updatedRelationships = new Set();
+        return;
+      }
       this._willSyncLocal = false;
       let updated = this._updatedRelationships;
       this._updatedRelationships = new Set();
-      updated.forEach(rel => syncRemoteToLocal(this, rel));
+      updated.forEach(rel => notifyChange(this, rel.identifier, rel.definition.key));
     }
     destroy() {
       Graphs.delete(this.store);
       this.identifiers.clear();
       this.store = null;
       this.isDestroyed = true;
+    }
+  }
+  function flushPending(graph, ops) {
+    ops.forEach(type => {
+      type.forEach(opList => {
+        flushPendingList(graph, opList);
+      });
+    });
+  }
+  function flushPendingList(graph, opList) {
+    for (let i = 0; i < opList.length; i++) {
+      graph.update(opList[i], true);
     }
   }
 
@@ -54804,7 +55407,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function destroyRelationship(graph, rel, silenceNotifications) {
     if (isImplicit(rel)) {
       if (graph.isReleasable(rel.identifier)) {
-        removeCompletelyFromInverse(graph, rel);
+        /*#__NOINLINE__*/removeCompletelyFromInverse(graph, rel);
       }
       return;
     }
@@ -54815,10 +55418,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       inverseKey
     } = rel.definition;
     if (!rel.definition.inverseIsImplicit) {
-      forAllRelatedIdentifiers(rel, inverseIdentifer => notifyInverseOfDematerialization(graph, inverseIdentifer, inverseKey, identifier, silenceNotifications));
+      /*#__NOINLINE__*/forAllRelatedIdentifiers(rel, inverseIdentifer => /*#__NOINLINE__*/notifyInverseOfDematerialization(graph, inverseIdentifer, inverseKey, identifier, silenceNotifications));
     }
     if (!rel.definition.inverseIsImplicit && !rel.definition.inverseIsAsync) {
       rel.state.isStale = true;
+      /*#__NOINLINE__*/
       clearRelationship(rel);
 
       // necessary to clear relationships in the ui from dematerialized records
@@ -54830,7 +55434,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       // leave the ui relationship populated since the record is destroyed and
       // internally we've fully cleaned up.
       if (!rel.definition.isAsync && !silenceNotifications) {
-        notifyChange(graph, rel.identifier, rel.definition.key);
+        /*#__NOINLINE__*/notifyChange(graph, rel.identifier, rel.definition.key);
       }
     }
   }
@@ -54842,7 +55446,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(!isImplicit(relationship)) && (0, _debug.assert)(`expected no implicit`, !isImplicit(relationship))); // For remote members, it is possible that inverseRecordData has already been associated to
     // to another record. For such cases, do not dematerialize the inverseRecordData
     if (!isBelongsTo(relationship) || !relationship.localState || identifier === relationship.localState) {
-      removeDematerializedInverse(graph, relationship, identifier, silenceNotifications);
+      /*#__NOINLINE__*/removeDematerializedInverse(graph, relationship, identifier, silenceNotifications);
     }
   }
   function clearRelationship(relationship) {
@@ -54852,25 +55456,26 @@ lunr.QueryParser.parseBoost = function (parser) {
       relationship.state.hasReceivedData = false;
       relationship.state.isEmpty = true;
     } else {
-      relationship.localMembers.clear();
       relationship.remoteMembers.clear();
-      relationship.localState = [];
       relationship.remoteState = [];
+      relationship.additions = null;
+      relationship.removals = null;
+      relationship.localState = null;
     }
   }
   function removeDematerializedInverse(graph, relationship, inverseIdentifier, silenceNotifications) {
     if (isBelongsTo(relationship)) {
-      const inverseIdentifier = relationship.localState;
-      if (!relationship.definition.isAsync || inverseIdentifier && isNew(inverseIdentifier)) {
+      const localInverse = relationship.localState;
+      if (!relationship.definition.isAsync || localInverse && isNew(localInverse)) {
         // unloading inverse of a sync relationship is treated as a client-side
         // delete, so actually remove the models don't merely invalidate the cp
         // cache.
         // if the record being unloaded only exists on the client, we similarly
         // treat it as a client side delete
-        if (relationship.localState === inverseIdentifier && inverseIdentifier !== null) {
+        if (relationship.localState === localInverse && localInverse !== null) {
           relationship.localState = null;
         }
-        if (relationship.remoteState === inverseIdentifier && inverseIdentifier !== null) {
+        if (relationship.remoteState === localInverse && localInverse !== null) {
           relationship.remoteState = null;
           relationship.state.hasReceivedData = true;
           relationship.state.isEmpty = true;
@@ -54891,6 +55496,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         // cache.
         // if the record being unloaded only exists on the client, we similarly
         // treat it as a client side delete
+        /*#__NOINLINE__*/
         removeIdentifierCompletelyFromRelationship(graph, relationship, inverseIdentifier);
       } else {
         relationship.state.hasDematerializedInverse = true;
@@ -54927,6 +55533,56 @@ lunr.QueryParser.parseBoost = function (parser) {
       relationship.localMembers.clear();
     }
   }
+  function addPending(cache, definition, op) {
+    let lc = cache[definition.kind] = cache[definition.kind] || new Map();
+    let lc2 = lc.get(definition.inverseType);
+    if (!lc2) {
+      lc2 = new Map();
+      lc.set(definition.inverseType, lc2);
+    }
+    let arr = lc2.get(op.field);
+    if (!arr) {
+      arr = [];
+      lc2.set(op.field, arr);
+    }
+    arr.push(op);
+  }
+  function isReordered(relationship) {
+    // if we are dirty we are never re-ordered because accessing
+    // the state would flush away any reordering.
+    if (relationship.isDirty) {
+      return false;
+    }
+    const {
+      remoteState,
+      localState,
+      additions,
+      removals
+    } = relationship;
+    (false && !(localState) && (0, _debug.assert)(`Expected localSate`, localState));
+    for (let i = 0, j = 0; i < remoteState.length; i++) {
+      const member = remoteState[i];
+      const localMember = localState[j];
+      if (member !== localMember) {
+        if (removals && removals.has(member)) {
+          // dont increment j because we want to skip this
+          continue;
+        }
+        if (additions && additions.has(localMember)) {
+          // increment j to skip this localMember
+          // decrement i to repeat this remoteMember
+          j++;
+          i--;
+          continue;
+        }
+        return true;
+      }
+
+      // if we made it here, increment j
+      j++;
+    }
+    return false;
+  }
   function isStore(maybeStore) {
     return maybeStore._instanceCache !== undefined;
   }
@@ -54942,14 +55598,12 @@ lunr.QueryParser.parseBoost = function (parser) {
     if (!graph) {
       graph = new Graph(wrapper);
       Graphs.set(wrapper, graph);
-
-      // in DEBUG we attach the graph to the main store for improved debuggability
+      getStore(wrapper)._graph = graph;
     }
-
     return graph;
   }
 });
-;define("@ember-data/json-api/index", ["exports", "@ember/debug", "@ember/runloop", "@ember-data/graph/-private"], function (_exports, _debug, _runloop, _private) {
+;define("@ember-data/json-api/index", ["exports", "@ember/debug", "@ember-data/graph/-private"], function (_exports, _debug, _private) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -55022,6 +55676,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.version = '2';
       this.__storeWrapper = storeWrapper;
       this.__cache = new Map();
+      this.__graph = (0, _private.graphFor)(storeWrapper);
       this.__destroyedCache = new Map();
       this.__documents = new Map();
     }
@@ -55070,9 +55725,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     put(doc) {
       (false && !(doc instanceof Error || typeof doc.content === 'object' && doc.content !== null) && (0, _debug.assert)(`Expected a JSON:API Document as the content provided to the cache, received ${doc.content}`, doc instanceof Error || typeof doc.content === 'object' && doc.content !== null));
       if (isErrorDocument(doc)) {
-        return this._putDocument(doc);
+        return this._putDocument(doc, undefined, undefined);
       } else if (isMetaDocument(doc)) {
-        return this._putDocument(doc);
+        return this._putDocument(doc, undefined, undefined);
       }
       const jsonApiDoc = doc.content;
       let included = jsonApiDoc.included;
@@ -55082,7 +55737,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       } = this.__storeWrapper;
       if (included) {
         for (i = 0, length = included.length; i < length; i++) {
-          putOne(this, identifierCache, included[i]);
+          included[i] = putOne(this, identifierCache, included[i]);
         }
       }
       if (Array.isArray(jsonApiDoc.data)) {
@@ -55091,20 +55746,25 @@ lunr.QueryParser.parseBoost = function (parser) {
         for (i = 0; i < length; i++) {
           identifiers.push(putOne(this, identifierCache, jsonApiDoc.data[i]));
         }
-        return this._putDocument(doc, identifiers);
+        return this._putDocument(doc, identifiers, included);
       }
       if (jsonApiDoc.data === null) {
-        return this._putDocument(doc, null);
+        return this._putDocument(doc, null, included);
       }
       (false && !(typeof jsonApiDoc.data === 'object') && (0, _debug.assert)(`Expected a resource object in the 'data' property in the document provided to the cache, but was ${typeof jsonApiDoc.data}`, typeof jsonApiDoc.data === 'object'));
       let identifier = putOne(this, identifierCache, jsonApiDoc.data);
-      return this._putDocument(doc, identifier);
+      return this._putDocument(doc, identifier, included);
     }
-    _putDocument(doc, data) {
+    _putDocument(doc, data, included) {
       // @ts-expect-error narrowing within is just horrible  in TS :/
       const resourceDocument = isErrorDocument(doc) ? fromStructuredError(doc) : fromBaseDocument(doc);
       if (data !== undefined) {
         resourceDocument.data = data;
+      }
+      if (included !== undefined) {
+        (false && !(!isErrorDocument(doc)) && (0, _debug.assert)(`There should not be included data on an Error document`, !isErrorDocument(doc)));
+        (false && !(!isMetaDocument(doc)) && (0, _debug.assert)(`There should not be included data on a Meta document`, !isMetaDocument(doc)));
+        resourceDocument.included = included;
       }
       const request = doc.request;
       const identifier = request ? this.__storeWrapper.identifierCache.getOrCreateDocumentIdentifier(request) : null;
@@ -55139,7 +55799,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           this.__cache.set(op.value, cache);
           this.__cache.delete(op.record);
         }
-        (0, _private.graphFor)(this.__storeWrapper).update(op, true);
+        this.__graph.update(op, true);
       }
     }
 
@@ -55152,7 +55812,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @public
      */
     mutate(mutation) {
-      (0, _private.graphFor)(this.__storeWrapper).update(mutation, false);
+      this.__graph.update(mutation, false);
     }
 
     /**
@@ -55201,15 +55861,15 @@ lunr.QueryParser.parseBoost = function (parser) {
         } = identifier;
         const attributes = Object.assign({}, peeked.remoteAttrs, peeked.inflightAttrs, peeked.localAttrs);
         const relationships = {};
-        const graph = (0, _private.graphFor)(this.__storeWrapper);
-        const rels = graph.identifiers.get(identifier);
+        const rels = this.__graph.identifiers.get(identifier);
         if (rels) {
           Object.keys(rels).forEach(key => {
             const rel = rels[key];
             if (rel.definition.isImplicit) {
               return;
+            } else {
+              relationships[key] = this.__graph.getData(identifier, key);
             }
-            relationships[key] = rel.getData();
           });
         }
         return {
@@ -55255,8 +55915,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       const peeked = this.__safePeek(identifier, false);
       const existed = !!peeked;
       const cached = peeked || this._createCache(identifier);
-      const isLoading = _isLoading(peeked, this.__storeWrapper, identifier) || !recordIsLoaded(peeked);
-      let isUpdate = !_isEmpty(peeked) && !isLoading;
+      const isLoading = /*#__NOINLINE__*/_isLoading(peeked, this.__storeWrapper, identifier) || !recordIsLoaded(peeked);
+      let isUpdate = /*#__NOINLINE__*/!_isEmpty(peeked) && !isLoading;
       if (cached.isNew) {
         cached.isNew = false;
         this.__storeWrapper.notifyChange(identifier, 'identity');
@@ -55278,7 +55938,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         cached.id = data.id;
       }
       if (data.relationships) {
-        setupRelationships(this.__storeWrapper, identifier, data);
+        setupRelationships(this.__graph, this.__storeWrapper, identifier, data);
       }
       if (changedKeys && changedKeys.length) {
         notifyAttributes(this.__storeWrapper, identifier, changedKeys);
@@ -55416,7 +56076,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         const storeWrapper = this.__storeWrapper;
         let attributeDefs = storeWrapper.getSchemaDefinitionService().attributesDefinitionFor(identifier);
         let relationshipDefs = storeWrapper.getSchemaDefinitionService().relationshipsDefinitionFor(identifier);
-        const graph = (0, _private.graphFor)(storeWrapper);
+        const graph = this.__graph;
         let propertyNames = Object.keys(options);
         for (let i = 0; i < propertyNames.length; i++) {
           let name = propertyNames[i];
@@ -55500,7 +56160,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const identifier = operation !== 'deleteRecord' && data ? identifierCache.updateRecordIdentifier(committedIdentifier, data) : committedIdentifier;
       const cached = this.__peek(identifier, false);
       if (cached.isDeleted) {
-        (0, _private.graphFor)(this.__storeWrapper).push({
+        this.__graph.push({
           op: 'deleteRecord',
           record: identifier,
           isNew: false
@@ -55521,7 +56181,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         }
         (false && !(identifier.id === cached.id) && (0, _debug.assert)(`Expected the ID received for the primary '${identifier.type}' resource being saved to match the current id '${cached.id}' but received '${identifier.id}'.`, identifier.id === cached.id));
         if (data.relationships) {
-          setupRelationships(this.__storeWrapper, identifier, data);
+          setupRelationships(this.__graph, this.__storeWrapper, identifier, data);
         }
         newCanonicalAttributes = data.attributes;
       }
@@ -55600,7 +56260,15 @@ lunr.QueryParser.parseBoost = function (parser) {
       const removeFromRecordArray = !this.isDeletionCommitted(identifier);
       let removed = false;
       const cached = this.__peek(identifier, false);
-      (0, _private.peekGraph)(storeWrapper)?.unload(identifier);
+      if (cached.isNew) {
+        (0, _private.peekGraph)(storeWrapper)?.push({
+          op: 'deleteRecord',
+          record: identifier,
+          isNew: true
+        });
+      } else {
+        (0, _private.peekGraph)(storeWrapper)?.unload(identifier);
+      }
 
       // effectively clearing these is ensuring that
       // we report as `isEmpty` during teardown.
@@ -55610,10 +56278,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       let relatedIdentifiers = _allRelatedIdentifiers(storeWrapper, identifier);
       if (areAllModelsUnloaded(storeWrapper, relatedIdentifiers)) {
         for (let i = 0; i < relatedIdentifiers.length; ++i) {
-          let identifier = relatedIdentifiers[i];
-          storeWrapper.notifyChange(identifier, 'removed');
+          let relatedIdentifier = relatedIdentifiers[i];
+          storeWrapper.notifyChange(relatedIdentifier, 'removed');
           removed = true;
-          storeWrapper.disconnectRecord(identifier);
+          storeWrapper.disconnectRecord(relatedIdentifier);
         }
       }
       this.__cache.delete(identifier);
@@ -55633,11 +56301,10 @@ lunr.QueryParser.parseBoost = function (parser) {
        * of a test won't cause issues.
        */
       if (this.__destroyedCache.size === 1) {
-        (0, _runloop.schedule)('destroy', () => {
-          setTimeout(() => {
-            this.__destroyedCache.clear();
-          }, 100);
-        });
+        // TODO do we still need this?
+        setTimeout(() => {
+          this.__destroyedCache.clear();
+        }, 100);
       }
       if (!removed && removeFromRecordArray) {
         storeWrapper.notifyChange(identifier, 'removed');
@@ -55702,7 +56369,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @method changedAttrs
      * @public
      * @param identifier
-     * @returns { <field>: [<old>, <new>] }
+     * @returns {ChangedAttributesHash} { <field>: [<old>, <new>] }
      */
     changedAttrs(identifier) {
       // TODO freeze in dev
@@ -55742,11 +56409,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         cached.changes = null;
       }
       if (cached.isNew) {
-        (0, _private.graphFor)(this.__storeWrapper).push({
-          op: 'deleteRecord',
-          record: identifier,
-          isNew: true
-        });
+        // > Note: Graph removal handled by unloadRecord
+        cached.isDeletionCommitted = true;
         cached.isDeleted = true;
         cached.isNew = false;
       }
@@ -55763,6 +56427,70 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
 
     /**
+       * Query the cache for the changes to relationships of a resource.
+       *
+       * Returns a map of relationship names to RelationshipDiff objects.
+       *
+       * ```ts
+       * type RelationshipDiff =
+      | {
+          kind: 'collection';
+          remoteState: StableRecordIdentifier[];
+          additions: Set<StableRecordIdentifier>;
+          removals: Set<StableRecordIdentifier>;
+          localState: StableRecordIdentifier[];
+          reordered: boolean;
+        }
+      | {
+          kind: 'resource';
+          remoteState: StableRecordIdentifier | null;
+          localState: StableRecordIdentifier | null;
+        };
+        ```
+       *
+       * @method changedRelationships
+       * @public
+       * @param {StableRecordIdentifier} identifier
+       * @returns {Map<string, RelationshipDiff>}
+       */
+    changedRelationships(identifier) {
+      return this.__graph.getChanged(identifier);
+    }
+
+    /**
+     * Query the cache for whether any mutated attributes exist
+     *
+     * @method hasChangedRelationships
+     * @public
+     * @param {StableRecordIdentifier} identifier
+     * @returns {boolean}
+     */
+    hasChangedRelationships(identifier) {
+      return this.__graph.hasChanged(identifier);
+    }
+
+    /**
+     * Tell the cache to discard any uncommitted mutations to relationships.
+     *
+     * This will also discard the change on any appropriate inverses.
+     *
+     * This method is a candidate to become a mutation
+     *
+     * @method rollbackRelationships
+     * @public
+     * @param {StableRecordIdentifier} identifier
+     * @returns {string[]} the names of relationships that were restored
+     */
+    rollbackRelationships(identifier) {
+      let result;
+      // @ts-expect-error we reach into private API here
+      this.__storeWrapper._store._join(() => {
+        result = this.__graph.rollback(identifier);
+      });
+      return result;
+    }
+
+    /**
      * Query the cache for the current state of a relationship property
      *
      * @method getRelationship
@@ -55772,7 +56500,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @returns resource relationship object
      */
     getRelationship(identifier, field) {
-      return (0, _private.graphFor)(this.__storeWrapper).get(identifier, field).getData();
+      return this.__graph.getData(identifier, field);
     }
 
     // Resource State
@@ -55792,14 +56520,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     setIsDeleted(identifier, isDeleted) {
       const cached = this.__peek(identifier, false);
       cached.isDeleted = isDeleted;
-      if (cached.isNew) {
-        // TODO can we delete this since we will do this in unload?
-        (0, _private.graphFor)(this.__storeWrapper).push({
-          op: 'deleteRecord',
-          record: identifier,
-          isNew: true
-        });
-      }
+      // > Note: Graph removal for isNew handled by unloadRecord
       this.__storeWrapper.notifyChange(identifier, 'state');
     }
 
@@ -55933,7 +56654,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     if (rel.definition.kind === 'belongsTo') {
       return rel.localState ? [rel.localState] : [];
     }
-    return rel.localState;
+    return rel.additions ? [...rel.additions] : [];
   }
   function getRemoteState(rel) {
     if (rel.definition.kind === 'belongsTo') {
@@ -56037,9 +56758,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     const isLoaded = recordIsLoaded(peeked);
     return !isLoaded &&
     // fulfilled === null &&
-    req.getPendingRequestsForRecord(identifier).some(req => req.type === 'query');
+    req.getPendingRequestsForRecord(identifier).some(r => r.type === 'query');
   }
-  function setupRelationships(storeWrapper, identifier, data) {
+  function setupRelationships(graph, storeWrapper, identifier, data) {
     // TODO @runspired iterating by definitions instead of by payload keys
     // allows relationship payloads to be ignored silently if no relationship
     // definition exists. Ensure there's a test for this and then consider
@@ -56052,7 +56773,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (!relationshipData) {
         continue;
       }
-      (0, _private.graphFor)(storeWrapper).push({
+      graph.push({
         op: 'updateRelationship',
         record: identifier,
         field: relationshipName,
@@ -56172,10 +56893,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       seen.add(identifier);
       const iterator = _directlyRelatedIdentifiersIterable(storeWrapper, originating).iterator();
       for (let obj = iterator.next(); !obj.done; obj = iterator.next()) {
-        const identifier = obj.value;
-        if (identifier && !seen.has(identifier)) {
-          seen.add(identifier);
-          queue.push(identifier);
+        const relatedIdentifier = obj.value;
+        if (relatedIdentifier && !seen.has(relatedIdentifier)) {
+          seen.add(relatedIdentifier);
+          queue.push(relatedIdentifier);
         }
       }
     }
@@ -56220,15 +56941,557 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 });
-;define("@ember-data/legacy-compat/-private-60665ff2", ["exports", "@ember-data/store/-private", "@ember/debug", "@ember-data/request", "@embroider/macros/es-compat2"], function (_exports, _private, _debug, _request, _esCompat) {
+;define("@ember-data/json-api/request", ["exports", "ember-inflector", "@ember-data/request-utils", "@ember/debug", "@ember-data/store"], function (_exports, _emberInflector, _requestUtils, _debug, _store) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.S = _exports.F = void 0;
-  _exports.a = assertIdentifierHasId;
-  _exports.c = _exports.b = void 0;
+  _exports.createRecord = createRecord;
+  _exports.deleteRecord = deleteRecord;
+  _exports.findRecord = findRecord;
+  _exports.query = query;
+  _exports.serializePatch = serializePatch;
+  _exports.serializeResources = serializeResources;
+  _exports.updateRecord = updateRecord;
+  function copyForwardUrlOptions(urlOptions, options) {
+    if ('host' in options) {
+      urlOptions.host = options.host;
+    }
+    if ('namespace' in options) {
+      urlOptions.namespace = options.namespace;
+    }
+    if ('resourcePath' in options) {
+      urlOptions.resourcePath = options.resourcePath;
+    }
+  }
+  function extractCacheOptions(options) {
+    const cacheOptions = {};
+    if ('reload' in options) {
+      cacheOptions.reload = options.reload;
+    }
+    if ('backgroundReload' in options) {
+      cacheOptions.backgroundReload = options.backgroundReload;
+    }
+    return cacheOptions;
+  }
+
+  /**
+   * @module @ember-data/json-api/request
+   */
+
+  /**
+   * Builds request options to fetch a single resource by a known id or identifier
+   * configured for the url and header expectations of most JSON:API APIs.
+   *
+   * **Basic Usage**
+   *
+   * ```ts
+   * import { findRecord } from '@ember-data/json-api/request';
+   *
+   * const data = await store.request(findRecord('person', '1'));
+   * ```
+   *
+   * **With Options**
+   *
+   * ```ts
+   * import { findRecord } from '@ember-data/json-api/request';
+   *
+   * const options = findRecord('person', '1', { include: ['pets', 'friends'] });
+   * const data = await store.request(options);
+   * ```
+   *
+   * **With an Identifier**
+   *
+   * ```ts
+   * import { findRecord } from '@ember-data/json-api/request';
+   *
+   * const options = findRecord({ type: 'person', id: '1' }, { include: ['pets', 'friends'] });
+   * const data = await store.request(options);
+   * ```
+   *
+   * **Supplying Options to Modify the Request Behavior**
+   *
+   * The following options are supported:
+   *
+   * - `host` - The host to use for the request, defaults to the `host` configured with `setBuildURLConfig`.
+   * - `namespace` - The namespace to use for the request, defaults to the `namespace` configured with `setBuildURLConfig`.
+   * - `resourcePath` - The resource path to use for the request, defaults to pluralizing the supplied type
+   * - `reload` - Whether to forcibly reload the request if it is already in the store, not supplying this
+   *      option will delegate to the store's lifetimes service, defaulting to `false` if none is configured.
+   * - `backgroundReload` - Whether to reload the request if it is already in the store, but to also resolve the
+   *      promise with the cached value, not supplying this option will delegate to the store's lifetimes service,
+   *      defaulting to `false` if none is configured.
+   * - `urlParamsSetting` - an object containing options for how to serialize the query params (see `buildQueryParams`)
+   *
+   * ```ts
+   * import { findRecord } from '@ember-data/json-api/request';
+   *
+   * const options = findRecord('person', '1', { include: ['pets', 'friends'] }, { namespace: 'api/v2' });
+   * const data = await store.request(options);
+   * ```
+   *
+   * @method findRecord
+   * @public
+   * @static
+   * @for @ember-data/json-api/request
+   * @param identifier
+   * @param options
+   */
+
+  function findRecord(arg1, arg2, arg3) {
+    const identifier = typeof arg1 === 'string' ? {
+      type: arg1,
+      id: arg2
+    } : arg1;
+    const options = (typeof arg1 === 'string' ? arg3 : arg2) || {};
+    const cacheOptions = extractCacheOptions(options);
+    const urlOptions = {
+      identifier,
+      op: 'findRecord',
+      resourcePath: (0, _emberInflector.pluralize)(identifier.type)
+    };
+    copyForwardUrlOptions(urlOptions, options);
+    const url = (0, _requestUtils.buildBaseURL)(urlOptions);
+    const headers = new Headers();
+    headers.append('Accept', 'application/vnd.api+json');
+    return {
+      url: options.include?.length ? `${url}?${(0, _requestUtils.buildQueryParams)({
+        include: options.include
+      }, options.urlParamsSettings)}` : url,
+      method: 'GET',
+      headers,
+      cacheOptions,
+      op: 'findRecord',
+      records: [identifier]
+    };
+  }
+
+  /**
+   * @module @ember-data/json-api/request
+   */
+
+  /**
+   * Builds request options to query for resources, usually by a primary
+   * type, configured for the url and header expectations of most JSON:API APIs.
+   *
+   * **Basic Usage**
+   *
+   * ```ts
+   * import { query } from '@ember-data/json-api/request';
+   *
+   * const data = await store.request(query('person'));
+   * ```
+   *
+   * **With Query Params**
+   *
+   * ```ts
+   * import { query } from '@ember-data/json-api/request';
+   *
+   * const options = query('person', { include: ['pets', 'friends'] });
+   * const data = await store.request(options);
+   * ```
+   *
+   * **Supplying Options to Modify the Request Behavior**
+   *
+   * The following options are supported:
+   *
+   * - `host` - The host to use for the request, defaults to the `host` configured with `setBuildURLConfig`.
+   * - `namespace` - The namespace to use for the request, defaults to the `namespace` configured with `setBuildURLConfig`.
+   * - `resourcePath` - The resource path to use for the request, defaults to pluralizing the supplied type
+   * - `reload` - Whether to forcibly reload the request if it is already in the store, not supplying this
+   *      option will delegate to the store's lifetimes service, defaulting to `false` if none is configured.
+   * - `backgroundReload` - Whether to reload the request if it is already in the store, but to also resolve the
+   *      promise with the cached value, not supplying this option will delegate to the store's lifetimes service,
+   *      defaulting to `false` if none is configured.
+   * - `urlParamsSetting` - an object containing options for how to serialize the query params (see `buildQueryParams`)
+   *
+   * ```ts
+   * import { query } from '@ember-data/json-api/request';
+   *
+   * const options = query('person', { include: ['pets', 'friends'] }, { reload: true });
+   * const data = await store.request(options);
+   * ```
+   *
+   * @method query
+   * @public
+   * @static
+   * @for @ember-data/json-api/request
+   * @param identifier
+   * @param query
+   * @param options
+   */
+  function query(type,
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  query = {}, options = {}) {
+    const cacheOptions = extractCacheOptions(options);
+    const urlOptions = {
+      identifier: {
+        type
+      },
+      op: 'query',
+      resourcePath: (0, _emberInflector.pluralize)(type)
+    };
+    copyForwardUrlOptions(urlOptions, options);
+    const url = (0, _requestUtils.buildBaseURL)(urlOptions);
+    const headers = new Headers();
+    headers.append('Accept', 'application/vnd.api+json');
+    return {
+      url: `${url}?${(0, _requestUtils.buildQueryParams)(query, options.urlParamsSettings)}`,
+      method: 'GET',
+      headers,
+      cacheOptions,
+      op: 'query'
+    };
+  }
+  function isExisting(identifier) {
+    return 'id' in identifier && identifier.id !== null && 'type' in identifier && identifier.type !== null;
+  }
+
+  /**
+   * Builds request options to delete record for resources,
+   * configured for the url, method and header expectations of most JSON:API APIs.
+   *
+   * **Basic Usage**
+   *
+   * ```ts
+   * import { deleteRecord } from '@ember-data/json-api/request';
+   *
+   * const person = this.store.peekRecord('person', '1');
+   *
+   * // mark record as deleted
+   * store.deleteRecord(person);
+   *
+   * // persist deletion
+   * const data = await store.request(deleteRecord(person));
+   * ```
+   *
+   * **Supplying Options to Modify the Request Behavior**
+   *
+   * The following options are supported:
+   *
+   * - `host` - The host to use for the request, defaults to the `host` configured with `setBuildURLConfig`.
+   * - `namespace` - The namespace to use for the request, defaults to the `namespace` configured with `setBuildURLConfig`.
+   * - `resourcePath` - The resource path to use for the request, defaults to pluralizing the supplied type
+   * - `reload` - Whether to forcibly reload the request if it is already in the store, not supplying this
+   *      option will delegate to the store's lifetimes service, defaulting to `false` if none is configured.
+   * - `backgroundReload` - Whether to reload the request if it is already in the store, but to also resolve the
+   *      promise with the cached value, not supplying this option will delegate to the store's lifetimes service,
+   *      defaulting to `false` if none is configured.
+   * - `urlParamsSetting` - an object containing options for how to serialize the query params (see `buildQueryParams`)
+   *
+   * ```ts
+   * import { deleteRecord } from '@ember-data/json-api/request';
+   *
+   * const person = this.store.peekRecord('person', '1');
+   *
+   * // mark record as deleted
+   * store.deleteRecord(person);
+   *
+   * // persist deletion
+   * const options = deleteRecord(person, { namespace: 'api/v1' });
+   * const data = await store.request(options);
+   * ```
+   *
+   * @method deleteRecord
+   * @public
+   * @static
+   * @for @ember-data/json-api/request
+   * @param record
+   * @param options
+   */
+  function deleteRecord(record, options = {}) {
+    const identifier = (0, _store.recordIdentifierFor)(record);
+    (false && !(identifier) && (0, _debug.assert)(`Expected to be given a record instance`, identifier));
+    (false && !(isExisting(identifier)) && (0, _debug.assert)(`Cannot delete a record that does not have an associated type and id.`, isExisting(identifier)));
+    const urlOptions = {
+      identifier: identifier,
+      op: 'deleteRecord',
+      resourcePath: (0, _emberInflector.pluralize)(identifier.type)
+    };
+    copyForwardUrlOptions(urlOptions, options);
+    const url = (0, _requestUtils.buildBaseURL)(urlOptions);
+    const headers = new Headers();
+    headers.append('Accept', 'application/vnd.api+json');
+    return {
+      url,
+      method: 'DELETE',
+      headers,
+      op: 'deleteRecord',
+      data: {
+        record: identifier
+      }
+    };
+  }
+
+  /**
+   * Builds request options to create new record for resources,
+   * configured for the url, method and header expectations of most JSON:API APIs.
+   *
+   * **Basic Usage**
+   *
+   * ```ts
+   * import { createRecord } from '@ember-data/json-api/request';
+   *
+   * const person = this.store.createRecord('person', { name: 'Ted' });
+   * const data = await store.request(createRecord(person));
+   * ```
+   *
+   * **Supplying Options to Modify the Request Behavior**
+   *
+   * The following options are supported:
+   *
+   * - `host` - The host to use for the request, defaults to the `host` configured with `setBuildURLConfig`.
+   * - `namespace` - The namespace to use for the request, defaults to the `namespace` configured with `setBuildURLConfig`.
+   * - `resourcePath` - The resource path to use for the request, defaults to pluralizing the supplied type
+   * - `reload` - Whether to forcibly reload the request if it is already in the store, not supplying this
+   *      option will delegate to the store's lifetimes service, defaulting to `false` if none is configured.
+   * - `backgroundReload` - Whether to reload the request if it is already in the store, but to also resolve the
+   *      promise with the cached value, not supplying this option will delegate to the store's lifetimes service,
+   *      defaulting to `false` if none is configured.
+   * - `urlParamsSetting` - an object containing options for how to serialize the query params (see `buildQueryParams`)
+   *
+   * ```ts
+   * import { createRecord } from '@ember-data/json-api/request';
+   *
+   * const person = this.store.createRecord('person', { name: 'Ted' });
+   * const options = createRecord(person, { namespace: 'api/v1' });
+   * const data = await store.request(options);
+   * ```
+   *
+   * @method createRecord
+   * @public
+   * @static
+   * @for @ember-data/json-api/request
+   * @param record
+   * @param options
+   */
+  function createRecord(record, options = {}) {
+    const identifier = (0, _store.recordIdentifierFor)(record);
+    (false && !(identifier) && (0, _debug.assert)(`Expected to be given a record instance`, identifier));
+    const urlOptions = {
+      identifier: identifier,
+      op: 'createRecord',
+      resourcePath: (0, _emberInflector.pluralize)(identifier.type)
+    };
+    copyForwardUrlOptions(urlOptions, options);
+    const url = (0, _requestUtils.buildBaseURL)(urlOptions);
+    const headers = new Headers();
+    headers.append('Accept', 'application/vnd.api+json');
+    return {
+      url,
+      method: 'POST',
+      headers,
+      op: 'createRecord',
+      data: {
+        record: identifier
+      }
+    };
+  }
+
+  /**
+   * Builds request options to update existing record for resources,
+   * configured for the url, method and header expectations of most JSON:API APIs.
+   *
+   * **Basic Usage**
+   *
+   * ```ts
+   * import { updateRecord } from '@ember-data/json-api/request';
+   *
+   * const person = this.store.peekRecord('person', '1');
+   * person.name = 'Chris';
+   * const data = await store.request(updateRecord(person));
+   * ```
+   *
+   * **Supplying Options to Modify the Request Behavior**
+   *
+   * The following options are supported:
+   *
+   * - `patch` - Allows caller to specify whether to use a PATCH request instead of a PUT request, defaults to `false`.
+   * - `host` - The host to use for the request, defaults to the `host` configured with `setBuildURLConfig`.
+   * - `namespace` - The namespace to use for the request, defaults to the `namespace` configured with `setBuildURLConfig`.
+   * - `resourcePath` - The resource path to use for the request, defaults to pluralizing the supplied type
+   * - `reload` - Whether to forcibly reload the request if it is already in the store, not supplying this
+   *      option will delegate to the store's lifetimes service, defaulting to `false` if none is configured.
+   * - `backgroundReload` - Whether to reload the request if it is already in the store, but to also resolve the
+   *      promise with the cached value, not supplying this option will delegate to the store's lifetimes service,
+   *      defaulting to `false` if none is configured.
+   * - `urlParamsSetting` - an object containing options for how to serialize the query params (see `buildQueryParams`)
+   *
+   * ```ts
+   * import { updateRecord } from '@ember-data/json-api/request';
+   *
+   * const person = this.store.peekRecord('person', '1');
+   * person.name = 'Chris';
+   * const options = updateRecord(person, { patch: true });
+   * const data = await store.request(options);
+   * ```
+   *
+   * @method updateRecord
+   * @public
+   * @static
+   * @for @ember-data/json-api/request
+   * @param record
+   * @param options
+   */
+  function updateRecord(record, options = {}) {
+    const identifier = (0, _store.recordIdentifierFor)(record);
+    (false && !(identifier) && (0, _debug.assert)(`Expected to be given a record instance`, identifier));
+    (false && !(isExisting(identifier)) && (0, _debug.assert)(`Cannot update a record that does not have an associated type and id.`, isExisting(identifier)));
+    const urlOptions = {
+      identifier: identifier,
+      op: 'updateRecord',
+      resourcePath: (0, _emberInflector.pluralize)(identifier.type)
+    };
+    copyForwardUrlOptions(urlOptions, options);
+    const url = (0, _requestUtils.buildBaseURL)(urlOptions);
+    const headers = new Headers();
+    headers.append('Accept', 'application/vnd.api+json');
+    return {
+      url,
+      method: options.patch ? 'PATCH' : 'PUT',
+      headers,
+      op: 'updateRecord',
+      data: {
+        record: identifier
+      }
+    };
+  }
+
+  /**
+   * @module @ember-data/json-api/request
+   */
+
+  /**
+   * Serializes the current state of a resource or array of resources for use with POST or PUT requests.
+   *
+   * @method serializeResources
+   * @static
+   * @public
+   * @for @ember-data/json-api/request
+   * @param {Cache} cache}
+   * @param {StableRecordIdentifier} identifier
+   * @returns {object} An object with a `data` property containing the serialized resource patch
+   */
+
+  function serializeResources(cache, identifiers) {
+    return {
+      data: Array.isArray(identifiers) ? identifiers.map(identifier => _serializeResource(cache, identifier)) : _serializeResource(cache, identifiers)
+    };
+  }
+  function _serializeResource(cache, identifier) {
+    const {
+      id,
+      lid,
+      type
+    } = identifier;
+    // yup! this method actually does nothing. It's just here for the dev assertion
+    // and to assist in providing a little sugar to the consuming app via the `serializeResources` utility
+    const record = cache.peek(identifier);
+    (false && !(record) && (0, _debug.assert)(`A record with id ${String(id)} and type ${type} for lid ${lid} was not found not in the supplied Cache.`, record));
+    return record;
+  }
+
+  /**
+   * Serializes changes to a resource for use with PATCH requests.
+   *
+   * Only attributes which are changed are serialized.
+   * Only relationships which are changed are serialized.
+   *
+   * Collection relationships serialize the collection as a whole.
+   *
+   * If you would like to serialize updates to a collection more granularly
+   * (for instance, as operations) request the diff from the store and
+   * serialize as desired:
+   *
+   * ```ts
+   * const relationshipDiffMap = cache.changedRelationships(identifier);
+   * ```
+   *
+   * @method serializePatch
+   * @static
+   * @public
+   * @for @ember-data/json-api/request
+   * @param {Cache} cache}
+   * @param {StableRecordIdentifier} identifier
+   * @returns {object} An object with a `data` property containing the serialized resource patch
+   */
+  function serializePatch(cache, identifier) {
+    const {
+      id,
+      lid,
+      type
+    } = identifier;
+    const record = cache.peek(identifier);
+    (false && !(record) && (0, _debug.assert)(`A record with id ${String(id)} and type ${type} for lid ${lid} was not found not in the supplied Cache.`, record));
+    const data = {
+      type,
+      lid,
+      id
+    };
+    if (cache.hasChangedAttrs(identifier)) {
+      const attrsChanges = cache.changedAttrs(identifier);
+      const attributes = {};
+      Object.keys(attrsChanges).forEach(key => {
+        const newVal = attrsChanges[key][1];
+        attributes[key] = newVal === undefined ? null : newVal;
+      });
+      data.attributes = attributes;
+    }
+    const changedRelationships = cache.changedRelationships(identifier);
+    if (changedRelationships.size) {
+      const relationships = {};
+      changedRelationships.forEach((diff, key) => {
+        relationships[key] = {
+          data: diff.localState
+        };
+      });
+      data.relationships = relationships;
+    }
+    return {
+      data
+    };
+  }
+});
+;define("@ember-data/legacy-compat/-private", ["exports", "@ember-data/legacy-compat/fetch-manager-0744e8e9"], function (_exports, _fetchManager0744e8e) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "FetchManager", {
+    enumerable: true,
+    get: function () {
+      return _fetchManager0744e8e.F;
+    }
+  });
+  Object.defineProperty(_exports, "SaveOp", {
+    enumerable: true,
+    get: function () {
+      return _fetchManager0744e8e.a;
+    }
+  });
+  Object.defineProperty(_exports, "Snapshot", {
+    enumerable: true,
+    get: function () {
+      return _fetchManager0744e8e.b;
+    }
+  });
+  Object.defineProperty(_exports, "SnapshotRecordArray", {
+    enumerable: true,
+    get: function () {
+      return _fetchManager0744e8e.S;
+    }
+  });
+});
+;define("@ember-data/legacy-compat/fetch-manager-0744e8e9", ["exports", "@ember-data/store/-private", "@ember/debug", "@ember-data/request", "@embroider/macros/es-compat2"], function (_exports, _private, _debug, _request, _esCompat) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.b = _exports.a = _exports.S = _exports.F = void 0;
+  _exports.c = assertIdentifierHasId;
   _exports.i = iterateData;
   _exports.n = normalizeResponseHelper;
   _exports.p = payloadIsNotBlank;
@@ -56375,7 +57638,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return this._snapshots;
     }
   }
-  _exports.b = SnapshotRecordArray;
+  _exports.S = SnapshotRecordArray;
   function assertIdentifierHasId(identifier) {
     (false && !(identifier.id !== null) && (0, _debug.assert)(`Attempted to schedule a fetch for a record without an id.`, identifier.id !== null));
   }
@@ -56651,10 +57914,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const {
         identifier
       } = this;
-      const relationship = graphFor(this._store).get(identifier, keyName);
-      (false && !(relationship) && (0, _debug.assert)(`You looked up the ${keyName} belongsTo relationship for { type: ${identifier.type}, id: ${identifier.id || ''}, lid: ${identifier.lid} but no such relationship was found.`, relationship));
-      (false && !(relationship.definition.kind === 'belongsTo') && (0, _debug.assert)(`You looked up the ${keyName} belongsTo relationship for { type: ${identifier.type}, id: ${identifier.id || ''}, lid: ${identifier.lid} but that relationship is a hasMany.`, relationship.definition.kind === 'belongsTo'));
-      let value = relationship.getData();
+      let value = graphFor(this._store).getData(identifier, keyName);
       let data = value && value.data;
       let inverseIdentifier = data ? store.identifierCache.getOrCreateRecordIdentifier(data) : null;
       if (value && value.data !== undefined) {
@@ -56724,10 +57984,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       const {
         identifier
       } = this;
-      const relationship = graphFor(this._store).get(identifier, keyName);
-      (false && !(relationship) && (0, _debug.assert)(`You looked up the ${keyName} hasMany relationship for { type: ${identifier.type}, id: ${identifier.id || ''}, lid: ${identifier.lid} but no such relationship was found.`, relationship));
-      (false && !(relationship.definition.kind === 'hasMany') && (0, _debug.assert)(`You looked up the ${keyName} hasMany relationship for { type: ${identifier.type}, id: ${identifier.id || ''}, lid: ${identifier.lid} but that relationship is a belongsTo.`, relationship.definition.kind === 'hasMany'));
-      let value = relationship.getData();
+      let value = graphFor(this._store).getData(identifier, keyName);
       if (value.data) {
         results = [];
         value.data.forEach(member => {
@@ -56822,9 +58079,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       return serializer.serialize(this, options);
     }
   }
-  _exports.c = Snapshot;
+  _exports.b = Snapshot;
   const SaveOp = Symbol('SaveOp');
-  _exports.S = SaveOp;
+  _exports.a = SaveOp;
   class FetchManager {
     // fetches pending in the runloop, waiting to be coalesced
 
@@ -57008,7 +58265,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     const isLoaded = cache.recordIsLoaded(identifier);
     return !isLoaded &&
     // fulfilled === null &&
-    req.getPendingRequestsForRecord(identifier).some(req => req.type === 'query');
+    req.getPendingRequestsForRecord(identifier).some(r => r.type === 'query');
   }
   function includesSatisfies(current, existing) {
     // if we have no includes we are good
@@ -57125,8 +58382,8 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     // reject missing records
     let rejected = [];
-    snapshotsById.forEach(snapshots => {
-      rejected.push(...snapshots);
+    snapshotsById.forEach(snapshotArray => {
+      rejected.push(...snapshotArray);
     });
     (false && (0, _debug.warn)('Ember Data expected to find records with the following ids in the adapter response from findMany but they were missing: [ "' + [...snapshotsById.values()].map(r => r[0].id).join('", "') + '" ]', {
       id: 'ds.store.missing-records-from-adapter'
@@ -57237,38 +58494,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     resolver.resolve(promise);
   }
 });
-;define("@ember-data/legacy-compat/-private", ["exports", "@ember-data/legacy-compat/-private-60665ff2"], function (_exports, _private60665ff) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "FetchManager", {
-    enumerable: true,
-    get: function () {
-      return _private60665ff.F;
-    }
-  });
-  Object.defineProperty(_exports, "SaveOp", {
-    enumerable: true,
-    get: function () {
-      return _private60665ff.S;
-    }
-  });
-  Object.defineProperty(_exports, "Snapshot", {
-    enumerable: true,
-    get: function () {
-      return _private60665ff.c;
-    }
-  });
-  Object.defineProperty(_exports, "SnapshotRecordArray", {
-    enumerable: true,
-    get: function () {
-      return _private60665ff.b;
-    }
-  });
-});
-;define("@ember-data/legacy-compat/index", ["exports", "@ember/debug", "@ember-data/legacy-compat/-private-60665ff2"], function (_exports, _debug, _private60665ff) {
+;define("@ember-data/legacy-compat/index", ["exports", "@ember/debug", "@ember-data/legacy-compat/fetch-manager-0744e8e9"], function (_exports, _debug, _fetchManager0744e8e) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -57283,10 +58509,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       return adapter.findHasMany(store, snapshot, relatedLink, relationship);
     });
     promise = promise.then(adapterPayload => {
-      (false && !((0, _private60665ff.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findHasMany' request for a ${identifier.type}'s '${relationship.key}' relationship, using link '${link}' , but the adapter's response did not have any data`, (0, _private60665ff.p)(adapterPayload)));
+      (false && !((0, _fetchManager0744e8e.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findHasMany' request for a ${identifier.type}'s '${relationship.key}' relationship, using link '${link}' , but the adapter's response did not have any data`, (0, _fetchManager0744e8e.p)(adapterPayload)));
       const modelClass = store.modelFor(relationship.type);
       let serializer = store.serializerFor(relationship.type);
-      let payload = (0, _private60665ff.n)(serializer, store, modelClass, adapterPayload, null, 'findHasMany');
+      let payload = (0, _fetchManager0744e8e.n)(serializer, store, modelClass, adapterPayload, null, 'findHasMany');
       (false && !('data' in payload && Array.isArray(payload.data)) && (0, _debug.assert)(`fetched the hasMany relationship '${relationship.name}' for ${identifier.type}:${identifier.id} with link '${link}', but no data member is present in the response. If no data exists, the response should set { data: [] }`, 'data' in payload && Array.isArray(payload.data)));
       payload = syncRelationshipDataFromLink(store, payload, identifier, relationship);
       return store._push(payload, true);
@@ -57306,7 +58532,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     promise = promise.then(adapterPayload => {
       let modelClass = store.modelFor(relationship.type);
       let serializer = store.serializerFor(relationship.type);
-      let payload = (0, _private60665ff.n)(serializer, store, modelClass, adapterPayload, null, 'findBelongsTo');
+      let payload = (0, _fetchManager0744e8e.n)(serializer, store, modelClass, adapterPayload, null, 'findBelongsTo');
       (false && !('data' in payload && (payload.data === null || typeof payload.data === 'object' && !Array.isArray(payload.data))) && (0, _debug.assert)(`fetched the belongsTo relationship '${relationship.name}' for ${identifier.type}:${identifier.id} with link '${link}', but no data member is present in the response. If no data exists, the response should set { data: null }`, 'data' in payload && (payload.data === null || typeof payload.data === 'object' && !Array.isArray(payload.data))));
       if (!payload.data && !payload.links && !payload.meta) {
         return null;
@@ -57326,7 +58552,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   function syncRelationshipDataFromLink(store, payload, parentIdentifier, relationship) {
     // ensure the right hand side (incoming payload) points to the parent record that
     // requested this relationship
-    let relationshipData = payload.data ? (0, _private60665ff.i)(payload.data, (data, index) => {
+    let relationshipData = payload.data ? (0, _fetchManager0744e8e.i)(payload.data, (data, index) => {
       const {
         id,
         type
@@ -57485,7 +58711,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         store
       } = context.request;
       if (!store._fetchManager) {
-        store._fetchManager = new _private60665ff.F(store);
+        store._fetchManager = new _fetchManager0744e8e.F(store);
       }
       switch (context.request.op) {
         case 'findRecord':
@@ -57537,7 +58763,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     (false && !(Array.isArray(identifiers) && identifiers.length === 1) && (0, _debug.assert)(`Expected an identifier`, Array.isArray(identifiers) && identifiers.length === 1));
     const manager = store._fetchManager;
-    (0, _private60665ff.a)(identifier);
+    (0, _fetchManager0744e8e.c)(identifier);
     return options.reload ? manager.scheduleFetch(identifier, options, context.request) : manager.fetchDataIfNeededForIdentifier(identifier, options, context.request);
   }
   function findHasMany(context) {
@@ -57578,7 +58804,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     for (let i = 0; i < identifiers.length; i++) {
       let identifier = identifiers[i];
       // TODO we probably can be lenient here and return from cache for the isNew case
-      (0, _private60665ff.a)(identifier);
+      (0, _fetchManager0744e8e.c)(identifier);
       fetches[i] = options.reload ? manager.scheduleFetch(identifier, options, context.request) : manager.fetchDataIfNeededForIdentifier(identifier, options, context.request);
     }
     return Promise.all(fetches);
@@ -57594,7 +58820,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       record: identifier
     } = data;
     const saveOptions = Object.assign({
-      [_private60665ff.S]: operation
+      [_fetchManager0744e8e.a]: operation
     }, options);
     const fetchManagerPromise = store._fetchManager.scheduleSave(identifier, saveOptions);
     return fetchManagerPromise.then(payload => {
@@ -57701,7 +58927,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       // Refetch if the reload option is passed
     } else if (options.reload) {
-      (0, _private60665ff.a)(identifier);
+      (0, _fetchManager0744e8e.c)(identifier);
       promise = store._fetchManager.scheduleFetch(identifier, options, context.request);
     } else {
       let snapshot = null;
@@ -57709,7 +58935,7 @@ lunr.QueryParser.parseBoost = function (parser) {
 
       // Refetch the record if the adapter thinks the record is stale
       if (typeof options.reload === 'undefined' && adapter.shouldReloadRecord && adapter.shouldReloadRecord(store, snapshot = store._fetchManager.createSnapshot(identifier, options))) {
-        (0, _private60665ff.a)(identifier);
+        (0, _fetchManager0744e8e.c)(identifier);
         {
           options.reload = true;
           promise = store._fetchManager.scheduleFetch(identifier, options, context.request);
@@ -57717,7 +58943,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         // Trigger the background refetch if backgroundReload option is passed
         if (options.backgroundReload !== false && (options.backgroundReload || !adapter.shouldBackgroundReloadRecord || adapter.shouldBackgroundReloadRecord(store, snapshot = snapshot || store._fetchManager.createSnapshot(identifier, options)))) {
-          (0, _private60665ff.a)(identifier);
+          (0, _fetchManager0744e8e.c)(identifier);
           {
             options.backgroundReload = true;
             void store._fetchManager.scheduleFetch(identifier, options, context.request);
@@ -57728,7 +58954,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         promise = Promise.resolve(identifier);
       }
     }
-    return promise.then(identifier => store.peekRecord(identifier));
+    return promise.then(i => store.peekRecord(i));
   }
   function findAll(context) {
     const {
@@ -57743,7 +58969,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(adapter) && (0, _debug.assert)(`You tried to load all records but you have no adapter (for ${type})`, adapter));
     (false && !(typeof adapter.findAll === 'function') && (0, _debug.assert)(`You tried to load all records but your adapter does not implement 'findAll'`, typeof adapter.findAll === 'function')); // avoid initializing the liveArray just to set `isUpdating`
     const maybeRecordArray = store.recordArrayManager._live.get(type);
-    const snapshotArray = new _private60665ff.b(store, type, options);
+    const snapshotArray = new _fetchManager0744e8e.S(store, type, options);
     const shouldReload = options.reload || options.reload !== false && (adapter.shouldReloadAll && adapter.shouldReloadAll(store, snapshotArray) || !adapter.shouldReloadAll && snapshotArray.length === 0);
     let fetch;
     if (shouldReload) {
@@ -57762,9 +58988,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     const schema = store.modelFor(type);
     let promise = Promise.resolve().then(() => adapter.findAll(store, schema, null, snapshotArray));
     promise = promise.then(adapterPayload => {
-      (false && !((0, _private60665ff.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findAll' request for '${type}' records, but the adapter's response did not have any data`, (0, _private60665ff.p)(adapterPayload)));
+      (false && !((0, _fetchManager0744e8e.p)(adapterPayload)) && (0, _debug.assert)(`You made a 'findAll' request for '${type}' records, but the adapter's response did not have any data`, (0, _fetchManager0744e8e.p)(adapterPayload)));
       const serializer = store.serializerFor(type);
-      const payload = (0, _private60665ff.n)(serializer, store, schema, adapterPayload, null, 'findAll');
+      const payload = (0, _fetchManager0744e8e.n)(serializer, store, schema, adapterPayload, null, 'findAll');
       store._push(payload, isAsyncFlush);
       snapshotArray._recordArray.isUpdating = false;
       return snapshotArray._recordArray;
@@ -57779,6 +59005,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     let {
       options
     } = data;
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const {
       type,
       query
@@ -57797,7 +59024,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     let promise = Promise.resolve().then(() => adapter.query(store, schema, query, recordArray, options));
     return promise.then(adapterPayload => {
       const serializer = store.serializerFor(type);
-      const payload = (0, _private60665ff.n)(serializer, store, schema, adapterPayload, null, 'query');
+      const payload = (0, _fetchManager0744e8e.n)(serializer, store, schema, adapterPayload, null, 'query');
       const identifiers = store._push(payload, true);
       (false && !(Array.isArray(identifiers)) && (0, _debug.assert)('The response to store.query is expected to be an array but it was a single record. Please wrap your response in an array or use `store.queryRecord` to query for a single record.', Array.isArray(identifiers)));
       store.recordArrayManager.populateManagedArray(recordArray, identifiers, payload);
@@ -57812,6 +59039,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       store,
       data
     } = context.request;
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const {
       type,
       query,
@@ -57824,14 +59052,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     let promise = Promise.resolve().then(() => adapter.queryRecord(store, schema, query, options));
     return promise.then(adapterPayload => {
       const serializer = store.serializerFor(type);
-      const payload = (0, _private60665ff.n)(serializer, store, schema, adapterPayload, null, 'queryRecord');
+      const payload = (0, _fetchManager0744e8e.n)(serializer, store, schema, adapterPayload, null, 'queryRecord');
       assertSingleResourceDocument(payload);
       const identifier = store._push(payload, true);
       return identifier ? store.peekRecord(identifier) : null;
     });
   }
 });
-;define("@ember-data/model/-private", ["exports", "@ember-data/model/index-372d2028", "@ember/application"], function (_exports, _index372d, _application) {
+;define("@ember-data/model/-private", ["exports", "@ember-data/model/has-many-774c4c4b", "@ember-data/model/model-b638e17c"], function (_exports, _hasMany774c4c4b, _modelB638e17c) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -57840,122 +59068,68 @@ lunr.QueryParser.parseBoost = function (parser) {
   Object.defineProperty(_exports, "Errors", {
     enumerable: true,
     get: function () {
-      return _index372d.E;
+      return _modelB638e17c.E;
     }
   });
   Object.defineProperty(_exports, "LEGACY_SUPPORT", {
     enumerable: true,
     get: function () {
-      return _index372d.L;
+      return _modelB638e17c.L;
     }
   });
   Object.defineProperty(_exports, "ManyArray", {
     enumerable: true,
     get: function () {
-      return _index372d.R;
+      return _modelB638e17c.R;
     }
   });
   Object.defineProperty(_exports, "Model", {
     enumerable: true,
     get: function () {
-      return _index372d.M;
+      return _modelB638e17c.M;
     }
   });
   Object.defineProperty(_exports, "PromiseBelongsTo", {
     enumerable: true,
     get: function () {
-      return _index372d.P;
+      return _modelB638e17c.P;
     }
   });
   Object.defineProperty(_exports, "PromiseManyArray", {
     enumerable: true,
     get: function () {
-      return _index372d.c;
+      return _modelB638e17c.a;
     }
   });
-  _exports._modelForMixin = modelForMixin;
   Object.defineProperty(_exports, "attr", {
     enumerable: true,
     get: function () {
-      return _index372d.a;
+      return _hasMany774c4c4b.a;
     }
   });
   Object.defineProperty(_exports, "belongsTo", {
     enumerable: true,
     get: function () {
-      return _index372d.b;
+      return _hasMany774c4c4b.b;
     }
   });
   Object.defineProperty(_exports, "hasMany", {
     enumerable: true,
     get: function () {
-      return _index372d.h;
+      return _hasMany774c4c4b.h;
     }
   });
-  /*
-      In case someone defined a relationship to a mixin, for example:
-      ```
-        import Model, { belongsTo, hasMany } from '@ember-data/model';
-        import Mixin from '@ember/object/mixin';
-  
-        class CommentModel extends Model {
-          @belongsTo('commentable', { polymorphic: true }) owner;
-        }
-  
-        let Commentable = Mixin.create({
-          @hasMany('comment') comments;
-        });
-      ```
-      we want to look up a Commentable class which has all the necessary
-      relationship meta data. Thus, we look up the mixin and create a mock
-      Model, so we can access the relationship CPs of the mixin (`comments`)
-      in this case
-    */
-  function modelForMixin(store, normalizedModelName) {
-    let owner = (0, _application.getOwner)(store);
-    let MaybeMixin = owner.factoryFor(`mixin:${normalizedModelName}`);
-    let mixin = MaybeMixin && MaybeMixin.class;
-    if (mixin) {
-      let ModelForMixin = _index372d.M.extend(mixin);
-      ModelForMixin.__isMixin = true;
-      ModelForMixin.__mixin = mixin;
-      //Cache the class as a model
-      owner.register('model:' + normalizedModelName, ModelForMixin);
-    }
-    return owner.factoryFor(`model:${normalizedModelName}`);
-  }
 });
-;define("@ember-data/model/index-372d2028", ["exports", "@ember/debug", "@ember/object", "@ember-data/store", "@ember-data/store/-private", "@ember/string", "@ember/object/compat", "@ember/runloop", "@glimmer/tracking", "ember", "@ember/array", "@ember/array/proxy", "@ember/object/computed", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@ember/object/internals", "@ember-data/tracking/-private", "ember-inflector", "@embroider/macros/es-compat2"], function (_exports, _debug, _object, _store, _private, _string, _compat, _runloop, _tracking, _ember, _array, _proxy, _computed, _promiseProxyMixin, _proxy2, _internals, _private2, _emberInflector, _esCompat) {
+;define("@ember-data/model/has-many-774c4c4b", ["exports", "@ember/debug", "@ember/object", "@ember-data/store", "@ember-data/store/-private", "@ember-data/model/model-b638e17c", "@ember/array", "@ember/string", "ember-inflector"], function (_exports, _debug, _object, _store, _private, _modelB638e17c, _array, _string, _emberInflector) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.h = _exports.c = _exports.b = _exports.a = _exports.R = _exports.P = _exports.M = _exports.L = _exports.E = void 0;
-  let cached = (0, _esCompat.default)(require("ember-cached-decorator-polyfill")).cached;
-  function isElementDescriptor(args) {
-    let [maybeTarget, maybeKey, maybeDesc] = args;
-    return (
-      // Ensure we have the right number of args
-      args.length === 3 && (
-      // Make sure the target is a class or object (prototype)
-      typeof maybeTarget === 'function' || typeof maybeTarget === 'object' && maybeTarget !== null) &&
-      // Make sure the key is a string
-      typeof maybeKey === 'string' && (
-      // Make sure the descriptor is the right shape
-      typeof maybeDesc === 'object' && maybeDesc !== null && 'enumerable' in maybeDesc && 'configurable' in maybeDesc ||
-      // TS compatibility
-      maybeDesc === undefined)
-    );
-  }
-  function computedMacroWithOptionalParams(fn) {
-    return (...maybeDesc) => isElementDescriptor(maybeDesc) ? fn()(...maybeDesc) : fn(...maybeDesc);
-  }
-
+  _exports.h = _exports.b = _exports.a = void 0;
   /**
     @module @ember-data/model
   */
-
   /**
     `attr` defines an attribute on a [Model](/ember-data/release/classes/Model).
     By default, attributes are passed through as-is, however you can specify an
@@ -58086,8 +59260,625 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }).meta(meta);
   }
-  var attr$1 = computedMacroWithOptionalParams(attr);
+  var attr$1 = (0, _modelB638e17c.c)(attr);
+
+  /**
+    @module @ember-data/model
+  */
+
+  /**
+    `belongsTo` is used to define One-To-One and One-To-Many
+    relationships on a [Model](/ember-data/release/classes/Model).
+  
+  
+    `belongsTo` takes an optional hash as a second parameter, currently
+    supported options are:
+  
+    - `async`: A boolean value used to explicitly declare this to be an async relationship. The default is true.
+    - `inverse`: A string used to identify the inverse property on a
+      related model in a One-To-Many relationship. See [Explicit Inverses](#explicit-inverses)
+    - `polymorphic` A boolean value to mark the relationship as polymorphic
+  
+    #### One-To-One
+    To declare a one-to-one relationship between two models, use
+    `belongsTo`:
+  
+    ```app/models/user.js
+    import Model, { belongsTo } from '@ember-data/model';
+  
+    export default class UserModel extends Model {
+      @belongsTo('profile') profile;
+    }
+    ```
+  
+    ```app/models/profile.js
+    import Model, { belongsTo } from '@ember-data/model';
+  
+    export default class ProfileModel extends Model {
+      @belongsTo('user') user;
+    }
+    ```
+  
+    #### One-To-Many
+  
+    To declare a one-to-many relationship between two models, use
+    `belongsTo` in combination with `hasMany`, like this:
+  
+    ```app/models/post.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class PostModel extends Model {
+      @hasMany('comment', { async: false, inverse: 'post' }) comments;
+    }
+    ```
+  
+    ```app/models/comment.js
+    import Model, { belongsTo } from '@ember-data/model';
+  
+    export default class CommentModel extends Model {
+      @belongsTo('post', { async: false, inverse: 'comments' }) post;
+    }
+    ```
+  
+    #### Sync relationships
+  
+    Ember Data resolves sync relationships with the related resources
+    available in its local store, hence it is expected these resources
+    to be loaded before or along-side the primary resource.
+  
+    ```app/models/comment.js
+    import Model, { belongsTo } from '@ember-data/model';
+  
+    export default class CommentModel extends Model {
+      @belongsTo('post', {
+        async: false,
+        inverse: null
+      })
+      post;
+    }
+    ```
+  
+    In contrast to async relationship, accessing a sync relationship
+    will always return the record (Model instance) for the existing
+    local resource, or null. But it will error on access when
+    a related resource is known to exist and it has not been loaded.
+  
+    ```
+    let post = comment.post;
+  
+    ```
+  
+    @method belongsTo
+    @public
+    @static
+    @for @ember-data/model
+    @param {String} modelName (optional) type of the relationship
+    @param {Object} options (optional) a hash of options
+    @return {Ember.computed} relationship
+  */
   _exports.a = attr$1;
+  function belongsTo(modelName, options) {
+    let opts = options;
+    let userEnteredModelName = modelName;
+    (false && !(opts && typeof opts.async === 'boolean') && (0, _debug.assert)(`Expected options.async from @belongsTo('${userEnteredModelName}', options) to be a boolean`, opts && typeof opts.async === 'boolean'));
+    (false && !(opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0) && (0, _debug.assert)(`Expected options.inverse from @belongsTo('${userEnteredModelName}', options) to be either null or the string type of the related resource.`, opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0));
+    let meta = {
+      type: (0, _modelB638e17c.n)(userEnteredModelName),
+      isRelationship: true,
+      options: opts,
+      kind: 'belongsTo',
+      name: 'Belongs To',
+      key: null
+    };
+    return (0, _object.computed)({
+      get(key) {
+        // this is a legacy behavior we may not carry into a new model setup
+        // it's better to error on disconnected records so users find errors
+        // in their logic.
+        if (this.isDestroying || this.isDestroyed) {
+          return null;
+        }
+        const support = (0, _modelB638e17c.l)(this);
+        return support.getBelongsTo(key);
+      },
+      set(key, value) {
+        const support = (0, _modelB638e17c.l)(this);
+        this.store._join(() => {
+          support.setDirtyBelongsTo(key, value);
+        });
+        return support.getBelongsTo(key);
+      }
+    }).meta(meta);
+  }
+  var belongsTo$1 = (0, _modelB638e17c.c)(belongsTo);
+  _exports.b = belongsTo$1;
+  function normalizeType(type) {
+    {
+      const result = (0, _emberInflector.singularize)((0, _string.dasherize)(type));
+      (false && !(result === type) && (0, _debug.deprecate)(`The resource type '${type}' is not normalized. Update your application code to use '${result}' instead of '${type}'.`, result === type, {
+        id: 'ember-data:deprecate-non-strict-types',
+        until: '6.0',
+        for: 'ember-data',
+        since: {
+          available: '5.3',
+          enabled: '5.3'
+        }
+      }));
+      return result;
+    }
+    return type;
+  }
+
+  /**
+    `hasMany` is used to define One-To-Many and Many-To-Many
+    relationships on a [Model](/ember-data/release/classes/Model).
+  
+    `hasMany` takes an optional hash as a second parameter, currently
+    supported options are:
+  
+    - `async`: A boolean value used to explicitly declare this to be an async relationship. The default is true.
+    - `inverse`: A string used to identify the inverse property on a related model.
+    - `polymorphic` A boolean value to mark the relationship as polymorphic
+  
+    #### One-To-Many
+    To declare a one-to-many relationship between two models, use
+    `belongsTo` in combination with `hasMany`, like this:
+  
+    ```app/models/post.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class PostModel extends Model {
+      @hasMany('comment') comments;
+    }
+    ```
+  
+    ```app/models/comment.js
+    import Model, { belongsTo } from '@ember-data/model';
+  
+    export default class CommentModel extends Model {
+      @belongsTo('post') post;
+    }
+    ```
+  
+    #### Many-To-Many
+    To declare a many-to-many relationship between two models, use
+    `hasMany`:
+  
+    ```app/models/post.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class PostModel extends Model {
+      @hasMany('tag') tags;
+    }
+    ```
+  
+    ```app/models/tag.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class TagModel extends Model {
+      @hasMany('post') posts;
+    }
+    ```
+  
+    You can avoid passing a string as the first parameter. In that case Ember Data
+    will infer the type from the singularized key name.
+  
+    ```app/models/post.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class PostModel extends Model {
+      @hasMany tags;
+    }
+    ```
+  
+    will lookup for a Tag type.
+  
+    #### Explicit Inverses
+  
+    Ember Data will do its best to discover which relationships map to
+    one another. In the one-to-many code above, for example, Ember Data
+    can figure out that changing the `comments` relationship should update
+    the `post` relationship on the inverse because post is the only
+    relationship to that model.
+  
+    However, sometimes you may have multiple `belongsTo`/`hasMany` for the
+    same type. You can specify which property on the related model is
+    the inverse using `hasMany`'s `inverse` option:
+  
+    ```app/models/comment.js
+    import Model, { belongsTo } from '@ember-data/model';
+  
+    export default class CommentModel extends Model {
+      @belongsTo('post') onePost;
+      @belongsTo('post') twoPost
+      @belongsTo('post') redPost;
+      @belongsTo('post') bluePost;
+    }
+    ```
+  
+    ```app/models/post.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class PostModel extends Model {
+      @hasMany('comment', {
+        inverse: 'redPost'
+      })
+      comments;
+    }
+    ```
+  
+    You can also specify an inverse on a `belongsTo`, which works how
+    you'd expect.
+  
+    #### Sync relationships
+  
+    Ember Data resolves sync relationships with the related resources
+    available in its local store, hence it is expected these resources
+    to be loaded before or along-side the primary resource.
+  
+    ```app/models/post.js
+    import Model, { hasMany } from '@ember-data/model';
+  
+    export default class PostModel extends Model {
+      @hasMany('comment', {
+        async: false
+      })
+      comments;
+    }
+    ```
+  
+    In contrast to async relationship, accessing a sync relationship
+    will always return a [ManyArray](/ember-data/release/classes/ManyArray) instance
+    containing the existing local resources. But it will error on access
+    when any of the known related resources have not been loaded.
+  
+    ```
+    post.comments.forEach((comment) => {
+  
+    });
+  
+    ```
+  
+    If you are using `links` with sync relationships, you have to use
+    `ref.reload` to fetch the resources.
+  
+    @method hasMany
+    @public
+    @static
+    @for @ember-data/model
+    @param {String} type (optional) type of the relationship
+    @param {Object} options (optional) a hash of options
+    @return {Ember.computed} relationship
+  */
+  function hasMany(type, options) {
+    (false && !(options && typeof options.async === 'boolean') && (0, _debug.assert)(`Expected hasMany options.async to be a boolean`, options && typeof options.async === 'boolean')); // Metadata about relationships is stored on the meta of
+    // the relationship. This is used for introspection and
+    // serialization. Note that `key` is populated lazily
+    // the first time the CP is called.
+    let meta = {
+      type: normalizeType(type),
+      options,
+      isRelationship: true,
+      kind: 'hasMany',
+      name: 'Has Many',
+      key: null
+    };
+    return (0, _object.computed)({
+      get(key) {
+        if (this.isDestroying || this.isDestroyed) {
+          return (0, _array.A)();
+        }
+        return (0, _modelB638e17c.l)(this).getHasMany(key);
+      },
+      set(key, records) {
+        const support = (0, _modelB638e17c.l)(this);
+        const manyArray = support.getManyArray(key);
+        (false && !(Array.isArray(records)) && (0, _debug.assert)(`You must pass an array of records to set a hasMany relationship`, Array.isArray(records)));
+        this.store._join(() => {
+          manyArray.splice(0, manyArray.length, ...records);
+        });
+        return support.getHasMany(key);
+      }
+    }).meta(meta);
+  }
+  var hasMany$1 = (0, _modelB638e17c.c)(hasMany);
+  _exports.h = hasMany$1;
+});
+;define("@ember-data/model/hooks-6d5c2fc2", ["exports", "@ember/application", "@ember/debug", "@ember-data/store/-private", "@ember-data/model/model-b638e17c"], function (_exports, _application, _debug, _private, _modelB638e17c) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.M = void 0;
+  _exports.b = buildSchema;
+  _exports.i = instantiateRecord;
+  _exports.m = modelFor;
+  _exports.t = teardownRecord;
+  /*
+      In case someone defined a relationship to a mixin, for example:
+      ```
+        import Model, { belongsTo, hasMany } from '@ember-data/model';
+        import Mixin from '@ember/object/mixin';
+  
+        class CommentModel extends Model {
+          @belongsTo('commentable', { polymorphic: true }) owner;
+        }
+  
+        let Commentable = Mixin.create({
+          @hasMany('comment') comments;
+        });
+      ```
+      we want to look up a Commentable class which has all the necessary
+      relationship meta data. Thus, we look up the mixin and create a mock
+      Model, so we can access the relationship CPs of the mixin (`comments`)
+      in this case
+    */
+  function modelForMixin(store, normalizedModelName) {
+    let owner = (0, _application.getOwner)(store);
+    let MaybeMixin = owner.factoryFor(`mixin:${normalizedModelName}`);
+    let mixin = MaybeMixin && MaybeMixin.class;
+    if (mixin) {
+      let ModelForMixin = _modelB638e17c.M.extend(mixin);
+      ModelForMixin.__isMixin = true;
+      ModelForMixin.__mixin = mixin;
+      //Cache the class as a model
+      owner.register('model:' + normalizedModelName, ModelForMixin);
+    }
+    return owner.factoryFor(`model:${normalizedModelName}`);
+  }
+  class ModelSchemaProvider {
+    constructor(store) {
+      this.store = store;
+      this._relationshipsDefCache = Object.create(null);
+      this._attributesDefCache = Object.create(null);
+    }
+
+    // Following the existing RD implementation
+    attributesDefinitionFor(identifier) {
+      const {
+        type
+      } = identifier;
+      let attributes;
+      attributes = this._attributesDefCache[type];
+      if (attributes === undefined) {
+        let modelClass = this.store.modelFor(type);
+        let attributeMap = modelClass.attributes;
+        attributes = Object.create(null);
+        attributeMap.forEach((meta, name) => attributes[name] = meta);
+        this._attributesDefCache[type] = attributes;
+      }
+      return attributes;
+    }
+
+    // Following the existing RD implementation
+    relationshipsDefinitionFor(identifier) {
+      const {
+        type
+      } = identifier;
+      let relationships;
+      relationships = this._relationshipsDefCache[type];
+      if (relationships === undefined) {
+        let modelClass = this.store.modelFor(type);
+        relationships = modelClass.relationshipsObject || null;
+        this._relationshipsDefCache[type] = relationships;
+      }
+      return relationships;
+    }
+    doesTypeExist(modelName) {
+      const type = (0, _modelB638e17c.n)(modelName);
+      const factory = getModelFactory(this.store, type);
+      return factory !== null;
+    }
+  }
+  _exports.M = ModelSchemaProvider;
+  function buildSchema(store) {
+    return new ModelSchemaProvider(store);
+  }
+  function getModelFactory(store, type) {
+    if (!store._modelFactoryCache) {
+      store._modelFactoryCache = Object.create(null);
+    }
+    const cache = store._modelFactoryCache;
+    let factory = cache[type];
+    if (!factory) {
+      const owner = (0, _application.getOwner)(store);
+      factory = owner.factoryFor(`model:${type}`);
+      if (!factory) {
+        //Support looking up mixins as base types for polymorphic relationships
+        factory = modelForMixin(store, type);
+      }
+      if (!factory) {
+        // we don't cache misses in case someone wants to register a missing model
+        return null;
+      }
+      let klass = factory.class;
+      if (klass.isModel) {
+        let hasOwnModelNameSet = klass.modelName && Object.prototype.hasOwnProperty.call(klass, 'modelName');
+        if (!hasOwnModelNameSet) {
+          Object.defineProperty(klass, 'modelName', {
+            value: type
+          });
+        }
+      }
+      cache[type] = factory;
+    }
+    return factory;
+  }
+  function instantiateRecord(identifier, createRecordArgs) {
+    const type = identifier.type;
+    const cache = this.cache;
+    // TODO deprecate allowing unknown args setting
+    const createOptions = {
+      _createProps: createRecordArgs,
+      // TODO @deprecate consider deprecating accessing record properties during init which the below is necessary for
+      _secretInit: {
+        identifier,
+        cache,
+        store: this,
+        cb: secretInit
+      }
+    };
+
+    // ensure that `getOwner(this)` works inside a model instance
+    (0, _application.setOwner)(createOptions, (0, _application.getOwner)(this));
+    const factory = getModelFactory(this, type);
+    (false && !(factory) && (0, _debug.assert)(`No model was found for '${type}'`, factory));
+    return factory.class.create(createOptions);
+  }
+  function teardownRecord(record) {
+    (false && !('destroy' in record) && (0, _debug.assert)(`expected to receive an instance of Model from @ember-data/model. If using a custom model make sure you implement teardownRecord`, 'destroy' in record));
+    record.destroy();
+  }
+  function modelFor(modelName) {
+    (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's modelFor method`, modelName));
+    (false && !(typeof modelName === 'string' && modelName.length) && (0, _debug.assert)(`Please pass a proper model name to the store's modelFor method`, typeof modelName === 'string' && modelName.length));
+    const type = (0, _modelB638e17c.n)(modelName);
+    const maybeFactory = getModelFactory(this, type);
+    const klass = maybeFactory && maybeFactory.class ? maybeFactory.class : null;
+    const ignoreType = !klass || !klass.isModel || this._forceShim;
+    if (!ignoreType) {
+      return klass;
+    }
+    (false && !(this.getSchemaDefinitionService().doesTypeExist(type)) && (0, _debug.assert)(`No model was found for '${type}' and no schema handles the type`, this.getSchemaDefinitionService().doesTypeExist(type)));
+  }
+  function secretInit(record, cache, identifier, store) {
+    (0, _private.setRecordIdentifier)(record, identifier);
+    _private.StoreMap.set(record, store);
+    (0, _private.setCacheFor)(record, cache);
+  }
+});
+;define("@ember-data/model/hooks", ["exports", "@ember-data/model/hooks-6d5c2fc2"], function (_exports, _hooks6d5c2fc) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "buildSchema", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.b;
+    }
+  });
+  Object.defineProperty(_exports, "instantiateRecord", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.i;
+    }
+  });
+  Object.defineProperty(_exports, "modelFor", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.m;
+    }
+  });
+  Object.defineProperty(_exports, "teardownRecord", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.t;
+    }
+  });
+});
+;define("@ember-data/model/index", ["exports", "@ember-data/model/has-many-774c4c4b", "@ember-data/model/model-b638e17c", "@ember-data/model/hooks-6d5c2fc2"], function (_exports, _hasMany774c4c4b, _modelB638e17c, _hooks6d5c2fc) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "ModelSchemaProvider", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.M;
+    }
+  });
+  Object.defineProperty(_exports, "attr", {
+    enumerable: true,
+    get: function () {
+      return _hasMany774c4c4b.a;
+    }
+  });
+  Object.defineProperty(_exports, "belongsTo", {
+    enumerable: true,
+    get: function () {
+      return _hasMany774c4c4b.b;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _modelB638e17c.M;
+    }
+  });
+  Object.defineProperty(_exports, "hasMany", {
+    enumerable: true,
+    get: function () {
+      return _hasMany774c4c4b.h;
+    }
+  });
+  Object.defineProperty(_exports, "instantiateRecord", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.i;
+    }
+  });
+  Object.defineProperty(_exports, "modelFor", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.m;
+    }
+  });
+  Object.defineProperty(_exports, "teardownRecord", {
+    enumerable: true,
+    get: function () {
+      return _hooks6d5c2fc.t;
+    }
+  });
+});
+;define("@ember-data/model/model-b638e17c", ["exports", "@ember/debug", "@ember/string", "@ember/object", "@ember/object/compat", "@glimmer/tracking", "ember", "@ember-data/store", "@ember-data/store/-private", "@ember/array", "@ember/array/proxy", "@ember/object/computed", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "@ember/object/internals", "@ember-data/tracking/-private", "@embroider/macros/es-compat2"], function (_exports, _debug, _string, _object, _compat, _tracking, _ember, _store, _private, _array, _proxy, _computed, _promiseProxyMixin, _proxy2, _internals, _private2, _esCompat) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.a = _exports.R = _exports.P = _exports.M = _exports.L = _exports.E = void 0;
+  _exports.c = computedMacroWithOptionalParams;
+  _exports.l = lookupLegacySupport;
+  _exports.n = normalizeModelName;
+  let cached = (0, _esCompat.default)(require("ember-cached-decorator-polyfill")).cached;
+  function isElementDescriptor(args) {
+    let [maybeTarget, maybeKey, maybeDesc] = args;
+    return (
+      // Ensure we have the right number of args
+      args.length === 3 && (
+      // Make sure the target is a class or object (prototype)
+      typeof maybeTarget === 'function' || typeof maybeTarget === 'object' && maybeTarget !== null) &&
+      // Make sure the key is a string
+      typeof maybeKey === 'string' && (
+      // Make sure the descriptor is the right shape
+      typeof maybeDesc === 'object' && maybeDesc !== null && 'enumerable' in maybeDesc && 'configurable' in maybeDesc ||
+      // TS compatibility
+      maybeDesc === undefined)
+    );
+  }
+  function computedMacroWithOptionalParams(fn) {
+    return (...maybeDesc) => isElementDescriptor(maybeDesc) ? fn()(...maybeDesc) : fn(...maybeDesc);
+  }
+  function normalizeModelName(type) {
+    {
+      const result = (0, _string.dasherize)(type);
+      (false && !(result === type) && (0, _debug.deprecate)(`The resource type '${type}' is not normalized. Update your application code to use '${result}' instead of '${type}'.`, result === type, {
+        id: 'ember-data:deprecate-non-strict-types',
+        until: '6.0',
+        for: 'ember-data',
+        since: {
+          available: '5.3',
+          enabled: '5.3'
+        }
+      }));
+      return result;
+    }
+    return type;
+  }
   function _initializerDefineProperty(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -58839,7 +60630,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     get meta() {
       // eslint-disable-next-line no-constant-condition
       {
-        (false && !(false) && (0, _debug.assert)('You attempted to access meta on the promise for the async belongsTo relationship ' + `${this.get('_belongsToState').modelName}:${this.get('_belongsToState').key}'.` + '\nUse `record.belongsTo(relationshipName).meta()` instead.', false));
+        (false && !(false) && (0, _debug.assert)('You attempted to access meta on the promise for the async belongsTo relationship ' + `${this._belongsToState.modelName}:${this._belongsToState.key}'.` + '\nUse `record.belongsTo(relationshipName).meta()` instead.', false));
       }
       return;
     }
@@ -59076,7 +60867,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return false;
     }
   }), _applyDecoratedDescriptor(_class$4.prototype, "links", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class$4.prototype, "links"), _class$4.prototype), _applyDecoratedDescriptor(_class$4.prototype, "meta", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class$4.prototype, "meta"), _class$4.prototype)), _class$4);
-  _exports.c = PromiseManyArray;
+  _exports.a = PromiseManyArray;
   function tapPromise(proxy, promise) {
     proxy.isPending = true;
     proxy.isSettled = false;
@@ -59129,12 +60920,8 @@ lunr.QueryParser.parseBoost = function (parser) {
    @public
    */
   let BelongsToReference = (_class$3 = class BelongsToReference {
-    // unsubscribe tokens given to us by the notification manager
-
     constructor(store, graph, parentIdentifier, belongsToRelationship, key) {
-      this.___identifier = void 0;
-      this.___token = void 0;
-      this.___relatedToken = null;
+      // unsubscribe tokens given to us by the notification manager
       _initializerDefineProperty(this, "_ref", _descriptor$3, this);
       this.graph = graph;
       this.key = key;
@@ -59142,6 +60929,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.type = belongsToRelationship.definition.type;
       this.store = store;
       this.___identifier = parentIdentifier;
+      this.___relatedToken = null;
       this.___token = store.notifications.subscribe(parentIdentifier, (_, bucket, notifiedKey) => {
         if (bucket === 'relationships' && notifiedKey === key) {
           this._ref++;
@@ -59605,9 +61393,8 @@ lunr.QueryParser.parseBoost = function (parser) {
    @extends Reference
    */
   let HasManyReference = (_class$2 = class HasManyReference {
-    // unsubscribe tokens given to us by the notification manager
-
     constructor(store, graph, parentIdentifier, hasManyRelationship, key) {
+      // unsubscribe tokens given to us by the notification manager
       this.___token = void 0;
       this.___identifier = void 0;
       this.___relatedTokenMap = void 0;
@@ -59926,8 +61713,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (!hasRelationshipDataProperty) {
         return false;
       }
-      let localState = this.hasManyRelationship.localState;
-      return localState.every(identifier => {
+      const relationship = this.graph.getData(this.hasManyRelationship.identifier, this.key);
+      return relationship.data?.every(identifier => {
         return this.store._instanceCache.recordIsLoaded(identifier, true) === true;
       });
     }
@@ -60095,6 +61882,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.store = (0, _private.storeFor)(record);
       this.identifier = (0, _private.recordIdentifierFor)(record);
       this.cache = (0, _private.peekCache)(record);
+      {
+        const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
+        this.graph = graphFor(this.store);
+      }
       this._manyArrayCache = Object.create(null);
       this._relationshipPromisesCache = Object.create(null);
       this._relationshipProxyCache = Object.create(null);
@@ -60131,14 +61922,14 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (loadingPromise) {
         return loadingPromise;
       }
-      const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
-      const relationship = graphFor(this.store).get(this.identifier, key);
+      const relationship = this.graph.get(this.identifier, key);
       (false && !(isBelongsTo(relationship)) && (0, _debug.assert)(`Expected ${key} to be a belongs-to relationship`, isBelongsTo(relationship)));
       let resource = this.cache.getRelationship(this.identifier, key);
       relationship.state.hasFailedLoadAttempt = false;
       relationship.state.shouldForceReload = true;
       let promise = this._findBelongsTo(key, resource, relationship, options);
       if (this._relationshipProxyCache[key]) {
+        // @ts-expect-error
         return this._updatePromiseProxyFor('belongsTo', key, {
           promise
         });
@@ -60154,8 +61945,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       let relatedIdentifier = resource && resource.data ? resource.data : null;
       (false && !(!relatedIdentifier || (0, _private.isStableIdentifier)(relatedIdentifier)) && (0, _debug.assert)(`Expected a stable identifier`, !relatedIdentifier || (0, _private.isStableIdentifier)(relatedIdentifier)));
       const store = this.store;
-      const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
-      const relationship = graphFor(store).get(this.identifier, key);
+      const relationship = this.graph.get(this.identifier, key);
       (false && !(isBelongsTo(relationship)) && (0, _debug.assert)(`Expected ${key} to be a belongs-to relationship`, isBelongsTo(relationship)));
       let isAsync = relationship.definition.isAsync;
       let _belongsToState = {
@@ -60201,10 +61991,10 @@ lunr.QueryParser.parseBoost = function (parser) {
       let identifiers = [];
       if (jsonApi.data) {
         for (let i = 0; i < jsonApi.data.length; i++) {
-          const identifier = jsonApi.data[i];
-          (false && !((0, _private.isStableIdentifier)(identifier)) && (0, _debug.assert)(`Expected a stable identifier`, (0, _private.isStableIdentifier)(identifier)));
-          if (cache.recordIsLoaded(identifier, true)) {
-            identifiers.push(identifier);
+          const relatedIdentifier = jsonApi.data[i];
+          (false && !((0, _private.isStableIdentifier)(relatedIdentifier)) && (0, _debug.assert)(`Expected a stable identifier`, (0, _private.isStableIdentifier)(relatedIdentifier)));
+          if (cache.recordIsLoaded(relatedIdentifier, true)) {
+            identifiers.push(relatedIdentifier);
           }
         }
       }
@@ -60214,8 +62004,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       {
         let manyArray = this._manyArrayCache[key];
         if (!definition) {
-          const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
-          definition = graphFor(this.store).get(this.identifier, key).definition;
+          definition = this.graph.get(this.identifier, key).definition;
         }
         if (!manyArray) {
           const [identifiers, doc] = this._getCurrentState(this.identifier, key);
@@ -60265,8 +62054,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         if (loadingPromise) {
           return loadingPromise;
         }
-        const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
-        const relationship = graphFor(this.store).get(this.identifier, key);
+        const relationship = this.graph.get(this.identifier, key);
         const {
           definition,
           state
@@ -60286,8 +62074,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     getHasMany(key, options) {
       {
-        const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
-        const relationship = graphFor(this.store).get(this.identifier, key);
+        const relationship = this.graph.get(this.identifier, key);
         const {
           definition,
           state
@@ -60343,14 +62130,16 @@ lunr.QueryParser.parseBoost = function (parser) {
     referenceFor(kind, name) {
       let reference = this.references[name];
       if (!reference) {
-        const graphFor = (0, _esCompat.default)(require("@ember-data/graph/-private")).graphFor;
-        const graph = graphFor(this.store);
-        const relationship = graph.get(this.identifier, name);
+        const {
+          graph,
+          identifier
+        } = this;
+        const relationship = graph.get(identifier, name);
         let relationshipKind = relationship.definition.kind;
         if (relationshipKind === 'belongsTo') {
-          reference = new BelongsToReference(this.store, graph, this.identifier, relationship, name);
+          reference = new BelongsToReference(this.store, graph, identifier, relationship, name);
         } else if (relationshipKind === 'hasMany') {
-          reference = new HasManyReference(this.store, graph, this.identifier, relationship, name);
+          reference = new HasManyReference(this.store, graph, identifier, relationship, name);
         }
         this.references[name] = reference;
       }
@@ -60583,9 +62372,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     return (0, _private.recordIdentifierFor)(record);
   }
   function anyUnloaded(store, relationship) {
-    let state = relationship.localState;
+    const graph = store._graph;
+    const relationshipData = graph.getData(relationship.identifier, relationship.definition.key);
+    const state = relationshipData.data;
     const cache = store._instanceCache;
-    const unloaded = state.find(s => {
+    const unloaded = state?.find(s => {
       let isLoaded = cache.recordIsLoaded(s, true);
       return !isLoaded;
     });
@@ -60613,8 +62404,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (key) {
         notifyAttribute(store, identifier, key, record);
       } else {
-        record.eachAttribute(key => {
-          notifyAttribute(store, identifier, key, record);
+        record.eachAttribute(name => {
+          notifyAttribute(store, identifier, name, record);
         });
       }
     } else if (value === 'relationships') {
@@ -60622,8 +62413,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         let meta = record.constructor.relationshipsByName.get(key);
         notifyRelationship(identifier, key, record, meta);
       } else {
-        record.eachRelationship((key, meta) => {
-          notifyRelationship(identifier, key, record, meta);
+        record.eachRelationship((name, meta) => {
+          notifyRelationship(identifier, name, record, meta);
         });
       }
     } else if (value === 'identity') {
@@ -60715,6 +62506,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       tags = Object.create(null);
       Tags.set(record, tags);
     }
+    // @ts-expect-error
     return tags[key] = tags[key] || new Tag();
   }
   function peekTag(record, key) {
@@ -60822,6 +62614,7 @@ lunr.QueryParser.parseBoost = function (parser) {
               this._errorRequests = [];
               this._lastError = null;
               this.isSaving = false;
+              this.notify('isDirty');
               notifyErrorsStateChanged(this);
               break;
           }
@@ -60865,6 +62658,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.handler = notifications.subscribe(identity, (identifier, type, key) => {
         switch (type) {
           case 'state':
+            this.notify('isSaved');
             this.notify('isNew');
             this.notify('isDeleted');
             this.notify('isDirty');
@@ -60887,7 +62681,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       getTag(this, key).notify();
     }
     updateInvalidErrors(errors) {
-      (false && !(typeof this.cache.getErrors === 'function') && (0, _debug.assert)(`Expected the Cache instance for ${this.identifier}  to implement getErrors(identifier)`, typeof this.cache.getErrors === 'function'));
+      (false && !(typeof this.cache.getErrors === 'function') && (0, _debug.assert)(`Expected the Cache instance for ${this.identifier.lid}  to implement getErrors(identifier)`, typeof this.cache.getErrors === 'function'));
       let jsonApiErrors = this.cache.getErrors(this.identifier);
       errors.clear();
       for (let i = 0; i < jsonApiErrors.length; i++) {
@@ -60956,10 +62750,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     get isDirty() {
       let rd = this.cache;
-      if (rd.isDeletionCommitted(this.identifier) || this.isDeleted && this.isNew) {
+      if (this.isEmpty || rd.isDeletionCommitted(this.identifier) || this.isDeleted && this.isNew) {
         return false;
       }
-      return this.isNew || rd.hasChangedAttrs(this.identifier);
+      return this.isDeleted || this.isNew || rd.hasChangedAttrs(this.identifier);
     }
     get isError() {
       let errorReq = this._errorRequests[this._errorRequests.length - 1];
@@ -61029,7 +62823,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return '';
 
         // deleted substates
-      } else if (this.isDeleted) {
+      } else if (this.isDirty && this.isDeleted) {
         return 'deleted';
 
         // loaded.created substates
@@ -61659,9 +63453,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return Promise.resolve(this);
       }
       return this.save(options).then(_ => {
-        (0, _runloop.run)(() => {
-          this.unloadRecord();
-        });
+        this.unloadRecord();
         return this;
       });
     }
@@ -61820,6 +63612,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (this.currentState.isNew && this.currentState.isDeleted) {
         promise = Promise.resolve(this);
       } else {
+        this.errors.clear();
         promise = (0, _store.storeFor)(this).saveRecord(this, options);
       }
       return promise;
@@ -62033,41 +63826,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     eachAttribute(callback, binding) {
       this.constructor.eachAttribute(callback, binding);
     }
-
-    /**
-      Create should only ever be called by the store. To create an instance of a
-      `Model` in a dirty state use `store.createRecord`.
-      To create instances of `Model` in a clean state, use `store.push`
-       @method create
-      @private
-      @static
-    */
-    /**
-     Represents the model's class name as a string. This can be used to look up the model's class name through
-     `Store`'s modelFor method.
-      `modelName` is generated for you by Ember Data. It will be a lowercased, dasherized string.
-     For example:
-      ```javascript
-     store.modelFor('post').modelName; // 'post'
-     store.modelFor('blog-post').modelName; // 'blog-post'
-     ```
-      The most common place you'll want to access `modelName` is in your serializer's `payloadKeyFromModelName` method. For example, to change payload
-     keys to underscore (instead of dasherized), you might use the following code:
-      ```javascript
-     import RESTSerializer from '@ember-data/serializer/rest';
-     import { underscore } from '<app-name>/utils/string-utils';
-      export default const PostSerializer = RESTSerializer.extend({
-       payloadKeyFromModelName(modelName) {
-         return underscore(modelName);
-       }
-     });
-     ```
-     @property modelName
-      @public
-     @type String
-     @readonly
-     @static
-    */
     /*
      These class methods below provide relationship
      introspection abilities about relationships.
@@ -62697,417 +64455,457 @@ lunr.QueryParser.parseBoost = function (parser) {
   _exports.M = Model;
   Model.prototype._createProps = null;
   Model.prototype._secretInit = null;
-  function normalizeType$1(type) {
-    return (0, _string.dasherize)(type);
-  }
-  /**
-    @module @ember-data/model
-  */
-
-  /**
-    `belongsTo` is used to define One-To-One and One-To-Many
-    relationships on a [Model](/ember-data/release/classes/Model).
-  
-  
-    `belongsTo` takes an optional hash as a second parameter, currently
-    supported options are:
-  
-    - `async`: A boolean value used to explicitly declare this to be an async relationship. The default is true.
-    - `inverse`: A string used to identify the inverse property on a
-      related model in a One-To-Many relationship. See [Explicit Inverses](#explicit-inverses)
-    - `polymorphic` A boolean value to mark the relationship as polymorphic
-  
-    #### One-To-One
-    To declare a one-to-one relationship between two models, use
-    `belongsTo`:
-  
-    ```app/models/user.js
-    import Model, { belongsTo } from '@ember-data/model';
-  
-    export default class UserModel extends Model {
-      @belongsTo('profile') profile;
-    }
-    ```
-  
-    ```app/models/profile.js
-    import Model, { belongsTo } from '@ember-data/model';
-  
-    export default class ProfileModel extends Model {
-      @belongsTo('user') user;
-    }
-    ```
-  
-    #### One-To-Many
-  
-    To declare a one-to-many relationship between two models, use
-    `belongsTo` in combination with `hasMany`, like this:
-  
-    ```app/models/post.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class PostModel extends Model {
-      @hasMany('comment', { async: false, inverse: 'post' }) comments;
-    }
-    ```
-  
-    ```app/models/comment.js
-    import Model, { belongsTo } from '@ember-data/model';
-  
-    export default class CommentModel extends Model {
-      @belongsTo('post', { async: false, inverse: 'comments' }) post;
-    }
-    ```
-  
-    #### Sync relationships
-  
-    Ember Data resolves sync relationships with the related resources
-    available in its local store, hence it is expected these resources
-    to be loaded before or along-side the primary resource.
-  
-    ```app/models/comment.js
-    import Model, { belongsTo } from '@ember-data/model';
-  
-    export default class CommentModel extends Model {
-      @belongsTo('post', {
-        async: false,
-        inverse: null
-      })
-      post;
-    }
-    ```
-  
-    In contrast to async relationship, accessing a sync relationship
-    will always return the record (Model instance) for the existing
-    local resource, or null. But it will error on access when
-    a related resource is known to exist and it has not been loaded.
-  
-    ```
-    let post = comment.post;
-  
-    ```
-  
-    @method belongsTo
-    @public
-    @static
-    @for @ember-data/model
-    @param {String} modelName (optional) type of the relationship
-    @param {Object} options (optional) a hash of options
-    @return {Ember.computed} relationship
-  */
-  function belongsTo(modelName, options) {
-    let opts = options;
-    let userEnteredModelName = modelName;
-    (false && !(opts && typeof opts.async === 'boolean') && (0, _debug.assert)(`Expected belongsTo options.async to be a boolean`, opts && typeof opts.async === 'boolean'));
-    (false && !(opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0) && (0, _debug.assert)(`Expected belongsTo options.inverse to be either null or the string type of the related resource.`, opts.inverse === null || typeof opts.inverse === 'string' && opts.inverse.length > 0));
-    let meta = {
-      type: normalizeType$1(userEnteredModelName),
-      isRelationship: true,
-      options: opts,
-      kind: 'belongsTo',
-      name: 'Belongs To',
-      key: null
-    };
-    return (0, _object.computed)({
-      get(key) {
-        // this is a legacy behavior we may not carry into a new model setup
-        // it's better to error on disconnected records so users find errors
-        // in their logic.
-        if (this.isDestroying || this.isDestroyed) {
-          return null;
-        }
-        const support = lookupLegacySupport(this);
-        return support.getBelongsTo(key);
-      },
-      set(key, value) {
-        const support = lookupLegacySupport(this);
-        this.store._join(() => {
-          support.setDirtyBelongsTo(key, value);
-        });
-        return support.getBelongsTo(key);
-      }
-    }).meta(meta);
-  }
-  var belongsTo$1 = computedMacroWithOptionalParams(belongsTo);
-  _exports.b = belongsTo$1;
-  function normalizeType(type) {
-    return (0, _emberInflector.singularize)((0, _string.dasherize)(type));
-  }
-
-  /**
-    `hasMany` is used to define One-To-Many and Many-To-Many
-    relationships on a [Model](/ember-data/release/classes/Model).
-  
-    `hasMany` takes an optional hash as a second parameter, currently
-    supported options are:
-  
-    - `async`: A boolean value used to explicitly declare this to be an async relationship. The default is true.
-    - `inverse`: A string used to identify the inverse property on a related model.
-    - `polymorphic` A boolean value to mark the relationship as polymorphic
-  
-    #### One-To-Many
-    To declare a one-to-many relationship between two models, use
-    `belongsTo` in combination with `hasMany`, like this:
-  
-    ```app/models/post.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class PostModel extends Model {
-      @hasMany('comment') comments;
-    }
-    ```
-  
-    ```app/models/comment.js
-    import Model, { belongsTo } from '@ember-data/model';
-  
-    export default class CommentModel extends Model {
-      @belongsTo('post') post;
-    }
-    ```
-  
-    #### Many-To-Many
-    To declare a many-to-many relationship between two models, use
-    `hasMany`:
-  
-    ```app/models/post.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class PostModel extends Model {
-      @hasMany('tag') tags;
-    }
-    ```
-  
-    ```app/models/tag.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class TagModel extends Model {
-      @hasMany('post') posts;
-    }
-    ```
-  
-    You can avoid passing a string as the first parameter. In that case Ember Data
-    will infer the type from the singularized key name.
-  
-    ```app/models/post.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class PostModel extends Model {
-      @hasMany tags;
-    }
-    ```
-  
-    will lookup for a Tag type.
-  
-    #### Explicit Inverses
-  
-    Ember Data will do its best to discover which relationships map to
-    one another. In the one-to-many code above, for example, Ember Data
-    can figure out that changing the `comments` relationship should update
-    the `post` relationship on the inverse because post is the only
-    relationship to that model.
-  
-    However, sometimes you may have multiple `belongsTo`/`hasMany` for the
-    same type. You can specify which property on the related model is
-    the inverse using `hasMany`'s `inverse` option:
-  
-    ```app/models/comment.js
-    import Model, { belongsTo } from '@ember-data/model';
-  
-    export default class CommentModel extends Model {
-      @belongsTo('post') onePost;
-      @belongsTo('post') twoPost
-      @belongsTo('post') redPost;
-      @belongsTo('post') bluePost;
-    }
-    ```
-  
-    ```app/models/post.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class PostModel extends Model {
-      @hasMany('comment', {
-        inverse: 'redPost'
-      })
-      comments;
-    }
-    ```
-  
-    You can also specify an inverse on a `belongsTo`, which works how
-    you'd expect.
-  
-    #### Sync relationships
-  
-    Ember Data resolves sync relationships with the related resources
-    available in its local store, hence it is expected these resources
-    to be loaded before or along-side the primary resource.
-  
-    ```app/models/post.js
-    import Model, { hasMany } from '@ember-data/model';
-  
-    export default class PostModel extends Model {
-      @hasMany('comment', {
-        async: false
-      })
-      comments;
-    }
-    ```
-  
-    In contrast to async relationship, accessing a sync relationship
-    will always return a [ManyArray](/ember-data/release/classes/ManyArray) instance
-    containing the existing local resources. But it will error on access
-    when any of the known related resources have not been loaded.
-  
-    ```
-    post.comments.forEach((comment) => {
-  
-    });
-  
-    ```
-  
-    If you are using `links` with sync relationships, you have to use
-    `ref.reload` to fetch the resources.
-  
-    @method hasMany
-    @public
-    @static
-    @for @ember-data/model
-    @param {String} type (optional) type of the relationship
-    @param {Object} options (optional) a hash of options
-    @return {Ember.computed} relationship
-  */
-  function hasMany(type, options) {
-    (false && !(options && typeof options.async === 'boolean') && (0, _debug.assert)(`Expected hasMany options.async to be a boolean`, options && typeof options.async === 'boolean')); // Metadata about relationships is stored on the meta of
-    // the relationship. This is used for introspection and
-    // serialization. Note that `key` is populated lazily
-    // the first time the CP is called.
-    let meta = {
-      type: normalizeType(type),
-      options,
-      isRelationship: true,
-      kind: 'hasMany',
-      name: 'Has Many',
-      key: null
-    };
-    return (0, _object.computed)({
-      get(key) {
-        if (this.isDestroying || this.isDestroyed) {
-          return (0, _array.A)();
-        }
-        return lookupLegacySupport(this).getHasMany(key);
-      },
-      set(key, records) {
-        const support = lookupLegacySupport(this);
-        const manyArray = support.getManyArray(key);
-        (false && !(Array.isArray(records)) && (0, _debug.assert)(`You must pass an array of records to set a hasMany relationship`, Array.isArray(records)));
-        this.store._join(() => {
-          manyArray.splice(0, manyArray.length, ...records);
-        });
-        return support.getHasMany(key);
-      }
-    }).meta(meta);
-  }
-  var hasMany$1 = computedMacroWithOptionalParams(hasMany);
-  _exports.h = hasMany$1;
 });
-;define("@ember-data/model/index", ["exports", "@ember-data/model/index-372d2028"], function (_exports, _index372d) {
+;define("@ember-data/request-utils/index", ["exports", "@ember/debug"], function (_exports, _debug) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "attr", {
-    enumerable: true,
-    get: function () {
-      return _index372d.a;
-    }
-  });
-  Object.defineProperty(_exports, "belongsTo", {
-    enumerable: true,
-    get: function () {
-      return _index372d.b;
-    }
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _index372d.M;
-    }
-  });
-  Object.defineProperty(_exports, "hasMany", {
-    enumerable: true,
-    get: function () {
-      return _index372d.h;
-    }
-  });
-});
-;define("@ember-data/request/fetch", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
+  _exports.LifetimesService = void 0;
+  _exports.buildBaseURL = buildBaseURL;
+  _exports.buildQueryParams = buildQueryParams;
+  _exports.filterEmpty = filterEmpty;
+  _exports.parseCacheControl = parseCacheControl;
+  _exports.setBuildURLConfig = setBuildURLConfig;
+  _exports.sortQueryParams = sortQueryParams;
   /**
-   * A basic Fetch Handler which converts a request into a
-   * `fetch` call presuming the response to be `json`.
+   * Simple utility function to assist in url building,
+   * query params, and other common request operations.
+   *
+   * These primitives may be used directly or composed
+   * by request builders to provide a consistent interface
+   * for building requests.
+   *
+   * For instance:
    *
    * ```ts
-   * import Fetch from '@ember-data/request/fetch';
+   * import { buildBaseURL, buildQueryParams } from '@ember-data/request-utils';
    *
-   * manager.use([Fetch]);
+   * const baseURL = buildBaseURL({
+   *   host: 'https://api.example.com',
+   *   namespace: 'api/v1',
+   *   resourcePath: 'emberDevelopers',
+   *   op: 'query',
+   *   identifier: { type: 'ember-developer' }
+   * });
+   * const url = `${baseURL}?${buildQueryParams({ name: 'Chris', include:['pets'] })}`;
+   * // => 'https://api.example.com/api/v1/emberDevelopers?include=pets&name=Chris'
    * ```
    *
-   * @module @ember-data/request/fetch
-   * @main @ember-data/request/fetch
-   */
-
-  const _fetch = typeof fetch !== 'undefined' ? fetch : typeof FastBoot !== 'undefined' ? FastBoot.require('node-fetch') : () => {
-    throw new Error('No Fetch Implementation Found');
-  };
-  /**
-   * A basic handler which converts a request into a
-   * `fetch` call presuming the response to be `json`.
+   * This is useful, but not as useful as the REST request builder for query which is sugar
+   * over this (and more!):
    *
    * ```ts
-   * import Fetch from '@ember-data/request/fetch';
+   * import { query } from '@ember-data/rest/request';
    *
-   * manager.use([Fetch]);
+   * const options = query('ember-developer', { name: 'Chris', include:['pets'] });
+   * // => { url: 'https://api.example.com/api/v1/emberDevelopers?include=pets&name=Chris' }
+   * // Note: options will also include other request options like headers, method, etc.
    * ```
    *
-   * @class Fetch
+   * @module @ember-data/request-utils
+   * @main @ember-data/request-utils
    * @public
    */
-  const Fetch = {
-    async request(context) {
-      const response = await _fetch(context.request.url, context.request);
-      context.setResponse(response);
 
-      // if we are an error, we will want to throw
-      if (!response.ok || response.status >= 400) {
-        const text = await response.text();
-        let errorPayload;
-        try {
-          errorPayload = JSON.parse(text);
-        } catch {
-          // void;
+  // prevents the final constructed object from needing to add
+  // host and namespace which are provided by the final consuming
+  // class to the prototype which can result in overwrite errors
+  let CONFIG = {
+    host: '',
+    namespace: ''
+  };
+
+  /**
+   * Sets the global configuration for `buildBaseURL`
+   * for host and namespace values for the application.
+   *
+   * These values may still be overridden by passing
+   * them to buildBaseURL directly.
+   *
+   * This method may be called as many times as needed
+   *
+   * ```ts
+   * type BuildURLConfig = {
+   *   host: string;
+   *   namespace: string'
+   * }
+   * ```
+   *
+   * @method setBuildURLConfig
+   * @static
+   * @public
+   * @for @ember-data/request-utils
+   * @param {BuildURLConfig} config
+   * @returns void
+   */
+  function setBuildURLConfig(config) {
+    CONFIG = config;
+  }
+  const OPERATIONS_WITH_PRIMARY_RECORDS = new Set(['findRecord', 'findRelatedRecord', 'findRelatedCollection', 'updateRecord', 'deleteRecord']);
+  function isOperationWithPrimaryRecord(options) {
+    return OPERATIONS_WITH_PRIMARY_RECORDS.has(options.op);
+  }
+  function resourcePathForType(options) {
+    return options.op === 'findMany' ? options.identifiers[0].type : options.identifier.type;
+  }
+
+  /**
+   * Builds a URL for a request based on the provided options.
+   * Does not include support for building query params (see `buildQueryParams`)
+   * so that it may be composed cleanly with other query-params strategies.
+   *
+   * Usage:
+   *
+   * ```ts
+   * import { buildBaseURL } from '@ember-data/request-utils';
+   *
+   * const url = buildBaseURL({
+   *   host: 'https://api.example.com',
+   *   namespace: 'api/v1',
+   *   resourcePath: 'emberDevelopers',
+   *   op: 'query',
+   *   identifier: { type: 'ember-developer' }
+   * });
+   *
+   * // => 'https://api.example.com/api/v1/emberDevelopers'
+   * ```
+   *
+   * On the surface this may seem like a lot of work to do something simple, but
+   * it is designed to be composable with other utilities and interfaces that the
+   * average product engineer will never need to see or use.
+   *
+   * A few notes:
+   *
+   * - `resourcePath` is optional, but if it is not provided, `identifier.type` will be used.
+   * - `host` and `namespace` are optional, but if they are not provided, the values globally
+   *    configured via `setBuildURLConfig` will be used.
+   * - `op` is required and must be one of the following:
+   *   - 'findRecord' 'query' 'findMany' 'findRelatedCollection' 'findRelatedRecord'` 'createRecord' 'updateRecord' 'deleteRecord'
+   * - Depending on the value of `op`, `identifier` or `identifiers` will be required.
+   *
+   * @method buildBaseURL
+   * @static
+   * @public
+   * @for @ember-data/request-utils
+   * @param urlOptions
+   * @returns string
+   */
+  function buildBaseURL(urlOptions) {
+    const options = Object.assign({
+      host: CONFIG.host,
+      namespace: CONFIG.namespace
+    }, urlOptions);
+    (false && !(typeof options.op === 'string' && options.op.length > 0) && (0, _debug.assert)(`buildBaseURL: You must pass \`op\` as part of options`, typeof options.op === 'string' && options.op.length > 0));
+    (false && !(options.op === 'findMany' || options.identifier && typeof options.identifier === 'object') && (0, _debug.assert)(`buildBaseURL: You must pass \`identifier\` as part of options`, options.op === 'findMany' || options.identifier && typeof options.identifier === 'object'));
+    (false && !(options.op !== 'findMany' || options.identifiers && Array.isArray(options.identifiers) && options.identifiers.length > 0 && options.identifiers.every(i => i && typeof i === 'object')) && (0, _debug.assert)(`buildBaseURL: You must pass \`identifiers\` as part of options`, options.op !== 'findMany' || options.identifiers && Array.isArray(options.identifiers) && options.identifiers.length > 0 && options.identifiers.every(i => i && typeof i === 'object')));
+    (false && !(!isOperationWithPrimaryRecord(options) || typeof options.identifier.id === 'string' && options.identifier.id.length > 0) && (0, _debug.assert)(`buildBaseURL: You must pass valid \`identifier\` as part of options, expected 'id'`, !isOperationWithPrimaryRecord(options) || typeof options.identifier.id === 'string' && options.identifier.id.length > 0));
+    (false && !(options.op !== 'findMany' || options.identifiers.every(i => typeof i.id === 'string' && i.id.length > 0)) && (0, _debug.assert)(`buildBaseURL: You must pass \`identifiers\` as part of options`, options.op !== 'findMany' || options.identifiers.every(i => typeof i.id === 'string' && i.id.length > 0)));
+    (false && !(options.op === 'findMany' || typeof options.identifier.type === 'string' && options.identifier.type.length > 0) && (0, _debug.assert)(`buildBaseURL: You must pass valid \`identifier\` as part of options, expected 'type'`, options.op === 'findMany' || typeof options.identifier.type === 'string' && options.identifier.type.length > 0));
+    (false && !(options.op !== 'findMany' || typeof options.identifiers[0].type === 'string' && options.identifiers[0].type.length > 0) && (0, _debug.assert)(`buildBaseURL: You must pass valid \`identifiers\` as part of options, expected 'type'`, options.op !== 'findMany' || typeof options.identifiers[0].type === 'string' && options.identifiers[0].type.length > 0)); // prettier-ignore
+    const idPath = isOperationWithPrimaryRecord(options) ? encodeURIComponent(options.identifier.id) : '';
+    const resourcePath = options.resourcePath || resourcePathForType(options);
+    const {
+      host,
+      namespace
+    } = options;
+    const fieldPath = 'fieldPath' in options ? options.fieldPath : '';
+    (false && !(['findRecord', 'query', 'findMany', 'findRelatedCollection', 'findRelatedRecord', 'createRecord', 'updateRecord', 'deleteRecord'].includes(options.op)) && (0, _debug.assert)(`buildBaseURL: You tried to build a ${String(options.op)} request to ${resourcePath} but op must be one of "${['findRecord', 'findRelatedRecord', 'findRelatedCollection', 'updateRecord', 'deleteRecord', 'createRecord', 'query', 'findMany'].join('","')}".`, ['findRecord', 'query', 'findMany', 'findRelatedCollection', 'findRelatedRecord', 'createRecord', 'updateRecord', 'deleteRecord'].includes(options.op)));
+    (false && !(host === '/' || !host.endsWith('/')) && (0, _debug.assert)(`buildBaseURL: host must NOT end with '/', received '${host}'`, host === '/' || !host.endsWith('/')));
+    (false && !(!namespace.startsWith('/')) && (0, _debug.assert)(`buildBaseURL: namespace must NOT start with '/', received '${namespace}'`, !namespace.startsWith('/')));
+    (false && !(!namespace.endsWith('/')) && (0, _debug.assert)(`buildBaseURL: namespace must NOT end with '/', received '${namespace}'`, !namespace.endsWith('/')));
+    (false && !(!resourcePath.startsWith('/')) && (0, _debug.assert)(`buildBaseURL: resourcePath must NOT start with '/', received '${resourcePath}'`, !resourcePath.startsWith('/')));
+    (false && !(!resourcePath.endsWith('/')) && (0, _debug.assert)(`buildBaseURL: resourcePath must NOT end with '/', received '${resourcePath}'`, !resourcePath.endsWith('/')));
+    (false && !(!fieldPath.startsWith('/')) && (0, _debug.assert)(`buildBaseURL: fieldPath must NOT start with '/', received '${fieldPath}'`, !fieldPath.startsWith('/')));
+    (false && !(!fieldPath.endsWith('/')) && (0, _debug.assert)(`buildBaseURL: fieldPath must NOT end with '/', received '${fieldPath}'`, !fieldPath.endsWith('/')));
+    (false && !(!idPath.startsWith('/')) && (0, _debug.assert)(`buildBaseURL: idPath must NOT start with '/', received '${idPath}'`, !idPath.startsWith('/')));
+    (false && !(!idPath.endsWith('/')) && (0, _debug.assert)(`buildBaseURL: idPath must NOT end with '/', received '${idPath}'`, !idPath.endsWith('/')));
+    const url = [host === '/' ? '' : host, namespace, resourcePath, idPath, fieldPath].filter(Boolean).join('/');
+    return host ? url : `/${url}`;
+  }
+  const DEFAULT_QUERY_PARAMS_SERIALIZATION_OPTIONS = {
+    arrayFormat: 'comma'
+  };
+  function handleInclude(include) {
+    (false && !(typeof include === 'string' || Array.isArray(include)) && (0, _debug.assert)(`Expected include to be a string or array, got ${typeof include}`, typeof include === 'string' || Array.isArray(include)));
+    return typeof include === 'string' ? include.split(',') : include;
+  }
+
+  /**
+   * filter out keys of an object that have falsy values or point to empty arrays
+   * returning a new object with only those keys that have truthy values / non-empty arrays
+   *
+   * @method filterEmpty
+   * @static
+   * @public
+   * @for @ember-data/request-utils
+   * @param {Record<string, Serializable>} source object to filter keys with empty values from
+   * @returns {Record<string, Serializable>} A new object with the keys that contained empty values removed
+   */
+  function filterEmpty(source) {
+    const result = {};
+    for (const key in source) {
+      const value = source[key];
+      // Allow `0` and `false` but filter falsy values that indicate "empty"
+      if (value !== undefined && value !== null && value !== '') {
+        if (!Array.isArray(value) || value.length > 0) {
+          result[key] = source[key];
         }
-        const error = new Error(`[${response.status}] ${response.statusText} - ${response.url}`);
-        error.content = errorPayload;
-        throw error;
-      } else {
-        return response.json();
       }
     }
-  };
-  _exports.default = Fetch;
+    return result;
+  }
+
+  /**
+   * Sorts query params by both key and value returning a new URLSearchParams
+   * object with the keys inserted in sorted order.
+   *
+   * Treats `included` specially, splicing it into an array if it is a string and sorting the array.
+   *
+   * Options:
+   * - arrayFormat: 'bracket' | 'indices' | 'repeat' | 'comma'
+   *
+   * 'bracket': appends [] to the key for every value e.g. `&ids[]=1&ids[]=2`
+   * 'indices': appends [i] to the key for every value e.g. `&ids[0]=1&ids[1]=2`
+   * 'repeat': appends the key for every value e.g. `&ids=1&ids=2`
+   * 'comma' (default): appends the key once with a comma separated list of values e.g. `&ids=1,2`
+   *
+   * @method sortQueryParams
+   * @static
+   * @public
+   * @for @ember-data/request-utils
+   * @param {URLSearchParams | object} params
+   * @param {object} options
+   * @returns {URLSearchParams} A URLSearchParams with keys inserted in sorted order
+   */
+  function sortQueryParams(params, options) {
+    options = Object.assign({}, DEFAULT_QUERY_PARAMS_SERIALIZATION_OPTIONS, options);
+    const paramsIsObject = !(params instanceof URLSearchParams);
+    const urlParams = new URLSearchParams();
+    const dictionaryParams = paramsIsObject ? params : {};
+    if (!paramsIsObject) {
+      params.forEach((value, key) => {
+        const hasExisting = (key in dictionaryParams);
+        if (!hasExisting) {
+          dictionaryParams[key] = value;
+        } else {
+          const existingValue = dictionaryParams[key];
+          if (Array.isArray(existingValue)) {
+            existingValue.push(value);
+          } else {
+            dictionaryParams[key] = [existingValue, value];
+          }
+        }
+      });
+    }
+    if ('include' in dictionaryParams) {
+      dictionaryParams.include = handleInclude(dictionaryParams.include);
+    }
+    const sortedKeys = Object.keys(dictionaryParams).sort();
+    sortedKeys.forEach(key => {
+      const value = dictionaryParams[key];
+      if (Array.isArray(value)) {
+        value.sort();
+        switch (options.arrayFormat) {
+          case 'indices':
+            value.forEach((v, i) => {
+              urlParams.append(`${key}[${i}]`, String(v));
+            });
+            return;
+          case 'bracket':
+            value.forEach(v => {
+              urlParams.append(`${key}[]`, String(v));
+            });
+            return;
+          case 'repeat':
+            value.forEach(v => {
+              urlParams.append(key, String(v));
+            });
+            return;
+          case 'comma':
+          default:
+            urlParams.append(key, value.join(','));
+            return;
+        }
+      } else {
+        urlParams.append(key, String(value));
+      }
+    });
+    return urlParams;
+  }
+
+  /**
+   * Sorts query params by both key and value, returning a query params string
+   *
+   * Treats `included` specially, splicing it into an array if it is a string and sorting the array.
+   *
+   * Options:
+   * - arrayFormat: 'bracket' | 'indices' | 'repeat' | 'comma'
+   *
+   * 'bracket': appends [] to the key for every value e.g. `ids[]=1&ids[]=2`
+   * 'indices': appends [i] to the key for every value e.g. `ids[0]=1&ids[1]=2`
+   * 'repeat': appends the key for every value e.g. `ids=1&ids=2`
+   * 'comma' (default): appends the key once with a comma separated list of values e.g. `ids=1,2`
+   *
+   * @method sortQueryParams
+   * @static
+   * @public
+   * @for @ember-data/request-utils
+   * @param {URLSearchParams | object} params
+   * @param {object} [options]
+   * @returns {string} A sorted query params string without the leading `?`
+   */
+  function buildQueryParams(params, options) {
+    return sortQueryParams(params, options).toString();
+  }
+  const NUMERIC_KEYS = new Set(['max-age', 's-maxage', 'stale-if-error', 'stale-while-revalidate']);
+
+  /**
+   *  Parses a string Cache-Control header value into an object with the following structure:
+   *
+   * ```ts
+   * interface CacheControlValue {
+   *   immutable?: boolean;
+   *   'max-age'?: number;
+   *   'must-revalidate'?: boolean;
+   *   'must-understand'?: boolean;
+   *   'no-cache'?: boolean;
+   *   'no-store'?: boolean;
+   *   'no-transform'?: boolean;
+   *   'only-if-cached'?: boolean;
+   *   private?: boolean;
+   *   'proxy-revalidate'?: boolean;
+   *   public?: boolean;
+   *   's-maxage'?: number;
+   *   'stale-if-error'?: number;
+   *   'stale-while-revalidate'?: number;
+   * }
+   * ```
+   * @method parseCacheControl
+   * @static
+   * @public
+   * @for @ember-data/request-utils
+   * @param {string} header
+   * @returns {CacheControlValue}
+   */
+  function parseCacheControl(header) {
+    let key = '';
+    let value = '';
+    let isParsingKey = true;
+    let cacheControlValue = {};
+    function parseCacheControlValue(stringToParse) {
+      const parsedValue = Number.parseInt(stringToParse);
+      (false && !(!Number.isNaN(parsedValue)) && (0, _debug.assert)(`Invalid Cache-Control value, expected a number but got - ${stringToParse}`, !Number.isNaN(parsedValue)));
+      return parsedValue;
+    }
+    for (let i = 0; i < header.length; i++) {
+      let char = header.charAt(i);
+      if (char === ',') {
+        (false && !(!isParsingKey || !NUMERIC_KEYS.has(key)) && (0, _debug.assert)(`Invalid Cache-Control value, expected a value`, !isParsingKey || !NUMERIC_KEYS.has(key)));
+        (false && !(i === 0 || header.charAt(i - 1) !== '=') && (0, _debug.assert)(`Invalid Cache-Control value, expected a value after "=" but got ","`, i === 0 || header.charAt(i - 1) !== '='));
+        isParsingKey = true;
+        cacheControlValue[key] = NUMERIC_KEYS.has(key) ? parseCacheControlValue(value) : true;
+        key = '';
+        value = '';
+        continue;
+      } else if (char === '=') {
+        (false && !(i + 1 !== header.length) && (0, _debug.assert)(`Invalid Cache-Control value, expected a value after "="`, i + 1 !== header.length));
+        isParsingKey = false;
+      } else if (char === ' ' || char === `\t` || char === `\n`) {
+        continue;
+      } else if (isParsingKey) {
+        key += char;
+      } else {
+        value += char;
+      }
+      if (i === header.length - 1) {
+        cacheControlValue[key] = NUMERIC_KEYS.has(key) ? parseCacheControlValue(value) : true;
+      }
+    }
+    return cacheControlValue;
+  }
+  function isStale(headers, expirationTime) {
+    // const age = headers.get('age');
+    // const cacheControl = parseCacheControl(headers.get('cache-control') || '');
+    // const expires = headers.get('expires');
+    // const lastModified = headers.get('last-modified');
+    const date = headers.get('date');
+    if (!date) {
+      return true;
+    }
+    const time = new Date(date).getTime();
+    const now = Date.now();
+    const deadline = time + expirationTime;
+    const result = now > deadline;
+    return result;
+  }
+  /**
+   * A basic LifetimesService that can be added to the Store service.
+   *
+   * Determines staleness based on time since the request was last received from the API
+   * using the `date` header.
+   *
+   * This allows the Store's CacheHandler to determine if a request is expired and
+   * should be refetched upon next request.
+   *
+   * The `Fetch` handler provided by `@ember-data/request/fetch` will automatically
+   * add the `date` header to responses if it is not present.
+   *
+   * Usage:
+   *
+   * ```ts
+   * import { LifetimesService } from '@ember-data/request-utils';
+   * import DataStore from '@ember-data/store';
+   *
+   * // ...
+   *
+   * export class Store extends DataStore {
+   *   constructor(args) {
+   *     super(args);
+   *     this.lifetimes = new LifetimesService(this, { apiCacheSoftExpires: 30_000, apiCacheHardExpires: 60_000 });
+   *   }
+   * }
+   * ```
+   *
+   * @class LifetimesService
+   * @public
+   * @module @ember-data/request-utils
+   */
+  // TODO this doesn't get documented correctly on the website because it shares a class name
+  // with the interface expected by the Store service
+  class LifetimesService {
+    constructor(store, config) {
+      this.store = store;
+      this.config = config;
+    }
+    isHardExpired(identifier) {
+      const cached = this.store.cache.peekRequest(identifier);
+      return !cached || !cached.response || isStale(cached.response.headers, this.config.apiCacheHardExpires);
+    }
+    isSoftExpired(identifier) {
+      const cached = this.store.cache.peekRequest(identifier);
+      return !cached || !cached.response || isStale(cached.response.headers, this.config.apiCacheSoftExpires);
+    }
+  }
+  _exports.LifetimesService = LifetimesService;
 });
-;define("@ember-data/request/index", ["exports"], function (_exports) {
+;define("@ember-data/request/context-49bbb842", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.createDeferred = createDeferred;
-  _exports.default = void 0;
+  _exports.C = void 0;
+  _exports._ = _classPrivateFieldBase;
+  _exports.a = assertValidRequest;
+  _exports.b = void 0;
+  _exports.c = cloneResponseProperties;
+  _exports.d = createFuture;
+  _exports.e = _classPrivateFieldKey;
+  _exports.f = createDeferred;
+  _exports.i = isFuture;
+  _exports.u = upgradePromise;
   function _classPrivateFieldBase(receiver, privateKey) {
     if (!Object.prototype.hasOwnProperty.call(receiver, privateKey)) {
       throw new TypeError("attempted to use private field on non-instance");
@@ -63117,188 +64915,6 @@ lunr.QueryParser.parseBoost = function (parser) {
   var id = 0;
   function _classPrivateFieldKey(name) {
     return "__private_" + id++ + "_" + name;
-  }
-  const IS_FUTURE = Symbol('IS_FUTURE');
-  function isFuture(maybe) {
-    return maybe[IS_FUTURE] === true;
-  }
-  function createDeferred() {
-    let resolve;
-    let reject;
-    let promise = new Promise((res, rej) => {
-      resolve = res;
-      reject = rej;
-    });
-    return {
-      resolve,
-      reject,
-      promise
-    };
-  }
-  function upgradePromise(promise, future) {
-    promise[IS_FUTURE] = true;
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    promise.getStream = future.getStream;
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    promise.abort = future.abort;
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    promise.onFinalize = future.onFinalize;
-    return promise;
-  }
-  function createFuture(owner) {
-    const deferred = createDeferred();
-    let {
-      promise
-    } = deferred;
-    let cbs;
-    promise = promise.finally(() => {
-      owner.resolveStream();
-      if (cbs) {
-        cbs.forEach(cb => cb());
-      }
-    });
-    promise.onFinalize = fn => {
-      cbs = cbs || [];
-      cbs.push(fn);
-    };
-    promise[IS_FUTURE] = true;
-    promise.getStream = () => {
-      return owner.getStream();
-    };
-    promise.abort = reason => {
-      owner.abort(enhanceReason(reason));
-    };
-    deferred.promise = promise;
-    return deferred;
-  }
-  function enhanceReason(reason) {
-    return new DOMException(reason || 'The user aborted a request.', 'AbortError');
-  }
-  class ContextOwner {
-    constructor(request, god) {
-      this.hasSetStream = false;
-      this.hasSetResponse = false;
-      this.hasSubscribers = false;
-      this.stream = createDeferred();
-      this.response = null;
-      this.nextCalled = 0;
-      this.requestId = god.id;
-      this.controller = request.controller || god.controller;
-      if (request.controller) {
-        if (request.controller !== god.controller) {
-          god.controller.signal.addEventListener('abort', () => {
-            this.controller.abort(god.controller.signal.reason);
-          });
-        }
-        delete request.controller;
-      }
-      let enhancedRequest = Object.assign({
-        signal: this.controller.signal
-      }, request);
-      {
-        if (request.headers) {
-          request.headers.clone = () => {
-            return new Headers([...request.headers.entries()]);
-          };
-          request.headers.toJSON = () => {
-            return [...request.headers.entries()];
-          };
-        }
-      }
-      this.enhancedRequest = enhancedRequest;
-      this.request = request;
-      this.god = god;
-      this.stream.promise = this.stream.promise.then(stream => {
-        if (this.god.stream === stream && this.hasSubscribers) {
-          this.god.stream = null;
-        }
-        return stream;
-      });
-    }
-    getResponse() {
-      if (this.hasSetResponse) {
-        return this.response;
-      }
-      if (this.nextCalled === 1) {
-        return this.god.response;
-      }
-      return null;
-    }
-    getStream() {
-      this.hasSubscribers = true;
-      return this.stream.promise;
-    }
-    abort(reason) {
-      this.controller.abort(reason);
-    }
-    setStream(stream) {
-      if (!this.hasSetStream) {
-        this.hasSetStream = true;
-        if (!(stream instanceof Promise)) {
-          this.god.stream = stream;
-        }
-        // @ts-expect-error
-        this.stream.resolve(stream);
-      }
-    }
-    resolveStream() {
-      this.setStream(this.nextCalled === 1 ? this.god.stream : null);
-    }
-    setResponse(response) {
-      if (this.hasSetResponse) {
-        return;
-      }
-      this.hasSetResponse = true;
-      if (response instanceof Response) {
-        const {
-          headers,
-          ok,
-          redirected,
-          status,
-          statusText,
-          type,
-          url
-        } = response;
-        headers.clone = () => {
-          return new Headers([...headers.entries()]);
-        };
-        headers.toJSON = () => {
-          return [...headers.entries()];
-        };
-        let responseData = {
-          headers: headers,
-          ok,
-          redirected,
-          status,
-          statusText,
-          type,
-          url
-        };
-        this.response = responseData;
-        this.god.response = responseData;
-      } else {
-        this.response = response;
-        this.god.response = response;
-      }
-    }
-  }
-  var _owner = /*#__PURE__*/_classPrivateFieldKey("owner");
-  class Context {
-    constructor(owner) {
-      Object.defineProperty(this, _owner, {
-        writable: true,
-        value: void 0
-      });
-      this.id = owner.requestId;
-      _classPrivateFieldBase(this, _owner)[_owner] = owner;
-      this.request = owner.enhancedRequest;
-    }
-    setStream(stream) {
-      _classPrivateFieldBase(this, _owner)[_owner].setStream(stream);
-    }
-    setResponse(response) {
-      _classPrivateFieldBase(this, _owner)[_owner].setResponse(response);
-    }
   }
   const BODY_TYPES = {
     type: 'string',
@@ -63496,6 +65112,287 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   const IgnoredKeys = new Set([]);
   function assertValidRequest(request, isTopLevel) {}
+  const IS_FUTURE = Symbol('IS_FUTURE');
+  function isFuture(maybe) {
+    return maybe[IS_FUTURE] === true;
+  }
+  function createDeferred() {
+    let resolve;
+    let reject;
+    let promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return {
+      resolve,
+      reject,
+      promise
+    };
+  }
+  function upgradePromise(promise, future) {
+    promise[IS_FUTURE] = true;
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    promise.getStream = future.getStream;
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    promise.abort = future.abort;
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    promise.onFinalize = future.onFinalize;
+    return promise;
+  }
+  function createFuture(owner) {
+    const deferred = createDeferred();
+    let {
+      promise
+    } = deferred;
+    let cbs;
+    promise = promise.finally(() => {
+      owner.resolveStream();
+      if (cbs) {
+        cbs.forEach(cb => cb());
+      }
+    });
+    promise.onFinalize = fn => {
+      cbs = cbs || [];
+      cbs.push(fn);
+    };
+    promise[IS_FUTURE] = true;
+    promise.getStream = () => {
+      return owner.getStream();
+    };
+    promise.abort = reason => {
+      owner.abort(enhanceReason(reason));
+    };
+    deferred.promise = promise;
+    return deferred;
+  }
+  function enhanceReason(reason) {
+    return new DOMException(reason || 'The user aborted a request.', 'AbortError');
+  }
+  function cloneResponseProperties(response) {
+    const {
+      headers,
+      ok,
+      redirected,
+      status,
+      statusText,
+      type,
+      url
+    } = response;
+    headers.clone = () => {
+      return new Headers(headers);
+    };
+    headers.toJSON = () => {
+      return Array.from(headers);
+    };
+    return {
+      headers: headers,
+      ok,
+      redirected,
+      status,
+      statusText,
+      type,
+      url
+    };
+  }
+  class ContextOwner {
+    constructor(request, god) {
+      this.hasSetStream = false;
+      this.hasSetResponse = false;
+      this.hasSubscribers = false;
+      this.stream = createDeferred();
+      this.response = null;
+      this.nextCalled = 0;
+      this.requestId = god.id;
+      this.controller = request.controller || god.controller;
+      if (request.controller) {
+        if (request.controller !== god.controller) {
+          god.controller.signal.addEventListener('abort', () => {
+            this.controller.abort(god.controller.signal.reason);
+          });
+        }
+        delete request.controller;
+      }
+      let enhancedRequest = Object.assign({
+        signal: this.controller.signal
+      }, request);
+      {
+        if (request.headers) {
+          request.headers.clone = () => {
+            return new Headers([...request.headers.entries()]);
+          };
+          request.headers.toJSON = () => {
+            return [...request.headers.entries()];
+          };
+        }
+      }
+      this.enhancedRequest = enhancedRequest;
+      this.request = request;
+      this.god = god;
+      this.stream.promise = this.stream.promise.then(stream => {
+        if (this.god.stream === stream && this.hasSubscribers) {
+          this.god.stream = null;
+        }
+        return stream;
+      });
+    }
+    getResponse() {
+      if (this.hasSetResponse) {
+        return this.response;
+      }
+      if (this.nextCalled === 1) {
+        return this.god.response;
+      }
+      return null;
+    }
+    getStream() {
+      this.hasSubscribers = true;
+      return this.stream.promise;
+    }
+    abort(reason) {
+      this.controller.abort(reason);
+    }
+    setStream(stream) {
+      if (!this.hasSetStream) {
+        this.hasSetStream = true;
+        if (!(stream instanceof Promise)) {
+          this.god.stream = stream;
+        }
+        // @ts-expect-error
+        this.stream.resolve(stream);
+      }
+    }
+    resolveStream() {
+      this.setStream(this.nextCalled === 1 ? this.god.stream : null);
+    }
+    setResponse(response) {
+      if (this.hasSetResponse) {
+        return;
+      }
+      this.hasSetResponse = true;
+      if (response instanceof Response) {
+        let responseData = cloneResponseProperties(response);
+        this.response = responseData;
+        this.god.response = responseData;
+      } else {
+        this.response = response;
+        this.god.response = response;
+      }
+    }
+  }
+  _exports.C = ContextOwner;
+  var _owner = /*#__PURE__*/_classPrivateFieldKey("owner");
+  class Context {
+    constructor(owner) {
+      Object.defineProperty(this, _owner, {
+        writable: true,
+        value: void 0
+      });
+      this.id = owner.requestId;
+      _classPrivateFieldBase(this, _owner)[_owner] = owner;
+      this.request = owner.enhancedRequest;
+    }
+    setStream(stream) {
+      _classPrivateFieldBase(this, _owner)[_owner].setStream(stream);
+    }
+    setResponse(response) {
+      _classPrivateFieldBase(this, _owner)[_owner].setResponse(response);
+    }
+  }
+  _exports.b = Context;
+});
+;define("@ember-data/request/fetch", ["exports", "@ember-data/request/context-49bbb842"], function (_exports, _context49bbb) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  /**
+   * A basic Fetch Handler which converts a request into a
+   * `fetch` call presuming the response to be `json`.
+   *
+   * ```ts
+   * import Fetch from '@ember-data/request/fetch';
+   *
+   * manager.use([Fetch]);
+   * ```
+   *
+   * @module @ember-data/request/fetch
+   * @main @ember-data/request/fetch
+   */
+
+  const _fetch = typeof fetch !== 'undefined' ? fetch : typeof FastBoot !== 'undefined' ? FastBoot.require('node-fetch') : () => {
+    throw new Error('No Fetch Implementation Found');
+  };
+
+  // clones a response in a way that should still
+  // allow it to stream
+  function cloneResponse(response, overrides) {
+    const props = (0, _context49bbb.c)(response);
+    return new Response(response.body, Object.assign(props, overrides));
+  }
+  const MUTATION_OPS = new Set(['updateRecord', 'createRecord', 'deleteRecord']);
+
+  /**
+   * A basic handler which converts a request into a
+   * `fetch` call presuming the response to be `json`.
+   *
+   * ```ts
+   * import Fetch from '@ember-data/request/fetch';
+   *
+   * manager.use([Fetch]);
+   * ```
+   *
+   * @class Fetch
+   * @public
+   */
+  const Fetch = {
+    async request(context) {
+      let response = await _fetch(context.request.url, context.request);
+      const isError = !response.ok || response.status >= 400;
+      const op = context.request.op;
+      const isMutationOp = Boolean(op && MUTATION_OPS.has(op));
+      if (!isError && !isMutationOp && response.status !== 204 && !response.headers.has('date')) {
+        const headers = new Headers(response.headers);
+        headers.set('date', new Date().toUTCString());
+        response = cloneResponse(response, {
+          headers
+        });
+      }
+      context.setResponse(response);
+
+      // if we are an error, we will want to throw
+      if (isError) {
+        const text = await response.text();
+        let errorPayload;
+        try {
+          errorPayload = JSON.parse(text);
+        } catch {
+          // void;
+        }
+        const error = new Error(`[${response.status}] ${response.statusText} - ${response.url}`);
+        error.content = errorPayload;
+        throw error;
+      } else {
+        return response.status === 204 ? null : response.json();
+      }
+    }
+  };
+  _exports.default = Fetch;
+});
+;define("@ember-data/request/index", ["exports", "@ember-data/request/context-49bbb842"], function (_exports, _context49bbb) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "createDeferred", {
+    enumerable: true,
+    get: function () {
+      return _context49bbb.f;
+    }
+  });
+  _exports.default = void 0;
   const STRUCTURED = Symbol('DOC');
   function curryFuture(owner, inbound, outbound) {
     owner.setStream(inbound.getStream());
@@ -63571,20 +65468,20 @@ lunr.QueryParser.parseBoost = function (parser) {
     return outbound.promise;
   }
   function executeNextHandler(wares, request, i, god) {
-    const owner = new ContextOwner(request, god);
+    const owner = new _context49bbb.C(request, god);
     function next(r) {
       owner.nextCalled++;
       return executeNextHandler(wares, r, i + 1, god);
     }
-    const context = new Context(owner);
+    const context = new _context49bbb.b(owner);
     let outcome;
     try {
       outcome = wares[i].request(context, next);
     } catch (e) {
       outcome = Promise.reject(e);
     }
-    const future = createFuture(owner);
-    if (isFuture(outcome)) {
+    const future = (0, _context49bbb.d)(owner);
+    if ((0, _context49bbb.i)(outcome)) {
       return curryFuture(owner, outcome, future);
     }
     return handleOutcome(owner, outcome, future);
@@ -63666,7 +65563,7 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @class RequestManager
    * @public
    */
-  var _handlers = /*#__PURE__*/_classPrivateFieldKey("handlers");
+  var _handlers = /*#__PURE__*/(0, _context49bbb.e)("handlers");
   class RequestManager {
     constructor(options) {
       Object.defineProperty(this, _handlers, {
@@ -63690,7 +65587,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @returns {void}
      */
     useCache(cacheHandler) {
-      _classPrivateFieldBase(this, _handlers)[_handlers].unshift(cacheHandler);
+      (0, _context49bbb._)(this, _handlers)[_handlers].unshift(cacheHandler);
     }
 
     /**
@@ -63706,7 +65603,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @returns {void}
      */
     use(newHandlers) {
-      const handlers = _classPrivateFieldBase(this, _handlers)[_handlers];
+      const handlers = (0, _context49bbb._)(this, _handlers)[_handlers];
       handlers.push(...newHandlers);
     }
 
@@ -63721,7 +65618,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @returns {Future}
      */
     request(request) {
-      const handlers = _classPrivateFieldBase(this, _handlers)[_handlers];
+      const handlers = (0, _context49bbb._)(this, _handlers)[_handlers];
       const controller = request.controller || new AbortController();
       if (request.controller) {
         delete request.controller;
@@ -63740,239 +65637,54 @@ lunr.QueryParser.parseBoost = function (parser) {
   }
   _exports.default = RequestManager;
 });
-;define("@ember-data/serializer/-private", ["exports", "@ember-data/serializer/embedded-records-mixin-d75385ff", "@ember/object"], function (_exports, _embeddedRecordsMixinD75385ff, _object) {
+;define("@ember-data/serializer/-private", ["exports", "@ember-data/serializer/embedded-records-mixin-d75385ff", "@ember/object", "@ember-data/serializer/string-22572f80", "@ember-data/serializer/utils-075c5b79"], function (_exports, _embeddedRecordsMixinD75385ff, _object, _string22572f, _utils075c5b) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.DateTransform = _exports.BooleanTransform = void 0;
+  Object.defineProperty(_exports, "BooleanTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.B;
+    }
+  });
+  Object.defineProperty(_exports, "DateTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.D;
+    }
+  });
   Object.defineProperty(_exports, "EmbeddedRecordsMixin", {
     enumerable: true,
     get: function () {
       return _embeddedRecordsMixinD75385ff.e;
     }
   });
-  _exports.StringTransform = _exports.NumberTransform = void 0;
+  Object.defineProperty(_exports, "NumberTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.N;
+    }
+  });
+  Object.defineProperty(_exports, "StringTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.S;
+    }
+  });
   Object.defineProperty(_exports, "Transform", {
     enumerable: true,
     get: function () {
       return _object.default;
     }
   });
-  /**
-    @module @ember-data/serializer
-  */
-  /**
-    The `BooleanTransform` class is used to serialize and deserialize
-    boolean attributes on Ember Data record objects. This transform is
-    used when `boolean` is passed as the type parameter to the
-    [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function.
-  
-    Usage
-  
-    ```app/models/user.js
-    import Model, { attr } from '@ember-data/model';
-  
-    export default class UserModel extends Model {
-      @attr('boolean') isAdmin;
-      @attr('string') name;
-      @attr('string') email;
+  Object.defineProperty(_exports, "coerceId", {
+    enumerable: true,
+    get: function () {
+      return _utils075c5b.c;
     }
-    ```
-  
-    By default, the boolean transform only allows for values of `true` or
-    `false`. You can opt into allowing `null` values for
-    boolean attributes via `attr('boolean', { allowNull: true })`
-  
-    ```app/models/user.js
-    import Model, { attr } from '@ember-data/model';
-  
-    export default class UserModel extends Model {
-      @attr('string') email;
-      @attr('string') username;
-      @attr('boolean', { allowNull: true }) wantsWeeklyEmail;
-    }
-    ```
-  
-    @class BooleanTransform
-    @public
-   */
-  class BooleanTransform {
-    deserialize(serialized, options) {
-      if ((serialized === null || serialized === undefined) && options.allowNull === true) {
-        return null;
-      }
-      let type = typeof serialized;
-      if (type === 'boolean') {
-        return serialized;
-      } else if (type === 'string') {
-        return /^(true|t|1)$/i.test(serialized);
-      } else if (type === 'number') {
-        return serialized === 1;
-      } else {
-        return false;
-      }
-    }
-    serialize(deserialized, options) {
-      if ((deserialized === null || deserialized === undefined) && options.allowNull === true) {
-        return null;
-      }
-      return Boolean(deserialized);
-    }
-    static create() {
-      return new this();
-    }
-  }
-
-  /**
-    @module @ember-data/serializer
-  */
-
-  /**
-   The `DateTransform` class is used to serialize and deserialize
-   date attributes on Ember Data record objects. This transform is used
-   when `date` is passed as the type parameter to the
-   [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function. It uses the [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601)
-   standard.
-  
-   ```app/models/score.js
-   import Model, { attr, belongsTo } from '@ember-data/model';
-  
-   export default class ScoreModel extends Model {
-      @attr('number') value;
-      @belongsTo('player') player;
-      @attr('date') date;
-    }
-   ```
-  
-   @class DateTransform
-    @public
-   */
-  _exports.BooleanTransform = BooleanTransform;
-  class DateTransform {
-    deserialize(serialized) {
-      let type = typeof serialized;
-      if (type === 'string') {
-        let offset = serialized.indexOf('+');
-        if (offset !== -1 && serialized.length - 5 === offset) {
-          offset += 3;
-          return new Date(serialized.slice(0, offset) + ':' + serialized.slice(offset));
-        }
-        return new Date(serialized);
-      } else if (type === 'number') {
-        return new Date(serialized);
-      } else if (serialized === null || serialized === undefined) {
-        // if the value is null return null
-        // if the value is not present in the data return undefined
-        return serialized;
-      } else {
-        return null;
-      }
-    }
-    serialize(date) {
-      if (date instanceof Date && !isNaN(date)) {
-        return date.toISOString();
-      } else {
-        return null;
-      }
-    }
-    static create() {
-      return new this();
-    }
-  }
-
-  /**
-    @module @ember-data/serializer
-  */
-  _exports.DateTransform = DateTransform;
-  function isNumber(value) {
-    return value === value && value !== Infinity && value !== -Infinity;
-  }
-
-  /**
-    The `NumberTransform` class is used to serialize and deserialize
-    numeric attributes on Ember Data record objects. This transform is
-    used when `number` is passed as the type parameter to the
-    [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function.
-  
-    Usage
-  
-    ```app/models/score.js
-    import Model, { attr, belongsTo } from '@ember-data/model';
-  
-    export default class ScoreModel extends Model {
-      @attr('number') value;
-      @belongsTo('player') player;
-      @attr('date') date;
-    }
-    ```
-  
-    @class NumberTransform
-    @public
-   */
-  class NumberTransform {
-    deserialize(serialized) {
-      let transformed;
-      if (serialized === '' || serialized === null || serialized === undefined) {
-        return null;
-      } else {
-        transformed = Number(serialized);
-        return isNumber(transformed) ? transformed : null;
-      }
-    }
-    serialize(deserialized) {
-      let transformed;
-      if (deserialized === '' || deserialized === null || deserialized === undefined) {
-        return null;
-      } else {
-        transformed = Number(deserialized);
-        return isNumber(transformed) ? transformed : null;
-      }
-    }
-    static create() {
-      return new this();
-    }
-  }
-
-  /**
-    @module @ember-data/serializer
-  */
-
-  /**
-    The `StringTransform` class is used to serialize and deserialize
-    string attributes on Ember Data record objects. This transform is
-    used when `string` is passed as the type parameter to the
-    [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function.
-  
-    Usage
-  
-    ```app/models/user.js
-    import Model, { attr, belongsTo } from '@ember-data/model';
-  
-    export default class UserModel extends Model {
-      @attr('boolean') isAdmin;
-      @attr('string') name;
-      @attr('string') email;
-    }
-    ```
-  
-    @class StringTransform
-    @public
-   */
-  _exports.NumberTransform = NumberTransform;
-  class StringTransform {
-    deserialize(serialized) {
-      return !serialized && serialized !== '' ? null : String(serialized);
-    }
-    serialize(deserialized) {
-      return !deserialized && deserialized !== '' ? null : String(deserialized);
-    }
-    static create() {
-      return new this();
-    }
-  }
-  _exports.StringTransform = StringTransform;
+  });
 });
 ;define("@ember-data/serializer/embedded-records-mixin-d75385ff", ["exports", "@ember/array", "@ember/debug", "@ember/object/mixin", "@ember/string"], function (_exports, _array, _debug, _mixin, _string) {
   "use strict";
@@ -64726,7 +66438,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {Object} hash
       @return {Object}
     */
-    normalize(typeClass, hash) {
+    normalize(_typeClass, hash) {
       return hash;
     }
   }, _descriptor = _applyDecoratedDescriptor(_class2.prototype, "store", [_service.inject], {
@@ -65042,7 +66754,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {String} the model's modelName
     */
     modelNameFromPayloadKey(key) {
-      return (0, _emberInflector.singularize)((0, _string.dasherize)(key));
+      return (0, _string.dasherize)((0, _emberInflector.singularize)(key));
     },
     /**
       Converts the model name to a pluralized version of the model name.
@@ -65321,7 +67033,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           }
 
           // only serialize has many relationships that are not new
-          let nonNewHasMany = hasMany.filter(item => item.record && !item.record.isNew);
+          let nonNewHasMany = hasMany.filter(item => !item.isNew);
           let data = new Array(nonNewHasMany.length);
           for (let i = 0; i < nonNewHasMany.length; i++) {
             let item = hasMany[i];
@@ -65340,7 +67052,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = JSONAPISerializer;
 });
-;define("@ember-data/serializer/json", ["exports", "@ember/application", "@ember/debug", "@ember/string", "@ember-data/store/-private", "@ember-data/serializer/index"], function (_exports, _application, _debug, _string, _private, _index) {
+;define("@ember-data/serializer/json", ["exports", "@ember/application", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/serializer/index", "@ember-data/serializer/utils-075c5b79"], function (_exports, _application, _debug, _string, _emberInflector, _index, _utils075c5b) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -65901,7 +67613,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     extractId(modelClass, resourceHash) {
       let primaryKey = this.primaryKey;
       let id = resourceHash[primaryKey];
-      return (0, _private.coerceId)(id);
+      return (0, _utils075c5b.c)(id);
     },
     /**
       Returns the resource's attributes formatted as a JSON-API "attributes object".
@@ -65943,7 +67655,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       */
       if (relationshipHash && typeof relationshipHash === 'object' && !Array.isArray(relationshipHash)) {
         if (relationshipHash.id) {
-          relationshipHash.id = (0, _private.coerceId)(relationshipHash.id);
+          relationshipHash.id = (0, _utils075c5b.c)(relationshipHash.id);
         }
         let modelClass = this.store.modelFor(relationshipModelName);
         if (relationshipHash.type && !modelClass.fields.has('type')) {
@@ -65952,8 +67664,8 @@ lunr.QueryParser.parseBoost = function (parser) {
         return relationshipHash;
       }
       return {
-        id: (0, _private.coerceId)(relationshipHash),
-        type: relationshipModelName
+        id: (0, _utils075c5b.c)(relationshipHash),
+        type: (0, _string.dasherize)((0, _emberInflector.singularize)(relationshipModelName))
       };
     },
     /**
@@ -66053,7 +67765,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {String} the model's modelName
     */
     modelNameFromPayloadKey(key) {
-      return (0, _string.dasherize)(key);
+      return (0, _string.dasherize)((0, _emberInflector.singularize)(key));
     },
     /**
       @method normalizeRelationships
@@ -66162,7 +67874,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @public
       @param {Snapshot} snapshot
       @param {String} key
-      @param {String} relationshipType
+      @param {RelationshipSchema} relationship
       @return {boolean} true if the hasMany relationship should be serialized
     */
     shouldSerializeHasMany(snapshot, key, relationship) {
@@ -66717,7 +68429,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = JSONSerializer;
 });
-;define("@ember-data/serializer/rest", ["exports", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/store/-private", "@ember-data/serializer/json", "@ember-data/serializer/embedded-records-mixin-d75385ff"], function (_exports, _debug, _string, _emberInflector, _private, _json, _embeddedRecordsMixinD75385ff) {
+;define("@ember-data/serializer/rest", ["exports", "@ember/debug", "@ember/string", "ember-inflector", "@ember-data/serializer/embedded-records-mixin-d75385ff", "@ember-data/serializer/utils-075c5b79", "@ember-data/serializer/json"], function (_exports, _debug, _string, _emberInflector, _embeddedRecordsMixinD75385ff, _utils075c5b, _json) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -67009,7 +68721,7 @@ lunr.QueryParser.parseBoost = function (parser) {
               2. If it's a newly created record without an ID, the first record
                  in the array
              */
-            let isUpdatedRecord = isPrimary && (0, _private.coerceId)(resource.id) === id;
+            let isUpdatedRecord = isPrimary && (0, _utils075c5b.c)(resource.id) === id;
             let isFirstCreatedRecord = isPrimary && !id && !documentHash.data;
             if (isFirstCreatedRecord || isUpdatedRecord) {
               documentHash.data = resource;
@@ -67137,7 +68849,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @return {String} the model's modelName
     */
     modelNameFromPayloadKey(key) {
-      return (0, _emberInflector.singularize)((0, _string.dasherize)(key));
+      return (0, _string.dasherize)((0, _emberInflector.singularize)(key));
     },
     // SERIALIZE
 
@@ -67387,7 +69099,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (isPolymorphic && resourceHash[typeProperty] !== undefined && typeof relationshipHash !== 'object') {
         let type = this.modelNameFromPayloadKey(resourceHash[typeProperty]);
         return {
-          id: relationshipHash,
+          id: (0, _utils075c5b.c)(relationshipHash),
           type: type
         };
       }
@@ -67396,11 +69108,257 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = RESTSerializer;
 });
-;define("@ember-data/serializer/transform", ["exports", "@ember/object"], function (_exports, _object) {
+;define("@ember-data/serializer/string-22572f80", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
+  });
+  _exports.S = _exports.N = _exports.D = _exports.B = void 0;
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+    The `BooleanTransform` class is used to serialize and deserialize
+    boolean attributes on Ember Data record objects. This transform is
+    used when `boolean` is passed as the type parameter to the
+    [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function.
+  
+    Usage
+  
+    ```app/models/user.js
+    import Model, { attr } from '@ember-data/model';
+  
+    export default class UserModel extends Model {
+      @attr('boolean') isAdmin;
+      @attr('string') name;
+      @attr('string') email;
+    }
+    ```
+  
+    By default, the boolean transform only allows for values of `true` or
+    `false`. You can opt into allowing `null` values for
+    boolean attributes via `attr('boolean', { allowNull: true })`
+  
+    ```app/models/user.js
+    import Model, { attr } from '@ember-data/model';
+  
+    export default class UserModel extends Model {
+      @attr('string') email;
+      @attr('string') username;
+      @attr('boolean', { allowNull: true }) wantsWeeklyEmail;
+    }
+    ```
+  
+    @class BooleanTransform
+    @public
+   */
+  class BooleanTransform {
+    deserialize(serialized, options) {
+      if ((serialized === null || serialized === undefined) && options.allowNull === true) {
+        return null;
+      }
+      let type = typeof serialized;
+      if (type === 'boolean') {
+        return serialized;
+      } else if (type === 'string') {
+        return /^(true|t|1)$/i.test(serialized);
+      } else if (type === 'number') {
+        return serialized === 1;
+      } else {
+        return false;
+      }
+    }
+    serialize(deserialized, options) {
+      if ((deserialized === null || deserialized === undefined) && options.allowNull === true) {
+        return null;
+      }
+      return Boolean(deserialized);
+    }
+    static create() {
+      return new this();
+    }
+  }
+
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+   The `DateTransform` class is used to serialize and deserialize
+   date attributes on Ember Data record objects. This transform is used
+   when `date` is passed as the type parameter to the
+   [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function. It uses the [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601)
+   standard.
+  
+   ```app/models/score.js
+   import Model, { attr, belongsTo } from '@ember-data/model';
+  
+   export default class ScoreModel extends Model {
+      @attr('number') value;
+      @belongsTo('player') player;
+      @attr('date') date;
+    }
+   ```
+  
+   @class DateTransform
+    @public
+   */
+  _exports.B = BooleanTransform;
+  class DateTransform {
+    deserialize(serialized) {
+      let type = typeof serialized;
+      if (type === 'string') {
+        let offset = serialized.indexOf('+');
+        if (offset !== -1 && serialized.length - 5 === offset) {
+          offset += 3;
+          return new Date(serialized.slice(0, offset) + ':' + serialized.slice(offset));
+        }
+        return new Date(serialized);
+      } else if (type === 'number') {
+        return new Date(serialized);
+      } else if (serialized === null || serialized === undefined) {
+        // if the value is null return null
+        // if the value is not present in the data return undefined
+        return serialized;
+      } else {
+        return null;
+      }
+    }
+    serialize(date) {
+      if (date instanceof Date && !isNaN(date)) {
+        return date.toISOString();
+      } else {
+        return null;
+      }
+    }
+    static create() {
+      return new this();
+    }
+  }
+
+  /**
+    @module @ember-data/serializer
+  */
+  _exports.D = DateTransform;
+  function isNumber(value) {
+    return value === value && value !== Infinity && value !== -Infinity;
+  }
+
+  /**
+    The `NumberTransform` class is used to serialize and deserialize
+    numeric attributes on Ember Data record objects. This transform is
+    used when `number` is passed as the type parameter to the
+    [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function.
+  
+    Usage
+  
+    ```app/models/score.js
+    import Model, { attr, belongsTo } from '@ember-data/model';
+  
+    export default class ScoreModel extends Model {
+      @attr('number') value;
+      @belongsTo('player') player;
+      @attr('date') date;
+    }
+    ```
+  
+    @class NumberTransform
+    @public
+   */
+  class NumberTransform {
+    deserialize(serialized) {
+      let transformed;
+      if (serialized === '' || serialized === null || serialized === undefined) {
+        return null;
+      } else {
+        transformed = Number(serialized);
+        return isNumber(transformed) ? transformed : null;
+      }
+    }
+    serialize(deserialized) {
+      let transformed;
+      if (deserialized === '' || deserialized === null || deserialized === undefined) {
+        return null;
+      } else {
+        transformed = Number(deserialized);
+        return isNumber(transformed) ? transformed : null;
+      }
+    }
+    static create() {
+      return new this();
+    }
+  }
+
+  /**
+    @module @ember-data/serializer
+  */
+
+  /**
+    The `StringTransform` class is used to serialize and deserialize
+    string attributes on Ember Data record objects. This transform is
+    used when `string` is passed as the type parameter to the
+    [attr](/ember-data/release/functions/@ember-data%2Fmodel/attr) function.
+  
+    Usage
+  
+    ```app/models/user.js
+    import Model, { attr, belongsTo } from '@ember-data/model';
+  
+    export default class UserModel extends Model {
+      @attr('boolean') isAdmin;
+      @attr('string') name;
+      @attr('string') email;
+    }
+    ```
+  
+    @class StringTransform
+    @public
+   */
+  _exports.N = NumberTransform;
+  class StringTransform {
+    deserialize(serialized) {
+      return !serialized && serialized !== '' ? null : String(serialized);
+    }
+    serialize(deserialized) {
+      return !deserialized && deserialized !== '' ? null : String(deserialized);
+    }
+    static create() {
+      return new this();
+    }
+  }
+  _exports.S = StringTransform;
+});
+;define("@ember-data/serializer/transform", ["exports", "@ember/object", "@ember-data/serializer/string-22572f80"], function (_exports, _object, _string22572f) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "BooleanTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.B;
+    }
+  });
+  Object.defineProperty(_exports, "DateTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.D;
+    }
+  });
+  Object.defineProperty(_exports, "NumberTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.N;
+    }
+  });
+  Object.defineProperty(_exports, "StringTransform", {
+    enumerable: true,
+    get: function () {
+      return _string22572f.S;
+    }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
@@ -67409,26 +69367,261 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define("@ember-data/store/-private", ["exports", "@ember/application", "@ember/debug", "@ember/object", "@ember/runloop", "@glimmer/tracking", "@ember/string", "@ember-data/tracking/-private", "@ember/-internals/metal", "@ember/object/compat", "@glimmer/validator", "ember", "@embroider/macros/es-compat2"], function (_exports, _application, _debug, _object, _runloop, _tracking, _string, _private, _metal, _compat, _validator, _ember, _esCompat) {
+;define("@ember-data/serializer/utils-075c5b79", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  _exports.Store = _exports.SOURCE = _exports.RecordArrayManager = _exports.RecordArray = _exports.MUTATE = _exports.IdentifierArray = _exports.IDENTIFIER_ARRAY_TAG = _exports.CacheHandler = _exports.AdapterPopulatedRecordArray = void 0;
-  _exports._clearCaches = _clearCaches;
-  _exports.coerceId = coerceId;
-  _exports.fastPush = fastPush;
-  _exports.isStableIdentifier = isStableIdentifier;
-  _exports.notifyArray = notifyArray;
-  _exports.peekCache = peekCache;
-  _exports.recordIdentifierFor = recordIdentifierFor;
-  _exports.removeRecordDataFor = removeRecordDataFor;
-  _exports.setIdentifierForgetMethod = setIdentifierForgetMethod;
-  _exports.setIdentifierGenerationMethod = setIdentifierGenerationMethod;
-  _exports.setIdentifierResetMethod = setIdentifierResetMethod;
-  _exports.setIdentifierUpdateMethod = setIdentifierUpdateMethod;
-  _exports.storeFor = storeFor;
+  _exports.c = coerceId;
+  function coerceId(id) {
+    if (id === null || id === undefined || id === '') {
+      return null;
+    } else if (typeof id === 'string') {
+      return id;
+    } else if (typeof id === 'symbol') {
+      return id.toString();
+    } else {
+      return String(id);
+    }
+  }
+});
+;define("@ember-data/store/-private", ["exports", "@ember-data/store/store-service-aee9dd76"], function (_exports, _storeServiceAee9dd) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "AdapterPopulatedRecordArray", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.f;
+    }
+  });
+  Object.defineProperty(_exports, "CacheHandler", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.C;
+    }
+  });
+  Object.defineProperty(_exports, "IDENTIFIER_ARRAY_TAG", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.h;
+    }
+  });
+  Object.defineProperty(_exports, "IdentifierArray", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.I;
+    }
+  });
+  Object.defineProperty(_exports, "MUTATE", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.M;
+    }
+  });
+  Object.defineProperty(_exports, "RecordArray", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.I;
+    }
+  });
+  Object.defineProperty(_exports, "RecordArrayManager", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.R;
+    }
+  });
+  Object.defineProperty(_exports, "SOURCE", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.g;
+    }
+  });
+  Object.defineProperty(_exports, "Store", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.S;
+    }
+  });
+  Object.defineProperty(_exports, "StoreMap", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.m;
+    }
+  });
+  Object.defineProperty(_exports, "_clearCaches", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd._;
+    }
+  });
+  Object.defineProperty(_exports, "coerceId", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.e;
+    }
+  });
+  Object.defineProperty(_exports, "fastPush", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.j;
+    }
+  });
+  Object.defineProperty(_exports, "isStableIdentifier", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.i;
+    }
+  });
+  Object.defineProperty(_exports, "notifyArray", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.n;
+    }
+  });
+  Object.defineProperty(_exports, "peekCache", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.p;
+    }
+  });
+  Object.defineProperty(_exports, "recordIdentifierFor", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.r;
+    }
+  });
+  Object.defineProperty(_exports, "removeRecordDataFor", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.k;
+    }
+  });
+  Object.defineProperty(_exports, "setCacheFor", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.o;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierForgetMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.c;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierGenerationMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.a;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierResetMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.d;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierUpdateMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.b;
+    }
+  });
+  Object.defineProperty(_exports, "setRecordIdentifier", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.l;
+    }
+  });
+  Object.defineProperty(_exports, "storeFor", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.s;
+    }
+  });
+});
+;define("@ember-data/store/index", ["exports", "@ember-data/store/store-service-aee9dd76"], function (_exports, _storeServiceAee9dd) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "CacheHandler", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.C;
+    }
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.S;
+    }
+  });
+  Object.defineProperty(_exports, "recordIdentifierFor", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.r;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierForgetMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.c;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierGenerationMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.a;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierResetMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.d;
+    }
+  });
+  Object.defineProperty(_exports, "setIdentifierUpdateMethod", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.b;
+    }
+  });
+  Object.defineProperty(_exports, "storeFor", {
+    enumerable: true,
+    get: function () {
+      return _storeServiceAee9dd.s;
+    }
+  });
+});
+;define("@ember-data/store/store-service-aee9dd76", ["exports", "@ember/application", "@ember/debug", "@ember/object", "@glimmer/tracking", "@ember/string", "@ember/runloop", "@ember-data/tracking/-private", "@ember/-internals/metal", "@ember/object/compat", "@glimmer/validator", "ember"], function (_exports, _application, _debug, _object, _tracking, _string, _runloop, _private, _metal, _compat, _validator, _ember) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.S = _exports.R = _exports.M = _exports.I = _exports.C = void 0;
+  _exports._ = _clearCaches;
+  _exports.a = setIdentifierGenerationMethod;
+  _exports.b = setIdentifierUpdateMethod;
+  _exports.c = setIdentifierForgetMethod;
+  _exports.d = setIdentifierResetMethod;
+  _exports.e = coerceId;
+  _exports.h = _exports.g = _exports.f = void 0;
+  _exports.i = isStableIdentifier;
+  _exports.j = fastPush;
+  _exports.k = removeRecordDataFor;
+  _exports.l = setRecordIdentifier;
+  _exports.m = void 0;
+  _exports.n = notifyArray;
+  _exports.o = setCacheFor;
+  _exports.p = peekCache;
+  _exports.r = recordIdentifierFor;
+  _exports.s = storeFor;
   function _initializerDefineProperty(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
@@ -67594,6 +69787,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           return document;
         }
         const data = recordArrayManager.createArray({
+          type: request.url,
           identifiers: document.data,
           doc: document,
           query: request
@@ -67607,6 +69801,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       let managed = recordArrayManager._keyedArrays.get(identifier.lid);
       if (!managed) {
         managed = recordArrayManager.createArray({
+          type: identifier.lid,
           identifiers: document.data,
           doc: document
         });
@@ -67650,11 +69845,12 @@ lunr.QueryParser.parseBoost = function (parser) {
       return options.shouldHydrate ? doc : document;
     }
   }
+  const MUTATION_OPS = new Set(['createRecord', 'updateRecord', 'deleteRecord']);
   function calcShouldFetch(store, request, hasCachedValue, identifier) {
     const {
       cacheOptions
     } = request;
-    return cacheOptions?.reload || !hasCachedValue || (store.lifetimes && identifier ? store.lifetimes.isHardExpired(identifier) : false);
+    return request.op && MUTATION_OPS.has(request.op) || cacheOptions?.reload || !hasCachedValue || (store.lifetimes && identifier ? store.lifetimes.isHardExpired(identifier) : false);
   }
   function calcShouldBackgroundFetch(store, request, willFetch, identifier) {
     const {
@@ -67662,17 +69858,31 @@ lunr.QueryParser.parseBoost = function (parser) {
     } = request;
     return !willFetch && (cacheOptions?.backgroundReload || (store.lifetimes && identifier ? store.lifetimes.isSoftExpired(identifier) : false));
   }
+  function isMutation(request) {
+    return Boolean(request.op && MUTATION_OPS.has(request.op));
+  }
   function fetchContentAndHydrate(next, context, identifier, shouldFetch, shouldBackgroundFetch) {
     const {
       store
     } = context.request;
     const shouldHydrate = context.request[Symbol.for('ember-data:enable-hydration')] || false;
-    return next(context.request).then(document => {
+    let isMut = false;
+    if (isMutation(context.request)) {
+      isMut = true;
+      const record = context.request.data?.record;
+      (false && !(record) && (0, _debug.assert)(`Expected to receive a list of records included in the ${context.request.op} request`, record));
+      store.cache.willCommit(record, context);
+    }
+    const promise = next(context.request).then(document => {
       store.requestManager._pending.delete(context.id);
       store._enableAsyncFlush = true;
       let response;
       store._join(() => {
-        response = store.cache.put(document);
+        if (isMutation(context.request)) {
+          response = store.cache.didCommit(context.request.data.record, document);
+        } else {
+          response = store.cache.put(document);
+        }
         response = maybeUpdateUiObjects(store, context.request, {
           shouldHydrate,
           shouldFetch,
@@ -67695,13 +69905,22 @@ lunr.QueryParser.parseBoost = function (parser) {
       store._enableAsyncFlush = true;
       let response;
       store._join(() => {
-        response = store.cache.put(error);
-        response = maybeUpdateUiObjects(store, context.request, {
-          shouldHydrate,
-          shouldFetch,
-          shouldBackgroundFetch,
-          identifier
-        }, response, false);
+        if (isMutation(context.request)) {
+          // TODO similar to didCommit we should spec this to be similar to cache.put for handling full response
+          // currently we let the response remain undefiend.
+          const errors = error && error.content && typeof error.content === 'object' && 'errors' in error.content && Array.isArray(error.content.errors) ? error.content.errors : undefined;
+          store.cache.commitWasRejected(context.request.data.record, errors);
+          // re-throw the original error to preserve `errors` property.
+          throw error;
+        } else {
+          response = store.cache.put(error);
+          response = maybeUpdateUiObjects(store, context.request, {
+            shouldHydrate,
+            shouldFetch,
+            shouldBackgroundFetch,
+            identifier
+          }, response, false);
+        }
       });
       store._enableAsyncFlush = null;
       if (!shouldBackgroundFetch) {
@@ -67711,6 +69930,17 @@ lunr.QueryParser.parseBoost = function (parser) {
       } else {
         store.notifications._flush();
       }
+    });
+    if (!isMut) {
+      return promise;
+    }
+    (false && !(isMutation(context.request)) && (0, _debug.assert)(`Expected a mutation`, isMutation(context.request))); // for mutations we need to enqueue the promise with the requestStateService
+    return store._requestCache._enqueue(promise, {
+      data: [{
+        op: 'saveRecord',
+        recordIdentifier: context.request.data.record,
+        options: undefined
+      }]
     });
   }
   function cloneError(error) {
@@ -67759,7 +69989,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }, peeked.content, true) : peeked.content);
     }
   };
-  _exports.CacheHandler = CacheHandler;
+  _exports.C = CacheHandler;
   function copyDocumentProperties(target, source) {
     if ('links' in source) {
       target.links = source.links;
@@ -67772,70 +70002,67 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 
-  /*
-   * Returns the Cache instance associated with a given
-   * Model or Identifier
-   */
-
-  const CacheForIdentifierCache = new Map();
-  function setCacheFor(identifier, cache) {
-    (false && !(!CacheForIdentifierCache.has(identifier) || CacheForIdentifierCache.get(identifier) === cache) && (0, _debug.assert)(`Illegal set of identifier`, !CacheForIdentifierCache.has(identifier) || CacheForIdentifierCache.get(identifier) === cache));
-    CacheForIdentifierCache.set(identifier, cache);
-  }
-  function removeRecordDataFor(identifier) {
-    CacheForIdentifierCache.delete(identifier);
-  }
-  function peekCache(instance) {
-    if (CacheForIdentifierCache.has(instance)) {
-      return CacheForIdentifierCache.get(instance);
-    }
-    return null;
-  }
-
-  /**
-    @module @ember-data/store
-  */
-
   // Used by the store to normalize IDs entering the store.  Despite the fact
   // that developers may provide IDs as numbers (e.g., `store.findRecord('person', 1)`),
   // it is important that internally we use strings, since IDs may be serialized
   // and lose type information.  For example, Ember's router may put a record's
   // ID into the URL, and if we later try to deserialize that URL and find the
   // corresponding record, we will not know if it is a string or a number.
-
   function coerceId(id) {
-    if (id === null || id === undefined || id === '') {
-      return null;
+    {
+      let normalized;
+      if (id === null || id === undefined || id === '') {
+        normalized = null;
+      } else {
+        normalized = String(id);
+      }
+      (false && !(normalized === id) && (0, _debug.deprecate)(`The resource id '<${typeof id}> ${String(id)} ' is not normalized. Update your application code to use '${JSON.stringify(normalized)}' instead.`, normalized === id, {
+        id: 'ember-data:deprecate-non-strict-id',
+        until: '6.0',
+        for: 'ember-data',
+        since: {
+          available: '5.3',
+          enabled: '5.3'
+        }
+      }));
+      return normalized;
     }
-    if (typeof id === 'string') {
-      return id;
-    }
-    if (typeof id === 'symbol') {
-      return id.toString();
-    }
-    return '' + id;
+    (false && !(id === null || typeof id === 'string' && id.length > 0) && (0, _debug.assert)(`Resource IDs must be a non-empty string or null. Received '${String(id)}'.`, id === null || typeof id === 'string' && id.length > 0));
+    return id;
   }
   function ensureStringId(id) {
     let normalized = null;
     if (typeof id === 'string') {
       normalized = id.length > 0 ? id : null;
     } else if (typeof id === 'number' && !isNaN(id)) {
-      normalized = '' + id;
+      normalized = String(id);
     }
-    if (normalized === null) {
-      throw new Error(`Expected id to be a string or number, received ${String(id)}`);
-    }
+    (false && !(normalized !== null) && (0, _debug.assert)(`Expected id to be a string or number, received ${String(id)}`, normalized !== null));
     return normalized;
   }
 
   // provided for additional debuggability
   const DEBUG_CLIENT_ORIGINATED = Symbol('record-originated-on-client');
   const DEBUG_IDENTIFIER_BUCKET = Symbol('identifier-bucket');
-  function isNonEmptyString(str) {
-    return str && typeof str === 'string';
-  }
-  function normalizeModelName(modelName) {
-    return (0, _string.dasherize)(modelName);
+  const DEBUG_STALE_CACHE_OWNER = Symbol('warpDriveStaleCache');
+
+  // also present in production
+  const CACHE_OWNER = Symbol('warpDriveCache');
+  function normalizeModelName(type) {
+    {
+      const result = (0, _string.dasherize)(type);
+      (false && !(result === type) && (0, _debug.deprecate)(`The resource type '${type}' is not normalized. Update your application code to use '${result}' instead of '${type}'.`, result === type, {
+        id: 'ember-data:deprecate-non-strict-types',
+        until: '6.0',
+        for: 'ember-data',
+        since: {
+          available: '5.3',
+          enabled: '5.3'
+        }
+      }));
+      return result;
+    }
+    return type;
   }
 
   /**
@@ -67879,6 +70106,21 @@ lunr.QueryParser.parseBoost = function (parser) {
       };
     }
   }
+  function isResource(resource) {
+    return Boolean(resource && typeof resource === 'object');
+  }
+  function hasProp(resource, prop) {
+    return Boolean(isResource(resource) && prop in resource && typeof resource[prop] === 'string' && resource[prop].length);
+  }
+  function hasLid(resource) {
+    return hasProp(resource, 'lid');
+  }
+  function hasId(resource) {
+    return hasProp(resource, 'id') || Boolean(isResource(resource) && 'id' in resource && typeof resource.id === 'number');
+  }
+  function hasType(resource) {
+    return hasProp(resource, 'type');
+  }
 
   /**
     @module @ember-data/store
@@ -67886,7 +70128,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   const IDENTIFIERS = new Set();
   const DOCUMENTS = new Set();
   function isStableIdentifier(identifier) {
-    return IDENTIFIERS.has(identifier);
+    return identifier[CACHE_OWNER] !== undefined || IDENTIFIERS.has(identifier);
   }
   function isDocumentIdentifier(identifier) {
     return DOCUMENTS.has(identifier);
@@ -67894,7 +70136,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   const isFastBoot = typeof FastBoot !== 'undefined';
   const _crypto = isFastBoot ? FastBoot.require('crypto') : window.crypto;
   function uuidv4() {
-    (false && !(_crypto.randomUUID) && (0, _debug.assert)('crypto.randomUUID needs to be avaliable. Some browsers incorrectly disallow it in insecure contexts. You maybe want to enable the polyfill: https://github.com/emberjs/data#randomuuid-polyfill', _crypto.randomUUID));
+    (false && !(typeof _crypto.randomUUID === 'function') && (0, _debug.assert)('crypto.randomUUID needs to be avaliable. Some browsers incorrectly disallow it in insecure contexts. You maybe want to enable the polyfill: https://github.com/emberjs/data#randomuuid-polyfill', typeof _crypto.randomUUID === 'function'));
     return _crypto.randomUUID();
   }
   function freeze(obj) {
@@ -67903,6 +70145,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     return obj;
   }
+
+  // type IdentifierTypeLookup = { all: Set<StableRecordIdentifier>; id: Map<string, StableRecordIdentifier> };
+  // type IdentifiersByType = Map<string, IdentifierTypeLookup>;
   let configuredForgetMethod;
   let configuredGenerationMethod;
   let configuredResetMethod;
@@ -67919,20 +70164,47 @@ lunr.QueryParser.parseBoost = function (parser) {
   function setIdentifierResetMethod(method) {
     configuredResetMethod = method;
   }
+
+  // Map<type, Map<id, lid>>
+
+  const NEW_IDENTIFIERS = new Map();
+  let IDENTIFIER_CACHE_ID = 0;
+  function updateTypeIdMapping(typeMap, identifier, id) {
+    let idMap = typeMap.get(identifier.type);
+    if (!idMap) {
+      idMap = new Map();
+      typeMap.set(identifier.type, idMap);
+    }
+    idMap.set(id, identifier.lid);
+  }
+  function defaultUpdateMethod(identifier, data, bucket) {
+    if (bucket === 'record') {
+      (false && !(isStableIdentifier(identifier)) && (0, _debug.assert)(`Expected identifier to be a StableRecordIdentifier`, isStableIdentifier(identifier)));
+      if (!identifier.id && hasId(data)) {
+        updateTypeIdMapping(NEW_IDENTIFIERS, identifier, data.id);
+      }
+    }
+  }
+  function defaultKeyInfoMethod(resource, known) {
+    // TODO RFC something to make this configurable
+    const id = hasId(resource) ? coerceId(resource.id) : null;
+    const type = hasType(resource) ? normalizeModelName(resource.type) : known ? known.type : null;
+    (false && !(type) && (0, _debug.assert)(`Expected keyInfoForResource to provide a type for the resource`, type));
+    return {
+      type,
+      id
+    };
+  }
   function defaultGenerationMethod(data, bucket) {
     if (bucket === 'record') {
-      if (isNonEmptyString(data.lid)) {
+      if (hasLid(data)) {
         return data.lid;
       }
-      if (data.id !== undefined) {
-        let {
-          type,
-          id
-        } = data;
-        // TODO: add test for id not a string
-        if (isNonEmptyString(coerceId(id))) {
-          return `@lid:${normalizeModelName(type)}-${id}`;
-        }
+      (false && !(hasType(data)) && (0, _debug.assert)(`Cannot generate an identifier for a resource without a type`, hasType(data)));
+      if (hasId(data)) {
+        const type = normalizeModelName(data.type);
+        const lid = NEW_IDENTIFIERS.get(type)?.get(data.id);
+        return lid || `@lid:${type}-${data.id}`;
       }
       return uuidv4();
     } else if (bucket === 'document') {
@@ -67947,6 +70219,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     (false && !(false) && (0, _debug.assert)(`Unknown bucket ${bucket}`, false));
   }
   function defaultEmptyCallback(...args) {}
+  function defaultMergeMethod(a, _b, _c) {
+    return a;
+  }
   let DEBUG_MAP;
   /**
    * Each instance of {Store} receives a unique instance of a IdentifierCache.
@@ -67963,19 +70238,21 @@ lunr.QueryParser.parseBoost = function (parser) {
    */
   class IdentifierCache {
     constructor() {
-      this._cache = {
-        lids: new Map(),
-        types: Object.create(null),
-        documents: new Map()
-      };
       // we cache the user configuredGenerationMethod at init because it must
       // be configured prior and is not allowed to be changed
       this._generate = configuredGenerationMethod || defaultGenerationMethod;
-      this._update = configuredUpdateMethod || defaultEmptyCallback;
+      this._update = configuredUpdateMethod || defaultUpdateMethod;
       this._forget = configuredForgetMethod || defaultEmptyCallback;
       this._reset = configuredResetMethod || defaultEmptyCallback;
-      this._merge = defaultEmptyCallback;
+      this._merge = defaultMergeMethod;
+      this._keyInfoForResource = defaultKeyInfoMethod;
       this._isDefaultConfig = !configuredGenerationMethod;
+      this._id = IDENTIFIER_CACHE_ID++;
+      this._cache = {
+        resources: new Map(),
+        resourcesByType: Object.create(null),
+        documents: new Map()
+      };
     }
 
     /**
@@ -67988,7 +70265,10 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @private
      */
     __configureMerge(method) {
-      this._merge = method || defaultEmptyCallback;
+      this._merge = method || defaultMergeMethod;
+    }
+    upgradeIdentifier(resource) {
+      return this._getRecordIdentifier(resource, 2);
     }
 
     /**
@@ -67996,86 +70276,35 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @private
      */
 
-    _getRecordIdentifier(resource, shouldGenerate = false) {
+    _getRecordIdentifier(resource, shouldGenerate) {
       // short circuit if we're already the stable version
       if (isStableIdentifier(resource)) {
         return resource;
       }
-      let lid = coerceId(resource.lid);
-      let identifier = lid !== null ? this._cache.lids.get(lid) : undefined;
-      if (identifier !== undefined) {
+
+      // the resource is unknown, ask the application to identify this data for us
+      const lid = this._generate(resource, 'record');
+      let identifier = /*#__NOINLINE__*/getIdentifierFromLid(this._cache, lid, resource);
+      if (identifier !== null) {
         return identifier;
       }
-      if (shouldGenerate === false) {
-        if (!resource.type || !resource.id) {
-          return;
-        }
+      if (shouldGenerate === 0) {
+        return;
       }
 
-      // `type` must always be present
-      (false && !('type' in resource && isNonEmptyString(resource.type)) && (0, _debug.assert)('resource.type needs to be a string', 'type' in resource && isNonEmptyString(resource.type)));
-      let type = resource.type && normalizeModelName(resource.type);
-      let id = coerceId(resource.id);
-      let keyOptions = getTypeIndex(this._cache.types, type);
-
-      // go straight for the stable RecordIdentifier key'd to `lid`
-      if (lid !== null) {
-        identifier = keyOptions.lid.get(lid);
+      // if we still don't have an identifier, time to generate one
+      if (shouldGenerate === 2) {
+        resource.lid = lid;
+        resource[CACHE_OWNER] = this._id;
+        identifier = /*#__NOINLINE__*/makeStableRecordIdentifier(resource, 'record', false);
+      } else {
+        // we lie a bit here as a memory optimization
+        const keyInfo = this._keyInfoForResource(resource, null);
+        keyInfo.lid = lid;
+        keyInfo[CACHE_OWNER] = this._id;
+        identifier = /*#__NOINLINE__*/makeStableRecordIdentifier(keyInfo, 'record', false);
       }
-
-      // we may have not seen this resource before
-      // but just in case we check our own secondary lookup (`id`)
-      if (identifier === undefined && id !== null) {
-        identifier = keyOptions.id.get(id);
-      }
-      if (identifier === undefined) {
-        // we have definitely not seen this resource before
-        // so we allow the user configured `GenerationMethod` to tell us
-        let newLid = this._generate(resource, 'record');
-        // we do this _even_ when `lid` is present because secondary lookups
-        // may need to be populated, but we enforce not giving us something
-        // different than expected
-        if (lid !== null && newLid !== lid) {
-          throw new Error(`You should not change the <lid> of a RecordIdentifier`);
-        } else if (lid === null && !this._isDefaultConfig) {
-          // allow configuration to tell us that we have
-          // seen this `lid` before. E.g. a secondary lookup
-          // connects this resource to a previously seen
-          // resource.
-          identifier = keyOptions.lid.get(newLid);
-        }
-        if (shouldGenerate === true) {
-          if (identifier === undefined) {
-            // if we still don't have an identifier, time to generate one
-            identifier = makeStableRecordIdentifier(id, type, newLid, 'record', false);
-
-            // populate our unique table
-
-            this._cache.lids.set(identifier.lid, identifier);
-
-            // populate our primary lookup table
-            // TODO consider having the `lid` cache be
-            // one level up
-            keyOptions.lid.set(identifier.lid, identifier);
-          }
-
-          // populate our own secondary lookup table
-          // even for the "successful" secondary lookup
-          // by `_generate()`, since we missed the cache
-          // previously
-          // we use identifier.id instead of id here
-          // because they may not match and we prefer
-          // what we've set via resource data
-          if (identifier.id !== null) {
-            keyOptions.id.set(identifier.id, identifier);
-
-            // TODO allow filling out of `id` here
-            // for the `username` non-client created
-            // case.
-          }
-        }
-      }
-
+      addResourceToCache(this._cache, identifier);
       return identifier;
     }
 
@@ -68090,7 +70319,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @private
      */
     peekRecordIdentifier(resource) {
-      return this._getRecordIdentifier(resource, false);
+      return this._getRecordIdentifier(resource, 0);
     }
 
     /**
@@ -68132,9 +70361,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       @returns {StableRecordIdentifier}
       @public
     */
-
     getOrCreateRecordIdentifier(resource) {
-      return this._getRecordIdentifier(resource, true);
+      return this._getRecordIdentifier(resource, 1);
     }
 
     /**
@@ -68150,18 +70378,17 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     createIdentifierForNewRecord(data) {
       let newLid = this._generate(data, 'record');
-      let identifier = makeStableRecordIdentifier(data.id || null, data.type, newLid, 'record', true);
-      let keyOptions = getTypeIndex(this._cache.types, data.type);
+      let identifier = /*#__NOINLINE__*/makeStableRecordIdentifier({
+        id: data.id || null,
+        type: data.type,
+        lid: newLid,
+        [CACHE_OWNER]: this._id
+      }, 'record', true);
 
       // populate our unique table
 
-      this._cache.lids.set(identifier.lid, identifier);
-
-      // populate the type+lid cache
-      keyOptions.lid.set(newLid, identifier);
-      if (data.id) {
-        keyOptions.id.set(data.id, identifier);
-      }
+      /*#__NOINLINE__*/
+      addResourceToCache(this._cache, identifier);
       return identifier;
     }
 
@@ -68185,35 +70412,41 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     updateRecordIdentifier(identifierObject, data) {
       let identifier = this.getOrCreateRecordIdentifier(identifierObject);
-      let newId = data.id !== undefined ? coerceId(data.id) : null;
-      let existingIdentifier = detectMerge(this._cache.types, identifier, data, newId, this._cache.lids);
+      const keyInfo = this._keyInfoForResource(data, identifier);
+      let existingIdentifier = /*#__NOINLINE__*/detectMerge(this._cache, keyInfo, identifier, data);
+      const hadLid = hasLid(data);
       if (!existingIdentifier) {
         // If the incoming type does not match the identifier type, we need to create an identifier for the incoming
         // data so we can merge the incoming data with the existing identifier, see #7325 and #7363
-        if (data.type && identifier.type !== normalizeModelName(data.type)) {
-          let incomingDataResource = {
-            ...data
-          };
-          // Need to strip the lid from the incomingData in order force a new identifier creation
-          delete incomingDataResource.lid;
-          existingIdentifier = this.getOrCreateRecordIdentifier(incomingDataResource);
+        if (identifier.type !== keyInfo.type) {
+          if (hadLid) {
+            // Strip the lid to ensure we force a new identifier creation
+            delete data.lid;
+          }
+          existingIdentifier = this.getOrCreateRecordIdentifier(data);
         }
       }
       if (existingIdentifier) {
-        let keyOptions = getTypeIndex(this._cache.types, identifier.type);
         let generatedIdentifier = identifier;
-        identifier = this._mergeRecordIdentifiers(keyOptions, generatedIdentifier, existingIdentifier, data, newId);
+        identifier = this._mergeRecordIdentifiers(keyInfo, generatedIdentifier, existingIdentifier, data);
+
+        // make sure that the `lid` on the data we are processing matches the lid we kept
+        if (hadLid) {
+          data.lid = identifier.lid;
+        }
       }
       let id = identifier.id;
-      performRecordIdentifierUpdate(identifier, data, this._update);
-      newId = identifier.id;
+      /*#__NOINLINE__*/
+      performRecordIdentifierUpdate(identifier, keyInfo, data, this._update);
+      const newId = identifier.id;
 
       // add to our own secondary lookup table
       if (id !== newId && newId !== null) {
-        let keyOptions = getTypeIndex(this._cache.types, identifier.type);
-        keyOptions.id.set(newId, identifier);
+        const typeSet = this._cache.resourcesByType[identifier.type];
+        (false && !(typeSet) && (0, _debug.assert)(`Expected to find a typeSet for ${identifier.type}`, typeSet));
+        typeSet.id.set(newId, identifier);
         if (id !== null) {
-          keyOptions.id.delete(id);
+          typeSet.id.delete(id);
         }
       }
       return identifier;
@@ -68223,22 +70456,21 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @method _mergeRecordIdentifiers
      * @private
      */
-    _mergeRecordIdentifiers(keyOptions, identifier, existingIdentifier, data, newId) {
-      // delegate determining which identifier to keep to the configured MergeMethod
-      let kept = this._merge(identifier, existingIdentifier, data);
-      let abandoned = kept === identifier ? existingIdentifier : identifier;
+    _mergeRecordIdentifiers(keyInfo, identifier, existingIdentifier, data) {
+      (false && !(hasId(keyInfo)) && (0, _debug.assert)(`Expected keyInfo to contain an id`, hasId(keyInfo))); // delegate determining which identifier to keep to the configured MergeMethod
+      const kept = this._merge(identifier, existingIdentifier, data);
+      const abandoned = kept === identifier ? existingIdentifier : identifier;
 
       // cleanup the identifier we no longer need
       this.forgetRecordIdentifier(abandoned);
 
       // ensure a secondary cache entry for this id for the identifier we do keep
-      keyOptions.id.set(newId, kept);
-      // ensure a secondary cache entry for this id for the abandoned identifier's type we do keep
-      let baseKeyOptions = getTypeIndex(this._cache.types, existingIdentifier.type);
-      baseKeyOptions.id.set(newId, kept);
+      // keyOptions.id.set(newId, kept);
 
-      // make sure that the `lid` on the data we are processing matches the lid we kept
-      data.lid = kept.lid;
+      // ensure a secondary cache entry for this id for the abandoned identifier's type we do keep
+      // let baseKeyOptions = getTypeIndex(this._cache.resourcesByType, existingIdentifier.type);
+      // baseKeyOptions.id.set(newId, kept);
+
       return kept;
     }
 
@@ -68253,44 +70485,31 @@ lunr.QueryParser.parseBoost = function (parser) {
      @public
     */
     forgetRecordIdentifier(identifierObject) {
-      let identifier = this.getOrCreateRecordIdentifier(identifierObject);
-      let keyOptions = getTypeIndex(this._cache.types, identifier.type);
+      const identifier = this.getOrCreateRecordIdentifier(identifierObject);
+      const typeSet = this._cache.resourcesByType[identifier.type];
+      (false && !(typeSet) && (0, _debug.assert)(`Expected to find a typeSet for ${identifier.type}`, typeSet));
       if (identifier.id !== null) {
-        keyOptions.id.delete(identifier.id);
+        typeSet.id.delete(identifier.id);
       }
-      this._cache.lids.delete(identifier.lid);
-      keyOptions.lid.delete(identifier.lid);
-      IDENTIFIERS.delete(identifierObject);
+      this._cache.resources.delete(identifier.lid);
+      typeSet.lid.delete(identifier.lid);
+      identifier[CACHE_OWNER] = undefined;
+      IDENTIFIERS.delete(identifier);
       this._forget(identifier, 'record');
     }
     destroy() {
+      NEW_IDENTIFIERS.clear();
       this._cache.documents.forEach(identifier => {
         DOCUMENTS.delete(identifier);
       });
       this._reset();
     }
   }
-  function getTypeIndex(typeMap, type) {
-    let typeIndex = typeMap[type];
-    if (typeIndex === undefined) {
-      typeIndex = {
-        lid: new Map(),
-        id: new Map()
-      };
-      typeMap[type] = typeIndex;
-    }
-    return typeIndex;
-  }
-  function makeStableRecordIdentifier(id, type, lid, bucket, clientOriginated = false) {
-    let recordIdentifier = {
-      lid,
-      id,
-      type
-    };
+  function makeStableRecordIdentifier(recordIdentifier, bucket, clientOriginated) {
     IDENTIFIERS.add(recordIdentifier);
     return recordIdentifier;
   }
-  function performRecordIdentifierUpdate(identifier, data, updateFn) {
+  function performRecordIdentifierUpdate(identifier, keyInfo, data, updateFn) {
     {
       updateFn(identifier, data, 'record');
     }
@@ -68303,31 +70522,57 @@ lunr.QueryParser.parseBoost = function (parser) {
       identifier.id = coerceId(data.id);
     }
   }
-  function detectMerge(typesCache, identifier, data, newId, lids) {
+  function detectMerge(cache, keyInfo, identifier, data) {
+    const newId = keyInfo.id;
     const {
       id,
       type,
       lid
     } = identifier;
+    const typeSet = cache.resourcesByType[identifier.type];
+
+    // if the IDs are present but do not match
+    // then check if we have an existing identifier
+    // for the newer ID.
     if (id !== null && id !== newId && newId !== null) {
-      let keyOptions = getTypeIndex(typesCache, identifier.type);
-      let existingIdentifier = keyOptions.id.get(newId);
+      const existingIdentifier = typeSet && typeSet.id.get(newId);
       return existingIdentifier !== undefined ? existingIdentifier : false;
     } else {
-      let newType = data.type && normalizeModelName(data.type);
+      const newType = keyInfo.type;
 
       // If the ids and type are the same but lid is not the same, we should trigger a merge of the identifiers
-      if (id !== null && id === newId && newType === type && data.lid && data.lid !== lid) {
-        let existingIdentifier = lids.get(data.lid);
-        return existingIdentifier !== undefined ? existingIdentifier : false;
+      // we trigger a merge of the identifiers
+      // though probably we should just throw an error here
+      if (id !== null && id === newId && newType === type && hasLid(data) && data.lid !== lid) {
+        return getIdentifierFromLid(cache, data.lid, data) || false;
+
         // If the lids are the same, and ids are the same, but types are different we should trigger a merge of the identifiers
-      } else if (id !== null && id === newId && newType && newType !== type && data.lid && data.lid === lid) {
-        let keyOptions = getTypeIndex(typesCache, newType);
-        let existingIdentifier = keyOptions.id.get(id);
+      } else if (id !== null && id === newId && newType && newType !== type && hasLid(data) && data.lid === lid) {
+        const newTypeSet = cache.resourcesByType[newType];
+        const existingIdentifier = newTypeSet && newTypeSet.id.get(newId);
         return existingIdentifier !== undefined ? existingIdentifier : false;
       }
     }
     return false;
+  }
+  function getIdentifierFromLid(cache, lid, resource) {
+    const identifier = cache.resources.get(lid);
+    return identifier || null;
+  }
+  function addResourceToCache(cache, identifier) {
+    cache.resources.set(identifier.lid, identifier);
+    let typeSet = cache.resourcesByType[identifier.type];
+    if (!typeSet) {
+      typeSet = {
+        lid: new Map(),
+        id: new Map()
+      };
+      cache.resourcesByType[identifier.type] = typeSet;
+    }
+    typeSet.lid.set(identifier.lid, identifier);
+    if (identifier.id) {
+      typeSet.id.set(identifier.id, identifier);
+    }
   }
   var _class$1, _descriptor$1;
 
@@ -68346,9 +70591,8 @@ lunr.QueryParser.parseBoost = function (parser) {
      @extends Reference
   */
   let RecordReference = (_class$1 = class RecordReference {
-    // unsubscribe token given to us by the notification manager
-
     constructor(store, identifier) {
+      // unsubscribe token given to us by the notification manager
       this.___token = void 0;
       this.___identifier = void 0;
       _initializerDefineProperty(this, "_ref", _descriptor$1, this);
@@ -68532,7 +70776,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     @module @ember-data/store
   */
 
-  class CacheStoreWrapper {
+  class CacheCapabilitiesManager {
     constructor(_store) {
       this._store = _store;
       this._willNotify = false;
@@ -68599,14 +70843,25 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._pendingNotifies.delete(identifier);
     }
   }
-  let _peekGraph;
-  {
-    let __peekGraph;
-    _peekGraph = wrapper => {
-      let a = (0, _esCompat.default)(require("@ember-data/graph/-private")).peekGraph;
-      __peekGraph = __peekGraph || a;
-      return __peekGraph(wrapper);
-    };
+
+  /*
+   * Returns the Cache instance associated with a given
+   * Model or Identifier
+   */
+
+  const CacheForIdentifierCache = new Map();
+  function setCacheFor(identifier, cache) {
+    (false && !(!CacheForIdentifierCache.has(identifier) || CacheForIdentifierCache.get(identifier) === cache) && (0, _debug.assert)(`Illegal set of identifier`, !CacheForIdentifierCache.has(identifier) || CacheForIdentifierCache.get(identifier) === cache));
+    CacheForIdentifierCache.set(identifier, cache);
+  }
+  function removeRecordDataFor(identifier) {
+    CacheForIdentifierCache.delete(identifier);
+  }
+  function peekCache(instance) {
+    if (CacheForIdentifierCache.has(instance)) {
+      return CacheForIdentifierCache.get(instance);
+    }
+    return null;
   }
 
   /**
@@ -68653,6 +70908,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     RecordCache.set(record, identifier);
   }
   const StoreMap = new Map();
+  _exports.m = StoreMap;
   function storeFor(record) {
     const store = StoreMap.get(record);
     (false && !(store) && (0, _debug.assert)(`A record in a disconnected state cannot utilize the store. This typically means the record has been destroyed, most commonly by unloading it.`, store));
@@ -68665,13 +70921,16 @@ lunr.QueryParser.parseBoost = function (parser) {
         reference: new WeakMap()
       };
       this.store = store;
-      this._storeWrapper = new CacheStoreWrapper(this.store);
+      this._storeWrapper = new CacheCapabilitiesManager(this.store);
       store.identifierCache.__configureMerge((identifier, matchedIdentifier, resourceData) => {
         let keptIdentifier = identifier;
         if (identifier.id !== matchedIdentifier.id) {
+          // @ts-expect-error TODO this needs to be fixed
           keptIdentifier = 'id' in resourceData && identifier.id === resourceData.id ? identifier : matchedIdentifier;
         } else if (identifier.type !== matchedIdentifier.type) {
-          keptIdentifier = 'type' in resourceData && identifier.type === resourceData.type ? identifier : matchedIdentifier;
+          keptIdentifier =
+          // @ts-expect-error TODO this needs to be fixed
+          'type' in resourceData && identifier.type === resourceData.type ? identifier : matchedIdentifier;
         }
         let staleIdentifier = identifier === keptIdentifier ? matchedIdentifier : identifier;
 
@@ -68686,6 +70945,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           // we can probably just "swap" what data source the abandoned
           // record points at so long as
           // it itself is not retained by the store in any way.
+          // @ts-expect-error TODO this needs to be fixed
           if ('id' in resourceData) {
             throw new Error(`Failed to update the 'id' for the RecordIdentifier '${identifier.type}:${String(identifier.id)} (${identifier.lid})' to '${String(resourceData.id)}', because that id is already in use by '${matchedIdentifier.type}:${String(matchedIdentifier.id)} (${matchedIdentifier.lid})'`);
           }
@@ -68699,11 +70959,8 @@ lunr.QueryParser.parseBoost = function (parser) {
 
         /*
         TODO @runspired consider adding this to make polymorphism even nicer
-        if (HAS_GRAPH_PACKAGE) {
         if (identifier.type !== matchedIdentifier.type) {
-          const graphFor = importSync('@ember-data/graph/-private').graphFor;
-          graphFor(this).registerPolymorphicType(identifier.type, matchedIdentifier.type);
-        }
+        this.store._graph?.registerPolymorphicType(identifier.type, matchedIdentifier.type);
         }
         */
 
@@ -68761,12 +71018,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     disconnect(identifier) {
       const record = this.__instances.record.get(identifier);
       (false && !(!record || record.isDestroyed || record.isDestroying) && (0, _debug.assert)('Cannot destroy record while it is still materialized', !record || record.isDestroyed || record.isDestroying));
-      {
-        let graph = _peekGraph(this.store);
-        if (graph) {
-          graph.remove(identifier);
-        }
-      }
+      this.store._graph?.remove(identifier);
       this.store.identifierCache.forgetRecordIdentifier(identifier);
       removeRecordDataFor(identifier);
       this.store._requestCache._clearEntries(identifier);
@@ -68797,11 +71049,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (type === undefined) {
         // it would be cool if we could just de-ref cache here
         // but probably would require WeakRef models to do so.
-        cache.lids.forEach(identifier => {
+        cache.resources.forEach(identifier => {
           this.unloadRecord(identifier);
         });
       } else {
-        const typeCache = cache.types;
+        const typeCache = cache.resourcesByType;
         let identifiers = typeCache[type]?.lid;
         if (identifiers) {
           identifiers.forEach(identifier => {
@@ -68915,7 +71167,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     if (typeof value === 'string' || typeof value === 'number') {
       return {
         type,
-        id: value
+        id: ensureStringId(value)
       };
     }
     // TODO if not a record instance assert it's an identifier
@@ -68926,84 +71178,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     RecordCache.clear();
     StoreMap.clear();
     CacheForIdentifierCache.clear();
-  }
-  let _modelForMixin;
-  {
-    let _found;
-    _modelForMixin = function () {
-      if (!_found) {
-        _found = (0, _esCompat.default)(require("@ember-data/model/-private"))._modelForMixin;
-      }
-      return _found(...arguments);
-    };
-  }
-  class DSModelSchemaDefinitionService {
-    constructor(store) {
-      this.store = store;
-      this._relationshipsDefCache = Object.create(null);
-      this._attributesDefCache = Object.create(null);
-    }
-
-    // Following the existing RD implementation
-    attributesDefinitionFor(identifier) {
-      let modelName, attributes;
-      modelName = identifier.type;
-      attributes = this._attributesDefCache[modelName];
-      if (attributes === undefined) {
-        let modelClass = this.store.modelFor(modelName);
-        let attributeMap = modelClass.attributes;
-        attributes = Object.create(null);
-        attributeMap.forEach((meta, name) => attributes[name] = meta);
-        this._attributesDefCache[modelName] = attributes;
-      }
-      return attributes;
-    }
-
-    // Following the existing RD implementation
-    relationshipsDefinitionFor(identifier) {
-      let modelName, relationships;
-      modelName = identifier.type;
-      relationships = this._relationshipsDefCache[modelName];
-      if (relationships === undefined) {
-        let modelClass = this.store.modelFor(modelName);
-        relationships = modelClass.relationshipsObject || null;
-        this._relationshipsDefCache[modelName] = relationships;
-      }
-      return relationships;
-    }
-    doesTypeExist(modelName) {
-      let normalizedModelName = normalizeModelName(modelName);
-      let factory = getModelFactory(this.store, this.store._modelFactoryCache, normalizedModelName);
-      return factory !== null;
-    }
-  }
-  function getModelFactory(store, cache, normalizedModelName) {
-    let factory = cache[normalizedModelName];
-    if (!factory) {
-      let owner = (0, _application.getOwner)(store);
-      factory = owner.factoryFor(`model:${normalizedModelName}`);
-      {
-        if (!factory) {
-          //Support looking up mixins as base types for polymorphic relationships
-          factory = _modelForMixin(store, normalizedModelName);
-        }
-      }
-      if (!factory) {
-        // we don't cache misses in case someone wants to register a missing model
-        return null;
-      }
-      let klass = factory.class;
-      if (klass.isModel) {
-        let hasOwnModelNameSet = klass.modelName && Object.prototype.hasOwnProperty.call(klass, 'modelName');
-        if (!hasOwnModelNameSet) {
-          Object.defineProperty(klass, 'modelName', {
-            value: normalizedModelName
-          });
-        }
-      }
-      cache[normalizedModelName] = factory;
-    }
-    return factory;
   }
 
   // if modelFor turns out to be a bottleneck we should replace with a Map
@@ -69022,7 +71196,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return shim;
   }
   function mapFromHash(hash) {
-    let map = new Map();
+    const map = new Map();
     for (let i in hash) {
       if (Object.prototype.hasOwnProperty.call(hash, i)) {
         map.set(i, hash[i]);
@@ -69031,7 +71205,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     return map;
   }
 
-  // Mimics the static apis of DSModel
+  // Mimics the static apis of @ember-data/model
   class ShimModelClass {
     constructor(store, modelName) {
       this.__store = store;
@@ -69496,6 +71670,65 @@ lunr.QueryParser.parseBoost = function (parser) {
     // =============
 
     /**
+     * Query the cache for the changes to relationships of a resource.
+     *
+     * Returns a map of relationship names to RelationshipDiff objects.
+     *
+     * ```ts
+     * type RelationshipDiff =
+    | {
+        kind: 'collection';
+        remoteState: StableRecordIdentifier[];
+        additions: Set<StableRecordIdentifier>;
+        removals: Set<StableRecordIdentifier>;
+        localState: StableRecordIdentifier[];
+        reordered: boolean;
+      }
+    | {
+        kind: 'resource';
+        remoteState: StableRecordIdentifier | null;
+        localState: StableRecordIdentifier | null;
+      };
+      ```
+     *
+     * @method changedRelationships
+     * @public
+     * @param {StableRecordIdentifier} identifier
+     * @returns {Map<string, RelationshipDiff>}
+     */
+    changedRelationships(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].changedRelationships(identifier);
+    }
+
+    /**
+     * Query the cache for whether any mutated attributes exist
+     *
+     * @method hasChangedRelationships
+     * @public
+     * @param {StableRecordIdentifier} identifier
+     * @returns {boolean}
+     */
+    hasChangedRelationships(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].hasChangedRelationships(identifier);
+    }
+
+    /**
+     * Tell the cache to discard any uncommitted mutations to relationships.
+     *
+     * This will also discard the change on any appropriate inverses.
+     *
+     * This method is a candidate to become a mutation
+     *
+     * @method rollbackRelationships
+     * @public
+     * @param {StableRecordIdentifier} identifier
+     * @returns {string[]} the names of relationships that were restored
+     */
+    rollbackRelationships(identifier) {
+      return _classPrivateFieldBase(this, _cache)[_cache].rollbackRelationships(identifier);
+    }
+
+    /**
      * Query the cache for the current state of a relationship property
      *
      * @method getRelationship
@@ -69764,15 +71997,15 @@ lunr.QueryParser.parseBoost = function (parser) {
     return ARRAY_SETTER_METHODS.has(prop);
   }
   const IDENTIFIER_ARRAY_TAG = Symbol('#tag');
-  _exports.IDENTIFIER_ARRAY_TAG = IDENTIFIER_ARRAY_TAG;
+  _exports.h = IDENTIFIER_ARRAY_TAG;
   const SOURCE = Symbol('#source');
-  _exports.SOURCE = SOURCE;
+  _exports.g = SOURCE;
   const MUTATE = Symbol('#update');
-  _exports.MUTATE = MUTATE;
+  _exports.M = MUTATE;
   const NOTIFY = Symbol('#notify');
   const IS_COLLECTION = Symbol.for('Collection');
   function notifyArray(arr) {
-    arr[IDENTIFIER_ARRAY_TAG].ref = null;
+    (0, _private.addToTransaction)(arr[IDENTIFIER_ARRAY_TAG]);
     {
       // eslint-disable-next-line
       (0, _validator.dirtyTag)((0, _metal.tagForProperty)(arr, 'length'));
@@ -69835,20 +72068,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     @public
   */
   let IdentifierArray = (_class3 = class IdentifierArray {
-    /**
-      The flag to signal a `RecordArray` is currently loading data.
-      Example
-      ```javascript
-      let people = store.peekAll('person');
-      people.isUpdating; // false
-      people.update();
-      people.isUpdating; // true
-      ```
-      @property isUpdating
-      @public
-      @type Boolean
-    */
-
     [NOTIFY]() {
       notifyArray(this);
     }
@@ -69885,13 +72104,25 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
     }
     constructor(options) {
+      /**
+        The flag to signal a `RecordArray` is currently loading data.
+        Example
+        ```javascript
+        let people = store.peekAll('person');
+        people.isUpdating; // false
+        people.update();
+        people.isUpdating; // true
+        ```
+        @property isUpdating
+        @public
+        @type Boolean
+      */
       _initializerDefineProperty(this, "isUpdating", _descriptor2, this);
       this.isLoaded = true;
       this.isDestroying = false;
       this.isDestroyed = false;
       this._updatingPromise = null;
       this[IS_COLLECTION] = true;
-      this[IDENTIFIER_ARRAY_TAG] = new Tag();
       this[SOURCE] = void 0;
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       let self = this;
@@ -69899,6 +72130,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.store = options.store;
       this._manager = options.manager;
       this[SOURCE] = options.identifiers;
+      // @ts-expect-error
+      this[IDENTIFIER_ARRAY_TAG] = new Tag();
       const store = options.store;
       const boundFns = new Map();
       const _TAG = this[IDENTIFIER_ARRAY_TAG];
@@ -70081,7 +72314,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       this.isUpdating = true;
       let updatingPromise = this._update();
-      updatingPromise.finally(() => {
+      void updatingPromise.finally(() => {
         this._updatingPromise = null;
         if (this.isDestroying || this.isDestroyed) {
           return;
@@ -70130,7 +72363,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       return false;
     }
   }), _applyDecoratedDescriptor(_class3.prototype, "length", [_compat.dependentKeyCompat], Object.getOwnPropertyDescriptor(_class3.prototype, "length"), _class3.prototype)), _class3);
-  _exports.RecordArray = _exports.IdentifierArray = IdentifierArray;
+  _exports.I = IdentifierArray;
   class Collection extends IdentifierArray {
     constructor(options) {
       super(options);
@@ -70159,7 +72392,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
   // trick the proxy "in" check
-  _exports.AdapterPopulatedRecordArray = Collection;
+  _exports.f = Collection;
   Collection.prototype.query = null;
 
   // Ensure instanceof works correctly
@@ -70469,7 +72702,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this.store.notifications.unsubscribe(this._subscription);
     }
   }
-  _exports.RecordArrayManager = RecordArrayManager;
+  _exports.R = RecordArrayManager;
   function associate(ArraysCache, array, identifiers) {
     for (let i = 0; i < identifiers.length; i++) {
       let identifier = identifiers[i];
@@ -70540,11 +72773,9 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   }
 
-  /**
-   * @module @ember-data/store
-   */
   const Touching = Symbol('touching');
   const RequestPromise = Symbol('promise');
+  const EMPTY_ARR = [];
   function hasRecordIdentifier(op) {
     return 'recordIdentifier' in op;
   }
@@ -70558,9 +72789,9 @@ lunr.QueryParser.parseBoost = function (parser) {
    */
   class RequestStateService {
     constructor(store) {
-      this._pending = Object.create(null);
+      this._pending = new Map();
       this._done = new Map();
-      this._subscriptions = Object.create(null);
+      this._subscriptions = new Map();
       this._toFlush = [];
       this._store = void 0;
       this._store = store;
@@ -70571,10 +72802,10 @@ lunr.QueryParser.parseBoost = function (parser) {
     _enqueue(promise, queryRequest) {
       let query = queryRequest.data[0];
       if (hasRecordIdentifier(query)) {
-        let lid = query.recordIdentifier.lid;
+        const identifier = query.recordIdentifier;
         let type = query.op === 'saveRecord' ? 'mutation' : 'query';
-        if (!this._pending[lid]) {
-          this._pending[lid] = [];
+        if (!this._pending.has(identifier)) {
+          this._pending.set(identifier, []);
         }
         let request = {
           state: 'pending',
@@ -70583,10 +72814,10 @@ lunr.QueryParser.parseBoost = function (parser) {
         };
         request[Touching] = [query.recordIdentifier];
         request[RequestPromise] = promise;
-        this._pending[lid].push(request);
+        this._pending.get(identifier).push(request);
         this._triggerSubscriptions(request);
         return promise.then(result => {
-          this._dequeue(lid, request);
+          this._dequeue(identifier, request);
           let finalizedRequest = {
             state: 'fulfilled',
             request: queryRequest,
@@ -70600,7 +72831,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           this._triggerSubscriptions(finalizedRequest);
           return result;
         }, error => {
-          this._dequeue(lid, request);
+          this._dequeue(identifier, request);
           let finalizedRequest = {
             state: 'rejected',
             request: queryRequest,
@@ -70637,13 +72868,15 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
     _flushRequest(req) {
       req[Touching].forEach(identifier => {
-        if (this._subscriptions[identifier.lid]) {
-          this._subscriptions[identifier.lid].forEach(callback => callback(req));
+        const subscriptions = this._subscriptions.get(identifier);
+        if (subscriptions) {
+          subscriptions.forEach(callback => callback(req));
         }
       });
     }
-    _dequeue(lid, request) {
-      this._pending[lid] = this._pending[lid].filter(req => req !== request);
+    _dequeue(identifier, request) {
+      const pending = this._pending.get(identifier);
+      this._pending.set(identifier, pending.filter(req => req !== request));
     }
     _addDone(request) {
       request[Touching].forEach(identifier => {
@@ -70654,7 +72887,7 @@ lunr.QueryParser.parseBoost = function (parser) {
           requests = requests.filter(req => {
             // TODO add support for multiple
             let data;
-            if (req.request.data instanceof Array) {
+            if (Array.isArray(req.request.data)) {
               data = req.request.data[0];
             } else {
               data = req.request.data;
@@ -70698,10 +72931,12 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param {(state: RequestState) => void} callback
      */
     subscribeForRecord(identifier, callback) {
-      if (!this._subscriptions[identifier.lid]) {
-        this._subscriptions[identifier.lid] = [];
+      let subscriptions = this._subscriptions.get(identifier);
+      if (!subscriptions) {
+        subscriptions = [];
+        this._subscriptions.set(identifier, subscriptions);
       }
-      this._subscriptions[identifier.lid].push(callback);
+      subscriptions.push(callback);
     }
 
     /**
@@ -70713,10 +72948,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @returns {RequestState[]} an array of request states for any pending requests for the given identifier
      */
     getPendingRequestsForRecord(identifier) {
-      if (this._pending[identifier.lid]) {
-        return this._pending[identifier.lid];
-      }
-      return [];
+      return this._pending.get(identifier) || EMPTY_ARR;
     }
 
     /**
@@ -70734,6 +72966,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       }
       return null;
     }
+  }
+  function isNonEmptyString(str) {
+    return Boolean(str && typeof str === 'string');
   }
   function constructResource(type, id, lid) {
     if (typeof type === 'object' && type !== null) {
@@ -70771,14 +73006,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       };
     }
   }
-
-  /**
-    @module @ember-data/store
-   */
-
-  // hello world
-
-  let _Cache;
 
   /**
    * A Store coordinates interaction between your application, a [Cache](https://api.emberjs.com/ember-data/release/classes/%3CInterface%3E%20Cache),
@@ -70898,14 +73125,12 @@ lunr.QueryParser.parseBoost = function (parser) {
 
     // DEBUG-only properties
 
-    // @ts-expect-error
     get isDestroying() {
       return this._isDestroying;
     }
     set isDestroying(value) {
       this._isDestroying = value;
     }
-    // @ts-expect-error
     get isDestroyed() {
       return this._isDestroyed;
     }
@@ -70918,6 +73143,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       @private
     */
     constructor(createArgs) {
+      // @ts-expect-error ember-source types improperly expect createArgs to be `Owner`
       super(createArgs);
       Object.assign(this, createArgs);
       this.identifierCache = new IdentifierCache();
@@ -70933,7 +73159,6 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._instanceCache = new InstanceCache(this);
       this._adapterCache = Object.create(null);
       this._serializerCache = Object.create(null);
-      this._modelFactoryCache = Object.create(null);
       this._documentCache = new Map();
       this.isDestroying = false;
       this.isDestroyed = false;
@@ -71004,7 +73229,7 @@ lunr.QueryParser.parseBoost = function (parser) {
      * MUST be supplied for the document to be cached.
      *
      * @method request
-     * @param {StoreRequestInfo} requestConfig
+     * @param {StoreRequestInput} requestConfig
      * @returns {Future}
      * @public
      */
@@ -71016,6 +73241,10 @@ lunr.QueryParser.parseBoost = function (parser) {
         store: this,
         [EnableHydration]: true
       };
+      if (requestConfig.records) {
+        const identifierCache = this.identifierCache;
+        opts.records = requestConfig.records.map(r => identifierCache.getOrCreateRecordIdentifier(r));
+      }
       const future = this.requestManager.request(Object.assign(requestConfig, opts));
       future.onFinalize(() => {
         // skip flush for legacy belongsTo
@@ -71044,28 +73273,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @returns A record instance
      * @public
      */
-    instantiateRecord(identifier, createRecordArgs) {
-      {
-        let modelName = identifier.type;
-        const cache = this.cache;
-        // TODO deprecate allowing unknown args setting
-        let createOptions = {
-          _createProps: createRecordArgs,
-          // TODO @deprecate consider deprecating accessing record properties during init which the below is necessary for
-          _secretInit: {
-            identifier,
-            cache,
-            store: this,
-            cb: secretInit
-          }
-        };
-
-        // ensure that `getOwner(this)` works inside a model instance
-        (0, _application.setOwner)(createOptions, (0, _application.getOwner)(this));
-        return getModelFactory(this, this._modelFactoryCache, modelName).class.create(createOptions);
-      }
-      (false && !(false) && (0, _debug.assert)(`You must implement the store's instantiateRecord hook for your custom model class.`));
-    }
 
     /**
      * A hook which an app or addon may implement. Called when
@@ -71077,12 +73284,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @public
      * @param record
      */
-    teardownRecord(record) {
-      {
-        (false && !('destroy' in record) && (0, _debug.assert)(`expected to receive an instance of DSModel. If using a custom model make sure you implement teardownRecord`, 'destroy' in record));
-        record.destroy();
-      }
-    }
 
     /**
      * Provides access to the SchemaDefinitionService instance
@@ -71095,13 +73296,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @public
      */
     getSchemaDefinitionService() {
-      {
-        if (!this._schema) {
-          // it is potentially a mistake for the RFC to have not enabled chaining these services, though highlander rule is nice.
-          // what ember-m3 did via private API to allow both worlds to interop would be much much harder using this.
-          this._schema = new DSModelSchemaDefinitionService(this);
-        }
-      }
       (false && !(this._schema) && (0, _debug.assert)(`You must registerSchemaDefinitionService with the store to use custom model classes`, this._schema));
       return this._schema;
     }
@@ -71233,30 +73427,15 @@ lunr.QueryParser.parseBoost = function (parser) {
       for example.
        @method modelFor
       @public
-      @param {String} modelName
-      @return {subclass of Model | ShimModelClass}
+      @param {String} type
+      @return {ModelSchema}
       */
     // TODO @deprecate in favor of schema APIs, requires adapter/serializer overhaul or replacement
 
-    modelFor(modelName) {
-      (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's modelFor method`, modelName));
-      (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-      {
-        let normalizedModelName = normalizeModelName(modelName);
-        let maybeFactory = getModelFactory(this, this._modelFactoryCache, normalizedModelName);
-
-        // for factorFor factory/class split
-        let klass = maybeFactory && maybeFactory.class ? maybeFactory.class : maybeFactory;
-        if (!klass || !klass.isModel || this._forceShim) {
-          (false && !(this.getSchemaDefinitionService().doesTypeExist(modelName)) && (0, _debug.assert)(`No model was found for '${modelName}' and no schema handles the type`, this.getSchemaDefinitionService().doesTypeExist(modelName)));
-          return getShimClass(this, modelName);
-        } else {
-          // TODO @deprecate ever returning the klass, always return the shim
-          return klass;
-        }
-      }
-      (false && !(this.getSchemaDefinitionService().doesTypeExist(modelName)) && (0, _debug.assert)(`No model was found for '${modelName}' and no schema handles the type`, this.getSchemaDefinitionService().doesTypeExist(modelName)));
-      return getShimClass(this, modelName);
+    modelFor(type) {
+      (false && !(typeof type === 'string' && type.length) && (0, _debug.assert)(`You need to pass <type> to the store's modelFor method`, typeof type === 'string' && type.length));
+      (false && !(this.getSchemaDefinitionService().doesTypeExist(type)) && (0, _debug.assert)(`No model was found for '${type}' and no schema handles the type`, this.getSchemaDefinitionService().doesTypeExist(type)));
+      return getShimClass(this, type);
     }
 
     /**
@@ -71291,43 +73470,41 @@ lunr.QueryParser.parseBoost = function (parser) {
       //
       //   to remove this, we would need to move to a new `async` API.
       let record;
-      _runloop._backburner.join(() => {
-        this._join(() => {
-          let normalizedModelName = normalizeModelName(modelName);
-          let properties = {
-            ...inputProperties
-          };
+      this._join(() => {
+        let normalizedModelName = normalizeModelName(modelName);
+        let properties = {
+          ...inputProperties
+        };
 
-          // If the passed properties do not include a primary key,
-          // give the adapter an opportunity to generate one. Typically,
-          // client-side ID generators will use something like uuid.js
-          // to avoid conflicts.
+        // If the passed properties do not include a primary key,
+        // give the adapter an opportunity to generate one. Typically,
+        // client-side ID generators will use something like uuid.js
+        // to avoid conflicts.
 
-          if (properties.id === null || properties.id === undefined) {
-            let adapter = this.adapterFor(modelName);
-            if (adapter && adapter.generateIdForRecord) {
-              properties.id = adapter.generateIdForRecord(this, modelName, properties);
-            } else {
-              properties.id = null;
-            }
+        if (properties.id === null || properties.id === undefined) {
+          let adapter = this.adapterFor(modelName, true);
+          if (adapter && adapter.generateIdForRecord) {
+            properties.id = adapter.generateIdForRecord(this, modelName, properties);
+          } else {
+            properties.id = null;
           }
+        }
 
-          // Coerce ID to a string
-          properties.id = coerceId(properties.id);
-          const resource = {
-            type: normalizedModelName,
-            id: properties.id
-          };
-          if (resource.id) {
-            const identifier = this.identifierCache.peekRecordIdentifier(resource);
-            (false && !(!identifier) && (0, _debug.assert)(`The id ${properties.id} has already been used with another '${normalizedModelName}' record.`, !identifier));
-          }
-          const identifier = this.identifierCache.createIdentifierForNewRecord(resource);
-          const cache = this.cache;
-          const createOptions = normalizeProperties(this, identifier, properties);
-          const resultProps = cache.clientDidCreate(identifier, createOptions);
-          record = this._instanceCache.getRecord(identifier, resultProps);
-        });
+        // Coerce ID to a string
+        properties.id = coerceId(properties.id);
+        const resource = {
+          type: normalizedModelName,
+          id: properties.id
+        };
+        if (resource.id) {
+          const identifier = this.identifierCache.peekRecordIdentifier(resource);
+          (false && !(!identifier) && (0, _debug.assert)(`The id ${String(properties.id)} has already been used with another '${normalizedModelName}' record.`, !identifier));
+        }
+        const identifier = this.identifierCache.createIdentifierForNewRecord(resource);
+        const cache = this.cache;
+        const createOptions = normalizeProperties(this, identifier, properties);
+        const resultProps = cache.clientDidCreate(identifier, createOptions);
+        record = this._instanceCache.getRecord(identifier, resultProps);
       });
       return record;
     }
@@ -71352,9 +73529,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       this._join(() => {
         cache.setIsDeleted(identifier, true);
         if (cache.isNew(identifier)) {
-          _runloop._backburner.join(() => {
-            this._instanceCache.unloadRecord(identifier);
-          });
+          this._instanceCache.unloadRecord(identifier);
         }
       });
     }
@@ -71787,7 +73962,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         return isLoaded ? this._instanceCache.getRecord(stableIdentifier) : null;
       }
       (false && !(identifier) && (0, _debug.assert)(`You need to pass a model name to the store's peekRecord method`, identifier));
-      (false && !(typeof identifier === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${identifier}`, typeof identifier === 'string'));
+      (false && !(typeof identifier === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${String(identifier)}`, typeof identifier === 'string'));
       const type = normalizeModelName(identifier);
       const normalizedId = ensureStringId(id);
       const resource = {
@@ -72160,19 +74335,13 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {String} modelName
     */
     unloadAll(modelName) {
-      (false && !(!modelName || typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, !modelName || typeof modelName === 'string'));
+      (false && !(!modelName || typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${String(modelName)}`, !modelName || typeof modelName === 'string'));
       this._join(() => {
         if (modelName === undefined) {
           // destroy the graph before unloadAll
           // since then we avoid churning relationships
           // during unload
-          {
-            const peekGraph = (0, _esCompat.default)(require("@ember-data/graph/-private")).peekGraph;
-            const graph = peekGraph(this);
-            if (graph) {
-              graph.identifiers.clear();
-            }
-          }
+          this._graph?.identifiers.clear();
           this.recordArrayManager.clear();
           this._instanceCache.clear();
         } else {
@@ -72331,7 +74500,7 @@ lunr.QueryParser.parseBoost = function (parser) {
        @method _push
       @private
       @param {Object} jsonApiDoc
-      @return {StableRecordIdentifier|Array<StableRecordIdentifier>} identifiers for the primary records that had data loaded
+      @return {StableRecordIdentifier|Array<StableRecordIdentifier>|null} identifiers for the primary records that had data loaded
     */
     _push(jsonApiDoc, asyncFlush) {
       if (asyncFlush) {
@@ -72344,7 +74513,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         });
       });
       this._enableAsyncFlush = null;
-      return ret.data;
+      return 'data' in ret ? ret.data : null;
     }
 
     /**
@@ -72392,33 +74561,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     */
     // TODO @runspired @deprecate pushPayload in favor of looking up the serializer
     pushPayload(modelName, inputPayload) {
-      let serializer;
-      let payload;
-      if (!inputPayload) {
-        payload = modelName;
-        serializer = this.serializerFor('application');
-        (false && !(typeof serializer.pushPayload === 'function') && (0, _debug.assert)(`You cannot use 'store#pushPayload' without a modelName unless your default serializer defines 'pushPayload'`, typeof serializer.pushPayload === 'function'));
-      } else {
-        payload = inputPayload;
-        (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
-        let normalizedModelName = normalizeModelName(modelName);
-        serializer = this.serializerFor(normalizedModelName);
-      }
-      (false && !(serializer.pushPayload) && (0, _debug.assert)(`You must define a pushPayload method in your serializer in order to call store.pushPayload`, serializer.pushPayload));
+      const payload = inputPayload || modelName;
+      const normalizedModelName = inputPayload ? normalizeModelName(modelName) : 'application';
+      const serializer = this.serializerFor(normalizedModelName);
+      (false && !(serializer && typeof serializer.pushPayload === 'function') && (0, _debug.assert)(`You cannot use 'store.pushPayload(<type>, <payload>)' unless the serializer for '${normalizedModelName}' defines 'pushPayload'`, serializer && typeof serializer.pushPayload === 'function'));
       serializer.pushPayload(this, payload);
-    }
-
-    // TODO @runspired @deprecate records should implement their own serialization if desired
-    serializeRecord(record, options) {
-      // TODO we used to check if the record was destroyed here
-      {
-        if (!this._fetchManager) {
-          const FetchManager = (0, _esCompat.default)(require("@ember-data/legacy-compat/-private")).FetchManager;
-          this._fetchManager = new FetchManager(this);
-        }
-        return this._fetchManager.createSnapshot(recordIdentifierFor(record)).serialize(options);
-      }
-      (false && !(false) && (0, _debug.assert)(`Store.serializeRecord is only available when utilizing @ember-data/legacy-compat for legacy compatibility`));
     }
 
     /**
@@ -72440,12 +74587,9 @@ lunr.QueryParser.parseBoost = function (parser) {
         return Promise.reject(`Record Is Disconnected`);
       }
       // TODO we used to check if the record was destroyed here
-      (false && !(this._instanceCache.recordIsLoaded(identifier)) && (0, _debug.assert)(`Cannot initiate a save request for an unloaded record: ${identifier}`, this._instanceCache.recordIsLoaded(identifier)));
+      (false && !(this._instanceCache.recordIsLoaded(identifier)) && (0, _debug.assert)(`Cannot initiate a save request for an unloaded record: ${identifier.lid}`, this._instanceCache.recordIsLoaded(identifier)));
       if (resourceIsFullyDeleted(this._instanceCache, identifier)) {
         return Promise.resolve(record);
-      }
-      if (isDSModel(record)) {
-        record.errors.clear();
       }
       if (!options) {
         options = {};
@@ -72486,15 +74630,6 @@ lunr.QueryParser.parseBoost = function (parser) {
      * @param storeWrapper
      * @returns {Cache}
      */
-    createCache(storeWrapper) {
-      {
-        if (_Cache === undefined) {
-          _Cache = (0, _esCompat.default)(require("@ember-data/json-api")).default;
-        }
-        return new _Cache(storeWrapper);
-      }
-      (false && !(false) && (0, _debug.assert)(`Expected store.createCache to be implemented but it wasn't`));
-    }
 
     /**
      * Returns the cache instance associated to this Store, instantiates the Cache
@@ -72534,11 +74669,11 @@ lunr.QueryParser.parseBoost = function (parser) {
     normalize(modelName, payload) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's normalize method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store methods has been removed. Please pass a dasherized string instead of ${typeof modelName}`, typeof modelName === 'string'));
-      let normalizedModelName = normalizeModelName(modelName);
-      let serializer = this.serializerFor(normalizedModelName);
-      let model = this.modelFor(normalizedModelName);
-      (false && !(serializer?.normalize) && (0, _debug.assert)(`You must define a normalize method in your serializer in order to call store.normalize`, serializer?.normalize));
-      return serializer.normalize(model, payload);
+      const normalizedModelName = normalizeModelName(modelName);
+      const serializer = this.serializerFor(normalizedModelName);
+      const schema = this.modelFor(normalizedModelName);
+      (false && !(typeof serializer?.normalize === 'function') && (0, _debug.assert)(`You must define a normalize method in your serializer in order to call store.normalize`, typeof serializer?.normalize === 'function'));
+      return serializer.normalize(schema, payload);
     }
 
     /**
@@ -72553,7 +74688,8 @@ lunr.QueryParser.parseBoost = function (parser) {
       @param {String} modelName
       @return Adapter
     */
-    adapterFor(modelName) {
+
+    adapterFor(modelName, _allowMissing) {
       (false && !(modelName) && (0, _debug.assert)(`You need to pass a model name to the store's adapterFor method`, modelName));
       (false && !(typeof modelName === 'string') && (0, _debug.assert)(`Passing classes to store.adapterFor has been removed. Please pass a dasherized string instead of ${modelName}`, typeof modelName === 'string'));
       let normalizedModelName = normalizeModelName(modelName);
@@ -72564,7 +74700,7 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (adapter) {
         return adapter;
       }
-      let owner = (0, _application.getOwner)(this);
+      const owner = (0, _application.getOwner)(this);
 
       // name specific adapter
       adapter = owner.lookup(`adapter:${normalizedModelName}`);
@@ -72580,7 +74716,7 @@ lunr.QueryParser.parseBoost = function (parser) {
         _adapterCache.application = adapter;
         return adapter;
       }
-      (false && !(false) && (0, _debug.assert)(`No adapter was found for '${modelName}' and no 'application' adapter was found as a fallback.`));
+      (false && !(_allowMissing) && (0, _debug.assert)(`No adapter was found for '${modelName}' and no 'application' adapter was found as a fallback.`, _allowMissing));
     }
 
     /**
@@ -72608,9 +74744,9 @@ lunr.QueryParser.parseBoost = function (parser) {
       if (serializer) {
         return serializer;
       }
-      let owner = (0, _application.getOwner)(this);
 
       // by name
+      const owner = (0, _application.getOwner)(this);
       serializer = owner.lookup(`serializer:${normalizedModelName}`);
       if (serializer !== undefined) {
         _serializerCache[normalizedModelName] = serializer;
@@ -72647,13 +74783,8 @@ lunr.QueryParser.parseBoost = function (parser) {
           serializer.destroy();
         }
       }
-      {
-        const peekGraph = (0, _esCompat.default)(require("@ember-data/graph/-private")).peekGraph;
-        let graph = peekGraph(this);
-        if (graph) {
-          graph.destroy();
-        }
-      }
+      this._graph?.destroy();
+      this._graph = undefined;
       this.notifications.destroy();
       this.recordArrayManager.destroy();
       this.identifierCache.destroy();
@@ -72664,14 +74795,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       return new this(args);
     }
   }
-  _exports.Store = Store;
+  _exports.S = Store;
   let assertDestroyingStore;
   let assertDestroyedStoreOnly;
   function isMaybeIdentifier(maybeIdentifier) {
     return Boolean(maybeIdentifier !== null && typeof maybeIdentifier === 'object' && ('id' in maybeIdentifier && 'type' in maybeIdentifier && maybeIdentifier.id && maybeIdentifier.type || maybeIdentifier.lid));
-  }
-  function isDSModel(record) {
-    return !!record && 'constructor' in record && 'isModel' in record.constructor && record.constructor.isModel === true;
   }
   function normalizeProperties(store, identifier, properties) {
     // assert here
@@ -72739,66 +74867,6 @@ lunr.QueryParser.parseBoost = function (parser) {
     const extract = recordIdentifierFor;
     return extract(recordOrPromiseRecord);
   }
-  function secretInit(record, cache, identifier, store) {
-    setRecordIdentifier(record, identifier);
-    StoreMap.set(record, store);
-    setCacheFor(record, cache);
-  }
-});
-;define("@ember-data/store/index", ["exports", "@ember-data/store/-private"], function (_exports, _private) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  Object.defineProperty(_exports, "CacheHandler", {
-    enumerable: true,
-    get: function () {
-      return _private.CacheHandler;
-    }
-  });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _private.Store;
-    }
-  });
-  Object.defineProperty(_exports, "recordIdentifierFor", {
-    enumerable: true,
-    get: function () {
-      return _private.recordIdentifierFor;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierForgetMethod", {
-    enumerable: true,
-    get: function () {
-      return _private.setIdentifierForgetMethod;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierGenerationMethod", {
-    enumerable: true,
-    get: function () {
-      return _private.setIdentifierGenerationMethod;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierResetMethod", {
-    enumerable: true,
-    get: function () {
-      return _private.setIdentifierResetMethod;
-    }
-  });
-  Object.defineProperty(_exports, "setIdentifierUpdateMethod", {
-    enumerable: true,
-    get: function () {
-      return _private.setIdentifierUpdateMethod;
-    }
-  });
-  Object.defineProperty(_exports, "storeFor", {
-    enumerable: true,
-    get: function () {
-      return _private.storeFor;
-    }
-  });
 });
 ;define("@ember-data/tracking/-private", ["exports"], function (_exports) {
   "use strict";
@@ -72826,7 +74894,6 @@ lunr.QueryParser.parseBoost = function (parser) {
    * @module @ember-data/tracking
    * @main @ember-data/tracking
    */
-
   let TRANSACTION = null;
   function createTransaction() {
     let transaction = {
@@ -72847,6 +74914,11 @@ lunr.QueryParser.parseBoost = function (parser) {
       obj.ref;
     }
   }
+  function updateRef(obj) {
+    {
+      obj.ref = null;
+    }
+  }
   function flushTransaction() {
     let transaction = TRANSACTION;
     TRANSACTION = transaction.parent;
@@ -72856,7 +74928,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     transaction.props.forEach(obj => {
       // mark this mutation as part of a transaction
       obj.t = true;
-      obj.ref = null;
+      updateRef(obj);
     });
     transaction.sub.forEach(obj => {
       obj.ref;
@@ -72874,14 +74946,14 @@ lunr.QueryParser.parseBoost = function (parser) {
     transaction.props.forEach(obj => {
       // mark this mutation as part of a transaction
       obj.t = true;
-      obj.ref = null;
+      updateRef(obj);
     });
   }
   function addToTransaction(obj) {
     if (TRANSACTION) {
       TRANSACTION.props.add(obj);
     } else {
-      obj.ref = null;
+      updateRef(obj);
     }
   }
   function addTransactionCB(method) {
@@ -88135,77 +90207,103 @@ lunr.QueryParser.parseBoost = function (parser) {
     }
   });
 });
-;define('ember-data/-private', ['exports', '@ember/array/proxy', '@ember/object/promise-proxy-mixin', '@ember/object/proxy', '@ember-data/legacy-compat', '@ember-data/request', '@ember-data/request/fetch', '@ember-data/store', '@ember/application/namespace', 'ember', 'ember-data/version', '@ember-data/model/-private', '@ember-data/legacy-compat/-private', '@ember-data/store/-private'], (function (exports, ArrayProxy, PromiseProxyMixin, ObjectProxy, legacyCompat, RequestManager, Fetch, BaseStore, Namespace, Ember, VERSION, Private, Private$1, Private$2) { 'use strict';
+;define("ember-data/-private/core", ["exports", "@ember/application/namespace", "ember", "ember-data/version"], function (_exports, _namespace, _ember, _version) {
+  "use strict";
 
-  const _interopDefaultLegacy = e => e && typeof e === 'object' && 'default' in e ? e : { default: e };
-
-  const ArrayProxy__default = /*#__PURE__*/_interopDefaultLegacy(ArrayProxy);
-  const PromiseProxyMixin__default = /*#__PURE__*/_interopDefaultLegacy(PromiseProxyMixin);
-  const ObjectProxy__default = /*#__PURE__*/_interopDefaultLegacy(ObjectProxy);
-  const RequestManager__default = /*#__PURE__*/_interopDefaultLegacy(RequestManager);
-  const Fetch__default = /*#__PURE__*/_interopDefaultLegacy(Fetch);
-  const BaseStore__default = /*#__PURE__*/_interopDefaultLegacy(BaseStore);
-  const Namespace__default = /*#__PURE__*/_interopDefaultLegacy(Namespace);
-  const Ember__default = /*#__PURE__*/_interopDefaultLegacy(Ember);
-  const VERSION__default = /*#__PURE__*/_interopDefaultLegacy(VERSION);
-
-  const DS = Namespace__default.default.create({
-    VERSION: VERSION__default.default,
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"@ember/application/namespace",0,"ember",0,"ember-data/version"eaimeta@70e063a35619d71f
+  const DS = _namespace.default.create({
+    VERSION: _version.default,
     name: 'DS'
   });
-  if (Ember__default.default.libraries) {
-    Ember__default.default.libraries.registerCoreLibrary('Ember Data', VERSION__default.default);
+  if (_ember.default.libraries) {
+    _ember.default.libraries.registerCoreLibrary('Ember Data', _version.default);
   }
+  var _default = DS;
+  _exports.default = _default;
+});
+;define("ember-data/-private/index", ["exports", "@ember/array/proxy", "@ember/debug", "@ember/object/promise-proxy-mixin", "@ember/object/proxy", "ember-data/store", "ember-data/-private/core", "@ember-data/model/-private", "@ember-data/legacy-compat/-private", "@ember-data/store/-private"], function (_exports, _proxy, _debug, _promiseProxyMixin, _proxy2, _store, _core, _private, _private2, _private3) {
+  "use strict";
 
-  class Store extends BaseStore__default.default {
-    constructor(args) {
-      super(args);
-      this.requestManager = new RequestManager__default.default();
-      this.requestManager.use([legacyCompat.LegacyNetworkHandler, Fetch__default.default]);
-      this.requestManager.useCache(BaseStore.CacheHandler);
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "DS", {
+    enumerable: true,
+    get: function () {
+      return _core.default;
     }
-  }
-  const PromiseArray = ArrayProxy__default.default.extend(PromiseProxyMixin__default.default);
-  const PromiseObject = ObjectProxy__default.default.extend(PromiseProxyMixin__default.default);
-
-  Object.defineProperty(exports, 'Errors', {
-    enumerable: true,
-    get: () => Private.Errors
   });
-  Object.defineProperty(exports, 'ManyArray', {
+  Object.defineProperty(_exports, "Errors", {
     enumerable: true,
-    get: () => Private.ManyArray
+    get: function () {
+      return _private.Errors;
+    }
   });
-  Object.defineProperty(exports, 'PromiseManyArray', {
+  Object.defineProperty(_exports, "ManyArray", {
     enumerable: true,
-    get: () => Private.PromiseManyArray
+    get: function () {
+      return _private.ManyArray;
+    }
   });
-  Object.defineProperty(exports, 'Snapshot', {
+  _exports.PromiseArray = void 0;
+  Object.defineProperty(_exports, "PromiseManyArray", {
     enumerable: true,
-    get: () => Private$1.Snapshot
+    get: function () {
+      return _private.PromiseManyArray;
+    }
   });
-  Object.defineProperty(exports, 'SnapshotRecordArray', {
+  _exports.PromiseObject = void 0;
+  Object.defineProperty(_exports, "RecordArrayManager", {
     enumerable: true,
-    get: () => Private$1.SnapshotRecordArray
+    get: function () {
+      return _private3.RecordArrayManager;
+    }
   });
-  Object.defineProperty(exports, 'RecordArrayManager', {
+  Object.defineProperty(_exports, "Snapshot", {
     enumerable: true,
-    get: () => Private$2.RecordArrayManager
+    get: function () {
+      return _private2.Snapshot;
+    }
   });
-  Object.defineProperty(exports, 'coerceId', {
+  Object.defineProperty(_exports, "SnapshotRecordArray", {
     enumerable: true,
-    get: () => Private$2.coerceId
+    get: function () {
+      return _private2.SnapshotRecordArray;
+    }
   });
-  exports.DS = DS;
-  exports.PromiseArray = PromiseArray;
-  exports.PromiseObject = PromiseObject;
-  exports.Store = Store;
-
-  Object.defineProperties(exports, { __esModule: { value: true }, [Symbol.toStringTag]: { value: 'Module' } });
-
-}));
-
-;define("ember-data/adapter", ["exports", "@ember-data/adapter"], function (_exports, _adapter) {
+  Object.defineProperty(_exports, "Store", {
+    enumerable: true,
+    get: function () {
+      return _store.default;
+    }
+  });
+  Object.defineProperty(_exports, "coerceId", {
+    enumerable: true,
+    get: function () {
+      return _private3.coerceId;
+    }
+  });
+  0; //eaimeta@70e063a35619d71f0,"@ember/array/proxy",0,"@ember/debug",0,"@ember/object/promise-proxy-mixin",0,"@ember/object/proxy",0,"ember-data/store",0,"ember-data/-private/core",0,"@ember-data/model/-private",0,"@ember-data/legacy-compat/-private",0,"@ember-data/store/-private",0,"@ember-data/model/-private",0,"@ember-data/legacy-compat/-private"eaimeta@70e063a35619d71f
+  // public
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/-private` is deprecated without replacement.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
+  const PromiseArray = _proxy.default.extend(_promiseProxyMixin.default);
+  _exports.PromiseArray = PromiseArray;
+  const PromiseObject = _proxy2.default.extend(_promiseProxyMixin.default);
+  _exports.PromiseObject = PromiseObject;
+});
+;define("ember-data/adapter", ["exports", "@ember/debug", "@ember-data/adapter"], function (_exports, _debug, _adapter) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88217,9 +90315,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _adapter.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/adapter"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/adapter` is deprecated. Please import from `@ember-data/adapter` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/adapters/errors", ["exports", "@ember-data/adapter/error"], function (_exports, _error) {
+;define("ember-data/adapters/errors", ["exports", "@ember/debug", "@ember-data/adapter/error"], function (_exports, _debug, _error) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88279,9 +90386,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _error.UnauthorizedError;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter/error"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/adapter/error"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/adapters/errors` is deprecated. Please import from `@ember-data/adapter` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/adapters/json-api", ["exports", "@ember-data/adapter/json-api"], function (_exports, _jsonApi) {
+;define("ember-data/adapters/json-api", ["exports", "@ember/debug", "@ember-data/adapter/json-api"], function (_exports, _debug, _jsonApi) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88293,9 +90409,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _jsonApi.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter/json-api"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/adapter/json-api"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/adapters/json-api` is deprecated. Please import from `@ember-data/adapter/json-api` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/adapters/rest", ["exports", "@ember-data/adapter/rest"], function (_exports, _rest) {
+;define("ember-data/adapters/rest", ["exports", "@ember/debug", "@ember-data/adapter/rest"], function (_exports, _debug, _rest) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88307,9 +90432,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _rest.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/adapter/rest"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/adapter/rest"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/adapters/rest` is deprecated. Please import from `@ember-data/adapter/rest` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/attr", ["exports", "@ember-data/model"], function (_exports, _model) {
+;define("ember-data/attr", ["exports", "@ember/debug", "@ember-data/model"], function (_exports, _debug, _model) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88321,16 +90455,25 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _model.attr;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/model"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/attr` is deprecated. Please import from `@ember-data/model` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/index", ["exports", "@ember-data/adapter", "@ember-data/adapter/error", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/model", "@ember-data/serializer", "@ember-data/serializer/-private", "@ember-data/serializer/json", "@ember-data/serializer/json-api", "@ember-data/serializer/rest", "@ember-data/serializer/transform", "ember-data/-private", "ember-data/setup-container", "@embroider/macros/es-compat2"], function (_exports, _adapter, _error, _jsonApi, _rest, _model, _serializer, _private, _json, _jsonApi2, _rest2, _transform, _private2, _setupContainer, _esCompat) {
+;define("ember-data/index", ["exports", "@ember/debug", "@ember-data/adapter", "@ember-data/adapter/error", "@ember-data/adapter/json-api", "@ember-data/adapter/rest", "@ember-data/model", "@ember-data/serializer", "@ember-data/serializer/-private", "@ember-data/serializer/json", "@ember-data/serializer/json-api", "@ember-data/serializer/rest", "@ember-data/serializer/transform", "ember-data/-private", "ember-data/setup-container", "@embroider/macros/es-compat2"], function (_exports, _debug, _adapter, _error, _jsonApi, _rest, _model, _serializer, _private, _json, _jsonApi2, _rest2, _transform, _private2, _setupContainer, _esCompat) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-inflector",0,"@embroider/macros",0,"@ember-data/adapter",0,"@ember-data/adapter/error",0,"@ember-data/adapter/json-api",0,"@ember-data/adapter/rest",0,"@ember-data/model",0,"@ember-data/serializer",0,"@ember-data/serializer/-private",0,"@ember-data/serializer/json",0,"@ember-data/serializer/json-api",0,"@ember-data/serializer/rest",0,"@ember-data/serializer/transform",0,"ember-data/-private",0,"ember-data/setup-container",0,"@ember-data/debug"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"ember-inflector",0,"@ember/debug",0,"@embroider/macros",0,"@ember-data/adapter",0,"@ember-data/adapter/error",0,"@ember-data/adapter/json-api",0,"@ember-data/adapter/rest",0,"@ember-data/model",0,"@ember-data/serializer",0,"@ember-data/serializer/-private",0,"@ember-data/serializer/json",0,"@ember-data/serializer/json-api",0,"@ember-data/serializer/rest",0,"@ember-data/serializer/transform",0,"ember-data/-private",0,"ember-data/setup-container",0,"@ember-data/debug"eaimeta@70e063a35619d71f
   /**
    <p align="center">
     <img
@@ -88494,6 +90637,15 @@ lunr.QueryParser.parseBoost = function (parser) {
    @module ember-data-overview
    @main ember-data-overview
   */
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data` is deprecated. Please import from the appropriate `@ember-data/*` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
   _private2.DS.Store = _private2.Store;
   _private2.DS.PromiseArray = _private2.PromiseArray;
   _private2.DS.PromiseObject = _private2.PromiseObject;
@@ -88536,7 +90688,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   var _default = _private2.DS;
   _exports.default = _default;
 });
-;define("ember-data/model", ["exports", "@ember-data/model"], function (_exports, _model) {
+;define("ember-data/model", ["exports", "@ember/debug", "@ember-data/model"], function (_exports, _debug, _model) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88548,9 +90700,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _model.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/model"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/model` is deprecated. Please import from `@ember-data/model` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/relationships", ["exports", "@ember-data/model"], function (_exports, _model) {
+;define("ember-data/relationships", ["exports", "@ember/debug", "@ember-data/model"], function (_exports, _debug, _model) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88568,9 +90729,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _model.hasMany;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/model"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/model"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/relationships` is deprecated. Please import from `@ember-data/model` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/serializer", ["exports", "@ember-data/serializer"], function (_exports, _serializer) {
+;define("ember-data/serializer", ["exports", "@ember/debug", "@ember-data/serializer"], function (_exports, _debug, _serializer) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88582,9 +90752,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _serializer.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/serializer` is deprecated. Please import from `@ember-data/serializer` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/serializers/embedded-records-mixin", ["exports", "@ember-data/serializer/rest"], function (_exports, _rest) {
+;define("ember-data/serializers/embedded-records-mixin", ["exports", "@ember/debug", "@ember-data/serializer/rest"], function (_exports, _debug, _rest) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88596,9 +90775,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _rest.EmbeddedRecordsMixin;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/rest"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/rest"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/serializers/embedded-records-mixin` is deprecated. Please import from `@ember-data/serializer/rest` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/serializers/json-api", ["exports", "@ember-data/serializer/json-api"], function (_exports, _jsonApi) {
+;define("ember-data/serializers/json-api", ["exports", "@ember/debug", "@ember-data/serializer/json-api"], function (_exports, _debug, _jsonApi) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88610,9 +90798,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _jsonApi.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/json-api"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/json-api"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/serializers/json-api` is deprecated. Please import from `@ember-data/serializer/json-api` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/serializers/json", ["exports", "@ember-data/serializer/json"], function (_exports, _json) {
+;define("ember-data/serializers/json", ["exports", "@ember/debug", "@ember-data/serializer/json"], function (_exports, _debug, _json) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88624,9 +90821,18 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _json.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/json"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/json"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/serializers/json` is deprecated. Please import from `@ember-data/serializer/json` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/serializers/rest", ["exports", "@ember-data/serializer/rest"], function (_exports, _rest) {
+;define("ember-data/serializers/rest", ["exports", "@ember/debug", "@ember-data/serializer/rest"], function (_exports, _debug, _rest) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88638,16 +90844,25 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _rest.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/rest"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/rest"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/serializers/rest` is deprecated. Please import from `@ember-data/serializer/rest` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/setup-container", ["exports"], function (_exports) {
+;define("ember-data/setup-container", ["exports", "@ember/debug"], function (_exports, _debug) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
   _exports.default = setupContainer;
-  0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug"eaimeta@70e063a35619d71f
   function initializeStore(application) {
     application.registerOptionsForType('serializer', {
       singleton: false
@@ -88659,22 +90874,57 @@ lunr.QueryParser.parseBoost = function (parser) {
   function setupContainer(application) {
     initializeStore(application);
   }
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/setup-container` is deprecated without replacement', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
-;define("ember-data/store", ["exports", "ember-data/-private"], function (_exports, _private) {
+;define("ember-data/store", ["exports", "@ember-data/json-api", "@ember-data/legacy-compat", "@ember-data/legacy-compat/-private", "@ember-data/model/hooks", "@ember-data/request", "@ember-data/request/fetch", "@ember-data/store"], function (_exports, _jsonApi, _legacyCompat, _private, _hooks, _request, _fetch, _store) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(_exports, "default", {
-    enumerable: true,
-    get: function () {
-      return _private.Store;
+  _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"@ember-data/json-api",0,"@ember-data/legacy-compat",0,"@ember-data/legacy-compat/-private",0,"@ember-data/model/hooks",0,"@ember-data/request",0,"@ember-data/request/fetch",0,"@ember-data/store"eaimeta@70e063a35619d71f
+  class Store extends _store.default {
+    constructor(args) {
+      super(args);
+      this.requestManager = new _request.default();
+      this.requestManager.use([_legacyCompat.LegacyNetworkHandler, _fetch.default]);
+      this.requestManager.useCache(_store.CacheHandler);
+      this.registerSchema((0, _hooks.buildSchema)(this));
     }
-  });
-  0; //eaimeta@70e063a35619d71f0,"ember-data/-private"eaimeta@70e063a35619d71f
+    createCache(storeWrapper) {
+      return new _jsonApi.default(storeWrapper);
+    }
+    instantiateRecord(identifier, createRecordArgs) {
+      return _hooks.instantiateRecord.call(this, identifier, createRecordArgs);
+    }
+    teardownRecord(record) {
+      _hooks.teardownRecord.call(this, record);
+    }
+    modelFor(type) {
+      return _hooks.modelFor.call(this, type) || super.modelFor(type);
+    }
+
+    // TODO @runspired @deprecate records should implement their own serialization if desired
+    serializeRecord(record, options) {
+      // TODO we used to check if the record was destroyed here
+      if (!this._fetchManager) {
+        this._fetchManager = new _private.FetchManager(this);
+      }
+      return this._fetchManager.createSnapshot((0, _store.recordIdentifierFor)(record)).serialize(options);
+    }
+  }
+  _exports.default = Store;
 });
-;define("ember-data/transform", ["exports", "@ember-data/serializer/transform"], function (_exports, _transform) {
+;define("ember-data/transform", ["exports", "@ember/debug", "@ember-data/serializer/transform"], function (_exports, _debug, _transform) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -88686,7 +90936,16 @@ lunr.QueryParser.parseBoost = function (parser) {
       return _transform.default;
     }
   });
-  0; //eaimeta@70e063a35619d71f0,"@ember-data/serializer/transform"eaimeta@70e063a35619d71f
+  0; //eaimeta@70e063a35619d71f0,"@ember/debug",0,"@ember-data/serializer/transform"eaimeta@70e063a35619d71f
+  (false && !(false) && (0, _debug.deprecate)('Importing from `ember-data/transform` is deprecated. Please import from `@ember-data/serializer/transform` instead.', false, {
+    id: 'ember-data:deprecate-legacy-imports',
+    for: 'ember-data',
+    until: '6.0',
+    since: {
+      enabled: '5.2',
+      available: '5.2'
+    }
+  }));
 });
 ;define("ember-data/version", ["exports"], function (_exports) {
   "use strict";
@@ -88696,7 +90955,7 @@ lunr.QueryParser.parseBoost = function (parser) {
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-  var _default = "5.2.0";
+  var _default = "5.3.0";
   _exports.default = _default;
 });
 ;define("ember-fetch/errors", ["exports"], function (_exports) {
@@ -89500,10 +91759,10 @@ lunr.QueryParser.parseBoost = function (parser) {
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); } /**
                                                                                                                                                                                                                                                                                                                                                                                              * Copyright 2015, Yahoo! Inc.
                                                                                                                                                                                                                                                                                                                                                                                              * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
-                                                                                                                                                                                                                                                                                                                                                                                             */
+                                                                                                                                                                                                                                                                                                                                                                                             */ /* eslint-disable @typescript-eslint/ban-ts-comment */
   const {
     Handlebars: {
-      // @ts-expect-error Upstream types are incomplete.
+      // @ts-ignore: Upstream types are incomplete.
       Utils: {
         escapeExpression
       }
@@ -89522,12 +91781,13 @@ lunr.QueryParser.parseBoost = function (parser) {
         // formatter won't know what to do with it. Instead, we cast
         // the SafeString to a regular string using `toHTML`.
         // Since it was already marked as safe we should *not* escape it.
-        // @ts-expect-error: see comment above
+        // @ts-ignore: see comment above
         escapedOpts[key] = val.toHTML();
       } else if (typeof val === 'string') {
+        // @ts-ignore: see comment above
         escapedOpts[key] = escapeExpression(val);
       } else {
-        // @ts-expect-error: see comment above
+        // @ts-ignore: see comment above
         escapedOpts[key] = val; // copy as-is
       }
     });
