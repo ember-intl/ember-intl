@@ -23,7 +23,6 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "changelog": "lerna-changelog",
     "deploy-docs": "ember deploy production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
@@ -35,6 +34,8 @@
     "lint:types": "tsc --noEmit",
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean",
+    "release:changelog": "lerna-changelog",
+    "release:package": "pnpm publish",
     "start": "ember serve",
     "test": "ember test",
     "test:ember-compatibility": "./node_modules/.bin/ember try:one",
