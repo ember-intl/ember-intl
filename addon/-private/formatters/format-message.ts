@@ -2,7 +2,7 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
 import type { IntlShape, MessageDescriptor } from '@formatjs/intl';
@@ -12,7 +12,7 @@ import type { PrimitiveType } from 'intl-messageformat';
 import Formatter from './-base';
 const {
   Handlebars: {
-    // @ts-expect-error Upstream types are incomplete.
+    // @ts-ignore: Upstream types are incomplete.
     Utils: { escapeExpression },
   },
 } = Ember;
@@ -35,12 +35,13 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
       // formatter won't know what to do with it. Instead, we cast
       // the SafeString to a regular string using `toHTML`.
       // Since it was already marked as safe we should *not* escape it.
-      // @ts-expect-error: see comment above
+      // @ts-ignore: see comment above
       escapedOpts[key] = val.toHTML();
     } else if (typeof val === 'string') {
+      // @ts-ignore: see comment above
       escapedOpts[key] = escapeExpression(val);
     } else {
-      // @ts-expect-error: see comment above
+      // @ts-ignore: see comment above
       escapedOpts[key] = val; // copy as-is
     }
   });
