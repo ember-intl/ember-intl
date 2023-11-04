@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.1.2 (2023-11-04)
+
+### Internal
+* [#1791](https://github.com/ember-intl/ember-intl/pull/1791) Pinned @babel/core, @babel/traverse, and fast-glob to address vulnerabilities ([@ijlee2](https://github.com/ijlee2))
+* [#1790](https://github.com/ember-intl/ember-intl/pull/1790) Updated project dependencies ([@ijlee2](https://github.com/ijlee2))
+
+### Committers: 1
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+
+
 ## 6.1.1 (2023-09-20)
 
 ### Internal

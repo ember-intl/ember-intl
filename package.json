@@ -1,6 +1,6 @@
 {
   "name": "ember-intl",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "A internationalization toolbox for ambitious applications.",
   "keywords": [
     "ember-addon",
@@ -23,7 +23,6 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "deploy-docs": "ember deploy production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
     "lint:glint": "glint",
@@ -35,6 +34,7 @@
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean",
     "release:changelog": "lerna-changelog",
+    "release:deploy-docs": "ember deploy production",
     "release:package": "pnpm publish",
     "start": "ember serve",
     "test": "ember test",
