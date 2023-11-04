@@ -166,6 +166,7 @@
   "pnpm": {
     "overrides": {
       "@babel/core": "^7.23.2",
+      "@babel/traverse": "^7.23.2",
       "@types/ember": "^4.0.8",
       "@types/ember__application": "^4.0.9",
       "@types/ember__array": "^4.0.7",
