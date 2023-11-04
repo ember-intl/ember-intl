@@ -84,6 +84,9 @@ export default function setupIntl(
 
     if (options?.formats) {
       const factory = this.owner.factoryFor('service:intl');
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: Property 'unregister' does not exist on type 'Owner'. Did you mean 'register'?
       this.owner.unregister('service:intl');
       this.owner.register('formats:main', options.formats);
       this.owner.register('service:intl', factory);

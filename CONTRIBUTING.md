@@ -9,7 +9,7 @@
 1. Fork and clone this repo.
 
     ```sh
-    git clone git@github.com:<your GitHub handle>/ember-intl.git
+    git clone git@github.com:<your-github-handle>/ember-intl.git
     ```
 
 1. Change directory.
@@ -18,7 +18,7 @@
     cd ember-intl
     ```
 
-1. Use `pnpm` to install dependencies.
+1. Use [`pnpm`](https://pnpm.io/installation) to install dependencies.
 
     ```sh
     pnpm install
@@ -84,18 +84,20 @@
 
 1. Generate a [personal access token](https://github.com/settings/tokens/) in GitHub, with default values for scopes (none selected).
 
-1. Create a pull request, in which you update the package version and `CHANGELOG`.
+1. Run the `release:changelog` script. This generates a text that you can add to `CHANGELOG.md`.
 
     ```sh
-    GITHUB_AUTH=<YOUR_PERSONAL_ACCESS_TOKEN> pnpm changelog
+    GITHUB_AUTH=<YOUR_PERSONAL_ACCESS_TOKEN> pnpm release:changelog
     ```
 
-1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) such as `v1.0.0` (the name satisfies the regular expression `^v\d+\.\d+\.\d+`).
+    Update the version number in `package.json`. Then, create a commit for the file changes (i.e. `CHANGELOG.md` and `package.json`).
+
+1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) and provide release notes. The tag name should match the package version, prefixed by the letter `v`. For example, `v1.0.0`.
 
 1. Publish the package.
 
     ```sh
-    npm publish
+    pnpm release:publish
     ```
 
 </details>
