@@ -111,7 +111,6 @@ export default class IntlService extends Service {
     const initialLocale = this.locale || ['en-us'];
     this._intls = {};
     this._ee = new EventEmitter();
-    this.setLocale(initialLocale);
 
     this._owner = getOwner(this);
     this._formatters = this._createFormatters();
@@ -119,6 +118,7 @@ export default class IntlService extends Service {
     if (!this._formats) {
       this._formats = this._owner.resolveRegistration('formats:main') || {};
     }
+    this.setLocale(initialLocale);
 
     this.onIntlError = this.onIntlError.bind(this);
     this.getIntl = this.getIntl.bind(this);
