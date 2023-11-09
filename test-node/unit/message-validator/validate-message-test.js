@@ -1,6 +1,5 @@
-const expect = require('chai').expect;
-
-const validateMessage = require('ember-intl/lib/message-validator/validate-message');
+import { expect } from 'chai';
+import validateMessage from 'ember-intl/lib/message-validator/validate-message.js';
 
 describe('validateMessage', function () {
   let valid = [

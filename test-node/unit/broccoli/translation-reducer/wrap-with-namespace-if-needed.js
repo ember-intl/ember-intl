@@ -1,7 +1,6 @@
-const expect = require('chai').expect;
-
-const wrapWithNamespaceIfNeeded = require('ember-intl/lib/broccoli/translation-reducer/utils/wrap-with-namespace-if-needed');
-const enums = require('ember-intl/lib/broccoli/enums');
+import { expect } from 'chai';
+import enums from 'ember-intl/lib/broccoli/enums.js';
+import wrapWithNamespaceIfNeeded from 'ember-intl/lib/broccoli/translation-reducer/utils/wrap-with-namespace-if-needed.js';
 
 describe('wrapWithNamespaceIfNeeded', function () {
   [

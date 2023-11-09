@@ -1,8 +1,6 @@
-'use strict';
-
-const { expect } = require('chai');
-const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
-const traverse = require('ember-intl/lib/message-validator/ast-traverse');
+import { parse, TYPE } from '@formatjs/icu-messageformat-parser';
+import { expect } from 'chai';
+import traverse from 'ember-intl/lib/message-validator/ast-traverse.js';
 
 describe('traverse', function () {
   it('hello world!', function () {

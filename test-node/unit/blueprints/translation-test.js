@@ -1,6 +1,5 @@
-const expect = require('chai').expect;
-
-const subject = require('ember-intl/blueprints/translation');
+import { expect } from 'chai';
+import subject from 'ember-intl/blueprints/translation/index.js';
 
 describe('translations', function () {
   it('returns undefined on valid formatted locale', function () {

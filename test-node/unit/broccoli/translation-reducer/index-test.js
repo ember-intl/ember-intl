@@ -1,15 +1,13 @@
-'use strict';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const { join } = require('node:path');
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const hasUnicode = require('has-unicode');
-const { createBuilder, createTempDir } = require('broccoli-test-helper');
-const TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
+import { createBuilder, createTempDir } from 'broccoli-test-helper';
+import { expect, use } from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+import TranslationReducer from 'ember-intl/lib/broccoli/translation-reducer/index.js';
+import hasUnicode from 'has-unicode';
 
-const { expect } = chai;
-
-chai.use(chaiAsPromised);
+use(chaiAsPromised);
 
 function build(output, callback) {
   return new Promise((resolve) => resolve(output.build()))
@@ -377,6 +375,9 @@ describe('translation-reducer', function () {
     });
 
     describe('mergeTranslations', function () {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = dirname(__filename);
+
       const testDirectory = join(
         __dirname,
         '../../../fixtures/strip-empty-translations',

@@ -1,6 +1,5 @@
-const expect = require('chai').expect;
-
-const pluralCategories = require('ember-intl/lib/message-validator/plural-categories');
+import { expect } from 'chai';
+import pluralCategories from 'ember-intl/lib/message-validator/plural-categories.js';
 
 describe('pluralCategories', function () {
   const expectations = {
