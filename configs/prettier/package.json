@@ -1,0 +1,33 @@
+{
+  "name": "@shared-configs/prettier",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Configuration for prettier",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "main": ".prettierrc.js",
+  "scripts": {
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:js": "prettier --check \"**/*.js\"",
+    "lint:js:fix": "prettier --write \"**/*.js\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.0.3"
+  },
+  "peerDependencies": {
+    "prettier": "^3.0.3"
+  },
+  "peerDependenciesMeta": {
+    "prettier": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": "16.* || >= 18"
+  }
+}

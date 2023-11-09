@@ -1,0 +1,37 @@
+{
+  "name": "@shared-configs/ember-template-lint",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Configuration for ember-template-lint",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "main": ".template-lintrc.js",
+  "scripts": {
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:js": "prettier --check \"**/*.js\"",
+    "lint:js:fix": "prettier --write \"**/*.js\""
+  },
+  "dependencies": {
+    "ember-template-lint-plugin-prettier": "^5.0.0"
+  },
+  "devDependencies": {
+    "@shared-configs/prettier": "workspace:*",
+    "concurrently": "^8.2.2",
+    "prettier": "^3.0.3"
+  },
+  "peerDependencies": {
+    "ember-template-lint": "^5.12.0"
+  },
+  "peerDependenciesMeta": {
+    "ember-template-lint": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": "16.* || >= 18"
+  }
+}
