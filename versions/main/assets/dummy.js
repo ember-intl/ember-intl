@@ -102,7 +102,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
   <DocsHeader />
@@ -117,7 +117,6 @@
     "moduleName": "dummy/application.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/breakpoints", ["exports"], function (_exports) {
   "use strict";
@@ -127,13 +126,12 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
-  var _default = {
+  var _default = _exports.default = {
     mobile: '(max-width: 767px)',
     tablet: '(min-width: 768px) and (max-width: 991px)',
     desktop: '(min-width: 992px) and (max-width: 1200px)',
     jumbo: '(min-width: 1201px)'
   };
-  _exports.default = _default;
 });
 ;define("dummy/component-managers/glimmer", ["exports", "@glimmer/component/-private/ember-component-manager"], function (_exports, _emberComponentManager) {
   "use strict";
@@ -802,7 +800,7 @@
     "moduleName": "dummy/components/locale-switcher.hbs",
     "isStrictMode": false
   });
-  let LocaleSwitcherComponent = (_class = class LocaleSwitcherComponent extends _component2.default {
+  let LocaleSwitcherComponent = _exports.default = (_class = class LocaleSwitcherComponent extends _component2.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "intl", _descriptor, this);
@@ -816,7 +814,6 @@
     writable: true,
     initializer: null
   }), _applyDecoratedDescriptor(_class.prototype, "updateLocale", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "updateLocale"), _class.prototype)), _class);
-  _exports.default = LocaleSwitcherComponent;
   (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, LocaleSwitcherComponent);
 });
 ;define("dummy/components/modal-dialog", ["exports", "ember-cli-addon-docs/components/modal-dialog"], function (_exports, _modalDialog) {
@@ -939,7 +936,7 @@
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let DocsHelpersTController = (_class = class DocsHelpersTController extends _controller.default {
+  let DocsHelpersTController = _exports.default = (_class = class DocsHelpersTController extends _controller.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "numPhotos", _descriptor, this);
@@ -961,7 +958,6 @@
       return 0;
     }
   }), _applyDecoratedDescriptor(_class.prototype, "addPhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "addPhoto"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "deletePhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "deletePhoto"), _class.prototype)), _class);
-  _exports.default = DocsHelpersTController;
 });
 ;define("dummy/controllers/smoke", ["exports", "@ember/controller", "@ember/service"], function (_exports, _controller, _service) {
   "use strict";
@@ -978,7 +974,7 @@
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let SmokeController = (_class = class SmokeController extends _controller.default {
+  let SmokeController = _exports.default = (_class = class SmokeController extends _controller.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "intl", _descriptor, this);
@@ -992,7 +988,6 @@
     writable: true,
     initializer: null
   })), _class);
-  _exports.default = SmokeController;
 });
 ;define("dummy/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
   "use strict";
@@ -1016,7 +1011,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
   <DocsViewer as |viewer|>
@@ -1171,7 +1166,6 @@
     "moduleName": "dummy/docs.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/advanced/addon-support", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1181,7 +1175,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="addon-support" class="docs-md__h1">Addon support</h1>
@@ -1217,7 +1211,6 @@
     "moduleName": "dummy/docs/advanced/addon-support.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/cookbook/common-errors", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1227,7 +1220,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="common-errors" class="docs-md__h1">Common errors</h1>
@@ -1243,7 +1236,6 @@
     "moduleName": "dummy/docs/cookbook/common-errors.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/getting-started/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1253,7 +1245,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="overview" class="docs-md__h1">Overview</h1>
@@ -1295,7 +1287,6 @@
     "moduleName": "dummy/docs/getting-started/index.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/getting-started/quickstart", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1305,7 +1296,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="quickstart" class="docs-md__h1">Quickstart</h1>
@@ -1380,7 +1371,6 @@
     "moduleName": "dummy/docs/getting-started/quickstart.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/getting-started/runtime-requirements", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1390,7 +1380,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="runtime-requirements" class="docs-md__h1">Runtime Requirements</h1>
@@ -1485,7 +1475,6 @@
     "moduleName": "dummy/docs/getting-started/runtime-requirements.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/addon-configs", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1495,7 +1484,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="addon-configs" class="docs-md__h1">Addon Configs</h1>
@@ -1605,7 +1594,6 @@
     "moduleName": "dummy/docs/guide/addon-configs.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/asynchronously-loading-translations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1615,7 +1603,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="asynchronously-loading-translations" class="docs-md__h1">Asynchronously loading translations</h1>
@@ -1688,7 +1676,6 @@
     "moduleName": "dummy/docs/guide/asynchronously-loading-translations.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/migration-5-0-to-6-1", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1698,7 +1685,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-5-0-to-6-1" class="docs-md__h1">Migrating from 5.0 to 6.1</h1>
@@ -1827,7 +1814,6 @@
     "moduleName": "dummy/docs/guide/migration-5-0-to-6-1.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/missing-translations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1837,7 +1823,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="missing-translations" class="docs-md__h1">Missing translations</h1>
@@ -1915,7 +1901,6 @@
     "moduleName": "dummy/docs/guide/missing-translations.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/service-api", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -1925,7 +1910,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="service-api" class="docs-md__h1">Service API</h1>
@@ -2064,7 +2049,6 @@
     "moduleName": "dummy/docs/guide/service-api.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/testing", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2074,7 +2058,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="testing" class="docs-md__h1">Testing</h1>
@@ -2327,7 +2311,6 @@
     "moduleName": "dummy/docs/guide/testing.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/guide/translating-text", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2337,7 +2320,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="translating-text" class="docs-md__h1">Translating Text</h1>
@@ -2498,7 +2481,6 @@
     "moduleName": "dummy/docs/guide/translating-text.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/format-date", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2508,7 +2490,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -2597,7 +2579,6 @@
     "moduleName": "dummy/docs/helpers/format-date.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/format-list", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2607,7 +2588,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -2670,7 +2651,6 @@
     "moduleName": "dummy/docs/helpers/format-list.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/format-message", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2680,7 +2660,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -2767,7 +2747,6 @@
     "moduleName": "dummy/docs/helpers/format-message.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/format-number", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2777,7 +2756,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -2826,7 +2805,6 @@
     "moduleName": "dummy/docs/helpers/format-number.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/format-relative", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2836,7 +2814,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -2905,7 +2883,6 @@
     "moduleName": "dummy/docs/helpers/format-relative.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/format-time", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2915,7 +2892,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -2951,7 +2928,6 @@
     "moduleName": "dummy/docs/helpers/format-time.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2961,7 +2937,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="ember-intl-template-helpers" class="docs-md__h1">Ember Intl Template Helpers</h1>
@@ -2981,7 +2957,6 @@
     "moduleName": "dummy/docs/helpers/index.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/helpers/t", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -2991,7 +2966,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -3094,7 +3069,6 @@
     "moduleName": "dummy/docs/helpers/t.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/integrations/ember-cp-validations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -3104,7 +3078,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="ember-cp-validations" class="docs-md__h1">ember-cp-validations</h1>
@@ -3117,7 +3091,6 @@
     "moduleName": "dummy/docs/integrations/ember-cp-validations.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/integrations/visual-studio-code", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -3127,7 +3100,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="visual-studio-code" class="docs-md__h1">Visual Studio Code</h1>
@@ -3140,7 +3113,6 @@
     "moduleName": "dummy/docs/integrations/visual-studio-code.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/legacy/migration-2-0-to-3-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -3150,7 +3122,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-2-0-to-3-0" class="docs-md__h1">Migrating from 2.0 to 3.0</h1>
@@ -3201,7 +3173,6 @@
     "moduleName": "dummy/docs/legacy/migration-2-0-to-3-0.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/legacy/migration-3-0-to-4-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -3211,7 +3182,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-3-0-to-4-0" class="docs-md__h1">Migrating from 3.0 to 4.0</h1>
@@ -3237,7 +3208,6 @@
     "moduleName": "dummy/docs/legacy/migration-3-0-to-4-0.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/legacy/migration-4-0-to-5-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -3247,7 +3217,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-4-0-to-5-0" class="docs-md__h1">Migrating from 4.0 to 5.0</h1>
@@ -3298,7 +3268,6 @@
     "moduleName": "dummy/docs/legacy/migration-4-0-to-5-0.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/docs/legacy/v2", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -3308,7 +3277,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="documentation-for-2-x" class="docs-md__h1">Documentation for 2.x</h1>
@@ -3321,7 +3290,6 @@
     "moduleName": "dummy/docs/legacy/v2.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/formats", ["exports"], function (_exports) {
   "use strict";
@@ -3365,8 +3333,7 @@
       }
     }
   };
-  var _default = formats;
-  _exports.default = _default;
+  var _default = _exports.default = formats;
 });
 ;define("dummy/helpers/and", ["exports", "ember-truth-helpers/helpers/and"], function (_exports, _and) {
   "use strict";
@@ -4552,8 +4519,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-inflector/lib/helpers/pluralize"eaimeta@70e063a35619d71f
-  var _default = _pluralize.default;
-  _exports.default = _default;
+  var _default = _exports.default = _pluralize.default;
 });
 ;define("dummy/helpers/previous", ["exports", "ember-composable-helpers/helpers/previous"], function (_exports, _previous) {
   "use strict";
@@ -4754,8 +4720,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-inflector/lib/helpers/singularize"eaimeta@70e063a35619d71f
-  var _default = _singularize.default;
-  _exports.default = _default;
+  var _default = _exports.default = _singularize.default;
 });
 ;define("dummy/helpers/slice", ["exports", "ember-composable-helpers/helpers/slice"], function (_exports, _slice) {
   "use strict";
@@ -5101,7 +5066,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><DocsHero
@@ -5153,7 +5118,6 @@
     "moduleName": "dummy/index.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/initializers/ember-data", ["exports"], function (_exports) {
   "use strict";
@@ -5166,7 +5130,7 @@
   /*
     This code initializes EmberData in an Ember application.
   */
-  var _default = {
+  var _default = _exports.default = {
     name: 'ember-data',
     initialize(application) {
       application.registerOptionsForType('serializer', {
@@ -5177,7 +5141,6 @@
       });
     }
   };
-  _exports.default = _default;
 });
 ;define("dummy/initializers/ember-responsive-breakpoints", ["exports", "ember-responsive/initializers/responsive"], function (_exports, _responsive) {
   "use strict";
@@ -5187,8 +5150,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-responsive/initializers/responsive"eaimeta@70e063a35619d71f
-  var _default = _responsive.default;
-  _exports.default = _default;
+  var _default = _exports.default = _responsive.default;
 });
 ;define("dummy/initializers/route-anchor-jump", ["exports", "ember-cli-addon-docs/initializers/route-anchor-jump"], function (_exports, _routeAnchorJump) {
   "use strict";
@@ -5218,7 +5180,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"dummy/config/environment",0,"ember-modal-dialog/instance-initializers/add-modals-container"eaimeta@70e063a35619d71f
-  var _default = {
+  var _default = _exports.default = {
     name: 'add-modals-container',
     initialize(appInstance) {
       if (_environment.default.environment === 'test') {
@@ -5227,7 +5189,6 @@
       return (0, _addModalsContainer.default)(appInstance);
     }
   };
-  _exports.default = _default;
 });
 ;define("dummy/instance-initializers/ember-router-scroll", ["exports", "ember-router-scroll/instance-initializers/ember-router-scroll"], function (_exports, _emberRouterScroll) {
   "use strict";
@@ -5383,7 +5344,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
   <h1>404</h1>
@@ -5399,7 +5360,6 @@
     "moduleName": "dummy/not-found.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/router", ["exports", "dummy/config/environment", "ember-cli-addon-docs/router"], function (_exports, _environment, _router) {
   "use strict";
@@ -5484,7 +5444,7 @@
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let ApplicationRoute = (_class = class ApplicationRoute extends _route.default {
+  let ApplicationRoute = _exports.default = (_class = class ApplicationRoute extends _route.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "intl", _descriptor, this);
@@ -5498,7 +5458,6 @@
     writable: true,
     initializer: null
   })), _class);
-  _exports.default = ApplicationRoute;
 });
 ;define("dummy/routes/docs", ["exports", "ember-cli-addon-docs/routes/docs"], function (_exports, _docs) {
   "use strict";
@@ -5680,8 +5639,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-responsive/services/media"eaimeta@70e063a35619d71f
-  var _default = _media.default;
-  _exports.default = _default;
+  var _default = _exports.default = _media.default;
 });
 ;define("dummy/services/modal-dialog", ["exports", "@ember/object", "@ember/service", "dummy/config/environment", "ember-modal-dialog/utils/config-utils"], function (_exports, _object, _service, _environment, _configUtils) {
   "use strict";
@@ -5696,7 +5654,7 @@
       return _environment.default['ember-modal-dialog'] && _environment.default['ember-modal-dialog'][prop];
     });
   }
-  var _default = _service.default.extend({
+  var _default = _exports.default = _service.default.extend({
     hasEmberTether: computedFromConfig('hasEmberTether'),
     hasLiquidWormhole: computedFromConfig('hasLiquidWormhole'),
     hasLiquidTether: computedFromConfig('hasLiquidTether'),
@@ -5704,7 +5662,6 @@
       return (0, _configUtils.getDestinationElementIdFromConfig)(_environment.default);
     })
   });
-  _exports.default = _default;
 });
 ;define("dummy/services/project-version", ["exports", "ember-cli-addon-docs/services/project-version"], function (_exports, _projectVersion) {
   "use strict";
@@ -5765,7 +5722,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <h1>Smoke</h1>
   
@@ -5824,7 +5781,6 @@
     "moduleName": "dummy/smoke.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-1/component", ["exports", "@glimmer/component"], function (_exports, _component) {
   "use strict";
@@ -5856,7 +5812,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-date__example-1__my-component.hbs --}}
   Today: {{format-date this.today}}
@@ -5869,7 +5825,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-date/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-2/component", ["exports", "@glimmer/component"], function (_exports, _component) {
   "use strict";
@@ -5897,7 +5852,7 @@
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71feaimeta@70e063a35619d71f
   // BEGIN-SNIPPET docs__helpers__format-date__example-2__app__format.js
-  var _default = {
+  var _default = _exports.default = {
     date: {
       hhmmss: {
         hour: 'numeric',
@@ -5912,7 +5867,6 @@
       /* ... */
     }
   }; // END-SNIPPET
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-2/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -5922,7 +5876,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-date__example-2__my-component.hbs --}}
   Time: {{format-date this.today format="hhmmss"}}
@@ -5934,7 +5888,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-date/example-2/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-list/example-1/component", ["exports", "@glimmer/component"], function (_exports, _component) {
   "use strict";
@@ -5961,7 +5914,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-list__example-1__my-component.hbs --}}
   Conjunction: {{format-list this.fruits type="conjunction"}}
@@ -5974,7 +5927,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-list/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-message/example-1/component", ["exports", "@glimmer/controller"], function (_exports, _controller) {
   "use strict";
@@ -6012,7 +5964,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-message__example-1__my-component.hbs --}}
   <div>
@@ -6049,7 +6001,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-message/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-number/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6059,7 +6010,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-number__example-1__my-component.hbs --}}
   As number: {{format-number 1000}}
@@ -6072,7 +6023,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-number/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-relative/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6082,7 +6032,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-relative__example-1__my-component.hbs --}}
   Past: {{format-relative -1 unit="month"}}
@@ -6096,7 +6046,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-relative/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/format-time/example-1/component", ["exports", "@glimmer/component"], function (_exports, _component) {
   "use strict";
@@ -6123,7 +6072,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__format-time__example-1__my-component.hbs --}}
   Time: {{format-time this.today format="hhmmss"}}
@@ -6135,7 +6084,6 @@
     "moduleName": "dummy/snippets/docs/helpers/format-time/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/snippets/docs/helpers/t/example-1/component", ["exports", "@ember/object", "@glimmer/component", "@glimmer/tracking"], function (_exports, _object, _component, _tracking) {
   "use strict";
@@ -6152,7 +6100,7 @@
   function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let MyComponent = (_class = class MyComponent extends _component.default {
+  let MyComponent = _exports.default = (_class = class MyComponent extends _component.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "numPhotos", _descriptor, this);
@@ -6174,7 +6122,6 @@
       return 0;
     }
   }), _applyDecoratedDescriptor(_class.prototype, "addPhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "addPhoto"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "deletePhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "deletePhoto"), _class.prototype)), _class); // END-SNIPPET
-  _exports.default = MyComponent;
 });
 ;define("dummy/snippets/docs/helpers/t/example-1/template", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6184,7 +6131,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{!-- BEGIN-SNIPPET docs__helpers__t__example-1__my-component.hbs --}}
   <button
@@ -6210,7 +6157,6 @@
     "moduleName": "dummy/snippets/docs/helpers/t/example-1/template.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/application", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6220,7 +6166,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
   <DocsHeader />
@@ -6235,7 +6181,6 @@
     "moduleName": "dummy/templates/application.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6245,7 +6190,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
   <DocsViewer as |viewer|>
@@ -6400,7 +6345,6 @@
     "moduleName": "dummy/templates/docs.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/advanced/addon-support", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6410,7 +6354,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="addon-support" class="docs-md__h1">Addon support</h1>
@@ -6446,7 +6390,6 @@
     "moduleName": "dummy/templates/docs/advanced/addon-support.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/api/item", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6456,7 +6399,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{#if this.model.isComponent}}
     <Api::XComponent @component={{this.model}} />
@@ -6472,7 +6415,6 @@
     "moduleName": "dummy/templates/docs/api/item.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/cookbook/common-errors", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6482,7 +6424,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="common-errors" class="docs-md__h1">Common errors</h1>
@@ -6498,7 +6440,6 @@
     "moduleName": "dummy/templates/docs/cookbook/common-errors.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/getting-started/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6508,7 +6449,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="overview" class="docs-md__h1">Overview</h1>
@@ -6550,7 +6491,6 @@
     "moduleName": "dummy/templates/docs/getting-started/index.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/getting-started/quickstart", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6560,7 +6500,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="quickstart" class="docs-md__h1">Quickstart</h1>
@@ -6635,7 +6575,6 @@
     "moduleName": "dummy/templates/docs/getting-started/quickstart.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/getting-started/runtime-requirements", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6645,7 +6584,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="runtime-requirements" class="docs-md__h1">Runtime Requirements</h1>
@@ -6740,7 +6679,6 @@
     "moduleName": "dummy/templates/docs/getting-started/runtime-requirements.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/addon-configs", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6750,7 +6688,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="addon-configs" class="docs-md__h1">Addon Configs</h1>
@@ -6860,7 +6798,6 @@
     "moduleName": "dummy/templates/docs/guide/addon-configs.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/asynchronously-loading-translations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6870,7 +6807,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="asynchronously-loading-translations" class="docs-md__h1">Asynchronously loading translations</h1>
@@ -6943,7 +6880,6 @@
     "moduleName": "dummy/templates/docs/guide/asynchronously-loading-translations.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/migration-5-0-to-6-1", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -6953,7 +6889,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-5-0-to-6-1" class="docs-md__h1">Migrating from 5.0 to 6.1</h1>
@@ -7082,7 +7018,6 @@
     "moduleName": "dummy/templates/docs/guide/migration-5-0-to-6-1.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/missing-translations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7092,7 +7027,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="missing-translations" class="docs-md__h1">Missing translations</h1>
@@ -7170,7 +7105,6 @@
     "moduleName": "dummy/templates/docs/guide/missing-translations.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/service-api", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7180,7 +7114,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="service-api" class="docs-md__h1">Service API</h1>
@@ -7319,7 +7253,6 @@
     "moduleName": "dummy/templates/docs/guide/service-api.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/testing", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7329,7 +7262,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="testing" class="docs-md__h1">Testing</h1>
@@ -7582,7 +7515,6 @@
     "moduleName": "dummy/templates/docs/guide/testing.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/guide/translating-text", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7592,7 +7524,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="translating-text" class="docs-md__h1">Translating Text</h1>
@@ -7753,7 +7685,6 @@
     "moduleName": "dummy/templates/docs/guide/translating-text.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-date", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7763,7 +7694,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -7852,7 +7783,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-date.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-list", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7862,7 +7792,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -7925,7 +7855,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-list.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-message", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -7935,7 +7864,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -8022,7 +7951,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-message.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-number", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8032,7 +7960,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -8081,7 +8009,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-number.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-relative", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8091,7 +8018,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -8160,7 +8087,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-relative.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/format-time", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8170,7 +8096,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -8206,7 +8132,6 @@
     "moduleName": "dummy/templates/docs/helpers/format-time.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8216,7 +8141,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="ember-intl-template-helpers" class="docs-md__h1">Ember Intl Template Helpers</h1>
@@ -8236,7 +8161,6 @@
     "moduleName": "dummy/templates/docs/helpers/index.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/helpers/t", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8246,7 +8170,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><LocaleSwitcher /></p>
@@ -8349,7 +8273,6 @@
     "moduleName": "dummy/templates/docs/helpers/t.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/integrations/ember-cp-validations", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8359,7 +8282,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="ember-cp-validations" class="docs-md__h1">ember-cp-validations</h1>
@@ -8372,7 +8295,6 @@
     "moduleName": "dummy/templates/docs/integrations/ember-cp-validations.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/integrations/visual-studio-code", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8382,7 +8304,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="visual-studio-code" class="docs-md__h1">Visual Studio Code</h1>
@@ -8395,7 +8317,6 @@
     "moduleName": "dummy/templates/docs/integrations/visual-studio-code.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/migration-2-0-to-3-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8405,7 +8326,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-2-0-to-3-0" class="docs-md__h1">Migrating from 2.0 to 3.0</h1>
@@ -8456,7 +8377,6 @@
     "moduleName": "dummy/templates/docs/legacy/migration-2-0-to-3-0.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/migration-3-0-to-4-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8466,7 +8386,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-3-0-to-4-0" class="docs-md__h1">Migrating from 3.0 to 4.0</h1>
@@ -8492,7 +8412,6 @@
     "moduleName": "dummy/templates/docs/legacy/migration-3-0-to-4-0.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/migration-4-0-to-5-0", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8502,7 +8421,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="migrating-from-4-0-to-5-0" class="docs-md__h1">Migrating from 4.0 to 5.0</h1>
@@ -8553,7 +8472,6 @@
     "moduleName": "dummy/templates/docs/legacy/migration-4-0-to-5-0.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/docs/legacy/v2", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8563,7 +8481,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
         <h1 id="documentation-for-2-x" class="docs-md__h1">Documentation for 2.x</h1>
@@ -8576,7 +8494,6 @@
     "moduleName": "dummy/templates/docs/legacy/v2.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/index", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8586,7 +8503,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <div class="docs-md">
   <p><DocsHero
@@ -8638,7 +8555,6 @@
     "moduleName": "dummy/templates/index.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/not-found", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8648,7 +8564,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     {{! @glint-nocheck }}
   <h1>404</h1>
@@ -8664,7 +8580,6 @@
     "moduleName": "dummy/templates/not-found.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/templates/smoke", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
   "use strict";
@@ -8674,7 +8589,7 @@
   });
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = (0, _templateFactory.createTemplateFactory)(
+  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
   /*
     <h1>Smoke</h1>
   
@@ -8733,7 +8648,6 @@
     "moduleName": "dummy/templates/smoke.hbs",
     "isStrictMode": false
   });
-  _exports.default = _default;
 });
 ;define("dummy/transforms/boolean", ["exports", "@ember/debug", "@ember-data/serializer/-private"], function (_exports, _debug, _private) {
   "use strict";
