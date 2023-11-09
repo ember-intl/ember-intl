@@ -1,6 +1,5 @@
-const expect = require('chai').expect;
-
-const addon = require('../../index');
+import { expect } from 'chai';
+import addon from 'ember-intl/index.js';
 
 describe('index', function () {
   it('createOptions ensures that requiresTranslation is a function.', function () {

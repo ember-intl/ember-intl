@@ -1,27 +1,12 @@
 # compiled output
-/dist/
-/declarations/
+dist/
+dist-for-testing/
+tmp/
 
 # dependencies
-/node_modules/
+node_modules/
 
 # misc
-/.env*
-/.pnp*
-/.eslintcache
-/coverage/
-/npm-debug.log*
-/.pnpm-debug.log
-/testem.log
-/yarn-error.log
-
-# ember-try
-/.node_modules.ember-try/
-/npm-shrinkwrap.json.ember-try
-/package.json.ember-try
-/package-lock.json.ember-try
-/pnpm-lock.yaml.ember-try
-/yarn.lock.ember-try
-
-# broccoli-debug
-/DEBUG/
+.DS_Store
+.env*
+.eslintcache

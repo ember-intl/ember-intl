@@ -1,7 +1,5 @@
-const chai = require('chai');
-const Linter = require('../../../../lib/broccoli/translation-reducer/linter');
-
-const { expect } = chai;
+import { expect } from 'chai';
+import Linter from 'ember-intl/lib/broccoli/translation-reducer/linter/index.js';
 
 describe('linting', function () {
   beforeEach(function () {

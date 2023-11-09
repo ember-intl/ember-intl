@@ -1,0 +1,44 @@
+{
+  "name": "test-node",
+  "version": "6.1.2",
+  "private": true,
+  "description": "Tests for the Node part of ember-intl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "license": "MIT",
+  "author": "jason.mitchell.w@gmail.com",
+  "type": "module",
+  "scripts": {
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "test": "mocha \"unit/**/*.{cjs,js}\""
+  },
+  "devDependencies": {
+    "@formatjs/icu-messageformat-parser": "^2.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "broccoli-test-helper": "^2.0.0",
+    "chai": "^4.3.10",
+    "chai-as-promised": "^7.1.1",
+    "concurrently": "^8.2.2",
+    "ember-intl": "workspace:*",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-typescript-sort-keys": "^3.1.0",
+    "has-unicode": "^2.0.1",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.3"
+  },
+  "engines": {
+    "node": "16.* || >= 18"
+  }
+}

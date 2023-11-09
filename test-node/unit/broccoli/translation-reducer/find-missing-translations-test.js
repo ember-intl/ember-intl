@@ -1,6 +1,5 @@
-const expect = require('chai').expect;
-
-const findLocalesMissingTranslation = require('../../../../lib/broccoli/translation-reducer/linter/find-missing-translations');
+import { expect } from 'chai';
+import findLocalesMissingTranslation from 'ember-intl/lib/broccoli/translation-reducer/linter/find-missing-translations.js';
 
 describe('findLocalesMissingTranslation', function () {
   it('finds nothing if nothing is missing', function () {

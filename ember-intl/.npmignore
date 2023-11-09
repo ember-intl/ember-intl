@@ -2,9 +2,6 @@
 /dist/
 /tmp/
 
-# dependencies
-/tests-node/
-
 # misc
 /.editorconfig
 /.ember-cli
