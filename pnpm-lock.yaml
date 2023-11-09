@@ -487,12 +487,12 @@ importers:
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.7.0
         version: 2.7.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.9.1
-        version: 6.9.1(@typescript-eslint/parser@6.9.1)(eslint@8.53.0)(typescript@5.2.2)
-      '@typescript-eslint/parser':
-        specifier: ^6.9.1
-        version: 6.9.1(eslint@8.53.0)(typescript@5.2.2)
+      '@shared-configs/eslint-config-node':
+        specifier: workspace:*
+        version: link:../configs/eslint/node
+      '@shared-configs/prettier':
+        specifier: workspace:*
+        version: link:../configs/prettier
       broccoli-test-helper:
         specifier: ^2.0.0
         version: 2.0.0
@@ -511,27 +511,6 @@ importers:
       eslint:
         specifier: ^8.53.0
         version: 8.53.0
-      eslint-config-prettier:
-        specifier: ^9.0.0
-        version: 9.0.0(eslint@8.53.0)
-      eslint-import-resolver-typescript:
-        specifier: ^3.6.1
-        version: 3.6.1(@typescript-eslint/parser@6.9.1)(eslint-plugin-import@2.29.0)(eslint@8.53.0)
-      eslint-plugin-import:
-        specifier: ^2.29.0
-        version: 2.29.0(@typescript-eslint/parser@6.9.1)(eslint-import-resolver-typescript@3.6.1)(eslint@8.53.0)
-      eslint-plugin-n:
-        specifier: ^16.2.0
-        version: 16.2.0(eslint@8.53.0)
-      eslint-plugin-prettier:
-        specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
-      eslint-plugin-simple-import-sort:
-        specifier: ^10.0.0
-        version: 10.0.0(eslint@8.53.0)
-      eslint-plugin-typescript-sort-keys:
-        specifier: ^3.1.0
-        version: 3.1.0(@typescript-eslint/parser@6.9.1)(eslint@8.53.0)(typescript@5.2.2)
       has-unicode:
         specifier: ^2.0.1
         version: 2.0.1
