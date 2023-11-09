@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const stripEmptyTranslations = require('../../../../lib/broccoli/translation-reducer/utils/strip-empty-translations');
+const stripEmptyTranslations = require('ember-intl/lib/broccoli/translation-reducer/utils/strip-empty-translations');
 
 describe('stripEmptyTranslations', function () {
   [

@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const validateMessage = require('../../../lib/message-validator/validate-message');
+const validateMessage = require('ember-intl/lib/message-validator/validate-message');
 
 describe('validateMessage', function () {
   let valid = [

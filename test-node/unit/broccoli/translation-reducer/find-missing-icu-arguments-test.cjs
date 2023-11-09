@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const findMissingICUArguments = require('../../../../lib/broccoli/translation-reducer/linter/find-missing-icu-arguments');
+const findMissingICUArguments = require('ember-intl/lib/broccoli/translation-reducer/linter/find-missing-icu-arguments');
 
 describe('findMissingICUArguments', function () {
   it('finds nothing if nothing is missing', function () {

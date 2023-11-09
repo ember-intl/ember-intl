@@ -38,8 +38,7 @@
     "release:package": "pnpm publish",
     "start": "ember serve",
     "test": "ember test",
-    "test:ember-compatibility": "./node_modules/.bin/ember try:one",
-    "test:node": "mocha \"tests-node/**/*.js\""
+    "test:ember-compatibility": "./node_modules/.bin/ember try:one"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.0",
@@ -94,9 +93,6 @@
     "@types/qunit": "^2.19.7",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
-    "broccoli-test-helper": "^2.0.0",
-    "chai": "^4.3.10",
-    "chai-as-promised": "^7.1.1",
     "concurrently": "^8.2.2",
     "ember-cli": "~5.4.0",
     "ember-cli-addon-docs": "^6.0.2",
@@ -128,7 +124,6 @@
     "eslint-plugin-typescript-sort-keys": "^3.1.0",
     "lerna-changelog": "^2.2.0",
     "loader.js": "^4.7.0",
-    "mocha": "^10.2.0",
     "prettier": "^3.0.3",
     "qunit": "^2.20.0",
     "qunit-dom": "^3.0.0",

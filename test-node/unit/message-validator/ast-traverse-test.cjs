@@ -2,7 +2,7 @@
 
 const { expect } = require('chai');
 const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
-const traverse = require('../../../lib/message-validator/ast-traverse');
+const traverse = require('ember-intl/lib/message-validator/ast-traverse');
 
 describe('traverse', function () {
   it('hello world!', function () {

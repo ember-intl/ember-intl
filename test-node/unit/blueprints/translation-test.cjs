@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const subject = require('../../../blueprints/translation');
+const subject = require('ember-intl/blueprints/translation');
 
 describe('translations', function () {
   it('returns undefined on valid formatted locale', function () {

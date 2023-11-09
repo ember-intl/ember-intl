@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const pluralCategories = require('../../../lib/message-validator/plural-categories');
+const pluralCategories = require('ember-intl/lib/message-validator/plural-categories');
 
 describe('pluralCategories', function () {
   const expectations = {

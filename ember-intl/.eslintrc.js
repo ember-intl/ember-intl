@@ -86,7 +86,6 @@ module.exports = {
         './config/**/*.js',
         './lib/**/*.js',
         './tests/dummy/config/**/*.js',
-        './tests-node/**/*.js',
       ],
       env: {
         browser: false,
@@ -98,12 +97,6 @@ module.exports = {
     {
       files: ['tests/**/*-test.{gjs,gts,js,ts}'],
       extends: ['plugin:qunit/recommended'],
-    },
-    {
-      files: ['tests-node/**/*.{js,ts}'],
-      env: {
-        mocha: true,
-      },
     },
   ],
 };

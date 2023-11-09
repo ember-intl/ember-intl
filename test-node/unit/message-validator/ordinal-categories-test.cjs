@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const ordinalCategories = require('../../../lib/message-validator/ordinal-categories');
+const ordinalCategories = require('ember-intl/lib/message-validator/ordinal-categories');
 
 describe('ordinalCategories', function () {
   const expectations = {

@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const addon = require('../../index');
+const addon = require('ember-intl/index');
 
 describe('index', function () {
   it('createOptions ensures that requiresTranslation is a function.', function () {

@@ -5,7 +5,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const hasUnicode = require('has-unicode');
 const { createBuilder, createTempDir } = require('broccoli-test-helper');
-const TranslationReducer = require('../../../../lib/broccoli/translation-reducer');
+const TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
 
 const { expect } = chai;
 

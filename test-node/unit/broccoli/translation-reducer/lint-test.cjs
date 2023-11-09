@@ -1,5 +1,5 @@
 const chai = require('chai');
-const Linter = require('../../../../lib/broccoli/translation-reducer/linter');
+const Linter = require('ember-intl/lib/broccoli/translation-reducer/linter');
 
 const { expect } = chai;
 
