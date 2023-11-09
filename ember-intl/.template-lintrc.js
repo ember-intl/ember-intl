@@ -1,15 +1,16 @@
 'use strict';
 
+const baseConfiguration = require('@shared-configs/ember-template-lint');
+
 module.exports = {
-  plugins: ['ember-template-lint-plugin-prettier'],
-  extends: ['recommended', 'ember-template-lint-plugin-prettier:recommended'],
+  plugins: baseConfiguration.plugins,
+
+  extends: baseConfiguration.extends,
+
+  rules: baseConfiguration.rules,
+
   overrides: [
-    {
-      files: ['**/*.{gjs,gts}'],
-      rules: {
-        'no-implicit-this': 'off',
-      },
-    },
+    ...baseConfiguration.overrides,
     {
       files: ['tests/**/*-test.{js,ts}'],
       rules: {
@@ -23,7 +24,6 @@ module.exports = {
             't',
           ],
         },
-        prettier: 'off',
       },
     },
     {
