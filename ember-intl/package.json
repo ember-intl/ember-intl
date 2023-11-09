@@ -162,27 +162,5 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "demoURL": "https://ember-intl.github.io/ember-intl/"
-  },
-  "pnpm": {
-    "overrides": {
-      "@babel/core": "^7.23.2",
-      "@babel/traverse": "^7.23.2",
-      "@types/ember": "^4.0.8",
-      "@types/ember__application": "^4.0.9",
-      "@types/ember__array": "^4.0.7",
-      "@types/ember__component": "^4.0.19",
-      "@types/ember__controller": "^4.0.9",
-      "@types/ember__debug": "^4.0.6",
-      "@types/ember__engine": "^4.0.8",
-      "@types/ember__object": "^4.0.9",
-      "@types/ember__routing": "^4.0.17",
-      "@types/ember__runloop": "^4.0.7",
-      "@types/ember__service": "^4.0.6",
-      "@types/ember__template": "^4.0.4",
-      "@types/ember__utils": "^4.0.5",
-      "@types/htmlbars-inline-precompile": "^3.0.1",
-      "@types/qunit": "^2.19.7",
-      "fast-glob": "^3.3.1"
-    }
   }
 }

@@ -1,0 +1,45 @@
+{
+  "name": "workspace-root",
+  "version": "6.1.2",
+  "private": true,
+  "description": "Workspace root for ember-intl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "license": "MIT",
+  "author": "jason.mitchell.w@gmail.com",
+  "type": "module",
+  "scripts": {
+    "lint": "pnpm --filter '*' lint",
+    "lint:fix": "pnpm --filter '*' lint:fix",
+    "start": "pnpm --filter ember-intl start",
+    "test": "pnpm --filter '*' test"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "16.* || >= 18"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/core": "^7.23.2",
+      "@babel/traverse": "^7.23.2",
+      "@types/ember": "^4.0.8",
+      "@types/ember__application": "^4.0.9",
+      "@types/ember__array": "^4.0.7",
+      "@types/ember__component": "^4.0.19",
+      "@types/ember__controller": "^4.0.9",
+      "@types/ember__debug": "^4.0.6",
+      "@types/ember__engine": "^4.0.8",
+      "@types/ember__object": "^4.0.9",
+      "@types/ember__routing": "^4.0.17",
+      "@types/ember__runloop": "^4.0.7",
+      "@types/ember__service": "^4.0.6",
+      "@types/ember__template": "^4.0.4",
+      "@types/ember__utils": "^4.0.5",
+      "@types/htmlbars-inline-precompile": "^3.0.1",
+      "@types/qunit": "^2.19.7",
+      "fast-glob": "^3.3.1"
+    }
+  }
+}
