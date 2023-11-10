@@ -438,12 +438,6 @@ importers:
       locale-emoji:
         specifier: ^0.3.0
         version: 0.3.0
-      lodash.castarray:
-        specifier: ^4.4.0
-        version: 4.4.0
-      lodash.last:
-        specifier: ^3.0.0
-        version: 3.0.0
       lodash.omit:
         specifier: ^4.5.0
         version: 4.5.0
@@ -12135,6 +12129,7 @@ packages:
 
   /lodash.castarray@4.4.0:
     resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
+    dev: true
 
   /lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
@@ -12182,10 +12177,6 @@ packages:
 
   /lodash.kebabcase@4.1.1:
     resolution: {integrity: sha512-N8XRTIMMqqDgSy4VLKPnJ/+hpGZN+PHQiJnSenYqPaVV/NCqEogTnAdZLQiGKhxX+JCs8waWq2t1XHWKOmlY8g==}
-    dev: false
-
-  /lodash.last@3.0.0:
-    resolution: {integrity: sha512-14mq7rSkCxG4XMy9lF2FbIOqqgF0aH0NfPuQ3LPR3vIh0kHnUvIYP70dqa1Hf47zyXfQ8FzAg0MYOQeSuE1R7A==}
     dev: false
 
   /lodash.memoize@4.1.2:
