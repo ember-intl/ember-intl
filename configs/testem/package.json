@@ -1,0 +1,27 @@
+{
+  "name": "@shared-configs/testem",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Configuration for testem",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "main": "testem.js",
+  "scripts": {
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:js": "prettier --check \"**/*.js\"",
+    "lint:js:fix": "prettier --write \"**/*.js\""
+  },
+  "devDependencies": {
+    "@shared-configs/prettier": "workspace:*",
+    "concurrently": "^8.2.2",
+    "prettier": "^3.0.3"
+  },
+  "peerDependenciesMeta": {},
+  "engines": {
+    "node": "16.* || >= 18"
+  }
+}

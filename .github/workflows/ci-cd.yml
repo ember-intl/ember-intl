@@ -20,6 +20,7 @@ jobs:
       matrix:
         package-location:
           - 'ember-intl'
+          - 'test-app'
           - 'test-node'
     timeout-minutes: 5
     steps:
@@ -52,6 +53,7 @@ jobs:
       matrix:
         package-location:
           - 'ember-intl'
+          - 'test-app'
           - 'test-node'
     timeout-minutes: 5
     steps:
@@ -115,7 +117,7 @@ jobs:
 
       - name: Test
         run: pnpm test:ember-compatibility ${{ matrix.scenario }} --- pnpm test
-        working-directory: 'ember-intl'
+        working-directory: 'test-app'
 
 
   test-node-windows:

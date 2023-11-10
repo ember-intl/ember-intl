@@ -1,7 +1,7 @@
 /* eslint-disable import/no-duplicates */
 import '@glint/environment-ember-loose';
 
-import { HelperLike } from '@glint/environment-ember-loose';
+import type { HelperLike } from '@glint/environment-ember-loose';
 import type EmberIntlRegistry from 'ember-intl/template-registry';
 
 declare module '@glint/environment-ember-loose/registry' {

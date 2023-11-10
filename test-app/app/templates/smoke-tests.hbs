@@ -1,0 +1,69 @@
+{{page-title "Smoke Tests"}}
+
+<h1>Smoke tests</h1>
+
+<section>
+  <h2>
+    <code>&#123;&#123;format-number&#125;&#125;</code>
+  </h2>
+
+  <div data-test-field="Format Number">
+    {{format-number
+      1000
+      currency="EUR"
+      format="currency"
+      style="currency"
+    }}
+  </div>
+</section>
+
+<section>
+  <h2>
+    <code>&#123;&#123;format-date&#125;&#125;</code>
+  </h2>
+
+  <div data-test-field="Format Date">
+    {{format-date
+      "Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)"
+      timeZone="UTC"
+    }}
+  </div>
+</section>
+
+<section>
+  <h2>
+    <code>&#123;&#123;format-time&#125;&#125;</code>
+  </h2>
+
+  <div data-test-field="Format Time">
+    {{format-time
+      "Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)"
+      hour="numeric"
+      hour12=false
+      minute="numeric"
+      second="numeric"
+      timeZone="UTC"
+    }}
+  </div>
+</section>
+
+<section>
+  <h2>
+    <code>&#123;&#123;format-relative&#125;&#125;</code>
+  </h2>
+
+  <div data-test-field="Format Relative">
+    {{format-relative 1 unit="day"}}
+  </div>
+</section>
+
+<section>
+  <h2>
+    Nested translations, with
+    <code>wrapTranslationsWithNamespace = true</code>
+  </h2>
+
+  <div data-test-field="Nested Translations">
+    {{this.nestedTranslation}}
+  </div>
+</section>
