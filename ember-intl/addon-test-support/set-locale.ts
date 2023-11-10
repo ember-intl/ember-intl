@@ -9,7 +9,7 @@ import type { IntlService } from 'ember-intl';
  * @function setLocale
  * @param {string|string[]} localeName
  */
-export default function setLocale(localeName: string | string[]): void {
+export function setLocale(localeName: string | string[]): void {
   const { owner } = getContext() as TestContext;
 
   assert(

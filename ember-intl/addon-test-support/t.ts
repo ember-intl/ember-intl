@@ -12,7 +12,7 @@ import type { TOptions } from 'ember-intl/services/intl';
  * @param {object} [options]
  * @return {string}
  */
-export default function t(key: string, options?: TOptions) {
+export function t(key: string, options?: TOptions) {
   const { owner } = getContext() as TestContext;
 
   assert(

@@ -24,12 +24,12 @@ function pickLastLocale(localeName: string | string[]): string {
  * @param {string} [localeName]
  * @param {object} translations
  */
-export default function addTranslations(translations: Translations): void;
-export default function addTranslations(
+export function addTranslations(translations: Translations): void;
+export function addTranslations(
   localeName: string,
   translations: Translations,
 ): void;
-export default function addTranslations(
+export function addTranslations(
   localeNameOrTranslations: string | Translations,
   translations?: Translations,
 ): void {
