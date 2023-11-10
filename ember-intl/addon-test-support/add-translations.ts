@@ -1,26 +1,11 @@
+import { assert } from '@ember/debug';
 import { get } from '@ember/object';
+import type { TestContext } from '@ember/test-helpers';
+import { getContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
-import { makeIntlHelper } from './-private/make-intl-helper';
 import { pickLastLocale } from './-private/pick-last-locale';
-
-// ! Because TypeScript seems to short-circuit overloaded functions when passed
-// as generics, including these overloads would not work with `makeIntlHelper`.
-// function addTranslations(intl: IntlService, translations: Translations): void;
-// function addTranslations(intl: IntlService, localeName: string, translations: Translations): void;
-function addTranslations(
-  intl: IntlService,
-  localeNameOrTranslations: string | Translations,
-  translations?: Translations,
-) {
-  if (typeof localeNameOrTranslations === 'object') {
-    translations = localeNameOrTranslations;
-    localeNameOrTranslations = pickLastLocale(get(intl, 'locale'));
-  }
-
-  intl.addTranslations(localeNameOrTranslations, translations);
-}
 
 /**
  * Invokes the `addTranslations` method of the `intl` service. The first
@@ -33,4 +18,32 @@ function addTranslations(
  * @param {string} [localeName]
  * @param {object} translations
  */
-export default makeIntlHelper(addTranslations);
+export default function addTranslations(translations: Translations): void;
+export default function addTranslations(
+  localeName: string,
+  translations: Translations,
+): void;
+export default function addTranslations(
+  localeNameOrTranslations: string | Translations,
+  translations?: Translations,
+): void {
+  const { owner } = getContext() as TestContext;
+
+  assert(
+    'The current test context has no owner. Did you forget to call `setupTest(hooks)`, `setupContext(this)` or some other test helper?',
+    typeof owner === 'object' && typeof owner.lookup === 'function',
+  );
+
+  const intl = owner.lookup('service:intl') as IntlService;
+
+  if (typeof localeNameOrTranslations === 'object') {
+    const localeName = pickLastLocale(get(intl, 'locale'));
+    const translations = localeNameOrTranslations;
+
+    intl.addTranslations(localeName, translations);
+
+    return;
+  }
+
+  intl.addTranslations(localeNameOrTranslations, translations!);
+}

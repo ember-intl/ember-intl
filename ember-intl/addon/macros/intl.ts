@@ -135,7 +135,7 @@ export default function intl<T>(
         enumerable: false,
       });
     }
-    const intl = this[__intlInjectionName];
+    const intl = this[__intlInjectionName]!;
     return getterFn.call(this, intl, propertyKey, this);
   } as any) as ComputedProperty<T>;
 }
