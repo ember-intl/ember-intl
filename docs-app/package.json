@@ -23,6 +23,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
+    "release:documentation": "ember deploy production",
     "start": "ember serve",
     "test": "ember test --test-port=0"
   },

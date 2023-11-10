@@ -15,7 +15,7 @@
     "lint:fix": "pnpm --filter '*' lint:fix",
     "release:changelog": "lerna-changelog",
     "release:package": "pnpm --recursive publish",
-    "start": "pnpm --filter ember-intl start",
+    "start": "pnpm --filter docs-app start",
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
