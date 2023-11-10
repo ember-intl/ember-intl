@@ -1,2 +1,0 @@
-photos:
-  banner: Du hast {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {{numPhotos} Fotos}}.

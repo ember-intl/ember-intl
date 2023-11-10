@@ -19,9 +19,6 @@ module.exports = function (defaults) {
       preferNative: true,
     },
 
-    // Code snippets for ember-cli-addon-docs
-    snippetExtensions: ['css', 'hbs', 'js', 'json', 'ts', 'yaml'],
-
     vendorFiles: {
       'app-shims.js': null,
     },
