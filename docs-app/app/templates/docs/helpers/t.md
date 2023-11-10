@@ -15,6 +15,7 @@ Compiles an [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-synt
     <div class="toolbar">
       <button
         class="button"
+        data-test-button="Add photo"
         type="button"
         {{on "click" this.addPhoto}}
       >
@@ -23,6 +24,7 @@ Compiles an [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-synt
 
       <button
         class="button"
+        data-test-button="Delete photo"
         type="button"
         {{on "click" this.deletePhoto}}
       >
@@ -30,7 +32,7 @@ Compiles an [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-synt
       </button>
     </div>
 
-    <div>
+    <div data-test-field="Message">
       Message: {{t "photos.banner" numPhotos=this.numPhotos}}
     </div>
   </demo.example>
