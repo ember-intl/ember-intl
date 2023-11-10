@@ -1,30 +1,7 @@
 {
+  "extends": "@shared-configs/typescript/ember",
   "compilerOptions": {
-    "target": "es2020",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "verbatimModuleSyntax": true, // enforces type imports when imports are not used as values
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noEmitOnError": false,
-    "noEmit": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
     "baseUrl": ".",
-    "module": "es6",
-    "experimentalDecorators": true,
-    "skipLibCheck": true, // Don't check the types of dependencies
-    "exactOptionalPropertyTypes": true,
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
@@ -33,11 +10,20 @@
       "ember-intl/test-support": ["addon-test-support"],
       "ember-intl/test-support/*": ["addon-test-support/*"],
       "*": ["types/*"]
-    }
+    },
+    "skipLibCheck": true
   },
-  "include": ["app/**/*", "addon/**/*", "tests/**/*", "types/**/*", "test-support/**/*", "addon-test-support/**/*"],
+  "include": [
+    "addon/**/*",
+    "addon-test-support/**/*",
+    "app/**/*",
+    "tests/**/*",
+    "types/**/*"
+  ],
   "glint": {
-    "environment": "ember-loose",
-    "checkStandaloneTemplates": false
+    "environment": [
+      "ember-loose",
+      "ember-template-imports"
+    ]
   }
 }
