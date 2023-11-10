@@ -6,7 +6,6 @@ module.exports = {
   extends: ['@shared-configs/eslint-config-ember/addon'],
   rules: {
     'ember/no-get': 'off', // TODO: Remove support for old Ember
-    'ember/no-classic-classes': 'off', // TODO: Remove support for old Ember
   },
   overrides: [
     // Node files
