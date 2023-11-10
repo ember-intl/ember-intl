@@ -1,5 +1,21 @@
 # Changelog
 
+## 6.2.0 (2023-11-10)
+
+### Enhancement
+* [#1798](https://github.com/ember-intl/ember-intl/pull/1798) Updated Glint to v1.2.1 ([@ijlee2](https://github.com/ijlee2))
+* [#1796](https://github.com/ember-intl/ember-intl/pull/1796) Introduce workspaces (Part 3) ([@ijlee2](https://github.com/ijlee2))
+* [#1795](https://github.com/ember-intl/ember-intl/pull/1795) Introduce workspaces (Part 2) ([@ijlee2](https://github.com/ijlee2))
+* [#1793](https://github.com/ember-intl/ember-intl/pull/1793) Introduce workspaces (Part 1) ([@ijlee2](https://github.com/ijlee2))
+
+### Internal
+* [#1798](https://github.com/ember-intl/ember-intl/pull/1798) Updated Glint to v1.2.1 ([@ijlee2](https://github.com/ijlee2))
+* [#1797](https://github.com/ember-intl/ember-intl/pull/1797) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
+### Committers: 1
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+
+
 ## 6.1.2 (2023-11-04)
 
 ### Internal
