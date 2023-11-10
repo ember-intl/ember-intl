@@ -5,7 +5,13 @@ import { getContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
-import { pickLastLocale } from './-private/pick-last-locale';
+function pickLastLocale(localeName: string | string[]): string {
+  if (typeof localeName === 'string') {
+    return localeName;
+  }
+
+  return localeName[localeName.length - 1]!;
+}
 
 /**
  * Invokes the `addTranslations` method of the `intl` service. The first
