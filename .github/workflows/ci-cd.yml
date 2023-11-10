@@ -96,7 +96,7 @@ jobs:
           - 'ember-beta'
           - 'ember-canary'
           - 'ember-classic'
-          # - 'embroider-safe'
+          - 'embroider-safe'
           # - 'embroider-optimized'
     timeout-minutes: 7
     steps:
