@@ -36,6 +36,3 @@
 /package-lock.json.ember-try
 /pnpm-lock.yaml.ember-try
 /yarn.lock.ember-try
-
-# ember-cli-addon-docs
-/config/addon-docs.js

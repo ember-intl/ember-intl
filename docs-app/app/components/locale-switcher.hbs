@@ -1,0 +1,14 @@
+<ul class="locale-switcher container" role="toolbar">
+  {{#each (array "en-us" "de-de" "es-es" "fr-fr") as |locale|}}
+    <li class="list-item">
+      <button
+        class="button"
+        data-test-button={{locale}}
+        type="button"
+        {{on "click" (fn this.updateLocale locale)}}
+      >
+        {{locale}}
+      </button>
+    </li>
+  {{/each}}
+</ul>
