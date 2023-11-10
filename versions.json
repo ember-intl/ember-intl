@@ -14,7 +14,7 @@
   "-latest": {
     "path": "",
     "name": "Latest",
-    "sha": "4b43ccbdfec1c14970bb006afe33715b7c7e0c8f",
+    "sha": "8367533dc79fc9eed67923f130b89c603a1a1f6b",
     "tag": null
   },
   "v4.2.0": {
@@ -212,7 +212,7 @@
   "main": {
     "path": "versions/main",
     "name": "main",
-    "sha": "4b43ccbdfec1c14970bb006afe33715b7c7e0c8f",
+    "sha": "8367533dc79fc9eed67923f130b89c603a1a1f6b",
     "tag": null
   },
   "v5.7.0": {
