@@ -959,36 +959,6 @@
     }
   }), _applyDecoratedDescriptor(_class.prototype, "addPhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "addPhoto"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "deletePhoto", [_object.action], Object.getOwnPropertyDescriptor(_class.prototype, "deletePhoto"), _class.prototype)), _class);
 });
-;define("dummy/controllers/smoke", ["exports", "@ember/controller", "@ember/service"], function (_exports, _controller, _service) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  var _class, _descriptor;
-  0; //eaimeta@70e063a35619d71f0,"@ember/controller",0,"@ember/service"eaimeta@70e063a35619d71f
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-  function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-  function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'transform-class-properties is enabled and runs after the decorators transform.'); }
-  let SmokeController = _exports.default = (_class = class SmokeController extends _controller.default {
-    constructor(...args) {
-      super(...args);
-      _initializerDefineProperty(this, "intl", _descriptor, this);
-    }
-    get areNestedTranslationsWorking() {
-      return this.intl.exists('smoke.parent.child');
-    }
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "intl", [_service.inject], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  })), _class);
-});
 ;define("dummy/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
   "use strict";
 
@@ -5423,7 +5393,6 @@
         this.route('v2');
       });
     });
-    this.route('smoke');
     this.route('not-found', {
       path: '*'
     });
@@ -5713,74 +5682,6 @@
       available: '5.2'
     }
   }));
-});
-;define("dummy/smoke", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
-  /*
-    <h1>Smoke</h1>
-  
-  <h2>Format Number</h2>
-  
-  <div data-test-field="Format Number">
-    {{format-number
-      1000
-      currency="EUR"
-      format="currency"
-      style="currency"
-    }}
-  </div>
-  
-  <h2>Format Date</h2>
-  
-  <div data-test-field="Format Date">
-    {{format-date
-      "Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)"
-      timeZone="UTC"
-    }}
-  </div>
-  
-  <h2>Format Time</h2>
-  
-  <div data-test-field="Format Time">
-    {{format-time
-      "Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)"
-      hour="numeric"
-      hour12=false
-      minute="numeric"
-      second="numeric"
-      timeZone="UTC"
-    }}
-  </div>
-  
-  <h2>Format Relative</h2>
-  
-  <div data-test-field="Format Relative">
-    {{format-relative 1 unit="day"}}
-  </div>
-  
-  <h2>Nested Translations</h2>
-  
-  <div data-test-field="Nested Translations">
-    {{#if this.areNestedTranslationsWorking}}
-      Working
-    {{else}}
-      Not working
-    {{/if}}
-  </div>
-  */
-  {
-    "id": "lXz3gQ7P",
-    "block": "[[[10,\"h1\"],[12],[1,\"Smoke\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Number\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Number\"],[12],[1,\"\\n  \"],[1,[28,[35,0],[1000],[[\"currency\",\"format\",\"style\"],[\"EUR\",\"currency\",\"currency\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Date\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Date\"],[12],[1,\"\\n  \"],[1,[28,[35,1],[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"timeZone\"],[\"UTC\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Time\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Time\"],[12],[1,\"\\n  \"],[1,[28,[35,2],[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"hour\",\"hour12\",\"minute\",\"second\",\"timeZone\"],[\"numeric\",false,\"numeric\",\"numeric\",\"UTC\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Relative\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Relative\"],[12],[1,\"\\n  \"],[1,[28,[35,3],[1],[[\"unit\"],[\"day\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Nested Translations\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Nested Translations\"],[12],[1,\"\\n\"],[41,[30,0,[\"areNestedTranslationsWorking\"]],[[[1,\"    Working\\n\"]],[]],[[[1,\"    Not working\\n\"]],[]]],[13]],[],false,[\"format-number\",\"format-date\",\"format-time\",\"format-relative\",\"if\"]]",
-    "moduleName": "dummy/smoke.hbs",
-    "isStrictMode": false
-  });
 });
 ;define("dummy/snippets/docs/helpers/format-date/example-1/component", ["exports", "@glimmer/component"], function (_exports, _component) {
   "use strict";
@@ -8578,74 +8479,6 @@
     "id": "rTMcSazc",
     "block": "[[[10,\"h1\"],[12],[1,\"404\"],[13],[1,\"\\n\\n\"],[10,2],[12],[1,\"\\n  This page does not exist.\\n  \"],[8,[39,0],null,[[\"@route\"],[\"index\"]],[[\"default\"],[[[[1,\"Head home?\"]],[]]]]],[1,\"\\n\"],[13]],[],false,[\"docs-link\"]]",
     "moduleName": "dummy/templates/not-found.hbs",
-    "isStrictMode": false
-  });
-});
-;define("dummy/templates/smoke", ["exports", "@ember/template-factory"], function (_exports, _templateFactory) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  0; //eaimeta@70e063a35619d71f0,"ember-cli-htmlbars"eaimeta@70e063a35619d71f
-  var _default = _exports.default = (0, _templateFactory.createTemplateFactory)(
-  /*
-    <h1>Smoke</h1>
-  
-  <h2>Format Number</h2>
-  
-  <div data-test-field="Format Number">
-    {{format-number
-      1000
-      currency="EUR"
-      format="currency"
-      style="currency"
-    }}
-  </div>
-  
-  <h2>Format Date</h2>
-  
-  <div data-test-field="Format Date">
-    {{format-date
-      "Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)"
-      timeZone="UTC"
-    }}
-  </div>
-  
-  <h2>Format Time</h2>
-  
-  <div data-test-field="Format Time">
-    {{format-time
-      "Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)"
-      hour="numeric"
-      hour12=false
-      minute="numeric"
-      second="numeric"
-      timeZone="UTC"
-    }}
-  </div>
-  
-  <h2>Format Relative</h2>
-  
-  <div data-test-field="Format Relative">
-    {{format-relative 1 unit="day"}}
-  </div>
-  
-  <h2>Nested Translations</h2>
-  
-  <div data-test-field="Nested Translations">
-    {{#if this.areNestedTranslationsWorking}}
-      Working
-    {{else}}
-      Not working
-    {{/if}}
-  </div>
-  */
-  {
-    "id": "MwWXYFPC",
-    "block": "[[[10,\"h1\"],[12],[1,\"Smoke\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Number\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Number\"],[12],[1,\"\\n  \"],[1,[28,[35,0],[1000],[[\"currency\",\"format\",\"style\"],[\"EUR\",\"currency\",\"currency\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Date\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Date\"],[12],[1,\"\\n  \"],[1,[28,[35,1],[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"timeZone\"],[\"UTC\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Time\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Time\"],[12],[1,\"\\n  \"],[1,[28,[35,2],[\"Thu Jan 23 2014 18:00:44 GMT+0000 (GMT)\"],[[\"hour\",\"hour12\",\"minute\",\"second\",\"timeZone\"],[\"numeric\",false,\"numeric\",\"numeric\",\"UTC\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Format Relative\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Format Relative\"],[12],[1,\"\\n  \"],[1,[28,[35,3],[1],[[\"unit\"],[\"day\"]]]],[1,\"\\n\"],[13],[1,\"\\n\\n\"],[10,\"h2\"],[12],[1,\"Nested Translations\"],[13],[1,\"\\n\\n\"],[10,0],[14,\"data-test-field\",\"Nested Translations\"],[12],[1,\"\\n\"],[41,[30,0,[\"areNestedTranslationsWorking\"]],[[[1,\"    Working\\n\"]],[]],[[[1,\"    Not working\\n\"]],[]]],[13]],[],false,[\"format-number\",\"format-date\",\"format-time\",\"format-relative\",\"if\"]]",
-    "moduleName": "dummy/templates/smoke.hbs",
     "isStrictMode": false
   });
 });
