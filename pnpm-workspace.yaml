@@ -1,4 +1,5 @@
 packages:
   - configs/**
   - ember-intl
+  - test-app
   - test-node

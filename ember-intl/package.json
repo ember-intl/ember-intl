@@ -35,8 +35,7 @@
     "postpack": "ember ts:clean",
     "release:documentation": "ember deploy production",
     "start": "ember serve",
-    "test": "ember test",
-    "test:ember-compatibility": "./node_modules/.bin/ember try:one"
+    "test": "ember test --test-port=0"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.0",
@@ -108,9 +107,7 @@
     "ember-qunit": "^8.0.2",
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.4.0",
-    "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^5.12.0",
-    "ember-try": "^3.0.0",
     "eslint": "^8.53.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.0.3",

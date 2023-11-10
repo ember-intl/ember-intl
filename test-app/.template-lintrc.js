@@ -12,9 +12,18 @@ module.exports = {
   overrides: [
     ...baseConfiguration.overrides,
     {
-      files: ['tests/dummy/app/snippets/**'],
+      files: ['tests/**/*-test.{js,ts}'],
       rules: {
-        prettier: 'off',
+        'no-curly-component-invocation': {
+          allow: [
+            'format-date',
+            'format-message',
+            'format-number',
+            'format-relative',
+            'format-time',
+            't',
+          ],
+        },
       },
     },
   ],

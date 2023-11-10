@@ -12,8 +12,6 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-cli': '~3.28.0',
-            'ember-cli-addon-docs': '^5.2.0',
-            'ember-data': '~3.28.0',
             'ember-source': '~3.28.0',
           },
         },
@@ -78,8 +76,6 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-cli': '~3.28.0',
-            'ember-cli-addon-docs': '^5.2.0',
-            'ember-data': '~3.28.0',
             'ember-source': '~3.28.0',
           },
           ember: {
