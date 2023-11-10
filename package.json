@@ -36,8 +36,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@babel/core": "^7.23.2",
-      "@babel/traverse": "^7.23.2",
+      "@babel/core": "^7.23.3",
+      "@babel/traverse": "^7.23.3",
       "fast-glob": "^3.3.1"
     }
   }

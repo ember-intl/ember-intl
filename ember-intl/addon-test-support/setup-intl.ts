@@ -5,7 +5,7 @@ import type { TOptions } from 'ember-intl/services/intl';
 import type { Formats, Translations } from 'ember-intl/types';
 
 import { missingMessage } from './-private/serialize-translation';
-import addTranslations from './add-translations';
+import { addTranslations } from './add-translations';
 
 export interface IntlTestContext {
   intl: IntlService;
@@ -42,18 +42,18 @@ export interface SetupIntlOptions {
  * @param {object} [translations]
  * @param {object} [options]
  */
-export default function setupIntl(
+export function setupIntl(
   hooks: NestedHooks,
   locale: string | string[],
   translations?: Translations,
   options?: SetupIntlOptions,
 ): void;
-export default function setupIntl(
+export function setupIntl(
   hooks: NestedHooks,
   translations?: Translations,
   options?: SetupIntlOptions,
 ): void;
-export default function setupIntl(
+export function setupIntl(
   hooks: NestedHooks,
   localeOrTranslations?: string | string[] | Translations,
   translationsOrOptions?: Translations | SetupIntlOptions,
