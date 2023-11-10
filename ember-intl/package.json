@@ -37,8 +37,8 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.7.0",
-    "@formatjs/intl": "^2.9.5",
+    "@formatjs/icu-messageformat-parser": "^2.7.1",
+    "@formatjs/intl": "^2.9.6",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.8",
     "broccoli-merge-files": "^0.8.0",
@@ -54,7 +54,7 @@
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.2",
     "has-unicode": "^2.0.1",
-    "intl-messageformat": "^10.5.4",
+    "intl-messageformat": "^10.5.5",
     "js-yaml": "^4.1.0",
     "json-stable-stringify": "^1.0.2",
     "locale-emoji": "^0.3.0",
