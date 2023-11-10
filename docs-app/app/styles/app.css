@@ -1,1 +1,46 @@
 /* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+:root {
+  --brand-primary: #397279;
+}
+
+html {
+  font-size: 16px;
+}
+
+.index-route.container {
+  margin: 4rem auto;
+  max-width: 50rem;
+}
+
+.index-route .section-title {
+  font-size: 2.25em;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.locale-switcher.container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.locale-switcher .list-item {
+  margin-right: 0.25rem;
+}
+
+.locale-switcher .list-item:last-of-type {
+  margin-right: 0;
+}
+
+.locale-switcher .button {
+  background-color: var(--brand-primary);
+  border-radius: 0.15rem;
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+}
+
+.toolbar .button {
+  background-color: var(--brand-primary);
+  border-radius: 0.15rem;
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+}
