@@ -97,7 +97,7 @@ jobs:
           - 'ember-canary'
           - 'ember-classic'
           - 'embroider-safe'
-          # - 'embroider-optimized'
+          - 'embroider-optimized'
     timeout-minutes: 7
     steps:
       - name: Check out a copy of the repo
