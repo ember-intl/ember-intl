@@ -26,7 +26,7 @@
     "test:ember-compatibility": "./node_modules/.bin/ember try:one"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
+    "@babel/core": "^7.23.3",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.0",
@@ -42,7 +42,7 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
-    "@types/qunit": "^2.19.7",
+    "@types/qunit": "^2.19.8",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
     "ember-auto-import": "^2.6.3",
@@ -69,7 +69,7 @@
     "loader.js": "^4.7.0",
     "prettier": "^3.0.3",
     "qunit": "^2.20.0",
-    "qunit-dom": "^2.0.0",
+    "qunit-dom": "^3.0.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0"
   },
