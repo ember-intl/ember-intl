@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { service } from '@ember/service';
+import { inject as service } from '@ember/service';
 import type { IntlService } from 'ember-intl';
 
 export default class SmokeController extends Controller {
