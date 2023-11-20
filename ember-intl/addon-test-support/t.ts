@@ -12,7 +12,7 @@ import type { TOptions } from 'ember-intl/services/intl';
  * @param {object} [options]
  * @return {string}
  */
-export function t(key: string, options?: TOptions) {
+export function t(key: string, options?: TOptions): string {
   const { owner } = getContext() as TestContext;
 
   assert(
@@ -22,5 +22,5 @@ export function t(key: string, options?: TOptions) {
 
   const intl = owner.lookup('service:intl') as IntlService;
 
-  return intl.t(key, options);
+  return intl.t(key, options) as unknown as string;
 }
