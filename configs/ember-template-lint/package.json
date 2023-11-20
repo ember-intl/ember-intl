@@ -21,7 +21,7 @@
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^8.2.2",
-    "prettier": "^3.0.3"
+    "prettier": "^3.1.0"
   },
   "peerDependencies": {
     "ember-template-lint": "^5.12.0"

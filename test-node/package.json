@@ -18,7 +18,7 @@
     "test": "mocha \"unit/**/*.{cjs,js}\""
   },
   "devDependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.7.1",
+    "@formatjs/icu-messageformat-parser": "^2.7.3",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
@@ -26,10 +26,10 @@
     "chai-as-promised": "^7.1.1",
     "concurrently": "^8.2.2",
     "ember-intl": "workspace:*",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "has-unicode": "^2.0.1",
     "mocha": "^10.2.0",
-    "prettier": "^3.0.3"
+    "prettier": "^3.1.0"
   },
   "engines": {
     "node": "16.* || >= 18"
