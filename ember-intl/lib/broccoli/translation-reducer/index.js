@@ -5,8 +5,6 @@
 
 const CachingWriter = require('broccoli-caching-writer');
 const stringify = require('json-stable-stringify');
-const localeEmoji = require('locale-emoji');
-const hasUnicode = require('has-unicode');
 const extend = require('extend');
 const yaml = require('js-yaml');
 const { basename, extname, join } = require('node:path');
@@ -85,24 +83,6 @@ class TranslationReducer extends CachingWriter {
     this.linter = new Linter({
       requiresTranslation: this.options.requiresTranslation,
     });
-
-    this.supportsUnicode = hasUnicode();
-  }
-
-  _logLocale(locale, message, options) {
-    let fullMessage = `${locale}: ${message}`;
-
-    if (this.supportsUnicode) {
-      let emoji = localeEmoji(
-        locale.replace(/-([a-z]{2})$/, (match, it) => `-${it.toUpperCase()}`),
-      );
-
-      if (emoji) {
-        fullMessage = `${emoji}  ${fullMessage}`;
-      }
-    }
-
-    this._log(fullMessage, options);
   }
 
   _log() {
@@ -272,13 +252,11 @@ class TranslationReducer extends CachingWriter {
     const language = locale.split('-')[0];
 
     if (!isKnownLanguage(language)) {
-      this._logLocale(
-        locale,
-        `Unable to detect language data for "${language}". Language code is either unknown or invalid.`,
-        {
-          warning: true,
-        },
-      );
+      const message = `${locale}: Unable to detect language data for "${language}". Language code is either unknown or invalid.`;
+
+      this._log(message, {
+        warning: true,
+      });
 
       return false;
     }
@@ -287,11 +265,11 @@ class TranslationReducer extends CachingWriter {
       try {
         validateMessage(message, locale);
       } catch (error) {
-        this._logLocale(
-          locale,
-          `"${key}" message cannot be parsed: ${error.message}`,
-          { warning: true },
-        );
+        const message = `${locale}: "${key}" message cannot be parsed: ${error.message}`;
+
+        this._log(message, {
+          warning: true,
+        });
       }
     });
   }

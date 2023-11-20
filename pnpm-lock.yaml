@@ -423,9 +423,6 @@ importers:
       fast-memoize:
         specifier: ^2.5.2
         version: 2.5.2
-      has-unicode:
-        specifier: ^2.0.1
-        version: 2.0.1
       intl-messageformat:
         specifier: ^10.5.8
         version: 10.5.8
@@ -435,9 +432,6 @@ importers:
       json-stable-stringify:
         specifier: ^1.1.0
         version: 1.1.0
-      locale-emoji:
-        specifier: ^0.3.0
-        version: 0.3.0
       silent-error:
         specifier: ^1.1.1
         version: 1.1.1
@@ -754,9 +748,6 @@ importers:
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
-      has-unicode:
-        specifier: ^2.0.1
-        version: 2.0.1
       mocha:
         specifier: ^10.2.0
         version: 10.2.0
@@ -10842,6 +10833,7 @@ packages:
 
   /has-unicode@2.0.1:
     resolution: {integrity: sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ==}
+    dev: true
 
   /has-value@0.3.1:
     resolution: {integrity: sha512-gpG936j8/MzaeID5Yif+577c17TxaDmhuyVgSwtnL/q8UUTySg8Mecb+8Cf1otgLoD7DDH75axp86ER7LFsf3Q==}
@@ -12032,10 +12024,6 @@ packages:
   /loader.js@4.7.0:
     resolution: {integrity: sha512-9M2KvGT6duzGMgkOcTkWb+PR/Q2Oe54df/tLgHGVmFpAmtqJ553xJh6N63iFYI2yjo2PeJXbS5skHi/QpJq4vA==}
     dev: true
-
-  /locale-emoji@0.3.0:
-    resolution: {integrity: sha512-JGm8+naU49CBDnH1jksS3LecPdfWQLxFgkLN6ZhYONKa850pJ0Xt8DPGJnYK0ZuJI8jTuiDDPCDtSL3nyacXwg==}
-    dev: false
 
   /locate-character@2.0.5:
     resolution: {integrity: sha512-n2GmejDXtOPBAZdIiEFy5dJ5N38xBCXLNOtw2WpB9kGh6pnrEuKlwYI+Tkpofc4wDtVXHtoAOJaMRlYG/oYaxg==}
