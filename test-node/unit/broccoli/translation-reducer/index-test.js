@@ -5,7 +5,6 @@ import { createBuilder, createTempDir } from 'broccoli-test-helper';
 import { expect, use } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import TranslationReducer from 'ember-intl/lib/broccoli/translation-reducer/index.js';
-import hasUnicode from 'has-unicode';
 
 use(chaiAsPromised);
 
@@ -324,17 +323,9 @@ describe('translation-reducer', function () {
       });
 
       return build(createBuilder(subject), () => {
-        const supportsUnicode = hasUnicode();
-
-        const expectedValue = supportsUnicode
-          ? [
-              '🇦🇰  ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.',
-            ]
-          : [
-              'ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.',
-            ];
-
-        expect(logs).to.deep.equal(expectedValue);
+        expect(logs).to.deep.equal([
+          'ypk-us-ak: Unable to detect language data for "ypk". Language code is either unknown or invalid.',
+        ]);
       });
     });
 

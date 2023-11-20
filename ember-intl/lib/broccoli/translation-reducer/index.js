@@ -92,7 +92,7 @@ class TranslationReducer extends CachingWriter {
   _logLocale(locale, message, options) {
     let fullMessage = `${locale}: ${message}`;
 
-    if (this.supportsUnicode) {
+    if (false) {
       let emoji = localeEmoji(
         locale.replace(/-([a-z]{2})$/, (match, it) => `-${it.toUpperCase()}`),
       );
