@@ -1,7 +1,3 @@
-// @ts-expect-error We don't want to bring along extra baggage, when installed
-// in a host project.
-import omit from 'lodash.omit';
-
 /**
  * Takes an object and stringifies it in a deterministic way. It will also only
  * include top-level entries.
@@ -11,8 +7,9 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = (obj: Record<string, unknown>) =>
-  JSON.stringify(obj, Object.keys(obj).sort());
+function stringifyDeterministically(object: Record<string, unknown>): string {
+  return JSON.stringify(object, Object.keys(object).sort());
+}
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -25,13 +22,17 @@ const stringifyDeterministically = (obj: Record<string, unknown>) =>
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = (subject: string) =>
-  String(subject).replace(/\{/g, '(').replace(/\}/g, ')').replace(/\\"/g, '"');
+function replaceInterpolators(input: string): string {
+  return String(input)
+    .replace(/\{/g, '(')
+    .replace(/\}/g, ')')
+    .replace(/\\"/g, '"');
+}
 
 /**
  * A list of internal options that should not be serialized.
  */
-const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
+const INTERNAL_OPTIONS = new Set(['default', 'htmlSafe', 'resilient']);
 
 /**
  * Takes a translation options object and stringifies it in a deterministic way.
@@ -43,10 +44,19 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @param {object} options
  * @return {string}
  */
-const stringifyOptions = (options: Record<string, unknown> = {}) =>
-  replaceInterpolators(
-    stringifyDeterministically(omit(options, INTERNAL_OPTIONS)),
-  );
+function stringifyOptions(options: Record<string, unknown> = {}): string {
+  const filteredOptions: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(options)) {
+    if (INTERNAL_OPTIONS.has(key)) {
+      continue;
+    }
+
+    filteredOptions[key] = value;
+  }
+
+  return replaceInterpolators(stringifyDeterministically(filteredOptions));
+}
 
 /**
  * Serializes a translation invocation deterministically.
@@ -58,10 +68,9 @@ const stringifyOptions = (options: Record<string, unknown> = {}) =>
  * @return {string}
  * @hide
  */
-export const serializeTranslation = (
-  key: string,
-  options: Record<string, unknown>,
-) => `t:${key}:${stringifyOptions(options)}`;
+function serializeTranslation(key: string, options: Record<string, unknown>) {
+  return `t:${key}:${stringifyOptions(options)}`;
+}
 
 /**
  * Used to overwrite the default `intl/missing-message` implementation in order
@@ -76,8 +85,10 @@ export const serializeTranslation = (
  * @return {string}
  * @hide
  */
-export const missingMessage = (
+export function missingMessage(
   key: string,
   _locales: string[],
   options: Record<string, unknown>,
-) => serializeTranslation(key, options);
+) {
+  return serializeTranslation(key, options);
+}

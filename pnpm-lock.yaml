@@ -438,9 +438,6 @@ importers:
       locale-emoji:
         specifier: ^0.3.0
         version: 0.3.0
-      lodash.omit:
-        specifier: ^4.5.0
-        version: 4.5.0
       silent-error:
         specifier: ^1.1.1
         version: 1.1.1
@@ -12164,6 +12161,7 @@ packages:
 
   /lodash.omit@4.5.0:
     resolution: {integrity: sha512-XeqSp49hNGmlkj2EJlfrQFIzQ6lXdNro9sddtQzcJY8QaoC2GO0DT7xaIokHeyM+mIT0mPMlPvkYzg2xCuHdZg==}
+    dev: true
 
   /lodash.template@4.5.0:
     resolution: {integrity: sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==}
