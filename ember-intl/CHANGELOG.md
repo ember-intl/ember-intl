@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.2.1
+
+### Patch Changes
+
+- [#1805](https://github.com/ember-intl/ember-intl/pull/1805) Removed has-unicode and locale-emoji ([@ijlee2](https://github.com/ijlee2))
+- [#1804](https://github.com/ember-intl/ember-intl/pull/1804) Removed lodash.omit ([@ijlee2](https://github.com/ijlee2))
+- [#1803](https://github.com/ember-intl/ember-intl/pull/1803) Update dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.0 (2023-11-10)
 
 ### Enhancement
