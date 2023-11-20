@@ -27,7 +27,6 @@
     "concurrently": "^8.2.2",
     "ember-intl": "workspace:*",
     "eslint": "^8.54.0",
-    "has-unicode": "^2.0.1",
     "mocha": "^10.2.0",
     "prettier": "^3.1.0"
   },

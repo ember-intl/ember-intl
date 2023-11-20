@@ -52,11 +52,9 @@
     "eventemitter3": "^5.0.1",
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.2",
-    "has-unicode": "^2.0.1",
     "intl-messageformat": "^10.5.8",
     "js-yaml": "^4.1.0",
     "json-stable-stringify": "^1.1.0",
-    "locale-emoji": "^0.3.0",
     "silent-error": "^1.1.1"
   },
   "devDependencies": {
