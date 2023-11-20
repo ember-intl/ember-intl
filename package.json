@@ -13,26 +13,17 @@
   "scripts": {
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
-    "release:changelog": "lerna-changelog",
+    "release:changelog": "changeset version",
     "release:package": "pnpm --recursive publish",
     "start": "pnpm --filter docs-app start",
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
-    "lerna-changelog": "^2.2.0"
+    "@changesets/cli": "^2.26.2",
+    "@changesets/get-github-info": "^0.5.2"
   },
   "engines": {
     "node": "16.* || >= 18"
-  },
-  "changelog": {
-    "labels": {
-      "breaking": "Breaking Change",
-      "bug": "Bug Fix",
-      "enhance: code": "Enhancement",
-      "enhance: dependency": "Internal",
-      "enhance: documentation": "Documentation",
-      "user feedback": "User Feedback"
-    }
   },
   "pnpm": {
     "overrides": {

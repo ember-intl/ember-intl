@@ -80,18 +80,43 @@
 
 <details>
 
+<summary>Add changeset to pull request</code></summary>
+
+1. To record how a pull request affects packages, you will want to add a changeset.
+
+    The changeset provides a summary of the code change. It also describes how package versions should be updated (major, minor, or patch) as a result of the code change.
+
+    ```sh
+    # From the workspace root
+    pnpm changeset
+    ```
+
+</details>
+
+
+<details>
+
 <summary>Publish packages (for admins)</summary>
 
 1. Generate a [personal access token](https://github.com/settings/tokens/) in GitHub, with default values for scopes (none selected).
 
-1. Run the `release:changelog` script. This generates a text that you can add to `ember-intl/CHANGELOG.md`.
+1. Run the `release:changelog` script. This removes changesets, updates the package versions, and updates the `CHANGELOG`'s.
 
     ```sh
     # From the workspace root
-    GITHUB_AUTH=<YOUR_PERSONAL_ACCESS_TOKEN> pnpm release:changelog
+    GITHUB_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> pnpm release:changelog
     ```
 
-    Update the version number in `package.json`. Then, create a commit for the file changes (i.e. `CHANGELOG.md` and `package.json`).
+1. The workspace root's version (e.g. `0.1.3`) is more of an identifier than a (semantic) version. We will use it to name the tag that will be published.
+
+    In the root `package.json`, update the version following the "highest-version" formula:
+
+    ```
+    workspace root version = max(
+      max(all package versions),
+      workspace root version + 0.0.1,
+    );
+    ```
 
 1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) and provide release notes. The tag name should match the package version, prefixed by the letter `v`. For example, `v1.0.0`.
 
@@ -99,7 +124,7 @@
 
     ```sh
     # From the workspace root
-    pnpm release:publish
+    pnpm release:package
     ```
 
 </details>
