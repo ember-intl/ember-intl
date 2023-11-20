@@ -32,7 +32,7 @@ function replaceInterpolators(input: string): string {
 /**
  * A list of internal options that should not be serialized.
  */
-const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
+const INTERNAL_OPTIONS = new Set(['default', 'htmlSafe', 'resilient']);
 
 /**
  * Takes a translation options object and stringifies it in a deterministic way.
@@ -45,9 +45,17 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @return {string}
  */
 function stringifyOptions(options: Record<string, unknown> = {}): string {
-  return replaceInterpolators(
-    stringifyDeterministically(options),
-  );
+  const filteredOptions: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(options)) {
+    if (INTERNAL_OPTIONS.has(key)) {
+      continue;
+    }
+
+    filteredOptions[key] = value;
+  }
+
+  return replaceInterpolators(stringifyDeterministically(filteredOptions));
 }
 
 /**
