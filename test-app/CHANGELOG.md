@@ -1,5 +1,12 @@
 # Changelog for test-app
 
+## 6.2.1
+
+### Patch Changes
+
+- [#1803](https://github.com/ember-intl/ember-intl/pull/1803) Update dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1799](https://github.com/ember-intl/ember-intl/pull/1799) Enable embroider-safe and embroider-optimized scenarios ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.0
 
 ### Minor Changes

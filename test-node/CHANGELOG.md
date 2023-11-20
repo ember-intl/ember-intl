@@ -1,5 +1,12 @@
 # Changelog for test-node
 
+## 6.2.1
+
+### Patch Changes
+
+- [#1805](https://github.com/ember-intl/ember-intl/pull/1805) Removed has-unicode and locale-emoji ([@ijlee2](https://github.com/ijlee2))
+- [#1803](https://github.com/ember-intl/ember-intl/pull/1803) Update dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.0
 
 ### Minor Changes
