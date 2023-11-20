@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "private": true,
   "description": "Test app for ember-intl",
   "repository": {
