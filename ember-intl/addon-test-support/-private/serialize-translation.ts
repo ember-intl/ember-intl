@@ -11,8 +11,9 @@ import omit from 'lodash.omit';
  * @param {object} obj
  * @return {string}
  */
-const stringifyDeterministically = (obj: Record<string, unknown>) =>
-  JSON.stringify(obj, Object.keys(obj).sort());
+function stringifyDeterministically(object: Record<string, unknown>): string {
+  return JSON.stringify(object, Object.keys(object).sort());
+}
 
 /**
  * Replaces the `{` and `}` characters with `(` and `)` in order for those to
@@ -25,8 +26,12 @@ const stringifyDeterministically = (obj: Record<string, unknown>) =>
  * @param {string} subject
  * @return {string}
  */
-const replaceInterpolators = (subject: string) =>
-  String(subject).replace(/\{/g, '(').replace(/\}/g, ')').replace(/\\"/g, '"');
+function replaceInterpolators(input: string): string {
+  return String(input)
+    .replace(/\{/g, '(')
+    .replace(/\}/g, ')')
+    .replace(/\\"/g, '"');
+}
 
 /**
  * A list of internal options that should not be serialized.
@@ -43,10 +48,11 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  * @param {object} options
  * @return {string}
  */
-const stringifyOptions = (options: Record<string, unknown> = {}) =>
-  replaceInterpolators(
+function stringifyOptions(options: Record<string, unknown> = {}): string {
+  return replaceInterpolators(
     stringifyDeterministically(omit(options, INTERNAL_OPTIONS)),
   );
+}
 
 /**
  * Serializes a translation invocation deterministically.
@@ -58,10 +64,9 @@ const stringifyOptions = (options: Record<string, unknown> = {}) =>
  * @return {string}
  * @hide
  */
-export const serializeTranslation = (
-  key: string,
-  options: Record<string, unknown>,
-) => `t:${key}:${stringifyOptions(options)}`;
+function serializeTranslation(key: string, options: Record<string, unknown>) {
+  return `t:${key}:${stringifyOptions(options)}`;
+}
 
 /**
  * Used to overwrite the default `intl/missing-message` implementation in order
@@ -76,8 +81,10 @@ export const serializeTranslation = (
  * @return {string}
  * @hide
  */
-export const missingMessage = (
+export function missingMessage(
   key: string,
   _locales: string[],
   options: Record<string, unknown>,
-) => serializeTranslation(key, options);
+) {
+  return serializeTranslation(key, options);
+}
