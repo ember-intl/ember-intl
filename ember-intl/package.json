@@ -57,7 +57,6 @@
     "js-yaml": "^4.1.0",
     "json-stable-stringify": "^1.1.0",
     "locale-emoji": "^0.3.0",
-    "lodash.omit": "^4.5.0",
     "silent-error": "^1.1.1"
   },
   "devDependencies": {
