@@ -1,7 +1,3 @@
-// @ts-expect-error We don't want to bring along extra baggage, when installed
-// in a host project.
-import omit from 'lodash.omit';
-
 /**
  * Takes an object and stringifies it in a deterministic way. It will also only
  * include top-level entries.
@@ -50,7 +46,7 @@ const INTERNAL_OPTIONS = 'resilient default htmlSafe'.split(' ');
  */
 function stringifyOptions(options: Record<string, unknown> = {}): string {
   return replaceInterpolators(
-    stringifyDeterministically(omit(options, INTERNAL_OPTIONS)),
+    stringifyDeterministically(options),
   );
 }
 
