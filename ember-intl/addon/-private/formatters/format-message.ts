@@ -1,7 +1,3 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { htmlSafe, isHTMLSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';

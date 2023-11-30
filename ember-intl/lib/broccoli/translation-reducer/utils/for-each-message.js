@@ -1,9 +1,4 @@
 /**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
-/**
  * Flattens the `messages` object and calls `fn` with a key describing
  * the path to the message and the message itself.
  */
