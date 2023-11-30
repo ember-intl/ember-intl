@@ -10,8 +10,7 @@
       "ember-intl/test-support": ["addon-test-support"],
       "ember-intl/test-support/*": ["addon-test-support/*"],
       "*": ["types/*"]
-    },
-    "skipLibCheck": true
+    }
   },
   "include": [
     "addon/**/*",
