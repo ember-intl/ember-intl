@@ -1,12 +1,12 @@
-import type FormatDateHelper from 'ember-intl/helpers/format-date';
-import type FormatListHelper from 'ember-intl/helpers/format-list';
-import type FormatMessageHelper from 'ember-intl/helpers/format-message';
-import type FormatNumberHelper from 'ember-intl/helpers/format-number';
-import type FormatRelativeHelper from 'ember-intl/helpers/format-relative';
-import type FormatTimeHelper from 'ember-intl/helpers/format-time';
-import type THelper from 'ember-intl/helpers/t';
+import type FormatDateHelper from './helpers/format-date';
+import type FormatListHelper from './helpers/format-list';
+import type FormatMessageHelper from './helpers/format-message';
+import type FormatNumberHelper from './helpers/format-number';
+import type FormatRelativeHelper from './helpers/format-relative';
+import type FormatTimeHelper from './helpers/format-time';
+import type THelper from './helpers/t';
 
-export default interface Registry {
+export default interface EmberIntlRegistry {
   'format-date': typeof FormatDateHelper;
   'format-list': typeof FormatListHelper;
   'format-message': typeof FormatMessageHelper;
