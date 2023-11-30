@@ -5,7 +5,7 @@ import { isEmpty } from '@ember/utils';
 export default class FormatDateHelper extends Helper {
   allowEmpty = true;
   intl = null;
-  unsubscribeLocaleChanged = null;
+  declare unsubscribeLocaleChanged: () => void;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params

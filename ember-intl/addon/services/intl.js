@@ -344,13 +344,15 @@ export default class IntlService extends Service {
   }
   /**
    * @private
-   * @param {Function} fn
+   * @param fn
+   * @param context
    * @returns {Function} unsubscribed from localeChanged
    */
-  onLocaleChanged(...args) {
-    this._ee.on('localeChanged', ...args);
+  onLocaleChanged(fn, context) {
+    this._ee.on('localeChanged', fn, context);
+
     return () => {
-      this._ee.off('localeChanged', ...args);
+      this._ee.off('localeChanged', fn, context);
     };
   }
 }
