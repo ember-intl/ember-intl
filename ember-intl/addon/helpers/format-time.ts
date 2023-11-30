@@ -8,8 +8,6 @@ import type IntlService from '../services/intl';
 export default class FormatTimeHelper extends Helper {
   @service declare intl: IntlService;
 
-  allowEmpty = false;
-
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -26,12 +24,12 @@ export default class FormatTimeHelper extends Helper {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options.allowEmpty ?? this.allowEmpty) {
+      if (options.allowEmpty) {
         return;
       }
 
       if (typeof value === 'undefined') {
-        throw new Error(`${this} helper requires value attribute.`);
+        throw new Error('{{format-time}} helper requires a value.');
       }
     }
 

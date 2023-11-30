@@ -8,8 +8,6 @@ import type IntlService from '../services/intl';
 export default class THelper extends Helper {
   @service declare intl: IntlService;
 
-  allowEmpty = false;
-
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -26,12 +24,12 @@ export default class THelper extends Helper {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options.allowEmpty ?? this.allowEmpty) {
+      if (options.allowEmpty) {
         return;
       }
 
       if (typeof value === 'undefined') {
-        throw new Error(`${this} helper requires value attribute.`);
+        throw new Error('{{t}} helper requires a value.');
       }
     }
 

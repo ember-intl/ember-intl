@@ -8,8 +8,6 @@ import type IntlService from '../services/intl';
 export default class FormatDateHelper extends Helper {
   @service declare intl: IntlService;
 
-  allowEmpty = true;
-
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -26,13 +24,18 @@ export default class FormatDateHelper extends Helper {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options.allowEmpty ?? this.allowEmpty) {
+      if (options.allowEmpty ?? true) {
         return;
       }
 
-      if (typeof value === 'undefined') {
-        throw new Error(`${this} helper requires value attribute.`);
-      }
+      /*
+        TODO: {{format-date}} is the only helper that always allows
+        an undefined value. That is, it can never throw an error.
+        For ember-intl@v7, unify the options of all helpers.
+      */
+      // if (typeof value === 'undefined') {
+      //   throw new Error('{{format-date}} helper requires a value.');
+      // }
     }
 
     return this.intl.formatDate(value, options);
