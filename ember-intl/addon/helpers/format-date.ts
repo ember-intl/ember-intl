@@ -1,18 +1,21 @@
-import { getOwner } from '@ember/application';
 import Helper from '@ember/component/helper';
+import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
+import type IntlService from '../services/intl';
+
 export default class FormatDateHelper extends Helper {
+  @service declare intl: IntlService;
+
   allowEmpty = true;
-  intl = null;
+
   declare unsubscribeLocaleChanged: () => void;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
-    this.intl = getOwner(this).lookup('service:intl');
-
+    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
     this.unsubscribeLocaleChanged = this.intl.onLocaleChanged(
       this.recompute,
       this,
