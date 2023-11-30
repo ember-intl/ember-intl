@@ -20,10 +20,6 @@ export default class FormatRelativeHelper extends Helper {
     });
   }
 
-  format(params, hash) {
-    return this.intl.formatRelative(params, hash);
-  }
-
   compute([value, positionalOptions], namedOptions) {
     const options = positionalOptions
       ? Object.assign({}, positionalOptions, namedOptions)
@@ -39,6 +35,6 @@ export default class FormatRelativeHelper extends Helper {
       }
     }
 
-    return this.format(value, options);
+    return this.intl.formatRelative(value, options);
   }
 }

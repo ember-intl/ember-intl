@@ -20,10 +20,6 @@ export default class FormatMessageHelper extends Helper {
     });
   }
 
-  format(value, options) {
-    return this.intl.formatMessage(value, options);
-  }
-
   compute([value, positionalOptions], namedOptions) {
     const options = positionalOptions
       ? Object.assign({}, positionalOptions, namedOptions)
@@ -39,6 +35,6 @@ export default class FormatMessageHelper extends Helper {
       }
     }
 
-    return this.format(value, options);
+    return this.intl.formatMessage(value, options);
   }
 }
