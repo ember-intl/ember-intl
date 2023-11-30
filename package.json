@@ -14,7 +14,7 @@
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "release:changelog": "changeset version",
-    "release:package": "pnpm --recursive publish",
+    "release:package": "changeset publish",
     "start": "pnpm --filter docs-app start",
     "test": "pnpm --filter '*' test"
   },
