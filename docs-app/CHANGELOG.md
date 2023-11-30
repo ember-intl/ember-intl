@@ -1,5 +1,11 @@
 # Changelog for docs-app
 
+## 6.2.2
+
+### Patch Changes
+
+- [#1808](https://github.com/ember-intl/ember-intl/pull/1808) Updated ember-auto-import to v2.7.0 ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.1
 
 ### Patch Changes
