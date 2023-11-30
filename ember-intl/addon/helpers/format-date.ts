@@ -24,7 +24,7 @@ export default class FormatDateHelper extends Helper {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options.allowEmpty ?? true) {
+      if (options?.allowEmpty ?? true) {
         return;
       }
 

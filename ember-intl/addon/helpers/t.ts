@@ -24,7 +24,7 @@ export default class THelper extends Helper {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options.allowEmpty) {
+      if (options?.allowEmpty) {
         return;
       }
 

@@ -24,7 +24,7 @@ export default class FormatTimeHelper extends Helper {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options.allowEmpty) {
+      if (options?.allowEmpty) {
         return;
       }
 
