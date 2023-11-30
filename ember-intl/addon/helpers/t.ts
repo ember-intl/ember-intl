@@ -1,36 +1,26 @@
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-
 import { getOwner } from '@ember/application';
 import Helper from '@ember/component/helper';
 import { isEmpty } from '@ember/utils';
 
-/**
- * @private
- * @hide
- */
-export default class AbstractHelper extends Helper {
+export default class THelper extends Helper {
+  allowEmpty = false;
   intl = null;
   unsubscribeLocaleChanged = null;
+
   constructor() {
+    // eslint-disable-next-line prefer-rest-params
     super(...arguments);
-    if (this.constructor === AbstractHelper) {
-      throw new Error(
-        'FormatHelper is an abstract class, can not be instantiated directly.',
-      );
-    }
 
     this.intl = getOwner(this).lookup('service:intl');
+
     this.unsubscribeLocaleChanged = this.intl.onLocaleChanged(
       this.recompute,
       this,
     );
   }
 
-  format() {
-    throw new Error('not implemented');
+  format(key, options) {
+    return this.intl.t(key, options);
   }
 
   compute([value, positionalOptions], namedOptions) {
@@ -53,6 +43,7 @@ export default class AbstractHelper extends Helper {
 
   willDestroy() {
     super.willDestroy();
+
     this.unsubscribeLocaleChanged();
   }
 }
