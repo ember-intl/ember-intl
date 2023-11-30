@@ -5,7 +5,19 @@ import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
-export default class FormatRelativeHelper extends Helper {
+type Params = Parameters<IntlService['formatRelative']>;
+type Value = Params[0];
+type Options = Params[1];
+
+interface FormatRelativeSignature {
+  Args: {
+    Named?: Options & { allowEmpty?: boolean };
+    Positional: [Value?, Options?];
+  };
+  Return: string;
+}
+
+export default class FormatRelativeHelper extends Helper<FormatRelativeSignature> {
   @service declare intl: IntlService;
 
   constructor() {
@@ -18,7 +30,10 @@ export default class FormatRelativeHelper extends Helper {
     });
   }
 
-  compute([value, positionalOptions], namedOptions) {
+  compute(
+    [value, positionalOptions]: FormatRelativeSignature['Args']['Positional'],
+    namedOptions: FormatRelativeSignature['Args']['Named'],
+  ) {
     const options = positionalOptions
       ? Object.assign({}, positionalOptions, namedOptions)
       : namedOptions;

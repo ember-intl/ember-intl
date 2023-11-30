@@ -5,7 +5,19 @@ import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
-export default class THelper extends Helper {
+type Params = Parameters<IntlService['t']>;
+type Value = Params[0];
+type Options = Params[1];
+
+interface TSignature {
+  Args: {
+    Named?: Options & { allowEmpty?: boolean };
+    Positional: [Value?, Options?];
+  };
+  Return: string;
+}
+
+export default class THelper extends Helper<TSignature> {
   @service declare intl: IntlService;
 
   constructor() {
@@ -18,7 +30,10 @@ export default class THelper extends Helper {
     });
   }
 
-  compute([value, positionalOptions], namedOptions) {
+  compute(
+    [value, positionalOptions]: TSignature['Args']['Positional'],
+    namedOptions: TSignature['Args']['Named'],
+  ) {
     const options = positionalOptions
       ? Object.assign({}, positionalOptions, namedOptions)
       : namedOptions;
