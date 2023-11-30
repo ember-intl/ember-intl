@@ -502,6 +502,9 @@ importers:
       '@types/ember__debug':
         specifier: ^4.0.7
         version: 4.0.7(@babel/core@7.23.5)
+      '@types/ember__destroyable':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/ember__engine':
         specifier: ^4.0.10
         version: 4.0.10(@babel/core@7.23.5)
@@ -3647,6 +3650,10 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: true
+
+  /@types/ember__destroyable@4.0.4:
+    resolution: {integrity: sha512-UQO/WisIiwIBJ65jsw5sQUxfbN1UdCg2Xue8SoH6Y8kiETSnGX1AxaILMoAQotK0NdU1xXvkzMABUexiWoPs1g==}
     dev: true
 
   /@types/ember__engine@3.16.8:
