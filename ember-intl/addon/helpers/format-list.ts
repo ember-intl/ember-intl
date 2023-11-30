@@ -14,7 +14,7 @@ interface FormatListSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string;
+  Return: string | undefined;
 }
 
 export default class FormatListHelper extends Helper<FormatListSignature> {
@@ -48,6 +48,6 @@ export default class FormatListHelper extends Helper<FormatListSignature> {
       }
     }
 
-    return this.intl.formatList(value, options);
+    return this.intl.formatList(value!, options);
   }
 }

@@ -14,7 +14,7 @@ interface FormatRelativeSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string;
+  Return: string | undefined;
 }
 
 export default class FormatRelativeHelper extends Helper<FormatRelativeSignature> {
@@ -48,6 +48,6 @@ export default class FormatRelativeHelper extends Helper<FormatRelativeSignature
       }
     }
 
-    return this.intl.formatRelative(value, options);
+    return this.intl.formatRelative(value!, options);
   }
 }

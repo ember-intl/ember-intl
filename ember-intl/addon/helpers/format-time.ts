@@ -14,7 +14,7 @@ interface FormatTimeSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string;
+  Return: string | undefined;
 }
 
 export default class FormatTimeHelper extends Helper<FormatTimeSignature> {
@@ -48,6 +48,6 @@ export default class FormatTimeHelper extends Helper<FormatTimeSignature> {
       }
     }
 
-    return this.intl.formatTime(value, options);
+    return this.intl.formatTime(value!, options);
   }
 }

@@ -14,7 +14,7 @@ interface FormatNumberSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string;
+  Return: string | undefined;
 }
 
 export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
@@ -48,6 +48,6 @@ export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
       }
     }
 
-    return this.intl.formatNumber(value, options);
+    return this.intl.formatNumber(value!, options);
   }
 }

@@ -14,7 +14,7 @@ interface FormatDateSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string;
+  Return: string | undefined;
 }
 
 export default class FormatDateHelper extends Helper<FormatDateSignature> {
@@ -53,6 +53,6 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
       // }
     }
 
-    return this.intl.formatDate(value, options);
+    return this.intl.formatDate(value!, options);
   }
 }
