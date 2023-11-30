@@ -1,4 +1,5 @@
 import Helper from '@ember/component/helper';
+import { registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
@@ -9,17 +10,14 @@ export default class THelper extends Helper {
 
   allowEmpty = false;
 
-  declare unsubscribeLocaleChanged: () => void;
-
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
-    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    this.unsubscribeLocaleChanged = this.intl.onLocaleChanged(
-      this.recompute,
-      this,
-    );
+    registerDestructor(this, () => {
+      // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
+      this.intl.onLocaleChanged(this.recompute, this);
+    });
   }
 
   format(key, options) {
@@ -42,11 +40,5 @@ export default class THelper extends Helper {
     }
 
     return this.format(value, options);
-  }
-
-  willDestroy() {
-    super.willDestroy();
-
-    this.unsubscribeLocaleChanged();
   }
 }
