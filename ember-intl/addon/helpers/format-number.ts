@@ -6,7 +6,7 @@ import { isEmpty } from '@ember/utils';
 import type IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatNumber']>;
-type Value = Params[0] | null | undefined;
+type Value = number | bigint | null | undefined;
 type Options = Params[1];
 
 interface FormatNumberSignature {

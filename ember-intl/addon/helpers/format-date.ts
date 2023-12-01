@@ -6,7 +6,7 @@ import { isEmpty } from '@ember/utils';
 import type IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatDate']>;
-type Value = Params[0] | null | undefined;
+type Value = string | number | Date | null | undefined;
 type Options = Params[1];
 
 interface FormatDateSignature {
