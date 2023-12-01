@@ -23,7 +23,6 @@ module(
     test('input is null', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{! @glint-expect-error }}
           {{format-relative null unit="year"}}
         </div>
       `);

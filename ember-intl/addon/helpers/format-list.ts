@@ -12,7 +12,7 @@ type Options = Params[1];
 interface FormatListSignature {
   Args: {
     Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value?, Options?];
+    Positional: [Value?] | [Value | null | undefined, Options];
   };
   Return: string;
 }
