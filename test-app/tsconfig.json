@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "ember-intl/helpers/*": ["../ember-intl/addon/helpers/*"],
       "test-app/tests/*": ["tests/*"],
       "test-app/*": ["app/*"],
       "*": ["types/*"]

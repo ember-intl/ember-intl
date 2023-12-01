@@ -1,21 +1,20 @@
 import Helper from '@ember/component/helper';
 import { registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
-import type { SafeString } from '@ember/template/-private/handlebars';
 import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatMessage']>;
-type Value = Params[0];
+type Value = string | null | undefined;
 type Options = Params[1];
 
 interface FormatMessageSignature {
   Args: {
     Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value?, Options?];
+    Positional: [Value] | [Value, Options];
   };
-  Return: string | SafeString | undefined;
+  Return: string;
 }
 
 export default class FormatMessageHelper extends Helper<FormatMessageSignature> {
@@ -41,7 +40,7 @@ export default class FormatMessageHelper extends Helper<FormatMessageSignature> 
 
     if (isEmpty(value)) {
       if (options?.allowEmpty) {
-        return;
+        return '';
       }
 
       if (typeof value === 'undefined') {
@@ -49,6 +48,6 @@ export default class FormatMessageHelper extends Helper<FormatMessageSignature> 
       }
     }
 
-    return this.intl.formatMessage(value!, options);
+    return this.intl.formatMessage(value!, options) as unknown as string;
   }
 }

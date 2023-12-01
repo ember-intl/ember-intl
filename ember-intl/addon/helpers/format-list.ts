@@ -6,15 +6,15 @@ import { isEmpty } from '@ember/utils';
 import type IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatList']>;
-type Value = Params[0];
+type Value = string[] | null | undefined;
 type Options = Params[1];
 
 interface FormatListSignature {
   Args: {
     Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value?, Options?];
+    Positional: [Value] | [Value, Options];
   };
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class FormatListHelper extends Helper<FormatListSignature> {
@@ -40,7 +40,7 @@ export default class FormatListHelper extends Helper<FormatListSignature> {
 
     if (isEmpty(value)) {
       if (options?.allowEmpty) {
-        return;
+        return '';
       }
 
       if (typeof value === 'undefined') {

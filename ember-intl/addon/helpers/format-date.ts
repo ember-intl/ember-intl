@@ -6,15 +6,15 @@ import { isEmpty } from '@ember/utils';
 import type IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatDate']>;
-type Value = Params[0];
+type Value = string | number | Date | null | undefined;
 type Options = Params[1];
 
 interface FormatDateSignature {
   Args: {
     Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value?, Options?];
+    Positional: [Value] | [Value, Options];
   };
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class FormatDateHelper extends Helper<FormatDateSignature> {
@@ -40,7 +40,7 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
 
     if (isEmpty(value)) {
       if (options?.allowEmpty ?? true) {
-        return;
+        return '';
       }
 
       /*

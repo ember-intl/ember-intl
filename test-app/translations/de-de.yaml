@@ -1,0 +1,6 @@
+routes:
+  application:
+    title: ember-intl
+
+  smoke-tests:
+    tile: Smoke tests

@@ -96,7 +96,7 @@ module(
             currency=this.currency.unit
             format="currency"
             style="currency"
-            minimumFractionDigits="0"
+            minimumFractionDigits=0
           }}
         </div>
       `);

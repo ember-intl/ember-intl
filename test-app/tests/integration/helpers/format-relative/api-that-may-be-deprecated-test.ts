@@ -13,11 +13,7 @@ module(
     test('input is null and allowEmpty is true', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-relative
-            null
-            allowEmpty=true
-            unit="year"
-          }}
+          {{format-relative null allowEmpty=true unit="year"}}
         </div>
       `);
 
@@ -27,11 +23,7 @@ module(
     test('input is undefined and allowEmpty is true', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-relative
-            undefined
-            allowEmpty=true
-            unit="year"
-          }}
+          {{format-relative undefined allowEmpty=true unit="year"}}
         </div>
       `);
 
