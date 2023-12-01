@@ -1,6 +1,5 @@
-import translations from 'ember-intl/translations';
-
 import type IntlService from '../../services/intl';
+import translations from '../../translations';
 
 /**
  * @private
