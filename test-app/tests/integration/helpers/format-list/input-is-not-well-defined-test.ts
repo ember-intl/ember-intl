@@ -13,6 +13,7 @@ module(
     test('input is an array of numbers', async function (assert) {
       await render(hbs`
         <div data-test-output>
+          {{! @glint-expect-error }}
           {{format-list (array 1 2 3)}}
         </div>
       `);

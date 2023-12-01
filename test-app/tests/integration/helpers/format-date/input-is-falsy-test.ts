@@ -33,6 +33,7 @@ module('Integration | Helper | format-date > input is falsy', function (hooks) {
   test('input is null', async function (assert) {
     await render(hbs`
       <div data-test-output>
+        {{! @glint-expect-error }}
         {{format-date null}}
       </div>
     `);

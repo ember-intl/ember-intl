@@ -17,6 +17,7 @@ module(
 
       await render(hbs`
         <div data-test-output>
+          {{! @glint-expect-error }}
           {{format-message null}}
         </div>
       `);

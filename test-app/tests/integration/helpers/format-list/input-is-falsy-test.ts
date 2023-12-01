@@ -25,6 +25,7 @@ module('Integration | Helper | format-list > input is falsy', function (hooks) {
 
     await render(hbs`
       <div data-test-output>
+        {{! @glint-expect-error }}
         {{format-list null}}
       </div>
     `);

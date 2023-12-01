@@ -13,6 +13,7 @@ module(
     test('input is null and allowEmpty is true', async function (assert) {
       await render(hbs`
         <div data-test-output>
+          {{! @glint-expect-error }}
           {{format-message null allowEmpty=true}}
         </div>
       `);
