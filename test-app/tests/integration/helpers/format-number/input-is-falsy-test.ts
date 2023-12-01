@@ -23,7 +23,6 @@ module(
     test('input is null', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{! @glint-expect-error }}
           {{format-number null}}
         </div>
       `);

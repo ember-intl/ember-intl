@@ -42,7 +42,6 @@ module('Integration | Helper | t > input is falsy', function (hooks) {
 
     await render(hbs`
       <div data-test-output>
-        {{! @glint-expect-error }}
         {{t null}}
       </div>
     `);

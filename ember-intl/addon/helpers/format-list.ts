@@ -6,13 +6,13 @@ import { isEmpty } from '@ember/utils';
 import type IntlService from '../services/intl';
 
 type Params = Parameters<IntlService['formatList']>;
-type Value = Params[0];
+type Value = Params[0] | null | undefined;
 type Options = Params[1];
 
 interface FormatListSignature {
   Args: {
     Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value?] | [Value | null | undefined, Options];
+    Positional: [Value] | [Value, Options];
   };
   Return: string;
 }

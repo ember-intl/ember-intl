@@ -41,7 +41,6 @@ module('Integration | Helper | format-time > input is falsy', function (hooks) {
   test('input is null', async function (assert) {
     await render(hbs`
       <div data-test-output>
-        {{! @glint-expect-error }}
         {{format-time null}}
       </div>
     `);
