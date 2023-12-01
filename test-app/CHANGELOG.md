@@ -1,5 +1,15 @@
 # Changelog for test-app
 
+## 6.3.0
+
+### Minor Changes
+
+- [#1811](https://github.com/ember-intl/ember-intl/pull/1811) Rewrote tests for helpers ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#1812](https://github.com/ember-intl/ember-intl/pull/1812) Updated signatures for helpers ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.2
 
 ### Patch Changes

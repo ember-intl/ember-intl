@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.3.1
+
+### Patch Changes
+
+- [#1812](https://github.com/ember-intl/ember-intl/pull/1812) Updated signatures for helpers ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.3.0
 
 ### Minor Changes
