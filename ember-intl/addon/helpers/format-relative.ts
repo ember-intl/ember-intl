@@ -14,7 +14,7 @@ interface FormatRelativeSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class FormatRelativeHelper extends Helper<FormatRelativeSignature> {
@@ -40,7 +40,7 @@ export default class FormatRelativeHelper extends Helper<FormatRelativeSignature
 
     if (isEmpty(value)) {
       if (options?.allowEmpty) {
-        return;
+        return '';
       }
 
       if (typeof value === 'undefined') {

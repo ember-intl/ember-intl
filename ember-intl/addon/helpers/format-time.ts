@@ -14,7 +14,7 @@ interface FormatTimeSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class FormatTimeHelper extends Helper<FormatTimeSignature> {
@@ -40,7 +40,7 @@ export default class FormatTimeHelper extends Helper<FormatTimeSignature> {
 
     if (isEmpty(value)) {
       if (options?.allowEmpty) {
-        return;
+        return '';
       }
 
       if (typeof value === 'undefined') {

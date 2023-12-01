@@ -14,7 +14,7 @@ interface FormatDateSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class FormatDateHelper extends Helper<FormatDateSignature> {
@@ -40,7 +40,7 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
 
     if (isEmpty(value)) {
       if (options?.allowEmpty ?? true) {
-        return;
+        return '';
       }
 
       /*

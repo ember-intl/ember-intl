@@ -14,7 +14,7 @@ interface FormatNumberSignature {
     Named?: Options & { allowEmpty?: boolean };
     Positional: [Value?, Options?];
   };
-  Return: string | undefined;
+  Return: string;
 }
 
 export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
@@ -40,7 +40,7 @@ export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
 
     if (isEmpty(value)) {
       if (options?.allowEmpty) {
-        return;
+        return '';
       }
 
       if (typeof value === 'undefined') {
