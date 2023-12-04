@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.3.2
+
+### Patch Changes
+
+- [#1814](https://github.com/ember-intl/ember-intl/pull/1814) Reverted the removal of the class property allowEmpty ([@ijlee2](https://github.com/ijlee2))
+- [#1815](https://github.com/ember-intl/ember-intl/pull/1815) Allowed the intl service to handle removing event listeners ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.3.1
 
 ### Patch Changes
