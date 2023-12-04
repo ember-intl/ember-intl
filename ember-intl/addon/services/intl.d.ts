@@ -129,7 +129,7 @@ export default class IntlService extends Service {
     time: FormatTime;
   };
 
-  private onLocaleChanged(fn: any, context: any): () => void;
+  private onLocaleChanged(fn: any, context: any): void;
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

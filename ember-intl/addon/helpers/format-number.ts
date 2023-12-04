@@ -1,5 +1,4 @@
 import Helper from '@ember/component/helper';
-import { registerDestructor } from '@ember/destroyable';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
@@ -26,10 +25,8 @@ export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
-    registerDestructor(this, () => {
-      // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-      this.intl.onLocaleChanged(this.recompute, this);
-    });
+    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
+    this.intl.onLocaleChanged(this.recompute, this);
   }
 
   compute(
