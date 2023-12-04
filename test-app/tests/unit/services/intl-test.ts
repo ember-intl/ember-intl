@@ -1,5 +1,4 @@
 import { registerWarnHandler } from '@ember/debug';
-import { next } from '@ember/runloop';
 import { isHTMLSafe } from '@ember/template';
 import type { TestContext as BaseTestContext } from '@ember/test-helpers';
 import { settled } from '@ember/test-helpers';
@@ -19,20 +18,18 @@ module('service:init initialization', function (hooks) {
   setupTest(hooks);
 
   test('it calls `setLocale` on init', async function (this: TestContext, assert) {
-    const localeChanged = () => {
-      assert.step('localeChanged');
+    const recompute = () => {
+      assert.step('Recompute helper');
     };
 
     const Intl = this.owner.factoryFor('service:intl');
 
-    // @ts-expect-error: https://github.com/typed-ember/ember-cli-typescript/issues/1471
-    const unsubscribe = Intl.create().onLocaleChanged(localeChanged);
+    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
+    Intl.create().onLocaleChanged(recompute, undefined);
 
-    next(() => {
-      unsubscribe();
+    await settled();
 
-      assert.verifySteps(['localeChanged']);
-    });
+    assert.verifySteps(['Recompute helper']);
   });
 });
 
@@ -273,14 +270,17 @@ module('service:intl', function (hooks) {
   });
 
   test('changing the locale emits the `localeChanged` event and the new locale is available', async function (this: TestContext, assert) {
-    const newLocale = ['de', 'en-us'];
+    const recompute = () => {
+      assert.step('Recompute helper');
+    };
 
-    const unsubscribe = this.intl.onLocaleChanged(() => {
-      assert.deepEqual(this.intl.locale as string[], newLocale);
-      unsubscribe();
-    });
+    this.intl.onLocaleChanged(recompute, undefined);
 
-    this.intl.setLocale(newLocale);
+    this.intl.setLocale(['de', 'en-us']);
+
+    await settled();
+
+    assert.verifySteps(['Recompute helper']);
   });
 
   test('updates document `lang` attribute on locale change', async function (this: TestContext, assert) {
