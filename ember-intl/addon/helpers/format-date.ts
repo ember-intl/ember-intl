@@ -20,6 +20,8 @@ interface FormatDateSignature {
 export default class FormatDateHelper extends Helper<FormatDateSignature> {
   @service declare intl: IntlService;
 
+  allowEmpty = true;
+
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -39,7 +41,7 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options?.allowEmpty ?? true) {
+      if (options?.allowEmpty ?? this.allowEmpty) {
         return '';
       }
 

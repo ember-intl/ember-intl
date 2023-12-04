@@ -20,6 +20,8 @@ interface TSignature {
 export default class THelper extends Helper<TSignature> {
   @service declare intl: IntlService;
 
+  allowEmpty = false;
+
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -39,7 +41,7 @@ export default class THelper extends Helper<TSignature> {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options?.allowEmpty) {
+      if (options?.allowEmpty ?? this.allowEmpty) {
         return '';
       }
 

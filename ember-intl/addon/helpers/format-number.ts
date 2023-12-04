@@ -20,6 +20,8 @@ interface FormatNumberSignature {
 export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
   @service declare intl: IntlService;
 
+  allowEmpty = false;
+
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -39,7 +41,7 @@ export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options?.allowEmpty) {
+      if (options?.allowEmpty ?? this.allowEmpty) {
         return '';
       }
 
