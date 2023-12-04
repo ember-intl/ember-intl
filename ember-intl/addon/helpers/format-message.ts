@@ -20,6 +20,8 @@ interface FormatMessageSignature {
 export default class FormatMessageHelper extends Helper<FormatMessageSignature> {
   @service declare intl: IntlService;
 
+  allowEmpty = false;
+
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -39,7 +41,7 @@ export default class FormatMessageHelper extends Helper<FormatMessageSignature> 
       : namedOptions;
 
     if (isEmpty(value)) {
-      if (options?.allowEmpty) {
+      if (options?.allowEmpty ?? this.allowEmpty) {
         return '';
       }
 
