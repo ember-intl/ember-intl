@@ -1,6 +1,7 @@
 import { getOwner } from '@ember/application';
 import { makeArray } from '@ember/array';
 import { assert } from '@ember/debug';
+import { registerDestructor } from '@ember/destroyable';
 import { dependentKeyCompat } from '@ember/object/compat';
 import { cancel, next } from '@ember/runloop';
 import Service from '@ember/service';
@@ -342,14 +343,13 @@ export default class IntlService extends Service {
    * @private
    * @param fn
    * @param context
-   * @returns {Function} unsubscribed from localeChanged
    */
   onLocaleChanged(fn, context) {
     this._ee.on('localeChanged', fn, context);
 
-    return () => {
+    registerDestructor(this, () => {
       this._ee.off('localeChanged', fn, context);
-    };
+    });
   }
 }
 
