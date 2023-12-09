@@ -1,8 +1,8 @@
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
+import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest, updateLocale } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 
 module(
   'Integration | Helper | t > input is a translation key',
@@ -27,7 +27,7 @@ module(
         </div>
       `);
 
-      await updateLocale('de-de');
+      await setLocale('de-de');
 
       assert.dom('[data-test-output]').hasText('Hallo Welt!');
     });
