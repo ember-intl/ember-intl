@@ -1,5 +1,7 @@
-import type { TestContext as BaseTestContext } from '@ember/test-helpers';
-import { settled } from '@ember/test-helpers';
+import {
+  settled,
+  type TestContext as BaseTestContext,
+} from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { TOptions } from 'ember-intl/services/intl';
 import type { Formats, Translations } from 'ember-intl/types';
