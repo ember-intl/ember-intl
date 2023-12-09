@@ -6,9 +6,9 @@ import {
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import type { IntlService } from 'ember-intl';
-import { setupIntl } from 'ember-intl/test-support';
+import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest, updateLocale } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 
 class Currency {
   @service declare intl: IntlService;
@@ -73,7 +73,7 @@ module(
         </div>
       `);
 
-      await updateLocale('de-de');
+      await setLocale('de-de');
 
       assert.dom('[data-test-output]').hasText(/12\.345\.678,90\s€/);
     });

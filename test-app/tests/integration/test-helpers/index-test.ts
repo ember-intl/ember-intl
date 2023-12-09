@@ -55,7 +55,7 @@ module('Integration | Test Helpers', function (hooks) {
         `locale was not '${germanLocale} before switching to it`,
       );
 
-      setLocale('de-de');
+      await setLocale('de-de');
       assert.deepEqual(
         this.intl.locale,
         [germanLocale],
@@ -88,7 +88,7 @@ module('Integration | Test Helpers', function (hooks) {
         'addTranslations: if explicit locale give, does not add the translations to currently active locale',
       );
 
-      setLocale(englishLocale);
+      await setLocale(englishLocale);
       assert.strictEqual(
         this.intl.t('some.english.translation'),
         'Good day, sir.',

@@ -1,4 +1,4 @@
-import { settled, visit } from '@ember/test-helpers';
+import { visit } from '@ember/test-helpers';
 import { setLocale } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'test-app/tests/helpers';
@@ -9,9 +9,7 @@ module('Acceptance | smoke-tests', function (hooks) {
   module('de-de', function () {
     test('We can see translations', async function (assert) {
       await visit('/smoke-tests');
-
-      setLocale(['de-de']);
-      await settled();
+      await setLocale(['de-de']);
 
       assert
         .dom('[data-test-field="Format Number"]')
