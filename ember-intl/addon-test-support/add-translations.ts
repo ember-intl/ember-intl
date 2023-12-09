@@ -1,5 +1,4 @@
 import { assert } from '@ember/debug';
-import { get } from '@ember/object';
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
@@ -44,18 +43,18 @@ export async function addTranslations(
 
   const intl = owner.lookup('service:intl') as IntlService;
 
+  let _localeName: string;
+  let _translations: Translations;
+
   if (typeof localeNameOrTranslations === 'object') {
-    const localeName = pickLastLocale(get(intl, 'locale'));
-    const translations = localeNameOrTranslations;
-
-    intl.addTranslations(localeName, translations);
-
-    await settled();
-
-    return;
+    _localeName = pickLastLocale(intl.locale);
+    _translations = localeNameOrTranslations;
+  } else {
+    _localeName = localeNameOrTranslations;
+    _translations = translations!;
   }
 
-  intl.addTranslations(localeNameOrTranslations, translations!);
+  intl.addTranslations(_localeName, _translations);
 
   await settled();
 }
