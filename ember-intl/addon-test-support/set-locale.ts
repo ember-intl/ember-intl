@@ -12,8 +12,8 @@ export async function setLocale(localeName: string | string[]): Promise<void> {
   const { owner } = getContext() as TestContext;
 
   assert(
-    'The current test context has no owner. Did you forget to call `setupTest(hooks)`, `setupContext(this)` or some other test helper?',
-    typeof owner === 'object' && typeof owner.lookup === 'function',
+    'The current test has no owner. To use `setLocale()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
+    owner,
   );
 
   const intl = owner.lookup('service:intl') as IntlService;
