@@ -1,15 +1,14 @@
 import { assert } from '@ember/debug';
-import type { TestContext } from '@ember/test-helpers';
-import { getContext } from '@ember/test-helpers';
+import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 
 /**
- * Invokes the `setLocale` method of the `intl` service.
+ * Update the locale, as if the end-user had changed it.
  *
  * @function setLocale
  * @param {string|string[]} localeName
  */
-export function setLocale(localeName: string | string[]): void {
+export async function setLocale(localeName: string | string[]): Promise<void> {
   const { owner } = getContext() as TestContext;
 
   assert(
@@ -20,4 +19,6 @@ export function setLocale(localeName: string | string[]): void {
   const intl = owner.lookup('service:intl') as IntlService;
 
   intl.setLocale(localeName);
+
+  await settled();
 }
