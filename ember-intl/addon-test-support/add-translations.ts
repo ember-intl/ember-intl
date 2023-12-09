@@ -1,7 +1,6 @@
 import { assert } from '@ember/debug';
 import { get } from '@ember/object';
-import type { TestContext } from '@ember/test-helpers';
-import { getContext } from '@ember/test-helpers';
+import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
@@ -14,25 +13,28 @@ function pickLastLocale(localeName: string | string[]): string {
 }
 
 /**
- * Invokes the `addTranslations` method of the `intl` service. The first
- * parameter, the `localeName`, is optional and will default to the last
- * currently enabled locale. This means, that if you invoke this helper with
- * just translations, they will be added to the last locale and all other
- * locales will be tried before.
+ * Adds translations, as if the end-developer had somehow added them.
+ *
+ * The first parameter, `localeName`, is optional and defaults to
+ * the current locale (the last enabled locale). So if you invoke the
+ * test helper with just the translations, they will be added to the
+ * last locale and all other locales will be tried before.
  *
  * @function addTranslations
  * @param {string} [localeName]
  * @param {object} translations
  */
-export function addTranslations(translations: Translations): void;
-export function addTranslations(
+export async function addTranslations(
+  translations: Translations,
+): Promise<void>;
+export async function addTranslations(
   localeName: string,
   translations: Translations,
-): void;
-export function addTranslations(
+): Promise<void>;
+export async function addTranslations(
   localeNameOrTranslations: string | Translations,
   translations?: Translations,
-): void {
+): Promise<void> {
   const { owner } = getContext() as TestContext;
 
   assert(
@@ -48,8 +50,12 @@ export function addTranslations(
 
     intl.addTranslations(localeName, translations);
 
+    await settled();
+
     return;
   }
 
   intl.addTranslations(localeNameOrTranslations, translations!);
+
+  await settled();
 }

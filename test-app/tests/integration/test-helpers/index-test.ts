@@ -62,7 +62,7 @@ module('Integration | Test Helpers', function (hooks) {
         `locale was switched with 'setLocale'`,
       );
 
-      addTranslations({
+      await addTranslations({
         some: {
           german: {
             translation: 'Guten Tag.',
@@ -76,7 +76,7 @@ module('Integration | Test Helpers', function (hooks) {
       );
 
       const englishLocale = 'en-us';
-      addTranslations(englishLocale, {
+      await addTranslations(englishLocale, {
         some: {
           english: {
             translation: 'Good day, sir.',
@@ -159,7 +159,7 @@ module('Integration | Test Helpers', function (hooks) {
       test('hooks were properly executed and translations have been added (1)', async function (this: TestContext, assert) {
         const ENGLISH_LOCALE = 'en-us';
 
-        addTranslations(ENGLISH_LOCALE, {
+        await addTranslations(ENGLISH_LOCALE, {
           some: {
             translation: 'The {foo} is a lie.',
             nested_translation: '{count, plural, =1 {Cake} other {Cakes}}',

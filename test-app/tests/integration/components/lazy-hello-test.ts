@@ -1,4 +1,4 @@
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { addTranslations, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
@@ -11,7 +11,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     setupIntl(nestedHooks);
 
     test('Translations are loaded before the component is rendered', async function (assert) {
-      addTranslations({
+      await addTranslations({
         'lazy-hello': {
           message: 'Hello, {name}!',
         },
@@ -54,13 +54,11 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'Before translations are loaded, we can write assertions against the test helper t().',
         );
 
-      addTranslations({
+      await addTranslations({
         'lazy-hello': {
           message: 'Hello, {name}!',
         },
       });
-
-      await settled();
 
       assert
         .dom('[data-test-message]')
@@ -78,7 +76,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         );
     });
 
-    test('When translations are loaded after rendering, we need to call settled() to see the effect', async function (assert) {
+    test('When translations are loaded after rendering, we need to add await to see the effect', async function (assert) {
       await render(hbs`
         <LazyHello @name="Zoey" />
       `);
@@ -93,15 +91,15 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .dom('[data-test-message]')
         .doesNotIncludeText(
           'Hello, Zoey!',
-          'BUG: After translations are loaded, we still cannot write assertions against a string.',
+          "Because we didn't add `await`, we still cannot write assertions against a string.",
         )
         .hasText(
           't:lazy-hello.message:("name":"Zoey")',
-          'BUG: After translations are loaded, we still see the missing-message string.',
+          "Because we didn't add `await`, we still see the missing-message string.",
         )
         .doesNotIncludeText(
           t('lazy-hello.message', { name: 'Zoey' }),
-          'BUG: After translations are loaded, we no longer can write assertions against the test helper t().',
+          "Because we didn't add `await`, we no longer can write assertions against the test helper t().",
         );
     });
   });
@@ -110,7 +108,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     setupIntl(nestedHooks, 'de-de');
 
     test('Translations are loaded before the component is rendered', async function (assert) {
-      addTranslations('de-de', {
+      await addTranslations('de-de', {
         'lazy-hello': {
           message: 'Hallo, {name}!',
         },
@@ -153,13 +151,11 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'Before translations are loaded, we can write assertions against the test helper t().',
         );
 
-      addTranslations('de-de', {
+      await addTranslations('de-de', {
         'lazy-hello': {
           message: 'Hallo, {name}!',
         },
       });
-
-      await settled();
 
       assert
         .dom('[data-test-message]')
@@ -177,7 +173,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         );
     });
 
-    test('When translations are loaded after rendering, we need to call settled() to see the effect', async function (assert) {
+    test('When translations are loaded after rendering, we need to add await to see the effect', async function (assert) {
       await render(hbs`
         <LazyHello @name="Zoey" />
       `);
@@ -192,15 +188,15 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .dom('[data-test-message]')
         .doesNotIncludeText(
           'Hallo, Zoey!',
-          'BUG: After translations are loaded, we still cannot write assertions against a string.',
+          "Because we didn't add `await`, we still cannot write assertions against a string.",
         )
         .hasText(
           't:lazy-hello.message:("name":"Zoey")',
-          'BUG: After translations are loaded, we still see the missing-message string.',
+          "Because we didn't add `await`, we still see the missing-message string.",
         )
         .doesNotIncludeText(
           t('lazy-hello.message', { name: 'Zoey' }),
-          'BUG: After translations are loaded, we no longer can write assertions against the test helper t().',
+          "Because we didn't add `await`, we no longer can write assertions against the test helper t().",
         );
     });
   });
