@@ -3,35 +3,36 @@ import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
-function pickLastLocale(localeName: string | string[]): string {
-  if (typeof localeName === 'string') {
-    return localeName;
+function pickLastLocale(locale: string | string[]): string {
+  if (typeof locale === 'string') {
+    return locale;
   }
 
-  return localeName[localeName.length - 1]!;
+  return locale[locale.length - 1]!;
 }
 
 /**
- * Adds translations, as if the end-developer had somehow added them.
+ * Updates the translations as if you had somehow added them (e.g.
+ * via lazy loading).
  *
- * The first parameter, `localeName`, is optional and defaults to
- * the current locale (the last enabled locale). So if you invoke the
- * test helper with just the translations, they will be added to the
- * last locale and all other locales will be tried before.
+ * The first parameter, `locale`, is optional and defaults to the last
+ * currently active locale. For example, if the current locales are
+ * `['en-ca', 'en-gb', 'en-us']`, then the translations will be added
+ * to `'en-us'` by default.
  *
  * @function addTranslations
- * @param {string} [localeName]
+ * @param {string} [locale]
  * @param {object} translations
  */
 export async function addTranslations(
   translations: Translations,
 ): Promise<void>;
 export async function addTranslations(
-  localeName: string,
+  locale: string,
   translations: Translations,
 ): Promise<void>;
 export async function addTranslations(
-  localeNameOrTranslations: string | Translations,
+  localeOrTranslations: string | Translations,
   translations?: Translations,
 ): Promise<void> {
   const { owner } = getContext() as TestContext;
@@ -43,18 +44,18 @@ export async function addTranslations(
 
   const intl = owner.lookup('service:intl') as IntlService;
 
-  let _localeName: string;
+  let _locale: string;
   let _translations: Translations;
 
-  if (typeof localeNameOrTranslations === 'object') {
-    _localeName = pickLastLocale(intl.locale);
-    _translations = localeNameOrTranslations;
+  if (typeof localeOrTranslations === 'object') {
+    _locale = pickLastLocale(intl.locale);
+    _translations = localeOrTranslations;
   } else {
-    _localeName = localeNameOrTranslations;
+    _locale = localeOrTranslations;
     _translations = translations!;
   }
 
-  intl.addTranslations(_localeName, _translations);
+  intl.addTranslations(_locale, _translations);
 
   await settled();
 }
