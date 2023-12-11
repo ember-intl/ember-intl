@@ -12,9 +12,6 @@ interface MacrosSignature {
   };
 }
 
-type MacrosArgs = MacrosSignature['Args'];
-
-export default interface MacrosComponent extends Component<MacrosArgs> {}
 export default class MacrosComponent extends Component<MacrosSignature> {
   @service declare intl: Services['intl'];
 
