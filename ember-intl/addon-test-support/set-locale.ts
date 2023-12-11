@@ -3,7 +3,7 @@ import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 
 /**
- * Update the locale, as if the end-user had changed it.
+ * Updates the locale as if the user had changed their preferred language.
  *
  * @function setLocale
  * @param {string|string[]} localeName
