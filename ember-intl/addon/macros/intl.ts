@@ -15,7 +15,7 @@ export type GetterFn<T, C = unknown> = (
  * @private
  * @hide
  */
-export const __intlInjectionName = `intl-${Date.now().toString(
+const __intlInjectionName = `intl-${Date.now().toString(
   36,
 )}` as 'intl-PRIVATE-SYMBOL';
 
