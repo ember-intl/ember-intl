@@ -4,7 +4,7 @@ declare module 'ember-intl' {
 }
 
 declare module 'ember-intl/macros' {
-  export { intl } from 'ember-intl/macros';
+  export { intl, raw, t } from 'ember-intl/macros';
 }
 
 declare module 'ember-intl/services/intl' {
