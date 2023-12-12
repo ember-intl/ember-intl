@@ -1,20 +1,16 @@
 import { get } from '@ember/object';
-// eslint-disable-next-line ember/no-computed-properties-in-native-classes
-import type ComputedProperty from '@ember/object/computed';
 
 import EmptyObject from '../-private/utils/empty-object';
-import type IntlService from '../services/intl';
 import type { TOptions } from '../services/intl';
 import intl from './intl';
 
-function partitionDynamicValuesAndStaticValues(
-  options: Record<string, string | Raw<string>>,
-) {
+function extractValues(options: Record<string, string | Raw<string>>) {
   const dynamicValues = new EmptyObject() as Record<string, string>;
   const staticValues = new EmptyObject() as Record<string, string>;
 
-  Object.keys(options).forEach((key) => {
+  Object.keys(options).forEach((key: string) => {
     const value = options[key];
+
     if (value instanceof Raw) {
       staticValues[key] = value.valueOf();
     } else if (typeof value !== 'undefined') {
@@ -22,7 +18,7 @@ function partitionDynamicValuesAndStaticValues(
     }
   });
 
-  return [dynamicValues, staticValues] as const;
+  return { dynamicValues, staticValues };
 }
 
 function mapPropertiesByHash<
@@ -52,14 +48,18 @@ class Raw<T> {
     this._value = value;
   }
 
-  valueOf() {
+  valueOf(): T {
     return this._value;
   }
 
-  toString() {
+  toString(): string {
     return String(this._value);
   }
 }
+
+type MacroOptions = {
+  [K in keyof TOptions]: TOptions[K] | Raw<TOptions[K]>;
+};
 
 /**
  * Use this utility function to mark a value as a raw literal.
@@ -72,25 +72,21 @@ export function raw<T>(value: T): Raw<T> {
   return new Raw(value);
 }
 
-type MacroOptions = {
-  [K in keyof TOptions]: TOptions[K] | Raw<TOptions[K]>;
-};
-
-export default function createTranslatedComputedProperty(
-  translationKey: string,
-  options?: MacroOptions,
-): ComputedProperty<ReturnType<IntlService['t']>> {
+export default function t(key: string, options?: MacroOptions) {
   const hash = options || new EmptyObject();
-  const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(
+
+  const { dynamicValues, staticValues } = extractValues(
     hash as Record<string, string | Raw<string>>,
   );
+
   const dependentKeys = Object.values(dynamicValues);
 
-  // @ts-expect-error TS2556: Can't deal with leading rest arguments
-  return intl(...dependentKeys, (intl, propertyKey, ctx) =>
-    intl.t(translationKey, {
+  return intl(...dependentKeys, (intl, propertyKey, ctx) => {
+    const _options = {
       ...staticValues,
       ...mapPropertiesByHash(ctx as Record<string, unknown>, dynamicValues),
-    }),
-  );
+    };
+
+    return intl.t(key, _options);
+  });
 }

@@ -205,7 +205,7 @@ module('service:intl', function (hooks) {
   test('translationsFor returns messages', async function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, { foo: 'bar' });
 
-    assert.strictEqual(this.intl.translationsFor(LOCALE).foo, 'bar');
+    assert.strictEqual(this.intl.translationsFor(LOCALE)['foo'], 'bar');
     assert.deepEqual(this.intl.translationsFor('ZZ'), undefined);
   });
 
@@ -274,6 +274,7 @@ module('service:intl', function (hooks) {
       assert.step('Recompute helper');
     };
 
+    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
     this.intl.onLocaleChanged(recompute, undefined);
 
     this.intl.setLocale(['de', 'en-us']);
