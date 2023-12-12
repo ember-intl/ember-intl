@@ -64,6 +64,7 @@ type MacroOptions = {
 /**
  * Use this utility function to mark a value as a raw literal.
  *
+ * @deprecated Will be removed in `ember-intl@7.0.0`.
  * @param {*} value The value to mark as a raw literal.
  * @return The same value, but boxed in the `Raw` class so that the consuming
  *  macro understands that this value should be used as is.
@@ -72,6 +73,9 @@ export function raw<T>(value: T): Raw<T> {
   return new Raw(value);
 }
 
+/**
+ * @deprecated Will be removed in `ember-intl@7.0.0`.
+ */
 export default function t(key: string, options?: MacroOptions) {
   const hash = options || new EmptyObject();
 

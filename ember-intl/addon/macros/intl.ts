@@ -18,6 +18,15 @@ type KeyOrGetterFn<T> = string | GetterFn<T>;
  */
 const __intlInjectionName = `intl-${Date.now().toString(36)}`;
 
+/**
+ * @deprecated Will be removed in v7.
+ *
+ * In classic components, inject the `intl` service
+ * and create a computed property.
+ *
+ * In Glimmer components, inject the `intl` service
+ * and create a getter.
+ */
 export default function intl<T>(...args: KeyOrGetterFn<T>[]) {
   const getterFn = args.pop() as GetterFn<T>;
 
