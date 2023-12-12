@@ -694,6 +694,9 @@ importers:
       ember-source-channel-url:
         specifier: ^3.0.0
         version: 3.0.0
+      ember-template-imports:
+        specifier: ^3.4.2
+        version: 3.4.2
       ember-template-lint:
         specifier: ^5.13.0
         version: 5.13.0
