@@ -1,7 +1,7 @@
 import { setOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import type { TestContext as BaseTestContext } from '@ember/test-helpers';
-import { raw, t } from 'ember-intl';
+import { raw, t } from 'ember-intl/macros';
 import { addTranslations, setLocale, setupIntl } from 'ember-intl/test-support';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
