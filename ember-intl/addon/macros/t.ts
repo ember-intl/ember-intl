@@ -1,9 +1,6 @@
 import { get } from '@ember/object';
-// eslint-disable-next-line ember/no-computed-properties-in-native-classes
-import type ComputedProperty from '@ember/object/computed';
 
 import EmptyObject from '../-private/utils/empty-object';
-import type IntlService from '../services/intl';
 import type { TOptions } from '../services/intl';
 import intl from './intl';
 
@@ -79,7 +76,7 @@ type MacroOptions = {
 export default function createTranslatedComputedProperty(
   translationKey: string,
   options?: MacroOptions,
-): ComputedProperty<ReturnType<IntlService['t']>> {
+) {
   const hash = options || new EmptyObject();
   const [dynamicValues, staticValues] = partitionDynamicValuesAndStaticValues(
     hash as Record<string, string | Raw<string>>,
