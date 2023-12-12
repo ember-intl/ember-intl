@@ -1,1 +1,1 @@
-export { default as IntlService } from './services/intl';
+export type { default as IntlService } from './services/intl';
