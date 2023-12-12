@@ -97,6 +97,16 @@ this.intl.t('a_key_that_is_missing', {
 
 ## Computed Property Macros
 
+**Warning: Macros are deprecated and will be removed in `ember-intl@7.0.0`.** 
+
+
+### Migration guide
+
+In classic and Glimmer components, inject the `intl` service to access its methods.
+
+If you want to create a value that depends on other things, you can use the `@computed` decorator (i.e. create a computed property) in classic and the native getter in Glimmer components. Alternatively, you can use `ember-intl`'s helpers.
+
+
 ### t
 
 `t` is a computed property macro that makes it easy to define translated
