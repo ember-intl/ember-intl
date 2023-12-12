@@ -114,7 +114,7 @@ computed properties. For example:
 
 ```js
 import Component from '@ember/component';
-import { t } from 'ember-intl';
+import { t } from 'ember-intl/macros';
 
 export default Component.extend({
   followersCount: 1,
@@ -141,7 +141,7 @@ the `raw` function like in
 
 ```js
 import Component from '@ember/component';
-import { raw, t } from 'ember-intl';
+import { raw, t } from 'ember-intl/macros';
 
 export default Component.extend({
   userName: 'Tom',
@@ -166,7 +166,7 @@ directly to access other methods from the `intl` service. It looks like this:
 
 ```js
 import Component from '@ember/component';
-import { intl } from 'ember-intl';
+import { intl } from 'ember-intl/macros';
 
 export default Component.extend({
   dateFormat: 'hhmmss',
