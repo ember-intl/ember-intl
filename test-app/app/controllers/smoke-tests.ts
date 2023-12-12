@@ -5,7 +5,7 @@ import type { IntlService } from 'ember-intl';
 export default class SmokeController extends Controller {
   @service declare intl: IntlService;
 
-  get nestedTranslation(): boolean {
+  get nestedTranslation(): string {
     return this.intl.t('smoke-tests.parent.child');
   }
 }
