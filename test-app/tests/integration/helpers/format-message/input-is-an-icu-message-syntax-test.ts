@@ -1,40 +1,12 @@
 import { setOwner } from '@ember/application';
-import { inject as service } from '@ember/service';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import type { IntlService } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-
-class Population {
-  @service declare intl: IntlService;
-
-  get data() {
-    return {
-      censusDate: new Date('2020-01-01'),
-      city: 'Atlanta',
-      population: 5475213,
-    };
-  }
-
-  get description(): string {
-    switch (this.intl.primaryLocale) {
-      case 'de-de': {
-        return '{city} hat eine Bevölkerung von {population, number, integer} zum {censusDate, date, long}.';
-      }
-
-      case 'en-us': {
-        return '{city} has a population of {population, number, integer} as of {censusDate, date, long}.';
-      }
-    }
-
-    throw new Error('Locale must be de-de or en-us.');
-  }
-}
+import { Population, setupRenderingTest } from 'test-app/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   population: Population;
@@ -49,7 +21,6 @@ module(
     hooks.beforeEach(function (this: TestContext) {
       this.population = new Population();
 
-      // Allow injecting the intl service
       setOwner(this.population, this.owner);
     });
 
