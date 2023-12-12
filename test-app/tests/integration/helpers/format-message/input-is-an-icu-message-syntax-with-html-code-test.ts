@@ -1,33 +1,13 @@
 import { setOwner } from '@ember/application';
-import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import type { IntlService } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-
-class Royalty {
-  @service declare intl: IntlService;
-
-  get message(): string {
-    switch (this.intl.primaryLocale) {
-      case 'de-de': {
-        return `<div class="message">Hallo, {name}! Du hast {points, number} Treuepunkte.</div>`;
-      }
-
-      case 'en-us': {
-        return `<div class="message">Hello, {name}! You have {points, number} royalty points.</div>`;
-      }
-    }
-
-    throw new Error('Locale must be de-de or en-us.');
-  }
-}
+import { Royalty, setupRenderingTest } from 'test-app/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   name: string;
@@ -45,7 +25,6 @@ module(
 
       this.royalty = new Royalty();
 
-      // Allow injecting the intl service
       setOwner(this.royalty, this.owner);
     });
 

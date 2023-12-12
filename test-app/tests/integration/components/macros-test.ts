@@ -4,23 +4,10 @@ import {
   settled,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-
-class User {
-  @tracked _name = 'Zoey';
-
-  get name(): string {
-    return this._name;
-  }
-
-  set name(name: string) {
-    this._name = name;
-  }
-}
+import { setupRenderingTest, User } from 'test-app/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   user: User;

@@ -1,32 +1,12 @@
 import { setOwner } from '@ember/application';
-import { inject as service } from '@ember/service';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import type { IntlService } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-
-class Currency {
-  @service declare intl: IntlService;
-
-  get unit(): string {
-    switch (this.intl.primaryLocale) {
-      case 'de-de': {
-        return 'EUR';
-      }
-
-      case 'en-us': {
-        return 'USD';
-      }
-    }
-
-    throw new Error('Locale must be de-de or en-us.');
-  }
-}
+import { Currency, setupRenderingTest } from 'test-app/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   currency: Currency;
@@ -42,7 +22,6 @@ module(
     hooks.beforeEach(function (this: TestContext) {
       this.currency = new Currency();
 
-      // Allow injecting the intl service
       setOwner(this.currency, this.owner);
 
       this.number = 12345678.9;
