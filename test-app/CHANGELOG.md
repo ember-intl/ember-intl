@@ -1,5 +1,15 @@
 # Changelog for test-app
 
+## 6.3.2
+
+### Patch Changes
+
+- [#1823](https://github.com/ember-intl/ember-intl/pull/1823) Improved <template>-tag support ([@ijlee2](https://github.com/ijlee2))
+- [#1821](https://github.com/ember-intl/ember-intl/pull/1821) Fixed types for macros ([@ijlee2](https://github.com/ijlee2))
+- [#1820](https://github.com/ember-intl/ember-intl/pull/1820) Rewrote tests for macros ([@ijlee2](https://github.com/ijlee2))
+- [#1818](https://github.com/ember-intl/ember-intl/pull/1818) Allowed the test helper addTranslations() to call settled() ([@ijlee2](https://github.com/ijlee2))
+- [#1817](https://github.com/ember-intl/ember-intl/pull/1817) Allowed the test helper setLocale() to call settled() ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.3.1
 
 ### Patch Changes

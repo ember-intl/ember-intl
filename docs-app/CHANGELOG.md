@@ -1,5 +1,12 @@
 # Changelog for docs-app
 
+## 6.2.3
+
+### Patch Changes
+
+- [#1822](https://github.com/ember-intl/ember-intl/pull/1822) Marked macros as deprecated ([@ijlee2](https://github.com/ijlee2))
+- [#1819](https://github.com/ember-intl/ember-intl/pull/1819) Updated documentation for testing ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.2
 
 ### Patch Changes
