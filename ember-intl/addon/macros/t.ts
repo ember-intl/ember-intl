@@ -86,7 +86,6 @@ export default function createTranslatedComputedProperty(
   );
   const dependentKeys = Object.values(dynamicValues);
 
-  // @ts-expect-error TS2556: Can't deal with leading rest arguments
   return intl(...dependentKeys, (intl, propertyKey, ctx) =>
     intl.t(translationKey, {
       ...staticValues,
