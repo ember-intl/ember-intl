@@ -12,9 +12,10 @@ ember install ember-intl
 ```
 
 <details>
-<summary>Use Glint? ✨</summary>
 
-- Update your template registry to extend this addon's. Check the [Glint documentation](https://typed-ember.gitbook.io/glint/using-glint/ember/using-addons#using-glint-enabled-addons) for more information.
+<summary>Use Glint or <code>&lt;template&gt;</code> tag? ✨</summary>
+
+- Update your template registry to extend this addon's. Check the [Glint documentation](https://typed-ember.gitbook.io/glint/environments/ember/using-addons#using-glint-enabled-addons) for more information.
 
     ```ts
     /* types/index.d.ts */
@@ -30,7 +31,28 @@ ember install ember-intl
     }
     ```
 
-  If you are on `ember-intl@v5`, use the types provided by [@gavant/glint-template-types](https://github.com/Gavant/glint-template-types/tree/v0.3.4/types/ember-intl/helpers).
+- If you are using [`<template>` tag](https://github.com/ember-template-imports/ember-template-imports), you are good to go! Use the named import to consume things.
+
+    ```ts
+    /* app/components/hello.gts */
+    import type { TOC } from '@ember/component/template-only';
+    import { t } from 'ember-intl';
+
+    interface HelloSignature {
+      Args: {
+        name: string;
+      };
+    }
+
+    const HelloComponent: TOC<HelloSignature> =
+      <template>
+        <div data-test-message>
+          {{t "hello.message" name=@name}}
+        </div>
+      </template>
+
+    export default HelloComponent;
+    ```
 
 </details>
 
