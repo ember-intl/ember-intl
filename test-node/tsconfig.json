@@ -1,0 +1,8 @@
+{
+  "extends": "@shared-configs/typescript/node18",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist-for-testing"
+  },
+  "include": ["tests"]
+}

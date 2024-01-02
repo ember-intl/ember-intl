@@ -2,6 +2,10 @@
 /dist/
 /dist-for-testing/
 
+# dependencies
+/node_modules/
+
 # misc
 !.*
 .*/
+/tests/fixtures/
