@@ -15,7 +15,7 @@
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "test": "mocha \"unit/**/*.{cjs,js}\""
+    "test": "mocha \"{tests,unit}/**/*.{cjs,js}\""
   },
   "devDependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.3",
