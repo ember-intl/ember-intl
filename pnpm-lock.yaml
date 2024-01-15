@@ -745,9 +745,6 @@ importers:
       chai:
         specifier: ^4.3.10
         version: 4.3.10
-      chai-as-promised:
-        specifier: ^7.1.1
-        version: 7.1.1(chai@4.3.10)
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
@@ -6571,15 +6568,6 @@ packages:
     dependencies:
       ansicolors: 0.2.1
       redeyed: 1.0.1
-    dev: true
-
-  /chai-as-promised@7.1.1(chai@4.3.10):
-    resolution: {integrity: sha512-azL6xMoi+uxu6z4rhWQ1jbdUhOMhis2PvscD/xjLqNMkv3BPPp2JyyuTHOrf9BOosGpNQ11v6BKv/g57RXbiaA==}
-    peerDependencies:
-      chai: '>= 2.1.2 < 5'
-    dependencies:
-      chai: 4.3.10
-      check-error: 1.0.3
     dev: true
 
   /chai@4.3.10:
