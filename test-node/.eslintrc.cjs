@@ -7,7 +7,7 @@ module.exports = {
   overrides: [
     // Test files
     {
-      files: ['unit/**/*.{cjs,cts,js,ts}'],
+      files: ['{tests,unit}/**/*.{cjs,cts,js,ts}'],
       env: {
         mocha: true,
       },

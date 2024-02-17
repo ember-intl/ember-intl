@@ -79,7 +79,7 @@ module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, {
     hello: {
-      message: 'What\'s up, ${name}?',
+      message: 'What\'s up, {name}?',
     },
   });
 
@@ -109,7 +109,7 @@ module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'de-de', {
     hello: {
-      message: 'Na, ${name}?',
+      message: 'Na, {name}?',
     },
   });
 
@@ -200,7 +200,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
 
 Use this test helper if you don't need to check the actual value of a translation, or you _can't_ get the value because of how your project is set up. It returns what the `intl` service's `t()` method would return.
 
-In most cases, we recommend _not_ using this test helper. In essence, you are writing an idempotent statement (`t()` is equal to `t()`), which may be considered useless.
+In most cases, we recommend _not_ using this test helper. In essence, you are writing a tautology (`t()` is equal to `t()`), which may be considered useless.
 
 When possible, pass the actual value to an `.hasText()` or `.includesText()` assertion. This way, you know what your app displayed at a given point of time. If the translation is changed later, you can get immediate feedback from failing assertions. (Was the change correct?)
 
