@@ -1,6 +1,15 @@
 {
   "extends": "@shared-configs/typescript/ember",
   "compilerOptions": {
+    // allow declarations to be emitted when despite having glint-nocheck directives.
+    // See https://github.com/typed-ember/glint/issues/599
+    "noEmitOnError": false,
+
+    "declarationDir": "declarations",
+
+    // The combination of `baseUrl` with `paths` allows Ember's classic package
+    // layout, which is not resolvable with the Node resolution algorithm, to
+    // work with TypeScript.
     "baseUrl": ".",
     "paths": {
       "dummy/tests/*": ["tests/*"],
@@ -12,13 +21,6 @@
       "*": ["types/*"]
     }
   },
-  "include": [
-    "addon/**/*",
-    "addon-test-support/**/*",
-    "app/**/*",
-    "tests/**/*",
-    "types/**/*"
-  ],
   "glint": {
     "environment": [
       "ember-loose",
