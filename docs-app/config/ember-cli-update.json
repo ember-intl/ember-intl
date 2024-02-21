@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "ember-cli",
-      "version": "5.4.0",
+      "version": "5.6.0",
       "blueprints": [
         {
           "name": "app",
@@ -11,8 +11,7 @@
           "codemodsSource": "ember-app-codemods-manifest@1",
           "isBaseBlueprint": true,
           "options": [
-            "--no-welcome",
-            "--ci-provider=github",
+            "--embroider",
             "--typescript"
           ]
         }
