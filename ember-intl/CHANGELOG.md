@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.4.1
+
+### Patch Changes
+
+- [#1833](https://github.com/ember-intl/ember-intl/pull/1833) Updated dependencies. Added ember-lts-5.4 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+- [#1825](https://github.com/ember-intl/ember-intl/pull/1825) Support native types from ember-source ([@jelhan](https://github.com/jelhan))
+
 ## 6.4.0
 
 ### Minor Changes

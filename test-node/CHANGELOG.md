@@ -1,5 +1,13 @@
 # Changelog for test-node
 
+## 6.2.2
+
+### Patch Changes
+
+- [#1833](https://github.com/ember-intl/ember-intl/pull/1833) Updated dependencies. Added ember-lts-5.4 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+- [#1828](https://github.com/ember-intl/ember-intl/pull/1828) Rewrote Node tests (Part 2) ([@ijlee2](https://github.com/ijlee2))
+- [#1827](https://github.com/ember-intl/ember-intl/pull/1827) Rewrote Node tests (Part 1) ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.1
 
 ### Patch Changes

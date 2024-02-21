@@ -1,5 +1,12 @@
 # Changelog for docs-app
 
+## 6.2.4
+
+### Patch Changes
+
+- [#1833](https://github.com/ember-intl/ember-intl/pull/1833) Updated dependencies. Added ember-lts-5.4 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+- [#1824](https://github.com/ember-intl/ember-intl/pull/1824) Updated import paths for macros ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.2.3
 
 ### Patch Changes
