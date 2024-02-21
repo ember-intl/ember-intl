@@ -8,4 +8,4 @@ routes:
     title: ember-intl
 
   smoke-tests:
-    tile: Smoke tests
+    title: Smoke tests
