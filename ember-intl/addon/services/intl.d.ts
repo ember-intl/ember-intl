@@ -1,6 +1,6 @@
-import type { EmberRunTimer } from '@ember/runloop/types';
+import type { Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
-import type { SafeString } from '@ember/template/-private/handlebars';
+import type { SafeString } from '@ember/template';
 
 import type {
   FormatDate,
