@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { htmlSafe, isHTMLSafe } from '@ember/template';
-import type { SafeString } from '@ember/template/-private/handlebars';
+import { htmlSafe, isHTMLSafe, type SafeString } from '@ember/template';
 import type { IntlShape, MessageDescriptor } from '@formatjs/intl';
 import Ember from 'ember';
 import type { PrimitiveType } from 'intl-messageformat';

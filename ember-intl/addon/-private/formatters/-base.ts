@@ -1,4 +1,4 @@
-import type { SafeString } from '@ember/template/-private/handlebars';
+import type { SafeString } from '@ember/template';
 import type { IntlShape } from '@formatjs/intl';
 
 import type { Formats } from '../../types';

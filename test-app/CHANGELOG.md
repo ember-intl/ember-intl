@@ -1,5 +1,11 @@
 # Changelog for test-app
 
+## 6.3.3
+
+### Patch Changes
+
+- [#1833](https://github.com/ember-intl/ember-intl/pull/1833) Updated dependencies. Added ember-lts-5.4 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.3.2
 
 ### Patch Changes

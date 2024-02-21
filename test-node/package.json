@@ -1,6 +1,6 @@
 {
   "name": "test-node",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "private": true,
   "description": "Tests for the Node part of ember-intl",
   "repository": {
@@ -18,16 +18,16 @@
     "test": "mocha \"{tests,unit}/**/*.{cjs,js}\""
   },
   "devDependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.7.3",
+    "@formatjs/icu-messageformat-parser": "^2.7.6",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
-    "chai": "^4.3.10",
+    "chai": "^5.1.0",
     "concurrently": "^8.2.2",
     "ember-intl": "workspace:*",
-    "eslint": "^8.54.0",
-    "mocha": "^10.2.0",
-    "prettier": "^3.1.0"
+    "eslint": "^8.56.0",
+    "mocha": "^10.3.0",
+    "prettier": "^3.2.5"
   },
   "engines": {
     "node": "16.* || >= 18"
