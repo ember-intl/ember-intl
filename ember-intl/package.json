@@ -45,7 +45,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
-    "prepack": "tsc --project tsconfig.declarations.json",
+    "prepack": "./build.sh; tsc --project tsconfig.declarations.json",
     "postpack": "rimraf declarations",
     "start": "ember serve",
     "test": "ember test --test-port=0"
