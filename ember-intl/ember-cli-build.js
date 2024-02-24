@@ -15,6 +15,10 @@ module.exports = function (defaults) {
       },
     },
 
+    'ember-cli-babel': {
+      enableTypeScriptTransform: true,
+    },
+
     'ember-fetch': {
       preferNative: true,
     },

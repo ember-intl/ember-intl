@@ -19,6 +19,13 @@ const OBSOLETE_OPTIONS = ['locales', 'disablePolyfill', 'autoPolyfill'];
 
 module.exports = {
   name: 'ember-intl',
+
+  options: {
+    'ember-cli-babel': {
+      enableTypeScriptTransform: true,
+    },
+  },
+
   logger: null,
   configOptions: null,
   isLocalizationFramework: true,

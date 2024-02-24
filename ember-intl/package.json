@@ -10,6 +10,21 @@
     "ember",
     "internationalization"
   ],
+  "typesVersions": {
+    "*": {
+      "test-support": [
+        "declarations/addon-test-support/index.d.ts"
+      ],
+      "test-support/*": [
+        "declarations/addon-test-support/*",
+        "declarations/addon-test-support/*/index.d.ts"
+      ],
+      "*": [
+        "declarations/addon/*",
+        "declarations/addon/*/index.d.ts"
+      ]
+    }
+  },
   "homepage": "https://ember-intl.github.io/ember-intl/",
   "repository": {
     "type": "git",
@@ -30,8 +45,8 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
-    "prepack": "ember ts:precompile",
-    "postpack": "ember ts:clean",
+    "prepack": "tsc --project tsconfig.declarations.json",
+    "postpack": "rimraf declarations",
     "start": "ember serve",
     "test": "ember test --test-port=0"
   },
@@ -48,7 +63,6 @@
     "cldr-core": "^44.1.0",
     "ember-auto-import": "^2.7.2",
     "ember-cli-babel": "^8.2.0",
-    "ember-cli-typescript": "^5.2.1",
     "eventemitter3": "^5.0.1",
     "extend": "^3.0.2",
     "fast-memoize": "^2.5.2",
@@ -104,6 +118,7 @@
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
     "qunit-dom": "^3.0.0",
+    "rimraf": "^5.0.5",
     "typescript": "^5.3.3",
     "webpack": "^5.90.3"
   },

@@ -5,6 +5,7 @@ import {
 import type { IntlService } from 'ember-intl';
 import type { TOptions } from 'ember-intl/services/intl';
 import type { Formats, Translations } from 'ember-intl/types';
+import type from 'ember-qunit';
 
 import { missingMessage } from './-private/missing-message';
 import { addTranslations } from './add-translations';
