@@ -100,9 +100,6 @@ export default class IntlService extends Service {
     opts?: { resilient?: boolean },
   ): string | undefined;
 
-  private validateKeys(keys: string[]): void;
-  private validateKeys(keys: unknown[]): void | never;
-
   t(
     key: string,
     options?: TOptions & { htmlSafe?: false },

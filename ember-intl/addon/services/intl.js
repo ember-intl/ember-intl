@@ -216,15 +216,6 @@ export default class IntlService extends Service {
     );
   }
 
-  validateKeys(keys) {
-    return keys.forEach((key) => {
-      assert(
-        `[ember-intl] expected translation key "${key}" to be of type String but received: "${typeof key}"`,
-        typeof key === 'string',
-      );
-    });
-  }
-
   /** @public **/
   t(key, options = {}) {
     let keys = [key];
@@ -237,7 +228,12 @@ export default class IntlService extends Service {
       }
     }
 
-    this.validateKeys(keys);
+    keys.forEach((key) => {
+      assert(
+        `[ember-intl] expected translation key "${key}" to be of type String but received: "${typeof key}"`,
+        typeof key === 'string',
+      );
+    });
 
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
