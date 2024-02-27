@@ -5,7 +5,6 @@ import { registerDestructor } from '@ember/destroyable';
 import { dependentKeyCompat } from '@ember/object/compat';
 import { cancel, next } from '@ember/runloop';
 import Service from '@ember/service';
-import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
 import { tracked } from '@glimmer/tracking';
 import EventEmitter from 'eventemitter3';
 
@@ -18,6 +17,11 @@ import {
   FormatTime,
 } from '../-private/formatters';
 import flatten from '../-private/utils/flatten';
+import {
+  createIntl,
+  createIntlCache,
+  onFormatjsIntlError,
+} from '../-private/utils/formatjs';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
 import isArrayEqual from '../-private/utils/is-array-equal';
@@ -117,7 +121,6 @@ export default class IntlService extends Service {
       this._formats = this._owner.resolveRegistration('formats:main') || {};
     }
 
-    this.onIntlError = this.onIntlError.bind(this);
     this.getIntl = this.getIntl.bind(this);
     this.getOrCreateIntl = this.getOrCreateIntl.bind(this);
 
@@ -127,12 +130,6 @@ export default class IntlService extends Service {
   willDestroy() {
     super.willDestroy(...arguments);
     cancel(this._timer);
-  }
-
-  onIntlError(err) {
-    if (err.code !== IntlErrorCode.MISSING_TRANSLATION) {
-      throw err;
-    }
   }
 
   /** @public **/
@@ -197,15 +194,17 @@ export default class IntlService extends Service {
    * @param {String} locale Locale of intl obj to create
    */
   createIntl(locale, messages = {}) {
+    const { _formats: formats } = this;
     const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+
     return createIntl(
       {
-        locale: resolvedLocale,
+        defaultFormats: formats,
         defaultLocale: resolvedLocale,
-        formats: this._formats,
-        defaultFormats: this._formats,
-        onError: this.onIntlError,
+        formats,
+        locale: resolvedLocale,
         messages,
+        onError: onFormatjsIntlError,
       },
       this._cache,
     );
