@@ -23,8 +23,12 @@ import {
 } from '../-private/utils/formatjs';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
-import { hasLocaleChanged } from '../-private/utils/locale';
-import normalizeLocale from '../-private/utils/normalize-locale';
+import {
+  convertToArray,
+  convertToString,
+  hasLocaleChanged,
+  normalizeLocale,
+} from '../-private/utils/locale';
 
 export default class IntlService extends Service {
   /**
@@ -37,13 +41,7 @@ export default class IntlService extends Service {
 
   /** @public **/
   set locale(localeName) {
-    let proposedLocale;
-
-    if (typeof localeName === 'string') {
-      proposedLocale = [localeName].map(normalizeLocale);
-    } else if (Array.isArray(localeName)) {
-      proposedLocale = localeName.map(normalizeLocale);
-    }
+    const proposedLocale = convertToArray(localeName).map(normalizeLocale);
 
     if (hasLocaleChanged(proposedLocale, this._locale)) {
       this._locale = proposedLocale;
@@ -175,13 +173,15 @@ export default class IntlService extends Service {
    * @private
    */
   getIntl(locale) {
-    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    const resolvedLocale = convertToString(locale);
+
     return this._intls[resolvedLocale];
   }
 
   getOrCreateIntl(locale, messages) {
-    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    const resolvedLocale = convertToString(locale);
     const existingIntl = this._intls[resolvedLocale];
+
     if (!existingIntl) {
       this._intls = {
         ...this._intls,
@@ -206,7 +206,7 @@ export default class IntlService extends Service {
    */
   createIntl(locale, messages = {}) {
     const { _formats: formats } = this;
-    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    const resolvedLocale = convertToString(locale);
 
     return createIntl(
       {
@@ -309,13 +309,7 @@ export default class IntlService extends Service {
       return this._locale || [];
     }
 
-    if (typeof localeName === 'string') {
-      return [localeName].map(normalizeLocale);
-    }
-
-    if (Array.isArray(localeName)) {
-      return localeName.map(normalizeLocale);
-    }
+    return convertToArray(localeName).map(normalizeLocale);
   }
 
   /** @private **/
