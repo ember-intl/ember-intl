@@ -21,7 +21,7 @@ export interface TOptions {
 type FormatterProxy<T extends keyof IntlService['_formatters']> = (
   value: Parameters<IntlService['_formatters'][T]['format']>[1],
   formatOptions?: Parameters<IntlService['_formatters'][T]['format']>[2] & {
-    locale?: string | [string, ...string[]];
+    locale?: string | string[];
   },
 ) => ReturnType<IntlService['_formatters'][T]['format']>;
 
@@ -39,7 +39,7 @@ export default class IntlService extends Service {
    */
   readonly locales: string[];
 
-  locale: string | [string, ...string[]];
+  locale: string | string[];
 
   /**
    * Returns the first locale of the currently active locales
@@ -61,21 +61,21 @@ export default class IntlService extends Service {
     maybeAst: string,
     options?: Partial<Record<string, unknown>> & {
       htmlSafe?: false;
-      locale?: string | [string, ...string[]];
+      locale?: string | string[];
     },
   ): string;
   formatMessage(
     maybeAst: string,
     options: Partial<Record<string, unknown>> & {
       htmlSafe: true;
-      locale?: string | [string, ...string[]];
+      locale?: string | string[];
     },
   ): SafeString;
   formatMessage(
     maybeAst: string,
     options?: Partial<Record<string, unknown>> & {
       htmlSafe?: boolean;
-      locale?: string | [string, ...string[]];
+      locale?: string | string[];
     },
   ): string | SafeString;
 
@@ -83,20 +83,22 @@ export default class IntlService extends Service {
 
   private _timer?: EmberRunTimer;
 
-  private _formatters: ReturnType<IntlService['_createFormatters']>;
+  private _formatters: {
+    date: FormatDate;
+    list: FormatList;
+    message: FormatMessage;
+    number: FormatNumber;
+    relative: FormatRelative;
+    time: FormatTime;
+  };
 
   private _owner: unknown;
-
-  private onError(info: { error: unknown; kind: unknown }): never;
 
   lookup(
     key: string,
     localeName?: string | string[],
     opts?: { resilient?: boolean },
   ): string | undefined;
-
-  private validateKeys(keys: string[]): void;
-  private validateKeys(keys: unknown[]): void | never;
 
   t(
     key: string,
@@ -119,15 +121,6 @@ export default class IntlService extends Service {
   private _localeWithDefault(localeName?: string | string[]): string[];
 
   private _updateDocumentLanguage(locales: string[]): void;
-
-  private _createFormatters(): {
-    date: FormatDate;
-    list: FormatList;
-    message: FormatMessage;
-    number: FormatNumber;
-    relative: FormatRelative;
-    time: FormatTime;
-  };
 
   private onLocaleChanged(fn: any, context: any): void;
 }

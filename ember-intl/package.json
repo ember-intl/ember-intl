@@ -75,7 +75,6 @@
     "@shared-configs/typescript": "workspace:*",
     "@types/ember": "^4.0.11",
     "@types/ember__application": "^4.0.11",
-    "@types/ember__array": "^4.0.10",
     "@types/ember__component": "^4.0.22",
     "@types/ember__controller": "^4.0.12",
     "@types/ember__debug": "^4.0.8",

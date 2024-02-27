@@ -1,11 +1,9 @@
 import { getOwner } from '@ember/application';
-import { makeArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { registerDestructor } from '@ember/destroyable';
 import { dependentKeyCompat } from '@ember/object/compat';
 import { cancel, next } from '@ember/runloop';
 import Service from '@ember/service';
-import { createIntl, createIntlCache, IntlErrorCode } from '@formatjs/intl';
 import { tracked } from '@glimmer/tracking';
 import EventEmitter from 'eventemitter3';
 
@@ -18,10 +16,19 @@ import {
   FormatTime,
 } from '../-private/formatters';
 import flatten from '../-private/utils/flatten';
+import {
+  createIntl,
+  createIntlCache,
+  onFormatjsIntlError,
+} from '../-private/utils/formatjs';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
-import isArrayEqual from '../-private/utils/is-array-equal';
-import normalizeLocale from '../-private/utils/normalize-locale';
+import {
+  convertToArray,
+  convertToString,
+  hasLocaleChanged,
+  normalizeLocale,
+} from '../-private/utils/locale';
 
 export default class IntlService extends Service {
   /**
@@ -34,10 +41,10 @@ export default class IntlService extends Service {
 
   /** @public **/
   set locale(localeName) {
-    const proposed = makeArray(localeName).map(normalizeLocale);
+    const proposedLocale = convertToArray(localeName).map(normalizeLocale);
 
-    if (!isArrayEqual(proposed, this._locale)) {
-      this._locale = proposed;
+    if (hasLocaleChanged(proposedLocale, this._locale)) {
+      this._locale = proposedLocale;
 
       cancel(this._timer);
       this._timer = next(() => {
@@ -88,7 +95,14 @@ export default class IntlService extends Service {
   _formats = null;
 
   /** @private **/
-  _formatters = null;
+  _formatters = {
+    message: new FormatMessage(),
+    relative: new FormatRelative(),
+    number: new FormatNumber(),
+    time: new FormatTime(),
+    date: new FormatDate(),
+    list: new FormatList(),
+  };
 
   /** @private */
   @tracked _intls = null;
@@ -111,13 +125,11 @@ export default class IntlService extends Service {
     this.setLocale(initialLocale);
 
     this._owner = getOwner(this);
-    this._formatters = this._createFormatters();
 
     if (!this._formats) {
       this._formats = this._owner.resolveRegistration('formats:main') || {};
     }
 
-    this.onIntlError = this.onIntlError.bind(this);
     this.getIntl = this.getIntl.bind(this);
     this.getOrCreateIntl = this.getOrCreateIntl.bind(this);
 
@@ -127,17 +139,6 @@ export default class IntlService extends Service {
   willDestroy() {
     super.willDestroy(...arguments);
     cancel(this._timer);
-  }
-
-  onIntlError(err) {
-    if (err.code !== IntlErrorCode.MISSING_TRANSLATION) {
-      throw err;
-    }
-  }
-
-  /** @private **/
-  onError({ /* kind, */ error }) {
-    throw error;
   }
 
   /** @public **/
@@ -172,13 +173,15 @@ export default class IntlService extends Service {
    * @private
    */
   getIntl(locale) {
-    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    const resolvedLocale = convertToString(locale);
+
     return this._intls[resolvedLocale];
   }
 
   getOrCreateIntl(locale, messages) {
-    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    const resolvedLocale = convertToString(locale);
     const existingIntl = this._intls[resolvedLocale];
+
     if (!existingIntl) {
       this._intls = {
         ...this._intls,
@@ -202,27 +205,20 @@ export default class IntlService extends Service {
    * @param {String} locale Locale of intl obj to create
    */
   createIntl(locale, messages = {}) {
-    const resolvedLocale = Array.isArray(locale) ? locale[0] : locale;
+    const { _formats: formats } = this;
+    const resolvedLocale = convertToString(locale);
+
     return createIntl(
       {
-        locale: resolvedLocale,
+        defaultFormats: formats,
         defaultLocale: resolvedLocale,
-        formats: this._formats,
-        defaultFormats: this._formats,
-        onError: this.onIntlError,
+        formats,
+        locale: resolvedLocale,
         messages,
+        onError: onFormatjsIntlError,
       },
       this._cache,
     );
-  }
-
-  validateKeys(keys) {
-    return keys.forEach((key) => {
-      assert(
-        `[ember-intl] expected translation key "${key}" to be of type String but received: "${typeof key}"`,
-        typeof key === 'string',
-      );
-    });
   }
 
   /** @public **/
@@ -237,7 +233,12 @@ export default class IntlService extends Service {
       }
     }
 
-    this.validateKeys(keys);
+    keys.forEach((key) => {
+      assert(
+        `[ember-intl] expected translation key "${key}" to be of type String but received: "${typeof key}"`,
+        typeof key === 'string',
+      );
+    });
 
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
@@ -308,13 +309,7 @@ export default class IntlService extends Service {
       return this._locale || [];
     }
 
-    if (typeof localeName === 'string') {
-      return makeArray(localeName).map(normalizeLocale);
-    }
-
-    if (Array.isArray(localeName)) {
-      return localeName.map(normalizeLocale);
-    }
+    return convertToArray(localeName).map(normalizeLocale);
   }
 
   /** @private **/
@@ -328,17 +323,6 @@ export default class IntlService extends Service {
     }
   }
 
-  /** @private */
-  _createFormatters() {
-    return {
-      message: new FormatMessage(),
-      relative: new FormatRelative(),
-      number: new FormatNumber(),
-      time: new FormatTime(),
-      date: new FormatDate(),
-      list: new FormatList(),
-    };
-  }
   /**
    * @private
    * @param fn
