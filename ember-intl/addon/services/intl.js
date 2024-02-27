@@ -1,5 +1,4 @@
 import { getOwner } from '@ember/application';
-import { makeArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { registerDestructor } from '@ember/destroyable';
 import { dependentKeyCompat } from '@ember/object/compat';
@@ -24,7 +23,7 @@ import {
 } from '../-private/utils/formatjs';
 import getDOM from '../-private/utils/get-dom';
 import hydrate from '../-private/utils/hydrate';
-import isArrayEqual from '../-private/utils/is-array-equal';
+import { hasLocaleChanged } from '../-private/utils/locale';
 import normalizeLocale from '../-private/utils/normalize-locale';
 
 export default class IntlService extends Service {
@@ -38,10 +37,16 @@ export default class IntlService extends Service {
 
   /** @public **/
   set locale(localeName) {
-    const proposed = makeArray(localeName).map(normalizeLocale);
+    let proposedLocale;
 
-    if (!isArrayEqual(proposed, this._locale)) {
-      this._locale = proposed;
+    if (typeof localeName === 'string') {
+      proposedLocale = [localeName].map(normalizeLocale);
+    } else if (Array.isArray(localeName)) {
+      proposedLocale = localeName.map(normalizeLocale);
+    }
+
+    if (hasLocaleChanged(proposedLocale, this._locale)) {
+      this._locale = proposedLocale;
 
       cancel(this._timer);
       this._timer = next(() => {
@@ -305,7 +310,7 @@ export default class IntlService extends Service {
     }
 
     if (typeof localeName === 'string') {
-      return makeArray(localeName).map(normalizeLocale);
+      return [localeName].map(normalizeLocale);
     }
 
     if (Array.isArray(localeName)) {
