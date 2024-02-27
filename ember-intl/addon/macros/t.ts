@@ -1,12 +1,11 @@
 import { get } from '@ember/object';
 
-import EmptyObject from '../-private/utils/empty-object';
 import type { TOptions } from '../services/intl';
 import intl from './intl';
 
 function extractValues(options: Record<string, string | Raw<string>>) {
-  const dynamicValues = new EmptyObject() as Record<string, string>;
-  const staticValues = new EmptyObject() as Record<string, string>;
+  const dynamicValues = {} as Record<string, string>;
+  const staticValues = {} as Record<string, string>;
 
   Object.keys(options).forEach((key: string) => {
     const value = options[key];
@@ -25,7 +24,7 @@ function mapPropertiesByHash<
   O extends Record<string, unknown>,
   H extends Record<string, keyof O>,
 >(object: O, hash: H): { [K in keyof H]: O[H[K]] } {
-  const result = new EmptyObject() as { [K in keyof H]: O[H[K]] };
+  const result = {} as { [K in keyof H]: O[H[K]] };
 
   (Object.keys(hash) as (keyof H)[]).forEach((key) => {
     result[key] = get(object, hash[key]) as O[H[typeof key]];
@@ -77,7 +76,7 @@ export function raw<T>(value: T): Raw<T> {
  * @deprecated Will be removed in `ember-intl@7.0.0`.
  */
 export default function t(key: string, options?: MacroOptions) {
-  const hash = options || new EmptyObject();
+  const hash = options || {};
 
   const { dynamicValues, staticValues } = extractValues(
     hash as Record<string, string | Raw<string>>,
