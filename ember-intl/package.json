@@ -17,12 +17,21 @@
   },
   "license": "MIT",
   "author": "jason.mitchell.w@gmail.com",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "declarations/*",
+        "declarations/*/index.d.ts"
+      ]
+    }
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "scripts": {
     "build": "ember build --environment=production",
+    "build:types": "glint --declaration",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint .",
@@ -30,8 +39,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
-    "prepack": "ember ts:precompile",
-    "postpack": "ember ts:clean",
+    "prepack": "pnpm run build:types",
     "start": "ember serve",
     "test": "ember test --test-port=0"
   },
