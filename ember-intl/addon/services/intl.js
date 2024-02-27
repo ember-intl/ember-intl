@@ -92,7 +92,14 @@ export default class IntlService extends Service {
   _formats = null;
 
   /** @private **/
-  _formatters = null;
+  _formatters = {
+    message: new FormatMessage(),
+    relative: new FormatRelative(),
+    number: new FormatNumber(),
+    time: new FormatTime(),
+    date: new FormatDate(),
+    list: new FormatList(),
+  };
 
   /** @private */
   @tracked _intls = null;
@@ -115,7 +122,6 @@ export default class IntlService extends Service {
     this.setLocale(initialLocale);
 
     this._owner = getOwner(this);
-    this._formatters = this._createFormatters();
 
     if (!this._formats) {
       this._formats = this._owner.resolveRegistration('formats:main') || {};
@@ -322,17 +328,6 @@ export default class IntlService extends Service {
     }
   }
 
-  /** @private */
-  _createFormatters() {
-    return {
-      message: new FormatMessage(),
-      relative: new FormatRelative(),
-      number: new FormatNumber(),
-      time: new FormatTime(),
-      date: new FormatDate(),
-      list: new FormatList(),
-    };
-  }
   /**
    * @private
    * @param fn

@@ -83,7 +83,14 @@ export default class IntlService extends Service {
 
   private _timer?: EmberRunTimer;
 
-  private _formatters: ReturnType<IntlService['_createFormatters']>;
+  private _formatters: {
+    date: FormatDate;
+    list: FormatList;
+    message: FormatMessage;
+    number: FormatNumber;
+    relative: FormatRelative;
+    time: FormatTime;
+  };
 
   private _owner: unknown;
 
@@ -117,15 +124,6 @@ export default class IntlService extends Service {
   private _localeWithDefault(localeName?: string | string[]): string[];
 
   private _updateDocumentLanguage(locales: string[]): void;
-
-  private _createFormatters(): {
-    date: FormatDate;
-    list: FormatList;
-    message: FormatMessage;
-    number: FormatNumber;
-    relative: FormatRelative;
-    time: FormatTime;
-  };
 
   private onLocaleChanged(fn: any, context: any): void;
 }
