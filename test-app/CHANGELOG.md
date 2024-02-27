@@ -1,5 +1,12 @@
 # Changelog for test-app
 
+## 6.3.4
+
+### Patch Changes
+
+- [#1834](https://github.com/ember-intl/ember-intl/pull/1834) Fixed URL in generated ember-intl.js config file ([@bertdeblock](https://github.com/bertdeblock))
+- [#1838](https://github.com/ember-intl/ember-intl/pull/1838) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.3.3
 
 ### Patch Changes

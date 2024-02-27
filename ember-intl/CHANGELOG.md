@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.5.0
+
+### Minor Changes
+
+- [#1837](https://github.com/ember-intl/ember-intl/pull/1837) Refactored private utilities ([@ijlee2](https://github.com/ijlee2))
+- [#1836](https://github.com/ember-intl/ember-intl/pull/1836) Refactored intl service ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#1838](https://github.com/ember-intl/ember-intl/pull/1838) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1834](https://github.com/ember-intl/ember-intl/pull/1834) Fixed URL in generated ember-intl.js config file ([@bertdeblock](https://github.com/bertdeblock))
+
 ## 6.4.1
 
 ### Patch Changes
