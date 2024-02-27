@@ -21,7 +21,7 @@ export interface TOptions {
 type FormatterProxy<T extends keyof IntlService['_formatters']> = (
   value: Parameters<IntlService['_formatters'][T]['format']>[1],
   formatOptions?: Parameters<IntlService['_formatters'][T]['format']>[2] & {
-    locale?: string | [string, ...string[]];
+    locale?: string | string[];
   },
 ) => ReturnType<IntlService['_formatters'][T]['format']>;
 
@@ -39,7 +39,7 @@ export default class IntlService extends Service {
    */
   readonly locales: string[];
 
-  locale: string | [string, ...string[]];
+  locale: string | string[];
 
   /**
    * Returns the first locale of the currently active locales
@@ -61,21 +61,21 @@ export default class IntlService extends Service {
     maybeAst: string,
     options?: Partial<Record<string, unknown>> & {
       htmlSafe?: false;
-      locale?: string | [string, ...string[]];
+      locale?: string | string[];
     },
   ): string;
   formatMessage(
     maybeAst: string,
     options: Partial<Record<string, unknown>> & {
       htmlSafe: true;
-      locale?: string | [string, ...string[]];
+      locale?: string | string[];
     },
   ): SafeString;
   formatMessage(
     maybeAst: string,
     options?: Partial<Record<string, unknown>> & {
       htmlSafe?: boolean;
-      locale?: string | [string, ...string[]];
+      locale?: string | string[];
     },
   ): string | SafeString;
 
