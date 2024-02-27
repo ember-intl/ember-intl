@@ -15,7 +15,6 @@ import {
   FormatRelative,
   FormatTime,
 } from '../-private/formatters';
-import flatten from '../-private/utils/flatten';
 import {
   createIntl,
   createIntlCache,
@@ -29,6 +28,7 @@ import {
   hasLocaleChanged,
   normalizeLocale,
 } from '../-private/utils/locale';
+import { flattenKeys } from '../-private/utils/translations';
 
 export default class IntlService extends Service {
   /**
@@ -294,7 +294,9 @@ export default class IntlService extends Service {
   /** @public **/
   addTranslations(localeName, payload) {
     const locale = normalizeLocale(localeName);
-    this.getOrCreateIntl(locale, flatten(payload));
+    const messages = flattenKeys(payload);
+
+    this.getOrCreateIntl(locale, messages);
   }
 
   /** @public **/
