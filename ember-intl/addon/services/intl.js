@@ -135,11 +135,6 @@ export default class IntlService extends Service {
     }
   }
 
-  /** @private **/
-  onError({ /* kind, */ error }) {
-    throw error;
-  }
-
   /** @public **/
   lookup(key, localeName, options = {}) {
     const localeNames = this._localeWithDefault(localeName);

@@ -87,8 +87,6 @@ export default class IntlService extends Service {
 
   private _owner: unknown;
 
-  private onError(info: { error: unknown; kind: unknown }): never;
-
   lookup(
     key: string,
     localeName?: string | string[],
