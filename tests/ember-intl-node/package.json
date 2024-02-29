@@ -1,0 +1,35 @@
+{
+  "name": "test-ember-intl-node",
+  "version": "6.2.3",
+  "private": true,
+  "description": "Tests for the Node part of ember-intl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "license": "MIT",
+  "author": "jason.mitchell.w@gmail.com",
+  "type": "module",
+  "scripts": {
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "test": "mocha \"{tests,unit}/**/*.{cjs,js}\""
+  },
+  "devDependencies": {
+    "@formatjs/icu-messageformat-parser": "^2.7.6",
+    "@shared-configs/eslint-config-node": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "broccoli-test-helper": "^2.0.0",
+    "chai": "^5.1.0",
+    "concurrently": "^8.2.2",
+    "ember-intl": "workspace:*",
+    "eslint": "^8.57.0",
+    "mocha": "^10.3.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": "16.* || >= 18"
+  }
+}

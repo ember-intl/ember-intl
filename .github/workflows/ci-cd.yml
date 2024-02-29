@@ -19,10 +19,10 @@ jobs:
     strategy:
       matrix:
         package-location:
-          - 'docs-app'
-          - 'ember-intl'
-          - 'test-app'
-          - 'test-node'
+          - 'docs/ember-intl'
+          - 'packages/ember-intl'
+          - 'tests/ember-intl'
+          - 'tests/ember-intl-node'
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
@@ -53,10 +53,10 @@ jobs:
     strategy:
       matrix:
         package-location:
-          - 'docs-app'
-          - 'ember-intl'
-          - 'test-app'
-          - 'test-node'
+          - 'docs/ember-intl'
+          - 'packages/ember-intl'
+          - 'tests/ember-intl'
+          - 'tests/ember-intl-node'
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
@@ -81,8 +81,8 @@ jobs:
         working-directory: ${{ matrix.package-location }}
 
 
-  test-compatibility:
-    name: Test compatibility
+  test-compatibility-ember-intl:
+    name: Test compatibility (ember-intl)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -120,11 +120,11 @@ jobs:
 
       - name: Test
         run: pnpm test:ember-compatibility ${{ matrix.scenario }} --- pnpm test
-        working-directory: 'test-app'
+        working-directory: 'tests/ember-intl'
 
 
-  test-node-windows:
-    name: Test Node (Windows)
+  test-ember-intl-node-windows:
+    name: Test (tests/ember-intl-node, Windows)
     runs-on: windows-latest
     timeout-minutes: 5
     steps:
@@ -147,13 +147,13 @@ jobs:
 
       - name: Test
         run: pnpm test
-        working-directory: 'test-node'
+        working-directory: 'tests/ember-intl-node'
 
 
   deploy-documentation:
     name: Deploy documentation
     runs-on: ubuntu-latest
-    needs: [lint, test, test-compatibility, test-node-windows]
+    needs: [lint, test, test-compatibility-ember-intl, test-ember-intl-node-windows]
     timeout-minutes: 5
     # Only run on pushes to the main branch or a tag (i.e. ignore pull requests and cron)
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
@@ -192,7 +192,7 @@ jobs:
       - name: Deploy the latest documentation
         if: github.ref == 'refs/heads/main'
         run: pnpm release:documentation --activate --verbose
-        working-directory: 'docs-app'
+        working-directory: 'docs/ember-intl'
         env:
           # Rebuild the demo application
           ADDON_DOCS_UPDATE_LATEST: 'true'
@@ -200,4 +200,4 @@ jobs:
       - name: Deploy the tagged documentation
         if: startsWith(github.ref, 'refs/tags/')
         run: pnpm release:documentation --activate --verbose
-        working-directory: 'docs-app'
+        working-directory: 'docs/ember-intl'

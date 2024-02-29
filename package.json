@@ -15,7 +15,7 @@
     "lint:fix": "pnpm --filter '*' lint:fix",
     "release:changelog": "changeset version",
     "release:package": "changeset publish",
-    "start": "pnpm --filter docs-app start",
+    "start": "pnpm --filter docs-app-for-ember-intl start",
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
