@@ -7,7 +7,10 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest, User } from 'test-app/tests/helpers';
+import {
+  setupRenderingTest,
+  User,
+} from 'test-app-for-ember-intl/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   user: User;

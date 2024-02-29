@@ -1,4 +1,4 @@
-# Changelog for test-app
+# Changelog for test-app-for-ember-intl
 
 ## 6.3.4
 

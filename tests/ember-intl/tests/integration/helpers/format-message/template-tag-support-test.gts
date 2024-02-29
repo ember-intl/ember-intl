@@ -3,7 +3,7 @@ import { render } from '@ember/test-helpers';
 import { formatMessage } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { Population, setupRenderingTest } from 'test-app/tests/helpers';
+import { Population, setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module(
   'Integration | Helper | format-message > <template> tag support',

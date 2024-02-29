@@ -5,7 +5,7 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   date: Date;

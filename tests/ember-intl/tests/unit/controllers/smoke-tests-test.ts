@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'test-app/tests/helpers';
+import { setupTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module('Unit | Controller | smoke-tests', function (hooks) {
   setupTest(hooks);

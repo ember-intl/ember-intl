@@ -2,7 +2,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { addTranslations, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module('Integration | Component | lazy-hello', function (hooks) {
   setupRenderingTest(hooks);

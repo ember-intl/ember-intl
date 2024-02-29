@@ -1,7 +1,7 @@
 import { visit } from '@ember/test-helpers';
 import { setLocale } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'test-app/tests/helpers';
+import { setupApplicationTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module('Acceptance | smoke-tests', function (hooks) {
   setupApplicationTest(hooks);
