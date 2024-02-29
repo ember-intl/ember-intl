@@ -11,7 +11,7 @@ module.exports = function (defaults) {
     },
 
     'ember-cli-addon-docs': {
-      documentingAddonAt: '../ember-intl',
+      documentingAddonAt: '../../packages/ember-intl',
     },
 
     'ember-cli-babel': {

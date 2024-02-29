@@ -31,7 +31,7 @@
 
 <summary>Run the demo app</summary>
 
-1. Once dependencies have been installed, you can run the demo app (also called `docs-app`).
+1. Once dependencies have been installed, you can run the [demo app](./docs/ember-intl).
 
     ```sh
     # From the workspace root

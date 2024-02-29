@@ -1,6 +1,5 @@
 packages:
   - configs/**
-  - docs-app
-  - ember-intl
-  - test-app
-  - test-node
+  - docs/**
+  - packages/ember-intl
+  - tests/**
