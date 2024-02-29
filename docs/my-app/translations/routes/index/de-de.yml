@@ -1,0 +1,2 @@
+routes.index:
+  title: "Willkommen bei <code>ember-intl</code>"

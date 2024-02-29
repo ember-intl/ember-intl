@@ -1,0 +1,35 @@
+import { visit } from '@ember/test-helpers';
+import { selectLocale, setupApplicationTest } from 'my-app/tests/helpers';
+import { module, test } from 'qunit';
+
+module('Acceptance | index', function (hooks) {
+  setupApplicationTest(hooks);
+
+  module('de-de', function () {
+    test('We can visit the page', async function (assert) {
+      await visit('/');
+      await selectLocale('de-de');
+
+      assert
+        .dom('[data-test-output="Title"]')
+        .hasText('Willkommen bei ember-intl');
+
+      assert
+        .dom('[data-test-output="App"]')
+        .hasText('Dies ist eine Komponente aus der App.');
+    });
+  });
+
+  module('en-us', function () {
+    test('We can visit the page', async function (assert) {
+      await visit('/');
+      await selectLocale('en-us');
+
+      assert.dom('[data-test-output="Title"]').hasText('Welcome to ember-intl');
+
+      assert
+        .dom('[data-test-output="App"]')
+        .hasText('This is a component from the app.');
+    });
+  });
+});
