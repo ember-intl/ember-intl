@@ -83,8 +83,8 @@ jobs:
         working-directory: ${{ matrix.package-location }}
 
 
-  test-compatibility-ember-intl:
-    name: Test compatibility (ember-intl)
+  test-compatibility:
+    name: Test compatibility
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -155,7 +155,7 @@ jobs:
   deploy-documentation:
     name: Deploy documentation
     runs-on: ubuntu-latest
-    needs: [lint, test, test-compatibility-ember-intl, test-ember-intl-node-windows]
+    needs: [lint, test, test-compatibility, test-ember-intl-node-windows]
     timeout-minutes: 5
     # Only run on pushes to the main branch or a tag (i.e. ignore pull requests and cron)
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
