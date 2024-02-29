@@ -20,6 +20,7 @@ jobs:
       matrix:
         package-location:
           - 'docs/ember-intl'
+          - 'docs/my-app'
           - 'packages/ember-intl'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
@@ -54,6 +55,7 @@ jobs:
       matrix:
         package-location:
           - 'docs/ember-intl'
+          - 'docs/my-app'
           - 'packages/ember-intl'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
