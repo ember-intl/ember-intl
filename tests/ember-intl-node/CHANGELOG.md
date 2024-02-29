@@ -1,4 +1,4 @@
-# Changelog for test-node
+# Changelog for test-ember-intl-node
 
 ## 6.2.3
 

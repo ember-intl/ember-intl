@@ -1,5 +1,5 @@
 {
-  "name": "test-node",
+  "name": "test-ember-intl-node",
   "version": "6.2.3",
   "private": true,
   "description": "Tests for the Node part of ember-intl",
