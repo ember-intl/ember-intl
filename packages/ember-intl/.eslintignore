@@ -11,6 +11,3 @@
 
 # ember-try
 /.node_modules.ember-try/
-
-# specific to this project
-tests/dummy/app/snippets
