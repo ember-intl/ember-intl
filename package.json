@@ -13,6 +13,7 @@
   "scripts": {
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
+    "prepare": "pnpm --filter my-v2-addon build",
     "release:changelog": "changeset version",
     "release:package": "changeset publish",
     "start": "pnpm --filter docs-app-for-ember-intl start",

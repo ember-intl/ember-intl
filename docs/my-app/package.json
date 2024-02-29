@@ -70,6 +70,7 @@
     "eslint": "^8.56.0",
     "loader.js": "^4.7.0",
     "my-v1-addon": "workspace:*",
+    "my-v2-addon": "workspace:*",
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
     "qunit-dom": "^3.0.0",

@@ -17,7 +17,7 @@ module.exports = function (defaults) {
 
     trees: {
       app: sideWatch('app', {
-        watching: [],
+        watching: ['../my-v2-addon/src'],
       }),
     },
   });
