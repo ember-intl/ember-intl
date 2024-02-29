@@ -17,6 +17,10 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="App"]')
         .hasText('Dies ist eine Komponente aus der App.');
+
+      assert
+        .dom('[data-test-output="V1 Addon"]')
+        .hasText('Dies ist eine Komponente aus einem v1 Addon.');
     });
   });
 
@@ -30,6 +34,10 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="App"]')
         .hasText('This is a component from the app.');
+
+      assert
+        .dom('[data-test-output="V1 Addon"]')
+        .hasText('This is a component from a v1 addon.');
     });
   });
 });

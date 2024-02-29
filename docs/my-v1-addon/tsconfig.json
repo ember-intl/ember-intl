@@ -1,15 +1,21 @@
 {
   "extends": "@shared-configs/typescript/ember",
   "compilerOptions": {
+    // The combination of `baseUrl` with `paths` allows Ember's classic package
+    // layout, which is not resolvable with the Node resolution algorithm, to
+    // work with TypeScript.
     "baseUrl": ".",
     "paths": {
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
       "ember-intl": ["../../packages/ember-intl/addon"],
       "ember-intl/*": ["../../packages/ember-intl/addon/*"],
       "ember-intl/test-support": ["../../packages/ember-intl/addon-test-support"],
       "ember-intl/test-support/*": ["../../packages/ember-intl/addon-test-support/*"],
-      "my-app/tests/*": ["tests/*"],
-      "my-app/*": ["app/*"],
-      "my-v1-addon/*": ["../my-v1-addon/addon/*"],
+      "my-v1-addon": ["addon"],
+      "my-v1-addon/*": ["addon/*"],
+      "my-v1-addon/test-support": ["addon-test-support"],
+      "my-v1-addon/test-support/*": ["addon-test-support/*"],
       "*": ["types/*"]
     },
     "skipLibCheck": true
