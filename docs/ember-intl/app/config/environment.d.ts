@@ -1,6 +1,6 @@
 /**
  * Type declarations for
- *    import config from 'docs-app/config/environment'
+ *    import config from 'docs-app-for-ember-intl/config/environment'
  */
 declare const config: {
   APP: Record<string, unknown>;

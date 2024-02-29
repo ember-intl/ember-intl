@@ -1,4 +1,4 @@
-# Changelog for docs-app
+# Changelog for docs-app-for-ember-intl
 
 ## 6.2.5
 

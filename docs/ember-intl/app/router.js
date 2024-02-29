@@ -1,4 +1,4 @@
-import config from 'docs-app/config/environment';
+import config from 'docs-app-for-ember-intl/config/environment';
 import AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
 
 export default class Router extends AddonDocsRouter {

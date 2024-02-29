@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'docs-app',
+    modulePrefix: 'docs-app-for-ember-intl',
     environment,
     rootURL: '/',
     locationType: 'history',

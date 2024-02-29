@@ -1,5 +1,5 @@
 import { click, visit } from '@ember/test-helpers';
-import { setupApplicationTest } from 'docs-app/tests/helpers';
+import { setupApplicationTest } from 'docs-app-for-ember-intl/tests/helpers';
 import { module, test } from 'qunit';
 
 module('Acceptance | docs | helpers | t', function (hooks) {

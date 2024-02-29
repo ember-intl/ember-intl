@@ -1,4 +1,4 @@
-import { setupTest } from 'docs-app/tests/helpers';
+import { setupTest } from 'docs-app-for-ember-intl/tests/helpers';
 import { module, test } from 'qunit';
 
 module('Unit | Controller | docs/helpers/t', function (hooks) {
