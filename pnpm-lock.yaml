@@ -211,7 +211,7 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
 
-  docs-app:
+  docs/ember-intl:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.9
@@ -254,22 +254,22 @@ importers:
         version: 1.3.0
       '@shared-configs/ember-template-lint':
         specifier: workspace:*
-        version: link:../configs/ember-template-lint
+        version: link:../../configs/ember-template-lint
       '@shared-configs/eslint-config-ember':
         specifier: workspace:*
-        version: link:../configs/eslint/ember
+        version: link:../../configs/eslint/ember
       '@shared-configs/prettier':
         specifier: workspace:*
-        version: link:../configs/prettier
+        version: link:../../configs/prettier
       '@shared-configs/stylelint':
         specifier: workspace:*
-        version: link:../configs/stylelint
+        version: link:../../configs/stylelint
       '@shared-configs/testem':
         specifier: workspace:*
-        version: link:../configs/testem
+        version: link:../../configs/testem
       '@shared-configs/typescript':
         specifier: workspace:*
-        version: link:../configs/typescript
+        version: link:../../configs/typescript
       '@types/qunit':
         specifier: ^2.19.10
         version: 2.19.10
@@ -329,7 +329,7 @@ importers:
         version: 5.3.0(@babel/core@7.23.9)(@ember/string@3.1.1)(@glimmer/tracking@1.1.2)(@glint/template@1.3.0)(ember-source@5.6.0)
       ember-intl:
         specifier: workspace:*
-        version: link:../ember-intl
+        version: link:../../packages/ember-intl
       ember-load-initializers:
         specifier: ^2.1.2
         version: 2.1.2(@babel/core@7.23.9)
@@ -376,7 +376,7 @@ importers:
         specifier: ^5.90.3
         version: 5.90.3
 
-  ember-intl:
+  packages/ember-intl:
     dependencies:
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.7.6
@@ -471,19 +471,19 @@ importers:
         version: 1.3.0
       '@shared-configs/ember-template-lint':
         specifier: workspace:*
-        version: link:../configs/ember-template-lint
+        version: link:../../configs/ember-template-lint
       '@shared-configs/eslint-config-ember':
         specifier: workspace:*
-        version: link:../configs/eslint/ember
+        version: link:../../configs/eslint/ember
       '@shared-configs/prettier':
         specifier: workspace:*
-        version: link:../configs/prettier
+        version: link:../../configs/prettier
       '@shared-configs/testem':
         specifier: workspace:*
-        version: link:../configs/testem
+        version: link:../../configs/testem
       '@shared-configs/typescript':
         specifier: workspace:*
-        version: link:../configs/typescript
+        version: link:../../configs/typescript
       '@types/ember':
         specifier: ^4.0.11
         version: 4.0.11(@babel/core@7.23.9)
@@ -581,7 +581,7 @@ importers:
         specifier: ^5.90.3
         version: 5.90.3
 
-  test-app:
+  tests/ember-intl:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.9
@@ -618,19 +618,19 @@ importers:
         version: 1.3.0
       '@shared-configs/ember-template-lint':
         specifier: workspace:*
-        version: link:../configs/ember-template-lint
+        version: link:../../configs/ember-template-lint
       '@shared-configs/eslint-config-ember':
         specifier: workspace:*
-        version: link:../configs/eslint/ember
+        version: link:../../configs/eslint/ember
       '@shared-configs/prettier':
         specifier: workspace:*
-        version: link:../configs/prettier
+        version: link:../../configs/prettier
       '@shared-configs/testem':
         specifier: workspace:*
-        version: link:../configs/testem
+        version: link:../../configs/testem
       '@shared-configs/typescript':
         specifier: workspace:*
-        version: link:../configs/typescript
+        version: link:../../configs/typescript
       '@types/qunit':
         specifier: ^2.19.10
         version: 2.19.10
@@ -672,7 +672,7 @@ importers:
         version: 4.0.2
       ember-intl:
         specifier: workspace:*
-        version: link:../ember-intl
+        version: link:../../packages/ember-intl
       ember-load-initializers:
         specifier: ^2.1.2
         version: 2.1.2(@babel/core@7.23.9)
@@ -725,17 +725,17 @@ importers:
         specifier: ^5.90.3
         version: 5.90.3
 
-  test-node:
+  tests/ember-intl-node:
     devDependencies:
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.7.6
         version: 2.7.6
       '@shared-configs/eslint-config-node':
         specifier: workspace:*
-        version: link:../configs/eslint/node
+        version: link:../../configs/eslint/node
       '@shared-configs/prettier':
         specifier: workspace:*
-        version: link:../configs/prettier
+        version: link:../../configs/prettier
       broccoli-test-helper:
         specifier: ^2.0.0
         version: 2.0.0
@@ -747,7 +747,7 @@ importers:
         version: 8.2.2
       ember-intl:
         specifier: workspace:*
-        version: link:../ember-intl
+        version: link:../../packages/ember-intl
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
