@@ -1,9 +1,9 @@
 # Addon support
 
-By default, addons are supported out of the box. They need to implement a `/translations` folder at the root of your project (NOTE: a sibling to `app` _not_ a child). Then, the contents of the translation folder will be bundled with the translations of your host app.
+**Warning: This page pertains to v1 addons and may be outdated. The described feature may not be supported in v2 addons.**
 
 
-## Advanced Usage (treeForTranslations)
+## treeForTranslations
 
 In v3.0.0, a hook called `treeForTranslations` was introduced to support addons better.
 
@@ -27,8 +27,3 @@ module.exports = {
   }
 };
 ```
-
-
-## Overriding Translations
-
-The host application can always override addon translations. If the application implements a key that collides with an addon, then the application wins when bundling the translations. This is intended to allow host applications to override translations without having to modify an addon.
