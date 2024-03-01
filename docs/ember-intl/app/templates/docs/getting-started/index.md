@@ -1,40 +1,20 @@
 # Overview
 
 
-## What is Ember-Intl?
+## What is ember-intl?
 
-Ember-intl is an internationalization addon that unlocks **translating simple to complex messages** using built-in **pluralization rules**, **number and datetime formatting**, with support for **over 150 languages**
-
-Ember-intl is now entirely built on native [ECMAScript Internationalization APIs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) that are now supported by [all modern browsers](https://caniuse.com/#feat=internationalization).
+`ember-intl` is an addon that helps you internationalize your Ember projects. It is built upon the JavaScript-native [Internationalization API](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl), which is supported by [all modern browsers](https://caniuse.com/#feat=internationalization).
 
 
-## Notable Features
+## Features
 
-* 💵 Locale-aware numbers: currencies, decimals, and percentages
-* 📅 Locale-aware date and time formatting
-* 🕑 Locale-aware display of relative time. i.e, `"in 1 day"`, `"2 years ago"`, etc.
-* 💬 Translations containing fragments of any of the above
-
-```icu
-Sale begins {start, date, medium}
-```
-
-also built-in pluralization:
-
-```icu
-You have {itemCount, plural,
-    =0 {no items}
-    one {# item}
-    other {# items}
-}
-```
-
+* 🐹 Compatible with Ember apps, v1 addons (including engines), and v2 addons.
+* 📚 Built on standards: <a class="external-link" href="https://formatjs.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
 * 🌐 Support for 150+ languages.
-* 📜 Built on standards such as the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) & [Native Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
-* ⚡ Extensive Ember Service API and template helpers for formatting and translating.
-* 🎉 <DocsLink @route="docs.advanced.addon-support">Advanced addon support</DocsLink> to provide translations to the host app
+* ⚙️ Locale-aware helpers and `intl` service, to help you display translations, numbers, dates, etc.
+* ✅ Test helpers to check locale-dependent templates.
 
 
-## Online Community Chat
+## Help Online
 
-Join the `topic-i18n` channel [here](https://discordapp.com/invite/zT3asNS) to ask questions and chat with community members in real-time.
+Join the `#topic-i18n` channel on [Ember Discord](https://discordapp.com/invite/zT3asNS). You can ask questions and chat with community members.
