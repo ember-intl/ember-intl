@@ -19,6 +19,7 @@ Router.map(function () {
 
     this.route('getting-started', { path: '/' }, function () {
       this.route('quickstart');
+      this.route('quickstart-addons');
       this.route('runtime-requirements');
     });
 

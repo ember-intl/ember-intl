@@ -1,7 +1,9 @@
-# Quickstart
+# Quickstart (Apps)
 
 
 ## 1. Install ember-intl
+
+You can use Ember CLI to install `ember-intl`.
 
 ```sh
 ember install ember-intl
@@ -47,7 +49,7 @@ Note, you may also use `.yml` or `.json` for file extension.
 
 ## 4. Configure project
 
-### Set your application's locale
+### Set your app's locale
 
 When your application boots, you need to tell `ember-intl` which locale to use. The recommended approach is to do this in the `application` route's `beforeModel` hook.
 
@@ -61,6 +63,25 @@ export default class ApplicationRoute extends Route {
 
   beforeModel() {
     this.intl.setLocale(['en-us']);
+  }
+}
+```
+
+
+### Glint
+
+Update your template registry to extend this addon's. Check the [Glint documentation](https://typed-ember.gitbook.io/glint/environments/ember/using-addons#using-glint-enabled-addons) for more information.
+
+```ts
+/* types/my-app/index.d.ts */
+
+import '@glint/environment-ember-loose';
+
+import type EmberIntlRegistry from 'ember-intl/template-registry';
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry extends EmberIntlRegistry, /* other addon registries */ {
+    // local entries
   }
 }
 ```
