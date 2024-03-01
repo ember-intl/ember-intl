@@ -25,6 +25,10 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="V2 Addon"]')
         .hasText('Dies ist eine Komponente aus einem v2 Addon.');
+
+      assert
+        .dom('[data-test-output="Key to Overwrite"]')
+        .hasText('Die Apps Übersetzungen haben Vorrang.');
     });
   });
 
@@ -46,6 +50,10 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="V2 Addon"]')
         .hasText('This is a component from a v2 addon.');
+
+      assert
+        .dom('[data-test-output="Key to Overwrite"]')
+        .hasText("The app's translations take precedence.");
     });
   });
 });
