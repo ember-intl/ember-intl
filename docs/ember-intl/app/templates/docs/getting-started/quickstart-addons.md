@@ -74,28 +74,30 @@ In a template, use the `{{t}}` helper to render the translation.
 ```hbs
 {{! v1 addons: addon/components/hello.hbs }}
 <div>
-  {{t "hello.message" name="Zoey"}}
+  {{t "hello.message" name=@name}}
 </div>
 ```
 
 ```hbs
 {{! v2 addons: src/components/hello.hbs }}
 <div>
-  {{t "hello.message" name="Zoey"}}
+  {{t "hello.message" name=@name}}
 </div>
 ```
+
+Just like [in apps](./quickstart#2-add-a-translation), you can import the `{{t}}` helper in a `<template>`-tag component.
 
 Note, the consuming app can override the addon's translations. If the app uses the same key as the addon, then the app's translation always wins.
 
 
 ## 3. Add a language
 
-Follow [the same step for apps](./quickstart#3-add-a-language).
+Follow [step 3 for apps](./quickstart#3-add-a-language).
 
 
 ## 4. Configure project
 
-Follow [the same step for apps](./quickstart#4-configure-project). For brevity, only the differences are noted below.
+Follow [step 4 for apps](./quickstart#4-configure-project). For brevity, only the differences are noted below.
 
 
 ### Set your test app's locale (optional)

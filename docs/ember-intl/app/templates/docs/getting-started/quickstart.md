@@ -34,6 +34,29 @@ In a template, use the `{{t}}` helper to render the translation:
 </div>
 ```
 
+In a [`<template>`-tag component](https://github.com/ember-template-imports/ember-template-imports), use the named import to consume the `{{t}}` helper.
+
+```ts
+/* app/components/hello.gts */
+import type { TOC } from '@ember/component/template-only';
+import { t } from 'ember-intl';
+
+interface HelloSignature {
+  Args: {
+    name: string;
+  };
+}
+
+const HelloComponent: TOC<HelloSignature> =
+  <template>
+    <div>
+      {{t "hello.message" name=@name}}
+    </div>
+  </template>
+
+export default HelloComponent;
+```
+
 
 ## 3. Add a language
 
