@@ -13,10 +13,6 @@ Router.map(function () {
       this.route('addon-support');
     });
 
-    this.route('cookbook', function () {
-      this.route('common-errors');
-    });
-
     this.route('getting-started', { path: '/' }, function () {
       this.route('quickstart');
       this.route('quickstart-addons');
