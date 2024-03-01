@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.5.1
+
+### Patch Changes
+
+- [#1842](https://github.com/ember-intl/ember-intl/pull/1842) Added a quickstart for addons. Removed the page for common errors. ([@ijlee2](https://github.com/ijlee2))
+- [#1841](https://github.com/ember-intl/ember-intl/pull/1841) Added READMEs for docs and tests. Updated Getting Started. ([@ijlee2](https://github.com/ijlee2))
+- [#1839](https://github.com/ember-intl/ember-intl/pull/1839) Reorganized project folders ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.5.0
 
 ### Minor Changes

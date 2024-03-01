@@ -1,12 +1,19 @@
 # Changelog for test-ember-intl-node
 
-## 6.2.3
+## 1.2.4
+
+### Patch Changes
+
+- [#1841](https://github.com/ember-intl/ember-intl/pull/1841) Added READMEs for docs and tests. Updated Getting Started. ([@ijlee2](https://github.com/ijlee2))
+- [#1839](https://github.com/ember-intl/ember-intl/pull/1839) Reorganized project folders ([@ijlee2](https://github.com/ijlee2))
+
+## 1.2.3
 
 ### Patch Changes
 
 - [#1838](https://github.com/ember-intl/ember-intl/pull/1838) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
 
-## 6.2.2
+## 1.2.2
 
 ### Patch Changes
 
@@ -14,14 +21,14 @@
 - [#1828](https://github.com/ember-intl/ember-intl/pull/1828) Rewrote Node tests (Part 2) ([@ijlee2](https://github.com/ijlee2))
 - [#1827](https://github.com/ember-intl/ember-intl/pull/1827) Rewrote Node tests (Part 1) ([@ijlee2](https://github.com/ijlee2))
 
-## 6.2.1
+## 1.2.1
 
 ### Patch Changes
 
 - [#1805](https://github.com/ember-intl/ember-intl/pull/1805) Removed has-unicode and locale-emoji ([@ijlee2](https://github.com/ijlee2))
 - [#1803](https://github.com/ember-intl/ember-intl/pull/1803) Update dependencies ([@ijlee2](https://github.com/ijlee2))
 
-## 6.2.0
+## 1.2.0
 
 ### Minor Changes
 
