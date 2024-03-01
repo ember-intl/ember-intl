@@ -1,34 +1,27 @@
 <DocsHero
-  @byline="🌐 Internationalize your Ember apps."
-  @logo="ember"
+  @byline="Internationalize your Ember projects"
 />
 
 <div class="index-route container">
   <div>
     <h2 class="section-title">
-      Notable Features
+      Features
     </h2>
     <ul>
       <li>
-        💵 Locale-aware numbers. Formatting of currencies, decimals, and percentages.
+        🐹 Compatible with Ember apps, v1 addons (including engines), and v2 addons.
       </li>
       <li>
-        📅 Locale-aware dates and times formatting
-      </li>
-      <li>
-        🕑 Locale-aware display of relative time. i.e, <code>"in 1 day"</code>, <code>"2 years ago"</code>, etc.
+        📚 Built on standards: <a class="external-link" href="https://formatjs.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
       </li>
       <li>
         🌐 Support for 150+ languages.
       </li>
       <li>
-        📜 Built largely on standards. <a href="https://formatjs.io/docs/core-concepts/icu-syntax">ICU message syntax</a> & <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">Native Intl API</a>.
+        ⚙️ Locale-aware helpers and <code>intl</code> service, to help you display translations, numbers, dates, etc.
       </li>
       <li>
-        ⚡ Extensive Ember Service API and template helpers for formatting and translating.
-      </li>
-      <li>
-        🎉 <DocsLink @route="docs.advanced.addon-support">Advanced addon support</DocsLink> to provide translations to the host app
+        ✅ Test helpers to check locale-dependent templates.
       </li>
     </ul>
   </div>
