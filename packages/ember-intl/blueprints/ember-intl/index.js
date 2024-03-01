@@ -28,8 +28,10 @@ module.exports = {
 
   afterInstall() {
     this.ui.writeLine(
-      "[ember-intl] Don't forget to configure your application.  " +
-        'Documentation: https://ember-intl.github.io/ember-intl/versions/master/docs/quickstart#4-configure-ember-intl',
+      [
+        "[ember-intl] Don't forget to configure your project.",
+        'See https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-project',
+      ].join(' '),
     );
   },
 };

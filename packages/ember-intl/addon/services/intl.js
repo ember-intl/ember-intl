@@ -283,7 +283,7 @@ export default class IntlService extends Service {
   /** @public */
   setLocale(locale) {
     assert(
-      `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
+      `[ember-intl] No locale has been set. See https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-project`,
       locale,
     );
 

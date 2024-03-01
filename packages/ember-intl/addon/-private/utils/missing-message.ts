@@ -8,7 +8,7 @@ import { isEmpty } from '@ember/utils';
 export default function missingMessage(key: string, locales: string[]): string {
   if (isEmpty(locales)) {
     warn(
-      `[ember-intl] no locale has been set!  See: https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-ember-intl`,
+      `[ember-intl] No locale has been set. See https://ember-intl.github.io/ember-intl/docs/quickstart#4-configure-project`,
       false,
       {
         id: 'ember-intl-no-locale-set',
