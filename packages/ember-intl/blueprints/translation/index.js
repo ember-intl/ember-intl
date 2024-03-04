@@ -3,6 +3,11 @@
 const SilentError = require('silent-error');
 const isValidLocaleFormat = require('../../lib/utils/is-valid-locale-format');
 
+/**
+ * @deprecated Will be removed in v7.
+ *
+ * You can manually create the translation file.
+ */
 module.exports = {
   description: 'Adds an empty translation file and locale is supported',
 

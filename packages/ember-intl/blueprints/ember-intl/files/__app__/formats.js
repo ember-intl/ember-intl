@@ -14,7 +14,9 @@ export default {
     },
   },
   number: {
-    compact: { notation: 'compact' },
+    compact: {
+      notation: 'compact',
+    },
     EUR: {
       style: 'currency',
       currency: 'EUR',
