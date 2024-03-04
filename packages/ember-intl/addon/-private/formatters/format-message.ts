@@ -1,16 +1,32 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { htmlSafe, isHTMLSafe, type SafeString } from '@ember/template';
 import type { IntlShape, MessageDescriptor } from '@formatjs/intl';
-import Ember from 'ember';
 import type { PrimitiveType } from 'intl-messageformat';
 
 import Formatter from './-base';
-const {
-  Handlebars: {
-    // @ts-ignore: Upstream types are incomplete.
-    Utils: { escapeExpression },
-  },
-} = Ember;
+
+const escaped: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#x27;',
+  '`': '&#x60;',
+  '=': '&#x3D;',
+};
+const needToEscape = /[&<>"'`=]/;
+const badCharacters = /[&<>"'`=]/g;
+
+// https://github.com/emberjs/ember.js/blob/v5.6.0/packages/%40ember/-internals/glimmer/lib/utils/string.ts#L103-L118
+function escapeExpression(value: string): string {
+  if (!needToEscape.test(value)) {
+    return value;
+  }
+
+  return value.replace(badCharacters, (character: string) => {
+    return escaped[character]!;
+  });
+}
 
 function escapeOptions<T extends Record<string, unknown>>(object?: T) {
   if (typeof object !== 'object') {
@@ -22,22 +38,22 @@ function escapeOptions<T extends Record<string, unknown>>(object?: T) {
   };
 
   (Object.keys(object) as (keyof T)[]).forEach((key) => {
-    const val = object[key];
+    const value = object[key];
 
-    if (isHTMLSafe(val)) {
+    if (isHTMLSafe(value)) {
       // If the option is an instance of Ember SafeString,
       // we don't want to pass it into the formatter, since the
       // formatter won't know what to do with it. Instead, we cast
       // the SafeString to a regular string using `toHTML`.
       // Since it was already marked as safe we should *not* escape it.
       // @ts-ignore: see comment above
-      escapedOpts[key] = val.toHTML();
-    } else if (typeof val === 'string') {
+      escapedOpts[key] = value.toHTML();
+    } else if (typeof value === 'string') {
       // @ts-ignore: see comment above
-      escapedOpts[key] = escapeExpression(val);
+      escapedOpts[key] = escapeExpression(value);
     } else {
       // @ts-ignore: see comment above
-      escapedOpts[key] = val; // copy as-is
+      escapedOpts[key] = value; // copy as-is
     }
   });
 
@@ -73,13 +89,11 @@ export default class FormatMessage extends Formatter<any> {
     options?: MessageFormatOptions & { htmlSafe?: boolean },
   ): string | SafeString {
     const isHTMLSafe = options && options.htmlSafe;
-    // Empty string is considered an err in ember-intl
-    // if (typeof stringOrDesc === 'string' && !stringOrDesc) {
-    //   return stringOrDesc;
-    // }
+
     const escapedOptions: MessageFormatOptions | undefined = isHTMLSafe
       ? escapeOptions(options)
       : options;
+
     const desc =
       stringOrDesc && typeof stringOrDesc === 'object'
         ? stringOrDesc
@@ -87,6 +101,7 @@ export default class FormatMessage extends Formatter<any> {
             id: stringOrDesc,
             defaultMessage: stringOrDesc,
           };
+
     const result = intl.formatMessage(desc, escapedOptions, {
       ignoreTag: true,
     });
