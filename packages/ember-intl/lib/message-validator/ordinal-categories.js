@@ -1,13 +1,14 @@
+const { ordinals } = require('../utils/cldr-core');
+
 function extractOrdinalCategories() {
-  const ordinals = require('cldr-core/supplemental/ordinals.json').supplemental[
-    'plurals-type-ordinal'
-  ];
   const ordinalCategories = {};
 
   Object.keys(ordinals).forEach((locale) => {
-    ordinalCategories[locale] = Object.keys(ordinals[locale]).map((key) =>
-      key.replace('pluralRule-count-', ''),
-    );
+    const pluralRuleNames = Object.keys(ordinals[locale]);
+
+    ordinalCategories[locale] = pluralRuleNames.map((name) => {
+      return name.replace(/^pluralRule-count-/, '');
+    });
   });
 
   return ordinalCategories;
