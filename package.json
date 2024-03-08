@@ -28,9 +28,12 @@
   },
   "pnpm": {
     "overrides": {
-      "@babel/core": "^7.23.9",
-      "@babel/traverse": "^7.23.9",
+      "@babel/core": "^7.24.0",
+      "@babel/traverse": "^7.24.0",
       "fast-glob": "^3.3.2"
+    },
+    "patchedDependencies": {
+      "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
     }
   }
 }

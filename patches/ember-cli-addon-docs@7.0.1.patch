@@ -1,0 +1,17 @@
+diff --git a/addon/components/docs-viewer/x-nav/index.hbs b/addon/components/docs-viewer/x-nav/index.hbs
+index a8cb6abb6f41ed2cdafc9da349ce16fa25cde5ff..98f25c4dab48380cc719f3385c23614b18c8542d 100644
+--- a/addon/components/docs-viewer/x-nav/index.hbs
++++ b/addon/components/docs-viewer/x-nav/index.hbs
+@@ -19,8 +19,10 @@
+     <div class="docs-pt-px docs-mb-8 docs-px-3 md:docs-px-4 md:docs-max-h-screen md:docs-overflow-y-scroll">
+       {{#if this.media.isMobile}}
+         <div class="absolute top-0 docs-text-right right-4">
+-          <button {{on "click" (set this "isShowingMenu" false)}}>
+-            class="docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline">
++          <button
++            class="docs-text-grey-darkest docs-opacity-50 hover:docs-opacity-100 docs-text-large-5 docs-py-2 docs-no-underline"
++            {{on "click" (set this "isShowingMenu" false)}}
++          >
+             &times;
+           </button>
+         </div>
