@@ -1,4 +1,10 @@
-const isEngine = require('./is-engine');
+function isEngine(addon) {
+  return (
+    addon.pkg &&
+    addon.pkg.keywords &&
+    addon.pkg.keywords.includes('ember-engine')
+  );
+}
 
 function findEngine(current) {
   do {
