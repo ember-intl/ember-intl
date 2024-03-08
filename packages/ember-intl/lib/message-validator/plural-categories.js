@@ -1,13 +1,14 @@
+const { plurals } = require('../utils/cldr-core');
+
 function extractPluralCategories() {
-  const plurals = require('cldr-core/supplemental/plurals.json').supplemental[
-    'plurals-type-cardinal'
-  ];
   const pluralCategories = {};
 
   Object.keys(plurals).forEach((locale) => {
-    pluralCategories[locale] = Object.keys(plurals[locale]).map((key) =>
-      key.replace('pluralRule-count-', ''),
-    );
+    const pluralRuleNames = Object.keys(plurals[locale]);
+
+    pluralCategories[locale] = pluralRuleNames.map((name) => {
+      return name.replace(/^pluralRule-count-/, '');
+    });
   });
 
   return pluralCategories;
