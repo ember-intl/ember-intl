@@ -1,5 +1,11 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.6
+
+### Patch Changes
+
+- [#1849](https://github.com/ember-intl/ember-intl/pull/1849) Updated dependencies (ember-cli-typescript to v5.3.0) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.5
 
 ### Patch Changes

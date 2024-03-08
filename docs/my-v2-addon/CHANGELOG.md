@@ -1,5 +1,11 @@
 # my-v2-addon
 
+## 1.0.1
+
+### Patch Changes
+
+- [#1849](https://github.com/ember-intl/ember-intl/pull/1849) Updated dependencies (ember-cli-typescript to v5.3.0) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.0
 
 ### Major Changes

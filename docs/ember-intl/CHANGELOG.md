@@ -1,5 +1,12 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.1
+
+### Patch Changes
+
+- [#1849](https://github.com/ember-intl/ember-intl/pull/1849) Updated dependencies (ember-cli-typescript to v5.3.0) ([@ijlee2](https://github.com/ijlee2))
+- [#1845](https://github.com/ember-intl/ember-intl/pull/1845) Updated blueprints so that they pass prettier@v3 out of the box. Deprecated `ember g translation`. ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.0
 
 ### Minor Changes

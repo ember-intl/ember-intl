@@ -1,5 +1,14 @@
 # Changelog
 
+## 6.5.2
+
+### Patch Changes
+
+- [#1850](https://github.com/ember-intl/ember-intl/pull/1850) Refactored a few files in /lib ([@ijlee2](https://github.com/ijlee2))
+- [#1849](https://github.com/ember-intl/ember-intl/pull/1849) Updated dependencies (ember-cli-typescript to v5.3.0) ([@ijlee2](https://github.com/ijlee2))
+- [#1845](https://github.com/ember-intl/ember-intl/pull/1845) Updated blueprints so that they pass prettier@v3 out of the box. Deprecated `ember g translation`. ([@ijlee2](https://github.com/ijlee2))
+- [#1844](https://github.com/ember-intl/ember-intl/pull/1844) Removed escapeExpression (to be deprecated) ([@ijlee2](https://github.com/ijlee2))
+
 ## 6.5.1
 
 ### Patch Changes
