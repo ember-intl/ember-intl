@@ -9,6 +9,11 @@ overrides:
   '@babel/traverse': ^7.23.9
   fast-glob: ^3.3.2
 
+patchedDependencies:
+  ember-cli-addon-docs@7.0.1:
+    hash: inqlm4xka5za5cdcffvvo33jci
+    path: patches/ember-cli-addon-docs@7.0.1.patch
+
 importers:
 
   .:
@@ -287,7 +292,7 @@ importers:
         version: 5.7.0
       ember-cli-addon-docs:
         specifier: ^7.0.1
-        version: 7.0.1(@babel/core@7.24.0)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-data@5.3.3)(ember-fetch@8.1.2)(ember-source@5.7.0)(webpack@5.90.3)
+        version: 7.0.1(patch_hash=inqlm4xka5za5cdcffvvo33jci)(@babel/core@7.24.0)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-data@5.3.3)(ember-fetch@8.1.2)(ember-source@5.7.0)(webpack@5.90.3)
       ember-cli-addon-docs-yuidoc:
         specifier: ^1.1.0
         version: 1.1.0
@@ -9334,7 +9339,7 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-addon-docs@7.0.1(@babel/core@7.24.0)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-data@5.3.3)(ember-fetch@8.1.2)(ember-source@5.7.0)(webpack@5.90.3):
+  /ember-cli-addon-docs@7.0.1(patch_hash=inqlm4xka5za5cdcffvvo33jci)(@babel/core@7.24.0)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-data@5.3.3)(ember-fetch@8.1.2)(ember-source@5.7.0)(webpack@5.90.3):
     resolution: {integrity: sha512-5XIlga3wPZ/XZi3I0LxRVPaeojRnT0zGA+L3eR3B1VlvVeWeMXQOvgM3k92/6331ncbBmtxKZMgrG54rSOdo5w==}
     engines: {node: '>= 18'}
     peerDependencies:
@@ -9422,6 +9427,7 @@ packages:
       - utf-8-validate
       - webpack
     dev: true
+    patched: true
 
   /ember-cli-app-version@6.0.1(ember-source@5.7.0):
     resolution: {integrity: sha512-XA1FwkWA5QytmWF0jcJqEr3jcZoiCl9Fb33TZgOVfClL7Voxe+/RwzISEprBRQgbf7j8z1xf8/RJCKfclUy3rQ==}
