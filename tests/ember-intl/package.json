@@ -26,7 +26,7 @@
     "test:ember-compatibility": "./node_modules/.bin/ember try:one"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@ember/optional-features": "^2.1.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.3.0",
@@ -71,7 +71,7 @@
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
     "qunit-dom": "^3.0.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "webpack": "^5.90.3"
   },
   "engines": {

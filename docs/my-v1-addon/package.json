@@ -44,7 +44,7 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0"
   },
@@ -86,7 +86,7 @@
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
     "qunit-dom": "^3.0.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "webpack": "^5.90.3"
   },
   "peerDependencies": {
