@@ -18,7 +18,7 @@ interface TestContext extends BaseTestContext {
 
 module('Integration | Component | macros', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function (this: TestContext) {
     this.user = new User();

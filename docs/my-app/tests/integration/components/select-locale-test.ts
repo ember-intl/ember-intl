@@ -6,7 +6,7 @@ import { module, test } from 'qunit';
 
 module('Integration | Component | select-locale', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
     await render(hbs`

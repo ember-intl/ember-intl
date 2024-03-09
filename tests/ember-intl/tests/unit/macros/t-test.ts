@@ -14,7 +14,7 @@ interface TestContext extends BaseTestContext {
 
 module('Unit | Macro | t', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks, {
+  setupIntl(hooks, 'en-us', {
     'no.interpolations': 'Hello',
     'with.interpolations': 'Clicks: {clicks}',
     'with.two.interpolations': 'Coordinates: {x}, {y}',

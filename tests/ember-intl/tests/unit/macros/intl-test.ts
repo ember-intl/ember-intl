@@ -11,7 +11,7 @@ class ContainerObject extends EmberObject {}
 
 module('Unit | Macro | intl', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('looks up the intl service through the owner and injects the service invisibly', function (assert) {
     const intlService = this.owner.lookup('service:intl');
