@@ -330,12 +330,11 @@ export default class IntlService extends Service {
    * @param fn
    * @param context
    */
-  onLocaleChanged(fn, context) {
-    this._ee.on('localeChanged', fn, context);
-
-    registerDestructor(this, () => {
-      this._ee.off('localeChanged', fn, context);
-    });
+  onLocaleChanged(...args) {
+    this._ee.on('localeChanged', ...args);
+    return () => {
+      this._ee.off('localeChanged', ...args);
+    };
   }
 }
 

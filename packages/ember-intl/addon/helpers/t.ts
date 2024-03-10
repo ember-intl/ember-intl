@@ -1,5 +1,5 @@
+import { getOwner } from '@ember/application';
 import Helper from '@ember/component/helper';
-import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
@@ -17,16 +17,20 @@ interface TSignature {
 }
 
 export default class THelper extends Helper<TSignature> {
-  @service declare intl: IntlService;
-
-  allowEmpty = false;
+  intl?: IntlService;
+  unsubscribeLocaleChanged?: () => void;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
+    this.intl = getOwner(this).lookup('service:intl');
+
     // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    this.intl.onLocaleChanged(this.recompute, this);
+    this.unsubscribeLocaleChanged = this.intl.onLocaleChanged(
+      this.recompute,
+      this,
+    );
   }
 
   compute(
@@ -48,5 +52,10 @@ export default class THelper extends Helper<TSignature> {
     }
 
     return this.intl.t(value!, options) as unknown as string;
+  }
+
+  willDestroy() {
+    super.willDestroy();
+    this.unsubscribeLocaleChanged();
   }
 }
