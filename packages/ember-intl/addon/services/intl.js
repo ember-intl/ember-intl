@@ -333,7 +333,7 @@ export default class IntlService extends Service {
   onLocaleChanged(fn, context) {
     this._ee.on('localeChanged', fn, context);
 
-    registerDestructor(this, () => {
+    registerDestructor(context, () => {
       this._ee.off('localeChanged', fn, context);
     });
   }
