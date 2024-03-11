@@ -1,7 +1,6 @@
 import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
 import { registerDestructor } from '@ember/destroyable';
-import { dependentKeyCompat } from '@ember/object/compat';
 import { cancel, next } from '@ember/runloop';
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -54,7 +53,6 @@ export default class IntlService extends Service {
     }
   }
 
-  @dependentKeyCompat
   get locale() {
     return this._locale;
   }
