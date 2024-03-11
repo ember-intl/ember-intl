@@ -1,3 +1,4 @@
+import Helper from '@ember/component/helper';
 import { registerWarnHandler } from '@ember/debug';
 import { isHTMLSafe } from '@ember/template';
 import type { TestContext as BaseTestContext } from '@ember/test-helpers';
@@ -18,14 +19,16 @@ module('service:init initialization', function (hooks) {
   setupTest(hooks);
 
   test('it calls `setLocale` on init', async function (this: TestContext, assert) {
+    const Intl = this.owner.factoryFor('service:intl');
+
     const recompute = () => {
       assert.step('Recompute helper');
     };
 
-    const Intl = this.owner.factoryFor('service:intl');
+    const context = class THelper extends Helper {};
 
     // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    Intl.create().onLocaleChanged(recompute, undefined);
+    Intl.create().onLocaleChanged(recompute, context);
 
     await settled();
 
@@ -274,8 +277,10 @@ module('service:intl', function (hooks) {
       assert.step('Recompute helper');
     };
 
+    const context = class THelper extends Helper {};
+
     // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    this.intl.onLocaleChanged(recompute, undefined);
+    this.intl.onLocaleChanged(recompute, context);
 
     this.intl.setLocale(['de', 'en-us']);
 
