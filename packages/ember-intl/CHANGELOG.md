@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.5.3
+
+### Patch Changes
+
+- [#1852](https://github.com/ember-intl/ember-intl/pull/1852) Fixed a memory leak. Ensured that registerDestructor is called when helpers are destroyed. ([@johanrd](https://github.com/johanrd))
+
 ## 6.5.2
 
 ### Patch Changes
