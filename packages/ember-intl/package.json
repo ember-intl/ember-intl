@@ -81,7 +81,6 @@
     "@types/ember__service": "^4.0.9",
     "@types/ember__template": "^4.0.7",
     "@types/ember__utils": "^4.0.7",
-    "@types/htmlbars-inline-precompile": "^3.0.3",
     "@types/qunit": "^2.19.10",
     "concurrently": "^8.2.2",
     "ember-cli": "~5.7.0",
