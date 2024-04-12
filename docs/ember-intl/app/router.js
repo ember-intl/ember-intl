@@ -49,6 +49,7 @@ Router.map(function () {
       this.route('v4');
       this.route('v5');
       this.route('v6');
+      this.route('v7');
     });
   });
 
