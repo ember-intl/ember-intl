@@ -878,9 +878,6 @@ importers:
       '@types/ember__utils':
         specifier: ^4.0.7
         version: 4.0.7(@babel/core@7.24.0)
-      '@types/htmlbars-inline-precompile':
-        specifier: ^3.0.3
-        version: 3.0.3
       '@types/qunit':
         specifier: ^2.19.10
         version: 2.19.10
@@ -5036,10 +5033,6 @@ packages:
     dependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 20.11.19
-    dev: true
-
-  /@types/htmlbars-inline-precompile@3.0.3:
-    resolution: {integrity: sha512-utarMsjpGrHc67F0o4AitUwNOW8YWeF2JfAixWQoZIOy/tyIOxw/qHHQS5AnuazDa1Rt2Mlr9OlHDFD72QJMrA==}
     dev: true
 
   /@types/http-errors@2.0.4:
