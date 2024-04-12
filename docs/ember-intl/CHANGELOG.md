@@ -1,5 +1,12 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.2
+
+### Patch Changes
+
+- [#1856](https://github.com/ember-intl/ember-intl/pull/1856) Began to document breaking changes in ember-intl@7.0.0 ([@ijlee2](https://github.com/ijlee2))
+- [#1854](https://github.com/ember-intl/ember-intl/pull/1854) Removed @intl and @t macros ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.1
 
 ### Patch Changes

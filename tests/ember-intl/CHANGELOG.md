@@ -1,5 +1,12 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.8
+
+### Patch Changes
+
+- [#1843](https://github.com/ember-intl/ember-intl/pull/1843) Removed dependentKeyCompat decorator ([@ijlee2](https://github.com/ijlee2))
+- [#1854](https://github.com/ember-intl/ember-intl/pull/1854) Removed @intl and @t macros ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.7
 
 ### Patch Changes
