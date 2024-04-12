@@ -25,11 +25,6 @@
     <nav.section @label="Guide" />
 
     <nav.item
-      @label="Migration from 5.0 to 6.1"
-      @route="docs.guide.migration-5-0-to-6-1"
-    />
-
-    <nav.item
       @label="Configuration"
       @route="docs.guide.addon-configs"
     />
@@ -114,26 +109,31 @@
       @route="docs.integrations.visual-studio-code"
     />
 
-    <nav.section @label="Legacy" />
+    <nav.section @label="Migration" />
 
     <nav.item
-      @label="Migration from 4.0 to 5.0"
-      @route="docs.legacy.migration-4-0-to-5-0"
+      @label="From 5.0 to 6.1"
+      @route="docs.migration.v6"
     />
 
     <nav.item
-      @label="Migration from 3.0 to 4.0"
-      @route="docs.legacy.migration-3-0-to-4-0"
+      @label="From 4.0 to 5.0"
+      @route="docs.migration.v5"
     />
 
     <nav.item
-      @label="Migration from 2.0 to 3.0"
-      @route="docs.legacy.migration-2-0-to-3-0"
+      @label="From 3.0 to 4.0"
+      @route="docs.migration.v4"
     />
 
     <nav.item
-      @label="Documentation for 2.0"
-      @route="docs.legacy.v2"
+      @label="From 2.0 to 3.0"
+      @route="docs.migration.v3"
+    />
+
+    <nav.item
+      @label="Documentation for 2.x"
+      @route="docs.migration.v2"
     />
   </viewer.nav>
 
