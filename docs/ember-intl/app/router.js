@@ -20,7 +20,6 @@ Router.map(function () {
     });
 
     this.route('guide', function () {
-      this.route('migration-5-0-to-6-1');
       this.route('addon-configs');
       this.route('asynchronously-loading-translations');
       this.route('missing-translations');
@@ -44,11 +43,13 @@ Router.map(function () {
       this.route('visual-studio-code');
     });
 
-    this.route('legacy', function () {
-      this.route('migration-2-0-to-3-0');
-      this.route('migration-3-0-to-4-0');
-      this.route('migration-4-0-to-5-0');
+    this.route('migration', function () {
       this.route('v2');
+      this.route('v3');
+      this.route('v4');
+      this.route('v5');
+      this.route('v6');
+      this.route('v7');
     });
   });
 
