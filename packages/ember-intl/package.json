@@ -53,8 +53,7 @@
     "fast-memoize": "^2.5.2",
     "intl-messageformat": "^10.5.11",
     "js-yaml": "^4.1.0",
-    "json-stable-stringify": "^1.1.1",
-    "silent-error": "^1.1.1"
+    "json-stable-stringify": "^1.1.1"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.1.0",
