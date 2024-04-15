@@ -19,14 +19,16 @@
 /.stylelintrc.js
 /.template-lintrc.js
 /.watchmanconfig
+/CHANGELOG.md
 /CONTRIBUTING.md
 /ember-cli-build.js
 /pnpm-lock.yaml
 /testem.js
 /tests/
+/tsconfig.declarations.json
+/tsconfig.json
 /yarn-error.log
 /yarn.lock
-/jsconfig.json
 .gitkeep
 
 # ember-try
