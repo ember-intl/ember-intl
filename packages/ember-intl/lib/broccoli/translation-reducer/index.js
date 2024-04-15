@@ -138,14 +138,6 @@ class TranslationReducer extends CachingWriter {
     }, {});
   }
 
-  generateFilename(locale) {
-    if (typeof this.options.filename === 'function') {
-      return this.options.filename(locale);
-    }
-
-    return `${locale}.json`;
-  }
-
   handleLintResult(result) {
     const { icuMismatch, missingTranslations } = result;
     const throwingMessages = [];
