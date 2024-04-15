@@ -1,11 +1,18 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.9
+
+### Patch Changes
+
+- [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1861](https://github.com/ember-intl/ember-intl/pull/1861) Updated minimum requirements for Ember, Node, and TypeScript ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.8
 
 ### Patch Changes
 
-- [#1843](https://github.com/ember-intl/ember-intl/pull/1843) Removed dependentKeyCompat decorator ([@ijlee2](https://github.com/ijlee2))
 - [#1854](https://github.com/ember-intl/ember-intl/pull/1854) Removed @intl and @t macros ([@ijlee2](https://github.com/ijlee2))
+- [#1843](https://github.com/ember-intl/ember-intl/pull/1843) Removed dependentKeyCompat decorator ([@ijlee2](https://github.com/ijlee2))
 
 ## 1.3.7
 
@@ -30,8 +37,8 @@
 
 ### Patch Changes
 
-- [#1834](https://github.com/ember-intl/ember-intl/pull/1834) Fixed URL in generated ember-intl.js config file ([@bertdeblock](https://github.com/bertdeblock))
 - [#1838](https://github.com/ember-intl/ember-intl/pull/1838) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1834](https://github.com/ember-intl/ember-intl/pull/1834) Fixed URL in generated ember-intl.js config file ([@bertdeblock](https://github.com/bertdeblock))
 
 ## 1.3.3
 

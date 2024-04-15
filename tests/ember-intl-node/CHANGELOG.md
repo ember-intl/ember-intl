@@ -1,5 +1,12 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.6
+
+### Patch Changes
+
+- [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1861](https://github.com/ember-intl/ember-intl/pull/1861) Updated minimum requirements for Ember, Node, and TypeScript ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.5
 
 ### Patch Changes

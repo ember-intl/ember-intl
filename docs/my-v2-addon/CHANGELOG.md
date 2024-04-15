@@ -1,5 +1,12 @@
 # my-v2-addon
 
+## 1.0.2
+
+### Patch Changes
+
+- [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1861](https://github.com/ember-intl/ember-intl/pull/1861) Updated minimum requirements for Ember, Node, and TypeScript ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.1
 
 ### Patch Changes

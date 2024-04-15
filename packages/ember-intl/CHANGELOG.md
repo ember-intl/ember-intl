@@ -4,12 +4,15 @@
 
 ### Major Changes
 
+- [#1861](https://github.com/ember-intl/ember-intl/pull/1861) Updated minimum requirements for Ember, Node, and TypeScript ([@ijlee2](https://github.com/ijlee2))
 - [#1855](https://github.com/ember-intl/ember-intl/pull/1855) Removed blueprints for ember g translation ([@ijlee2](https://github.com/ijlee2))
 - [#1854](https://github.com/ember-intl/ember-intl/pull/1854) Removed @intl and @t macros ([@ijlee2](https://github.com/ijlee2))
 - [#1843](https://github.com/ember-intl/ember-intl/pull/1843) Removed dependentKeyCompat decorator ([@ijlee2](https://github.com/ijlee2))
 
 ### Patch Changes
 
+- [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1859](https://github.com/ember-intl/ember-intl/pull/1859) Added CHANGELOG.md and tsconfig.json to .npmignore ([@ijlee2](https://github.com/ijlee2))
 - [#1857](https://github.com/ember-intl/ember-intl/pull/1857) Removed @types/htmlbars-inline-precompile from devDependencies ([@ijlee2](https://github.com/ijlee2))
 
 ## 6.5.3
