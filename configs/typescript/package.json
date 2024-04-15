@@ -16,9 +16,9 @@
     "lint:js:fix": "prettier --write \"**/*.js\""
   },
   "dependencies": {
-    "@tsconfig/ember": "^3.0.5",
-    "@tsconfig/node18": "^18.2.2",
-    "@tsconfig/strictest": "^2.0.3"
+    "@tsconfig/ember": "^3.0.6",
+    "@tsconfig/node18": "^18.2.4",
+    "@tsconfig/strictest": "^2.0.5"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
@@ -26,7 +26,7 @@
     "prettier": "^3.2.5"
   },
   "peerDependencies": {
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.5"
   },
   "peerDependenciesMeta": {
     "typescript": {
