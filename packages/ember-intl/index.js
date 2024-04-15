@@ -5,8 +5,6 @@
 const { existsSync } = require('node:fs');
 const { dirname, isAbsolute, join } = require('node:path');
 const mergeTrees = require('broccoli-merge-trees');
-const { BroccoliMergeFiles } = require('broccoli-merge-files');
-const stringify = require('json-stable-stringify');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
@@ -100,21 +98,7 @@ module.exports = {
         },
       });
 
-      const flattenedTranslationTree = new BroccoliMergeFiles(
-        [translationTree],
-        {
-          outputFileName: 'translations.js',
-          merge: (entries) => {
-            const output = entries.map(([locale, translations]) => {
-              return [locale, JSON.parse(translations)];
-            });
-
-            return 'export default ' + stringify(output);
-          },
-        },
-      );
-
-      trees.push(flattenedTranslationTree);
+      trees.push(translationTree);
     }
 
     return this._super.treeForAddon.call(

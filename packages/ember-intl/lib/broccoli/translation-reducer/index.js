@@ -232,15 +232,20 @@ class TranslationReducer extends CachingWriter {
           translations[locale],
         );
       }
-
-      writeFileSync(
-        `${filepath}/${this.generateFilename(locale)}`,
-        stringify(translations[locale]),
-        {
-          encoding: 'utf8',
-        },
-      );
     }
+
+    const restructuredTranslations = [];
+    for (const [locale, hash] of Object.entries(translations)) {
+      restructuredTranslations.push([locale, hash]);
+    }
+
+    writeFileSync(
+      `${filepath}/translations.js`,
+      'export default ' + stringify(restructuredTranslations),
+      {
+        encoding: 'utf8',
+      },
+    );
   }
 
   validateMessages(messages, locale) {
