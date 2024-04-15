@@ -1,6 +1,6 @@
 # Quickstart (Addons)
 
-Addons need to publish a folder called `translations`. Note, `translations` is the name that your apps expect, unless configured otherwise.
+Addons need to publish a folder called `translations`.
 
 
 ## 1. Install ember-intl
