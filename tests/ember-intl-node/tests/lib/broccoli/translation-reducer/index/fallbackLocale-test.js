@@ -22,8 +22,8 @@ describe('lib | broccoli | translation-reducer | index | fallbackLocale', functi
         await output.build();
 
         expect(output.read()).to.deep.equal({
-          'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
-          'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+          'translations.js':
+            'export default [["de-de",{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}],["en-us",{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}]]',
         });
       } finally {
         await output.dispose();
@@ -52,8 +52,8 @@ describe('lib | broccoli | translation-reducer | index | fallbackLocale', functi
         await output.build();
 
         expect(output.read()).to.deep.equal({
-          'de-de.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
-          'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+          'translations.js':
+            'export default [["de-de",{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}],["en-us",{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}]]',
         });
       } finally {
         await output.dispose();
