@@ -75,7 +75,6 @@ module.exports = {
       stripEmptyTranslations,
       wrapTranslationsWithNamespace,
       verbose: !this.isSilent,
-      filename: options.filename,
       outputPath: 'outputPath' in options ? options.outputPath : outputPath,
       addonsWithTranslations,
       log: (...args) => {
@@ -93,9 +92,6 @@ module.exports = {
     if (!this.configOptions.publicOnly) {
       const translationTree = this.generateTranslationTree({
         outputPath: '',
-        filename(key) {
-          return key;
-        },
       });
 
       trees.push(translationTree);
