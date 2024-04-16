@@ -39,7 +39,6 @@
     "@formatjs/intl": "^2.10.1",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.8",
-    "broccoli-merge-files": "^0.8.0",
     "broccoli-merge-trees": "^4.2.0",
     "broccoli-source": "^3.0.1",
     "broccoli-stew": "^3.0.0",
