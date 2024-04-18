@@ -96,7 +96,7 @@ export default class ApplicationRoute extends Route {
 Update your template registry to extend this addon's. Check the [Glint documentation](https://typed-ember.gitbook.io/glint/environments/ember/using-addons#using-glint-enabled-addons) for more information.
 
 ```ts
-/* types/my-app/index.d.ts */
+/* types/global.d.ts */
 
 import '@glint/environment-ember-loose';
 
