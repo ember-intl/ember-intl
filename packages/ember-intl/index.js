@@ -77,6 +77,7 @@ module.exports = {
       verbose: !this.isSilent,
       outputPath: 'outputPath' in options ? options.outputPath : outputPath,
       addonsWithTranslations,
+      mergeTranslationFiles: options.mergeTranslationFiles,
       log: (...args) => {
         return this.logger.log(...args);
       },
@@ -92,6 +93,7 @@ module.exports = {
     if (!this.configOptions.publicOnly) {
       const translationTree = this.generateTranslationTree({
         outputPath: '',
+        mergeTranslationFiles: true,
       });
 
       trees.push(translationTree);

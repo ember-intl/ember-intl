@@ -22,8 +22,7 @@ describe('lib | broccoli | translation-reducer | index | excludeLocales', functi
         await output.build();
 
         expect(output.read()).to.deep.equal({
-          'translations.js':
-            'export default [["de-de",{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}]]',
+          'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
         });
       } finally {
         await output.dispose();
@@ -51,9 +50,7 @@ describe('lib | broccoli | translation-reducer | index | excludeLocales', functi
       try {
         await output.build();
 
-        expect(output.read()).to.deep.equal({
-          'translations.js': 'export default []',
-        });
+        expect(output.read()).to.deep.equal({});
       } finally {
         await output.dispose();
       }
@@ -82,8 +79,7 @@ describe('lib | broccoli | translation-reducer | index | excludeLocales', functi
         await output.build();
 
         expect(output.read()).to.deep.equal({
-          'translations.js':
-            'export default [["de-de",{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}]]',
+          'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
         });
       } finally {
         await output.dispose();

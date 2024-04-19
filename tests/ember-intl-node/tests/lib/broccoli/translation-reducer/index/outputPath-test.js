@@ -25,8 +25,8 @@ describe('lib | broccoli | translation-reducer | index | outputPath', function (
           custom: {
             output: {
               path: {
-                'translations.js':
-                  'export default [["de-de",{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}],["en-us",{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}]]',
+                'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
+                'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
               },
             },
           },

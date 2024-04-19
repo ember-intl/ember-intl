@@ -70,6 +70,7 @@ class TranslationReducer extends CachingWriter {
       requiresTranslation(/* key, locale */) {
         return true;
       },
+      mergeTranslationFiles: false,
       ...options,
     };
 
@@ -224,21 +225,31 @@ class TranslationReducer extends CachingWriter {
           translations[locale],
         );
       }
+
+      writeFileSync(
+        `${filepath}/${locale}.json`,
+        stringify(translations[locale]),
+        {
+          encoding: 'utf8',
+        },
+      );
     }
 
-    const restructuredTranslations = [];
+    if (this.options.mergeTranslationFiles) {
+      const restructuredTranslations = [];
 
-    for (const [locale, hash] of Object.entries(translations)) {
-      restructuredTranslations.push([locale, hash]);
+      for (const [locale, hash] of Object.entries(translations)) {
+        restructuredTranslations.push([locale, hash]);
+      }
+
+      writeFileSync(
+        `${filepath}/translations.js`,
+        'export default ' + stringify(restructuredTranslations),
+        {
+          encoding: 'utf8',
+        },
+      );
     }
-
-    writeFileSync(
-      `${filepath}/translations.js`,
-      'export default ' + stringify(restructuredTranslations),
-      {
-        encoding: 'utf8',
-      },
-    );
   }
 
   validateMessages(messages, locale) {

@@ -20,6 +20,38 @@ describe('lib | broccoli | translation-reducer | index | base case', function ()
         await output.build();
 
         expect(output.read()).to.deep.equal({
+          'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
+          'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+        });
+      } finally {
+        await output.dispose();
+      }
+    } finally {
+      await input.dispose();
+    }
+  });
+
+  it('combines the output into a single translation.js file when specified', async function () {
+    const input = await createTempDir();
+
+    try {
+      const subject = new TranslationReducer(input.path(), {
+        mergeTranslationFiles: true,
+      });
+
+      input.write({
+        'de-de.json': `{ "nested": { "key": "Hallo {name}!" }, "no-arguments": "Hallo Welt!" }`,
+        'en-us.json': `{ "nested": { "key": "Hello {name}!" }, "no-arguments": "Hello world!" }`,
+      });
+
+      const output = createBuilder(subject);
+
+      try {
+        await output.build();
+
+        expect(output.read()).to.deep.equal({
+          'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
+          'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
           'translations.js':
             'export default [["de-de",{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}],["en-us",{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}]]',
         });
