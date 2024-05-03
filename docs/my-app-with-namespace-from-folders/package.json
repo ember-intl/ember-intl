@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
-  "version": "1.0.2",
+  "name": "my-app-with-namespace-from-folders",
+  "version": "0.0.0",
   "private": true,
-  "description": "An Embroider app with ember-intl",
+  "description": "An Embroider app that checks wrapTranslationsWithNamespace: true",
   "keywords": [],
   "repository": {
     "type": "git",

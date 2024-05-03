@@ -1,6 +1,6 @@
 /**
  * Type declarations for
- *    import config from 'my-app/config/environment'
+ *    import config from 'my-app-with-namespace-from-folders/config/environment'
  */
 declare const config: {
   APP: Record<string, unknown>;
