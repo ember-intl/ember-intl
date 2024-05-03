@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
-  "version": "1.0.2",
+  "name": "my-classic-app",
+  "version": "0.0.0",
   "private": true,
-  "description": "An Embroider app with the default ember-intl configuration",
+  "description": "An Ember app with the classic build",
   "keywords": [],
   "repository": {
     "type": "git",

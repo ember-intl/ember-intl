@@ -1,4 +1,4 @@
-# my-app
+# my-classic-app
 
 1. [What is it?](#what-is-it)
 1. [Local development](#local-development)
@@ -6,15 +6,7 @@
 
 ## What is it?
 
-`my-app` is an Embroider app. We use it to check the default configuration of `ember-intl`.
-
-The app also helps ensure that `ember-intl` is compatible with "bleeding-edge" Ember:
-
-- [Embroider on the strictest settings](https://github.com/embroider-build/embroider/#options) (including route splitting)
-- [TypeScript](https://www.typescriptlang.org/docs/) + [Glint](https://typed-ember.gitbook.io/glint/)
-- [`<template>` tag](https://github.com/ember-template-imports/ember-template-imports)
-
-In addition, the application tests serve as a living documentation that translations can be provided by apps, v1 addons, or v2 addons.
+`my-classic-app` is an Ember app. We use it to check that `ember-intl` works on the classic build.
 
 
 ## Local development
@@ -26,7 +18,7 @@ Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so tha
 pnpm prepare
 
 # Change directory
-cd docs/my-app
+cd docs/my-classic-app
 ```
 
 Some useful commands:

@@ -1,7 +1,7 @@
 import { setApplication } from '@ember/test-helpers';
 import { start } from 'ember-qunit';
-import Application from 'my-app/app';
-import config from 'my-app/config/environment';
+import Application from 'my-classic-app/app';
+import config from 'my-classic-app/config/environment';
 import * as QUnit from 'qunit';
 import { setup } from 'qunit-dom';
 

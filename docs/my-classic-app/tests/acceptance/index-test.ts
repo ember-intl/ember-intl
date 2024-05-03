@@ -1,5 +1,8 @@
 import { visit } from '@ember/test-helpers';
-import { selectLocale, setupApplicationTest } from 'my-app/tests/helpers';
+import {
+  selectLocale,
+  setupApplicationTest,
+} from 'my-classic-app/tests/helpers';
 import { module, test } from 'qunit';
 
 module('Acceptance | index', function (hooks) {
