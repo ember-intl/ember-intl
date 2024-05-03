@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'my-app',
+    modulePrefix: 'my-app-with-lazy-loaded-translations',
     environment,
     rootURL: '/',
     locationType: 'history',

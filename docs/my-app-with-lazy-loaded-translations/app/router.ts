@@ -1,5 +1,5 @@
 import EmberRouter from '@embroider/router';
-import config from 'my-app/config/environment';
+import config from 'my-app-with-lazy-loaded-translations/config/environment';
 
 export default class Router extends EmberRouter {
   location = config.locationType;

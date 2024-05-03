@@ -1,6 +1,6 @@
 /**
  * Type declarations for
- *    import config from 'my-app/config/environment'
+ *    import config from 'my-app-with-lazy-loaded-translations/config/environment'
  */
 declare const config: {
   APP: Record<string, unknown>;
