@@ -6,7 +6,8 @@
 
 ## What is it?
 
-`my-app-with-lazy-loaded-translations` is an Ember app. We use it to check that `publicOnly: true` works.
+`my-app-with-lazy-loaded-translations` is an Embroider app. We use it to check that `publicOnly: true` works.
+
 
 ## Local development
 
