@@ -6,7 +6,9 @@
 
 ## What is it?
 
-`my-app` is an Ember app. We use it to check that `ember-intl` is compatible with "bleeding-edge" Ember:
+`my-app` is an Embroider app. We use it to check the default configuration of `ember-intl`.
+
+The app also helps ensure that `ember-intl` is compatible with "bleeding-edge" Ember:
 
 - [Embroider on the strictest settings](https://github.com/embroider-build/embroider/#options) (including route splitting)
 - [TypeScript](https://www.typescriptlang.org/docs/) + [Glint](https://typed-ember.gitbook.io/glint/)

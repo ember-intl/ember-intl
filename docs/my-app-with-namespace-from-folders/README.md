@@ -6,7 +6,8 @@
 
 ## What is it?
 
-`my-app-with-namespace-from-folders` is an Ember app. We use it to check that `wrapTranslationsWithNamespace: true` works.
+`my-app-with-namespace-from-folders` is an Embroider app. We use it to check that `wrapTranslationsWithNamespace: true` works.
+
 
 ## Local development
 
