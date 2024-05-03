@@ -540,6 +540,159 @@ importers:
         specifier: ^5.91.0
         version: 5.91.0
 
+  docs/my-app-with-namespace-from-folders:
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.24.0
+        version: 7.24.4
+      '@ember/optional-features':
+        specifier: ^2.1.0
+        version: 2.1.0
+      '@ember/string':
+        specifier: ^3.1.1
+        version: 3.1.1
+      '@ember/test-helpers':
+        specifier: ^3.3.0
+        version: 3.3.0(@glint/template@1.4.0)(ember-source@5.7.0)(webpack@5.91.0)
+      '@embroider/broccoli-side-watch':
+        specifier: 0.0.2-unstable.ba9fd29
+        version: 0.0.2-unstable.ba9fd29
+      '@embroider/compat':
+        specifier: ^3.4.7
+        version: 3.4.7(@embroider/core@3.4.7)(@glint/template@1.4.0)
+      '@embroider/core':
+        specifier: ^3.4.7
+        version: 3.4.7(@glint/template@1.4.0)
+      '@embroider/router':
+        specifier: ^2.1.6
+        version: 2.1.6(@embroider/core@3.4.7)
+      '@embroider/webpack':
+        specifier: ^3.2.3
+        version: 3.2.3(@embroider/core@3.4.7)(webpack@5.91.0)
+      '@glimmer/component':
+        specifier: ^1.1.2
+        version: 1.1.2(@babel/core@7.24.4)
+      '@glimmer/tracking':
+        specifier: ^1.1.2
+        version: 1.1.2
+      '@glint/core':
+        specifier: ^1.4.0
+        version: 1.4.0(typescript@5.4.5)
+      '@glint/environment-ember-loose':
+        specifier: ^1.4.0
+        version: 1.4.0(@glimmer/component@1.1.2)(@glint/template@1.4.0)(@types/ember__component@4.0.22)(@types/ember__object@4.0.12)(@types/ember__routing@4.0.22)(ember-cli-htmlbars@6.3.0)
+      '@glint/environment-ember-template-imports':
+        specifier: ^1.4.0
+        version: 1.4.0(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(@types/ember__component@4.0.22)(@types/ember__routing@4.0.22)
+      '@glint/template':
+        specifier: ^1.4.0
+        version: 1.4.0
+      '@shared-configs/ember-template-lint':
+        specifier: workspace:*
+        version: link:../../configs/ember-template-lint
+      '@shared-configs/eslint-config-ember':
+        specifier: workspace:*
+        version: link:../../configs/eslint/ember
+      '@shared-configs/prettier':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@shared-configs/testem':
+        specifier: workspace:*
+        version: link:../../configs/testem
+      '@shared-configs/typescript':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      '@types/qunit':
+        specifier: ^2.19.10
+        version: 2.19.10
+      broccoli-asset-rev:
+        specifier: ^3.0.0
+        version: 3.0.0
+      concurrently:
+        specifier: ^8.2.2
+        version: 8.2.2
+      ember-auto-import:
+        specifier: ^2.7.2
+        version: 2.7.2(@glint/template@1.4.0)(webpack@5.91.0)
+      ember-cli:
+        specifier: ~5.7.0
+        version: 5.7.0
+      ember-cli-app-version:
+        specifier: ^6.0.1
+        version: 6.0.1(ember-source@5.7.0)
+      ember-cli-babel:
+        specifier: ^8.2.0
+        version: 8.2.0(@babel/core@7.24.4)
+      ember-cli-clean-css:
+        specifier: ^3.0.0
+        version: 3.0.0
+      ember-cli-dependency-checker:
+        specifier: ^3.3.2
+        version: 3.3.2(ember-cli@5.7.0)
+      ember-cli-htmlbars:
+        specifier: ^6.3.0
+        version: 6.3.0
+      ember-cli-inject-live-reload:
+        specifier: ^2.1.0
+        version: 2.1.0
+      ember-intl:
+        specifier: workspace:*
+        version: link:../../packages/ember-intl
+      ember-load-initializers:
+        specifier: ^2.1.2
+        version: 2.1.2(@babel/core@7.24.4)
+      ember-page-title:
+        specifier: ^8.2.3
+        version: 8.2.3(ember-source@5.7.0)
+      ember-qunit:
+        specifier: ^8.0.2
+        version: 8.0.2(@ember/test-helpers@3.3.0)(@glint/template@1.4.0)(ember-source@5.7.0)(qunit@2.20.1)
+      ember-resolver:
+        specifier: ^11.0.1
+        version: 11.0.1(ember-source@5.7.0)
+      ember-source:
+        specifier: ~5.7.0
+        version: 5.7.0(@babel/core@7.24.4)(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.91.0)
+      ember-template-imports:
+        specifier: ^3.4.2
+        version: 3.4.2
+      ember-template-lint:
+        specifier: ^6.0.0
+        version: 6.0.0
+      ember-test-selectors:
+        specifier: ^6.0.0
+        version: 6.0.0
+      ember-truth-helpers:
+        specifier: ^4.0.3
+        version: 4.0.3(ember-source@5.7.0)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      loader.js:
+        specifier: ^4.7.0
+        version: 4.7.0
+      my-v1-addon:
+        specifier: workspace:*
+        version: link:../my-v1-addon
+      my-v2-addon:
+        specifier: workspace:*
+        version: link:../my-v2-addon
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      qunit:
+        specifier: ^2.20.1
+        version: 2.20.1
+      qunit-dom:
+        specifier: ^3.1.1
+        version: 3.1.1
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+      webpack:
+        specifier: ^5.91.0
+        version: 5.91.0
+
   docs/my-v1-addon:
     dependencies:
       '@babel/core':
