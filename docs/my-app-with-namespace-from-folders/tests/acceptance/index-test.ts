@@ -23,11 +23,15 @@ module('Acceptance | index', function (hooks) {
 
       assert
         .dom('[data-test-output="V1 Addon"]')
-        .hasText('Dies ist eine Komponente aus einem v1 Addon.');
+        .hasText(
+          'Missing translation "components.component-from-v1-addon.message" for locale "de-de"',
+        );
 
       assert
         .dom('[data-test-output="V2 Addon"]')
-        .hasText('Dies ist eine Komponente aus einem v2 Addon.');
+        .hasText(
+          'Missing translation "components.component-from-v2-addon.message" for locale "de-de"',
+        );
 
       assert
         .dom('[data-test-output="Key to Overwrite"]')
@@ -48,11 +52,15 @@ module('Acceptance | index', function (hooks) {
 
       assert
         .dom('[data-test-output="V1 Addon"]')
-        .hasText('This is a component from a v1 addon.');
+        .hasText(
+          'Missing translation "components.component-from-v1-addon.message" for locale "en-us"',
+        );
 
       assert
         .dom('[data-test-output="V2 Addon"]')
-        .hasText('This is a component from a v2 addon.');
+        .hasText(
+          'Missing translation "components.component-from-v2-addon.message" for locale "en-us"',
+        );
 
       assert
         .dom('[data-test-output="Key to Overwrite"]')

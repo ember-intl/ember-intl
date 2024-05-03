@@ -1,3 +1,2 @@
-components.select-locale:
-  default-option: Sprache auswählen
-  label: Sprache
+default-option: Sprache auswählen
+label: Sprache
