@@ -21,6 +21,7 @@ jobs:
         package-location:
           - 'docs/ember-intl'
           - 'docs/my-app'
+          - 'docs/my-app-with-namespace-from-folders'
           - 'packages/ember-intl'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
@@ -56,6 +57,7 @@ jobs:
         package-location:
           - 'docs/ember-intl'
           - 'docs/my-app'
+          - 'docs/my-app-with-namespace-from-folders'
           - 'packages/ember-intl'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
