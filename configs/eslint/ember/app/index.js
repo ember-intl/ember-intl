@@ -38,7 +38,7 @@ module.exports = {
     },
   },
   overrides: [
-    // TypeScript files
+    // Ember files
     {
       files: ['**/*.{gts,ts}'],
       extends: [
@@ -49,29 +49,40 @@ module.exports = {
         '@typescript-eslint/array-type': 'error',
         '@typescript-eslint/consistent-type-imports': 'error',
         '@typescript-eslint/no-empty-interface': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-import-type-side-effects': 'error',
-        '@typescript-eslint/no-non-null-assertion': 'off',
       },
     },
-    // TypeScript and JavaScript files
+    {
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+      extends: ['plugin:ember/recommended-gts'],
+    },
+    {
+      files: ['**/*.gjs'],
+      parser: 'ember-eslint-parser',
+      extends: ['plugin:ember/recommended-gjs'],
+    },
     {
       files: ['**/*.{gjs,gts,js,ts}'],
       rules: {
         'import/no-duplicates': 'error',
-        'import/no-unresolved': 'off',
+        'import/no-unresolved': [
+          'error',
+          { ignore: ['^@ember', '^dummy/', '^ember', 'fetch'] },
+        ],
       },
     },
     // Node files
     {
       files: [
-        './.eslintrc.js',
-        './.prettierrc.js',
-        './.stylelintrc.js',
-        './.template-lintrc.js',
+        './.eslintrc.{cjs,js}',
+        './.prettierrc.{cjs,js}',
+        './.stylelintrc.{cjs,js}',
+        './.template-lintrc.{cjs,js}',
         './ember-cli-build.js',
         './postcss.config.js',
         './testem.js',
+        './vite.config.{js,mjs}',
         './blueprints/*/index.js',
         './config/**/*.js',
         './lib/*/index.js',
