@@ -227,7 +227,7 @@ class TranslationReducer extends CachingWriter {
       }
 
       writeFileSync(
-        `${filepath}/${locale}.json`,
+        join(filepath, `${locale}.json`),
         stringify(translations[locale]),
         {
           encoding: 'utf8',
@@ -243,7 +243,7 @@ class TranslationReducer extends CachingWriter {
       }
 
       writeFileSync(
-        `${filepath}/translations.js`,
+        join(filepath, 'translations.js'),
         'export default ' + stringify(restructuredTranslations),
         {
           encoding: 'utf8',
