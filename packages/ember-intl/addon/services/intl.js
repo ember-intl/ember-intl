@@ -45,7 +45,10 @@ export default class IntlService extends Service {
     if (hasLocaleChanged(proposedLocale, this._locale)) {
       this._locale = proposedLocale;
 
+      // eslint-disable-next-line ember/no-runloop
       cancel(this._timer);
+
+      // eslint-disable-next-line ember/no-runloop
       this._timer = next(() => {
         this._ee.emit('localeChanged');
         this._updateDocumentLanguage(this._locale);
@@ -136,6 +139,8 @@ export default class IntlService extends Service {
 
   willDestroy() {
     super.willDestroy(...arguments);
+
+    // eslint-disable-next-line ember/no-runloop
     cancel(this._timer);
   }
 
