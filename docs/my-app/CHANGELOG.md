@@ -1,5 +1,11 @@
 # my-app
 
+## 1.0.3
+
+### Patch Changes
+
+- [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.2
 
 ### Patch Changes

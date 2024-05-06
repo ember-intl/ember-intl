@@ -1,5 +1,12 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.4
+
+### Patch Changes
+
+- [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1865](https://github.com/ember-intl/ember-intl/pull/1865) Recommend using types/global.d.ts for glint. ([@MichalBryxi](https://github.com/MichalBryxi))
+
 ## 1.3.3
 
 ### Patch Changes

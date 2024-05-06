@@ -11,9 +11,16 @@
 
 ### Patch Changes
 
+- [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1859](https://github.com/ember-intl/ember-intl/pull/1859) Added CHANGELOG.md and tsconfig.json to .npmignore ([@ijlee2](https://github.com/ijlee2))
 - [#1857](https://github.com/ember-intl/ember-intl/pull/1857) Removed @types/htmlbars-inline-precompile from devDependencies ([@ijlee2](https://github.com/ijlee2))
+
+## 6.5.4
+
+### Patch Changes
+
+- [#1864](https://github.com/ember-intl/ember-intl/pull/1864) Remove broccoli-merge-files ([@LucasHill](https://github.com/LucasHill))
 
 ## 6.5.3
 

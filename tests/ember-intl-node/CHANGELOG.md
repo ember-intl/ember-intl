@@ -1,5 +1,12 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.7
+
+### Patch Changes
+
+- [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1864](https://github.com/ember-intl/ember-intl/pull/1864) Removed broccoli-merge-files ([@LucasHill](https://github.com/LucasHill))
+
 ## 1.2.6
 
 ### Patch Changes

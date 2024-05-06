@@ -1,5 +1,11 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.10
+
+### Patch Changes
+
+- [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.9
 
 ### Patch Changes
