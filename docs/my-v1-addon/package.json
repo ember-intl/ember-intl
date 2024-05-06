@@ -44,14 +44,14 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.24.5",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.1.0",
     "@ember/test-helpers": "^3.3.0",
-    "@embroider/test-setup": "^3.0.3",
+    "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "^1.4.0",
@@ -85,7 +85,7 @@
     "loader.js": "^4.7.0",
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
-    "qunit-dom": "^3.1.1",
+    "qunit-dom": "^3.1.2",
     "typescript": "^5.4.5",
     "webpack": "^5.91.0"
   },
