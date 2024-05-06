@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.5.4
+
+### Patch Changes
+
+- [#1864](https://github.com/ember-intl/ember-intl/pull/1864) Remove broccoli-merge-files ([@LucasHill](https://github.com/LucasHill))
+
 ## 6.5.3
 
 ### Patch Changes
