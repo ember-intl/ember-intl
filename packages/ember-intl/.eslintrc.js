@@ -3,7 +3,7 @@
 require('@shared-configs/eslint-config-ember/patch');
 
 module.exports = {
-  extends: ['@shared-configs/eslint-config-ember/addon'],
+  extends: ['@shared-configs/eslint-config-ember/v1-addon'],
   rules: {
     'ember/no-get': 'off', // TODO: Remove support for old Ember
   },

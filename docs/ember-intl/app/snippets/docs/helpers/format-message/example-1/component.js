@@ -1,5 +1,5 @@
 // BEGIN-SNIPPET docs__helpers__format-message__example-1__my-component.js
-import Component from '@glimmer/controller';
+import Component from '@glimmer/component';
 
 export default class DocsHelpersFormatMessageComponent extends Component {
   customMessage =
