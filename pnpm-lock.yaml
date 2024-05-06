@@ -7,7 +7,6 @@ settings:
 overrides:
   '@babel/core': ^7.24.0
   '@babel/traverse': ^7.24.0
-  fast-glob: ^3.3.2
 
 patchedDependencies:
   ember-cli-addon-docs@7.0.1:
