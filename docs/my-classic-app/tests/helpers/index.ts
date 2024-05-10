@@ -42,4 +42,4 @@ function setupTest(hooks: NestedHooks, options?: SetupTestOptions) {
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
 
-export * from './components/select-locale';
+export { selectLocale } from 'my-v2-addon/test-support';

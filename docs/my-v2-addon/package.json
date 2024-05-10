@@ -58,7 +58,8 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.7",
-    "decorator-transforms": "^1.2.1"
+    "decorator-transforms": "^1.2.1",
+    "ember-truth-helpers": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
@@ -66,6 +67,7 @@
     "@babel/runtime": "^7.24.5",
     "@embroider/addon-dev": "^4.3.1",
     "@glimmer/component": "^1.1.2",
+    "@glimmer/tracking": "^1.1.2",
     "@glint/core": "^1.4.0",
     "@glint/environment-ember-loose": "^1.4.0",
     "@glint/environment-ember-template-imports": "^1.4.0",
@@ -88,9 +90,13 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
+    "@ember/test-helpers": "^3.3.0",
     "ember-intl": "workspace:*"
   },
   "peerDependenciesMeta": {
+    "@ember/test-helpers": {
+      "optional": false
+    },
     "ember-intl": {
       "optional": false
     }
@@ -103,7 +109,8 @@
   },
   "ember-addon": {
     "app-js": {
-      "./components/component-from-v2-addon.js": "./dist/_app_/components/component-from-v2-addon.js"
+      "./components/component-from-v2-addon.js": "./dist/_app_/components/component-from-v2-addon.js",
+      "./components/select-locale.js": "./dist/_app_/components/select-locale.js"
     },
     "main": "addon-main.cjs",
     "type": "addon",

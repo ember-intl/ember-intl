@@ -1,5 +1,6 @@
 import { find, select } from '@ember/test-helpers';
-import type { SupportedLocale } from 'my-app-with-namespace-from-folders/components/select-locale';
+
+import type { SupportedLocale } from '../../components/select-locale.ts';
 
 export async function selectLocale(locale: SupportedLocale): Promise<void> {
   const option = find(`[data-test-option="${locale}"]`);
