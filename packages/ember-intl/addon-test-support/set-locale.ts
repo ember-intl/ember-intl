@@ -6,9 +6,9 @@ import type { IntlService } from 'ember-intl';
  * Updates the locale as if the user had changed their preferred language.
  *
  * @function setLocale
- * @param {string|string[]} localeName
+ * @param {string|string[]} locale
  */
-export async function setLocale(localeName: string | string[]): Promise<void> {
+export async function setLocale(locale: string | string[]): Promise<void> {
   const { owner } = getContext() as TestContext;
 
   assert(
@@ -18,7 +18,7 @@ export async function setLocale(localeName: string | string[]): Promise<void> {
 
   const intl = owner.lookup('service:intl') as IntlService;
 
-  intl.setLocale(localeName);
+  intl.setLocale(locale);
 
   await settled();
 }
