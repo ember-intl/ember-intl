@@ -32,9 +32,9 @@ function normalizeLocale(locale) {
   return locale;
 }
 
-function readAsObject(filepath) {
-  const data = readFileSync(filepath);
-  const ext = extname(filepath);
+function readAsObject(filePath) {
+  const data = readFileSync(filePath);
+  const ext = extname(filePath);
 
   switch (ext) {
     case '.json': {
@@ -87,28 +87,29 @@ class TranslationReducer extends CachingWriter {
     }
   }
 
-  mergeTranslations(listFiles) {
+  mergeTranslations(filePaths) {
     const addonPrefix = `/${enums.addonNamespace}/`;
-    const orderedTranslations = listFiles.sort(function (fileA, fileB) {
-      // Orders all the addons at the top and the application last.
-      // This way the application wins if there is a translation conflict.
-      if (fileA.includes(addonPrefix) && !fileB.includes(addonPrefix)) {
+
+    // List the addon's translation files first, then the app's.
+    // This way, the app can override an addon's translations.
+    const orderedFilePaths = filePaths.sort(function (filePath1, filePath2) {
+      if (filePath1.includes(addonPrefix) && !filePath2.includes(addonPrefix)) {
         return -1;
       }
 
-      if (!fileA.includes(addonPrefix) && fileB.includes(addonPrefix)) {
+      if (!filePath1.includes(addonPrefix) && filePath2.includes(addonPrefix)) {
         return 1;
       }
 
       return 0;
     });
 
-    return orderedTranslations.reduce((accum, filepath) => {
-      if (statSync(filepath).isDirectory()) {
-        return accum;
+    return orderedFilePaths.reduce((accumulator, filePath) => {
+      if (statSync(filePath).isDirectory()) {
+        return accumulator;
       }
 
-      let translation = readAsObject(filepath);
+      let translation = readAsObject(filePath);
 
       // TODO: make the default in 6.0.0
       if (this.options.stripEmptyTranslations === true) {
@@ -116,24 +117,24 @@ class TranslationReducer extends CachingWriter {
       }
 
       if (!translation) {
-        this._log(`cannot read path "${filepath}"`);
+        this._log(`cannot read path "${filePath}"`);
 
-        return accum;
+        return accumulator;
       }
 
       if (this.options.wrapTranslationsWithNamespace === true) {
         translation = wrapWithNamespaceIfNeeded(
           translation,
-          filepath,
+          filePath,
           this.inputPaths[0],
           this.options.addonsWithTranslations,
         );
       }
 
-      let filename = basename(filepath).split('.')[0];
-      let localeName = normalizeLocale(filename);
+      const fileName = basename(filePath).split('.')[0];
+      const localeName = normalizeLocale(fileName);
 
-      return extend(true, accum, {
+      return extend(true, accumulator, {
         [localeName]: translation,
       });
     }, {});
@@ -203,14 +204,17 @@ class TranslationReducer extends CachingWriter {
   }
 
   build() {
-    const translations = this.mergeTranslations(this.listFiles());
+    // Call listFiles() from broccoli-caching-writer
+    const translationFilePaths = this.listFiles();
+
+    const translations = this.mergeTranslations(translationFilePaths);
     const lintResults = this.linter.lint(translations);
     this.handleLintResult(lintResults);
 
-    const filepath = join(this.outputPath, this.options.outputPath);
+    const filePath = join(this.outputPath, this.options.outputPath);
     const fallbacks = translations[this.options.fallbackLocale];
 
-    mkdirSync(filepath, { recursive: true });
+    mkdirSync(filePath, { recursive: true });
 
     for (const locale in translations) {
       if (this.options.verbose) {
@@ -227,7 +231,7 @@ class TranslationReducer extends CachingWriter {
       }
 
       writeFileSync(
-        join(filepath, `${locale}.json`),
+        join(filePath, `${locale}.json`),
         stringify(translations[locale]),
         {
           encoding: 'utf8',
@@ -243,7 +247,7 @@ class TranslationReducer extends CachingWriter {
       }
 
       writeFileSync(
-        join(filepath, 'translations.js'),
+        join(filePath, 'translations.js'),
         'export default ' + stringify(restructuredTranslations),
         {
           encoding: 'utf8',
