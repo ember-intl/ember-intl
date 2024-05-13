@@ -9,12 +9,14 @@ import type { IntlService } from 'ember-intl';
  * @param {string|string[]} locale
  */
 export async function setLocale(locale: string | string[]): Promise<void> {
-  const { owner } = getContext() as TestContext;
+  const context = getContext();
 
   assert(
-    'The current test has no owner. To use `setLocale()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
-    owner,
+    'To use `setLocale()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
+    context,
   );
+
+  const { owner } = context as TestContext;
 
   const intl = owner.lookup('service:intl') as IntlService;
 

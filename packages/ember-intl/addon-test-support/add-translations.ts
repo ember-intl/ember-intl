@@ -15,12 +15,14 @@ export async function addTranslations(
   locale: string,
   translations: Translations,
 ): Promise<void> {
-  const { owner } = getContext() as TestContext;
+  const context = getContext();
 
   assert(
-    'The current test has no owner. To use `addTranslations()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
-    owner,
+    'To use `addTranslations()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
+    context,
   );
+
+  const { owner } = context as TestContext;
 
   const intl = owner.lookup('service:intl') as IntlService;
 

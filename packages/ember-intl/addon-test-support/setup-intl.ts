@@ -1,4 +1,5 @@
-import { settled, type TestContext } from '@ember/test-helpers';
+import { assert } from '@ember/debug';
+import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
@@ -21,9 +22,18 @@ export function setupIntl(
   translations?: Translations,
 ): void {
   hooks.beforeEach(async function (this: TestContext) {
-    this.owner.register('util:intl/missing-message', missingMessage);
+    const context = getContext();
 
-    const intl = this.owner.lookup('service:intl') as IntlService;
+    assert(
+      'To use `setupIntl()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
+      context,
+    );
+
+    const { owner } = context as TestContext;
+
+    owner.register('util:intl/missing-message', missingMessage);
+
+    const intl = owner.lookup('service:intl') as IntlService;
 
     intl.setLocale(locale);
 
