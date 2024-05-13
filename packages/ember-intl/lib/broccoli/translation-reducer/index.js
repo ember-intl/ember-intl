@@ -1,6 +1,5 @@
 const CachingWriter = require('broccoli-caching-writer');
 const stringify = require('json-stable-stringify');
-const extend = require('extend');
 const yaml = require('js-yaml');
 const { basename, extname, join } = require('node:path');
 const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
@@ -107,27 +106,30 @@ class TranslationReducer extends CachingWriter {
       return 0;
     });
 
-    return orderedFilePaths.reduce((accumulator, filePath) => {
+    // Map locale to a translation object
+    const translations = {};
+
+    orderedFilePaths.forEach((filePath) => {
       if (statSync(filePath).isDirectory()) {
-        return accumulator;
+        return;
       }
 
-      let translation = readAsObject(filePath);
+      let translationObject = readAsObject(filePath);
 
       // TODO: make the default in 6.0.0
       if (this.options.stripEmptyTranslations === true) {
-        translation = stripEmptyTranslations(translation);
+        translationObject = stripEmptyTranslations(translationObject);
       }
 
-      if (!translation) {
+      if (!translationObject) {
         this._log(`cannot read path "${filePath}"`);
 
-        return accumulator;
+        return;
       }
 
       if (this.options.wrapTranslationsWithNamespace === true) {
-        translation = wrapWithNamespaceIfNeeded(
-          translation,
+        translationObject = wrapWithNamespaceIfNeeded(
+          translationObject,
           filePath,
           this.inputPaths[0],
           this.options.addonsWithTranslations,
@@ -135,12 +137,15 @@ class TranslationReducer extends CachingWriter {
       }
 
       const fileName = basename(filePath).split('.')[0];
-      const localeName = normalizeLocale(fileName);
+      const locale = normalizeLocale(fileName);
 
-      return extend(true, accumulator, {
-        [localeName]: translation,
-      });
-    }, {});
+      const oldValue = translations[locale] ?? {};
+      const newValue = Object.assign({}, oldValue, translationObject);
+
+      translations[locale] = newValue;
+    });
+
+    return translations;
   }
 
   handleLintResult(result) {
@@ -215,7 +220,7 @@ class TranslationReducer extends CachingWriter {
     this.handleLintResult(lintResults);
 
     const filePath = join(this.outputPath, this.options.outputPath);
-    const fallbacks = translations[this.options.fallbackLocale];
+    const fallbackTranslationObject = translations[this.options.fallbackLocale];
 
     mkdirSync(filePath, { recursive: true });
 
@@ -224,13 +229,11 @@ class TranslationReducer extends CachingWriter {
         this.validateMessages(translations[locale], locale);
       }
 
-      if (fallbacks && this.options.fallbackLocale !== locale) {
-        translations[locale] = extend(
-          true,
-          {},
-          fallbacks,
-          translations[locale],
-        );
+      if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
+        const oldValue = translations[locale];
+        const newValue = Object.assign({}, fallbackTranslationObject, oldValue);
+
+        translations[locale] = newValue;
       }
 
       writeFileSync(

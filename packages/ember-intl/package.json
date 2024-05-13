@@ -47,7 +47,6 @@
     "ember-cli-babel": "^8.2.0",
     "ember-cli-typescript": "^5.3.0",
     "eventemitter3": "^5.0.1",
-    "extend": "^3.0.2",
     "intl-messageformat": "^10.5.11",
     "js-yaml": "^4.1.0",
     "json-stable-stringify": "^1.1.1"
