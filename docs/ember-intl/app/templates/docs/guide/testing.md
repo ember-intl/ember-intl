@@ -3,44 +3,16 @@
 With `ember-intl`'s test helpers, you can check translations under various conditions easily.
 
 
-## setupIntl(hooks, [locale], [translations])
+## setupIntl(hooks, locale, [translations])
 
-In rendering and unit tests, you must add `setupIntl(hooks)` if they depend on `ember-intl`, e.g. you used the `{{t}}` helper in the template, or injected the `intl` service in the class.
+In rendering and unit tests, you should add `setupIntl()` if they depend on `ember-intl`, e.g. you used the `{{t}}` helper in the template, or injected the `intl` service in the class.
 
-You can also use `setupIntl()` to set the locale and stub translations. This setup runs as a part of the test module's `beforeEach` hook (e.g. before a component is rendered).
-
-In application tests, it's not necessary to call `setupIntl(hooks)`. The only time you might do this is to run a test module with a particular locale.
-
-
-### setupIntl(hooks)
-
-The syntax helps you check the default case. That is, what does the user see with the default locale and the translations as provided?
-
-```ts
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
-import { setupRenderingTest } from 'ember-qunit';
-import { module, test } from 'qunit';
-
-module('Integration | Component | hello', function (hooks) {
-  setupRenderingTest(hooks);
-  setupIntl(hooks);
-
-  test('it renders', async function (assert) {
-    await render(hbs`
-      <Hello @name="Zoey" />
-    `);
-
-    assert.dom('[data-test-message]').hasText('Hello, Zoey!');
-  });
-});
-```
+In application tests, it's not necessary to call `setupIntl()`. The only time you might do this is to run a test module with a particular locale.
 
 
 ### setupIntl(hooks, locale)
 
-The syntax helps you check the translations for a specific locale.
+The default syntax helps you check the translations for a specific locale.
 
 ```ts
 import { render } from '@ember/test-helpers';
@@ -64,39 +36,9 @@ module('Integration | Component | hello', function (hooks) {
 ```
 
 
-### setupIntl(hooks, translations)
-
-The syntax helps you stub the translations for the default locale.
-
-```ts
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
-import { setupRenderingTest } from 'ember-qunit';
-import { module, test } from 'qunit';
-
-module('Integration | Component | hello', function (hooks) {
-  setupRenderingTest(hooks);
-  setupIntl(hooks, {
-    hello: {
-      message: 'What\'s up, {name}?',
-    },
-  });
-
-  test('it renders', async function (assert) {
-    await render(hbs`
-      <Hello @name="Zoey" />
-    `);
-
-    assert.dom('[data-test-message]').hasText('What\'s up, Zoey?');
-  });
-});
-```
-
-
 ### setupIntl(hooks, locale, translations)
 
-The syntax helps you stub the translations for a specific locale.
+You can pass a translation object to stub the translations for a specific locale.
 
 ```ts
 import { render } from '@ember/test-helpers';
@@ -137,7 +79,7 @@ import { module, test } from 'qunit';
 
 module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
     await render(hbs`
@@ -169,7 +111,7 @@ import { module, test } from 'qunit';
 
 module('Integration | Component | lazy-hello', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('Lazily loaded translations', async function (assert) {
     await render(hbs`
@@ -213,7 +155,7 @@ import { module, test } from 'qunit';
 
 module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
     await render(hbs`
