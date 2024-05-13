@@ -120,10 +120,8 @@ export default class IntlService extends Service {
   constructor() {
     super(...arguments);
 
-    const initialLocale = this.locale || ['en-us'];
     this._intls = {};
     this._ee = new EventEmitter();
-    this.setLocale(initialLocale);
 
     this._owner = getOwner(this);
 
