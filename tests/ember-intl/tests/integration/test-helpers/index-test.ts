@@ -31,6 +31,7 @@ module('Integration | Test Helpers', function (hooks) {
         't:some.translation:()',
         '`t` method serializes translation without variables',
       );
+
       assert.strictEqual(
         this.intl.t('some.translation', { foo: 'bar' }),
         't:some.translation:("foo":"bar")',
@@ -48,47 +49,49 @@ module('Integration | Test Helpers', function (hooks) {
         '`t` helper serializes translation with variables',
       );
 
-      const germanLocale = 'de-de';
       assert.notDeepEqual(
         this.intl.locale,
-        [germanLocale],
-        `locale was not '${germanLocale} before switching to it`,
+        ['de-de'],
+        'locale was not de-de before switching to it',
       );
 
       await setLocale('de-de');
+
       assert.deepEqual(
         this.intl.locale,
-        [germanLocale],
+        ['de-de'],
         `locale was switched with 'setLocale'`,
       );
 
-      await addTranslations({
+      await addTranslations('de-de', {
         some: {
           german: {
             translation: 'Guten Tag.',
           },
         },
       });
+
       assert.strictEqual(
         this.intl.t('some.german.translation'),
         'Guten Tag.',
         'addTranslations: adds translations to currently active locale, if invoked without explicit locale',
       );
 
-      const englishLocale = 'en-us';
-      await addTranslations(englishLocale, {
+      await addTranslations('en-us', {
         some: {
           english: {
             translation: 'Good day, sir.',
           },
         },
       });
+
       assert.notOk(
         this.intl.exists('some.english.translation'),
         'addTranslations: if explicit locale give, does not add the translations to currently active locale',
       );
 
-      await setLocale(englishLocale);
+      await setLocale('en-us');
+
       assert.strictEqual(
         this.intl.t('some.english.translation'),
         'Good day, sir.',
@@ -121,9 +124,7 @@ module('Integration | Test Helpers', function (hooks) {
     });
 
     module('With a non-default locale', function (hooks) {
-      const germanLocale = 'de-de';
-
-      setupIntl(hooks, germanLocale, {
+      setupIntl(hooks, 'de-de', {
         some: {
           translation: 'Der Kuchen ist eine Lüge.',
         },
@@ -138,7 +139,7 @@ module('Integration | Test Helpers', function (hooks) {
 
         assert.deepEqual(
           this.intl.locale,
-          [germanLocale],
+          ['de-de'],
           'locale has been switched',
         );
 
@@ -157,9 +158,7 @@ module('Integration | Test Helpers', function (hooks) {
       setupIntl(hooks, 'en-us');
 
       test('hooks were properly executed and translations have been added (1)', async function (this: TestContext, assert) {
-        const ENGLISH_LOCALE = 'en-us';
-
-        await addTranslations(ENGLISH_LOCALE, {
+        await addTranslations('en-us', {
           some: {
             translation: 'The {foo} is a lie.',
             nested_translation: '{count, plural, =1 {Cake} other {Cakes}}',
