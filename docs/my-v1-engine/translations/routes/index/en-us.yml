@@ -1,0 +1,2 @@
+routes.index:
+  key-to-overwrite: The engine's translations take precedence.
