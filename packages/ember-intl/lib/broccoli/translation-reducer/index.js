@@ -116,7 +116,6 @@ class TranslationReducer extends CachingWriter {
 
       let translationObject = readAsObject(filePath);
 
-      // TODO: make the default in 6.0.0
       if (this.options.stripEmptyTranslations === true) {
         translationObject = stripEmptyTranslations(translationObject);
       }
