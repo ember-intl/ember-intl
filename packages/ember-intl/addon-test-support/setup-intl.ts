@@ -35,12 +35,13 @@ export interface SetupIntlOptions {
  * to explicitly add any translations and can just rely on the implicit
  * serialization. See the docs for detailed examples.
  *
- * Besides the `hooks` object you can also pass a `locale` string or array to
- * set the locale, as well as an object of `translations`, if you do want to
- * bootstrap translations. Both arguments are optional.
+ * In addition to the `hooks` object, you must specify the locale
+ * under which your tests make sense.
+ *
+ * You may pass a `translations` object to stub the translations.
  *
  * @param {object} hooks
- * @param {string} [localeOrTranslations]
+ * @param {string} [locale]
  * @param {object} [translations]
  * @param {object} [options]
  */
@@ -49,34 +50,7 @@ export function setupIntl(
   locale: string | string[],
   translations?: Translations,
   options?: SetupIntlOptions,
-): void;
-export function setupIntl(
-  hooks: NestedHooks,
-  translations?: Translations,
-  options?: SetupIntlOptions,
-): void;
-export function setupIntl(
-  hooks: NestedHooks,
-  localeOrTranslations?: string | string[] | Translations,
-  translationsOrOptions?: Translations | SetupIntlOptions,
-  options?: SetupIntlOptions,
-) {
-  let locale: string | string[] | undefined;
-  let translations: Translations | undefined;
-  if (
-    typeof localeOrTranslations === 'object' &&
-    !Array.isArray(localeOrTranslations)
-  ) {
-    translations = localeOrTranslations;
-    localeOrTranslations = undefined;
-    if (typeof translationsOrOptions === 'object') {
-      options = translationsOrOptions;
-    }
-  } else {
-    locale = localeOrTranslations;
-    translations = translationsOrOptions as Translations | undefined;
-  }
-
+): void {
   hooks.beforeEach(async function (this: TestContext) {
     if (typeof options?.missingMessage === 'function') {
       this.owner.register('util:intl/missing-message', options.missingMessage);
@@ -96,9 +70,7 @@ export function setupIntl(
 
     this.intl = this.owner.lookup('service:intl') as IntlService;
 
-    if (locale) {
-      this.intl.setLocale(locale);
-    }
+    this.intl.setLocale(locale);
 
     if (translations) {
       addTranslations(translations);

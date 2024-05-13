@@ -16,8 +16,8 @@ interface TestContext extends BaseTestContext {
 module('Integration | Test Helpers', function (hooks) {
   setupRenderingTest(hooks);
 
-  module('setupIntl(hooks)', function (hooks) {
-    setupIntl(hooks);
+  module('setupIntl(hooks, locale)', function (hooks) {
+    setupIntl(hooks, 'en-us');
 
     test('hooks were properly executed and helpers work', async function (this: TestContext, assert) {
       assert.strictEqual(
@@ -99,7 +99,7 @@ module('Integration | Test Helpers', function (hooks) {
 
   module('setupIntl(hooks, translations)', function () {
     module('With default locale', function (hooks) {
-      setupIntl(hooks, {
+      setupIntl(hooks, 'en-us', {
         some: {
           translation: 'The cake is a lie.',
         },
@@ -154,7 +154,7 @@ module('Integration | Test Helpers', function (hooks) {
   module(
     'setupIntl(hooks, translations) for nested translations',
     function (hooks) {
-      setupIntl(hooks);
+      setupIntl(hooks, 'en-us');
 
       test('hooks were properly executed and translations have been added (1)', async function (this: TestContext, assert) {
         const ENGLISH_LOCALE = 'en-us';

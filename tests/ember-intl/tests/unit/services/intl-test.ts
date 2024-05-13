@@ -18,7 +18,7 @@ interface TestContext extends BaseTestContext {
 module('service:init initialization', function (hooks) {
   setupTest(hooks);
 
-  test('it calls `setLocale` on init', async function (this: TestContext, assert) {
+  test('it does not call `setLocale` on init', async function (this: TestContext, assert) {
     const Intl = this.owner.factoryFor('service:intl');
 
     const recompute = () => {
@@ -32,7 +32,7 @@ module('service:init initialization', function (hooks) {
 
     await settled();
 
-    assert.verifySteps(['Recompute helper']);
+    assert.verifySteps([]);
   });
 });
 
