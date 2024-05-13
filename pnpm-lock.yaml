@@ -1369,9 +1369,6 @@ importers:
       broccoli-source:
         specifier: ^3.0.1
         version: 3.0.1
-      broccoli-stew:
-        specifier: ^3.0.0
-        version: 3.0.0
       calculate-cache-key-for-tree:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1390,12 +1387,6 @@ importers:
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
-      extend:
-        specifier: ^3.0.2
-        version: 3.0.2
-      fast-memoize:
-        specifier: ^2.5.2
-        version: 2.5.2
       intl-messageformat:
         specifier: ^10.5.11
         version: 10.5.11
@@ -12386,10 +12377,6 @@ packages:
       is-extendable: 1.0.1
     dev: true
 
-  /extend@3.0.2:
-    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
-    dev: false
-
   /extendable-error@0.1.7:
     resolution: {integrity: sha512-UOiS2in6/Q0FK0R0q6UY9vYpQ21mr/Qn1KOnte7vsACuNJf514WvCCUHSRCPcgjPT2bAhNIJdlE6bVap1GKmeg==}
     dev: true
@@ -12446,10 +12433,6 @@ packages:
 
   /fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
-
-  /fast-memoize@2.5.2:
-    resolution: {integrity: sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==}
-    dev: false
 
   /fast-ordered-set@1.0.3:
     resolution: {integrity: sha512-MxBW4URybFszOx1YlACEoK52P6lE3xiFcPaGCUZ7QQOZ6uJXKo++Se8wa31SjcZ+NC/fdAWX7UtKEfaGgHS2Vg==}

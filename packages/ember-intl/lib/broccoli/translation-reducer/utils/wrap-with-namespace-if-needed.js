@@ -9,14 +9,14 @@ const enums = require('../../enums');
  *
  * @method wrapWithNamespaceIfNeeded
  * @param {Object} object
- * @param {String} filepath
+ * @param {String} filePath
  * @param {String} inputPath
  * @param {String[]} addonNames Names of the addons with translations
  * @return {Object} Returns the input object
  * @private
  */
-function wrapWithNamespaceIfNeeded(object, filepath, inputPath, addonNames) {
-  const normalizedFilePath = normalize(filepath);
+function wrapWithNamespaceIfNeeded(object, filePath, inputPath, addonNames) {
+  const normalizedFilePath = normalize(filePath);
   const normalizedInputPath = normalize(inputPath);
   const normalizedAddonNames = addonNames.map(normalize);
 

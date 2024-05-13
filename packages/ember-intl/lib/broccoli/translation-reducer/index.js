@@ -1,6 +1,5 @@
 const CachingWriter = require('broccoli-caching-writer');
 const stringify = require('json-stable-stringify');
-const extend = require('extend');
 const yaml = require('js-yaml');
 const { basename, extname, join } = require('node:path');
 const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
@@ -13,9 +12,32 @@ const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed
 const isKnownLanguage = require('./utils/is-known-language');
 const enums = require('../enums');
 
-function readAsObject(filepath) {
-  const data = readFileSync(filepath);
-  const ext = extname(filepath);
+function filterPatterns(locales) {
+  if (Array.isArray(locales)) {
+    return locales.map(
+      (locale) =>
+        new RegExp(`${normalizeLocale(locale)}.(json|yaml|yml)$`, 'i'),
+    );
+  }
+
+  return null;
+}
+
+function isApp(filePath) {
+  return !filePath.includes(`/${enums.addonNamespace}/`);
+}
+
+function normalizeLocale(locale) {
+  if (typeof locale === 'string') {
+    return locale.replace(/_/g, '-').trim().toLowerCase();
+  }
+
+  return locale;
+}
+
+function readAsObject(filePath) {
+  const data = readFileSync(filePath);
+  const ext = extname(filePath);
 
   switch (ext) {
     case '.json': {
@@ -27,25 +49,6 @@ function readAsObject(filepath) {
       return yaml.load(data);
     }
   }
-}
-
-function normalizeLocale(locale) {
-  if (typeof locale === 'string') {
-    return locale.replace(/_/g, '-').trim().toLowerCase();
-  }
-
-  return locale;
-}
-
-function filterPatterns(locales) {
-  if (Array.isArray(locales)) {
-    return locales.map(
-      (locale) =>
-        new RegExp(`${normalizeLocale(locale)}.(json|yaml|yml)$`, 'i'),
-    );
-  }
-
-  return null;
 }
 
 class TranslationReducer extends CachingWriter {
@@ -87,56 +90,61 @@ class TranslationReducer extends CachingWriter {
     }
   }
 
-  mergeTranslations(listFiles) {
-    const addonPrefix = `/${enums.addonNamespace}/`;
-    const orderedTranslations = listFiles.sort(function (fileA, fileB) {
-      // Orders all the addons at the top and the application last.
-      // This way the application wins if there is a translation conflict.
-      if (fileA.includes(addonPrefix) && !fileB.includes(addonPrefix)) {
-        return -1;
+  mergeTranslations(filePaths) {
+    const orderedFilePaths = filePaths.sort(function (filePath1, filePath2) {
+      const isApp1 = isApp(filePath1);
+      const isApp2 = isApp(filePath2);
+
+      if (isApp1 && !isApp2) {
+        return 1;
       }
 
-      if (!fileA.includes(addonPrefix) && fileB.includes(addonPrefix)) {
-        return 1;
+      if (isApp2 && !isApp1) {
+        return -1;
       }
 
       return 0;
     });
 
-    return orderedTranslations.reduce((accum, filepath) => {
-      if (statSync(filepath).isDirectory()) {
-        return accum;
+    // Map locale to a translation object
+    const translations = {};
+
+    orderedFilePaths.forEach((filePath) => {
+      if (statSync(filePath).isDirectory()) {
+        return;
       }
 
-      let translation = readAsObject(filepath);
+      let translationObject = readAsObject(filePath);
 
-      // TODO: make the default in 6.0.0
       if (this.options.stripEmptyTranslations === true) {
-        translation = stripEmptyTranslations(translation);
+        translationObject = stripEmptyTranslations(translationObject);
       }
 
-      if (!translation) {
-        this._log(`cannot read path "${filepath}"`);
+      if (!translationObject) {
+        this._log(`cannot read path "${filePath}"`);
 
-        return accum;
+        return;
       }
 
       if (this.options.wrapTranslationsWithNamespace === true) {
-        translation = wrapWithNamespaceIfNeeded(
-          translation,
-          filepath,
+        translationObject = wrapWithNamespaceIfNeeded(
+          translationObject,
+          filePath,
           this.inputPaths[0],
           this.options.addonsWithTranslations,
         );
       }
 
-      let filename = basename(filepath).split('.')[0];
-      let localeName = normalizeLocale(filename);
+      const fileName = basename(filePath).split('.')[0];
+      const locale = normalizeLocale(fileName);
 
-      return extend(true, accum, {
-        [localeName]: translation,
-      });
-    }, {});
+      const oldValue = translations[locale] ?? {};
+      const newValue = Object.assign({}, oldValue, translationObject);
+
+      translations[locale] = newValue;
+    });
+
+    return translations;
   }
 
   handleLintResult(result) {
@@ -203,31 +211,32 @@ class TranslationReducer extends CachingWriter {
   }
 
   build() {
-    const translations = this.mergeTranslations(this.listFiles());
+    // Call listFiles() from broccoli-caching-writer
+    const translationFilePaths = this.listFiles();
+
+    const translations = this.mergeTranslations(translationFilePaths);
     const lintResults = this.linter.lint(translations);
     this.handleLintResult(lintResults);
 
-    const filepath = join(this.outputPath, this.options.outputPath);
-    const fallbacks = translations[this.options.fallbackLocale];
+    const filePath = join(this.outputPath, this.options.outputPath);
+    const fallbackTranslationObject = translations[this.options.fallbackLocale];
 
-    mkdirSync(filepath, { recursive: true });
+    mkdirSync(filePath, { recursive: true });
 
     for (const locale in translations) {
       if (this.options.verbose) {
         this.validateMessages(translations[locale], locale);
       }
 
-      if (fallbacks && this.options.fallbackLocale !== locale) {
-        translations[locale] = extend(
-          true,
-          {},
-          fallbacks,
-          translations[locale],
-        );
+      if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
+        const oldValue = translations[locale];
+        const newValue = Object.assign({}, fallbackTranslationObject, oldValue);
+
+        translations[locale] = newValue;
       }
 
       writeFileSync(
-        join(filepath, `${locale}.json`),
+        join(filePath, `${locale}.json`),
         stringify(translations[locale]),
         {
           encoding: 'utf8',
@@ -243,7 +252,7 @@ class TranslationReducer extends CachingWriter {
       }
 
       writeFileSync(
-        join(filepath, 'translations.js'),
+        join(filePath, 'translations.js'),
         'export default ' + stringify(restructuredTranslations),
         {
           encoding: 'utf8',
