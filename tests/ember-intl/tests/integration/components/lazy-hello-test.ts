@@ -8,7 +8,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
   setupRenderingTest(hooks);
 
   module('en-us', function (nestedHooks) {
-    setupIntl(nestedHooks);
+    setupIntl(nestedHooks, 'en-us');
 
     test('Translations are loaded before the component is rendered', async function (assert) {
       await addTranslations({
