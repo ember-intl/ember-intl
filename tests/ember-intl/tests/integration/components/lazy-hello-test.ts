@@ -11,7 +11,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     setupIntl(nestedHooks, 'en-us');
 
     test('Translations are loaded before the component is rendered', async function (assert) {
-      await addTranslations({
+      await addTranslations('en-us', {
         'lazy-hello': {
           message: 'Hello, {name}!',
         },
@@ -54,7 +54,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'Before translations are loaded, we can write assertions against the test helper t().',
         );
 
-      await addTranslations({
+      await addTranslations('en-us', {
         'lazy-hello': {
           message: 'Hello, {name}!',
         },
@@ -81,7 +81,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         <LazyHello @name="Zoey" />
       `);
 
-      addTranslations({
+      addTranslations('en-us', {
         'lazy-hello': {
           message: 'Hello, {name}!',
         },

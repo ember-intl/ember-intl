@@ -96,11 +96,9 @@ module('Integration | Component | hello', function (hooks) {
 ```
 
 
-## addTranslations([locale], translations)
+## addTranslations(locale, translations)
 
 Updates the translations as if you had somehow added them (e.g. via lazy loading).
-
-The first parameter, `locale`, is optional and defaults to the last currently active locale. For example, if the current locales are `['en-ca', 'en-gb', 'en-us']`, then the translations will be added to `'en-us'` by default.
 
 ```ts
 import { render } from '@ember/test-helpers';
@@ -123,7 +121,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
       .doesNotIncludeText('Hello, Zoey!')
       .hasText('t:lazy-hello.message:("name":"Zoey")');
 
-    await addTranslations({
+    await addTranslations('en-us', {
       'lazy-hello': {
         message: 'Hello, {name}!',
       },

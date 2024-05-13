@@ -47,7 +47,7 @@ export interface SetupIntlOptions {
  */
 export function setupIntl(
   hooks: NestedHooks,
-  locale: string | string[],
+  locale: string,
   translations?: Translations,
   options?: SetupIntlOptions,
 ): void {
@@ -73,7 +73,7 @@ export function setupIntl(
     this.intl.setLocale(locale);
 
     if (translations) {
-      addTranslations(translations);
+      addTranslations(locale, translations);
     }
 
     await settled();
