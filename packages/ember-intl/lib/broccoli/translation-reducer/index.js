@@ -24,6 +24,10 @@ function filterPatterns(locales) {
   return null;
 }
 
+function isApp(filePath) {
+  return !filePath.includes(`/${enums.addonNamespace}/`);
+}
+
 function normalizeLocale(locale) {
   if (typeof locale === 'string') {
     return locale.replace(/_/g, '-').trim().toLowerCase();
@@ -88,17 +92,16 @@ class TranslationReducer extends CachingWriter {
   }
 
   mergeTranslations(filePaths) {
-    const addonPrefix = `/${enums.addonNamespace}/`;
-
-    // List the addon's translation files first, then the app's.
-    // This way, the app can override an addon's translations.
     const orderedFilePaths = filePaths.sort(function (filePath1, filePath2) {
-      if (filePath1.includes(addonPrefix) && !filePath2.includes(addonPrefix)) {
-        return -1;
+      const isApp1 = isApp(filePath1);
+      const isApp2 = isApp(filePath2);
+
+      if (isApp1 && !isApp2) {
+        return 1;
       }
 
-      if (!filePath1.includes(addonPrefix) && filePath2.includes(addonPrefix)) {
-        return 1;
+      if (isApp2 && !isApp1) {
+        return -1;
       }
 
       return 0;
