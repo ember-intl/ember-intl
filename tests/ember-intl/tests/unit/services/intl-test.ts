@@ -38,7 +38,7 @@ module('service:init initialization', function (hooks) {
 
 module('service:intl', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks, LOCALE, {}, { missingMessage: false });
+  setupIntl(hooks, LOCALE, {});
 
   test('should return a number if the translation is a number', function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, {
@@ -138,7 +138,7 @@ module('service:intl', function (hooks) {
       this.intl.t('x', {
         default: ['y', 'z'],
       }),
-      `Missing translation "z" for locale "en-us"`,
+      't:z:()',
     );
   });
 

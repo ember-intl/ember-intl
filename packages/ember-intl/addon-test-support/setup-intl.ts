@@ -3,7 +3,6 @@ import {
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
-import type { TOptions } from 'ember-intl/services/intl';
 import type { Formats, Translations } from 'ember-intl/types';
 
 import { missingMessage } from './-private/missing-message';
@@ -17,24 +16,9 @@ export interface TestContext extends IntlTestContext, BaseTestContext {}
 
 export interface SetupIntlOptions {
   formats?: Formats;
-
-  /**
-   * Whether to install the special `missing-message` handler.
-   *
-   * @defaultValue true
-   */
-  missingMessage?:
-    | boolean
-    | ((key: string, locales: string[], options: TOptions) => string);
 }
 
 /**
- * Calling this helper will install a special `missing-message` util that will
- * serialize all missing translations in a deterministic manner, including
- * variables you've passed for interpolation. This means that you do not have
- * to explicitly add any translations and can just rely on the implicit
- * serialization. See the docs for detailed examples.
- *
  * In addition to the `hooks` object, you must specify the locale
  * under which your tests make sense.
  *
@@ -52,11 +36,7 @@ export function setupIntl(
   options?: SetupIntlOptions,
 ): void {
   hooks.beforeEach(async function (this: TestContext) {
-    if (typeof options?.missingMessage === 'function') {
-      this.owner.register('util:intl/missing-message', options.missingMessage);
-    } else if ((options?.missingMessage ?? true) === true) {
-      this.owner.register('util:intl/missing-message', missingMessage);
-    }
+    this.owner.register('util:intl/missing-message', missingMessage);
 
     if (options?.formats) {
       const factory = this.owner.factoryFor('service:intl');
