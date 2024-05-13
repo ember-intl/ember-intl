@@ -13,6 +13,25 @@ const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed
 const isKnownLanguage = require('./utils/is-known-language');
 const enums = require('../enums');
 
+function filterPatterns(locales) {
+  if (Array.isArray(locales)) {
+    return locales.map(
+      (locale) =>
+        new RegExp(`${normalizeLocale(locale)}.(json|yaml|yml)$`, 'i'),
+    );
+  }
+
+  return null;
+}
+
+function normalizeLocale(locale) {
+  if (typeof locale === 'string') {
+    return locale.replace(/_/g, '-').trim().toLowerCase();
+  }
+
+  return locale;
+}
+
 function readAsObject(filepath) {
   const data = readFileSync(filepath);
   const ext = extname(filepath);
@@ -27,25 +46,6 @@ function readAsObject(filepath) {
       return yaml.load(data);
     }
   }
-}
-
-function normalizeLocale(locale) {
-  if (typeof locale === 'string') {
-    return locale.replace(/_/g, '-').trim().toLowerCase();
-  }
-
-  return locale;
-}
-
-function filterPatterns(locales) {
-  if (Array.isArray(locales)) {
-    return locales.map(
-      (locale) =>
-        new RegExp(`${normalizeLocale(locale)}.(json|yaml|yml)$`, 'i'),
-    );
-  }
-
-  return null;
 }
 
 class TranslationReducer extends CachingWriter {
