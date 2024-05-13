@@ -1,5 +1,13 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.11
+
+### Patch Changes
+
+- [#1878](https://github.com/ember-intl/ember-intl/pull/1878) Minimized test helpers API ([@ijlee2](https://github.com/ijlee2))
+- [#1877](https://github.com/ember-intl/ember-intl/pull/1877) Required locale in addTranslations() ([@ijlee2](https://github.com/ijlee2))
+- [#1847](https://github.com/ember-intl/ember-intl/pull/1847) Required locale in setupIntl() ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.10
 
 ### Patch Changes
