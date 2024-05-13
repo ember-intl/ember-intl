@@ -1,10 +1,11 @@
 {
-  "name": "my-v1-addon",
-  "version": "1.0.3",
+  "name": "my-v1-engine",
+  "version": "0.0.0",
   "private": true,
-  "description": "A v1 addon with ember-intl",
+  "description": "An engine with ember-intl",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-engine"
   ],
   "repository": {
     "type": "git",
@@ -45,12 +46,12 @@
   },
   "dependencies": {
     "@babel/core": "^7.24.5",
-    "ember-auto-import": "^2.7.2",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-intl": "workspace:*"
   },
   "devDependencies": {
+    "@ember/legacy-built-in-components": "^0.5.0",
     "@ember/optional-features": "^2.1.0",
     "@ember/test-helpers": "^3.3.0",
     "@embroider/test-setup": "^4.0.0",
@@ -68,12 +69,15 @@
     "@types/qunit": "^2.19.9",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
+    "ember-asset-loader": "^1.0.0",
+    "ember-auto-import": "^2.7.2",
     "ember-cli": "~5.8.1",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-dependency-checker": "^3.3.2",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-engines": "^0.10.0",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^8.2.3",
     "ember-qunit": "^8.0.2",
@@ -90,9 +94,13 @@
     "webpack": "^5.91.0"
   },
   "peerDependencies": {
+    "ember-engines": "^0.10.0",
     "ember-intl": "workspace:*"
   },
   "peerDependenciesMeta": {
+    "ember-engines": {
+      "optional": false
+    },
     "ember-intl": {
       "optional": false
     }

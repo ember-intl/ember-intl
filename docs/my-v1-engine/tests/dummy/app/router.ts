@@ -1,5 +1,5 @@
 import EmberRouter from '@ember/routing/router';
-import config from 'my-classic-app/config/environment';
+import config from 'dummy/config/environment';
 
 export default class Router extends EmberRouter {
   location = config.locationType;
@@ -7,6 +7,5 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  // Add routes here
-  this.mount('my-v1-engine');
+  // Add route declarations here
 });
