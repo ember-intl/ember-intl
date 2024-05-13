@@ -1,8 +1,10 @@
 import Helper from '@ember/component/helper';
 import { registerWarnHandler } from '@ember/debug';
 import { isHTMLSafe } from '@ember/template';
-import type { TestContext as BaseTestContext } from '@ember/test-helpers';
-import { settled } from '@ember/test-helpers';
+import {
+  settled,
+  type TestContext as BaseTestContext,
+} from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { TOptions } from 'ember-intl/services/intl';
 import { setupIntl } from 'ember-intl/test-support';
@@ -17,6 +19,10 @@ interface TestContext extends BaseTestContext {
 
 module('service:init initialization', function (hooks) {
   setupTest(hooks);
+
+  hooks.beforeEach(function (this: TestContext) {
+    this.intl = this.owner.lookup('service:intl') as IntlService;
+  });
 
   test('it does not call `setLocale` on init', async function (this: TestContext, assert) {
     const Intl = this.owner.factoryFor('service:intl');
@@ -38,7 +44,11 @@ module('service:init initialization', function (hooks) {
 
 module('service:intl', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks, LOCALE, {}, { missingMessage: false });
+  setupIntl(hooks, LOCALE, {});
+
+  hooks.beforeEach(function (this: TestContext) {
+    this.intl = this.owner.lookup('service:intl') as IntlService;
+  });
 
   test('should return a number if the translation is a number', function (this: TestContext, assert) {
     this.intl.addTranslations(LOCALE, {
@@ -138,7 +148,7 @@ module('service:intl', function (hooks) {
       this.intl.t('x', {
         default: ['y', 'z'],
       }),
-      `Missing translation "z" for locale "en-us"`,
+      't:z:()',
     );
   });
 

@@ -16,16 +16,14 @@ interface TestContext extends BaseTestContext {
 module('Integration | Test Helpers', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function (this: TestContext) {
+    this.intl = this.owner.lookup('service:intl') as IntlService;
+  });
+
   module('setupIntl(hooks, locale)', function (hooks) {
     setupIntl(hooks, 'en-us');
 
     test('hooks were properly executed and helpers work', async function (this: TestContext, assert) {
-      assert.strictEqual(
-        this.intl,
-        this.owner.lookup('service:intl'),
-        '`this.intl` shorthand is available',
-      );
-
       assert.strictEqual(
         this.intl.t('some.translation'),
         't:some.translation:()',

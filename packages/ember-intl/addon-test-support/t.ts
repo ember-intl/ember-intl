@@ -12,12 +12,14 @@ import type { TOptions } from 'ember-intl/services/intl';
  * @return {string}
  */
 export function t(key: string, options?: TOptions): string {
-  const { owner } = getContext() as TestContext;
+  const context = getContext();
 
   assert(
-    'The current test has no owner. To use `t()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
-    owner,
+    'To use `t()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
+    context,
   );
+
+  const { owner } = context as TestContext;
 
   const intl = owner.lookup('service:intl') as IntlService;
 
