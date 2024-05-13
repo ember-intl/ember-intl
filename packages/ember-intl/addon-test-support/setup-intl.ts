@@ -1,18 +1,9 @@
-import {
-  settled,
-  type TestContext as BaseTestContext,
-} from '@ember/test-helpers';
+import { settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/types';
 
 import { missingMessage } from './-private/missing-message';
 import { addTranslations } from './add-translations';
-
-export interface IntlTestContext {
-  intl: IntlService;
-}
-
-export interface TestContext extends IntlTestContext, BaseTestContext {}
 
 /**
  * In addition to the `hooks` object, you must specify the locale
@@ -21,7 +12,7 @@ export interface TestContext extends IntlTestContext, BaseTestContext {}
  * You may pass a `translations` object to stub the translations.
  *
  * @param {object} hooks
- * @param {string} [locale]
+ * @param {string} locale
  * @param {object} [translations]
  */
 export function setupIntl(
@@ -32,9 +23,9 @@ export function setupIntl(
   hooks.beforeEach(async function (this: TestContext) {
     this.owner.register('util:intl/missing-message', missingMessage);
 
-    this.intl = this.owner.lookup('service:intl') as IntlService;
+    const intl = this.owner.lookup('service:intl') as IntlService;
 
-    this.intl.setLocale(locale);
+    intl.setLocale(locale);
 
     if (translations) {
       addTranslations(locale, translations);
