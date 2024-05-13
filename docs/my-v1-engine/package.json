@@ -1,0 +1,117 @@
+{
+  "name": "my-v1-engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "An engine with ember-intl",
+  "keywords": [
+    "ember-addon",
+    "ember-engine"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "typesVersions": {
+    "*": {
+      "test-support": [
+        "declarations/addon-test-support/index.d.ts"
+      ],
+      "test-support/*": [
+        "declarations/addon-test-support/*",
+        "declarations/addon-test-support/*/index.d.ts"
+      ],
+      "*": [
+        "declarations/addon/*",
+        "declarations/addon/*/index.d.ts"
+      ]
+    }
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "_build": "ember build --environment=production",
+    "_prepack": "tsc --project tsconfig.declarations.json",
+    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "glint",
+    "start": "ember serve",
+    "test": "ember test --test-port=0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.24.5",
+    "ember-cli-babel": "^8.2.0",
+    "ember-cli-htmlbars": "^6.3.0",
+    "ember-intl": "workspace:*"
+  },
+  "devDependencies": {
+    "@ember/legacy-built-in-components": "^0.5.0",
+    "@ember/optional-features": "^2.1.0",
+    "@ember/test-helpers": "^3.3.0",
+    "@embroider/test-setup": "^4.0.0",
+    "@glimmer/component": "^1.1.2",
+    "@glimmer/tracking": "^1.1.2",
+    "@glint/core": "^1.4.0",
+    "@glint/environment-ember-loose": "^1.4.0",
+    "@glint/environment-ember-template-imports": "^1.4.0",
+    "@glint/template": "^1.4.0",
+    "@shared-configs/ember-template-lint": "workspace:*",
+    "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/testem": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@types/qunit": "^2.19.9",
+    "broccoli-asset-rev": "^3.0.0",
+    "concurrently": "^8.2.2",
+    "ember-asset-loader": "^1.0.0",
+    "ember-auto-import": "^2.7.2",
+    "ember-cli": "~5.8.1",
+    "ember-cli-clean-css": "^3.0.0",
+    "ember-cli-dependency-checker": "^3.3.2",
+    "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-cli-sri": "^2.1.1",
+    "ember-cli-terser": "^4.0.2",
+    "ember-engines": "^0.10.0",
+    "ember-load-initializers": "^2.1.2",
+    "ember-page-title": "^8.2.3",
+    "ember-qunit": "^8.0.2",
+    "ember-resolver": "^11.0.1",
+    "ember-source": "~5.8.0",
+    "ember-template-lint": "^6.0.0",
+    "ember-test-selectors": "^6.0.0",
+    "eslint": "^8.57.0",
+    "loader.js": "^4.7.0",
+    "prettier": "^3.2.5",
+    "qunit": "^2.20.1",
+    "qunit-dom": "^3.1.2",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0"
+  },
+  "peerDependencies": {
+    "ember-engines": "^0.10.0",
+    "ember-intl": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "ember-engines": {
+      "optional": false
+    },
+    "ember-intl": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": "18.* || >= 20"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  }
+}
