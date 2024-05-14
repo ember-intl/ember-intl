@@ -19,7 +19,6 @@ module.exports = {
   name: 'ember-intl',
   logger: null,
   configOptions: null,
-  isLocalizationFramework: true,
 
   included(parent) {
     this._super.included.apply(this, arguments);
