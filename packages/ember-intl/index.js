@@ -9,8 +9,8 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
-const findEngine = require('./lib/utils/find-engine');
 const defaultConfig = require('./lib/default-config');
+const findEngine = require('./lib/utils/find-engine');
 
 module.exports = {
   name: 'ember-intl',
@@ -21,7 +21,7 @@ module.exports = {
 
     this.app = this._findHost();
 
-    this.package = findEngine(parent) || this.project;
+    this.package = findEngine(parent) ?? this.project;
 
     this.configOptions = {
       ...defaultConfig,
