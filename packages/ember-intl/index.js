@@ -10,24 +10,16 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/find-engine');
-const Logger = require('./lib/logger');
 const defaultConfig = require('./lib/default-config');
 
 module.exports = {
   name: 'ember-intl',
-  logger: null,
   configOptions: null,
 
   included(parent) {
     this._super.included.apply(this, arguments);
 
     this.app = this._findHost();
-    const options = this.app.options.intl || {};
-
-    this.logger = new Logger({
-      ui: this.ui,
-      silent: options.silent,
-    });
 
     this.package = findEngine(parent) || this.project;
 
@@ -73,17 +65,14 @@ module.exports = {
       excludeLocales,
       fallbackLocale,
       includeLocales,
-      log: (...args) => {
-        return this.logger.log(...args);
+      log: (message) => {
+        return this.ui.writeLine(`[ember-intl] ${message}`);
       },
       mergeTranslationFiles: options.mergeTranslationFiles,
       outputPath: 'outputPath' in options ? options.outputPath : outputPath,
       requiresTranslation,
       stripEmptyTranslations,
       verbose: !this.isSilent,
-      warn: (...args) => {
-        return this.logger.warn(...args);
-      },
       wrapTranslationsWithNamespace,
     });
   },
