@@ -3,7 +3,7 @@
 'use strict';
 
 const { existsSync } = require('node:fs');
-const { dirname, isAbsolute, join } = require('node:path');
+const { dirname, join } = require('node:path');
 const mergeTrees = require('broccoli-merge-trees');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
@@ -108,19 +108,12 @@ module.exports = {
   getUserConfig() {
     const { env: environment, project } = this.app;
 
-    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
-    // while older ember-cli versions return path relative to project root
-    let configPath = dirname(project.configPath());
-    let config = join(configPath, 'ember-intl.js');
+    const config = join(dirname(project.configPath()), 'ember-intl.js');
 
-    if (!isAbsolute(config)) {
-      config = join(project.root, config);
+    if (!existsSync(config)) {
+      return {};
     }
 
-    if (existsSync(config)) {
-      return require(config)(environment);
-    }
-
-    return {};
+    return require(config)(environment);
   },
 };
