@@ -17,35 +17,6 @@ function funnelTranslations(tree, destDir) {
   });
 }
 
-function buildTranslationTree(project, inputPath, treeGenerator) {
-  const projectTranslations = join(project.root, inputPath);
-  const addonTrees = [];
-  const addonsWithTranslations = [];
-  const trees = [];
-
-  processAddons(
-    project.addons,
-    addonsWithTranslations,
-    addonTrees,
-    treeGenerator,
-  );
-
-  if (addonTrees.length > 0) {
-    trees.push(
-      funnelTranslations(
-        mergeTrees(addonTrees, { overwrite: true }),
-        enums.addonNamespace,
-      ),
-    );
-  }
-
-  if (existsSync(projectTranslations)) {
-    trees.push(new WatchedDir(projectTranslations));
-  }
-
-  return [mergeTrees(trees, { overwrite: true }), addonsWithTranslations];
-}
-
 function processAddons(
   addons,
   addonsWithTranslations,
@@ -96,6 +67,35 @@ function _processAddon(
     translationTrees,
     treeGenerator,
   );
+}
+
+function buildTranslationTree(project, inputPath, treeGenerator) {
+  const projectTranslations = join(project.root, inputPath);
+  const addonTrees = [];
+  const addonsWithTranslations = [];
+  const trees = [];
+
+  processAddons(
+    project.addons,
+    addonsWithTranslations,
+    addonTrees,
+    treeGenerator,
+  );
+
+  if (addonTrees.length > 0) {
+    trees.push(
+      funnelTranslations(
+        mergeTrees(addonTrees, { overwrite: true }),
+        enums.addonNamespace,
+      ),
+    );
+  }
+
+  if (existsSync(projectTranslations)) {
+    trees.push(new WatchedDir(projectTranslations));
+  }
+
+  return [mergeTrees(trees, { overwrite: true }), addonsWithTranslations];
 }
 
 module.exports = buildTranslationTree;
