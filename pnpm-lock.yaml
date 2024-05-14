@@ -1257,9 +1257,6 @@ importers:
 
   docs/my-v2-addon:
     dependencies:
-      '@ember/test-helpers':
-        specifier: ^3.3.0
-        version: 3.3.0(@glint/template@1.4.0)(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/addon-shim':
         specifier: ^1.8.7
         version: 1.8.7
@@ -1279,6 +1276,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.24.5
         version: 7.24.5
+      '@ember/test-helpers':
+        specifier: ^3.3.0
+        version: 3.3.0(@glint/template@1.4.0)(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/addon-dev':
         specifier: ^4.3.1
         version: 4.3.1(@glint/template@1.4.0)(rollup@4.17.2)
@@ -1351,6 +1351,9 @@ importers:
 
   packages/ember-intl:
     dependencies:
+      '@babel/core':
+        specifier: ^7.24.5
+        version: 7.24.5
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.7.6
         version: 2.7.6
@@ -3793,6 +3796,7 @@ packages:
       - '@glint/template'
       - supports-color
       - webpack
+    dev: true
 
   /@ember/test-waiters@3.1.0:
     resolution: {integrity: sha512-bb9h95ktG2wKY9+ja1sdsFBdOms2lB19VWs8wmNpzgHv1NCetonBoV5jHBV4DHt0uS1tg9z66cZqhUVlYs96KQ==}
@@ -3804,6 +3808,7 @@ packages:
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@embroider/addon-dev@4.3.1(@glint/template@1.4.0)(rollup@4.17.2):
     resolution: {integrity: sha512-CNZ4Y69PPIZAAGGoERjvDcrwOwWTuUmnRYu+XnmqKk0opdlu/PTssO9YWyxp8AnvGd2l7iLCjEn5mpLFvifstA==}
@@ -9971,6 +9976,7 @@ packages:
 
   /dom-element-descriptors@0.5.0:
     resolution: {integrity: sha512-CVzntLid1oFVHTKdTp/Qu7Kz+wSm8uO30TSQyAJ6n4Dz09yTzVQn3S1oRhVhUubxdMuKs1DjDqt88pubHagbPw==}
+    dev: true
 
   /dom-serializer@0.2.2:
     resolution: {integrity: sha512-2/xPb3ORsQ42nHYiSunXkDjPLBaEj/xTwUO4B7XCZQTRk7EBtTOPaygh10YAAh2OI1Qrp6NWfpAhzswj0ydt9g==}

@@ -35,6 +35,7 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
+    "@babel/core": "^7.24.5",
     "@formatjs/icu-messageformat-parser": "^2.7.6",
     "@formatjs/intl": "^2.10.1",
     "broccoli-caching-writer": "^3.0.3",
