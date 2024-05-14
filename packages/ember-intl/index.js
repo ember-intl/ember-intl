@@ -39,7 +39,35 @@ module.exports = {
     );
   },
 
-  generateTranslationTree(options = {}) {
+  treeForAddon(tree) {
+    let trees = [tree];
+
+    if (!this.configOptions.publicOnly) {
+      const translationTree = this.getTranslationTree({
+        mergeTranslationFiles: true,
+        outputPath: '',
+      });
+
+      trees.push(translationTree);
+    }
+
+    return this._super.treeForAddon.call(
+      this,
+      mergeTrees(trees, { overwrite: true }),
+    );
+  },
+
+  treeForPublic() {
+    let trees = [];
+
+    if (this.configOptions.publicOnly) {
+      trees.push(this.getTranslationTree());
+    }
+
+    return mergeTrees(trees, { overwrite: true });
+  },
+
+  getTranslationTree(options = {}) {
     const {
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
@@ -69,40 +97,12 @@ module.exports = {
         return this.ui.writeLine(`[ember-intl] ${message}`);
       },
       mergeTranslationFiles: options.mergeTranslationFiles,
-      outputPath: 'outputPath' in options ? options.outputPath : outputPath,
+      outputPath: options.outputPath ?? outputPath,
       requiresTranslation,
       stripEmptyTranslations,
       verbose: !this.isSilent,
       wrapTranslationsWithNamespace,
     });
-  },
-
-  treeForAddon(tree) {
-    let trees = [tree];
-
-    if (!this.configOptions.publicOnly) {
-      const translationTree = this.generateTranslationTree({
-        outputPath: '',
-        mergeTranslationFiles: true,
-      });
-
-      trees.push(translationTree);
-    }
-
-    return this._super.treeForAddon.call(
-      this,
-      mergeTrees(trees, { overwrite: true }),
-    );
-  },
-
-  treeForPublic() {
-    let trees = [];
-
-    if (this.configOptions.publicOnly) {
-      trees.push(this.generateTranslationTree());
-    }
-
-    return mergeTrees(trees, { overwrite: true });
   },
 
   getUserConfig() {
