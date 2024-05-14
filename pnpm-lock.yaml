@@ -745,6 +745,9 @@ importers:
 
   packages/ember-intl:
     dependencies:
+      '@babel/core':
+        specifier: ^7.24.0
+        version: 7.24.0
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.7.6
         version: 2.7.6
