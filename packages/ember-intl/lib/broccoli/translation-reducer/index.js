@@ -1,16 +1,16 @@
-const CachingWriter = require('broccoli-caching-writer');
-const stringify = require('json-stable-stringify');
-const yaml = require('js-yaml');
-const { basename, extname, join } = require('node:path');
 const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
+const { basename, extname, join } = require('node:path');
+const CachingWriter = require('broccoli-caching-writer');
+const yaml = require('js-yaml');
+const stringify = require('json-stable-stringify');
 
 const Linter = require('./linter');
 const forEachMessage = require('./utils/for-each-message');
-const validateMessage = require('../../message-validator/validate-message');
+const isKnownLanguage = require('./utils/is-known-language');
 const stripEmptyTranslations = require('./utils/strip-empty-translations');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
-const isKnownLanguage = require('./utils/is-known-language');
 const enums = require('../enums');
+const validateMessage = require('../../message-validator/validate-message');
 
 function filterPatterns(locales) {
   if (Array.isArray(locales)) {
@@ -84,12 +84,6 @@ class TranslationReducer extends CachingWriter {
     });
   }
 
-  _log() {
-    if (this.options.log) {
-      return this.options.log(...arguments);
-    }
-  }
-
   mergeTranslations(filePaths) {
     const orderedFilePaths = filePaths.sort(function (filePath1, filePath2) {
       const isApp1 = isApp(filePath1);
@@ -121,7 +115,7 @@ class TranslationReducer extends CachingWriter {
       }
 
       if (!translationObject) {
-        this._log(`cannot read path "${filePath}"`);
+        this.options.log(`cannot read path "${filePath}"`);
 
         return;
       }
@@ -170,7 +164,7 @@ class TranslationReducer extends CachingWriter {
         // log messages if not failing as it's duplicated console output
         !this.options.errorOnNamedArgumentMismatch
       ) {
-        missingICUArguments.forEach((message) => this._log(message));
+        missingICUArguments.forEach((message) => this.options.log(message));
       }
 
       if (this.options.errorOnNamedArgumentMismatch) {
@@ -194,7 +188,9 @@ class TranslationReducer extends CachingWriter {
         // log messages if not failing as it's duplicated console output
         !this.options.errorOnMissingTranslations
       ) {
-        missingTranslationMessages.forEach((message) => this._log(message));
+        missingTranslationMessages.forEach((message) =>
+          this.options.log(message),
+        );
       }
 
       if (this.options.errorOnMissingTranslations) {
@@ -267,9 +263,7 @@ class TranslationReducer extends CachingWriter {
     if (!isKnownLanguage(language)) {
       const message = `${locale}: Unable to detect language data for "${language}". Language code is either unknown or invalid.`;
 
-      this._log(message, {
-        warning: true,
-      });
+      this.options.log(message);
 
       return false;
     }
@@ -280,9 +274,7 @@ class TranslationReducer extends CachingWriter {
       } catch (error) {
         const message = `${locale}: "${key}" message cannot be parsed: ${error.message}`;
 
-        this._log(message, {
-          warning: true,
-        });
+        this.options.log(message);
       }
     });
   }

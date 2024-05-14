@@ -1,6 +1,6 @@
 const extractICUArguments = require('./extract-icu-arguments');
-const findLocalesMissingTranslation = require('./find-missing-translations');
 const findMissingICUArguments = require('./find-missing-icu-arguments');
+const findMissingTranslations = require('./find-missing-translations');
 const forEachMessage = require('../utils/for-each-message');
 
 module.exports = class Linter {
@@ -49,7 +49,7 @@ module.exports = class Linter {
     const { requiresTranslation } = this.options;
 
     allTranslationKeys.forEach((key) => {
-      const translationMissingFromLocales = findLocalesMissingTranslation(
+      const translationMissingFromLocales = findMissingTranslations(
         key,
         localeKeys,
       );

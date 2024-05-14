@@ -1,18 +1,13 @@
-function isEngine(addon) {
-  return (
-    addon.pkg &&
-    addon.pkg.keywords &&
-    addon.pkg.keywords.includes('ember-engine')
-  );
-}
-
-function findEngine(current) {
+function findEngine(addon) {
   do {
-    if (isEngine(current)) {
-      return current;
+    const isEngine = addon.pkg?.keywords.includes('ember-engine');
+
+    if (isEngine) {
+      return addon;
     }
-  } while ((current = current.parent));
-  return null;
+  } while ((addon = addon.parent));
+
+  return undefined;
 }
 
 module.exports = findEngine;

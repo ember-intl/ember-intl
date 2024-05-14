@@ -1,4 +1,4 @@
-function findLocalesMissingTranslation(key, localeKeys) {
+function findMissingTranslations(key, localeKeys) {
   return localeKeys
     .filter(([, translationKeys]) => {
       return !translationKeys.includes(key);
@@ -8,4 +8,4 @@ function findLocalesMissingTranslation(key, localeKeys) {
     });
 }
 
-module.exports = findLocalesMissingTranslation;
+module.exports = findMissingTranslations;

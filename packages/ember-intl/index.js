@@ -3,37 +3,30 @@
 'use strict';
 
 const { existsSync } = require('node:fs');
-const { dirname, isAbsolute, join } = require('node:path');
+const { dirname, join } = require('node:path');
 const mergeTrees = require('broccoli-merge-trees');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
+const defaultConfig = require('./lib/default-config');
 const findEngine = require('./lib/utils/find-engine');
-const Logger = require('./lib/logger');
-const DEFAULT_CONFIG = require('./lib/default-config');
-
-const OBSOLETE_OPTIONS = ['locales', 'disablePolyfill', 'autoPolyfill'];
 
 module.exports = {
   name: 'ember-intl',
-  logger: null,
   configOptions: null,
-  isLocalizationFramework: true,
 
   included(parent) {
     this._super.included.apply(this, arguments);
 
     this.app = this._findHost();
-    const options = this.app.options.intl || {};
 
-    this.logger = new Logger({
-      ui: this.ui,
-      silent: options.silent,
-    });
+    this.package = findEngine(parent) ?? this.project;
 
-    this.package = findEngine(parent) || this.project;
-    this.configOptions = this.createOptions(this.app.env, this.app.project);
+    this.configOptions = {
+      ...defaultConfig,
+      ...this.getUserConfig(),
+    };
   },
 
   cacheKeyForTree(treeType) {
@@ -46,54 +39,13 @@ module.exports = {
     );
   },
 
-  generateTranslationTree(options = {}) {
-    const {
-      outputPath,
-      fallbackLocale,
-      includeLocales,
-      excludeLocales,
-      requiresTranslation,
-      errorOnMissingTranslations,
-      errorOnNamedArgumentMismatch,
-      stripEmptyTranslations,
-      wrapTranslationsWithNamespace,
-    } = this.configOptions;
-
-    const [translationTree, addonsWithTranslations] = buildTranslationTree(
-      this.project,
-      this.configOptions.inputPath,
-      this.treeGenerator,
-    );
-
-    return new TranslationReducer([translationTree], {
-      fallbackLocale,
-      includeLocales,
-      excludeLocales,
-      requiresTranslation,
-      errorOnMissingTranslations,
-      errorOnNamedArgumentMismatch,
-      stripEmptyTranslations,
-      wrapTranslationsWithNamespace,
-      verbose: !this.isSilent,
-      outputPath: 'outputPath' in options ? options.outputPath : outputPath,
-      addonsWithTranslations,
-      mergeTranslationFiles: options.mergeTranslationFiles,
-      log: (...args) => {
-        return this.logger.log(...args);
-      },
-      warn: (...args) => {
-        return this.logger.warn(...args);
-      },
-    });
-  },
-
   treeForAddon(tree) {
     let trees = [tree];
 
     if (!this.configOptions.publicOnly) {
-      const translationTree = this.generateTranslationTree({
-        outputPath: '',
+      const translationTree = this.getTranslationTree({
         mergeTranslationFiles: true,
+        outputPath: '',
       });
 
       trees.push(translationTree);
@@ -109,48 +61,59 @@ module.exports = {
     let trees = [];
 
     if (this.configOptions.publicOnly) {
-      trees.push(this.generateTranslationTree());
+      trees.push(this.getTranslationTree());
     }
 
     return mergeTrees(trees, { overwrite: true });
   },
 
-  readConfig(environment, project) {
-    // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
-    // while older ember-cli versions return path relative to project root
-    let configPath = dirname(project.configPath());
-    let config = join(configPath, 'ember-intl.js');
+  getTranslationTree(options = {}) {
+    const {
+      errorOnMissingTranslations,
+      errorOnNamedArgumentMismatch,
+      excludeLocales,
+      fallbackLocale,
+      includeLocales,
+      outputPath,
+      requiresTranslation,
+      stripEmptyTranslations,
+      wrapTranslationsWithNamespace,
+    } = this.configOptions;
 
-    if (!isAbsolute(config)) {
-      config = join(project.root, config);
-    }
+    const [translationTree, addonsWithTranslations] = buildTranslationTree(
+      this.project,
+      this.configOptions.inputPath,
+      this.treeGenerator,
+    );
 
-    if (existsSync(config)) {
-      return require(config)(environment);
-    }
-
-    return {};
+    return new TranslationReducer([translationTree], {
+      addonsWithTranslations,
+      errorOnMissingTranslations,
+      errorOnNamedArgumentMismatch,
+      excludeLocales,
+      fallbackLocale,
+      includeLocales,
+      log: (message) => {
+        return this.ui.writeLine(`[ember-intl] ${message}`);
+      },
+      mergeTranslationFiles: options.mergeTranslationFiles,
+      outputPath: options.outputPath ?? outputPath,
+      requiresTranslation,
+      stripEmptyTranslations,
+      verbose: !this.isSilent,
+      wrapTranslationsWithNamespace,
+    });
   },
 
-  createOptions(environment, project) {
-    const config = {
-      ...DEFAULT_CONFIG,
-      ...this.readConfig(environment, project),
-    };
+  getUserConfig() {
+    const { env: environment, project } = this.app;
 
-    if (typeof config.requiresTranslation !== 'function') {
-      this.logger.warn(
-        'Configured `requiresTranslation` is not a function. Using default implementation.',
-      );
-      config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
+    const config = join(dirname(project.configPath()), 'ember-intl.js');
+
+    if (!existsSync(config)) {
+      return {};
     }
 
-    OBSOLETE_OPTIONS.filter((option) => option in config).forEach((option) => {
-      this.logger.warn(
-        `\`${option}\` is obsolete and can be removed from config/ember-intl.js.`,
-      );
-    });
-
-    return config;
+    return require(config)(environment);
   },
 };

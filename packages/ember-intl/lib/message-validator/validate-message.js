@@ -1,8 +1,8 @@
 const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
 
-const pluralCategories = require('./plural-categories');
-const ordinalCategories = require('./ordinal-categories');
 const traverse = require('./ast-traverse');
+const ordinalCategories = require('./ordinal-categories');
+const pluralCategories = require('./plural-categories');
 const parseOptions = require('../parse-options');
 
 function validateMessage(message, locale) {

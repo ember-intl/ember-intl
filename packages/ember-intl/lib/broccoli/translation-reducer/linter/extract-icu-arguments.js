@@ -1,4 +1,5 @@
 const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
+
 const traverse = require('../../../message-validator/ast-traverse');
 const parseOptions = require('../../../parse-options');
 

@@ -1,14 +1,15 @@
 module.exports = {
-  publicOnly: false,
-  fallbackLocale: null,
-  includeLocales: null,
-  excludeLocales: null,
-  inputPath: 'translations',
-  outputPath: 'translations',
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
-  wrapTranslationsWithNamespace: false,
+  excludeLocales: null,
+  fallbackLocale: null,
+  includeLocales: null,
+  inputPath: 'translations',
+  outputPath: 'translations',
+  publicOnly: false,
   requiresTranslation(/* key, locale */) {
     return true;
   },
+  stripEmptyTranslations: false,
+  wrapTranslationsWithNamespace: false,
 };
