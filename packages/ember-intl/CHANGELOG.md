@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.5.5
+
+### Patch Changes
+
+- [#1880](https://github.com/ember-intl/ember-intl/pull/1880) Added @babel/core as a dependency (required by ember-cli-babel@v8) ([@mkszepp](https://github.com/mkszepp))
+
 ## 6.5.4
 
 ### Patch Changes
