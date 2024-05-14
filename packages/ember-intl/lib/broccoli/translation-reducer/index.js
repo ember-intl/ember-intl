@@ -1,16 +1,16 @@
-const CachingWriter = require('broccoli-caching-writer');
-const stringify = require('json-stable-stringify');
-const yaml = require('js-yaml');
-const { basename, extname, join } = require('node:path');
 const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
+const { basename, extname, join } = require('node:path');
+const CachingWriter = require('broccoli-caching-writer');
+const yaml = require('js-yaml');
+const stringify = require('json-stable-stringify');
 
 const Linter = require('./linter');
 const forEachMessage = require('./utils/for-each-message');
-const validateMessage = require('../../message-validator/validate-message');
+const isKnownLanguage = require('./utils/is-known-language');
 const stripEmptyTranslations = require('./utils/strip-empty-translations');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
-const isKnownLanguage = require('./utils/is-known-language');
 const enums = require('../enums');
+const validateMessage = require('../../message-validator/validate-message');
 
 function filterPatterns(locales) {
   if (Array.isArray(locales)) {

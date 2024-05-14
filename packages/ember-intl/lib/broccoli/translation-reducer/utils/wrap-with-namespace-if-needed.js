@@ -1,4 +1,5 @@
 const { dirname, normalize, sep: separator } = require('node:path');
+
 const enums = require('../../enums');
 
 /**
