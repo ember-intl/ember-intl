@@ -49,13 +49,13 @@ module.exports = {
 
   generateTranslationTree(options = {}) {
     const {
-      outputPath,
-      fallbackLocale,
-      includeLocales,
-      excludeLocales,
-      requiresTranslation,
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
+      excludeLocales,
+      fallbackLocale,
+      includeLocales,
+      outputPath,
+      requiresTranslation,
       stripEmptyTranslations,
       wrapTranslationsWithNamespace,
     } = this.configOptions;
@@ -67,24 +67,24 @@ module.exports = {
     );
 
     return new TranslationReducer([translationTree], {
-      fallbackLocale,
-      includeLocales,
-      excludeLocales,
-      requiresTranslation,
+      addonsWithTranslations,
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
-      stripEmptyTranslations,
-      wrapTranslationsWithNamespace,
-      verbose: !this.isSilent,
-      outputPath: 'outputPath' in options ? options.outputPath : outputPath,
-      addonsWithTranslations,
-      mergeTranslationFiles: options.mergeTranslationFiles,
+      excludeLocales,
+      fallbackLocale,
+      includeLocales,
       log: (...args) => {
         return this.logger.log(...args);
       },
+      mergeTranslationFiles: options.mergeTranslationFiles,
+      outputPath: 'outputPath' in options ? options.outputPath : outputPath,
+      requiresTranslation,
+      stripEmptyTranslations,
+      verbose: !this.isSilent,
       warn: (...args) => {
         return this.logger.warn(...args);
       },
+      wrapTranslationsWithNamespace,
     });
   },
 
