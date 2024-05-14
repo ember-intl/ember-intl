@@ -16,7 +16,6 @@
     "lint:js:fix": "prettier --write \"**/*.js\""
   },
   "dependencies": {
-    "ember-template-lint": "^6.0.0",
     "ember-template-lint-plugin-prettier": "^5.0.0"
   },
   "devDependencies": {

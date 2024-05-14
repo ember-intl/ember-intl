@@ -35,7 +35,6 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.24.5",
     "@formatjs/icu-messageformat-parser": "^2.7.6",
     "@formatjs/intl": "^2.10.1",
     "broccoli-caching-writer": "^3.0.3",
@@ -94,7 +93,6 @@
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
     "qunit-dom": "^3.1.2",
-    "rsvp": "^4.8.5",
     "typescript": "^5.4.5",
     "webpack": "^5.91.0"
   },
