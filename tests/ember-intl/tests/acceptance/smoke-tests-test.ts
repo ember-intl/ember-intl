@@ -9,7 +9,7 @@ module('Acceptance | smoke-tests', function (hooks) {
   module('de-de', function () {
     test('We can see translations', async function (assert) {
       await visit('/smoke-tests');
-      await setLocale(['de-de']);
+      await setLocale('de-de');
 
       assert
         .dom('[data-test-field="Format Number"]')
