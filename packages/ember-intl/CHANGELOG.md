@@ -14,11 +14,19 @@
 
 ### Patch Changes
 
+- [#1883](https://github.com/ember-intl/ember-intl/pull/1883) Patched #1877 and #1882 ([@ijlee2](https://github.com/ijlee2))
+- [#1882](https://github.com/ember-intl/ember-intl/pull/1882) Refactored code in lib ([@ijlee2](https://github.com/ijlee2))
 - [#1876](https://github.com/ember-intl/ember-intl/pull/1876) Removed 3 dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1859](https://github.com/ember-intl/ember-intl/pull/1859) Added CHANGELOG.md and tsconfig.json to .npmignore ([@ijlee2](https://github.com/ijlee2))
 - [#1857](https://github.com/ember-intl/ember-intl/pull/1857) Removed @types/htmlbars-inline-precompile from devDependencies ([@ijlee2](https://github.com/ijlee2))
+
+## 6.5.5
+
+### Patch Changes
+
+- [#1880](https://github.com/ember-intl/ember-intl/pull/1880) Added @babel/core as a dependency (required by ember-cli-babel@v8) ([@mkszepp](https://github.com/mkszepp))
 
 ## 6.5.4
 

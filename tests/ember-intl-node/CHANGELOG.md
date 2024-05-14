@@ -1,5 +1,11 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.8
+
+### Patch Changes
+
+- [#1882](https://github.com/ember-intl/ember-intl/pull/1882) Refactored code in lib ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.7
 
 ### Patch Changes

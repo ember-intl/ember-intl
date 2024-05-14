@@ -1,6 +1,12 @@
 # my-v2-addon
 
-## 2.0.0
+## 1.0.5
+
+### Patch Changes
+
+- [#1880](https://github.com/ember-intl/ember-intl/pull/1880) Added @ember/test-helpers as a development dependency ([@mkszepp](https://github.com/mkszepp))
+
+## 1.0.4
 
 ### Patch Changes
 

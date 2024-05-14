@@ -1,6 +1,6 @@
 # my-v1-addon
 
-## 2.0.0
+## 1.0.4
 
 ### Patch Changes
 

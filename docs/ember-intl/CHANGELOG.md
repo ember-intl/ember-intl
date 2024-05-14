@@ -1,5 +1,11 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.6
+
+### Patch Changes
+
+- [#1879](https://github.com/ember-intl/ember-intl/pull/1879) Fix migration test sample ([@mkszepp](https://github.com/mkszepp))
+
 ## 1.3.5
 
 ### Patch Changes
