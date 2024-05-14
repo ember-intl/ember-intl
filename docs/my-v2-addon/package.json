@@ -65,6 +65,7 @@
     "@babel/core": "^7.24.5",
     "@babel/plugin-transform-typescript": "^7.24.5",
     "@babel/runtime": "^7.24.5",
+    "@ember/test-helpers": "^3.3.0",
     "@embroider/addon-dev": "^4.3.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
