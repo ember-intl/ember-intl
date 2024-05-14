@@ -1,6 +1,6 @@
 function findEngine(addon) {
   do {
-    const isEngine = addon.pkg?.keywords.includes('ember-engine');
+    const isEngine = addon.pkg?.keywords?.includes('ember-engine');
 
     if (isEngine) {
       return addon;
