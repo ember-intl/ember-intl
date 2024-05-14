@@ -11,9 +11,7 @@ const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/find-engine');
 const Logger = require('./lib/logger');
-const DEFAULT_CONFIG = require('./lib/default-config');
-
-const OBSOLETE_OPTIONS = ['locales', 'disablePolyfill', 'autoPolyfill'];
+const defaultConfig = require('./lib/default-config');
 
 module.exports = {
   name: 'ember-intl',
@@ -32,7 +30,11 @@ module.exports = {
     });
 
     this.package = findEngine(parent) || this.project;
-    this.configOptions = this.createOptions(this.app.env, this.app.project);
+
+    this.configOptions = {
+      ...defaultConfig,
+      ...this.getUserConfig(),
+    };
   },
 
   cacheKeyForTree(treeType) {
@@ -114,7 +116,9 @@ module.exports = {
     return mergeTrees(trees, { overwrite: true });
   },
 
-  readConfig(environment, project) {
+  getUserConfig() {
+    const { env: environment, project } = this.app;
+
     // NOTE: For ember-cli >= 2.6.0-beta.3, project.configPath() returns absolute path
     // while older ember-cli versions return path relative to project root
     let configPath = dirname(project.configPath());
@@ -129,27 +133,5 @@ module.exports = {
     }
 
     return {};
-  },
-
-  createOptions(environment, project) {
-    const config = {
-      ...DEFAULT_CONFIG,
-      ...this.readConfig(environment, project),
-    };
-
-    if (typeof config.requiresTranslation !== 'function') {
-      this.logger.warn(
-        'Configured `requiresTranslation` is not a function. Using default implementation.',
-      );
-      config.requiresTranslation = DEFAULT_CONFIG.requiresTranslation;
-    }
-
-    OBSOLETE_OPTIONS.filter((option) => option in config).forEach((option) => {
-      this.logger.warn(
-        `\`${option}\` is obsolete and can be removed from config/ember-intl.js.`,
-      );
-    });
-
-    return config;
   },
 };
