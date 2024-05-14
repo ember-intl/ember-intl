@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 settings:
-  autoInstallPeers: true
+  autoInstallPeers: false
   excludeLinksFromLockfile: false
 
 overrides:
@@ -81,10 +81,10 @@ importers:
       eslint-plugin-typescript-sort-keys:
         specifier: ^3.2.0
         version: 3.2.0(@typescript-eslint/parser@7.8.0)(eslint@8.57.0)(typescript@5.4.5)
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
     devDependencies:
+      '@babel/core':
+        specifier: ^7.24.5
+        version: 7.24.5
       '@shared-configs/eslint-config-node':
         specifier: workspace:*
         version: link:../node
@@ -100,6 +100,9 @@ importers:
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
 
   configs/eslint/node:
     dependencies:
@@ -133,9 +136,6 @@ importers:
       eslint-plugin-typescript-sort-keys:
         specifier: ^3.2.0
         version: 3.2.0(@typescript-eslint/parser@7.8.0)(eslint@8.57.0)(typescript@5.4.5)
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
     devDependencies:
       '@shared-configs/prettier':
         specifier: workspace:*
@@ -149,6 +149,9 @@ importers:
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
 
   configs/prettier:
     devDependencies:
@@ -161,9 +164,6 @@ importers:
 
   configs/stylelint:
     dependencies:
-      stylelint:
-        specifier: ^16.3.1
-        version: 16.5.0(typescript@5.4.5)
       stylelint-config-standard:
         specifier: ^36.0.0
         version: 36.0.0(stylelint@16.5.0)
@@ -183,6 +183,9 @@ importers:
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
+      stylelint:
+        specifier: ^16.3.1
+        version: 16.5.0(typescript@5.4.5)
 
   configs/testem:
     devDependencies:
@@ -207,9 +210,6 @@ importers:
       '@tsconfig/strictest':
         specifier: ^2.0.5
         version: 2.0.5
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
     devDependencies:
       '@shared-configs/prettier':
         specifier: workspace:*
@@ -297,7 +297,7 @@ importers:
         version: 5.8.1
       ember-cli-addon-docs:
         specifier: ^7.0.1
-        version: 7.0.1(patch_hash=inqlm4xka5za5cdcffvvo33jci)(@babel/core@7.24.5)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-data@5.3.3)(ember-fetch@8.1.2)(ember-source@5.8.0)(webpack@5.91.0)
+        version: 7.0.1(patch_hash=inqlm4xka5za5cdcffvvo33jci)(@babel/core@7.24.5)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-data@5.3.3)(ember-source@5.8.0)(webpack@5.91.0)
       ember-cli-addon-docs-yuidoc:
         specifier: ^1.1.0
         version: 1.1.0
@@ -376,6 +376,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       stylelint:
         specifier: ^16.5.0
         version: 16.5.0(typescript@5.4.5)
@@ -529,6 +532,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -679,6 +685,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -829,6 +838,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -979,6 +991,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1109,6 +1124,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1248,6 +1266,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1257,9 +1278,6 @@ importers:
 
   docs/my-v2-addon:
     dependencies:
-      '@ember/test-helpers':
-        specifier: ^3.3.0
-        version: 3.3.0(@glint/template@1.4.0)(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/addon-shim':
         specifier: ^1.8.7
         version: 1.8.7
@@ -1279,6 +1297,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.24.5
         version: 7.24.5
+      '@ember/test-helpers':
+        specifier: ^3.3.0
+        version: 3.3.0(@glint/template@1.4.0)(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/addon-dev':
         specifier: ^4.3.1
         version: 4.3.1(@glint/template@1.4.0)(rollup@4.17.2)
@@ -1333,6 +1354,9 @@ importers:
       ember-intl:
         specifier: workspace:*
         version: link:../../packages/ember-intl
+      ember-source:
+        specifier: ^5.8.0
+        version: 5.8.0(@babel/core@7.24.5)(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.91.0)
       ember-template-lint:
         specifier: ^6.0.0
         version: 6.0.0
@@ -1345,12 +1369,21 @@ importers:
       rollup:
         specifier: ^4.17.2
         version: 4.17.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
+      webpack:
+        specifier: ^5.91.0
+        version: 5.91.0
 
   packages/ember-intl:
     dependencies:
+      '@babel/core':
+        specifier: ^7.24.5
+        version: 7.24.5
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.7.6
         version: 2.7.6
@@ -1520,6 +1553,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1664,6 +1700,9 @@ importers:
       qunit-dom:
         specifier: ^3.1.2
         version: 3.1.2
+      rsvp:
+        specifier: ^4.8.5
+        version: 4.8.5
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -3793,6 +3832,7 @@ packages:
       - '@glint/template'
       - supports-color
       - webpack
+    dev: true
 
   /@ember/test-waiters@3.1.0:
     resolution: {integrity: sha512-bb9h95ktG2wKY9+ja1sdsFBdOms2lB19VWs8wmNpzgHv1NCetonBoV5jHBV4DHt0uS1tg9z66cZqhUVlYs96KQ==}
@@ -3804,6 +3844,7 @@ packages:
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@embroider/addon-dev@4.3.1(@glint/template@1.4.0)(rollup@4.17.2):
     resolution: {integrity: sha512-CNZ4Y69PPIZAAGGoERjvDcrwOwWTuUmnRYu+XnmqKk0opdlu/PTssO9YWyxp8AnvGd2l7iLCjEn5mpLFvifstA==}
@@ -6362,13 +6403,8 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ajv-formats@2.1.1(ajv@8.13.0):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
-    peerDependenciesMeta:
-      ajv:
-        optional: true
     dependencies:
       ajv: 8.13.0
 
@@ -9971,6 +10007,7 @@ packages:
 
   /dom-element-descriptors@0.5.0:
     resolution: {integrity: sha512-CVzntLid1oFVHTKdTp/Qu7Kz+wSm8uO30TSQyAJ6n4Dz09yTzVQn3S1oRhVhUubxdMuKs1DjDqt88pubHagbPw==}
+    dev: true
 
   /dom-serializer@0.2.2:
     resolution: {integrity: sha512-2/xPb3ORsQ42nHYiSunXkDjPLBaEj/xTwUO4B7XCZQTRk7EBtTOPaygh10YAAh2OI1Qrp6NWfpAhzswj0ydt9g==}
@@ -10205,12 +10242,11 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-addon-docs@7.0.1(patch_hash=inqlm4xka5za5cdcffvvo33jci)(@babel/core@7.24.5)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-data@5.3.3)(ember-fetch@8.1.2)(ember-source@5.8.0)(webpack@5.91.0):
+  /ember-cli-addon-docs@7.0.1(patch_hash=inqlm4xka5za5cdcffvvo33jci)(@babel/core@7.24.5)(@ember/test-helpers@3.3.0)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-data@5.3.3)(ember-source@5.8.0)(webpack@5.91.0):
     resolution: {integrity: sha512-5XIlga3wPZ/XZi3I0LxRVPaeojRnT0zGA+L3eR3B1VlvVeWeMXQOvgM3k92/6331ncbBmtxKZMgrG54rSOdo5w==}
     engines: {node: '>= 18'}
     peerDependencies:
       ember-data: '>= 3.0.0'
-      ember-fetch: ^8.1.1
       ember-source: '>= 4.0.0'
     dependencies:
       '@csstools/postcss-sass': 5.1.1(postcss@8.4.38)
@@ -10289,6 +10325,7 @@ packages:
       - '@glint/template'
       - bufferutil
       - canvas
+      - encoding
       - supports-color
       - utf-8-validate
       - webpack
@@ -17252,7 +17289,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.13.0
-      ajv-formats: 2.1.1(ajv@8.13.0)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.13.0)
 
   /select@1.1.2:
