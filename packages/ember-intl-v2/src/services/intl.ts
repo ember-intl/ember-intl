@@ -29,6 +29,15 @@ import {
 } from '../-private/utils/locale.ts';
 import { flattenKeys } from '../-private/utils/translations.ts';
 
+type Formatters = IntlService['_formatters'];
+
+type FormatterProxy<T extends keyof Formatters> = (
+  value: Parameters<Formatters[T]['format']>[1],
+  formatOptions?: Parameters<Formatters[T]['format']>[2] & {
+    locale?: string | string[];
+  },
+) => ReturnType<Formatters[T]['format']>;
+
 export interface TOptions {
   [option: string]: unknown;
   default?: string | string[];
@@ -39,7 +48,6 @@ export interface TOptions {
 export default class IntlService extends Service {
   /**
    * Returns an array of registered locale names
-   *
    */
   get locales() {
     return Object.keys(this._intls);
@@ -74,24 +82,6 @@ export default class IntlService extends Service {
   get primaryLocale() {
     return this.locale[0];
   }
-
-  /** @public **/
-  formatRelative = createFormatterProxy('relative');
-
-  /** @public **/
-  formatMessage = createFormatterProxy('message');
-
-  /** @public **/
-  formatNumber = createFormatterProxy('number');
-
-  /** @public **/
-  formatTime = createFormatterProxy('time');
-
-  /** @public **/
-  formatDate = createFormatterProxy('date');
-
-  /** @public **/
-  formatList = createFormatterProxy('list');
 
   /** @private **/
   @tracked _locale = null;
@@ -176,6 +166,24 @@ export default class IntlService extends Service {
 
     return translation;
   }
+
+  readonly formatDate = createFormatterProxy('date') as FormatterProxy<'date'>;
+
+  readonly formatList = createFormatterProxy('list') as FormatterProxy<'list'>;
+
+  readonly formatMessage = createFormatterProxy(
+    'message',
+  ) as FormatterProxy<'message'>;
+
+  readonly formatNumber = createFormatterProxy(
+    'number',
+  ) as FormatterProxy<'number'>;
+
+  readonly formatRelative = createFormatterProxy(
+    'relative',
+  ) as FormatterProxy<'relative'>;
+
+  readonly formatTime = createFormatterProxy('time') as FormatterProxy<'time'>;
 
   /**
    * @private
