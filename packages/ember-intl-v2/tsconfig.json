@@ -1,0 +1,20 @@
+{
+  "extends": "@shared-configs/typescript/ember",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "declarationDir": "declarations",
+    "rootDir": "./src",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "unpublished-development-types/**/*"
+  ],
+  "glint": {
+    "environment": [
+      "ember-loose",
+      "ember-template-imports"
+    ]
+  }
+}
