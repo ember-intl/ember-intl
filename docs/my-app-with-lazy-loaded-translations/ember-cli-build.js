@@ -17,7 +17,7 @@ module.exports = function (defaults) {
 
     trees: {
       app: sideWatch('app', {
-        watching: ['../my-v2-addon/src'],
+        watching: ['../../packages/ember-intl-v2/src', '../my-v2-addon/src'],
       }),
     },
   });

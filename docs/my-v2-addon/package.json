@@ -84,6 +84,7 @@
     "babel-plugin-ember-template-compilation": "^2.2.3",
     "concurrently": "^8.2.2",
     "ember-intl": "workspace:*",
+    "ember-intl-v2": "workspace:*",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
@@ -92,13 +93,17 @@
   },
   "peerDependencies": {
     "@ember/test-helpers": "^3.3.0",
-    "ember-intl": "workspace:*"
+    "ember-intl": "workspace:*",
+    "ember-intl-v2": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@ember/test-helpers": {
       "optional": false
     },
     "ember-intl": {
+      "optional": false
+    },
+    "ember-intl-v2": {
       "optional": false
     }
   },
