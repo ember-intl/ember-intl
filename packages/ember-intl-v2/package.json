@@ -53,16 +53,17 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.8",
-    "decorator-transforms": "^2.0.0"
+    "@formatjs/icu-messageformat-parser": "^2.7.6",
+    "@formatjs/intl": "^2.10.1",
+    "decorator-transforms": "^2.0.0",
+    "eventemitter3": "^5.0.1",
+    "intl-messageformat": "^10.5.11"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/plugin-transform-typescript": "^7.24.5",
     "@babel/runtime": "^7.24.5",
-    "@shared-configs/ember-template-lint": "workspace:*",
-    "@shared-configs/eslint-config-ember": "workspace:*",
-    "@shared-configs/prettier": "workspace:*",
-    "@shared-configs/typescript": "workspace:*",
+    "@ember/test-helpers": "^3.3.0",
     "@embroider/addon-dev": "^4.3.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -71,11 +72,21 @@
     "@glint/environment-ember-template-imports": "^1.4.0",
     "@glint/template": "^1.4.0",
     "@rollup/plugin-babel": "^6.0.4",
+    "@shared-configs/ember-template-lint": "workspace:*",
+    "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@types/ember__application": "^4.0.11",
     "@types/ember__component": "^4.0.22",
-    "@types/ember__object": "^4.0.12",
+    "@types/ember__debug": "^4.0.8",
+    "@types/ember__destroyable": "^4.0.5",
+    "@types/ember__runloop": "^4.0.10",
     "@types/ember__service": "^4.0.9",
+    "@types/ember__template": "^4.0.7",
+    "@types/ember__utils": "^4.0.7",
     "babel-plugin-ember-template-compilation": "^2.2.5",
     "concurrently": "^8.2.2",
+    "ember-qunit": "^8.0.2",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",
     "postcss": "^8.4.35",
@@ -91,7 +102,15 @@
     "edition": "octane"
   },
   "ember-addon": {
-    "app-js": {},
+    "app-js": {
+      "./helpers/format-date.js": "./dist/_app_/helpers/format-date.js",
+      "./helpers/format-list.js": "./dist/_app_/helpers/format-list.js",
+      "./helpers/format-message.js": "./dist/_app_/helpers/format-message.js",
+      "./helpers/format-number.js": "./dist/_app_/helpers/format-number.js",
+      "./helpers/format-relative.js": "./dist/_app_/helpers/format-relative.js",
+      "./helpers/t.js": "./dist/_app_/helpers/t.js",
+      "./services/intl.js": "./dist/_app_/services/intl.js"
+    },
     "main": "addon-main.cjs",
     "type": "addon",
     "version": 2
