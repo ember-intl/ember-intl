@@ -8,22 +8,25 @@ import { getOwner } from '@ember/application';
  * @private
  * @hide
  */
-export default function getDOM(context) {
+export default function getDOM(context: unknown) {
+  // @ts-expect-error: Property 'renderer' does not exist on type 'unknown'.
   let { renderer } = context;
-  if (!renderer || !renderer._dom) {
-    // pre glimmer2
-    let container = getOwner ? getOwner(context) : context.container;
-    let documentService = container.lookup('service:-document');
 
-    if (documentService) {
-      return documentService;
+  // Pre-glimmer 2
+  if (!renderer || !renderer._dom) {
+    // @ts-expect-error: 'context' is of type 'unknown'.
+    const container = getOwner ? getOwner(context) : context.container;
+    const document = container.lookup('service:-document');
+
+    if (document) {
+      return document;
     }
 
     renderer = container.lookup('renderer:-dom');
   }
 
+  // Pre-Ember 2.6
   if (renderer._dom && renderer._dom.document) {
-    // pre Ember 2.6
     return renderer._dom.document;
   }
 

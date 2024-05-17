@@ -5,4 +5,9 @@
  * @private
  * @hide
  */
-export default [];
+// [locale, translations][]
+type Translations = [string, unknown][];
+
+const translations: Translations = [];
+
+export default translations;

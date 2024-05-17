@@ -29,6 +29,13 @@ import {
 } from '../-private/utils/locale.ts';
 import { flattenKeys } from '../-private/utils/translations.ts';
 
+export interface TOptions {
+  [option: string]: unknown;
+  default?: string | string[];
+  htmlSafe?: boolean;
+  locale?: string | string[];
+}
+
 export default class IntlService extends Service {
   /**
    * Returns an array of registered locale names
@@ -358,4 +365,11 @@ function createFormatterProxy(name) {
 
     return this._formatters[name].format(intl, value, formatOptions);
   };
+}
+
+// DO NOT DELETE: this is how TypeScript knows how to look up your services.
+declare module '@ember/service' {
+  interface Registry {
+    intl: IntlService;
+  }
 }
