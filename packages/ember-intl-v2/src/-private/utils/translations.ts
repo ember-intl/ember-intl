@@ -1,8 +1,10 @@
-type NestedStructure<T = string> = {
-  [Key in string | number]?: T | NestedStructure<T>;
+type IndexSignatureParameter = string | number | symbol;
+
+type NestedStructure<T extends IndexSignatureParameter> = {
+  [Key in IndexSignatureParameter]?: T | NestedStructure<T>;
 };
 
-export type Translations = NestedStructure<string | number>;
+export type Translations = NestedStructure<string>;
 
 /**
  * @private
