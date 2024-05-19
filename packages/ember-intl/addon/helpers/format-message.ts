@@ -10,7 +10,7 @@ type Options = FormatParameters[1];
 interface FormatMessageSignature {
   Args: {
     Named?: Options;
-    Positional: [Value] | [Value, Options];
+    Positional: [Value];
   };
   Return: string;
 }
@@ -27,13 +27,9 @@ export default class FormatMessageHelper extends Helper<FormatMessageSignature> 
   }
 
   compute(
-    [value, positionalOptions]: FormatMessageSignature['Args']['Positional'],
-    namedOptions: FormatMessageSignature['Args']['Named'],
+    [value]: FormatMessageSignature['Args']['Positional'],
+    options: FormatMessageSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
-    return this.intl.formatMessage(value, options as Options);
+    return this.intl.formatMessage(value, options);
   }
 }

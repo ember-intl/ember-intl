@@ -10,7 +10,7 @@ type Options = FormatParameters[1];
 interface FormatTimeSignature {
   Args: {
     Named?: Options;
-    Positional: [Value] | [Value, Options];
+    Positional: [Value];
   };
   Return: string;
 }
@@ -27,13 +27,9 @@ export default class FormatTimeHelper extends Helper<FormatTimeSignature> {
   }
 
   compute(
-    [value, positionalOptions]: FormatTimeSignature['Args']['Positional'],
-    namedOptions: FormatTimeSignature['Args']['Named'],
+    [value]: FormatTimeSignature['Args']['Positional'],
+    options: FormatTimeSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
     return this.intl.formatTime(value, options);
   }
 }

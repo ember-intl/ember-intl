@@ -10,7 +10,7 @@ type Options = FormatParameters[1];
 interface FormatNumberSignature {
   Args: {
     Named?: Options;
-    Positional: [Value] | [Value, Options];
+    Positional: [Value];
   };
   Return: string;
 }
@@ -27,13 +27,9 @@ export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
   }
 
   compute(
-    [value, positionalOptions]: FormatNumberSignature['Args']['Positional'],
-    namedOptions: FormatNumberSignature['Args']['Named'],
+    [value]: FormatNumberSignature['Args']['Positional'],
+    options: FormatNumberSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
     return this.intl.formatNumber(value, options);
   }
 }

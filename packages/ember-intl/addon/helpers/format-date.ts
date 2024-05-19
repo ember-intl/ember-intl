@@ -10,7 +10,7 @@ type Options = FormatParameters[1];
 interface FormatDateSignature {
   Args: {
     Named?: Options;
-    Positional: [Value] | [Value, Options];
+    Positional: [Value];
   };
   Return: string;
 }
@@ -27,13 +27,9 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
   }
 
   compute(
-    [value, positionalOptions]: FormatDateSignature['Args']['Positional'],
-    namedOptions: FormatDateSignature['Args']['Named'],
+    [value]: FormatDateSignature['Args']['Positional'],
+    options: FormatDateSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
     return this.intl.formatDate(value, options);
   }
 }

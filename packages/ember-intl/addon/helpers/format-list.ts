@@ -10,7 +10,7 @@ type Options = FormatParameters[1];
 interface FormatListSignature {
   Args: {
     Named?: Options;
-    Positional: [Value] | [Value, Options];
+    Positional: [Value];
   };
   Return: string;
 }
@@ -27,13 +27,9 @@ export default class FormatListHelper extends Helper<FormatListSignature> {
   }
 
   compute(
-    [value, positionalOptions]: FormatListSignature['Args']['Positional'],
-    namedOptions: FormatListSignature['Args']['Named'],
+    [value]: FormatListSignature['Args']['Positional'],
+    options: FormatListSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
     return this.intl.formatList(value, options);
   }
 }

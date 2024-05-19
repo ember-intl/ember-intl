@@ -10,7 +10,7 @@ type Options = FormatParameters[1];
 interface FormatRelativeSignature {
   Args: {
     Named?: Options;
-    Positional: [Value] | [Value, Options];
+    Positional: [Value];
   };
   Return: string;
 }
@@ -27,13 +27,9 @@ export default class FormatRelativeHelper extends Helper<FormatRelativeSignature
   }
 
   compute(
-    [value, positionalOptions]: FormatRelativeSignature['Args']['Positional'],
-    namedOptions: FormatRelativeSignature['Args']['Named'],
+    [value]: FormatRelativeSignature['Args']['Positional'],
+    options: FormatRelativeSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
-    return this.intl.formatRelative(value, options as Options);
+    return this.intl.formatRelative(value, options);
   }
 }
