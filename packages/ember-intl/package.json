@@ -77,7 +77,6 @@
     "@types/ember__runloop": "^4.0.10",
     "@types/ember__service": "^4.0.9",
     "@types/ember__template": "^4.0.7",
-    "@types/ember__utils": "^4.0.7",
     "@types/qunit": "^2.19.10",
     "concurrently": "^8.2.2",
     "ember-cli": "~5.8.1",

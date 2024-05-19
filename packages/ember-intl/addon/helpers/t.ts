@@ -1,25 +1,22 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
-type FormatParameters = Parameters<IntlService['t']>;
-type Value = FormatParameters[0];
-type Options = FormatParameters[1];
+type TParameters = Parameters<IntlService['t']>;
+type Key = TParameters[0];
+type Options = TParameters[1];
 
 interface TSignature {
   Args: {
-    Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value] | [Value, Options];
+    Named?: Options;
+    Positional: [Key] | [Key, Options];
   };
   Return: string;
 }
 
 export default class THelper extends Helper<TSignature> {
   @service declare intl: IntlService;
-
-  allowEmpty = false;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params
@@ -30,23 +27,13 @@ export default class THelper extends Helper<TSignature> {
   }
 
   compute(
-    [value, positionalOptions]: TSignature['Args']['Positional'],
+    [key, positionalOptions]: TSignature['Args']['Positional'],
     namedOptions: TSignature['Args']['Named'],
   ) {
     const options = positionalOptions
       ? Object.assign({}, positionalOptions, namedOptions)
       : namedOptions;
 
-    if (isEmpty(value)) {
-      if (options?.allowEmpty ?? this.allowEmpty) {
-        return '';
-      }
-
-      if (typeof value === 'undefined') {
-        throw new Error('{{t}} helper requires a value.');
-      }
-    }
-
-    return this.intl.t(value!, options) as unknown as string;
+    return this.intl.t(key, options);
   }
 }

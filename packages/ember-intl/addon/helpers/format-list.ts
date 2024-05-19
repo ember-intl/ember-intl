@@ -1,6 +1,5 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
@@ -10,7 +9,7 @@ type Options = FormatParameters[1];
 
 interface FormatListSignature {
   Args: {
-    Named?: Options & { allowEmpty?: boolean };
+    Named?: Options;
     Positional: [Value] | [Value, Options];
   };
   Return: string;
@@ -18,8 +17,6 @@ interface FormatListSignature {
 
 export default class FormatListHelper extends Helper<FormatListSignature> {
   @service declare intl: IntlService;
-
-  allowEmpty = false;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params
@@ -37,16 +34,6 @@ export default class FormatListHelper extends Helper<FormatListSignature> {
       ? Object.assign({}, positionalOptions, namedOptions)
       : namedOptions;
 
-    if (isEmpty(value)) {
-      if (options?.allowEmpty ?? this.allowEmpty) {
-        return '';
-      }
-
-      if (typeof value === 'undefined') {
-        throw new Error('{{format-list}} helper requires a value.');
-      }
-    }
-
-    return this.intl.formatList(value!, options);
+    return this.intl.formatList(value, options);
   }
 }
