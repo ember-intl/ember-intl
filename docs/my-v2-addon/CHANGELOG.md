@@ -1,5 +1,11 @@
 # my-v2-addon
 
+## 1.0.6
+
+### Patch Changes
+
+- [#1884](https://github.com/ember-intl/ember-intl/pull/1884) Patched docs-apps ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.5
 
 ### Patch Changes

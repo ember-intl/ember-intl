@@ -1,5 +1,14 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.13
+
+### Patch Changes
+
+- [#1889](https://github.com/ember-intl/ember-intl/pull/1889) Restricted API for helpers ([@ijlee2](https://github.com/ijlee2))
+- [#1887](https://github.com/ember-intl/ember-intl/pull/1887) Allowed end-developers to specify what to do when @formatjs errors ([@ijlee2](https://github.com/ijlee2))
+- [#1886](https://github.com/ember-intl/ember-intl/pull/1886) Allowed end-developers to specify what to do when a translation is missing ([@ijlee2](https://github.com/ijlee2))
+- [#1885](https://github.com/ember-intl/ember-intl/pull/1885) Provided native types for intl service ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.12
 
 ### Patch Changes

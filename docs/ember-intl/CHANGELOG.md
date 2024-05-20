@@ -1,5 +1,13 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.7
+
+### Patch Changes
+
+- [#1890](https://github.com/ember-intl/ember-intl/pull/1890) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+- [#1885](https://github.com/ember-intl/ember-intl/pull/1885) Provided native types for intl service ([@ijlee2](https://github.com/ijlee2))
+- [#1884](https://github.com/ember-intl/ember-intl/pull/1884) Patched docs-apps ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.6
 
 ### Patch Changes

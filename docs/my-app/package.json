@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "description": "An Embroider app with the default ember-intl configuration",
   "keywords": [],

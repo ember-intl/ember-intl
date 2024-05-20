@@ -4,6 +4,9 @@
 
 ### Major Changes
 
+- [#1889](https://github.com/ember-intl/ember-intl/pull/1889) Restricted API for helpers ([@ijlee2](https://github.com/ijlee2))
+- [#1886](https://github.com/ember-intl/ember-intl/pull/1886) Allowed end-developers to specify what to do when a translation is missing ([@ijlee2](https://github.com/ijlee2))
+- [#1885](https://github.com/ember-intl/ember-intl/pull/1885) Provided native types for intl service ([@ijlee2](https://github.com/ijlee2))
 - [#1878](https://github.com/ember-intl/ember-intl/pull/1878) Minimized test helpers API ([@ijlee2](https://github.com/ijlee2))
 - [#1877](https://github.com/ember-intl/ember-intl/pull/1877) Required locale in addTranslations() ([@ijlee2](https://github.com/ijlee2))
 - [#1861](https://github.com/ember-intl/ember-intl/pull/1861) Updated minimum requirements for Ember, Node, and TypeScript ([@ijlee2](https://github.com/ijlee2))
@@ -12,8 +15,13 @@
 - [#1847](https://github.com/ember-intl/ember-intl/pull/1847) Required locale in setupIntl() ([@ijlee2](https://github.com/ijlee2))
 - [#1843](https://github.com/ember-intl/ember-intl/pull/1843) Removed dependentKeyCompat decorator ([@ijlee2](https://github.com/ijlee2))
 
+### Minor Changes
+
+- [#1887](https://github.com/ember-intl/ember-intl/pull/1887) Allowed end-developers to specify what to do when @formatjs errors ([@ijlee2](https://github.com/ijlee2))
+
 ### Patch Changes
 
+- [#1888](https://github.com/ember-intl/ember-intl/pull/1888) Called normalizeLocale() when reading or writing to this.\_intls ([@ijlee2](https://github.com/ijlee2))
 - [#1883](https://github.com/ember-intl/ember-intl/pull/1883) Patched #1877 and #1882 ([@ijlee2](https://github.com/ijlee2))
 - [#1882](https://github.com/ember-intl/ember-intl/pull/1882) Refactored code in lib ([@ijlee2](https://github.com/ijlee2))
 - [#1876](https://github.com/ember-intl/ember-intl/pull/1876) Removed 3 dependencies ([@ijlee2](https://github.com/ijlee2))

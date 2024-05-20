@@ -1,5 +1,13 @@
 # my-classic-app
 
+## 1.1.1
+
+### Patch Changes
+
+- [#1886](https://github.com/ember-intl/ember-intl/pull/1886) Allowed end-developers to specify what to do when a translation is missing ([@ijlee2](https://github.com/ijlee2))
+- [#1885](https://github.com/ember-intl/ember-intl/pull/1885) Provided native types for intl service ([@ijlee2](https://github.com/ijlee2))
+- [#1884](https://github.com/ember-intl/ember-intl/pull/1884) Patched docs-apps ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.0
 
 ### Minor Changes
