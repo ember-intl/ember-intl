@@ -9,7 +9,7 @@ type Option = {
   value: SupportedLocale;
 };
 
-export type SupportedLocale = 'de-DE' | 'en-US';
+export type SupportedLocale = 'de-de' | 'en-us';
 
 interface SelectLocaleSignature {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -34,11 +34,11 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
     return [
       {
         label: 'Deutsch',
-        value: 'de-DE',
+        value: 'de-de',
       },
       {
         label: 'English',
-        value: 'en-US',
+        value: 'en-us',
       },
     ];
   }
