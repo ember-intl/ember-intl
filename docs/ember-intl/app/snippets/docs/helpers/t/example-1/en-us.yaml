@@ -1,0 +1,4 @@
+# BEGIN-SNIPPET docs__helpers__t__example-1__translations__en-us.yaml
+hello:
+  world: Hello!
+# END-SNIPPET

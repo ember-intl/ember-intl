@@ -1,18 +1,12 @@
 export default {
-  time: {
-    hhmmss: {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    },
-  },
   date: {
-    hhmmss: {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
+    'user-friendly': {
+      day: 'numeric',
+      month: 'long',
+      weekday: 'short',
     },
   },
+
   number: {
     compact: {
       notation: 'compact',
@@ -24,6 +18,14 @@ export default {
     USD: {
       style: 'currency',
       currency: 'USD',
+    },
+  },
+
+  time: {
+    hhmmss: {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
     },
   },
 };

@@ -1,12 +1,12 @@
-// BEGIN-SNIPPET docs__helpers__format-date__example-1__my-component.js
+// BEGIN-SNIPPET docs__helpers__format-date__example-1__example.ts
 import Component from '@glimmer/component';
 
-export default class MyComponent extends Component {
-  get today() {
+export default class ExampleComponent extends Component {
+  get today(): Date {
     return new Date();
   }
 
-  get yesterday() {
+  get yesterday(): number {
     const today = new Date();
     const yesterday = today.setDate(today.getDate() - 1);
 

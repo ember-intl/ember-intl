@@ -1,7 +1,7 @@
-{{!-- BEGIN-SNIPPET docs__helpers__format-message__example-1__my-component.hbs --}}
+{{!-- BEGIN-SNIPPET docs__helpers__format-message__example-1__example.hbs --}}
 <div>
   {{format-message
-    this.customMessage
+    this.descriptor
     name="Sonja"
     numPhotos=12
     timestamp=this.yesterday
@@ -10,7 +10,7 @@
 
 <div>
   {{format-message
-    this.customMessage
+    this.descriptor
     name="Chris"
     numPhotos=0
     timestamp=this.yesterday
@@ -19,7 +19,7 @@
 
 <div>
   {{format-message
-    this.customMessage
+    this.descriptor
     name="Maki"
     numPhotos=1
     timestamp=this.today

@@ -35,6 +35,7 @@ Router.map(function () {
       this.route('format-number');
       this.route('format-relative');
       this.route('format-time');
+      this.route('introduction');
       this.route('t');
     });
 

@@ -1,28 +1,116 @@
-<LocaleSwitcher />
+# &#123;&#123;format-time&#125;&#125;
 
-# Format Time
-
-This helper behaves like the `{{format-date}}` helper, except its format comes from `formats.time`.
+Behaves like the [`{{format-date}}` helper](./format-date), except the possible formats are defined in `time` in `app/format.js`.
 
 <DocsDemo as |demo|>
+  <LocaleSwitcher />
+
   <demo.example @name="docs__helpers__format-time__example-1">
     <div>
-      Time: {{format-time this.today format="hhmmss"}}
+      {{format-time this.today}}
     </div>
   </demo.example>
 
   <demo.snippet
-    @label="my-component.hbs"
-    @name="docs__helpers__format-time__example-1__my-component.hbs"
+    @label="components/example.hbs"
+    @name="docs__helpers__format-time__example-1__example.hbs"
   />
 
   <demo.snippet
-    @label="my-component.js"
-    @name="docs__helpers__format-time__example-1__my-component.js"
+    @label="components/example.ts"
+    @name="docs__helpers__format-time__example-1__example.ts"
   />
 </DocsDemo>
 
 
-## Custom format
+## options.format
 
-Visit <DocsLink @route="docs.helpers.format-date">Format Date</DocsLink> to learn more. (See the section "Custom format.")
+A consuming app can define custom formats for `{{format-time}}` in `app/formats.js`. Pass a format key to the named argument `format`.
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-time__example-2">
+    <div>
+      {{format-time this.today format="hhmmss"}}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-time__example-2__example.hbs"
+  />
+
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-time__example-2__example.ts"
+  />
+
+  <demo.snippet
+    @label="format.js"
+    @name="docs__helpers__format-time__example-2__app__format.js"
+  />
+</DocsDemo>
+
+
+## options.locale
+
+You can display the text in another locale (i.e. independently from the user's preferred locale).
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-time__example-3">
+    <div lang="en-us">
+      {{format-time this.today locale="en-us"}}
+    </div>
+
+    <div lang="de-de">
+      {{format-time this.today locale="de-de"}}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-time__example-3__example.hbs"
+  />
+
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-time__example-3__example.ts"
+  />
+</DocsDemo>
+
+
+## Additional options
+
+You can use named arguments to pass the [options that `Intl.DateTimeFormat` supports](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options). Some of these options are listed below.
+
+- `hour12`
+- `timeStyle`
+- `timeZone`
+- `weekday`
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-time__example-4">
+    <div>
+      {{format-time
+        this.today
+        timeStyle="full"
+        timeZone="America/New_York"
+      }}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-time__example-4__example.hbs"
+  />
+
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-time__example-4__example.ts"
+  />
+</DocsDemo>

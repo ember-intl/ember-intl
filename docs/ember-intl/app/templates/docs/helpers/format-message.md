@@ -1,14 +1,14 @@
-<LocaleSwitcher />
+# &#123;&#123;format-message&#125;&#125;
 
-# Format Message
-
-Formats [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) strings with the provided values passed as arguments to the helper/method.
+Formats a string with the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax).
 
 <DocsDemo as |demo|>
+  <LocaleSwitcher />
+
   <demo.example @name="docs__helpers__format-message__example-1">
     <div>
       {{format-message
-        this.customMessage
+        this.descriptor1
         name="Sonja"
         numPhotos=12
         timestamp=this.yesterday
@@ -17,7 +17,7 @@ Formats [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) 
 
     <div>
       {{format-message
-        this.customMessage
+        this.descriptor1
         name="Chris"
         numPhotos=0
         timestamp=this.yesterday
@@ -26,7 +26,7 @@ Formats [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) 
 
     <div>
       {{format-message
-        this.customMessage
+        this.descriptor1
         name="Maki"
         numPhotos=1
         timestamp=this.today
@@ -35,52 +35,62 @@ Formats [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax) 
   </demo.example>
 
   <demo.snippet
-    @label="my-component.hbs"
-    @name="docs__helpers__format-message__example-1__my-component.hbs"
+    @label="components/example.hbs"
+    @name="docs__helpers__format-message__example-1__example.hbs"
   />
 
   <demo.snippet
-    @label="my-component.js"
-    @name="docs__helpers__format-message__example-1__my-component.js"
+    @label="components/example.ts"
+    @name="docs__helpers__format-message__example-1__example.ts"
   />
 </DocsDemo>
 
 
-## Format HTML Message
+## Passing a string instead of a descriptor
 
-To enable rendering HTML within translations, pass an `htmlSafe` attribute to the `format-message` helper.
+`@formatjs/intl`'s `formatMessage()` requires an object called `descriptor`. In the simplest form, `descriptor` has the following type:
 
-```hbs
-{{format-message
-  "'<em>'{numPhotos, number}'</em>'"
-  htmlSafe=true
-  numPhotos=@photos.length
-}}
-```
-
-It will escape all hash arguments and returns as an htmlSafe String which renders an ElementNode.  
-
-
-## Service API
-
-```js
-import { service } from '@ember/service';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-
-export default class MyComponent extends Component {
-  @service intl;
-
-  customMessage = 'You took {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.';
-
-  get message() {
-    const photos = this.args.photos ?? [];
-
-    return this.intl.formatMessage(this.customMessage, {
-      numPhotos: photos.length
-    });
-  }
+```ts
+interface MessageDescriptor {
+  defaultMessage?: string;
+  description?: string;
+  id?: string;
 }
 ```
 
-Visit the page <DocsLink @route="docs.guide.service-api">Service API</DocsLink> to learn more.
+Currently, `ember-intl` allows you to pass a string instead. If possible, avoid using this feature and favor writing code explicitly.
+
+```hbs
+{{format-message
+  "<em>{numPhotos, number} photos taken.</em>"
+  htmlSafe=true
+  numPhotos=3
+}}
+```
+
+
+## options.htmlSafe
+
+To render an HTML in a translation message, set `htmlSafe` to `true`.
+
+<DocsDemo as |demo|>
+  <demo.example>
+    <div>
+      {{format-message
+        this.descriptor2
+        htmlSafe=true
+        numPhotos=3
+      }}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-message__example-2__example.hbs"
+  />
+
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-message__example-2__example.ts"
+  />
+</DocsDemo>

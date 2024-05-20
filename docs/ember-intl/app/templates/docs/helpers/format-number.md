@@ -1,46 +1,74 @@
-<LocaleSwitcher />
+# &#123;&#123;format-number&#125;&#125;
 
-# Format Number
-
-Formats numbers using [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and returns the formatted value as a string.
+Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) to format a number.
 
 <DocsDemo as |demo|>
+  <LocaleSwitcher />
+
   <demo.example @name="docs__helpers__format-number__example-1">
     <div>
-      As number: {{format-number 1000}}
-    </div>
-    <div>
-      As currency: {{format-number 1000 currency="USD" style="currency"}}
+      {{format-number 12345}}
     </div>
   </demo.example>
 
   <demo.snippet
-    @label="my-component.hbs"
-    @name="docs__helpers__format-number__example-1__my-component.hbs"
+    @label="components/example.hbs"
+    @name="docs__helpers__format-number__example-1__example.hbs"
   />
 </DocsDemo>
 
 
-## Format Number Options
+## options.locale
 
-For a complete, up-to-date list, please check [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat).
+You can display the text in another locale (i.e. independently from the user's preferred locale).
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-number__example-2">
+    <div lang="en-us">
+      {{format-number 12345 locale="en-us"}}
+    </div>
+
+    <div lang="de-de">
+      {{format-number 12345 locale="de-de"}}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-number__example-2__example.hbs"
+  />
+</DocsDemo>
 
 
-### localeMatcher
+## Additional options
 
-The locale matching algorithm to use. Possible values are `"lookup"` and `"best fit"`; the default is `"best fit"`. For information about this option, see the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locale_negotiation) page.
+You can use named arguments to pass [options that `Intl.NumberFormat` supports](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options). Some of these options are listed below.
 
+- `currency`
+- `maximumFractionDigits`
+- `maximumSignificantDigits`
+- `style`
 
-### style
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
 
-The formatting style to use. The default is `"decimal"`.
+  <demo.example @name="docs__helpers__format-number__example-3">
+    <div>
+      {{format-number
+        12345
+        currency="EUR"
+        maximumFractionDigits=1
+        notation="compact"
+        roundingMode="ceil"
+        style="currency"
+      }}
+    </div>
+  </demo.example>
 
-- `"decimal"` for plain number formatting.
-- `"currency"` for currency formatting.
-- `"percent"` for percent formatting
-- `"unit"` for unit formatting
-
-
-### currency
-
-The currency to use in currency formatting. Possible values are the ISO 4217 currency codes, such as `"USD"` for the US dollar, `"EUR"` for the euro, or `"CNY"` for the Chinese RMB — see the [Current currency & funds code list](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=currency-codes). There is no default value; if the style is `"currency"`, the currency property must be provided.
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-number__example-3__example.hbs"
+  />
+</DocsDemo>
