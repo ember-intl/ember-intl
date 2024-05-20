@@ -89,6 +89,20 @@ export default class IntlService extends Service {
     this.updateIntl(locale, messages);
   }
 
+  exists(key: string, locale?: string | string[]): boolean {
+    const candidates = locale ? convertToArray(locale) : this._locale!;
+
+    return candidates.some((candidate) => {
+      const messages = this.getIntl(candidate)?.messages;
+
+      if (!messages) {
+        return false;
+      }
+
+      return key in messages;
+    });
+  }
+
   formatDate(
     value: FormatDateParameters[0] | undefined | null,
     options?: FormatDateParameters[1] & {
