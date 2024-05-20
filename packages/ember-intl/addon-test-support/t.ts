@@ -1,4 +1,3 @@
-import { assert } from '@ember/debug';
 import { getContext, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 
@@ -13,14 +12,7 @@ type TParameters = Parameters<IntlService['t']>;
  * @return {string}
  */
 export function t(key: TParameters[0], options?: TParameters[1]): string {
-  const context = getContext();
-
-  assert(
-    'To use `t()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
-    context,
-  );
-
-  const { owner } = context as TestContext;
+  const { owner } = getContext() as TestContext;
 
   const intl = owner.lookup('service:intl') as IntlService;
 
