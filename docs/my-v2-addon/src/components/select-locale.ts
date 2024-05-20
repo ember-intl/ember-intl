@@ -1,6 +1,6 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { inject as service, type Registry as Services } from '@ember/service';
+import { type Registry as Services, service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
