@@ -1451,9 +1451,6 @@ importers:
       '@types/ember__component':
         specifier: ^4.0.22
         version: 4.0.22(@babel/core@7.24.5)
-      '@types/ember__debug':
-        specifier: ^4.0.8
-        version: 4.0.8(@babel/core@7.24.5)
       '@types/ember__destroyable':
         specifier: ^4.0.5
         version: 4.0.5
@@ -1472,9 +1469,6 @@ importers:
       '@types/ember__template':
         specifier: ^4.0.7
         version: 4.0.7
-      '@types/ember__utils':
-        specifier: ^4.0.7
-        version: 4.0.7(@babel/core@7.24.5)
       '@types/qunit':
         specifier: ^2.19.10
         version: 2.19.10
