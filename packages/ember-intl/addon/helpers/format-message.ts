@@ -1,6 +1,5 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
@@ -10,16 +9,14 @@ type Options = FormatParameters[1];
 
 interface FormatMessageSignature {
   Args: {
-    Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value] | [Value, Options];
+    Named?: Options;
+    Positional: [Value];
   };
   Return: string;
 }
 
 export default class FormatMessageHelper extends Helper<FormatMessageSignature> {
   @service declare intl: IntlService;
-
-  allowEmpty = false;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params
@@ -30,23 +27,9 @@ export default class FormatMessageHelper extends Helper<FormatMessageSignature> 
   }
 
   compute(
-    [value, positionalOptions]: FormatMessageSignature['Args']['Positional'],
-    namedOptions: FormatMessageSignature['Args']['Named'],
+    [value]: FormatMessageSignature['Args']['Positional'],
+    options: FormatMessageSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
-    if (isEmpty(value)) {
-      if (options?.allowEmpty ?? this.allowEmpty) {
-        return '';
-      }
-
-      if (typeof value === 'undefined') {
-        throw new Error('{{format-message}} helper requires a value.');
-      }
-    }
-
-    return this.intl.formatMessage(value!, options) as unknown as string;
+    return this.intl.formatMessage(value, options);
   }
 }

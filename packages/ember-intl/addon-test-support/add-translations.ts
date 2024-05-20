@@ -1,4 +1,3 @@
-import { assert } from '@ember/debug';
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/-private/utils/translations';
@@ -15,14 +14,7 @@ export async function addTranslations(
   locale: string,
   translations: Translations,
 ): Promise<void> {
-  const context = getContext();
-
-  assert(
-    'To use `addTranslations()`, make sure to call `setupTest()`, `setupRenderingTest()`, or `setupApplicationTest()`.',
-    context,
-  );
-
-  const { owner } = context as TestContext;
+  const { owner } = getContext() as TestContext;
 
   const intl = owner.lookup('service:intl') as IntlService;
 

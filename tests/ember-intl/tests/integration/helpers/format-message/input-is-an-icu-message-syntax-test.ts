@@ -67,23 +67,6 @@ module(
         );
     });
 
-    test('we can provide data as an object', async function (this: TestContext, assert) {
-      await render<TestContext>(hbs`
-        <div data-test-output>
-          {{format-message
-            this.population.description
-            this.population.data
-          }}
-        </div>
-      `);
-
-      assert
-        .dom('[data-test-output]')
-        .hasText(
-          'Atlanta has a population of 5,475,213 as of January 1, 2020.',
-        );
-    });
-
     test('we can specify the locale', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output="1">

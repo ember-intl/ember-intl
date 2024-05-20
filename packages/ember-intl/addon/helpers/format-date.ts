@@ -1,6 +1,5 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
@@ -10,16 +9,14 @@ type Options = FormatParameters[1];
 
 interface FormatDateSignature {
   Args: {
-    Named?: Options & { allowEmpty?: boolean };
-    Positional: [Value] | [Value, Options];
+    Named?: Options;
+    Positional: [Value];
   };
   Return: string;
 }
 
 export default class FormatDateHelper extends Helper<FormatDateSignature> {
   @service declare intl: IntlService;
-
-  allowEmpty = true;
 
   constructor() {
     // eslint-disable-next-line prefer-rest-params
@@ -30,28 +27,9 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
   }
 
   compute(
-    [value, positionalOptions]: FormatDateSignature['Args']['Positional'],
-    namedOptions: FormatDateSignature['Args']['Named'],
+    [value]: FormatDateSignature['Args']['Positional'],
+    options: FormatDateSignature['Args']['Named'],
   ) {
-    const options = positionalOptions
-      ? Object.assign({}, positionalOptions, namedOptions)
-      : namedOptions;
-
-    if (isEmpty(value)) {
-      if (options?.allowEmpty ?? this.allowEmpty) {
-        return '';
-      }
-
-      /*
-        TODO: {{format-date}} is the only helper that always allows
-        an undefined value. That is, it can never throw an error.
-        For ember-intl@v7, unify the options of all helpers.
-      */
-      // if (typeof value === 'undefined') {
-      //   throw new Error('{{format-date}} helper requires a value.');
-      // }
-    }
-
-    return this.intl.formatDate(value!, options);
+    return this.intl.formatDate(value, options);
   }
 }
