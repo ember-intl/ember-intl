@@ -21,10 +21,6 @@ Router.map(function () {
       this.route('quickstart-addons');
     });
 
-    this.route('guide', function () {
-      this.route('testing');
-    });
-
     this.route('helpers', function () {
       this.route('format-date');
       this.route('format-list');
@@ -49,6 +45,14 @@ Router.map(function () {
       this.route('intl-part-1');
       this.route('intl-part-2');
       this.route('introduction');
+    });
+
+    this.route('test-helpers', function () {
+      this.route('add-translations');
+      this.route('set-locale');
+      this.route('introduction');
+      this.route('setup-intl');
+      this.route('t');
     });
   });
 
