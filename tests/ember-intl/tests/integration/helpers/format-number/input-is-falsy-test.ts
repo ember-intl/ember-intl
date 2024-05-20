@@ -1,4 +1,4 @@
-import { render, resetOnerror, setupOnerror } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
@@ -31,24 +31,13 @@ module(
     });
 
     test('input is undefined', async function (assert) {
-      setupOnerror((error: Error) => {
-        assert.strictEqual(
-          error.message,
-          '{{format-number}} helper requires a value.',
-        );
-
-        assert.step('ember-intl throws an error');
-      });
-
       await render(hbs`
         <div data-test-output>
           {{format-number undefined}}
         </div>
       `);
 
-      assert.verifySteps(['ember-intl throws an error']);
-
-      resetOnerror();
+      assert.dom('[data-test-output]').hasText('');
     });
   },
 );

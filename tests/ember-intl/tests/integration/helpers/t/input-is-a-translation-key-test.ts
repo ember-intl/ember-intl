@@ -31,5 +31,23 @@ module(
 
       assert.dom('[data-test-output]').hasText('Hallo Welt!');
     });
+
+    test('we can specify the locale', async function (assert) {
+      await render(hbs`
+        <div data-test-output="1">
+          {{t "smoke-tests.hello.world" locale="de-de"}}
+        </div>
+
+        <div data-test-output="2">
+          {{t "smoke-tests.hello.world" locale="fr-fr"}}
+        </div>
+      `);
+
+      assert.dom('[data-test-output="1"]').hasText('Hallo Welt!');
+
+      assert
+        .dom('[data-test-output="2"]')
+        .hasText('t:smoke-tests.hello.world:()');
+    });
   },
 );

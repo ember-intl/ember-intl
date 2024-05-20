@@ -27,7 +27,9 @@ module('Integration | Helper | format-date > input is falsy', function (hooks) {
       </div>
     `);
 
-    assert.dom('[data-test-output]').hasText('');
+    assert
+      .dom('[data-test-output]')
+      .hasText(new Intl.DateTimeFormat('en-us').format(0));
   });
 
   test('input is null', async function (assert) {
