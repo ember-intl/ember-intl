@@ -1,6 +1,6 @@
-# Runtime Requirements
+# Runtime requirements
 
-ember-intl relies on these `Intl` APIs:
+`ember-intl` relies on these `Intl` APIs:
 
 - [Intl.getCanonicalLocales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales): Polyfill: [@formatjs/intl-getcanonicallocales](https://formatjs.io/docs/polyfills/intl-getcanonicallocales).
 

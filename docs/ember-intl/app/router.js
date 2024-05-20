@@ -10,21 +10,19 @@ Router.map(function () {
   // Add route declarations here
   docsRoute(this, function () {
     this.route('advanced', function () {
-      this.route('addon-support');
+      this.route('configuration');
+      this.route('lazy-loading-translations');
+      this.route('organizing-translations');
+      this.route('runtime-requirements');
     });
 
     this.route('getting-started', { path: '/' }, function () {
       this.route('quickstart');
       this.route('quickstart-addons');
-      this.route('runtime-requirements');
     });
 
     this.route('guide', function () {
-      this.route('addon-configs');
-      this.route('asynchronously-loading-translations');
-      this.route('missing-translations');
       this.route('testing');
-      this.route('translating-text');
     });
 
     this.route('helpers', function () {
