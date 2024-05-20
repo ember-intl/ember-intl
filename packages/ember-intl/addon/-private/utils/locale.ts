@@ -38,11 +38,3 @@ export function hasLocaleChanged(
 
   return locale1.toString() !== locale2.toString();
 }
-
-/**
- * @private
- * @hide
- */
-export function normalizeLocale(locale: string): string {
-  return locale.replace(/_/g, '-').toLowerCase();
-}
