@@ -3,7 +3,7 @@ import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/-private/utils/translations';
 
-import { missingMessage } from './-private/missing-message';
+import { onMissingTranslation } from './-private/on-missing-translation';
 import { addTranslations } from './add-translations';
 
 /**
@@ -31,11 +31,10 @@ export function setupIntl(
 
     const { owner } = context as TestContext;
 
-    owner.register('util:intl/missing-message', missingMessage);
-
     const intl = owner.lookup('service:intl') as IntlService;
 
     intl.setLocale(locale);
+    intl.setOnMissingTranslation(onMissingTranslation);
 
     if (translations) {
       addTranslations(locale, translations);

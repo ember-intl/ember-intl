@@ -38,6 +38,12 @@ import translations from '../translations';
 
 type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
+type OnMissingTranslation = (
+  key: string,
+  locales: string[],
+  options?: Record<string, unknown>,
+) => string;
+
 export default class IntlService extends Service {
   @tracked private _intls: Record<string, IntlShape> = {};
   @tracked private _locale?: string[];
@@ -46,6 +52,12 @@ export default class IntlService extends Service {
   private _eventEmitter = new EventEmitter();
   private _formats?: Record<string, unknown>;
   private _timer?: EmberRunTimer;
+
+  private _onMissingTranslation: OnMissingTranslation = (key, locales) => {
+    const locale = locales.join(', ');
+
+    return `Missing translation "${key}" for locale "${locale}"`;
+  };
 
   get locales(): string[] {
     return Object.keys(this._intls);
@@ -238,6 +250,10 @@ export default class IntlService extends Service {
     this.updateIntl(locale);
   }
 
+  setOnMissingTranslation(onMissingTranslation: OnMissingTranslation): void {
+    this._onMissingTranslation = onMissingTranslation;
+  }
+
   t(
     key: string,
     options?: FormatMessageParameters[1] & {
@@ -258,12 +274,7 @@ export default class IntlService extends Service {
     }
 
     if (translation === undefined) {
-      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-      const missingMessage = getOwner(this).resolveRegistration(
-        'util:intl/missing-message',
-      );
-
-      return missingMessage.call(this, key, this._locale!, options) as string;
+      return this._onMissingTranslation(key, this._locale!, options);
     }
 
     // Bypass @formatjs/intl

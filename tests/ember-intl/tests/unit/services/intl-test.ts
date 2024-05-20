@@ -298,6 +298,53 @@ module('Unit | Service | intl', function (hooks) {
     });
   });
 
+  module('setOnMissingTranslation()', function () {
+    test('default implementation', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.t('foo.bar', {
+          name: 'Zoey',
+        }),
+        't:foo.bar:("name":"Zoey")',
+      );
+    });
+
+    test('custom implementation returns a custom string', function (this: TestContext, assert) {
+      this.intl.setOnMissingTranslation((key, locales) => {
+        return `🐹🐹🐹 Missing: ${key} (${locales.join(',')}) 🐹🐹🐹`;
+      });
+
+      assert.strictEqual(
+        this.intl.t('foo.bar', {
+          name: 'Zoey',
+        }),
+        '🐹🐹🐹 Missing: foo.bar (en-us) 🐹🐹🐹',
+      );
+    });
+
+    test('custom implementation throws an error', function (this: TestContext, assert) {
+      this.intl.setOnMissingTranslation((key) => {
+        throw new Error(`${key} not found!`);
+
+        return '';
+      });
+
+      assert.throws(
+        () => {
+          this.intl.t('foo.bar', {
+            name: 'Zoey',
+          });
+        },
+        (error: Error) => {
+          assert.step('ember-intl throws an error');
+
+          return error.message === 'foo.bar not found!';
+        },
+      );
+
+      assert.verifySteps(['ember-intl throws an error']);
+    });
+  });
+
   module('t()', function () {
     test('it works', async function (this: TestContext, assert) {
       assert.strictEqual(
