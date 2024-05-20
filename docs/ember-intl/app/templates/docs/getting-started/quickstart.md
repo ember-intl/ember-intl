@@ -30,7 +30,7 @@ In a template, use the `{{t}}` helper to render the translation:
 ```hbs
 {{! app/templates/application.hbs }}
 <div>
-  {{t "hello.message" name="Zoey"}}
+  {{t "hello.message" (hash name="Zoey")}}
 </div>
 ```
 
@@ -39,6 +39,7 @@ In a [`<template>`-tag component](https://github.com/ember-template-imports/embe
 ```ts
 /* app/components/hello.gts */
 import type { TOC } from '@ember/component/template-only';
+import { hash } from '@ember/helper';
 import { t } from 'ember-intl';
 
 interface HelloSignature {
@@ -50,7 +51,7 @@ interface HelloSignature {
 const HelloComponent: TOC<HelloSignature> =
   <template>
     <div>
-      {{t "hello.message" name=@name}}
+      {{t "hello.message" (hash name=@name)}}
     </div>
   </template>
 
@@ -77,12 +78,12 @@ Note, you may also use `.yml` or `.json` for file extension.
 When your application boots, you need to tell `ember-intl` which locale to use. The recommended approach is to do this in the `application` route's `beforeModel` hook.
 
 ```js
-/* app/routes/application.js */
+/* app/routes/application.ts */
 import Route from '@ember/routing/route';
-import { service } from '@ember/service';
+import { type Registry as Services, service } from '@ember/service';
 
 export default class ApplicationRoute extends Route {
-  @service intl;
+  @service declare intl: Services['intl'];
 
   beforeModel() {
     this.intl.setLocale(['en-us']);
