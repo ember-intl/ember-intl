@@ -1,0 +1,4 @@
+# BEGIN-SNIPPET docs__advanced__organizing-translations__example-1__routes-application-de-de.yaml
+routes.application:
+  title: Willkommen bei ember-intl
+# END-SNIPPET

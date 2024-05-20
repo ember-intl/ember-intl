@@ -1,59 +1,81 @@
-<LocaleSwitcher />
+# &#123;&#123;format-list&#125;&#125;
 
-# Format List
-
-Uses [`Intl.ListFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat) to join an array of strings into a single value.
+Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat) to join an array of strings.
 
 <DocsDemo as |demo|>
-  <demo.example @name="docs__helpers__format-number__example-1">
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-list__example-1">
     <div>
-      Conjunction: {{format-list this.fruits type="conjunction"}}
-    </div>
-    <div>
-      Disjunction: {{format-list this.fruits type="disjunction"}}
+      {{format-list this.letters}}
     </div>
   </demo.example>
 
   <demo.snippet
-    @label="my-component.hbs"
-    @name="docs__helpers__format-list__example-1__my-component.hbs"
+    @label="components/example.hbs"
+    @name="docs__helpers__format-list__example-1__example.hbs"
   />
 
   <demo.snippet
-    @label="my-component.js"
-    @name="docs__helpers__format-list__example-1__my-component.js"
+    @label="components/example.ts"
+    @name="docs__helpers__format-list__example-1__example.ts"
   />
 </DocsDemo>
 
 
-## Format List Options
+## options.locale
 
-For a complete, up-to-date list, please check [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat).
+You can display the text in another locale (i.e. independently from the user's preferred locale).
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-list__example-2">
+    <div lang="en-us">
+      {{format-list this.letters locale="en-us"}}
+    </div>
+
+    <div lang="de-de">
+      {{format-list this.letters locale="de-de"}}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-list__example-2__example.hbs"
+  />
+
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-list__example-2__example.ts"
+  />
+</DocsDemo>
 
 
-### localeMatcher
+## Additional options
 
-The locale-matching algorithm to use. Possible values:
+You can use named arguments to pass the [options that `Intl.ListFormat` supports](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat#options). Some of these options are listed below.
 
-- `"best fit"` (default)
-- `"lookup"`
+- `localeMatcher`
+- `style`
+- `type`
 
-For information about this option, see the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locale_negotiation) page.
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
 
+  <demo.example @name="docs__helpers__format-list__example-3">
+    <div>
+      {{format-list this.letters type="disjunction"}}
+    </div>
+  </demo.example>
 
-### type
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-list__example-3__example.hbs"
+  />
 
-Indicates the type of grouping. Possible values:
-
-- `"conjunction"`, for "and"-based grouping of the list items: "A, B, and C" (default)
-- `"disjunction"`, for "or"-based grouping of the list items: "A, B, or C"
-- `"unit"`, for grouping the list items as a unit (neither "and"-based nor "or"-based): "A, B, C" (e.g., "5 pounds, 12 ounces")
-
-
-### style
-
-Indicates the grouping style (for example, whether list separators and conjunctions are included). Possible values:
-
-- `"long"`: "A, B, and C" (default)
-- `"short"`: "A, B, C"
-- `"narrow"`: "A B C"
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-list__example-3__example.ts"
+  />
+</DocsDemo>

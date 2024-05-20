@@ -10,22 +10,15 @@ Router.map(function () {
   // Add route declarations here
   docsRoute(this, function () {
     this.route('advanced', function () {
-      this.route('addon-support');
+      this.route('configuration');
+      this.route('lazy-loading-translations');
+      this.route('organizing-translations');
+      this.route('runtime-requirements');
     });
 
     this.route('getting-started', { path: '/' }, function () {
       this.route('quickstart');
       this.route('quickstart-addons');
-      this.route('runtime-requirements');
-    });
-
-    this.route('guide', function () {
-      this.route('addon-configs');
-      this.route('asynchronously-loading-translations');
-      this.route('missing-translations');
-      this.route('service-api');
-      this.route('testing');
-      this.route('translating-text');
     });
 
     this.route('helpers', function () {
@@ -35,12 +28,8 @@ Router.map(function () {
       this.route('format-number');
       this.route('format-relative');
       this.route('format-time');
+      this.route('introduction');
       this.route('t');
-    });
-
-    this.route('integrations', function () {
-      this.route('ember-cp-validations');
-      this.route('visual-studio-code');
     });
 
     this.route('migration', function () {
@@ -50,6 +39,20 @@ Router.map(function () {
       this.route('v5');
       this.route('v6');
       this.route('v7');
+    });
+
+    this.route('services', function () {
+      this.route('intl-part-1');
+      this.route('intl-part-2');
+      this.route('introduction');
+    });
+
+    this.route('test-helpers', function () {
+      this.route('add-translations');
+      this.route('set-locale');
+      this.route('introduction');
+      this.route('setup-intl');
+      this.route('t');
     });
   });
 

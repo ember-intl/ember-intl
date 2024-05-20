@@ -74,14 +74,14 @@ In a template, use the `{{t}}` helper to render the translation.
 ```hbs
 {{! v1 addons: addon/components/hello.hbs }}
 <div>
-  {{t "hello.message" name=@name}}
+  {{t "hello.message" (hash name=@name)}}
 </div>
 ```
 
 ```hbs
 {{! v2 addons: src/components/hello.hbs }}
 <div>
-  {{t "hello.message" name=@name}}
+  {{t "hello.message" (hash name=@name)}}
 </div>
 ```
 
@@ -104,8 +104,8 @@ Follow [step 4 for apps](./quickstart#4-configure-project). For brevity, only th
 
 If your test app is something more than "just tests," e.g. the app is also a documentation app, then you will want to set the locale in your test app.
 
-- v1 addons: `tests/dummy/app/routes/application.js`
-- v2 addons: `app/routes/application.js`
+- v1 addons: `tests/dummy/app/routes/application.ts`
+- v2 addons: `app/routes/application.ts`
 
 
 ### Glint
