@@ -53,6 +53,19 @@ export default class IntlService extends Service {
   private _formats?: Record<string, unknown>;
   private _timer?: EmberRunTimer;
 
+  private _onFormatjsError(error: Parameters<OnFormatjsError>[0]): void {
+    switch (error.code) {
+      case 'MISSING_TRANSLATION': {
+        // Do nothing
+        break;
+      }
+
+      default: {
+        throw error;
+      }
+    }
+  }
+
   private _onMissingTranslation: OnMissingTranslation = (key, locales) => {
     const locale = locales.join(', ');
 
@@ -250,6 +263,10 @@ export default class IntlService extends Service {
     this.updateIntl(locale);
   }
 
+  setOnFormatjsError(onFormatjsError: OnFormatjsError): void {
+    this._onFormatjsError = onFormatjsError;
+  }
+
   setOnMissingTranslation(onMissingTranslation: OnMissingTranslation): void {
     this._onMissingTranslation = onMissingTranslation;
   }
@@ -306,7 +323,7 @@ export default class IntlService extends Service {
         locale: resolvedLocale,
         // @ts-expect-error: Type 'Record<string, unknown>' is not assignable
         messages,
-        onError: this.onFormatjsError,
+        onError: this._onFormatjsError,
       },
       this._cache,
     );
@@ -338,19 +355,6 @@ export default class IntlService extends Service {
       | undefined;
 
     return translation;
-  }
-
-  private onFormatjsError(error: Parameters<OnFormatjsError>[0]): void {
-    switch (error.code) {
-      case 'MISSING_TRANSLATION': {
-        // Do nothing
-        break;
-      }
-
-      default: {
-        throw error;
-      }
-    }
   }
 
   private onLocaleChanged(fn: any, context: any) {
