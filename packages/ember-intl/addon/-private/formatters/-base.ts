@@ -1,7 +1,12 @@
 import type { SafeString } from '@ember/template';
 import type { IntlShape } from '@formatjs/intl';
+import type { Formats as BaseFormats } from 'intl-messageformat';
 
-import type { Formats } from '../../types';
+import type { RelativeTimeFormatOptions } from './format-relative';
+
+interface Formats extends Partial<BaseFormats> {
+  relative?: Record<string, RelativeTimeFormatOptions>;
+}
 
 export type ValueOf<
   ObjectType,
