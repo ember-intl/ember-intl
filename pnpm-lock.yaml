@@ -1121,6 +1121,9 @@ importers:
       '@babel/core':
         specifier: ^7.24.5
         version: 7.24.5
+      ember-auto-import:
+        specifier: ^2.7.2
+        version: 2.7.2(@glint/template@1.4.0)(webpack@5.91.0)
       ember-cli-babel:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.24.5)
@@ -1188,9 +1191,6 @@ importers:
       ember-asset-loader:
         specifier: ^1.0.0
         version: 1.0.0
-      ember-auto-import:
-        specifier: ^2.7.2
-        version: 2.7.2(@glint/template@1.4.0)(webpack@5.91.0)
       ember-cli:
         specifier: ~5.8.1
         version: 5.8.1

@@ -1,1 +1,10 @@
 /* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+.section {
+  border: 1px dashed lightsteelblue;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.section:last-of-child {
+  margin-bottom: 0;
+}
