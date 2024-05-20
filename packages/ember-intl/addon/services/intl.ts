@@ -32,6 +32,7 @@ import {
   convertToArray,
   convertToString,
   hasLocaleChanged,
+  normalizeLocale,
 } from '../-private/utils/locale';
 import { flattenKeys, type Translations } from '../-private/utils/translations';
 import translations from '../translations';
@@ -260,7 +261,7 @@ export default class IntlService extends Service {
       });
     }
 
-    this.updateIntl(locale);
+    this.updateIntl(proposedLocale);
   }
 
   setOnFormatjsError(onFormatjsError: OnFormatjsError): void {
@@ -330,7 +331,7 @@ export default class IntlService extends Service {
   }
 
   private getIntl(locale: string | string[]) {
-    const resolvedLocale = convertToString(locale);
+    const resolvedLocale = normalizeLocale(convertToString(locale));
 
     return this._intls[resolvedLocale];
   }
@@ -379,7 +380,7 @@ export default class IntlService extends Service {
     locale: string | string[],
     messages?: Record<string, unknown>,
   ) {
-    const resolvedLocale = convertToString(locale);
+    const resolvedLocale = normalizeLocale(convertToString(locale));
     const intl = this._intls[resolvedLocale];
 
     let newIntl;
