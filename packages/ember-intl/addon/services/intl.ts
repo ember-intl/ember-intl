@@ -2,11 +2,31 @@ import { getOwner } from '@ember/application';
 import { registerDestructor } from '@ember/destroyable';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
+import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import EventEmitter from 'eventemitter3';
 
-import type { IntlShape, OnErrorFn } from '../-private/formatjs/index';
-import { createIntl, createIntlCache } from '../-private/formatjs/index';
+import type {
+  FormatDateParameters,
+  FormatListParameters,
+  FormatMessageParameters,
+  FormatNumberParameters,
+  FormatRelativeParameters,
+  FormatTimeParameters,
+  IntlShape,
+  OnErrorFn,
+} from '../-private/formatjs/index';
+import {
+  createIntl,
+  createIntlCache,
+  formatDate,
+  formatList,
+  formatMessage,
+  formatNumber,
+  formatRelative,
+  formatTime,
+} from '../-private/formatjs/index';
+import { escapeFormatMessageOptions } from '../-private/utils/escape-format-message-options';
 import { getDOM } from '../-private/utils/get-dom';
 import {
   convertToArray,
@@ -54,6 +74,117 @@ export default class IntlService extends Service {
     // @ts-ignore: Argument of type 'Timer | undefined' is not assignable to parameter of type 'EmberRunTimer | undefined'
     // eslint-disable-next-line ember/no-runloop
     cancel(this._timer);
+  }
+
+  formatDate(
+    value: FormatDateParameters[0] | undefined | null,
+    options?: FormatDateParameters[1] & {
+      locale?: string;
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    return formatDate(intlShape, value, options);
+  }
+
+  formatList(
+    value: FormatListParameters[0] | undefined | null,
+    options?: FormatListParameters[1] & {
+      locale?: string;
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    return formatList(intlShape, value, options);
+  }
+
+  formatMessage(
+    value: FormatMessageParameters[0] | string | undefined | null,
+    options?: FormatMessageParameters[1] & {
+      htmlSafe?: boolean;
+      locale?: string;
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    const descriptor =
+      typeof value === 'object'
+        ? value
+        : {
+            defaultMessage: value,
+            description: undefined,
+            id: value,
+          };
+
+    if (options?.htmlSafe) {
+      const output = formatMessage(
+        intlShape,
+        descriptor,
+        escapeFormatMessageOptions(options),
+      );
+
+      return htmlSafe(output) as unknown as string;
+    }
+
+    return formatMessage(intlShape, descriptor, options);
+  }
+
+  formatNumber(
+    value: FormatNumberParameters[0] | undefined | null,
+    options?: FormatNumberParameters[1] & {
+      locale?: string;
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    return formatNumber(intlShape, value, options);
+  }
+
+  formatRelative(
+    value: FormatRelativeParameters[0] | undefined | null,
+    options?: FormatRelativeParameters[2] & {
+      locale?: string;
+      unit?: FormatRelativeParameters[1];
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    return formatRelative(intlShape, value, options?.unit, options);
+  }
+
+  formatTime(
+    value: FormatTimeParameters[0] | undefined | null,
+    options?: FormatTimeParameters[1] & {
+      locale?: string;
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    return formatTime(intlShape, value, options);
   }
 
   setLocale(locale: string | string[]): void {
@@ -105,6 +236,14 @@ export default class IntlService extends Service {
     const resolvedLocale = convertToString(locale);
 
     return this._intls[resolvedLocale];
+  }
+
+  private getIntlShape(locale?: string) {
+    if (locale) {
+      return this.createIntl(locale)!;
+    }
+
+    return this.getIntl(this._locale!)!;
   }
 
   private onFormatjsError(error: Parameters<OnFormatjsError>[0]): void {
