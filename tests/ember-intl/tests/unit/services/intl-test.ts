@@ -298,6 +298,47 @@ module('Unit | Service | intl', function (hooks) {
     });
   });
 
+  module('setOnFormatjsError()', function () {
+    test('default implementation', function (this: TestContext, assert) {
+      assert.throws(
+        () => {
+          this.intl.t('smoke-tests.hello.message', {
+            locale: 'de-de',
+          });
+        },
+        (error: Error & { code: string }) => {
+          assert.step('@formatjs/intl throws an error');
+
+          return error.code === 'FORMAT_ERROR';
+        },
+      );
+
+      assert.verifySteps(['@formatjs/intl throws an error']);
+    });
+
+    test('custom implementation ignores an error', function (this: TestContext, assert) {
+      this.intl.setOnFormatjsError((error) => {
+        switch (error.code) {
+          case 'FORMAT_ERROR': {
+            // Do nothing
+            break;
+          }
+
+          default: {
+            throw error;
+          }
+        }
+      });
+
+      assert.strictEqual(
+        this.intl.t('smoke-tests.hello.message', {
+          locale: 'de-de',
+        }),
+        'Hallo, {name}!',
+      );
+    });
+  });
+
   module('setOnMissingTranslation()', function () {
     test('default implementation', function (this: TestContext, assert) {
       assert.strictEqual(
