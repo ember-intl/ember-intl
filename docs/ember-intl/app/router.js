@@ -36,11 +36,6 @@ Router.map(function () {
       this.route('t');
     });
 
-    this.route('integrations', function () {
-      this.route('ember-cp-validations');
-      this.route('visual-studio-code');
-    });
-
     this.route('migration', function () {
       this.route('v2');
       this.route('v3');
