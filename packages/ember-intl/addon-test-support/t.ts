@@ -1,7 +1,8 @@
 import { assert } from '@ember/debug';
 import { getContext, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
-import type { TOptions } from 'ember-intl/services/intl';
+
+type TParameters = Parameters<IntlService['t']>;
 
 /**
  * Invokes the `t` method of the `intl` service.
@@ -11,7 +12,7 @@ import type { TOptions } from 'ember-intl/services/intl';
  * @param {object} [options]
  * @return {string}
  */
-export function t(key: string, options?: TOptions): string {
+export function t(key: TParameters[0], options?: TParameters[1]): string {
   const context = getContext();
 
   assert(
@@ -23,5 +24,5 @@ export function t(key: string, options?: TOptions): string {
 
   const intl = owner.lookup('service:intl') as IntlService;
 
-  return intl.t(key, options) as unknown as string;
+  return intl.t(key, options);
 }

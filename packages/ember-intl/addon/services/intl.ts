@@ -33,6 +33,8 @@ import {
   convertToString,
   hasLocaleChanged,
 } from '../-private/utils/locale';
+import { flattenKeys, type Translations } from '../-private/utils/translations';
+import translations from '../translations';
 
 type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
@@ -65,6 +67,11 @@ export default class IntlService extends Service {
       // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
       this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
     }
+
+    // Hydrate
+    translations.forEach(([locale, translations]: [string, Translations]) => {
+      this.addTranslations(locale, translations);
+    });
   }
 
   willDestroy() {
@@ -74,6 +81,12 @@ export default class IntlService extends Service {
     // @ts-ignore: Argument of type 'Timer | undefined' is not assignable to parameter of type 'EmberRunTimer | undefined'
     // eslint-disable-next-line ember/no-runloop
     cancel(this._timer);
+  }
+
+  addTranslations(locale: string, translations: Translations) {
+    const messages = flattenKeys(translations);
+
+    this.updateIntl(locale, messages);
   }
 
   formatDate(
@@ -211,6 +224,48 @@ export default class IntlService extends Service {
     this.updateIntl(locale);
   }
 
+  t(
+    key: string,
+    options?: FormatMessageParameters[1] & {
+      htmlSafe?: boolean;
+      locale?: string;
+    },
+  ): string {
+    const locales = options?.locale ? [options.locale] : this._locale!;
+
+    let translation: string | undefined;
+
+    for (let i = 0; i < locales!.length; i++) {
+      translation = this.getTranslation(key, locales[i]!);
+
+      if (translation !== undefined) {
+        break;
+      }
+    }
+
+    if (translation === undefined) {
+      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
+      const missingMessage = getOwner(this).resolveRegistration(
+        'util:intl/missing-message',
+      );
+
+      return missingMessage.call(this, key, this._locale!, options) as string;
+    }
+
+    // Bypass @formatjs/intl
+    if (translation === '') {
+      return '';
+    }
+
+    return this.formatMessage(
+      {
+        defaultMessage: translation,
+        id: key,
+      },
+      options,
+    );
+  }
+
   private createIntl(
     locale: string | string[],
     messages: Record<string, unknown> = {},
@@ -244,6 +299,20 @@ export default class IntlService extends Service {
     }
 
     return this.getIntl(this._locale!)!;
+  }
+
+  private getTranslation(key: string, locale: string): string | undefined {
+    const messages = this.getIntl(locale)?.messages;
+
+    if (!messages) {
+      return;
+    }
+
+    const translation = (messages as unknown as Record<string, string>)[key] as
+      | string
+      | undefined;
+
+    return translation;
   }
 
   private onFormatjsError(error: Parameters<OnFormatjsError>[0]): void {
