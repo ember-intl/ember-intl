@@ -1,14 +1,18 @@
-type NestedStructure<T = string> = {
-  [Key in string | number]?: T | NestedStructure<T>;
+type IndexSignatureParameter = string | number | symbol;
+
+type NestedStructure<T extends IndexSignatureParameter> = {
+  [Key in IndexSignatureParameter]?: T | NestedStructure<T>;
 };
 
-export type Translations = NestedStructure<string | number>;
+export type Translations = NestedStructure<string>;
 
 /**
  * @private
  * @hide
  */
-export function flattenKeys<T>(object: NestedStructure<T>): Record<string, T> {
+export function flattenKeys<T extends IndexSignatureParameter>(
+  object: NestedStructure<T>,
+): Record<string, T> {
   const result = {} as Record<string, T>;
 
   for (const key in object) {

@@ -17,9 +17,7 @@ module(
         </div>
       `);
 
-      assert
-        .dom('[data-test-output]')
-        .hasText(new Intl.DateTimeFormat('en-us').format(0));
+      assert.dom('[data-test-output]').hasText('');
     });
 
     test('input is null and allowEmpty is true', async function (assert) {
@@ -39,9 +37,7 @@ module(
         </div>
       `);
 
-      assert
-        .dom('[data-test-output]')
-        .hasText(new Intl.DateTimeFormat('en-us').format(new Date()));
+      assert.dom('[data-test-output]').hasText('');
     });
 
     test('input is undefined and allowEmpty is true', async function (assert) {

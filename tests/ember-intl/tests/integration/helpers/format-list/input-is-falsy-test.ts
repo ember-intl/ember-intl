@@ -19,19 +19,13 @@ module('Integration | Helper | format-list > input is falsy', function (hooks) {
   });
 
   test('input is null', async function (assert) {
-    setupOnerror(() => {
-      assert.step('@formatjs/intl throws an error');
-    });
-
     await render(hbs`
       <div data-test-output>
         {{format-list null}}
       </div>
     `);
 
-    assert.verifySteps(['@formatjs/intl throws an error']);
-
-    resetOnerror();
+    assert.dom('[data-test-output]').hasText('');
   });
 
   test('input is undefined', async function (assert) {

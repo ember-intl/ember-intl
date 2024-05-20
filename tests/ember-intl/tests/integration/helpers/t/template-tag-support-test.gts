@@ -14,7 +14,7 @@ module(
       await render(
         <template>
           <div data-test-output>
-            {{t "smoke-tests.parent.child"}}
+            {{t "smoke-tests.hello.world"}}
           </div>
         </template>
       );

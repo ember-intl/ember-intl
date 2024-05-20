@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
-type Params = Parameters<IntlService['formatMessage']>;
-type Value = string | null | undefined;
-type Options = Params[1];
+type FormatParameters = Parameters<IntlService['formatMessage']>;
+type Value = FormatParameters[0];
+type Options = FormatParameters[1];
 
 interface FormatMessageSignature {
   Args: {

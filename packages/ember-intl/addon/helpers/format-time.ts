@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 
 import type IntlService from '../services/intl';
 
-type Params = Parameters<IntlService['formatTime']>;
-type Value = string | number | Date | null | undefined;
-type Options = Params[1];
+type FormatParameters = Parameters<IntlService['formatTime']>;
+type Value = FormatParameters[0];
+type Options = FormatParameters[1];
 
 interface FormatTimeSignature {
   Args: {

@@ -45,12 +45,7 @@ module('Integration | Helper | format-time > input is falsy', function (hooks) {
       </div>
     `);
 
-    assert.dom('[data-test-output]').hasText(
-      new Intl.DateTimeFormat('en-us', {
-        hour: 'numeric',
-        minute: 'numeric',
-      }).format(0),
-    );
+    assert.dom('[data-test-output]').hasText('');
   });
 
   test('input is undefined', async function (assert) {

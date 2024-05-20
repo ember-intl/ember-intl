@@ -1,7 +1,7 @@
 import { assert } from '@ember/debug';
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
-import type { Translations } from 'ember-intl/types';
+import type { Translations } from 'ember-intl/-private/utils/translations';
 
 import { missingMessage } from './-private/missing-message';
 import { addTranslations } from './add-translations';

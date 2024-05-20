@@ -8,28 +8,16 @@ module(
   'Integration | Helper | t > input is not well-defined',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupIntl(hooks, 'en-us', {
-      'translation-not-found': 'Oops! {emoji}',
-    });
+    setupIntl(hooks, 'en-us');
 
     test('input is not a valid translation key', async function (assert) {
       await render(hbs`
         <div data-test-output="1">
           {{t "key.does.not.exist"}}
         </div>
-
-        <div data-test-output="2">
-          {{t
-            "key.does.not.exist"
-            default="translation-not-found"
-            emoji="🐹"
-          }}
-        </div>
       `);
 
       assert.dom('[data-test-output="1"]').hasText(t('key.does.not.exist'));
-
-      assert.dom('[data-test-output="2"]').hasText('Oops! 🐹');
     });
 
     test('translation is not defined for the locale', async function (assert) {

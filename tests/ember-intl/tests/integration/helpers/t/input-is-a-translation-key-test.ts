@@ -13,7 +13,7 @@ module(
     test('it returns a string', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{t "smoke-tests.parent.child"}}
+          {{t "smoke-tests.hello.world"}}
         </div>
       `);
 
@@ -23,7 +23,7 @@ module(
     test('it returns a new value when the locale is changed', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{t "smoke-tests.parent.child"}}
+          {{t "smoke-tests.hello.world"}}
         </div>
       `);
 

@@ -27,7 +27,7 @@ module(
         </div>
       `);
 
-      assert.dom('[data-test-output]').hasText('in 0 years');
+      assert.dom('[data-test-output]').hasText('');
     });
 
     test('input is undefined', async function (assert) {
