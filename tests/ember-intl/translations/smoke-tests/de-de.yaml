@@ -1,2 +1,3 @@
-parent:
-  child: Hallo Welt!
+hello:
+  message: Hallo, {name}!
+  world: Hallo Welt!

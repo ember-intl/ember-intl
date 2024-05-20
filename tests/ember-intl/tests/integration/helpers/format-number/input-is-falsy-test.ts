@@ -27,7 +27,7 @@ module(
         </div>
       `);
 
-      assert.dom('[data-test-output]').hasText('0');
+      assert.dom('[data-test-output]').hasText('');
     });
 
     test('input is undefined', async function (assert) {

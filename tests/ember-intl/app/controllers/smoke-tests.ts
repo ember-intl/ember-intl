@@ -6,6 +6,6 @@ export default class SmokeController extends Controller {
   @service declare intl: IntlService;
 
   get nestedTranslation(): string {
-    return this.intl.t('smoke-tests.parent.child');
+    return this.intl.t('smoke-tests.hello.world');
   }
 }

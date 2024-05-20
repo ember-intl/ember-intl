@@ -1,318 +1,370 @@
 import Helper from '@ember/component/helper';
-import { registerWarnHandler } from '@ember/debug';
-import { isHTMLSafe } from '@ember/template';
 import {
   settled,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
-import type { TOptions } from 'ember-intl/services/intl';
 import { setupIntl } from 'ember-intl/test-support';
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
-
-const LOCALE = 'en-us';
+import { setupTest } from 'test-app-for-ember-intl/tests/helpers';
 
 interface TestContext extends BaseTestContext {
   intl: IntlService;
 }
 
-module('service:init initialization', function (hooks) {
+module('Unit | Service | intl', function (hooks) {
   setupTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function (this: TestContext) {
     this.intl = this.owner.lookup('service:intl') as IntlService;
   });
 
-  test('it does not call `setLocale` on init', async function (this: TestContext, assert) {
-    const Intl = this.owner.factoryFor('service:intl');
-
-    const recompute = () => {
-      assert.step('Recompute helper');
-    };
-
-    const context = class THelper extends Helper {};
-
-    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    Intl.create().onLocaleChanged(recompute, context);
-
-    await settled();
-
-    assert.verifySteps([]);
-  });
-});
-
-module('service:intl', function (hooks) {
-  setupTest(hooks);
-  setupIntl(hooks, LOCALE, {});
-
-  hooks.beforeEach(function (this: TestContext) {
-    this.intl = this.owner.lookup('service:intl') as IntlService;
-  });
-
-  test('should return a number if the translation is a number', function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      a_number: 2,
+  module('getters', function () {
+    test('locales', function (this: TestContext, assert) {
+      assert.deepEqual(this.intl.locales, ['de-de', 'en-us']);
     });
 
-    assert.strictEqual(this.intl.t('a_number') as unknown as number, 2);
+    test('primaryLocale', function (this: TestContext, assert) {
+      assert.strictEqual(this.intl.primaryLocale, 'en-us');
+    });
   });
 
-  test('should deepMerge addTranslations', function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      foo: {
-        bar: {
-          baz: {
-            a: 'a',
+  module('addTranslations()', function () {
+    test('translations must be a string', function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        foo: 'Hello!',
+        // @ts-expect-error: Incorrect type
+        bar: 2,
+      });
+
+      assert.strictEqual(this.intl.t('foo'), 'Hello!');
+
+      assert.throws(
+        () => {
+          this.intl.t('bar');
+        },
+        (error: Error) => {
+          assert.step('@formatjs/intl throws an error');
+
+          return error.message.includes('@formatjs/intl');
+        },
+      );
+
+      assert.verifySteps(['@formatjs/intl throws an error']);
+    });
+
+    test('keys can include a period', function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        foo: {
+          'bar.baz': 'Hello!',
+        },
+        'foo2.bar.baz': 'Hi!',
+        'foo3.bar': {
+          baz: 'Bye!',
+        },
+      });
+
+      assert.strictEqual(this.intl.t('foo.bar.baz'), 'Hello!');
+      assert.strictEqual(this.intl.t('foo2.bar.baz'), 'Hi!');
+      assert.strictEqual(this.intl.t('foo3.bar.baz'), 'Bye!');
+    });
+
+    test('can be called multiple times', function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        foo: {
+          bar: {
+            baz: 'Hello!',
           },
         },
-      },
-    });
+      });
 
-    this.intl.addTranslations(LOCALE, {
-      foo: {
-        bar: {
-          baz: {
-            b: 'b',
+      this.intl.addTranslations('en-us', {
+        foo: {
+          bar: {
+            baz: 'Hi!',
+            quux: 'Bye!',
           },
-          c: {
-            d: {
-              e: {},
-            },
+          bar2: {},
+        },
+      });
+
+      assert.strictEqual(this.intl.t('foo.bar.baz'), 'Hi!');
+      assert.strictEqual(this.intl.t('foo.bar.quux'), 'Bye!');
+      assert.strictEqual(this.intl.t('foo.bar2'), 't:foo.bar2:()');
+    });
+  });
+
+  module('exists()', function () {
+    test('returns true if the key exists for the given locale', async function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        foo: 'Hello!',
+      });
+
+      assert.true(this.intl.exists('foo'));
+    });
+
+    test("returns false if the key doesn't exist for the given locale", async function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        foo: 'Hello!',
+      });
+
+      assert.false(this.intl.exists('foo', 'de-de'));
+      assert.false(this.intl.exists('bar'));
+      assert.false(this.intl.exists('bar', 'de-de'));
+    });
+  });
+
+  module('formatDate()', function () {
+    test('it works', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatDate(new Date('2014-01-23T18:00:44')),
+        '1/23/2014',
+      );
+    });
+
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatDate(new Date('2014-01-23T18:00:44'), {
+          locale: 'de-de',
+        }),
+        '23.1.2014',
+      );
+    });
+  });
+
+  module('formatList()', function () {
+    test('it works', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatList(['apples', 'bananas', 'oranges']),
+        'apples, bananas, and oranges',
+      );
+    });
+
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatList(['apples', 'bananas', 'oranges'], {
+          locale: 'de-de',
+        }),
+        'apples, bananas und oranges',
+      );
+    });
+  });
+
+  module('formatMessage()', function () {
+    test('it works', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatMessage(
+          {
+            defaultMessage: 'Hello, {name}!',
+            description: 'A welcome message',
+            id: 'foo',
           },
-        },
-      },
-    });
-
-    assert.strictEqual(this.intl.t('foo.bar.baz.a'), 'a');
-    assert.strictEqual(this.intl.t('foo.bar.baz.b'), 'b');
-  });
-
-  test('should overwrite translations', function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      foo: {
-        bar: {
-          baz: 'baz',
-        },
-      },
-    });
-
-    this.intl.addTranslations(LOCALE, {
-      foo: {
-        bar: {
-          baz: 'baz!',
-        },
-      },
-    });
-
-    assert.strictEqual(this.intl.t('foo.bar.baz'), 'baz!');
-  });
-
-  test('lookup() should return translation string', function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      foo: 'hello world',
-    });
-
-    assert.strictEqual(this.intl.lookup('foo'), 'hello world');
-  });
-
-  test('should escape attributes but render translation as HTML', async function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      legacyStyle: `'<strong class="example">'Hello {name}'</strong>'`,
-      modernStyle: `<strong class="example">Hello {name}</strong>`,
-    });
-
-    assert.strictEqual(
-      this.intl
-        .t('modernStyle', { htmlSafe: true, name: '<em>Tom</em>' })
-        .toString(),
-      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>',
-    );
-    assert.strictEqual(
-      this.intl
-        .t('legacyStyle', { htmlSafe: true, name: '<em>Tom</em>' })
-        .toString(),
-      '<strong class="example">Hello &lt;em&gt;Tom&lt;/em&gt;</strong>',
-    );
-  });
-
-  test('lookup() should return undefined for missing translations ', function (this: TestContext, assert) {
-    assert.strictEqual(
-      this.intl.lookup('missing', undefined, { resilient: true }),
-      undefined,
-    );
-  });
-
-  test('`t` should display last missing translation key when using default', function (this: TestContext, assert) {
-    assert.strictEqual(
-      this.intl.t('x', {
-        default: ['y', 'z'],
-      }),
-      't:z:()',
-    );
-  });
-
-  test('`t` should pass `key`, `locales`, `options` through to `missing-message` util', function (this: TestContext, assert) {
-    this.owner.register(
-      'util:intl/missing-message',
-      (key: string, locales: string[], options: TOptions) => {
-        assert.strictEqual(key, 'should_also_not_exist');
-        assert.deepEqual(locales, [LOCALE]);
-        assert.deepEqual(options, {
-          default: ['also.does.not.exist', 'should_also_not_exist'],
-          resilient: false,
-          someVariable: 'hello',
-        });
-
-        return '';
-      },
-    );
-
-    this.intl.t('does.not.exist', {
-      default: ['also.does.not.exist', 'should_also_not_exist'],
-      someVariable: 'hello',
-    });
-  });
-
-  test('waits for translations to load', async function (this: TestContext, assert) {
-    await settled();
-    assert.strictEqual(
-      this.intl.t('smoke-tests.parent.child', { locale: 'en-us' }),
-      'Hello world!',
-    );
-  });
-
-  test('it does not mutate t options hash', function (this: TestContext, assert) {
-    this.intl.setLocale(LOCALE);
-    this.intl.addTranslations(LOCALE, { foo: '' });
-    const obj = { bar: 'bar' };
-    this.intl.t('foo', obj);
-    assert.notOk('locale' in obj);
-  });
-
-  test('`t` can be passed a null options hash', function (this: TestContext, assert) {
-    this.intl.setLocale(LOCALE);
-    this.intl.addTranslations(LOCALE, { foo: '' });
-    this.intl.t('foo', undefined);
-    assert.ok(true, 'Exception was not raised');
-  });
-
-  test('`t` can be passed a no options argument and no warning should be emitted', async function (this: TestContext, assert) {
-    this.intl.setLocale(LOCALE);
-
-    let invokedWarn = false;
-    registerWarnHandler(function () {
-      invokedWarn = true;
-    });
-
-    this.intl.addTranslations(LOCALE, { foo: 'FOO' });
-    this.intl.t('foo');
-    assert.false(invokedWarn, 'Warning was not raised');
-  });
-
-  test('translations that are empty strings are valid', function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, { empty_string: '' });
-    assert.strictEqual(this.intl.t('empty_string'), '');
-  });
-
-  test('translationsFor returns messages', async function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, { foo: 'bar' });
-
-    assert.strictEqual(this.intl.translationsFor(LOCALE)['foo'], 'bar');
-    assert.deepEqual(this.intl.translationsFor('ZZ'), undefined);
-  });
-
-  test('translations keys can contain periods within the key', async function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      a: {
-        b: {
-          c: {
-            'd.d': {
-              'e.e': 'Periods within a key work are now valid.',
-            },
+          {
+            name: 'Zoey',
           },
-        },
-      },
-      'b.b': 'Root key with double period.',
+        ),
+        'Hello, Zoey!',
+      );
     });
 
-    assert.strictEqual(
-      this.intl.t('a.b.c.d.d.e.e'),
-      'Periods within a key work are now valid.',
-    );
-    assert.strictEqual(this.intl.t('b.b'), 'Root key with double period.');
-  });
-
-  test('should return safestring when htmlSafe attribute passed to `t`', async function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      html_safe_translation:
-        "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatMessage(
+          {
+            defaultMessage: 'Hello, {name}!',
+            description: 'A welcome message',
+            id: 'foo',
+          },
+          {
+            locale: 'de-de',
+            name: 'Zoey',
+          },
+        ),
+        'Hello, Zoey!',
+        'options.locale should have no effect.',
+      );
     });
 
-    const out = this.intl.t('html_safe_translation', {
-      htmlSafe: true,
-      name: '<em>Jason</em>',
-      count: 42000,
+    test('value is a string', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatMessage('Hello, {name}!', { name: 'Zoey' }),
+        'Hello, Zoey!',
+      );
+    });
+  });
+
+  module('formatNumber()', function () {
+    test('it works', function (this: TestContext, assert) {
+      assert.strictEqual(this.intl.formatNumber(12345678.9), '12,345,678.9');
     });
 
-    assert.true(isHTMLSafe(out));
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatNumber(12345678.9, {
+          locale: 'de-de',
+        }),
+        '12.345.678,9',
+      );
+    });
   });
 
-  test('should return regular string when htmlSafe is falsey', async function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, {
-      html_safe_translation:
-        "'<strong>'Hello &lt;em&gt;Jason&lt;/em&gt; 42,000'</strong>'",
+  module('formatRelative()', function () {
+    test('it works', function (this: TestContext, assert) {
+      assert.strictEqual(this.intl.formatRelative(-1), '1 second ago');
     });
 
-    const out = this.intl.t('html_safe_translation', {
-      htmlSafe: false,
-      name: '<em>Jason</em>',
-      count: 42000,
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatRelative(-1, {
+          locale: 'de-de',
+        }),
+        'vor 1 Sekunde',
+      );
     });
 
-    assert.false(isHTMLSafe(out));
+    test('options.unit', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatRelative(-1, {
+          unit: 'minute',
+        }),
+        '1 minute ago',
+      );
+    });
   });
 
-  test('exists returns true when key found', async function (this: TestContext, assert) {
-    this.intl.addTranslations(LOCALE, { hello: 'world' });
-    assert.true(this.intl.exists('hello'));
+  module('formatTime()', function () {
+    test('it works', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatTime(new Date('2014-01-23T18:00:44')),
+        '6:00 PM',
+      );
+    });
+
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.formatTime(new Date('2014-01-23T18:00:44'), {
+          locale: 'de-de',
+        }),
+        '18:00',
+      );
+    });
   });
 
-  test('exists returns false when key not found', function (this: TestContext, assert) {
-    assert.false(this.intl.exists('bar'));
+  module('setLocale()', function () {
+    test('triggers the localeChanged event', async function (this: TestContext, assert) {
+      const callback = () => {
+        assert.step('Callback');
+      };
+
+      const context = class THelper extends Helper {};
+
+      // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
+      this.intl.onLocaleChanged(callback, context);
+
+      assert.verifySteps([]);
+
+      this.intl.setLocale(['de-de', 'en-us']);
+
+      await settled();
+
+      assert.verifySteps(['Callback']);
+
+      this.intl.setLocale(['fr-fr', 'de-de', 'en-us']);
+
+      await settled();
+
+      assert.verifySteps(['Callback']);
+    });
+
+    test("updates the document's lang attribute", async function (this: TestContext, assert) {
+      function getLang() {
+        return document.documentElement.getAttribute('lang');
+      }
+
+      assert.strictEqual(getLang(), 'en-us');
+
+      this.intl.setLocale(['de-de', 'en-us']);
+
+      await settled();
+
+      assert.strictEqual(getLang(), 'de-de');
+
+      this.intl.setLocale(['fr-fr', 'de-de', 'en-us']);
+
+      await settled();
+
+      assert.strictEqual(getLang(), 'fr-fr');
+    });
   });
 
-  test('changing the locale emits the `localeChanged` event and the new locale is available', async function (this: TestContext, assert) {
-    const recompute = () => {
-      assert.step('Recompute helper');
-    };
+  module('t()', function () {
+    test('it works', async function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.t('smoke-tests.hello.message', {
+          name: 'Zoey',
+        }),
+        'Hello, Zoey!',
+      );
+    });
 
-    const context = class THelper extends Helper {};
+    test('translations can be an empty string', function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        foo: '',
+      });
 
-    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    this.intl.onLocaleChanged(recompute, context);
+      assert.strictEqual(this.intl.t('foo'), '');
+    });
 
-    this.intl.setLocale(['de', 'en-us']);
+    test('options.htmlSafe', function (this: TestContext, assert) {
+      this.intl.addTranslations('en-us', {
+        legacy: `'<strong class="example">'Hello, {name}!'</strong>'`,
+        modern: `<strong class="example">Hello, {name}!</strong>`,
+      });
 
-    await settled();
+      assert.strictEqual(
+        this.intl.t('legacy', {
+          name: '<em>Tom</em>',
+        }),
+        '<strong class="example">Hello, <em>Tom</em>!</strong>',
+      );
 
-    assert.verifySteps(['Recompute helper']);
-  });
+      assert.strictEqual(
+        this.intl.t('modern', {
+          name: '<em>Tom</em>',
+        }),
+        '<strong class="example">Hello, <em>Tom</em>!</strong>',
+      );
 
-  test('updates document `lang` attribute on locale change', async function (this: TestContext, assert) {
-    this.intl.setLocale(['de']);
-    await settled();
-    assert.strictEqual(document.documentElement.getAttribute('lang'), 'de');
+      assert.strictEqual(
+        this.intl
+          .t('legacy', {
+            htmlSafe: true,
+            name: '<em>Tom</em>',
+          })
+          .toString(),
+        '<strong class="example">Hello, &lt;em&gt;Tom&lt;/em&gt;!</strong>',
+      );
 
-    this.intl.setLocale(['es', 'fr']);
-    await settled();
-    assert.strictEqual(document.documentElement.getAttribute('lang'), 'es');
-  });
+      assert.strictEqual(
+        this.intl
+          .t('modern', {
+            htmlSafe: true,
+            name: '<em>Tom</em>',
+          })
+          .toString(),
+        '<strong class="example">Hello, &lt;em&gt;Tom&lt;/em&gt;!</strong>',
+      );
+    });
 
-  test('primaryLocale returns the first locale of the currently active locales', async function (this: TestContext, assert) {
-    assert.strictEqual(this.intl.get('primaryLocale'), LOCALE);
-
-    this.intl.setLocale(['de']);
-    assert.strictEqual(this.intl.get('primaryLocale'), 'de');
+    test('options.locale', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.t('smoke-tests.hello.message', {
+          locale: 'de-de',
+          name: 'Zoey',
+        }),
+        'Hallo, Zoey!',
+      );
+    });
   });
 });

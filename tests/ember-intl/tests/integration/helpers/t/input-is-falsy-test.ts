@@ -9,15 +9,6 @@ module('Integration | Helper | t > input is falsy', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('input is false', async function (assert) {
-    setupOnerror((error: Error) => {
-      assert.strictEqual(
-        error.message,
-        'Assertion Failed: [ember-intl] expected translation key "false" to be of type String but received: "boolean"',
-      );
-
-      assert.step('ember-intl throws an error');
-    });
-
     await render(hbs`
       <div data-test-output>
         {{! @glint-expect-error }}
@@ -25,30 +16,18 @@ module('Integration | Helper | t > input is falsy', function (hooks) {
       </div>
     `);
 
-    assert.verifySteps(['ember-intl throws an error']);
-
-    resetOnerror();
+    assert.dom('[data-test-output]').hasText('t:false:()');
   });
 
   test('input is null', async function (assert) {
-    setupOnerror((error: Error) => {
-      assert.strictEqual(
-        error.message,
-        'Assertion Failed: [ember-intl] expected translation key "null" to be of type String but received: "object"',
-      );
-
-      assert.step('ember-intl throws an error');
-    });
-
     await render(hbs`
       <div data-test-output>
+        {{! @glint-expect-error }}
         {{t null}}
       </div>
     `);
 
-    assert.verifySteps(['ember-intl throws an error']);
-
-    resetOnerror();
+    assert.dom('[data-test-output]').hasText('t:null:()');
   });
 
   test('input is undefined', async function (assert) {
@@ -60,6 +39,7 @@ module('Integration | Helper | t > input is falsy', function (hooks) {
 
     await render(hbs`
       <div data-test-output>
+        {{! @glint-expect-error }}
         {{t undefined}}
       </div>
     `);

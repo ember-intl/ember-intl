@@ -1,8 +1,3 @@
-components:
-  macros-classic:
-    hello:
-      message: "Hello, {name}!"
-
 routes:
   application:
     title: ember-intl
