@@ -3,10 +3,9 @@ import '@glint/environment-ember-template-imports';
 import 'ember-source/types';
 import 'ember-source/types/preview';
 
+import type EmberIntlRegistry from 'ember-intl/template-registry';
 import type EmberPageTitleRegistry from 'ember-page-title/template-registry';
 import type MyV1AddonRegistry from 'my-v1-addon/template-registry';
-
-import type EmberIntlRegistry from './ember-intl';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
