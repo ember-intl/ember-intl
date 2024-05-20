@@ -23,7 +23,6 @@ Router.map(function () {
       this.route('addon-configs');
       this.route('asynchronously-loading-translations');
       this.route('missing-translations');
-      this.route('service-api');
       this.route('testing');
       this.route('translating-text');
     });
@@ -51,6 +50,12 @@ Router.map(function () {
       this.route('v5');
       this.route('v6');
       this.route('v7');
+    });
+
+    this.route('services', function () {
+      this.route('intl-part-1');
+      this.route('intl-part-2');
+      this.route('introduction');
     });
   });
 
