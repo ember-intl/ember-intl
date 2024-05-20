@@ -34,7 +34,13 @@ module('Acceptance | index', function (hooks) {
         );
 
       assert
-        .dom('[data-test-output="Key to Overwrite"]')
+        .dom('[data-test-output="Key Missing"]')
+        .hasText(
+          'Missing translation "routes.index.key-without-translation" for locale "de-de"',
+        );
+
+      assert
+        .dom('[data-test-output="Key Overwritten"]')
         .hasText('Die Apps Übersetzungen haben Vorrang.');
     });
   });
@@ -63,7 +69,13 @@ module('Acceptance | index', function (hooks) {
         );
 
       assert
-        .dom('[data-test-output="Key to Overwrite"]')
+        .dom('[data-test-output="Key Missing"]')
+        .hasText(
+          'Missing translation "routes.index.key-without-translation" for locale "en-us"',
+        );
+
+      assert
+        .dom('[data-test-output="Key Overwritten"]')
         .hasText("The app's translations take precedence.");
     });
   });

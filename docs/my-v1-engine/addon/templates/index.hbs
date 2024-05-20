@@ -3,11 +3,15 @@
     {{t "routes.my-v1-engine.index.title" htmlSafe=true}}
   </h1>
 
-  <div>
+  <div class="section">
     <ComponentFromV1Engine />
   </div>
 
-  <div data-test-output="Key to Overwrite">
-    {{t "routes.index.key-to-overwrite"}}
+  <div class="section" data-test-output="Key Missing">
+    {{t "routes.index.key-without-translation"}}
+  </div>
+
+  <div class="section" data-test-output="Key Overwritten">
+    {{this.overwrittenTranslation}}
   </div>
 </div>
