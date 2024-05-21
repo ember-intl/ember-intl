@@ -74,14 +74,14 @@ In a template, use the `{{t}}` helper to render the translation.
 ```hbs
 {{! v1 addons: addon/components/hello.hbs }}
 <div>
-  {{t "hello.message" (hash name=@name)}}
+  {{t "hello.message" name=@name}}
 </div>
 ```
 
 ```hbs
 {{! v2 addons: src/components/hello.hbs }}
 <div>
-  {{t "hello.message" (hash name=@name)}}
+  {{t "hello.message" name=@name}}
 </div>
 ```
 

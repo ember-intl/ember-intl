@@ -9,6 +9,8 @@ We continue from [Part 1](./intl-part-1) and will examine parts of the API that 
 
 Returns all locales that have translations.
 
+**WARNING: The values of `locales` have been "normalized," and are meant to be identifiers for the `intl` service. Avoid writing logic based on `locales`.**
+
 ```ts
 console.log(this.intl.locales);
 // ['de-de', 'en-us', 'es-es', 'fr-fr']
@@ -63,15 +65,23 @@ export default class ApplicationRoute extends Route {
 Returns `true` if a translation key exists in one of the locales that are currently active.
 
 ```ts
-if (this.intl.exists('hello.message')) {
-  // Do something
+get options(): string[] {
+  const options: string[] = [];
+  let count = 1;
+
+  while (this.intl.exists(`components.example.option-${count}`)) {
+    options.push(this.intl.t(`components.example.option-${count}`));
+    count++;
+  }
+
+  return options;
 }
 ```
 
 You may query against a particular locale:
 
 ```ts
-if (this.intl.exists('hello.message', 'de-de')) {
+if (this.intl.exists('components.example.option-1', 'de-de')) {
   // Do something
 }
 ```
@@ -128,12 +138,12 @@ export default class ApplicationRoute extends Route {
 }
 ```
 
-Your callback function has access to `error`, one that is provided by `@formatjs/intl`.
+Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.io/docs/guides/develop#error-codes).
 
 
 ### setOnMissingTranslation()
 
-Specify what to do when a translation is missing. Used to override `ember-intl`'s default implementation.
+Specify what to display when a translation is missing. Used to override `ember-intl`'s default implementation.
 
 ```ts
 /* routes/application.ts */

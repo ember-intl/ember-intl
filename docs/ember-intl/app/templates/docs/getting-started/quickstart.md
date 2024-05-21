@@ -30,7 +30,7 @@ In a template, use the `{{t}}` helper to render the translation:
 ```hbs
 {{! app/templates/application.hbs }}
 <div>
-  {{t "hello.message" (hash name="Zoey")}}
+  {{t "hello.message" name="Zoey"}}
 </div>
 ```
 
@@ -39,7 +39,6 @@ In a [`<template>`-tag component](https://github.com/ember-template-imports/embe
 ```ts
 /* app/components/hello.gts */
 import type { TOC } from '@ember/component/template-only';
-import { hash } from '@ember/helper';
 import { t } from 'ember-intl';
 
 interface HelloSignature {
@@ -51,7 +50,7 @@ interface HelloSignature {
 const HelloComponent: TOC<HelloSignature> =
   <template>
     <div>
-      {{t "hello.message" (hash name=@name)}}
+      {{t "hello.message" name=@name}}
     </div>
   </template>
 
@@ -160,4 +159,4 @@ module.exports = {
 };
 ```
 
-You can also use [`prettier`](https://prettier.io/) to format the translation files.
+You can also use [`prettier`](https://prettier.io/) to format the translation files and [`ember-intl-analyzer`](https://github.com/mainmatter/ember-intl-analyzer) to find unused translations.

@@ -32,7 +32,7 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
 
 You can use named arguments, a positional argument (2nd position), or a combination of both to pass data. In the combined case, data passed as named arguments will take precedence.
 
-**Warning: To reduce complexity, only one or these approaches may be allowed in the future. I recommend that you start writing code consistently: Always pass data as named arguments or always as the 2nd positional argument (recommended).**
+**Warning: Avoid the combined case.**
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
