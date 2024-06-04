@@ -9,8 +9,23 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
-const defaultConfig = require('./lib/default-config');
 const findEngine = require('./lib/utils/find-engine');
+
+const defaultConfig = {
+  errorOnMissingTranslations: false,
+  errorOnNamedArgumentMismatch: false,
+  excludeLocales: null,
+  fallbackLocale: null,
+  includeLocales: null,
+  inputPath: 'translations',
+  outputPath: 'translations',
+  publicOnly: false,
+  requiresTranslation(/* key, locale */) {
+    return true;
+  },
+  stripEmptyTranslations: false,
+  wrapTranslationsWithNamespace: false,
+};
 
 module.exports = {
   name: 'ember-intl',

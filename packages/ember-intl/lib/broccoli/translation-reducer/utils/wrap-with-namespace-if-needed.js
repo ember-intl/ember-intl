@@ -1,7 +1,5 @@
 const { dirname, normalize, sep: separator } = require('node:path');
 
-const enums = require('../../enums');
-
 /**
  * Wraps the root object with a namespace if the file is under subdirectories
  *
@@ -27,7 +25,7 @@ function wrapWithNamespaceIfNeeded(object, filePath, inputPath, addonNames) {
     let prefix = separator;
 
     for (let addon of normalizedAddonNames) {
-      let addonPrefix = `${separator}${enums.addonNamespace}${separator}${addon}`;
+      let addonPrefix = `${separator}__ember-intl-addon__${separator}${addon}`;
 
       if (`${directory}${separator}`.startsWith(`${addonPrefix}${separator}`)) {
         prefix = addonPrefix;

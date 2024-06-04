@@ -41,10 +41,11 @@ describe('validateMessage', function () {
   invalidSyntax.forEach((message) => {
     it(`throws SyntaxError for "${message}"`, function () {
       try {
-        validateMessage(message);
+        validateMessage(message, 'en-us');
       } catch (e) {
-        /* SyntaxError is subclassed within with peg, so we cannot assert err.constructor === SyntaxError */
-        expect(e.toString()).to.include('SyntaxError');
+        expect(e.toString()).to.satisfy((str) => {
+          return str.startsWith('SyntaxError');
+        });
 
         return;
       }
@@ -57,7 +58,7 @@ describe('validateMessage', function () {
     {
       locale: 'en-us',
       message: `{name} took {numPhotos, plural, zero {no photos} one {one photo} other {# photos}} on {takenDate, date, long}.`,
-      error: 'Unknown plural category: zero',
+      error: 'Unknown plural categories: zero',
     },
     {
       locale: 'de-de',
@@ -72,7 +73,7 @@ describe('validateMessage', function () {
         many {#rd}
         other {#th}
     } birthday!`,
-      error: 'Unknown ordinal category: many',
+      error: 'Unknown ordinal categories: many',
     },
     {
       locale: 'de-de',

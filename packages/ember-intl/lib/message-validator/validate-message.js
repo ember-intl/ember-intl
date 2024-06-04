@@ -3,20 +3,24 @@ const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
 const traverse = require('./ast-traverse');
 const ordinalCategories = require('./ordinal-categories');
 const pluralCategories = require('./plural-categories');
-const parseOptions = require('../parse-options');
 
 function validateMessage(message, locale) {
-  const ast = parse(message, parseOptions);
   const language = locale.split('-')[0];
+
   const validPlurals = pluralCategories[language];
   const validOrdinals = ordinalCategories[language];
+
+  // Keep the options in sync with those for formatMessage()
+  const ast = parse(message, {
+    ignoreTag: true,
+  });
 
   traverse(ast, {
     [TYPE.plural]: (node) => {
       const selectors = Object.keys(node.options).map((s) => s.trim());
 
       if (!selectors.includes('other')) {
-        throw new MissingOtherSelectorError();
+        throw new Error('Missing selector: other');
       }
 
       if (!locale) {
@@ -25,18 +29,19 @@ function validateMessage(message, locale) {
 
       const isOrdinal = node.pluralType === 'ordinal';
       const validSelectors = isOrdinal ? validOrdinals : validPlurals;
+
       const invalidSelectors = selectors.filter((selector) => {
-        return (
-          validSelectors.indexOf(selector) === -1 && !/=\d+/.test(selector)
-        );
+        if (validSelectors.indexOf(selector) >= 0) {
+          return false;
+        }
+
+        return !/=\d+/.test(selector);
       });
 
       if (invalidSelectors.length) {
-        if (isOrdinal) {
-          throw new UnknownOrdinalCategoriesError(invalidSelectors);
-        } else {
-          throw new UnknownPluralCategoriesError(invalidSelectors);
-        }
+        throw new Error(
+          `Unknown ${isOrdinal ? 'ordinal' : 'plural'} categories: ${invalidSelectors.join(', ')}`,
+        );
       }
     },
 
@@ -44,36 +49,10 @@ function validateMessage(message, locale) {
       const selectors = Object.keys(node.options).map((s) => s.trim());
 
       if (!selectors.includes('other')) {
-        throw new MissingOtherSelectorError();
+        throw new Error('Missing selector: other');
       }
     },
   });
-}
-
-class UnknownPluralCategoriesError extends Error {
-  constructor(categories) {
-    super(
-      categories.length === 1
-        ? `Unknown plural category: ${categories[0]}`
-        : `Unknown plural categories: ${categories.join(', ')}`,
-    );
-  }
-}
-
-class UnknownOrdinalCategoriesError extends Error {
-  constructor(categories) {
-    super(
-      categories.length === 1
-        ? `Unknown ordinal category: ${categories[0]}`
-        : `Unknown ordinal categories: ${categories.join(', ')}`,
-    );
-  }
-}
-
-class MissingOtherSelectorError extends Error {
-  constructor() {
-    super('Missing selector: other');
-  }
 }
 
 module.exports = validateMessage;
