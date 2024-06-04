@@ -16,14 +16,14 @@
     "lint:js:fix": "prettier --write \"**/*.js\""
   },
   "dependencies": {
-    "@tsconfig/ember": "^3.0.6",
+    "@tsconfig/ember": "^3.0.8",
     "@tsconfig/node18": "^18.2.4",
     "@tsconfig/strictest": "^2.0.5"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^8.2.2",
-    "prettier": "^3.2.5"
+    "prettier": "^3.3.0"
   },
   "peerDependencies": {
     "typescript": "^5.4.5"
