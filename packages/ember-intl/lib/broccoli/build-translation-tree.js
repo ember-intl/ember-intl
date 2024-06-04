@@ -4,8 +4,6 @@ const funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
 const { WatchedDir } = require('broccoli-source');
 
-const enums = require('./enums');
-
 function funnelTranslations(tree, destDir) {
   if (!tree) {
     return;
@@ -74,7 +72,7 @@ function buildTranslationTree(project, inputPath, treeGenerator) {
     trees.push(
       funnelTranslations(
         mergeTrees(translationTrees, { overwrite: true }),
-        enums.addonNamespace,
+        '__ember-intl-addon__',
       ),
     );
   }

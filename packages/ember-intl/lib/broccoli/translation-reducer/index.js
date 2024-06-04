@@ -9,7 +9,6 @@ const forEachMessage = require('./utils/for-each-message');
 const isKnownLanguage = require('./utils/is-known-language');
 const stripEmptyTranslations = require('./utils/strip-empty-translations');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
-const enums = require('../enums');
 const validateMessage = require('../../message-validator/validate-message');
 
 function filterPatterns(locales) {
@@ -24,7 +23,7 @@ function filterPatterns(locales) {
 }
 
 function isApp(filePath) {
-  return !filePath.includes(`/${enums.addonNamespace}/`);
+  return !filePath.includes('/__ember-intl-addon__/');
 }
 
 function normalizeLocale(locale) {
