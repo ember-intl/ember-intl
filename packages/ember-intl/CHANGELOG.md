@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.0 (currently in beta)
+## 7.0.0
 
 ### Major Changes
 
@@ -21,6 +21,8 @@
 
 ### Patch Changes
 
+- [#1893](https://github.com/ember-intl/ember-intl/pull/1893) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1892](https://github.com/ember-intl/ember-intl/pull/1892) Refactored a few files in /lib ([@ijlee2](https://github.com/ijlee2))
 - [#1888](https://github.com/ember-intl/ember-intl/pull/1888) Called normalizeLocale() when reading or writing to this.\_intls ([@ijlee2](https://github.com/ijlee2))
 - [#1883](https://github.com/ember-intl/ember-intl/pull/1883) Patched #1877 and #1882 ([@ijlee2](https://github.com/ijlee2))
 - [#1882](https://github.com/ember-intl/ember-intl/pull/1882) Refactored code in lib ([@ijlee2](https://github.com/ijlee2))

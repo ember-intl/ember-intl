@@ -1,5 +1,12 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.14
+
+### Patch Changes
+
+- [#1893](https://github.com/ember-intl/ember-intl/pull/1893) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1891](https://github.com/ember-intl/ember-intl/pull/1891) Replaced ember-source-channel-url with latest-version ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.13
 
 ### Patch Changes

@@ -21,8 +21,8 @@ See https://ember-intl.github.io/ember-intl/docs/quickstart.
 
 ## Documentation
 
-- [7.x (beta)](https://ember-intl.github.io/ember-intl/)
-- [6.x (stable)](https://ember-intl.github.io/ember-intl/versions/v6.5.3/)
+- [7.x (stable)](https://ember-intl.github.io/ember-intl/)
+- [6.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v6.5.5/)
 
 
 ## Compatibility
