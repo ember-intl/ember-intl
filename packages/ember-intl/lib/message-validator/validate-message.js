@@ -3,13 +3,16 @@ const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
 const traverse = require('./ast-traverse');
 const ordinalCategories = require('./ordinal-categories');
 const pluralCategories = require('./plural-categories');
-const parseOptions = require('../parse-options');
 
 function validateMessage(message, locale) {
-  const ast = parse(message, parseOptions);
   const language = locale.split('-')[0];
   const validPlurals = pluralCategories[language];
   const validOrdinals = ordinalCategories[language];
+
+  // Keep the options in sync with those for formatMessage()
+  const ast = parse(message, {
+    ignoreTag: true,
+  });
 
   traverse(ast, {
     [TYPE.plural]: (node) => {
