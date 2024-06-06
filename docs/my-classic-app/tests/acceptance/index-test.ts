@@ -17,6 +17,8 @@ module('Acceptance | index', function (hooks) {
         .dom('[data-test-output="Title"]')
         .hasText('Willkommen bei ember-intl');
 
+      assert.dom('[data-test-header="Components"]').hasText('Komponenten');
+
       assert
         .dom('[data-test-output="App"]')
         .hasText('Dies ist eine Komponente aus der App.');
@@ -51,6 +53,8 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="App"]')
         .hasText('This is a component from the app.');
+
+      assert.dom('[data-test-header="Components"]').hasText('Components');
 
       assert
         .dom('[data-test-output="V1 Addon"]')

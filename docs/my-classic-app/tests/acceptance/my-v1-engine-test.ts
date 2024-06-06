@@ -17,6 +17,8 @@ module('Acceptance | my-v1-engine', function (hooks) {
         .dom('[data-test-output="Title"]')
         .hasText('Willkommen bei my-v1-engine');
 
+      assert.dom('[data-test-header="Components"]').hasText('Komponenten');
+
       assert
         .dom('[data-test-output="Engine"]')
         .hasText('Dies ist eine Komponente aus einer Engine.');
@@ -41,6 +43,8 @@ module('Acceptance | my-v1-engine', function (hooks) {
       assert
         .dom('[data-test-output="Title"]')
         .hasText('Welcome to my-v1-engine');
+
+      assert.dom('[data-test-header="Components"]').hasText('Components');
 
       assert
         .dom('[data-test-output="Engine"]')
