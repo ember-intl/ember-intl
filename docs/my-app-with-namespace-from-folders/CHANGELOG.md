@@ -1,5 +1,11 @@
 # my-app-with-namespace-from-folders
 
+## 1.0.4
+
+### Patch Changes
+
+- [#1895](https://github.com/ember-intl/ember-intl/pull/1895) Reintroduced extend to handle deeply nested translation folders ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.3
 
 ### Patch Changes

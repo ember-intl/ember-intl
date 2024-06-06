@@ -1,5 +1,11 @@
 # my-app
 
+## 1.0.7
+
+### Patch Changes
+
+- [#1895](https://github.com/ember-intl/ember-intl/pull/1895) Reintroduced extend to handle deeply nested translation folders ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.6
 
 ### Patch Changes

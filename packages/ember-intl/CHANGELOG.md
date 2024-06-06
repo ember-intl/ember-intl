@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.1
+
+### Patch Changes
+
+- [#1895](https://github.com/ember-intl/ember-intl/pull/1895) Reintroduced extend to handle deeply nested translation folders ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.0.0
 
 ### Major Changes
