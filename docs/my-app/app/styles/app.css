@@ -5,6 +5,11 @@
   padding: 1rem;
 }
 
+.section h2 {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
 .section:last-of-child {
   margin-bottom: 0;
 }

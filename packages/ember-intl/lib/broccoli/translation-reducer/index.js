@@ -1,6 +1,7 @@
 const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
 const { basename, extname, join } = require('node:path');
 const CachingWriter = require('broccoli-caching-writer');
+const extend = require('extend');
 const yaml = require('js-yaml');
 const stringify = require('json-stable-stringify');
 
@@ -99,12 +100,9 @@ class TranslationReducer extends CachingWriter {
       return 0;
     });
 
-    // Map locale to a translation object
-    const translations = {};
-
-    orderedFilePaths.forEach((filePath) => {
+    const translations = orderedFilePaths.reduce((accumulator, filePath) => {
       if (statSync(filePath).isDirectory()) {
-        return;
+        return accumulator;
       }
 
       let translationObject = readAsObject(filePath);
@@ -116,7 +114,7 @@ class TranslationReducer extends CachingWriter {
       if (!translationObject) {
         this.options.log(`cannot read path "${filePath}"`);
 
-        return;
+        return accumulator;
       }
 
       if (this.options.wrapTranslationsWithNamespace === true) {
@@ -131,11 +129,10 @@ class TranslationReducer extends CachingWriter {
       const fileName = basename(filePath).split('.')[0];
       const locale = normalizeLocale(fileName);
 
-      const oldValue = translations[locale] ?? {};
-      const newValue = Object.assign({}, oldValue, translationObject);
-
-      translations[locale] = newValue;
-    });
+      return extend(true, accumulator, {
+        [locale]: translationObject,
+      });
+    }, {});
 
     return translations;
   }
@@ -224,10 +221,12 @@ class TranslationReducer extends CachingWriter {
       }
 
       if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
-        const oldValue = translations[locale];
-        const newValue = Object.assign({}, fallbackTranslationObject, oldValue);
-
-        translations[locale] = newValue;
+        translations[locale] = extend(
+          true,
+          {},
+          fallbackTranslationObject,
+          translations[locale],
+        );
       }
 
       writeFileSync(

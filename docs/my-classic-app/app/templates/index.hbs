@@ -3,17 +3,21 @@
     {{t "routes.index.title" htmlSafe=true}}
   </h1>
 
-  <div class="section">
+  <section class="section">
+    <h2 data-test-header="Components">
+      {{t "components.title"}}
+    </h2>
+
     <ComponentFromApp />
     <ComponentFromV1Addon />
     <ComponentFromV2Addon />
-  </div>
+  </section>
 
-  <div class="section" data-test-output="Key Missing">
+  <section class="section" data-test-output="Key Missing">
     {{t "routes.index.key-without-translation"}}
-  </div>
+  </section>
 
-  <div class="section" data-test-output="Key Overwritten">
+  <section class="section" data-test-output="Key Overwritten">
     {{this.overwrittenTranslation}}
-  </div>
+  </section>
 </div>

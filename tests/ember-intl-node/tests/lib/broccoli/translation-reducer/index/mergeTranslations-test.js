@@ -8,19 +8,194 @@ import TranslationReducer from 'ember-intl/lib/broccoli/translation-reducer/inde
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const fixtureFilePaths = [
-  join(__dirname, '../../../../fixtures/stripEmptyTranslations/de-de.yaml'),
-  join(__dirname, '../../../../fixtures/stripEmptyTranslations/en-us.yaml'),
-];
+const fixtureDir = join(
+  __dirname,
+  '../../../../fixtures/broccoli/translation-reducer/index',
+);
 
 describe('lib | broccoli | translation-reducer | index | mergeTranslations', function () {
+  it('handles nested translations (wrapTranslationsWithNamespace is false in app, translations from app)', async function () {
+    const input = await createTempDir();
+
+    try {
+      const subject = new TranslationReducer(input.path(), {
+        addonsWithTranslations: [],
+      });
+
+      let translations = subject.mergeTranslations([
+        join(fixtureDir, 'my-app/components/hello/en-us.yaml'),
+        join(fixtureDir, 'my-app/components/en-us.yaml'),
+        join(fixtureDir, 'my-app/en-us.yaml'),
+      ]);
+
+      expect(translations).to.deep.equal({
+        'en-us': {
+          foo: 'bar',
+          message: 'Hello, {name}!',
+          title: 'Homepage',
+        },
+      });
+
+      // Check order dependency
+      translations = subject.mergeTranslations([
+        join(fixtureDir, 'my-app/en-us.yaml'),
+        join(fixtureDir, 'my-app/components/en-us.yaml'),
+        join(fixtureDir, 'my-app/components/hello/en-us.yaml'),
+      ]);
+
+      expect(translations).to.deep.equal({
+        'en-us': {
+          foo: 'bar',
+          message: 'Hello, {name}!',
+          title: '<Hello> component',
+        },
+      });
+    } finally {
+      await input.dispose();
+    }
+  });
+
+  it('handles nested translations (wrapTranslationsWithNamespace is true in app, translations from app)', async function () {
+    const input = await createTempDir();
+
+    try {
+      const subject = new TranslationReducer(input.path(), {
+        addonsWithTranslations: [],
+        wrapTranslationsWithNamespace: true,
+      });
+
+      subject.inputPaths = [`${fixtureDir}/my-app`];
+
+      const translations = subject.mergeTranslations([
+        join(fixtureDir, 'my-app/components/hello/en-us.yaml'),
+        join(fixtureDir, 'my-app/components/en-us.yaml'),
+        join(fixtureDir, 'my-app/en-us.yaml'),
+      ]);
+
+      expect(translations).to.deep.equal({
+        'en-us': {
+          components: {
+            foo: 'bar',
+            hello: {
+              message: 'Hello, {name}!',
+              title: '<Hello> component',
+            },
+            title: 'Components',
+          },
+          title: 'Homepage',
+        },
+      });
+    } finally {
+      await input.dispose();
+    }
+  });
+
+  it('handles nested translations (wrapTranslationsWithNamespace is false in app, translations from addon)', async function () {
+    const input = await createTempDir();
+
+    try {
+      const subject = new TranslationReducer(input.path(), {
+        addonsWithTranslations: ['my-v1-addon'],
+      });
+
+      subject.inputPaths = [fixtureDir];
+
+      let translations = subject.mergeTranslations([
+        join(
+          fixtureDir,
+          '__ember-intl-addon__/my-v1-addon/components/hello/en-us.yaml',
+        ),
+        join(
+          fixtureDir,
+          '__ember-intl-addon__/my-v1-addon/components/en-us.yaml',
+        ),
+        join(fixtureDir, '__ember-intl-addon__/my-v1-addon/en-us.yaml'),
+      ]);
+
+      expect(translations).to.deep.equal({
+        'en-us': {
+          foo: 'bar',
+          message: 'Hello, {name}!',
+          title: 'Homepage',
+        },
+      });
+
+      // Check order dependency
+      translations = subject.mergeTranslations([
+        join(fixtureDir, '__ember-intl-addon__/my-v1-addon/en-us.yaml'),
+        join(
+          fixtureDir,
+          '__ember-intl-addon__/my-v1-addon/components/en-us.yaml',
+        ),
+        join(
+          fixtureDir,
+          '__ember-intl-addon__/my-v1-addon/components/hello/en-us.yaml',
+        ),
+      ]);
+
+      expect(translations).to.deep.equal({
+        'en-us': {
+          foo: 'bar',
+          message: 'Hello, {name}!',
+          title: '<Hello> component',
+        },
+      });
+    } finally {
+      await input.dispose();
+    }
+  });
+
+  it('handles nested translations (wrapTranslationsWithNamespace is true in app, translations from addon)', async function () {
+    const input = await createTempDir();
+
+    try {
+      const subject = new TranslationReducer(input.path(), {
+        addonsWithTranslations: ['my-v1-addon'],
+        wrapTranslationsWithNamespace: true,
+      });
+
+      subject.inputPaths = [fixtureDir];
+
+      const translations = subject.mergeTranslations([
+        join(
+          fixtureDir,
+          '__ember-intl-addon__/my-v1-addon/components/hello/en-us.yaml',
+        ),
+        join(
+          fixtureDir,
+          '__ember-intl-addon__/my-v1-addon/components/en-us.yaml',
+        ),
+        join(fixtureDir, '__ember-intl-addon__/my-v1-addon/en-us.yaml'),
+      ]);
+
+      expect(translations).to.deep.equal({
+        'en-us': {
+          components: {
+            foo: 'bar',
+            hello: {
+              message: 'Hello, {name}!',
+              title: '<Hello> component',
+            },
+            title: 'Components',
+          },
+          title: 'Homepage',
+        },
+      });
+    } finally {
+      await input.dispose();
+    }
+  });
+
   it('does not remove empty translations, if stripEmptyTranslations is falsy', async function () {
     const input = await createTempDir();
 
     try {
       const subject = new TranslationReducer(input.path());
 
-      const translations = subject.mergeTranslations(fixtureFilePaths);
+      const translations = subject.mergeTranslations([
+        join(fixtureDir, 'strip-empty-translations/de-de.yaml'),
+        join(fixtureDir, 'strip-empty-translations/en-us.yaml'),
+      ]);
 
       expect(translations).to.deep.equal({
         'de-de': {
@@ -50,7 +225,10 @@ describe('lib | broccoli | translation-reducer | index | mergeTranslations', fun
         stripEmptyTranslations: true,
       });
 
-      const translations = subject.mergeTranslations(fixtureFilePaths);
+      const translations = subject.mergeTranslations([
+        join(fixtureDir, 'strip-empty-translations/de-de.yaml'),
+        join(fixtureDir, 'strip-empty-translations/en-us.yaml'),
+      ]);
 
       expect(translations).to.deep.equal({
         'de-de': {

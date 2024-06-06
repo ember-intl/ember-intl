@@ -1390,6 +1390,9 @@ importers:
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
+      extend:
+        specifier: ^3.0.2
+        version: 3.0.2
       intl-messageformat:
         specifier: ^10.5.14
         version: 10.5.14
@@ -12365,6 +12368,10 @@ packages:
       assign-symbols: 1.0.0
       is-extendable: 1.0.1
     dev: true
+
+  /extend@3.0.2:
+    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
+    dev: false
 
   /extendable-error@0.1.7:
     resolution: {integrity: sha512-UOiS2in6/Q0FK0R0q6UY9vYpQ21mr/Qn1KOnte7vsACuNJf514WvCCUHSRCPcgjPT2bAhNIJdlE6bVap1GKmeg==}
