@@ -8,10 +8,10 @@ import TranslationReducer from 'ember-intl/lib/broccoli/translation-reducer/inde
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const fixtureFilePaths = [
-  join(__dirname, '../../../../fixtures/stripEmptyTranslations/de-de.yaml'),
-  join(__dirname, '../../../../fixtures/stripEmptyTranslations/en-us.yaml'),
-];
+const fixtureDir = join(
+  __dirname,
+  '../../../../fixtures/broccoli/translation-reducer/index',
+);
 
 describe('lib | broccoli | translation-reducer | index | mergeTranslations', function () {
   it('handles nested translations (wrapTranslationsWithNamespace is false in app, translations from app)', async function () {
@@ -192,7 +192,10 @@ describe('lib | broccoli | translation-reducer | index | mergeTranslations', fun
     try {
       const subject = new TranslationReducer(input.path());
 
-      const translations = subject.mergeTranslations(fixtureFilePaths);
+      const translations = subject.mergeTranslations([
+        join(fixtureDir, 'strip-empty-translations/de-de.yaml'),
+        join(fixtureDir, 'strip-empty-translations/en-us.yaml'),
+      ]);
 
       expect(translations).to.deep.equal({
         'de-de': {
@@ -222,7 +225,10 @@ describe('lib | broccoli | translation-reducer | index | mergeTranslations', fun
         stripEmptyTranslations: true,
       });
 
-      const translations = subject.mergeTranslations(fixtureFilePaths);
+      const translations = subject.mergeTranslations([
+        join(fixtureDir, 'strip-empty-translations/de-de.yaml'),
+        join(fixtureDir, 'strip-empty-translations/en-us.yaml'),
+      ]);
 
       expect(translations).to.deep.equal({
         'de-de': {
