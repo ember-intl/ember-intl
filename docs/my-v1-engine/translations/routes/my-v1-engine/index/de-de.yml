@@ -1,2 +1,2 @@
 routes.my-v1-engine.index:
-  title: "Willkommen bei <code>my-v1-engine</code>"
+  title: Willkommen bei <code>my-v1-engine</code>
