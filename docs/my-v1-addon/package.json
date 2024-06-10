@@ -40,6 +40,8 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
+    "lint:yml": "prettier --check \"translations/**/*.{yaml,yml}\"",
+    "lint:yml:fix": "prettier --write \"translations/**/*.{yaml,yml}\"",
     "start": "ember serve",
     "test": "ember test --test-port=0"
   },
@@ -62,6 +64,7 @@
     "@glint/template": "^1.4.0",
     "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/eslint-config-yaml": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
     "@shared-configs/typescript": "workspace:*",

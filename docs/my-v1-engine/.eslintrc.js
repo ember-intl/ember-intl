@@ -3,5 +3,8 @@
 require('@shared-configs/eslint-config-ember/patch');
 
 module.exports = {
-  extends: ['@shared-configs/eslint-config-ember/v1-addon'],
+  extends: [
+    '@shared-configs/eslint-config-ember/v1-addon',
+    '@shared-configs/eslint-config-yaml',
+  ],
 };
