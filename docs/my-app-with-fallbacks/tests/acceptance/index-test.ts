@@ -17,11 +17,27 @@ module('Acceptance | index', function (hooks) {
         .dom('[data-test-output="Title"]')
         .hasText('Willkommen bei ember-intl');
 
-      assert.dom('[data-test-header="Components"]').hasText('Komponenten');
+      assert
+        .dom('[data-test-header="Translation with Arguments"]')
+        .hasText('Übersetzung mit Argumenten');
+
+      assert
+        .dom('[data-test-output="Translation with Arguments"]')
+        .hasText(
+          [
+            '{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.',
+            '{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.',
+            'hat 0 Fotos.',
+          ].join(' '),
+        );
+
+      assert.dom('[data-test-header="Components"]').hasText('Components');
 
       assert
         .dom('[data-test-output="App"]')
-        .hasText('Dies ist eine Komponente aus der App.');
+        .hasText(
+          '🐹🐹🐹 Missing: components.component-from-app.message (de-de) 🐹🐹🐹',
+        );
 
       assert
         .dom('[data-test-output="V1 Addon"]')
@@ -48,13 +64,31 @@ module('Acceptance | index', function (hooks) {
       await visit('/');
       await selectLocale('en-us');
 
-      assert.dom('[data-test-output="Title"]').hasText('Welcome to ember-intl');
+      assert
+        .dom('[data-test-output="Title"]')
+        .hasText('🐹🐹🐹 Missing: routes.index.title (en-us) 🐹🐹🐹');
+
+      assert
+        .dom('[data-test-header="Translation with Arguments"]')
+        .hasText('Translation with Arguments');
+
+      assert
+        .dom('[data-test-output="Translation with Arguments"]')
+        .hasText(
+          [
+            '{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}.',
+            '{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}.',
+            'has 0 photos.',
+          ].join(' '),
+        );
 
       assert.dom('[data-test-header="Components"]').hasText('Components');
 
       assert
         .dom('[data-test-output="App"]')
-        .hasText('This is a component from the app.');
+        .hasText(
+          '🐹🐹🐹 Missing: components.component-from-app.message (en-us) 🐹🐹🐹',
+        );
 
       assert
         .dom('[data-test-output="V1 Addon"]')

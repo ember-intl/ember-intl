@@ -6,6 +6,24 @@ export default class ApplicationRoute extends Route {
   @service declare intl: IntlService;
 
   beforeModel() {
-    this.intl.setLocale(['en-us']);
+    this.intl.setLocale(['de-de', 'en-us']);
+
+    this.intl.setOnFormatjsError((error) => {
+      switch (error.code) {
+        case 'FORMAT_ERROR':
+        case 'MISSING_TRANSLATION': {
+          // Do nothing
+          break;
+        }
+
+        default: {
+          throw error;
+        }
+      }
+    });
+
+    this.intl.setOnMissingTranslation((key, locales) => {
+      return `🐹🐹🐹 Missing: ${key} (${locales.join(', ')}) 🐹🐹🐹`;
+    });
   }
 }
