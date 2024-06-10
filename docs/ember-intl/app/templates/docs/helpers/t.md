@@ -78,7 +78,7 @@ Note, when an argument doesn't have a value, `@formatjs/intl` will throw a `FORM
 You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
 ```
 
-Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider creating default values.
+Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider [creating default values](../services/intl-part-2#gettranslation-).
 
 ```hbs
 {{#let (hash numPhotos=0) as |fallback|}}

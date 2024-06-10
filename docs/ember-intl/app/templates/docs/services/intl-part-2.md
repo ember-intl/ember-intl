@@ -87,6 +87,18 @@ if (this.intl.exists('components.example.option-1', 'de-de')) {
 ```
 
 
+### getTranslation()
+
+Returns the translation message for a given key and locale.
+
+```ts
+console.log(this.intl.getTranslation('hello.message', 'de-de'));
+// 'Hallo, {name}!'
+```
+
+This method could be used to create default values for arguments, so that users don't see the raw message when an argument doesn't have a value. To extract the message arguments, you can use [`@formatjs/icu-messageformat-parser`](https://formatjs.io/docs/icu-messageformat-parser/).
+
+
 ### setLocale()
 
 Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
