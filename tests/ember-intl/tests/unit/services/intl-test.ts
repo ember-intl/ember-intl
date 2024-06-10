@@ -251,6 +251,39 @@ module('Unit | Service | intl', function (hooks) {
     });
   });
 
+  module('getTranslation()', function () {
+    test('returns the translation message', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.getTranslation('smoke-tests.hello.message', 'de-de'),
+        'Hallo, {name}!',
+      );
+
+      assert.strictEqual(
+        this.intl.getTranslation('smoke-tests.hello.message', 'en-us'),
+        'Hello, {name}!',
+      );
+    });
+
+    test('returns undefined if the locale has no translations', function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.getTranslation('smoke-tests.hello.message', 'fr-fr'),
+        undefined,
+      );
+    });
+
+    test("returns undefined if the key doesn't exist for the given locale", function (this: TestContext, assert) {
+      assert.strictEqual(
+        this.intl.getTranslation('smoke-tests.hello', 'de-de'),
+        undefined,
+      );
+
+      assert.strictEqual(
+        this.intl.getTranslation('smoke-tests.hello', 'en-us'),
+        undefined,
+      );
+    });
+  });
+
   module('setLocale()', function () {
     test('triggers the localeChanged event', async function (this: TestContext, assert) {
       const callback = () => {

@@ -240,6 +240,16 @@ export default class IntlService extends Service {
     return formatTime(intlShape, value, options);
   }
 
+  getTranslation(key: string, locale: string): string | undefined {
+    const messages = this.getIntl(locale)?.messages;
+
+    if (!messages) {
+      return;
+    }
+
+    return messages[key] as string | undefined;
+  }
+
   setLocale(locale: string | string[]): void {
     const proposedLocale = convertToArray(locale);
 
@@ -347,20 +357,6 @@ export default class IntlService extends Service {
     }
 
     return this.getIntl(this._locale!)!;
-  }
-
-  private getTranslation(key: string, locale: string): string | undefined {
-    const messages = this.getIntl(locale)?.messages;
-
-    if (!messages) {
-      return;
-    }
-
-    const translation = (messages as unknown as Record<string, string>)[key] as
-      | string
-      | undefined;
-
-    return translation;
   }
 
   private onLocaleChanged(fn: any, context: any) {
