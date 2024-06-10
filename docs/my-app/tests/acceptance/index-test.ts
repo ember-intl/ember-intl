@@ -14,6 +14,20 @@ module('Acceptance | index', function (hooks) {
         .dom('[data-test-output="Title"]')
         .hasText('Willkommen bei ember-intl');
 
+      assert
+        .dom('[data-test-header="Translation with Arguments"]')
+        .hasText('Übersetzung mit Argumenten');
+
+      assert
+        .dom('[data-test-output="Translation with Arguments"]')
+        .hasText(
+          [
+            'Sonja hat 12 Fotos.',
+            'Chris hat keine Fotos.',
+            'Maki hat ein Foto.',
+          ].join(' '),
+        );
+
       assert.dom('[data-test-header="Components"]').hasText('Komponenten');
 
       assert
@@ -31,7 +45,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="Key Missing"]')
         .hasText(
-          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de) 🐹🐹🐹',
+          'Missing translation "routes.index.key-without-translation" for locale "de-de"',
         );
 
       assert
@@ -46,6 +60,20 @@ module('Acceptance | index', function (hooks) {
       await selectLocale('en-us');
 
       assert.dom('[data-test-output="Title"]').hasText('Welcome to ember-intl');
+
+      assert
+        .dom('[data-test-header="Translation with Arguments"]')
+        .hasText('Translation with Arguments');
+
+      assert
+        .dom('[data-test-output="Translation with Arguments"]')
+        .hasText(
+          [
+            'Sonja has 12 photos.',
+            'Chris has no photos.',
+            'Maki has a photo.',
+          ].join(' '),
+        );
 
       assert.dom('[data-test-header="Components"]').hasText('Components');
 
@@ -64,7 +92,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="Key Missing"]')
         .hasText(
-          '🐹🐹🐹 Missing: routes.index.key-without-translation (en-us) 🐹🐹🐹',
+          'Missing translation "routes.index.key-without-translation" for locale "en-us"',
         );
 
       assert
