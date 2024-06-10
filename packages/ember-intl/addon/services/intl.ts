@@ -266,6 +266,11 @@ export default class IntlService extends Service {
 
   setOnFormatjsError(onFormatjsError: OnFormatjsError): void {
     this._onFormatjsError = onFormatjsError;
+
+    // Call `updateIntl` to update `onError` for each locale
+    this.locales.forEach((locale) => {
+      this.updateIntl(locale, {});
+    });
   }
 
   setOnMissingTranslation(onMissingTranslation: OnMissingTranslation): void {
