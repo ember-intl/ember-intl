@@ -21,6 +21,7 @@ jobs:
         package-location:
           - 'docs/ember-intl'
           - 'docs/my-app'
+          - 'docs/my-app-with-fallbacks'
           - 'docs/my-app-with-lazy-loaded-translations'
           - 'docs/my-app-with-namespace-from-folders'
           - 'docs/my-classic-app'
@@ -62,6 +63,7 @@ jobs:
         package-location:
           - 'docs/ember-intl'
           - 'docs/my-app'
+          - 'docs/my-app-with-fallbacks'
           - 'docs/my-app-with-lazy-loaded-translations'
           - 'docs/my-app-with-namespace-from-folders'
           - 'docs/my-classic-app'
