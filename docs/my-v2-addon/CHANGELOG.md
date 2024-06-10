@@ -1,5 +1,11 @@
 # my-v2-addon
 
+## 1.0.8
+
+### Patch Changes
+
+- [#1898](https://github.com/ember-intl/ember-intl/pull/1898) Linted translation files ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.7
 
 ### Patch Changes

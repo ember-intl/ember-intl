@@ -1,5 +1,12 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.9
+
+### Patch Changes
+
+- [#1897](https://github.com/ember-intl/ember-intl/pull/1897) Made getTranslation() public ([@ijlee2](https://github.com/ijlee2))
+- [#1896](https://github.com/ember-intl/ember-intl/pull/1896) Updated setOnFormatjsError() to tell @formatjs/intl that onError() has changed ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.8
 
 ### Patch Changes
