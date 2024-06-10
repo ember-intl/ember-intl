@@ -9,7 +9,7 @@ export default class ApplicationRoute extends Route {
     this.intl.setLocale(['en-us']);
 
     this.intl.setOnMissingTranslation((key, locales) => {
-      return `🐹🐹🐹 Missing: ${key} (${locales.join(',')}) 🐹🐹🐹`;
+      return `🐹🐹🐹 Missing: ${key} (${locales.join(', ')}) 🐹🐹🐹`;
     });
   }
 }
