@@ -89,7 +89,7 @@ if (this.intl.exists('components.example.option-1', 'de-de')) {
 
 ### setLocale()
 
-Specify which locales are currently active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
+Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
 
 ```ts
 /* routes/application.ts */
@@ -105,10 +105,26 @@ export default class ApplicationRoute extends Route {
 }
 ```
 
+The order in which you list the locales in `setLocale()` decides the order in which translations are looked up.
+
+```ts
+// Given a translation key, check 'de-at' (Austria) first, then 'de-de' (Germany), then 'en-us'
+this.intl.setLocale(['de-at', 'de-de', 'en-us']);
+```
+
+When you call `setLocale()`, `ember-intl` sets the `lang` global attribute to the first locale, also called the primary locale (recall the getter `primaryLocale`). We recommend providing Unicode locale identifiers to set the `lang` attribute correctly.
+
+```ts
+// Recommended
+this.intl.setLocale(['de-AT', 'de-DE', 'en-US']);
+```
+
 
 ### setOnFormatjsError()
 
-Specify what to do when `@formatjs/intl` errors. Used to override `ember-intl`'s default implementation.
+Specify what to do when `@formatjs/intl` errors. Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.io/docs/guides/develop#error-codes).
+
+The following example ignores `FORMAT_ERROR` (incorrect or missing argument values), in addition to `MISSING_TRANSLATION` (default implementation of `ember-intl`).
 
 ```ts
 /* routes/application.ts */
@@ -138,12 +154,10 @@ export default class ApplicationRoute extends Route {
 }
 ```
 
-Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.io/docs/guides/develop#error-codes).
-
 
 ### setOnMissingTranslation()
 
-Specify what to display when a translation is missing. Used to override `ember-intl`'s default implementation.
+Specify what to display when a translation is missing. Your callback function has access to `key`, `locales`, and `options` (data).
 
 ```ts
 /* routes/application.ts */
@@ -162,5 +176,3 @@ export default class ApplicationRoute extends Route {
   }
 }
 ```
-
-Your callback function has access to `key`, `locales`, and `options` (data).

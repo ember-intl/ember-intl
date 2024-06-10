@@ -1,6 +1,6 @@
 # &#123;&#123;t&#125;&#125;
 
-The `{{t}}` helper finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.io/docs/core-concepts/icu-syntax) (optional). The helper returns the resulting string.
+The `{{t}}` helper finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.io/docs/core-concepts/icu-syntax). The helper returns the resulting string.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
@@ -30,9 +30,21 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
 
 ## Passing data
 
-You can use named arguments, a positional argument (2nd position), or a combination of both to pass data. In the combined case, data passed as named arguments will take precedence.
+We use the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) to pass data to translations. Data can also be formatted when you specify their type.
 
-**Warning: Avoid the combined case.**
+```yml
+# A simple argument
+hello:
+  message: Hello, {name}!
+```
+
+```yml
+# A plural-type argument
+photo-album:
+  summary: You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
+```
+
+To pass data to the `{{t}}` helper, you can use named arguments, a positional argument (2nd position), or a combination of both. In the combined case, data passed as named arguments will take precedence.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
@@ -58,6 +70,25 @@ You can use named arguments, a positional argument (2nd position), or a combinat
     @name="docs__helpers__t__example-2__translations__en-us.yaml"
   />
 </DocsDemo>
+
+Note, when an argument doesn't have a value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#setonformatjserror-), `@formatjs/intl` will return the message as is.
+
+```html
+<!-- What users see when `numPhotos` is undefined -->
+You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
+```
+
+Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider creating default values.
+
+```hbs
+{{#let (hash numPhotos=0) as |fallback|}}
+  {{t
+    "photo-album.summary"
+    fallback
+    numPhotos=@user.numPhotos
+  }}
+{{/let}}
+```
 
 
 ## options.htmlSafe
@@ -96,8 +127,6 @@ ember:
   visit-legal: See our '<'a href="{url}"'>'Terms and Conditions'</a>'.
 ```
 
-Note, `htmlSafe` isn't considered data, so it's okay to mix named and positional arguments.
-
 
 ## options.locale
 
@@ -133,5 +162,3 @@ You can display the text in another locale (i.e. independently from the user's p
     @name="docs__helpers__t__example-3__example.hbs"
   />
 </DocsDemo>
-
-Again, `locale` isn't considered data, so it's okay to mix named and positional arguments.
