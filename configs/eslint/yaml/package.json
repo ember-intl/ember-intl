@@ -1,14 +1,14 @@
 {
-  "name": "@shared-configs/eslint-config-node",
+  "name": "@shared-configs/eslint-config-yaml",
   "version": "0.0.0",
   "private": true,
-  "description": "Configuration for eslint (Node)",
+  "description": "Configuration for YAML",
   "repository": {
     "type": "git",
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
-  "main": "typescript/index.js",
+  "main": ".eslintrc.js",
   "scripts": {
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
@@ -16,18 +16,10 @@
     "lint:js:fix": "prettier --write \"**/*.js\""
   },
   "dependencies": {
-    "@rushstack/eslint-patch": "^1.10.3",
-    "@typescript-eslint/eslint-plugin": "^7.12.0",
-    "@typescript-eslint/parser": "^7.12.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^17.7.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-simple-import-sort": "^12.1.0",
-    "eslint-plugin-typescript-sort-keys": "^3.2.0"
+    "eslint-plugin-yml": "^1.14.0"
   },
   "devDependencies": {
+    "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
@@ -35,8 +27,7 @@
   },
   "peerDependencies": {
     "eslint": "^8.57.0",
-    "prettier": "^3.3.0",
-    "typescript": "^5.4.5"
+    "prettier": "^3.3.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
@@ -44,9 +35,6 @@
     },
     "prettier": {
       "optional": false
-    },
-    "typescript": {
-      "optional": true
     }
   },
   "engines": {
