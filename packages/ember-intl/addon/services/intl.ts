@@ -116,16 +116,10 @@ export default class IntlService extends Service {
   }
 
   exists(key: string, locale?: string | string[]): boolean {
-    const candidates = locale ? convertToArray(locale) : this._locale!;
+    const locales = locale ? convertToArray(locale) : this._locale!;
 
-    return candidates.some((candidate) => {
-      const messages = this.getIntl(candidate)?.messages;
-
-      if (!messages) {
-        return false;
-      }
-
-      return key in messages;
+    return locales.some((locale) => {
+      return this.getTranslation(key, locale) !== undefined;
     });
   }
 

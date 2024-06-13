@@ -96,22 +96,134 @@ module('Unit | Service | intl', function (hooks) {
   });
 
   module('exists()', function () {
-    test('returns true if the key exists for the given locale', async function (this: TestContext, assert) {
-      this.intl.addTranslations('en-us', {
-        foo: 'Hello!',
+    module('locale is missing', function () {
+      test('returns true, if and only if, the key exists for an active locale (1)', async function (this: TestContext, assert) {
+        this.intl.addTranslations('de-de', {});
+
+        this.intl.addTranslations('en-us', {
+          foo2: 'Hello!',
+        });
+
+        this.intl.setLocale(['de-de', 'en-us']);
+
+        assert.false(this.intl.exists('foo1'));
+        assert.true(this.intl.exists('foo2'));
       });
 
-      assert.true(this.intl.exists('foo'));
+      test('returns true, if and only if, the key exists for an active locale (2)', async function (this: TestContext, assert) {
+        this.intl.addTranslations('de-de', {
+          foo1: 'Hallo',
+        });
+
+        this.intl.addTranslations('en-us', {
+          foo2: 'Hello!',
+        });
+
+        this.intl.setLocale(['de-de', 'en-us']);
+
+        assert.true(this.intl.exists('foo1'));
+        assert.true(this.intl.exists('foo2'));
+      });
+
+      test('returns true, if and only if, the key exists for an active locale (3)', async function (this: TestContext, assert) {
+        this.intl.addTranslations('de-de', {
+          foo1: {
+            bar: {
+              baz: 'Hallo!',
+            },
+          },
+        });
+
+        this.intl.addTranslations('en-us', {
+          foo2: {
+            bar: {
+              baz: 'Hello!',
+            },
+          },
+        });
+
+        this.intl.setLocale(['de-de', 'en-us']);
+
+        assert.false(this.intl.exists('foo1'));
+        assert.false(this.intl.exists('foo2'));
+
+        assert.false(this.intl.exists('foo1.bar'));
+        assert.false(this.intl.exists('foo2.bar'));
+
+        assert.true(this.intl.exists('foo1.bar.baz'));
+        assert.true(this.intl.exists('foo2.bar.baz'));
+      });
     });
 
-    test("returns false if the key doesn't exist for the given locale", async function (this: TestContext, assert) {
-      this.intl.addTranslations('en-us', {
-        foo: 'Hello!',
+    module('locale is specified', function () {
+      test('returns true, if and only if, the key exists for the specified locale (1)', async function (this: TestContext, assert) {
+        this.intl.addTranslations('de-de', {});
+
+        this.intl.addTranslations('en-us', {
+          foo2: 'Hello!',
+        });
+
+        this.intl.setLocale(['en-us']);
+
+        assert.false(this.intl.exists('foo1', 'de-de'));
+        assert.false(this.intl.exists('foo2', 'de-de'));
+
+        assert.false(this.intl.exists('foo1', 'en-us'));
+        assert.true(this.intl.exists('foo2', 'en-us'));
+
+        assert.false(this.intl.exists('foo1', 'fr-fr'));
+        assert.false(this.intl.exists('foo2', 'fr-fr'));
       });
 
-      assert.false(this.intl.exists('foo', 'de-de'));
-      assert.false(this.intl.exists('bar'));
-      assert.false(this.intl.exists('bar', 'de-de'));
+      test('returns true, if and only if, the key exists for the specified locale (2)', async function (this: TestContext, assert) {
+        this.intl.addTranslations('de-de', {
+          foo1: 'Hallo',
+        });
+
+        this.intl.addTranslations('en-us', {
+          foo2: 'Hello!',
+        });
+
+        this.intl.setLocale(['en-us']);
+
+        assert.true(this.intl.exists('foo1', 'de-de'));
+        assert.false(this.intl.exists('foo2', 'de-de'));
+
+        assert.false(this.intl.exists('foo1', 'en-us'));
+        assert.true(this.intl.exists('foo2', 'en-us'));
+
+        assert.false(this.intl.exists('foo1', 'fr-fr'));
+        assert.false(this.intl.exists('foo2', 'fr-fr'));
+      });
+
+      test('returns true, if and only if, the key exists for the specified locale (3)', async function (this: TestContext, assert) {
+        this.intl.addTranslations('de-de', {
+          foo1: {
+            bar: {
+              baz: 'Hallo!',
+            },
+          },
+        });
+
+        this.intl.addTranslations('en-us', {
+          foo2: {
+            bar: {
+              baz: 'Hello!',
+            },
+          },
+        });
+
+        this.intl.setLocale(['en-us']);
+
+        assert.true(this.intl.exists('foo1.bar.baz', 'de-de'));
+        assert.false(this.intl.exists('foo2.bar.baz', 'de-de'));
+
+        assert.false(this.intl.exists('foo1.bar.baz', 'en-us'));
+        assert.true(this.intl.exists('foo2.bar.baz', 'en-us'));
+
+        assert.false(this.intl.exists('foo1.bar.baz', 'fr-fr'));
+        assert.false(this.intl.exists('foo2.bar.baz', 'fr-fr'));
+      });
     });
   });
 
