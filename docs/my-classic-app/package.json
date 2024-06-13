@@ -28,7 +28,7 @@
     "test": "ember test --test-port=0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.6",
+    "@babel/core": "^7.24.7",
     "@ember/legacy-built-in-components": "^0.5.0",
     "@ember/optional-features": "^2.1.0",
     "@ember/string": "^3.1.1",
@@ -49,8 +49,8 @@
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
     "ember-auto-import": "^2.7.3",
-    "ember-cli": "~5.8.1",
-    "ember-cli-app-version": "^6.0.1",
+    "ember-cli": "~5.9.0",
+    "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-dependency-checker": "^3.3.2",
@@ -58,13 +58,13 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
-    "ember-engines": "^0.10.0",
+    "ember-engines": "^0.11.0",
     "ember-intl": "workspace:*",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^8.2.3",
-    "ember-qunit": "^8.0.2",
-    "ember-resolver": "^11.0.1",
-    "ember-source": "~5.8.0",
+    "ember-qunit": "^8.1.0",
+    "ember-resolver": "^12.0.1",
+    "ember-source": "~5.9.0",
     "ember-template-imports": "^4.1.1",
     "ember-template-lint": "^6.0.0",
     "ember-test-selectors": "^6.0.0",
@@ -73,11 +73,11 @@
     "my-v1-addon": "workspace:*",
     "my-v1-engine": "workspace:*",
     "my-v2-addon": "workspace:*",
-    "prettier": "^3.3.0",
+    "prettier": "^3.3.2",
     "qunit": "^2.21.0",
     "qunit-dom": "^3.1.2",
     "typescript": "^5.4.5",
-    "webpack": "^5.91.0"
+    "webpack": "^5.92.0"
   },
   "engines": {
     "node": "18.* || >= 20"

@@ -27,10 +27,6 @@
     "node": "18.* || >= 20"
   },
   "pnpm": {
-    "overrides": {
-      "@babel/core": "^7.24.6",
-      "@babel/traverse": "^7.24.6"
-    },
     "patchedDependencies": {
       "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
     }
