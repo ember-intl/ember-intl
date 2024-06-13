@@ -54,7 +54,7 @@ export default class IntlService extends Service {
   private _formats?: Record<string, unknown>;
   private _timer?: EmberRunTimer;
 
-  private _onFormatjsError(error: Parameters<OnFormatjsError>[0]): void {
+  private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
       case 'MISSING_TRANSLATION': {
         // Do nothing
@@ -65,7 +65,7 @@ export default class IntlService extends Service {
         throw error;
       }
     }
-  }
+  };
 
   private _onMissingTranslation: OnMissingTranslation = (key, locales) => {
     const locale = locales.join(', ');
