@@ -23,6 +23,7 @@ See https://ember-intl.github.io/ember-intl/docs/quickstart.
 
 - [7.x (stable)](https://ember-intl.github.io/ember-intl/)
 - [6.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v6.5.5/)
+- [Changelog](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl/CHANGELOG.md)
 
 
 ## Compatibility

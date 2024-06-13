@@ -24,7 +24,7 @@ Every `format*()` method returns an empty string when `value` (the 1st positiona
 
 Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) to format a date.
 
-The 1st argument `key` is required and expects a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 2nd argument.
+The 1st argument `value` is required and expects a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 2nd argument.
 
 ```ts
 const output = this.intl.formatDate('2014-01-23T18:00:44');
@@ -110,7 +110,7 @@ const output = this.intl.formatRelative(-1);
 
 Behaves like `formatDate()`, except the possible formats are defined in `time` in `app/format.js`.
 
-The 1st argument `key` is required and expects a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 2nd argument.
+The 1st argument `value` is required and expects a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 2nd argument.
 
 ```ts
 const output = this.intl.formatTime('2014-01-23T18:00:44');

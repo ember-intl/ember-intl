@@ -47,7 +47,7 @@ export default class ApplicationRoute extends Route {
       this.loadTranslations('en-us'),
     ]);
 
-    this.intl.setLocale(['en-us']);
+    this.intl.setLocale(['de-de', 'en-us']);
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us') {
