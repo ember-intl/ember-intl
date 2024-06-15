@@ -289,11 +289,10 @@ export default class IntlService extends Service {
     },
   ): string {
     const locales = options?.locale ? [options.locale] : this._locale!;
-
     let translation: string | undefined;
 
-    for (let i = 0; i < locales.length; i++) {
-      translation = this.getTranslation(key, locales[i]!);
+    for (const locale of locales) {
+      translation = this.getTranslation(key, locale);
 
       if (translation !== undefined) {
         break;
