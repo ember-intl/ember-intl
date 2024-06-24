@@ -1,5 +1,12 @@
 # my-app-with-namespace-from-folders
 
+## 1.0.6
+
+### Patch Changes
+
+- [#1905](https://github.com/ember-intl/ember-intl/pull/1905) Documented setLocale() with multiple locales ([@ijlee2](https://github.com/ijlee2))
+- [#1900](https://github.com/ember-intl/ember-intl/pull/1900) Updated dependencies. Added ember-lts-5.8 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.3.10
+
+### Patch Changes
+
+- [#1907](https://github.com/ember-intl/ember-intl/pull/1907) Documented how the dummy app can provide translations ([@ijlee2](https://github.com/ijlee2))
+- [#1902](https://github.com/ember-intl/ember-intl/pull/1902) Fixed typos and provided migration examples ([@ijlee2](https://github.com/ijlee2))
+- [#1900](https://github.com/ember-intl/ember-intl/pull/1900) Updated dependencies. Added ember-lts-5.8 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.9
 
 ### Patch Changes

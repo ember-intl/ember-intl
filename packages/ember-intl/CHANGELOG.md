@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.0.3
+
+### Patch Changes
+
+- [#1907](https://github.com/ember-intl/ember-intl/pull/1907) Documented how the dummy app can provide translations ([@ijlee2](https://github.com/ijlee2))
+- [#1906](https://github.com/ember-intl/ember-intl/pull/1906) Removed unnnecessary non-null assertion operators ([@ijlee2](https://github.com/ijlee2))
+- [#1903](https://github.com/ember-intl/ember-intl/pull/1903) Consumed OnFormatjsError type directly ([@ijlee2](https://github.com/ijlee2))
+- [#1902](https://github.com/ember-intl/ember-intl/pull/1902) Fixed typos and provided migration examples ([@ijlee2](https://github.com/ijlee2))
+- [#1901](https://github.com/ember-intl/ember-intl/pull/1901) Used getTranslation() to implement exists() ([@ijlee2](https://github.com/ijlee2))
+- [#1900](https://github.com/ember-intl/ember-intl/pull/1900) Updated dependencies. Added ember-lts-5.8 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.0.2
 
 ### Patch Changes

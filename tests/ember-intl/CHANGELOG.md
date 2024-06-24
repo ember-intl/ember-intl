@@ -1,5 +1,12 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.16
+
+### Patch Changes
+
+- [#1901](https://github.com/ember-intl/ember-intl/pull/1901) Used getTranslation() to implement exists() ([@ijlee2](https://github.com/ijlee2))
+- [#1900](https://github.com/ember-intl/ember-intl/pull/1900) Updated dependencies. Added ember-lts-5.8 to ember-try scenarios. ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.15
 
 ### Patch Changes
