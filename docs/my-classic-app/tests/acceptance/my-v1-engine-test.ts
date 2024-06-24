@@ -26,7 +26,7 @@ module('Acceptance | my-v1-engine', function (hooks) {
       assert
         .dom('[data-test-output="Key Missing"]')
         .hasText(
-          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de) 🐹🐹🐹',
+          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de, en-us) 🐹🐹🐹',
         );
 
       assert

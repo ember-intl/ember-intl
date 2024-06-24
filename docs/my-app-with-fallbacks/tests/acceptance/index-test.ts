@@ -36,7 +36,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="App"]')
         .hasText(
-          '🐹🐹🐹 Missing: components.component-from-app.message (de-de) 🐹🐹🐹',
+          '🐹🐹🐹 Missing: components.component-from-app.message (de-de, en-us) 🐹🐹🐹',
         );
 
       assert
@@ -50,7 +50,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="Key Missing"]')
         .hasText(
-          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de) 🐹🐹🐹',
+          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de, en-us) 🐹🐹🐹',
         );
 
       assert

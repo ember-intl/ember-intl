@@ -40,19 +40,19 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="V1 Addon"]')
         .hasText(
-          'Missing translation "components.component-from-v1-addon.message" for locale "de-de"',
+          'Missing translation "components.component-from-v1-addon.message" for locale "de-de, en-us"',
         );
 
       assert
         .dom('[data-test-output="V2 Addon"]')
         .hasText(
-          'Missing translation "components.component-from-v2-addon.message" for locale "de-de"',
+          'Missing translation "components.component-from-v2-addon.message" for locale "de-de, en-us"',
         );
 
       assert
         .dom('[data-test-output="Key Missing"]')
         .hasText(
-          'Missing translation "routes.index.key-without-translation" for locale "de-de"',
+          'Missing translation "routes.index.key-without-translation" for locale "de-de, en-us"',
         );
 
       assert

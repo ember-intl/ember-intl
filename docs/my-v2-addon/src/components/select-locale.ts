@@ -43,12 +43,29 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
     ];
   }
 
-  @action updateLocale(event: Event): void {
+  updateLocale(value: SupportedLocale): void {
+    let locale: string[];
+
+    switch (value) {
+      case 'de-de': {
+        locale = ['de-de', 'en-us'];
+        break;
+      }
+
+      case 'en-us': {
+        locale = ['en-us'];
+        break;
+      }
+    }
+
+    // @ts-expect-error: Property 'setLocale' does not exist on type 'Service'
+    this.intl.setLocale(locale);
+  }
+
+  @action updateValue(event: Event): void {
     const value = (event.target as HTMLSelectElement).value as SupportedLocale;
 
     this.value = value;
-
-    // @ts-expect-error: Property 'setLocale' does not exist on type 'Service'
-    this.intl.setLocale([value]);
+    this.updateLocale(value);
   }
 }
