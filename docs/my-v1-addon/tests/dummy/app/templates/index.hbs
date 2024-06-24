@@ -1,12 +1,11 @@
 <div>
-  <h1>Welcome!</h1>
+  <h1 data-test-output="Title">
+    {{t "routes.index.title"}}
+  </h1>
 
   <div>
-    <p>
-      This is a test v1 addon for
-      <code>ember-intl</code>. Did you want to run the app in
-      <code>docs/my-app</code>
-      instead?
+    <p data-test-output="Description">
+      {{t "routes.index.description" htmlSafe=true}}
     </p>
   </div>
 </div>

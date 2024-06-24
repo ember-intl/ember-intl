@@ -26,6 +26,16 @@ module.exports = {
     };
   },
 
+  locals(options) {
+    const configInputPath = options.inAddon
+      ? 'tests/dummy/translations'
+      : 'translations';
+
+    return {
+      configInputPath,
+    };
+  },
+
   afterInstall() {
     this.ui.writeLine(
       [
