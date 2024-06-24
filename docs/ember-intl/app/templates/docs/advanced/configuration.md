@@ -57,14 +57,12 @@ This does **not** prevent missing translation warnings or errors. It's meant as 
 
 ## inputPath
 
-Path where translations are stored. This is relative to the project root.
-
-For example, if your translations are stored as a npm/yarn dependency, then this path would look something like `'./node_modules/path/to/translations'`.
+Where translations are stored, relative to the project root. For example, to have the `dummy` app in a v1 addon provide translations (these aren't published):
 
 ```js
 {
   // Default: 'translations'
-  inputPath: 'my-translations',
+  inputPath: 'tests/dummy/translations',
 }
 ```
 

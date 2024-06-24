@@ -1,0 +1,4 @@
+routes:
+  index:
+    description: "Das hier ist ein v1 Addon, um <code>ember-intl</code> zu testen. Vielleicht wolltest du die App in <code>docs/my-app</code> ausführen?"
+    title: Willkommen!
