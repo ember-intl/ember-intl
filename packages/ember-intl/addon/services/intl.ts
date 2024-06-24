@@ -292,7 +292,7 @@ export default class IntlService extends Service {
 
     let translation: string | undefined;
 
-    for (let i = 0; i < locales!.length; i++) {
+    for (let i = 0; i < locales.length; i++) {
       translation = this.getTranslation(key, locales[i]!);
 
       if (translation !== undefined) {
@@ -321,7 +321,7 @@ export default class IntlService extends Service {
   private createIntl(
     locale: string | string[],
     messages: Record<string, unknown> = {},
-  ) {
+  ): IntlShape {
     const resolvedLocale = convertToString(locale);
     const formats = this._formats;
 
@@ -339,21 +339,21 @@ export default class IntlService extends Service {
     );
   }
 
-  private getIntl(locale: string | string[]) {
+  private getIntl(locale: string | string[]): IntlShape | undefined {
     const resolvedLocale = normalizeLocale(convertToString(locale));
 
     return this._intls[resolvedLocale];
   }
 
-  private getIntlShape(locale?: string) {
+  private getIntlShape(locale?: string): IntlShape {
     if (locale) {
-      return this.createIntl(locale)!;
+      return this.createIntl(locale);
     }
 
     return this.getIntl(this._locale!)!;
   }
 
-  private onLocaleChanged(fn: any, context: any) {
+  private onLocaleChanged(fn: any, context: any): void {
     this._eventEmitter.on('localeChanged', fn, context);
 
     registerDestructor(context, () => {
@@ -374,7 +374,7 @@ export default class IntlService extends Service {
   private updateIntl(
     locale: string | string[],
     messages?: Record<string, unknown>,
-  ) {
+  ): void {
     const resolvedLocale = normalizeLocale(convertToString(locale));
     const intl = this._intls[resolvedLocale];
 
