@@ -5,6 +5,10 @@ import {
 } from 'my-app-with-fallbacks/tests/helpers';
 import { module, test } from 'qunit';
 
+function getGlobalLang(): string | null {
+  return document.querySelector('html')!.getAttribute('lang');
+}
+
 module('Acceptance | index', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -12,6 +16,8 @@ module('Acceptance | index', function (hooks) {
     test('We can visit the page', async function (assert) {
       await visit('/');
       await selectLocale('de-de');
+
+      assert.strictEqual(getGlobalLang(), 'de-de');
 
       assert
         .dom('[data-test-output="Title"]')
@@ -36,7 +42,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="App"]')
         .hasText(
-          '🐹🐹🐹 Missing: components.component-from-app.message (de-de) 🐹🐹🐹',
+          '🐹🐹🐹 Missing: components.component-from-app.message (de-de, en-us) 🐹🐹🐹',
         );
 
       assert
@@ -50,7 +56,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="Key Missing"]')
         .hasText(
-          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de) 🐹🐹🐹',
+          '🐹🐹🐹 Missing: routes.index.key-without-translation (de-de, en-us) 🐹🐹🐹',
         );
 
       assert
@@ -63,6 +69,8 @@ module('Acceptance | index', function (hooks) {
     test('We can visit the page', async function (assert) {
       await visit('/');
       await selectLocale('en-us');
+
+      assert.strictEqual(getGlobalLang(), 'en-us');
 
       assert
         .dom('[data-test-output="Title"]')

@@ -5,7 +5,7 @@
 <select
   data-test-select-locale
   id={{this.fieldId}}
-  {{on "change" this.updateLocale}}
+  {{on "change" this.updateValue}}
 >
   {{!
     BUG: We can't conditionally render the `selected` attribute
