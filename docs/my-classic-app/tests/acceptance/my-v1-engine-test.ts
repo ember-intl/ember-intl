@@ -5,6 +5,10 @@ import {
 } from 'my-classic-app/tests/helpers';
 import { module, test } from 'qunit';
 
+function getGlobalLang(): string | null {
+  return document.querySelector('html')!.getAttribute('lang');
+}
+
 module('Acceptance | my-v1-engine', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -12,6 +16,8 @@ module('Acceptance | my-v1-engine', function (hooks) {
     test('We can visit the page', async function (assert) {
       await visit('/my-v1-engine');
       await selectLocale('de-de');
+
+      assert.strictEqual(getGlobalLang(), 'de-de');
 
       assert
         .dom('[data-test-output="Title"]')
@@ -39,6 +45,8 @@ module('Acceptance | my-v1-engine', function (hooks) {
     test('We can visit the page', async function (assert) {
       await visit('/my-v1-engine');
       await selectLocale('en-us');
+
+      assert.strictEqual(getGlobalLang(), 'en-us');
 
       assert
         .dom('[data-test-output="Title"]')
