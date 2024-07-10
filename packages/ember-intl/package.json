@@ -44,7 +44,7 @@
     "broccoli-source": "^3.0.1",
     "calculate-cache-key-for-tree": "^2.0.0",
     "cldr-core": "^45.0.0",
-    "ember-auto-import": "^2.7.3",
+    "ember-auto-import": "^2.7.4",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-typescript": "^5.3.0",
     "eventemitter3": "^5.0.1",
@@ -92,9 +92,9 @@
     "loader.js": "^4.7.0",
     "prettier": "^3.3.2",
     "qunit": "^2.21.0",
-    "qunit-dom": "^3.1.2",
-    "typescript": "^5.4.5",
-    "webpack": "^5.92.0"
+    "qunit-dom": "^3.2.0",
+    "typescript": "^5.5.3",
+    "webpack": "^5.92.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
