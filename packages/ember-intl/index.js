@@ -24,6 +24,7 @@ const defaultConfig = {
     return true;
   },
   stripEmptyTranslations: false,
+  verbose: false,
   wrapTranslationsWithNamespace: false,
 };
 
@@ -92,6 +93,7 @@ module.exports = {
       outputPath,
       requiresTranslation,
       stripEmptyTranslations,
+      verbose,
       wrapTranslationsWithNamespace,
     } = this.configOptions;
 
@@ -115,7 +117,7 @@ module.exports = {
       outputPath: options.outputPath ?? outputPath,
       requiresTranslation,
       stripEmptyTranslations,
-      verbose: !this.isSilent,
+      verbose,
       wrapTranslationsWithNamespace,
     });
   },
