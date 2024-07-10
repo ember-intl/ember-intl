@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.0.4
+
+### Patch Changes
+
+- [#1910](https://github.com/ember-intl/ember-intl/pull/1910) Updated ember-auto-import to v2.7.4. Updated development dependencies. ([@ijlee2](https://github.com/ijlee2))
+- [#1909](https://github.com/ember-intl/ember-intl/pull/1909) Silence missing translations output on build by default ([@Techn1x](https://github.com/Techn1x))
+
 ## 7.0.3
 
 ### Patch Changes
@@ -114,7 +121,7 @@
 
 ### Minor Changes
 
-- [#1823](https://github.com/ember-intl/ember-intl/pull/1823) Improved <template>-tag support ([@ijlee2](https://github.com/ijlee2))
+- [#1823](https://github.com/ember-intl/ember-intl/pull/1823) Improved `<template>`-tag support ([@ijlee2](https://github.com/ijlee2))
 - [#1818](https://github.com/ember-intl/ember-intl/pull/1818) Allowed the test helper addTranslations() to call settled() ([@ijlee2](https://github.com/ijlee2))
 - [#1817](https://github.com/ember-intl/ember-intl/pull/1817) Allowed the test helper setLocale() to call settled() ([@ijlee2](https://github.com/ijlee2))
 
