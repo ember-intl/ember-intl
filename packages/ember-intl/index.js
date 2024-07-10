@@ -24,8 +24,8 @@ const defaultConfig = {
     return true;
   },
   stripEmptyTranslations: false,
-  wrapTranslationsWithNamespace: false,
   verbose: false,
+  wrapTranslationsWithNamespace: false,
 };
 
 module.exports = {
@@ -93,8 +93,8 @@ module.exports = {
       outputPath,
       requiresTranslation,
       stripEmptyTranslations,
-      wrapTranslationsWithNamespace,
       verbose,
+      wrapTranslationsWithNamespace,
     } = this.configOptions;
 
     const [translationTree, addonsWithTranslations] = buildTranslationTree(
@@ -117,8 +117,8 @@ module.exports = {
       outputPath: options.outputPath ?? outputPath,
       requiresTranslation,
       stripEmptyTranslations,
-      wrapTranslationsWithNamespace,
       verbose,
+      wrapTranslationsWithNamespace,
     });
   },
 
