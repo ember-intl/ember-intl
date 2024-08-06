@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import type { IntlService } from 'ember-intl';
+import ENV from 'my-classic-app-with-lazy-loaded-translations/config/environment';
 
 export default class ApplicationRoute extends Route {
   @service declare intl: IntlService;
@@ -15,7 +16,19 @@ export default class ApplicationRoute extends Route {
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us') {
-    const response = await fetch(`/translations/${locale}.json`);
+    const filePath = `translations/${locale}.json`;
+    let resource: string;
+
+    if (ENV.environment === 'production') {
+      const response = await fetch('/assets/assetMap.json');
+      const assetMap = await response.json();
+
+      resource = `/${assetMap.assets[filePath]}`;
+    } else {
+      resource = `/${filePath}`;
+    }
+
+    const response = await fetch(resource);
     const translations = await response.json();
 
     this.intl.addTranslations(locale, translations);

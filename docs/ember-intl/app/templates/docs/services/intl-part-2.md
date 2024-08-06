@@ -34,7 +34,7 @@ console.log(this.intl.primaryLocale);
 Register translations for a particular locale. Used to lazy-load translations.
 
 ```ts
-/* routes/application.ts */
+/* app/routes/application.ts */
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 
@@ -104,7 +104,7 @@ This method could be used to create default values for arguments, so that users 
 Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
 
 ```ts
-/* routes/application.ts */
+/* app/routes/application.ts */
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 
@@ -139,7 +139,7 @@ Specify what to do when `@formatjs/intl` errors. Your callback function has acce
 The following example ignores `FORMAT_ERROR` (incorrect or missing argument values), in addition to `MISSING_TRANSLATION` (default implementation of `ember-intl`).
 
 ```ts
-/* routes/application.ts */
+/* app/routes/application.ts */
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 
@@ -172,7 +172,7 @@ export default class ApplicationRoute extends Route {
 Specify what to display when a translation is missing. Your callback function has access to `key`, `locales`, and `options` (data).
 
 ```ts
-/* routes/application.ts */
+/* app/routes/application.ts */
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 
