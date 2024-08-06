@@ -23,6 +23,21 @@ module.exports = function (defaults) {
   });
 
   const options = {
+    packagerOptions: {
+      webpackConfig: {
+        module: {
+          rules: [
+            {
+              generator: {
+                filename: '[path][name]-[hash][ext][query]',
+              },
+              test: /(node_modules\/\.embroider\/rewritten-app\/translations\/)(.*\.json)$/,
+              type: 'asset/resource',
+            },
+          ],
+        },
+      },
+    },
     skipBabel: [
       {
         package: 'qunit',

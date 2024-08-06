@@ -15,7 +15,9 @@ export default class ApplicationRoute extends Route {
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us') {
-    const response = await fetch(`/translations/${locale}.json`);
+    const { default: resource } = await import(`/translations/${locale}.json`);
+
+    const response = await fetch(resource);
     const translations = await response.json();
 
     this.intl.addTranslations(locale, translations);
