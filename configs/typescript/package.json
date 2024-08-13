@@ -23,10 +23,10 @@
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^8.2.2",
-    "prettier": "^3.3.2"
+    "prettier": "^3.3.3"
   },
   "peerDependencies": {
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "peerDependenciesMeta": {
     "typescript": {

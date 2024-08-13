@@ -35,7 +35,7 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.24.7",
+    "@babel/core": "^7.25.2",
     "@formatjs/icu-messageformat-parser": "^2.7.8",
     "@formatjs/intl": "^2.10.4",
     "broccoli-caching-writer": "^3.0.3",
@@ -56,7 +56,7 @@
   "devDependencies": {
     "@ember/optional-features": "^2.1.0",
     "@ember/string": "^3.1.1",
-    "@ember/test-helpers": "^3.3.0",
+    "@ember/test-helpers": "^3.3.1",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -86,15 +86,15 @@
     "ember-load-initializers": "^2.1.2",
     "ember-qunit": "^8.1.0",
     "ember-resolver": "^12.0.1",
-    "ember-source": "~5.10.0",
+    "ember-source": "~5.10.2",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",
     "loader.js": "^4.7.0",
-    "prettier": "^3.3.2",
-    "qunit": "^2.21.0",
+    "prettier": "^3.3.3",
+    "qunit": "^2.21.1",
     "qunit-dom": "^3.2.0",
-    "typescript": "^5.5.3",
-    "webpack": "^5.92.1"
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
