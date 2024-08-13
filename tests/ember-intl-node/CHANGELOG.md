@@ -1,5 +1,12 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.13
+
+### Patch Changes
+
+- [#1914](https://github.com/ember-intl/ember-intl/pull/1914) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1913](https://github.com/ember-intl/ember-intl/pull/1913) Used pnpm@9 to manage dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.12
 
 ### Patch Changes

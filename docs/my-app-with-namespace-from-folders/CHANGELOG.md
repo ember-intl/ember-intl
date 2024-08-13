@@ -1,5 +1,12 @@
 # my-app-with-namespace-from-folders
 
+## 1.0.8
+
+### Patch Changes
+
+- [#1914](https://github.com/ember-intl/ember-intl/pull/1914) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1913](https://github.com/ember-intl/ember-intl/pull/1913) Used pnpm@9 to manage dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.7
 
 ### Patch Changes
