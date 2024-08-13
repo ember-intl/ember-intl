@@ -1,7 +1,6 @@
 import templateOnlyComponent from '@ember/component/template-only';
 
 interface TranslationWithArgumentsSignature {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   Args: {};
 }
 
