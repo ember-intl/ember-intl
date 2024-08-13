@@ -8,7 +8,6 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "license": "MIT",
-  "author": "jason.mitchell.w@gmail.com",
   "type": "module",
   "scripts": {
     "lint": "pnpm --filter '*' lint",
@@ -24,7 +23,8 @@
     "@changesets/get-github-info": "^0.6.0"
   },
   "engines": {
-    "node": "18.* || >= 20"
+    "node": "18.* || >= 20",
+    "pnpm": ">= 9"
   },
   "pnpm": {
     "patchedDependencies": {
