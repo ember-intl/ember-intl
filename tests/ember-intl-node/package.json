@@ -11,11 +11,11 @@
   "author": "jason.mitchell.w@gmail.com",
   "type": "module",
   "scripts": {
-    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint": "concurrently 'pnpm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'pnpm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "test": "mocha \"tests/**/*.{cjs,js}\""
+    "test": "mocha 'tests/**/*.{cjs,js}'"
   },
   "devDependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.8",

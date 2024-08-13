@@ -10,10 +10,10 @@
   "author": "Isaac J. Lee",
   "main": ".prettierrc.js",
   "scripts": {
-    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier --check \"**/*.js\"",
-    "lint:js:fix": "prettier --write \"**/*.js\""
+    "lint": "concurrently 'pnpm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'pnpm:lint:*:fix' --names 'fix:'",
+    "lint:js": "prettier --check '**/*.js'",
+    "lint:js:fix": "prettier --write '**/*.js'"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
