@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import type { ComponentLike } from '@glint/template';
 
 type DocsHeaderComponent = ComponentLike<{

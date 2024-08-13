@@ -4,13 +4,17 @@ require('@shared-configs/eslint-config-ember/patch');
 
 module.exports = {
   extends: ['@shared-configs/eslint-config-ember/v1-addon'],
-  rules: {
-    'ember/no-get': 'off', // TODO: Remove support for old Ember
-  },
   overrides: [
+    // TypeScript files
+    {
+      files: ['**/*.{gts,ts}'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'warn',
+      },
+    },
     // Node files
     {
-      files: ['./lib/**/*.js'],
+      files: ['lib/**/*.js'],
       env: {
         browser: false,
         node: true,

@@ -1,7 +1,6 @@
 import templateOnlyComponent from '@ember/component/template-only';
 
 interface ComponentFromV2AddonSignature {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   Args: {};
 }
 

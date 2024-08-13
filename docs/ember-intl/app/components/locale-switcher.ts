@@ -4,7 +4,6 @@ import Component from '@glimmer/component';
 import type { IntlService } from 'ember-intl';
 
 interface LocaleSwitcherSignature {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   Args: {};
 }
 

@@ -12,7 +12,6 @@ type Option = {
 export type SupportedLocale = 'de-de' | 'en-us';
 
 interface SelectLocaleSignature {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   Args: {};
 }
 
