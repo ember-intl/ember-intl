@@ -79,22 +79,22 @@
     "@types/ember__template": "^4.0.7",
     "@types/qunit": "^2.19.10",
     "concurrently": "^8.2.2",
-    "ember-cli": "~5.10.0",
+    "ember-cli": "~5.11.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-load-initializers": "^2.1.2",
     "ember-qunit": "^8.1.0",
     "ember-resolver": "^12.0.1",
-    "ember-source": "~5.10.2",
+    "ember-source": "~5.11.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.3.3",
-    "qunit": "^2.21.1",
+    "qunit": "^2.22.0",
     "qunit-dom": "^3.2.0",
     "typescript": "^5.5.4",
-    "webpack": "^5.93.0"
+    "webpack": "^5.94.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

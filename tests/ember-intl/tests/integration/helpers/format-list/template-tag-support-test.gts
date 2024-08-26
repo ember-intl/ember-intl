@@ -18,7 +18,7 @@ module(
           <div data-test-output>
             {{formatList list}}
           </div>
-        </template>
+        </template>,
       );
 
       assert.dom('[data-test-output]').hasText('apples, bananas, and oranges');

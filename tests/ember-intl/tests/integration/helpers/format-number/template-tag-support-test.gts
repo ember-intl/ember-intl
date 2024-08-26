@@ -18,7 +18,7 @@ module(
           <div data-test-output>
             {{formatNumber number}}
           </div>
-        </template>
+        </template>,
       );
 
       assert.dom('[data-test-output]').hasText('12,345,678.9');

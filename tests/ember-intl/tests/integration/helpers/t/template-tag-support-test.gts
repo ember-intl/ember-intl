@@ -4,26 +4,23 @@ import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
-module(
-  'Integration | Helper | t > <template> tag support',
-  function (hooks) {
-    setupRenderingTest(hooks);
-    setupIntl(hooks, 'en-us');
+module('Integration | Helper | t > <template> tag support', function (hooks) {
+  setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
-    test('it works', async function (assert) {
-      await render(
-        <template>
-          <div data-test-output>
-            {{t "smoke-tests.hello.world"}}
-          </div>
-        </template>
-      );
+  test('it works', async function (assert) {
+    await render(
+      <template>
+        <div data-test-output>
+          {{t "smoke-tests.hello.world"}}
+        </div>
+      </template>,
+    );
 
-      assert.dom('[data-test-output]').hasText('Hello world!');
+    assert.dom('[data-test-output]').hasText('Hello world!');
 
-      await setLocale('de-de');
+    await setLocale('de-de');
 
-      assert.dom('[data-test-output]').hasText('Hallo Welt!');
-    });
-  },
-);
+    assert.dom('[data-test-output]').hasText('Hallo Welt!');
+  });
+});
