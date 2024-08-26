@@ -18,7 +18,7 @@ module(
           <div data-test-output>
             {{formatRelative number unit="year"}}
           </div>
-        </template>
+        </template>,
       );
 
       assert.dom('[data-test-output]').hasText('1 year ago');

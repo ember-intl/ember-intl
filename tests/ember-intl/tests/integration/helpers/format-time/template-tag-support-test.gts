@@ -18,7 +18,7 @@ module(
           <div data-test-output>
             {{formatTime date}}
           </div>
-        </template>
+        </template>,
       );
 
       assert.dom('[data-test-output]').hasText('6:00 PM');
