@@ -15,6 +15,9 @@
     "lint:js": "prettier --check '**/*.js'",
     "lint:js:fix": "prettier --write '**/*.js'"
   },
+  "dependencies": {
+    "prettier-plugin-ember-template-tag": "^2.0.2"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "prettier": "^3.3.3"

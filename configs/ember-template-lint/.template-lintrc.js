@@ -8,6 +8,7 @@ module.exports = {
       files: ['**/*.{gjs,gts}'],
       rules: {
         'no-implicit-this': 'off',
+        prettier: 'off',
       },
     },
     {

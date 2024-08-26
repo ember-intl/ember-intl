@@ -59,14 +59,14 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.gts'],
-      parser: 'ember-eslint-parser',
-      extends: ['plugin:ember/recommended-gts'],
-    },
-    {
       files: ['**/*.gjs'],
       parser: 'ember-eslint-parser',
       extends: ['plugin:ember/recommended-gjs'],
+    },
+    {
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+      extends: ['plugin:ember/recommended-gts'],
     },
     {
       files: ['**/*.{gjs,gts,js,ts}'],
