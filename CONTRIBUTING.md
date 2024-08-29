@@ -107,11 +107,10 @@
     GITHUB_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> pnpm release:changelog
     ```
 
-1. The workspace root's version (e.g. `0.1.3`) is more of an identifier than a (semantic) version. We will use it to name the tag that will be published.
-
-    In the root `package.json`, update the version following the "highest-version" formula:
+    The `release:changelog` script also updated the workspace root's version (by following the highest version formula). We will use it to name the tag that will be published.
 
     ```
+    # Highest version formula
     workspace root version = max(
       max(all package versions),
       workspace root version + 0.0.1,
