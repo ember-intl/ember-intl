@@ -13,14 +13,15 @@
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "prepare": "pnpm --filter my-v2-addon build",
-    "release:changelog": "changeset version",
+    "release:changelog": "changeset version; update-workspace-root-version",
     "release:package": "changeset publish",
     "start": "pnpm --filter docs-app-for-ember-intl start",
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
-    "@changesets/get-github-info": "^0.6.0"
+    "@changesets/get-github-info": "^0.6.0",
+    "update-workspace-root-version": "^0.3.0"
   },
   "engines": {
     "node": "18.* || >= 20",
