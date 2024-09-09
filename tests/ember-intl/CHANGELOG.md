@@ -1,5 +1,11 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.8
+
+### Patch Changes
+
+- [#1918](https://github.com/ember-intl/ember-intl/pull/1918) Listed @ember/test-helpers as a peer dependency ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.7
 
 ### Patch Changes
