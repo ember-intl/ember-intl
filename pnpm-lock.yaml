@@ -2004,6 +2004,9 @@ importers:
       webpack:
         specifier: ^5.94.0
         version: 5.94.0
+    dependenciesMeta:
+      ember-intl:
+        injected: true
 
   tests/ember-intl-node:
     devDependencies:

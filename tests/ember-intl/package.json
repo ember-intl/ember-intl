@@ -77,6 +77,11 @@
     "typescript": "^5.5.4",
     "webpack": "^5.94.0"
   },
+  "dependenciesMeta": {
+    "ember-intl": {
+      "injected": true
+    }
+  },
   "engines": {
     "node": "18.* || >= 20"
   },
