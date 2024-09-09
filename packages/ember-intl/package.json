@@ -56,7 +56,7 @@
   "devDependencies": {
     "@ember/optional-features": "^2.1.0",
     "@ember/string": "^3.1.1",
-    "@ember/test-helpers": "^3.3.1",
+    "@ember/test-helpers": "^4.0.4",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -97,9 +97,13 @@
     "webpack": "^5.94.0"
   },
   "peerDependencies": {
+    "@ember/test-helpers": "^2.9.4 || ^3.2.0 || ^4.0.0",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {
+    "@ember/test-helpers": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
