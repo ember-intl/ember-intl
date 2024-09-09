@@ -19,9 +19,9 @@
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.7",
+    "@changesets/cli": "^2.27.8",
     "@changesets/get-github-info": "^0.6.0",
-    "update-workspace-root-version": "^0.3.0"
+    "update-workspace-root-version": "^0.3.1"
   },
   "engines": {
     "node": "18.* || >= 20",

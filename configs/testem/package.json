@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.0",
     "prettier": "^3.3.3"
   },
   "peerDependenciesMeta": {},

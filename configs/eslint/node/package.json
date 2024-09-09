@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.10.4",
-    "@typescript-eslint/eslint-plugin": "^8.2.0",
-    "@typescript-eslint/parser": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-n": "^17.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.0",
     "eslint": "^8.57.0",
     "prettier": "^3.3.3"
   },
