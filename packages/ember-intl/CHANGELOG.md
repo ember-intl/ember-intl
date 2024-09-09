@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.0.6
+
+### Patch Changes
+
+- [#1918](https://github.com/ember-intl/ember-intl/pull/1918) Listed @ember/test-helpers as a peer dependency ([@ijlee2](https://github.com/ijlee2))
+- [#1922](https://github.com/ember-intl/ember-intl/pull/1922) Made pnpm settings stricter ([@ijlee2](https://github.com/ijlee2))
+- [#1923](https://github.com/ember-intl/ember-intl/pull/1923) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.0.5
 
 ### Patch Changes
