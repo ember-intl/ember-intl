@@ -30,6 +30,7 @@ Router.map(function () {
       this.route('format-time');
       this.route('introduction');
       this.route('t');
+      this.route('template-tag');
     });
 
     this.route('migration', function () {
