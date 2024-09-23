@@ -24,10 +24,12 @@ html {
 
 .locale-switcher.container {
   display: flex;
-  justify-content: flex-end;
+  margin: 0;
+  padding: 0.25rem;
 }
 
 .locale-switcher .list-item {
+  margin: 0;
   margin-right: 0.25rem;
 }
 
@@ -36,13 +38,6 @@ html {
 }
 
 .locale-switcher .button {
-  background-color: var(--brand-primary);
-  border-radius: 0.15rem;
-  color: #fff;
-  padding: 0.25rem 0.75rem;
-}
-
-.toolbar .button {
   background-color: var(--brand-primary);
   border-radius: 0.15rem;
   color: #fff;
