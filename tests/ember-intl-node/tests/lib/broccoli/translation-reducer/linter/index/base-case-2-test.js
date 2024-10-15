@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Linter from 'ember-intl/lib/broccoli/translation-reducer/linter/index.js';
+import Linter from 'ember-intl-compat/lib/broccoli/translation-reducer/linter/index.js';
 
 describe('lib | broccoli | translation-reducer | linter | index', function () {
   it('base case (2)', function () {
