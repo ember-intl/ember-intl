@@ -29,7 +29,7 @@ const defaultConfig = {
 };
 
 module.exports = {
-  name: 'ember-intl',
+  name: 'ember-intl-compat',
   configOptions: null,
 
   included(parent) {

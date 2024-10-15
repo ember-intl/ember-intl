@@ -1,7 +1,7 @@
 import '@glint/environment-ember-loose';
 import '@glint/environment-ember-template-imports';
 
-import type EmberIntlRegistry from 'ember-intl/template-registry';
+import type EmberIntlRegistry from 'ember-intl-compat/template-registry';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry extends EmberIntlRegistry {
