@@ -57,7 +57,9 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.9",
-    "decorator-transforms": "^2.2.2"
+    "@formatjs/intl": "^2.10.8",
+    "decorator-transforms": "^2.2.2",
+    "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.8",
@@ -78,6 +80,7 @@
     "@shared-configs/typescript": "workspace:*",
     "babel-plugin-ember-template-compilation": "^2.3.0",
     "concurrently": "^9.0.1",
+    "ember-qunit": "^8.1.0",
     "ember-source": "~5.12.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",

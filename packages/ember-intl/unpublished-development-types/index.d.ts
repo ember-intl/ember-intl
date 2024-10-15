@@ -3,6 +3,7 @@
 
 import '@glint/environment-ember-loose';
 import '@glint/environment-ember-template-imports';
+import 'ember-qunit';
 import 'ember-source/types';
 
 import type EmberIntlV2Registry from '../src/template-registry.ts';
