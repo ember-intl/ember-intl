@@ -28,11 +28,8 @@ module.exports = function (defaults) {
         module: {
           rules: [
             {
-              generator: {
-                filename: '[path][name]-[hash][ext][query]',
-              },
               test: /(node_modules\/\.embroider\/rewritten-app\/translations\/)(.*\.json)$/,
-              type: 'asset/resource',
+              type: 'asset/source',
             },
           ],
         },
