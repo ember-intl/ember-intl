@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.0.0",
+    "concurrently": "^9.0.1",
     "prettier": "^3.3.3"
   },
   "peerDependencies": {

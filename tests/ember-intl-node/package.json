@@ -18,12 +18,12 @@
     "test": "mocha 'tests/**/*.{cjs,js}'"
   },
   "devDependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.7.8",
+    "@formatjs/icu-messageformat-parser": "^2.7.10",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
     "chai": "^5.1.1",
-    "concurrently": "^9.0.0",
+    "concurrently": "^9.0.1",
     "ember-intl": "workspace:*",
     "eslint": "^8.57.0",
     "mocha": "^10.7.3",
