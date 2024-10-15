@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import ordinalCategories from 'ember-intl/lib/message-validator/ordinal-categories.js';
+import ordinalCategories from 'ember-intl-compat/lib/message-validator/ordinal-categories.js';
 
 describe('ordinalCategories', function () {
   const expectations = {

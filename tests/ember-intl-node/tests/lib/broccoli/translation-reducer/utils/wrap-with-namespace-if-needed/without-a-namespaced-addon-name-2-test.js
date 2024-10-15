@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import wrapWithNamespaceIfNeeded from 'ember-intl/lib/broccoli/translation-reducer/utils/wrap-with-namespace-if-needed.js';
+import wrapWithNamespaceIfNeeded from 'ember-intl-compat/lib/broccoli/translation-reducer/utils/wrap-with-namespace-if-needed.js';
 
 describe('lib | broccoli | translation-reducer | utils | wrap-with-namespace-if-needed', function () {
   it('without a namespaced addon name (2)', function () {
