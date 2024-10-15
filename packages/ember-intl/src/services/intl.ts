@@ -37,7 +37,7 @@ import {
   flattenKeys,
   type Translations,
 } from '../-private/utils/translations.ts';
-import translations from '../translations.ts';
+// import translations from '../translations.ts';
 
 type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
@@ -123,10 +123,10 @@ export default class IntlService extends Service {
       };
     }
 
-    // Hydrate
-    translations.forEach(([locale, translations]: [string, Translations]) => {
-      this.addTranslations(locale, translations);
-    });
+    // // Hydrate
+    // translations.forEach(([locale, translations]: [string, Translations]) => {
+    //   this.addTranslations(locale, translations);
+    // });
   }
 
   willDestroy() {
