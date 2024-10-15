@@ -98,13 +98,21 @@
   },
   "peerDependencies": {
     "ember-engines": "^0.10.0",
-    "ember-intl": "workspace:*"
+    "ember-intl": "workspace:*",
+    "ember-load-initializers": "^3.0.1",
+    "ember-resolver": "^13.0.2"
   },
   "peerDependenciesMeta": {
     "ember-engines": {
       "optional": false
     },
     "ember-intl": {
+      "optional": false
+    },
+    "ember-load-initializers": {
+      "optional": false
+    },
+    "ember-resolver": {
       "optional": false
     }
   },
