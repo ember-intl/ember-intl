@@ -4,8 +4,3 @@
 # compiled output
 /declarations/
 /dist/
-
-# misc
-/coverage/
-!.*
-.*/
