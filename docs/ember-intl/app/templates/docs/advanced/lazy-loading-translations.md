@@ -15,8 +15,20 @@ module.exports = function (/* environment */) {
 };
 ```
 
+When you run `ember serve` or `ember build -prod`, you will find translations (as JSON files) in the `dist/translations` folder.
+
+```sh
+my-app
+└── dist
+    └── translations
+        ├── de-de.json
+        └── en-us.json
+```
+
 
 ## 2. Load translations at runtime
+
+### Classic apps
 
 Use native `fetch` to load a translation file.
 
@@ -46,20 +58,76 @@ export default class ApplicationRoute extends Route {
 }
 ```
 
-After you run `ember serve` or `ember build -prod`, you will find translations (as JSON files) in the `dist/translations` folder.
 
-```sh
-my-app
-└── dist
-    └── translations
-        ├── de-de.json
-        └── en-us.json
+### Embroider apps (Webpack)
+
+In `ember-cli-build.js`, configure Webpack to [treat translations as assets](https://webpack.js.org/guides/asset-modules/).
+
+```js
+'use strict';
+
+const { Webpack } = require('@embroider/webpack');
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+module.exports = function (defaults) {
+  const app = new EmberApp(defaults, {
+    // ...
+  });
+
+  const options = {
+    packagerOptions: {
+      webpackConfig: {
+        module: {
+          rules: [
+            {
+              test: /(node_modules\/\.embroider\/rewritten-app\/translations\/)(.*\.json)$/,
+              type: 'asset/source',
+            },
+          ],
+        },
+      },
+    },
+    // ...
+  };
+
+  return require('@embroider/compat').compatBuild(app, Webpack, options);
+};
+```
+
+Afterwards, use dynamic import to get the file content.
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  async beforeModel() {
+    await Promise.allSettled([
+      this.loadTranslations('de-de'),
+      this.loadTranslations('en-us'),
+    ]);
+
+    this.intl.setLocale(['en-us']);
+  }
+
+  private async loadTranslations(locale: 'de-de' | 'en-us') {
+    const { default: resource } = await import(`/translations/${locale}.json`);
+    const translations = JSON.parse(resource);
+
+    this.intl.addTranslations(locale, translations);
+  }
+}
 ```
 
 
 ## 3. Fingerprint translations
 
-### Classic build
+This step applies to classic apps only.
+
+### Classic apps
 
 In Ember apps with a classic build, we use [`broccoli-asset-rev`](https://github.com/ember-cli/broccoli-asset-rev) to fingerprint files.
 
@@ -126,70 +194,4 @@ my-app
     └── translations
         ├── de-de-825f3177f5b85adcb9029643007ebcf9.json
         └── en-us-b1cfad13180d11102395dd387f10f673.json
-```
-
-
-### Embroider build (Webpack)
-
-**WARNING: The original files will remain in the `dist/translations` folder, but shouldn't affect production. Please let us know if you know how to remove these.**
-
-In `ember-cli-build.js`, configure Webpack to [treat translations as assets](https://webpack.js.org/guides/asset-modules/).
-
-```js
-'use strict';
-
-const { Webpack } = require('@embroider/webpack');
-const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-
-module.exports = function (defaults) {
-  const app = new EmberApp(defaults, {
-    // ...
-  });
-
-  const options = {
-    packagerOptions: {
-      webpackConfig: {
-        module: {
-          rules: [
-            {
-              generator: {
-                filename: '[path][name]-[hash][ext][query]',
-              },
-              test: /(node_modules\/\.embroider\/rewritten-app\/translations\/)(.*\.json)$/,
-              type: 'asset/resource',
-            },
-          ],
-        },
-      },
-    },
-    // ...
-  };
-
-  return require('@embroider/compat').compatBuild(app, Webpack, options);
-};
-```
-
-Afterwards, in `loadTranslations()` from Step 2, use dynamic import to get the asset URL.
-
-```ts
-private async loadTranslations(locale: 'de-de' | 'en-us') {
-  const { default: resource } = await import(`/translations/${locale}.json`);
-
-  const response = await fetch(resource);
-  const translations = await response.json();
-
-  this.intl.addTranslations(locale, translations);
-}
-```
-
-File names will be hashed in development and production.
-
-```sh
-my-app
-└── dist
-    └── translations
-        ├── de-de-12356e988bf952560f6e.json
-        ├── de-de.json
-        ├── en-us-31e4a23c9d04705ba9bf.json
-        └── en-us.json
 ```
