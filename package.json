@@ -23,6 +23,7 @@
     "@changesets/get-github-info": "^0.6.0",
     "update-workspace-root-version": "^0.3.1"
   },
+  "packageManager": "pnpm@9.12.1",
   "engines": {
     "node": "18.* || >= 20",
     "pnpm": ">= 9"
