@@ -30,6 +30,7 @@ jobs:
           - 'docs/my-v1-engine'
           - 'docs/my-v2-addon'
           - 'packages/ember-intl'
+          - 'packages/ember-intl-compat'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
     timeout-minutes: 5
@@ -71,6 +72,7 @@ jobs:
           - 'docs/my-v1-engine'
           - 'docs/my-v2-addon'
           - 'packages/ember-intl'
+          - 'packages/ember-intl-compat'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
     timeout-minutes: 5

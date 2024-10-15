@@ -8,7 +8,7 @@ module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     // Add options here
     autoImport: {
-      watchDependencies: [],
+      watchDependencies: ['ember-intl-compat'],
     },
 
     'ember-cli-babel': {
@@ -17,7 +17,7 @@ module.exports = function (defaults) {
 
     trees: {
       app: sideWatch('app', {
-        watching: ['../my-v2-addon/src'],
+        watching: ['../../packages/ember-intl/src', '../my-v2-addon/src'],
       }),
     },
   });
