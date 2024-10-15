@@ -1,5 +1,11 @@
 # my-v2-addon
 
+## 1.0.13
+
+### Patch Changes
+
+- [#1928](https://github.com/ember-intl/ember-intl/pull/1928) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.12
 
 ### Patch Changes

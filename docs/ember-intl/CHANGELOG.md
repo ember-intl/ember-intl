@@ -1,5 +1,17 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.4.0
+
+### Minor Changes
+
+- [#1921](https://github.com/ember-intl/ember-intl/pull/1921) Created a page that explains how to use ember-intl's helpers in <template> tag ([@MichalBryxi](https://github.com/MichalBryxi))
+
+### Patch Changes
+
+- [#1929](https://github.com/ember-intl/ember-intl/pull/1929) Documented how to migrate away from translationsFor() ([@ijlee2](https://github.com/ijlee2))
+- [#1928](https://github.com/ember-intl/ember-intl/pull/1928) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1927](https://github.com/ember-intl/ember-intl/pull/1927) Used asset/source to retrieve the translation JSONs ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.13
 
 ### Patch Changes

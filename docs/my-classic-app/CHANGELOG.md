@@ -1,5 +1,11 @@
 # my-classic-app
 
+## 1.1.9
+
+### Patch Changes
+
+- [#1928](https://github.com/ember-intl/ember-intl/pull/1928) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.8
 
 ### Patch Changes

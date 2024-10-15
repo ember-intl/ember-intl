@@ -1,5 +1,11 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.15
+
+### Patch Changes
+
+- [#1928](https://github.com/ember-intl/ember-intl/pull/1928) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.14
 
 ### Patch Changes
