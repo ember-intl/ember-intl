@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import { registerDestructor } from '@ember/destroyable';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
@@ -93,8 +92,35 @@ export default class IntlService extends Service {
     super(...arguments);
 
     if (!this._formats) {
-      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-      this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
+      this._formats = {
+        time: {
+          hhmmss: {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+          },
+        },
+        date: {
+          hhmmss: {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+          },
+        },
+        number: {
+          compact: {
+            notation: 'compact',
+          },
+          EUR: {
+            style: 'currency',
+            currency: 'EUR',
+          },
+          USD: {
+            style: 'currency',
+            currency: 'USD',
+          },
+        },
+      };
     }
 
     // Hydrate
