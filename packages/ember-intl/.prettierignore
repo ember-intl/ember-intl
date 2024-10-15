@@ -1,0 +1,6 @@
+# unconventional js
+/blueprints/*/files/
+
+# compiled output
+/declarations/
+/dist/

@@ -1,0 +1,13 @@
+# compiled output
+/declarations/
+/dist/
+
+# dependencies
+/node_modules/
+
+# misc
+/.eslintcache
+/.stylelintcache
+
+# npm/pnpm/yarn pack output
+*.tgz
