@@ -17,6 +17,7 @@ module.exports = {
         'no-curly-component-invocation': {
           allow: [
             'format-date',
+            'format-date-time-range',
             'format-message',
             'format-number',
             'format-relative',

@@ -1,4 +1,5 @@
 import type FormatDateHelper from './helpers/format-date';
+import type FormatDateTimeRangeHelper from './helpers/format-date-time-range';
 import type FormatListHelper from './helpers/format-list';
 import type FormatMessageHelper from './helpers/format-message';
 import type FormatNumberHelper from './helpers/format-number';
@@ -8,6 +9,7 @@ import type THelper from './helpers/t';
 
 export default interface EmberIntlRegistry {
   'format-date': typeof FormatDateHelper;
+  'format-date-time-range': typeof FormatDateTimeRangeHelper;
   'format-list': typeof FormatListHelper;
   'format-message': typeof FormatMessageHelper;
   'format-number': typeof FormatNumberHelper;
