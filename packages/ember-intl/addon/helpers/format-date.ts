@@ -18,14 +18,6 @@ interface FormatDateSignature {
 export default class FormatDateHelper extends Helper<FormatDateSignature> {
   @service declare intl: IntlService;
 
-  constructor() {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments);
-
-    // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-    this.intl.onLocaleChanged(this.recompute, this);
-  }
-
   compute(
     [value]: FormatDateSignature['Args']['Positional'],
     options: FormatDateSignature['Args']['Named'],

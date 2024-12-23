@@ -1,4 +1,3 @@
-import Helper from '@ember/component/helper';
 import {
   settled,
   type TestContext as BaseTestContext,
@@ -397,31 +396,6 @@ module('Unit | Service | intl', function (hooks) {
   });
 
   module('setLocale()', function () {
-    test('triggers the localeChanged event', async function (this: TestContext, assert) {
-      const callback = () => {
-        assert.step('Callback');
-      };
-
-      const context = class THelper extends Helper {};
-
-      // @ts-expect-error: Property 'onLocaleChanged' is private and only accessible within class 'IntlService'.
-      this.intl.onLocaleChanged(callback, context);
-
-      assert.verifySteps([]);
-
-      this.intl.setLocale(['de-de', 'en-us']);
-
-      await settled();
-
-      assert.verifySteps(['Callback']);
-
-      this.intl.setLocale(['fr-fr', 'de-de', 'en-us']);
-
-      await settled();
-
-      assert.verifySteps(['Callback']);
-    });
-
     test("updates the document's lang attribute", async function (this: TestContext, assert) {
       function getLang() {
         return document.documentElement.getAttribute('lang');
