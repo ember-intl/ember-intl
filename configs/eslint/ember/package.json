@@ -17,13 +17,13 @@
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.10.4",
-    "@typescript-eslint/eslint-plugin": "^8.9.0",
-    "@typescript-eslint/parser": "^8.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.3",
-    "eslint-plugin-ember": "^12.2.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-ember": "^12.3.3",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.11.1",
+    "eslint-plugin-n": "^17.15.1",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-qunit": "^8.1.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
@@ -32,14 +32,14 @@
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.0.1",
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.3"
+    "concurrently": "^9.1.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2"
   },
   "peerDependencies": {
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.6.3"
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
   },
   "peerDependenciesMeta": {
     "eslint": {
