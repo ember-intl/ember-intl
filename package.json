@@ -19,18 +19,13 @@
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.9",
+    "@changesets/cli": "^2.27.11",
     "@changesets/get-github-info": "^0.6.0",
     "update-workspace-root-version": "^1.0.1"
   },
-  "packageManager": "pnpm@9.12.1",
+  "packageManager": "pnpm@9.15.1",
   "engines": {
     "node": "18.* || >= 20",
     "pnpm": ">= 9"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "ember-cli-addon-docs@7.0.1": "patches/ember-cli-addon-docs@7.0.1.patch"
-    }
   }
 }

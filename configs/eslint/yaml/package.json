@@ -16,18 +16,18 @@
     "lint:js:fix": "prettier --write '**/*.js'"
   },
   "dependencies": {
-    "eslint-plugin-yml": "^1.14.0"
+    "eslint-plugin-yml": "^1.16.0"
   },
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.0.1",
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.3"
+    "concurrently": "^9.1.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2"
   },
   "peerDependencies": {
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.3"
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2"
   },
   "peerDependenciesMeta": {
     "eslint": {

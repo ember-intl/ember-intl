@@ -18,16 +18,16 @@
     "test": "mocha 'tests/**/*.{cjs,js}'"
   },
   "devDependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.7.10",
+    "@formatjs/icu-messageformat-parser": "^2.9.7",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
-    "chai": "^5.1.1",
-    "concurrently": "^9.0.1",
+    "chai": "^5.1.2",
+    "concurrently": "^9.1.0",
     "ember-intl": "workspace:*",
-    "eslint": "^8.57.0",
-    "mocha": "^10.7.3",
-    "prettier": "^3.3.3"
+    "eslint": "^8.57.1",
+    "mocha": "^11.0.1",
+    "prettier": "^3.4.2"
   },
   "engines": {
     "node": "18.* || >= 20"

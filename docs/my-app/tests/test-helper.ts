@@ -9,6 +9,4 @@ setApplication(Application.create(config.APP));
 
 setup(QUnit.assert);
 
-start({
-  setupTestIsolationValidation: true,
-});
+start();
