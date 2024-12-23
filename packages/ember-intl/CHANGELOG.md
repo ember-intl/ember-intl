@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.9
+
+### Patch Changes
+
+- Re-released `7.0.8` (removes the accidentally published files from a development branch)
+
 ## 7.0.8
 
 ### Patch Changes
