@@ -1,5 +1,11 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.4.1
+
+### Patch Changes
+
+- [#1933](https://github.com/ember-intl/ember-intl/pull/1933) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.0
 
 ### Minor Changes

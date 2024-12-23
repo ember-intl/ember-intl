@@ -1,5 +1,13 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.3.21
+
+### Patch Changes
+
+- [#1932](https://github.com/ember-intl/ember-intl/pull/1932) Removed the usages of Ember Helper's recompute. Removed eventemitter3 as a dependency. ([@ijlee2](https://github.com/ijlee2))
+- [#1933](https://github.com/ember-intl/ember-intl/pull/1933) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1934](https://github.com/ember-intl/ember-intl/pull/1934) Replaced ember-lts-5.4 and ember-lts-5.8 with ember-lts-5.12 ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.20
 
 ### Patch Changes

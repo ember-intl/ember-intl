@@ -1,5 +1,12 @@
 # my-app-with-lazy-loaded-translations
 
+## 1.2.1
+
+### Patch Changes
+
+- [#1932](https://github.com/ember-intl/ember-intl/pull/1932) Removed the usages of Ember Helper's recompute. Removed eventemitter3 as a dependency. ([@ijlee2](https://github.com/ijlee2))
+- [#1933](https://github.com/ember-intl/ember-intl/pull/1933) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.0
 
 ### Minor Changes
