@@ -144,12 +144,11 @@ export default class IntlService extends Service {
       locale?: string;
     },
   ): string {
-    if (
-      from === undefined ||
-      from === null ||
-      to === undefined ||
-      to === null
-    ) {
+    if (from === undefined || from === null) {
+      return '';
+    }
+
+    if (to === undefined || to === null) {
       return '';
     }
 
