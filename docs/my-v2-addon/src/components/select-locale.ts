@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import type Owner from '@ember/owner';
 import { type Registry as Services, service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -22,7 +23,7 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
 
   @tracked value!: SupportedLocale;
 
-  constructor(owner: unknown, args: SelectLocaleSignature['Args']) {
+  constructor(owner: Owner, args: SelectLocaleSignature['Args']) {
     super(owner, args);
 
     // @ts-expect-error: Property 'primaryLocale' does not exist on type 'Service'
