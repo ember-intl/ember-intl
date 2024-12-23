@@ -1,10 +1,8 @@
 import { getOwner } from '@ember/application';
-import { registerDestructor } from '@ember/destroyable';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
-import EventEmitter from 'eventemitter3';
 
 import type {
   FormatDateParameters,
@@ -50,7 +48,6 @@ export default class IntlService extends Service {
   @tracked private _locale?: string[];
 
   private _cache = createIntlCache();
-  private _eventEmitter = new EventEmitter();
   private _formats?: Record<string, unknown>;
   private _timer?: EmberRunTimer;
 
@@ -259,8 +256,6 @@ export default class IntlService extends Service {
       // @ts-ignore: Argument of type 'Timer | undefined' is not assignable to parameter of type 'EmberRunTimer | undefined'
       // eslint-disable-next-line ember/no-runloop
       this._timer = next(() => {
-        this._eventEmitter.emit('localeChanged');
-
         this.updateDocumentLanguage();
       });
     }
@@ -350,14 +345,6 @@ export default class IntlService extends Service {
     }
 
     return this.getIntl(this._locale!)!;
-  }
-
-  private onLocaleChanged(fn: any, context: any): void {
-    this._eventEmitter.on('localeChanged', fn, context);
-
-    registerDestructor(context, () => {
-      this._eventEmitter.off('localeChanged', fn, context);
-    });
   }
 
   private updateDocumentLanguage(): void {
