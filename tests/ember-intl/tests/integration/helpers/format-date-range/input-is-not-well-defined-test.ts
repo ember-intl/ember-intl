@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module(
-  'Integration | Helper | format-date-time-range > input is not well-defined',
+  'Integration | Helper | format-date-range > input is not well-defined',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
@@ -13,7 +13,7 @@ module(
     test('input is not an integer', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-date-time-range 1.1 1.2}}
+          {{format-date-range 1.1 1.2}}
         </div>
       `);
 
@@ -28,7 +28,7 @@ module(
       await render(hbs`
         <div data-test-output>
           {{! @glint-expect-error }}
-          {{format-date-time-range 'hello world' 'hello world'}}
+          {{format-date-range 'hello world' 'hello world'}}
         </div>
       `);
 

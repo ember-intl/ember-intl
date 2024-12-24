@@ -20,8 +20,8 @@ module('Acceptance | smoke-tests', function (hooks) {
         .hasText('23.1.2014', '{{format-date}} works.');
 
       assert
-        .dom('[data-test-field="Format Date Time Range"]')
-        .hasText('23.–26.01.2014', '{{format-date-time-range}} works.');
+        .dom('[data-test-field="Format Date Range"]')
+        .hasText('23.–26.01.2014', '{{format-date-range}} works.');
 
       assert
         .dom('[data-test-field="Format Time"]')
@@ -50,11 +50,8 @@ module('Acceptance | smoke-tests', function (hooks) {
         .hasText('1/23/2014', '{{format-date}} works.');
 
       assert
-        .dom('[data-test-field="Format Date Time Range"]')
-        .hasText(
-          /1\/23\/2014\s–\s1\/26\/2014/,
-          '{{format-date-time-range}} works.',
-        );
+        .dom('[data-test-field="Format Date Range"]')
+        .hasText(/1\/23\/2014\s–\s1\/26\/2014/, '{{format-date-range}} works.');
 
       assert
         .dom('[data-test-field="Format Time"]')

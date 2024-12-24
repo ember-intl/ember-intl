@@ -8,25 +8,25 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 interface TestContext extends BaseTestContext {
-  from: number;
-  to: number;
+  from: Date;
+  to: Date;
 }
 
 module(
-  'Integration | Helper | format-date-time-range > input is an integer',
+  'Integration | Helper | format-date-range > input is a Date',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
 
     hooks.beforeEach(function (this: TestContext) {
-      this.from = new Date('2014-01-23T18:00:44').getTime();
-      this.to = new Date('2014-01-26T19:30:34').getTime();
+      this.from = new Date('2014-01-23T18:00:44');
+      this.to = new Date('2014-01-26T19:30:34');
     });
 
     test('it returns a string', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-time-range this.from this.to}}
+          {{format-date-range this.from this.to}}
         </div>
       `);
 
@@ -39,7 +39,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-time-range this.from this.to}}
+          {{format-date-range this.from this.to}}
         </div>
       `);
 
@@ -54,7 +54,7 @@ module(
     test('we can format the date', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output="2">
-          {{format-date-time-range
+          {{format-date-range
             this.from
             this.to
             hour="numeric"
@@ -73,7 +73,7 @@ module(
     test('we can specify the time zone', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-time-range this.from this.to timeZone='UTC'}}
+          {{format-date-range this.from this.to timeZone='UTC'}}
         </div>
       `);
 

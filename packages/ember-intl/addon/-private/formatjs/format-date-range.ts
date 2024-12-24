@@ -1,12 +1,12 @@
 import type { IntlShape } from '@formatjs/intl';
 
-export type FormatDateTimeRangeParameters = Parameters<
+export type FormatDateRangeParameters = Parameters<
   IntlShape<string>['formatDateTimeRange']
 >;
 
-export function formatDateTimeRange(
+export function formatDateRange(
   intlShape: IntlShape,
-  ...[from, to, formatOptions]: FormatDateTimeRangeParameters
+  ...[from, to, formatOptions]: FormatDateRangeParameters
 ): string {
   return intlShape.formatDateTimeRange(from, to, formatOptions);
 }

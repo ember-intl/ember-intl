@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module(
-  'Integration | Helper | format-date-time-range > input is falsy',
+  'Integration | Helper | format-date-range > input is falsy',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
@@ -13,7 +13,7 @@ module(
     test('input is 0', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-date-time-range 0 0}}
+          {{format-date-range 0 0}}
         </div>
       `);
 
@@ -26,7 +26,7 @@ module(
       await render(hbs`
         <div data-test-output>
           {{! @glint-expect-error }}
-          {{format-date-time-range '' ''}}
+          {{format-date-range '' ''}}
         </div>
       `);
 
@@ -38,7 +38,7 @@ module(
     test('input is null', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-date-time-range null null}}
+          {{format-date-range null null}}
         </div>
       `);
 
@@ -48,7 +48,7 @@ module(
     test('input is undefined', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-date-time-range undefined undefined}}
+          {{format-date-range undefined undefined}}
         </div>
       `);
 

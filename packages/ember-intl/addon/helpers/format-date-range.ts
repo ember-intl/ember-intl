@@ -3,12 +3,12 @@ import { inject as service } from '@ember/service';
 
 import type IntlService from '../services/intl';
 
-type FormatParameters = Parameters<IntlService['formatDateTimeRange']>;
+type FormatParameters = Parameters<IntlService['formatDateRange']>;
 type From = FormatParameters[0];
 type To = FormatParameters[1];
 type Options = FormatParameters[2];
 
-interface FormatDateTimeRangeSignature {
+interface FormatDateRangeSignature {
   Args: {
     Named?: Options;
     Positional: [From, To];
@@ -16,13 +16,13 @@ interface FormatDateTimeRangeSignature {
   Return: string;
 }
 
-export default class FormatDateTimeRangeHelper extends Helper<FormatDateTimeRangeSignature> {
+export default class FormatDateRangeHelper extends Helper<FormatDateRangeSignature> {
   @service declare intl: IntlService;
 
   compute(
-    [from, to]: FormatDateTimeRangeSignature['Args']['Positional'],
-    options: FormatDateTimeRangeSignature['Args']['Named'],
+    [from, to]: FormatDateRangeSignature['Args']['Positional'],
+    options: FormatDateRangeSignature['Args']['Named'],
   ) {
-    return this.intl.formatDateTimeRange(from, to, options);
+    return this.intl.formatDateRange(from, to, options);
   }
 }

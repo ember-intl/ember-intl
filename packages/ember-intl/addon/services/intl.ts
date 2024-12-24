@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 
 import type {
   FormatDateParameters,
-  FormatDateTimeRangeParameters,
+  FormatDateRangeParameters,
   FormatListParameters,
   FormatMessageParameters,
   FormatNumberParameters,
@@ -19,7 +19,7 @@ import {
   createIntl,
   createIntlCache,
   formatDate,
-  formatDateTimeRange,
+  formatDateRange,
   formatList,
   formatMessage,
   formatNumber,
@@ -137,10 +137,10 @@ export default class IntlService extends Service {
     return formatDate(intlShape, value, options);
   }
 
-  formatDateTimeRange(
-    from: FormatDateTimeRangeParameters[0] | undefined | null,
-    to: FormatDateTimeRangeParameters[1] | undefined | null,
-    options?: FormatDateTimeRangeParameters[2] & {
+  formatDateRange(
+    from: FormatDateRangeParameters[0] | undefined | null,
+    to: FormatDateRangeParameters[1] | undefined | null,
+    options?: FormatDateRangeParameters[2] & {
       locale?: string;
     },
   ): string {
@@ -154,7 +154,7 @@ export default class IntlService extends Service {
 
     const intlShape = this.getIntlShape(options?.locale);
 
-    return formatDateTimeRange(intlShape, from, to, options);
+    return formatDateRange(intlShape, from, to, options);
   }
 
   formatList(

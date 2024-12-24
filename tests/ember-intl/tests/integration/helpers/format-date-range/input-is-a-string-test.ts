@@ -15,7 +15,7 @@ interface TestContext extends BaseTestContext {
 }
 
 module(
-  'Integration | Helper | format-date-time-range > input is a string',
+  'Integration | Helper | format-date-range > input is a string',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
@@ -28,7 +28,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-time-range this.from this.to}}
+          {{format-date-range this.from this.to}}
         </div>
       `);
 
@@ -41,7 +41,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-time-range this.from this.to}}
+          {{format-date-range this.from this.to}}
         </div>
       `);
 
@@ -56,7 +56,7 @@ module(
     test('we can format the date', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output="2">
-          {{format-date-time-range
+          {{format-date-range
             this.from
             this.to
             hour="numeric"
@@ -75,7 +75,7 @@ module(
     test('we can specify the time zone', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-time-range this.from this.to timeZone='UTC'}}
+          {{format-date-range this.from this.to timeZone='UTC'}}
         </div>
       `);
 

@@ -1,11 +1,11 @@
 import { render } from '@ember/test-helpers';
-import { formatDateTimeRange } from 'ember-intl';
+import { formatDateRange } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module(
-  'Integration | Helper | format-date-time-range > <template> tag support',
+  'Integration | Helper | format-date-range > <template> tag support',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
@@ -17,7 +17,7 @@ module(
       await render(
         <template>
           <div data-test-output>
-            {{formatDateTimeRange from to}}
+            {{formatDateRange from to}}
           </div>
         </template>,
       );
