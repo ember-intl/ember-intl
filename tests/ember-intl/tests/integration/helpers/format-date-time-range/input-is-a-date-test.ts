@@ -20,7 +20,7 @@ module(
 
     hooks.beforeEach(function (this: TestContext) {
       this.from = new Date('2014-01-23T18:00:44');
-      this.to = new Date('2015-02-26T19:30:34');
+      this.to = new Date('2014-01-26T19:30:34');
     });
 
     test('it returns a string', async function (this: TestContext, assert) {
@@ -30,7 +30,10 @@ module(
         </div>
       `);
 
-      assert.dom('[data-test-output]').hasText('1/23/2014 – 2/26/2015');
+      assert
+        .dom('[data-test-output]')
+        .hasText(/1\/23\/2014\s–\s1\/26\/2014/)
+        .hasText('1/23/2014 – 1/26/2014');
     });
 
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
@@ -42,15 +45,14 @@ module(
 
       await setLocale('de-de');
 
-      assert.dom('[data-test-output]').hasText('23.01.2014 – 26.02.2015');
+      assert
+        .dom('[data-test-output]')
+        .hasText(/23\.–26\.01\.2014/)
+        .hasText('23.–26.01.2014');
     });
 
     test('we can format the date', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
-        <div data-test-output="1">
-          {{format-date-time-range this.from this.to format='hhmmss'}}
-        </div>
-
         <div data-test-output="2">
           {{format-date-time-range
             this.from
@@ -62,12 +64,10 @@ module(
         </div>
       `);
 
-      // apparently formatDateTimeRange does not support defaultFormats in formatjs
-      // assert.dom('[data-test-output="1"]').hasText('6:00:44 PM');
-
       assert
         .dom('[data-test-output="2"]')
-        .hasText('January 23, 2014 at 6:00 PM – February 26, 2015 at 7:30 PM');
+        .hasText(/January 23 at 6:00\sPM\s–\sJanuary 26 at 7:30\sPM/)
+        .hasText('January 23 at 6:00 PM – January 26 at 7:30 PM');
     });
 
     test('we can specify the time zone', async function (this: TestContext, assert) {
@@ -77,7 +77,10 @@ module(
         </div>
       `);
 
-      assert.dom('[data-test-output]').hasText('1/23/2014 – 2/26/2015');
+      assert
+        .dom('[data-test-output]')
+        .hasText(/1\/23\/2014\s–\s1\/26\/2014/)
+        .hasText('1/23/2014 – 1/26/2014');
     });
   },
 );

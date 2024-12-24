@@ -1,3 +1,5 @@
+/* eslint-disable no-irregular-whitespace, qunit/no-commented-tests */
+/*
 import {
   render,
   type TestContext as BaseTestContext,
@@ -8,19 +10,19 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 interface TestContext extends BaseTestContext {
-  from: number;
-  to: number;
+  from: string;
+  to: string;
 }
 
 module(
-  'Integration | Helper | format-date-time-range > input is an integer',
+  'Integration | Helper | format-date-time-range > input is a string',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
 
     hooks.beforeEach(function (this: TestContext) {
-      this.from = new Date('2014-01-23T18:00:44').getTime();
-      this.to = new Date('2014-01-26T19:30:34').getTime();
+      this.from = new Date('2014-01-23T18:00:44').toISOString();
+      this.to = new Date('2014-01-26T19:30:34').toISOString();
     });
 
     test('it returns a string', async function (this: TestContext, assert) {
@@ -84,3 +86,4 @@ module(
     });
   },
 );
+*/

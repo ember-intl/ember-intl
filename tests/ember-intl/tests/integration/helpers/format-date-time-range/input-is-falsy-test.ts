@@ -12,44 +12,45 @@ module(
 
     test('input is 0', async function (assert) {
       await render(hbs`
-      <div data-test-output>
-        {{format-date-time-range 0 0}}
-      </div>
-    `);
+        <div data-test-output>
+          {{format-date-time-range 0 0}}
+        </div>
+      `);
 
       assert
         .dom('[data-test-output]')
-        .hasText(new Intl.DateTimeFormat('en-us').format(0));
+        .hasText(new Intl.DateTimeFormat('en-us').formatRange(0, 0));
     });
 
     test('input is an empty string', async function (assert) {
       await render(hbs`
-      <div data-test-output>
-        {{format-date-time-range '' ''}}
-      </div>
-    `);
+        <div data-test-output>
+          {{! @glint-expect-error }}
+          {{format-date-time-range '' ''}}
+        </div>
+      `);
 
       assert
         .dom('[data-test-output]')
-        .hasText(new Intl.DateTimeFormat('en-us').format(0));
+        .hasText(new Intl.DateTimeFormat('en-us').formatRange(0, 0));
     });
 
     test('input is null', async function (assert) {
       await render(hbs`
-      <div data-test-output>
-        {{format-date-time-range null null}}
-      </div>
-    `);
+        <div data-test-output>
+          {{format-date-time-range null null}}
+        </div>
+      `);
 
       assert.dom('[data-test-output]').hasText('');
     });
 
     test('input is undefined', async function (assert) {
       await render(hbs`
-      <div data-test-output>
-        {{format-date-time-range undefined undefined}}
-      </div>
-    `);
+        <div data-test-output>
+          {{format-date-time-range undefined undefined}}
+        </div>
+      `);
 
       assert.dom('[data-test-output]').hasText('');
     });

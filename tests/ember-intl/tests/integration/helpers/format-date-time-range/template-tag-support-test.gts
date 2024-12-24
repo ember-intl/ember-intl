@@ -22,11 +22,17 @@ module(
         </template>,
       );
 
-      assert.dom('[data-test-output]').hasText('1/23/2014 – 1/26/2014');
+      assert
+        .dom('[data-test-output]')
+        .hasText(/1\/23\/2014\s–\s1\/26\/2014/)
+        .hasText('1/23/2014 – 1/26/2014');
 
       await setLocale('de-de');
 
-      assert.dom('[data-test-output]').hasText('23.–26.01.2014');
+      assert
+        .dom('[data-test-output]')
+        .hasText(/23\.–26\.01\.2014/)
+        .hasText('23.–26.01.2014');
     });
   },
 );
