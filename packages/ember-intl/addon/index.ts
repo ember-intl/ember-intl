@@ -1,4 +1,5 @@
 export { default as formatDate } from './helpers/format-date';
+export { default as formatDateRange } from './helpers/format-date-range';
 export { default as formatList } from './helpers/format-list';
 export { default as formatMessage } from './helpers/format-message';
 export { default as formatNumber } from './helpers/format-number';
