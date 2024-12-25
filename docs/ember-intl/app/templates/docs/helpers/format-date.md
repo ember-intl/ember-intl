@@ -1,6 +1,6 @@
 # &#123;&#123;format-date&#125;&#125;
 
-Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) to format a date.
+Uses [`Intl.DateTimeFormat#format()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/format) to format a date.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
