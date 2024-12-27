@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import findMissingTranslations from 'ember-intl-compat/lib/broccoli/translation-reducer/linter/find-missing-translations.js';
+import findMissingTranslations from 'ember-intl-v1-compat/lib/broccoli/translation-reducer/linter/find-missing-translations.js';
 
 describe('lib | broccoli | translation-reducer | linter | find-missing-translations', function () {
   it('key is an empty string', function () {
