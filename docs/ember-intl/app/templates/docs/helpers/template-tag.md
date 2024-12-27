@@ -5,6 +5,7 @@ You can use the helpers from `ember-intl` in a [`<template>` tag](https://github
 ```ts
 import {
   formatDate,
+  formatDateRange,
   formatList,
   formatMessage,
   formatNumber,

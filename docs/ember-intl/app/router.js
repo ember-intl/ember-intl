@@ -23,6 +23,7 @@ Router.map(function () {
 
     this.route('helpers', function () {
       this.route('format-date');
+      this.route('format-date-range');
       this.route('format-list');
       this.route('format-message');
       this.route('format-number');

@@ -32,6 +32,21 @@ const output = this.intl.formatDate('2014-01-23T18:00:44');
 ```
 
 
+### formatDateRange()
+
+Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) to format a date range.
+
+The 1st argument `from` and 2nd argument `to` are required and expect a `Date` or `number` (Unix timestamp). You can pass options for `Intl.DateTimeFormat` in the 3rd argument.
+
+```ts
+const date1 = new Date('2014-01-23T18:00:44');
+const date2 = new Date('2014-01-26T19:30:34');
+
+const output = this.intl.formatDateRange(date1, date2);
+// '1/23/2014 – 1/26/2014'
+```
+
+
 ### formatList()
 
 Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat) to join an array of strings.
