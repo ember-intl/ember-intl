@@ -10,9 +10,9 @@
 
 ### Patch Changes
 
-- [#1932](https://github.com/ember-intl/ember-intl/pull/1932) Removed the usages of Ember Helper's recompute. Removed eventemitter3 as a dependency. ([@ijlee2](https://github.com/ijlee2))
-- [#1933](https://github.com/ember-intl/ember-intl/pull/1933) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1934](https://github.com/ember-intl/ember-intl/pull/1934) Replaced ember-lts-5.4 and ember-lts-5.8 with ember-lts-5.12 ([@ijlee2](https://github.com/ijlee2))
+- [#1933](https://github.com/ember-intl/ember-intl/pull/1933) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1932](https://github.com/ember-intl/ember-intl/pull/1932) Removed the usages of Ember Helper's recompute. Removed eventemitter3 as a dependency. ([@ijlee2](https://github.com/ijlee2))
 
 ## 7.0.7
 
@@ -24,9 +24,9 @@
 
 ### Patch Changes
 
-- [#1918](https://github.com/ember-intl/ember-intl/pull/1918) Listed @ember/test-helpers as a peer dependency ([@ijlee2](https://github.com/ijlee2))
-- [#1922](https://github.com/ember-intl/ember-intl/pull/1922) Made pnpm settings stricter ([@ijlee2](https://github.com/ijlee2))
 - [#1923](https://github.com/ember-intl/ember-intl/pull/1923) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1922](https://github.com/ember-intl/ember-intl/pull/1922) Made pnpm settings stricter ([@ijlee2](https://github.com/ijlee2))
+- [#1918](https://github.com/ember-intl/ember-intl/pull/1918) Listed @ember/test-helpers as a peer dependency ([@ijlee2](https://github.com/ijlee2))
 
 ## 7.0.5
 
@@ -92,11 +92,19 @@
 - [#1888](https://github.com/ember-intl/ember-intl/pull/1888) Called normalizeLocale() when reading or writing to this.\_intls ([@ijlee2](https://github.com/ijlee2))
 - [#1883](https://github.com/ember-intl/ember-intl/pull/1883) Patched #1877 and #1882 ([@ijlee2](https://github.com/ijlee2))
 - [#1882](https://github.com/ember-intl/ember-intl/pull/1882) Refactored code in lib ([@ijlee2](https://github.com/ijlee2))
+- [#1880](https://github.com/ember-intl/ember-intl/pull/1880) Added @babel/core as a dependency (required by ember-cli-babel@v8) ([@mkszepp](https://github.com/mkszepp))
 - [#1876](https://github.com/ember-intl/ember-intl/pull/1876) Removed 3 dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1872](https://github.com/ember-intl/ember-intl/pull/1872) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1864](https://github.com/ember-intl/ember-intl/pull/1864) Remove broccoli-merge-files ([@LucasHill](https://github.com/LucasHill))
 - [#1862](https://github.com/ember-intl/ember-intl/pull/1862) Updated development dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#1859](https://github.com/ember-intl/ember-intl/pull/1859) Added CHANGELOG.md and tsconfig.json to .npmignore ([@ijlee2](https://github.com/ijlee2))
 - [#1857](https://github.com/ember-intl/ember-intl/pull/1857) Removed @types/htmlbars-inline-precompile from devDependencies ([@ijlee2](https://github.com/ijlee2))
+
+## 6.5.6
+
+### Patch Changes
+
+- [#1918](https://github.com/ember-intl/ember-intl/pull/1918) Listed @ember/test-helpers as a peer dependency ([@ijlee2](https://github.com/ijlee2))
 
 ## 6.5.5
 
