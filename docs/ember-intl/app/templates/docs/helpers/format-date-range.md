@@ -7,7 +7,7 @@ Uses [`Intl.DateTimeFormat#formatRange()`](https://developer.mozilla.org/docs/We
 
   <demo.example @name="docs__helpers__format-date-range__example-1">
     <div>
-      Between yesterday and today: {{format-date-range this.yesterday this.today}}
+      Range: {{format-date-range this.yesterday this.today}}
     </div>
   </demo.example>
 
