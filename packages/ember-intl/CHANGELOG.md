@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.1.0
+
+### Minor Changes
+
+- [#1931](https://github.com/ember-intl/ember-intl/pull/1931) Created {{format-date-range}} helper ([@miguelcobain](https://github.com/miguelcobain))
+
+### Patch Changes
+
+- [#1935](https://github.com/ember-intl/ember-intl/pull/1935) Documented {{format-date-range}} helper ([@miguelcobain](https://github.com/miguelcobain))
+
 ## 7.0.9
 
 ### Patch Changes

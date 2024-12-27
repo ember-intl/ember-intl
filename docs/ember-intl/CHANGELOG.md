@@ -1,5 +1,11 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.5.0
+
+### Minor Changes
+
+- [#1935](https://github.com/ember-intl/ember-intl/pull/1935) Documented {{format-date-range}} helper ([@miguelcobain](https://github.com/miguelcobain))
+
 ## 1.4.1
 
 ### Patch Changes

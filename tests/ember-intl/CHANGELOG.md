@@ -1,5 +1,11 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.4.0
+
+### Minor Changes
+
+- [#1931](https://github.com/ember-intl/ember-intl/pull/1931) Created {{format-date-range}} helper ([@miguelcobain](https://github.com/miguelcobain))
+
 ## 1.3.21
 
 ### Patch Changes
