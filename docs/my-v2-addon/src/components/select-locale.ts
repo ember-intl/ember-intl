@@ -26,7 +26,6 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
   constructor(owner: Owner, args: SelectLocaleSignature['Args']) {
     super(owner, args);
 
-    // @ts-expect-error: Property 'primaryLocale' does not exist on type 'Service'
     this.value = this.intl.primaryLocale as SupportedLocale;
   }
 
@@ -58,7 +57,6 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
       }
     }
 
-    // @ts-expect-error: Property 'setLocale' does not exist on type 'Service'
     this.intl.setLocale(locale);
   }
 
