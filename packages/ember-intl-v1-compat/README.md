@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/dm/ember-intl.svg)](https://www.npmjs.com/package/ember-intl)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-intl.svg)](http://emberobserver.com/addons/ember-intl)
 
-# ember-intl
+# ember-intl-v1-compat
 
 
 ## Installation
