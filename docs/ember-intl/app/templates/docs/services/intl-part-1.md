@@ -31,6 +31,7 @@ const output = this.intl.formatDate('2014-01-23T18:00:44');
 // '1/23/2014'
 ```
 
+
 ### formatDateRange()
 
 Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) to format a date range.
@@ -38,10 +39,11 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 The 1st argument `from` and 2nd argument `to` are required and expect a `Date` or `number` (Unix timestamp). You can pass options for `Intl.DateTimeFormat` in the 3rd argument.
 
 ```ts
-const date1 = new Date(Date.UTC(1906, 0, 10, 11, 0, 0)); // Wed, 10 Jan 1906 11:00:00 
-const date2 = new Date(Date.UTC(1906, 0, 20, 10, 0, 0)); // Sat, 20 Jan 1906 10:00:00
+const date1 = new Date('2014-01-23T18:00:44');
+const date2 = new Date('2014-01-26T19:30:34');
+
 const output = this.intl.formatDateRange(date1, date2);
-// '1/10/1906 – 1/20/1906'
+// '1/23/2014 – 1/26/2014'
 ```
 
 
