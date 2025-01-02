@@ -53,6 +53,10 @@ module(
 
     test('we can format the date', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
+        <div data-test-output="1">
+          {{format-date-range this.from this.to format='custom'}}
+        </div>
+
         <div data-test-output="2">
           {{format-date-range
             this.from
@@ -63,6 +67,10 @@ module(
           }}
         </div>
       `);
+
+      assert
+        .dom('[data-test-output="1"]')
+        .hasText('1/23/14, 6:00 PM – 1/26/14, 7:30 PM');
 
       assert
         .dom('[data-test-output="2"]')
