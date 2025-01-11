@@ -37,7 +37,7 @@
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@formatjs/icu-messageformat-parser": "^2.9.7",
-    "@formatjs/intl": "^3.0.4",
+    "@formatjs/intl": "^3.1.0",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.8",
     "broccoli-merge-trees": "^4.2.0",

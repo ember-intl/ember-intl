@@ -22,7 +22,7 @@ Every `format*()` method returns an empty string when `value` (the 1st positiona
 
 ### formatDate()
 
-Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) to format a date.
+Uses [`Intl.DateTimeFormat#format()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/format) to format a date.
 
 The 1st argument `value` is required and expects a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 2nd argument.
 
@@ -34,7 +34,7 @@ const output = this.intl.formatDate('2014-01-23T18:00:44');
 
 ### formatDateRange()
 
-Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) to format a date range.
+Uses [`Intl.DateTimeFormat#formatRange()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange) to format a date range.
 
 The 1st argument `from` and 2nd argument `to` are required and expect a `Date` or `number` (Unix timestamp). You can pass options for `Intl.DateTimeFormat` in the 3rd argument.
 
@@ -49,7 +49,7 @@ const output = this.intl.formatDateRange(date1, date2);
 
 ### formatList()
 
-Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat) to join an array of strings.
+Uses [`Intl.ListFormat#format()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/format) to join an array of strings.
 
 The 1st argument `value` is required and expects a `string[]`. You can pass options for `Intl.ListFormat` in the 2nd argument.
 
@@ -99,7 +99,7 @@ const output = this.intl.formatMessage(
 
 ### formatNumber()
 
-Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) to format a number.
+Uses [`Intl.NumberFormat#format()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/format) to format a number.
 
 The 1st argument `value` is required and expects a `bigint` or `number`. You can pass options for `Intl.NumberFormat` in the 2nd argument.
 
@@ -111,7 +111,7 @@ const output = this.intl.formatNumber(12345);
 
 ### formatRelative()
 
-Uses [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat) to format the time relative to now.
+Uses [`Intl.RelativeTimeFormat#format()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/format) to format the time relative to now.
 
 The 1st argument `value` is required and expects a `number`. You can pass options for `Intl.RelativeTimeFormat` in the 2nd argument.
 

@@ -27,7 +27,6 @@ module(
 
       await render(hbs`
         <div data-test-output>
-          {{! @glint-expect-error }}
           {{format-date-range 'hello world' 'hello world'}}
         </div>
       `);
