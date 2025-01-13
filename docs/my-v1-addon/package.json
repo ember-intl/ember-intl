@@ -1,6 +1,6 @@
 {
   "name": "my-v1-addon",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": true,
   "description": "A v1 addon with ember-intl",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "my-classic-app",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "private": true,
   "description": "An Ember app with the classic build",
   "keywords": [],

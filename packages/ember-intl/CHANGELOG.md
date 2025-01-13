@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.1.1
+
+### Patch Changes
+
+- [#1940](https://github.com/ember-intl/ember-intl/pull/1940) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1938](https://github.com/ember-intl/ember-intl/pull/1938) Updated @formatjs/intl to 3.1.0, to allow passing ISO strings to {{format-date-range}} helper ([@miguelcobain](https://github.com/miguelcobain))
+
 ## 7.1.0
 
 ### Minor Changes

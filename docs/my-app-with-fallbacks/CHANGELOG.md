@@ -1,5 +1,11 @@
 # my-app-with-fallbacks
 
+## 1.0.7
+
+### Patch Changes
+
+- [#1940](https://github.com/ember-intl/ember-intl/pull/1940) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.6
 
 ### Patch Changes
