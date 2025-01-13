@@ -1,6 +1,6 @@
 # &#123;&#123;format-number&#125;&#125;
 
-Uses [`Intl.NumberFormat#format()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/format) to format a number.
+Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/format) to format a number.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
