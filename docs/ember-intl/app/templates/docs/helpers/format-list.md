@@ -1,6 +1,6 @@
 # &#123;&#123;format-list&#125;&#125;
 
-Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat) to join an array of strings.
+Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/format) to join an array of strings.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

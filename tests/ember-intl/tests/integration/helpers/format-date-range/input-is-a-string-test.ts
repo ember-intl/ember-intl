@@ -1,5 +1,3 @@
-/* eslint-disable no-irregular-whitespace, qunit/no-commented-tests */
-/*
 import {
   render,
   type TestContext as BaseTestContext,
@@ -86,4 +84,3 @@ module(
     });
   },
 );
-*/

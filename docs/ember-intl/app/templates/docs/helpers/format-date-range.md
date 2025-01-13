@@ -1,6 +1,6 @@
 # &#123;&#123;format-date-range&#125;&#125;
 
-Uses [`Intl.DateTimeFormat#formatRange()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange) to format a date range.
+Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange) to format a date range.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

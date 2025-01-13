@@ -1,6 +1,6 @@
 # &#123;&#123;format-relative&#125;&#125;
 
-Uses [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat) to format the time relative to now.
+Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/format) to format the time relative to now.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
