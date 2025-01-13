@@ -31,10 +31,8 @@ module.exports = function (defaults) {
     splitAtRoutes: [],
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
-    staticComponents: true,
     staticEmberSource: true,
-    staticHelpers: true,
-    staticModifiers: true,
+    staticInvokables: true,
   };
 
   return require('@embroider/compat').compatBuild(app, Webpack, options);

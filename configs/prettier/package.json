@@ -19,7 +19,7 @@
     "prettier-plugin-ember-template-tag": "^2.0.4"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0",
+    "concurrently": "^9.1.2",
     "prettier": "^3.4.2"
   },
   "peerDependencies": {
