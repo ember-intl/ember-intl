@@ -36,7 +36,7 @@ const output = this.intl.formatDate('2014-01-23T18:00:44');
 
 Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange) to format a date range.
 
-The 1st argument `from` and 2nd argument `to` are required and expect a `Date` or `number` (Unix timestamp). You can pass options for `Intl.DateTimeFormat` in the 3rd argument.
+The 1st argument `from` and 2nd argument `to` are required and expect a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 3rd argument.
 
 ```ts
 const date1 = new Date('2014-01-23T18:00:44');
