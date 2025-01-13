@@ -28,12 +28,4 @@ export default {
       second: 'numeric',
     },
   },
-
-  dateTimeRange: {
-    'user-friendly': {
-      day: 'numeric',
-      month: 'long',
-      weekday: 'short',
-    },
-  },
 };

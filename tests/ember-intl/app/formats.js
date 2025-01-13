@@ -35,14 +35,4 @@ export default {
       second: 'numeric',
     },
   },
-
-  dateTimeRange: {
-    custom: {
-      year: '2-digit',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    },
-  },
 };

@@ -23,36 +23,6 @@ Uses [`Intl.DateTimeFormat#formatRange()`](https://developer.mozilla.org/docs/We
 </DocsDemo>
 
 
-## options.format
-
-A consuming app can define custom formats for `{{format-date-range}}` in `app/formats.js`. Pass a format key to the named argument `format`.
-
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-date-range__example-2">
-    <div>
-      {{format-date-range this.yesterday this.today format="user-friendly"}}
-    </div>
-  </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-date-range__example-2__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-date-range__example-2__example.ts"
-  />
-
-  <demo.snippet
-    @label="format.js"
-    @name="docs__helpers__format-date-range__example-2__app__format.js"
-  />
-</DocsDemo>
-
-
 ## options.locale
 
 You can display the text in another locale (i.e. independently from the user's preferred locale).
