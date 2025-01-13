@@ -70,7 +70,7 @@
     "ember-intl": "workspace:*",
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^8.2.3",
-    "ember-qunit": "^8.1.1",
+    "ember-qunit": "^9.0.1",
     "ember-resolver": "^13.1.0",
     "ember-source": "~6.0.1",
     "ember-template-lint": "^6.0.0",
