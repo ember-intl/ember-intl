@@ -80,7 +80,7 @@
     "prettier": "^3.4.2",
     "qunit": "^2.23.1",
     "qunit-dom": "^3.4.0",
-    "stylelint": "^16.13.0",
+    "stylelint": "^16.13.2",
     "typescript": "^5.7.3",
     "webpack": "^5.97.1"
   },

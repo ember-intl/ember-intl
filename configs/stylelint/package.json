@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "prettier": "^3.4.2",
-    "stylelint": "^16.13.0"
+    "stylelint": "^16.13.2"
   },
   "peerDependenciesMeta": {
     "prettier": {
