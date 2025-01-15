@@ -5,7 +5,10 @@
     "allowJs": true,
     "declarationDir": "declarations",
     "rootDir": "./src",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "ember-source/types"
+    ]
   },
   "include": [
     "src/**/*",

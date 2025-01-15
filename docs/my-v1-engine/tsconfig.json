@@ -18,7 +18,10 @@
       "my-v1-engine/test-support/*": ["addon-test-support/*"],
       "*": ["types/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "ember-source/types"
+    ]
   },
   "glint": {
     "environment": [

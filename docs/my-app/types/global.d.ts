@@ -1,7 +1,19 @@
-// Types for compiled templates
-declare module 'my-app/templates/*' {
-  import type { TemplateFactory } from 'ember-cli-htmlbars';
+import '@glint/environment-ember-loose';
+import '@glint/environment-ember-template-imports';
 
-  const tmpl: TemplateFactory;
-  export default tmpl;
+import type EmberIntlRegistry from 'ember-intl/template-registry';
+import type EmberPageTitleRegistry from 'ember-page-title/template-registry';
+import type MyV2AddonRegistry from 'my-v2-addon/template-registry';
+
+import type MyV1AddonRegistry from './my-v1-addon';
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry
+    extends EmberIntlRegistry,
+      EmberPageTitleRegistry,
+      MyV1AddonRegistry,
+      MyV2AddonRegistry {
+    // Add any registry entries from other addons here that your addon itself uses (in non-strict mode templates)
+    // See https://typed-ember.gitbook.io/glint/using-glint/ember/using-addons
+  }
 }

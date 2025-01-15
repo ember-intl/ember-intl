@@ -4,7 +4,10 @@
     "declarationDir": "declarations",
     "emitDeclarationOnly": true,
     "noEmit": false,
-    "rootDir": "."
+    "rootDir": ".",
+    "types": [
+      "ember-source/types"
+    ]
   },
   "include": ["addon", "addon-test-support"]
 }
