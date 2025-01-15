@@ -25,7 +25,7 @@
     "lint:yml:fix": "prettier --write \"translations/**/*.{yaml,yml}\"",
     "start": "ember serve",
     "test": "ember test --test-port=0",
-    "test:ember-compatibility": "./node_modules/.bin/ember try:one"
+    "test:ember-compatibility": "ember try:one"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
