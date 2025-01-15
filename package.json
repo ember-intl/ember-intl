@@ -10,20 +10,20 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "lint": "pnpm --filter '*' lint",
-    "lint:fix": "pnpm --filter '*' lint:fix",
+    "lint": "pnpm --filter \"*\" lint",
+    "lint:fix": "pnpm --filter \"*\" lint:fix",
     "prepare": "pnpm --filter my-v2-addon build",
     "release:changelog": "changeset version; update-workspace-root-version",
     "release:package": "changeset publish",
     "start": "pnpm --filter docs-app-for-ember-intl start",
-    "test": "pnpm --filter '*' test"
+    "test": "pnpm --filter \"*\" test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.11",
     "@changesets/get-github-info": "^0.6.0",
     "update-workspace-root-version": "^1.0.1"
   },
-  "packageManager": "pnpm@9.15.1",
+  "packageManager": "pnpm@9.15.3",
   "engines": {
     "node": "18.* || >= 20",
     "pnpm": ">= 9"

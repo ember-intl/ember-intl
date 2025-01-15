@@ -36,23 +36,19 @@
     "translations"
   ],
   "scripts": {
-    "build": "concurrently 'pnpm:build:*' --names 'build:'",
-    "build:js": "rollup --config",
-    "build:types": "glint --declaration",
-    "lint": "concurrently 'pnpm:lint:*(!fix)' --names 'lint:'",
-    "lint:fix": "concurrently 'pnpm:lint:*:fix' --names 'fix:'",
+    "build": "rollup --config",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
-    "lint:yml": "prettier --check 'translations/**/*.{yaml,yml}'",
-    "lint:yml:fix": "prettier --write 'translations/**/*.{yaml,yml}'",
+    "lint:yml": "prettier --check \"translations/**/*.{yaml,yml}\"",
+    "lint:yml:fix": "prettier --write \"translations/**/*.{yaml,yml}\"",
     "prepack": "rollup --config",
-    "start": "concurrently 'pnpm:start:*' --names 'start:'",
-    "start:js": "rollup --config --watch --no-watch.clearScreen",
-    "start:types": "glint --declaration --watch",
-    "test": "echo 'A v2 addon does not have tests, run tests in docs/my-app'"
+    "start": "rollup --config --watch",
+    "test": "echo \"A v2 addon does not have tests, run tests in docs/my-app\""
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.9.0",

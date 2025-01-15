@@ -12,7 +12,10 @@
       "my-v1-addon/*": ["../my-v1-addon/addon/*"],
       "*": ["types/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "ember-source/types"
+    ]
   },
   "glint": {
     "environment": [

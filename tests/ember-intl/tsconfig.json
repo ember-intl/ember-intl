@@ -11,7 +11,10 @@
       "test-app-for-ember-intl/*": ["app/*"],
       "*": ["types/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "ember-source/types"
+    ]
   },
   "include": [
     "app/**/*",

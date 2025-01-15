@@ -3,7 +3,6 @@
 
 import '@glint/environment-ember-loose';
 import '@glint/environment-ember-template-imports';
-import 'ember-source/types';
 
 import type EmberTruthHelpersRegistry from 'ember-truth-helpers/template-registry';
 
