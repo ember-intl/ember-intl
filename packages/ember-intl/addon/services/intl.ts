@@ -353,10 +353,6 @@ export default class IntlService extends Service {
   }
 
   private getDefaultFormats(): void {
-    if (this._formats) {
-      return;
-    }
-
     // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
     this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
   }
