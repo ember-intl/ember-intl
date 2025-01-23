@@ -120,12 +120,17 @@ module.exports = {
   getUserConfig() {
     const { env: environment, project } = this.app;
 
-    const config = join(dirname(project.configPath()), 'ember-intl.js');
+    const configFile = join(
+      dirname(project.configPath()),
+      'ember-intl-config.js',
+    );
 
-    if (!existsSync(config)) {
+    if (!existsSync(configFile)) {
       return {};
     }
 
-    return require(config)(environment);
+    const { options } = require(configFile);
+
+    return options(environment);
   },
 };

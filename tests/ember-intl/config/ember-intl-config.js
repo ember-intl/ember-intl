@@ -1,5 +1,7 @@
-export default {
-  date: {
+'use strict';
+
+const formats = {
+  'format-date': {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
@@ -7,7 +9,7 @@ export default {
     },
   },
 
-  number: {
+  'format-number': {
     EUR: {
       currency: 'EUR',
       style: 'currency',
@@ -28,11 +30,34 @@ export default {
     },
   },
 
-  time: {
+  'format-time': {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
     },
   },
+};
+
+const options = (/* environment */) => {
+  return {
+    errorOnMissingTranslations: false,
+
+    errorOnNamedArgumentMismatch: false,
+
+    fallbackLocale: null,
+
+    inputPath: 'translations',
+
+    publicOnly: false,
+
+    stripEmptyTranslations: false,
+
+    wrapTranslationsWithNamespace: true,
+  };
+};
+
+module.exports = {
+  formats,
+  options,
 };

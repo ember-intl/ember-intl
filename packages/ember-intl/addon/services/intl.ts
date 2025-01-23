@@ -1,7 +1,7 @@
-import { getOwner } from '@ember/application';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
+import { getOwnConfig } from '@embroider/macros';
 import { tracked } from '@glimmer/tracking';
 
 import type {
@@ -36,6 +36,7 @@ import {
 } from '../-private/utils/locale';
 import { flattenKeys, type Translations } from '../-private/utils/translations';
 import translations from '../translations';
+import type { EmberIntlConfig } from '../types/config';
 
 type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
@@ -353,8 +354,30 @@ export default class IntlService extends Service {
   }
 
   private getDefaultFormats(): void {
-    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-    this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
+    function renameKeys(
+      obj: Record<string, any>,
+      newKeys: Record<string, string>,
+    ) {
+      const keyValues = Object.keys(obj).map((key) => {
+        const newKey = newKeys[key] || key;
+
+        return {
+          [newKey]: obj[key],
+        };
+      });
+
+      return Object.assign({}, ...keyValues);
+    }
+
+    const formats = getOwnConfig<EmberIntlConfig>().formats ?? {};
+
+    const newFormats = renameKeys(formats, {
+      'format-date': 'date',
+      'format-number': 'number',
+      'format-time': 'time',
+    });
+
+    this._formats = newFormats;
   }
 
   private getIntl(locale: string | string[]): IntlShape | undefined {
