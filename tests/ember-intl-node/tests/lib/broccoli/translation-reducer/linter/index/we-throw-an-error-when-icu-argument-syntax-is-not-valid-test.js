@@ -3,11 +3,7 @@ import Linter from 'ember-intl/lib/broccoli/translation-reducer/linter/index.js'
 
 describe('lib | broccoli | translation-reducer | linter | index', function () {
   it('we throw an error when ICU argument syntax is not valid', function () {
-    const linter = new Linter({
-      requiresTranslation() {
-        return true;
-      },
-    });
+    const linter = new Linter();
 
     expect(() => {
       linter.lint({

@@ -70,18 +70,13 @@ class TranslationReducer extends CachingWriter {
       outputPath: '',
       fallbackLocale: null,
       log() {},
-      requiresTranslation(/* key, locale */) {
-        return true;
-      },
       mergeTranslationFiles: false,
       ...options,
     };
 
     this.options.fallbackLocale = normalizeLocale(this.options.fallbackLocale);
 
-    this.linter = new Linter({
-      requiresTranslation: this.options.requiresTranslation,
-    });
+    this.linter = new Linter();
   }
 
   mergeTranslations(filePaths) {
