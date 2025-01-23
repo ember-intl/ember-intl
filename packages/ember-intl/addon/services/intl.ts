@@ -88,10 +88,7 @@ export default class IntlService extends Service {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
-    if (!this._formats) {
-      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-      this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
-    }
+    this.getDefaultFormats();
 
     // Hydrate
     translations.forEach(([locale, translations]: [string, Translations]) => {
@@ -353,6 +350,15 @@ export default class IntlService extends Service {
       },
       this._cache,
     );
+  }
+
+  private getDefaultFormats(): void {
+    if (this._formats) {
+      return;
+    }
+
+    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
+    this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
   }
 
   private getIntl(locale: string | string[]): IntlShape | undefined {
