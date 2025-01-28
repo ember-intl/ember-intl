@@ -1,6 +1,6 @@
 {
   "name": "workspace-root",
-  "version": "7.1.1",
+  "version": "7.1.2",
   "private": true,
   "description": "Workspace root for ember-intl",
   "repository": {
@@ -13,8 +13,8 @@
     "lint": "pnpm --filter \"*\" lint",
     "lint:fix": "pnpm --filter \"*\" lint:fix",
     "prepare": "pnpm --filter my-v2-addon build",
-    "release:changelog": "changeset version; update-workspace-root-version",
-    "release:package": "changeset publish",
+    "release:prepare": "changeset version; update-workspace-root-version",
+    "release:publish": "changeset publish",
     "start": "pnpm --filter docs-app-for-ember-intl start",
     "test": "pnpm --filter \"*\" test"
   },

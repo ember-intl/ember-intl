@@ -1,5 +1,12 @@
 # my-app
 
+## 1.0.16
+
+### Patch Changes
+
+- [#1944](https://github.com/ember-intl/ember-intl/pull/1944) Allowed @ember/test-helpers@5.x ([@mkszepp](https://github.com/mkszepp))
+- [#1943](https://github.com/ember-intl/ember-intl/pull/1943) Downstreamed ember-cli blueprints ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.15
 
 ### Patch Changes

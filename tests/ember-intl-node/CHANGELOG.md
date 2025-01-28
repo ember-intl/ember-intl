@@ -1,5 +1,11 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.18
+
+### Patch Changes
+
+- [#1943](https://github.com/ember-intl/ember-intl/pull/1943) Downstreamed ember-cli blueprints ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.17
 
 ### Patch Changes
