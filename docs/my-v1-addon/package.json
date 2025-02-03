@@ -50,7 +50,8 @@
     "ember-auto-import": "^2.10.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
-    "ember-intl": "workspace:*"
+    "ember-intl": "workspace:*",
+    "ember-intl-v1-compat": "workspace:*"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.2.0",
@@ -93,10 +94,14 @@
     "webpack": "^5.97.1"
   },
   "peerDependencies": {
-    "ember-intl": "workspace:*"
+    "ember-intl": "workspace:*",
+    "ember-intl-v1-compat": "workspace:*"
   },
   "peerDependenciesMeta": {
     "ember-intl": {
+      "optional": false
+    },
+    "ember-intl-v1-compat": {
       "optional": false
     }
   },
