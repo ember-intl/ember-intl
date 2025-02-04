@@ -1,6 +1,6 @@
 # &#123;&#123;t&#125;&#125;
 
-The `{{t}}` helper finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.io/docs/core-concepts/icu-syntax). The helper returns the resulting string.
+The `{{t}}` helper finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.github.io/docs/core-concepts/icu-syntax/). The helper returns the resulting string.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
@@ -30,7 +30,7 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
 
 ## Passing data
 
-We use the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) to pass data to translations. Data can also be formatted when you specify their type.
+We use the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/) to pass data to translations. Data can also be formatted when you specify their type.
 
 ```yml
 # A simple argument

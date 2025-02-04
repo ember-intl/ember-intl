@@ -1,6 +1,6 @@
 # &#123;&#123;format-message&#125;&#125;
 
-Formats a string with the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax).
+Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/).
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
