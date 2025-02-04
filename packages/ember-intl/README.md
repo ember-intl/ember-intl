@@ -13,7 +13,7 @@ See https://ember-intl.github.io/ember-intl/docs/quickstart.
 ## Features
 
 * 🐹 Compatible with Ember apps, v1 addons (including engines), and v2 addons.
-* 📚 Built on standards: [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) and [Internationalization API](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* 📚 Built on standards: [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/) and [Internationalization API](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 * 🌐 Support for 150+ languages.
 * ⚙️ Locale-aware helpers and `intl` service, to help you display translations, numbers, dates, etc.
 * ✅ Test helpers to check locale-dependent templates.

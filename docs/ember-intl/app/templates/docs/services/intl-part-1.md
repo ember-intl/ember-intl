@@ -61,7 +61,7 @@ const output = this.intl.formatList(['apples', 'bananas', 'oranges']);
 
 ### formatMessage()
 
-Formats a string with the [ICU message syntax](https://formatjs.io/docs/core-concepts/icu-syntax).
+Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/).
 
 The 1st argument `value` is required and expects a `MessageDescriptor` or `string`. You can pass data for the message in the 2nd argument.
 
@@ -135,7 +135,7 @@ const output = this.intl.formatTime('2014-01-23T18:00:44');
 
 ### t()
 
-Finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.io/docs/core-concepts/icu-syntax) (optional).
+Finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.github.io/docs/core-concepts/icu-syntax/) (optional).
 
 The 1st argument `key` is required and expects a `string` (non-empty). You can pass data for the translation message in the 2nd argument.
 

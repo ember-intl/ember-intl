@@ -12,7 +12,7 @@
         🐹 Compatible with Ember apps, v1 addons (including engines), and v2 addons.
       </li>
       <li>
-        📚 Built on standards: <a class="external-link" href="https://formatjs.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
+        📚 Built on standards: <a class="external-link" href="https://formatjs.github.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
       </li>
       <li>
         🌐 Support for 150+ languages.

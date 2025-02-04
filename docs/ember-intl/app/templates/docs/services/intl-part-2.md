@@ -96,7 +96,7 @@ console.log(this.intl.getTranslation('hello.message', 'de-de'));
 // 'Hallo, {name}!'
 ```
 
-This method could be used to create default values for arguments, so that users don't see the raw message when an argument doesn't have a value. To extract the message arguments, you can use [`@formatjs/icu-messageformat-parser`](https://formatjs.io/docs/icu-messageformat-parser/).
+This method could be used to create default values for arguments, so that users don't see the raw message when an argument doesn't have a value. To extract the message arguments, you can use [`@formatjs/icu-messageformat-parser`](https://formatjs.github.io/docs/icu-messageformat-parser/).
 
 
 ### setLocale()
@@ -134,7 +134,7 @@ this.intl.setLocale(['de-AT', 'de-DE', 'en-US']);
 
 ### setOnFormatjsError()
 
-Specify what to do when `@formatjs/intl` errors. Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.io/docs/guides/develop#error-codes).
+Specify what to do when `@formatjs/intl` errors. Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.github.io/docs/guides/develop#error-codes).
 
 The following example ignores `FORMAT_ERROR` (incorrect or missing argument values), in addition to `MISSING_TRANSLATION` (default implementation of `ember-intl`).
 

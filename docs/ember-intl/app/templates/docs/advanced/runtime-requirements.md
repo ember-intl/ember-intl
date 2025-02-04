@@ -2,43 +2,43 @@
 
 `ember-intl` relies on these `Intl` APIs:
 
-- [Intl.getCanonicalLocales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales): Polyfill: [@formatjs/intl-getcanonicallocales](https://formatjs.io/docs/polyfills/intl-getcanonicallocales).
+- [Intl.getCanonicalLocales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales): Polyfill: [@formatjs/intl-getcanonicallocales](https://formatjs.github.io/docs/polyfills/intl-getcanonicallocales/).
 
 <a href="https://caniuse.com/#search=getCanonicalLocales">
   <img src={{root-url "images/getcanonicallocales.png"}} />
 </a>
 
-- [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): Polyfill: [@formatjs/intl-locale](https://formatjs.io/docs/polyfills/intl-locale).
+- [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): Polyfill: [@formatjs/intl-locale](https://formatjs.github.io/docs/polyfills/intl-locale/).
 
 <a href="https://caniuse.com/mdn-javascript_builtins_intl_locale_maximize">
   <img src={{root-url "images/locale.png"}} />
 </a>
 
-- [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+. Polyfill: [@formatjs/intl-numberformat](https://formatjs.io/docs/polyfills/intl-numberformat).
+- [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat): Available on IE11+. Polyfill: [@formatjs/intl-numberformat](https://formatjs.github.io/docs/polyfills/intl-numberformat/).
 
 <a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_numberformat">
   <img src={{root-url "images/numberformat.png"}} />
 </a>
 
-- [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+. Polyfill: [@formatjs/intl-datetimeformat](https://formatjs.io/docs/polyfills/intl-datetimeformat).
+- [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat): Available on IE11+. Polyfill: [@formatjs/intl-datetimeformat](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/).
 
 <a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_datetimeformat">
   <img src={{root-url "images/datetimeformat.png"}} />
 </a>
 
-- [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules): Polyfill: [`@formatjs/intl-pluralrules`](https://formatjs.io/docs/polyfills/intl-pluralrules).
+- [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules): Polyfill: [`@formatjs/intl-pluralrules`](https://formatjs.github.io/docs/polyfills/intl-pluralrules/).
 
 <a href="https://caniuse.com/#feat=intl-pluralrules">
   <img src={{root-url "images/pluralrules.png"}} />
 </a>
 
-- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat): Polyfill: [`@formatjs/intl-relativetimeformat`](https://formatjs.io/docs/polyfills/intl-relativetimeformat).
+- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat): Polyfill: [`@formatjs/intl-relativetimeformat`](https://formatjs.github.io/docs/polyfills/intl-relativetimeformat/).
 
 <a href="https://caniuse.com/#feat=mdn-javascript_builtins_intl_relativetimeformat">
   <img src={{root-url 'images/relativetimeformat.png'}} />
 </a>
 
-- [Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ListFormat): Polyfill: [`@formatjs/intl-listformat`](https://formatjs.io/docs/polyfills/intl-listformat).
+- [Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ListFormat): Polyfill: [`@formatjs/intl-listformat`](https://formatjs.github.io/docs/polyfills/intl-listformat/).
 
 
 ## Basic Polyfilling Strategies

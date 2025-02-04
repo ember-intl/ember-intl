@@ -9,7 +9,7 @@
 ## Features
 
 * 🐹 Compatible with Ember apps, v1 addons (including engines), and v2 addons.
-* 📚 Built on standards: <a class="external-link" href="https://formatjs.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
+* 📚 Built on standards: <a class="external-link" href="https://formatjs.github.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
 * 🌐 Support for 150+ languages.
 * ⚙️ Locale-aware helpers and `intl` service, to help you display translations, numbers, dates, etc.
 * ✅ Test helpers to check locale-dependent templates.
