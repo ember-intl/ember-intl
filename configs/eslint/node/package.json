@@ -8,12 +8,13 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
+  "type": "module",
   "main": "typescript/index.js",
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier --check \"**/*.js\"",
-    "lint:js:fix": "prettier --write \"**/*.js\""
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
     "@babel/core": "^7.26.7",
