@@ -8,7 +8,7 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
-  "main": ".eslintrc.js",
+  "main": "index.js",
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
