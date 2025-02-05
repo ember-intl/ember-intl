@@ -25,7 +25,8 @@
     "chai": "^5.1.2",
     "concurrently": "^9.1.2",
     "ember-intl": "workspace:*",
-    "eslint": "^8.57.1",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
     "mocha": "^11.1.0",
     "prettier": "^3.4.2"
   },

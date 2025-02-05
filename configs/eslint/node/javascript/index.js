@@ -4,10 +4,7 @@ import eslintPluginImport from 'eslint-plugin-import';
 import eslintPluginN from 'eslint-plugin-n';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
-import eslintPluginTypescriptSortKeys from 'eslint-plugin-typescript-sort-keys';
 import globals from 'globals';
-// eslint-disable-next-line import/no-unresolved
-import tseslint from 'typescript-eslint';
 
 const parserOptionsJs = {
   babelOptions: {
@@ -27,12 +24,7 @@ const parserOptionsJs = {
   requireConfigFile: false,
 };
 
-const parserOptionsTs = {
-  projectService: true,
-  tsconfigRootDir: import.meta.dirname,
-};
-
-export default tseslint.config(
+export default [
   {
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
@@ -65,35 +57,6 @@ export default tseslint.config(
     },
   },
 
-  // TypeScript files
-  {
-    extends: [
-      ...tseslint.configs.recommended,
-      eslintPluginImport.flatConfigs.typescript,
-    ],
-    files: ['**/*.ts'],
-    languageOptions: {
-      parserOptions: parserOptionsTs,
-    },
-    plugins: {
-      'typescript-sort-keys': eslintPluginTypescriptSortKeys,
-    },
-    rules: {
-      '@typescript-eslint/array-type': 'error',
-      '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/no-import-type-side-effects': 'error',
-      'import/no-duplicates': 'error',
-      'typescript-sort-keys/interface': 'error',
-      'typescript-sort-keys/string-enum': 'error',
-    },
-    settings: {
-      'import/resolver': {
-        node: true,
-        typescript: true,
-      },
-    },
-  },
-
   // Configuration files
   {
     files: ['**/*.cjs'],
@@ -118,4 +81,4 @@ export default tseslint.config(
       n: eslintPluginN,
     },
   },
-);
+];

@@ -8,12 +8,13 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
-  "main": ".eslintrc.js",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier --check \"**/*.js\"",
-    "lint:js:fix": "prettier --write \"**/*.js\""
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
     "eslint-plugin-yml": "^1.16.0"
@@ -22,11 +23,11 @@
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^9.1.2",
-    "eslint": "^8.57.1",
+    "eslint": "^9.19.0",
     "prettier": "^3.4.2"
   },
   "peerDependencies": {
-    "eslint": "^8.57.1",
+    "eslint": "^9.19.0",
     "prettier": "^3.4.2"
   },
   "peerDependenciesMeta": {

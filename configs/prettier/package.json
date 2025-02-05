@@ -8,12 +8,13 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
-  "main": ".prettierrc.js",
+  "type": "module",
+  "main": ".prettierrc.cjs",
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier --check \"**/*.js\"",
-    "lint:js:fix": "prettier --write \"**/*.js\""
+    "lint:js": "prettier . --check",
+    "lint:js:fix": "prettier . --write"
   },
   "dependencies": {
     "prettier-plugin-ember-template-tag": "^2.0.4"
