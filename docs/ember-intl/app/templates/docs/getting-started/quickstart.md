@@ -133,9 +133,35 @@ You can also use [`ember-template-lint-plugin-prettier`](https://github.com/embe
 
 With [`eslint-plugin-yml`](https://ota-meshi.github.io/eslint-plugin-yml/), you can enable a few rules to keep YAML files consistent.
 
+```js
+/* eslint.config.js (eslint@v9) */
+import eslintPluginYml from 'eslint-plugin-yml';
+
+export default [
+  ...eslintPluginYml.configs['flat/standard'],
+  {
+    rules: {
+      'yml/key-name-casing': [
+        'error',
+        {
+          camelCase: false,
+          'kebab-case': true,
+          PascalCase: false,
+          SCREAMING_SNAKE_CASE: false,
+          snake_case: false,
+          ignores: ['^[a-z0-9\\.-]+$'],
+        },
+      ],
+      'yml/no-empty-document': 'off',
+      'yml/no-multiple-empty-lines': 'error',
+      'yml/sort-keys': 'error',
+    },
+  },
+];
+```
 
 ```js
-/* .eslintrc.js */
+/* .eslintrc.js (eslint@v8) */
 'use strict';
 
 module.exports = {
