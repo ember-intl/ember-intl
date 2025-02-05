@@ -1,5 +1,12 @@
 # my-app-with-fallbacks
 
+## 1.0.9
+
+### Patch Changes
+
+- [#1948](https://github.com/ember-intl/ember-intl/pull/1948) Updated eslint to v9 ([@ijlee2](https://github.com/ijlee2))
+- [#1947](https://github.com/ember-intl/ember-intl/pull/1947) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.8
 
 ### Patch Changes

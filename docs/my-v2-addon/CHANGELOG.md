@@ -1,5 +1,12 @@
 # my-v2-addon
 
+## 1.0.17
+
+### Patch Changes
+
+- [#1948](https://github.com/ember-intl/ember-intl/pull/1948) Updated eslint to v9 ([@ijlee2](https://github.com/ijlee2))
+- [#1947](https://github.com/ember-intl/ember-intl/pull/1947) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.16
 
 ### Patch Changes

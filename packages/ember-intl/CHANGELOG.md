@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.1.3
+
+### Patch Changes
+
+- [#1948](https://github.com/ember-intl/ember-intl/pull/1948) Updated eslint to v9 ([@ijlee2](https://github.com/ijlee2))
+- [#1947](https://github.com/ember-intl/ember-intl/pull/1947) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1946](https://github.com/ember-intl/ember-intl/pull/1946) Updated URLs from formatjs website ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.1.2
 
 ### Patch Changes

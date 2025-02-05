@@ -20,11 +20,13 @@
 /CHANGELOG.md
 /CONTRIBUTING.md
 /ember-cli-build.js
+/eslint.config.mjs
 /pnpm-lock.yaml
 /testem.js
 /tests/
 /tsconfig.declarations.json
 /tsconfig.json
+/types/
 /yarn-error.log
 /yarn.lock
 .gitkeep
