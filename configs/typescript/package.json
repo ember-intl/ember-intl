@@ -9,22 +9,23 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "main": "ember/tsconfig.json",
+  "exports": {
+    "./ember": "./ember/index.json",
+    "./node18": "./node18/index.json"
+  },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier . --check",
-    "lint:js:fix": "prettier . --write"
+    "lint:js": "prettier \"**/*.{cjs,json,mjs}\" --check",
+    "lint:js:fix": "prettier \"**/*.{cjs,json,mjs}\" --write"
   },
   "dependencies": {
-    "@tsconfig/ember": "^3.0.9",
-    "@tsconfig/node18": "^18.2.4",
-    "@tsconfig/strictest": "^2.0.5"
+    "@ijlee2-frontend-configs/typescript": "^0.3.0"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^9.1.2",
-    "prettier": "^3.4.2"
+    "prettier": "^3.5.0"
   },
   "peerDependencies": {
     "typescript": "^5.7.3"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import {
   getContext,
   render,
@@ -6,7 +7,6 @@ import {
   type TestContext,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import type { IntlService } from 'ember-intl';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'my-app-with-fallbacks/tests/helpers';
 import { module, test } from 'qunit';
@@ -14,7 +14,7 @@ import { module, test } from 'qunit';
 function ignoreFormatError() {
   const { owner } = getContext() as TestContext;
 
-  const intl = owner.lookup('service:intl') as IntlService;
+  const intl = owner.lookup('service:intl');
 
   intl.setOnFormatjsError((error) => {
     switch (error.code) {

@@ -33,7 +33,7 @@ module(
     });
 
     test('input is an empty string', async function (assert) {
-      addTranslations('en-us', {
+      await addTranslations('en-us', {
         '': 'Hello, world!',
       });
 

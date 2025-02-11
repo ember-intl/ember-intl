@@ -1,7 +1,7 @@
 import { setApplication } from '@ember/test-helpers';
 import { setupEmberOnerrorValidation, start } from 'ember-qunit';
 import { loadTests } from 'ember-qunit/test-loader';
-import * as QUnit from 'qunit';
+import QUnit from 'qunit';
 import { setup } from 'qunit-dom';
 import Application from 'test-app-for-ember-intl/app';
 import config from 'test-app-for-ember-intl/config/environment';

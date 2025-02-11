@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import { Addon } from '@embroider/addon-dev/rollup';
 import { babel } from '@rollup/plugin-babel';
 

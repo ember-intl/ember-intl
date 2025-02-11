@@ -12,7 +12,6 @@
 /.gitignore
 /.pnpm-debug.log
 /.prettierignore
-/.prettierrc.js
 /.stylelintignore
 /.stylelintrc.js
 /.template-lintrc.js
@@ -22,6 +21,7 @@
 /ember-cli-build.js
 /eslint.config.mjs
 /pnpm-lock.yaml
+/prettier.config.mjs
 /testem.js
 /tests/
 /tsconfig.declarations.json

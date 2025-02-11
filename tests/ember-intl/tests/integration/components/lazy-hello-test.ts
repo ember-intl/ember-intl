@@ -81,6 +81,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         <LazyHello @name="Zoey" />
       `);
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       addTranslations('en-us', {
         'lazy-hello': {
           message: 'Hello, {name}!',
@@ -178,6 +179,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         <LazyHello @name="Zoey" />
       `);
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       addTranslations('de-de', {
         'lazy-hello': {
           message: 'Hallo, {name}!',

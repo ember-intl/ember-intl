@@ -1,6 +1,0 @@
-{
-  "extends": ["@tsconfig/node18/tsconfig", "@tsconfig/strictest/tsconfig"],
-  "compilerOptions": {
-    "moduleResolution": "NodeNext"
-  }
-}

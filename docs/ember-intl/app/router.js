@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import config from 'docs-app-for-ember-intl/config/environment';
 import AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
 

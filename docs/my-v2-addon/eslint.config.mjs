@@ -1,4 +1,4 @@
-import eslintConfigEmberV2Addon from '@shared-configs/eslint-config-ember/v2-addon/index.js';
-import eslintConfigYaml from '@shared-configs/eslint-config-yaml/index.js';
+import baseConfiguration from '@shared-configs/eslint-config-ember/v2-addon';
+import eslintConfigYaml from '@shared-configs/eslint-config-yaml';
 
-export default [...eslintConfigEmberV2Addon, ...eslintConfigYaml];
+export default [...baseConfiguration, ...eslintConfigYaml];

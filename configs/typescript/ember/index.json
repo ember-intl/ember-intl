@@ -1,0 +1,3 @@
+{
+  "extends": "@ijlee2-frontend-configs/typescript/ember"
+}

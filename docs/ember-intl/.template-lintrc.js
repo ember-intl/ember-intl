@@ -3,12 +3,7 @@
 const baseConfiguration = require('@shared-configs/ember-template-lint');
 
 module.exports = {
-  plugins: baseConfiguration.plugins,
-
-  extends: baseConfiguration.extends,
-
-  rules: baseConfiguration.rules,
-
+  ...baseConfiguration,
   overrides: [
     ...baseConfiguration.overrides,
     {

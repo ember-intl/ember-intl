@@ -9,22 +9,27 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "main": ".prettierrc.cjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    }
+  },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier . --check",
-    "lint:js:fix": "prettier . --write"
+    "lint:js": "prettier \"**/*.{cjs,mjs}\" --check",
+    "lint:js:fix": "prettier \"**/*.{cjs,mjs}\" --write"
   },
   "dependencies": {
-    "prettier-plugin-ember-template-tag": "^2.0.4"
+    "@ijlee2-frontend-configs/prettier": "^0.2.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "prettier": "^3.4.2"
+    "prettier": "^3.5.0"
   },
   "peerDependencies": {
-    "prettier": "^3.4.2"
+    "prettier": "^3.5.0"
   },
   "peerDependenciesMeta": {
     "prettier": {

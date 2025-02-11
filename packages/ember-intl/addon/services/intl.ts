@@ -55,6 +55,7 @@ export default class IntlService extends Service {
 
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       case 'MISSING_TRANSLATION': {
         // Do nothing
         break;
@@ -88,10 +89,7 @@ export default class IntlService extends Service {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
-    if (!this._formats) {
-      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-      this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
-    }
+    this.getDefaultFormats();
 
     // Hydrate
     translations.forEach(([locale, translations]: [string, Translations]) => {
@@ -102,8 +100,6 @@ export default class IntlService extends Service {
   willDestroy() {
     super.willDestroy();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: Argument of type 'Timer | undefined' is not assignable to parameter of type 'EmberRunTimer | undefined'
     // eslint-disable-next-line ember/no-runloop
     cancel(this._timer);
   }
@@ -269,13 +265,9 @@ export default class IntlService extends Service {
     if (hasLocaleChanged(proposedLocale, this._locale)) {
       this._locale = proposedLocale;
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Argument of type 'Timer | undefined' is not assignable to parameter of type 'EmberRunTimer | undefined'
       // eslint-disable-next-line ember/no-runloop
       cancel(this._timer);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Argument of type 'Timer | undefined' is not assignable to parameter of type 'EmberRunTimer | undefined'
       // eslint-disable-next-line ember/no-runloop
       this._timer = next(() => {
         this.updateDocumentLanguage();
@@ -355,6 +347,12 @@ export default class IntlService extends Service {
     );
   }
 
+  private getDefaultFormats(): void {
+    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
+  }
+
   private getIntl(locale: string | string[]): IntlShape | undefined {
     const resolvedLocale = normalizeLocale(convertToString(locale));
 
@@ -370,11 +368,14 @@ export default class IntlService extends Service {
   }
 
   private updateDocumentLanguage(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const dom = getDOM(this);
 
     if (dom) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       const html = dom.documentElement;
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       html.setAttribute('lang', this.primaryLocale);
     }
   }

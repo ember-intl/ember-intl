@@ -16,7 +16,7 @@ module('Unit | Service | intl', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function (this: TestContext) {
-    this.intl = this.owner.lookup('service:intl') as IntlService;
+    this.intl = this.owner.lookup('service:intl');
   });
 
   module('getters', function () {
@@ -96,7 +96,7 @@ module('Unit | Service | intl', function (hooks) {
 
   module('exists()', function () {
     module('locale is missing', function () {
-      test('returns true, if and only if, the key exists for an active locale (1)', async function (this: TestContext, assert) {
+      test('returns true, if and only if, the key exists for an active locale (1)', function (this: TestContext, assert) {
         this.intl.addTranslations('de-de', {});
 
         this.intl.addTranslations('en-us', {
@@ -109,7 +109,7 @@ module('Unit | Service | intl', function (hooks) {
         assert.true(this.intl.exists('foo2'));
       });
 
-      test('returns true, if and only if, the key exists for an active locale (2)', async function (this: TestContext, assert) {
+      test('returns true, if and only if, the key exists for an active locale (2)', function (this: TestContext, assert) {
         this.intl.addTranslations('de-de', {
           foo1: 'Hallo',
         });
@@ -124,7 +124,7 @@ module('Unit | Service | intl', function (hooks) {
         assert.true(this.intl.exists('foo2'));
       });
 
-      test('returns true, if and only if, the key exists for an active locale (3)', async function (this: TestContext, assert) {
+      test('returns true, if and only if, the key exists for an active locale (3)', function (this: TestContext, assert) {
         this.intl.addTranslations('de-de', {
           foo1: {
             bar: {
@@ -155,7 +155,7 @@ module('Unit | Service | intl', function (hooks) {
     });
 
     module('locale is specified', function () {
-      test('returns true, if and only if, the key exists for the specified locale (1)', async function (this: TestContext, assert) {
+      test('returns true, if and only if, the key exists for the specified locale (1)', function (this: TestContext, assert) {
         this.intl.addTranslations('de-de', {});
 
         this.intl.addTranslations('en-us', {
@@ -174,7 +174,7 @@ module('Unit | Service | intl', function (hooks) {
         assert.false(this.intl.exists('foo2', 'fr-fr'));
       });
 
-      test('returns true, if and only if, the key exists for the specified locale (2)', async function (this: TestContext, assert) {
+      test('returns true, if and only if, the key exists for the specified locale (2)', function (this: TestContext, assert) {
         this.intl.addTranslations('de-de', {
           foo1: 'Hallo',
         });
@@ -195,7 +195,7 @@ module('Unit | Service | intl', function (hooks) {
         assert.false(this.intl.exists('foo2', 'fr-fr'));
       });
 
-      test('returns true, if and only if, the key exists for the specified locale (3)', async function (this: TestContext, assert) {
+      test('returns true, if and only if, the key exists for the specified locale (3)', function (this: TestContext, assert) {
         this.intl.addTranslations('de-de', {
           foo1: {
             bar: {
@@ -438,6 +438,7 @@ module('Unit | Service | intl', function (hooks) {
     test('custom implementation ignores an error', function (this: TestContext, assert) {
       this.intl.setOnFormatjsError((error) => {
         switch (error.code) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
           case 'FORMAT_ERROR': {
             // Do nothing
             break;
@@ -506,7 +507,7 @@ module('Unit | Service | intl', function (hooks) {
   });
 
   module('t()', function () {
-    test('it works', async function (this: TestContext, assert) {
+    test('it works', function (this: TestContext, assert) {
       assert.strictEqual(
         this.intl.t('smoke-tests.hello.message', {
           name: 'Zoey',

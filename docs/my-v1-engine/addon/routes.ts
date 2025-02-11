@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 // @ts-expect-error: Cannot find module 'ember-engines/routes' or its corresponding type declarations.
 import buildRoutes from 'ember-engines/routes';
 

@@ -37,6 +37,7 @@ function setupApplicationTest(hooks: NestedHooks, options?: SetupTestOptions) {
 
 function setupRenderingTest(hooks: NestedHooks, options?: SetupTestOptions) {
   upstreamSetupRenderingTest(hooks, options);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   setupEngine(hooks, 'my-v1-engine');
 
   // Additional setup for rendering tests can be done here.
