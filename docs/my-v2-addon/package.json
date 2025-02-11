@@ -78,8 +78,8 @@
     "ember-intl": "workspace:*",
     "ember-source": "~6.1.0",
     "ember-template-lint": "^6.1.0",
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2",
+    "eslint": "^9.20.0",
+    "prettier": "^3.5.0",
     "rollup": "^4.34.3",
     "typescript": "^5.7.3"
   },

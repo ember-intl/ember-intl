@@ -1,5 +1,3 @@
 'use strict';
 
-module.exports = {
-  extends: ['stylelint-config-standard', 'stylelint-prettier/recommended'],
-};
+module.exports = require('@shared-configs/stylelint');

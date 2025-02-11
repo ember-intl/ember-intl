@@ -1,8 +1,8 @@
-import eslintConfigNodeTypescript from '@shared-configs/eslint-config-node/typescript/index.js';
+import baseConfiguration from '@shared-configs/eslint-config-node/typescript';
 import globals from 'globals';
 
 export default [
-  ...eslintConfigNodeTypescript,
+  ...baseConfiguration,
   {
     files: ['{tests,unit}/**/*.{cjs,cts,js,ts}'],
     languageOptions: {
