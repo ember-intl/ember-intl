@@ -12,7 +12,7 @@ const escaped: Record<string, string> = {
 const needToEscape = /[&<>"'`=]/;
 const badCharacters = /[&<>"'`=]/g;
 
-// https://github.com/emberjs/ember.js/blob/v5.8.0/packages/%40ember/-internals/glimmer/lib/utils/string.ts#L103-L118
+// https://github.com/emberjs/ember.js/blob/v5.12.0/packages/%40ember/-internals/glimmer/lib/utils/string.ts#L103-L118
 function escapeExpression(value: string): string {
   if (!needToEscape.test(value)) {
     return value;
@@ -47,10 +47,12 @@ export function escapeFormatMessageOptions<T extends Record<string, any>>(
     } else if (typeof value === 'string') {
       newValue = escapeExpression(value);
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       newValue = value;
     }
 
     // @ts-expect-error: Type not specific enough
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     escapedOptions[key] = newValue;
   }
 

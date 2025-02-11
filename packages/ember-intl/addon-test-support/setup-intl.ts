@@ -29,9 +29,9 @@ export function setupIntl(
     intl.setOnMissingTranslation(onMissingTranslation);
 
     if (translations) {
-      addTranslations(locale, translations);
+      await addTranslations(locale, translations);
+    } else {
+      await settled();
     }
-
-    await settled();
   });
 }
