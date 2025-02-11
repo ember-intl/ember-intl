@@ -18,7 +18,7 @@
     "test": "mocha \"tests/**/*.{cjs,js}\""
   },
   "devDependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.11.0",
+    "@formatjs/icu-messageformat-parser": "^2.11.1",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
