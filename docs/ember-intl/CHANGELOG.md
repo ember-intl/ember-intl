@@ -1,5 +1,12 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.5.4
+
+### Patch Changes
+
+- [#1950](https://github.com/ember-intl/ember-intl/pull/1950) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1949](https://github.com/ember-intl/ember-intl/pull/1949) Consumed @ijlee2-frontend-configs (enabled recommendedTypeChecked) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.5.3
 
 ### Patch Changes

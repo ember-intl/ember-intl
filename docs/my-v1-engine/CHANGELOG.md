@@ -1,5 +1,12 @@
 # my-v1-engine
 
+## 1.0.15
+
+### Patch Changes
+
+- [#1950](https://github.com/ember-intl/ember-intl/pull/1950) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1949](https://github.com/ember-intl/ember-intl/pull/1949) Consumed @ijlee2-frontend-configs (enabled recommendedTypeChecked) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.14
 
 ### Patch Changes

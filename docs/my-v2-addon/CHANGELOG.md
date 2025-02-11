@@ -1,5 +1,12 @@
 # my-v2-addon
 
+## 1.0.18
+
+### Patch Changes
+
+- [#1950](https://github.com/ember-intl/ember-intl/pull/1950) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1949](https://github.com/ember-intl/ember-intl/pull/1949) Consumed @ijlee2-frontend-configs (enabled recommendedTypeChecked) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.17
 
 ### Patch Changes
