@@ -1,0 +1,17 @@
+---
+"my-classic-app-with-lazy-loaded-translations": patch
+"my-app-with-lazy-loaded-translations": patch
+"my-app-with-namespace-from-folders": patch
+"my-app-with-fallbacks": patch
+"test-ember-intl-node": patch
+"my-classic-app": patch
+"ember-intl": patch
+"my-v1-engine": patch
+"my-v1-addon": patch
+"my-v2-addon": patch
+"test-app-for-ember-intl": patch
+"docs-app-for-ember-intl": patch
+"my-app": patch
+---
+
+Consumed @ijlee2-frontend-configs (enabled recommendedTypeChecked)
