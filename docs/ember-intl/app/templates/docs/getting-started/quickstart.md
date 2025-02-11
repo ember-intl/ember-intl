@@ -134,7 +134,7 @@ You can also use [`ember-template-lint-plugin-prettier`](https://github.com/embe
 With [`eslint-plugin-yml`](https://ota-meshi.github.io/eslint-plugin-yml/), you can enable a few rules to keep YAML files consistent.
 
 ```js
-/* eslint.config.js (eslint@v9) */
+/* eslint.config.mjs (eslint@v9) */
 import eslintPluginYml from 'eslint-plugin-yml';
 
 export default [

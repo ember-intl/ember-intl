@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import type Owner from '@ember/owner';
-import { type Registry as Services, service } from '@ember/service';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+// @ts-expect-error: Cannot find module 'ember-intl/services/intl' or its corresponding type declarations.
+import type IntlService from 'ember-intl/services/intl';
 
 type Option = {
   label: string;
@@ -19,14 +22,13 @@ interface SelectLocaleSignature {
 export default class SelectLocaleComponent extends Component<SelectLocaleSignature> {
   fieldId = guidFor(this);
 
-  @service declare intl: Services['intl'];
+  @service declare intl: IntlService;
 
   @tracked value!: SupportedLocale;
 
   constructor(owner: Owner, args: SelectLocaleSignature['Args']) {
     super(owner, args);
 
-    // @ts-expect-error: Property 'primaryLocale' does not exist on type 'Service'
     this.value = this.intl.primaryLocale as SupportedLocale;
   }
 
@@ -58,7 +60,6 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
       }
     }
 
-    // @ts-expect-error: Property 'setLocale' does not exist on type 'Service'
     this.intl.setLocale(locale);
   }
 
