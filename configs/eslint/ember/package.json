@@ -9,7 +9,11 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "main": "app/index.js",
+  "exports": {
+    "./app": "./app/index.js",
+    "./v1-addon": "./v1-addon/index.js",
+    "./v2-addon": "./v2-addon/index.js"
+  },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
@@ -17,33 +21,18 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@babel/core": "^7.26.7",
-    "@babel/eslint-parser": "^7.26.5",
-    "@babel/plugin-proposal-decorators": "^7.25.9",
-    "@eslint/js": "^9.19.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-import-resolver-typescript": "^3.7.0",
-    "eslint-plugin-ember": "^12.5.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.15.1",
-    "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-qunit": "^8.1.2",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-typescript-sort-keys": "^3.3.0",
-    "globals": "^15.14.0",
-    "typescript-eslint": "^8.23.0"
+    "@ijlee2-frontend-configs/eslint-config-ember": "^0.2.1"
   },
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
-    "@types/eslint__js": "^8.42.3",
     "concurrently": "^9.1.2",
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2"
+    "eslint": "^9.20.0",
+    "prettier": "^3.5.0"
   },
   "peerDependencies": {
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2",
+    "eslint": "^9.20.0",
+    "prettier": "^3.5.0",
     "typescript": "^5.7.3"
   },
   "peerDependenciesMeta": {
@@ -54,7 +43,7 @@
       "optional": false
     },
     "typescript": {
-      "optional": false
+      "optional": true
     }
   },
   "engines": {

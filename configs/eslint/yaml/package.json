@@ -9,7 +9,7 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
@@ -23,12 +23,12 @@
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^9.1.2",
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2"
+    "eslint": "^9.20.0",
+    "prettier": "^3.5.0"
   },
   "peerDependencies": {
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2"
+    "eslint": "^9.20.0",
+    "prettier": "^3.5.0"
   },
   "peerDependenciesMeta": {
     "eslint": {

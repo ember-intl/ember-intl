@@ -9,25 +9,28 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "main": ".stylelintrc.cjs",
+  "exports": {
+    ".": {
+      "import": "./default/index.mjs",
+      "require": "./default/index.cjs"
+    }
+  },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier . --check",
-    "lint:js:fix": "prettier . --write"
+    "lint:js": "prettier \"**/*.{cjs,mjs}\" --check",
+    "lint:js:fix": "prettier \"**/*.{cjs,mjs}\" --write"
   },
   "dependencies": {
-    "stylelint-config-standard": "^37.0.0",
-    "stylelint-order": "^6.0.4",
-    "stylelint-prettier": "^5.0.3"
+    "@ijlee2-frontend-configs/stylelint": "^0.2.0"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^9.1.2",
-    "prettier": "^3.4.2"
+    "prettier": "^3.5.0"
   },
   "peerDependencies": {
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.0",
     "stylelint": "^16.14.1"
   },
   "peerDependenciesMeta": {
