@@ -1,5 +1,4 @@
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
-import type { IntlService } from 'ember-intl';
 import type { Translations } from 'ember-intl/-private/utils/translations';
 
 import { onMissingTranslation } from './-private/on-missing-translation';
@@ -23,7 +22,7 @@ export function setupIntl(
   hooks.beforeEach(async function (this: TestContext) {
     const { owner } = getContext() as TestContext;
 
-    const intl = owner.lookup('service:intl') as IntlService;
+    const intl = owner.lookup('service:intl');
 
     intl.setLocale(locale);
     intl.setOnMissingTranslation(onMissingTranslation);

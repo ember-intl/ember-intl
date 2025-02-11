@@ -14,7 +14,7 @@ type TParameters = Parameters<IntlService['t']>;
 export function t(key: TParameters[0], options?: TParameters[1]): string {
   const { owner } = getContext() as TestContext;
 
-  const intl = owner.lookup('service:intl') as IntlService;
+  const intl = owner.lookup('service:intl');
 
   return intl.t(key, options);
 }

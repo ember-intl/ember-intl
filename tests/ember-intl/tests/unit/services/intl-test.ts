@@ -16,7 +16,7 @@ module('Unit | Service | intl', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function (this: TestContext) {
-    this.intl = this.owner.lookup('service:intl') as IntlService;
+    this.intl = this.owner.lookup('service:intl');
   });
 
   module('getters', function () {
