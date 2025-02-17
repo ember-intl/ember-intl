@@ -55,6 +55,12 @@ export default class IntlService extends Service {
 
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
+      case 'MISSING_DATA': {
+        // Temporarily ignore errors caused by Chromium for `eu-es`
+        console.warn(error.message);
+        break;
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
       case 'MISSING_TRANSLATION': {
         // Do nothing
