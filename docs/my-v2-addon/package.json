@@ -56,9 +56,9 @@
     "ember-truth-helpers": "^4.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.7",
+    "@babel/core": "^7.26.9",
     "@babel/plugin-transform-typescript": "^7.26.8",
-    "@babel/runtime": "^7.26.7",
+    "@babel/runtime": "^7.26.9",
     "@ember/test-helpers": "^5.1.0",
     "@embroider/addon-dev": "^7.1.1",
     "@glimmer/component": "^2.0.0",
@@ -77,11 +77,11 @@
     "concurrently": "^9.1.2",
     "ember-intl": "workspace:*",
     "ember-source": "~6.2.0",
-    "ember-template-lint": "^6.1.0",
-    "eslint": "^9.20.0",
-    "prettier": "^3.5.0",
-    "rollup": "^4.34.6",
-    "typescript": "^5.7.3"
+    "ember-template-lint": "^7.0.1",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.3",
+    "rollup": "^4.34.9",
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "@ember/test-helpers": "^5.0.0",
