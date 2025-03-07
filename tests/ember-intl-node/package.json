@@ -22,13 +22,13 @@
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
-    "chai": "^5.1.2",
+    "chai": "^5.2.0",
     "concurrently": "^9.1.2",
     "ember-intl": "workspace:*",
-    "eslint": "^9.20.0",
-    "globals": "^15.14.0",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
     "mocha": "^11.1.0",
-    "prettier": "^3.5.0"
+    "prettier": "^3.5.3"
   },
   "engines": {
     "node": "18.* || >= 20"

@@ -10,8 +10,8 @@
   "author": "Isaac J. Lee",
   "type": "module",
   "exports": {
-    "./javascript": "./javascript/index.js",
-    "./typescript": "./typescript/index.js"
+    "./javascript": "./javascript/index.mjs",
+    "./typescript": "./typescript/index.mjs"
   },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
@@ -20,18 +20,18 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/eslint-config-node": "^0.2.1"
+    "@ijlee2-frontend-configs/eslint-config-node": "^0.2.5"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^9.1.2",
-    "eslint": "^9.20.0",
-    "prettier": "^3.5.0"
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.3"
   },
   "peerDependencies": {
-    "eslint": "^9.20.0",
-    "prettier": "^3.5.0",
-    "typescript": "^5.7.3"
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
   },
   "peerDependenciesMeta": {
     "eslint": {
