@@ -10,9 +10,10 @@
   "author": "Isaac J. Lee",
   "type": "module",
   "exports": {
-    "./app": "./app/index.js",
-    "./v1-addon": "./v1-addon/index.js",
-    "./v2-addon": "./v2-addon/index.js"
+    "./v1-addon": "./v1-addon/index.mjs",
+    "./v1-app": "./v1-app/index.mjs",
+    "./v2-addon": "./v2-addon/index.mjs",
+    "./v2-app": "./v2-app/index.mjs"
   },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",

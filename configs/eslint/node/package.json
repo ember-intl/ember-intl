@@ -10,8 +10,8 @@
   "author": "Isaac J. Lee",
   "type": "module",
   "exports": {
-    "./javascript": "./javascript/index.js",
-    "./typescript": "./typescript/index.js"
+    "./javascript": "./javascript/index.mjs",
+    "./typescript": "./typescript/index.mjs"
   },
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
