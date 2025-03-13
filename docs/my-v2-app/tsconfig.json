@@ -7,10 +7,10 @@
       "ember-intl/*": ["../../packages/ember-intl/addon/*"],
       "ember-intl/test-support": ["../../packages/ember-intl/addon-test-support"],
       "ember-intl/test-support/*": ["../../packages/ember-intl/addon-test-support/*"],
-      "my-app-with-lazy-loaded-translations/tests/*": ["tests/*"],
-      "my-app-with-lazy-loaded-translations/*": ["app/*"],
       "my-v1-addon": ["../my-v1-addon/addon/index"],
       "my-v1-addon/*": ["../my-v1-addon/addon/*"],
+      "my-v2-app/tests/*": ["tests/*"],
+      "my-v2-app/*": ["app/*"],
       "*": ["types/*"]
     },
     "skipLibCheck": true,
@@ -23,5 +23,10 @@
       "ember-loose",
       "ember-template-imports"
     ]
-  }
+  },
+  "include": [
+    "app/**/*",
+    "tests/**/*",
+    "types/**/*"
+  ]
 }
