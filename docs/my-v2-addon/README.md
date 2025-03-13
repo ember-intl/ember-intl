@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v2-addon` is a v2 addon. We use it in [`my-app`](../my-app) to show that translations can be provided by v2 addons.
+`my-v2-addon` is a v2 addon. We use it to show that v2 addons can provide translations.
 
 
 ## Local development

@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-engine` is an engine (routable, lazy loaded). We use it in [`my-classic-app`](../my-classic-app) to show that translations can be provided by engines.
+`my-v1-engine` is an engine (routable, lazy loaded). We use it to show that engines can provide translations.
 
 
 ## Local development

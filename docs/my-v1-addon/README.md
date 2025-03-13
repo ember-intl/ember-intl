@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-addon` is a v1 addon. We use it in [`my-app`](../my-app) to show that translations can be provided by v1 addons.
+`my-v1-addon` is a v1 addon. We use it to show that v1 addons can provide translations.
 
 
 ## Local development
