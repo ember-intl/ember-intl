@@ -1,6 +1,6 @@
 /**
  * Type declarations for
- *    import config from 'my-app-with-fallbacks/config/environment'
+ *    import config from 'my-v1-app-with-fallbacks/config/environment'
  */
 declare const config: {
   APP: Record<string, unknown>;

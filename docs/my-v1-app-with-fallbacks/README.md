@@ -1,4 +1,4 @@
-# my-app-with-fallbacks
+# my-v1-app-with-fallbacks
 
 1. [What is it?](#what-is-it)
 1. [Local development](#local-development)
@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-app-with-fallbacks` is an Embroider app. We use it to check fallbacks for `ember-intl`:
+`my-v1-app-with-fallbacks` is an Embroider app. We use it to check fallbacks for `ember-intl`:
 
 - `fallbackLocale` (from `config/ember-intl.js`)
 - `setOnFormatjsError()`
@@ -22,7 +22,7 @@ Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so tha
 pnpm prepare
 
 # Change directory
-cd docs/my-app-with-fallbacks
+cd docs/my-v1-app-with-fallbacks
 ```
 
 Some useful commands:

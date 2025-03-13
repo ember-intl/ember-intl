@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'my-app-with-fallbacks',
+    modulePrefix: 'my-v1-app-with-fallbacks',
     environment,
     rootURL: '/',
     locationType: 'history',

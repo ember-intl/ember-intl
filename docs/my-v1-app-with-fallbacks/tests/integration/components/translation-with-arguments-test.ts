@@ -8,7 +8,7 @@ import {
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
-import { setupRenderingTest } from 'my-app-with-fallbacks/tests/helpers';
+import { setupRenderingTest } from 'my-v1-app-with-fallbacks/tests/helpers';
 import { module, test } from 'qunit';
 
 function ignoreFormatError() {

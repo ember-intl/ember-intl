@@ -1,4 +1,4 @@
-# my-app-with-fallbacks
+# my-v1-app-with-fallbacks
 
 ## 1.0.10
 
