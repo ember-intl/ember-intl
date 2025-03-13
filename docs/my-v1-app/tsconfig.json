@@ -7,8 +7,8 @@
       "ember-intl/*": ["../../packages/ember-intl/addon/*"],
       "ember-intl/test-support": ["../../packages/ember-intl/addon-test-support"],
       "ember-intl/test-support/*": ["../../packages/ember-intl/addon-test-support/*"],
-      "my-app/tests/*": ["tests/*"],
-      "my-app/*": ["app/*"],
+      "my-v1-app/tests/*": ["tests/*"],
+      "my-v1-app/*": ["app/*"],
       "my-v1-addon": ["../my-v1-addon/addon/index"],
       "my-v1-addon/*": ["../my-v1-addon/addon/*"],
       "*": ["types/*"]
