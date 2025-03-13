@@ -17,7 +17,7 @@
     "lint:js:fix": "prettier \"**/*.{cjs,mjs}\" --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/ember-template-lint": "^0.5.0"
+    "@ijlee2-frontend-configs/ember-template-lint": "^0.5.1"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
