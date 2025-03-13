@@ -6,7 +6,7 @@ module.exports = async function () {
   const { default: latestVersion } = await import('latest-version');
 
   return {
-    usePnpm: true,
+    packageManager: 'pnpm',
     scenarios: [
       {
         name: 'ember-lts-3.28',

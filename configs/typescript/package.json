@@ -20,7 +20,7 @@
     "lint:js:fix": "prettier \"**/*.{cjs,json,mjs}\" --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/typescript": "^0.3.1"
+    "@ijlee2-frontend-configs/typescript": "^0.3.2"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
