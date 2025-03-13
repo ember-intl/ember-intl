@@ -1,12 +1,22 @@
+import { t } from 'ember-intl';
 import { pageTitle } from 'ember-page-title';
 import Route from 'ember-route-template';
+import { SelectLocale } from 'my-v2-addon';
 
 export default Route(
   <template>
-    {{pageTitle "ember-intl"}}
+    {{pageTitle (t "routes.application.title")}}
 
     <div>
-      {{outlet}}
+      <main>
+        <div>
+          <SelectLocale />
+        </div>
+
+        <div>
+          {{outlet}}
+        </div>
+      </main>
     </div>
   </template>,
 );
