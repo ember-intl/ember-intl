@@ -22,7 +22,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="Description"]')
         .hasText(
-          'Das hier ist ein v1 Addon, um ember-intl zu testen. Vielleicht wolltest du die App in docs/my-app ausführen?',
+          'Das hier ist ein v1 Addon, um ember-intl zu testen. Vielleicht wolltest du die App in docs/my-v1-app ausführen?',
         );
     });
   });
@@ -39,7 +39,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom('[data-test-output="Description"]')
         .hasText(
-          'This is a test v1 addon for ember-intl. Did you want to run the app in docs/my-app instead?',
+          'This is a test v1 addon for ember-intl. Did you want to run the app in docs/my-v1-app instead?',
         );
     });
   });

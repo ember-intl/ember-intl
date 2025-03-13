@@ -1,7 +1,10 @@
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
-import { selectLocale, setupRenderingTest } from 'my-v1-classic-app/tests/helpers';
+import {
+  selectLocale,
+  setupRenderingTest,
+} from 'my-v1-classic-app/tests/helpers';
 import { module, test } from 'qunit';
 
 module('Integration | Component | select-locale', function (hooks) {

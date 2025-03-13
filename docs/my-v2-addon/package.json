@@ -48,7 +48,7 @@
     "lint:yml:fix": "prettier --write \"translations/**/*.{yaml,yml}\"",
     "prepack": "rollup --config",
     "start": "rollup --config --watch",
-    "test": "echo \"A v2 addon does not have tests, run tests in docs/my-app\""
+    "test": "echo \"A v2 addon does not have tests\""
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.9.0",
