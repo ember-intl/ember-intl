@@ -1,4 +1,4 @@
-# my-classic-app
+# my-v1-classic-app
 
 ## 1.1.14
 
