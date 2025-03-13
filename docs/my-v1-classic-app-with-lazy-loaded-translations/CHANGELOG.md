@@ -1,4 +1,4 @@
-# my-classic-app-with-lazy-loaded-translations
+# my-v1-classic-app-with-lazy-loaded-translations
 
 ## 1.0.7
 

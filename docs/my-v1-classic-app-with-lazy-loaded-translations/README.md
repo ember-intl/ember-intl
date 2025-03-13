@@ -1,4 +1,4 @@
-# my-classic-app-with-lazy-loaded-translations
+# my-v1-classic-app-with-lazy-loaded-translations
 
 1. [What is it?](#what-is-it)
 1. [Local development](#local-development)
@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-classic-app-with-lazy-loaded-translations` is an Ember app. We use it to check that `publicOnly: true` works on the classic build.
+`my-v1-classic-app-with-lazy-loaded-translations` is an Ember app. We use it to check that `publicOnly: true` works on the classic build.
 
 
 ## Local development
@@ -18,7 +18,7 @@ Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so tha
 pnpm prepare
 
 # Change directory
-cd docs/my-classic-app-with-lazy-loaded-translations
+cd docs/my-v1-classic-app-with-lazy-loaded-translations
 ```
 
 Some useful commands:

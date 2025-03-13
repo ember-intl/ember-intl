@@ -2,7 +2,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import type { IntlService } from 'ember-intl';
-import ENV from 'my-classic-app-with-lazy-loaded-translations/config/environment';
+import ENV from 'my-v1-classic-app-with-lazy-loaded-translations/config/environment';
 
 export default class ApplicationRoute extends Route {
   @service declare intl: IntlService;
