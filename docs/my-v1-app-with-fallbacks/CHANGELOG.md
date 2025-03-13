@@ -1,5 +1,14 @@
 # my-v1-app-with-fallbacks
 
+## 1.0.11
+
+### Patch Changes
+
+- [#1956](https://github.com/ember-intl/ember-intl/pull/1956) Renamed app ([@ijlee2](https://github.com/ijlee2))
+- [#1955](https://github.com/ember-intl/ember-intl/pull/1955) Standardized paths ([@ijlee2](https://github.com/ijlee2))
+- [#1954](https://github.com/ember-intl/ember-intl/pull/1954) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1953](https://github.com/ember-intl/ember-intl/pull/1953) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.10
 
 ### Patch Changes
