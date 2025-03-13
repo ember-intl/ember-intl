@@ -1,0 +1,32 @@
+{
+  "extends": "@shared-configs/typescript/ember",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "ember-intl": ["../../packages/ember-intl/addon"],
+      "ember-intl/*": ["../../packages/ember-intl/addon/*"],
+      "ember-intl/test-support": ["../../packages/ember-intl/addon-test-support"],
+      "ember-intl/test-support/*": ["../../packages/ember-intl/addon-test-support/*"],
+      "my-v1-addon": ["../my-v1-addon/addon/index"],
+      "my-v1-addon/*": ["../my-v1-addon/addon/*"],
+      "my-v2-app/tests/*": ["tests/*"],
+      "my-v2-app/*": ["app/*"],
+      "*": ["types/*"]
+    },
+    "skipLibCheck": true,
+    "types": [
+      "ember-source/types"
+    ]
+  },
+  "glint": {
+    "environment": [
+      "ember-loose",
+      "ember-template-imports"
+    ]
+  },
+  "include": [
+    "app/**/*",
+    "tests/**/*",
+    "types/**/*"
+  ]
+}
