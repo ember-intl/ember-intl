@@ -1,4 +1,4 @@
-# my-app-with-namespace-from-folders
+# my-v1-app-with-namespace-from-folders
 
 ## 1.0.15
 

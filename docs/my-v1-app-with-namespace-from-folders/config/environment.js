@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'my-app-with-namespace-from-folders',
+    modulePrefix: 'my-v1-app-with-namespace-from-folders',
     environment,
     rootURL: '/',
     locationType: 'history',

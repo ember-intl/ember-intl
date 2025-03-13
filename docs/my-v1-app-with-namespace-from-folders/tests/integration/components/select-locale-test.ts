@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import {
   selectLocale,
   setupRenderingTest,
-} from 'my-app-with-namespace-from-folders/tests/helpers';
+} from 'my-v1-app-with-namespace-from-folders/tests/helpers';
 import { module, test } from 'qunit';
 
 module('Integration | Component | select-locale', function (hooks) {
