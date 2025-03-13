@@ -1,4 +1,4 @@
-# my-app-with-lazy-loaded-translations
+# my-v1-app-with-lazy-loaded-translations
 
 ## 1.2.5
 
