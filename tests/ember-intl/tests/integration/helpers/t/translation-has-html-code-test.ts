@@ -4,7 +4,7 @@ import {
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setLocale, setupIntl } from 'ember-intl/test-support';
+import { setLocale, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
@@ -44,11 +44,20 @@ module(
         </div>
       `);
 
+      const testHelperT = t('royalty.message', {
+        name: 'Zoey',
+        points: 31415,
+      });
+
       assert
         .dom('[data-test-output]')
+        .hasHtml(
+          '&lt;div class="message"&gt;Hello, Zoey! You have 31,415 royalty points.&lt;/div&gt;',
+        )
         .hasText(
           '<div class="message">Hello, Zoey! You have 31,415 royalty points.</div>',
-        );
+        )
+        .hasText(testHelperT);
 
       assert.dom('[data-test-output] > div').doesNotExist();
     });
@@ -91,8 +100,18 @@ module(
         </div>
       `);
 
+      const testHelperT = t('royalty.message', {
+        htmlSafe: true,
+        name: this.name,
+        points: 31415,
+      });
+
       assert
         .dom('[data-test-output]')
+        .hasHtml(
+          '<div class="message">Hello, <span class="emphasize">Zoey</span>! You have 31,415 royalty points.</div>',
+        )
+        .hasHtml(testHelperT.toString())
         .hasText('Hello, Zoey! You have 31,415 royalty points.');
 
       assert.dom('[data-test-output] > div').hasClass('message');
