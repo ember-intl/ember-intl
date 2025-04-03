@@ -27,10 +27,5 @@
   "engines": {
     "node": "18.* || >= 20",
     "pnpm": ">= 9"
-  },
-  "pnpm": {
-    "overrides": {
-      "get-tsconfig": "4.7.3"
-    }
   }
 }

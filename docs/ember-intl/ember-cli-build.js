@@ -31,6 +31,7 @@ module.exports = function (defaults) {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
     staticInvokables: true,
+    staticEmberSource: true,
   };
 
   return require('@embroider/compat').compatBuild(app, Webpack, options);

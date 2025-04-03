@@ -1,3 +1,8 @@
 {
-  "extends": "@ijlee2-frontend-configs/typescript/node18"
+  "extends": ["@tsconfig/node18/tsconfig", "@tsconfig/strictest/tsconfig"],
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "verbatimModuleSyntax": true
+  }
 }
