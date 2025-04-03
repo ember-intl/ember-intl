@@ -27,5 +27,10 @@
   "engines": {
     "node": "18.* || >= 20",
     "pnpm": ">= 9"
+  },
+  "pnpm": {
+    "overrides": {
+      "ember-cli-addon-docs>@handlebars/parser": "2.1.0"
+    }
   }
 }
