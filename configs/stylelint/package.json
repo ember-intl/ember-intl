@@ -9,12 +9,7 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./default/index.mjs",
-      "require": "./default/index.cjs"
-    }
-  },
+  "main": "index.mjs",
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",

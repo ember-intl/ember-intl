@@ -18,7 +18,6 @@
       "my-v1-addon/test-support/*": ["addon-test-support/*"],
       "*": ["types/*"]
     },
-    "skipLibCheck": true,
     "types": [
       "ember-source/types"
     ]

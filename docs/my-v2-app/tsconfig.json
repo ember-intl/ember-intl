@@ -13,7 +13,6 @@
       "my-v2-app/*": ["app/*"],
       "*": ["types/*"]
     },
-    "skipLibCheck": true,
     "types": [
       "ember-source/types"
     ]
