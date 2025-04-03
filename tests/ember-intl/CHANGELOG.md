@@ -1,5 +1,12 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.4.6
+
+### Patch Changes
+
+- [#1961](https://github.com/ember-intl/ember-intl/pull/1961) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1960](https://github.com/ember-intl/ember-intl/pull/1960) Removed inject as service (while still supporting ember-source@3.28) ([@mkszepp](https://github.com/mkszepp))
+
 ## 1.4.5
 
 ### Patch Changes
