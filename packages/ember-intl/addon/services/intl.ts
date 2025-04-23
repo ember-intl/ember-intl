@@ -61,6 +61,13 @@ export default class IntlService extends Service {
         break;
       }
 
+      // Some locales are not technically supported in Chromium but continue to work.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+      case 'MISSING_DATA': {
+        console.warn(error.message);
+        break;
+      }
+
       default: {
         throw error;
       }
