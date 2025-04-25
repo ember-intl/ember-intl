@@ -1,5 +1,11 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.4.7
+
+### Patch Changes
+
+- [#1962](https://github.com/ember-intl/ember-intl/pull/1962) Documented usage of test helper t() ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.6
 
 ### Patch Changes

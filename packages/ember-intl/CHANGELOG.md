@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.1.7
+
+### Patch Changes
+
+- [#1963](https://github.com/ember-intl/ember-intl/pull/1963) Warn MISSING_DATA issues instead of erroring ([@lfloyd117](https://github.com/lfloyd117))
+
 ## 7.1.6
 
 ### Patch Changes
