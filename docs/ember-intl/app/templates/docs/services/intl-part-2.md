@@ -136,7 +136,9 @@ this.intl.setLocale(['de-AT', 'de-DE', 'en-US']);
 
 Specify what to do when `@formatjs/intl` errors. Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.github.io/docs/guides/develop#error-codes).
 
-The following example ignores `FORMAT_ERROR` (incorrect or missing argument values), in addition to `MISSING_TRANSLATION` (default implementation of `ember-intl`).
+By default, `ember-intl` warns `MISSING_DATA` (browser doesn't support an Intl API) and ignores `MISSING_TRANSLATION` (translation message doesn't exist).
+
+Suppose you want to ignore `FORMAT_ERROR` (incorrect or missing argument values) and `MISSING_TRANSLATION`:
 
 ```ts
 /* app/routes/application.ts */
