@@ -56,15 +56,14 @@ export default class IntlService extends Service {
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-      case 'MISSING_TRANSLATION': {
-        // Do nothing
+      case 'MISSING_DATA': {
+        console.warn(error.message);
         break;
       }
 
-      // Some locales are not technically supported in Chromium but continue to work.
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-      case 'MISSING_DATA': {
-        console.warn(error.message);
+      case 'MISSING_TRANSLATION': {
+        // Do nothing
         break;
       }
 
