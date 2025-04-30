@@ -1,0 +1,34 @@
+{
+  "name": "@ember-intl/intl-extractor",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/intl-extract.js"
+    },
+    "./rollup": {
+      "import": "./src/rollup.js"
+    }
+  },
+  "dependencies": {
+    "@formatjs/cli-lib": "7.0.2",
+    "@manypkg/get-packages": "2.2.2",
+    "@types/jscodeshift": "0.12.0",
+    "chalk": "5.4.1",
+    "command-line-args": "6.0.1",
+    "execa": "9.5.2",
+    "globby": "14.1.0"
+  },
+  "engines": {
+    "node": ">= 22"
+  },
+  "scripts": {},
+  "bin": {
+    "intl-extract": "./src/cli/index.js"
+  },
+  "devDependencies": {
+    "eslint": "8.57.1",
+    "prettier": "3.5.3"
+  }
+}
