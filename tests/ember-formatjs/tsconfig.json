@@ -1,0 +1,13 @@
+{
+  "extends": "@ember/app-tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "ember-formatjs-tests/tests/*": ["tests/*"],
+      "ember-formatjs-tests/*": ["app/*"],
+      "*": ["types/*"]
+    },
+    "types": ["ember-source/types", "vite/client", "@embroider/core/virtual"]
+  },
+  "glint": { "environment": { "ember-loose": {}, "ember-template-imports": { "additionalGlobals": ["modifier"] } } }
+}
