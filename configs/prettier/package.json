@@ -17,7 +17,7 @@
     "lint:js:fix": "prettier \"**/*.{cjs,mjs}\" --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/prettier": "^0.2.3"
+    "@ijlee2-frontend-configs/prettier": "^1.0.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
