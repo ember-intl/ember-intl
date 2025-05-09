@@ -1,5 +1,11 @@
 # my-v1-engine
 
+## 1.0.18
+
+### Patch Changes
+
+- [#1965](https://github.com/ember-intl/ember-intl/pull/1965) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.17
 
 ### Patch Changes
