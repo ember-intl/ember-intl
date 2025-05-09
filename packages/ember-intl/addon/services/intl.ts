@@ -46,13 +46,8 @@ type OnMissingTranslation = (
 ) => string;
 
 export default class IntlService extends Service {
-  @tracked private _intls: Record<string, IntlShape> = {};
-  @tracked private _locale?: string[];
-
   private _cache = createIntlCache();
   private _formats?: Record<string, unknown>;
-  private _timer?: EmberRunTimer;
-
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
@@ -72,12 +67,15 @@ export default class IntlService extends Service {
       }
     }
   };
-
   private _onMissingTranslation: OnMissingTranslation = (key, locales) => {
     const locale = locales.join(', ');
 
     return `Missing translation "${key}" for locale "${locale}"`;
   };
+  private _timer?: EmberRunTimer;
+
+  @tracked private _intls: Record<string, IntlShape> = {};
+  @tracked private _locale?: string[];
 
   get locales(): string[] {
     return Object.keys(this._intls);
@@ -103,17 +101,31 @@ export default class IntlService extends Service {
     });
   }
 
-  willDestroy() {
-    super.willDestroy();
-
-    // eslint-disable-next-line ember/no-runloop
-    cancel(this._timer);
-  }
-
   addTranslations(locale: string, translations: Translations) {
     const messages = flattenKeys(translations);
 
     this.updateIntl(locale, messages);
+  }
+
+  private createIntl(
+    locale: string | string[],
+    messages: Record<string, unknown> = {},
+  ): IntlShape {
+    const resolvedLocale = convertToString(locale);
+    const formats = this._formats;
+
+    return createIntl(
+      {
+        defaultFormats: formats,
+        defaultLocale: resolvedLocale,
+        formats,
+        locale: resolvedLocale,
+        // @ts-expect-error: Type 'Record<string, unknown>' is not assignable
+        messages,
+        onError: this._onFormatjsError,
+      },
+      this._cache,
+    );
   }
 
   exists(key: string, locale?: string | string[]): boolean {
@@ -255,6 +267,26 @@ export default class IntlService extends Service {
     return formatTime(intlShape, value, options);
   }
 
+  private getDefaultFormats(): void {
+    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
+  }
+
+  private getIntl(locale: string | string[]): IntlShape | undefined {
+    const resolvedLocale = normalizeLocale(convertToString(locale));
+
+    return this._intls[resolvedLocale];
+  }
+
+  private getIntlShape(locale?: string): IntlShape {
+    if (locale) {
+      return this.createIntl(locale);
+    }
+
+    return this.getIntl(this._locale!)!;
+  }
+
   getTranslation(key: string, locale: string): string | undefined {
     const messages = this.getIntl(locale)?.messages;
 
@@ -332,47 +364,6 @@ export default class IntlService extends Service {
     );
   }
 
-  private createIntl(
-    locale: string | string[],
-    messages: Record<string, unknown> = {},
-  ): IntlShape {
-    const resolvedLocale = convertToString(locale);
-    const formats = this._formats;
-
-    return createIntl(
-      {
-        defaultFormats: formats,
-        defaultLocale: resolvedLocale,
-        formats,
-        locale: resolvedLocale,
-        // @ts-expect-error: Type 'Record<string, unknown>' is not assignable
-        messages,
-        onError: this._onFormatjsError,
-      },
-      this._cache,
-    );
-  }
-
-  private getDefaultFormats(): void {
-    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    this._formats = getOwner(this).resolveRegistration('formats:main') ?? {};
-  }
-
-  private getIntl(locale: string | string[]): IntlShape | undefined {
-    const resolvedLocale = normalizeLocale(convertToString(locale));
-
-    return this._intls[resolvedLocale];
-  }
-
-  private getIntlShape(locale?: string): IntlShape {
-    if (locale) {
-      return this.createIntl(locale);
-    }
-
-    return this.getIntl(this._locale!)!;
-  }
-
   private updateDocumentLanguage(): void {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const dom = getDOM(this);
@@ -412,6 +403,13 @@ export default class IntlService extends Service {
       ...this._intls,
       [resolvedLocale]: newIntl,
     };
+  }
+
+  willDestroy() {
+    super.willDestroy();
+
+    // eslint-disable-next-line ember/no-runloop
+    cancel(this._timer);
   }
 }
 
