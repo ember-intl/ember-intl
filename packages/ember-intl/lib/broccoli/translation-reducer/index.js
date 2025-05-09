@@ -84,57 +84,57 @@ class TranslationReducer extends CachingWriter {
     });
   }
 
-  mergeTranslations(filePaths) {
-    const orderedFilePaths = filePaths.sort(function (filePath1, filePath2) {
-      const isApp1 = isApp(filePath1);
-      const isApp2 = isApp(filePath2);
+  build() {
+    // Call listFiles() from broccoli-caching-writer
+    const translationFilePaths = this.listFiles();
 
-      if (isApp1 && !isApp2) {
-        return 1;
+    const translations = this.mergeTranslations(translationFilePaths);
+    const lintResults = this.linter.lint(translations);
+    this.handleLintResult(lintResults);
+
+    const filePath = join(this.outputPath, this.options.outputPath);
+    const fallbackTranslationObject = translations[this.options.fallbackLocale];
+
+    mkdirSync(filePath, { recursive: true });
+
+    for (const locale in translations) {
+      if (this.options.verbose) {
+        this.validateMessages(translations[locale], locale);
       }
 
-      if (isApp2 && !isApp1) {
-        return -1;
-      }
-
-      return 0;
-    });
-
-    const translations = orderedFilePaths.reduce((accumulator, filePath) => {
-      if (statSync(filePath).isDirectory()) {
-        return accumulator;
-      }
-
-      let translationObject = readAsObject(filePath);
-
-      if (this.options.stripEmptyTranslations === true) {
-        translationObject = stripEmptyTranslations(translationObject);
-      }
-
-      if (!translationObject) {
-        this.options.log(`cannot read path "${filePath}"`);
-
-        return accumulator;
-      }
-
-      if (this.options.wrapTranslationsWithNamespace === true) {
-        translationObject = wrapWithNamespaceIfNeeded(
-          translationObject,
-          filePath,
-          this.inputPaths[0],
-          this.options.addonsWithTranslations,
+      if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
+        translations[locale] = extend(
+          true,
+          {},
+          fallbackTranslationObject,
+          translations[locale],
         );
       }
 
-      const fileName = basename(filePath).split('.')[0];
-      const locale = normalizeLocale(fileName);
+      writeFileSync(
+        join(filePath, `${locale}.json`),
+        stringify(translations[locale]),
+        {
+          encoding: 'utf8',
+        },
+      );
+    }
 
-      return extend(true, accumulator, {
-        [locale]: translationObject,
-      });
-    }, {});
+    if (this.options.mergeTranslationFiles) {
+      const restructuredTranslations = [];
 
-    return translations;
+      for (const [locale, hash] of Object.entries(translations)) {
+        restructuredTranslations.push([locale, hash]);
+      }
+
+      writeFileSync(
+        join(filePath, 'translations.js'),
+        'export default ' + stringify(restructuredTranslations),
+        {
+          encoding: 'utf8',
+        },
+      );
+    }
   }
 
   handleLintResult(result) {
@@ -202,57 +202,57 @@ class TranslationReducer extends CachingWriter {
     }
   }
 
-  build() {
-    // Call listFiles() from broccoli-caching-writer
-    const translationFilePaths = this.listFiles();
+  mergeTranslations(filePaths) {
+    const orderedFilePaths = filePaths.sort(function (filePath1, filePath2) {
+      const isApp1 = isApp(filePath1);
+      const isApp2 = isApp(filePath2);
 
-    const translations = this.mergeTranslations(translationFilePaths);
-    const lintResults = this.linter.lint(translations);
-    this.handleLintResult(lintResults);
-
-    const filePath = join(this.outputPath, this.options.outputPath);
-    const fallbackTranslationObject = translations[this.options.fallbackLocale];
-
-    mkdirSync(filePath, { recursive: true });
-
-    for (const locale in translations) {
-      if (this.options.verbose) {
-        this.validateMessages(translations[locale], locale);
+      if (isApp1 && !isApp2) {
+        return 1;
       }
 
-      if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
-        translations[locale] = extend(
-          true,
-          {},
-          fallbackTranslationObject,
-          translations[locale],
+      if (isApp2 && !isApp1) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    const translations = orderedFilePaths.reduce((accumulator, filePath) => {
+      if (statSync(filePath).isDirectory()) {
+        return accumulator;
+      }
+
+      let translationObject = readAsObject(filePath);
+
+      if (this.options.stripEmptyTranslations === true) {
+        translationObject = stripEmptyTranslations(translationObject);
+      }
+
+      if (!translationObject) {
+        this.options.log(`cannot read path "${filePath}"`);
+
+        return accumulator;
+      }
+
+      if (this.options.wrapTranslationsWithNamespace === true) {
+        translationObject = wrapWithNamespaceIfNeeded(
+          translationObject,
+          filePath,
+          this.inputPaths[0],
+          this.options.addonsWithTranslations,
         );
       }
 
-      writeFileSync(
-        join(filePath, `${locale}.json`),
-        stringify(translations[locale]),
-        {
-          encoding: 'utf8',
-        },
-      );
-    }
+      const fileName = basename(filePath).split('.')[0];
+      const locale = normalizeLocale(fileName);
 
-    if (this.options.mergeTranslationFiles) {
-      const restructuredTranslations = [];
+      return extend(true, accumulator, {
+        [locale]: translationObject,
+      });
+    }, {});
 
-      for (const [locale, hash] of Object.entries(translations)) {
-        restructuredTranslations.push([locale, hash]);
-      }
-
-      writeFileSync(
-        join(filePath, 'translations.js'),
-        'export default ' + stringify(restructuredTranslations),
-        {
-          encoding: 'utf8',
-        },
-      );
-    }
+    return translations;
   }
 
   validateMessages(messages, locale) {

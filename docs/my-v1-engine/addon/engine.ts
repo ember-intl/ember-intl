@@ -7,12 +7,11 @@ import config from './config/environment';
 const { modulePrefix } = config;
 
 export default class MyV1Engine extends Engine {
-  modulePrefix = modulePrefix;
-  Resolver = Resolver;
-
   dependencies = {
     services: ['intl'],
   };
+  modulePrefix = modulePrefix;
+  Resolver = Resolver;
 }
 
 loadInitializers(MyV1Engine, modulePrefix);

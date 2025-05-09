@@ -20,9 +20,9 @@ interface SelectLocaleSignature {
 }
 
 export default class SelectLocaleComponent extends Component<SelectLocaleSignature> {
-  fieldId = guidFor(this);
-
   @service declare intl: IntlService;
+
+  fieldId = guidFor(this);
 
   @tracked value!: SupportedLocale;
 
