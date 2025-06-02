@@ -24,10 +24,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-relative
-            this.number
-            unit="year"
-          }}
+          {{format-relative this.number unit="year"}}
         </div>
       `);
 
@@ -37,10 +34,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-relative
-            this.number
-            unit="year"
-          }}
+          {{format-relative this.number unit="year"}}
         </div>
       `);
 
@@ -52,19 +46,11 @@ module(
     test('we can format the number', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output="1">
-          {{format-relative
-            this.number
-            numeric="auto"
-            unit="year"
-          }}
+          {{format-relative this.number numeric="auto" unit="year"}}
         </div>
 
         <div data-test-output="2">
-          {{format-relative
-            this.number
-            style="short"
-            unit="year"
-          }}
+          {{format-relative this.number style="short" unit="year"}}
         </div>
       `);
 

@@ -32,7 +32,7 @@ module(
 
       await render(hbs`
         <div data-test-output>
-          {{format-time 'hello world'}}
+          {{format-time "hello world"}}
         </div>
       `);
 

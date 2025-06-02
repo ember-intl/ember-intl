@@ -22,15 +22,9 @@ interface SelectLocaleSignature {
 export default class SelectLocaleComponent extends Component<SelectLocaleSignature> {
   @service declare intl: IntlService;
 
-  fieldId = guidFor(this);
-
   @tracked value!: SupportedLocale;
 
-  constructor(owner: Owner, args: SelectLocaleSignature['Args']) {
-    super(owner, args);
-
-    this.value = this.intl.primaryLocale as SupportedLocale;
-  }
+  fieldId = guidFor(this);
 
   get options(): Option[] {
     return [
@@ -43,6 +37,12 @@ export default class SelectLocaleComponent extends Component<SelectLocaleSignatu
         value: 'en-us',
       },
     ];
+  }
+
+  constructor(owner: Owner, args: SelectLocaleSignature['Args']) {
+    super(owner, args);
+
+    this.value = this.intl.primaryLocale as SupportedLocale;
   }
 
   updateLocale(value: SupportedLocale): void {

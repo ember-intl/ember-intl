@@ -27,7 +27,7 @@ module(
 
       await render(hbs`
         <div data-test-output>
-          {{format-date 'hello world'}}
+          {{format-date "hello world"}}
         </div>
       `);
 

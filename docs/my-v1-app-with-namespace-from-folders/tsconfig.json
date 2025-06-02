@@ -5,22 +5,21 @@
     "paths": {
       "ember-intl": ["../../packages/ember-intl/addon"],
       "ember-intl/*": ["../../packages/ember-intl/addon/*"],
-      "ember-intl/test-support": ["../../packages/ember-intl/addon-test-support"],
-      "ember-intl/test-support/*": ["../../packages/ember-intl/addon-test-support/*"],
+      "ember-intl/test-support": [
+        "../../packages/ember-intl/addon-test-support"
+      ],
+      "ember-intl/test-support/*": [
+        "../../packages/ember-intl/addon-test-support/*"
+      ],
       "my-v1-app-with-namespace-from-folders/tests/*": ["tests/*"],
       "my-v1-app-with-namespace-from-folders/*": ["app/*"],
       "my-v1-addon": ["../my-v1-addon/addon/index"],
       "my-v1-addon/*": ["../my-v1-addon/addon/*"],
       "*": ["types/*"]
     },
-    "types": [
-      "ember-source/types"
-    ]
+    "types": ["ember-source/types"]
   },
   "glint": {
-    "environment": [
-      "ember-loose",
-      "ember-template-imports"
-    ]
+    "environment": ["ember-loose", "ember-template-imports"]
   }
 }

@@ -77,8 +77,8 @@ module(
             this.number
             currency=this.currency.unit
             format="currency"
-            style="currency"
             minimumFractionDigits=0
+            style="currency"
           }}
         </div>
       `);

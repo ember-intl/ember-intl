@@ -26,7 +26,7 @@ module('Integration | Helper | format-time > input is falsy', function (hooks) {
   test('input is an empty string', async function (assert) {
     await render(hbs`
       <div data-test-output>
-        {{format-time ''}}
+        {{format-time ""}}
       </div>
     `);
 

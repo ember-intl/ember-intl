@@ -73,11 +73,7 @@ module(
     test('we can override the data', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{t
-            "population.description"
-            this.data
-            population=300
-          }}
+          {{t "population.description" this.data population=300}}
         </div>
       `);
 

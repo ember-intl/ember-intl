@@ -104,10 +104,7 @@ module(
         </div>
 
         <div data-test-output="2">
-          {{format-message
-            "Sale ends on '{'day'}'"
-            day=1390496444000
-          }}
+          {{format-message "Sale ends on '{'day'}'" day=1390496444000}}
         </div>
       `);
 

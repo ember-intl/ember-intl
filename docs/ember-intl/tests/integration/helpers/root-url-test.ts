@@ -7,13 +7,21 @@ module('Integration | Helper | root-url', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it accepts urls with a leading slash', async function (assert) {
-    await render(hbs`{{root-url "/images/numberformat.png"}}`);
+    await render(
+      hbs`
+        {{root-url "/images/numberformat.png"}}
+      `,
+    );
 
     assert.dom().hasText('/images/numberformat.png');
   });
 
   test('it accepts urls witout a leading slash', async function (assert) {
-    await render(hbs`{{root-url "images/numberformat.png"}}`);
+    await render(
+      hbs`
+        {{root-url "images/numberformat.png"}}
+      `,
+    );
 
     assert.dom().hasText('/images/numberformat.png');
   });

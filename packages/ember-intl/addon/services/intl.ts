@@ -46,6 +46,9 @@ type OnMissingTranslation = (
 ) => string;
 
 export default class IntlService extends Service {
+  @tracked private _intls: Record<string, IntlShape> = {};
+  @tracked private _locale?: string[];
+
   private _cache = createIntlCache();
   private _formats?: Record<string, unknown>;
   private _onFormatjsError: OnFormatjsError = (error) => {
@@ -73,9 +76,6 @@ export default class IntlService extends Service {
     return `Missing translation "${key}" for locale "${locale}"`;
   };
   private _timer?: EmberRunTimer;
-
-  @tracked private _intls: Record<string, IntlShape> = {};
-  @tracked private _locale?: string[];
 
   get locales(): string[] {
     return Object.keys(this._intls);
