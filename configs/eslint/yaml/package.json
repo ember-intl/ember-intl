@@ -11,10 +11,8 @@
   "type": "module",
   "main": "index.mjs",
   "scripts": {
-    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "eslint . --cache",
-    "lint:js:fix": "eslint . --fix"
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "eslint-plugin-yml": "^1.18.0"
@@ -22,19 +20,14 @@
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.1.2",
-    "eslint": "^9.26.0",
+    "eslint": "^9.28.0",
     "prettier": "^3.5.3"
   },
   "peerDependencies": {
-    "eslint": "^9.26.0",
-    "prettier": "^3.5.3"
+    "eslint": "^9.28.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
-      "optional": false
-    },
-    "prettier": {
       "optional": false
     }
   },

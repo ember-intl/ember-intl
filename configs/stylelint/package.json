@@ -11,27 +11,20 @@
   "type": "module",
   "main": "index.mjs",
   "scripts": {
-    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier \"**/*.{cjs,mjs}\" --check",
-    "lint:js:fix": "prettier \"**/*.{cjs,mjs}\" --write"
+    "lint": "prettier \"**/*.mjs\" --cache --check",
+    "lint:fix": "prettier \"**/*.mjs\" --cache --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/stylelint": "^1.0.0"
+    "@ijlee2-frontend-configs/stylelint": "^2.0.0"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.1.2",
     "prettier": "^3.5.3"
   },
   "peerDependencies": {
-    "prettier": "^3.5.3",
-    "stylelint": "^16.19.1"
+    "stylelint": "^16.20.0"
   },
   "peerDependenciesMeta": {
-    "prettier": {
-      "optional": false
-    },
     "stylelint": {
       "optional": false
     }
