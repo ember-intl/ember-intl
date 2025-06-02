@@ -5,7 +5,6 @@ const baseConfiguration = require('@shared-configs/ember-template-lint');
 module.exports = {
   ...baseConfiguration,
   overrides: [
-    ...baseConfiguration.overrides,
     {
       files: ['tests/**/*-test.{js,ts}'],
       rules: {
