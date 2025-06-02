@@ -34,11 +34,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-message
-            this.royalty.message
-            name=this.name
-            points=31415
-          }}
+          {{format-message this.royalty.message name=this.name points=31415}}
         </div>
       `);
 
@@ -54,11 +50,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-message
-            this.royalty.message
-            name=this.name
-            points=31415
-          }}
+          {{format-message this.royalty.message name=this.name points=31415}}
         </div>
       `);
 

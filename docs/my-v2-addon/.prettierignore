@@ -1,6 +1,10 @@
-# unconventional js
-/blueprints/*/files/
-
 # compiled output
 /declarations/
 /dist/
+
+# misc
+!.*
+.*/
+README.md
+
+# specific to this package

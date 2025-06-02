@@ -14,10 +14,8 @@
     "./node18": "./node18/index.json"
   },
   "scripts": {
-    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier \"**/*.{cjs,json,mjs}\" --check",
-    "lint:js:fix": "prettier \"**/*.{cjs,json,mjs}\" --write"
+    "lint:js": "prettier \"**/*.{json,mjs}\" --cache --check",
+    "lint:js:fix": "prettier \"**/*.{json,mjs}\" --cache --write"
   },
   "dependencies": {
     "@tsconfig/ember": "^3.0.10",
@@ -26,7 +24,6 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.1.2",
     "prettier": "^3.5.3"
   },
   "peerDependencies": {

@@ -1,1 +1,1 @@
-export { default } from '@shared-configs/prettier';
+export { default } from '@shared-configs/prettier/node';

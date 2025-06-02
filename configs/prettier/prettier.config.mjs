@@ -1,1 +1,1 @@
-export { default } from './index.mjs';
+export { default } from './node/index.mjs';

@@ -46,15 +46,11 @@ module(
     test('we can format the date', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output="1">
-          {{format-time this.date format='hhmmss'}}
+          {{format-time this.date format="hhmmss"}}
         </div>
 
         <div data-test-output="2">
-          {{format-time
-            this.date
-            hour="2-digit"
-            minute="numeric"
-          }}
+          {{format-time this.date hour="2-digit" minute="numeric"}}
         </div>
       `);
 
@@ -66,7 +62,7 @@ module(
     test('we can specify the time zone', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-time this.date timeZone='UTC'}}
+          {{format-time this.date timeZone="UTC"}}
         </div>
       `);
 

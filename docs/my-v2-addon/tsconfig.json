@@ -5,18 +5,10 @@
     "allowJs": true,
     "declarationDir": "declarations",
     "rootDir": "./src",
-    "types": [
-      "ember-source/types"
-    ]
+    "types": ["ember-source/types"]
   },
-  "include": [
-    "src/**/*",
-    "unpublished-development-types/**/*"
-  ],
+  "include": ["src/**/*", "unpublished-development-types/**/*"],
   "glint": {
-    "environment": [
-      "ember-loose",
-      "ember-template-imports"
-    ]
+    "environment": ["ember-loose", "ember-template-imports"]
   }
 }

@@ -25,7 +25,7 @@ module(
     test('input is an empty string', async function (assert) {
       await render(hbs`
         <div data-test-output>
-          {{format-date-range '' ''}}
+          {{format-date-range "" ""}}
         </div>
       `);
 

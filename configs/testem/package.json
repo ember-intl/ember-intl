@@ -11,14 +11,11 @@
   "type": "module",
   "main": "index.cjs",
   "scripts": {
-    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
-    "lint:js": "prettier \"**/*.{cjs,mjs}\" --check",
-    "lint:js:fix": "prettier \"**/*.{cjs,mjs}\" --write"
+    "lint": "prettier \"**/*.{cjs,mjs}\" --cache --check",
+    "lint:fix": "prettier \"**/*.{cjs,mjs}\" --cache --write"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^9.1.2",
     "prettier": "^3.5.3"
   },
   "engines": {

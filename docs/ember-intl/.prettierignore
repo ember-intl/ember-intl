@@ -8,3 +8,9 @@
 /coverage/
 !.*
 .*/
+*.html
+README.md
+
+# specific to this package
+app/snippets/**/*
+app/templates/**/*.md

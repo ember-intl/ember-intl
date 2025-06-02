@@ -73,7 +73,7 @@ module(
     test('we can specify the time zone', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-date-range this.from this.to timeZone='UTC'}}
+          {{format-date-range this.from this.to timeZone="UTC"}}
         </div>
       `);
 
