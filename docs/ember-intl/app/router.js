@@ -28,6 +28,7 @@ Router.map(function () {
       this.route('format-message');
       this.route('format-number');
       this.route('format-relative');
+      this.route('format-relative-time');
       this.route('format-time');
       this.route('introduction');
       this.route('t');

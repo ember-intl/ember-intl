@@ -1,18 +1,12 @@
 import type { IntlShape } from '@formatjs/intl';
 
-/**
- * @deprecated
- */
-export type FormatRelativeParameters = Parameters<
+export type FormatRelativeTimeParameters = Parameters<
   IntlShape<string>['formatRelativeTime']
 >;
 
-/**
- * @deprecated
- */
-export function formatRelative(
+export function formatRelativeTime(
   intlShape: IntlShape,
-  ...[value, unit, formatOptions]: FormatRelativeParameters
+  ...[value, unit, formatOptions]: FormatRelativeTimeParameters
 ): string {
   return intlShape.formatRelativeTime(value, unit, formatOptions);
 }

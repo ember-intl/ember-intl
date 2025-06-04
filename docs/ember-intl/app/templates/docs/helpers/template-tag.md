@@ -9,7 +9,7 @@ import {
   formatList,
   formatMessage,
   formatNumber,
-  formatRelative,
+  formatRelativeTime,
   formatTime,
   t,
 } from 'ember-intl';

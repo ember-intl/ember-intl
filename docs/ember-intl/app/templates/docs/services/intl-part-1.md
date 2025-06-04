@@ -111,12 +111,22 @@ const output = this.intl.formatNumber(12345);
 
 ### formatRelative()
 
+**Deprecated: `formatRelative()` will be renamed to `formatRelativeTime()` in `ember-intl@8.0.0`. Please rename the method to [`formatRelativeTime()`](./intl-part-1#formatrelativetime-) in your class now.**
+
+```diff
+- const output = this.intl.formatRelative(-1);
++ const output = this.intl.formatRelativeTime(-1);
+```
+
+
+### formatRelativeTime()
+
 Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/format) to format the time relative to now.
 
 The 1st argument `value` is required and expects a `number`. You can pass options for `Intl.RelativeTimeFormat` in the 2nd argument.
 
 ```ts
-const output = this.intl.formatRelative(-1);
+const output = this.intl.formatRelativeTime(-1);
 // '1 second ago'
 ```
 

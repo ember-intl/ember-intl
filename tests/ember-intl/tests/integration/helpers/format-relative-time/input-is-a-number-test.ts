@@ -1,5 +1,4 @@
 import {
-  getDeprecations,
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
@@ -13,7 +12,7 @@ interface TestContext extends BaseTestContext {
 }
 
 module(
-  'Integration | Helper | format-relative > input is a number',
+  'Integration | Helper | format-relative-time > input is a number',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'en-us');
@@ -22,27 +21,10 @@ module(
       this.number = -1;
     });
 
-    test('shows a deprecation message', async function (this: TestContext, assert) {
-      await render<TestContext>(hbs`
-        <div data-test-output>
-          {{format-relative this.number unit="year"}}
-        </div>
-      `);
-
-      const deprecationMessages = getDeprecations().map(
-        ({ message }) => message,
-      );
-
-      assert.deepEqual(deprecationMessages, [
-        '{{format-relative}} will be renamed to {{format-relative-time}} in ember-intl@8.0.0. Please rename the helper to {{format-relative-time}} in your template now.',
-        'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
-      ]);
-    });
-
     test('it returns a string', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-relative this.number unit="year"}}
+          {{format-relative-time this.number unit="year"}}
         </div>
       `);
 
@@ -52,7 +34,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output>
-          {{format-relative this.number unit="year"}}
+          {{format-relative-time this.number unit="year"}}
         </div>
       `);
 
@@ -64,11 +46,11 @@ module(
     test('we can format the number', async function (this: TestContext, assert) {
       await render<TestContext>(hbs`
         <div data-test-output="1">
-          {{format-relative this.number numeric="auto" unit="year"}}
+          {{format-relative-time this.number numeric="auto" unit="year"}}
         </div>
 
         <div data-test-output="2">
-          {{format-relative this.number style="short" unit="year"}}
+          {{format-relative-time this.number style="short" unit="year"}}
         </div>
       `);
 
