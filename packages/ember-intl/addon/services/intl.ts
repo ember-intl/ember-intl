@@ -11,6 +11,7 @@ import type {
   FormatMessageParameters,
   FormatNumberParameters,
   FormatRelativeParameters,
+  FormatRelativeTimeParameters,
   FormatTimeParameters,
   IntlShape,
   OnErrorFn,
@@ -24,6 +25,7 @@ import {
   formatMessage,
   formatNumber,
   formatRelative,
+  formatRelativeTime,
   formatTime,
 } from '../-private/formatjs/index';
 import { escapeFormatMessageOptions } from '../-private/utils/escape-format-message-options';
@@ -250,6 +252,22 @@ export default class IntlService extends Service {
     const intlShape = this.getIntlShape(options?.locale);
 
     return formatRelative(intlShape, value, options?.unit, options);
+  }
+
+  formatRelativeTime(
+    value: FormatRelativeTimeParameters[0] | undefined | null,
+    options?: FormatRelativeTimeParameters[2] & {
+      locale?: string;
+      unit?: FormatRelativeTimeParameters[1];
+    },
+  ): string {
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    const intlShape = this.getIntlShape(options?.locale);
+
+    return formatRelativeTime(intlShape, value, options?.unit, options);
   }
 
   formatTime(
