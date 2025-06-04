@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.2.0
+
+### Minor Changes
+
+- [#1969](https://github.com/ember-intl/ember-intl/pull/1969) Created {{format-relative-time}} helper and formatRelativeTime() method ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#1969](https://github.com/ember-intl/ember-intl/pull/1969) Deprecated {{format-relative}} helper and formatRelative() method ([@ijlee2](https://github.com/ijlee2))
+- [#1968](https://github.com/ember-intl/ember-intl/pull/1968) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1967](https://github.com/ember-intl/ember-intl/pull/1967) Separated formatting and linting ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.1.8
 
 ### Patch Changes
