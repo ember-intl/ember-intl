@@ -1,4 +1,5 @@
 import {
+  getDeprecations,
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
@@ -19,6 +20,23 @@ module(
 
     hooks.beforeEach(function (this: TestContext) {
       this.number = -1;
+    });
+
+    test('shows a deprecation message', async function (this: TestContext, assert) {
+      await render<TestContext>(hbs`
+        <div data-test-output>
+          {{format-relative this.number unit="year"}}
+        </div>
+      `);
+
+      const deprecationMessages = getDeprecations().map(
+        ({ message }) => message,
+      );
+
+      assert.deepEqual(deprecationMessages, [
+        '{{format-relative}} will be renamed to {{format-relative-time}} in ember-intl@8.0.0. Please rename the helper to {{format-relative-time}} in your template now.',
+        'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
+      ]);
     });
 
     test('it returns a string', async function (this: TestContext, assert) {
