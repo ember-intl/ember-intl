@@ -29,7 +29,7 @@
     "ember-intl": "workspace:*",
     "eslint": "^9.28.0",
     "globals": "^16.1.0",
-    "mocha": "^11.2.2",
+    "mocha": "^11.5.0",
     "prettier": "^3.5.3"
   },
   "engines": {

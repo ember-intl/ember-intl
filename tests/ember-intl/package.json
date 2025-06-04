@@ -28,10 +28,10 @@
     "test:ember-compatibility": "ember try:one"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.27.4",
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.1",
-    "@ember/test-helpers": "^5.2.1",
+    "@ember/test-helpers": "^5.2.2",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
@@ -60,12 +60,12 @@
     "ember-cli-terser": "^4.0.2",
     "ember-intl": "workspace:*",
     "ember-load-initializers": "^3.0.1",
-    "ember-page-title": "^9.0.1",
-    "ember-qunit": "^9.0.2",
-    "ember-resolver": "^13.1.0",
+    "ember-page-title": "^9.0.2",
+    "ember-qunit": "^9.0.3",
+    "ember-resolver": "^13.1.1",
     "ember-source": "~6.4.0",
     "ember-template-imports": "^4.3.0",
-    "ember-template-lint": "^7.7.0",
+    "ember-template-lint": "^7.8.1",
     "ember-test-selectors": "^7.1.0",
     "ember-try": "^4.0.0",
     "eslint": "^9.28.0",
@@ -75,7 +75,7 @@
     "qunit": "^2.24.1",
     "qunit-dom": "^3.4.0",
     "typescript": "^5.8.3",
-    "webpack": "^5.99.8"
+    "webpack": "^5.99.9"
   },
   "dependenciesMeta": {
     "ember-intl": {
