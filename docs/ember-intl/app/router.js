@@ -14,6 +14,7 @@ Router.map(function () {
       this.route('lazy-loading-translations');
       this.route('organizing-translations');
       this.route('runtime-requirements');
+      this.route('alternative-syntax');
     });
 
     this.route('getting-started', { path: '/' }, function () {
