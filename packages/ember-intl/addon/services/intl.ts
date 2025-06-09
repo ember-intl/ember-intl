@@ -96,7 +96,15 @@ export default class IntlService extends Service {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
 
-    this.getDefaultFormats();
+    const hasNewConfiguration = Boolean(
+      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      getOwner(this).resolveRegistration('ember-intl:main'),
+    );
+
+    if (!hasNewConfiguration) {
+      this.getDefaultFormats();
+    }
 
     // Hydrate
     translations.forEach(([locale, translations]: [string, Translations]) => {
