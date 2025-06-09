@@ -99,6 +99,42 @@ console.log(this.intl.getTranslation('hello.message', 'de-de'));
 This method could be used to create default values for arguments, so that users don't see the raw message when an argument doesn't have a value. To extract the message arguments, you can use [`@formatjs/icu-messageformat-parser`](https://formatjs.github.io/docs/icu-messageformat-parser/).
 
 
+### setFormats()
+
+Specify your reusable formats (defined in `app/ember-intl.{js,ts}`).
+
+```ts
+/* app/ember-intl.ts */
+import type { Formats } from 'ember-intl';
+
+export const formats: Formats = {
+  'format-time': {
+    hhmmss: {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    },
+  },
+};
+```
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+import { formats } from 'my-app/ember-intl';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  async beforeModel() {
+    this.intl.setFormats(formats);
+    this.intl.setLocale(['de-de']);
+  }
+}
+```
+
+
 ### setLocale()
 
 Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
