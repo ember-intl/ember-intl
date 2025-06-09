@@ -1,4 +1,4 @@
-// BEGIN-SNIPPET docs__helpers__format-date__example-2__app__format.js
+// BEGIN-SNIPPET docs__helpers__format-date__example-2__app__formats.js
 export default {
   date: {
     'user-friendly': {

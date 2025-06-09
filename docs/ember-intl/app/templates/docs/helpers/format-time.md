@@ -1,6 +1,6 @@
 # &#123;&#123;format-time&#125;&#125;
 
-Behaves like the [`{{format-date}}` helper](./format-date), except the possible formats are defined in `time` in `app/format.js`.
+Behaves like the [`{{format-date}}` helper](./format-date), except the possible formats are defined in `time` in `app/formats.js`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
@@ -47,8 +47,8 @@ A consuming app can define custom formats for `{{format-time}}` in `app/formats.
   />
 
   <demo.snippet
-    @label="format.js"
-    @name="docs__helpers__format-time__example-2__app__format.js"
+    @label="formats.js"
+    @name="docs__helpers__format-time__example-2__app__formats.js"
   />
 </DocsDemo>
 

@@ -53,7 +53,7 @@ export default class IntlService extends Service {
   @tracked private _locale?: string[];
 
   private _cache = createIntlCache();
-  private _formats?: Record<string, unknown>;
+  private _formats: Record<string, unknown> = {};
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
