@@ -1,5 +1,7 @@
-export default {
-  date: {
+import type { Formats } from 'ember-intl';
+
+export const formats: Formats = {
+  'format-date': {
     'user-friendly': {
       day: 'numeric',
       month: 'long',
@@ -7,14 +9,14 @@ export default {
     },
   },
 
-  dateTimeRange: {
+  'format-date-range': {
     'user-friendly': {
       day: 'numeric',
       month: 'short',
     },
   },
 
-  number: {
+  'format-number': {
     compact: {
       notation: 'compact',
     },
@@ -28,13 +30,13 @@ export default {
     },
   },
 
-  relative: {
+  'format-relative-time': {
     compact: {
       style: 'narrow',
     },
   },
 
-  time: {
+  'format-time': {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
