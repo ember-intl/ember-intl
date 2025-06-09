@@ -5,10 +5,7 @@ export default class DocsHelpersFormatDateRangeController extends Controller {
     return new Date();
   }
 
-  get yesterday(): number {
-    const today = new Date();
-    const yesterday = today.setDate(today.getDate() - 1);
-
-    return yesterday;
+  get yesterday(): Date {
+    return new Date(this.today.valueOf() - 24 * 60 * 60 * 1000);
   }
 }
