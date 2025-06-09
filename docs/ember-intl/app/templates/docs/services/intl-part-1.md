@@ -133,7 +133,7 @@ const output = this.intl.formatRelativeTime(-1);
 
 ### formatTime()
 
-Behaves like `formatDate()`, except the possible formats are defined in `time` in `app/format.js`.
+Behaves like `formatDate()`, except the possible formats are defined in `time` in `app/formats.js`.
 
 The 1st argument `value` is required and expects a `Date`, `number` (Unix timestamp), or `string` (ISO 8601). You can pass options for `Intl.DateTimeFormat` in the 2nd argument.
 

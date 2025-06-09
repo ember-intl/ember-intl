@@ -51,8 +51,8 @@ A consuming app can define custom formats for `{{format-date}}` in `app/formats.
   />
 
   <demo.snippet
-    @label="format.js"
-    @name="docs__helpers__format-date__example-2__app__format.js"
+    @label="formats.js"
+    @name="docs__helpers__format-date__example-2__app__formats.js"
   />
 </DocsDemo>
 
