@@ -1,5 +1,17 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.6.0
+
+### Minor Changes
+
+- [#1972](https://github.com/ember-intl/ember-intl/pull/1972) Created setFormats() ([@ijlee2](https://github.com/ijlee2))
+- [#1971](https://github.com/ember-intl/ember-intl/pull/1971) Documented how to define formats ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#1971](https://github.com/ember-intl/ember-intl/pull/1971) Added acceptance tests ([@ijlee2](https://github.com/ijlee2))
+- [#1970](https://github.com/ember-intl/ember-intl/pull/1970) Removed unused files ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.5.9
 
 ### Patch Changes
