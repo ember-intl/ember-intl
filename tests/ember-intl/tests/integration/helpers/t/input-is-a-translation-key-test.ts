@@ -39,14 +39,20 @@ module(
         </div>
 
         <div data-test-output="2">
+          {{t "smoke-tests.hello.world" locale="en-us"}}
+        </div>
+
+        <div data-test-output="3">
           {{t "smoke-tests.hello.world" locale="fr-fr"}}
         </div>
       `);
 
       assert.dom('[data-test-output="1"]').hasText('Hallo Welt!');
 
+      assert.dom('[data-test-output="2"]').hasText('Hello world!');
+
       assert
-        .dom('[data-test-output="2"]')
+        .dom('[data-test-output="3"]')
         .hasText('t:smoke-tests.hello.world:()');
     });
   },

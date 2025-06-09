@@ -420,7 +420,7 @@ export default class IntlService extends Service {
     }
 
     if (translation === undefined) {
-      return this._onMissingTranslation(key, this._locale!, options);
+      return this._onMissingTranslation(key, locales, options);
     }
 
     // Bypass @formatjs/intl
