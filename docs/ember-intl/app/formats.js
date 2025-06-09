@@ -7,17 +7,30 @@ export default {
     },
   },
 
+  dateTimeRange: {
+    'user-friendly': {
+      day: 'numeric',
+      month: 'short',
+    },
+  },
+
   number: {
     compact: {
       notation: 'compact',
     },
     EUR: {
-      style: 'currency',
       currency: 'EUR',
+      style: 'currency',
     },
     USD: {
-      style: 'currency',
       currency: 'USD',
+      style: 'currency',
+    },
+  },
+
+  relative: {
+    compact: {
+      style: 'narrow',
     },
   },
 

@@ -1,10 +1,9 @@
 {{!-- BEGIN-SNIPPET docs__helpers__format-number__example-3__example.hbs --}}
-{{format-number
-  12345
-  currency="EUR"
-  maximumFractionDigits=1
-  notation="compact"
-  roundingMode="ceil"
-  style="currency"
-}}
+<div lang="en-us">
+  {{format-number 12345 locale="en-us"}}
+</div>
+
+<div lang="de-de">
+  {{format-number 12345 locale="de-de"}}
+</div>
 {{!-- END-SNIPPET --}}

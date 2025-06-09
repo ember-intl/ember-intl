@@ -7,6 +7,5 @@ export default {
       weekday: 'short',
     },
   },
-  // ...
 };
 // END-SNIPPET
