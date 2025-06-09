@@ -7,4 +7,4 @@ export { default as formatRelative } from './helpers/format-relative';
 export { default as formatRelativeTime } from './helpers/format-relative-time';
 export { default as formatTime } from './helpers/format-time';
 export { default as t } from './helpers/t';
-export type { default as IntlService } from './services/intl';
+export type { Formats, default as IntlService } from './services/intl';

@@ -6,5 +6,6 @@ export * from './format-number';
 export * from './format-relative';
 export * from './format-relative-time';
 export * from './format-time';
+export * from './formats';
 export type { IntlShape, OnErrorFn } from '@formatjs/intl';
 export { createIntl, createIntlCache } from '@formatjs/intl';
