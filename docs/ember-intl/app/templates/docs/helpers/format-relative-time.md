@@ -6,7 +6,7 @@ Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScri
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__format-relative-time__example-1">
-    <div>
+    <div data-test-output="format-relative-time">
       Past: {{format-relative-time -1}}
     </div>
 
@@ -26,20 +26,16 @@ Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScri
 </DocsDemo>
 
 
-## options.locale
+## options.format
 
-You can display the text in another locale (i.e. independently from the user's preferred locale).
+In `app/formats.js`, you can define formats that you want to reuse for `{{format-relative-time}}`. Pass a format key to the named argument `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__format-relative-time__example-2">
-    <div lang="en-us">
-      {{format-relative-time -1 locale="en-us"}}
-    </div>
-
-    <div lang="de-de">
-      {{format-relative-time -1 locale="de-de"}}
+    <div data-test-output="format-relative-time, format">
+      {{format-relative-time -1 format="compact"}}
     </div>
   </demo.example>
 
@@ -49,8 +45,32 @@ You can display the text in another locale (i.e. independently from the user's p
   />
 
   <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-relative-time__example-2__example.ts"
+    @label="formats.js"
+    @name="docs__helpers__format-relative-time__example-2__app__formats.js"
+  />
+</DocsDemo>
+
+
+## options.locale
+
+You can display the text in another locale (i.e. independently from the user's preferred locale).
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-relative-time__example-3">
+    <div lang="en-us">
+      {{format-relative-time -1 locale="en-us"}}
+    </div>
+
+    <div data-test-output="format-relative-time, locale" lang="de-de">
+      {{format-relative-time -1 locale="de-de"}}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-relative-time__example-3__example.hbs"
   />
 </DocsDemo>
 
@@ -66,7 +86,7 @@ You can use named arguments to pass the [options that `Intl.RelativeTimeFormat` 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
-  <demo.example @name="docs__helpers__format-relative-time__example-3">
+  <demo.example @name="docs__helpers__format-relative-time__example-4">
     <div>
       Past: {{format-relative-time -1 unit="month"}}
     </div>
@@ -82,6 +102,6 @@ You can use named arguments to pass the [options that `Intl.RelativeTimeFormat` 
 
   <demo.snippet
     @label="components/example.hbs"
-    @name="docs__helpers__format-relative-time__example-3__example.hbs"
+    @name="docs__helpers__format-relative-time__example-4__example.hbs"
   />
 </DocsDemo>

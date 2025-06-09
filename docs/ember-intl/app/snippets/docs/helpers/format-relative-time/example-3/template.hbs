@@ -1,5 +1,9 @@
 {{!-- BEGIN-SNIPPET docs__helpers__format-relative-time__example-3__example.hbs --}}
-Past: {{format-relative-time -1 unit="month"}}
-Now: {{format-relative-time 0 unit="day"}}
-Future: {{format-relative-time 3 unit="week"}}
+<div lang="en-us">
+  {{format-relative-time -1 locale="en-us"}}
+</div>
+
+<div lang="de-de">
+  {{format-relative-time -1 locale="de-de"}}
+</div>
 {{!-- END-SNIPPET --}}

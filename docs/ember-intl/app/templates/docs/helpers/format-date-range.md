@@ -6,7 +6,7 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__format-date-range__example-1">
-    <div>
+    <div data-test-output="format-date-range">
       Range: {{format-date-range this.yesterday this.today}}
     </div>
   </demo.example>
@@ -23,6 +23,36 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 </DocsDemo>
 
 
+## options.format
+
+In `app/formats.js`, you can define formats that you want to reuse for `{{format-date-range}}`. Pass a format key to the named argument `format`.
+
+<DocsDemo as |demo|>
+  <LocaleSwitcher />
+
+  <demo.example @name="docs__helpers__format-date-range__example-2">
+    <div data-test-output="format-date-range, format">
+      {{format-date-range this.yesterday this.today format="user-friendly"}}
+    </div>
+  </demo.example>
+
+  <demo.snippet
+    @label="components/example.hbs"
+    @name="docs__helpers__format-date-range__example-2__example.hbs"
+  />
+
+  <demo.snippet
+    @label="components/example.ts"
+    @name="docs__helpers__format-date-range__example-2__example.ts"
+  />
+
+  <demo.snippet
+    @label="formats.js"
+    @name="docs__helpers__format-date-range__example-2__app__formats.js"
+  />
+</DocsDemo>
+
+
 ## options.locale
 
 You can display the text in another locale (i.e. independently from the user's preferred locale).
@@ -35,7 +65,7 @@ You can display the text in another locale (i.e. independently from the user's p
       {{format-date-range this.yesterday this.today locale="en-us"}}
     </div>
 
-    <div lang="de-de">
+    <div data-test-output="format-date-range, locale" lang="de-de">
       {{format-date-range this.yesterday this.today locale="de-de"}}
     </div>
   </demo.example>

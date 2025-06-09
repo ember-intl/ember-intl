@@ -7,6 +7,5 @@ export default {
       second: 'numeric',
     },
   },
-  // ...
 };
 // END-SNIPPET

@@ -24,7 +24,7 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
       }}
     </div>
 
-    <div>
+    <div data-test-output="format-message">
       {{format-message
         this.descriptor1
         name="Maki"

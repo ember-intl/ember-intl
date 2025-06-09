@@ -6,7 +6,7 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__t__example-1">
-    <div>
+    <div data-test-output="t">
       {{t "hello.message"}}
     </div>
   </demo.example>
@@ -50,7 +50,7 @@ To pass data to the `{{t}}` helper, you can use named arguments, a positional ar
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__t__example-2">
-    <div>
+    <div data-test-output="t, data">
       {{t "photo-album.summary" (hash numPhotos=3)}}
     </div>
   </demo.example>
@@ -146,7 +146,7 @@ You can display the text in another locale (i.e. independently from the user's p
       }}
     </div>
 
-    <div lang="de-de">
+    <div data-test-output="t, locale" lang="de-de">
       {{t
         "photo-album.summary"
         (hash

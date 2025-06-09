@@ -27,7 +27,7 @@
   </div>
 
   <div>
-    <DocsLink @route="docs">
+    <DocsLink @route="docs" data-test-link="Read the docs">
       Read the docs
     </DocsLink>
   </div>
