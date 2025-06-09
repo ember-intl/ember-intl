@@ -1,5 +1,7 @@
-export default {
-  date: {
+import type { Formats } from 'ember-intl';
+
+export const formats: Formats = {
+  'format-date': {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
@@ -7,7 +9,7 @@ export default {
     },
   },
 
-  number: {
+  'format-number': {
     EUR: {
       currency: 'EUR',
       style: 'currency',
@@ -28,7 +30,7 @@ export default {
     },
   },
 
-  time: {
+  'format-time': {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
