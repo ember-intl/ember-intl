@@ -25,7 +25,7 @@ Behaves like the [`{{format-date}}` helper](./format-date), except the possible 
 
 ## options.format
 
-A consuming app can define custom formats for `{{format-time}}` in `app/formats.js`. Pass a format key to the named argument `format`.
+In `app/formats.js`, you can define formats that you want to reuse for `{{format-time}}`. Pass a format key to the named argument `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

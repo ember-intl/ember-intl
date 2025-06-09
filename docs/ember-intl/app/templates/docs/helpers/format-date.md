@@ -6,7 +6,7 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__format-date__example-1">
-    <div>
+    <div data-test-output="format-date">
       Today: {{format-date this.today}}
     </div>
 
@@ -29,13 +29,13 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 ## options.format
 
-A consuming app can define custom formats for `{{format-date}}` in `app/formats.js`. Pass a format key to the named argument `format`.
+In `app/formats.js`, you can define formats that you want to reuse for `{{format-date}}`. Pass a format key to the named argument `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__format-date__example-2">
-    <div>
+    <div data-test-output="format-date, format">
       {{format-date this.today format="user-friendly"}}
     </div>
   </demo.example>
@@ -69,7 +69,7 @@ You can display the text in another locale (i.e. independently from the user's p
       {{format-date this.today locale="en-us"}}
     </div>
 
-    <div lang="de-de">
+    <div data-test-output="format-date, locale" lang="de-de">
       {{format-date this.today locale="de-de"}}
     </div>
   </demo.example>

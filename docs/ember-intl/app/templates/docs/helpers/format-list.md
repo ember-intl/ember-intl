@@ -6,7 +6,7 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
   <LocaleSwitcher />
 
   <demo.example @name="docs__helpers__format-list__example-1">
-    <div>
+    <div data-test-output="format-list">
       {{format-list this.letters}}
     </div>
   </demo.example>
@@ -35,7 +35,7 @@ You can display the text in another locale (i.e. independently from the user's p
       {{format-list this.letters locale="en-us"}}
     </div>
 
-    <div lang="de-de">
+    <div data-test-output="format-list, locale" lang="de-de">
       {{format-list this.letters locale="de-de"}}
     </div>
   </demo.example>
