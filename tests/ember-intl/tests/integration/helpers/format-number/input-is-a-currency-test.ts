@@ -6,6 +6,7 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
+import { formats } from 'test-app-for-ember-intl/ember-intl';
 import {
   Currency,
   setupRenderingTest,
@@ -23,6 +24,10 @@ module(
     setupIntl(hooks, 'en-us');
 
     hooks.beforeEach(function (this: TestContext) {
+      const intl = this.owner.lookup('service:intl');
+
+      intl.setFormats(formats);
+
       this.currency = new Currency();
 
       setOwner(this.currency, this.owner);

@@ -5,6 +5,7 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
+import { formats } from 'test-app-for-ember-intl/ember-intl';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 interface TestContext extends BaseTestContext {
@@ -18,6 +19,10 @@ module(
     setupIntl(hooks, 'en-us');
 
     hooks.beforeEach(function (this: TestContext) {
+      const intl = this.owner.lookup('service:intl');
+
+      intl.setFormats(formats);
+
       this.date = new Date('2014-01-23T18:00:44').toISOString();
     });
 
