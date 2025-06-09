@@ -315,6 +315,13 @@ export default class IntlService extends Service {
     return formatTime(intlShape, value, options);
   }
 
+  /**
+   * @deprecated
+   *
+   * Formats, defined in the file `app/formats.js`, will have no effect in
+   * `ember-intl@8.0.0`. Please define formats in `app/ember-intl.{js,ts}`,
+   * then call `setFormats()` before loading your translations.
+   */
   private getDefaultFormats(): void {
     // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
