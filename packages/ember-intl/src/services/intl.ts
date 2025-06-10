@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import { deprecate } from '@ember/debug';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
@@ -8,7 +7,6 @@ import { tracked } from '@glimmer/tracking';
 import type {
   FormatDateParameters,
   FormatDateRangeParameters,
-  FormatjsFormats,
   FormatListParameters,
   FormatMessageParameters,
   FormatNumberParameters,
@@ -60,7 +58,7 @@ export default class IntlService extends Service {
   @tracked private _locale?: string[];
 
   private _cache = createIntlCache();
-  private _formats: FormatjsFormats = {};
+  private _formats: Formats = {};
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
@@ -99,21 +97,6 @@ export default class IntlService extends Service {
     return this._locale[0];
   }
 
-  constructor() {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments);
-
-    const hasNewConfiguration = Boolean(
-      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      getOwner(this).resolveRegistration('ember-intl:main'),
-    );
-
-    if (!hasNewConfiguration) {
-      this.getDefaultFormats();
-    }
-  }
-
   addTranslations(locale: string, translations: Translations) {
     const messages = flattenKeys(translations);
 
@@ -125,7 +108,7 @@ export default class IntlService extends Service {
     messages: Record<string, unknown> = {},
   ): IntlShape {
     const resolvedLocale = convertToString(locale);
-    const formats = this._formats;
+    const formats = convertToFormatjsFormats(this._formats);
 
     return createIntl(
       {
@@ -317,23 +300,6 @@ export default class IntlService extends Service {
     return formatTime(intlShape, value, options);
   }
 
-  /**
-   * @deprecated
-   *
-   * Formats, defined in the file `app/formats.js`, will have no effect in
-   * `ember-intl@8.0.0`. Please define formats in `app/ember-intl.{js,ts}`,
-   * then call `setFormats()` before loading your translations.
-   */
-  private getDefaultFormats(): void {
-    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const formats = getOwner(this).resolveRegistration('formats:main') as
-      | FormatjsFormats
-      | undefined;
-
-    this._formats = formats ?? {};
-  }
-
   private getIntl(locale: string | string[]): IntlShape | undefined {
     const resolvedLocale = normalizeLocale(convertToString(locale));
 
@@ -359,7 +325,7 @@ export default class IntlService extends Service {
   }
 
   setFormats(formats: Formats): void {
-    this._formats = convertToFormatjsFormats(formats);
+    this._formats = formats;
 
     // Call `updateIntl` to update `formats` for each locale
     this.locales.forEach((locale) => {

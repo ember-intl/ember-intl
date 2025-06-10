@@ -8,8 +8,6 @@ export type Formats = Partial<{
   'format-time': FormatjsFormats['time'];
 }>;
 
-export type { FormatjsFormats };
-
 export function convertToFormatjsFormats(formats: Formats): FormatjsFormats {
   const formatjsFormats: FormatjsFormats = {
     dateTimeRange: formats['format-date-range'],
