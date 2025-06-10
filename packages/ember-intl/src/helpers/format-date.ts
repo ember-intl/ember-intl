@@ -1,6 +1,6 @@
 import Helper from '@ember/component/helper';
-import { service } from '@ember/service';
 
+import service from '../-private/utils/service.ts';
 import type IntlService from '../services/intl.ts';
 
 type FormatParameters = Parameters<IntlService['formatDate']>;
