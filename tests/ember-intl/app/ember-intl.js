@@ -1,6 +1,17 @@
-import type { Formats } from 'ember-intl';
+export const config = {
+  errorOnMissingTranslations: false,
+  errorOnNamedArgumentMismatch: false,
+  fallbackLocale: null,
+  inputPath: 'translations',
+  publicOnly: false,
+  requiresTranslation(/* key, locale */) {
+    return true;
+  },
+  stripEmptyTranslations: false,
+  wrapTranslationsWithNamespace: true,
+};
 
-export const formats: Formats = {
+export const formats = {
   'format-date': {
     hhmmss: {
       hour: 'numeric',

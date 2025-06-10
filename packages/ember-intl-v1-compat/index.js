@@ -125,12 +125,25 @@ module.exports = {
   getUserConfig() {
     const { env: environment, project } = this.app;
 
-    const config = join(dirname(project.configPath()), 'ember-intl.js');
+    const configDir = dirname(project.configPath());
+    const oldConfigFilePath = join(configDir, 'ember-intl.js');
+    const newConfigFilePathJs = join(configDir, '..', 'app', 'ember-intl.js');
+    const newConfigFilePathTs = join(configDir, '..', 'app', 'ember-intl.ts');
 
-    if (!existsSync(config)) {
+    try {
+      let config = {};
+
+      if (existsSync(newConfigFilePathTs)) {
+        ({ config } = require(newConfigFilePathTs));
+      } else if (existsSync(newConfigFilePathJs)) {
+        ({ config } = require(newConfigFilePathJs));
+      } else if (existsSync(oldConfigFilePath)) {
+        config = require(oldConfigFilePath)(environment);
+      }
+
+      return config;
+    } catch (error) {
       return {};
     }
-
-    return require(config)(environment);
   },
 };
