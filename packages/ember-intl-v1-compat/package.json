@@ -77,6 +77,14 @@
     "qunit-dom": "^3.4.0",
     "webpack": "^5.99.9"
   },
+  "peerDependencies": {
+    "ember-intl": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "ember-intl": {
+      "optional": false
+    }
+  },
   "engines": {
     "node": "18.* || >= 20"
   },
