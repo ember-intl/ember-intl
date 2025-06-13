@@ -10,6 +10,7 @@ Router.map(function () {
   // Add route declarations here
   docsRoute(this, function () {
     this.route('advanced', function () {
+      this.route('auto-generating-keys');
       this.route('configuration');
       this.route('lazy-loading-translations');
       this.route('organizing-translations');
