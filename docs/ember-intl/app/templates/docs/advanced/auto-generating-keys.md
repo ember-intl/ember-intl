@@ -83,7 +83,7 @@ Now that you have a translation file with unique keys, you can create translatio
 
 Finally, we need to change `{{format-message}}` and `formatMessage()` to `{{t}}` and `t()`, so that your app displays the correct translations to your users.
 
-Simply install [`ember-formatjs`](https://github.com/mainmatter/ember-formatjs/blob/main/README.md) as a development dependency. The addon will transform your code at build time.
+Install [`ember-formatjs`](https://github.com/mainmatter/ember-formatjs/blob/main/README.md) as a development dependency. The addon will transform your code at build time.
 
 ```json
 /* package.json */
