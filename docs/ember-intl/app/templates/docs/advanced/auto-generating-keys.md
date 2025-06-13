@@ -20,29 +20,83 @@ By default, `ember-intl` asks developers to create translation keys in `*.json` 
 
 Maintaining and extending these keys can be difficult if you have a production project and need to support many locales.
 
-You can install [`ember-formatjs`](https://github.com/mainmatter/ember-formatjs/) to take [the extraction approach from `@formatjs/cli`](https://formatjs.github.io/docs/getting-started/message-extraction/). The addon will transform your `{{format-message}}` helpers to `{{t}}` at build time:
+The steps below describe how [keys can be created automatically](https://formatjs.github.io/docs/getting-started/message-extraction/).
+
+
+## 1. Use `{{format-message}}`
+
+In templates, use the `{{format-message}}` helper and pass the translation that you want for the default locale.
 
 ```hbs
-{{! What you write in app/templates/application.hbs }}
+{{! app/templates/application.hbs }}
 <div>
   {{format-message "Hello, {name}!" name="Zoey"}}
 </div>
 ```
 
-```hbs
-{{! What gets built in app/templates/application.hbs }}
-<div>
-  {{t "some-hash" name="Zoey"}}
-</div>
+In classes, you would use the `intl` service's `formatMessage()` method instead.
+
+```ts
+// app/controller/application.ts
+export default class ApplicationController extends Controller {
+  get helloMessage(): string {
+    return this.intl.formatMessage('Hello, {name}!', {
+      name: 'Zoey',
+    });
+  }
+}
 ```
 
-Use `@formatjs/cli` to extract the translation file for the default locale. Then, create translation files for other locales, either manually or with the help of a Translation Management System (TMS).
+
+## 2. Extract translations
+
+Install `@formatjs/cli` as a development dependency, then add the following script:
+
+```json
+/* package.json */
+{
+  "scripts": {
+    "intl:extract": "formatjs extract \"app/**/*.{gjs,gts,hbs,js,ts}\" --format simple --ignore \"**/*.d.ts\" > translations/en-us.json"
+  },
+  "devDependencies": {
+    "@formatjs/cli": "..."
+  }  
+}
+```
+
+Run the script to get the translation file for the default locale.
 
 ```json
 /* translations/en-us.json */
 {
-  "some-hash": "Hello, {name}!"
+  "tBFOH1": "Hello, {name}!"
 }
 ```
 
-For more information, please see `ember-format`'s [`README`](https://github.com/mainmatter/ember-formatjs/blob/main/README.md).
+Now that you have a translation file with unique keys, you can create translation files for your other locales in one of two ways:
+
+- Manual: Duplicate the default locale file, then update translations.
+- Use a Translation Management System (TMS).
+
+
+## 3. Convert `{{format-message}}` to `{{t}}`
+
+Finally, we need to change `{{format-message}}` and `formatMessage()` to `{{t}}` and `t()`, so that your app displays the correct translations to your users.
+
+Simply install [`ember-formatjs`](https://github.com/mainmatter/ember-formatjs/blob/main/README.md) as a development dependency. The addon will transform your code at build time.
+
+```json
+/* package.json */
+{
+  "devDependencies": {
+    "ember-formatjs": "..."
+  }  
+}
+```
+
+```hbs
+{{! What gets built for app/templates/application.hbs }}
+<div>
+  {{t "tBFOH1" name="Zoey"}}
+</div>
+```
