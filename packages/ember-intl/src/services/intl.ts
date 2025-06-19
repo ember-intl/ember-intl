@@ -1,4 +1,3 @@
-import { deprecate } from '@ember/debug';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
@@ -10,7 +9,6 @@ import type {
   FormatListParameters,
   FormatMessageParameters,
   FormatNumberParameters,
-  FormatRelativeParameters,
   FormatRelativeTimeParameters,
   Formats,
   FormatTimeParameters,
@@ -26,7 +24,6 @@ import {
   formatList,
   formatMessage,
   formatNumber,
-  formatRelative,
   formatRelativeTime,
   formatTime,
 } from '../-private/formatjs/index.ts';
@@ -230,43 +227,6 @@ export default class IntlService extends Service {
     const intlShape = this.getIntlShape(options?.locale);
 
     return formatNumber(intlShape, value, options);
-  }
-
-  /**
-   * @deprecated
-   *
-   * `formatRelative()` will be renamed to `formatRelativeTime()` in `ember-intl@8.0.0`.
-   * Please rename the method to `formatRelativeTime()` in your class now.
-   */
-  formatRelative(
-    value: FormatRelativeParameters[0] | undefined | null,
-    options?: FormatRelativeParameters[2] & {
-      locale?: string;
-      unit?: FormatRelativeParameters[1];
-    },
-  ): string {
-    deprecate(
-      'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
-      false,
-      {
-        for: 'ember-intl',
-        id: 'ember-intl.rename-format-relative-method',
-        since: {
-          available: '7.2.0',
-          enabled: '7.2.0',
-        },
-        until: '8.0.0',
-        url: 'https://ember-intl.github.io/ember-intl/docs/helpers/introduction',
-      },
-    );
-
-    if (value === undefined || value === null) {
-      return '';
-    }
-
-    const intlShape = this.getIntlShape(options?.locale);
-
-    return formatRelative(intlShape, value, options?.unit, options);
   }
 
   formatRelativeTime(
