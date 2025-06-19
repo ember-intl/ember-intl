@@ -1,0 +1,100 @@
+{
+  "name": "my-v2-app-with-lazy-loaded-translations",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A Vite app that checks publicOnly: true",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "vite build",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "glint",
+    "start": "vite",
+    "test": "vite build --mode test && ember test --config-file \"./testem.cjs\" --path dist --test-port=0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/plugin-transform-runtime": "^7.27.4",
+    "@babel/plugin-transform-typescript": "^7.27.1",
+    "@ember/optional-features": "^2.2.0",
+    "@ember/string": "^4.0.1",
+    "@ember/test-helpers": "^5.2.2",
+    "@embroider/compat": "^4.1.0",
+    "@embroider/config-meta-loader": "^1.0.0",
+    "@embroider/core": "^4.1.0",
+    "@embroider/router": "^3.0.1",
+    "@embroider/vite": "^1.1.5",
+    "@glimmer/component": "^2.0.0",
+    "@glimmer/tracking": "^1.1.2",
+    "@glint/core": "^1.5.2",
+    "@glint/environment-ember-loose": "^1.5.2",
+    "@glint/environment-ember-template-imports": "^1.5.2",
+    "@glint/template": "^1.5.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@shared-configs/ember-template-lint": "workspace:*",
+    "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/eslint-config-yaml": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/testem": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@types/qunit": "^2.19.12",
+    "babel-plugin-ember-template-compilation": "^2.4.1",
+    "broccoli-asset-rev": "^3.0.0",
+    "concurrently": "^9.1.2",
+    "decorator-transforms": "^2.3.0",
+    "ember-auto-import": "^2.10.0",
+    "ember-cli": "~6.4.0",
+    "ember-cli-app-version": "^7.0.0",
+    "ember-cli-babel": "^8.2.0",
+    "ember-cli-clean-css": "^3.0.0",
+    "ember-cli-dependency-checker": "^3.3.3",
+    "ember-cli-htmlbars": "^6.3.0",
+    "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-intl": "workspace:*",
+    "ember-load-initializers": "^3.0.1",
+    "ember-page-title": "^9.0.2",
+    "ember-qunit": "^9.0.3",
+    "ember-resolver": "^13.1.1",
+    "ember-route-template": "^1.0.3",
+    "ember-source": "~6.4.0",
+    "ember-template-imports": "^4.3.0",
+    "ember-template-lint": "^7.8.1",
+    "ember-test-selectors": "^7.1.0",
+    "eslint": "^9.28.0",
+    "my-v1-addon": "workspace:*",
+    "my-v2-addon": "workspace:*",
+    "prettier": "^3.5.3",
+    "qunit": "^2.24.1",
+    "qunit-dom": "^3.4.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": "18.* || >= 20"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "type": "app",
+    "version": 2
+  }
+}
