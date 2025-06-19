@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v2-app` is a v2 app. We use it to check the default configuration of `ember-intl`.
+`my-v2-app` is a Vite app. We use it to check the default configuration of `ember-intl`.
 
 
 ## Local development
