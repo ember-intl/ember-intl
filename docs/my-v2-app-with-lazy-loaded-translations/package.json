@@ -1,8 +1,8 @@
 {
-  "name": "my-v2-app",
-  "version": "1.0.3",
+  "name": "my-v2-app-with-lazy-loaded-translations",
+  "version": "0.0.0",
   "private": true,
-  "description": "A Vite app with the default ember-intl configuration",
+  "description": "A Vite app that checks publicOnly: true",
   "repository": {
     "type": "git",
     "url": "https://github.com/ember-intl/ember-intl.git"

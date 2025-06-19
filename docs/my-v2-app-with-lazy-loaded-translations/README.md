@@ -1,4 +1,4 @@
-# my-v2-app
+# my-v2-app-with-lazy-loaded-translations
 
 1. [What is it?](#what-is-it)
 1. [Local development](#local-development)
@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v2-app` is a Vite app. We use it to check the default configuration of `ember-intl`.
+`my-v2-app-with-lazy-loaded-translations` is a Vite app. We use it to check that `publicOnly: true` works.
 
 
 ## Local development
@@ -18,7 +18,7 @@ Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so tha
 pnpm prepare
 
 # Change directory
-cd docs/my-v2-app
+cd docs/my-v2-app-with-lazy-loaded-translations
 ```
 
 Some useful commands:
