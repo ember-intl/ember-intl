@@ -1,0 +1,27 @@
+{
+  "components": {
+    "title": "Komponenten",
+    "translation-with-arguments": {
+      "message": "{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.",
+      "title": "Übersetzung mit Argumenten"
+    }
+  },
+  "components.component-from-app": {
+    "message": "Dies ist eine Komponente aus der App."
+  },
+  "components.component-from-v1-addon": {
+    "message": "Dies ist eine Komponente aus einem v1 Addon."
+  },
+  "components.component-from-v2-addon": {
+    "message": "Dies ist eine Komponente aus einem v2 Addon."
+  },
+  "components.select-locale": {
+    "default-option": "Sprache auswählen",
+    "label": "Sprache"
+  },
+  "routes.application": { "title": "ember-intl" },
+  "routes.index": {
+    "key-to-overwrite": "Die Apps Übersetzungen haben Vorrang.",
+    "title": "Willkommen bei <code>ember-intl</code>"
+  }
+}

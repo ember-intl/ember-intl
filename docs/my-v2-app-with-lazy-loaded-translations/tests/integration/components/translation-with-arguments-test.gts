@@ -1,7 +1,9 @@
 import { render } from '@ember/test-helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import TranslationWithArguments from 'my-v2-app-with-lazy-loaded-translations/components/translation-with-arguments';
-import { setupRenderingTest } from 'my-v2-app-with-lazy-loaded-translations/tests/helpers';
+import {
+  setupIntl,
+  setupRenderingTest,
+} from 'my-v2-app-with-lazy-loaded-translations/tests/helpers';
 import { module, test } from 'qunit';
 
 module(

@@ -1,8 +1,8 @@
 import { render } from '@ember/test-helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { SelectLocale } from 'my-v2-addon';
 import {
   selectLocale,
+  setupIntl,
   setupRenderingTest,
 } from 'my-v2-app-with-lazy-loaded-translations/tests/helpers';
 import { module, test } from 'qunit';

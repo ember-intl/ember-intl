@@ -42,4 +42,5 @@ function setupTest(hooks: NestedHooks, options?: SetupTestOptions) {
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
 
+export * from './ember-intl';
 export { selectLocale } from 'my-v2-addon/test-support';

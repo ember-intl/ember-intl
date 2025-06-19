@@ -36,7 +36,7 @@ module.exports = function (/* environment */) {
      * @type {Boolean}
      * @default "false"
      */
-    publicOnly: false,
+    publicOnly: true,
 
     /**
      * Add the subdirectories of the translations as a namespace for all keys.

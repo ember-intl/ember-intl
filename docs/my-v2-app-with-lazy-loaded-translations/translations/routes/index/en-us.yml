@@ -1,3 +1,0 @@
-routes.index:
-  key-to-overwrite: The app's translations take precedence.
-  title: Welcome to <code>ember-intl</code>
