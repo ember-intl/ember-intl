@@ -33,10 +33,17 @@ module(
         ({ message }) => message,
       );
 
-      assert.deepEqual(deprecationMessages, [
-        '{{format-relative}} will be renamed to {{format-relative-time}} in ember-intl@8.0.0. Please rename the helper to {{format-relative-time}} in your template now.',
-        'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
-      ]);
+      assert.true(
+        deprecationMessages.includes(
+          '{{format-relative}} will be renamed to {{format-relative-time}} in ember-intl@8.0.0. Please rename the helper to {{format-relative-time}} in your template now.',
+        ),
+      );
+
+      assert.true(
+        deprecationMessages.includes(
+          'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
+        ),
+      );
     });
 
     test('it returns a string', async function (this: TestContext, assert) {

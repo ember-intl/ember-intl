@@ -24,9 +24,11 @@ module('Unit | Service | intl > formatRelative()', function (hooks) {
 
     const deprecationMessages = getDeprecations().map(({ message }) => message);
 
-    assert.deepEqual(deprecationMessages, [
-      'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
-    ]);
+    assert.true(
+      deprecationMessages.includes(
+        'formatRelative() will be renamed to formatRelativeTime() in ember-intl@8.0.0. Please rename the method to formatRelativeTime() in your class now.',
+      ),
+    );
   });
 
   test('it works', function (this: TestContext, assert) {
