@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.3.1
+
+### Patch Changes
+
+- [#1978](https://github.com/ember-intl/ember-intl/pull/1978) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1974](https://github.com/ember-intl/ember-intl/pull/1974) Passed the correct locales to `_onMissingTranslation()` ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.3.0
 
 ### Minor Changes

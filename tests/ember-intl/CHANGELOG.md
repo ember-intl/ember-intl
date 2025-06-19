@@ -1,5 +1,16 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.5.0
+
+### Minor Changes
+
+- [#1973](https://github.com/ember-intl/ember-intl/pull/1973) Added tests for setFormats() ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#1978](https://github.com/ember-intl/ember-intl/pull/1978) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#1974](https://github.com/ember-intl/ember-intl/pull/1974) Passed the correct locales to `_onMissingTranslation()` ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.9
 
 ### Patch Changes

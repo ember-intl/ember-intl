@@ -1,5 +1,11 @@
 # my-v1-app-with-lazy-loaded-translations
 
+## 1.2.11
+
+### Patch Changes
+
+- [#1978](https://github.com/ember-intl/ember-intl/pull/1978) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.10
 
 ### Patch Changes

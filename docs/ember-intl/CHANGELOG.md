@@ -1,5 +1,15 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.7.0
+
+### Minor Changes
+
+- [#1966](https://github.com/ember-intl/ember-intl/pull/1966) Documented how to auto-generate keys ([@mansona](https://github.com/mansona))
+
+### Patch Changes
+
+- [#1978](https://github.com/ember-intl/ember-intl/pull/1978) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.6.0
 
 ### Minor Changes
