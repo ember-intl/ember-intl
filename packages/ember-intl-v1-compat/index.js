@@ -2,10 +2,11 @@
 
 'use strict';
 
-const { existsSync } = require('node:fs');
+const { existsSync, readFileSync, rmSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 const mergeTrees = require('broccoli-merge-trees');
 const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
+const oxc = require('oxc-transform');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
@@ -125,12 +126,34 @@ module.exports = {
   getUserConfig() {
     const { env: environment, project } = this.app;
 
-    const config = join(dirname(project.configPath()), 'ember-intl.js');
+    const configDir = dirname(project.configPath());
+    const oldConfigFilePath = join(configDir, 'ember-intl.js');
+    const newConfigFilePathJs = join(configDir, '..', 'app', 'ember-intl.js');
+    const newConfigFilePathTs = join(configDir, '..', 'app', 'ember-intl.ts');
 
-    if (!existsSync(config)) {
+    try {
+      let config = {};
+
+      if (existsSync(oldConfigFilePath)) {
+        config = require(oldConfigFilePath)(environment);
+      } else if (existsSync(newConfigFilePathJs)) {
+        ({ config } = require(newConfigFilePathJs));
+      } else if (existsSync(newConfigFilePathTs)) {
+        const { code } = oxc.transform(
+          'ember-intl.ts',
+          readFileSync(newConfigFilePathTs, 'utf8'),
+        );
+        writeFileSync(newConfigFilePathJs, code, 'utf8');
+
+        ({ config } = require(newConfigFilePathJs));
+        rmSync(newConfigFilePathJs);
+      }
+
+      return config;
+    } catch (error) {
+      console.error(error);
+
       return {};
     }
-
-    return require(config)(environment);
   },
 };

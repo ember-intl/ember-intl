@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "ember-intl-v1-compat": [
+        "../../packages/ember-intl-v1-compat/addon/index"
+      ],
       "test-app-for-ember-intl/tests/*": ["tests/*"],
       "test-app-for-ember-intl/*": ["app/*"],
       "*": ["types/*"]

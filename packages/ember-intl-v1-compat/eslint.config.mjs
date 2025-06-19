@@ -4,6 +4,9 @@ import globals from 'globals';
 export default [
   ...baseConfiguration,
   {
+    ignores: ['addon/index.d.ts'],
+  },
+  {
     files: ['lib/**/*.js'],
     languageOptions: {
       globals: globals.node,
