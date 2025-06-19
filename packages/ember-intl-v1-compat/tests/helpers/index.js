@@ -1,4 +1,3 @@
-import type { SetupTestOptions } from 'ember-qunit';
 import {
   setupApplicationTest as upstreamSetupApplicationTest,
   setupRenderingTest as upstreamSetupRenderingTest,
@@ -9,7 +8,7 @@ import {
 // test setup functions. This way, you can easily extend the setup that is
 // needed per test type.
 
-function setupApplicationTest(hooks: NestedHooks, options?: SetupTestOptions) {
+function setupApplicationTest(hooks, options) {
   upstreamSetupApplicationTest(hooks, options);
 
   // Additional setup for application tests can be done here.
@@ -28,13 +27,13 @@ function setupApplicationTest(hooks: NestedHooks, options?: SetupTestOptions) {
   // setupMirage(hooks); // ember-cli-mirage
 }
 
-function setupRenderingTest(hooks: NestedHooks, options?: SetupTestOptions) {
+function setupRenderingTest(hooks, options) {
   upstreamSetupRenderingTest(hooks, options);
 
   // Additional setup for rendering tests can be done here.
 }
 
-function setupTest(hooks: NestedHooks, options?: SetupTestOptions) {
+function setupTest(hooks, options) {
   upstreamSetupTest(hooks, options);
 
   // Additional setup for unit tests can be done here.

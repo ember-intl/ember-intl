@@ -5,10 +5,6 @@ const { maybeEmbroider } = require('@embroider/test-setup');
 
 module.exports = function (defaults) {
   const app = new EmberAddon(defaults, {
-    'ember-cli-babel': {
-      enableTypeScriptTransform: true,
-    },
-
     // Add options here
   });
 
