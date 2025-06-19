@@ -1,0 +1,12 @@
+# compiled output
+/declarations/
+/dist/
+
+# misc
+!.*
+.*/
+CONTRIBUTING.md
+LICENSE.md
+README.md
+
+# specific to this package
