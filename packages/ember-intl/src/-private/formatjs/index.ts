@@ -3,6 +3,7 @@ export * from './format-date-range.ts';
 export * from './format-list.ts';
 export * from './format-message.ts';
 export * from './format-number.ts';
+export * from './format-relative.ts';
 export * from './format-relative-time.ts';
 export * from './format-time.ts';
 export * from './formats.ts';

@@ -107,6 +107,7 @@
       "./helpers/format-message.js": "./dist/_app_/helpers/format-message.js",
       "./helpers/format-number.js": "./dist/_app_/helpers/format-number.js",
       "./helpers/format-relative-time.js": "./dist/_app_/helpers/format-relative-time.js",
+      "./helpers/format-relative.js": "./dist/_app_/helpers/format-relative.js",
       "./helpers/format-time.js": "./dist/_app_/helpers/format-time.js",
       "./helpers/t.js": "./dist/_app_/helpers/t.js",
       "./services/intl.js": "./dist/_app_/services/intl.js"

@@ -1,6 +1,7 @@
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
 
 import type { Translations } from '../-private/utils/translations.ts';
+import { onMissingTranslation } from './-private/on-missing-translation.ts';
 import { addTranslations } from './add-translations.ts';
 
 /**
@@ -24,6 +25,7 @@ export function setupIntl(
     const intl = owner.lookup('service:intl');
 
     intl.setLocale(locale);
+    intl.setOnMissingTranslation(onMissingTranslation);
 
     if (translations) {
       await addTranslations(locale, translations);
