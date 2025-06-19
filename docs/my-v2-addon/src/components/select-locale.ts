@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import type Owner from '@ember/owner';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-// @ts-expect-error: Cannot find module 'ember-intl/services/intl' or its corresponding type declarations.
 import type IntlService from 'ember-intl/services/intl';
 
 type Option = {

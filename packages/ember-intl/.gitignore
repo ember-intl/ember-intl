@@ -1,17 +1,13 @@
 # compiled output
-/dist/
 /declarations/
+/dist/
 
 # dependencies
 /node_modules/
 
 # misc
-/.env*
-/.pnp*
 /.eslintcache
-/coverage/
-/.pnpm-debug.log
-/testem.log
+/.stylelintcache
 
-# broccoli-debug
-/DEBUG/
+# npm/pnpm/yarn pack output
+*.tgz

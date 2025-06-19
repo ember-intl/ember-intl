@@ -1,16 +1,12 @@
-# unconventional js
-/blueprints/*/files/
-
 # compiled output
 /declarations/
 /dist/
 
 # misc
-/coverage/
 !.*
 .*/
-*.html
 CONTRIBUTING.md
+LICENSE.md
 README.md
 
 # specific to this package

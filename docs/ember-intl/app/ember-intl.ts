@@ -1,4 +1,18 @@
 import type { Formats } from 'ember-intl';
+import type { Config } from 'ember-intl-v1-compat';
+
+export const config: Config = {
+  errorOnMissingTranslations: false,
+  errorOnNamedArgumentMismatch: false,
+  fallbackLocale: null,
+  inputPath: 'translations',
+  publicOnly: false,
+  requiresTranslation(/* key, locale */) {
+    return true;
+  },
+  stripEmptyTranslations: false,
+  wrapTranslationsWithNamespace: false,
+};
 
 export const formats: Formats = {
   'format-date': {
