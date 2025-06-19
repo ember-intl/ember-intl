@@ -8,14 +8,6 @@
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
-      "ember-intl": ["../../packages/ember-intl/addon"],
-      "ember-intl/*": ["../../packages/ember-intl/addon/*"],
-      "ember-intl/test-support": [
-        "../../packages/ember-intl/addon-test-support"
-      ],
-      "ember-intl/test-support/*": [
-        "../../packages/ember-intl/addon-test-support/*"
-      ],
       "my-v1-engine": ["addon"],
       "my-v1-engine/*": ["addon/*"],
       "my-v1-engine/test-support": ["addon-test-support"],
