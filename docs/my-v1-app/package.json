@@ -52,7 +52,7 @@
     "@types/qunit": "^2.19.13",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.2.1",
-    "ember-auto-import": "^2.10.0",
+    "ember-auto-import": "^2.10.1",
     "ember-cli": "~6.7.0",
     "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.2.0",
