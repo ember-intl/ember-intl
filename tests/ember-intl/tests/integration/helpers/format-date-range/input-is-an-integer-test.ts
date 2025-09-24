@@ -67,7 +67,7 @@ module(
       assert
         .dom('[data-test-output="2"]')
         .hasText(/January 23 at 6:00\sPM\s–\sJanuary 26 at 7:30\sPM/)
-        .hasText('January 23 at 6:00 PM – January 26 at 7:30 PM');
+        .hasText('January 23 at 6:00 PM – January 26 at 7:30 PM');
     });
 
     test('we can specify the time zone', async function (this: TestContext, assert) {
