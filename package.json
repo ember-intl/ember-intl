@@ -34,7 +34,8 @@
   },
   "pnpm": {
     "overrides": {
-      "ember-cli-addon-docs>@handlebars/parser": "2.1.0"
+      "ember-cli-addon-docs>@handlebars/parser": "2.1.0",
+      "ember-svg-jar>cheerio": "1.0.0"
     }
   }
 }
