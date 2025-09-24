@@ -1,3 +1,5 @@
+import './ember-inspector';
+
 import Application from '@ember/application';
 import config from 'docs-app-for-ember-intl/config/environment';
 import loadInitializers from 'ember-load-initializers';
