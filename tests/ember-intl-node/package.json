@@ -25,7 +25,7 @@
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
     "chai": "^5.2.0",
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.1",
     "ember-intl": "workspace:*",
     "eslint": "^9.29.0",
     "globals": "^16.1.0",

@@ -71,7 +71,7 @@
     "@shared-configs/testem": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@types/qunit": "^2.19.12",
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.1",
     "ember-cli": "~6.5.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-htmlbars": "^6.3.0",
