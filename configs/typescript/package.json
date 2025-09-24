@@ -18,16 +18,16 @@
     "lint:js:fix": "prettier \"**/*.{json,mjs}\" --cache --write"
   },
   "dependencies": {
-    "@tsconfig/ember": "^3.0.10",
+    "@tsconfig/ember": "^3.0.11",
     "@tsconfig/node18": "^18.2.4",
-    "@tsconfig/strictest": "^2.0.5"
+    "@tsconfig/strictest": "^2.0.6"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "prettier": "^3.5.3"
+    "prettier": "^3.6.2"
   },
   "peerDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "peerDependenciesMeta": {
     "typescript": {

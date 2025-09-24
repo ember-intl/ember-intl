@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "prettier": "^3.5.3"
+    "prettier": "^3.6.2"
   },
   "engines": {
     "node": "18.* || >= 20"
