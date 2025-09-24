@@ -1,5 +1,11 @@
 # Changelog for test-ember-intl-node
 
+## 1.2.26
+
+### Patch Changes
+
+- [#1983](https://github.com/ember-intl/ember-intl/pull/1983) Updated lint and test dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.25
 
 ### Patch Changes

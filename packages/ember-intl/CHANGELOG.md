@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.4.0
+
+### Minor Changes
+
+- [#1986](https://github.com/ember-intl/ember-intl/pull/1986) Updated ember-auto-import to 2.10.1 ([@ijlee2](https://github.com/ijlee2))
+- [#1982](https://github.com/ember-intl/ember-intl/pull/1982) Updated assertions for {{format-date-range}} ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#1985](https://github.com/ember-intl/ember-intl/pull/1985) Updated dependencies for Babel, Embroider, and Webpack ([@ijlee2](https://github.com/ijlee2))
+- [#1984](https://github.com/ember-intl/ember-intl/pull/1984) Updated ember-source to 6.7.0 ([@ijlee2](https://github.com/ijlee2))
+- [#1983](https://github.com/ember-intl/ember-intl/pull/1983) Updated lint and test dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.3.1
 
 ### Patch Changes

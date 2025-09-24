@@ -1,6 +1,6 @@
 {
   "name": "test-ember-intl-node",
-  "version": "1.2.25",
+  "version": "1.2.26",
   "private": true,
   "description": "Tests for the Node part of ember-intl",
   "repository": {
