@@ -34,8 +34,10 @@
   },
   "pnpm": {
     "overrides": {
+      "ansi-html": "^0.0.9",
       "ember-cli-addon-docs>@handlebars/parser": "2.1.0",
-      "ember-svg-jar>cheerio": "1.0.0"
+      "ember-svg-jar>cheerio": "1.0.0",
+      "form-data": "^4.0.4"
     }
   }
 }
