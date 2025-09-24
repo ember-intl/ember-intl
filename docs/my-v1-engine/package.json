@@ -81,7 +81,7 @@
     "ember-cli-terser": "^4.0.2",
     "ember-engines": "^0.12.0",
     "ember-load-initializers": "^3.0.1",
-    "ember-page-title": "^9.0.2",
+    "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
     "ember-source": "~6.7.0",
@@ -93,7 +93,7 @@
     "qunit": "^2.24.1",
     "qunit-dom": "^3.5.0",
     "typescript": "^5.9.2",
-    "webpack": "^5.99.9"
+    "webpack": "^5.101.3"
   },
   "peerDependencies": {
     "ember-engines": "^0.10.0",
