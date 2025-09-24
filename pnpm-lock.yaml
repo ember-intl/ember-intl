@@ -6,7 +6,7 @@ settings:
 
 overrides:
   ember-cli-addon-docs>@handlebars/parser: 2.1.0
-  ember-cli-addon-docs>ember-svg-jar: 2.6.3
+  ember-cli-addon-docs>ember-svg-jar: 2.6.2
 
 importers:
 
@@ -6613,8 +6613,8 @@ packages:
     peerDependencies:
       '@glimmer/component': '>= 1.1.2'
 
-  ember-svg-jar@2.6.3:
-    resolution: {integrity: sha512-+hgqDIVmtyHcBWOKfRlvxWvTWGJ8Ly4t9NjGsRGSu8qfP/w/TP6IgYJNUgN9MU9ZkU24Sg02RzIkfuXvIhoYJg==}
+  ember-svg-jar@2.6.2:
+    resolution: {integrity: sha512-bDwzecB1DjVMvYCg0QpSsqQoHjK/zRDJ/ob+QbB0VzL8rPbSsThpoyKAsRcNip7m0l+gUxBfyUoHorPlyc0UxA==}
     engines: {node: 12.* || 14.* || >= 16}
 
   ember-template-imports@4.3.0:
@@ -16341,7 +16341,7 @@ snapshots:
       ember-router-scroll: 4.1.2(@babel/core@7.28.4)
       ember-set-helper: 2.0.1
       ember-source: 6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
-      ember-svg-jar: 2.6.3(@glint/template@1.5.2)
+      ember-svg-jar: 2.6.2(@glint/template@1.5.2)
       ember-tether: 3.1.0(@glint/template@1.5.2)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3)
       ember-truth-helpers: 4.0.3(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       esm: 3.2.25
@@ -17269,7 +17269,7 @@ snapshots:
       - rsvp
       - supports-color
 
-  ember-svg-jar@2.6.3(@glint/template@1.5.2):
+  ember-svg-jar@2.6.2(@glint/template@1.5.2):
     dependencies:
       '@embroider/macros': 1.18.1(@glint/template@1.5.2)
       broccoli-caching-writer: 3.0.3
