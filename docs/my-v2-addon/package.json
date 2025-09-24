@@ -77,11 +77,11 @@
     "concurrently": "^9.2.1",
     "ember-intl": "workspace:*",
     "ember-source": "~6.5.0",
-    "ember-template-lint": "^7.9.1",
-    "eslint": "^9.29.0",
-    "prettier": "^3.5.3",
+    "ember-template-lint": "^7.9.3",
+    "eslint": "^9.36.0",
+    "prettier": "^3.6.2",
     "rollup": "^4.43.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "@ember/test-helpers": "^5.0.0",
