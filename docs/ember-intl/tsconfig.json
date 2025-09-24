@@ -3,16 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "ember-intl": ["../../packages/ember-intl/addon"],
-      "ember-intl/*": ["../../packages/ember-intl/addon/*"],
-      "ember-intl/test-support": [
-        "../../packages/ember-intl/addon-test-support"
-      ],
-      "ember-intl/test-support/*": [
-        "../../packages/ember-intl/addon-test-support/*"
-      ],
       "docs-app-for-ember-intl/tests/*": ["tests/*"],
       "docs-app-for-ember-intl/*": ["app/*"],
+      "ember-intl-v1-compat": [
+        "../../packages/ember-intl-v1-compat/addon/index"
+      ],
       "*": ["types/*"]
     },
     "types": ["ember-source/types"]
