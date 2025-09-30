@@ -2082,6 +2082,9 @@ importers:
         version: 5.101.3
 
   tests/ember-intl:
+    dependenciesMeta:
+      ember-intl:
+        injected: true
     devDependencies:
       '@babel/core':
         specifier: ^7.27.4
@@ -2227,9 +2230,6 @@ importers:
       webpack:
         specifier: ^5.101.3
         version: 5.101.3
-    dependenciesMeta:
-      ember-intl:
-        injected: true
 
   tests/ember-intl-node:
     devDependencies:
