@@ -32,6 +32,12 @@ module.exports = {
   name: 'ember-intl',
   configOptions: null,
 
+  options: {
+    'ember-cli-babel': {
+      enableTypeScriptTransform: true,
+    },
+  },
+
   included(parent) {
     this._super.included.apply(this, arguments);
 
