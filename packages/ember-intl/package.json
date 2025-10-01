@@ -48,6 +48,7 @@
     "cldr-core": "^47.0.0",
     "ember-auto-import": "^2.10.1",
     "ember-cli-babel": "^8.2.0",
+    "ember-cli-typescript": "^5.3.0",
     "extend": "^3.0.2",
     "intl-messageformat": "^10.7.16",
     "js-yaml": "^4.1.0",
