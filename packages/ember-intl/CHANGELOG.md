@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.4.1
+
+### Patch Changes
+
+- [#1993](https://github.com/ember-intl/ember-intl/pull/1993) Reintroduced ember-cli-typescript so that we can publish ember-intl safely ([@ijlee2](https://github.com/ijlee2))
+- [#1990](https://github.com/ember-intl/ember-intl/pull/1990) Removed ember-cli-typescript from dependencies and moved typescript to devDependencies ([@aklkv](https://github.com/aklkv))
+
 ## 7.4.0
 
 ### Minor Changes
