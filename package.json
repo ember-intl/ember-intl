@@ -34,6 +34,10 @@
   },
   "pnpm": {
     "overrides": {
+      "@glint/core": "1.5.2",
+      "@glint/environment-ember-loose": "1.5.2",
+      "@glint/environment-ember-template-imports": "1.5.2",
+      "@glint/template": "1.5.2",
       "ansi-html": "^0.0.9",
       "ember-cli-addon-docs>@handlebars/parser": "2.1.0",
       "ember-svg-jar>cheerio": "1.0.0",
