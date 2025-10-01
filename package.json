@@ -27,10 +27,10 @@
     "sort-package-json": "^3.4.0",
     "update-workspace-root-version": "^2.0.5"
   },
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.17.1",
   "engines": {
     "node": "18.* || >= 20",
-    "pnpm": ">= 9"
+    "pnpm": ">= 10"
   },
   "pnpm": {
     "overrides": {
