@@ -1966,9 +1966,6 @@ importers:
       ember-cli-babel:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.28.4)
-      ember-cli-typescript:
-        specifier: ^5.3.0
-        version: 5.3.0
       extend:
         specifier: ^3.0.2
         version: 3.0.2
