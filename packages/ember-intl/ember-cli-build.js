@@ -7,10 +7,6 @@ module.exports = function (defaults) {
   const { project } = defaults;
 
   const options = {
-    'ember-cli-babel': {
-      enableTypeScriptTransform: true,
-    },
-
     autoImport: {
       webpack: {
         node: {
