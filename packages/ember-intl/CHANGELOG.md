@@ -1,5 +1,13 @@
 # Changelog
 
+## 8.0.0-beta.1
+
+### Major Changes
+
+- [#1997](https://github.com/ember-intl/ember-intl/pull/1997) Dropped @ember/test-helpers@v3 support ([@ijlee2](https://github.com/ijlee2))
+- [#1996](https://github.com/ember-intl/ember-intl/pull/1996) Dropped Ember 3.28 support ([@ijlee2](https://github.com/ijlee2))
+- [#1994](https://github.com/ember-intl/ember-intl/pull/1994) Dropped Node 18 support ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.4.1
 
 ### Patch Changes

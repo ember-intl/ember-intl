@@ -1,5 +1,11 @@
 # my-v1-classic-app
 
+## 2.0.0
+
+### Major Changes
+
+- [#1994](https://github.com/ember-intl/ember-intl/pull/1994) Dropped Node 18 support ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.21
 
 ### Patch Changes

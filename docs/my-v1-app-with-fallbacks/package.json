@@ -1,6 +1,6 @@
 {
   "name": "my-v1-app-with-fallbacks",
-  "version": "1.0.17",
+  "version": "2.0.0",
   "private": true,
   "description": "An Embroider app with fallbacks for ember-intl",
   "keywords": [],
