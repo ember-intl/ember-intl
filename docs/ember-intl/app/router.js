@@ -43,6 +43,7 @@ Router.map(function () {
       this.route('v5');
       this.route('v6');
       this.route('v7');
+      this.route('v8');
     });
 
     this.route('services', function () {
