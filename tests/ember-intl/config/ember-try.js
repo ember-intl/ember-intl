@@ -25,14 +25,6 @@ module.exports = async function () {
         },
       },
       {
-        name: 'ember-test-helpers-v3',
-        npm: {
-          devDependencies: {
-            '@ember/test-helpers': '^3.3.1',
-          },
-        },
-      },
-      {
         name: 'ember-release',
         npm: {
           devDependencies: {
