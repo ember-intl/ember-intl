@@ -47,8 +47,8 @@ importers:
   configs/eslint/ember:
     dependencies:
       '@ijlee2-frontend-configs/eslint-config-ember':
-        specifier: ^2.2.1
-        version: 2.2.1(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)
+        specifier: ^2.3.0
+        version: 2.3.0(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)
     devDependencies:
       '@shared-configs/eslint-config-node':
         specifier: workspace:*
@@ -66,8 +66,8 @@ importers:
   configs/eslint/node:
     dependencies:
       '@ijlee2-frontend-configs/eslint-config-node':
-        specifier: ^2.2.1
-        version: 2.2.1(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)
+        specifier: ^2.2.2
+        version: 2.2.2(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)
     devDependencies:
       '@shared-configs/prettier':
         specifier: workspace:*
@@ -135,9 +135,9 @@ importers:
       '@tsconfig/ember':
         specifier: ^3.0.11
         version: 3.0.11
-      '@tsconfig/node18':
-        specifier: ^18.2.4
-        version: 18.2.4
+      '@tsconfig/node20':
+        specifier: ^20.1.6
+        version: 20.1.6
       '@tsconfig/strictest':
         specifier: ^2.0.6
         version: 2.0.6
@@ -3667,8 +3667,8 @@ packages:
     peerDependencies:
       ember-template-lint: ^7.9.2
 
-  '@ijlee2-frontend-configs/eslint-config-ember@2.2.1':
-    resolution: {integrity: sha512-LsAI0zybPHTMnDjn0GMTvfDlDjSdDL85Js/vT25id+k+7R4MI9spiEmEMQRWUCXlyVmlVfn7gT7WpBk3ts/c7A==}
+  '@ijlee2-frontend-configs/eslint-config-ember@2.3.0':
+    resolution: {integrity: sha512-hXDCcH8R07lYQI152jRr115JpxRGaGd7G541Ly6ESrzbg85fZy5OwKGW8O+aSM3GMVifvXcpBcYOpBiuVQWIwA==}
     engines: {node: 20.* || >= 22}
     peerDependencies:
       eslint: ^9.0.0
@@ -3677,8 +3677,8 @@ packages:
       typescript:
         optional: true
 
-  '@ijlee2-frontend-configs/eslint-config-node@2.2.1':
-    resolution: {integrity: sha512-0EwuENQ8DHZG9eJxTH1muVndnynH08/wbjFg671JH+OnadlgkvNsJM24lx9CPRDvh8hzxVVXMczhqkgXqe2ewQ==}
+  '@ijlee2-frontend-configs/eslint-config-node@2.2.2':
+    resolution: {integrity: sha512-huyny9m+tgUwOIXx0bW/O03bHpojTL5wiPW6FmjSjhSLO2gL+IqInYqjNuQ9l+mGtmsNJFj+jbxoNiaXnB2HFQ==}
     engines: {node: 20.* || >= 22}
     peerDependencies:
       eslint: ^9.0.0
@@ -4040,8 +4040,8 @@ packages:
   '@tsconfig/ember@3.0.11':
     resolution: {integrity: sha512-c9uaKBN4KxtdT/UNPPxoWghyoDsTRHzYb53Z5Fv9eum+4cok0U+hYwyKNjvCxkBjEPECS8QAyp8nGAhRifZnBQ==}
 
-  '@tsconfig/node18@18.2.4':
-    resolution: {integrity: sha512-5xxU8vVs9/FNcvm3gE07fPbn9tl6tqGGWA9tSlwsUEkBxtRnTsNmwrV8gasZ9F/EobaSv9+nu8AxUKccw77JpQ==}
+  '@tsconfig/node20@20.1.6':
+    resolution: {integrity: sha512-sz+Hqx9zwZDpZIV871WSbUzSqNIsXzghZydypnfgzPKLltVJfkINfUeTct31n/tTSa9ZE1ZOfKdRre1uHHquYQ==}
 
   '@tsconfig/strictest@2.0.6':
     resolution: {integrity: sha512-tPOhmDhIUcDjvpDDYyiUdssP84Eqm7n5KxJe5J3/g+s6xoDIPAf+SIn06dhw7VkhxIvLOnhDDrX7tsqMHNEhDg==}
@@ -12885,7 +12885,7 @@ snapshots:
     dependencies:
       ember-template-lint: 7.9.3
 
-  '@ijlee2-frontend-configs/eslint-config-ember@2.2.1(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)':
+  '@ijlee2-frontend-configs/eslint-config-ember@2.3.0(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.4(supports-color@8.1.1)
       '@babel/eslint-parser': 7.28.4(@babel/core@7.28.4)(eslint@9.36.0)
@@ -12912,7 +12912,7 @@ snapshots:
       - eslint-plugin-import
       - supports-color
 
-  '@ijlee2-frontend-configs/eslint-config-node@2.2.1(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)':
+  '@ijlee2-frontend-configs/eslint-config-node@2.2.2(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(@typescript-eslint/utils@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.4(supports-color@8.1.1)
       '@babel/eslint-parser': 7.28.4(@babel/core@7.28.4)(eslint@9.36.0)
@@ -13240,7 +13240,7 @@ snapshots:
 
   '@tsconfig/ember@3.0.11': {}
 
-  '@tsconfig/node18@18.2.4': {}
+  '@tsconfig/node20@20.1.6': {}
 
   '@tsconfig/strictest@2.0.6': {}
 
