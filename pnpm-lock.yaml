@@ -10,8 +10,6 @@ overrides:
   '@glint/environment-ember-template-imports': 1.5.2
   '@glint/template': 1.5.2
   ansi-html: ^0.0.9
-  ember-cli-addon-docs>@handlebars/parser: 2.1.0
-  ember-svg-jar>cheerio: 1.0.0
   form-data: ^4.0.4
 
 importers:
@@ -3637,9 +3635,6 @@ packages:
 
   '@handlebars/parser@2.0.0':
     resolution: {integrity: sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA==}
-
-  '@handlebars/parser@2.1.0':
-    resolution: {integrity: sha512-R14NuNaSKZ6eE9y4t0fg/1f8iKd5ZJtSOTIseGFzXINTV17XffhLG2Y0CvdKOgyVQ7+UnXi89YGzRo/xsgwHIA==}
 
   '@handlebars/parser@2.2.1':
     resolution: {integrity: sha512-D76vKOZFEGA9v6g0rZTYTQDUXNopCblW1Zeas3EEVrbdeh8gWrCEO9/goocKmcgtqAwv1Md76p58UQp7HeFTEw==}
@@ -12866,8 +12861,6 @@ snapshots:
 
   '@handlebars/parser@2.0.0': {}
 
-  '@handlebars/parser@2.1.0': {}
-
   '@handlebars/parser@2.2.1': {}
 
   '@humanfs/core@0.19.1': {}
@@ -16123,7 +16116,7 @@ snapshots:
       '@glimmer/component': 1.1.2(@babel/core@7.28.4)
       '@glimmer/syntax': 0.87.1
       '@glimmer/tracking': 1.1.2
-      '@handlebars/parser': 2.1.0
+      '@handlebars/parser': 2.2.1
       broccoli-bridge: 1.0.0
       broccoli-caching-writer: 3.0.3
       broccoli-filter: 1.3.0
