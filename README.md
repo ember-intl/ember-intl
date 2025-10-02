@@ -28,5 +28,5 @@ See https://ember-intl.github.io/ember-intl/docs/quickstart.
 
 ## Compatibility
 
-* Ember.js v3.28 or above
+* Ember.js v4.12 or above
 * Node.js v20 or above
