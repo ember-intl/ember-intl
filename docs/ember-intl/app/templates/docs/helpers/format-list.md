@@ -25,7 +25,7 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
 
 ## options.locale
 
-You can display the text in another locale (i.e. independently from the user's preferred locale).
+You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

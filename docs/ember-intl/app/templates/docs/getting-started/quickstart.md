@@ -11,7 +11,6 @@ ember install ember-intl
 
 This will create a few files:
 
-* `app/formats.js`
 * `config/ember-intl.js`
 * `translations/en-us.yaml`
 
