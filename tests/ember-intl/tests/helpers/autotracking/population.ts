@@ -1,7 +1,4 @@
-import type { Registry as Services } from '@ember/service';
-import * as s from '@ember/service';
-
-const service = s.service ?? s.inject;
+import { type Registry as Services, service } from '@ember/service';
 
 export class Population {
   @service declare intl: Services['intl'];
