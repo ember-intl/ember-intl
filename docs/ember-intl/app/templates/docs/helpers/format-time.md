@@ -1,6 +1,6 @@
 # &#123;&#123;format-time&#125;&#125;
 
-Behaves like the [`{{format-date}}` helper](./format-date), except the possible formats are defined in `time` in `app/formats.js`.
+Behaves like the [`{{format-date}}` helper](./format-date), except it focuses on the time.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
@@ -25,7 +25,7 @@ Behaves like the [`{{format-date}}` helper](./format-date), except the possible 
 
 ## options.format
 
-In `app/formats.js`, you can define formats that you want to reuse for `{{format-time}}`. Pass a format key to the named argument `format`.
+In `app/ember-intl.{js,ts}`, you can use the `format-time` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
@@ -47,15 +47,15 @@ In `app/formats.js`, you can define formats that you want to reuse for `{{format
   />
 
   <demo.snippet
-    @label="formats.js"
-    @name="docs__helpers__format-time__example-2__app__formats.js"
+    @label="ember-intl.ts"
+    @name="docs__helpers__format-time__example-2__app__ember-intl.ts"
   />
 </DocsDemo>
 
 
 ## options.locale
 
-You can display the text in another locale (i.e. independently from the user's preferred locale).
+You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />
