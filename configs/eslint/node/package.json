@@ -18,7 +18,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/eslint-config-node": "^2.2.1"
+    "@ijlee2-frontend-configs/eslint-config-node": "^2.2.2"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
@@ -38,6 +38,6 @@
     }
   },
   "engines": {
-    "node": "18.* || >= 20"
+    "node": "20.* || >= 22"
   }
 }

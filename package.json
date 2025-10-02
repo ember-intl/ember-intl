@@ -29,7 +29,7 @@
   },
   "packageManager": "pnpm@10.17.1",
   "engines": {
-    "node": "18.* || >= 20",
+    "node": "20.* || >= 22",
     "pnpm": ">= 10"
   },
   "pnpm": {
