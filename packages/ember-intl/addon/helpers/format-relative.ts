@@ -1,7 +1,7 @@
 import Helper from '@ember/component/helper';
 import { deprecate } from '@ember/debug';
+import { service } from '@ember/service';
 
-import service from '../-private/utils/service';
 import type IntlService from '../services/intl';
 
 type FormatParameters = Parameters<IntlService['formatRelative']>;
