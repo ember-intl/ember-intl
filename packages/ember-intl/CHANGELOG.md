@@ -1,5 +1,12 @@
 # Changelog
 
+## 8.0.0-beta.2
+
+### Major Changes
+
+- [#2000](https://github.com/ember-intl/ember-intl/pull/2000) Removed app/formats.js support ([@ijlee2](https://github.com/ijlee2))
+- [#1999](https://github.com/ember-intl/ember-intl/pull/1999) Removed formatRelative() from the intl service ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.0-beta.1
 
 ### Major Changes

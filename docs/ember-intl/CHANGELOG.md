@@ -8,6 +8,8 @@
 
 ### Patch Changes
 
+- [#2000](https://github.com/ember-intl/ember-intl/pull/2000) Documented removal of app/formats.js support ([@ijlee2](https://github.com/ijlee2))
+- [#1999](https://github.com/ember-intl/ember-intl/pull/1999) Documented removal of formatRelative() from the intl service ([@ijlee2](https://github.com/ijlee2))
 - [#1998](https://github.com/ember-intl/ember-intl/pull/1998) Documented minimum requirements for v8 ([@ijlee2](https://github.com/ijlee2))
 - [#1995](https://github.com/ember-intl/ember-intl/pull/1995) Removed pnpm.overrides that had been added to support Node 18 ([@ijlee2](https://github.com/ijlee2))
 
