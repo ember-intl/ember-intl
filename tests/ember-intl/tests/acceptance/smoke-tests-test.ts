@@ -28,8 +28,8 @@ module('Acceptance | smoke-tests', function (hooks) {
         .hasText('18:00:44', '{{format-time}} works.');
 
       assert
-        .dom('[data-test-field="Format Relative"]')
-        .hasText('in 1 Tag', '{{format-relative}} works.');
+        .dom('[data-test-field="Format Relative Time"]')
+        .hasText('in 1 Tag', '{{format-relative-time}} works.');
 
       assert
         .dom('[data-test-field="Nested Translations"]')
@@ -58,8 +58,8 @@ module('Acceptance | smoke-tests', function (hooks) {
         .hasText('18:00:44', '{{format-time}} works.');
 
       assert
-        .dom('[data-test-field="Format Relative"]')
-        .hasText('in 1 day', '{{format-relative}} works.');
+        .dom('[data-test-field="Format Relative Time"]')
+        .hasText('in 1 day', '{{format-relative-time}} works.');
 
       assert
         .dom('[data-test-field="Nested Translations"]')

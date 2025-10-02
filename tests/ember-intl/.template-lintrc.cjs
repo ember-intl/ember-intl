@@ -15,7 +15,7 @@ module.exports = {
             'format-list',
             'format-message',
             'format-number',
-            'format-relative',
+            'format-relative-time',
             'format-time',
             't',
           ],
