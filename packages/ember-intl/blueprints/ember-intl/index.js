@@ -9,13 +9,6 @@ module.exports = {
 
   fileMapTokens() {
     return {
-      __app__(options) {
-        if (options.inAddon) {
-          return join('tests', 'dummy', 'app');
-        }
-
-        return 'app';
-      },
       __config__(options) {
         if (options.inAddon) {
           return join('tests', 'dummy', 'config');

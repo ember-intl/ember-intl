@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
@@ -97,16 +96,6 @@ export default class IntlService extends Service {
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
-
-    const hasNewConfiguration = Boolean(
-      // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      getOwner(this).resolveRegistration('ember-intl:main'),
-    );
-
-    if (!hasNewConfiguration) {
-      this.getDefaultFormats();
-    }
 
     // Hydrate
     translations.forEach(([locale, translations]: [string, Translations]) => {
@@ -278,23 +267,6 @@ export default class IntlService extends Service {
     const intlShape = this.getIntlShape(options?.locale);
 
     return formatTime(intlShape, value, options);
-  }
-
-  /**
-   * @deprecated
-   *
-   * Formats, defined in the file `app/formats.js`, will have no effect in
-   * `ember-intl@8.0.0`. Please define formats in `app/ember-intl.{js,ts}`,
-   * then call `setFormats()` before loading your translations.
-   */
-  private getDefaultFormats(): void {
-    // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const formats = getOwner(this).resolveRegistration('formats:main') as
-      | FormatjsFormats
-      | undefined;
-
-    this._formats = formats ?? {};
   }
 
   private getIntl(locale: string | string[]): IntlShape | undefined {
