@@ -108,7 +108,6 @@ jobs:
         scenario:
           - 'ember-lts-4.12'
           - 'ember-lts-5.12'
-          - 'ember-test-helpers-v3'
           - 'ember-release'
           - 'ember-beta'
           - 'ember-canary'
