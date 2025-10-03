@@ -1,10 +1,9 @@
-import { t } from 'ember-intl';
-
 import { htmlSafe } from '@ember/template';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
+import { t } from 'ember-intl';
 import { setLocale, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';

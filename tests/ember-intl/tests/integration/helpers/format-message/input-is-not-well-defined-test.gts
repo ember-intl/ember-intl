@@ -1,6 +1,5 @@
-import { formatMessage } from 'ember-intl';
-
 import { render, resetOnerror, setupOnerror } from '@ember/test-helpers';
+import { formatMessage } from 'ember-intl';
 import { setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
@@ -16,11 +15,13 @@ module(
         assert.step('@formatjs/intl throws an error');
       });
 
-      await render(<template>
-      <div data-test-output>
-        {{formatMessage ""}}
-      </div>
-      </template>);
+      await render(
+        <template>
+          <div data-test-output>
+            {{formatMessage ""}}
+          </div>
+        </template>,
+      );
 
       assert.verifySteps(['@formatjs/intl throws an error']);
 

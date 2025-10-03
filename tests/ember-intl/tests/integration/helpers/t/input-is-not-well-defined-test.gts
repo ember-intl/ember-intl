@@ -1,6 +1,5 @@
-import { t } from 'ember-intl';
-
 import { render, resetOnerror, setupOnerror } from '@ember/test-helpers';
+import { t } from 'ember-intl';
 import { addTranslations, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';

@@ -1,10 +1,9 @@
-import { formatNumber } from 'ember-intl';
-
 import { setOwner } from '@ember/application';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
+import { formatNumber } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { formats } from 'test-app-for-ember-intl/ember-intl';
@@ -39,18 +38,17 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatNumber
-          self.number
-          currency=self.currency.unit
-          style="currency"
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatNumber
+              self.number
+              currency=self.currency.unit
+              style="currency"
+            }}
+          </div>
+        </template>,
+      );
 
       assert.dom('[data-test-output]').hasText('$12,345,678.90');
     });
@@ -58,18 +56,17 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatNumber
-          self.number
-          currency=self.currency.unit
-          style="currency"
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatNumber
+              self.number
+              currency=self.currency.unit
+              style="currency"
+            }}
+          </div>
+        </template>,
+      );
 
       await setLocale('de-de');
 
@@ -79,30 +76,29 @@ module(
     test('we can use hash options to override the global options', async function (this: TestContext, assert) {
       const self = this;
 
+      await render<TestContext>(
+        <template>
+          {{! Globally, number.currency.minimumFractionDigits is 2. }}
+          <div data-test-output="1">
+            {{formatNumber
+              self.number
+              currency=self.currency.unit
+              format="currency"
+              style="currency"
+            }}
+          </div>
 
-
-
-      await render<TestContext>(<template>
-      {{! Globally, number.currency.minimumFractionDigits is 2. }}
-      <div data-test-output="1">
-        {{formatNumber
-          self.number
-          currency=self.currency.unit
-          format="currency"
-          style="currency"
-        }}
-      </div>
-
-      <div data-test-output="2">
-        {{formatNumber
-          self.number
-          currency=self.currency.unit
-          format="currency"
-          minimumFractionDigits=0
-          style="currency"
-        }}
-      </div>
-      </template>);
+          <div data-test-output="2">
+            {{formatNumber
+              self.number
+              currency=self.currency.unit
+              format="currency"
+              minimumFractionDigits=0
+              style="currency"
+            }}
+          </div>
+        </template>,
+      );
 
       assert.dom('[data-test-output="1"]').hasText('$12,345,678.90');
 

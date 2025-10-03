@@ -1,8 +1,7 @@
-import LazyHello from 'test-app-for-ember-intl/components/lazy-hello';
-
 import { render } from '@ember/test-helpers';
 import { addTranslations, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
+import LazyHello from 'test-app-for-ember-intl/components/lazy-hello';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
 module('Integration | Component | lazy-hello', function (hooks) {
@@ -18,9 +17,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         },
       });
 
-      await render(<template>
-      <LazyHello @name="Zoey" />
-      </template>);
+      await render(<template><LazyHello @name="Zoey" /></template>);
 
       assert
         .dom('[data-test-message]')
@@ -36,9 +33,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     });
 
     test('Translations are loaded after the component is rendered', async function (assert) {
-      await render(<template>
-      <LazyHello @name="Zoey" />
-      </template>);
+      await render(<template><LazyHello @name="Zoey" /></template>);
 
       assert
         .dom('[data-test-message]')
@@ -78,9 +73,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     });
 
     test('When translations are loaded after rendering, we need to add await to see the effect', async function (assert) {
-      await render(<template>
-      <LazyHello @name="Zoey" />
-      </template>);
+      await render(<template><LazyHello @name="Zoey" /></template>);
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       addTranslations('en-us', {
@@ -116,9 +109,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         },
       });
 
-      await render(<template>
-      <LazyHello @name="Zoey" />
-      </template>);
+      await render(<template><LazyHello @name="Zoey" /></template>);
 
       assert
         .dom('[data-test-message]')
@@ -134,9 +125,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     });
 
     test('Translations are loaded after the component is rendered', async function (assert) {
-      await render(<template>
-      <LazyHello @name="Zoey" />
-      </template>);
+      await render(<template><LazyHello @name="Zoey" /></template>);
 
       assert
         .dom('[data-test-message]')
@@ -176,9 +165,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     });
 
     test('When translations are loaded after rendering, we need to add await to see the effect', async function (assert) {
-      await render(<template>
-      <LazyHello @name="Zoey" />
-      </template>);
+      await render(<template><LazyHello @name="Zoey" /></template>);
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       addTranslations('de-de', {

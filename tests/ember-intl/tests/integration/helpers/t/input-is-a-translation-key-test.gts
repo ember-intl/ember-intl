@@ -1,6 +1,5 @@
-import { t } from 'ember-intl';
-
 import { render } from '@ember/test-helpers';
+import { t } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
@@ -12,21 +11,25 @@ module(
     setupIntl(hooks, 'en-us');
 
     test('it returns a string', async function (assert) {
-      await render(<template>
-      <div data-test-output>
-        {{t "smoke-tests.hello.world"}}
-      </div>
-      </template>);
+      await render(
+        <template>
+          <div data-test-output>
+            {{t "smoke-tests.hello.world"}}
+          </div>
+        </template>,
+      );
 
       assert.dom('[data-test-output]').hasText('Hello world!');
     });
 
     test('it returns a new value when the locale is changed', async function (assert) {
-      await render(<template>
-      <div data-test-output>
-        {{t "smoke-tests.hello.world"}}
-      </div>
-      </template>);
+      await render(
+        <template>
+          <div data-test-output>
+            {{t "smoke-tests.hello.world"}}
+          </div>
+        </template>,
+      );
 
       await setLocale('de-de');
 
@@ -34,19 +37,21 @@ module(
     });
 
     test('we can specify the locale', async function (assert) {
-      await render(<template>
-      <div data-test-output="1">
-        {{t "smoke-tests.hello.world" locale="de-de"}}
-      </div>
+      await render(
+        <template>
+          <div data-test-output="1">
+            {{t "smoke-tests.hello.world" locale="de-de"}}
+          </div>
 
-      <div data-test-output="2">
-        {{t "smoke-tests.hello.world" locale="en-us"}}
-      </div>
+          <div data-test-output="2">
+            {{t "smoke-tests.hello.world" locale="en-us"}}
+          </div>
 
-      <div data-test-output="3">
-        {{t "smoke-tests.hello.world" locale="fr-fr"}}
-      </div>
-      </template>);
+          <div data-test-output="3">
+            {{t "smoke-tests.hello.world" locale="fr-fr"}}
+          </div>
+        </template>,
+      );
 
       assert.dom('[data-test-output="1"]').hasText('Hallo Welt!');
 

@@ -1,11 +1,10 @@
-import { formatMessage } from 'ember-intl';
-
 import { setOwner } from '@ember/application';
 import { htmlSafe } from '@ember/template';
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
+import { formatMessage } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import {
@@ -35,14 +34,13 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatMessage self.royalty.message name=self.name points=31415}}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatMessage self.royalty.message name=self.name points=31415}}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')
@@ -56,14 +54,13 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatMessage self.royalty.message name=self.name points=31415}}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatMessage self.royalty.message name=self.name points=31415}}
+          </div>
+        </template>,
+      );
 
       await setLocale('de-de');
 
@@ -79,19 +76,18 @@ module(
     test('we can render a message that is an HTML code', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatMessage
-          self.royalty.message
-          htmlSafe=true
-          name=self.name
-          points=31415
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatMessage
+              self.royalty.message
+              htmlSafe=true
+              name=self.name
+              points=31415
+            }}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')
@@ -107,19 +103,18 @@ module(
 
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatMessage
-          self.royalty.message
-          htmlSafe=true
-          name=self.name
-          points=31415
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatMessage
+              self.royalty.message
+              htmlSafe=true
+              name=self.name
+              points=31415
+            }}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')

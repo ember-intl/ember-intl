@@ -1,9 +1,8 @@
-import { formatNumber } from 'ember-intl';
-
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
+import { formatNumber } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
@@ -25,19 +24,18 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatNumber
-          self.number
-          style="unit"
-          unit="kilometer-per-hour"
-          unitDisplay="long"
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatNumber
+              self.number
+              style="unit"
+              unit="kilometer-per-hour"
+              unitDisplay="long"
+            }}
+          </div>
+        </template>,
+      );
 
       assert.dom('[data-test-output]').hasText('1.235 kilometers per hour');
     });
@@ -45,19 +43,18 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatNumber
-          self.number
-          style="unit"
-          unit="kilometer-per-hour"
-          unitDisplay="long"
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatNumber
+              self.number
+              style="unit"
+              unit="kilometer-per-hour"
+              unitDisplay="long"
+            }}
+          </div>
+        </template>,
+      );
 
       await setLocale('de-de');
 

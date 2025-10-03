@@ -1,9 +1,8 @@
-import { formatDateRange } from 'ember-intl';
-
 import {
   render,
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
+import { formatDateRange } from 'ember-intl';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
@@ -27,14 +26,13 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatDateRange self.from self.to}}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatDateRange self.from self.to}}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')
@@ -45,14 +43,13 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatDateRange self.from self.to}}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatDateRange self.from self.to}}
+          </div>
+        </template>,
+      );
 
       await setLocale('de-de');
 
@@ -65,20 +62,19 @@ module(
     test('we can format the date', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output="2">
-        {{formatDateRange
-          self.from
-          self.to
-          hour="numeric"
-          minute="numeric"
-          month="long"
-        }}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output="2">
+            {{formatDateRange
+              self.from
+              self.to
+              hour="numeric"
+              minute="numeric"
+              month="long"
+            }}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output="2"]')
@@ -89,14 +85,13 @@ module(
     test('we can specify the time zone', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{formatDateRange self.from self.to timeZone="UTC"}}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{formatDateRange self.from self.to timeZone="UTC"}}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')
