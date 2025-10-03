@@ -85,6 +85,7 @@
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
     "ember-source": "~6.7.0",
+    "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
     "eslint": "^9.36.0",
