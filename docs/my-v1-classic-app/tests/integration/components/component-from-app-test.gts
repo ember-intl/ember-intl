@@ -1,7 +1,7 @@
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
+import ComponentFromApp from 'my-v1-classic-app/components/component-from-app';
 import { setupRenderingTest } from 'my-v1-classic-app/tests/helpers';
-import ComponentFromApp from 'my-v2-app-with-lazy-loaded-translations/components/component-from-app';
 import { module, test } from 'qunit';
 
 module('Integration | Component | component-from-app', function (hooks) {

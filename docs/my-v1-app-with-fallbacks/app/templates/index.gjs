@@ -1,8 +1,8 @@
 import { t } from 'ember-intl';
 import { ComponentFromV1Addon } from 'my-v1-addon';
+import ComponentFromApp from 'my-v1-app-with-fallbacks/components/component-from-app';
+import TranslationWithArguments from 'my-v1-app-with-fallbacks/components/translation-with-arguments';
 import { ComponentFromV2Addon } from 'my-v2-addon';
-import ComponentFromApp from 'my-v2-app-with-lazy-loaded-translations/components/component-from-app';
-import TranslationWithArguments from 'my-v2-app-with-lazy-loaded-translations/components/translation-with-arguments';
 
 <template>
   <div>

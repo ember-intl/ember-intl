@@ -6,9 +6,8 @@ import type Owner from '@ember/owner';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { t } from 'ember-intl';
-// @ts-expect-error: Cannot find module 'ember-intl/services/intl' or its corresponding type declarations.
-import type IntlService from 'ember-intl/services/intl';
+// @ts-expect-error: Module '"ember-intl"' has no exported member 't'.
+import { type IntlService, t } from 'ember-intl';
 import { eq } from 'ember-truth-helpers';
 
 type Option = {

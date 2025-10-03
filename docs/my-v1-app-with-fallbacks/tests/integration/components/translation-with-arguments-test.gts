@@ -7,8 +7,8 @@ import {
   type TestContext,
 } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
+import TranslationWithArguments from 'my-v1-app-with-fallbacks/components/translation-with-arguments';
 import { setupRenderingTest } from 'my-v1-app-with-fallbacks/tests/helpers';
-import TranslationWithArguments from 'my-v2-app-with-lazy-loaded-translations/components/translation-with-arguments';
 import { module, test } from 'qunit';
 
 function ignoreFormatError() {
