@@ -281,6 +281,9 @@ importers:
       ember-source:
         specifier: ~6.7.0
         version: 6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-template-imports:
+        specifier: ^4.3.0
+        version: 4.3.0
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -329,6 +332,9 @@ importers:
       ember-intl:
         specifier: workspace:*
         version: link:../../packages/ember-intl
+      ember-template-imports:
+        specifier: ^4.3.0
+        version: 4.3.0
     devDependencies:
       '@ember/optional-features':
         specifier: ^2.2.0
@@ -1474,6 +1480,9 @@ importers:
       ember-source:
         specifier: ~6.7.0
         version: 6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-template-imports:
+        specifier: ^4.3.0
+        version: 4.3.0
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
