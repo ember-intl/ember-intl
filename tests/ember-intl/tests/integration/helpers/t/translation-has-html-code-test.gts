@@ -4,7 +4,11 @@ import {
   type TestContext as BaseTestContext,
 } from '@ember/test-helpers';
 import { t } from 'ember-intl';
-import { setLocale, setupIntl, t } from 'ember-intl/test-support';
+import {
+  setLocale,
+  setupIntl,
+  t as testHelperT,
+} from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
@@ -36,19 +40,13 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{t "royalty.message" name=self.name points=31415}}
-      </div>
-      </template>);
-
-      const testHelperT = t('royalty.message', {
-        name: 'Zoey',
-        points: 31415,
-      });
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{t "royalty.message" name=self.name points=31415}}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')
@@ -58,7 +56,12 @@ module(
         .hasText(
           '<div class="message">Hello, Zoey! You have 31,415 royalty points.</div>',
         )
-        .hasText(testHelperT);
+        .hasText(
+          testHelperT('royalty.message', {
+            name: 'Zoey',
+            points: 31415,
+          }),
+        );
 
       assert.dom('[data-test-output] > div').doesNotExist();
     });
@@ -66,14 +69,13 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{t "royalty.message" name=self.name points=31415}}
-      </div>
-      </template>);
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{t "royalty.message" name=self.name points=31415}}
+          </div>
+        </template>,
+      );
 
       await setLocale('de-de');
 
@@ -93,27 +95,26 @@ module(
 
       const self = this;
 
-
-
-
-      await render<TestContext>(<template>
-      <div data-test-output>
-        {{t "royalty.message" htmlSafe=true name=self.name points=31415}}
-      </div>
-      </template>);
-
-      const testHelperT = t('royalty.message', {
-        htmlSafe: true,
-        name: this.name,
-        points: 31415,
-      });
+      await render<TestContext>(
+        <template>
+          <div data-test-output>
+            {{t "royalty.message" htmlSafe=true name=self.name points=31415}}
+          </div>
+        </template>,
+      );
 
       assert
         .dom('[data-test-output]')
         .hasHtml(
           '<div class="message">Hello, <span class="emphasize">Zoey</span>! You have 31,415 royalty points.</div>',
         )
-        .hasHtml(testHelperT.toString())
+        .hasHtml(
+          testHelperT('royalty.message', {
+            htmlSafe: true,
+            name: this.name,
+            points: 31415,
+          }).toString(),
+        )
         .hasText('Hello, Zoey! You have 31,415 royalty points.');
 
       assert.dom('[data-test-output] > div').hasClass('message');
