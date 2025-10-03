@@ -2193,6 +2193,9 @@ importers:
       ember-resolver:
         specifier: ^13.1.1
         version: 13.1.1
+      ember-route-template:
+        specifier: ^1.0.3
+        version: 1.0.3
       ember-source:
         specifier: ~6.7.0
         version: 6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)

@@ -63,6 +63,7 @@
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
+    "ember-route-template": "^1.0.3",
     "ember-source": "~6.7.0",
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.9.3",
