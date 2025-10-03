@@ -3,8 +3,8 @@ import {
   type RenderingTestContext,
   setupRenderingTest,
 } from 'dummy/tests/helpers';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
-import ComponentFromV1Engine from 'my-v1-engine/components/component-from-v1-engine';
 import { module, test } from 'qunit';
 
 interface TestContext extends RenderingTestContext {}
@@ -17,7 +17,10 @@ module('Integration | Component | component-from-v1-engine', function (hooks) {
 
     test('it renders', async function (this: TestContext, assert) {
       await render(
-        <template><ComponentFromV1Engine /></template>, // @ts-expect-error: Property 'visit' is missing in type 'EngineInstance' but required in type 'Owner'
+        hbs`
+          <ComponentFromV1Engine />
+        `,
+        // @ts-expect-error: Property 'visit' is missing in type 'EngineInstance' but required in type 'Owner'
         { owner: this.engine },
       );
 
@@ -32,7 +35,10 @@ module('Integration | Component | component-from-v1-engine', function (hooks) {
 
     test('it renders', async function (this: TestContext, assert) {
       await render(
-        <template><ComponentFromV1Engine /></template>, // @ts-expect-error: Property 'visit' is missing in type 'EngineInstance' but required in type 'Owner'
+        hbs`
+          <ComponentFromV1Engine />
+        `,
+        // @ts-expect-error: Property 'visit' is missing in type 'EngineInstance' but required in type 'Owner'
         { owner: this.engine },
       );
 
