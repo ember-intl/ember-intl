@@ -12,9 +12,3 @@ const ComponentFromAppComponent = <template>
 </template> satisfies TOC<ComponentFromAppSignature>;
 
 export default ComponentFromAppComponent;
-
-declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry {
-    ComponentFromApp: typeof ComponentFromAppComponent;
-  }
-}

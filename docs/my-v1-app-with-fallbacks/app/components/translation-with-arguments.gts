@@ -25,9 +25,3 @@ const TranslationWithArgumentsComponent = <template>
 </template> satisfies TOC<TranslationWithArgumentsSignature>;
 
 export default TranslationWithArgumentsComponent;
-
-declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry {
-    TranslationWithArguments: typeof TranslationWithArgumentsComponent;
-  }
-}
