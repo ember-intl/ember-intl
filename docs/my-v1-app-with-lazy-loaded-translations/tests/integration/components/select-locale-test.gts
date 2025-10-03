@@ -1,11 +1,10 @@
-import { SelectLocale } from 'my-v2-addon';
-
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import {
   selectLocale,
   setupRenderingTest,
 } from 'my-v1-app-with-lazy-loaded-translations/tests/helpers';
+import { SelectLocale } from 'my-v2-addon';
 import { module, test } from 'qunit';
 
 module('Integration | Component | select-locale', function (hooks) {
@@ -13,9 +12,7 @@ module('Integration | Component | select-locale', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(<template>
-    <SelectLocale />
-    </template>);
+    await render(<template><SelectLocale /></template>);
 
     assert
       .dom('option[value=""]')
@@ -35,9 +32,7 @@ module('Integration | Component | select-locale', function (hooks) {
   });
 
   test('We can select a locale', async function (assert) {
-    await render(<template>
-    <SelectLocale />
-    </template>);
+    await render(<template><SelectLocale /></template>);
 
     await selectLocale('de-de');
 

@@ -1,8 +1,7 @@
-import ComponentFromApp from 'my-v2-app-with-lazy-loaded-translations/components/component-from-app';
-
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'my-v1-app-with-lazy-loaded-translations/tests/helpers';
+import ComponentFromApp from 'my-v2-app-with-lazy-loaded-translations/components/component-from-app';
 import { module, test } from 'qunit';
 
 module('Integration | Component | component-from-app', function (hooks) {
@@ -12,9 +11,7 @@ module('Integration | Component | component-from-app', function (hooks) {
     setupIntl(nestedHooks, 'de-de');
 
     test('it renders', async function (assert) {
-      await render(<template>
-      <ComponentFromApp />
-      </template>);
+      await render(<template><ComponentFromApp /></template>);
 
       assert
         .dom('[data-test-output="App"]')
@@ -26,9 +23,7 @@ module('Integration | Component | component-from-app', function (hooks) {
     setupIntl(nestedHooks, 'en-us');
 
     test('it renders', async function (assert) {
-      await render(<template>
-      <ComponentFromApp />
-      </template>);
+      await render(<template><ComponentFromApp /></template>);
 
       assert
         .dom('[data-test-output="App"]')

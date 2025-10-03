@@ -3,17 +3,17 @@ import { pageTitle } from 'ember-page-title';
 import { SelectLocale } from 'my-v2-addon';
 
 <template>
-{{pageTitle (t "routes.application.title")}}
+  {{pageTitle (t "routes.application.title")}}
 
-<div>
-  <main>
-    <div>
-      <SelectLocale />
-    </div>
+  <div>
+    <main>
+      <div>
+        <SelectLocale />
+      </div>
 
-    <div>
-      {{outlet}}
-    </div>
-  </main>
-</div>
+      <div>
+        {{outlet}}
+      </div>
+    </main>
+  </div>
 </template>

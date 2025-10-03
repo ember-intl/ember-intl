@@ -1,5 +1,3 @@
-import TranslationWithArguments from 'my-v2-app-with-lazy-loaded-translations/components/translation-with-arguments';
-
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import {
   getContext,
@@ -10,6 +8,7 @@ import {
 } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'my-v1-app-with-fallbacks/tests/helpers';
+import TranslationWithArguments from 'my-v2-app-with-lazy-loaded-translations/components/translation-with-arguments';
 import { module, test } from 'qunit';
 
 function ignoreFormatError() {
@@ -43,9 +42,7 @@ module(
       test('it renders when we ignore FORMAT_ERROR', async function (assert) {
         ignoreFormatError();
 
-        await render(<template>
-        <TranslationWithArguments />
-        </template>);
+        await render(<template><TranslationWithArguments /></template>);
 
         assert
           .dom('[data-test-output="Translation with Arguments"]')
@@ -65,9 +62,7 @@ module(
           assert.step('@formatjs/intl throws an error');
         });
 
-        await render(<template>
-        <TranslationWithArguments />
-        </template>);
+        await render(<template><TranslationWithArguments /></template>);
 
         assert.verifySteps(['@formatjs/intl throws an error']);
 
@@ -81,9 +76,7 @@ module(
       test('it renders when we ignore FORMAT_ERROR', async function (assert) {
         ignoreFormatError();
 
-        await render(<template>
-        <TranslationWithArguments />
-        </template>);
+        await render(<template><TranslationWithArguments /></template>);
 
         assert
           .dom('[data-test-output="Translation with Arguments"]')
@@ -103,9 +96,7 @@ module(
           assert.step('@formatjs/intl throws an error');
         });
 
-        await render(<template>
-        <TranslationWithArguments />
-        </template>);
+        await render(<template><TranslationWithArguments /></template>);
 
         assert.verifySteps(['@formatjs/intl throws an error']);
 

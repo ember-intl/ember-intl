@@ -1,8 +1,7 @@
-import { ComponentFromV1Addon } from 'my-v1-addon';
-
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
+import { ComponentFromV1Addon } from 'my-v1-addon';
 import { module, test } from 'qunit';
 
 module('Integration | Component | component-from-v1-addon', function (hooks) {
@@ -12,9 +11,7 @@ module('Integration | Component | component-from-v1-addon', function (hooks) {
     setupIntl(nestedHooks, 'de-de');
 
     test('it renders', async function (assert) {
-      await render(<template>
-      <ComponentFromV1Addon />
-      </template>);
+      await render(<template><ComponentFromV1Addon /></template>);
 
       assert
         .dom('[data-test-output="V1 Addon"]')
@@ -26,9 +23,7 @@ module('Integration | Component | component-from-v1-addon', function (hooks) {
     setupIntl(nestedHooks, 'en-us');
 
     test('it renders', async function (assert) {
-      await render(<template>
-      <ComponentFromV1Addon />
-      </template>);
+      await render(<template><ComponentFromV1Addon /></template>);
 
       assert
         .dom('[data-test-output="V1 Addon"]')

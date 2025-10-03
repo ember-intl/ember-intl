@@ -1,3 +1,1 @@
-<template>
-{{outlet}}
-</template>
+<template>{{outlet}}</template>
