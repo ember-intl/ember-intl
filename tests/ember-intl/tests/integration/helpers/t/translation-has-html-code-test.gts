@@ -40,7 +40,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{t "royalty.message" name=self.name points=31415}}
@@ -69,7 +69,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{t "royalty.message" name=self.name points=31415}}
@@ -95,7 +95,7 @@ module(
 
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{t "royalty.message" htmlSafe=true name=self.name points=31415}}

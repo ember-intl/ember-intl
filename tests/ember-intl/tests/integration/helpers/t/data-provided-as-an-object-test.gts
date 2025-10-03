@@ -43,7 +43,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{t "population.description" self.data}}
@@ -61,7 +61,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{t "population.description" self.data}}
@@ -81,7 +81,7 @@ module(
     test('we can override the data', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{t "population.description" self.data population=300}}

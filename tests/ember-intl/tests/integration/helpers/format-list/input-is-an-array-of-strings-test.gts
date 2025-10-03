@@ -24,7 +24,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatList self.list}}
@@ -38,7 +38,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatList self.list}}
@@ -54,7 +54,7 @@ module(
     test('we can specify the grouping style', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output="1">
             {{formatList self.list style="long"}}
@@ -84,7 +84,7 @@ module(
     test('we can specify the grouping type', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output="1">
             {{formatList self.list type="conjunction"}}

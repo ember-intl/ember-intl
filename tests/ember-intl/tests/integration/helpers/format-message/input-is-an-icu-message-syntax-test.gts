@@ -30,7 +30,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage
@@ -53,7 +53,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage
@@ -76,7 +76,7 @@ module(
     });
 
     test('we can specify the locale', async function (this: TestContext, assert) {
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output="1">
             {{formatMessage
@@ -105,7 +105,7 @@ module(
     });
 
     test('we can use single quotes to escape curly braces', async function (this: TestContext, assert) {
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output="1">
             {{formatMessage
@@ -127,7 +127,7 @@ module(
 
     // TODO: Consider a unit test (intl.formatMessage)
     test('we can pass 0', async function (this: TestContext, assert) {
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage "{count}" count=0}}
@@ -140,7 +140,7 @@ module(
 
     // TODO: Consider a unit test (intl.formatMessage)
     test('we can pass # to a select type', async function (this: TestContext, assert) {
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage

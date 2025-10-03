@@ -34,7 +34,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage self.royalty.message name=self.name points=31415}}
@@ -54,7 +54,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage self.royalty.message name=self.name points=31415}}
@@ -76,7 +76,7 @@ module(
     test('we can render a message that is an HTML code', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage
@@ -103,7 +103,7 @@ module(
 
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatMessage

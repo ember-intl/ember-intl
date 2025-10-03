@@ -26,7 +26,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatDateRange self.from self.to}}
@@ -43,7 +43,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatDateRange self.from self.to}}
@@ -62,7 +62,7 @@ module(
     test('we can format the date', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output="2">
             {{formatDateRange
@@ -85,7 +85,7 @@ module(
     test('we can specify the time zone', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatDateRange self.from self.to timeZone="UTC"}}

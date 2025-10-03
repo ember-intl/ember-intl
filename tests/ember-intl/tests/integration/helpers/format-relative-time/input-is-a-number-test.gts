@@ -24,7 +24,7 @@ module(
     test('it returns a string', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatRelativeTime self.number unit="year"}}
@@ -38,7 +38,7 @@ module(
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output>
             {{formatRelativeTime self.number unit="year"}}
@@ -54,7 +54,7 @@ module(
     test('we can format the number', async function (this: TestContext, assert) {
       const self = this;
 
-      await render<TestContext>(
+      await render(
         <template>
           <div data-test-output="1">
             {{formatRelativeTime self.number numeric="auto" unit="year"}}
