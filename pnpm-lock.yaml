@@ -167,6 +167,9 @@ importers:
       '@embroider/core':
         specifier: ^3.5.7
         version: 3.5.7(@glint/template@1.5.2)
+      '@embroider/legacy-inspector-support':
+        specifier: ^0.1.2
+        version: 0.1.2
       '@embroider/webpack':
         specifier: ^4.1.1
         version: 4.1.1(@embroider/core@3.5.7(@glint/template@1.5.2))(webpack@5.102.0)
@@ -1736,9 +1739,6 @@ importers:
       ember-source:
         specifier: ~6.7.0
         version: 6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
-      ember-template-imports:
-        specifier: ^4.3.0
-        version: 4.3.0
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -1904,9 +1904,6 @@ importers:
       ember-source:
         specifier: ~6.7.0
         version: 6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
-      ember-template-imports:
-        specifier: ^4.3.0
-        version: 4.3.0
       ember-template-lint:
         specifier: ^7.9.3
         version: 7.9.3
@@ -3166,6 +3163,9 @@ packages:
     peerDependencies:
       '@embroider/core': ^3.5.7
       webpack: ^5
+
+  '@embroider/legacy-inspector-support@0.1.2':
+    resolution: {integrity: sha512-mKQCEciMtylTnOyBI/B7q5+MFFt6n8RRVXu8sQvAZ05ZRz+MmYEW8nIjV24rRCUAS/irLicjDGrBwNVZFOPCfA==}
 
   '@embroider/macros@1.16.13':
     resolution: {integrity: sha512-2oGZh0m1byBYQFWEa8b2cvHJB2LzaF3DdMCLCqcRAccABMROt1G3sultnNCT30NhfdGWMEsJOT3Jm4nFxXmTRw==}
@@ -12276,6 +12276,12 @@ snapshots:
     dependencies:
       '@embroider/core': 3.5.7(@glint/template@1.5.2)
       webpack: 5.102.0
+
+  '@embroider/legacy-inspector-support@0.1.2':
+    dependencies:
+      '@embroider/addon-shim': 1.10.0
+    transitivePeerDependencies:
+      - supports-color
 
   '@embroider/macros@1.16.13(@glint/template@1.5.2)':
     dependencies:
