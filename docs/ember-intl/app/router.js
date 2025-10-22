@@ -7,7 +7,6 @@ export default class Router extends AddonDocsRouter {
 }
 
 Router.map(function () {
-  // Add route declarations here
   docsRoute(this, function () {
     this.route('advanced', function () {
       this.route('auto-generating-keys');

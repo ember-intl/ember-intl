@@ -15,16 +15,16 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "eslint-plugin-yml": "^1.18.0"
+    "eslint-plugin-yml": "^1.19.0"
   },
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
-    "eslint": "^9.36.0",
+    "eslint": "^9.38.0",
     "prettier": "^3.6.2"
   },
   "peerDependencies": {
-    "eslint": "^9.36.0"
+    "eslint": "^9.38.0"
   },
   "peerDependenciesMeta": {
     "eslint": {
