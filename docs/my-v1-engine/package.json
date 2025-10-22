@@ -47,8 +47,8 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.27.4",
-    "ember-auto-import": "^2.10.1",
+    "@babel/core": "^7.28.4",
+    "ember-auto-import": "^2.11.1",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-intl": "workspace:*"
@@ -88,13 +88,13 @@
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "eslint": "^9.36.0",
+    "eslint": "^9.38.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.6.2",
-    "qunit": "^2.24.1",
+    "qunit": "^2.24.2",
     "qunit-dom": "^3.5.0",
-    "typescript": "^5.9.2",
-    "webpack": "^5.101.3"
+    "typescript": "^5.9.3",
+    "webpack": "^5.102.1"
   },
   "peerDependencies": {
     "ember-engines": "^0.10.0",

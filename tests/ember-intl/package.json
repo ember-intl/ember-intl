@@ -28,7 +28,7 @@
     "test:ember-compatibility": "ember try:one"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.4",
+    "@babel/core": "^7.28.4",
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.3.0",
@@ -48,7 +48,7 @@
     "@types/qunit": "^2.19.13",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.2.1",
-    "ember-auto-import": "^2.10.1",
+    "ember-auto-import": "^2.11.1",
     "ember-cli": "~6.7.0",
     "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.2.0",
@@ -69,14 +69,14 @@
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
     "ember-try": "^4.0.0",
-    "eslint": "^9.36.0",
+    "eslint": "^9.38.0",
     "latest-version": "^9.0.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.6.2",
-    "qunit": "^2.24.1",
+    "qunit": "^2.24.2",
     "qunit-dom": "^3.5.0",
-    "typescript": "^5.9.2",
-    "webpack": "^5.101.3"
+    "typescript": "^5.9.3",
+    "webpack": "^5.102.1"
   },
   "dependenciesMeta": {
     "ember-intl": {
