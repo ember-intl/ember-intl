@@ -1,6 +1,7 @@
 'use strict';
 
 const sideWatch = require('@embroider/broccoli-side-watch');
+const { compatBuild } = require('@embroider/compat');
 const { Webpack } = require('@embroider/webpack');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
@@ -47,5 +48,5 @@ module.exports = function (defaults) {
     staticInvokables: true,
   };
 
-  return require('@embroider/compat').compatBuild(app, Webpack, options);
+  return compatBuild(app, Webpack, options);
 };

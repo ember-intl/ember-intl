@@ -1,5 +1,6 @@
 'use strict';
 
+const { compatBuild } = require('@embroider/compat');
 const { Webpack } = require('@embroider/webpack');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
@@ -34,5 +35,5 @@ module.exports = function (defaults) {
     staticEmberSource: true,
   };
 
-  return require('@embroider/compat').compatBuild(app, Webpack, options);
+  return compatBuild(app, Webpack, options);
 };

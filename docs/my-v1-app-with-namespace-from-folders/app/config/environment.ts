@@ -2,7 +2,7 @@ import { assert } from '@ember/debug';
 import loadConfigFromMeta from '@embroider/config-meta-loader';
 
 const config = loadConfigFromMeta(
-  'my-v2-app-with-lazy-loaded-translations',
+  'my-v1-app-with-namespace-from-folders',
 ) as unknown;
 
 assert(

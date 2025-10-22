@@ -1,9 +1,7 @@
 import { assert } from '@ember/debug';
 import loadConfigFromMeta from '@embroider/config-meta-loader';
 
-const config = loadConfigFromMeta(
-  'my-v2-app-with-lazy-loaded-translations',
-) as unknown;
+const config = loadConfigFromMeta('test-app-for-ember-intl') as unknown;
 
 assert(
   'config is not an object',

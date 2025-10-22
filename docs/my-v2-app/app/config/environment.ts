@@ -1,12 +1,33 @@
+import { assert } from '@ember/debug';
 import loadConfigFromMeta from '@embroider/config-meta-loader';
 
-interface Config {
-  APP: Record<string, unknown>;
-  environment: string;
-  locationType: 'history' | 'hash' | 'none';
-  modulePrefix: string;
-  podModulePrefix: string;
-  rootURL: string;
-}
+const config = loadConfigFromMeta('my-v2-app') as unknown;
 
-export default loadConfigFromMeta('my-v2-app') as Config;
+assert(
+  'config is not an object',
+  typeof config === 'object' && config !== null,
+);
+assert(
+  'modulePrefix was not detected on your config',
+  'modulePrefix' in config && typeof config.modulePrefix === 'string',
+);
+assert(
+  'locationType was not detected on your config',
+  'locationType' in config && typeof config.locationType === 'string',
+);
+assert(
+  'rootURL was not detected on your config',
+  'rootURL' in config && typeof config.rootURL === 'string',
+);
+assert(
+  'APP was not detected on your config',
+  'APP' in config && typeof config.APP === 'object',
+);
+
+export default config as {
+  APP: Record<string, unknown>;
+  locationType: string;
+  modulePrefix: string;
+  podModulePrefix?: string;
+  rootURL: string;
+} & Record<string, unknown>;
