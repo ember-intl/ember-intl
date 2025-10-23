@@ -15,9 +15,6 @@ const defaultConfig = {
   fallbackLocale: null,
   inputPath: 'translations',
   publicOnly: false,
-  requiresTranslation(/* key, locale */) {
-    return true;
-  },
   stripEmptyTranslations: false,
   verbose: false,
   wrapTranslationsWithNamespace: false,
@@ -92,7 +89,6 @@ module.exports = {
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
       fallbackLocale,
-      requiresTranslation,
       stripEmptyTranslations,
       verbose,
       wrapTranslationsWithNamespace,
@@ -114,7 +110,6 @@ module.exports = {
       },
       mergeTranslationFiles: options.mergeTranslationFiles,
       outputPath: options.outputPath ?? 'translations',
-      requiresTranslation,
       stripEmptyTranslations,
       verbose,
       wrapTranslationsWithNamespace,
