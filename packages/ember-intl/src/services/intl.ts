@@ -6,7 +6,6 @@ import { tracked } from '@glimmer/tracking';
 import type {
   FormatDateParameters,
   FormatDateRangeParameters,
-  FormatjsFormats,
   FormatListParameters,
   FormatMessageParameters,
   FormatNumberParameters,
@@ -56,7 +55,7 @@ export default class IntlService extends Service {
   @tracked private _locale?: string[];
 
   private _cache = createIntlCache();
-  private _formats: FormatjsFormats = {};
+  private _formats: Formats = {};
   private _onFormatjsError: OnFormatjsError = (error) => {
     switch (error.code) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
@@ -106,7 +105,7 @@ export default class IntlService extends Service {
     messages: Record<string, unknown> = {},
   ): IntlShape {
     const resolvedLocale = convertToString(locale);
-    const formats = this._formats;
+    const formats = convertToFormatjsFormats(this._formats);
 
     return createIntl(
       {
@@ -286,7 +285,7 @@ export default class IntlService extends Service {
   }
 
   setFormats(formats: Formats): void {
-    this._formats = convertToFormatjsFormats(formats);
+    this._formats = formats;
 
     // Call `updateIntl` to update `formats` for each locale
     this.locales.forEach((locale) => {
