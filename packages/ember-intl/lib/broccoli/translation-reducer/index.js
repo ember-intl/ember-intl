@@ -5,7 +5,7 @@ const extend = require('extend');
 const yaml = require('js-yaml');
 const stringify = require('json-stable-stringify');
 
-const Linter = require('./lint-translations');
+const lintTranslations = require('./lint-translations');
 const forEachMessage = require('./utils/for-each-message');
 const isKnownLanguage = require('./utils/is-known-language');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
@@ -58,17 +58,14 @@ class TranslationReducer extends CachingWriter {
     };
 
     this.options.fallbackLocale = normalizeLocale(this.options.fallbackLocale);
-
-    this.linter = new Linter();
   }
 
   build() {
     // Call listFiles() from broccoli-caching-writer
     const translationFilePaths = this.listFiles();
     const translations = this.mergeTranslations(translationFilePaths);
-    const lintResults = this.linter.lint(translations);
 
-    this.handleLintResult(lintResults);
+    this.checkTranslations(translations);
 
     const filePath = join(this.outputPath, this.options.outputPath);
     const fallbackTranslationObject = translations[this.options.fallbackLocale];
@@ -113,8 +110,8 @@ class TranslationReducer extends CachingWriter {
     }
   }
 
-  handleLintResult(result) {
-    const { icuMismatch, missingTranslations } = result;
+  checkTranslations(translations) {
+    const { icuMismatch, missingTranslations } = lintTranslations(translations);
     const messages = [];
 
     if (this.options.errorOnNamedArgumentMismatch && icuMismatch.length) {

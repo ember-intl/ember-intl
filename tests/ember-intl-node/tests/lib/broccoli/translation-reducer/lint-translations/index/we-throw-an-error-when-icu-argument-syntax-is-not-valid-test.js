@@ -1,16 +1,10 @@
 import { expect } from 'chai';
-import Linter from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/index.js';
+import lintTranslations from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/index.js';
 
 describe('lib | broccoli | translation-reducer | lint-translations | index', function () {
   it('we throw an error when ICU argument syntax is not valid', function () {
-    const linter = new Linter({
-      requiresTranslation() {
-        return true;
-      },
-    });
-
     expect(() => {
-      linter.lint({
+      lintTranslations({
         de: {
           'some-key':
             'Du hast {count, plural, =0 {keine Katzen} =1 {eine Katze} other {viele Katzen}}.',

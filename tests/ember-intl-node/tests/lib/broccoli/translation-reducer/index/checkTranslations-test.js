@@ -56,7 +56,7 @@ const fixtureWithMissingTranslations = {
   it: {},
 };
 
-describe('lib | broccoli | translation-reducer | index | handleLintResult', function () {
+describe('lib | broccoli | translation-reducer | index | checkTranslations', function () {
   it('does not error by default', async function () {
     const input = await createTempDir();
 
@@ -69,9 +69,7 @@ describe('lib | broccoli | translation-reducer | index | handleLintResult', func
         },
       });
 
-      const lintResults = subject.linter.lint(fixtureWithMissingTranslations);
-
-      subject.handleLintResult(lintResults);
+      subject.checkTranslations(fixtureWithMissingTranslations);
 
       expect(logs).to.deep.equal([]);
     } finally {
@@ -93,9 +91,7 @@ describe('lib | broccoli | translation-reducer | index | handleLintResult', func
       });
 
       try {
-        const lintResults = subject.linter.lint(fixtureWithMissingTranslations);
-
-        subject.handleLintResult(lintResults);
+        subject.checkTranslations(fixtureWithMissingTranslations);
       } catch (error) {
         expect(error.message).to.equal(
           [
@@ -128,9 +124,7 @@ describe('lib | broccoli | translation-reducer | index | handleLintResult', func
       });
 
       try {
-        const lintResults = subject.linter.lint(fixtureWithMissingArguments);
-
-        subject.handleLintResult(lintResults);
+        subject.checkTranslations(fixtureWithMissingArguments);
       } catch (error) {
         expect(error.message).to.equal(
           [

@@ -1,15 +1,9 @@
 import { expect } from 'chai';
-import Linter from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/index.js';
+import lintTranslations from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/index.js';
 
 describe('lib | broccoli | translation-reducer | lint-translations | index', function () {
   it('base case (3)', function () {
-    const linter = new Linter({
-      requiresTranslation() {
-        return true;
-      },
-    });
-
-    const output = linter.lint({
+    const output = lintTranslations({
       de: {
         'key-with-argument': 'Hallo {name}!',
         'key-with-date': 'Es ist jetzt {timestamp, date, long}.',
