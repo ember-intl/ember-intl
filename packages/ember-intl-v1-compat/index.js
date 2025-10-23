@@ -21,7 +21,7 @@ const defaultConfig = {
 const allowedConfigOptions = Object.keys(defaultConfig);
 
 module.exports = {
-  name: 'ember-intl',
+  name: '@ember-intl/v1-compat',
   configOptions: null,
 
   included(parent) {

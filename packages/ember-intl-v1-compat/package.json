@@ -1,7 +1,7 @@
 {
-  "name": "ember-intl",
-  "version": "8.0.0-beta.3",
-  "description": "Internationalization for Ember projects",
+  "name": "@ember-intl/v1-compat",
+  "version": "0.0.0",
+  "description": "Loads translations to support ember-intl as v2 addon",
   "keywords": [
     "ember",
     "ember-addon",
@@ -15,7 +15,6 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "license": "MIT",
-  "author": "jason.mitchell.w@gmail.com",
   "directories": {
     "doc": "doc",
     "test": "tests"

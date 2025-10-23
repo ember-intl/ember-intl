@@ -5,10 +5,10 @@
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
-      "ember-intl": ["addon"],
-      "ember-intl/*": ["addon/*"],
-      "ember-intl/test-support": ["addon-test-support"],
-      "ember-intl/test-support/*": ["addon-test-support/*"],
+      "@ember-intl/v1-compat": ["addon"],
+      "@ember-intl/v1-compat/*": ["addon/*"],
+      "@ember-intl/v1-compat/test-support": ["addon-test-support"],
+      "@ember-intl/v1-compat/test-support/*": ["addon-test-support/*"],
       "*": ["types/*"]
     },
     "types": ["ember-source/types"]
