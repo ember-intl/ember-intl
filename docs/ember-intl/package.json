@@ -32,9 +32,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
+    "@ember-intl/v1-compat": "workspace:*",
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^5.3.0",
+    "@embroider/broccoli-side-watch": "^1.1.0",
     "@embroider/compat": "^3.9.1",
     "@embroider/config-meta-loader": "^1.0.0",
     "@embroider/core": "^3.5.7",

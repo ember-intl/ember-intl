@@ -32,6 +32,7 @@ jobs:
           - 'docs/my-v2-app'
           - 'docs/my-v2-app-with-lazy-loaded-translations'
           - 'packages/ember-intl'
+          - 'packages/ember-intl-v1-compat'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
     timeout-minutes: 5
@@ -75,6 +76,7 @@ jobs:
           - 'docs/my-v2-app'
           - 'docs/my-v2-app-with-lazy-loaded-translations'
           - 'packages/ember-intl'
+          - 'packages/ember-intl-v1-compat'
           - 'tests/ember-intl'
           - 'tests/ember-intl-node'
     timeout-minutes: 5
