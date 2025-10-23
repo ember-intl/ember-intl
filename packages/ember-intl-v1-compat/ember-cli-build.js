@@ -1,34 +1,12 @@
 'use strict';
 
-const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 const { maybeEmbroider } = require('@embroider/test-setup');
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
-  const { project } = defaults;
-
-  const options = {
-    autoImport: {
-      webpack: {
-        node: {
-          global: true,
-        },
-      },
-    },
-
-    'ember-fetch': {
-      preferNative: true,
-    },
-
-    vendorFiles: {
-      'app-shims.js': null,
-    },
-  };
-
-  if (project.findAddonByName('ember-native-dom-event-dispatcher')) {
-    options.vendorFiles['jquery.js'] = null;
-  }
-
-  const app = new EmberAddon(defaults, options);
+  const app = new EmberAddon(defaults, {
+    // Add options here
+  });
 
   /*
     This build file specifies the options for the dummy test app of this
@@ -36,7 +14,6 @@ module.exports = function (defaults) {
     This build file does *not* influence how the addon or the app using it
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
-
   return maybeEmbroider(app, {
     skipBabel: [
       {

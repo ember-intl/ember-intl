@@ -29,16 +29,12 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "lint:types": "glint",
-    "prepack": "ember ts:precompile",
-    "postpack": "ember ts:clean",
     "start": "ember serve",
     "test": "ember test --test-port=0"
   },
   "dependencies": {
     "@babel/core": "^7.28.4",
     "@formatjs/icu-messageformat-parser": "^2.11.4",
-    "@formatjs/intl": "^3.1.8",
     "broccoli-caching-writer": "^3.0.3",
     "broccoli-funnel": "^3.0.8",
     "broccoli-merge-trees": "^4.2.0",
@@ -47,7 +43,6 @@
     "cldr-core": "^47.0.0",
     "ember-auto-import": "^2.11.1",
     "ember-cli-babel": "^8.2.0",
-    "ember-cli-typescript": "^5.3.0",
     "extend": "^3.0.2",
     "intl-messageformat": "^10.7.18",
     "js-yaml": "^4.1.0",
@@ -60,16 +55,10 @@
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/core": "^1.5.2",
-    "@glint/environment-ember-loose": "^1.5.2",
-    "@glint/environment-ember-template-imports": "^1.5.2",
-    "@glint/template": "^1.5.2",
     "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
-    "@shared-configs/typescript": "workspace:*",
-    "@types/qunit": "^2.19.13",
     "concurrently": "^9.2.1",
     "ember-cli": "~6.8.0",
     "ember-cli-clean-css": "^3.0.0",
@@ -86,16 +75,7 @@
     "prettier": "^3.6.2",
     "qunit": "^2.24.2",
     "qunit-dom": "^3.5.0",
-    "typescript": "^5.9.3",
     "webpack": "^5.102.1"
-  },
-  "peerDependencies": {
-    "@ember/test-helpers": "^4.0.0 || ^5.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@ember/test-helpers": {
-      "optional": true
-    }
   },
   "engines": {
     "node": "20.* || >= 22"
