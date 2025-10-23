@@ -1,5 +1,5 @@
+import namespaceKeys from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/utils/namespace-keys.js';
 import { expect } from 'chai';
-import namespaceKeys from 'ember-intl/lib/broccoli/translation-reducer/utils/namespace-keys.js';
 
 describe('lib | broccoli | translation-reducer | utils | namespace-keys', function () {
   it('with a namespaced addon name (2)', function () {

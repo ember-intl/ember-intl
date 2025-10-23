@@ -1,6 +1,6 @@
+import traverse from '@ember-intl/v1-compat/lib/message-validator/ast-traverse.js';
 import { parse, TYPE } from '@formatjs/icu-messageformat-parser';
 import { expect } from 'chai';
-import traverse from 'ember-intl/lib/message-validator/ast-traverse.js';
 
 describe('traverse', function () {
   it('hello world!', function () {

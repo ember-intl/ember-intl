@@ -29,10 +29,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
+    "@ember-intl/v1-compat": "workspace:*",
     "@ember/legacy-built-in-components": "^0.5.0",
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.3.0",
+    "@embroider/broccoli-side-watch": "^1.1.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "^1.5.2",

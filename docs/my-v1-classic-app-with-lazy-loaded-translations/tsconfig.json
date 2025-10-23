@@ -3,14 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "ember-intl": ["../../packages/ember-intl/addon"],
-      "ember-intl/*": ["../../packages/ember-intl/addon/*"],
-      "ember-intl/test-support": [
-        "../../packages/ember-intl/addon-test-support"
-      ],
-      "ember-intl/test-support/*": [
-        "../../packages/ember-intl/addon-test-support/*"
-      ],
       "my-v1-classic-app-with-lazy-loaded-translations/tests/*": ["tests/*"],
       "my-v1-classic-app-with-lazy-loaded-translations/*": ["app/*"],
       "my-v1-addon": ["../my-v1-addon/addon/index"],

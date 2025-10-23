@@ -1,12 +1,10 @@
 import { on } from '@ember/modifier';
-/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import type Owner from '@ember/owner';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-// @ts-expect-error: Module '"ember-intl"' has no exported member 't'.
 import { type IntlService, t } from 'ember-intl';
 import { eq } from 'ember-truth-helpers';
 

@@ -1,5 +1,5 @@
+import lintTranslations from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/lint-translations/index.js';
 import { expect } from 'chai';
-import lintTranslations from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/index.js';
 
 describe('lib | broccoli | translation-reducer | lint-translations | index', function () {
   it('we can match ICU arguments by name', function () {

@@ -2,4 +2,5 @@ packages:
   - configs/**
   - docs/**
   - packages/ember-intl
+  - packages/ember-intl-v1-compat
   - tests/**

@@ -1,9 +1,9 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/index.js';
 import { createTempDir } from 'broccoli-test-helper';
 import { expect } from 'chai';
-import TranslationReducer from 'ember-intl/lib/broccoli/translation-reducer/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

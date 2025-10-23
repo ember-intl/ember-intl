@@ -4,10 +4,10 @@
 import '@glint/environment-ember-loose';
 import '@glint/environment-ember-template-imports';
 
+import type EmberIntlRegistry from 'ember-intl/template-registry';
 import type EmberTruthHelpersRegistry from 'ember-truth-helpers/template-registry';
 
 import type MyV2AddonRegistry from '../src/template-registry.ts';
-import type EmberIntlRegistry from './ember-intl.ts';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry

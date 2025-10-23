@@ -54,6 +54,7 @@
     "ember-template-imports": "^4.3.0"
   },
   "devDependencies": {
+    "@ember-intl/v1-compat": "workspace:*",
     "@ember/optional-features": "^2.2.0",
     "@ember/test-helpers": "^5.3.0",
     "@embroider/test-setup": "^4.0.0",

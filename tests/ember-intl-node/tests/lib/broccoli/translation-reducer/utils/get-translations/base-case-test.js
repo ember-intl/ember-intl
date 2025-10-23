@@ -1,8 +1,8 @@
 import { join } from 'node:path';
 
+import getTranslations from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/utils/get-translations.js';
 import { createTempDir } from 'broccoli-test-helper';
 import { expect } from 'chai';
-import getTranslations from 'ember-intl/lib/broccoli/translation-reducer/utils/get-translations.js';
 
 describe('lib | broccoli | translation-reducer | utils | get-translations', function () {
   it('file extension is json', async function () {
