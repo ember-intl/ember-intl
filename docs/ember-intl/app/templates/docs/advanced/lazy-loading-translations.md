@@ -17,7 +17,7 @@ module.exports = function (/* environment */) {
 
 When you run `ember serve` or `ember build -prod`, you will find translations (as JSON files) in the `dist/translations` folder.
 
-```sh
+```
 my-app
 └── dist
     └── translations

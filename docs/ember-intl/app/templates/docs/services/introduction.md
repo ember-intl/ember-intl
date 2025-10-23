@@ -7,7 +7,7 @@
 import { type Registry as Services, service } from '@ember/service';
 import Component from '@glimmer/component';
 
-export default class ExampleComponent extends Component {
+export default class Example extends Component {
   @service declare intl: Services['intl'];
 
   get options(): string[] {

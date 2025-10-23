@@ -3,16 +3,19 @@
 
 ## 1. Install ember-intl
 
-You can use Ember CLI to install `ember-intl`.
+Use your package manager to install `ember-intl`.
 
 ```sh
-ember install ember-intl
+pnpm add -D ember-intl
 ```
 
-This will create a few files:
+If you want your app to provide translations, create the folder `translations` as a sibling to `app`.
 
-* `config/ember-intl.js`
-* `translations/en-us.yaml`
+```
+my-app
+├── app
+└── translations
+```
 
 
 ## 2. Add a translation
@@ -46,14 +49,13 @@ interface HelloSignature {
   };
 }
 
-const HelloComponent: TOC<HelloSignature> =
-  <template>
-    <div>
-      {{t "hello.message" name=@name}}
-    </div>
-  </template>
+const Hello: TOC<HelloSignature> = <template>
+  <div>
+    {{t "hello.message" name=@name}}
+  </div>
+</template>;
 
-export default HelloComponent;
+export default Hello;
 ```
 
 
@@ -73,9 +75,9 @@ Note, you may also use `.yml` or `.json` for file extension.
 
 ### Set your app's locale
 
-When your application boots, you need to tell `ember-intl` which locale to use. The recommended approach is to do this in the `application` route's `beforeModel` hook.
+Before your app runs, you need to tell `ember-intl` which locale to use. You can set up the locale in the `application` route's `beforeModel` hook.
 
-```js
+```ts
 /* app/routes/application.ts */
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
@@ -90,13 +92,12 @@ export default class ApplicationRoute extends Route {
 ```
 
 
-### Glint
+### Set up glint
 
-Update your template registry to extend this addon's. Check the [Glint documentation](https://typed-ember.gitbook.io/glint/environments/ember/using-addons#using-glint-enabled-addons) for more information.
+If your app uses [`glint`](https://typed-ember.gitbook.io/glint) and is in "loose mode" (has `*.hbs` files or `hbs` tags), extend `ember-intl`'s template registry.
 
 ```ts
 /* types/global.d.ts */
-
 import '@glint/environment-ember-loose';
 
 import type EmberIntlRegistry from 'ember-intl/template-registry';
@@ -111,7 +112,7 @@ declare module '@glint/environment-ember-loose/registry' {
 
 ### Lint templates
 
-With [`ember-template-lint`](https://github.com/ember-template-lint/ember-template-lint), you can enable the [`no-bare-strings`](https://github.com/ember-template-lint/ember-template-lint/blob/v5.13.0/docs/rule/no-bare-strings.md) rule. This will help you check if hard-coded texts are present in a template.
+If your app uses [`ember-template-lint`](https://github.com/ember-template-lint/ember-template-lint), you may want to enable [`no-bare-strings`](https://github.com/ember-template-lint/ember-template-lint/blob/v7.9.3-ember-template-lint/docs/rule/no-bare-strings.md). This will help you check if hard-coded texts are present in a template.
 
 ```js
 /* .template-lintrc.js */
@@ -125,15 +126,12 @@ module.exports = {
 };
 ```
 
-You can also use [`ember-template-lint-plugin-prettier`](https://github.com/ember-template-lint/ember-template-lint-plugin-prettier) to format the template.
-
 
 ### Lint translations
 
 With [`eslint-plugin-yml`](https://ota-meshi.github.io/eslint-plugin-yml/), you can enable a few rules to keep YAML files consistent.
 
 ```js
-/* eslint.config.mjs (eslint@v9) */
 import eslintPluginYml from 'eslint-plugin-yml';
 
 export default [
@@ -157,31 +155,6 @@ export default [
     },
   },
 ];
-```
-
-```js
-/* .eslintrc.js (eslint@v8) */
-'use strict';
-
-module.exports = {
-  extends: ['plugin:yml/standard'],
-  rules: {
-    'yml/file-extension': 'error',
-    'yml/key-name-casing': [
-      'error',
-      {
-        camelCase: false,
-        'kebab-case': true,
-        PascalCase: false,
-        SCREAMING_SNAKE_CASE: false,
-        snake_case: false,
-        ignores: ['^[a-z0-9\\.-]+$'],
-      },
-    ],
-    'yml/no-multiple-empty-lines': 'error',
-    'yml/sort-keys': 'error',
-  },
-};
 ```
 
 You can also use [`prettier`](https://prettier.io/) to format the translation files and [`ember-intl-analyzer`](https://github.com/mainmatter/ember-intl-analyzer) to find unused translations.
