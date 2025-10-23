@@ -8,7 +8,7 @@ const stringify = require('json-stable-stringify');
 const lintTranslations = require('./lint-translations');
 const forEachMessage = require('./utils/for-each-message');
 const isKnownLanguage = require('./utils/is-known-language');
-const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
+const namespaceKeys = require('./utils/namespace-keys');
 const validateMessage = require('../../message-validator/validate-message');
 
 function isApp(filePath) {
@@ -177,12 +177,11 @@ class TranslationReducer extends CachingWriter {
       }
 
       if (this.options.wrapTranslationsWithNamespace === true) {
-        translationObject = wrapWithNamespaceIfNeeded(
-          translationObject,
+        translationObject = namespaceKeys(translationObject, {
+          addonNames: this.options.addonsWithTranslations,
           filePath,
-          this.inputPaths[0],
-          this.options.addonsWithTranslations,
-        );
+          inputPath: this.inputPaths[0],
+        });
       }
 
       const fileName = basename(filePath).split('.')[0];

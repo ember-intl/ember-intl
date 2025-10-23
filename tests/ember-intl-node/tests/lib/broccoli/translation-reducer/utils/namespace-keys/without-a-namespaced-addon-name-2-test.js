@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import wrapWithNamespaceIfNeeded from 'ember-intl/lib/broccoli/translation-reducer/utils/wrap-with-namespace-if-needed.js';
+import namespaceKeys from 'ember-intl/lib/broccoli/translation-reducer/utils/namespace-keys.js';
 
-describe('lib | broccoli | translation-reducer | utils | wrap-with-namespace-if-needed', function () {
+describe('lib | broccoli | translation-reducer | utils | namespace-keys', function () {
   it('without a namespaced addon name (2)', function () {
     const inputPath = '/tmp/broccoli_debug-output_path-l4iBcmcT';
     const translations = {
@@ -15,15 +15,11 @@ describe('lib | broccoli | translation-reducer | utils | wrap-with-namespace-if-
       key1: 'some value for key1',
     };
 
-    let filePath = `${inputPath}/my-addon/en-us.json`;
-    let addonNames = ['my-addon'];
-
-    let output = wrapWithNamespaceIfNeeded(
-      translations,
-      filePath,
+    let output = namespaceKeys(translations, {
+      addonNames: ['my-addon'],
+      filePath: `${inputPath}/my-addon/en-us.json`,
       inputPath,
-      addonNames,
-    );
+    });
 
     expect(output).to.deep.equal({
       'my-addon': {
@@ -39,15 +35,11 @@ describe('lib | broccoli | translation-reducer | utils | wrap-with-namespace-if-
     });
 
     // Check nested translations
-    filePath = `${inputPath}/my-addon/components/hello/en-us.json`;
-    addonNames = ['my-addon'];
-
-    output = wrapWithNamespaceIfNeeded(
-      translations,
-      filePath,
+    output = namespaceKeys(translations, {
+      addonNames: ['my-addon'],
+      filePath: `${inputPath}/my-addon/components/hello/en-us.json`,
       inputPath,
-      addonNames,
-    );
+    });
 
     expect(output).to.deep.equal({
       'my-addon': {
@@ -67,15 +59,11 @@ describe('lib | broccoli | translation-reducer | utils | wrap-with-namespace-if-
     });
 
     // Check scoped packages
-    filePath = `${inputPath}/@my-org/my-addon/en-us.json`;
-    addonNames = ['@my-org/my-addon'];
-
-    output = wrapWithNamespaceIfNeeded(
-      translations,
-      filePath,
+    output = namespaceKeys(translations, {
+      addonNames: ['@my-org/my-addon'],
+      filePath: `${inputPath}/@my-org/my-addon/en-us.json`,
       inputPath,
-      addonNames,
-    );
+    });
 
     expect(output).to.deep.equal({
       '@my-org': {
