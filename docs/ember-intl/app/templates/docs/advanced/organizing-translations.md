@@ -2,19 +2,19 @@
 
 Translations are stored in the `translations` folder, either as a `*.json` or `*.{yaml,yml}` file.
 
-```sh
+```
 my-app
 ├── app
 └── translations
 ```
 
-```sh
+```
 my-v1-addon
 ├── addon
 └── translations
 ```
 
-```sh
+```
 my-v2-addon
 ├── src
 └── translations
@@ -27,7 +27,7 @@ As the project grows, you will find the need to organize your translations. Here
 
 You may create subdirectories to organize your translations.
 
-```sh
+```
 my-app
 ├── app
 └── translations

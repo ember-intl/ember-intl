@@ -5,22 +5,17 @@ Addons need to publish a folder called `translations`.
 
 ## 1. Install ember-intl
 
-### v1 addons
-
-You can use Ember CLI to install `ember-intl`.
+Use your package manager to install `ember-intl` (as a dependency or peer dependency).
 
 ```sh
-ember install ember-intl
+pnpm add ember-intl
 ```
 
-This will create a few files:
+### v1 addons
 
-* `tests/dummy/config/ember-intl.js`
-* `translations/en-us.yaml`
+If you want your addon to provide translations, create the folder `translations` as a sibling to `addon`.
 
-Note the folder structure. Namely, `addon` and `translations` are siblings.
-
-```sh
+```
 my-v1-addon
 ├── addon
 └── translations
@@ -29,21 +24,15 @@ my-v1-addon
 
 ### v2 addons
 
-You can use your package manager to install `ember-intl` (as a dependency or peer dependency).
+If you want your addon to provide translations, create the folder `translations` as a sibling to `src`.
 
-```sh
-pnpm add ember-intl
 ```
-
-Then, create the folder `translations` as a sibling to `src`.
-
-```sh
 my-v2-addon
 ├── src
 └── translations
 ```
 
-Lastly, add `translations` to the `files` field in `package.json`.
+Then, add `translations` to the `files` field in `package.json`.
 
 ```json
 /* package.json */
@@ -99,17 +88,17 @@ Follow [step 3 for apps](./quickstart#3-add-a-language).
 Follow [step 4 for apps](./quickstart#4-configure-project). For brevity, only the differences are noted below.
 
 
-### Set your test app's locale (optional)
+### Set your test app's locale
 
-If your test app is something more than "just tests," e.g. the app is also a documentation app, then you will want to set the locale in your test app.
+If your test app uses the `app` folder to provide documentation, you will want to set the locale.
 
 - v1 addons: `tests/dummy/app/routes/application.ts`
 - v2 addons: `app/routes/application.ts`
 
 
-### Glint
+### Set up glint
 
-Extend `ember-intl`'s template registry.
+If your addon uses [`glint`](https://typed-ember.gitbook.io/glint) and is in "loose mode" (has `*.hbs` files or `hbs` tags), extend `ember-intl`'s template registry.
 
 - v1 addons: `types/global.d.ts`
 - v2 addons: `unpublished-development-types/index.d.ts`
