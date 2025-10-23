@@ -76,9 +76,7 @@ class TranslationReducer extends CachingWriter {
     mkdirSync(filePath, { recursive: true });
 
     for (const locale in translations) {
-      if (this.options.verbose) {
-        this.validateMessages(translations[locale], locale);
-      }
+      this.validateMessages(translations[locale], locale);
 
       if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
         translations[locale] = extend(
@@ -133,14 +131,6 @@ class TranslationReducer extends CachingWriter {
         return `"${key}" ICU argument mismatch: ${missingString}`;
       });
 
-      if (
-        this.options.verbose &&
-        // log messages if not failing as it's duplicated console output
-        !this.options.errorOnNamedArgumentMismatch
-      ) {
-        missingICUArguments.forEach((message) => this.options.log(message));
-      }
-
       if (this.options.errorOnNamedArgumentMismatch) {
         throwingMessages.push(
           'ICU arguments mismatch:\n' +
@@ -156,16 +146,6 @@ class TranslationReducer extends CachingWriter {
             .map((locale) => `"${locale}"`)
             .join(', ')}`,
       );
-
-      if (
-        this.options.verbose &&
-        // log messages if not failing as it's duplicated console output
-        !this.options.errorOnMissingTranslations
-      ) {
-        missingTranslationMessages.forEach((message) =>
-          this.options.log(message),
-        );
-      }
 
       if (this.options.errorOnMissingTranslations) {
         throwingMessages.push(
