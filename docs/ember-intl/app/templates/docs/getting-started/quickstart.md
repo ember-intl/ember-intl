@@ -46,14 +46,13 @@ interface HelloSignature {
   };
 }
 
-const HelloComponent: TOC<HelloSignature> =
-  <template>
-    <div>
-      {{t "hello.message" name=@name}}
-    </div>
-  </template>
+const Hello: TOC<HelloSignature> = <template>
+  <div>
+    {{t "hello.message" name=@name}}
+  </div>
+</template>;
 
-export default HelloComponent;
+export default Hello;
 ```
 
 

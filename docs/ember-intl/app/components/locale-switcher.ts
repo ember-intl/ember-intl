@@ -1,14 +1,13 @@
 import { action } from '@ember/object';
-import { service } from '@ember/service';
+import { type Registry as Services, service } from '@ember/service';
 import Component from '@glimmer/component';
-import type { IntlService } from 'ember-intl';
 
 interface LocaleSwitcherSignature {
   Args: {};
 }
 
-export default class LocaleSwitcherComponent extends Component<LocaleSwitcherSignature> {
-  @service declare intl: IntlService;
+export default class LocaleSwitcher extends Component<LocaleSwitcherSignature> {
+  @service declare intl: Services['intl'];
 
   @action updateLocale(locale: string) {
     this.intl.setLocale([locale]);
@@ -17,6 +16,7 @@ export default class LocaleSwitcherComponent extends Component<LocaleSwitcherSig
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LocaleSwitcher: typeof LocaleSwitcherComponent;
+    LocaleSwitcher: typeof LocaleSwitcher;
+    'locale-switcher': typeof LocaleSwitcher;
   }
 }
