@@ -2,32 +2,33 @@ const { parse, TYPE } = require('@formatjs/icu-messageformat-parser');
 
 const traverse = require('../../../message-validator/ast-traverse');
 
-function extractICUArguments(string) {
-  try {
-    const args = new Set();
-    const recordVisitedNodeValue = (node) => args.add(node.value);
+function extractIcuArguments(message) {
+  const icuArguments = new Set();
 
-    // Keep the options in sync with those for formatMessage()
-    const ast = parse(string, {
+  function recordArgument(node) {
+    icuArguments.add(node.value);
+  }
+
+  try {
+    // Keep the options for `parse()` in sync with those for `formatMessage()`
+    const ast = parse(message, {
       ignoreTag: true,
     });
 
-    // Errors thrown by the parser won't include any details about the string. By rethrowing the
-    // error with the string quoted it's much easier to identify which ICU argument was invalid.
     traverse(ast, {
-      [TYPE.time]: recordVisitedNodeValue,
-      [TYPE.date]: recordVisitedNodeValue,
-      [TYPE.plural]: recordVisitedNodeValue,
-      [TYPE.select]: recordVisitedNodeValue,
-      [TYPE.argument]: recordVisitedNodeValue,
+      [TYPE.argument]: recordArgument,
+      [TYPE.date]: recordArgument,
+      [TYPE.plural]: recordArgument,
+      [TYPE.select]: recordArgument,
+      [TYPE.time]: recordArgument,
     });
 
-    return [...args];
-  } catch (err) {
+    return Array.from(icuArguments);
+  } catch (e) {
     throw new Error(
-      `An error occurred (${err.message}) when extracting ICU arguments for '${string}'`,
+      `An error occurred while extracting ICU arguments for '${message}' (${e.message})`,
     );
   }
 }
 
-module.exports = extractICUArguments;
+module.exports = extractIcuArguments;

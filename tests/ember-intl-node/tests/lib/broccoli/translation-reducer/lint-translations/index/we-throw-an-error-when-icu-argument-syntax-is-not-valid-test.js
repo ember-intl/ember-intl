@@ -15,7 +15,7 @@ describe('lib | broccoli | translation-reducer | lint-translations | index', fun
         },
       });
     }).to.throw(
-      `An error occurred (MALFORMED_ARGUMENT) when extracting ICU arguments for 'You have {count, plural, =0 {no cats} =1 {one {cat} other {many cats}}.'`,
+      `An error occurred while extracting ICU arguments for 'You have {count, plural, =0 {no cats} =1 {one {cat} other {many cats}}.' (MALFORMED_ARGUMENT)`,
     );
   });
 });
