@@ -18,14 +18,7 @@ const defaultConfig = {
   wrapTranslationsWithNamespace: false,
 };
 
-const allowedConfigOptions = [
-  'errorOnMissingTranslations',
-  'errorOnNamedArgumentMismatch',
-  'fallbackLocale',
-  'inputPath',
-  'publicOnly',
-  'wrapTranslationsWithNamespace',
-];
+const allowedConfigOptions = Object.keys(defaultConfig);
 
 module.exports = {
   name: 'ember-intl',
