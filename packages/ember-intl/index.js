@@ -14,7 +14,6 @@ const defaultConfig = {
   errorOnNamedArgumentMismatch: false,
   fallbackLocale: null,
   inputPath: 'translations',
-  outputPath: 'translations',
   publicOnly: false,
   requiresTranslation(/* key, locale */) {
     return true;
@@ -93,7 +92,6 @@ module.exports = {
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
       fallbackLocale,
-      outputPath,
       requiresTranslation,
       stripEmptyTranslations,
       verbose,
@@ -115,7 +113,7 @@ module.exports = {
         return this.ui.writeLine(`[ember-intl] ${message}`);
       },
       mergeTranslationFiles: options.mergeTranslationFiles,
-      outputPath: options.outputPath ?? outputPath,
+      outputPath: options.outputPath ?? 'translations',
       requiresTranslation,
       stripEmptyTranslations,
       verbose,

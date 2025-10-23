@@ -51,13 +51,13 @@ class TranslationReducer extends CachingWriter {
     });
 
     this.options = {
-      outputPath: '',
       fallbackLocale: null,
       log() {},
+      mergeTranslationFiles: false,
+      outputPath: '',
       requiresTranslation(/* key, locale */) {
         return true;
       },
-      mergeTranslationFiles: false,
       ...options,
     };
 
