@@ -65,9 +65,9 @@ class TranslationReducer extends CachingWriter {
   build() {
     // Call listFiles() from broccoli-caching-writer
     const translationFilePaths = this.listFiles();
-
     const translations = this.mergeTranslations(translationFilePaths);
     const lintResults = this.linter.lint(translations);
+
     this.handleLintResult(lintResults);
 
     const filePath = join(this.outputPath, this.options.outputPath);
@@ -115,49 +115,39 @@ class TranslationReducer extends CachingWriter {
 
   handleLintResult(result) {
     const { icuMismatch, missingTranslations } = result;
-    const throwingMessages = [];
+    const messages = [];
 
-    if (icuMismatch.length) {
-      const missingICUArguments = icuMismatch.map(([key, notInLocales]) => {
-        const missingString = notInLocales
-          .map(
-            ([locale, missingICUArgs]) =>
-              `"${locale}": ${missingICUArgs
-                .map((arg) => `"${arg}"`)
-                .join(', ')}`,
-          )
+    if (this.options.errorOnNamedArgumentMismatch && icuMismatch.length) {
+      const messageItems = icuMismatch.map(([key, notInLocales]) => {
+        const list = notInLocales
+          .map(([locale, missingICUArgs]) => {
+            const sublist = missingICUArgs.map((arg) => `"${arg}"`).join(', ');
+
+            return `"${locale}": ${sublist}`;
+          })
           .join(', ');
 
-        return `"${key}" ICU argument mismatch: ${missingString}`;
+        return `- "${key}" ICU argument mismatch: ${list}`;
       });
 
-      if (this.options.errorOnNamedArgumentMismatch) {
-        throwingMessages.push(
-          'ICU arguments mismatch:\n' +
-            missingICUArguments.map((text) => `- ${text}`).join('\n'),
-        );
-      }
+      messages.push(['ICU arguments mismatch:', ...messageItems].join('\n'));
     }
 
-    if (missingTranslations.length) {
-      const missingTranslationMessages = missingTranslations.map(
-        ([key, notInLocales]) =>
-          `"${key}" was not found in ${notInLocales
-            .map((locale) => `"${locale}"`)
-            .join(', ')}`,
-      );
+    if (this.options.errorOnMissingTranslations && missingTranslations.length) {
+      const messageItems = missingTranslations.map(([key, notInLocales]) => {
+        const list = notInLocales.map((locale) => `"${locale}"`).join(', ');
 
-      if (this.options.errorOnMissingTranslations) {
-        throwingMessages.push(
-          'Missing translations:\n' +
-            missingTranslationMessages.map((text) => `- ${text}`).join('\n'),
-        );
-      }
+        return `- "${key}" was not found in ${list}`;
+      });
+
+      messages.push(['Missing translations:', ...messageItems].join('\n'));
     }
 
-    if (throwingMessages.length) {
-      throw new Error(throwingMessages.join('\n\n'));
+    if (messages.length === 0) {
+      return;
     }
+
+    throw new Error(messages.join('\n\n'));
   }
 
   mergeTranslations(filePaths) {
