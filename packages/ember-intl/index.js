@@ -69,13 +69,18 @@ module.exports = {
     let trees = [];
 
     if (this.configOptions.publicOnly) {
-      trees.push(this.getTranslationTree());
+      const translationTree = this.getTranslationTree({
+        mergeTranslationFiles: false,
+        outputPath: 'translations',
+      });
+
+      trees.push(translationTree);
     }
 
     return mergeTrees(trees, { overwrite: true });
   },
 
-  getTranslationTree(options = {}) {
+  getTranslationTree({ mergeTranslationFiles, outputPath }) {
     const {
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
@@ -97,8 +102,8 @@ module.exports = {
       log: (message) => {
         return this.ui.writeLine(`[ember-intl] ${message}`);
       },
-      mergeTranslationFiles: options.mergeTranslationFiles,
-      outputPath: options.outputPath ?? 'translations',
+      mergeTranslationFiles,
+      outputPath,
       wrapTranslationsWithNamespace,
     });
   },
