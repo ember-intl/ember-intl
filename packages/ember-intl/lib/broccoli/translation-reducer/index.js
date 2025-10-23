@@ -1,12 +1,12 @@
-const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
-const { basename, extname, join } = require('node:path');
+const { mkdirSync, statSync, writeFileSync } = require('node:fs');
+const { basename, join } = require('node:path');
 const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
-const yaml = require('js-yaml');
 const stringify = require('json-stable-stringify');
 
 const lintTranslations = require('./lint-translations');
 const forEachMessage = require('./utils/for-each-message');
+const getTranslations = require('./utils/get-translations');
 const isKnownLanguage = require('./utils/is-known-language');
 const namespaceKeys = require('./utils/namespace-keys');
 const validateMessage = require('../../message-validator/validate-message');
@@ -21,22 +21,6 @@ function normalizeLocale(locale) {
   }
 
   return locale;
-}
-
-function readAsObject(filePath) {
-  const data = readFileSync(filePath);
-  const ext = extname(filePath);
-
-  switch (ext) {
-    case '.json': {
-      return JSON.parse(data);
-    }
-
-    case '.yaml':
-    case '.yml': {
-      return yaml.load(data);
-    }
-  }
 }
 
 class TranslationReducer extends CachingWriter {
@@ -168,7 +152,7 @@ class TranslationReducer extends CachingWriter {
         return accumulator;
       }
 
-      let translationObject = readAsObject(filePath);
+      let translationObject = getTranslations(filePath);
 
       if (!translationObject) {
         this.options.log(`cannot read path "${filePath}"`);
