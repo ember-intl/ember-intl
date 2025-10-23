@@ -1,5 +1,5 @@
+import forEachMessage from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/utils/for-each-message.js';
 import { expect } from 'chai';
-import forEachMessage from 'ember-intl/lib/broccoli/translation-reducer/utils/for-each-message.js';
 
 describe('lib | broccoli | translation-reducer | utils | for-each-message', function () {
   it('base case', function () {

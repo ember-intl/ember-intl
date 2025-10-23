@@ -1,5 +1,5 @@
+import pluralCategories from '@ember-intl/v1-compat/lib/message-validator/plural-categories.js';
 import { expect } from 'chai';
-import pluralCategories from 'ember-intl/lib/message-validator/plural-categories.js';
 
 describe('pluralCategories', function () {
   const expectations = {

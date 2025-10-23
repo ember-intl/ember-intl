@@ -1,5 +1,5 @@
+import validateMessage from '@ember-intl/v1-compat/lib/message-validator/validate-message.js';
 import { expect } from 'chai';
-import validateMessage from 'ember-intl/lib/message-validator/validate-message.js';
 
 describe('validateMessage', function () {
   let valid = [

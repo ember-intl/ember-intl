@@ -1,6 +1,6 @@
+import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/index.js';
 import { createBuilder, createTempDir } from 'broccoli-test-helper';
 import { expect } from 'chai';
-import TranslationReducer from 'ember-intl/lib/broccoli/translation-reducer/index.js';
 
 describe('lib | broccoli | translation-reducer | index | fallbackLocale', function () {
   it('does not overwrite user-provided translations', async function () {
