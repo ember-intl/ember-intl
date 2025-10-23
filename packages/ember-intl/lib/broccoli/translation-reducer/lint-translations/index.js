@@ -65,12 +65,11 @@ function lintTranslations(allTranslations) {
       return !localesWithMissingTranslations.includes(locale);
     });
 
-    const localesWithIcuMismatch = findMissingIcuArguments(
-      key,
+    const localesWithIcuMismatch = findMissingIcuArguments(key, {
       allIcuArguments,
-      localesToScanMissingICUArguments,
+      locales: localesToScanMissingICUArguments,
       localeToIcuArguments,
-    );
+    });
 
     if (localesWithIcuMismatch.length) {
       result.icuMismatch.push([key, localesWithIcuMismatch]);

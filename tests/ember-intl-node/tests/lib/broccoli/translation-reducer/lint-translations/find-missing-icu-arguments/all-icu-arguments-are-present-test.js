@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import findMissingICUArguments from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/find-missing-icu-arguments.js';
+import findMissingIcuArguments from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/find-missing-icu-arguments.js';
 
 describe('lib | broccoli | translation-reducer | lint-translations | find-missing-icu-arguments', function () {
   it('all ICU arguments are present', function () {
@@ -7,7 +7,9 @@ describe('lib | broccoli | translation-reducer | lint-translations | find-missin
       'some-key': ['timestamp', 'name', 'numPhotos'],
     };
 
-    const icuArguments = {
+    const locales = ['de', 'en'];
+
+    const localeToIcuArguments = {
       de: {
         'some-key': ['name', 'timestamp', 'numPhotos'],
       },
@@ -16,14 +18,11 @@ describe('lib | broccoli | translation-reducer | lint-translations | find-missin
       },
     };
 
-    const locales = ['de', 'en'];
-
-    const output = findMissingICUArguments(
-      'some-key',
+    const output = findMissingIcuArguments('some-key', {
       allIcuArguments,
       locales,
-      icuArguments,
-    );
+      localeToIcuArguments,
+    });
 
     expect(output).to.deep.equal([]);
   });
