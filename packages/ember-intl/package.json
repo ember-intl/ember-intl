@@ -100,7 +100,9 @@
     "edition": "octane"
   },
   "ember-addon": {
-    "app-js": {},
+    "app-js": {
+      "./services/intl.js": "./dist/_app_/services/intl.js"
+    },
     "demoURL": "https://ember-intl.github.io/ember-intl/",
     "main": "addon-main.cjs",
     "type": "addon",
