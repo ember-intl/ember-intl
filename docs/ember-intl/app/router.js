@@ -10,7 +10,7 @@ Router.map(function () {
   docsRoute(this, function () {
     this.route('advanced', function () {
       this.route('auto-generating-keys');
-      this.route('configuration');
+      this.route('build-options');
       this.route('lazy-loading-translations');
       this.route('organizing-translations');
       this.route('runtime-requirements');
