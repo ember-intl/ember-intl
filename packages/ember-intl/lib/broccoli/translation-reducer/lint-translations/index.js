@@ -5,15 +5,17 @@ const forEachMessage = require('../utils/for-each-message');
 
 function preprocess(allTranslations) {
   const allIcuArguments = {};
-  const localeKeys = [];
+  const allKeys = new Set();
   const localeToIcuArguments = {};
+  const localeToKeys = {};
 
   for (const [locale, translations] of Object.entries(allTranslations)) {
-    const keys = [];
+    const keys = new Set();
     localeToIcuArguments[locale] = {};
 
     forEachMessage(translations, (key, message) => {
-      keys.push(key);
+      allKeys.add(key);
+      keys.add(key);
 
       const extractedIcuArguments = extractIcuArguments(message);
 
@@ -26,13 +28,14 @@ function preprocess(allTranslations) {
       });
     });
 
-    localeKeys.push([locale, keys]);
+    localeToKeys[locale] = keys;
   }
 
   return {
     allIcuArguments,
-    localeKeys,
+    allKeys,
     localeToIcuArguments,
+    localeToKeys,
   };
 }
 
@@ -42,20 +45,15 @@ function lintTranslations(allTranslations) {
     missingTranslations: [],
   };
 
-  const { allIcuArguments, localeKeys, localeToIcuArguments } =
+  const { allIcuArguments, allKeys, localeToIcuArguments, localeToKeys } =
     preprocess(allTranslations);
 
   const allLocales = Object.keys(allTranslations);
 
-  const allTranslationKeys = new Set(
-    Array.prototype.concat(...localeKeys.map(([, keys]) => keys)),
-  );
-
-  allTranslationKeys.forEach((key) => {
-    const localesWithMissingTranslations = findMissingTranslations(
-      key,
-      localeKeys,
-    );
+  allKeys.forEach((key) => {
+    const localesWithMissingTranslations = findMissingTranslations(key, {
+      localeToKeys,
+    });
 
     if (localesWithMissingTranslations.length) {
       result.missingTranslations.push([key, localesWithMissingTranslations]);

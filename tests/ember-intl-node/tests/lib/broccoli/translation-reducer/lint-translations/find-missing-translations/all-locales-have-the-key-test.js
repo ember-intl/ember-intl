@@ -3,12 +3,12 @@ import findMissingTranslations from 'ember-intl/lib/broccoli/translation-reducer
 
 describe('lib | broccoli | translation-reducer | lint-translations | find-missing-translations', function () {
   it('all locales have the key', function () {
-    const localeKeys = [
-      ['de', ['some-key']],
-      ['en', ['some-key']],
-    ];
+    const localeToKeys = {
+      de: new Set(['some-key']),
+      en: new Set(['some-key']),
+    };
 
-    const output = findMissingTranslations('some-key', localeKeys);
+    const output = findMissingTranslations('some-key', { localeToKeys });
 
     expect(output).to.deep.equal([]);
   });

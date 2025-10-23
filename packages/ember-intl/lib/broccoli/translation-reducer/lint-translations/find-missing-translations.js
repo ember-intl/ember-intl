@@ -1,11 +1,15 @@
-function findMissingTranslations(key, localeKeys) {
-  return localeKeys
-    .filter(([, translationKeys]) => {
-      return !translationKeys.includes(key);
-    })
-    .map(([locale]) => {
-      return locale;
-    });
+function findMissingTranslations(key, data) {
+  const { localeToKeys } = data;
+
+  const result = [];
+
+  for (const [locale, keys] of Object.entries(localeToKeys)) {
+    if (!keys.has(key)) {
+      result.push(locale);
+    }
+  }
+
+  return result;
 }
 
 module.exports = findMissingTranslations;
