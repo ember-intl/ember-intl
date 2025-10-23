@@ -12,9 +12,7 @@ const findEngine = require('./lib/utils/find-engine');
 const defaultConfig = {
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
-  excludeLocales: null,
   fallbackLocale: null,
-  includeLocales: null,
   inputPath: 'translations',
   outputPath: 'translations',
   publicOnly: false,
@@ -94,9 +92,7 @@ module.exports = {
     const {
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
-      excludeLocales,
       fallbackLocale,
-      includeLocales,
       outputPath,
       requiresTranslation,
       stripEmptyTranslations,
@@ -114,9 +110,7 @@ module.exports = {
       addonsWithTranslations,
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
-      excludeLocales,
       fallbackLocale,
-      includeLocales,
       log: (message) => {
         return this.ui.writeLine(`[ember-intl] ${message}`);
       },

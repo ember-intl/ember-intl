@@ -12,17 +12,6 @@ const stripEmptyTranslations = require('./utils/strip-empty-translations');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
 const validateMessage = require('../../message-validator/validate-message');
 
-function filterPatterns(locales) {
-  if (Array.isArray(locales)) {
-    return locales.map(
-      (locale) =>
-        new RegExp(`${normalizeLocale(locale)}.(json|yaml|yml)$`, 'i'),
-    );
-  }
-
-  return null;
-}
-
 function isApp(filePath) {
   return !filePath.includes('/__ember-intl-addon__/');
 }
@@ -57,13 +46,8 @@ class TranslationReducer extends CachingWriter {
       inputNode = [inputNode];
     }
 
-    const cacheInclude = filterPatterns(options && options.includeLocales);
-    const cacheExclude = filterPatterns(options && options.excludeLocales);
-
     super(inputNode, {
       annotation: 'Translation Reducer',
-      cacheInclude,
-      cacheExclude,
     });
 
     this.options = {
