@@ -40,7 +40,6 @@ import {
   flattenKeys,
   type Translations,
 } from '../-private/utils/translations.ts';
-import translations from '../translations.ts';
 
 export type { Formats };
 
@@ -94,16 +93,6 @@ export default class IntlService extends Service {
     }
 
     return this._locale[0];
-  }
-
-  constructor() {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments);
-
-    // Hydrate
-    translations.forEach(([locale, translations]: [string, Translations]) => {
-      this.addTranslations(locale, translations);
-    });
   }
 
   addTranslations(locale: string, translations: Translations) {
