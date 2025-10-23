@@ -8,20 +8,8 @@ const stringify = require('json-stable-stringify');
 const Linter = require('./linter');
 const forEachMessage = require('./utils/for-each-message');
 const isKnownLanguage = require('./utils/is-known-language');
-const stripEmptyTranslations = require('./utils/strip-empty-translations');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
 const validateMessage = require('../../message-validator/validate-message');
-
-function filterPatterns(locales) {
-  if (Array.isArray(locales)) {
-    return locales.map(
-      (locale) =>
-        new RegExp(`${normalizeLocale(locale)}.(json|yaml|yml)$`, 'i'),
-    );
-  }
-
-  return null;
-}
 
 function isApp(filePath) {
   return !filePath.includes('/__ember-intl-addon__/');
@@ -57,31 +45,21 @@ class TranslationReducer extends CachingWriter {
       inputNode = [inputNode];
     }
 
-    const cacheInclude = filterPatterns(options && options.includeLocales);
-    const cacheExclude = filterPatterns(options && options.excludeLocales);
-
     super(inputNode, {
       annotation: 'Translation Reducer',
-      cacheInclude,
-      cacheExclude,
     });
 
     this.options = {
-      outputPath: '',
       fallbackLocale: null,
       log() {},
-      requiresTranslation(/* key, locale */) {
-        return true;
-      },
       mergeTranslationFiles: false,
+      outputPath: '',
       ...options,
     };
 
     this.options.fallbackLocale = normalizeLocale(this.options.fallbackLocale);
 
-    this.linter = new Linter({
-      requiresTranslation: this.options.requiresTranslation,
-    });
+    this.linter = new Linter();
   }
 
   build() {
@@ -98,9 +76,7 @@ class TranslationReducer extends CachingWriter {
     mkdirSync(filePath, { recursive: true });
 
     for (const locale in translations) {
-      if (this.options.verbose) {
-        this.validateMessages(translations[locale], locale);
-      }
+      this.validateMessages(translations[locale], locale);
 
       if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
         translations[locale] = extend(
@@ -155,14 +131,6 @@ class TranslationReducer extends CachingWriter {
         return `"${key}" ICU argument mismatch: ${missingString}`;
       });
 
-      if (
-        this.options.verbose &&
-        // log messages if not failing as it's duplicated console output
-        !this.options.errorOnNamedArgumentMismatch
-      ) {
-        missingICUArguments.forEach((message) => this.options.log(message));
-      }
-
       if (this.options.errorOnNamedArgumentMismatch) {
         throwingMessages.push(
           'ICU arguments mismatch:\n' +
@@ -178,16 +146,6 @@ class TranslationReducer extends CachingWriter {
             .map((locale) => `"${locale}"`)
             .join(', ')}`,
       );
-
-      if (
-        this.options.verbose &&
-        // log messages if not failing as it's duplicated console output
-        !this.options.errorOnMissingTranslations
-      ) {
-        missingTranslationMessages.forEach((message) =>
-          this.options.log(message),
-        );
-      }
 
       if (this.options.errorOnMissingTranslations) {
         throwingMessages.push(
@@ -224,10 +182,6 @@ class TranslationReducer extends CachingWriter {
       }
 
       let translationObject = readAsObject(filePath);
-
-      if (this.options.stripEmptyTranslations === true) {
-        translationObject = stripEmptyTranslations(translationObject);
-      }
 
       if (!translationObject) {
         this.options.log(`cannot read path "${filePath}"`);

@@ -4,10 +4,6 @@ const findMissingTranslations = require('./find-missing-translations');
 const forEachMessage = require('../utils/for-each-message');
 
 module.exports = class Linter {
-  constructor(options = {}) {
-    this.options = options;
-  }
-
   lint(translations) {
     const locales = Object.keys(translations);
     const result = {
@@ -46,7 +42,6 @@ module.exports = class Linter {
     const allTranslationKeys = new Set(
       Array.prototype.concat(...localeKeys.map(([, keys]) => keys)),
     );
-    const { requiresTranslation } = this.options;
 
     allTranslationKeys.forEach((key) => {
       const translationMissingFromLocales = findMissingTranslations(
@@ -55,14 +50,7 @@ module.exports = class Linter {
       );
 
       if (translationMissingFromLocales.length) {
-        const alertableMissingTranslations =
-          translationMissingFromLocales.filter((locale) =>
-            requiresTranslation(key, locale),
-          );
-
-        if (alertableMissingTranslations.length) {
-          result.missingTranslations.push([key, alertableMissingTranslations]);
-        }
+        result.missingTranslations.push([key, translationMissingFromLocales]);
       }
 
       const localesToScanMissingICUArguments = locales.filter((locale) => {

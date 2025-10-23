@@ -57,7 +57,7 @@ const fixtureWithMissingTranslations = {
 };
 
 describe('lib | broccoli | translation-reducer | index | handleLintResult', function () {
-  it('warns, if verbose is true', async function () {
+  it('does not error by default', async function () {
     const input = await createTempDir();
 
     try {
@@ -67,19 +67,13 @@ describe('lib | broccoli | translation-reducer | index | handleLintResult', func
         log: (message) => {
           logs.push(message);
         },
-        verbose: true,
       });
 
       const lintResults = subject.linter.lint(fixtureWithMissingTranslations);
 
       subject.handleLintResult(lintResults);
 
-      expect(logs).to.deep.equal([
-        '"some\\.key" was not found in "it"',
-        '"some.deeply-nested.key" was not found in "fr", "it"',
-        '"key1" was not found in "en", "it"',
-        '"some-key" was not found in "de", "fr", "it"',
-      ]);
+      expect(logs).to.deep.equal([]);
     } finally {
       await input.dispose();
     }

@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 'use strict';
 
 const { existsSync } = require('node:fs');
@@ -14,19 +12,13 @@ const findEngine = require('./lib/utils/find-engine');
 const defaultConfig = {
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
-  excludeLocales: null,
   fallbackLocale: null,
-  includeLocales: null,
   inputPath: 'translations',
-  outputPath: 'translations',
   publicOnly: false,
-  requiresTranslation(/* key, locale */) {
-    return true;
-  },
-  stripEmptyTranslations: false,
-  verbose: false,
   wrapTranslationsWithNamespace: false,
 };
+
+const allowedConfigOptions = Object.keys(defaultConfig);
 
 module.exports = {
   name: 'ember-intl',
@@ -87,13 +79,7 @@ module.exports = {
     const {
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
-      excludeLocales,
       fallbackLocale,
-      includeLocales,
-      outputPath,
-      requiresTranslation,
-      stripEmptyTranslations,
-      verbose,
       wrapTranslationsWithNamespace,
     } = this.configOptions;
 
@@ -107,17 +93,12 @@ module.exports = {
       addonsWithTranslations,
       errorOnMissingTranslations,
       errorOnNamedArgumentMismatch,
-      excludeLocales,
       fallbackLocale,
-      includeLocales,
       log: (message) => {
         return this.ui.writeLine(`[ember-intl] ${message}`);
       },
       mergeTranslationFiles: options.mergeTranslationFiles,
-      outputPath: options.outputPath ?? outputPath,
-      requiresTranslation,
-      stripEmptyTranslations,
-      verbose,
+      outputPath: options.outputPath ?? 'translations',
       wrapTranslationsWithNamespace,
     });
   },
@@ -125,12 +106,19 @@ module.exports = {
   getUserConfig() {
     const { env: environment, project } = this.app;
 
-    const config = join(dirname(project.configPath()), 'ember-intl.js');
+    const configFile = join(dirname(project.configPath()), 'ember-intl.js');
+    const config = {};
 
-    if (!existsSync(config)) {
-      return {};
+    if (existsSync(configFile)) {
+      const userConfig = require(configFile)(environment);
+
+      allowedConfigOptions.forEach((option) => {
+        if (option in userConfig) {
+          config[option] = userConfig[option];
+        }
+      });
     }
 
-    return require(config)(environment);
+    return config;
   },
 };
