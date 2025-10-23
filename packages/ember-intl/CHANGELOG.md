@@ -1,5 +1,17 @@
 # Changelog
 
+## 8.0.0-beta.3
+
+### Major Changes
+
+- [#2008](https://github.com/ember-intl/ember-intl/pull/2008) Removed blueprints ([@ijlee2](https://github.com/ijlee2))
+- [#2006](https://github.com/ember-intl/ember-intl/pull/2006) Limited build options ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2007](https://github.com/ember-intl/ember-intl/pull/2007) Refactored utilities for lib ([@ijlee2](https://github.com/ijlee2))
+- [#2004](https://github.com/ember-intl/ember-intl/pull/2004) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.0-beta.2
 
 ### Major Changes

@@ -1,8 +1,17 @@
 # Changelog for docs-app-for-ember-intl
 
-## 2.0.0
+## 1.8.1
 
-### Major Changes
+### Patch Changes
+
+- [#2009](https://github.com/ember-intl/ember-intl/pull/2009) Documented breaking changes in #2006 and #2008 ([@ijlee2](https://github.com/ijlee2))
+- [#2005](https://github.com/ember-intl/ember-intl/pull/2005) Simplified config/ember-intl.js ([@ijlee2](https://github.com/ijlee2))
+- [#2004](https://github.com/ember-intl/ember-intl/pull/2004) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2003](https://github.com/ember-intl/ember-intl/pull/2003) Installed @embroider/legacy-inspector-support ([@ijlee2](https://github.com/ijlee2))
+
+## 1.8.0
+
+### Minor Changes
 
 - [#1994](https://github.com/ember-intl/ember-intl/pull/1994) Dropped Node 18 support ([@ijlee2](https://github.com/ijlee2))
 

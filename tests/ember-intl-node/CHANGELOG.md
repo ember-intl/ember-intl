@@ -1,8 +1,16 @@
 # Changelog for test-ember-intl-node
 
-## 2.0.0
+## 1.3.1
 
-### Major Changes
+### Patch Changes
+
+- [#2007](https://github.com/ember-intl/ember-intl/pull/2007) Refactored utilities for lib ([@ijlee2](https://github.com/ijlee2))
+- [#2006](https://github.com/ember-intl/ember-intl/pull/2006) Limited build options ([@ijlee2](https://github.com/ijlee2))
+- [#2004](https://github.com/ember-intl/ember-intl/pull/2004) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
+## 1.3.0
+
+### Minor Changes
 
 - [#1994](https://github.com/ember-intl/ember-intl/pull/1994) Dropped Node 18 support ([@ijlee2](https://github.com/ijlee2))
 

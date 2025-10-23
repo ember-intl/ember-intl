@@ -1,12 +1,19 @@
 # my-v1-engine
 
-## 4.0.0
+## 1.1.1
 
-### Major Changes
+### Patch Changes
+
+- [#2005](https://github.com/ember-intl/ember-intl/pull/2005) Simplified config/ember-intl.js ([@ijlee2](https://github.com/ijlee2))
+- [#2004](https://github.com/ember-intl/ember-intl/pull/2004) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
+## 1.1.0
+
+### Minor Changes
 
 - [#1994](https://github.com/ember-intl/ember-intl/pull/1994) Dropped Node 18 support ([@ijlee2](https://github.com/ijlee2))
 
-## 3.0.0
+## 1.0.21
 
 ### Patch Changes
 
@@ -15,13 +22,13 @@
 - [#1984](https://github.com/ember-intl/ember-intl/pull/1984) Updated ember-source to 6.7.0 ([@ijlee2](https://github.com/ijlee2))
 - [#1983](https://github.com/ember-intl/ember-intl/pull/1983) Updated lint and test dependencies ([@ijlee2](https://github.com/ijlee2))
 
-## 2.0.1
+## 1.0.20
 
 ### Patch Changes
 
 - [#1978](https://github.com/ember-intl/ember-intl/pull/1978) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
 
-## 2.0.0
+## 1.0.19
 
 ### Patch Changes
 

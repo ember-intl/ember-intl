@@ -1,8 +1,16 @@
 # Changelog for test-app-for-ember-intl
 
-## 2.0.0
+## 1.6.1
 
-### Major Changes
+### Patch Changes
+
+- [#2005](https://github.com/ember-intl/ember-intl/pull/2005) Simplified config/ember-intl.js ([@ijlee2](https://github.com/ijlee2))
+- [#2004](https://github.com/ember-intl/ember-intl/pull/2004) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2001](https://github.com/ember-intl/ember-intl/pull/2001) Converted to `<template>` tag ([@ijlee2](https://github.com/ijlee2))
+
+## 1.6.0
+
+### Minor Changes
 
 - [#1997](https://github.com/ember-intl/ember-intl/pull/1997) Dropped @ember/test-helpers@v3 support ([@ijlee2](https://github.com/ijlee2))
 - [#1996](https://github.com/ember-intl/ember-intl/pull/1996) Dropped Ember 3.28 support ([@ijlee2](https://github.com/ijlee2))

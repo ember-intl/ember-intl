@@ -1,5 +1,14 @@
 # my-v2-app-with-lazy-loaded-translations
 
+## 1.0.1
+
+### Patch Changes
+
+- [#2005](https://github.com/ember-intl/ember-intl/pull/2005) Simplified config/ember-intl.js ([@ijlee2](https://github.com/ijlee2))
+- [#2004](https://github.com/ember-intl/ember-intl/pull/2004) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2003](https://github.com/ember-intl/ember-intl/pull/2003) Removed unused dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2002](https://github.com/ember-intl/ember-intl/pull/2002) Converted to `<template>` tag ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.0
 
 ### Major Changes
