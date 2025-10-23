@@ -8,7 +8,6 @@ const stringify = require('json-stable-stringify');
 const Linter = require('./linter');
 const forEachMessage = require('./utils/for-each-message');
 const isKnownLanguage = require('./utils/is-known-language');
-const stripEmptyTranslations = require('./utils/strip-empty-translations');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
 const validateMessage = require('../../message-validator/validate-message');
 
@@ -203,10 +202,6 @@ class TranslationReducer extends CachingWriter {
       }
 
       let translationObject = readAsObject(filePath);
-
-      if (this.options.stripEmptyTranslations === true) {
-        translationObject = stripEmptyTranslations(translationObject);
-      }
 
       if (!translationObject) {
         this.options.log(`cannot read path "${filePath}"`);

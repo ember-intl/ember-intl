@@ -186,7 +186,7 @@ describe('lib | broccoli | translation-reducer | index | mergeTranslations', fun
     }
   });
 
-  it('does not remove empty translations, if stripEmptyTranslations is falsy', async function () {
+  it('does not remove empty translations', async function () {
     const input = await createTempDir();
 
     try {
@@ -203,37 +203,6 @@ describe('lib | broccoli | translation-reducer | index | mergeTranslations', fun
             translation_1: 'Lorem ipsum',
             translation_2: '',
             translation_3: null,
-          },
-        },
-        'en-us': {
-          sample_translation: {
-            translation_1: 'Lorem ipsum',
-            translation_2: 'dolor sit amet',
-          },
-        },
-      });
-    } finally {
-      await input.dispose();
-    }
-  });
-
-  it('removes empty translations, if stripEmptyTranslations is true', async function () {
-    const input = await createTempDir();
-
-    try {
-      const subject = new TranslationReducer(input.path(), {
-        stripEmptyTranslations: true,
-      });
-
-      const translations = subject.mergeTranslations([
-        join(fixtureDir, 'strip-empty-translations/de-de.yaml'),
-        join(fixtureDir, 'strip-empty-translations/en-us.yaml'),
-      ]);
-
-      expect(translations).to.deep.equal({
-        'de-de': {
-          sample_translation: {
-            translation_1: 'Lorem ipsum',
           },
         },
         'en-us': {
