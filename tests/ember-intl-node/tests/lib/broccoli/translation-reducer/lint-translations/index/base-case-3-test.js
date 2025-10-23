@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import Linter from 'ember-intl/lib/broccoli/translation-reducer/linter/index.js';
+import Linter from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/index.js';
 
-describe('lib | broccoli | translation-reducer | linter | index', function () {
+describe('lib | broccoli | translation-reducer | lint-translations | index', function () {
   it('base case (3)', function () {
     const linter = new Linter({
       requiresTranslation() {

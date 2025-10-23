@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import findMissingICUArguments from 'ember-intl/lib/broccoli/translation-reducer/linter/find-missing-icu-arguments.js';
+import findMissingICUArguments from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/find-missing-icu-arguments.js';
 
-describe('lib | broccoli | translation-reducer | linter | find-missing-icu-arguments', function () {
+describe('lib | broccoli | translation-reducer | lint-translations | find-missing-icu-arguments', function () {
   it('all ICU arguments are present', function () {
     const allIcuArguments = {
       'some-key': ['timestamp', 'name', 'numPhotos'],

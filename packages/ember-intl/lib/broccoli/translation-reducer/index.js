@@ -5,7 +5,7 @@ const extend = require('extend');
 const yaml = require('js-yaml');
 const stringify = require('json-stable-stringify');
 
-const Linter = require('./linter');
+const Linter = require('./lint-translations');
 const forEachMessage = require('./utils/for-each-message');
 const isKnownLanguage = require('./utils/is-known-language');
 const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');

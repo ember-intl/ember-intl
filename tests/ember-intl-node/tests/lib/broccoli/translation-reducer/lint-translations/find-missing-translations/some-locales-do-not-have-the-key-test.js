@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import findMissingTranslations from 'ember-intl/lib/broccoli/translation-reducer/linter/find-missing-translations.js';
+import findMissingTranslations from 'ember-intl/lib/broccoli/translation-reducer/lint-translations/find-missing-translations.js';
 
-describe('lib | broccoli | translation-reducer | linter | find-missing-translations', function () {
+describe('lib | broccoli | translation-reducer | lint-translations | find-missing-translations', function () {
   it('some locales do not have the key', function () {
     const localeKeys = [
       ['de', ['some-key']],
