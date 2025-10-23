@@ -1,5 +1,4 @@
 import type { TOC } from '@ember/component/template-only';
-// @ts-expect-error: Module '"ember-intl"' has no exported member 't'.
 import { t } from 'ember-intl';
 
 interface ComponentFromV2AddonSignature {
