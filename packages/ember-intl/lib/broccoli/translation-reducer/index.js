@@ -1,14 +1,14 @@
-const { mkdirSync, readFileSync, statSync, writeFileSync } = require('node:fs');
-const { basename, extname, join } = require('node:path');
+const { mkdirSync, statSync, writeFileSync } = require('node:fs');
+const { basename, join } = require('node:path');
 const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
-const yaml = require('js-yaml');
 const stringify = require('json-stable-stringify');
 
-const Linter = require('./linter');
+const lintTranslations = require('./lint-translations');
 const forEachMessage = require('./utils/for-each-message');
+const getTranslations = require('./utils/get-translations');
 const isKnownLanguage = require('./utils/is-known-language');
-const wrapWithNamespaceIfNeeded = require('./utils/wrap-with-namespace-if-needed');
+const namespaceKeys = require('./utils/namespace-keys');
 const validateMessage = require('../../message-validator/validate-message');
 
 function isApp(filePath) {
@@ -21,22 +21,6 @@ function normalizeLocale(locale) {
   }
 
   return locale;
-}
-
-function readAsObject(filePath) {
-  const data = readFileSync(filePath);
-  const ext = extname(filePath);
-
-  switch (ext) {
-    case '.json': {
-      return JSON.parse(data);
-    }
-
-    case '.yaml':
-    case '.yml': {
-      return yaml.load(data);
-    }
-  }
 }
 
 class TranslationReducer extends CachingWriter {
@@ -58,17 +42,14 @@ class TranslationReducer extends CachingWriter {
     };
 
     this.options.fallbackLocale = normalizeLocale(this.options.fallbackLocale);
-
-    this.linter = new Linter();
   }
 
   build() {
     // Call listFiles() from broccoli-caching-writer
     const translationFilePaths = this.listFiles();
-
     const translations = this.mergeTranslations(translationFilePaths);
-    const lintResults = this.linter.lint(translations);
-    this.handleLintResult(lintResults);
+
+    this.checkTranslations(translations);
 
     const filePath = join(this.outputPath, this.options.outputPath);
     const fallbackTranslationObject = translations[this.options.fallbackLocale];
@@ -113,51 +94,41 @@ class TranslationReducer extends CachingWriter {
     }
   }
 
-  handleLintResult(result) {
-    const { icuMismatch, missingTranslations } = result;
-    const throwingMessages = [];
+  checkTranslations(translations) {
+    const { icuMismatch, missingTranslations } = lintTranslations(translations);
+    const messages = [];
 
-    if (icuMismatch.length) {
-      const missingICUArguments = icuMismatch.map(([key, notInLocales]) => {
-        const missingString = notInLocales
-          .map(
-            ([locale, missingICUArgs]) =>
-              `"${locale}": ${missingICUArgs
-                .map((arg) => `"${arg}"`)
-                .join(', ')}`,
-          )
+    if (this.options.errorOnNamedArgumentMismatch && icuMismatch.length) {
+      const messageItems = icuMismatch.map(([key, notInLocales]) => {
+        const list = notInLocales
+          .map(([locale, missingICUArgs]) => {
+            const sublist = missingICUArgs.map((arg) => `"${arg}"`).join(', ');
+
+            return `"${locale}": ${sublist}`;
+          })
           .join(', ');
 
-        return `"${key}" ICU argument mismatch: ${missingString}`;
+        return `- "${key}" ICU argument mismatch: ${list}`;
       });
 
-      if (this.options.errorOnNamedArgumentMismatch) {
-        throwingMessages.push(
-          'ICU arguments mismatch:\n' +
-            missingICUArguments.map((text) => `- ${text}`).join('\n'),
-        );
-      }
+      messages.push(['ICU arguments mismatch:', ...messageItems].join('\n'));
     }
 
-    if (missingTranslations.length) {
-      const missingTranslationMessages = missingTranslations.map(
-        ([key, notInLocales]) =>
-          `"${key}" was not found in ${notInLocales
-            .map((locale) => `"${locale}"`)
-            .join(', ')}`,
-      );
+    if (this.options.errorOnMissingTranslations && missingTranslations.length) {
+      const messageItems = missingTranslations.map(([key, notInLocales]) => {
+        const list = notInLocales.map((locale) => `"${locale}"`).join(', ');
 
-      if (this.options.errorOnMissingTranslations) {
-        throwingMessages.push(
-          'Missing translations:\n' +
-            missingTranslationMessages.map((text) => `- ${text}`).join('\n'),
-        );
-      }
+        return `- "${key}" was not found in ${list}`;
+      });
+
+      messages.push(['Missing translations:', ...messageItems].join('\n'));
     }
 
-    if (throwingMessages.length) {
-      throw new Error(throwingMessages.join('\n\n'));
+    if (messages.length === 0) {
+      return;
     }
+
+    throw new Error(messages.join('\n\n'));
   }
 
   mergeTranslations(filePaths) {
@@ -181,7 +152,7 @@ class TranslationReducer extends CachingWriter {
         return accumulator;
       }
 
-      let translationObject = readAsObject(filePath);
+      let translationObject = getTranslations(filePath);
 
       if (!translationObject) {
         this.options.log(`cannot read path "${filePath}"`);
@@ -190,12 +161,11 @@ class TranslationReducer extends CachingWriter {
       }
 
       if (this.options.wrapTranslationsWithNamespace === true) {
-        translationObject = wrapWithNamespaceIfNeeded(
-          translationObject,
+        translationObject = namespaceKeys(translationObject, {
+          addonNames: this.options.addonsWithTranslations,
           filePath,
-          this.inputPaths[0],
-          this.options.addonsWithTranslations,
-        );
+          inputPath: this.inputPaths[0],
+        });
       }
 
       const fileName = basename(filePath).split('.')[0];
