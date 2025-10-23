@@ -1,71 +1,79 @@
-const extractICUArguments = require('./extract-icu-arguments');
-const findMissingICUArguments = require('./find-missing-icu-arguments');
+const extractIcuArguments = require('./extract-icu-arguments');
+const findMissingIcuArguments = require('./find-missing-icu-arguments');
 const findMissingTranslations = require('./find-missing-translations');
 const forEachMessage = require('../utils/for-each-message');
 
-function lintTranslations(translations) {
-  const locales = Object.keys(translations);
+function preprocess(allTranslations) {
+  const allIcuArguments = {};
+  const localeKeys = [];
+  const localeToIcuArguments = {};
 
+  for (const [locale, translations] of Object.entries(allTranslations)) {
+    const keys = [];
+    localeToIcuArguments[locale] = {};
+
+    forEachMessage(translations, (key, message) => {
+      keys.push(key);
+
+      const extractedIcuArguments = extractIcuArguments(message);
+
+      localeToIcuArguments[locale][key] = extractedIcuArguments;
+
+      allIcuArguments[key] = allIcuArguments[key] ?? new Set();
+
+      extractedIcuArguments.forEach((icuArgument) => {
+        allIcuArguments[key].add(icuArgument);
+      });
+    });
+
+    localeKeys.push([locale, keys]);
+  }
+
+  return {
+    allIcuArguments,
+    localeKeys,
+    localeToIcuArguments,
+  };
+}
+
+function lintTranslations(allTranslations) {
   const result = {
     icuMismatch: [],
     missingTranslations: [],
   };
 
-  // lookup table for language -> translationKey -> icuArguments
-  // {de: {foo.bar: ['name']}}
-  const icuArguments = {};
+  const { allIcuArguments, localeKeys, localeToIcuArguments } =
+    preprocess(allTranslations);
 
-  // lookup table for translationKey -> all of its found ICUArguments
-  // {foo.bar: ['name']}
-  const allIcuArguments = {};
+  const allLocales = Object.keys(allTranslations);
 
-  // list of locales and all of their found translation keys
-  // [['de',['foo.bar', 'bar.baz'], ['en',['foo.baz','bar.baz']]
-  const localeKeys = locales.map((locale) => {
-    const keys = [];
-    icuArguments[locale] = icuArguments[locale] || {};
-
-    forEachMessage(translations[locale], (key, value) => {
-      keys.push(key);
-
-      const extractedArguments = extractICUArguments(value);
-      allIcuArguments[key] = allIcuArguments[key] || new Set();
-      extractedArguments.forEach((arg) => allIcuArguments[key].add(arg));
-      icuArguments[locale] = icuArguments[locale] || {};
-      icuArguments[locale][key] = extractedArguments;
-    });
-
-    return [locale, keys];
-  });
-
-  // create flattened list of all unique translation keys
   const allTranslationKeys = new Set(
     Array.prototype.concat(...localeKeys.map(([, keys]) => keys)),
   );
 
   allTranslationKeys.forEach((key) => {
-    const translationMissingFromLocales = findMissingTranslations(
+    const localesWithMissingTranslations = findMissingTranslations(
       key,
       localeKeys,
     );
 
-    if (translationMissingFromLocales.length) {
-      result.missingTranslations.push([key, translationMissingFromLocales]);
+    if (localesWithMissingTranslations.length) {
+      result.missingTranslations.push([key, localesWithMissingTranslations]);
     }
 
-    const localesToScanMissingICUArguments = locales.filter((locale) => {
-      return !translationMissingFromLocales.includes(locale);
+    const localesToScanMissingICUArguments = allLocales.filter((locale) => {
+      return !localesWithMissingTranslations.includes(locale);
     });
 
-    let missingICUArgs = findMissingICUArguments(
+    const localesWithIcuMismatch = findMissingIcuArguments(
       key,
       allIcuArguments,
       localesToScanMissingICUArguments,
-      icuArguments,
+      localeToIcuArguments,
     );
 
-    if (missingICUArgs.length) {
-      result.icuMismatch.push([key, missingICUArgs]);
+    if (localesWithIcuMismatch.length) {
+      result.icuMismatch.push([key, localesWithIcuMismatch]);
     }
   });
 
