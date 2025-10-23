@@ -149,6 +149,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -158,6 +161,9 @@ importers:
       '@ember/test-helpers':
         specifier: ^5.3.0
         version: 5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2)
+      '@embroider/broccoli-side-watch':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@embroider/compat':
         specifier: ^3.9.1
         version: 3.9.1(@embroider/core@3.5.7(@glint/template@1.5.2))(@glint/template@1.5.2)
@@ -339,6 +345,9 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
     devDependencies:
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -459,6 +468,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -615,6 +627,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -771,6 +786,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -927,6 +945,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -1083,6 +1104,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/legacy-built-in-components':
         specifier: ^0.5.0
         version: 0.5.0(@glint/template@1.5.2)(ember-source@6.8.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1095,6 +1119,9 @@ importers:
       '@ember/test-helpers':
         specifier: ^5.3.0
         version: 5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2)
+      '@embroider/broccoli-side-watch':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -1236,6 +1263,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/legacy-built-in-components':
         specifier: ^0.5.0
         version: 0.5.0(@glint/template@1.5.2)(ember-source@6.8.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1248,6 +1278,9 @@ importers:
       '@ember/test-helpers':
         specifier: ^5.3.0
         version: 5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2)
+      '@embroider/broccoli-side-watch':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -1402,6 +1435,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ember-intl
     devDependencies:
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/legacy-built-in-components':
         specifier: ^0.5.0
         version: 0.5.0(@glint/template@1.5.2)(ember-source@6.8.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1628,6 +1664,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.0
         version: 7.28.0(@babel/core@7.28.4)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -1793,6 +1832,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.0
         version: 7.28.0(@babel/core@7.28.4)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -1949,15 +1991,100 @@ importers:
 
   packages/ember-intl:
     dependencies:
+      '@embroider/addon-shim':
+        specifier: ^1.10.0
+        version: 1.10.0
+      '@formatjs/intl':
+        specifier: ^3.1.8
+        version: 3.1.8(typescript@5.9.3)
+      decorator-transforms:
+        specifier: ^2.3.0
+        version: 2.3.0(@babel/core@7.28.4)
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.28.4
+        version: 7.28.4(supports-color@8.1.1)
+      '@babel/plugin-transform-typescript':
+        specifier: ^7.28.0
+        version: 7.28.0(@babel/core@7.28.4)
+      '@babel/runtime':
+        specifier: ^7.28.4
+        version: 7.28.4
+      '@ember/test-helpers':
+        specifier: ^5.3.0
+        version: 5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2)
+      '@embroider/addon-dev':
+        specifier: ^8.1.0
+        version: 8.1.0(@glint/template@1.5.2)(rollup@4.52.5)
+      '@glimmer/component':
+        specifier: ^2.0.0
+        version: 2.0.0
+      '@glimmer/tracking':
+        specifier: ^1.1.2
+        version: 1.1.2
+      '@glint/core':
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.9.3)
+      '@glint/environment-ember-loose':
+        specifier: ^1.5.2
+        version: 1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.28.4))
+      '@glint/environment-ember-template-imports':
+        specifier: ^1.5.2
+        version: 1.5.2(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.28.4)))(@glint/template@1.5.2)
+      '@glint/template':
+        specifier: 1.5.2
+        version: 1.5.2
+      '@rollup/plugin-babel':
+        specifier: ^6.0.4
+        version: 6.1.0(@babel/core@7.28.4)(rollup@4.52.5)
+      '@shared-configs/ember-template-lint':
+        specifier: workspace:*
+        version: link:../../configs/ember-template-lint
+      '@shared-configs/eslint-config-ember':
+        specifier: workspace:*
+        version: link:../../configs/eslint/ember
+      '@shared-configs/prettier':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@shared-configs/typescript':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      babel-plugin-ember-template-compilation:
+        specifier: ^2.4.1
+        version: 2.4.1
+      concurrently:
+        specifier: ^9.2.1
+        version: 9.2.1
+      ember-qunit:
+        specifier: ^9.0.4
+        version: 9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2))(@glint/template@1.5.2)(qunit@2.24.2)
+      ember-source:
+        specifier: ~6.8.0
+        version: 6.8.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      ember-template-lint:
+        specifier: ^7.9.3
+        version: 7.9.3
+      eslint:
+        specifier: ^9.38.0
+        version: 9.38.0
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      rollup:
+        specifier: ^4.52.5
+        version: 4.52.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/ember-intl-v1-compat:
+    dependencies:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.11.4
         version: 2.11.4
-      '@formatjs/intl':
-        specifier: ^3.1.8
-        version: 3.1.8(typescript@5.9.3)
       broccoli-caching-writer:
         specifier: ^3.0.3
         version: 3.0.3
@@ -1982,9 +2109,6 @@ importers:
       ember-cli-babel:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.28.4)
-      ember-cli-typescript:
-        specifier: ^5.3.0
-        version: 5.3.0
       extend:
         specifier: ^3.0.2
         version: 3.0.2
@@ -2016,18 +2140,6 @@ importers:
       '@glimmer/tracking':
         specifier: ^1.1.2
         version: 1.1.2
-      '@glint/core':
-        specifier: ^1.5.2
-        version: 1.5.2(typescript@5.9.3)
-      '@glint/environment-ember-loose':
-        specifier: ^1.5.2
-        version: 1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.28.4))
-      '@glint/environment-ember-template-imports':
-        specifier: ^1.5.2
-        version: 1.5.2(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.28.4)))(@glint/template@1.5.2)
-      '@glint/template':
-        specifier: 1.5.2
-        version: 1.5.2
       '@shared-configs/ember-template-lint':
         specifier: workspace:*
         version: link:../../configs/ember-template-lint
@@ -2040,12 +2152,6 @@ importers:
       '@shared-configs/testem':
         specifier: workspace:*
         version: link:../../configs/testem
-      '@shared-configs/typescript':
-        specifier: workspace:*
-        version: link:../../configs/typescript
-      '@types/qunit':
-        specifier: ^2.19.13
-        version: 2.19.13
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -2094,9 +2200,6 @@ importers:
       qunit-dom:
         specifier: ^3.5.0
         version: 3.5.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
       webpack:
         specifier: ^5.102.1
         version: 5.102.1
@@ -2109,6 +2212,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.4
         version: 7.28.4(supports-color@8.1.1)
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.2.0
@@ -2118,6 +2224,9 @@ importers:
       '@ember/test-helpers':
         specifier: ^5.3.0
         version: 5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2)
+      '@embroider/broccoli-side-watch':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@embroider/config-meta-loader':
         specifier: ^1.0.0
         version: 1.0.0
@@ -2259,6 +2368,9 @@ importers:
 
   tests/ember-intl-node:
     devDependencies:
+      '@ember-intl/v1-compat':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-v1-compat
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.11.4
         version: 2.11.4
@@ -2277,9 +2389,6 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
-      ember-intl:
-        specifier: workspace:*
-        version: link:../../packages/ember-intl
       eslint:
         specifier: ^9.38.0
         version: 9.38.0
