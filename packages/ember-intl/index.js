@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 'use strict';
 
 const { existsSync } = require('node:fs');
@@ -27,6 +25,15 @@ const defaultConfig = {
   verbose: false,
   wrapTranslationsWithNamespace: false,
 };
+
+const allowedConfigOptions = [
+  'errorOnMissingTranslations',
+  'errorOnNamedArgumentMismatch',
+  'fallbackLocale',
+  'inputPath',
+  'publicOnly',
+  'wrapTranslationsWithNamespace',
+];
 
 module.exports = {
   name: 'ember-intl',
@@ -125,12 +132,19 @@ module.exports = {
   getUserConfig() {
     const { env: environment, project } = this.app;
 
-    const config = join(dirname(project.configPath()), 'ember-intl.js');
+    const configFile = join(dirname(project.configPath()), 'ember-intl.js');
+    const config = {};
 
-    if (!existsSync(config)) {
-      return {};
+    if (existsSync(configFile)) {
+      const userConfig = require(configFile)(environment);
+
+      allowedConfigOptions.forEach((option) => {
+        if (option in userConfig) {
+          config[option] = userConfig[option];
+        }
+      });
     }
 
-    return require(config)(environment);
+    return config;
   },
 };
