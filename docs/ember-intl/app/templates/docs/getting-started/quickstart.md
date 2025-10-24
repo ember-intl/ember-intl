@@ -3,13 +3,13 @@
 
 ## 1. Install ember-intl
 
-Use your package manager to install `ember-intl`.
+Use your package manager to install `ember-intl` and `@ember-intl/v1-compat`. The latter is used to load translations in the same way as in `ember-intl@v7`.
 
 ```sh
-pnpm add -D ember-intl
+pnpm add -D ember-intl @ember-intl/v1-compat
 ```
 
-If you want your app to provide translations, create the folder `translations` as a sibling to `app`.
+If your app provides translations, create the folder `translations` as a sibling to `app`.
 
 ```
 my-app
