@@ -2,7 +2,7 @@
 import type { Formats } from 'ember-intl';
 
 export const formats: Formats = {
-  'format-relative-time': {
+  formatRelativeTime: {
     compact: {
       style: 'narrow',
     },

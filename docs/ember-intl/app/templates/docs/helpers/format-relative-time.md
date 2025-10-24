@@ -28,7 +28,7 @@ Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScri
 
 ## options.format
 
-In `app/ember-intl.{js,ts}`, you can use the `format-relative-time` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
+In `app/ember-intl.{js,ts}`, you can use the `formatRelativeTime` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

@@ -20,7 +20,7 @@ Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Ref
 
 ## options.format
 
-In `app/ember-intl.{js,ts}`, you can use the `format-number` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
+In `app/ember-intl.{js,ts}`, you can use the `formatNumber` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

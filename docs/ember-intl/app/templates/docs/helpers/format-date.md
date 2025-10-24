@@ -29,7 +29,7 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 ## options.format
 
-In `app/ember-intl.{js,ts}`, you can use the `format-date` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
+In `app/ember-intl.{js,ts}`, you can use the `formatDate` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
 
 <DocsDemo as |demo|>
   <LocaleSwitcher />

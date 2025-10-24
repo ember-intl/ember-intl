@@ -2,7 +2,7 @@
 import type { Formats } from 'ember-intl';
 
 export const formats: Formats = {
-  'format-number': {
+  formatNumber: {
     EUR: {
       currency: 'EUR',
       style: 'currency',

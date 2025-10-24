@@ -37,7 +37,7 @@ module('Unit | Service | intl > setFormats()', function (hooks) {
     assert.strictEqual(this.intl.formatNumber(12345), '12,345');
 
     this.intl.setFormats({
-      'format-number': {
+      formatNumber: {
         'my-format': {
           currency: 'EUR',
           style: 'currency',
