@@ -12,7 +12,7 @@ const findEngine = require('./lib/utils/find-engine');
 const defaultConfig = {
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
-  fallbackLocale: null,
+  fallbackLocale: undefined,
   inputPath: 'translations',
   publicOnly: false,
   wrapTranslationsWithNamespace: false,

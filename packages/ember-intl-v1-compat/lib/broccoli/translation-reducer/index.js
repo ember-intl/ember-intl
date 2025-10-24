@@ -34,7 +34,7 @@ class TranslationReducer extends CachingWriter {
     });
 
     this.options = {
-      fallbackLocale: null,
+      fallbackLocale: undefined,
       log() {},
       mergeTranslationFiles: false,
       outputPath: '',
