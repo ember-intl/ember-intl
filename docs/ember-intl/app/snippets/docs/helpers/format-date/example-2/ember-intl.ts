@@ -2,7 +2,7 @@
 import type { Formats } from 'ember-intl';
 
 export const formats: Formats = {
-  'format-date': {
+  formatDate: {
     'user-friendly': {
       day: 'numeric',
       month: 'long',
