@@ -1,5 +1,11 @@
 # my-v2-addon
 
+## 1.1.2
+
+### Patch Changes
+
+- [#1975](https://github.com/ember-intl/ember-intl/pull/1975) Converted ember-intl to v2 addon ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.1
 
 ### Patch Changes

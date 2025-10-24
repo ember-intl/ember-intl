@@ -1,5 +1,12 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.6.2
+
+### Patch Changes
+
+- [#2010](https://github.com/ember-intl/ember-intl/pull/2010) Renamed Formats keys to match the service's method names ([@ijlee2](https://github.com/ijlee2))
+- [#1975](https://github.com/ember-intl/ember-intl/pull/1975) Converted ember-intl to v2 addon ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.6.1
 
 ### Patch Changes

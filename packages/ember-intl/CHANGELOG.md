@@ -1,5 +1,15 @@
 # Changelog
 
+## 8.0.0-beta.4
+
+### Major Changes
+
+- [#2010](https://github.com/ember-intl/ember-intl/pull/2010) Renamed Formats keys to match the service's method names ([@ijlee2](https://github.com/ijlee2))
+
+### Minor Changes
+
+- [#1975](https://github.com/ember-intl/ember-intl/pull/1975) Converted ember-intl to v2 addon ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.0-beta.3
 
 ### Major Changes

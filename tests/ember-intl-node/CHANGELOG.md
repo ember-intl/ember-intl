@@ -1,5 +1,11 @@
 # Changelog for test-ember-intl-node
 
+## 1.3.2
+
+### Patch Changes
+
+- [#1975](https://github.com/ember-intl/ember-intl/pull/1975) Converted ember-intl to v2 addon ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.1
 
 ### Patch Changes
