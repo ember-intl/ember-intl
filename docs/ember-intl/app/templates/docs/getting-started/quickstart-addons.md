@@ -1,19 +1,18 @@
 # Quickstart (Addons)
 
-Addons need to publish a folder called `translations`.
-
 
 ## 1. Install ember-intl
 
-Use your package manager to install `ember-intl` (as a dependency or peer dependency).
+### v1 addons
+
+Use your package manager to install `ember-intl` (as a dependency or peer dependency). Install `@ember-intl/v1-compat` (as a development dependency) if the `dummy` app needs translations for documentation or testing.
 
 ```sh
 pnpm add ember-intl
+pnpm add -D @ember-intl/v1-compat
 ```
 
-### v1 addons
-
-If you want your addon to provide translations, create the folder `translations` as a sibling to `addon`.
+If your addon provides translations, create the folder `translations` as a sibling to `addon`.
 
 ```
 my-v1-addon
@@ -24,7 +23,13 @@ my-v1-addon
 
 ### v2 addons
 
-If you want your addon to provide translations, create the folder `translations` as a sibling to `src`.
+Use your package manager to install `ember-intl` (as a dependency or peer dependency).
+
+```sh
+pnpm add ember-intl
+```
+
+If your addon provides translations, create the folder `translations` as a sibling to `src`.
 
 ```
 my-v2-addon
