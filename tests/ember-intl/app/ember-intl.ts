@@ -1,7 +1,7 @@
 import type { Formats } from 'ember-intl';
 
 export const formats: Formats = {
-  'format-date': {
+  formatDate: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
@@ -9,7 +9,7 @@ export const formats: Formats = {
     },
   },
 
-  'format-number': {
+  formatNumber: {
     EUR: {
       currency: 'EUR',
       style: 'currency',
@@ -30,7 +30,7 @@ export const formats: Formats = {
     },
   },
 
-  'format-time': {
+  formatTime: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',

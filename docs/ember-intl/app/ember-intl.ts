@@ -1,7 +1,7 @@
 import type { Formats } from 'ember-intl';
 
 export const formats: Formats = {
-  'format-date': {
+  formatDate: {
     'user-friendly': {
       day: 'numeric',
       month: 'long',
@@ -9,14 +9,14 @@ export const formats: Formats = {
     },
   },
 
-  'format-date-range': {
+  formatDateRange: {
     'user-friendly': {
       day: 'numeric',
       month: 'short',
     },
   },
 
-  'format-number': {
+  formatNumber: {
     compact: {
       notation: 'compact',
     },
@@ -30,13 +30,13 @@ export const formats: Formats = {
     },
   },
 
-  'format-relative-time': {
+  formatRelativeTime: {
     compact: {
       style: 'narrow',
     },
   },
 
-  'format-time': {
+  formatTime: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
