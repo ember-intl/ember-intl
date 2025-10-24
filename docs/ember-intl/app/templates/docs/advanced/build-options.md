@@ -2,11 +2,11 @@
 
 `ember-intl` provides a few options for customizing the build step. Here are the options' names and default values.
 
-```js
+```ts
 const defaultConfig = {
   errorOnMissingTranslations: false,
   errorOnNamedArgumentMismatch: false,
-  fallbackLocale: null,
+  fallbackLocale: undefined,
   inputPath: 'translations',
   publicOnly: false,
   wrapTranslationsWithNamespace: false,
