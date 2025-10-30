@@ -47,7 +47,7 @@ type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 type OnMissingTranslation = (
   key: string,
   locales: string[],
-  options?: Record<string, unknown>,
+  data?: Record<string, unknown>,
 ) => string;
 
 export default class IntlService extends Service {

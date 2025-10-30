@@ -57,9 +57,7 @@ module(
 
       assert.dom('[data-test-output="2"]').hasText('Hello world!');
 
-      assert
-        .dom('[data-test-output="3"]')
-        .hasText('t:smoke-tests.hello.world:()');
+      assert.dom('[data-test-output="3"]').hasText('t:smoke-tests.hello.world');
     });
   },
 );

@@ -23,7 +23,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .dom('[data-test-message]')
         .hasText('Hello, Zoey!', 'We can write assertions against a string.')
         .doesNotIncludeText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           'We should not see the missing-message string.',
         )
         .hasText(
@@ -42,7 +42,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'Before translations are loaded, we cannot write assertions against a string.',
         )
         .hasText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           'Before translations are loaded, we should see the missing-message string.',
         )
         .hasText(
@@ -63,7 +63,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'After translations are loaded, we can write assertions against a string.',
         )
         .doesNotIncludeText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           'After translations are loaded, we should not see the missing-message string.',
         )
         .hasText(
@@ -89,7 +89,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           "Because we didn't add `await`, we still cannot write assertions against a string.",
         )
         .hasText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           "Because we didn't add `await`, we still see the missing-message string.",
         )
         .doesNotIncludeText(
@@ -115,7 +115,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .dom('[data-test-message]')
         .hasText('Hallo, Zoey!', 'We can write assertions against a string.')
         .doesNotIncludeText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           'We should not see the missing-message string.',
         )
         .hasText(
@@ -134,7 +134,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'Before translations are loaded, we cannot write assertions against a string.',
         )
         .hasText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           'Before translations are loaded, we should see the missing-message string.',
         )
         .hasText(
@@ -155,7 +155,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           'After translations are loaded, we can write assertions against a string.',
         )
         .doesNotIncludeText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           'After translations are loaded, we should not see the missing-message string.',
         )
         .hasText(
@@ -181,7 +181,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
           "Because we didn't add `await`, we still cannot write assertions against a string.",
         )
         .hasText(
-          't:lazy-hello.message:("name":"Zoey")',
+          't:lazy-hello.message',
           "Because we didn't add `await`, we still see the missing-message string.",
         )
         .doesNotIncludeText(

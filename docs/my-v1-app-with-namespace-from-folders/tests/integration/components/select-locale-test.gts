@@ -16,7 +16,7 @@ module('Integration | Component | select-locale', function (hooks) {
 
     assert
       .dom('option[value=""]')
-      .hasText('t:components.select-locale.default-option:()');
+      .hasText('t:components.select-locale.default-option');
 
     assert
       .dom('[data-test-option="de-de"]')
@@ -38,7 +38,7 @@ module('Integration | Component | select-locale', function (hooks) {
 
     assert
       .dom('option[value=""]')
-      .hasText('t:components.select-locale.default-option:()');
+      .hasText('t:components.select-locale.default-option');
 
     assert
       .dom('[data-test-option="de-de"]')

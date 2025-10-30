@@ -76,6 +76,6 @@ module('Unit | Service | intl > addTranslations()', function (hooks) {
 
     assert.strictEqual(this.intl.t('foo.bar.baz'), 'Hi!');
     assert.strictEqual(this.intl.t('foo.bar.quux'), 'Bye!');
-    assert.strictEqual(this.intl.t('foo.bar2'), 't:foo.bar2:()');
+    assert.strictEqual(this.intl.t('foo.bar2'), 't:foo.bar2');
   });
 });

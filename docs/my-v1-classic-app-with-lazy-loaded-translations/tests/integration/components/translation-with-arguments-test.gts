@@ -19,9 +19,9 @@ module(
           .dom('[data-test-output="Translation with Arguments"]')
           .hasText(
             [
-              't:components.translation-with-arguments.message:("name":"Sonja","numPhotos":12)',
-              't:components.translation-with-arguments.message:("name":"Chris","numPhotos":0)',
-              't:components.translation-with-arguments.message:("name":"Maki","numPhotos":1)',
+              't:components.translation-with-arguments.message',
+              't:components.translation-with-arguments.message',
+              't:components.translation-with-arguments.message',
             ].join(' '),
           );
       });
@@ -37,9 +37,9 @@ module(
           .dom('[data-test-output="Translation with Arguments"]')
           .hasText(
             [
-              't:components.translation-with-arguments.message:("name":"Sonja","numPhotos":12)',
-              't:components.translation-with-arguments.message:("name":"Chris","numPhotos":0)',
-              't:components.translation-with-arguments.message:("name":"Maki","numPhotos":1)',
+              't:components.translation-with-arguments.message',
+              't:components.translation-with-arguments.message',
+              't:components.translation-with-arguments.message',
             ].join(' '),
           );
       });
