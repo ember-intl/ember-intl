@@ -8,8 +8,15 @@ import {
 } from 'ember-intl';
 import { pageTitle } from 'ember-page-title';
 import RouteTemplate from 'ember-route-template';
+import type SmokeTestsController from 'test-app-for-ember-intl/controllers/smoke-tests';
 
-export default RouteTemplate(
+interface SmokeTestsSignature {
+  Args: {
+    controller: SmokeTestsController;
+  };
+}
+
+export default RouteTemplate<SmokeTestsSignature>(
   <template>
     {{pageTitle (t "routes.smoke-tests.title")}}
 

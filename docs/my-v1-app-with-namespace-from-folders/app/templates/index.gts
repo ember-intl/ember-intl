@@ -1,8 +1,16 @@
+import type { TOC } from '@ember/component/template-only';
 import { t } from 'ember-intl';
 import { ComponentFromV1Addon } from 'my-v1-addon';
-import ComponentFromApp from 'my-v1-classic-app/components/component-from-app';
-import TranslationWithArguments from 'my-v1-classic-app/components/translation-with-arguments';
+import ComponentFromApp from 'my-v1-app-with-namespace-from-folders/components/component-from-app';
+import TranslationWithArguments from 'my-v1-app-with-namespace-from-folders/components/translation-with-arguments';
+import type IndexController from 'my-v1-app-with-namespace-from-folders/controllers/index';
 import { ComponentFromV2Addon } from 'my-v2-addon';
+
+interface IndexSignature {
+  Args: {
+    controller: IndexController;
+  };
+}
 
 <template>
   <div>
@@ -36,4 +44,4 @@ import { ComponentFromV2Addon } from 'my-v2-addon';
       {{@controller.overwrittenTranslation}}
     </section>
   </div>
-</template>
+</template> satisfies TOC<IndexSignature>;
