@@ -21,7 +21,7 @@ module('Unit | Service | intl > setOnMissingTranslation()', function (hooks) {
       this.intl.t('foo.bar', {
         name: 'Zoey',
       }),
-      't:foo.bar:("name":"Zoey")',
+      't:foo.bar',
     );
   });
 

@@ -24,7 +24,7 @@ module(
         </template>,
       );
 
-      assert.dom('[data-test-output]').hasText('t:null:()');
+      assert.dom('[data-test-output]').hasText('t:null');
     });
 
     test('input is undefined', async function (assert) {
@@ -37,7 +37,7 @@ module(
         </template>,
       );
 
-      assert.dom('[data-test-output]').hasText('t:undefined:()');
+      assert.dom('[data-test-output]').hasText('t:undefined');
     });
 
     test('input is an empty string', async function (assert) {
@@ -72,7 +72,7 @@ module(
         </template>,
       );
 
-      assert.dom('[data-test-output]').hasText('t:false:()');
+      assert.dom('[data-test-output]').hasText('t:false');
     });
 
     test('translation does not exist', async function (assert) {
