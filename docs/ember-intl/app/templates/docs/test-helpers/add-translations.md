@@ -24,7 +24,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     assert
       .dom('[data-test-message]')
       .doesNotIncludeText('Hello, Zoey!')
-      .hasText('t:lazy-hello.message:("name":"Zoey")');
+      .hasText('t:lazy-hello.message');
 
     await addTranslations('en-us', {
       'lazy-hello': {
@@ -35,7 +35,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
     assert
       .dom('[data-test-message]')
       .hasText('Hello, Zoey!')
-      .doesNotIncludeText('t:lazy-hello.message:("name":"Zoey")');
+      .doesNotIncludeText('t:lazy-hello.message');
   });
 });
 ```

@@ -54,9 +54,7 @@ module('Integration | Component | hello', function (hooks) {
       <Hello @name="Zoey" />
     `);
 
-    assert
-      .dom('[data-test-message]')
-      .hasText('t:hello.message:("name":"Zoey")');
+    assert.dom('[data-test-message]').hasText('t:hello.message');
   });
 });
 ```

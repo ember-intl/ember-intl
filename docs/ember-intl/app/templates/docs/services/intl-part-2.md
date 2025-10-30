@@ -207,7 +207,7 @@ export default class ApplicationRoute extends Route {
 
 ### setOnMissingTranslation()
 
-Specify what to display when a translation is missing. Your callback function has access to `key`, `locales`, and `options` (data).
+Specify what to display when a translation is missing. Your callback function has access to `key`, `locales`, and `data` (this includes `options.htmlSafe` and `options.locale`).
 
 ```ts
 /* app/routes/application.ts */
