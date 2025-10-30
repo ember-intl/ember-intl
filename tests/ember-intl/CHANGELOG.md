@@ -1,5 +1,12 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.6.3
+
+### Patch Changes
+
+- [#2015](https://github.com/ember-intl/ember-intl/pull/2015) Simplified message for setOnMissingTranslation() in tests ([@ijlee2](https://github.com/ijlee2))
+- [#2014](https://github.com/ember-intl/ember-intl/pull/2014) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.6.2
 
 ### Patch Changes

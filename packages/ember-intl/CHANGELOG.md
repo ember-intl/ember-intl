@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.0-beta.5
+
+### Major Changes
+
+- [#2015](https://github.com/ember-intl/ember-intl/pull/2015) Simplified message for setOnMissingTranslation() in tests ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.0-beta.4
 
 ### Major Changes

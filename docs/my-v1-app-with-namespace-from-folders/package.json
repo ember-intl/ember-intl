@@ -1,6 +1,6 @@
 {
   "name": "my-v1-app-with-namespace-from-folders",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "private": true,
   "description": "An Embroider app that checks wrapTranslationsWithNamespace: true",
   "keywords": [],

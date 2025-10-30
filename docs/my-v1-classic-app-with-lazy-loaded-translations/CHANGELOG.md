@@ -1,5 +1,12 @@
 # my-v1-classic-app-with-lazy-loaded-translations
 
+## 1.1.3
+
+### Patch Changes
+
+- [#2015](https://github.com/ember-intl/ember-intl/pull/2015) Simplified message for setOnMissingTranslation() in tests ([@ijlee2](https://github.com/ijlee2))
+- [#2014](https://github.com/ember-intl/ember-intl/pull/2014) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.2
 
 ### Patch Changes

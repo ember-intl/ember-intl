@@ -1,6 +1,6 @@
 {
   "name": "my-v1-app-with-lazy-loaded-translations",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "private": true,
   "description": "An Embroider app that checks publicOnly: true",
   "keywords": [],

@@ -1,5 +1,11 @@
 # my-v1-classic-app
 
+## 1.2.3
+
+### Patch Changes
+
+- [#2014](https://github.com/ember-intl/ember-intl/pull/2014) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.2
 
 ### Patch Changes

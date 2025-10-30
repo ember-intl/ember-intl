@@ -1,5 +1,13 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.8.3
+
+### Patch Changes
+
+- [#2015](https://github.com/ember-intl/ember-intl/pull/2015) Simplified message for setOnMissingTranslation() in tests ([@ijlee2](https://github.com/ijlee2))
+- [#2014](https://github.com/ember-intl/ember-intl/pull/2014) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+- [#2013](https://github.com/ember-intl/ember-intl/pull/2014) Documented stricter plural category validation in v8 ([@johanrd](https://github.com/johanrd))
+
 ## 1.8.2
 
 ### Patch Changes
