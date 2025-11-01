@@ -16,8 +16,12 @@
     "message": "Dies ist eine Komponente aus einem v2 Addon."
   },
   "components.select-locale": {
-    "default-option": "Sprache auswählen",
-    "label": "Sprache"
+    "label": "Sprache",
+    "option": {
+      "de-de": "Deutsch",
+      "default": "Sprache auswählen",
+      "en-us": "Englisch"
+    }
   },
   "routes.application": { "title": "ember-intl" },
   "routes.index": {
