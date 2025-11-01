@@ -1,0 +1,22 @@
+# compiled output
+/dist-for-testing/
+/tmp/
+
+# dependencies
+/node_modules/
+
+# misc
+/.DS_Store
+/.env*
+/.eslintcache
+/.git/
+/.github/
+/.gitignore
+/.pnpm-debug.log
+/.prettierignore
+/build.sh
+/CONTRIBUTING.md
+/eslint.config.mjs
+/prettier.config.mjs
+/tests/
+/update-test-fixtures.sh

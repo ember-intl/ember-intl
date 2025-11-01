@@ -10,7 +10,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "pnpm --filter ember-intl --filter my-v2-addon build",
+    "build": "pnpm --filter ember-intl --filter @ember-intl/lint --filter my-v2-addon build",
     "format": "pnpm --filter \"*\" format",
     "lint": "pnpm --filter \"*\" lint && pnpm lint:package-json",
     "lint:fix": "pnpm --filter \"*\" lint:fix && pnpm lint:package-json:fix",
