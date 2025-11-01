@@ -6,4 +6,5 @@ export { default as formatNumber } from './helpers/format-number.ts';
 export { default as formatRelativeTime } from './helpers/format-relative-time.ts';
 export { default as formatTime } from './helpers/format-time.ts';
 export { default as t } from './helpers/t.ts';
+export { default as tKey } from './helpers/t-key.ts';
 export type { Formats, default as IntlService } from './services/intl.ts';
