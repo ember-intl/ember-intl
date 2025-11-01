@@ -1,47 +1,56 @@
-import type { TOC } from '@ember/component/template-only';
+import { type Registry as Services, service } from '@ember/service';
+import Component from '@glimmer/component';
 import { t } from 'ember-intl';
 import { ComponentFromV1Addon } from 'my-v1-addon';
 import ComponentFromApp from 'my-v1-app-with-namespace-from-folders/components/component-from-app';
 import TranslationWithArguments from 'my-v1-app-with-namespace-from-folders/components/translation-with-arguments';
-import type IndexController from 'my-v1-app-with-namespace-from-folders/controllers/index';
 import { ComponentFromV2Addon } from 'my-v2-addon';
 
 interface IndexSignature {
   Args: {
-    controller: IndexController;
+    controller: unknown;
+    model: unknown;
   };
 }
 
-<template>
-  <div>
-    <h1 data-test-output="Title">
-      {{t "routes.index.title" htmlSafe=true}}
-    </h1>
+export default class IndexRoute extends Component<IndexSignature> {
+  @service declare intl: Services['intl'];
 
-    <section class="section">
-      <h2 data-test-header="Translation with Arguments">
-        {{t "components.translation-with-arguments.title"}}
-      </h2>
+  get translationToOverwrite(): string {
+    return this.intl.t('routes.index.key-to-overwrite');
+  }
 
-      <TranslationWithArguments />
-    </section>
+  <template>
+    <div>
+      <h1 data-test-output="Title">
+        {{t "routes.index.title" htmlSafe=true}}
+      </h1>
 
-    <section class="section">
-      <h2 data-test-header="Components">
-        {{t "components.title"}}
-      </h2>
+      <section class="section">
+        <h2 data-test-header="Translation with Arguments">
+          {{t "components.translation-with-arguments.title"}}
+        </h2>
 
-      <ComponentFromApp />
-      <ComponentFromV1Addon />
-      <ComponentFromV2Addon />
-    </section>
+        <TranslationWithArguments />
+      </section>
 
-    <section class="section" data-test-output="Key Missing">
-      {{t "routes.index.key-without-translation"}}
-    </section>
+      <section class="section">
+        <h2 data-test-header="Components">
+          {{t "components.title"}}
+        </h2>
 
-    <section class="section" data-test-output="Key Overwritten">
-      {{@controller.overwrittenTranslation}}
-    </section>
-  </div>
-</template> satisfies TOC<IndexSignature>;
+        <ComponentFromApp />
+        <ComponentFromV1Addon />
+        <ComponentFromV2Addon />
+      </section>
+
+      <section class="section" data-test-output="Translation Missing">
+        {{t "routes.index.key-without-translation"}}
+      </section>
+
+      <section class="section" data-test-output="Translation Overwritten">
+        {{this.translationToOverwrite}}
+      </section>
+    </div>
+  </template>
+}

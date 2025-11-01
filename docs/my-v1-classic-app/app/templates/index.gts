@@ -36,12 +36,12 @@ interface IndexSignature {
       <ComponentFromV2Addon />
     </section>
 
-    <section class="section" data-test-output="Key Missing">
+    <section class="section" data-test-output="Translation Missing">
       {{t "routes.index.key-without-translation"}}
     </section>
 
-    <section class="section" data-test-output="Key Overwritten">
-      {{@controller.overwrittenTranslation}}
+    <section class="section" data-test-output="Translation Overwritten">
+      {{@controller.translationToOverwrite}}
     </section>
   </div>
 </template> satisfies TOC<IndexSignature>;

@@ -30,13 +30,13 @@ module('Acceptance | my-v1-engine', function (hooks) {
         .hasText('Dies ist eine Komponente aus einer Engine.');
 
       assert
-        .dom('[data-test-output="Key Missing"]')
+        .dom('[data-test-output="Translation Missing"]')
         .hasText(
           'Missing translation "routes.index.key-without-translation" for locale "de-de, en-us"',
         );
 
       assert
-        .dom('[data-test-output="Key Overwritten"]')
+        .dom('[data-test-output="Translation Overwritten"]')
         .hasText('Die Apps Übersetzungen haben Vorrang.');
     });
   });
@@ -59,13 +59,13 @@ module('Acceptance | my-v1-engine', function (hooks) {
         .hasText('This is a component from an engine.');
 
       assert
-        .dom('[data-test-output="Key Missing"]')
+        .dom('[data-test-output="Translation Missing"]')
         .hasText(
           'Missing translation "routes.index.key-without-translation" for locale "en-us"',
         );
 
       assert
-        .dom('[data-test-output="Key Overwritten"]')
+        .dom('[data-test-output="Translation Overwritten"]')
         .hasText("The app's translations take precedence.");
     });
   });
