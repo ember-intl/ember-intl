@@ -25,11 +25,11 @@
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "broccoli-test-helper": "^2.0.0",
-    "chai": "^6.2.0",
+    "chai": "^6.2.1",
     "concurrently": "^9.2.1",
-    "eslint": "^9.38.0",
-    "globals": "^16.4.0",
-    "mocha": "^11.7.4",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "mocha": "^11.7.5",
     "prettier": "^3.6.2"
   },
   "engines": {

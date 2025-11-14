@@ -47,8 +47,8 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.28.4",
-    "ember-auto-import": "^2.11.1",
+    "@babel/core": "^7.28.5",
+    "ember-auto-import": "^2.11.2",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-intl": "workspace:*"
@@ -57,7 +57,7 @@
     "@ember-intl/v1-compat": "workspace:*",
     "@ember/legacy-built-in-components": "^0.5.0",
     "@ember/optional-features": "^2.2.0",
-    "@ember/test-helpers": "^5.3.0",
+    "@ember/test-helpers": "^5.4.0",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
@@ -85,11 +85,11 @@
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
-    "ember-source": "~6.8.0",
+    "ember-source": "~6.8.1",
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "eslint": "^9.38.0",
+    "eslint": "^9.39.1",
     "loader.js": "^4.7.0",
     "prettier": "^3.6.2",
     "qunit": "^2.24.2",
