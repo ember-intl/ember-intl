@@ -1,3 +1,6 @@
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { Addon } from '@embroider/addon-dev/rollup';
 import { babel } from '@rollup/plugin-babel';
 
@@ -5,6 +8,10 @@ const addon = new Addon({
   srcDir: 'src',
   destDir: 'dist',
 });
+
+const rootDirectory = dirname(fileURLToPath(import.meta.url));
+const babelConfig = resolve(rootDirectory, './babel.config.cjs');
+const tsConfig = resolve(rootDirectory, './tsconfig.json');
 
 export default {
   // This provides defaults that work well alongside `publicEntrypoints` below.
@@ -45,6 +52,7 @@ export default {
     // babel.config.json.
     babel({
       babelHelpers: 'bundled',
+      configFile: babelConfig,
       extensions: ['.gjs', '.gts', '.js', '.ts'],
     }),
 
@@ -55,7 +63,10 @@ export default {
     addon.gjs(),
 
     // Emit .d.ts declaration files
-    addon.declarations('declarations'),
+    addon.declarations(
+      'declarations',
+      `pnpm ember-tsc --declaration --project ${tsConfig}`,
+    ),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
