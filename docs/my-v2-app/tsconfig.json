@@ -9,10 +9,7 @@
       "my-v2-app/*": ["app/*"],
       "*": ["types/*"]
     },
-    "types": ["ember-source/types"]
-  },
-  "glint": {
-    "environment": ["ember-loose", "ember-template-imports"]
+    "types": ["ember-source/types", "@glint/ember-tsc/types"]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

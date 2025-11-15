@@ -15,7 +15,6 @@ module(
       await render(
         <template>
           <div data-test-output>
-            {{! @glint-expect-error }}
             {{formatList (array 1 2 3)}}
           </div>
         </template>,
