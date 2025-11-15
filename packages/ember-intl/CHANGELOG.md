@@ -1,5 +1,12 @@
 # Changelog
 
+## 8.0.0-beta.6
+
+### Patch Changes
+
+- [#2018](https://github.com/ember-intl/ember-intl/pull/2018) Replaced @glint/core with @glint/ember-tsc ([@ijlee2](https://github.com/ijlee2))
+- [#2017](https://github.com/ember-intl/ember-intl/pull/2017) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.0-beta.5
 
 ### Major Changes
