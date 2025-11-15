@@ -26,7 +26,7 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "lint:types": "glint",
+    "lint:types": "ember-tsc --noEmit",
     "start": "vite",
     "test": "vite build --mode test && ember test --config-file \"./testem.cjs\" --path dist --test-port=0"
   },
