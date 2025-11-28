@@ -31,6 +31,7 @@ Router.map(function () {
       this.route('format-time');
       this.route('introduction');
       this.route('t');
+      this.route('t-key');
       this.route('template-tag');
     });
 
