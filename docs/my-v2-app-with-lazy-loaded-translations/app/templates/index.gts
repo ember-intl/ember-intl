@@ -1,19 +1,25 @@
+import { type Registry as Services, service } from '@ember/service';
+import Component from '@glimmer/component';
 import { t } from 'ember-intl';
-import Route from 'ember-route-template';
 import { ComponentFromV1Addon } from 'my-v1-addon';
 import { ComponentFromV2Addon } from 'my-v2-addon';
 import ComponentFromApp from 'my-v2-app-with-lazy-loaded-translations/components/component-from-app';
 import TranslationWithArguments from 'my-v2-app-with-lazy-loaded-translations/components/translation-with-arguments';
 
-interface IndexRouteSignature {
+interface IndexSignature {
   Args: {
-    controller: {
-      overwrittenTranslation: string;
-    };
+    controller: unknown;
+    model: unknown;
   };
 }
 
-export default Route<IndexRouteSignature>(
+export default class IndexRoute extends Component<IndexSignature> {
+  @service declare intl: Services['intl'];
+
+  get translationToOverwrite(): string {
+    return this.intl.t('routes.index.key-to-overwrite');
+  }
+
   <template>
     <div>
       <h1 data-test-output="Title">
@@ -38,13 +44,13 @@ export default Route<IndexRouteSignature>(
         <ComponentFromV2Addon />
       </section>
 
-      <section class="section" data-test-output="Key Missing">
+      <section class="section" data-test-output="Translation Missing">
         {{t "routes.index.key-without-translation"}}
       </section>
 
-      <section class="section" data-test-output="Key Overwritten">
-        {{@controller.overwrittenTranslation}}
+      <section class="section" data-test-output="Translation Overwritten">
+        {{this.translationToOverwrite}}
       </section>
     </div>
-  </template>,
-);
+  </template>
+}
