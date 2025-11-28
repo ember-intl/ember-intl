@@ -6,4 +6,12 @@ type Options = {
   projectRoot: string;
 };
 
-export type { CodemodOptions, Options };
+type FilePath = string;
+
+type Project = {
+  usedKeys: Map<TranslationKey, FilePath[]>;
+};
+
+type TranslationKey = string;
+
+export type { CodemodOptions, Options, Project };
