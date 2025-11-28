@@ -9,6 +9,7 @@
     },
     "types": ["ember-source/types"]
   },
+  "exclude": ["app/snippets/**/*"],
   "include": ["app/**/*", "tests/**/*", "types/**/*"],
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]

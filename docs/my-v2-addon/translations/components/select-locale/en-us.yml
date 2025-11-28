@@ -1,3 +1,6 @@
 components.select-locale:
-  default-option: Choose your language
   label: Language
+  option:
+    de-de: German
+    default: Choose your language
+    en-us: English

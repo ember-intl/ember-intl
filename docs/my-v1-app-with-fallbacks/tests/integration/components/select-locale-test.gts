@@ -19,7 +19,7 @@ module('Integration | Component | select-locale', function (hooks) {
     assert
       .dom('[data-test-option="de-de"]')
       .doesNotHaveAttribute('selected')
-      .hasText('Deutsch')
+      .hasText('German')
       .hasValue('de-de');
 
     assert
@@ -45,7 +45,7 @@ module('Integration | Component | select-locale', function (hooks) {
     assert
       .dom('[data-test-option="en-us"]')
       .doesNotHaveAttribute('selected')
-      .hasText('English')
+      .hasText('Englisch')
       .hasValue('en-us');
   });
 });

@@ -11,11 +11,17 @@
     <ComponentFromV1Engine />
   </section>
 
-  <section class="section" data-test-output="Key Missing">
+  <section
+    class="section"
+    data-test-output="Translation Missing"
+  >
     {{t "routes.index.key-without-translation"}}
   </section>
 
-  <section class="section" data-test-output="Key Overwritten">
-    {{this.overwrittenTranslation}}
+  <section
+    class="section"
+    data-test-output="Translation Overwritten"
+  >
+    {{this.translationToOverwrite}}
   </section>
 </div>

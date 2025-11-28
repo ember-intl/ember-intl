@@ -106,6 +106,7 @@
       "./helpers/format-number.js": "./dist/_app_/helpers/format-number.js",
       "./helpers/format-relative-time.js": "./dist/_app_/helpers/format-relative-time.js",
       "./helpers/format-time.js": "./dist/_app_/helpers/format-time.js",
+      "./helpers/t-key.js": "./dist/_app_/helpers/t-key.js",
       "./helpers/t.js": "./dist/_app_/helpers/t.js",
       "./services/intl.js": "./dist/_app_/services/intl.js"
     },

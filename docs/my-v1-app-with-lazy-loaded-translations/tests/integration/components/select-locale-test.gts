@@ -16,18 +16,18 @@ module('Integration | Component | select-locale', function (hooks) {
 
     assert
       .dom('option[value=""]')
-      .hasText('t:components.select-locale.default-option');
+      .hasText('t:components.select-locale.option.default');
 
     assert
       .dom('[data-test-option="de-de"]')
       .doesNotHaveAttribute('selected')
-      .hasText('Deutsch')
+      .hasText('t:components.select-locale.option.de-de')
       .hasValue('de-de');
 
     assert
       .dom('[data-test-option="en-us"]')
       .hasAttribute('selected')
-      .hasText('English')
+      .hasText('t:components.select-locale.option.en-us')
       .hasValue('en-us');
   });
 
@@ -38,18 +38,18 @@ module('Integration | Component | select-locale', function (hooks) {
 
     assert
       .dom('option[value=""]')
-      .hasText('t:components.select-locale.default-option');
+      .hasText('t:components.select-locale.option.default');
 
     assert
       .dom('[data-test-option="de-de"]')
       .hasAttribute('selected')
-      .hasText('Deutsch')
+      .hasText('t:components.select-locale.option.de-de')
       .hasValue('de-de');
 
     assert
       .dom('[data-test-option="en-us"]')
       .doesNotHaveAttribute('selected')
-      .hasText('English')
+      .hasText('t:components.select-locale.option.en-us')
       .hasValue('en-us');
   });
 });
