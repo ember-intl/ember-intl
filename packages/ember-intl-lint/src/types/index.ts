@@ -3,12 +3,23 @@ type CodemodOptions = {
 };
 
 type Options = {
+  config: Config;
   projectRoot: string;
+};
+
+type Config = {
+  addonPaths: FilePath[];
+  rules: Record<LintRule, boolean | LintOptions>;
 };
 
 type FilePath = string;
 
-type LintMethods = Record<LintRule, (project: Project) => string[]>;
+type LintMethods = Record<
+  LintRule,
+  (project: Project, lintOptions?: LintOptions) => string[]
+>;
+
+type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, string[]>;
 
@@ -27,7 +38,9 @@ type TranslationKey = string;
 
 export type {
   CodemodOptions,
+  Config,
   LintMethods,
+  LintOptions,
   LintResults,
   LintRule,
   Options,

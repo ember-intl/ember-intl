@@ -6,6 +6,6 @@ import {
   options,
 } from '../../helpers/shared-test-setups/my-v1-app.js';
 
-test('steps | create-options > my-v1-app', function () {
-  assert.deepStrictEqual(createOptions(codemodOptions), options);
+test('steps | create-options > my-v1-app', async function () {
+  assert.deepStrictEqual(await createOptions(codemodOptions), options);
 });

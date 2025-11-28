@@ -1,10 +1,18 @@
 import type { Project } from '../../types/index.js';
 
-export function findMissingKeys(project: Project): string[] {
+type LintOptions = {
+  ignores: string[];
+};
+
+export function findMissingKeys(
+  project: Project,
+  lintOptions?: Partial<LintOptions>,
+): string[] {
   const failed: string[] = [];
+  const ignores = new Set<string>(lintOptions?.ignores ?? []);
 
   project.usedKeys.forEach((filePaths, key) => {
-    if (project.availableKeys.has(key)) {
+    if (project.availableKeys.has(key) || ignores.has(key)) {
       return;
     }
 

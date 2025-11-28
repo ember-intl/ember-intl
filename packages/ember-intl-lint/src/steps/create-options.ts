@@ -1,9 +1,14 @@
 import type { CodemodOptions, Options } from '../types/index.js';
+import { getConfig } from '../utils/create-options/index.js';
 
-export function createOptions(codemodOptions: CodemodOptions): Options {
+export async function createOptions(
+  codemodOptions: CodemodOptions,
+): Promise<Options> {
   const { projectRoot } = codemodOptions;
+  const config = await getConfig(projectRoot);
 
   return {
+    config,
     projectRoot,
   };
 }

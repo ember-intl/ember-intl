@@ -1,4 +1,9 @@
-import type { LintMethods, LintResults, Project } from '../types/index.js';
+import type {
+  LintMethods,
+  LintResults,
+  Options,
+  Project,
+} from '../types/index.js';
 import {
   findMissingKeys,
   findUnusedKeys,
@@ -10,11 +15,22 @@ const lintMethods: LintMethods = {
   'find-unused-keys': findUnusedKeys,
 };
 
-export function lintProject(project: Project): LintResults {
+export function lintProject(project: Project, options: Options): LintResults {
+  const { config } = options;
+
   return lintRules.reduce((accumulator, lintRule) => {
+    const lintOptions = config.rules[lintRule];
+
+    if (lintOptions === false) {
+      return accumulator;
+    }
+
     const lintMethod = lintMethods[lintRule];
 
-    accumulator[lintRule] = lintMethod(project);
+    accumulator[lintRule] =
+      lintOptions === true
+        ? lintMethod(project)
+        : lintMethod(project, lintOptions);
 
     return accumulator;
   }, {} as LintResults);

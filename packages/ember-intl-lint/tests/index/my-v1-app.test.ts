@@ -4,10 +4,10 @@ import { runCodemod } from '../../src/index.js';
 import { inputProject, outputProject } from '../fixtures/my-v1-app/index.js';
 import { codemodOptions } from '../helpers/shared-test-setups/my-v1-app.js';
 
-test('index > my-app', function () {
+test('index > my-app', async function () {
   loadFixture(inputProject, codemodOptions);
 
-  let lintResults = runCodemod(codemodOptions);
+  let lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
     'find-missing-keys': [],
@@ -17,7 +17,7 @@ test('index > my-app', function () {
   assertFixture(outputProject, codemodOptions);
 
   // Check idempotence
-  lintResults = runCodemod(codemodOptions);
+  lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
     'find-missing-keys': [],
