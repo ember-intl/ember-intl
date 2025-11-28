@@ -1,0 +1,15 @@
+# compiled output
+/dist/
+/dist-for-testing/
+/tmp/
+ 
+# misc
+/src/blueprints/
+/tests/fixtures/
+!.*
+.*/
+CONTRIBUTING.md
+README.md
+pnpm-lock.yaml
+
+# specific to this package

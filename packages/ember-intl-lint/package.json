@@ -1,0 +1,66 @@
+{
+  "name": "@ember-intl/lint",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Linter for ember-intl",
+  "keywords": [
+    "codemod",
+    "ember",
+    "ember-codemod",
+    "ember-intl",
+    "i18n",
+    "internationalization"
+  ],
+  "homepage": "https://ember-intl.github.io/ember-intl/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "bin": "dist/bin/ember-intl-lint.js",
+  "directories": {
+    "test": "tests"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "sh build.sh --production",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
+    "lint:format": "prettier . --cache --check",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "tsc --noEmit",
+    "prepare": "pnpm build",
+    "test": "sh build.sh --test && mt dist-for-testing --quiet"
+  },
+  "dependencies": {
+    "@codemod-utils/ast-javascript": "^2.0.9",
+    "@codemod-utils/ast-template": "^2.0.4",
+    "@codemod-utils/ast-template-tag": "^1.0.1",
+    "@codemod-utils/files": "^3.0.6",
+    "js-yaml": "^4.1.1",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@codemod-utils/tests": "^2.0.6",
+    "@shared-configs/eslint-config-node": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@sondr3/minitest": "^0.1.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.19.25",
+    "@types/yargs": "^17.0.35",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": "20.* || >= 22"
+  }
+}
