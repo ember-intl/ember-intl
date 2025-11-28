@@ -1,7 +1,9 @@
-import { analyzeProject, createOptions } from './steps/index.js';
-import type { CodemodOptions } from './types/index.js';
+import { analyzeProject, createOptions, lintProject } from './steps/index.js';
+import type { CodemodOptions, LintResults } from './types/index.js';
 
-export function runCodemod(codemodOptions: CodemodOptions): void {
+export function runCodemod(codemodOptions: CodemodOptions): LintResults {
   const options = createOptions(codemodOptions);
   const project = analyzeProject(options);
+
+  return lintProject(project);
 }
