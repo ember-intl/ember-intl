@@ -79,7 +79,7 @@ const output = this.intl.formatMessage(
 // '3 photos taken.'
 ```
 
-If the message has HTML and you want to render it in the template, set `htmlSafe` to `true`.
+If the message has HTML and you want to render it in the template, set `htmlSafe` (or its alias `trustHTML`) to `true`.
 
 ```ts
 const output = this.intl.formatMessage(
@@ -89,12 +89,14 @@ const output = this.intl.formatMessage(
     id: 'photoshoot-short-summary',
   },
   {
-    htmlSafe: true,
+    trustHTML: true, // or htmlSafe: true
     numPhotos: 3,
   },
 );
 // '<em>3 photos taken.</em>'
 ```
+
+> **Note:** `trustHTML` is an alias for `htmlSafe`, introduced to align with [Ember's naming convention](https://github.com/emberjs/ember.js/pull/20939). The name better reflects the behavior: you're marking the HTML content as trusted. Both options work identically.
 
 
 ### formatNumber()
@@ -146,11 +148,11 @@ const output = this.intl.t('hello.message', {
 // 'Hello, Zoey!'
 ```
 
-If the translation message has HTML and you want to render it in the template, set `htmlSafe` to `true`.
+If the translation message has HTML and you want to render it in the template, set `htmlSafe` (or its alias `trustHTML`) to `true`.
 
 ```ts
 const output = this.intl.t('ember.visit-legal', {
-  htmlSafe: true,
+  trustHTML: true, // or htmlSafe: true
   url: 'https://emberjs.com/about/legal',
 });
 // 'See our <a href="https://emberjs.com/about/legal">Terms and Conditions</a>.'

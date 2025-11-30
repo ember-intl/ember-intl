@@ -184,6 +184,12 @@ export default class IntlService extends Service {
     options?: FormatMessageParameters[1] & {
       htmlSafe?: boolean;
       locale?: string;
+      /**
+       * Alias for `htmlSafe`. When `true`, the output will be treated as trusted HTML.
+       * This naming better reflects the behavior: we're trusting the HTML content.
+       * @see https://github.com/emberjs/ember.js/pull/20939
+       */
+      trustHTML?: boolean;
     },
   ): string {
     if (value === undefined || value === null) {
@@ -201,7 +207,7 @@ export default class IntlService extends Service {
             id: value,
           };
 
-    if (options?.htmlSafe) {
+    if (options?.htmlSafe || options?.trustHTML) {
       const output = formatMessage(
         intlShape,
         descriptor,
@@ -329,6 +335,12 @@ export default class IntlService extends Service {
     options?: FormatMessageParameters[1] & {
       htmlSafe?: boolean;
       locale?: string;
+      /**
+       * Alias for `htmlSafe`. When `true`, the output will be treated as trusted HTML.
+       * This naming better reflects the behavior: we're trusting the HTML content.
+       * @see https://github.com/emberjs/ember.js/pull/20939
+       */
+      trustHTML?: boolean;
     },
   ): string {
     const locales = options?.locale ? [options.locale] : this._locale!;

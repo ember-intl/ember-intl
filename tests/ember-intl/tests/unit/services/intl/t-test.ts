@@ -74,6 +74,35 @@ module('Unit | Service | intl > t()', function (hooks) {
     );
   });
 
+  test('options.trustHTML (alias for htmlSafe)', function (this: TestContext, assert) {
+    this.intl.addTranslations('en-us', {
+      legacy: `'<strong class="example">'Hello, {name}!'</strong>'`,
+      modern: `<strong class="example">Hello, {name}!</strong>`,
+    });
+
+    assert.strictEqual(
+      this.intl
+        .t('legacy', {
+          trustHTML: true,
+          name: '<em>Tom</em>',
+        })
+        .toString(),
+      '<strong class="example">Hello, &lt;em&gt;Tom&lt;/em&gt;!</strong>',
+      'trustHTML works with legacy syntax',
+    );
+
+    assert.strictEqual(
+      this.intl
+        .t('modern', {
+          trustHTML: true,
+          name: '<em>Tom</em>',
+        })
+        .toString(),
+      '<strong class="example">Hello, &lt;em&gt;Tom&lt;/em&gt;!</strong>',
+      'trustHTML works with modern syntax',
+    );
+  });
+
   test('options.locale', function (this: TestContext, assert) {
     assert.strictEqual(
       this.intl.t('smoke-tests.hello.message', {
