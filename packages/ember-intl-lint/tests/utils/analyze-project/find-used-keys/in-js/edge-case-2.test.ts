@@ -1,0 +1,76 @@
+import { assert, test } from '@codemod-utils/tests';
+
+import { inJsTs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
+
+test('utils | analyze-project | find-used-keys | in-js > edge case (2)', function () {
+  const file = [
+    `import { service } from '@ember/service';`,
+    `import Component from '@glimmer/component';`,
+    `import { tKey } from 'ember-intl';`,
+    ``,
+    `export default class Hello extends Component {`,
+    `  @service('intl') x;`,
+    ``,
+    `  get getter01() {`,
+    `    return t('key01');`,
+    `  }`,
+    ``,
+    `  get getter02() {`,
+    `    return x.t('key02');`,
+    `  }`,
+    ``,
+    `  get getter03() {`,
+    `    return this.x.t('key03');`,
+    `  }`,
+    ``,
+    `  get getter04() {`,
+    `    const { x } = this;`,
+    `    return x.t('key04');`,
+    `  }`,
+    ``,
+    `  get getter05() {`,
+    `    const x = { t: () => {} };`,
+    `    return x.t('key05');`,
+    `  }`,
+    ``,
+    `  get getter06() {`,
+    `    return t(tKey('key06'));`,
+    `  }`,
+    ``,
+    `  get getter07() {`,
+    `    return x.t(tKey('key07'));`,
+    `  }`,
+    ``,
+    `  get getter08() {`,
+    `    return this.x.t(tKey('key08'));`,
+    `  }`,
+    ``,
+    `  get getter09() {`,
+    `    const { x } = this;`,
+    `    return x.t(tKey('key09'));`,
+    `  }`,
+    ``,
+    `  get getter10() {`,
+    `    const x = { t: () => {} };`,
+    `    return x.t(tKey('key10'));`,
+    `  }`,
+    `}`,
+    ``,
+  ].join('\n');
+
+  const keys = inJsTs(file, {
+    isTypeScript: false,
+  });
+
+  assert.deepStrictEqual(keys, [
+    'key02',
+    'key03',
+    'key04',
+    'key05',
+    'key06',
+    'key07',
+    'key08',
+    'key09',
+    'key10',
+  ]);
+});
