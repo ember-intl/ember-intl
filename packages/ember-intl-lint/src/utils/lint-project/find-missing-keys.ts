@@ -5,7 +5,7 @@ type LintOptions = {
 };
 
 export function findMissingKeys(
-  project: Project,
+  project: Pick<Project, 'availableKeys' | 'usedKeys'>,
   lintOptions?: Partial<LintOptions>,
 ): string[] {
   const failed: string[] = [];

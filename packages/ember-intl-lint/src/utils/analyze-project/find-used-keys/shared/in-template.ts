@@ -41,7 +41,8 @@ export function inTemplate(file: string, data: Data): string[] {
   const canSkip =
     isTemplateTag &&
     dependencies.helpers.t === undefined &&
-    dependencies.helpers.tKey === undefined;
+    dependencies.helpers.tKey === undefined &&
+    dependencies.services.intl === undefined;
 
   if (canSkip) {
     return [];
@@ -58,7 +59,8 @@ export function inTemplate(file: string, data: Data): string[] {
 
       switch (node.path.original) {
         case dependencies.helpers.t:
-        case dependencies.helpers.tKey: {
+        case dependencies.helpers.tKey:
+        case `this.${dependencies.services.intl}.t`: {
           saveKeys(keys, node.params[0]);
           break;
         }
@@ -72,7 +74,8 @@ export function inTemplate(file: string, data: Data): string[] {
 
       switch (node.path.original) {
         case dependencies.helpers.t:
-        case dependencies.helpers.tKey: {
+        case dependencies.helpers.tKey:
+        case `this.${dependencies.services.intl}.t`: {
           saveKeys(keys, node.params[0]);
           break;
         }

@@ -5,8 +5,8 @@ type LintOptions = {
 };
 
 export function findUnusedKeys(
-  project: Project,
-  lintOptions: Partial<LintOptions> | undefined,
+  project: Pick<Project, 'availableKeys' | 'usedKeys'>,
+  lintOptions?: Partial<LintOptions>,
 ): string[] {
   const failed: string[] = [];
   const ignores = new Set<string>(lintOptions?.ignores ?? []);
