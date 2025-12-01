@@ -11,7 +11,13 @@ type Data = {
 export function forEach(json: TranslationJson, data: Data): void {
   const prefix = data.prefix ?? '';
 
-  for (const [key, value] of Object.entries(json)) {
+  for (const key in json) {
+    if (!Object.hasOwn(json, key)) {
+      continue;
+    }
+
+    const value = json[key]!;
+
     if (typeof value === 'object') {
       forEach(value, {
         callback: data.callback,
