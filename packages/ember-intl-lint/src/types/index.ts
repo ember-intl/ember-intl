@@ -14,6 +14,16 @@ type Config = {
 
 type Failed = string[];
 
+type IcuArguments = Record<IcuArgumentType, Set<string>>;
+
+type IcuArgumentType =
+  | 'argument'
+  | 'date'
+  | 'number'
+  | 'plural'
+  | 'select'
+  | 'time';
+
 type LintMethods = Record<
   LintRule,
   (project: Project, lintOptions?: LintOptions) => Failed
@@ -23,7 +33,10 @@ type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, Failed>;
 
-type LintRule = 'no-missing-keys' | 'no-unused-keys';
+type LintRule =
+  | 'no-inconsistent-messages'
+  | 'no-missing-keys'
+  | 'no-unused-keys';
 
 type Project = {
   availableKeys: Map<
@@ -31,6 +44,7 @@ type Project = {
     Map<
       TranslationFilePath,
       {
+        icuArguments: IcuArguments;
         message: TranslationMessage;
       }
     >
@@ -63,12 +77,15 @@ export type {
   CodemodOptions,
   Config,
   Failed,
+  IcuArguments,
+  IcuArgumentType,
   LintMethods,
   LintOptions,
   LintResults,
   LintRule,
   Options,
   Project,
+  TranslationFilePath,
   TranslationJson,
   TranslationKey,
   TranslationMessage,

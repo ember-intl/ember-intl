@@ -2024,6 +2024,9 @@ importers:
       '@codemod-utils/files':
         specifier: ^3.0.6
         version: 3.0.6
+      '@formatjs/icu-messageformat-parser':
+        specifier: ^2.11.4
+        version: 2.11.4
       js-yaml:
         specifier: ^4.1.1
         version: 4.1.1

@@ -24,6 +24,7 @@ test('utils | create-options | get-config > config has addonPaths', async functi
   assert.deepStrictEqual(config, {
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     rules: {
+      'no-inconsistent-messages': true,
       'no-missing-keys': true,
       'no-unused-keys': true,
     },

@@ -6,6 +6,7 @@ import {
   inJson,
   inYaml,
 } from '../../utils/analyze-project/find-available-keys/index.js';
+import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js';
 
 export function findAvailableKeys(
   translationFiles: Project['translationFiles'],
@@ -21,11 +22,14 @@ export function findAvailableKeys(
       data.format === 'json' ? inJson(file) : inYaml(file);
 
     for (const [key, message] of Object.entries(translationObject)) {
+      const icuArguments = findIcuArguments(message);
+
       if (!availableKeys.has(key)) {
         availableKeys.set(key, new Map());
       }
 
       availableKeys.get(key)!.set(filePath, {
+        icuArguments,
         message,
       });
     }

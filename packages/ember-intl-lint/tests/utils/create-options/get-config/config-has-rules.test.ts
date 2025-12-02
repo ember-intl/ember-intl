@@ -26,6 +26,7 @@ test('utils | create-options | get-config > config has rules', async function ()
   assert.deepStrictEqual(config, {
     addonPaths: [],
     rules: {
+      'no-inconsistent-messages': true,
       'no-missing-keys': {
         ignores: ['hello.message'],
       },
