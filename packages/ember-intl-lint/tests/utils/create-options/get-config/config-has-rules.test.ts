@@ -7,10 +7,10 @@ test('utils | create-options | get-config > config has rules', async function ()
     'ember-intl-lint.config.mjs': [
       `export default {`,
       `  rules: {`,
-      `    'find-missing-keys': {`,
+      `    'no-missing-keys': {`,
       `      ignores: ['hello.message'],`,
       `    },`,
-      `    'find-unused-keys': false,`,
+      `    'no-unused-keys': false,`,
       `  },`,
       `};`,
       ``,
@@ -26,10 +26,10 @@ test('utils | create-options | get-config > config has rules', async function ()
   assert.deepStrictEqual(config, {
     addonPaths: [],
     rules: {
-      'find-missing-keys': {
+      'no-missing-keys': {
         ignores: ['hello.message'],
       },
-      'find-unused-keys': false,
+      'no-unused-keys': false,
     },
   });
 });

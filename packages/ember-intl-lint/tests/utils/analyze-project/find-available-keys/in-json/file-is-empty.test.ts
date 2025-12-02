@@ -5,7 +5,7 @@ import { inJson } from '../../../../../src/utils/analyze-project/find-available-
 test('utils | analyze-project | find-available-keys | in-json > file is empty', function () {
   const file = '';
 
-  const keys = inJson(file);
+  const translationObject = inJson(file);
 
-  assert.deepStrictEqual(keys, []);
+  assert.deepStrictEqual(translationObject, {});
 });

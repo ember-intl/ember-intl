@@ -3,28 +3,16 @@ import { join } from 'node:path';
 
 import { findFiles, parseFilePath } from '@codemod-utils/files';
 
-import type { Config, Options, Project } from '../../types/index.js';
+import type { Options, Project, TranslationKey } from '../../types/index.js';
 import {
   inGjsGts,
   inHbs,
   inJsTs,
 } from '../../utils/analyze-project/find-used-keys/index.js';
 
-function canSkip(config: Config): boolean {
-  return (
-    config.rules['find-missing-keys'] === false &&
-    config.rules['find-unused-keys'] === false
-  );
-}
-
 export function findUsedKeys(options: Options): Project['usedKeys'] {
-  const { config, projectRoot } = options;
-
+  const { projectRoot } = options;
   const usedKeys: Project['usedKeys'] = new Map();
-
-  if (canSkip(config)) {
-    return usedKeys;
-  }
 
   const filePaths = findFiles('app/**/*.{gjs,gts,hbs,js,ts}', {
     ignoreList: ['**/*.d.ts'],
@@ -35,7 +23,7 @@ export function findUsedKeys(options: Options): Project['usedKeys'] {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
     const { ext } = parseFilePath(filePath);
 
-    let keys: string[] = [];
+    let keys: TranslationKey[] = [];
 
     switch (ext) {
       case '.gjs':

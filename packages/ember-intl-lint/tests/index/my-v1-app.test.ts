@@ -10,8 +10,8 @@ test('index > my-app', async function () {
   let lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
-    'find-missing-keys': [],
-    'find-unused-keys': [],
+    'no-missing-keys': [],
+    'no-unused-keys': [],
   });
 
   assertFixture(outputProject, codemodOptions);
@@ -20,8 +20,8 @@ test('index > my-app', async function () {
   lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
-    'find-missing-keys': [],
-    'find-unused-keys': [],
+    'no-missing-keys': [],
+    'no-unused-keys': [],
   });
 
   assertFixture(outputProject, codemodOptions);

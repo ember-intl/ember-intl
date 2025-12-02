@@ -4,15 +4,12 @@ import type {
   Options,
   Project,
 } from '../types/index.js';
-import {
-  findMissingKeys,
-  findUnusedKeys,
-} from '../utils/lint-project/index.js';
+import { noMissingKeys, noUnusedKeys } from '../utils/lint-project/index.js';
 import { lintRules } from '../utils/lint-rules.js';
 
 const lintMethods: LintMethods = {
-  'find-missing-keys': findMissingKeys,
-  'find-unused-keys': findUnusedKeys,
+  'no-missing-keys': noMissingKeys,
+  'no-unused-keys': noUnusedKeys,
 };
 
 export function lintProject(project: Project, options: Options): LintResults {

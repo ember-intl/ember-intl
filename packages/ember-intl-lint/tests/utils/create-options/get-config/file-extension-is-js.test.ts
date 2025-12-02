@@ -16,8 +16,8 @@ test('utils | create-options | get-config > file extension is js', async functio
   assert.deepStrictEqual(config, {
     addonPaths: [],
     rules: {
-      'find-missing-keys': true,
-      'find-unused-keys': true,
+      'no-missing-keys': true,
+      'no-unused-keys': true,
     },
   });
 });

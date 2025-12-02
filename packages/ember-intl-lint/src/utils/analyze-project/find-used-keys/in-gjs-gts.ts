@@ -1,13 +1,14 @@
 import { findTemplateTags, toEcma } from '@codemod-utils/ast-template-tag';
 
+import type { TranslationKey } from '../../../types/index.js';
 import { findDependencies, inJavascript, inTemplate } from './shared/index.js';
 
 type Data = {
   isTypeScript: boolean;
 };
 
-export function inGjsGts(file: string, data: Data): string[] {
-  const keys: string[] = [];
+export function inGjsGts(file: string, data: Data): TranslationKey[] {
+  const keys: TranslationKey[] = [];
 
   const ecma = toEcma(file);
   const dependencies = findDependencies(ecma, {

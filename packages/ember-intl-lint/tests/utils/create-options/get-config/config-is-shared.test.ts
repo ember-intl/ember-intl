@@ -21,10 +21,10 @@ test('utils | create-options | get-config > config is shared', async function ()
           `    'node_modules/my-v2-addon',`,
           `  ],`,
           `  rules: {`,
-          `    'find-missing-keys': {`,
+          `    'no-missing-keys': {`,
           `      ignores: ['hello.message'],`,
           `    },`,
-          `    'find-unused-keys': false,`,
+          `    'no-unused-keys': false,`,
           `  },`,
           `};`,
           ``,
@@ -42,10 +42,10 @@ test('utils | create-options | get-config > config is shared', async function ()
   assert.deepStrictEqual(config, {
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     rules: {
-      'find-missing-keys': {
+      'no-missing-keys': {
         ignores: ['hello.message'],
       },
-      'find-unused-keys': false,
+      'no-unused-keys': false,
     },
   });
 });

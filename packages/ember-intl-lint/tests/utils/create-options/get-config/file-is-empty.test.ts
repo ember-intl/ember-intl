@@ -16,8 +16,8 @@ test('utils | create-options | get-config > file is empty', async function () {
   assert.deepStrictEqual(config, {
     addonPaths: [],
     rules: {
-      'find-missing-keys': true,
-      'find-unused-keys': true,
+      'no-missing-keys': true,
+      'no-unused-keys': true,
     },
   });
 });
