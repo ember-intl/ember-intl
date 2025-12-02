@@ -1,15 +1,15 @@
-import type { Project } from '../../types/index.js';
+import type { Failed, Project, TranslationKey } from '../../types/index.js';
 
 type LintOptions = {
-  ignores: string[];
+  ignores: TranslationKey[];
 };
 
 export function noUnusedKeys(
   project: Project,
   lintOptions?: Partial<LintOptions>,
-): string[] {
-  const ignores = new Set<string>(lintOptions?.ignores ?? []);
-  const failed: string[] = [];
+): Failed {
+  const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
+  const failed: Failed = [];
 
   project.availableKeys.forEach((filePaths, key) => {
     if (ignores.has(key)) {

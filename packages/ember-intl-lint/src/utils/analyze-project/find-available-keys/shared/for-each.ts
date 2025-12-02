@@ -1,10 +1,11 @@
 import type {
   TranslationJson,
   TranslationKey,
+  TranslationMessage,
 } from '../../../../types/index.js';
 
 type Data = {
-  callback: (key: string, value: TranslationKey) => void;
+  callback: (key: TranslationKey, value: TranslationMessage) => void;
   prefix?: string;
 };
 

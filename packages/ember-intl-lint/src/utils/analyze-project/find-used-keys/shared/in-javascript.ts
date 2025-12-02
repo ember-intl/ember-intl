@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { AST } from '@codemod-utils/ast-javascript';
 
+import type { TranslationKey } from '../../../../types/index.js';
 import type { Dependencies } from './find-dependencies.js';
 
 type ExpressionStatement = ReturnType<typeof AST.builders.expressionStatement>;
@@ -11,7 +12,7 @@ type Data = {
   isTypeScript: boolean;
 };
 
-function saveKeys(keys: string[], node: Expression): void {
+function saveKeys(keys: TranslationKey[], node: Expression): void {
   switch (node.type) {
     case 'ConditionalExpression': {
       saveKeys(keys, node.consequent);
@@ -21,7 +22,7 @@ function saveKeys(keys: string[], node: Expression): void {
 
     case 'Literal':
     case 'StringLiteral': {
-      keys.push(node.value as string);
+      keys.push(node.value as TranslationKey);
       break;
     }
 
@@ -34,7 +35,7 @@ function saveKeys(keys: string[], node: Expression): void {
   }
 }
 
-export function inJavascript(file: string, data: Data): string[] {
+export function inJavascript(file: string, data: Data): TranslationKey[] {
   const { dependencies, isTypeScript } = data;
 
   const canSkip =
@@ -47,7 +48,7 @@ export function inJavascript(file: string, data: Data): string[] {
   }
 
   const traverse = AST.traverse(isTypeScript);
-  const keys: string[] = [];
+  const keys: TranslationKey[] = [];
 
   traverse(file, {
     visitCallExpression(node) {

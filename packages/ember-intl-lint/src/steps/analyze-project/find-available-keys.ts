@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import { findFiles, parseFilePath } from '@codemod-utils/files';
 
-import type { Options, Project } from '../../types/index.js';
+import type { Options, Project, TranslationKey } from '../../types/index.js';
 import {
   inJson,
   inYaml,
@@ -30,7 +30,7 @@ export function findAvailableKeys(options: Options): Project['availableKeys'] {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
     const { ext } = parseFilePath(filePath);
 
-    let keys: string[] = [];
+    let keys: TranslationKey[] = [];
 
     switch (ext) {
       case '.json': {

@@ -8,37 +8,44 @@ type Options = {
 };
 
 type Config = {
-  addonPaths: FilePath[];
+  addonPaths: string[];
   rules: Record<LintRule, boolean | LintOptions>;
 };
 
-type FilePath = string;
+type Failed = string[];
 
 type LintMethods = Record<
   LintRule,
-  (project: Project, lintOptions?: LintOptions) => string[]
+  (project: Project, lintOptions?: LintOptions) => Failed
 >;
 
 type LintOptions = Record<string, unknown>;
 
-type LintResults = Record<LintRule, string[]>;
+type LintResults = Record<LintRule, Failed>;
 
 type LintRule = 'no-missing-keys' | 'no-unused-keys';
 
 type Project = {
-  availableKeys: Map<TranslationKey, FilePath[]>;
-  usedKeys: Map<TranslationKey, FilePath[]>;
+  availableKeys: Map<TranslationKey, TranslationFilePath[]>;
+  usedKeys: Map<TranslationKey, SourceFilePath[]>;
 };
 
+type SourceFilePath = string;
+
+type TranslationFilePath = string;
+
 type TranslationJson = {
-  [key: TranslationKey]: string | TranslationJson;
+  [key: TranslationKey]: TranslationJson | TranslationMessage;
 };
 
 type TranslationKey = string;
 
+type TranslationMessage = string;
+
 export type {
   CodemodOptions,
   Config,
+  Failed,
   LintMethods,
   LintOptions,
   LintResults,
@@ -47,4 +54,5 @@ export type {
   Project,
   TranslationJson,
   TranslationKey,
+  TranslationMessage,
 };

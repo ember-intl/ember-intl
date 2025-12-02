@@ -1,5 +1,6 @@
 import { AST } from '@codemod-utils/ast-template';
 
+import type { TranslationKey } from '../../../../types/index.js';
 import type { Dependencies } from './find-dependencies.js';
 
 type Expression = ReturnType<typeof AST.builders.path>;
@@ -9,7 +10,7 @@ type Data = {
   isTemplateTag: boolean;
 };
 
-function saveKeys(keys: string[], node: Expression | undefined): void {
+function saveKeys(keys: TranslationKey[], node: Expression | undefined): void {
   if (node === undefined) {
     return;
   }
@@ -35,7 +36,7 @@ function saveKeys(keys: string[], node: Expression | undefined): void {
   }
 }
 
-export function inTemplate(file: string, data: Data): string[] {
+export function inTemplate(file: string, data: Data): TranslationKey[] {
   const { dependencies, isTemplateTag } = data;
 
   const canSkip =
@@ -49,7 +50,7 @@ export function inTemplate(file: string, data: Data): string[] {
   }
 
   const traverse = AST.traverse();
-  const keys: string[] = [];
+  const keys: TranslationKey[] = [];
 
   traverse(file, {
     MustacheStatement(node) {

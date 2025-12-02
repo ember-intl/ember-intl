@@ -1,10 +1,10 @@
 import yaml from 'js-yaml';
 
-import type { TranslationJson } from '../../../types/index.js';
+import type { TranslationJson, TranslationKey } from '../../../types/index.js';
 import { forEach } from './shared/index.js';
 
-export function inYaml(file: string): string[] {
-  const keys: string[] = [];
+export function inYaml(file: string): TranslationKey[] {
+  const keys: TranslationKey[] = [];
 
   if (file === '') {
     return keys;
@@ -13,7 +13,7 @@ export function inYaml(file: string): string[] {
   const json = yaml.load(file) as TranslationJson;
 
   forEach(json, {
-    callback: (key) => {
+    callback(key) {
       keys.push(key);
     },
   });
