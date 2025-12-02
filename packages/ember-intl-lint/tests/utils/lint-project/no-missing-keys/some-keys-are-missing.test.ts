@@ -2,19 +2,31 @@ import { assert, test } from '@codemod-utils/tests';
 
 import type { Project } from '../../../../src/types/index.js';
 import { noMissingKeys } from '../../../../src/utils/lint-project/index.js';
+import { stubMapping } from '../../../helpers/index.js';
 
 test('utils | lint-project | no-missing-keys > some keys are missing', function () {
   const project: Project = {
     availableKeys: new Map([
-      ['key01', ['translations/de-de.json']],
-      ['key02', ['translations/en-us.json']],
-      ['key06', ['node_modules/my-v1-addon/translations/de-de.json']],
+      ['key01', stubMapping('Hello!', ['translations/de-de.json'])],
+      [
+        'key02',
+        stubMapping('{timestamp, date, long}', ['translations/en-us.json']),
+      ],
+      [
+        'key06',
+        stubMapping('It is now {timestamp, time, short}.', [
+          'node_modules/my-v1-addon/translations/de-de.json',
+        ]),
+      ],
       [
         'key07',
-        [
-          'node_modules/my-v2-addon/translations/de-de.json',
-          'node_modules/my-v2-addon/translations/en-us.json',
-        ],
+        stubMapping(
+          '{isTaxed, select, yes {An additional {tax, number, percent} tax will be collected.} other {No taxes apply.}}',
+          [
+            'node_modules/my-v2-addon/translations/de-de.json',
+            'node_modules/my-v2-addon/translations/en-us.json',
+          ],
+        ),
       ],
     ]),
     translationFiles: new Map([

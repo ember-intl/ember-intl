@@ -5,7 +5,7 @@ import { inYaml } from '../../../../../src/utils/analyze-project/find-available-
 test('utils | analyze-project | find-available-keys | in-yaml > file is empty', function () {
   const file = '';
 
-  const keys = inYaml(file);
+  const translationObject = inYaml(file);
 
-  assert.deepStrictEqual(keys, []);
+  assert.deepStrictEqual(translationObject, {});
 });

@@ -26,7 +26,15 @@ type LintResults = Record<LintRule, Failed>;
 type LintRule = 'no-missing-keys' | 'no-unused-keys';
 
 type Project = {
-  availableKeys: Map<TranslationKey, TranslationFilePath[]>;
+  availableKeys: Map<
+    TranslationKey,
+    Map<
+      TranslationFilePath,
+      {
+        message: TranslationMessage;
+      }
+    >
+  >;
   translationFiles: Map<
     TranslationFilePath,
     {
@@ -49,6 +57,8 @@ type TranslationKey = string;
 
 type TranslationMessage = string;
 
+type TranslationObject = Record<TranslationKey, TranslationMessage>;
+
 export type {
   CodemodOptions,
   Config,
@@ -62,4 +72,5 @@ export type {
   TranslationJson,
   TranslationKey,
   TranslationMessage,
+  TranslationObject,
 };

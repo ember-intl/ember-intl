@@ -11,7 +11,7 @@ export function noUnusedKeys(
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const failed: Failed = [];
 
-  project.availableKeys.forEach((filePaths, key) => {
+  project.availableKeys.forEach((mapping, key) => {
     if (ignores.has(key)) {
       return;
     }
@@ -20,7 +20,7 @@ export function noUnusedKeys(
       return;
     }
 
-    const details = `  - Found in ${filePaths.join(', ')}`;
+    const details = `  - Found in ${Array.from(mapping.keys()).join(', ')}`;
 
     failed.push([key, details].join('\n'));
   });

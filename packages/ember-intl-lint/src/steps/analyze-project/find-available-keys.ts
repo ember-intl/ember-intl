@@ -17,15 +17,18 @@ export function findAvailableKeys(
   translationFiles.forEach((data, filePath) => {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
 
-    const keys = data.format === 'json' ? inJson(file) : inYaml(file);
+    const translationObject =
+      data.format === 'json' ? inJson(file) : inYaml(file);
 
-    keys.forEach((key) => {
-      if (availableKeys.has(key)) {
-        availableKeys.get(key)!.push(filePath);
-      } else {
-        availableKeys.set(key, [filePath]);
+    for (const [key, message] of Object.entries(translationObject)) {
+      if (!availableKeys.has(key)) {
+        availableKeys.set(key, new Map());
       }
-    });
+
+      availableKeys.get(key)!.set(filePath, {
+        message,
+      });
+    }
   });
 
   return new Map(Array.from(availableKeys).sort());
