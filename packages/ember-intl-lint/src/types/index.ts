@@ -14,6 +14,16 @@ type Config = {
 
 type Failed = string[];
 
+type IcuArguments = Record<IcuArgumentType, Set<string>>;
+
+type IcuArgumentType =
+  | 'argument'
+  | 'date'
+  | 'number'
+  | 'plural'
+  | 'select'
+  | 'time';
+
 type LintMethods = Record<
   LintRule,
   (project: Project, lintOptions?: LintOptions) => Failed
@@ -63,6 +73,8 @@ export type {
   CodemodOptions,
   Config,
   Failed,
+  IcuArguments,
+  IcuArgumentType,
   LintMethods,
   LintOptions,
   LintResults,
