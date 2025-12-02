@@ -43,6 +43,7 @@
     "@codemod-utils/ast-template": "^2.0.4",
     "@codemod-utils/ast-template-tag": "^1.0.1",
     "@codemod-utils/files": "^3.0.6",
+    "@formatjs/icu-messageformat-parser": "^2.11.4",
     "js-yaml": "^4.1.1",
     "yargs": "^18.0.0"
   },
