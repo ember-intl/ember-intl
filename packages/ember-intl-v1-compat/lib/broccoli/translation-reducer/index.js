@@ -4,7 +4,6 @@ const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
 const stringify = require('json-stable-stringify');
 
-const lintTranslations = require('./lint-translations');
 const forEachMessage = require('./utils/for-each-message');
 const getTranslations = require('./utils/get-translations');
 const isKnownLanguage = require('./utils/is-known-language');
@@ -49,8 +48,6 @@ class TranslationReducer extends CachingWriter {
     const translationFilePaths = this.listFiles();
     const translations = this.mergeTranslations(translationFilePaths);
 
-    this.checkTranslations(translations);
-
     const filePath = join(this.outputPath, this.options.outputPath);
     const fallbackTranslationObject = translations[this.options.fallbackLocale];
 
@@ -92,43 +89,6 @@ class TranslationReducer extends CachingWriter {
         },
       );
     }
-  }
-
-  checkTranslations(translations) {
-    const { icuMismatch, missingTranslations } = lintTranslations(translations);
-    const messages = [];
-
-    if (this.options.errorOnNamedArgumentMismatch && icuMismatch.length) {
-      const messageItems = icuMismatch.map(([key, notInLocales]) => {
-        const list = notInLocales
-          .map(([locale, missingICUArgs]) => {
-            const sublist = missingICUArgs.map((arg) => `"${arg}"`).join(', ');
-
-            return `"${locale}": ${sublist}`;
-          })
-          .join(', ');
-
-        return `- "${key}" ICU argument mismatch: ${list}`;
-      });
-
-      messages.push(['ICU arguments mismatch:', ...messageItems].join('\n'));
-    }
-
-    if (this.options.errorOnMissingTranslations && missingTranslations.length) {
-      const messageItems = missingTranslations.map(([key, notInLocales]) => {
-        const list = notInLocales.map((locale) => `"${locale}"`).join(', ');
-
-        return `- "${key}" was not found in ${list}`;
-      });
-
-      messages.push(['Missing translations:', ...messageItems].join('\n'));
-    }
-
-    if (messages.length === 0) {
-      return;
-    }
-
-    throw new Error(messages.join('\n\n'));
   }
 
   mergeTranslations(filePaths) {
