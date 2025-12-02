@@ -2076,9 +2076,6 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
-      '@formatjs/icu-messageformat-parser':
-        specifier: ^2.11.4
-        version: 2.11.4
       broccoli-caching-writer:
         specifier: ^3.0.3
         version: 3.0.3
@@ -2094,9 +2091,6 @@ importers:
       calculate-cache-key-for-tree:
         specifier: ^2.0.0
         version: 2.0.0
-      cldr-core:
-        specifier: ^48.0.0
-        version: 48.0.0
       ember-auto-import:
         specifier: ^2.11.2
         version: 2.11.2(@glint/template@1.7.2)(webpack@5.102.1)
@@ -2106,9 +2100,6 @@ importers:
       extend:
         specifier: ^3.0.2
         version: 3.0.2
-      intl-messageformat:
-        specifier: ^10.7.18
-        version: 10.7.18
       js-yaml:
         specifier: ^4.1.1
         version: 4.1.1
@@ -5652,9 +5643,6 @@ packages:
   class-utils@0.3.6:
     resolution: {integrity: sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==}
     engines: {node: '>=0.10.0'}
-
-  cldr-core@48.0.0:
-    resolution: {integrity: sha512-iQnK68eOjEsHEOwCvi2CI7xbjcVlCdaSNTQrkwCgEMnyZUbHCgF0GPw2CXi0D2IGz+9Pj80cmcWzRFcF6zdrYQ==}
 
   clean-base-url@1.0.0:
     resolution: {integrity: sha512-9q6ZvUAhbKOSRFY7A/irCQ/rF0KIpa3uXpx6izm8+fp7b2H4hLeUJ+F1YYk9+gDQ/X8Q0MEyYs+tG3cht//HTg==}
@@ -16079,8 +16067,6 @@ snapshots:
       define-property: 0.2.5
       isobject: 3.0.1
       static-extend: 0.1.2
-
-  cldr-core@48.0.0: {}
 
   clean-base-url@1.0.0: {}
 
