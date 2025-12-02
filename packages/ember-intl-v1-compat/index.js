@@ -7,11 +7,9 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
-const findEngine = require('./lib/utils/find-engine');
+const findEngine = require('./lib/utils/ember-engine');
 
 const defaultConfig = {
-  errorOnMissingTranslations: false,
-  errorOnNamedArgumentMismatch: false,
   fallbackLocale: undefined,
   inputPath: 'translations',
   publicOnly: false,
@@ -81,12 +79,8 @@ module.exports = {
   },
 
   getTranslationTree({ mergeTranslationFiles, outputPath }) {
-    const {
-      errorOnMissingTranslations,
-      errorOnNamedArgumentMismatch,
-      fallbackLocale,
-      wrapTranslationsWithNamespace,
-    } = this.configOptions;
+    const { fallbackLocale, wrapTranslationsWithNamespace } =
+      this.configOptions;
 
     const [translationTree, addonsWithTranslations] = buildTranslationTree(
       this.project,
@@ -96,8 +90,6 @@ module.exports = {
 
     return new TranslationReducer([translationTree], {
       addonsWithTranslations,
-      errorOnMissingTranslations,
-      errorOnNamedArgumentMismatch,
       fallbackLocale,
       log: (message) => {
         return this.ui.writeLine(`[ember-intl] ${message}`);
