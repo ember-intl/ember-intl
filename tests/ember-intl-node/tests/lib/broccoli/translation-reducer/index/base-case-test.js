@@ -63,7 +63,7 @@ describe('lib | broccoli | translation-reducer | index | base case', function ()
     }
   });
 
-  it('warns an unknown locale, if verbose is true', async function () {
+  it('ignores unknown locales', async function () {
     const input = await createTempDir();
 
     try {
@@ -73,7 +73,6 @@ describe('lib | broccoli | translation-reducer | index | base case', function ()
         log: (message) => {
           logs.push(message);
         },
-        verbose: true,
       });
 
       input.write({
@@ -86,9 +85,7 @@ describe('lib | broccoli | translation-reducer | index | base case', function ()
       try {
         await output.build();
 
-        expect(logs).to.deep.equal([
-          'unknown-language: Unable to detect language data for "unknown". Language code is either unknown or invalid.',
-        ]);
+        expect(logs).to.deep.equal([]);
       } finally {
         await output.dispose();
       }

@@ -4,11 +4,8 @@ const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
 const stringify = require('json-stable-stringify');
 
-const forEachMessage = require('./utils/for-each-message');
 const getTranslations = require('./utils/get-translations');
-const isKnownLanguage = require('./utils/is-known-language');
 const namespaceKeys = require('./utils/namespace-keys');
-const validateMessage = require('../../message-validator/validate-message');
 
 function isApp(filePath) {
   return !filePath.includes('/__ember-intl-addon__/');
@@ -54,8 +51,6 @@ class TranslationReducer extends CachingWriter {
     mkdirSync(filePath, { recursive: true });
 
     for (const locale in translations) {
-      this.validateMessages(translations[locale], locale);
-
       if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
         translations[locale] = extend(
           true,
@@ -137,28 +132,6 @@ class TranslationReducer extends CachingWriter {
     }, {});
 
     return translations;
-  }
-
-  validateMessages(messages, locale) {
-    const language = locale.split('-')[0];
-
-    if (!isKnownLanguage(language)) {
-      const message = `${locale}: Unable to detect language data for "${language}". Language code is either unknown or invalid.`;
-
-      this.options.log(message);
-
-      return false;
-    }
-
-    forEachMessage(messages, (key, message) => {
-      try {
-        validateMessage(message, locale);
-      } catch (error) {
-        const message = `${locale}: "${key}" message cannot be parsed: ${error.message}`;
-
-        this.options.log(message);
-      }
-    });
   }
 }
 
