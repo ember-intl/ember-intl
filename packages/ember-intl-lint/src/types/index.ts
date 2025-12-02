@@ -85,6 +85,7 @@ export type {
   LintRule,
   Options,
   Project,
+  TranslationFilePath,
   TranslationJson,
   TranslationKey,
   TranslationMessage,

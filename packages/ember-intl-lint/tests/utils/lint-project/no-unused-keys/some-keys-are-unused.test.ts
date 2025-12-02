@@ -93,6 +93,5 @@ test('utils | lint-project | no-unused-keys > some keys are unused', function ()
   assert.deepStrictEqual(keys, [
     'key01\n  - Found in translations/de-de.json',
     'key02\n  - Found in translations/en-us.json',
-    'key07\n  - Found in node_modules/my-v2-addon/translations/de-de.json, node_modules/my-v2-addon/translations/en-us.json',
   ]);
 });

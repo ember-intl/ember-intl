@@ -5,6 +5,7 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
+import { getOwnTranslations } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -16,18 +17,6 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   }
 
   return true;
-}
-
-function getOwnTranslations(project: Project): Set<string> {
-  const filePaths = new Set<string>();
-
-  project.translationFiles.forEach((data, filePath) => {
-    if (data.isInternal) {
-      filePaths.add(filePath);
-    }
-  });
-
-  return filePaths;
 }
 
 type LintOptions = {
