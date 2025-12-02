@@ -41,6 +41,7 @@ type Project = {
     Map<
       TranslationFilePath,
       {
+        icuArguments: IcuArguments;
         message: TranslationMessage;
       }
     >
