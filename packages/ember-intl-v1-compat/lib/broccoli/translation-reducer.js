@@ -4,8 +4,8 @@ const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
 const stringify = require('json-stable-stringify');
 
-const getTranslations = require('./utils/get-translations');
-const namespaceKeys = require('./utils/namespace-keys');
+const getTranslations = require('../utils/translation-reducer/get-translations');
+const namespaceKeys = require('../utils/translation-reducer/namespace-keys');
 
 function isApp(filePath) {
   return !filePath.includes('/__ember-intl-addon__/');

@@ -1,7 +1,7 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/index.js';
+import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer.js';
 import { createTempDir } from 'broccoli-test-helper';
 import { expect } from 'chai';
 
@@ -10,10 +10,10 @@ const __dirname = dirname(__filename);
 
 const fixtureDir = join(
   __dirname,
-  '../../../../fixtures/broccoli/translation-reducer/index',
+  '../../../fixtures/broccoli/translation-reducer/index',
 );
 
-describe('lib | broccoli | translation-reducer | index | mergeTranslations', function () {
+describe('lib | broccoli | translation-reducer | mergeTranslations', function () {
   it('handles nested translations (wrapTranslationsWithNamespace is false in app, translations from app)', async function () {
     const input = await createTempDir();
 

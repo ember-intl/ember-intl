@@ -1,8 +1,8 @@
-import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/index.js';
+import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer.js';
 import { createBuilder, createTempDir } from 'broccoli-test-helper';
 import { expect } from 'chai';
 
-describe('lib | broccoli | translation-reducer | index | base case', function () {
+describe('lib | broccoli | translation-reducer | base case', function () {
   it('works', async function () {
     const input = await createTempDir();
 

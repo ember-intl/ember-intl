@@ -7,7 +7,7 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
-const findEngine = require('./lib/utils/find-engine');
+const findEngine = require('./lib/utils/ember-engine');
 
 const defaultConfig = {
   fallbackLocale: undefined,

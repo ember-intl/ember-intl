@@ -1,10 +1,10 @@
 import { join } from 'node:path';
 
-import getTranslations from '@ember-intl/v1-compat/lib/broccoli/translation-reducer/utils/get-translations.js';
+import getTranslations from '@ember-intl/v1-compat/lib/utils/translation-reducer/get-translations.js';
 import { createTempDir } from 'broccoli-test-helper';
 import { expect } from 'chai';
 
-describe('lib | broccoli | translation-reducer | utils | get-translations', function () {
+describe('lib | utils | translation-reducer | get-translations | base case', function () {
   it('file extension is json', async function () {
     const input = await createTempDir();
 
