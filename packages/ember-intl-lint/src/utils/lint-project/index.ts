@@ -1,2 +1,2 @@
-export * from './find-missing-keys.js';
-export * from './find-unused-keys.js';
+export * from './no-missing-keys.js';
+export * from './no-unused-keys.js';

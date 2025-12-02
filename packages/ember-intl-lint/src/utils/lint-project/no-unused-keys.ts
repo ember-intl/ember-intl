@@ -4,19 +4,25 @@ type LintOptions = {
   ignores: string[];
 };
 
-export function findUnusedKeys(
-  project: Pick<Project, 'availableKeys' | 'usedKeys'>,
+export function noUnusedKeys(
+  project: Project,
   lintOptions?: Partial<LintOptions>,
 ): string[] {
-  const failed: string[] = [];
   const ignores = new Set<string>(lintOptions?.ignores ?? []);
+  const failed: string[] = [];
 
   project.availableKeys.forEach((filePaths, key) => {
-    if (project.usedKeys.has(key) || ignores.has(key)) {
+    if (ignores.has(key)) {
       return;
     }
 
-    failed.push([key, `  - Found in ${filePaths.join(', ')}`].join('\n'));
+    if (project.usedKeys.has(key)) {
+      return;
+    }
+
+    const details = `  - Found in ${filePaths.join(', ')}`;
+
+    failed.push([key, details].join('\n'));
   });
 
   return failed;

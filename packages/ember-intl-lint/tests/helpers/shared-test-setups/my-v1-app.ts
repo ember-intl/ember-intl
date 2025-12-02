@@ -8,8 +8,8 @@ const options: Options = {
   config: {
     addonPaths: [],
     rules: {
-      'find-missing-keys': true,
-      'find-unused-keys': true,
+      'no-missing-keys': true,
+      'no-unused-keys': true,
     },
   },
   projectRoot: 'tmp/my-v1-app',

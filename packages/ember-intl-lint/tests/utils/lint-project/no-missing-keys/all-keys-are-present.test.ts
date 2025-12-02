@@ -1,8 +1,8 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { findMissingKeys } from '../../../../src/utils/lint-project/index.js';
+import { noMissingKeys } from '../../../../src/utils/lint-project/index.js';
 
-test('utils | lint-project | find-missing-keys > all keys are present', function () {
+test('utils | lint-project | no-missing-keys > all keys are present', function () {
   const project = {
     availableKeys: new Map([
       ['key01', ['translations/de-de.json']],
@@ -31,7 +31,7 @@ test('utils | lint-project | find-missing-keys > all keys are present', function
     ]),
   };
 
-  const keys = findMissingKeys(project);
+  const keys = noMissingKeys(project);
 
   assert.deepStrictEqual(keys, []);
 });

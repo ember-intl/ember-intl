@@ -23,7 +23,7 @@ type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, string[]>;
 
-type LintRule = 'find-missing-keys' | 'find-unused-keys';
+type LintRule = 'no-missing-keys' | 'no-unused-keys';
 
 type Project = {
   availableKeys: Map<TranslationKey, FilePath[]>;
