@@ -1,49 +1,23 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { findFiles, parseFilePath } from '@codemod-utils/files';
-
-import type { Options, Project, TranslationKey } from '../../types/index.js';
+import type { Options, Project } from '../../types/index.js';
 import {
   inJson,
   inYaml,
 } from '../../utils/analyze-project/find-available-keys/index.js';
 
-export function findAvailableKeys(options: Options): Project['availableKeys'] {
-  const { config, projectRoot } = options;
-
+export function findAvailableKeys(
+  translationFiles: Project['translationFiles'],
+  options: Options,
+): Project['availableKeys'] {
+  const { projectRoot } = options;
   const availableKeys: Project['availableKeys'] = new Map();
 
-  const filePaths = findFiles(
-    [
-      'translations/**/*.{json,yaml,yml}',
-      ...config.addonPaths.map((addonPath) => {
-        return join(addonPath, 'translations/**/*.{json,yaml,yml}');
-      }),
-    ],
-    {
-      projectRoot,
-    },
-  );
-
-  filePaths.forEach((filePath) => {
+  translationFiles.forEach((data, filePath) => {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
-    const { ext } = parseFilePath(filePath);
 
-    let keys: TranslationKey[] = [];
-
-    switch (ext) {
-      case '.json': {
-        keys = inJson(file);
-        break;
-      }
-
-      case '.yaml':
-      case '.yml': {
-        keys = inYaml(file);
-        break;
-      }
-    }
+    const keys = data.format === 'json' ? inJson(file) : inYaml(file);
 
     keys.forEach((key) => {
       if (availableKeys.has(key)) {

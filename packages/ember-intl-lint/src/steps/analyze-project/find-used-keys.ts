@@ -12,7 +12,6 @@ import {
 
 export function findUsedKeys(options: Options): Project['usedKeys'] {
   const { projectRoot } = options;
-
   const usedKeys: Project['usedKeys'] = new Map();
 
   const filePaths = findFiles('app/**/*.{gjs,gts,hbs,js,ts}', {

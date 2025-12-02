@@ -27,6 +27,13 @@ type LintRule = 'no-missing-keys' | 'no-unused-keys';
 
 type Project = {
   availableKeys: Map<TranslationKey, TranslationFilePath[]>;
+  translationFiles: Map<
+    TranslationFilePath,
+    {
+      format: 'json' | 'yaml';
+      isInternal: boolean;
+    }
+  >;
   usedKeys: Map<TranslationKey, SourceFilePath[]>;
 };
 
