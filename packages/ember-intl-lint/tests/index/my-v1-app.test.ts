@@ -10,6 +10,7 @@ test('index > my-app', async function () {
   let lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
+    'no-inconsistent-messages': [],
     'no-missing-keys': [],
     'no-unused-keys': [],
   });
@@ -20,6 +21,7 @@ test('index > my-app', async function () {
   lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
+    'no-inconsistent-messages': [],
     'no-missing-keys': [],
     'no-unused-keys': [],
   });

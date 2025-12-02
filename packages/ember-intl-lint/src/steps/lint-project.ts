@@ -4,10 +4,15 @@ import type {
   Options,
   Project,
 } from '../types/index.js';
-import { noMissingKeys, noUnusedKeys } from '../utils/lint-project/index.js';
+import {
+  noInconsistentMessages,
+  noMissingKeys,
+  noUnusedKeys,
+} from '../utils/lint-project/index.js';
 import { lintRules } from '../utils/lint-rules.js';
 
 const lintMethods: LintMethods = {
+  'no-inconsistent-messages': noInconsistentMessages,
   'no-missing-keys': noMissingKeys,
   'no-unused-keys': noUnusedKeys,
 };

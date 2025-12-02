@@ -16,6 +16,7 @@ test('utils | create-options | get-config > file is empty', async function () {
   assert.deepStrictEqual(config, {
     addonPaths: [],
     rules: {
+      'no-inconsistent-messages': true,
       'no-missing-keys': true,
       'no-unused-keys': true,
     },

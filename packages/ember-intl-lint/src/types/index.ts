@@ -33,7 +33,10 @@ type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, Failed>;
 
-type LintRule = 'no-missing-keys' | 'no-unused-keys';
+type LintRule =
+  | 'no-inconsistent-messages'
+  | 'no-missing-keys'
+  | 'no-unused-keys';
 
 type Project = {
   availableKeys: Map<
