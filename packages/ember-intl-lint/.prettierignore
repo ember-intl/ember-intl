@@ -8,8 +8,8 @@
 /tests/fixtures/
 !.*
 .*/
-CONTRIBUTING.md
 README.md
 pnpm-lock.yaml
 
 # specific to this package
+/docs/

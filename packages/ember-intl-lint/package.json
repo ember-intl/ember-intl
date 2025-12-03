@@ -2,14 +2,15 @@
   "name": "@ember-intl/lint",
   "version": "0.0.0",
   "private": true,
-  "description": "Linter for ember-intl",
+  "description": "Official linter for ember-intl",
   "keywords": [
     "codemod",
     "ember",
     "ember-codemod",
     "ember-intl",
     "i18n",
-    "internationalization"
+    "internationalization",
+    "linter"
   ],
   "homepage": "https://ember-intl.github.io/ember-intl/",
   "repository": {
