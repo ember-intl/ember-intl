@@ -1,3 +1,5 @@
+import type { LintRule } from '../utils/lint-rules.js';
+
 type CodemodOptions = {
   projectRoot: string;
 };
@@ -24,19 +26,11 @@ type IcuArgumentType =
   | 'select'
   | 'time';
 
-type LintMethods = Record<
-  LintRule,
-  (project: Project, lintOptions?: LintOptions) => Failed
->;
+type LintMethod = (project: Project, lintOptions?: LintOptions) => Failed;
 
 type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, Failed>;
-
-type LintRule =
-  | 'no-inconsistent-messages'
-  | 'no-missing-keys'
-  | 'no-unused-keys';
 
 type Project = {
   availableKeys: Map<
@@ -79,10 +73,9 @@ export type {
   Failed,
   IcuArguments,
   IcuArgumentType,
-  LintMethods,
+  LintMethod,
   LintOptions,
   LintResults,
-  LintRule,
   Options,
   Project,
   TranslationFilePath,

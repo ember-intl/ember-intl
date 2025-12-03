@@ -3,8 +3,8 @@ import { pathToFileURL } from 'node:url';
 
 import { findFiles } from '@codemod-utils/files';
 
-import type { Config, LintOptions, LintRule } from '../../types/index.js';
-import { lintRules } from '../lint-rules.js';
+import type { Config, LintOptions } from '../../types/index.js';
+import { type LintRule, lintRules } from '../lint-rules.js';
 
 function getDefaultConfig(): Config {
   const rules = {} as Config['rules'];
