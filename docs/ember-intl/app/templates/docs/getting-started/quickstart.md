@@ -71,11 +71,9 @@ hello:
 Note, you may also use `.yml` or `.json` for file extension.
 
 
-## 4. Configure project
+## 4. Set app locale
 
-### Set your app's locale
-
-Before your app runs, you need to tell `ember-intl` which locale to use. You can set up the locale in the `application` route's `beforeModel` hook.
+Before your app runs, you need to tell `ember-intl` which locale(s) to use. Call `setLocale()` in the `application` route's `beforeModel` hook.
 
 ```ts
 /* app/routes/application.ts */
@@ -92,9 +90,59 @@ export default class ApplicationRoute extends Route {
 ```
 
 
-### Set up glint
+## 5. Configure linters
 
-If your app uses [`glint`](https://typed-ember.gitbook.io/glint) and is in "loose mode" (has `*.hbs` files or `hbs` tags), extend `ember-intl`'s template registry.
+### @ember-intl/lint
+
+[`@ember-intl/lint`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-lint/README.md) is the official linter for `ember-intl`. It removes the need for [`ember-intl-analyzer`](https://github.com/mainmatter/ember-intl-analyzer), separates linting and building translations, and strives to be "zero config."
+
+1\. Install `@ember-intl/lint` as a development dependency.
+
+```sh
+pnpm add -D @ember-intl/lint
+```
+
+2\. In `package.json`, add the scripts `lint:intl` and `lint:intl:fix`. They will run as a part of `lint` and `lint:fix`.
+
+```diff
+/* package.json */
+{
+  "scripts": {
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
++     "lint:intl": "@ember-intl/lint",
++     "lint:intl:fix": "@ember-intl/lint --fix"
+  },
+  "devDependencies": {
+    "@ember-intl/lint": "...",
+    "concurrently": "...",
+  }
+}
+```
+
+
+### ember-template-lint
+
+[`ember-template-lint`](https://github.com/ember-template-lint/ember-template-lint) provides [`no-bare-strings`](https://github.com/ember-template-lint/ember-template-lint/blob/v7.9.3-ember-template-lint/docs/rule/no-bare-strings.md). This finds hard-coded texts in templates.
+
+```js
+/* .template-lintrc.cjs */
+'use strict';
+
+module.exports = {
+  extends: ['recommended'],
+  rules: {
+    'no-bare-strings': true,
+  },
+};
+```
+
+
+### glint
+
+At the end of September 2025, [`glint`](https://typed-ember.gitbook.io/glint) released a Volar-based v2. Put it simply, you have v1 if your app depends on `@glint/core`, and v2 if on `@glint/ember-tsc`.
+
+- If you use v1 and "loose mode" templates (you have `*.hbs` files or `hbs` tags), then extend `ember-intl`'s template registry.
 
 ```ts
 /* types/global.d.ts */
@@ -109,52 +157,10 @@ declare module '@glint/environment-ember-loose/registry' {
 }
 ```
 
-
-### Lint templates
-
-If your app uses [`ember-template-lint`](https://github.com/ember-template-lint/ember-template-lint), you may want to enable [`no-bare-strings`](https://github.com/ember-template-lint/ember-template-lint/blob/v7.9.3-ember-template-lint/docs/rule/no-bare-strings.md). This will help you check if hard-coded texts are present in a template.
-
-```js
-/* .template-lintrc.js */
-'use strict';
-
-module.exports = {
-  extends: ['recommended'],
-  rules: {
-    'no-bare-strings': true,
-  },
-};
-```
+- If you use v1 and "strict mode" templates (you don't have `*.hbs` files or `hbs` tags, or don't wish to type-check any remaining ones), then you are good to go.
+- If you use v2, then you are good to go.
 
 
-### Lint translations
+### Miscellaneous
 
-With [`eslint-plugin-yml`](https://ota-meshi.github.io/eslint-plugin-yml/), you can enable a few rules to keep YAML files consistent.
-
-```js
-import eslintPluginYml from 'eslint-plugin-yml';
-
-export default [
-  ...eslintPluginYml.configs['flat/standard'],
-  {
-    rules: {
-      'yml/key-name-casing': [
-        'error',
-        {
-          camelCase: false,
-          'kebab-case': true,
-          PascalCase: false,
-          SCREAMING_SNAKE_CASE: false,
-          snake_case: false,
-          ignores: ['^[a-z0-9\\.-]+$'],
-        },
-      ],
-      'yml/no-empty-document': 'off',
-      'yml/no-multiple-empty-lines': 'error',
-      'yml/sort-keys': 'error',
-    },
-  },
-];
-```
-
-You can also use [`prettier`](https://prettier.io/) to format the translation files and [`ember-intl-analyzer`](https://github.com/mainmatter/ember-intl-analyzer) to find unused translations.
+[`prettier`](https://prettier.io/) can format your translation files. To reduce noise in pull requests, consider sorting the translation keys and standardizing their names.

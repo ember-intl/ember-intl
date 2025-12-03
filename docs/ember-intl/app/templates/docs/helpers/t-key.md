@@ -1,6 +1,6 @@
 # &#123;&#123;t-key&#125;&#125;
 
-`{{t-key}}` helps programs (e.g. linters, codemods) identify strings that are translation keys. It is an identity function, i.e. `{{t-key}}` returns the input string and its type unchanged.
+In JavaScript files (`*.{gjs,gts,js,ts}`), you can use `tKey()` to mark strings that are actually translation keys. This will help programs (e.g. linters like [`@ember-intl/lint`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-lint/README.md), codemods) check how you use translations.
 
 <DocsDemo as |demo|>
   <demo.snippet
@@ -31,10 +31,12 @@
   />
 </DocsDemo>
 
+Note, `tKey()` is an identity function. The input string and its type (`string` or a string literal) are unchanged.
+
 
 ## What not to do
 
-Don't pass a dynamic expression to `{{t-key}}`. It's difficult and costly for programs to accurately find all possible values.
+Don't pass a dynamic expression to `tKey()` and `{{t-key}}`. It's difficult and costly for programs to accurately find all possible values.
 
 ```hbs
 {{#let
@@ -63,4 +65,4 @@ Don't pass a dynamic expression to `{{t-key}}`. It's difficult and costly for pr
 {{/let}}
 ```
 
-Refactor code so that you always pass strings (string literals) to `{{t-key}}`.
+Refactor code so that you always pass strings or string literals.

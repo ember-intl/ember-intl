@@ -88,32 +88,37 @@ Note, the consuming app can override the addon's translations. If the app uses t
 Follow [step 3 for apps](./quickstart#3-add-a-language).
 
 
-## 4. Configure project
+## 4. Set test app's locale
 
-Follow [step 4 for apps](./quickstart#4-configure-project). For brevity, only the differences are noted below.
-
-
-### Set your test app's locale
-
-If your test app uses the `app` folder to provide documentation, you will want to set the locale.
+Call `setLocale()` if your test app needs translations for documentation.
 
 - v1 addons: `tests/dummy/app/routes/application.ts`
 - v2 addons: `app/routes/application.ts`
 
 
-### Set up glint
+## 5. Configure linters
 
-If your addon uses [`glint`](https://typed-ember.gitbook.io/glint) and is in "loose mode" (has `*.hbs` files or `hbs` tags), extend `ember-intl`'s template registry.
+Follow [step 5 for apps](./quickstart#5-configure-linters). For brevity, only the differences are noted below.
+
+
+### @ember-intl/lint
+
+There are no differences.
+
+
+### ember-template-lint
+
+There are no differences.
+
+
+### glint
+
+If you use `glint` v1 and "loose mode" templates, then extend `ember-intl`'s template registry.
 
 - v1 addons: `types/global.d.ts`
 - v2 addons: `unpublished-development-types/index.d.ts`
 
 
-### Lint templates
-
-There are no differences.
-
-
-### Lint translations
+### Miscellaneous
 
 There are no differences.

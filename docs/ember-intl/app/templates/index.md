@@ -15,13 +15,13 @@
         📚 Built on standards: <a class="external-link" href="https://formatjs.github.io/docs/core-concepts/icu-syntax/" target="_blank" rel="noopener noreferrer">ICU message syntax</a> and <a class="external-link" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank" rel="noopener noreferrer">Internationalization API</a>.
       </li>
       <li>
-        🌐 Support for 150+ languages.
-      </li>
-      <li>
         ⚙️ Locale-aware helpers and <code>intl</code> service, to help you display translations, numbers, dates, etc.
       </li>
       <li>
         ✅ Test helpers to check locale-dependent templates.
+      </li>
+      <li>
+        ✨ Linter to enforce best practices.
       </li>
     </ul>
   </div>
