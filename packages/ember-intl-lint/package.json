@@ -19,7 +19,9 @@
   "license": "MIT",
   "type": "module",
   "main": "dist/src/index.js",
-  "bin": "dist/bin/ember-intl-lint.js",
+  "bin": {
+    "ember-intl-lint": "dist/bin/ember-intl-lint.js"
+  },
   "directories": {
     "test": "tests"
   },
