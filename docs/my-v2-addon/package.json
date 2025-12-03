@@ -64,7 +64,7 @@
     "@babel/runtime": "^7.28.4",
     "@ember-intl/lint": "workspace:*",
     "@ember/test-helpers": "^5.4.1",
-    "@embroider/addon-dev": "^8.1.2",
+    "@embroider/addon-dev": "^8.1.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/ember-tsc": "^1.0.8",
     "@glint/template": "^1.7.3",

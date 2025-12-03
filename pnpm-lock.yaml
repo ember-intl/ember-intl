@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@embroider/addon-dev': 8.1.0
   ansi-html: ^0.0.9
   form-data: ^4.0.5
 
@@ -1574,8 +1575,8 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)
       '@embroider/addon-dev':
-        specifier: ^8.1.2
-        version: 8.1.2(@glint/template@1.7.3)(rollup@4.53.3)
+        specifier: 8.1.0
+        version: 8.1.0(@glint/template@1.7.3)(rollup@4.53.3)
       '@glimmer/tracking':
         specifier: ^1.1.2
         version: 1.1.2
@@ -1986,8 +1987,8 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)
       '@embroider/addon-dev':
-        specifier: ^8.1.2
-        version: 8.1.2(@glint/template@1.7.3)(rollup@4.53.3)
+        specifier: 8.1.0
+        version: 8.1.0(@glint/template@1.7.3)(rollup@4.53.3)
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -3265,8 +3266,8 @@ packages:
   '@ember/test-waiters@4.1.1':
     resolution: {integrity: sha512-HbK70JYCDJcGI0CrwcbjeL2QHAn0HLwa3oGep7mr6l/yO95U7JYA8VN+/9VTsWJTmKueLtWayUqEmGS3a3mVOg==}
 
-  '@embroider/addon-dev@8.1.2':
-    resolution: {integrity: sha512-4F0/gCZ1YxN8YKMuCuNuFcGBjRwYJNnl52hK2p82Pztoi9saglPDpZBkjOoaEg2yWoqaVJRAGg3GBKQjDCZltw==}
+  '@embroider/addon-dev@8.1.0':
+    resolution: {integrity: sha512-bOsEqvpAH7pLphjDUMRQTjy6TTrvocvownIlUUFrIy6JCdfIpiirgrz55MJRxy6IIUtKR4jGBh2LxEZrRbL6PQ==}
     engines: {node: 12.* || 14.* || >= 16}
     hasBin: true
     peerDependencies:
@@ -12404,7 +12405,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@embroider/addon-dev@8.1.2(@glint/template@1.7.3)(rollup@4.53.3)':
+  '@embroider/addon-dev@8.1.0(@glint/template@1.7.3)(rollup@4.53.3)':
     dependencies:
       '@embroider/core': 4.4.0(@glint/template@1.7.3)
       '@rollup/pluginutils': 5.3.0(rollup@4.53.3)
