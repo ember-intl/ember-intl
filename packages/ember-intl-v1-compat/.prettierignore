@@ -3,11 +3,9 @@
 /dist/
 
 # misc
-/coverage/
 !.*
 .*/
 *.html
-CONTRIBUTING.md
 README.md
 
 # specific to this package
