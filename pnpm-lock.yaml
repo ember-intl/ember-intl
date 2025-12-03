@@ -344,6 +344,9 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
     devDependencies:
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -461,6 +464,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -614,6 +620,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -767,6 +776,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -920,6 +932,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -1073,6 +1088,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -1226,6 +1244,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -1392,6 +1413,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ember-intl
     devDependencies:
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -1543,6 +1567,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.28.4
         version: 7.28.4
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember/test-helpers':
         specifier: ^5.4.0
         version: 5.4.0(@babel/core@7.28.5)(@glint/template@1.7.2)
@@ -1615,6 +1642,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.5)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -1777,6 +1807,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.5)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
@@ -2024,6 +2057,9 @@ importers:
       '@codemod-utils/files':
         specifier: ^3.0.6
         version: 3.0.6
+      '@codemod-utils/package-json':
+        specifier: ^3.2.3
+        version: 3.2.3
       '@formatjs/icu-messageformat-parser':
         specifier: ^2.11.4
         version: 2.11.4
@@ -3053,8 +3089,8 @@ packages:
     resolution: {integrity: sha512-uC5dcIpXYSGdt/2J2NLaXb9nl6IfBNDYsDNRyAUjiSiFceywUoA7tc/FCi1dURxXSCeJvZHCqOB7nFzbfFHCzQ==}
     engines: {node: 20.* || >= 22}
 
-  '@codemod-utils/package-json@3.2.0':
-    resolution: {integrity: sha512-VfZOPRMj3XDNATMTOGmukfEb33Put7rZyoiohEK9xkn3/Xb10I8Wa4GqH69e8rqstSI3IJnT3Fsj+99Z2ne83g==}
+  '@codemod-utils/package-json@3.2.3':
+    resolution: {integrity: sha512-XiYPi1BCKBCy9Gg/zLOH9BDoDLaO9v+Vz8WoDZcDpVvj51NSAP9XR1qFGREdhUXx03ijwK/IMJ9+Aj76A40UfA==}
     engines: {node: 20.* || >= 22}
 
   '@codemod-utils/tests@2.0.6':
@@ -10544,8 +10580,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  type-fest@5.0.1:
-    resolution: {integrity: sha512-9MpwAI52m8H6ssA542UxSLnSiSD2dsC3/L85g6hVubLSXd82wdI80eZwTWhdOfN67NlA+D+oipAs1MlcTcu3KA==}
+  type-fest@5.3.0:
+    resolution: {integrity: sha512-d9CwU93nN0IA1QL+GSNDdwLAu1Ew5ZjTwupvedwg3WdfoH6pIDvYQ2hV0Uc2nKBLPq7NB5apCx57MLS5qlmO5g==}
     engines: {node: '>=20'}
 
   type-is@1.6.18:
@@ -12046,9 +12082,9 @@ snapshots:
     dependencies:
       glob: 12.0.0
 
-  '@codemod-utils/package-json@3.2.0':
+  '@codemod-utils/package-json@3.2.3':
     dependencies:
-      type-fest: 5.0.1
+      type-fest: 5.3.0
 
   '@codemod-utils/tests@2.0.6(@sondr3/minitest@0.1.2)':
     dependencies:
@@ -22245,7 +22281,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  type-fest@5.0.1:
+  type-fest@5.3.0:
     dependencies:
       tagged-tag: 1.0.0
 
@@ -22409,7 +22445,7 @@ snapshots:
   update-workspace-root-version@2.0.5:
     dependencies:
       '@codemod-utils/files': 3.0.6
-      '@codemod-utils/package-json': 3.2.0
+      '@codemod-utils/package-json': 3.2.3
       yargs: 18.0.0
 
   uri-js@4.4.1:

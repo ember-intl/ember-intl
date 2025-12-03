@@ -10,6 +10,7 @@ export function noUnusedKeys(
   lintOptions?: Partial<LintOptions>,
 ): Failed {
   const ownTranslations = getOwnTranslations(project);
+
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const failed: Failed = [];
 
@@ -18,15 +19,15 @@ export function noUnusedKeys(
       return;
     }
 
-    const ownMapping: typeof mapping = new Map();
+    const mappingSubset: typeof mapping = new Map();
 
-    mapping.forEach((data, filePath) => {
-      if (ownTranslations.has(filePath)) {
-        ownMapping.set(filePath, data);
+    mapping.forEach((data, locale) => {
+      if (ownTranslations.has(data.filePath)) {
+        mappingSubset.set(locale, data);
       }
     });
 
-    if (ownMapping.size === 0) {
+    if (mappingSubset.size === 0) {
       return;
     }
 
@@ -34,7 +35,10 @@ export function noUnusedKeys(
       return;
     }
 
-    const details = `  - Found in ${Array.from(mapping.keys()).join(', ')}`;
+    const filePaths = Array.from(mapping.values()).map(({ filePath }) => {
+      return filePath;
+    });
+    const details = `  - Found in ${filePaths.join(', ')}`;
 
     failed.push([key, details].join('\n'));
   });

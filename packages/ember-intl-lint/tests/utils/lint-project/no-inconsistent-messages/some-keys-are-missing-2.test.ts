@@ -11,15 +11,17 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         'key01',
         new Map([
           [
-            'node_modules/my-v1-addon/translations/de-de.json',
+            'de-de',
             {
+              filePath: 'node_modules/my-v1-addon/translations/de-de.json',
               icuArguments: findIcuArguments('Hallo!'),
               message: 'Hallo!',
             },
           ],
           [
-            'node_modules/my-v1-addon/translations/en-us.json',
+            'en-us',
             {
+              filePath: 'node_modules/my-v1-addon/translations/en-us.json',
               icuArguments: findIcuArguments('Hello!'),
               message: 'Hello!',
             },
@@ -30,8 +32,9 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         'key02',
         new Map([
           [
-            'node_modules/my-v2-addon/translations/en-us.json',
+            'en-us',
             {
+              filePath: 'node_modules/my-v2-addon/translations/en-us.json',
               icuArguments: findIcuArguments('Hello, {name}!'),
               message: 'Hello, {name}!',
             },
@@ -45,6 +48,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: true,
+          locale: 'de-de',
+          rootDir: 'translations',
         },
       ],
       [
@@ -52,6 +57,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: true,
+          locale: 'en-us',
+          rootDir: 'translations',
         },
       ],
       [
@@ -59,6 +66,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: true,
+          locale: 'es-es',
+          rootDir: 'translations',
         },
       ],
       [
@@ -66,6 +75,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'de-de',
+          rootDir: 'node_modules/my-v1-addon/translations',
         },
       ],
       [
@@ -73,6 +84,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'en-us',
+          rootDir: 'node_modules/my-v1-addon/translations',
         },
       ],
       [
@@ -80,6 +93,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'de-de',
+          rootDir: 'node_modules/my-v2-addon/translations',
         },
       ],
       [
@@ -87,6 +102,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'en-us',
+          rootDir: 'node_modules/my-v2-addon/translations',
         },
       ],
     ]),

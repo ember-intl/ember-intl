@@ -3,6 +3,7 @@ import { assert, test } from '@codemod-utils/tests';
 import type { Project } from '../../../../src/types/index.js';
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 
 test('utils | lint-project | no-inconsistent-messages > some ICU arguments do not match (1)', function () {
   const project: Project = {
@@ -11,15 +12,17 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
         'key01',
         new Map([
           [
-            'translations/de-de.json',
+            'de-de',
             {
+              filePath: 'translations/de-de.json',
               icuArguments: findIcuArguments('{name}'),
               message: '{name}',
             },
           ],
           [
-            'translations/en-us.json',
+            'en-us',
             {
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments('name'),
               message: 'name',
             },
@@ -30,8 +33,9 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
         'key02',
         new Map([
           [
-            'translations/de-de.json',
+            'de-de',
             {
+              filePath: 'translations/de-de.json',
               icuArguments: findIcuArguments(
                 'Es ist jetzt {timestamp, time, short}.',
               ),
@@ -39,8 +43,9 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
             },
           ],
           [
-            'translations/en-us.json',
+            'en-us',
             {
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments(
                 'It is now {timestamp, date, short}',
               ),
@@ -53,8 +58,9 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
         'key03',
         new Map([
           [
-            'translations/de-de.json',
+            'de-de',
             {
+              filePath: 'translations/de-de.json',
               icuArguments: findIcuArguments(
                 'Du hast {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}. {percentage}% davon sind neu.',
               ),
@@ -63,8 +69,9 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
             },
           ],
           [
-            'translations/en-us.json',
+            'en-us',
             {
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments(
                 'You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}. {proportion, number, ::percent} of them are new.',
               ),
@@ -78,8 +85,9 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
         'key04',
         new Map([
           [
-            'translations/de-de.json',
+            'de-de',
             {
+              filePath: 'translations/de-de.json',
               icuArguments: findIcuArguments(
                 '<a href="{url}" rel="noopener noreferrer" target="_blank">AGB</a>',
               ),
@@ -88,8 +96,9 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
             },
           ],
           [
-            'translations/en-us.json',
+            'en-us',
             {
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments(
                 '<a class="{class}" href="{url}" target="_blank">Terms and Conditions</a>',
               ),
@@ -100,50 +109,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
         ]),
       ],
     ]),
-    translationFiles: new Map([
-      [
-        'translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: true,
-        },
-      ],
-      [
-        'translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: true,
-        },
-      ],
-      [
-        'node_modules/my-v1-addon/translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v1-addon/translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v2-addon/translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v2-addon/translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-    ]),
+    translationFiles: stubTranslationFiles(),
     usedKeys: new Map(),
   };
 

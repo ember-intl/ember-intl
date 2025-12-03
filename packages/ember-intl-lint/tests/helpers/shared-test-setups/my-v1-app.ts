@@ -1,19 +1,26 @@
 import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
+  fix: false,
   projectRoot: 'tmp/my-v1-app',
 };
 
 const options: Options = {
   config: {
     addonPaths: [],
-    rules: {
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
+    lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': true,
       'no-unused-keys': true,
     },
   },
+  fix: false,
   projectRoot: 'tmp/my-v1-app',
+  src: 'app',
 };
 
 export { codemodOptions, options };

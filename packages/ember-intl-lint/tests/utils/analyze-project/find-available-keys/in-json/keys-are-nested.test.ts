@@ -103,7 +103,11 @@ test('utils | analyze-project | find-available-keys | in-json > keys are nested'
     },
   });
 
-  const translationObject = inJson(file);
+  const translationObject = inJson(file, {
+    filePath: 'translations/en-us.json',
+    namespaceKeys: false,
+    rootDir: 'translations',
+  });
 
   assert.deepStrictEqual(translationObject, {
     'components.products.product.card.learn-more.aria-label':

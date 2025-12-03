@@ -3,11 +3,13 @@ import { pathToFileURL } from 'node:url';
 
 import { findFiles } from '@codemod-utils/files';
 
-import type { Config, LintOptions, LintRule } from '../../types/index.js';
-import { lintRules } from '../lint-rules.js';
+import type { Config, LintOptions } from '../../types/index.js';
+import { type LintRule, lintRules } from '../lint-rules.js';
+
+type BuildOption = keyof Config['buildOptions'];
 
 function getDefaultConfig(): Config {
-  const rules = {} as Config['rules'];
+  const rules = {} as Config['lintRules'];
 
   lintRules.forEach((lintRule) => {
     rules[lintRule] = true;
@@ -15,14 +17,18 @@ function getDefaultConfig(): Config {
 
   return {
     addonPaths: [],
-    rules,
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
+    lintRules: rules,
   };
 }
 
 async function getUserConfig(
   projectRoot: string,
 ): Promise<Partial<Config> | undefined> {
-  const filePaths = findFiles('ember-intl-lint.config.{js,mjs}', {
+  const filePaths = findFiles('ember-intl.config.{js,mjs}', {
     projectRoot,
   });
 
@@ -55,16 +61,32 @@ function mergeConfigs(
     defaultConfig.addonPaths.push(...userConfig.addonPaths);
   }
 
-  if (userConfig.rules) {
-    for (const [lintRule, lintOptions] of Object.entries(userConfig.rules) as [
-      LintRule,
-      boolean | LintOptions,
-    ][]) {
-      if (!lintRules.includes(lintRule)) {
-        throw new Error(`unknown rule: ${lintRule}`);
+  if (userConfig.buildOptions) {
+    const buildOptions = Object.keys(
+      defaultConfig.buildOptions,
+    ) as BuildOption[];
+
+    for (const [buildOption, value] of Object.entries(
+      userConfig.buildOptions,
+    )) {
+      if (!buildOptions.includes(buildOption as BuildOption)) {
+        throw new Error(`unknown build option: ${buildOption}`);
       }
 
-      defaultConfig.rules[lintRule] = lintOptions;
+      // @ts-expect-error: Incorrect type
+      defaultConfig.buildOptions[buildOption] = value;
+    }
+  }
+
+  if (userConfig.lintRules) {
+    for (const [lintRule, lintOptions] of Object.entries(
+      userConfig.lintRules,
+    ) as [LintRule, boolean | LintOptions][]) {
+      if (!lintRules.includes(lintRule)) {
+        throw new Error(`unknown lint rule: ${lintRule}`);
+      }
+
+      defaultConfig.lintRules[lintRule] = lintOptions;
     }
   }
 

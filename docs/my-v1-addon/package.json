@@ -39,6 +39,8 @@
     "lint:format": "prettier . --cache --check",
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
@@ -54,6 +56,7 @@
     "ember-template-imports": "^4.3.0"
   },
   "devDependencies": {
+    "@ember-intl/lint": "workspace:*",
     "@ember-intl/v1-compat": "workspace:*",
     "@ember/optional-features": "^2.2.0",
     "@ember/test-helpers": "^5.4.0",

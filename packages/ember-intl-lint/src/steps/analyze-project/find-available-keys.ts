@@ -12,14 +12,19 @@ export function findAvailableKeys(
   translationFiles: Project['translationFiles'],
   options: Options,
 ): Project['availableKeys'] {
-  const { projectRoot } = options;
+  const { config, projectRoot } = options;
   const availableKeys: Project['availableKeys'] = new Map();
 
   translationFiles.forEach((data, filePath) => {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
 
-    const translationObject =
-      data.format === 'json' ? inJson(file) : inYaml(file);
+    const parser = data.format === 'json' ? inJson : inYaml;
+
+    const translationObject = parser(file, {
+      filePath,
+      namespaceKeys: config.buildOptions.wrapTranslationsWithNamespace,
+      rootDir: data.rootDir,
+    });
 
     for (const [key, message] of Object.entries(translationObject)) {
       const icuArguments = findIcuArguments(message);
@@ -28,10 +33,24 @@ export function findAvailableKeys(
         availableKeys.set(key, new Map());
       }
 
-      availableKeys.get(key)!.set(filePath, {
-        icuArguments,
-        message,
-      });
+      const mapping = availableKeys.get(key)!;
+
+      if (mapping.has(data.locale)) {
+        // App's translation takes precedence
+        if (data.isInternal) {
+          mapping.set(data.locale, {
+            filePath,
+            icuArguments,
+            message,
+          });
+        }
+      } else {
+        mapping.set(data.locale, {
+          filePath,
+          icuArguments,
+          message,
+        });
+      }
     }
   });
 

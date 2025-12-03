@@ -12,6 +12,11 @@ process.title = '@ember-intl/lint';
 
 // Set codemod options
 const argv = yargs(hideBin(process.argv))
+  .option('fix', {
+    default: false,
+    describe: 'Run autofix?',
+    type: 'boolean',
+  })
   .option('root', {
     describe: 'Where to run the codemod',
     type: 'string',
@@ -19,6 +24,7 @@ const argv = yargs(hideBin(process.argv))
   .parseSync();
 
 const codemodOptions: CodemodOptions = {
+  fix: argv['fix'],
   projectRoot: argv['root'] ?? process.cwd(),
 };
 

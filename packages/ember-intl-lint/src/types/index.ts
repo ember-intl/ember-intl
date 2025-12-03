@@ -1,15 +1,24 @@
+import type { LintRule } from '../utils/lint-rules.js';
+
 type CodemodOptions = {
+  fix: boolean;
   projectRoot: string;
 };
 
 type Options = {
   config: Config;
+  fix: boolean;
   projectRoot: string;
+  src: 'addon' | 'app' | 'src';
 };
 
 type Config = {
   addonPaths: string[];
-  rules: Record<LintRule, boolean | LintOptions>;
+  buildOptions: {
+    inputPath: string;
+    wrapTranslationsWithNamespace: boolean;
+  };
+  lintRules: Record<LintRule, boolean | LintOptions>;
 };
 
 type Failed = string[];
@@ -24,26 +33,21 @@ type IcuArgumentType =
   | 'select'
   | 'time';
 
-type LintMethods = Record<
-  LintRule,
-  (project: Project, lintOptions?: LintOptions) => Failed
->;
+type LintMethod = (project: Project, lintOptions?: LintOptions) => Failed;
 
 type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, Failed>;
 
-type LintRule =
-  | 'no-inconsistent-messages'
-  | 'no-missing-keys'
-  | 'no-unused-keys';
+type Locale = string;
 
 type Project = {
   availableKeys: Map<
     TranslationKey,
     Map<
-      TranslationFilePath,
+      Locale,
       {
+        filePath: TranslationFilePath;
         icuArguments: IcuArguments;
         message: TranslationMessage;
       }
@@ -54,6 +58,8 @@ type Project = {
     {
       format: 'json' | 'yaml';
       isInternal: boolean;
+      locale: Locale;
+      rootDir: string;
     }
   >;
   usedKeys: Map<TranslationKey, SourceFilePath[]>;
@@ -79,10 +85,9 @@ export type {
   Failed,
   IcuArguments,
   IcuArgumentType,
-  LintMethods,
+  LintMethod,
   LintOptions,
   LintResults,
-  LintRule,
   Options,
   Project,
   TranslationFilePath,

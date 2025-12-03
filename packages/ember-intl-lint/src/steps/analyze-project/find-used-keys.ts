@@ -11,10 +11,10 @@ import {
 } from '../../utils/analyze-project/find-used-keys/index.js';
 
 export function findUsedKeys(options: Options): Project['usedKeys'] {
-  const { projectRoot } = options;
+  const { projectRoot, src } = options;
   const usedKeys: Project['usedKeys'] = new Map();
 
-  const filePaths = findFiles('app/**/*.{gjs,gts,hbs,js,ts}', {
+  const filePaths = findFiles(`${src}/**/*.{gjs,gts,hbs,js,ts}`, {
     ignoreList: ['**/*.d.ts'],
     projectRoot,
   });

@@ -6,21 +6,21 @@ test('utils | create-options | get-config > config is shared', async function ()
   const inputProject = {
     apps: {
       'my-app': {
-        'ember-intl-lint.config.mjs': [
-          `export { default } from '../../configs/ember-intl-lint/index.mjs';`,
+        'ember-intl.config.mjs': [
+          `export { default } from '../../configs/ember-intl/index.mjs';`,
           ``,
         ].join('\n'),
       },
     },
     configs: {
-      'ember-intl-lint': {
+      'ember-intl': {
         'index.mjs': [
           `export default {`,
           `  addonPaths: [`,
           `    'node_modules/my-v1-addon',`,
           `    'node_modules/my-v2-addon',`,
           `  ],`,
-          `  rules: {`,
+          `  lintRules: {`,
           `    'no-missing-keys': {`,
           `      ignores: ['hello.message'],`,
           `    },`,
@@ -41,7 +41,11 @@ test('utils | create-options | get-config > config is shared', async function ()
 
   assert.deepStrictEqual(config, {
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
-    rules: {
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
+    lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': {
         ignores: ['hello.message'],

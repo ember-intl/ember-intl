@@ -1,39 +1,31 @@
 import type {
-  LintMethods,
+  LintMethod,
   LintResults,
   Options,
   Project,
 } from '../types/index.js';
-import {
-  noInconsistentMessages,
-  noMissingKeys,
-  noUnusedKeys,
-} from '../utils/lint-project/index.js';
-import { lintRules } from '../utils/lint-rules.js';
-
-const lintMethods: LintMethods = {
-  'no-inconsistent-messages': noInconsistentMessages,
-  'no-missing-keys': noMissingKeys,
-  'no-unused-keys': noUnusedKeys,
-};
+import { type LintRule, lintRuleMapping } from '../utils/lint-rules.js';
 
 export function lintProject(project: Project, options: Options): LintResults {
   const { config } = options;
+  const lintResults: Partial<LintResults> = {};
 
-  return lintRules.reduce((accumulator, lintRule) => {
-    const lintOptions = config.rules[lintRule];
+  for (const [lintRule, lintMethod] of Object.entries(lintRuleMapping) as [
+    LintRule,
+    LintMethod,
+  ][]) {
+    const lintOptions = config.lintRules[lintRule];
 
     if (lintOptions === false) {
-      return accumulator;
+      continue;
     }
 
-    const lintMethod = lintMethods[lintRule];
+    if (lintOptions === true) {
+      lintResults[lintRule] = lintMethod(project);
+    } else {
+      lintResults[lintRule] = lintMethod(project, lintOptions);
+    }
+  }
 
-    accumulator[lintRule] =
-      lintOptions === true
-        ? lintMethod(project)
-        : lintMethod(project, lintOptions);
-
-    return accumulator;
-  }, {} as LintResults);
+  return lintResults as LintResults;
 }

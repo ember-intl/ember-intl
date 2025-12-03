@@ -5,7 +5,11 @@ import { inYaml } from '../../../../../src/utils/analyze-project/find-available-
 test('utils | analyze-project | find-available-keys | in-yaml > file is empty', function () {
   const file = '';
 
-  const translationObject = inYaml(file);
+  const translationObject = inYaml(file, {
+    filePath: 'translations/en-us.yaml',
+    namespaceKeys: false,
+    rootDir: 'translations',
+  });
 
   assert.deepStrictEqual(translationObject, {});
 });

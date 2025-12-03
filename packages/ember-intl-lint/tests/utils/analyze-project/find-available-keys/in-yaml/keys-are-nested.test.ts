@@ -81,7 +81,11 @@ test('utils | analyze-project | find-available-keys | in-yaml > keys are nested'
     ``,
   ].join('\n');
 
-  const translationObject = inYaml(file);
+  const translationObject = inYaml(file, {
+    filePath: 'translations/en-us.yaml',
+    namespaceKeys: false,
+    rootDir: 'translations',
+  });
 
   assert.deepStrictEqual(translationObject, {
     'components.products.product.card.learn-more.aria-label':
