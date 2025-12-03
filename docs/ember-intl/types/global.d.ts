@@ -8,7 +8,8 @@ import type EmberCliAddonDocsRegistry from './ember-cli-addon-docs';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
-    extends EmberCliAddonDocsRegistry,
+    extends
+      EmberCliAddonDocsRegistry,
       EmberIntlRegistry,
       EmberPageTitleRegistry {
     // Add any registry entries from other addons here that your addon itself uses (in non-strict mode templates)

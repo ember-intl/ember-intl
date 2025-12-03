@@ -52,7 +52,6 @@ function setupTest(hooks: NestedHooks, options?: SetupTestOptions) {
 export { setupApplicationTest, setupRenderingTest, setupTest };
 
 export interface RenderingTestContext
-  extends BaseTestContext,
-    EnginesTestContext {
+  extends BaseTestContext, EnginesTestContext {
   engine: EngineInstance;
 }
