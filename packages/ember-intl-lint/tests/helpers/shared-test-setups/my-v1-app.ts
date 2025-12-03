@@ -1,6 +1,7 @@
 import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
+  fix: false,
   projectRoot: 'tmp/my-v1-app',
 };
 
@@ -13,6 +14,7 @@ const options: Options = {
       'no-unused-keys': true,
     },
   },
+  fix: false,
   projectRoot: 'tmp/my-v1-app',
 };
 

@@ -7,5 +7,9 @@ export async function runCodemod(
   const options = await createOptions(codemodOptions);
   const project = analyzeProject(options);
 
+  if (options.fix) {
+    // TODO: Fix project
+  }
+
   return lintProject(project, options);
 }

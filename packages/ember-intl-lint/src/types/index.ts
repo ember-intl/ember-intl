@@ -1,11 +1,13 @@
 import type { LintRule } from '../utils/lint-rules.js';
 
 type CodemodOptions = {
+  fix: boolean;
   projectRoot: string;
 };
 
 type Options = {
   config: Config;
+  fix: boolean;
   projectRoot: string;
 };
 
