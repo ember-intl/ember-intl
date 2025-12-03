@@ -23,12 +23,12 @@
     "test": "pnpm --filter \"*\" test"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
-    "@changesets/get-github-info": "^0.6.0",
-    "sort-package-json": "^3.4.0",
-    "update-workspace-root-version": "^2.0.5"
+    "@changesets/cli": "^2.29.8",
+    "@changesets/get-github-info": "^0.7.0",
+    "sort-package-json": "^3.5.0",
+    "update-workspace-root-version": "^2.0.6"
   },
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.24.0",
   "engines": {
     "node": "20.* || >= 22",
     "pnpm": ">= 10"
@@ -36,7 +36,7 @@
   "pnpm": {
     "overrides": {
       "ansi-html": "^0.0.9",
-      "form-data": "^4.0.4"
+      "form-data": "^4.0.5"
     }
   }
 }
