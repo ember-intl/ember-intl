@@ -7,7 +7,7 @@ import type { Config, LintOptions } from '../../types/index.js';
 import { type LintRule, lintRules } from '../lint-rules.js';
 
 function getDefaultConfig(): Config {
-  const rules = {} as Config['rules'];
+  const rules = {} as Config['lintRules'];
 
   lintRules.forEach((lintRule) => {
     rules[lintRule] = true;
@@ -15,7 +15,7 @@ function getDefaultConfig(): Config {
 
   return {
     addonPaths: [],
-    rules,
+    lintRules: rules,
   };
 }
 
@@ -55,16 +55,15 @@ function mergeConfigs(
     defaultConfig.addonPaths.push(...userConfig.addonPaths);
   }
 
-  if (userConfig.rules) {
-    for (const [lintRule, lintOptions] of Object.entries(userConfig.rules) as [
-      LintRule,
-      boolean | LintOptions,
-    ][]) {
+  if (userConfig.lintRules) {
+    for (const [lintRule, lintOptions] of Object.entries(
+      userConfig.lintRules,
+    ) as [LintRule, boolean | LintOptions][]) {
       if (!lintRules.includes(lintRule)) {
-        throw new Error(`unknown rule: ${lintRule}`);
+        throw new Error(`unknown lint rule: ${lintRule}`);
       }
 
-      defaultConfig.rules[lintRule] = lintOptions;
+      defaultConfig.lintRules[lintRule] = lintOptions;
     }
   }
 

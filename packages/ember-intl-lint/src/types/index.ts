@@ -11,7 +11,7 @@ type Options = {
 
 type Config = {
   addonPaths: string[];
-  rules: Record<LintRule, boolean | LintOptions>;
+  lintRules: Record<LintRule, boolean | LintOptions>;
 };
 
 type Failed = string[];

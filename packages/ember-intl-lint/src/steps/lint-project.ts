@@ -14,7 +14,7 @@ export function lintProject(project: Project, options: Options): LintResults {
     LintRule,
     LintMethod,
   ][]) {
-    const lintOptions = config.rules[lintRule];
+    const lintOptions = config.lintRules[lintRule];
 
     if (lintOptions === false) {
       continue;

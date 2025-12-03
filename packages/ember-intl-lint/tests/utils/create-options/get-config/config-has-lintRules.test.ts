@@ -2,11 +2,11 @@ import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { getConfig } from '../../../../src/utils/create-options/index.js';
 
-test('utils | create-options | get-config > config has rules', async function () {
+test('utils | create-options | get-config > config has lintRules', async function () {
   const inputProject = {
     'ember-intl-lint.config.mjs': [
       `export default {`,
-      `  rules: {`,
+      `  lintRules: {`,
       `    'no-missing-keys': {`,
       `      ignores: ['hello.message'],`,
       `    },`,
@@ -17,7 +17,7 @@ test('utils | create-options | get-config > config has rules', async function ()
     ].join('\n'),
   };
 
-  const projectRoot = 'tmp/utils/get-config/config-has-rules';
+  const projectRoot = 'tmp/utils/get-config/config-has-lintRules';
 
   loadFixture(inputProject, { projectRoot });
 
@@ -25,7 +25,7 @@ test('utils | create-options | get-config > config has rules', async function ()
 
   assert.deepStrictEqual(config, {
     addonPaths: [],
-    rules: {
+    lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': {
         ignores: ['hello.message'],

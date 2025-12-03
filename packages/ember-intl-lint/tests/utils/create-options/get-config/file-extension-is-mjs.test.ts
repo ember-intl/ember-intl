@@ -15,7 +15,7 @@ test('utils | create-options | get-config > file extension is mjs', async functi
 
   assert.deepStrictEqual(config, {
     addonPaths: [],
-    rules: {
+    lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': true,
       'no-unused-keys': true,
