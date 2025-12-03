@@ -7,46 +7,69 @@ import { stubMapping, stubTranslationFiles } from '../../../helpers/index.js';
 test('utils | lint-project | no-unused-keys > all keys are used', function () {
   const project: Project = {
     availableKeys: new Map([
-      ['key01', stubMapping('Hello!', ['translations/de-de.json'])],
+      [
+        'key01',
+        stubMapping({
+          message: 'Hello!',
+          translationFilePaths: ['translations/de-de.json'],
+        }),
+      ],
       [
         'key02',
-        stubMapping('{timestamp, date, long}', ['translations/en-us.json']),
+        stubMapping({
+          message: '{timestamp, date, long}',
+          translationFilePaths: ['translations/en-us.json'],
+        }),
       ],
       [
         'key03',
-        stubMapping('{name}', [
-          'translations/de-de.json',
-          'translations/en-us.json',
-        ]),
+        stubMapping({
+          message: '{name}',
+          translationFilePaths: [
+            'translations/de-de.json',
+            'translations/en-us.json',
+          ],
+        }),
       ],
       [
         'key04',
-        stubMapping(
-          '{itemCount, plural, =0 {You have no items.} one {You have {itemCount, number} item.} other {You have {itemCount, number} items.}}',
-          ['translations/de-de.json', 'translations/en-us.json'],
-        ),
+        stubMapping({
+          message:
+            '{itemCount, plural, =0 {You have no items.} one {You have {itemCount, number} item.} other {You have {itemCount, number} items.}}',
+          translationFilePaths: [
+            'translations/de-de.json',
+            'translations/en-us.json',
+          ],
+        }),
       ],
       [
         'key05',
-        stubMapping('{proportion, number, ::percent}', [
-          'node_modules/my-v1-addon/translations/en-us.json',
-        ]),
+        stubMapping({
+          message: '{proportion, number, ::percent}',
+          translationFilePaths: [
+            'node_modules/my-v1-addon/translations/en-us.json',
+          ],
+        }),
       ],
       [
         'key06',
-        stubMapping('It is now {timestamp, time, short}.', [
-          'node_modules/my-v1-addon/translations/de-de.json',
-        ]),
+        stubMapping({
+          message: 'It is now {timestamp, time, short}.',
+          translationFilePaths: [
+            'node_modules/my-v1-addon/translations/de-de.json',
+          ],
+        }),
       ],
       [
         'key07',
-        stubMapping(
-          '{isTaxed, select, yes {An additional {tax, number, percent} tax will be collected.} other {No taxes apply.}}',
-          [
+        stubMapping({
+          message:
+            '{isTaxed, select, yes {An additional {tax, number, percent} tax will be collected.} other {No taxes apply.}}',
+          translationFilePaths: [
             'node_modules/my-v2-addon/translations/de-de.json',
             'node_modules/my-v2-addon/translations/en-us.json',
           ],
-        ),
+        }),
       ],
     ]),
     translationFiles: stubTranslationFiles(),
