@@ -1,0 +1,13 @@
+{
+  "name": "my-v1-addon",
+  "version": "0.0.0",
+  "keywords": [
+    "ember-addon"
+  ],
+  "devDependencies": {
+    "ember-source": "~6.8.0"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  }
+}

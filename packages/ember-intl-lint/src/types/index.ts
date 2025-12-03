@@ -9,6 +9,7 @@ type Options = {
   config: Config;
   fix: boolean;
   projectRoot: string;
+  src: 'addon' | 'app' | 'src';
 };
 
 type Config = {
