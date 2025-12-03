@@ -586,5 +586,11 @@
     "name": "v8.0.0-beta.6",
     "sha": "67f16efad3bb64426e3185fabdb7565303e52046",
     "tag": "v8.0.0-beta.6"
+  },
+  "v8.0.0-beta.7": {
+    "path": "versions/v8.0.0-beta.7",
+    "name": "v8.0.0-beta.7",
+    "sha": "b6583ede1b4f00c9edc10cc29cf96d4eb4c5ea29",
+    "tag": "v8.0.0-beta.7"
   }
 }
