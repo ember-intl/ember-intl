@@ -19,8 +19,8 @@ pnpm add -D @ember-intl/lint
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
-+     "lint:intl": "@ember-intl/lint",
-+     "lint:intl:fix": "@ember-intl/lint --fix"
++     "lint:intl": "ember-intl-lint",
++     "lint:intl:fix": "ember-intl-lint --fix"
   },
   "devDependencies": {
     "@ember-intl/lint": "...",
