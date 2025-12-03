@@ -22,7 +22,7 @@ function getDefaultConfig(): Config {
 async function getUserConfig(
   projectRoot: string,
 ): Promise<Partial<Config> | undefined> {
-  const filePaths = findFiles('ember-intl-lint.config.{js,mjs}', {
+  const filePaths = findFiles('ember-intl.config.{js,mjs}', {
     projectRoot,
   });
 

@@ -6,14 +6,14 @@ test('utils | create-options | get-config > config is shared', async function ()
   const inputProject = {
     apps: {
       'my-app': {
-        'ember-intl-lint.config.mjs': [
-          `export { default } from '../../configs/ember-intl-lint/index.mjs';`,
+        'ember-intl.config.mjs': [
+          `export { default } from '../../configs/ember-intl/index.mjs';`,
           ``,
         ].join('\n'),
       },
     },
     configs: {
-      'ember-intl-lint': {
+      'ember-intl': {
         'index.mjs': [
           `export default {`,
           `  addonPaths: [`,

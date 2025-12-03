@@ -4,7 +4,7 @@ import { getConfig } from '../../../../src/utils/create-options/index.js';
 
 test('utils | create-options | get-config > file extension is js', async function () {
   const inputProject = {
-    'ember-intl-lint.config.js': [`export default {};`, ``].join('\n'),
+    'ember-intl.config.js': [`export default {};`, ``].join('\n'),
   };
 
   const projectRoot = 'tmp/utils/get-config/file-extension-is-js';
