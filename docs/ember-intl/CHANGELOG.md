@@ -1,5 +1,13 @@
 # Changelog for docs-app-for-ember-intl
 
+## 1.8.5
+
+### Patch Changes
+
+- [#2028](https://github.com/ember-intl/ember-intl/pull/2028) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2027](https://github.com/ember-intl/ember-intl/pull/2027) Documented changes due to @ember-intl/lint and @ember-intl/v1-compat ([@ijlee2](https://github.com/ijlee2))
+- [#2019](https://github.com/ember-intl/ember-intl/pull/2019) Created {{t-key}} helper ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.8.4
 
 ### Patch Changes

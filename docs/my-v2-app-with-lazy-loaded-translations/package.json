@@ -1,6 +1,6 @@
 {
   "name": "my-v2-app-with-lazy-loaded-translations",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "description": "A Vite app that checks publicOnly: true",
   "repository": {

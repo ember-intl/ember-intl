@@ -1,5 +1,13 @@
 # my-v2-app-with-lazy-loaded-translations
 
+## 1.0.4
+
+### Patch Changes
+
+- [#2028](https://github.com/ember-intl/ember-intl/pull/2028) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2026](https://github.com/ember-intl/ember-intl/pull/2026) Consumed @ember-intl/lint in docs ([@ijlee2](https://github.com/ijlee2))
+- [#2019](https://github.com/ember-intl/ember-intl/pull/2019) Created {{t-key}} helper ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.3
 
 ### Patch Changes
