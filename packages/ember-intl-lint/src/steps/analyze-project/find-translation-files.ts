@@ -4,9 +4,7 @@ import { findFiles, parseFilePath } from '@codemod-utils/files';
 
 import type { Options, Project } from '../../types/index.js';
 
-function getFormat(filePath: string): 'json' | 'yaml' {
-  const { ext } = parseFilePath(filePath);
-
+function getFormat(ext: string): 'json' | 'yaml' {
   return ext === '.json' ? 'json' : 'yaml';
 }
 
@@ -21,9 +19,12 @@ export function findTranslationFiles(
   });
 
   filePaths.forEach((filePath) => {
+    const { ext, name } = parseFilePath(filePath);
+
     translationFiles.set(filePath, {
-      format: getFormat(filePath),
+      format: getFormat(ext),
       isInternal: true,
+      locale: name,
     });
   });
 
@@ -37,9 +38,12 @@ export function findTranslationFiles(
   );
 
   filePaths.forEach((filePath) => {
+    const { ext, name } = parseFilePath(filePath);
+
     translationFiles.set(filePath, {
-      format: getFormat(filePath),
+      format: getFormat(ext),
       isInternal: false,
+      locale: name,
     });
   });
 

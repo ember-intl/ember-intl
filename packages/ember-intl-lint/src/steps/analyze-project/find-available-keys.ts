@@ -28,10 +28,24 @@ export function findAvailableKeys(
         availableKeys.set(key, new Map());
       }
 
-      availableKeys.get(key)!.set(filePath, {
-        icuArguments,
-        message,
-      });
+      const mapping = availableKeys.get(key)!;
+
+      if (mapping.has(data.locale)) {
+        // App's translation takes precedence
+        if (data.isInternal) {
+          mapping.set(data.locale, {
+            filePath,
+            icuArguments,
+            message,
+          });
+        }
+      } else {
+        mapping.set(data.locale, {
+          filePath,
+          icuArguments,
+          message,
+        });
+      }
     }
   });
 

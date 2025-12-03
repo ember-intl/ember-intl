@@ -11,15 +11,17 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (1
         'key01',
         new Map([
           [
-            'translations/de-de.json',
+            'de-de',
             {
+              filePath: 'translations/de-de.json',
               icuArguments: findIcuArguments('Hallo!'),
               message: 'Hallo!',
             },
           ],
           [
-            'translations/en-us.json',
+            'en-us',
             {
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments('Hello!'),
               message: 'Hello!',
             },
@@ -30,8 +32,9 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (1
         'key02',
         new Map([
           [
-            'translations/en-us.json',
+            'en-us',
             {
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments('Hello, {name}!'),
               message: 'Hello, {name}!',
             },

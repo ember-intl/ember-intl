@@ -1,3 +1,5 @@
+import { parseFilePath } from '@codemod-utils/files';
+
 import { findIcuArguments } from '../../src/utils/icu-message/find-icu-arguments.js';
 
 type Data = {
@@ -10,9 +12,12 @@ export function stubMapping(data: Data) {
 
   return new Map(
     translationFilePaths.map((filePath) => {
+      const { name: locale } = parseFilePath(filePath);
+
       return [
-        filePath,
+        locale,
         {
+          filePath,
           icuArguments: findIcuArguments(message),
           message,
         },

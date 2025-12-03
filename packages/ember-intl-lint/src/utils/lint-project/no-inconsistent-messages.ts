@@ -5,7 +5,7 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
-import { getOwnTranslations } from './shared/index.js';
+import { getOwnLocales, getOwnTranslations } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -27,7 +27,9 @@ export function noInconsistentMessages(
   project: Project,
   lintOptions?: Partial<LintOptions>,
 ): Failed {
+  const ownLocales = getOwnLocales(project);
   const ownTranslations = getOwnTranslations(project);
+
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const failed: Failed = [];
 
@@ -36,28 +38,28 @@ export function noInconsistentMessages(
       return;
     }
 
-    const ownMapping: typeof mapping = new Map();
+    const mappingSubset: typeof mapping = new Map();
 
-    mapping.forEach((data, filePath) => {
-      if (ownTranslations.has(filePath)) {
-        ownMapping.set(filePath, data);
+    mapping.forEach((data, locale) => {
+      if (ownTranslations.has(data.filePath)) {
+        mappingSubset.set(locale, data);
       }
     });
 
-    if (ownMapping.size === 0) {
+    if (mappingSubset.size === 0) {
       return;
     }
 
     const allIcuArguments: IcuArguments[] = [];
 
-    ownMapping.forEach((data) => {
+    mappingSubset.forEach((data) => {
       allIcuArguments.push(data.icuArguments);
     });
 
     let isConsistent = allIcuArgumentsMatch(allIcuArguments);
 
-    ownTranslations.forEach((filePath) => {
-      if (!ownMapping.has(filePath)) {
+    ownLocales.forEach((locale) => {
+      if (!mappingSubset.has(locale)) {
         isConsistent = false;
       }
     });
@@ -66,7 +68,10 @@ export function noInconsistentMessages(
       return;
     }
 
-    const details = `  - Found in ${Array.from(mapping.keys()).join(', ')}`;
+    const filePaths = Array.from(mapping.values()).map(({ filePath }) => {
+      return filePath;
+    });
+    const details = `  - Found in ${filePaths.join(', ')}`;
 
     failed.push([key, details].join('\n'));
   });

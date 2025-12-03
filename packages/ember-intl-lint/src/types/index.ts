@@ -32,12 +32,15 @@ type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, Failed>;
 
+type Locale = string;
+
 type Project = {
   availableKeys: Map<
     TranslationKey,
     Map<
-      TranslationFilePath,
+      Locale,
       {
+        filePath: TranslationFilePath;
         icuArguments: IcuArguments;
         message: TranslationMessage;
       }
@@ -48,6 +51,7 @@ type Project = {
     {
       format: 'json' | 'yaml';
       isInternal: boolean;
+      locale: Locale;
     }
   >;
   usedKeys: Map<TranslationKey, SourceFilePath[]>;
