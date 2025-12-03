@@ -13,6 +13,10 @@ test('utils | create-options | get-config > file is missing', async function () 
 
   assert.deepStrictEqual(config, {
     addonPaths: [],
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
     lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': true,

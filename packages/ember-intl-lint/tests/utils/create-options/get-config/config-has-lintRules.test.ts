@@ -25,6 +25,10 @@ test('utils | create-options | get-config > config has lintRules', async functio
 
   assert.deepStrictEqual(config, {
     addonPaths: [],
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
     lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': {

@@ -6,6 +6,8 @@ import { findFiles } from '@codemod-utils/files';
 import type { Config, LintOptions } from '../../types/index.js';
 import { type LintRule, lintRules } from '../lint-rules.js';
 
+type BuildOption = keyof Config['buildOptions'];
+
 function getDefaultConfig(): Config {
   const rules = {} as Config['lintRules'];
 
@@ -15,6 +17,10 @@ function getDefaultConfig(): Config {
 
   return {
     addonPaths: [],
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
     lintRules: rules,
   };
 }
@@ -53,6 +59,23 @@ function mergeConfigs(
 
   if (userConfig.addonPaths) {
     defaultConfig.addonPaths.push(...userConfig.addonPaths);
+  }
+
+  if (userConfig.buildOptions) {
+    const buildOptions = Object.keys(
+      defaultConfig.buildOptions,
+    ) as BuildOption[];
+
+    for (const [buildOption, value] of Object.entries(
+      userConfig.buildOptions,
+    )) {
+      if (!buildOptions.includes(buildOption as BuildOption)) {
+        throw new Error(`unknown build option: ${buildOption}`);
+      }
+
+      // @ts-expect-error: Incorrect type
+      defaultConfig.buildOptions[buildOption] = value;
+    }
   }
 
   if (userConfig.lintRules) {

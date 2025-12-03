@@ -6,7 +6,7 @@ import type {
 
 type Data = {
   callback: (key: TranslationKey, value: TranslationMessage) => void;
-  prefix?: string;
+  prefix: string | undefined;
 };
 
 export function forEach(json: TranslationJson, data: Data): void {

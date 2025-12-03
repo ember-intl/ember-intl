@@ -49,6 +49,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: true,
           locale: 'de-de',
+          rootDir: 'translations',
         },
       ],
       [
@@ -57,6 +58,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: true,
           locale: 'en-us',
+          rootDir: 'translations',
         },
       ],
       [
@@ -65,6 +67,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: true,
           locale: 'es-es',
+          rootDir: 'translations',
         },
       ],
       [
@@ -73,6 +76,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'de-de',
+          rootDir: 'node_modules/my-v1-addon/translations',
         },
       ],
       [
@@ -81,6 +85,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'en-us',
+          rootDir: 'node_modules/my-v1-addon/translations',
         },
       ],
       [
@@ -89,6 +94,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'de-de',
+          rootDir: 'node_modules/my-v2-addon/translations',
         },
       ],
       [
@@ -97,6 +103,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'en-us',
+          rootDir: 'node_modules/my-v2-addon/translations',
         },
       ],
     ]),

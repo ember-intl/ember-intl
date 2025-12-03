@@ -14,7 +14,9 @@ export function findTranslationFiles(
   const { config, projectRoot } = options;
   const translationFiles: Project['translationFiles'] = new Map();
 
-  let filePaths = findFiles('translations/**/*.{json,yaml,yml}', {
+  let rootDir = config.buildOptions.inputPath;
+
+  let filePaths = findFiles(join(rootDir, '**/*.{json,yaml,yml}'), {
     projectRoot,
   });
 
@@ -25,25 +27,26 @@ export function findTranslationFiles(
       format: getFormat(ext),
       isInternal: true,
       locale: name,
+      rootDir,
     });
   });
 
-  filePaths = findFiles(
-    config.addonPaths.map((addonPath) => {
-      return join(addonPath, 'translations/**/*.{json,yaml,yml}');
-    }),
-    {
+  config.addonPaths.forEach((addonPath) => {
+    rootDir = join(addonPath, 'translations');
+
+    filePaths = findFiles(join(rootDir, '**/*.{json,yaml,yml}'), {
       projectRoot,
-    },
-  );
+    });
 
-  filePaths.forEach((filePath) => {
-    const { ext, name } = parseFilePath(filePath);
+    filePaths.forEach((filePath) => {
+      const { ext, name } = parseFilePath(filePath);
 
-    translationFiles.set(filePath, {
-      format: getFormat(ext),
-      isInternal: false,
-      locale: name,
+      translationFiles.set(filePath, {
+        format: getFormat(ext),
+        isInternal: false,
+        locale: name,
+        rootDir,
+      });
     });
   });
 

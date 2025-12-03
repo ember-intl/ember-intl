@@ -41,6 +41,10 @@ test('utils | create-options | get-config > config is shared', async function ()
 
   assert.deepStrictEqual(config, {
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
     lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': {

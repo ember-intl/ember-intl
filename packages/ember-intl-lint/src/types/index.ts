@@ -14,6 +14,10 @@ type Options = {
 
 type Config = {
   addonPaths: string[];
+  buildOptions: {
+    inputPath: string;
+    wrapTranslationsWithNamespace: boolean;
+  };
   lintRules: Record<LintRule, boolean | LintOptions>;
 };
 
@@ -55,6 +59,7 @@ type Project = {
       format: 'json' | 'yaml';
       isInternal: boolean;
       locale: Locale;
+      rootDir: string;
     }
   >;
   usedKeys: Map<TranslationKey, SourceFilePath[]>;

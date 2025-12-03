@@ -5,7 +5,11 @@ import { inJson } from '../../../../../src/utils/analyze-project/find-available-
 test('utils | analyze-project | find-available-keys | in-json > file is empty', function () {
   const file = '';
 
-  const translationObject = inJson(file);
+  const translationObject = inJson(file, {
+    filePath: 'translations/en-us.json',
+    namespaceKeys: false,
+    rootDir: 'translations',
+  });
 
   assert.deepStrictEqual(translationObject, {});
 });

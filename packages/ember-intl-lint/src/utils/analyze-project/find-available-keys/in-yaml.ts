@@ -4,9 +4,11 @@ import type {
   TranslationJson,
   TranslationObject,
 } from '../../../types/index.js';
-import { forEach } from './shared/index.js';
+import { forEach, getPrefix } from './shared/index.js';
 
-export function inYaml(file: string): TranslationObject {
+type Data = Parameters<typeof getPrefix>[0];
+
+export function inYaml(file: string, data: Data): TranslationObject {
   const translationObject: TranslationObject = {};
 
   if (file === '') {
@@ -14,11 +16,13 @@ export function inYaml(file: string): TranslationObject {
   }
 
   const json = yaml.load(file) as TranslationJson;
+  const prefix = getPrefix(data);
 
   forEach(json, {
     callback(key, value) {
       translationObject[key] = value;
     },
+    prefix,
   });
 
   return translationObject;

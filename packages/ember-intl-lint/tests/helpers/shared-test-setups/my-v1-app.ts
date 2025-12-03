@@ -8,6 +8,10 @@ const codemodOptions: CodemodOptions = {
 const options: Options = {
   config: {
     addonPaths: [],
+    buildOptions: {
+      inputPath: 'translations',
+      wrapTranslationsWithNamespace: false,
+    },
     lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': true,
