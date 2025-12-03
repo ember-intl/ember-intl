@@ -3,6 +3,7 @@ import { assert, test } from '@codemod-utils/tests';
 import type { Project } from '../../../../src/types/index.js';
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 
 test('utils | lint-project | no-inconsistent-messages > with ignores option', function () {
   const project: Project = {
@@ -100,50 +101,7 @@ test('utils | lint-project | no-inconsistent-messages > with ignores option', fu
         ]),
       ],
     ]),
-    translationFiles: new Map([
-      [
-        'translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: true,
-        },
-      ],
-      [
-        'translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: true,
-        },
-      ],
-      [
-        'node_modules/my-v1-addon/translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v1-addon/translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v2-addon/translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v2-addon/translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-    ]),
+    translationFiles: stubTranslationFiles(),
     usedKeys: new Map(),
   };
 

@@ -2,7 +2,7 @@ import { assert, test } from '@codemod-utils/tests';
 
 import type { Project } from '../../../../src/types/index.js';
 import { noUnusedKeys } from '../../../../src/utils/lint-project/index.js';
-import { stubMapping } from '../../../helpers/index.js';
+import { stubMapping, stubTranslationFiles } from '../../../helpers/index.js';
 
 test('utils | lint-project | no-unused-keys > some keys are unused', function () {
   const project: Project = {
@@ -29,50 +29,7 @@ test('utils | lint-project | no-unused-keys > some keys are unused', function ()
         ),
       ],
     ]),
-    translationFiles: new Map([
-      [
-        'translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: true,
-        },
-      ],
-      [
-        'translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: true,
-        },
-      ],
-      [
-        'node_modules/my-v1-addon/translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v1-addon/translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v2-addon/translations/de-de.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-      [
-        'node_modules/my-v2-addon/translations/en-us.json',
-        {
-          format: 'json',
-          isInternal: false,
-        },
-      ],
-    ]),
+    translationFiles: stubTranslationFiles(),
     usedKeys: new Map([
       ['key03', ['app/components/file03.gts']],
       ['key04', ['app/components/file02.gjs', 'app/components/file03.gts']],

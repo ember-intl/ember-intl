@@ -45,6 +45,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: true,
+          locale: 'de-de',
         },
       ],
       [
@@ -52,6 +53,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: true,
+          locale: 'en-us',
         },
       ],
       [
@@ -59,6 +61,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: true,
+          locale: 'es-es',
         },
       ],
       [
@@ -66,6 +69,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'de-de',
         },
       ],
       [
@@ -73,6 +77,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'en-us',
         },
       ],
       [
@@ -80,6 +85,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'de-de',
         },
       ],
       [
@@ -87,6 +93,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
         {
           format: 'json',
           isInternal: false,
+          locale: 'en-us',
         },
       ],
     ]),
