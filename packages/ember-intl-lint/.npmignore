@@ -20,3 +20,6 @@
 /prettier.config.mjs
 /tests/
 /update-test-fixtures.sh
+
+# specific to this package
+/docs/

@@ -1,11 +1,9 @@
 # Build options
 
-`ember-intl` provides a few options for customizing the build step. Here are the options' names and default values.
+`@ember-intl/v1-compat` supports a few options to customize how translations are loaded and merged. Here are the options' names and default values.
 
 ```ts
 const defaultConfig = {
-  errorOnMissingTranslations: false,
-  errorOnNamedArgumentMismatch: false,
   fallbackLocale: undefined,
   inputPath: 'translations',
   publicOnly: false,
@@ -16,37 +14,9 @@ const defaultConfig = {
 You can create `config/ember-intl.js` to override a value.
 
 
-## errorOnMissingTranslations
-
-Throw an error if the translation is missing for some locale for some key.
-
-```js
-module.exports = function (/* environment */) {
-  return {
-    errorOnMissingTranslations: true,
-  };
-};
-```
-
-
-## errorOnNamedArgumentMismatch
-
-Throw an error if the arguments aren't the same for all locales for some key.
-
-```js
-module.exports = function (/* environment */) {
-  return {
-    errorOnNamedArgumentMismatch: true,
-  };
-};
-```
-
-
 ## fallbackLocale
 
 Copy the fallback locale's translations to all other locales as a fallback strategy.
-
-This does **not** prevent missing translation warnings and errors. It's meant to be a safety net for warnings. When `errorOnMissingTranslations` is enabled, a fallback results in an error.
 
 ```js
 module.exports = function (/* environment */) {

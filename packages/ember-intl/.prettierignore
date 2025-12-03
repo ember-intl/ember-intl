@@ -5,8 +5,6 @@
 # misc
 !.*
 .*/
-CONTRIBUTING.md
-LICENSE.md
 README.md
 
 # specific to this package
