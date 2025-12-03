@@ -1,5 +1,11 @@
 # my-v2-addon
 
+## 1.1.5
+
+### Patch Changes
+
+- [#2029](https://github.com/ember-intl/ember-intl/pull/2029) Downgraded @embroider/addon-dev to 8.1.0 ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.4
 
 ### Patch Changes

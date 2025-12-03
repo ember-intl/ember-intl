@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.0-beta.8
+
+### Patch Changes
+
+- [#2029](https://github.com/ember-intl/ember-intl/pull/2029) Downgraded @embroider/addon-dev to 8.1.0 ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.0-beta.7
 
 ### Minor Changes
