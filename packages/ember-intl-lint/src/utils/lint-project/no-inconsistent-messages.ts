@@ -5,7 +5,15 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
-import { getOwnLocales, getOwnTranslations } from './shared/index.js';
+import {
+  getOwnLocales,
+  getOwnTranslations,
+  listFilePaths,
+} from './shared/index.js';
+
+type LintOptions = {
+  ignores: TranslationKey[];
+};
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -18,10 +26,6 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
 
   return true;
 }
-
-type LintOptions = {
-  ignores: TranslationKey[];
-};
 
 export function noInconsistentMessages(
   project: Project,
@@ -68,10 +72,10 @@ export function noInconsistentMessages(
       return;
     }
 
-    const filePaths = Array.from(mapping.values()).map(({ filePath }) => {
-      return filePath;
-    });
-    const details = `  - Found in ${filePaths.join(', ')}`;
+    const filePaths = Array.from(mapping.values()).map(
+      ({ filePath }) => filePath,
+    );
+    const details = listFilePaths(filePaths);
 
     failed.push([key, details].join('\n'));
   });

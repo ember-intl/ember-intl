@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inHbs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-hbs > with unless helper', function () {
-  const file = [
+  const file = normalizeFile([
     `{{unless this.someCondition "key01"}}`,
     ``,
     `{{unless this.someCondition (t "key02")}}`,
@@ -59,7 +59,7 @@ test('utils | analyze-project | find-used-keys | in-hbs > with unless helper', f
     `    )`,
     `  )`,
     `}}`,
-  ].join('\n');
+  ]);
 
   const keys = inHbs(file);
 

@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inHbs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-hbs > with array helper', function () {
-  const file = [
+  const file = normalizeFile([
     `{{#each (array "key1" "key02") as |value|}}`,
     `  {{value}}`,
     `{{/each}}`,
@@ -39,7 +39,7 @@ test('utils | analyze-project | find-used-keys | in-hbs > with array helper', fu
     `{{#each (array (t-key "key17") (t-key "key18")) as |key|}}`,
     `  {{t (t-key key)}}`,
     `{{/each}}`,
-  ].join('\n');
+  ]);
 
   const keys = inHbs(file);
 

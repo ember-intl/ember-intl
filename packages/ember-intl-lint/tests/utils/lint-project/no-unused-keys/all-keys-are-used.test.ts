@@ -1,11 +1,14 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import type { Project } from '../../../../src/types/index.js';
 import { noUnusedKeys } from '../../../../src/utils/lint-project/index.js';
-import { stubMapping, stubTranslationFiles } from '../../../helpers/index.js';
+import {
+  normalizeProject,
+  stubMapping,
+  stubTranslationFiles,
+} from '../../../helpers/index.js';
 
 test('utils | lint-project | no-unused-keys > all keys are used', function () {
-  const project: Project = {
+  const project = normalizeProject({
     availableKeys: new Map([
       [
         'key01',
@@ -89,7 +92,7 @@ test('utils | lint-project | no-unused-keys > all keys are used', function () {
       ['key06', ['app/templates/file01.hbs', 'app/templates/file02.gjs']],
       ['key07', ['app/components/file03.gts', 'app/templates/file03.gts']],
     ]),
-  };
+  });
 
   const keys = noUnusedKeys(project);
 

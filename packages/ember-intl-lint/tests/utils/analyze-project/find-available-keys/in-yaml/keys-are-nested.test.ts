@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inYaml } from '../../../../../src/utils/analyze-project/find-available-keys/index.js';
 
 test('utils | analyze-project | find-available-keys | in-yaml > keys are nested', function () {
-  const file = [
+  const file = normalizeFile([
     `components:`,
     `  products:`,
     `    product:`,
@@ -79,7 +79,7 @@ test('utils | analyze-project | find-available-keys | in-yaml > keys are nested'
     `      price-descending: "Price: High to Low"`,
     `    title: Products`,
     ``,
-  ].join('\n');
+  ]);
 
   const translationObject = inYaml(file, {
     filePath: 'translations/en-us.yaml',

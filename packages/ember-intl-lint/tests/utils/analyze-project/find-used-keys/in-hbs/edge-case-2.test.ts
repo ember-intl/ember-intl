@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inHbs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-hbs > edge case (2)', function () {
-  const file = [
+  const file = normalizeFile([
     `{{(tKey)}}`,
     `{{tKey "key01" "key02"}}`,
     ``,
@@ -14,7 +14,7 @@ test('utils | analyze-project | find-used-keys | in-hbs > edge case (2)', functi
     `{{#let (some-helper) as |tKey|}}`,
     `  {{tKey "key04"}}`,
     `{{/let}}`,
-  ].join('\n');
+  ]);
 
   const keys = inHbs(file);
 

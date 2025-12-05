@@ -1,5 +1,5 @@
 import type { Failed, Project, TranslationKey } from '../../types/index.js';
-import { getOwnTranslations } from './shared/index.js';
+import { getOwnTranslations, listFilePaths } from './shared/index.js';
 
 type LintOptions = {
   ignores: TranslationKey[];
@@ -19,6 +19,10 @@ export function noUnusedKeys(
       return;
     }
 
+    if (project.usedKeys.has(key)) {
+      return;
+    }
+
     const mappingSubset: typeof mapping = new Map();
 
     mapping.forEach((data, locale) => {
@@ -31,14 +35,10 @@ export function noUnusedKeys(
       return;
     }
 
-    if (project.usedKeys.has(key)) {
-      return;
-    }
-
-    const filePaths = Array.from(mapping.values()).map(({ filePath }) => {
-      return filePath;
-    });
-    const details = `  - Found in ${filePaths.join(', ')}`;
+    const filePaths = Array.from(mapping.values()).map(
+      ({ filePath }) => filePath,
+    );
+    const details = listFilePaths(filePaths);
 
     failed.push([key, details].join('\n'));
   });

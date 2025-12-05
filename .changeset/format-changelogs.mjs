@@ -1,4 +1,6 @@
-const { getInfo } = require('@changesets/get-github-info');
+import { EOL } from 'node:os';
+
+import { getInfo } from '@changesets/get-github-info';
 
 const repo = 'ember-intl/ember-intl';
 
@@ -37,7 +39,7 @@ async function getReleaseLine(changeset) {
   }
 }
 
-module.exports = {
+export default {
   getDependencyReleaseLine,
   getReleaseLine,
 };

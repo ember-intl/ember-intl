@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inYaml } from '../../../../../src/utils/analyze-project/find-available-keys/index.js';
 
 test('utils | analyze-project | find-available-keys | in-yaml > keys are namespaced (2)', function () {
-  const file = [
+  const file = normalizeFile([
     `card:`,
     `  learn-more:`,
     `    aria-label: Learn more about {productName}`,
@@ -16,7 +16,7 @@ test('utils | analyze-project | find-available-keys | in-yaml > keys are namespa
     `  rating-value: "{productRating} out of 5 stars"`,
     `  seller: Seller`,
     ``,
-  ].join('\n');
+  ]);
 
   const translationObject = inYaml(file, {
     filePath: 'translations/components/products/product/en-us.yaml',

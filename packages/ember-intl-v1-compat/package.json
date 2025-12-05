@@ -57,7 +57,7 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
     "concurrently": "^9.2.1",
-    "ember-cli": "~6.8.0",
+    "ember-cli": "~6.8.1",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-htmlbars": "^7.0.0",
     "ember-cli-inject-live-reload": "^2.1.0",

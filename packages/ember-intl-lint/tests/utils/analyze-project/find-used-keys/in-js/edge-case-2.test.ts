@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inJsTs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-js > edge case (2)', function () {
-  const file = [
+  const file = normalizeFile([
     `import { service } from '@ember/service';`,
     `import Component from '@glimmer/component';`,
     `import { tKey } from 'ember-intl';`,
@@ -56,7 +56,7 @@ test('utils | analyze-project | find-used-keys | in-js > edge case (2)', functio
     `  }`,
     `}`,
     ``,
-  ].join('\n');
+  ]);
 
   const keys = inJsTs(file, {
     isTypeScript: false,
