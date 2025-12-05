@@ -1,4 +1,5 @@
 import type { Failed, Project, TranslationKey } from '../../types/index.js';
+import { listFilePaths } from './shared/index.js';
 
 type LintOptions = {
   ignores: TranslationKey[];
@@ -20,7 +21,7 @@ export function noMissingKeys(
       return;
     }
 
-    const details = `  - Found in ${filePaths.join(', ')}`;
+    const details = listFilePaths(filePaths);
 
     failed.push([key, details].join('\n'));
   });
