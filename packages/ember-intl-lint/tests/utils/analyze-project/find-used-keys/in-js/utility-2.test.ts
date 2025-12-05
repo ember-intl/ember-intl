@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inJsTs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-js > utility (2)', function () {
-  const file = [
+  const file = normalizeFile([
     `import { action } from '@ember/object';`,
     `import { setOwner } from '@ember/owner';`,
     `import { service } from '@ember/service';`,
@@ -43,7 +43,7 @@ test('utils | analyze-project | find-used-keys | in-js > utility (2)', function 
     `  }`,
     `}`,
     ``,
-  ].join('\n');
+  ]);
 
   const keys = inJsTs(file, {
     isTypeScript: false,

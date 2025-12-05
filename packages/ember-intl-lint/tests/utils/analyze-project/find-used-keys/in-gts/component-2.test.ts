@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inGjsGts } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-gts > component (2)', function () {
-  const file = [
+  const file = normalizeFile([
     `import type { TOC } from '@ember/component/template-only';`,
     ``,
     `interface HelloSignature {`,
@@ -14,7 +14,7 @@ test('utils | analyze-project | find-used-keys | in-gts > component (2)', functi
     ``,
     `export default Hello;`,
     ``,
-  ].join('\n');
+  ]);
 
   const keys = inGjsGts(file, {
     isTypeScript: true,

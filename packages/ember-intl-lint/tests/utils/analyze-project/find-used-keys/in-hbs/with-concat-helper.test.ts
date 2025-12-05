@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inHbs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-hbs > with concat helper', function () {
-  const file = [
+  const file = normalizeFile([
     `{{concat "key01" "key02"}}`,
     ``,
     `{{concat (t "key03") (t "key04")}}`,
@@ -17,7 +17,7 @@ test('utils | analyze-project | find-used-keys | in-hbs > with concat helper', f
     `{{t (t-key (concat "key11" "key12"))}}`,
     ``,
     `{{t (t-key (concat this.someProperty "key14"))}}`,
-  ].join('\n');
+  ]);
 
   const keys = inHbs(file);
 

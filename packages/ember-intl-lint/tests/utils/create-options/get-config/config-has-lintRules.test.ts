@@ -1,10 +1,10 @@
-import { assert, loadFixture, test } from '@codemod-utils/tests';
+import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
 import { getConfig } from '../../../../src/utils/create-options/index.js';
 
 test('utils | create-options | get-config > config has lintRules', async function () {
   const inputProject = {
-    'ember-intl.config.mjs': [
+    'ember-intl.config.mjs': normalizeFile([
       `export default {`,
       `  lintRules: {`,
       `    'no-missing-keys': {`,
@@ -14,7 +14,7 @@ test('utils | create-options | get-config > config has lintRules', async functio
       `  },`,
       `};`,
       ``,
-    ].join('\n'),
+    ]),
   };
 
   const projectRoot = 'tmp/utils/get-config/config-has-lintRules';

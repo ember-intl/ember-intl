@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inYaml } from '../../../../../src/utils/analyze-project/find-available-keys/index.js';
 
 test('utils | analyze-project | find-available-keys | in-yaml > base case', function () {
-  const file = [
+  const file = normalizeFile([
     `components.products.product.card.learn-more.aria-label: Learn more about {productName}`,
     `components.products.product.card.learn-more.label: Learn more`,
     `components.products.product.details.add-to-cart: Add to Cart`,
@@ -50,7 +50,7 @@ test('utils | analyze-project | find-available-keys | in-yaml > base case', func
     `routes.products.sort-by.price-descending: "Price: High to Low"`,
     `routes.products.title: Products`,
     ``,
-  ].join('\n');
+  ]);
 
   const translationObject = inYaml(file, {
     filePath: 'translations/en-us.yaml',

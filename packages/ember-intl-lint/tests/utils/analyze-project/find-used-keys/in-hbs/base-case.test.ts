@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inHbs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-hbs > base case', function () {
-  const file = [
+  const file = normalizeFile([
     `{{t "key01"}}`,
     `{{t "key02" key1="key03" key2="key04"}}`,
     `{{t "key05" (hash key1="key06" key2="key07")}}`,
@@ -14,7 +14,7 @@ test('utils | analyze-project | find-used-keys | in-hbs > base case', function (
     `{{intl.t "key10"}}`,
     `{{this.intl.t "key11"}}`,
     `{{this.intl.t (t-key "key12")}}`,
-  ].join('\n');
+  ]);
 
   const keys = inHbs(file);
 

@@ -1,9 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inJsTs } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
 test('utils | analyze-project | find-used-keys | in-js > edge case (4)', function () {
-  const file = [
+  const file = normalizeFile([
     `import { service } from '@ember/service';`,
     `import { tKey as t } from 'ember-intl';`,
     ``,
@@ -35,7 +35,7 @@ test('utils | analyze-project | find-used-keys | in-js > edge case (4)', functio
     `  return intl.t(t('key10'));`,
     `}`,
     ``,
-  ].join('\n');
+  ]);
 
   const keys = inJsTs(file, {
     isTypeScript: false,

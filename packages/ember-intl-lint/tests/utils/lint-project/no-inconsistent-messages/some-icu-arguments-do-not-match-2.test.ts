@@ -1,12 +1,12 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import type { Project } from '../../../../src/types/index.js';
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 
 test('utils | lint-project | no-inconsistent-messages > some ICU arguments do not match (2)', function () {
-  const project: Project = {
+  const project = normalizeProject({
     availableKeys: new Map([
       [
         'key01',
@@ -111,7 +111,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
     ]),
     translationFiles: stubTranslationFiles(),
     usedKeys: new Map(),
-  };
+  });
 
   const keys = noInconsistentMessages(project);
 

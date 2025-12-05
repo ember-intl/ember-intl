@@ -1,4 +1,4 @@
-import { assert, loadFixture, test } from '@codemod-utils/tests';
+import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
 import { getConfig } from '../../../../src/utils/create-options/index.js';
 
@@ -6,15 +6,15 @@ test('utils | create-options | get-config > config is shared', async function ()
   const inputProject = {
     apps: {
       'my-app': {
-        'ember-intl.config.mjs': [
+        'ember-intl.config.mjs': normalizeFile([
           `export { default } from '../../configs/ember-intl/index.mjs';`,
           ``,
-        ].join('\n'),
+        ]),
       },
     },
     configs: {
       'ember-intl': {
-        'index.mjs': [
+        'index.mjs': normalizeFile([
           `export default {`,
           `  addonPaths: [`,
           `    'node_modules/my-v1-addon',`,
@@ -28,7 +28,7 @@ test('utils | create-options | get-config > config is shared', async function ()
           `  },`,
           `};`,
           ``,
-        ].join('\n'),
+        ]),
       },
     },
   };
