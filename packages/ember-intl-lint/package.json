@@ -45,7 +45,7 @@
     "@codemod-utils/ast-template": "^2.1.0",
     "@codemod-utils/ast-template-tag": "^1.1.0",
     "@codemod-utils/files": "^3.2.1",
-    "@codemod-utils/package-json": "^3.3.0",
+    "@codemod-utils/package-json": "^3.3.1",
     "@formatjs/icu-messageformat-parser": "^2.11.4",
     "js-yaml": "^4.1.1",
     "yargs": "^18.0.0"
@@ -57,7 +57,7 @@
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.25",
+    "@types/node": "^20.19.26",
     "@types/yargs": "^17.0.35",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
