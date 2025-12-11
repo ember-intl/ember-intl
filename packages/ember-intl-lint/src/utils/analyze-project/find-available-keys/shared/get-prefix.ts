@@ -16,7 +16,11 @@ export function getPrefix(data: Data): string | undefined {
   }
 
   const { dir } = parseFilePath(data.filePath);
-  const prefix = relative(data.rootDir, dir).replaceAll(separator, '.');
+  const relativePath = relative(data.rootDir, dir);
 
-  return `${prefix}.`;
+  if (relativePath === '') {
+    return '';
+  }
+
+  return `${relativePath.replaceAll(separator, '.')}.`;
 }
