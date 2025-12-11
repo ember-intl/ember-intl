@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 0.2.1
+
+### Patch Changes
+
+- [#2035](https://github.com/ember-intl/ember-intl/pull/2035) Handled top-level translation files with wrapTranslationsWithNamespace: true ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.2.0
 
 ### Minor Changes
