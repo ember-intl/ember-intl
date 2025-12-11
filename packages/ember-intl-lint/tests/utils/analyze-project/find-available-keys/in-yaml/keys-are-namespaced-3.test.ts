@@ -15,6 +15,7 @@ test('utils | analyze-project | find-available-keys | in-yaml > keys are namespa
     `  rating: Rating`,
     `  rating-value: "{productRating} out of 5 stars"`,
     `  seller: Seller`,
+    `title: "{productName}"`,
     ``,
   ]);
 
@@ -35,5 +36,6 @@ test('utils | analyze-project | find-available-keys | in-yaml > keys are namespa
     'components.products.product.details.rating-value':
       '{productRating} out of 5 stars',
     'components.products.product.details.seller': 'Seller',
+    'components.products.product.title': '{productName}',
   });
 });

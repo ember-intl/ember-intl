@@ -18,6 +18,7 @@ test('utils | analyze-project | find-available-keys | in-json > keys are namespa
       'rating-value': '{productRating} out of 5 stars',
       seller: 'Seller',
     },
+    title: '{productName}',
   });
 
   const translationObject = inJson(file, {
@@ -37,5 +38,6 @@ test('utils | analyze-project | find-available-keys | in-json > keys are namespa
     'components.products.product.details.rating-value':
       '{productRating} out of 5 stars',
     'components.products.product.details.seller': 'Seller',
+    'components.products.product.title': '{productName}',
   });
 });
