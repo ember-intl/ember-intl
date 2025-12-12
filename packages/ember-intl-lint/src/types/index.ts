@@ -36,7 +36,10 @@ type IcuArgumentType =
   | 'select'
   | 'time';
 
-type LintMethod = (project: Project, lintOptions?: LintOptions) => Failed;
+type LintMethod = (data: {
+  lintOptions?: LintOptions;
+  project: Project;
+}) => Failed;
 
 type LintOptions = Record<string, unknown>;
 

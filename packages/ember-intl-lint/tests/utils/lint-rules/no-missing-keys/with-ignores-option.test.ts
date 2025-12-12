@@ -61,8 +61,11 @@ test('utils | lint-project | no-missing-keys > with ignores option', function ()
     ]),
   });
 
-  const failed = noMissingKeys(project, {
-    ignores: ['key01', 'key03', 'key05', 'key07'],
+  const failed = noMissingKeys({
+    lintOptions: {
+      ignores: ['key01', 'key03', 'key05', 'key07'],
+    },
+    project,
   });
   const keys = failed.map(({ key }) => key);
 

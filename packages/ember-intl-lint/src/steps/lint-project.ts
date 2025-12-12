@@ -21,9 +21,9 @@ export function lintProject(project: Project, options: Options): LintResults {
     }
 
     if (lintOptions === true) {
-      lintResults[lintRule] = lintMethod(project);
+      lintResults[lintRule] = lintMethod({ project });
     } else {
-      lintResults[lintRule] = lintMethod(project, lintOptions);
+      lintResults[lintRule] = lintMethod({ lintOptions, project });
     }
   }
 
