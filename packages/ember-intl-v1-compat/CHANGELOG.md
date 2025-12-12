@@ -1,5 +1,12 @@
 # @ember-intl/v1-compat
 
+## 1.0.1
+
+### Patch Changes
+
+- [#2036](https://github.com/ember-intl/ember-intl/pull/2036) Specified repository.directory for npm ([@ijlee2](https://github.com/ijlee2))
+- [#2036](https://github.com/ember-intl/ember-intl/pull/2036) Updated README ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.0
 
 - Stable release

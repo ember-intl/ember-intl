@@ -1,4 +1,12 @@
-# Changelog
+# ember-intl
+
+## 8.0.1
+
+### Patch Changes
+
+- [#2037](https://github.com/ember-intl/ember-intl/pull/2037) Updated @embroider/addon-dev to 8.1.2 ([@ijlee2](https://github.com/ijlee2))
+- [#2036](https://github.com/ember-intl/ember-intl/pull/2036) Specified repository.directory for npm ([@ijlee2](https://github.com/ijlee2))
+- [#2036](https://github.com/ember-intl/ember-intl/pull/2036) Updated README ([@ijlee2](https://github.com/ijlee2))
 
 ## 8.0.0
 

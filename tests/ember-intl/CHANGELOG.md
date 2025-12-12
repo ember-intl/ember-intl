@@ -1,5 +1,11 @@
 # Changelog for test-app-for-ember-intl
 
+## 1.6.6
+
+### Patch Changes
+
+- [#2037](https://github.com/ember-intl/ember-intl/pull/2037) Documented the use of signDisplay for {{format-number}} ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.6.5
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @ember-intl/lint
 
+## 0.2.2
+
+### Patch Changes
+
+- [#2039](https://github.com/ember-intl/ember-intl/pull/2039) Refactored code ([@ijlee2](https://github.com/ijlee2))
+- [#2038](https://github.com/ember-intl/ember-intl/pull/2038) Refactored code ([@ijlee2](https://github.com/ijlee2))
+- [#2036](https://github.com/ember-intl/ember-intl/pull/2036) Specified repository.directory for npm ([@ijlee2](https://github.com/ijlee2))
+- [#2036](https://github.com/ember-intl/ember-intl/pull/2036) Updated README ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.2.1
 
 ### Patch Changes
