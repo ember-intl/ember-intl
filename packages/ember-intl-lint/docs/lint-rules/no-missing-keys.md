@@ -2,7 +2,7 @@
 
 ## Why use it?
 
-The rule finds translation keys that are used in the source code, but aren't defined in a translation file (yours or an addon's).
+The rule finds missing translation keys. In other words, keys that are used in the source code, but aren't defined in a translation file (yours or an addon's).
 
 
 ## Options for `lintRules`
@@ -13,6 +13,6 @@ Ignore keys that fail this rule.
 
 ```js
 'no-missing-keys': {
-  ignores: ['hello.message']
-}
+  ignores: ['hello.message'],
+},
 ```

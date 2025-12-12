@@ -4,10 +4,7 @@
 
 # ember-intl
 
-
-## Installation
-
-See https://ember-intl.github.io/ember-intl/docs/quickstart.
+_Internationalization for Ember projects_
 
 
 ## Features
@@ -21,9 +18,8 @@ See https://ember-intl.github.io/ember-intl/docs/quickstart.
 
 ## Documentation
 
-- [8.x (stable)](https://ember-intl.github.io/ember-intl/)
-- [7.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v7.4.1/)
-- [Changelog](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl/CHANGELOG.md)
+- [Changelog](./CHANGELOG.md)
+- [Quickstart](https://ember-intl.github.io/ember-intl/docs/quickstart)
 
 
 ## Compatibility
@@ -39,4 +35,4 @@ See the [Contributing](../../CONTRIBUTING.md) guide for details.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [MIT License](./LICENSE.md).

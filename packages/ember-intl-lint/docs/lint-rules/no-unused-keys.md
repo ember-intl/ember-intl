@@ -2,7 +2,7 @@
 
 ## Why use it?
 
-The rule finds translation keys that are defined in a translation file (yours), but aren't used in the source code.
+The rule finds unused translation keys. In other words, keys that are defined in a translation file (yours), but aren't used in the source code.
 
 
 ## Options for `lintRules`
@@ -13,6 +13,6 @@ Ignore keys that fail this rule.
 
 ```js
 'no-unused-keys': {
-  ignores: ['hello.message']
-}
+  ignores: ['hello.message'],
+},
 ```

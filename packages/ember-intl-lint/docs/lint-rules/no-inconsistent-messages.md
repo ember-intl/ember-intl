@@ -18,6 +18,6 @@ Ignore keys that fail this rule.
 
 ```js
 'no-inconsistent-messages': {
-  ignores: ['hello.message']
-}
+  ignores: ['hello.message'],
+},
 ```
