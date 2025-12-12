@@ -55,7 +55,7 @@ test('utils | analyze-project | find-available-keys | in-yaml > base case', func
   const translationObject = inYaml(file, {
     filePath: 'translations/en-us.yaml',
     namespaceKeys: false,
-    rootDir: 'translations',
+    translationsDir: 'translations',
   });
 
   assert.deepStrictEqual(translationObject, {

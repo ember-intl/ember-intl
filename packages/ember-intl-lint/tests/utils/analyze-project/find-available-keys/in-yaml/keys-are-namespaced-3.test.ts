@@ -22,7 +22,7 @@ test('utils | analyze-project | find-available-keys | in-yaml > keys are namespa
   const translationObject = inYaml(file, {
     filePath: 'translations/components/products/product/en-us.yaml',
     namespaceKeys: true,
-    rootDir: 'translations',
+    translationsDir: 'translations',
   });
 
   assert.deepStrictEqual(translationObject, {

@@ -59,7 +59,7 @@ type Project = {
       format: 'json' | 'yaml';
       isInternal: boolean;
       locale: Locale;
-      rootDir: string;
+      translationsDir: string;
     }
   >;
   usedKeys: Map<TranslationKey, SourceFilePath[]>;

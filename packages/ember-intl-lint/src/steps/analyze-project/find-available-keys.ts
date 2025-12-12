@@ -23,7 +23,7 @@ export function findAvailableKeys(
     const translationObject = parser(file, {
       filePath,
       namespaceKeys: config.buildOptions.wrapTranslationsWithNamespace,
-      rootDir: data.rootDir,
+      translationsDir: data.translationsDir,
     });
 
     for (const [key, message] of Object.entries(translationObject)) {
