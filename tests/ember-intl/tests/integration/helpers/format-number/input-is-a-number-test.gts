@@ -63,12 +63,18 @@ module(
           <div data-test-output="2">
             {{formatNumber self.number notation="compact"}}
           </div>
+
+          <div data-test-output="3">
+            {{formatNumber self.number signDisplay="always"}}
+          </div>
         </template>,
       );
 
       assert.dom('[data-test-output="1"]').hasText('12,346,000');
 
       assert.dom('[data-test-output="2"]').hasText('12M');
+
+      assert.dom('[data-test-output="3"]').hasText('+12,345,678.9');
     });
 
     test('we can specify the locale', async function (this: TestContext, assert) {

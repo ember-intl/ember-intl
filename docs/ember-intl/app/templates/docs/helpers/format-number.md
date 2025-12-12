@@ -74,6 +74,7 @@ You can use named arguments to pass [options that `Intl.NumberFormat` supports](
 - `currency`
 - `maximumFractionDigits`
 - `maximumSignificantDigits`
+- `signDisplay`
 - `style`
 
 <DocsDemo as |demo|>
