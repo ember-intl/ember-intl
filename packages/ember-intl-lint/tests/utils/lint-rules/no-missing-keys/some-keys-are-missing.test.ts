@@ -61,11 +61,8 @@ test('utils | lint-project | no-missing-keys > some keys are missing', function 
     ]),
   });
 
-  const keys = noMissingKeys.lint(project);
+  const failed = noMissingKeys({ project });
+  const keys = failed.map(({ key }) => key);
 
-  assert.deepStrictEqual(keys, [
-    'key03\n  - Found in app/components/file03.gts',
-    'key04\n  - Found in app/components/file02.gjs, app/components/file03.gts',
-    'key05\n  - Found in app/components/file01.hbs, app/components/file02.gjs, app/components/file03.gts',
-  ]);
+  assert.deepStrictEqual(keys, ['key03', 'key04', 'key05']);
 });

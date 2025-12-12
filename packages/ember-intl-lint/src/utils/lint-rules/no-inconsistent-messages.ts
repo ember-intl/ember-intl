@@ -11,10 +11,6 @@ import {
   listFilePaths,
 } from './shared/index.js';
 
-type LintOptions = {
-  ignores: TranslationKey[];
-};
-
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
     for (let j = i + 1; j < allIcuArguments.length; j++) {
@@ -27,7 +23,14 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   return true;
 }
 
-function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
+export function noInconsistentMessages(data: {
+  lintOptions?: Partial<{
+    ignores: TranslationKey[];
+  }>;
+  project: Project;
+}): Failed {
+  const { lintOptions, project } = data;
+
   const ownLocales = getOwnLocales(project);
   const ownTranslations = getOwnTranslations(project);
 
@@ -72,12 +75,12 @@ function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
     const filePaths = Array.from(mapping.values()).map(
       ({ filePath }) => filePath,
     );
-    const details = listFilePaths(filePaths);
 
-    failed.push([key, details].join('\n'));
+    failed.push({
+      key,
+      details: listFilePaths(filePaths),
+    });
   });
 
   return failed;
 }
-
-export const noInconsistentMessages = { lint };

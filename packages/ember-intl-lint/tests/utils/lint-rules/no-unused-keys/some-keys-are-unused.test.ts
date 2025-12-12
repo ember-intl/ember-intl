@@ -61,10 +61,8 @@ test('utils | lint-project | no-unused-keys > some keys are unused', function ()
     ]),
   });
 
-  const keys = noUnusedKeys.lint(project);
+  const failed = noUnusedKeys({ project });
+  const keys = failed.map(({ key }) => key);
 
-  assert.deepStrictEqual(keys, [
-    'key01\n  - Found in translations/de-de.json',
-    'key02\n  - Found in translations/en-us.json',
-  ]);
+  assert.deepStrictEqual(keys, ['key01', 'key02']);
 });

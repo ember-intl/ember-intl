@@ -21,7 +21,10 @@ type Config = {
   lintRules: Record<LintRule, boolean | LintOptions>;
 };
 
-type Failed = string[];
+type Failed = {
+  details: string;
+  key: string;
+}[];
 
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 
@@ -33,7 +36,10 @@ type IcuArgumentType =
   | 'select'
   | 'time';
 
-type LintMethod = (project: Project, lintOptions?: LintOptions) => Failed;
+type LintMethod = (data: {
+  lintOptions?: LintOptions;
+  project: Project;
+}) => Failed;
 
 type LintOptions = Record<string, unknown>;
 

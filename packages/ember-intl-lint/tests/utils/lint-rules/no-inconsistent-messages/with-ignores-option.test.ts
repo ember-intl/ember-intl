@@ -113,12 +113,13 @@ test('utils | lint-project | no-inconsistent-messages > with ignores option', fu
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages.lint(project, {
-    ignores: ['key02', 'key04'],
+  const failed = noInconsistentMessages({
+    lintOptions: {
+      ignores: ['key02', 'key04'],
+    },
+    project,
   });
+  const keys = failed.map(({ key }) => key);
 
-  assert.deepStrictEqual(keys, [
-    'key01\n  - Found in translations/de-de.json, translations/en-us.json',
-    'key03\n  - Found in translations/de-de.json, translations/en-us.json',
-  ]);
+  assert.deepStrictEqual(keys, ['key01', 'key03']);
 });

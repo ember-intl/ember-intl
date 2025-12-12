@@ -1,11 +1,14 @@
 import type { Failed, Project, TranslationKey } from '../../types/index.js';
 import { getOwnTranslations, listFilePaths } from './shared/index.js';
 
-type LintOptions = {
-  ignores: TranslationKey[];
-};
+export function noUnusedKeys(data: {
+  lintOptions?: Partial<{
+    ignores: TranslationKey[];
+  }>;
+  project: Project;
+}): Failed {
+  const { lintOptions, project } = data;
 
-function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
   const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
@@ -35,12 +38,12 @@ function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
     const filePaths = Array.from(mapping.values()).map(
       ({ filePath }) => filePath,
     );
-    const details = listFilePaths(filePaths);
 
-    failed.push([key, details].join('\n'));
+    failed.push({
+      key,
+      details: listFilePaths(filePaths),
+    });
   });
 
   return failed;
 }
-
-export const noUnusedKeys = { lint };

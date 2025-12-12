@@ -10,9 +10,9 @@ export function lintProject(project: Project, options: Options): LintResults {
   const { config } = options;
   const lintResults: Partial<LintResults> = {};
 
-  for (const [lintRule, { lint }] of Object.entries(lintRuleMapping) as [
+  for (const [lintRule, lintMethod] of Object.entries(lintRuleMapping) as [
     LintRule,
-    { lint: LintMethod },
+    LintMethod,
   ][]) {
     const lintOptions = config.lintRules[lintRule];
 
@@ -21,9 +21,9 @@ export function lintProject(project: Project, options: Options): LintResults {
     }
 
     if (lintOptions === true) {
-      lintResults[lintRule] = lint(project);
+      lintResults[lintRule] = lintMethod({ project });
     } else {
-      lintResults[lintRule] = lint(project, lintOptions);
+      lintResults[lintRule] = lintMethod({ lintOptions, project });
     }
   }
 
