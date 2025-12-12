@@ -5,10 +5,7 @@ type LintOptions = {
   ignores: TranslationKey[];
 };
 
-export function noUnusedKeys(
-  project: Project,
-  lintOptions?: Partial<LintOptions>,
-): Failed {
+function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
   const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
@@ -45,3 +42,5 @@ export function noUnusedKeys(
 
   return failed;
 }
+
+export const noUnusedKeys = { lint };

@@ -113,7 +113,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages(project);
+  const keys = noInconsistentMessages.lint(project);
 
   assert.deepStrictEqual(keys, []);
 });

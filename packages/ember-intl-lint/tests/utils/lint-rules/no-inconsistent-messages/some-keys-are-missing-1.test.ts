@@ -110,7 +110,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (1
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages(project);
+  const keys = noInconsistentMessages.lint(project);
 
   assert.deepStrictEqual(keys, [
     'key01\n  - Found in translations/de-de.json, translations/en-us.json',
