@@ -3,7 +3,7 @@ import {
   noInconsistentMessages,
   noMissingKeys,
   noUnusedKeys,
-} from './lint-project/index.js';
+} from './lint-rules/index.js';
 
 export const lintRules = [
   'no-inconsistent-messages',

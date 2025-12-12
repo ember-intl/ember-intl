@@ -1,16 +1,16 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { noUnusedKeys } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 
-test('utils | lint-project | no-unused-keys > base case', function () {
+test('utils | lint-project | no-inconsistent-messages > base case', function () {
   const project = normalizeProject({
     availableKeys: new Map(),
     translationFiles: new Map(),
     usedKeys: new Map(),
   });
 
-  const keys = noUnusedKeys(project);
+  const keys = noInconsistentMessages(project);
 
   assert.deepStrictEqual(keys, []);
 });

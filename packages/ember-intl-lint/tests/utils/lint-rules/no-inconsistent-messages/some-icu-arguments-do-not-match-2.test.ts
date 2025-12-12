@@ -1,7 +1,7 @@
 import { assert, test } from '@codemod-utils/tests';
 
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
-import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 

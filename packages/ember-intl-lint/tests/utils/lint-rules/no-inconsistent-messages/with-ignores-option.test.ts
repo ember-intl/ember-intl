@@ -1,11 +1,11 @@
 import { assert, test } from '@codemod-utils/tests';
 
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
-import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 
-test('utils | lint-project | no-inconsistent-messages > some ICU arguments do not match (1)', function () {
+test('utils | lint-project | no-inconsistent-messages > with ignores option', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [
@@ -113,12 +113,12 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages(project);
+  const keys = noInconsistentMessages(project, {
+    ignores: ['key02', 'key04'],
+  });
 
   assert.deepStrictEqual(keys, [
     'key01\n  - Found in translations/de-de.json, translations/en-us.json',
-    'key02\n  - Found in translations/de-de.json, translations/en-us.json',
     'key03\n  - Found in translations/de-de.json, translations/en-us.json',
-    'key04\n  - Found in translations/de-de.json, translations/en-us.json',
   ]);
 });

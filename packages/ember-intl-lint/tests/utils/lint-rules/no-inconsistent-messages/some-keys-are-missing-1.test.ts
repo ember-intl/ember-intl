@@ -1,10 +1,10 @@
 import { assert, test } from '@codemod-utils/tests';
 
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
-import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 
-test('utils | lint-project | no-inconsistent-messages > some keys are missing (2)', function () {
+test('utils | lint-project | no-inconsistent-messages > some keys are missing (1)', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [
@@ -13,7 +13,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           [
             'de-de',
             {
-              filePath: 'node_modules/my-v1-addon/translations/de-de.json',
+              filePath: 'translations/de-de.json',
               icuArguments: findIcuArguments('Hallo!'),
               message: 'Hallo!',
             },
@@ -21,7 +21,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           [
             'en-us',
             {
-              filePath: 'node_modules/my-v1-addon/translations/en-us.json',
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments('Hello!'),
               message: 'Hello!',
             },
@@ -34,7 +34,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           [
             'en-us',
             {
-              filePath: 'node_modules/my-v2-addon/translations/en-us.json',
+              filePath: 'translations/en-us.json',
               icuArguments: findIcuArguments('Hello, {name}!'),
               message: 'Hello, {name}!',
             },
@@ -76,7 +76,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'de-de',
-          rootDir: 'node_modules/my-v1-addon/translations',
+          rootDir: 'translations',
         },
       ],
       [
@@ -85,7 +85,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'en-us',
-          rootDir: 'node_modules/my-v1-addon/translations',
+          rootDir: 'translations',
         },
       ],
       [
@@ -94,7 +94,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'de-de',
-          rootDir: 'node_modules/my-v2-addon/translations',
+          rootDir: 'translations',
         },
       ],
       [
@@ -103,7 +103,7 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
           format: 'json',
           isInternal: false,
           locale: 'en-us',
-          rootDir: 'node_modules/my-v2-addon/translations',
+          rootDir: 'translations',
         },
       ],
     ]),
@@ -112,5 +112,8 @@ test('utils | lint-project | no-inconsistent-messages > some keys are missing (2
 
   const keys = noInconsistentMessages(project);
 
-  assert.deepStrictEqual(keys, []);
+  assert.deepStrictEqual(keys, [
+    'key01\n  - Found in translations/de-de.json, translations/en-us.json',
+    'key02\n  - Found in translations/en-us.json',
+  ]);
 });

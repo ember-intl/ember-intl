@@ -1,13 +1,13 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { noMissingKeys } from '../../../../src/utils/lint-project/index.js';
+import { noUnusedKeys } from '../../../../src/utils/lint-rules/index.js';
 import {
   normalizeProject,
   stubMapping,
   stubTranslationFiles,
 } from '../../../helpers/index.js';
 
-test('utils | lint-project | no-missing-keys > all keys are present', function () {
+test('utils | lint-project | no-unused-keys > all keys are used', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [
@@ -94,7 +94,7 @@ test('utils | lint-project | no-missing-keys > all keys are present', function (
     ]),
   });
 
-  const keys = noMissingKeys(project);
+  const keys = noUnusedKeys(project);
 
   assert.deepStrictEqual(keys, []);
 });
