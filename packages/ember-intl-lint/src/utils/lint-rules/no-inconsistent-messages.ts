@@ -27,7 +27,10 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   return true;
 }
 
-function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
+export function noInconsistentMessages(
+  project: Project,
+  lintOptions?: Partial<LintOptions>,
+): Failed {
   const ownLocales = getOwnLocales(project);
   const ownTranslations = getOwnTranslations(project);
 
@@ -79,5 +82,3 @@ function lint(project: Project, lintOptions?: Partial<LintOptions>): Failed {
 
   return failed;
 }
-
-export const noInconsistentMessages = { lint };

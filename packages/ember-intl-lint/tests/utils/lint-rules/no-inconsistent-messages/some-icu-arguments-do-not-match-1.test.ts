@@ -113,7 +113,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages.lint(project);
+  const keys = noInconsistentMessages(project);
 
   assert.deepStrictEqual(keys, [
     'key01\n  - Found in translations/de-de.json, translations/en-us.json',

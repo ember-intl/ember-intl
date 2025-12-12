@@ -61,7 +61,7 @@ test('utils | lint-project | no-unused-keys > with ignores option', function () 
     ]),
   });
 
-  const keys = noUnusedKeys.lint(project, {
+  const keys = noUnusedKeys(project, {
     ignores: ['key01', 'key03', 'key05', 'key07'],
   });
 

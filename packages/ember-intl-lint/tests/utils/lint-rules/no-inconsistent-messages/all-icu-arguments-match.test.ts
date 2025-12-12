@@ -188,7 +188,7 @@ test('utils | lint-project | no-inconsistent-messages > all ICU arguments match'
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages.lint(project);
+  const keys = noInconsistentMessages(project);
 
   assert.deepStrictEqual(keys, []);
 });

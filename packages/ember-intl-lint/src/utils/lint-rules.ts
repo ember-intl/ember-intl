@@ -13,12 +13,7 @@ export const lintRules = [
 
 export type LintRule = (typeof lintRules)[number];
 
-export const lintRuleMapping: Record<
-  LintRule,
-  {
-    lint: LintMethod;
-  }
-> = {
+export const lintRuleMapping: Record<LintRule, LintMethod> = {
   'no-inconsistent-messages': noInconsistentMessages,
   'no-missing-keys': noMissingKeys,
   'no-unused-keys': noUnusedKeys,
