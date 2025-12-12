@@ -1,7 +1,7 @@
 import { assert, test } from '@codemod-utils/tests';
 
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
-import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import {
   normalizeProject,
   stubTranslationFiles,
@@ -188,7 +188,7 @@ test('utils | lint-project | no-inconsistent-messages > all ICU arguments match'
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages(project);
+  const keys = noInconsistentMessages.lint(project);
 
   assert.deepStrictEqual(keys, []);
 });

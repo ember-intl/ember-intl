@@ -1,6 +1,6 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { noUnusedKeys } from '../../../../src/utils/lint-project/index.js';
+import { noUnusedKeys } from '../../../../src/utils/lint-rules/index.js';
 import {
   normalizeProject,
   stubMapping,
@@ -94,7 +94,7 @@ test('utils | lint-project | no-unused-keys > all keys are used', function () {
     ]),
   });
 
-  const keys = noUnusedKeys(project);
+  const keys = noUnusedKeys.lint(project);
 
   assert.deepStrictEqual(keys, []);
 });

@@ -1,9 +1,8 @@
-import { join, normalize } from 'node:path';
+import { join, normalize, sep } from 'node:path';
 
 import { findFiles, parseFilePath } from '@codemod-utils/files';
 
 import type { Options, Project } from '../../types/index.js';
-import { unnormalizedJoin } from '../../utils/files/index.js';
 
 function getFormat(ext: string): 'json' | 'yaml' {
   return ext === '.json' ? 'json' : 'yaml';
@@ -15,11 +14,14 @@ export function findTranslationFiles(
   const { config, projectRoot } = options;
   const translationFiles: Project['translationFiles'] = new Map();
 
-  let rootDir = normalize(config.buildOptions.inputPath);
+  let translationsDir = normalize(config.buildOptions.inputPath);
 
-  let filePaths = findFiles(unnormalizedJoin(rootDir, '**/*.{json,yaml,yml}'), {
-    projectRoot,
-  });
+  let filePaths = findFiles(
+    join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/'),
+    {
+      projectRoot,
+    },
+  );
 
   filePaths.forEach((filePath) => {
     const { ext, name } = parseFilePath(filePath);
@@ -28,16 +30,19 @@ export function findTranslationFiles(
       format: getFormat(ext),
       isInternal: true,
       locale: name,
-      rootDir,
+      translationsDir,
     });
   });
 
   config.addonPaths.forEach((addonPath) => {
-    rootDir = join(addonPath, 'translations');
+    translationsDir = join(addonPath, 'translations');
 
-    filePaths = findFiles(unnormalizedJoin(rootDir, '**/*.{json,yaml,yml}'), {
-      projectRoot,
-    });
+    filePaths = findFiles(
+      join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/'),
+      {
+        projectRoot,
+      },
+    );
 
     filePaths.forEach((filePath) => {
       const { ext, name } = parseFilePath(filePath);
@@ -46,7 +51,7 @@ export function findTranslationFiles(
         format: getFormat(ext),
         isInternal: false,
         locale: name,
-        rootDir,
+        translationsDir,
       });
     });
   });

@@ -8,7 +8,7 @@ test('utils | analyze-project | find-available-keys | in-json > file is empty', 
   const translationObject = inJson(file, {
     filePath: 'translations/en-us.json',
     namespaceKeys: false,
-    rootDir: 'translations',
+    translationsDir: 'translations',
   });
 
   assert.deepStrictEqual(translationObject, {});

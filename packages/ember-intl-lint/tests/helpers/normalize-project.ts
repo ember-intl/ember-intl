@@ -25,7 +25,7 @@ export function normalizeProject(project: Project): Project {
   project.translationFiles.forEach((data, translationFilePath) => {
     normalized.translationFiles.set(normalize(translationFilePath), {
       ...data,
-      rootDir: normalize(data.rootDir),
+      translationsDir: normalize(data.translationsDir),
     });
   });
 

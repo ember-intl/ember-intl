@@ -8,7 +8,7 @@ export function stubTranslationFiles(): Project['translationFiles'] {
         format: 'json',
         isInternal: true,
         locale: 'de-de',
-        rootDir: 'translations',
+        translationsDir: 'translations',
       },
     ],
     [
@@ -17,7 +17,7 @@ export function stubTranslationFiles(): Project['translationFiles'] {
         format: 'json',
         isInternal: true,
         locale: 'en-us',
-        rootDir: 'translations',
+        translationsDir: 'translations',
       },
     ],
     [
@@ -26,7 +26,7 @@ export function stubTranslationFiles(): Project['translationFiles'] {
         format: 'json',
         isInternal: false,
         locale: 'de-de',
-        rootDir: 'node_modules/my-v1-addon/translations',
+        translationsDir: 'node_modules/my-v1-addon/translations',
       },
     ],
     [
@@ -35,7 +35,7 @@ export function stubTranslationFiles(): Project['translationFiles'] {
         format: 'json',
         isInternal: false,
         locale: 'en-us',
-        rootDir: 'node_modules/my-v1-addon/translations',
+        translationsDir: 'node_modules/my-v1-addon/translations',
       },
     ],
     [
@@ -44,7 +44,7 @@ export function stubTranslationFiles(): Project['translationFiles'] {
         format: 'json',
         isInternal: false,
         locale: 'de-de',
-        rootDir: 'node_modules/my-v2-addon/translations',
+        translationsDir: 'node_modules/my-v2-addon/translations',
       },
     ],
     [
@@ -53,7 +53,7 @@ export function stubTranslationFiles(): Project['translationFiles'] {
         format: 'json',
         isInternal: false,
         locale: 'en-us',
-        rootDir: 'node_modules/my-v2-addon/translations',
+        translationsDir: 'node_modules/my-v2-addon/translations',
       },
     ],
   ]);

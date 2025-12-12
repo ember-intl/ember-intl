@@ -1,6 +1,6 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 
 test('utils | lint-project | no-inconsistent-messages > base case', function () {
@@ -10,7 +10,7 @@ test('utils | lint-project | no-inconsistent-messages > base case', function () 
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages(project);
+  const keys = noInconsistentMessages.lint(project);
 
   assert.deepStrictEqual(keys, []);
 });

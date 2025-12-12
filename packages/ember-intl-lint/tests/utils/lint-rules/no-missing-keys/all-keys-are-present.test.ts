@@ -1,13 +1,13 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { noUnusedKeys } from '../../../../src/utils/lint-project/index.js';
+import { noMissingKeys } from '../../../../src/utils/lint-rules/index.js';
 import {
   normalizeProject,
   stubMapping,
   stubTranslationFiles,
 } from '../../../helpers/index.js';
 
-test('utils | lint-project | no-unused-keys > some keys are unused', function () {
+test('utils | lint-project | no-missing-keys > all keys are present', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [
@@ -22,6 +22,36 @@ test('utils | lint-project | no-unused-keys > some keys are unused', function ()
         stubMapping({
           message: '{timestamp, date, long}',
           translationFilePaths: ['translations/en-us.json'],
+        }),
+      ],
+      [
+        'key03',
+        stubMapping({
+          message: '{name}',
+          translationFilePaths: [
+            'translations/de-de.json',
+            'translations/en-us.json',
+          ],
+        }),
+      ],
+      [
+        'key04',
+        stubMapping({
+          message:
+            '{itemCount, plural, =0 {You have no items.} one {You have {itemCount, number} item.} other {You have {itemCount, number} items.}}',
+          translationFilePaths: [
+            'translations/de-de.json',
+            'translations/en-us.json',
+          ],
+        }),
+      ],
+      [
+        'key05',
+        stubMapping({
+          message: '{proportion, number, ::percent}',
+          translationFilePaths: [
+            'node_modules/my-v1-addon/translations/en-us.json',
+          ],
         }),
       ],
       [
@@ -47,6 +77,8 @@ test('utils | lint-project | no-unused-keys > some keys are unused', function ()
     ]),
     translationFiles: stubTranslationFiles(),
     usedKeys: new Map([
+      ['key01', ['app/components/file01.hbs']],
+      ['key02', ['app/components/file02.gjs']],
       ['key03', ['app/components/file03.gts']],
       ['key04', ['app/components/file02.gjs', 'app/components/file03.gts']],
       [
@@ -58,13 +90,11 @@ test('utils | lint-project | no-unused-keys > some keys are unused', function ()
         ],
       ],
       ['key06', ['app/templates/file01.hbs', 'app/templates/file02.gjs']],
+      ['key07', ['app/components/file03.gts', 'app/templates/file03.gts']],
     ]),
   });
 
-  const keys = noUnusedKeys(project);
+  const keys = noMissingKeys.lint(project);
 
-  assert.deepStrictEqual(keys, [
-    'key01\n  - Found in translations/de-de.json',
-    'key02\n  - Found in translations/en-us.json',
-  ]);
+  assert.deepStrictEqual(keys, []);
 });

@@ -1,11 +1,11 @@
 import { assert, test } from '@codemod-utils/tests';
 
 import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
-import { noInconsistentMessages } from '../../../../src/utils/lint-project/index.js';
+import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 
-test('utils | lint-project | no-inconsistent-messages > some ICU arguments do not match (1)', function () {
+test('utils | lint-project | no-inconsistent-messages > some ICU arguments do not match (2)', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [
@@ -14,7 +14,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'de-de',
             {
-              filePath: 'translations/de-de.json',
+              filePath: 'node_modules/my-v1-addon/translations/de-de.json',
               icuArguments: findIcuArguments('{name}'),
               message: '{name}',
             },
@@ -22,7 +22,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'en-us',
             {
-              filePath: 'translations/en-us.json',
+              filePath: 'node_modules/my-v1-addon/translations/en-us.json',
               icuArguments: findIcuArguments('name'),
               message: 'name',
             },
@@ -35,7 +35,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'de-de',
             {
-              filePath: 'translations/de-de.json',
+              filePath: 'node_modules/my-v2-addon/translations/de-de.json',
               icuArguments: findIcuArguments(
                 'Es ist jetzt {timestamp, time, short}.',
               ),
@@ -45,7 +45,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'en-us',
             {
-              filePath: 'translations/en-us.json',
+              filePath: 'node_modules/my-v2-addon/translations/en-us.json',
               icuArguments: findIcuArguments(
                 'It is now {timestamp, date, short}',
               ),
@@ -60,7 +60,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'de-de',
             {
-              filePath: 'translations/de-de.json',
+              filePath: 'node_modules/my-v1-addon/translations/de-de.json',
               icuArguments: findIcuArguments(
                 'Du hast {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}. {percentage}% davon sind neu.',
               ),
@@ -71,7 +71,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'en-us',
             {
-              filePath: 'translations/en-us.json',
+              filePath: 'node_modules/my-v2-addon/translations/en-us.json',
               icuArguments: findIcuArguments(
                 'You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}. {proportion, number, ::percent} of them are new.',
               ),
@@ -87,7 +87,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'de-de',
             {
-              filePath: 'translations/de-de.json',
+              filePath: 'node_modules/my-v2-addon/translations/de-de.json',
               icuArguments: findIcuArguments(
                 '<a href="{url}" rel="noopener noreferrer" target="_blank">AGB</a>',
               ),
@@ -98,7 +98,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
           [
             'en-us',
             {
-              filePath: 'translations/en-us.json',
+              filePath: 'node_modules/my-v1-addon/translations/en-us.json',
               icuArguments: findIcuArguments(
                 '<a class="{class}" href="{url}" target="_blank">Terms and Conditions</a>',
               ),
@@ -113,12 +113,7 @@ test('utils | lint-project | no-inconsistent-messages > some ICU arguments do no
     usedKeys: new Map(),
   });
 
-  const keys = noInconsistentMessages(project);
+  const keys = noInconsistentMessages.lint(project);
 
-  assert.deepStrictEqual(keys, [
-    'key01\n  - Found in translations/de-de.json, translations/en-us.json',
-    'key02\n  - Found in translations/de-de.json, translations/en-us.json',
-    'key03\n  - Found in translations/de-de.json, translations/en-us.json',
-    'key04\n  - Found in translations/de-de.json, translations/en-us.json',
-  ]);
+  assert.deepStrictEqual(keys, []);
 });

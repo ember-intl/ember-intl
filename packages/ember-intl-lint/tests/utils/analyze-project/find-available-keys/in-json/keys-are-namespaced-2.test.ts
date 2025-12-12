@@ -18,7 +18,7 @@ test('utils | analyze-project | find-available-keys | in-json > keys are namespa
   const translationObject = inJson(file, {
     filePath: 'translations/components/products/product/en-us.json',
     namespaceKeys: true,
-    rootDir: 'translations',
+    translationsDir: 'translations',
   });
 
   assert.deepStrictEqual(translationObject, {

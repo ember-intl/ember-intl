@@ -7,16 +7,16 @@ import type { TranslationFilePath } from '../../../../types/index.js';
 type Data = {
   filePath: TranslationFilePath;
   namespaceKeys: boolean;
-  rootDir: string;
+  translationsDir: string;
 };
 
-export function getPrefix(data: Data): string | undefined {
+export function getPrefix(data: Data): string {
   if (!data.namespaceKeys) {
-    return undefined;
+    return '';
   }
 
   const { dir } = parseFilePath(data.filePath);
-  const relativePath = relative(data.rootDir, dir);
+  const relativePath = relative(data.translationsDir, dir);
 
   if (relativePath === '') {
     return '';
