@@ -61,11 +61,10 @@ test('utils | lint-project | no-missing-keys > with ignores option', function ()
     ]),
   });
 
-  const keys = noMissingKeys(project, {
+  const failed = noMissingKeys(project, {
     ignores: ['key01', 'key03', 'key05', 'key07'],
   });
+  const keys = failed.map(({ key }) => key);
 
-  assert.deepStrictEqual(keys, [
-    'key04\n  - Found in app/components/file02.gjs, app/components/file03.gts',
-  ]);
+  assert.deepStrictEqual(keys, ['key04']);
 });

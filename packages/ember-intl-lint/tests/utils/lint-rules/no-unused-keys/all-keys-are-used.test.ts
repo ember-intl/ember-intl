@@ -94,7 +94,8 @@ test('utils | lint-project | no-unused-keys > all keys are used', function () {
     ]),
   });
 
-  const keys = noUnusedKeys(project);
+  const failed = noUnusedKeys(project);
+  const keys = failed.map(({ key }) => key);
 
   assert.deepStrictEqual(keys, []);
 });

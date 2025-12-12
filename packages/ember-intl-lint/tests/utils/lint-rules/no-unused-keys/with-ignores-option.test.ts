@@ -61,9 +61,10 @@ test('utils | lint-project | no-unused-keys > with ignores option', function () 
     ]),
   });
 
-  const keys = noUnusedKeys(project, {
+  const failed = noUnusedKeys(project, {
     ignores: ['key01', 'key03', 'key05', 'key07'],
   });
+  const keys = failed.map(({ key }) => key);
 
-  assert.deepStrictEqual(keys, ['key02\n  - Found in translations/en-us.json']);
+  assert.deepStrictEqual(keys, ['key02']);
 });

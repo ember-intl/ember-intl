@@ -42,7 +42,7 @@ runCodemod(codemodOptions)
       runFailed = true;
 
       console.log(`❌ ${lintRule} (${failed.length} issues)\n`);
-      console.log(failed.join('\n'));
+      console.log(failed.map(({ key }) => key).join('\n'));
     }
 
     process.exitCode = runFailed ? 1 : 0;

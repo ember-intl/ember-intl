@@ -21,7 +21,10 @@ type Config = {
   lintRules: Record<LintRule, boolean | LintOptions>;
 };
 
-type Failed = string[];
+type Failed = {
+  details: string;
+  key: string;
+}[];
 
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 

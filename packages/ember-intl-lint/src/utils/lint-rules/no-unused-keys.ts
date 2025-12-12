@@ -40,7 +40,7 @@ export function noUnusedKeys(
     );
     const details = listFilePaths(filePaths);
 
-    failed.push([key, details].join('\n'));
+    failed.push({ key, details });
   });
 
   return failed;

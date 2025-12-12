@@ -10,7 +10,8 @@ test('utils | lint-project | no-missing-keys > base case', function () {
     usedKeys: new Map(),
   });
 
-  const keys = noMissingKeys(project);
+  const failed = noMissingKeys(project);
+  const keys = failed.map(({ key }) => key);
 
   assert.deepStrictEqual(keys, []);
 });
