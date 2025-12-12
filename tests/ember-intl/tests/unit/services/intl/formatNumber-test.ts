@@ -28,4 +28,13 @@ module('Unit | Service | intl > formatNumber()', function (hooks) {
       '12.345.678,9',
     );
   });
+
+  test('options.signDisplay', function (this: TestContext, assert) {
+    assert.strictEqual(
+      this.intl.formatNumber(12345678.9, {
+        signDisplay: 'always',
+      }),
+      '+12,345,678.9',
+    );
+  });
 });

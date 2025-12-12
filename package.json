@@ -35,7 +35,6 @@
   },
   "pnpm": {
     "overrides": {
-      "@embroider/addon-dev": "8.1.0",
       "ansi-html": "^0.0.9",
       "form-data": "^4.0.5"
     }
