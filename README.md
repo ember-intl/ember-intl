@@ -4,10 +4,14 @@
 
 # ember-intl
 
+_Internationalization for Ember projects_
 
-## Installation
 
-See https://ember-intl.github.io/ember-intl/docs/quickstart.
+## Package overview
+
+- [ember-intl](./packages/ember-intl/README.md)
+- [@ember-intl/lint](./packages/ember-intl-lint/README.md)
+- [@ember-intl/v1-compat](./packages/ember-intl-v1-compat/README.md)
 
 
 ## Features
@@ -21,9 +25,8 @@ See https://ember-intl.github.io/ember-intl/docs/quickstart.
 
 ## Documentation
 
-- [8.x (stable)](https://ember-intl.github.io/ember-intl/)
-- [7.x (legacy)](https://ember-intl.github.io/ember-intl/versions/v7.4.1/)
-- [Changelog](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl/CHANGELOG.md)
+- [Changelog](./packages/ember-intl/CHANGELOG.md)
+- [Quickstart](https://ember-intl.github.io/ember-intl/docs/quickstart)
 
 
 ## Compatibility

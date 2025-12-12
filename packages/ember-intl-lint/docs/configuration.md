@@ -70,7 +70,7 @@ export default {
 };
 ```
 
-To ignore keys that fail a rule, pass an object with the `ignores` key. For simplicity, only exact matches are supported.
+Lint rules may support different lint options (always as an object). For example, a rule may allow the `ignores` option so that you can ignore translation keys that fail. For simplicity, this option only supports exact matches.
 
 ```js
 /* ember-intl.config.mjs */
@@ -82,3 +82,5 @@ export default {
   },
 };
 ```
+
+See [docs/lint-rules](./lint-rules) to learn more about each rule and the options it supports.
