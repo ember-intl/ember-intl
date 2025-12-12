@@ -1,9 +1,8 @@
-import { join, normalize } from 'node:path';
+import { join, normalize, sep } from 'node:path';
 
 import { findFiles, parseFilePath } from '@codemod-utils/files';
 
 import type { Options, Project } from '../../types/index.js';
-import { unnormalizedJoin } from '../../utils/files/index.js';
 
 function getFormat(ext: string): 'json' | 'yaml' {
   return ext === '.json' ? 'json' : 'yaml';
@@ -18,7 +17,7 @@ export function findTranslationFiles(
   let translationsDir = normalize(config.buildOptions.inputPath);
 
   let filePaths = findFiles(
-    unnormalizedJoin(translationsDir, '**/*.{json,yaml,yml}'),
+    join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/'),
     {
       projectRoot,
     },
@@ -39,7 +38,7 @@ export function findTranslationFiles(
     translationsDir = join(addonPath, 'translations');
 
     filePaths = findFiles(
-      unnormalizedJoin(translationsDir, '**/*.{json,yaml,yml}'),
+      join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/'),
       {
         projectRoot,
       },
