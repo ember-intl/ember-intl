@@ -91,16 +91,18 @@ Please check that all arguments are well-defined when using the `{{t}}` helper. 
 ```
 
 
-## options.htmlSafe
+## options.htmlSafe / options.trustHTML
 
-To render an HTML in a translation message, set `htmlSafe` to `true`. The `{{t}}` helper returns a `SafeString` (casted as `string` to improve DX).
+To render an HTML in a translation message, set `htmlSafe` (or its alias `trustHTML`) to `true`. The `{{t}}` helper returns a `SafeString` (casted as `string` to improve DX).
 
 **Warning: Do not use triple curly braces (e.g. `{{{t "call-to-action"}}}`), as it can allow XSS (cross-site scripting).**
 
 ```hbs
 {{! components/example.hbs }}
-{{t "ember.visit-homepage" htmlSafe=true}}
+{{t "ember.visit-homepage" trustHTML=true}}
 ```
+
+> **Note:** `trustHTML` is an alias for `htmlSafe`, introduced to align with [Ember's naming convention](https://github.com/emberjs/ember.js/pull/20939). The name better reflects the behavior: you're marking the HTML content as trusted. Both options work identically.
 
 ```yaml
 # translations/en-us.yaml
