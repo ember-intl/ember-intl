@@ -10,9 +10,9 @@ type Data = {
   translationsDir: string;
 };
 
-export function getPrefix(data: Data): string | undefined {
+export function getPrefix(data: Data): string {
   if (!data.namespaceKeys) {
-    return undefined;
+    return '';
   }
 
   const { dir } = parseFilePath(data.filePath);

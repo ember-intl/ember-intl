@@ -6,12 +6,10 @@ import type {
 
 type Data = {
   callback: (key: TranslationKey, value: TranslationMessage) => void;
-  prefix: string | undefined;
+  prefix: string;
 };
 
 export function forEach(json: TranslationJson, data: Data): void {
-  const prefix = data.prefix ?? '';
-
   for (const key in json) {
     if (!Object.hasOwn(json, key)) {
       continue;
@@ -22,12 +20,12 @@ export function forEach(json: TranslationJson, data: Data): void {
     if (typeof value === 'object') {
       forEach(value, {
         callback: data.callback,
-        prefix: `${prefix}${key}.`,
+        prefix: `${data.prefix}${key}.`,
       });
 
       continue;
     }
 
-    data.callback(`${prefix}${key}`, value);
+    data.callback(`${data.prefix}${key}`, value);
   }
 }
