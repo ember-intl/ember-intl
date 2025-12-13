@@ -1,7 +1,11 @@
 # compiled output
 /dist/
+/dist-for-testing/
+/tmp/
 
 # misc
+/src/blueprints/
+/tests/fixtures/
 !.*
 .*/
 README.md
