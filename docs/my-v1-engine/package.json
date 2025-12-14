@@ -92,7 +92,7 @@
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "loader.js": "^4.7.0",
     "prettier": "^3.7.4",
     "qunit": "^2.24.3",

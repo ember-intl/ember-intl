@@ -25,8 +25,8 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
     "@ijlee2-frontend-configs/changesets": "^1.0.0",
-    "sort-package-json": "^3.5.1",
-    "update-workspace-root-version": "^2.1.1"
+    "sort-package-json": "^3.6.0",
+    "update-workspace-root-version": "^2.1.2"
   },
   "packageManager": "pnpm@10.24.0",
   "engines": {

@@ -72,7 +72,7 @@
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "loader.js": "^4.7.0",
     "my-v1-addon": "workspace:*",
     "my-v2-addon": "workspace:*",

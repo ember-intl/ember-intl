@@ -22,11 +22,11 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "prettier": "^3.7.4"
   },
   "peerDependencies": {
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "typescript": "^5.9.3"
   },
   "peerDependenciesMeta": {
