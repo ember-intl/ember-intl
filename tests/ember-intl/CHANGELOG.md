@@ -1,4 +1,4 @@
-# Changelog for test-app-for-ember-intl
+# test-app-for-ember-intl
 
 ## 1.6.6
 
