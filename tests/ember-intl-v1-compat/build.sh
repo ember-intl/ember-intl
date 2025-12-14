@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-COMMAND="test-ember-intl-node"
+COMMAND="test-ember-intl-v1-compat"
 ENVIRONMENT=$1
 
 if [ $ENVIRONMENT = "--production" ]

@@ -1,4 +1,4 @@
-# Changelog for test-ember-intl-node
+# test-ember-intl-v1-compat
 
 ## 1.3.4
 
