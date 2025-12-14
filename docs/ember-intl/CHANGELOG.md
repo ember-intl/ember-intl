@@ -1,4 +1,4 @@
-# Changelog for docs-app-for-ember-intl
+# docs-app-for-ember-intl
 
 ## 1.8.7
 
