@@ -76,7 +76,6 @@ jobs:
           - 'docs/my-v2-addon'
           - 'docs/my-v2-app'
           - 'docs/my-v2-app-with-lazy-loaded-translations'
-          - 'packages/ember-intl'
           - 'packages/ember-intl-lint'
           - 'packages/ember-intl-v1-compat'
           - 'tests/ember-intl'
@@ -115,7 +114,6 @@ jobs:
           - 'ember-release'
           - 'ember-beta'
           - 'ember-canary'
-          - 'embroider-safe'
           - 'embroider-optimized'
     timeout-minutes: 7
     steps:
