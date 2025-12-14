@@ -1,9 +1,14 @@
+'use strict';
+
 const {
   babelCompatSupport,
   templateCompatSupport,
 } = require('@embroider/compat/babel');
 
 module.exports = {
+  generatorOpts: {
+    compact: false,
+  },
   plugins: [
     [
       '@babel/plugin-transform-typescript',
@@ -37,14 +42,10 @@ module.exports = {
       '@babel/plugin-transform-runtime',
       {
         absoluteRuntime: __dirname,
-        useESModules: true,
         regenerator: false,
+        useESModules: true,
       },
     ],
     ...babelCompatSupport(),
   ],
-
-  generatorOpts: {
-    compact: false,
-  },
 };

@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = require('@shared-configs/testem');
+if (typeof module !== 'undefined') {
+  module.exports = require('@shared-configs/testem');
+}
