@@ -2381,7 +2381,7 @@ importers:
         specifier: ^5.103.0
         version: 5.103.0
 
-  tests/ember-intl-node:
+  tests/ember-intl-v1-compat:
     devDependencies:
       '@codemod-utils/tests':
         specifier: ^2.2.0
