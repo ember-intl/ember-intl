@@ -1,0 +1,55 @@
+import { join } from 'node:path';
+
+import { assert, loadFixture, test } from '@codemod-utils/tests';
+import namespaceKeys from '@ember-intl/v1-compat/lib/utils/translation-reducer/namespace-keys.js';
+
+test('lib | utils | translation-reducer | namespace-keys > without a namespaced addon name (1)', function () {
+  const translations = {};
+
+  const inputProject = {
+    translations,
+  };
+
+  const projectRoot = 'tmp/my-app';
+  const inputPath = join(projectRoot, 'translations');
+
+  loadFixture(inputProject, { projectRoot });
+
+  let output = namespaceKeys(translations, {
+    addonNames: ['my-addon'],
+    filePath: join(inputPath, 'my-addon/en-us.json'),
+    inputPath,
+  });
+
+  assert.deepStrictEqual(output, {
+    'my-addon': {},
+  });
+
+  // Check nested translations
+  output = namespaceKeys(translations, {
+    addonNames: ['my-addon'],
+    filePath: join(inputPath, 'my-addon/components/hello/en-us.json'),
+    inputPath,
+  });
+
+  assert.deepStrictEqual(output, {
+    'my-addon': {
+      components: {
+        hello: {},
+      },
+    },
+  });
+
+  // Check scoped packages
+  output = namespaceKeys(translations, {
+    addonNames: ['@my-org/my-addon'],
+    filePath: join(inputPath, '@my-org/my-addon/en-us.json'),
+    inputPath,
+  });
+
+  assert.deepStrictEqual(output, {
+    '@my-org': {
+      'my-addon': {},
+    },
+  });
+});
