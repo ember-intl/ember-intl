@@ -8,7 +8,7 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "license": "MIT",
-  "author": "jason.mitchell.w@gmail.com",
+  "author": "Isaac J. Lee",
   "type": "module",
   "scripts": {
     "format": "prettier . --cache --write",
@@ -17,20 +17,22 @@
     "lint:format": "prettier . --cache --check",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "test": "mocha \"tests/**/*.{cjs,js}\""
+    "lint:types": "tsc --noEmit",
+    "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "devDependencies": {
+    "@codemod-utils/tests": "^2.2.0",
     "@ember-intl/v1-compat": "workspace:*",
-    "@formatjs/icu-messageformat-parser": "^2.11.4",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@sondr3/minitest": "^0.1.2",
+    "@types/node": "^20.19.26",
     "broccoli-test-helper": "^2.0.0",
-    "chai": "^6.2.1",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
-    "globals": "^16.5.0",
-    "mocha": "^11.7.5",
-    "prettier": "^3.7.4"
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": "20.* || >= 22"
