@@ -41,20 +41,24 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  async beforeModel(): Promise<void> {
+    await this.setupIntl();
+  }
+
+  private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+    const response = await fetch(`/translations/${locale}.json`);
+    const translations = await response.json();
+
+    this.intl.addTranslations(locale, translations);
+  }
+
+  private async setupIntl(): Promise<void> {
     await Promise.allSettled([
       this.loadTranslations('de-de'),
       this.loadTranslations('en-us'),
     ]);
 
-    this.intl.setLocale(['de-de', 'en-us']);
-  }
-
-  private async loadTranslations(locale: 'de-de' | 'en-us') {
-    const response = await fetch(`/translations/${locale}.json`);
-    const translations = await response.json();
-
-    this.intl.addTranslations(locale, translations);
+    this.intl.setLocale(['en-us']);
   }
 }
 ```
@@ -127,7 +131,11 @@ import { formats } from 'my-app/ember-intl';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
     this.intl.setFormats(formats);
     this.intl.setLocale(['de-de']);
   }
@@ -147,7 +155,11 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
     this.intl.setLocale(['de-de']);
   }
 }
@@ -184,7 +196,11 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
     this.intl.setLocale(['de-de']);
 
     this.intl.setOnFormatjsError((error) => {
@@ -217,7 +233,11 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
     this.intl.setLocale(['de-de']);
 
     this.intl.setOnMissingTranslation((key) => {
