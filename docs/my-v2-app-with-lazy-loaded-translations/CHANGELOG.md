@@ -1,5 +1,16 @@
 # my-v2-app-with-lazy-loaded-translations
 
+## 1.1.0
+
+### Minor Changes
+
+- [#2042](https://github.com/ember-intl/ember-intl/pull/2042) Downstreamed blueprint changes ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2044](https://github.com/ember-intl/ember-intl/pull/2044) Extracted ember-intl setup ([@ijlee2](https://github.com/ijlee2))
+- [#2043](https://github.com/ember-intl/ember-intl/pull/2043) Standardized code ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.5
 
 ### Patch Changes

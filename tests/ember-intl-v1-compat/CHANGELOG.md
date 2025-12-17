@@ -1,5 +1,15 @@
 # test-ember-intl-v1-compat
 
+## 1.4.0
+
+### Minor Changes
+
+- [#2040](https://github.com/ember-intl/ember-intl/pull/2040) Replaced mocha with @sondr3/minitest ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2041](https://github.com/ember-intl/ember-intl/pull/2041) Renamed package to test-ember-intl-v1-compat ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.4
 
 ### Patch Changes
