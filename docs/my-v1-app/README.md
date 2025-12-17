@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-app` is an Embroider app. We use it to check the default configuration of `ember-intl`.
+`my-v1-app` is an Embroider app built with Webpack. We use it to test `ember-intl` with the default build options.
 
 The app also helps ensure that `ember-intl` is compatible with "bleeding-edge" Ember:
 
@@ -19,17 +19,14 @@ In addition, the application tests serve as a living documentation that translat
 
 ## Local development
 
-Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so that you can test the latest code.
-
-```sh
-# From the workspace root
-pnpm prepare
-
-# Change directory
-cd docs/my-v1-app
-```
-
-Some useful commands:
+> [!NOTE]
+>
+> To run the commands below, some packages in this monorepo must be built first.
+>
+> ```sh
+> # From the workspace root
+> pnpm prepare
+> ```
 
 ```sh
 # Run the app

@@ -19,7 +19,7 @@ interface SelectLocaleSignature {
   Args: {};
 }
 
-export default class SelectLocaleComponent extends Component<SelectLocaleSignature> {
+export default class SelectLocale extends Component<SelectLocaleSignature> {
   @service declare intl: Services['intl'];
 
   @tracked value!: SupportedLocale;

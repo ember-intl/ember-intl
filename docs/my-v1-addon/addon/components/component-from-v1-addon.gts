@@ -5,10 +5,10 @@ interface ComponentFromV1AddonSignature {
   Args: {};
 }
 
-const ComponentFromV1AddonComponent = <template>
+const ComponentFromV1Addon: TOC<ComponentFromV1AddonSignature> = <template>
   <div data-test-output="V1 Addon">
     {{t "components.component-from-v1-addon.message"}}
   </div>
-</template> satisfies TOC<ComponentFromV1AddonSignature>;
+</template>;
 
-export default ComponentFromV1AddonComponent;
+export default ComponentFromV1Addon;

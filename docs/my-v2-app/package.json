@@ -2,7 +2,7 @@
   "name": "my-v2-app",
   "version": "1.1.5",
   "private": true,
-  "description": "A Vite app with the default ember-intl configuration",
+  "description": "A Vite app to test the default build options",
   "repository": {
     "type": "git",
     "url": "https://github.com/ember-intl/ember-intl.git"
@@ -71,7 +71,6 @@
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
-    "ember-route-template": "^1.0.3",
     "ember-source": "~6.8.1",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",

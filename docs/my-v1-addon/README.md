@@ -11,6 +11,15 @@
 
 ## Local development
 
+> [!NOTE]
+>
+> To run the commands below, some packages in this monorepo must be built first.
+>
+> ```sh
+> # From the workspace root
+> pnpm prepare
+> ```
+
 ```sh
 # Run the app
 pnpm start

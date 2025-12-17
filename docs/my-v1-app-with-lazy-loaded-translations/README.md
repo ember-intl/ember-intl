@@ -6,22 +6,19 @@
 
 ## What is it?
 
-`my-v1-app-with-lazy-loaded-translations` is an Embroider app. We use it to check that `publicOnly: true` works.
+`my-v1-app-with-lazy-loaded-translations` is an Embroider app built with Webpack. We use it to test `ember-intl` with the build option `publicOnly`.
 
 
 ## Local development
 
-Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so that you can test the latest code.
-
-```sh
-# From the workspace root
-pnpm prepare
-
-# Change directory
-cd docs/my-v1-app-with-lazy-loaded-translations
-```
-
-Some useful commands:
+> [!NOTE]
+>
+> To run the commands below, some packages in this monorepo must be built first.
+>
+> ```sh
+> # From the workspace root
+> pnpm prepare
+> ```
 
 ```sh
 # Run the app
