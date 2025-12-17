@@ -4,6 +4,10 @@ import {
   setupTest as upstreamSetupTest,
   type SetupTestOptions,
 } from 'ember-qunit';
+// @ts-expect-error: Incorrect type
+import translationsForDeDe from 'virtual:ember-intl/translations/de-de';
+// @ts-expect-error: Incorrect type
+import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
 
 // This file exists to provide wrappers around ember-qunit's
 // test setup functions. This way, you can easily extend the setup that is
@@ -32,6 +36,14 @@ function setupRenderingTest(hooks: NestedHooks, options?: SetupTestOptions) {
   upstreamSetupRenderingTest(hooks, options);
 
   // Additional setup for rendering tests can be done here.
+  hooks.beforeEach(function () {
+    const intl = this.owner.lookup('service:intl');
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    intl.addTranslations('de-de', translationsForDeDe);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    intl.addTranslations('en-us', translationsForEnUs);
+  });
 }
 
 function setupTest(hooks: NestedHooks, options?: SetupTestOptions) {
