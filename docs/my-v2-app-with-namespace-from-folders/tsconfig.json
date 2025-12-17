@@ -1,0 +1,15 @@
+{
+  "extends": "@shared-configs/typescript/ember",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "my-v1-addon": ["../my-v1-addon/addon/index"],
+      "my-v1-addon/*": ["../my-v1-addon/addon/*"],
+      "my-v2-app-with-namespace-from-folders/tests/*": ["tests/*"],
+      "my-v2-app-with-namespace-from-folders/*": ["app/*"],
+      "*": ["types/*"]
+    },
+    "types": ["ember-source/types", "@glint/ember-tsc/types"]
+  },
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
+}

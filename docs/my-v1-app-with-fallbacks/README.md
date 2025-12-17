@@ -6,26 +6,19 @@
 
 ## What is it?
 
-`my-v1-app-with-fallbacks` is an Embroider app. We use it to check fallbacks for `ember-intl`:
-
-- `fallbackLocale` (from `config/ember-intl.js`)
-- `setOnFormatjsError()`
-- `setOnMissingTranslation()`
+`my-v1-app-with-fallbacks` is an Embroider app built with Webpack. We use it to test `ember-intl` with the build option `fallbackLocale`. It also tests the `intl` service methods `setOnFormatjsError()` and `setOnMissingTranslation()`.
 
 
 ## Local development
 
-Before starting the application, build the v2 addons (e.g. `my-v2-addon`) so that you can test the latest code.
-
-```sh
-# From the workspace root
-pnpm prepare
-
-# Change directory
-cd docs/my-v1-app-with-fallbacks
-```
-
-Some useful commands:
+> [!NOTE]
+>
+> To run the commands below, some packages in this monorepo must be built first.
+>
+> ```sh
+> # From the workspace root
+> pnpm prepare
+> ```
 
 ```sh
 # Run the app

@@ -2,7 +2,7 @@
   "name": "my-v1-app",
   "version": "1.1.5",
   "private": true,
-  "description": "An Embroider app with the default ember-intl configuration",
+  "description": "A Webpack app to test the default build options",
   "keywords": [],
   "repository": {
     "type": "git",

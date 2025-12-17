@@ -2,7 +2,7 @@
   "name": "my-v1-app-with-lazy-loaded-translations",
   "version": "1.3.5",
   "private": true,
-  "description": "An Embroider app that checks publicOnly: true",
+  "description": "A Webpack app to test publicOnly",
   "keywords": [],
   "repository": {
     "type": "git",

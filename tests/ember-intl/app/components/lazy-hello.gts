@@ -7,10 +7,10 @@ interface LazyHelloSignature {
   };
 }
 
-const LazyHelloComponent = <template>
+const LazyHello = <template>
   <div data-test-message>
     {{t "lazy-hello.message" name=@name}}
   </div>
 </template> satisfies TOC<LazyHelloSignature>;
 
-export default LazyHelloComponent;
+export default LazyHello;
