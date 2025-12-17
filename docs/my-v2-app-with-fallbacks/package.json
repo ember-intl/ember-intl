@@ -38,6 +38,7 @@
     "@babel/plugin-transform-typescript": "^7.28.5",
     "@ember-intl/lint": "workspace:*",
     "@ember-intl/v1-compat": "workspace:*",
+    "@ember-intl/vite": "workspace:*",
     "@ember/optional-features": "^2.3.0",
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.4.1",
