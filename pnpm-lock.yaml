@@ -1648,6 +1648,9 @@ importers:
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
+      '@ember-intl/vite':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-vite
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -1798,6 +1801,9 @@ importers:
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
+      '@ember-intl/vite':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-vite
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -1948,6 +1954,9 @@ importers:
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
+      '@ember-intl/vite':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-vite
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -2098,6 +2107,9 @@ importers:
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
+      '@ember-intl/vite':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-vite
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -2494,6 +2506,46 @@ importers:
       webpack:
         specifier: ^5.103.0
         version: 5.103.0
+
+  packages/ember-intl-vite:
+    dependencies:
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
+    devDependencies:
+      '@shared-configs/eslint-config-node':
+        specifier: workspace:*
+        version: link:../../configs/eslint/node
+      '@shared-configs/prettier':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@shared-configs/typescript':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      '@sondr3/minitest':
+        specifier: ^0.1.2
+        version: 0.1.2
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
+      '@types/node':
+        specifier: ^20.19.26
+        version: 20.19.26
+      concurrently:
+        specifier: ^9.2.1
+        version: 9.2.1
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2
+      prettier:
+        specifier: ^3.7.4
+        version: 3.7.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.2.7
+        version: 7.2.7(@types/node@20.19.26)(sass@1.93.2)(terser@5.44.1)(yaml@2.8.1)
 
   tests/ember-intl:
     dependenciesMeta:
