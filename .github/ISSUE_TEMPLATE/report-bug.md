@@ -14,24 +14,23 @@ Before you make a new issue, please search for similar issues. It's possible tha
 
 ## Describe the bug 🐞
 
-A clear and concise description of what the bug is.
+A clear and concise description of the bug.
 
 
 ## Expected behavior 🤔
 
-A clear and concise description of what you expected to happen.
+A clear and concise description of what you expected to see.
 
 
 ## Minimal reproduction 🔬
 
-Describe steps to reproduce the behavior:
+Describe steps to reproduce the issue.
 
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See error
+1. ...
+1. ...
+1. ...
 
-If possible, please, share a link with a minimal reproduction.
+If possible, please share a repo with the minimum files to reproduce the issue.
 
 
 ## Environment 🌍
