@@ -9,7 +9,12 @@
       "my-v2-app-with-fallbacks/*": ["app/*"],
       "*": ["types/*"]
     },
-    "types": ["ember-source/types", "@glint/ember-tsc/types"]
+    "types": [
+      "ember-source/types",
+      "@embroider/core/virtual",
+      "@glint/ember-tsc/types",
+      "vite/client"
+    ]
   },
-  "include": ["app/**/*", "tests/**/*", "types/**/*"]
+  "include": ["app/**/*", "tests/**/*", "types/**/*", "vite.config.mts"]
 }
