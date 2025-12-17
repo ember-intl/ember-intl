@@ -4,7 +4,11 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  beforeModel() {
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
     this.intl.setLocale(['de-de', 'en-us']);
   }
 }

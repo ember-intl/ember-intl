@@ -6,7 +6,11 @@ import type { IntlService } from 'ember-intl';
 export default class ApplicationRoute extends Route {
   @service declare intl: IntlService;
 
-  beforeModel() {
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
     this.intl.setLocale(['de-de', 'en-us']);
 
     this.intl.setOnFormatjsError((error) => {

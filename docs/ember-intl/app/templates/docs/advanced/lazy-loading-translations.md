@@ -40,20 +40,24 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  async beforeModel(): Promise<void> {
+    await this.setupIntl();
+  }
+
+  private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+    const response = await fetch(`/translations/${locale}.json`);
+    const translations = await response.json();
+
+    this.intl.addTranslations(locale, translations);
+  }
+
+  private async setupIntl(): Promise<void> {
     await Promise.allSettled([
       this.loadTranslations('de-de'),
       this.loadTranslations('en-us'),
     ]);
 
     this.intl.setLocale(['en-us']);
-  }
-
-  private async loadTranslations(locale: 'de-de' | 'en-us') {
-    const response = await fetch(`/translations/${locale}.json`);
-    const translations = await response.json();
-
-    this.intl.addTranslations(locale, translations);
   }
 }
 ```
@@ -104,20 +108,24 @@ import { type Registry as Services, service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
 
-  async beforeModel() {
+  async beforeModel(): Promise<void> {
+    await this.setupIntl();
+  }
+
+  private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+    const { default: resource } = await import(`/translations/${locale}.json`);
+    const translations = JSON.parse(resource);
+
+    this.intl.addTranslations(locale, translations);
+  }
+
+  private async setupIntl(): Promise<void> {
     await Promise.allSettled([
       this.loadTranslations('de-de'),
       this.loadTranslations('en-us'),
     ]);
 
     this.intl.setLocale(['en-us']);
-  }
-
-  private async loadTranslations(locale: 'de-de' | 'en-us') {
-    const { default: resource } = await import(`/translations/${locale}.json`);
-    const translations = JSON.parse(resource);
-
-    this.intl.addTranslations(locale, translations);
   }
 }
 ```
@@ -156,7 +164,7 @@ const app = new EmberApp(defaults, {
 ```
 
 ```ts
-private async loadTranslations(locale: 'de-de' | 'en-us') {
+private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
   const filePath = `translations/${locale}.json`;
   let resource: string;
 
