@@ -1,0 +1,96 @@
+{
+  "name": "my-v2-app-with-fallbacks",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A Vite app to test fallbackLocale",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "vite build",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "ember-tsc --noEmit",
+    "start": "vite",
+    "test": "vite build --mode development && ember test --path dist --test-port=0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/plugin-transform-runtime": "^7.28.5",
+    "@babel/plugin-transform-typescript": "^7.28.5",
+    "@ember-intl/lint": "workspace:*",
+    "@ember-intl/v1-compat": "workspace:*",
+    "@ember/optional-features": "^2.3.0",
+    "@ember/string": "^4.0.1",
+    "@ember/test-helpers": "^5.4.1",
+    "@embroider/compat": "^4.1.11",
+    "@embroider/config-meta-loader": "^1.0.0",
+    "@embroider/core": "^4.4.0",
+    "@embroider/router": "^3.0.6",
+    "@embroider/vite": "^1.4.4",
+    "@glimmer/component": "^2.0.0",
+    "@glimmer/tracking": "^1.1.2",
+    "@glint/ember-tsc": "^1.0.8",
+    "@glint/template": "^1.7.3",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@shared-configs/ember-template-lint": "workspace:*",
+    "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/eslint-config-yaml": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/testem": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@types/qunit": "^2.19.13",
+    "babel-plugin-ember-template-compilation": "^3.0.1",
+    "broccoli-asset-rev": "^3.0.0",
+    "concurrently": "^9.2.1",
+    "decorator-transforms": "^2.3.0",
+    "ember-auto-import": "^2.12.0",
+    "ember-cli": "~6.8.1",
+    "ember-cli-babel": "^8.2.0",
+    "ember-cli-htmlbars": "^7.0.0",
+    "ember-intl": "workspace:*",
+    "ember-load-initializers": "^3.0.1",
+    "ember-page-title": "^9.0.3",
+    "ember-qunit": "^9.0.4",
+    "ember-resolver": "^13.1.1",
+    "ember-source": "~6.8.1",
+    "ember-template-lint": "^7.9.3",
+    "ember-test-selectors": "^7.1.0",
+    "eslint": "^9.39.2",
+    "my-v1-addon": "workspace:*",
+    "my-v2-addon": "workspace:*",
+    "prettier": "^3.7.4",
+    "qunit": "^2.24.3",
+    "qunit-dom": "^3.5.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.7"
+  },
+  "engines": {
+    "node": "20.* || >= 22"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "type": "app",
+    "version": 2
+  }
+}
