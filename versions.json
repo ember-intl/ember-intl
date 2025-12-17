@@ -15,7 +15,7 @@
     "path": "",
     "name": "Latest",
     "sha": "8286a788ffdd31581180284d4eeb72e5af9252fc",
-    "tag": null
+    "tag": "8.0.3"
   },
   "v4.2.0": {
     "path": "versions/v4.2.0",
@@ -616,5 +616,11 @@
     "name": "8.0.2",
     "sha": "d47131f49ce034640649629c4a4d52171be69a2a",
     "tag": "8.0.2"
+  },
+  "8.0.3": {
+    "path": "versions/8.0.3",
+    "name": "8.0.3",
+    "sha": "8286a788ffdd31581180284d4eeb72e5af9252fc",
+    "tag": "8.0.3"
   }
 }
