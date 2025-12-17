@@ -1,0 +1,60 @@
+{
+  "name": "@ember-intl/vite",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Vite plugin for ember-intl",
+  "keywords": [
+    "ember",
+    "ember-intl",
+    "i18n",
+    "internationalization",
+    "rollup-plugin",
+    "vite-plugin"
+  ],
+  "homepage": "https://ember-intl.github.io/ember-intl/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git",
+    "directory": "packages/ember-intl-vite"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "sh build.sh --production",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
+    "lint:format": "prettier . --cache --check",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "tsc --noEmit",
+    "prepare": "pnpm build",
+    "test": "sh build.sh --test && mt dist-for-testing --quiet"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1"
+  },
+  "devDependencies": {
+    "@shared-configs/eslint-config-node": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "@sondr3/minitest": "^0.1.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.19.26",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.2",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.7"
+  },
+  "engines": {
+    "node": "20.* || >= 22"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "@shared-configs/typescript/node",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist-for-testing/src"
+  },
+  "include": ["bin", "src", "tests"],
+  "exclude": ["tests/fixtures"]
+}
