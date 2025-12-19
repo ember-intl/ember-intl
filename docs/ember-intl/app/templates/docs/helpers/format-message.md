@@ -63,15 +63,17 @@ Currently, `ember-intl` allows you to pass a string instead. If possible, avoid 
 ```hbs
 {{format-message
   "<em>{numPhotos, number} photos taken.</em>"
-  htmlSafe=true
+  trustHTML=true
   numPhotos=3
 }}
 ```
 
 
-## options.htmlSafe
+## options.htmlSafe / options.trustHTML
 
-To render an HTML in a translation message, set `htmlSafe` to `true`.
+To render an HTML in a translation message, set `htmlSafe` (or its alias `trustHTML`) to `true`.
+
+> **Note:** `trustHTML` is an alias for `htmlSafe`, introduced to align with [Ember's naming convention](https://github.com/emberjs/ember.js/pull/20939). The name better reflects the behavior: you're marking the HTML content as trusted. Both options work identically.
 
 <DocsDemo as |demo|>
   <demo.example>
