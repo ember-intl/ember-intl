@@ -12,7 +12,13 @@ test('index > my-v1-addon', async function () {
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
     'no-missing-keys': [],
-    'no-unused-keys': [],
+    'no-unused-keys': [
+      {
+        details:
+          '  - Found in translations/routes/index/de-de.yml, translations/routes/index/en-us.yml',
+        key: 'routes.index.key-to-overwrite',
+      },
+    ],
   });
 
   assertFixture(outputProject, codemodOptions);
@@ -23,7 +29,13 @@ test('index > my-v1-addon', async function () {
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
     'no-missing-keys': [],
-    'no-unused-keys': [],
+    'no-unused-keys': [
+      {
+        details:
+          '  - Found in translations/routes/index/de-de.yml, translations/routes/index/en-us.yml',
+        key: 'routes.index.key-to-overwrite',
+      },
+    ],
   });
 
   assertFixture(outputProject, codemodOptions);

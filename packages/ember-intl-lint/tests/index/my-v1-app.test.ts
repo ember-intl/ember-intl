@@ -11,7 +11,12 @@ test('index > my-v1-app', async function () {
 
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
-    'no-missing-keys': [],
+    'no-missing-keys': [
+      {
+        details: '  - Found in app/templates/index.gts',
+        key: 'routes.index.key-without-translation',
+      },
+    ],
     'no-unused-keys': [],
   });
 
@@ -22,7 +27,12 @@ test('index > my-v1-app', async function () {
 
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
-    'no-missing-keys': [],
+    'no-missing-keys': [
+      {
+        details: '  - Found in app/templates/index.gts',
+        key: 'routes.index.key-without-translation',
+      },
+    ],
     'no-unused-keys': [],
   });
 
