@@ -1,0 +1,6 @@
+components.select-locale:
+  label: Sprache
+  option:
+    de-de: Deutsch
+    default: Sprache auswählen
+    en-us: Englisch

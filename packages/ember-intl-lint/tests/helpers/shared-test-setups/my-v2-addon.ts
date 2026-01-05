@@ -15,7 +15,9 @@ const options: Options = {
     lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': true,
-      'no-unused-keys': true,
+      'no-unused-keys': {
+        ignores: ['routes.index.key-to-overwrite'],
+      },
     },
   },
   fix: false,
