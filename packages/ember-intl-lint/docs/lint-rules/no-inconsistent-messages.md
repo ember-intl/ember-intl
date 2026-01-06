@@ -6,8 +6,8 @@ The rule finds translation keys whose message is "inconsistent" across the trans
 
 A message is consistent if it meets these conditions:
 
-- A message uses the same set of ICU arguments in every translation file.
-- A message is defined for every locale.
+- If a translation file has the key, the message uses the same set of ICU arguments.
+- Every translation file defines the key.
 
 
 ## Options for `lintRules`

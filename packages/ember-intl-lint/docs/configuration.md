@@ -21,10 +21,10 @@ export default {};
 ```ts
 type UserConfig = Partial<{
   addonPaths: string[];
-  buildOptions: {
+  buildOptions: Partial<{
     inputPath: string;
     wrapTranslationsWithNamespace: boolean;
-  };
+  }>;
   lintRules: Record<LintRule, boolean | LintOptions>;
 }>;
 ```
@@ -70,7 +70,7 @@ export default {
 };
 ```
 
-Lint rules may support different lint options (always as an object). For example, a rule may allow the `ignores` option so that you can ignore translation keys that fail. For simplicity, this option only supports exact matches.
+Lint rules may provide options (always configured as an object). For example, a rule may allow the `ignores` option so that you can ignore translation keys that fail. For simplicity, this option only supports exact matches.
 
 ```js
 /* ember-intl.config.mjs */
@@ -83,4 +83,4 @@ export default {
 };
 ```
 
-See [docs/lint-rules](./lint-rules) to learn more about each rule and the options it supports.
+See [docs/lint-rules](./lint-rules) to learn more about each rule and the options that it supports.

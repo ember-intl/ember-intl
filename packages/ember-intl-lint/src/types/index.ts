@@ -21,11 +21,6 @@ type Config = {
   lintRules: Record<LintRule, boolean | LintOptions>;
 };
 
-type Failed = {
-  details: string;
-  key: string;
-}[];
-
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 
 type IcuArgumentType =
@@ -36,14 +31,13 @@ type IcuArgumentType =
   | 'select'
   | 'time';
 
-type LintMethod = (data: {
-  lintOptions?: LintOptions;
-  project: Project;
-}) => Failed;
+type LintErrors = string[];
+
+type LintMethod = (project: Project, lintOptions?: LintOptions) => LintErrors;
 
 type LintOptions = Record<string, unknown>;
 
-type LintResults = Record<LintRule, Failed>;
+type LintResults = Record<LintRule, LintErrors>;
 
 type Locale = string;
 
@@ -88,9 +82,9 @@ type TranslationObject = Record<TranslationKey, TranslationMessage>;
 export type {
   CodemodOptions,
   Config,
-  Failed,
   IcuArguments,
   IcuArgumentType,
+  LintErrors,
   LintMethod,
   LintOptions,
   LintResults,

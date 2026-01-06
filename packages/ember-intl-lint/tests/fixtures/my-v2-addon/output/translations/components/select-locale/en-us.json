@@ -1,0 +1,10 @@
+{
+  "components.select-locale": {
+    "label": "Language",
+    "option": {
+      "de-de": "German",
+      "default": "Choose your language",
+      "en-us": "English"
+    }
+  }
+}
