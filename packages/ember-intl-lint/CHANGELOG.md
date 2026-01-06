@@ -1,5 +1,18 @@
 # @ember-intl/lint
 
+## 0.3.0
+
+### Minor Changes
+
+- [#2048](https://github.com/ember-intl/ember-intl/pull/2048) Simplified LintMethod ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2050](https://github.com/ember-intl/ember-intl/pull/2050) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2049](https://github.com/ember-intl/ember-intl/pull/2049) Updated copyright year ([@ijlee2](https://github.com/ijlee2))
+- [#2048](https://github.com/ember-intl/ember-intl/pull/2048) Added integration tests ([@ijlee2](https://github.com/ijlee2))
+- [#2047](https://github.com/ember-intl/ember-intl/pull/2047) Added acceptance tests ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.2.2
 
 ### Patch Changes

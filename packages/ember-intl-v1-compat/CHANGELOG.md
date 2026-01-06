@@ -1,5 +1,12 @@
 # @ember-intl/v1-compat
 
+## 1.0.2
+
+### Patch Changes
+
+- [#2050](https://github.com/ember-intl/ember-intl/pull/2050) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2049](https://github.com/ember-intl/ember-intl/pull/2049) Updated copyright year ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.1
 
 ### Patch Changes

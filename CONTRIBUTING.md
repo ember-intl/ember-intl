@@ -119,7 +119,7 @@
     git push origin tag-0.1.2
     ```
 
-1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) and provide release notes. The tag name should match the workspace root's version, prefixed by the letter `v` (e.g. `v0.1.2`).
+1. [Create a tag](https://github.com/ember-intl/ember-intl/releases/new) and provide release notes. The tag name should match the workspace root's version (e.g. `0.1.2`).
 
 1. Publish the packages.
 
