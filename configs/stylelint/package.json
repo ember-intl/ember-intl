@@ -15,7 +15,7 @@
     "lint:fix": "prettier \"**/*.mjs\" --cache --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/stylelint": "^2.2.0"
+    "@ijlee2-frontend-configs/stylelint": "^2.2.2"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",

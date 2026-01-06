@@ -21,13 +21,13 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^2.2.0",
+    "@codemod-utils/tests": "^2.2.2",
     "@ember-intl/v1-compat": "workspace:*",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
-    "@types/node": "^20.19.26",
+    "@types/node": "^20.19.27",
     "broccoli-test-helper": "^2.0.0",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.2",

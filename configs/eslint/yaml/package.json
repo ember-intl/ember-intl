@@ -15,7 +15,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "eslint-plugin-yml": "^1.19.0"
+    "eslint-plugin-yml": "^1.19.1"
   },
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
