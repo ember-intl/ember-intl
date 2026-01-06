@@ -1,0 +1,6 @@
+{
+  "components.select-locale.label": "Sprache",
+  "components.select-locale.option.de-de": "Deutsch",
+  "components.select-locale.option.default": "Sprache auswählen",
+  "components.select-locale.option.en-us": "Englisch"
+}
