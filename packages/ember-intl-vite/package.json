@@ -47,12 +47,12 @@
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.26",
+    "@types/node": "^20.19.27",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "vite": "^7.2.7"
+    "vite": "^7.3.0"
   },
   "engines": {
     "node": "20.* || >= 22"
