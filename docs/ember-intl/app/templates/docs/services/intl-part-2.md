@@ -112,7 +112,7 @@ Specify your reusable formats (defined in `app/ember-intl.{js,ts}`).
 import type { Formats } from 'ember-intl';
 
 export const formats: Formats = {
-  'format-time': {
+  formatTime: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
