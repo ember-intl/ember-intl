@@ -10,8 +10,7 @@ test('utils | lint-project | no-inconsistent-messages > base case', function () 
     usedKeys: new Map(),
   });
 
-  const failed = noInconsistentMessages(project);
-  const keys = failed.map(({ key }) => key);
+  const lintErrors = noInconsistentMessages(project);
 
-  assert.deepStrictEqual(keys, []);
+  assert.deepStrictEqual(lintErrors, []);
 });

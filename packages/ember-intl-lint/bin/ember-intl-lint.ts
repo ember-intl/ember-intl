@@ -32,8 +32,8 @@ runCodemod(codemodOptions)
   .then((lintResults) => {
     let runFailed = false;
 
-    for (const [lintRule, failed] of Object.entries(lintResults)) {
-      if (failed.length === 0) {
+    for (const [lintRule, lintErrors] of Object.entries(lintResults)) {
+      if (lintErrors.length === 0) {
         console.log(`✅ ${lintRule}`);
 
         continue;
@@ -41,8 +41,8 @@ runCodemod(codemodOptions)
 
       runFailed = true;
 
-      console.log(`❌ ${lintRule} (${failed.length} issues)\n`);
-      console.log(failed.map(({ key }) => key).join('\n'));
+      console.log(`❌ ${lintRule} (${lintErrors.length} issues)\n`);
+      console.log(lintErrors.join('\n'));
     }
 
     process.exitCode = runFailed ? 1 : 0;

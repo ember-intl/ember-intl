@@ -61,8 +61,7 @@ test('utils | lint-project | no-missing-keys > some keys are missing', function 
     ]),
   });
 
-  const failed = noMissingKeys(project);
-  const keys = failed.map(({ key }) => key);
+  const lintErrors = noMissingKeys(project);
 
-  assert.deepStrictEqual(keys, ['key03', 'key04', 'key05']);
+  assert.deepStrictEqual(lintErrors, ['key03', 'key04', 'key05']);
 });

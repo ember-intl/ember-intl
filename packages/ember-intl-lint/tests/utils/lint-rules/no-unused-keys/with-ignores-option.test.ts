@@ -61,10 +61,9 @@ test('utils | lint-project | no-unused-keys > with ignores option', function () 
     ]),
   });
 
-  const failed = noUnusedKeys(project, {
+  const lintErrors = noUnusedKeys(project, {
     ignores: ['key01', 'key03', 'key05', 'key07'],
   });
-  const keys = failed.map(({ key }) => key);
 
-  assert.deepStrictEqual(keys, ['key02']);
+  assert.deepStrictEqual(lintErrors, ['key02']);
 });

@@ -1,16 +1,15 @@
-import type { Failed, Project, TranslationKey } from '../../types/index.js';
-import { listFilePaths } from './shared/index.js';
+import type { LintErrors, Project, TranslationKey } from '../../types/index.js';
 
 export function noMissingKeys(
   project: Project,
   lintOptions?: Partial<{
     ignores: TranslationKey[];
   }>,
-): Failed {
+): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
-  const failed: Failed = [];
+  const lintErrors: LintErrors = [];
 
-  project.usedKeys.forEach((filePaths, key) => {
+  project.usedKeys.forEach((_filePaths, key) => {
     if (ignores.has(key)) {
       return;
     }
@@ -19,11 +18,8 @@ export function noMissingKeys(
       return;
     }
 
-    failed.push({
-      key,
-      details: listFilePaths(filePaths),
-    });
+    lintErrors.push(key);
   });
 
-  return failed;
+  return lintErrors;
 }

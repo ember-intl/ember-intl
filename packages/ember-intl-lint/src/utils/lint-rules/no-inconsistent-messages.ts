@@ -1,15 +1,11 @@
 import type {
-  Failed,
   IcuArguments,
+  LintErrors,
   Project,
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
-import {
-  getOwnLocales,
-  getOwnTranslations,
-  listFilePaths,
-} from './shared/index.js';
+import { getOwnLocales, getOwnTranslations } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -28,12 +24,12 @@ export function noInconsistentMessages(
   lintOptions?: Partial<{
     ignores: TranslationKey[];
   }>,
-): Failed {
+): LintErrors {
   const ownLocales = getOwnLocales(project);
   const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
-  const failed: Failed = [];
+  const lintErrors: LintErrors = [];
 
   project.availableKeys.forEach((mapping, key) => {
     if (ignores.has(key)) {
@@ -70,15 +66,8 @@ export function noInconsistentMessages(
       return;
     }
 
-    const filePaths = Array.from(mapping.values()).map(
-      ({ filePath }) => filePath,
-    );
-
-    failed.push({
-      key,
-      details: listFilePaths(filePaths),
-    });
+    lintErrors.push(key);
   });
 
-  return failed;
+  return lintErrors;
 }
