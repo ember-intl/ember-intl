@@ -1,14 +1,12 @@
 import type { Failed, Project, TranslationKey } from '../../types/index.js';
 import { listFilePaths } from './shared/index.js';
 
-export function noMissingKeys(data: {
+export function noMissingKeys(
+  project: Project,
   lintOptions?: Partial<{
     ignores: TranslationKey[];
-  }>;
-  project: Project;
-}): Failed {
-  const { lintOptions, project } = data;
-
+  }>,
+): Failed {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const failed: Failed = [];
 

@@ -61,11 +61,8 @@ test('utils | lint-project | no-unused-keys > with ignores option', function () 
     ]),
   });
 
-  const failed = noUnusedKeys({
-    lintOptions: {
-      ignores: ['key01', 'key03', 'key05', 'key07'],
-    },
-    project,
+  const failed = noUnusedKeys(project, {
+    ignores: ['key01', 'key03', 'key05', 'key07'],
   });
   const keys = failed.map(({ key }) => key);
 

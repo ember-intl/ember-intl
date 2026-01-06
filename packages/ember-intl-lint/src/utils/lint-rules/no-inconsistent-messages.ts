@@ -23,14 +23,12 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   return true;
 }
 
-export function noInconsistentMessages(data: {
+export function noInconsistentMessages(
+  project: Project,
   lintOptions?: Partial<{
     ignores: TranslationKey[];
-  }>;
-  project: Project;
-}): Failed {
-  const { lintOptions, project } = data;
-
+  }>,
+): Failed {
   const ownLocales = getOwnLocales(project);
   const ownTranslations = getOwnTranslations(project);
 

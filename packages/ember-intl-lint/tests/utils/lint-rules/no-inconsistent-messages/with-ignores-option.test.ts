@@ -113,11 +113,8 @@ test('utils | lint-project | no-inconsistent-messages > with ignores option', fu
     usedKeys: new Map(),
   });
 
-  const failed = noInconsistentMessages({
-    lintOptions: {
-      ignores: ['key02', 'key04'],
-    },
-    project,
+  const failed = noInconsistentMessages(project, {
+    ignores: ['key02', 'key04'],
   });
   const keys = failed.map(({ key }) => key);
 

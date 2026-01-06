@@ -1,14 +1,12 @@
 import type { Failed, Project, TranslationKey } from '../../types/index.js';
 import { getOwnTranslations, listFilePaths } from './shared/index.js';
 
-export function noUnusedKeys(data: {
+export function noUnusedKeys(
+  project: Project,
   lintOptions?: Partial<{
     ignores: TranslationKey[];
-  }>;
-  project: Project;
-}): Failed {
-  const { lintOptions, project } = data;
-
+  }>,
+): Failed {
   const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
