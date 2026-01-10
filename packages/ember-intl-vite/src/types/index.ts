@@ -1,9 +1,3 @@
-type IndexSignatureParameter = string | number | symbol;
-
-type NestedStructure<T extends IndexSignatureParameter> = {
-  [Key in IndexSignatureParameter]?: T | NestedStructure<T>;
-};
-
 type BuildOptions = {
   fallbackLocale: string | undefined;
   inputPath: string;
@@ -16,11 +10,51 @@ type Config = {
   buildOptions: BuildOptions;
 };
 
-type Translations = NestedStructure<string>;
+type Locale = string;
+
+type Options = {
+  config: Config;
+  projectRoot: string;
+};
+
+type Project = {
+  translationFiles: Map<
+    TranslationFilePath,
+    {
+      format: 'json' | 'yaml';
+      isInternal: boolean;
+      locale: Locale;
+      translationsDir: string;
+    }
+  >;
+  translations: Map<Locale, TranslationObject>;
+};
+
+type TranslationFilePath = string;
+
+type TranslationJson = {
+  [key: TranslationKey]: TranslationJson | TranslationMessage;
+};
+
+type TranslationKey = string;
+
+type TranslationMessage = string;
+
+type TranslationObject = Record<TranslationKey, TranslationMessage>;
 
 type UserConfig = Partial<{
   addonPaths: string[];
   buildOptions: Partial<BuildOptions>;
 }>;
 
-export type { Config, Translations, UserConfig };
+export type {
+  Config,
+  Options,
+  Project,
+  TranslationFilePath,
+  TranslationJson,
+  TranslationKey,
+  TranslationMessage,
+  TranslationObject,
+  UserConfig,
+};

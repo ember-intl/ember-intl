@@ -1,1 +1,2 @@
-export { getTranslations } from './get-translations.js';
+export { analyzeProject } from './analyze-project.js';
+export { createOptions } from './create-options.js';

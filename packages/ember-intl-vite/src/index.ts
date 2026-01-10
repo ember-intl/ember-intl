@@ -2,7 +2,7 @@ import { EOL } from 'node:os';
 
 import type { Plugin } from 'vite';
 
-import { getTranslations } from './steps/index.js';
+import { analyzeProject, createOptions } from './steps/index.js';
 import type { UserConfig } from './types/index.js';
 
 export function loadTranslations(userConfig?: UserConfig): Plugin {
@@ -13,7 +13,7 @@ export function loadTranslations(userConfig?: UserConfig): Plugin {
     name: 'ember-intl-load-translations',
 
     resolveId(id) {
-      if (!id.startsWith(virtualModuleId)) {
+      if (!id.startsWith(virtualModuleId) || !id.endsWith('.js')) {
         return;
       }
 
@@ -28,13 +28,16 @@ export function loadTranslations(userConfig?: UserConfig): Plugin {
         return;
       }
 
-      console.log(userConfig);
+      const options = createOptions(userConfig);
+      const { translations } = analyzeProject(options);
+      const locale = id
+        .replace(`\0${virtualModuleId}/`, '')
+        .replace(/\.js$/, '');
 
-      const locale = id.replace(`\0${virtualModuleId}/`, '');
-      const translations = getTranslations(locale);
+      console.log(translations.get(locale));
 
       return [
-        `const translations = ${JSON.stringify(translations)};`,
+        `const translations = ${JSON.stringify(translations.get(locale) ?? {})};`,
         ``,
         `export default translations;`,
       ].join(EOL);
