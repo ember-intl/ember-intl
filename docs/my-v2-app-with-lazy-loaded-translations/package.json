@@ -29,7 +29,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
-    "start": "vite",
+    "start": "vite --force",
     "test": "vite build --mode development && ember test --path dist --test-port=0"
   },
   "devDependencies": {
