@@ -1,6 +1,6 @@
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
 
-import type { Translations } from '../-private/utils/translations.ts';
+import type { TranslationJson } from '../-private/utils/translations.ts';
 import { addTranslations } from './add-translations.ts';
 
 /**
@@ -16,7 +16,7 @@ import { addTranslations } from './add-translations.ts';
 export function setupIntl(
   hooks: NestedHooks,
   locale: string,
-  translations?: Translations,
+  translations?: TranslationJson,
 ): void {
   hooks.beforeEach(async function (this: TestContext) {
     const { owner } = getContext() as TestContext;

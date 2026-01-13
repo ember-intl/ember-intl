@@ -1,6 +1,6 @@
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
 
-import type { Translations } from '../-private/utils/translations.ts';
+import type { TranslationJson } from '../-private/utils/translations.ts';
 
 /**
  * Updates the translations as if you had somehow added them (e.g.
@@ -12,7 +12,7 @@ import type { Translations } from '../-private/utils/translations.ts';
  */
 export async function addTranslations(
   locale: string,
-  translations: Translations,
+  translations: TranslationJson,
 ): Promise<void> {
   const { owner } = getContext() as TestContext;
 
