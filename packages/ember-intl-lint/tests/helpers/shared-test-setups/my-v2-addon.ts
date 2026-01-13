@@ -9,7 +9,9 @@ const options: Options = {
   config: {
     addonPaths: [],
     buildOptions: {
+      fallbackLocale: undefined,
       inputPath: 'translations',
+      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: {

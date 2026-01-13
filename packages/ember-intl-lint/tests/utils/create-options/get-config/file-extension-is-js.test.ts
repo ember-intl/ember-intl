@@ -16,7 +16,9 @@ test('utils | create-options | get-config > file extension is js', async functio
   assert.deepStrictEqual(config, {
     addonPaths: [],
     buildOptions: {
+      fallbackLocale: undefined,
       inputPath: 'translations',
+      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: {

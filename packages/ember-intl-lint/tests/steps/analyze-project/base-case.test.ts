@@ -15,7 +15,9 @@ test('steps | analyze-project > base case', function () {
     config: {
       addonPaths: [],
       buildOptions: {
+        fallbackLocale: undefined,
         inputPath: 'translations',
+        publicOnly: false,
         wrapTranslationsWithNamespace: false,
       },
       lintRules: {
