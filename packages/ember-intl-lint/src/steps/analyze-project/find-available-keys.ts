@@ -1,31 +1,14 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-
-import type { Options, Project } from '../../types/index.js';
-import {
-  inJson,
-  inYaml,
-} from '../../utils/analyze-project/merge-translation-files/index.js';
+import type { Locale, Project, TranslationObject } from '../../types/index.js';
 import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js';
 
+type Translations = Map<Locale, TranslationObject>;
+
 export function findAvailableKeys(
-  translationFiles: Project['translationFiles'],
-  options: Options,
+  translations: Translations,
 ): Project['availableKeys'] {
-  const { config, projectRoot } = options;
   const availableKeys: Project['availableKeys'] = new Map();
 
-  translationFiles.forEach((data, filePath) => {
-    const file = readFileSync(join(projectRoot, filePath), 'utf8');
-
-    const parser = data.format === 'json' ? inJson : inYaml;
-
-    const translationObject = parser(file, {
-      filePath,
-      namespaceKeys: config.buildOptions.wrapTranslationsWithNamespace,
-      translationsDir: data.translationsDir,
-    });
-
+  translations.forEach((translationObject, locale) => {
     for (const [key, message] of Object.entries(translationObject)) {
       const icuArguments = findIcuArguments(message);
 
@@ -35,22 +18,10 @@ export function findAvailableKeys(
 
       const mapping = availableKeys.get(key)!;
 
-      if (mapping.has(data.locale)) {
-        // App's translation takes precedence
-        if (data.isInternal) {
-          mapping.set(data.locale, {
-            filePath,
-            icuArguments,
-            message,
-          });
-        }
-      } else {
-        mapping.set(data.locale, {
-          filePath,
-          icuArguments,
-          message,
-        });
-      }
+      mapping.set(locale, {
+        icuArguments,
+        message,
+      });
     }
   });
 

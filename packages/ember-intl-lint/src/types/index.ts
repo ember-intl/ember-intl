@@ -53,7 +53,6 @@ type Project = {
     Map<
       Locale,
       {
-        filePath: TranslationFilePath;
         icuArguments: IcuArguments;
         message: TranslationMessage;
       }
