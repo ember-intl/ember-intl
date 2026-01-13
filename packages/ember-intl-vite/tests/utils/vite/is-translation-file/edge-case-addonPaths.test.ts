@@ -4,7 +4,7 @@ import { assert, test } from '@codemod-utils/tests';
 
 import {
   isTranslationFile,
-  resolveModuleId,
+  ModuleTracker,
 } from '../../../../src/utils/vite.js';
 import {
   options,
@@ -12,9 +12,11 @@ import {
 } from '../../../helpers/shared-test-setups/my-v2-app-with-addonPaths.js';
 
 test('utils | vite | is-translation-file > edge case (addonPaths)', function () {
-  resolveModuleId('virtual:ember-intl/translations/de-de');
-  resolveModuleId('virtual:ember-intl/translations/en-us');
-  resolveModuleId('virtual:ember-intl/translations/es');
+  const moduleTracker = new ModuleTracker();
+
+  moduleTracker.resolveModuleId('virtual:ember-intl/translations/de-de');
+  moduleTracker.resolveModuleId('virtual:ember-intl/translations/en-us');
+  moduleTracker.resolveModuleId('virtual:ember-intl/translations/es');
 
   assert.strictEqual(
     isTranslationFile(

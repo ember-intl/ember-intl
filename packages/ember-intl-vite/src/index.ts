@@ -5,25 +5,21 @@ import type { Plugin } from 'vite';
 
 import { analyzeProject, createOptions } from './steps/index.js';
 import type { Options } from './types/index.js';
-import {
-  getLocale,
-  getResolvedModuleIds,
-  isTranslationFile,
-  resolveModuleId,
-} from './utils/vite.js';
+import { isTranslationFile, ModuleTracker } from './utils/vite.js';
 
 export function loadTranslations(): Plugin {
+  const moduleTracker = new ModuleTracker();
   let options: Options | undefined;
 
   return {
     name: 'ember-intl-load-translations',
 
     resolveId(id) {
-      return resolveModuleId(id);
+      return moduleTracker.resolveModuleId(id);
     },
 
     async load(id) {
-      const locale = getLocale(id);
+      const locale = moduleTracker.getLocale(id);
 
       if (locale === undefined) {
         return;
@@ -54,15 +50,17 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      const promises = getResolvedModuleIds().reduce((accumulator, id) => {
-        const module = server.moduleGraph.getModuleById(id);
+      const promises = moduleTracker
+        .getResolvedModuleIds()
+        .reduce((accumulator, id) => {
+          const module = server.moduleGraph.getModuleById(id);
 
-        if (module) {
-          accumulator.push(server.reloadModule(module));
-        }
+          if (module) {
+            accumulator.push(server.reloadModule(module));
+          }
 
-        return accumulator;
-      }, [] as Promise<void>[]);
+          return accumulator;
+        }, [] as Promise<void>[]);
 
       await Promise.allSettled(promises);
     },

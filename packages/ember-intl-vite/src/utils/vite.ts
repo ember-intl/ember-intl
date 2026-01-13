@@ -1,30 +1,10 @@
-import { parseFilePath } from '@codemod-utils/files';
 import { join } from 'node:path';
+
+import { parseFilePath } from '@codemod-utils/files';
 
 import type { Locale, Options } from '../types/index.js';
 
-const VIRTUAL_MODULE_ID = 'virtual:ember-intl/translations' as const;
-
-const resolvedModuleIds = new Set<string>();
 const supportedExtensions = new Set(['.json', '.yaml', '.yml']);
-
-function _getLocale(moduleId: string): Locale {
-  return moduleId.replace(`${VIRTUAL_MODULE_ID}/`, '');
-}
-
-export function getLocale(resolvedModuleId: string): Locale | undefined {
-  if (!resolvedModuleIds.has(resolvedModuleId)) {
-    return undefined;
-  }
-
-  const moduleId = resolvedModuleId.replace(/^\0/, '');
-
-  return _getLocale(moduleId);
-}
-
-export function getResolvedModuleIds(): string[] {
-  return Array.from(resolvedModuleIds);
-}
 
 export function isTranslationFile(filePath: string, options: Options): boolean {
   const { ext } = parseFilePath(filePath);
@@ -50,17 +30,41 @@ export function isTranslationFile(filePath: string, options: Options): boolean {
   return foldersToWatch.some((folder) => filePath.startsWith(folder));
 }
 
-export function resolveModuleId(moduleId: string): string | undefined {
-  if (!moduleId.startsWith(`${VIRTUAL_MODULE_ID}/`)) {
-    return undefined;
+export class ModuleTracker {
+  private resolvedModuleIds = new Set<string>();
+
+  private static VIRTUAL_MODULE_ID = 'virtual:ember-intl/translations';
+
+  private _getLocale(moduleId: string): Locale {
+    return moduleId.replace(`${ModuleTracker.VIRTUAL_MODULE_ID}/`, '');
   }
 
-  if (_getLocale(moduleId) === '') {
-    return undefined;
+  getLocale(resolvedModuleId: string): Locale | undefined {
+    if (!this.resolvedModuleIds.has(resolvedModuleId)) {
+      return undefined;
+    }
+
+    const moduleId = resolvedModuleId.replace(/^\0/, '');
+
+    return this._getLocale(moduleId);
   }
 
-  const resolvedModuleId = `\0${moduleId}`;
-  resolvedModuleIds.add(resolvedModuleId);
+  getResolvedModuleIds(): string[] {
+    return Array.from(this.resolvedModuleIds);
+  }
 
-  return resolvedModuleId;
+  resolveModuleId(moduleId: string): string | undefined {
+    if (!moduleId.startsWith(`${ModuleTracker.VIRTUAL_MODULE_ID}/`)) {
+      return undefined;
+    }
+
+    if (this._getLocale(moduleId) === '') {
+      return undefined;
+    }
+
+    const resolvedModuleId = `\0${moduleId}`;
+    this.resolvedModuleIds.add(resolvedModuleId);
+
+    return resolvedModuleId;
+  }
 }
