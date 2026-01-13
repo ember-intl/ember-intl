@@ -5,7 +5,6 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
-import { getOwnLocales, getOwnTranslations } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -19,6 +18,18 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   return true;
 }
 
+function getOwnLocales(project: Project): Set<string> {
+  const locales = new Set<string>();
+
+  project.translationFiles.forEach((data) => {
+    if (data.isInternal) {
+      locales.add(data.locale);
+    }
+  });
+
+  return locales;
+}
+
 export function noInconsistentMessages(
   project: Project,
   lintOptions?: Partial<{
@@ -26,7 +37,6 @@ export function noInconsistentMessages(
   }>,
 ): LintErrors {
   const ownLocales = getOwnLocales(project);
-  const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
@@ -36,28 +46,16 @@ export function noInconsistentMessages(
       return;
     }
 
-    const mappingSubset: typeof mapping = new Map();
-
-    mapping.forEach((data, locale) => {
-      if (ownTranslations.has(data.filePath)) {
-        mappingSubset.set(locale, data);
-      }
-    });
-
-    if (mappingSubset.size === 0) {
-      return;
-    }
-
     const allIcuArguments: IcuArguments[] = [];
 
-    mappingSubset.forEach((data) => {
+    mapping.forEach((data) => {
       allIcuArguments.push(data.icuArguments);
     });
 
     let isConsistent = allIcuArgumentsMatch(allIcuArguments);
 
     ownLocales.forEach((locale) => {
-      if (!mappingSubset.has(locale)) {
+      if (!mapping.has(locale)) {
         isConsistent = false;
       }
     });
