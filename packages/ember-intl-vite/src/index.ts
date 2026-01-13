@@ -20,7 +20,9 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      const options = await createOptions();
+      const projectRoot = process.cwd();
+      const options = await createOptions(projectRoot);
+
       const { translations } = analyzeProject(options);
 
       if (translations.get(locale) === undefined) {
