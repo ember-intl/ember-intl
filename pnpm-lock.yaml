@@ -1645,9 +1645,6 @@ importers:
       '@ember-intl/lint':
         specifier: workspace:*
         version: link:../../packages/ember-intl-lint
-      '@ember-intl/v1-compat':
-        specifier: workspace:*
-        version: link:../../packages/ember-intl-v1-compat
       '@ember-intl/vite':
         specifier: workspace:*
         version: link:../../packages/ember-intl-vite
@@ -2104,9 +2101,6 @@ importers:
       '@ember-intl/lint':
         specifier: workspace:*
         version: link:../../packages/ember-intl-lint
-      '@ember-intl/v1-compat':
-        specifier: workspace:*
-        version: link:../../packages/ember-intl-v1-compat
       '@ember-intl/vite':
         specifier: workspace:*
         version: link:../../packages/ember-intl-vite
@@ -2509,10 +2503,16 @@ importers:
 
   packages/ember-intl-vite:
     dependencies:
+      '@codemod-utils/files':
+        specifier: ^3.2.3
+        version: 3.2.3
       js-yaml:
         specifier: ^4.1.1
         version: 4.1.1
     devDependencies:
+      '@codemod-utils/tests':
+        specifier: ^2.2.2
+        version: 2.2.2(@sondr3/minitest@0.1.2)
       '@shared-configs/eslint-config-node':
         specifier: workspace:*
         version: link:../../configs/eslint/node
