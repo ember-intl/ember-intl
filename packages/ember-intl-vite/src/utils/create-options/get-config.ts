@@ -1,3 +1,8 @@
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+import { findFiles } from '@codemod-utils/files';
+
 import type { Config, UserConfig } from '../../types/index.js';
 
 type BuildOption = keyof Config['buildOptions'];
@@ -12,6 +17,30 @@ function getDefaultConfig(): Config {
       wrapTranslationsWithNamespace: false,
     },
   };
+}
+
+async function getUserConfig(
+  projectRoot: string,
+): Promise<UserConfig | undefined> {
+  const filePaths = findFiles('ember-intl.config.{js,mjs}', {
+    projectRoot,
+  });
+
+  if (filePaths.length === 0) {
+    return undefined;
+  }
+
+  if (filePaths.length > 1) {
+    throw new Error('found multiple config files');
+  }
+
+  const fileURL = pathToFileURL(join(projectRoot, filePaths[0]!));
+
+  const { default: userConfig } = (await import(fileURL.pathname)) as {
+    default: UserConfig | undefined;
+  };
+
+  return userConfig;
 }
 
 function mergeConfigs(
@@ -46,9 +75,10 @@ function mergeConfigs(
   return defaultConfig;
 }
 
-export function getConfig(userConfig?: UserConfig): Config {
+export async function getConfig(projectRoot: string): Promise<Config> {
   try {
     const defaultConfig = getDefaultConfig();
+    const userConfig = await getUserConfig(projectRoot);
 
     return mergeConfigs(defaultConfig, userConfig);
   } catch (error) {
