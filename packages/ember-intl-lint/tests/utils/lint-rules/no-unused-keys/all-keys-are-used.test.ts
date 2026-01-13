@@ -7,7 +7,7 @@ import {
   stubTranslationFiles,
 } from '../../../helpers/index.js';
 
-test('utils | lint-project | no-unused-keys > all keys are used', function () {
+test('utils | lint-rules | no-unused-keys > all keys are used', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [

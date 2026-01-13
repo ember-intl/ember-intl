@@ -7,7 +7,7 @@ import {
   stubTranslationFiles,
 } from '../../../helpers/index.js';
 
-test('utils | lint-project | no-inconsistent-messages > all ICU arguments match', function () {
+test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [

@@ -1,8 +1,8 @@
 import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
-import { inYaml } from '../../../../../src/utils/analyze-project/find-translations/index.js';
+import { inYaml } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | find-translations | in-yaml > keys are namespaced (3)', function () {
+test('utils | analyze-project | merge-translation-files | in-yaml > keys are namespaced (3)', function () {
   const file = normalizeFile([
     `card:`,
     `  learn-more:`,

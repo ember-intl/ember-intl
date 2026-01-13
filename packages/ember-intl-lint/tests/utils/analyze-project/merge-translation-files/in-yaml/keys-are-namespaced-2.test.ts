@@ -1,20 +1,17 @@
 import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
-import { inYaml } from '../../../../../src/utils/analyze-project/find-available-keys/index.js';
+import { inYaml } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | find-available-keys | in-yaml > keys are namespaced (3)', function () {
+test('utils | analyze-project | merge-translation-files | in-yaml > keys are namespaced (2)', function () {
   const file = normalizeFile([
-    `card:`,
-    `  learn-more:`,
-    `    aria-label: Learn more about {productName}`,
-    `    label: Learn more`,
-    `details:`,
-    `  add-to-cart: Add to Cart`,
-    `  description: Description`,
-    `  price: Price`,
-    `  rating: Rating`,
-    `  rating-value: "{productRating} out of 5 stars"`,
-    `  seller: Seller`,
+    `card.learn-more.aria-label: Learn more about {productName}`,
+    `card.learn-more.label: Learn more`,
+    `details.add-to-cart: Add to Cart`,
+    `details.description: Description`,
+    `details.price: Price`,
+    `details.rating: Rating`,
+    `details.rating-value: "{productRating} out of 5 stars"`,
+    `details.seller: Seller`,
     `title: "{productName}"`,
     ``,
   ]);

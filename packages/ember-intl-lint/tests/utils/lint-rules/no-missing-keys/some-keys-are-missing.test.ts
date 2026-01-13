@@ -7,7 +7,7 @@ import {
   stubTranslationFiles,
 } from '../../../helpers/index.js';
 
-test('utils | lint-project | no-missing-keys > some keys are missing', function () {
+test('utils | lint-rules | no-missing-keys > some keys are missing', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [

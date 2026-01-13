@@ -1,8 +1,8 @@
 import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
-import { inYaml } from '../../../../../src/utils/analyze-project/find-available-keys/index.js';
+import { inYaml } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | find-available-keys | in-yaml > keys are nested', function () {
+test('utils | analyze-project | merge-translation-files | in-yaml > keys are nested', function () {
   const file = normalizeFile([
     `components:`,
     `  products:`,

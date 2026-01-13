@@ -5,7 +5,7 @@ import type { Options, Project } from '../../types/index.js';
 import {
   inJson,
   inYaml,
-} from '../../utils/analyze-project/find-available-keys/index.js';
+} from '../../utils/analyze-project/merge-translation-files/index.js';
 import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js';
 
 export function findAvailableKeys(

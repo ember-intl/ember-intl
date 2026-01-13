@@ -5,7 +5,7 @@ import type { Options, Project } from '../../types/index.js';
 import {
   inJson,
   inYaml,
-} from '../../utils/analyze-project/find-translations/index.js';
+} from '../../utils/analyze-project/merge-translation-files/index.js';
 
 export function mergeTranslationFiles(
   translationFiles: Project['translationFiles'],

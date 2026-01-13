@@ -1,8 +1,8 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { inYaml } from '../../../../../src/utils/analyze-project/find-translations/index.js';
+import { inYaml } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | find-translations | in-yaml > file is empty', function () {
+test('utils | analyze-project | merge-translation-files | in-yaml > file is empty', function () {
   const file = '';
 
   const translationObject = inYaml(file, {
