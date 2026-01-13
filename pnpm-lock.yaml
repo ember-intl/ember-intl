@@ -1795,9 +1795,6 @@ importers:
       '@ember-intl/lint':
         specifier: workspace:*
         version: link:../../packages/ember-intl-lint
-      '@ember-intl/v1-compat':
-        specifier: workspace:*
-        version: link:../../packages/ember-intl-v1-compat
       '@ember-intl/vite':
         specifier: workspace:*
         version: link:../../packages/ember-intl-vite

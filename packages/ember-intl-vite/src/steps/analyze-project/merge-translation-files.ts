@@ -36,5 +36,25 @@ export function mergeTranslationFiles(
     translations.set(data.locale, newTranslationObject);
   });
 
-  return translations;
+  if (buildOptions.fallbackLocale === undefined) {
+    return translations;
+  }
+
+  const translationsWithFallback: Project['translations'] = new Map();
+
+  const fallbackTranslationObject = translations.get(
+    buildOptions.fallbackLocale,
+  );
+
+  translations.forEach((translationObject, locale) => {
+    const newTranslationObject = Object.assign(
+      {},
+      fallbackTranslationObject,
+      translationObject,
+    );
+
+    translationsWithFallback.set(locale, newTranslationObject);
+  });
+
+  return translationsWithFallback;
 }

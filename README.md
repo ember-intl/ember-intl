@@ -12,6 +12,7 @@ _Internationalization for Ember projects_
 - [ember-intl](./packages/ember-intl/README.md)
 - [@ember-intl/lint](./packages/ember-intl-lint/README.md)
 - [@ember-intl/v1-compat](./packages/ember-intl-v1-compat/README.md)
+- [@ember-intl/vite](./packages/ember-intl-vite/README.md)
 
 
 ## Features
