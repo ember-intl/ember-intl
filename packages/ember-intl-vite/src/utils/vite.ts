@@ -1,33 +1,70 @@
-import type { Locale } from '../types/index.js';
+import { join } from 'node:path';
 
-const VIRTUAL_MODULE_ID = 'virtual:ember-intl/translations' as const;
-const resolvedModuleIds = new Set<string>();
+import { parseFilePath } from '@codemod-utils/files';
 
-function _getLocale(moduleId: string): Locale {
-  return moduleId.replace(`${VIRTUAL_MODULE_ID}/`, '');
+import type { Locale, Options } from '../types/index.js';
+
+const supportedExtensions = new Set(['.json', '.yaml', '.yml']);
+
+export function isTranslationFile(filePath: string, options: Options): boolean {
+  const { ext } = parseFilePath(filePath);
+
+  if (!supportedExtensions.has(ext)) {
+    return false;
+  }
+
+  const { config, projectRoot } = options;
+  const { addonPaths, buildOptions } = config;
+
+  const foldersToWatch: string[] = [
+    /*
+      TODO: Vite/chokidar can't watch changes to `node_modules`.
+      See https://github.com/vitejs/vite/issues/8619.
+    */
+    ...addonPaths.map((addonPath) => {
+      return join(projectRoot, addonPath, 'translations');
+    }),
+    join(projectRoot, buildOptions.inputPath),
+  ];
+
+  return foldersToWatch.some((folder) => filePath.startsWith(folder));
 }
 
-export function getLocale(resolvedModuleId: string): Locale | undefined {
-  if (!resolvedModuleIds.has(resolvedModuleId)) {
-    return undefined;
+export class ModuleTracker {
+  private resolvedModuleIds = new Set<string>();
+
+  private static VIRTUAL_MODULE_ID = 'virtual:ember-intl/translations';
+
+  private _getLocale(moduleId: string): Locale {
+    return moduleId.replace(`${ModuleTracker.VIRTUAL_MODULE_ID}/`, '');
   }
 
-  const moduleId = resolvedModuleId.replace(/^\0/, '');
+  getLocale(resolvedModuleId: string): Locale | undefined {
+    if (!this.resolvedModuleIds.has(resolvedModuleId)) {
+      return undefined;
+    }
 
-  return _getLocale(moduleId);
-}
+    const moduleId = resolvedModuleId.replace(/^\0/, '');
 
-export function resolveModuleId(moduleId: string): string | undefined {
-  if (!moduleId.startsWith(`${VIRTUAL_MODULE_ID}/`)) {
-    return undefined;
+    return this._getLocale(moduleId);
   }
 
-  if (_getLocale(moduleId) === '') {
-    return undefined;
+  getResolvedModuleIds(): string[] {
+    return Array.from(this.resolvedModuleIds);
   }
 
-  const resolvedModuleId = `\0${moduleId}`;
-  resolvedModuleIds.add(resolvedModuleId);
+  resolveModuleId(moduleId: string): string | undefined {
+    if (!moduleId.startsWith(`${ModuleTracker.VIRTUAL_MODULE_ID}/`)) {
+      return undefined;
+    }
 
-  return resolvedModuleId;
+    if (this._getLocale(moduleId) === '') {
+      return undefined;
+    }
+
+    const resolvedModuleId = `\0${moduleId}`;
+    this.resolvedModuleIds.add(resolvedModuleId);
+
+    return resolvedModuleId;
+  }
 }
