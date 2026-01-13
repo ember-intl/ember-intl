@@ -17,6 +17,19 @@ type Options = {
   projectRoot: string;
 };
 
+type Project = {
+  translationFiles: Map<
+    TranslationFilePath,
+    {
+      format: 'json' | 'yaml';
+      isInternal: boolean;
+      locale: Locale;
+      translationsDir: string;
+    }
+  >;
+  translations: Map<Locale, TranslationObject>;
+};
+
 type TranslationFilePath = string;
 
 type TranslationJson = {
@@ -38,6 +51,7 @@ export type {
   Config,
   Locale,
   Options,
+  Project,
   TranslationFilePath,
   TranslationJson,
   TranslationKey,

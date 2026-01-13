@@ -2,7 +2,7 @@ import { EOL } from 'node:os';
 
 import type { Plugin } from 'vite';
 
-import { createOptions } from './steps/index.js';
+import { analyzeProject, createOptions } from './steps/index.js';
 import type { UserConfig } from './types/index.js';
 import { getLocale, resolveModuleId } from './utils/vite.js';
 
@@ -22,10 +22,14 @@ export function loadTranslations(userConfig?: UserConfig): Plugin {
       }
 
       const options = createOptions(userConfig);
-      const translations = {};
+      const { translations } = analyzeProject(options);
+
+      if (translations.get(locale) === undefined) {
+        return;
+      }
 
       return [
-        `const translations = ${JSON.stringify(translations)};`,
+        `const translations = ${JSON.stringify(translations.get(locale))};`,
         ``,
         `export default translations;`,
       ].join(EOL);
