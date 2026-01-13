@@ -1,11 +1,20 @@
 import { EOL } from 'node:os';
+import { sep } from 'node:path';
 
 import type { Plugin } from 'vite';
 
 import { analyzeProject, createOptions } from './steps/index.js';
-import { getLocale, resolveModuleId } from './utils/vite.js';
+import type { Options } from './types/index.js';
+import {
+  getLocale,
+  getResolvedModuleIds,
+  isTranslationFile,
+  resolveModuleId,
+} from './utils/vite.js';
 
 export function loadTranslations(): Plugin {
+  let options: Options | undefined;
+
   return {
     name: 'ember-intl-load-translations',
 
@@ -20,8 +29,8 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      const projectRoot = process.cwd();
-      const options = await createOptions(projectRoot);
+      const projectRoot = process.cwd().replaceAll(sep, '/');
+      options = await createOptions(projectRoot);
 
       const { translations } = analyzeProject(options);
 
@@ -34,6 +43,28 @@ export function loadTranslations(): Plugin {
         ``,
         `export default translations;`,
       ].join(EOL);
+    },
+
+    async handleHotUpdate({ file: filePath, server }) {
+      if (options === undefined) {
+        return;
+      }
+
+      if (!isTranslationFile(filePath, options)) {
+        return;
+      }
+
+      const promises = getResolvedModuleIds().reduce((accumulator, id) => {
+        const module = server.moduleGraph.getModuleById(id);
+
+        if (module) {
+          accumulator.push(server.reloadModule(module));
+        }
+
+        return accumulator;
+      }, [] as Promise<void>[]);
+
+      await Promise.allSettled(promises);
     },
   };
 }
