@@ -1,5 +1,15 @@
 # my-v2-app
 
+## 1.4.0
+
+### Minor Changes
+
+- [#2052](https://github.com/ember-intl/ember-intl/pull/2052) Loaded translations (default, wrapTranslationsWithNamespace) ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2053](https://github.com/ember-intl/ember-intl/pull/2053) Updated configuration for @ember-intl/lint and @ember-intl/vite ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.0
 
 ### Minor Changes

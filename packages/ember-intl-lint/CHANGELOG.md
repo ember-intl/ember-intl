@@ -1,5 +1,12 @@
 # @ember-intl/lint
 
+## 0.3.1
+
+### Patch Changes
+
+- [#2054](https://github.com/ember-intl/ember-intl/pull/2054) Added tests for buildOptions ([@ijlee2](https://github.com/ijlee2))
+- [#2053](https://github.com/ember-intl/ember-intl/pull/2053) Allowed passing fallbackLocale and publicOnly to buildOptions ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.3.0
 
 ### Minor Changes

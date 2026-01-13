@@ -1,5 +1,11 @@
 # docs-app-for-ember-intl
 
+## 1.8.10
+
+### Patch Changes
+
+- [#2051](https://github.com/ember-intl/ember-intl/pull/2051) Fixed typo ([@MichalBryxi](https://github.com/MichalBryxi))
+
 ## 1.8.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # my-v2-app-with-fallbacks
 
+## 1.1.1
+
+### Patch Changes
+
+- [#2053](https://github.com/ember-intl/ember-intl/pull/2053) Updated configuration for @ember-intl/lint and @ember-intl/vite ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.0
 
 ### Minor Changes
