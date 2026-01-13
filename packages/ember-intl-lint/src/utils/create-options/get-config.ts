@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url';
 
 import { findFiles } from '@codemod-utils/files';
 
-import type { Config, LintOptions } from '../../types/index.js';
+import type { Config, LintOptions, UserConfig } from '../../types/index.js';
 import { type LintRule, lintRules } from '../lint-rules.js';
 
 type BuildOption = keyof Config['buildOptions'];
@@ -18,7 +18,9 @@ function getDefaultConfig(): Config {
   return {
     addonPaths: [],
     buildOptions: {
+      fallbackLocale: undefined,
       inputPath: 'translations',
+      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: rules,
@@ -27,7 +29,7 @@ function getDefaultConfig(): Config {
 
 async function getUserConfig(
   projectRoot: string,
-): Promise<Partial<Config> | undefined> {
+): Promise<UserConfig | undefined> {
   const filePaths = findFiles('ember-intl.config.{js,mjs}', {
     projectRoot,
   });
@@ -43,7 +45,7 @@ async function getUserConfig(
   const fileURL = pathToFileURL(join(projectRoot, filePaths[0]!));
 
   const { default: userConfig } = (await import(fileURL.pathname)) as {
-    default: Partial<Config> | undefined;
+    default: UserConfig | undefined;
   };
 
   return userConfig;
@@ -51,7 +53,7 @@ async function getUserConfig(
 
 function mergeConfigs(
   defaultConfig: Config,
-  userConfig: Partial<Config> | undefined,
+  userConfig: UserConfig | undefined,
 ): Config {
   if (userConfig === undefined) {
     return defaultConfig;
