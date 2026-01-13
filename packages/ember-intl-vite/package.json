@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "type": "module",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "directories": {
     "test": "tests"
   },
