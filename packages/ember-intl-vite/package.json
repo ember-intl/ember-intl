@@ -18,7 +18,15 @@
   },
   "license": "MIT",
   "type": "module",
-  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./virtual": {
+      "types": "./dist/virtual.d.ts"
+    }
+  },
   "directories": {
     "test": "tests"
   },
