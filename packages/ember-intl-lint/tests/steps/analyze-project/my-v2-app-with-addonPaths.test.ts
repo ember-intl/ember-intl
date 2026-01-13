@@ -23,7 +23,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -38,7 +37,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -58,8 +56,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath:
-                  'node_modules/my-v1-addon/translations/components/component-from-v1-addon/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -74,8 +70,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath:
-                  'node_modules/my-v1-addon/translations/components/component-from-v1-addon/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -95,8 +89,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/component-from-v2-addon/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -111,8 +103,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/component-from-v2-addon/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -132,8 +122,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -148,8 +136,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -169,8 +155,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -185,8 +169,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -206,8 +188,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -222,8 +202,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -243,8 +221,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -259,8 +235,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath:
-                  'node_modules/my-v2-addon/translations/components/select-locale/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -280,7 +254,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -295,7 +268,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -315,7 +287,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -331,7 +302,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -352,7 +322,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -367,7 +336,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -387,7 +355,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -402,7 +369,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -422,7 +388,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -437,7 +402,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -457,7 +421,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'de-de',
               {
-                filePath: 'translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -472,7 +435,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
             [
               'en-us',
               {
-                filePath: 'translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),

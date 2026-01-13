@@ -40,8 +40,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/component-from-app/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -56,8 +54,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/component-from-app/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -77,7 +73,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath: 'translations/components/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -92,7 +87,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath: 'translations/components/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -112,8 +106,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/de-de.yml',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -129,8 +121,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/en-us.yml',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -151,8 +141,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -167,8 +155,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -188,7 +174,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath: 'translations/routes/application/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -203,7 +188,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath: 'translations/routes/application/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -223,7 +207,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -238,7 +221,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -258,7 +240,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -273,7 +254,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),

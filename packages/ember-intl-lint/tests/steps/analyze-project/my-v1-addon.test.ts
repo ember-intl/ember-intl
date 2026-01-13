@@ -23,8 +23,6 @@ test('steps | analyze-project > my-v1-addon', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/component-from-v1-addon/de-de.yaml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -39,8 +37,6 @@ test('steps | analyze-project > my-v1-addon', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/component-from-v1-addon/en-us.yaml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -60,7 +56,6 @@ test('steps | analyze-project > my-v1-addon', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yaml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -75,7 +70,6 @@ test('steps | analyze-project > my-v1-addon', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.yaml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),

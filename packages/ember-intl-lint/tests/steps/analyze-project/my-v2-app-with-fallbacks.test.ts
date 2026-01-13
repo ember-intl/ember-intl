@@ -23,7 +23,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'en-us',
               {
-                filePath: 'translations/components/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -43,8 +42,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/de-de.yml',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -60,8 +57,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/en-us.yml',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -82,8 +77,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -98,8 +91,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -119,7 +110,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/application/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -134,7 +124,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/application/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -154,7 +143,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -169,7 +157,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -189,7 +176,6 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yml',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),

@@ -23,7 +23,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -38,7 +37,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -58,7 +56,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -73,7 +70,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -93,7 +89,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -109,7 +104,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -130,7 +124,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -145,7 +138,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -165,7 +157,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -180,7 +171,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -200,7 +190,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -215,7 +204,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -235,7 +223,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'de-de',
               {
-                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -250,7 +237,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
             [
               'en-us',
               {
-                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),

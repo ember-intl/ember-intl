@@ -10,16 +10,7 @@ export function normalizeProject(project: Project): Project {
   };
 
   project.availableKeys.forEach((mapping, key) => {
-    const mappingNormalized: typeof mapping = new Map();
-
-    mapping.forEach((data, locale) => {
-      mappingNormalized.set(locale, {
-        ...data,
-        filePath: normalize(data.filePath),
-      });
-    });
-
-    normalized.availableKeys.set(key, mappingNormalized);
+    normalized.availableKeys.set(key, mapping);
   });
 
   project.translationFiles.forEach((data, translationFilePath) => {

@@ -23,8 +23,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/component-from-v2-addon/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -39,8 +37,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/component-from-v2-addon/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -60,7 +56,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'de-de',
               {
-                filePath: 'translations/components/select-locale/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -75,7 +70,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'en-us',
               {
-                filePath: 'translations/components/select-locale/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -95,7 +89,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'de-de',
               {
-                filePath: 'translations/components/select-locale/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -110,7 +103,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'en-us',
               {
-                filePath: 'translations/components/select-locale/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -130,7 +122,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'de-de',
               {
-                filePath: 'translations/components/select-locale/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -145,7 +136,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'en-us',
               {
-                filePath: 'translations/components/select-locale/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -165,7 +155,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'de-de',
               {
-                filePath: 'translations/components/select-locale/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -180,7 +169,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'en-us',
               {
-                filePath: 'translations/components/select-locale/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -200,7 +188,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -215,7 +202,6 @@ test('steps | analyze-project > my-v2-addon', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
