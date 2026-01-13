@@ -5,7 +5,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { stubTranslationFiles } from '../../../helpers/stub-translation-files.js';
 
-test('utils | lint-project | no-inconsistent-messages > some ICU arguments do not match (1)', function () {
+test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not match (1)', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [

@@ -4,7 +4,7 @@ import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arg
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 
-test('utils | lint-project | no-inconsistent-messages > some keys are missing (2)', function () {
+test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)', function () {
   const project = normalizeProject({
     availableKeys: new Map([
       [
