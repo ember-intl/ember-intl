@@ -14,12 +14,18 @@ type Options = {
 
 type Config = {
   addonPaths: string[];
-  buildOptions: {
-    inputPath: string;
-    wrapTranslationsWithNamespace: boolean;
-  };
-  lintRules: Record<LintRule, boolean | LintOptions>;
+  buildOptions: ConfigBuildOptions;
+  lintRules: ConfigLintRules;
 };
+
+type ConfigBuildOptions = {
+  fallbackLocale: string | undefined;
+  inputPath: string;
+  publicOnly: boolean;
+  wrapTranslationsWithNamespace: boolean;
+};
+
+type ConfigLintRules = Record<LintRule, boolean | LintOptions>;
 
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 
@@ -79,6 +85,12 @@ type TranslationMessage = string;
 
 type TranslationObject = Record<TranslationKey, TranslationMessage>;
 
+type UserConfig = Partial<{
+  addonPaths: string[];
+  buildOptions: Partial<ConfigBuildOptions>;
+  lintRules: Partial<ConfigLintRules>;
+}>;
+
 export type {
   CodemodOptions,
   Config,
@@ -95,4 +107,5 @@ export type {
   TranslationKey,
   TranslationMessage,
   TranslationObject,
+  UserConfig,
 };

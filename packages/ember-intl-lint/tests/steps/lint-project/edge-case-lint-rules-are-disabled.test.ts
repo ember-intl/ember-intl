@@ -10,7 +10,9 @@ test('steps | lint-project > edge-case (lint rules are disabled)', function () {
     config: {
       addonPaths: [],
       buildOptions: {
+        fallbackLocale: undefined,
         inputPath: 'translations',
+        publicOnly: false,
         wrapTranslationsWithNamespace: false,
       },
       lintRules: {

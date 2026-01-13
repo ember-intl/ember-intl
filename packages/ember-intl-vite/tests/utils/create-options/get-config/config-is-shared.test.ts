@@ -47,12 +47,5 @@ test('utils | create-options | get-config > config is shared', async function ()
       publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': {
-        ignores: ['hello.message'],
-      },
-      'no-unused-keys': false,
-    },
   });
 });

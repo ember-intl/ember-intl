@@ -2,10 +2,12 @@ import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { getConfig } from '../../../../src/utils/create-options/index.js';
 
-test('utils | create-options | get-config > file is missing', async function () {
-  const inputProject = {};
+test('utils | create-options | get-config > config is empty', async function () {
+  const inputProject = {
+    'ember-intl.config.mjs': '',
+  };
 
-  const projectRoot = 'tmp/utils/get-config/file-is-missing';
+  const projectRoot = 'tmp/utils/get-config/config-is-empty';
 
   loadFixture(inputProject, { projectRoot });
 
@@ -14,7 +16,9 @@ test('utils | create-options | get-config > file is missing', async function () 
   assert.deepStrictEqual(config, {
     addonPaths: [],
     buildOptions: {
+      fallbackLocale: undefined,
       inputPath: 'translations',
+      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: {

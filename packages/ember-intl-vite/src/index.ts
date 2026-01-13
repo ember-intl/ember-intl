@@ -3,10 +3,9 @@ import { EOL } from 'node:os';
 import type { Plugin } from 'vite';
 
 import { analyzeProject, createOptions } from './steps/index.js';
-import type { UserConfig } from './types/index.js';
 import { getLocale, resolveModuleId } from './utils/vite.js';
 
-export function loadTranslations(userConfig?: UserConfig): Plugin {
+export function loadTranslations(): Plugin {
   return {
     name: 'ember-intl-load-translations',
 
@@ -14,14 +13,14 @@ export function loadTranslations(userConfig?: UserConfig): Plugin {
       return resolveModuleId(id);
     },
 
-    load(id) {
+    async load(id) {
       const locale = getLocale(id);
 
       if (locale === undefined) {
         return;
       }
 
-      const options = createOptions(userConfig);
+      const options = await createOptions();
       const { translations } = analyzeProject(options);
 
       if (translations.get(locale) === undefined) {

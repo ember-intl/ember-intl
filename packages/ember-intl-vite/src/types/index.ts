@@ -1,14 +1,16 @@
-type BuildOptions = {
+type Config = {
+  addonPaths: string[];
+  buildOptions: ConfigBuildOptions;
+};
+
+type ConfigBuildOptions = {
   fallbackLocale: string | undefined;
   inputPath: string;
   publicOnly: boolean;
   wrapTranslationsWithNamespace: boolean;
 };
 
-type Config = {
-  addonPaths: string[];
-  buildOptions: BuildOptions;
-};
+type ConfigLintRules = Record<string, boolean | Record<string, unknown>>;
 
 type Locale = string;
 
@@ -44,7 +46,8 @@ type TranslationObject = Record<TranslationKey, TranslationMessage>;
 
 type UserConfig = Partial<{
   addonPaths: string[];
-  buildOptions: Partial<BuildOptions>;
+  buildOptions: Partial<ConfigBuildOptions>;
+  lintRules: Partial<ConfigLintRules>;
 }>;
 
 export type {

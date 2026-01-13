@@ -22,10 +22,12 @@ export default {};
 type UserConfig = Partial<{
   addonPaths: string[];
   buildOptions: Partial<{
+    fallbackLocale: string | undefined;
     inputPath: string;
+    publicOnly: boolean;
     wrapTranslationsWithNamespace: boolean;
   }>;
-  lintRules: Record<LintRule, boolean | LintOptions>;
+  lintRules: Partial<Record<LintRule, boolean | LintOptions>>;
 }>;
 ```
 
@@ -44,14 +46,14 @@ export default {
 
 ## buildOptions
 
-Copy-paste the build options that you defined in `config/ember-intl.js`. Only `inputPath` and `wrapTranslationsWithNamespace` are supported.
+Copy-paste the build options that you defined in `config/ember-intl.js`.
 
 ```js
 /* ember-intl.config.mjs */
 export default {
   buildOptions: {
+    fallbackLocale: 'en-us',
     inputPath: 'public/assets/translations',
-    wrapTranslationsWithNamespace: false,
   },
 };
 ```
