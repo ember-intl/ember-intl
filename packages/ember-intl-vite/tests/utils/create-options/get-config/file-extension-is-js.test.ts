@@ -2,27 +2,19 @@ import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
 import { getConfig } from '../../../../src/utils/create-options/index.js';
 
-test('utils | create-options | get-config > config has addonPaths', async function () {
+test('utils | create-options | get-config > file extension is js', async function () {
   const inputProject = {
-    'ember-intl.config.mjs': normalizeFile([
-      `export default {`,
-      `  addonPaths: [`,
-      `    'node_modules/my-v1-addon',`,
-      `    'node_modules/my-v2-addon',`,
-      `  ],`,
-      `};`,
-      ``,
-    ]),
+    'ember-intl.config.js': normalizeFile([`export default {};`, ``]),
   };
 
-  const projectRoot = 'tmp/utils/get-config/config-has-addonPaths';
+  const projectRoot = 'tmp/utils/get-config/file-extension-is-js';
 
   loadFixture(inputProject, { projectRoot });
 
   const config = await getConfig(projectRoot);
 
   assert.deepStrictEqual(config, {
-    addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
+    addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
