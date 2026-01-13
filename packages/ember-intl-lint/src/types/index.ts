@@ -100,6 +100,7 @@ export type {
   LintMethod,
   LintOptions,
   LintResults,
+  Locale,
   Options,
   Project,
   TranslationFilePath,
