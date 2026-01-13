@@ -4,9 +4,7 @@ import {
   setupTest as upstreamSetupTest,
   type SetupTestOptions,
 } from 'ember-qunit';
-// @ts-expect-error: Incorrect type
 import translationsForDeDe from 'virtual:ember-intl/translations/de-de';
-// @ts-expect-error: Incorrect type
 import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
 
 // This file exists to provide wrappers around ember-qunit's
@@ -39,9 +37,7 @@ function setupRenderingTest(hooks: NestedHooks, options?: SetupTestOptions) {
   hooks.beforeEach(function () {
     const intl = this.owner.lookup('service:intl');
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     intl.addTranslations('de-de', translationsForDeDe);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     intl.addTranslations('en-us', translationsForEnUs);
   });
 }

@@ -11,6 +11,8 @@ then
   # Compile TypeScript
   tsc --project "tsconfig.build.json"
 
+  cp "src/virtual.d.ts" "dist/virtual.d.ts"
+
   echo "SUCCESS: Built dist.\n"
 
 elif [ $ENVIRONMENT = "--test" ]
