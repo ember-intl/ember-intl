@@ -18,6 +18,7 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
       [
         'de-de',
         {
+          'components.title': 'Components',
           'components.translation-with-arguments.message':
             '{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.',
           'components.translation-with-arguments.title':
