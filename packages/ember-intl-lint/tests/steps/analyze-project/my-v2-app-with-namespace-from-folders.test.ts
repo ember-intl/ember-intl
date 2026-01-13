@@ -1,14 +1,14 @@
 import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { analyzeProject } from '../../../src/steps/index.js';
-import { inputProject } from '../../fixtures/my-v2-app/index.js';
+import { inputProject } from '../../fixtures/my-v2-app-with-namespace-from-folders/index.js';
 import { normalizeProject } from '../../helpers/index.js';
 import {
   codemodOptions,
   options,
-} from '../../helpers/shared-test-setups/my-v2-app.js';
+} from '../../helpers/shared-test-setups/my-v2-app-with-namespace-from-folders.js';
 
-test('steps | analyze-project > my-v2-app', function () {
+test('steps | analyze-project > my-v2-app-with-namespace-from-folders', function () {
   loadFixture(inputProject, codemodOptions);
 
   const project = analyzeProject(options);

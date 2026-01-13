@@ -1,14 +1,14 @@
 import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { analyzeProject } from '../../../src/steps/index.js';
-import { inputProject } from '../../fixtures/my-v2-app/index.js';
+import { inputProject } from '../../fixtures/my-v2-app-with-lazy-loaded-translations/index.js';
 import { normalizeProject } from '../../helpers/index.js';
 import {
   codemodOptions,
   options,
-} from '../../helpers/shared-test-setups/my-v2-app.js';
+} from '../../helpers/shared-test-setups/my-v2-app-with-lazy-loaded-translations.js';
 
-test('steps | analyze-project > my-v2-app', function () {
+test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', function () {
   loadFixture(inputProject, codemodOptions);
 
   const project = analyzeProject(options);
@@ -23,8 +23,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/component-from-app/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -39,8 +38,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/component-from-app/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -60,7 +58,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath: 'translations/components/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -75,7 +73,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath: 'translations/components/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -95,8 +93,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -112,8 +109,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(['name']),
                   date: new Set(),
@@ -134,8 +130,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -150,8 +145,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath:
-                  'translations/components/translation-with-arguments/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -171,7 +165,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/application/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -186,7 +180,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/application/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -206,7 +200,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -221,7 +215,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -241,7 +235,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'de-de',
               {
-                filePath: 'translations/routes/index/de-de.yml',
+                filePath: 'public/assets/translations/de-de.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -256,7 +250,7 @@ test('steps | analyze-project > my-v2-app', function () {
             [
               'en-us',
               {
-                filePath: 'translations/routes/index/en-us.yml',
+                filePath: 'public/assets/translations/en-us.json',
                 icuArguments: {
                   argument: new Set(),
                   date: new Set(),
@@ -273,93 +267,21 @@ test('steps | analyze-project > my-v2-app', function () {
       ]),
       translationFiles: new Map([
         [
-          'translations/components/component-from-app/de-de.yml',
+          'public/assets/translations/de-de.json',
           {
-            format: 'yaml',
+            format: 'json',
             isInternal: true,
             locale: 'de-de',
-            translationsDir: 'translations',
+            translationsDir: 'public/assets/translations',
           },
         ],
         [
-          'translations/components/component-from-app/en-us.yml',
+          'public/assets/translations/en-us.json',
           {
-            format: 'yaml',
+            format: 'json',
             isInternal: true,
             locale: 'en-us',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/components/de-de.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'de-de',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/components/en-us.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'en-us',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/components/translation-with-arguments/de-de.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'de-de',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/components/translation-with-arguments/en-us.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'en-us',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/routes/application/de-de.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'de-de',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/routes/application/en-us.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'en-us',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/routes/index/de-de.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'de-de',
-            translationsDir: 'translations',
-          },
-        ],
-        [
-          'translations/routes/index/en-us.yml',
-          {
-            format: 'yaml',
-            isInternal: true,
-            locale: 'en-us',
-            translationsDir: 'translations',
+            translationsDir: 'public/assets/translations',
           },
         ],
       ]),

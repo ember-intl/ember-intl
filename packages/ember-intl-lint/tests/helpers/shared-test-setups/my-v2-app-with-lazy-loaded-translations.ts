@@ -2,7 +2,7 @@ import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-lazy-loaded-translations',
 };
 
 const options: Options = {
@@ -10,8 +10,8 @@ const options: Options = {
     addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      publicOnly: false,
+      inputPath: 'public/assets/translations',
+      publicOnly: true,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: {
@@ -21,7 +21,7 @@ const options: Options = {
     },
   },
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-lazy-loaded-translations',
   src: 'app',
 };
 

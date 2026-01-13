@@ -1,14 +1,14 @@
 import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { analyzeProject } from '../../../src/steps/index.js';
-import { inputProject } from '../../fixtures/my-v2-app/index.js';
+import { inputProject } from '../../fixtures/my-v2-app-with-fallbacks/index.js';
 import { normalizeProject } from '../../helpers/index.js';
 import {
   codemodOptions,
   options,
-} from '../../helpers/shared-test-setups/my-v2-app.js';
+} from '../../helpers/shared-test-setups/my-v2-app-with-fallbacks.js';
 
-test('steps | analyze-project > my-v2-app', function () {
+test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
   loadFixture(inputProject, codemodOptions);
 
   const project = analyzeProject(options);
@@ -18,60 +18,8 @@ test('steps | analyze-project > my-v2-app', function () {
     normalizeProject({
       availableKeys: new Map([
         [
-          'components.component-from-app.message',
-          new Map([
-            [
-              'de-de',
-              {
-                filePath:
-                  'translations/components/component-from-app/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
-                message: 'Dies ist eine Komponente aus der App.',
-              },
-            ],
-            [
-              'en-us',
-              {
-                filePath:
-                  'translations/components/component-from-app/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
-                message: 'This is a component from the app.',
-              },
-            ],
-          ]),
-        ],
-        [
           'components.title',
           new Map([
-            [
-              'de-de',
-              {
-                filePath: 'translations/components/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
-                message: 'Komponenten',
-              },
-            ],
             [
               'en-us',
               {
@@ -251,21 +199,6 @@ test('steps | analyze-project > my-v2-app', function () {
                   time: new Set(),
                 },
                 message: 'Willkommen bei <code>ember-intl</code>',
-              },
-            ],
-            [
-              'en-us',
-              {
-                filePath: 'translations/routes/index/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
-                message: 'Welcome to <code>ember-intl</code>',
               },
             ],
           ]),

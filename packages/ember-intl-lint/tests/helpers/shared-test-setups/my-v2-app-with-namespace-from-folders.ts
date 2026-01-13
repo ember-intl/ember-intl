@@ -2,7 +2,7 @@ import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-namespace-from-folders',
 };
 
 const options: Options = {
@@ -12,7 +12,7 @@ const options: Options = {
       fallbackLocale: undefined,
       inputPath: 'translations',
       publicOnly: false,
-      wrapTranslationsWithNamespace: false,
+      wrapTranslationsWithNamespace: true,
     },
     lintRules: {
       'no-inconsistent-messages': true,
@@ -21,7 +21,7 @@ const options: Options = {
     },
   },
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-namespace-from-folders',
   src: 'app',
 };
 

@@ -2,12 +2,12 @@ import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-addonPaths',
 };
 
 const options: Options = {
   config: {
-    addonPaths: [],
+    addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
@@ -21,7 +21,7 @@ const options: Options = {
     },
   },
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-addonPaths',
   src: 'app',
 };
 

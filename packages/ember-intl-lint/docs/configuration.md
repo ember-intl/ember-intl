@@ -54,6 +54,7 @@ export default {
   buildOptions: {
     fallbackLocale: 'en-us',
     inputPath: 'public/assets/translations',
+    publicOnly: true,
   },
 };
 ```

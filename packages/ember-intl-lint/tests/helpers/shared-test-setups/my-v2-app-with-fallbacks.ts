@@ -2,14 +2,14 @@ import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-fallbacks',
 };
 
 const options: Options = {
   config: {
     addonPaths: [],
     buildOptions: {
-      fallbackLocale: undefined,
+      fallbackLocale: 'en-us',
       inputPath: 'translations',
       publicOnly: false,
       wrapTranslationsWithNamespace: false,
@@ -21,7 +21,7 @@ const options: Options = {
     },
   },
   fix: false,
-  projectRoot: 'tmp/my-v2-app',
+  projectRoot: 'tmp/my-v2-app-with-fallbacks',
   src: 'app',
 };
 
