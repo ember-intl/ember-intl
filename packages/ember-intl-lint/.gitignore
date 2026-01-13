@@ -5,6 +5,7 @@ tmp/
 
 # dependencies
 node_modules/
+!tests/fixtures/my-v2-app-with-addonPaths/**/node_modules/
 
 # misc
 .DS_Store

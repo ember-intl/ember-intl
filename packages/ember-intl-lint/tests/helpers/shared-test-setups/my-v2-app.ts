@@ -7,7 +7,7 @@ const codemodOptions: CodemodOptions = {
 
 const options: Options = {
   config: {
-    addonPaths: ['node_modules/my-addon'],
+    addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
@@ -17,9 +17,7 @@ const options: Options = {
     lintRules: {
       'no-inconsistent-messages': true,
       'no-missing-keys': true,
-      'no-unused-keys': {
-        ignores: ['routes.error.default-message'],
-      },
+      'no-unused-keys': true,
     },
   },
   fix: false,

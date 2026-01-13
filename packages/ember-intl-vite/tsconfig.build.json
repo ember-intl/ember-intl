@@ -2,7 +2,7 @@
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
     "declaration": true,
-    "outDir": "dist/src"
+    "outDir": "dist"
   },
   "include": ["bin", "src"],
   "exclude": ["src/blueprints"]

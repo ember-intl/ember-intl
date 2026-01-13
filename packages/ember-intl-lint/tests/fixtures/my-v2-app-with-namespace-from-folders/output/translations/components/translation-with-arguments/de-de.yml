@@ -1,0 +1,2 @@
+message: "{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}."
+title: Übersetzung mit Argumenten
