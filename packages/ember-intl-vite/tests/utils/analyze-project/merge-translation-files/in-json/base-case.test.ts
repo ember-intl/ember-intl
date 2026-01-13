@@ -1,8 +1,8 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { inJson } from '../../../../../src/utils/analyze-project/find-translations/index.js';
+import { inJson } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | find-translations | in-json > base case', function () {
+test('utils | analyze-project | merge-translation-files | in-json > base case', function () {
   const file = JSON.stringify({
     'components.products.product.card.learn-more.aria-label':
       'Learn more about {productName}',
