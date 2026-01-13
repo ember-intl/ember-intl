@@ -1,5 +1,11 @@
 # ember-intl
 
+## 8.0.3
+
+### Patch Changes
+
+- [#2059](https://github.com/ember-intl/ember-intl/pull/2059) Standardized type (TranslationJson) ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.2
 
 ### Patch Changes

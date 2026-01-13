@@ -1,5 +1,11 @@
 # my-v2-app
 
+## 1.4.1
+
+### Patch Changes
+
+- [#2059](https://github.com/ember-intl/ember-intl/pull/2059) Provided types for virtual modules ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 0.3.2
+
+### Patch Changes
+
+- [#2058](https://github.com/ember-intl/ember-intl/pull/2058) Moved files ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.3.1
 
 ### Patch Changes
