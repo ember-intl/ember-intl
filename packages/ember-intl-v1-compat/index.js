@@ -9,18 +9,16 @@ const buildTranslationTree = require('./lib/broccoli/build-translation-tree');
 const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/ember-engine');
 
-const defaultConfig = {
+const defaultBuildOptions = {
   fallbackLocale: undefined,
   inputPath: 'translations',
   publicOnly: false,
   wrapTranslationsWithNamespace: false,
 };
 
-const allowedConfigOptions = Object.keys(defaultConfig);
-
 module.exports = {
   name: '@ember-intl/v1-compat',
-  configOptions: null,
+  buildOptions: null,
 
   included(parent) {
     this._super.included.apply(this, arguments);
@@ -29,9 +27,9 @@ module.exports = {
 
     this.package = findEngine(parent) ?? this.project;
 
-    this.configOptions = {
-      ...defaultConfig,
-      ...this.getUserConfig(),
+    this.buildOptions = {
+      ...defaultBuildOptions,
+      ...this.getUserBuildOptions(),
     };
   },
 
@@ -48,7 +46,7 @@ module.exports = {
   treeForAddon(tree) {
     let trees = [tree];
 
-    if (!this.configOptions.publicOnly) {
+    if (!this.buildOptions.publicOnly) {
       const translationTree = this.getTranslationTree({
         mergeTranslationFiles: true,
         outputPath: '',
@@ -66,7 +64,7 @@ module.exports = {
   treeForPublic() {
     let trees = [];
 
-    if (this.configOptions.publicOnly) {
+    if (this.buildOptions.publicOnly) {
       const translationTree = this.getTranslationTree({
         mergeTranslationFiles: false,
         outputPath: 'translations',
@@ -79,41 +77,45 @@ module.exports = {
   },
 
   getTranslationTree({ mergeTranslationFiles, outputPath }) {
-    const { fallbackLocale, wrapTranslationsWithNamespace } =
-      this.configOptions;
+    const { fallbackLocale, inputPath, wrapTranslationsWithNamespace } =
+      this.buildOptions;
 
     const [translationTree, addonsWithTranslations] = buildTranslationTree(
       this.project,
-      this.configOptions.inputPath,
+      inputPath,
       this.treeGenerator,
     );
 
     return new TranslationReducer([translationTree], {
       addonsWithTranslations,
       fallbackLocale,
-      log: (message) => {
-        return this.ui.writeLine(`[ember-intl] ${message}`);
-      },
       mergeTranslationFiles,
       outputPath,
       wrapTranslationsWithNamespace,
     });
   },
 
-  getUserConfig() {
+  getUserBuildOptions() {
     const { env: environment, project } = this.app;
 
     const configFile = join(dirname(project.configPath()), 'ember-intl.js');
     const config = {};
 
-    if (existsSync(configFile)) {
-      const userConfig = require(configFile)(environment);
+    if (!existsSync(configFile)) {
+      return config;
+    }
 
-      allowedConfigOptions.forEach((option) => {
-        if (option in userConfig) {
-          config[option] = userConfig[option];
-        }
-      });
+    const userConfig = require(configFile)(environment);
+    const buildOptions = Object.keys(defaultBuildOptions);
+
+    for (const [buildOption, value] of Object.entries(userConfig)) {
+      if (!buildOptions.includes(buildOption)) {
+        throw new Error(
+          `ERROR: Unable to read \`config/ember-intl.js\`. (unknown build option: ${buildOption})`,
+        );
+      }
+
+      config[buildOption] = value;
     }
 
     return config;

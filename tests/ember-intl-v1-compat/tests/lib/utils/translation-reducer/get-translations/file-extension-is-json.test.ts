@@ -8,6 +8,7 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
     translations: {
       'de-de.json': `{ "nested": { "key": "Hallo {name}!" }, "no-arguments": "Hallo Welt!" }`,
       'en-us.json': `{ "nested": { "key": "Hello {name}!" }, "no-arguments": "Hello world!" }`,
+      'es.json': ``,
     },
   };
 
@@ -16,7 +17,7 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
 
   loadFixture(inputProject, { projectRoot });
 
-  const output = getTranslations(join(inputPath, 'de-de.json'));
+  let output = getTranslations(join(inputPath, 'de-de.json'));
 
   assert.deepStrictEqual(output, {
     nested: {
@@ -24,4 +25,8 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
     },
     'no-arguments': 'Hallo Welt!',
   });
+
+  output = getTranslations(join(inputPath, 'es.json'));
+
+  assert.deepStrictEqual(output, {});
 });
