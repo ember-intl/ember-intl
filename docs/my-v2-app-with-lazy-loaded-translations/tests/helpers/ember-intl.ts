@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment */
+import type { Registry as Services } from '@ember/service';
 import { settled } from '@ember/test-helpers';
-import type { IntlService } from 'ember-intl';
 
-async function loadTranslations(intl: IntlService, locale: 'de-de' | 'en-us') {
+async function loadTranslations(
+  intl: Services['intl'],
+  locale: 'de-de' | 'en-us',
+) {
   const { default: translations } = await import(
     `../../translations/${locale}.json`
   );
