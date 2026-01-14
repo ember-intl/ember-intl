@@ -75,6 +75,7 @@ test('utils | lint-rules | no-unused-keys > all keys are used', function () {
         }),
       ],
     ]),
+    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Map([
       ['key01', ['app/components/file01.hbs']],

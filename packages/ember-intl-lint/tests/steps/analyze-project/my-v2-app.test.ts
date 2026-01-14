@@ -271,6 +271,7 @@ test('steps | analyze-project > my-v2-app', function () {
           ]),
         ],
       ]),
+      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'translations/components/component-from-app/de-de.yml',

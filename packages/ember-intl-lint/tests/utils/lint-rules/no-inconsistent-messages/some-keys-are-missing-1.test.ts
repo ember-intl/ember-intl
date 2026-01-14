@@ -42,6 +42,7 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
         ]),
       ],
     ]),
+    locales: ['de-de', 'en-us', 'es-es'],
     translationFiles: new Map([
       [
         'translations/de-de.json',

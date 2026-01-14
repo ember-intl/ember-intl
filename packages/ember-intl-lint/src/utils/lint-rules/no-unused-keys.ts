@@ -1,5 +1,21 @@
-import type { LintErrors, Project, TranslationKey } from '../../types/index.js';
-import { getOwnTranslations } from './shared/index.js';
+import type {
+  LintErrors,
+  Project,
+  TranslationFilePath,
+  TranslationKey,
+} from '../../types/index.js';
+
+function getOwnTranslations(project: Project): Set<TranslationFilePath> {
+  const filePaths = new Set<TranslationFilePath>();
+
+  project.translationFiles.forEach((data, filePath) => {
+    if (data.isInternal) {
+      filePaths.add(filePath);
+    }
+  });
+
+  return filePaths;
+}
 
 export function noUnusedKeys(
   project: Project,

@@ -10,6 +10,7 @@ import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js'
 
 export function findAvailableKeys(
   translationFiles: Project['translationFiles'],
+  locales: Project['locales'],
   options: Options,
 ): Project['availableKeys'] {
   const { config, projectRoot } = options;
@@ -43,5 +44,27 @@ export function findAvailableKeys(
     }
   });
 
-  return new Map(Array.from(availableKeys).sort());
+  const { fallbackLocale } = config.buildOptions;
+
+  if (!fallbackLocale) {
+    return new Map(Array.from(availableKeys).sort());
+  }
+
+  const newAvailableKeys: Project['availableKeys'] = new Map();
+
+  availableKeys.forEach((mapping, key) => {
+    const newMapping: typeof mapping = new Map();
+
+    locales.forEach((locale) => {
+      const data = mapping.get(locale) ?? mapping.get(fallbackLocale);
+
+      if (data) {
+        newMapping.set(locale, data);
+      }
+    });
+
+    newAvailableKeys.set(key, newMapping);
+  });
+
+  return new Map(Array.from(newAvailableKeys).sort());
 }

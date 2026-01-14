@@ -288,6 +288,7 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
           ]),
         ],
       ]),
+      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'translations/components/component-from-app/de-de.yml',

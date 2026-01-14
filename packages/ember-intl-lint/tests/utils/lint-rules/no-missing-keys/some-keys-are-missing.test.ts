@@ -45,6 +45,7 @@ test('utils | lint-rules | no-missing-keys > some keys are missing', function ()
         }),
       ],
     ]),
+    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Map([
       ['key03', ['app/components/file03.gts']],
