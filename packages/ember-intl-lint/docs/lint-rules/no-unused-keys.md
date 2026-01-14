@@ -2,7 +2,7 @@
 
 ## Why use it?
 
-The rule finds unused translation keys. In other words, keys that are defined in a translation file (yours), but aren't used in the source code.
+The rule finds unused translation keys. In other words, keys that are defined in a translation file (in yours), but aren't used in the source code.
 
 
 ## Options for `lintRules`

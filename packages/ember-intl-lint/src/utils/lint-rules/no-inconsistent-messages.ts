@@ -5,7 +5,7 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
-import { getLocales, getOwnTranslations } from './shared/index.js';
+import { getLocales } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -26,7 +26,6 @@ export function noInconsistentMessages(
   }>,
 ): LintErrors {
   const locales = getLocales(project);
-  const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
@@ -36,22 +35,10 @@ export function noInconsistentMessages(
       return;
     }
 
-    const mappingSubset: typeof mapping = new Map();
-
-    mapping.forEach((data, locale) => {
-      if (ownTranslations.has(data.filePath)) {
-        mappingSubset.set(locale, data);
-      }
-    });
-
-    if (mappingSubset.size === 0) {
-      return;
-    }
-
     let hasTranslation = true;
 
     locales.forEach((locale) => {
-      if (!mappingSubset.has(locale)) {
+      if (!mapping.has(locale)) {
         hasTranslation = false;
       }
     });
@@ -62,7 +49,7 @@ export function noInconsistentMessages(
 
     const allIcuArguments: IcuArguments[] = [];
 
-    mappingSubset.forEach((data) => {
+    mapping.forEach((data) => {
       allIcuArguments.push(data.icuArguments);
     });
 
