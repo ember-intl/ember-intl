@@ -109,6 +109,7 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
         ]),
       ],
     ]),
+    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Map(),
   });

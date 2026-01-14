@@ -75,6 +75,7 @@ test('utils | lint-rules | no-missing-keys > all keys are present', function () 
         }),
       ],
     ]),
+    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Map([
       ['key01', ['app/components/file01.hbs']],

@@ -90,6 +90,7 @@ test('steps | analyze-project > my-v1-addon', function () {
           ]),
         ],
       ]),
+      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'translations/components/component-from-v1-addon/de-de.yaml',
