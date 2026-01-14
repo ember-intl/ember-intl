@@ -2,12 +2,12 @@
 
 ## Why use it?
 
-The rule finds translation keys whose message is "inconsistent" across the translation files (yours).
+The rule finds translation keys whose message is "inconsistent" across locales.
 
 A message is consistent if it meets these conditions:
 
-- If a translation file has the key, the message uses the same set of ICU arguments.
-- Every translation file defines the key.
+- If a locale has the key, the message uses the same set of ICU arguments.
+- Every locale defines the key.
 
 
 ## Options for `lintRules`

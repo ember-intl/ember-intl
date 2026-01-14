@@ -47,17 +47,17 @@ Note, if multiple addons define the same key, the last appearing addon's transla
 
 ## buildOptions
 
-Copy-paste the build options that you defined in `config/ember-intl.js`.
+Build options dictate how translations are loaded and merged.
 
 ```js
 export default {
   buildOptions: {
     fallbackLocale: 'en-us',
-    inputPath: 'public/assets/translations',
-    publicOnly: true,
   },
 };
 ```
+
+For more information, see the [documentation site](https://ember-intl.github.io/ember-intl/docs/advanced/customizing-loading-of-translations#build-options).
 
 
 ## lintRules
