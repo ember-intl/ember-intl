@@ -89,9 +89,6 @@ module.exports = {
     return new TranslationReducer([translationTree], {
       addonsWithTranslations,
       fallbackLocale,
-      log: (message) => {
-        return this.ui.writeLine(`[ember-intl] ${message}`);
-      },
       mergeTranslationFiles,
       outputPath,
       wrapTranslationsWithNamespace,

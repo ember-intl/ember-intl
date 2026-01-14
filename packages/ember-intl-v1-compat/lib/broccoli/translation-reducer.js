@@ -31,7 +31,6 @@ class TranslationReducer extends CachingWriter {
 
     this.options = {
       fallbackLocale: undefined,
-      log() {},
       mergeTranslationFiles: false,
       outputPath: '',
       ...options,
@@ -110,8 +109,6 @@ class TranslationReducer extends CachingWriter {
       let translationObject = getTranslations(filePath);
 
       if (!translationObject) {
-        this.options.log(`cannot read path "${filePath}"`);
-
         return accumulator;
       }
 
