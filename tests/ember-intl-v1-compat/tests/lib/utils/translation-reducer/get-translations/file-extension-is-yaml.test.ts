@@ -16,6 +16,7 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
         `  key: "Hello {name}!"`,
         `no-arguments: Hello world!`,
       ]),
+      'es.yaml': ``,
     },
   };
 
@@ -24,7 +25,7 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
 
   loadFixture(inputProject, { projectRoot });
 
-  const output = getTranslations(join(inputPath, 'en-us.yaml'));
+  let output = getTranslations(join(inputPath, 'en-us.yaml'));
 
   assert.deepStrictEqual(output, {
     nested: {
@@ -32,4 +33,8 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
     },
     'no-arguments': 'Hello world!',
   });
+
+  output = getTranslations(join(inputPath, 'es.yaml'));
+
+  assert.deepStrictEqual(output, {});
 });

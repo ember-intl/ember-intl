@@ -3,7 +3,12 @@ const { extname } = require('node:path');
 const yaml = require('js-yaml');
 
 function getTranslations(filePath) {
-  const file = readFileSync(filePath);
+  const file = readFileSync(filePath, 'utf8');
+
+  if (file === '') {
+    return {};
+  }
+
   const ext = extname(filePath);
 
   switch (ext) {
