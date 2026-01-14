@@ -5,6 +5,7 @@ import type { Options, Project } from '../../types/index.js';
 import {
   inJson,
   inYaml,
+  sortTranslationKeys,
 } from '../../utils/analyze-project/merge-translation-files/index.js';
 
 export function mergeTranslationFiles(
@@ -37,7 +38,7 @@ export function mergeTranslationFiles(
   });
 
   if (buildOptions.fallbackLocale === undefined) {
-    return translations;
+    return sortTranslationKeys(translations);
   }
 
   const translationsWithFallback: Project['translations'] = new Map();
@@ -56,5 +57,5 @@ export function mergeTranslationFiles(
     translationsWithFallback.set(locale, newTranslationObject);
   });
 
-  return translationsWithFallback;
+  return sortTranslationKeys(translationsWithFallback);
 }
