@@ -1,5 +1,13 @@
 # @ember-intl/v1-compat
 
+## 1.0.3
+
+### Patch Changes
+
+- [#2063](https://github.com/ember-intl/ember-intl/pull/2063) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+- [#2060](https://github.com/ember-intl/ember-intl/pull/2060) Normalized locale (translation file name) ([@ijlee2](https://github.com/ijlee2))
+- [#2060](https://github.com/ember-intl/ember-intl/pull/2060) Handled empty translation files ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.2
 
 ### Patch Changes

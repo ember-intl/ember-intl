@@ -1,6 +1,6 @@
 {
   "name": "my-v2-app",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "description": "A Vite app to test the default build options",
   "repository": {

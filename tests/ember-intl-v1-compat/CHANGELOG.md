@@ -1,5 +1,11 @@
 # test-ember-intl-v1-compat
 
+## 1.4.2
+
+### Patch Changes
+
+- [#2060](https://github.com/ember-intl/ember-intl/pull/2060) Handled empty translation files ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.1
 
 ### Patch Changes

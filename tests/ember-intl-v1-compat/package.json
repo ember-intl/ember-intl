@@ -1,6 +1,6 @@
 {
   "name": "test-ember-intl-v1-compat",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "description": "Test package for @ember-intl/v1-compat",
   "repository": {

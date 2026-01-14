@@ -1,5 +1,13 @@
 # @ember-intl/lint
 
+## 0.3.3
+
+### Patch Changes
+
+- [#2063](https://github.com/ember-intl/ember-intl/pull/2063) Updated documentation ([@ijlee2](https://github.com/ijlee2))
+- [#2062](https://github.com/ember-intl/ember-intl/pull/2062) Reverted normalizing locales to encourage explicit code ([@ijlee2](https://github.com/ijlee2))
+- [#2060](https://github.com/ember-intl/ember-intl/pull/2060) Normalized locale (translation file name) ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.3.2
 
 ### Patch Changes
