@@ -5,7 +5,7 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
-import { getOwnLocales, getOwnTranslations } from './shared/index.js';
+import { getLocales, getOwnTranslations } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -25,7 +25,7 @@ export function noInconsistentMessages(
     ignores: TranslationKey[];
   }>,
 ): LintErrors {
-  const ownLocales = getOwnLocales(project);
+  const locales = getLocales(project);
   const ownTranslations = getOwnTranslations(project);
 
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
@@ -50,7 +50,7 @@ export function noInconsistentMessages(
 
     let hasTranslation = true;
 
-    ownLocales.forEach((locale) => {
+    locales.forEach((locale) => {
       if (!mappingSubset.has(locale)) {
         hasTranslation = false;
       }
