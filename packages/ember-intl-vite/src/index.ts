@@ -1,42 +1,46 @@
 import { EOL } from 'node:os';
-import { sep } from 'node:path';
 
 import type { Plugin } from 'vite';
 
 import { analyzeProject, createOptions } from './steps/index.js';
-import type { Options } from './types/index.js';
+import type { Options, Project } from './types/index.js';
 import { isTranslationFile, ModuleTracker } from './utils/vite.js';
 
 export function loadTranslations(): Plugin {
   const moduleTracker = new ModuleTracker();
+
   let options: Options | undefined;
+  let translations: Project['translations'] | undefined;
 
   return {
     name: 'ember-intl-load-translations',
+
+    async buildStart() {
+      const projectRoot = process.cwd();
+      options = await createOptions(projectRoot);
+
+      ({ translations } = analyzeProject(options));
+    },
 
     resolveId(id) {
       return moduleTracker.resolveModuleId(id);
     },
 
-    async load(id) {
+    load(id) {
       const locale = moduleTracker.getLocale(id);
 
       if (locale === undefined) {
         return;
       }
 
-      const projectRoot = process.cwd().replaceAll(sep, '/');
-      options = await createOptions(projectRoot);
+      const translationsForLocale = translations?.get(locale);
 
-      const { translations } = analyzeProject(options);
-
-      if (translations.get(locale) === undefined) {
+      if (translationsForLocale === undefined) {
         return;
       }
 
       return [
-        `const translations = ${JSON.stringify(translations.get(locale))};`,
-        ``,
+        `const translations = ${JSON.stringify(translationsForLocale)};`,
         `export default translations;`,
       ].join(EOL);
     },
@@ -49,6 +53,8 @@ export function loadTranslations(): Plugin {
       if (!isTranslationFile(filePath, options)) {
         return;
       }
+
+      ({ translations } = analyzeProject(options));
 
       const promises = moduleTracker
         .getResolvedModuleIds()
