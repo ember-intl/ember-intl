@@ -1,7 +1,7 @@
 {
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
-    "declaration": true,
+    "declaration": false,
     "outDir": "dist"
   },
   "include": ["bin", "src"],
