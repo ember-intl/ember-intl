@@ -29,7 +29,7 @@ type UserConfig = Partial<{
 
 > [!TIP]
 >
-> The same file is used for `@ember-intl/lint` and `@ember-intl/vite`. The `Partial`'s in the `UserConfig` mean, you only need to specify the object keys that you need.
+> The same file is used for `@ember-intl/lint` and `@ember-intl/vite`. The `Partial`'s in `UserConfig` above mean, you only need to specify the object keys that you need.
 
 
 ## addonPaths
@@ -62,26 +62,4 @@ export default {
 
 ## lintRules
 
-To disable a rule, pass `false`.
-
-```js
-export default {
-  lintRules: {
-    'no-inconsistent-messages': false,
-  },
-};
-```
-
-Lint rules may provide options (always configured as an object). For example, a rule may allow the `ignores` option so that you can ignore translation keys that fail. For simplicity, this option only supports exact matches.
-
-```js
-export default {
-  lintRules: {
-    'no-unused-keys': {
-      ignores: ['hello.message'],
-    },
-  },
-};
-```
-
-See [docs/lint-rules](./lint-rules) to learn more about each rule and the options that it supports.
+`@ember-intl/vite` doesn't use `lintRules`. See [`@ember-intl/lint`](../../ember-intl-lint/docs/configuration.md#lintrules).

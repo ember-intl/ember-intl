@@ -3,13 +3,15 @@
 
 ## 1. Install ember-intl
 
-Use your package manager to install `ember-intl` and `@ember-intl/v1-compat`. The latter is used to load translations in the same way as in `ember-intl@v7`.
+### v1 apps
+
+Use your package manager to install `ember-intl` and `@ember-intl/v1-compat`.
 
 ```sh
 pnpm add -D ember-intl @ember-intl/v1-compat
 ```
 
-If your app provides translations, create the folder `translations` as a sibling to `app`.
+Next, create the folder `translations` as a sibling to `app`.
 
 ```
 my-app
@@ -17,8 +19,50 @@ my-app
 └── translations
 ```
 
+When you run the app, `@ember-intl/v1-compat` will automatically load translations.
 
-## 2. Add a translation
+
+### v2 apps
+
+Use your package manager to install `ember-intl` and `@ember-intl/vite`.
+
+```sh
+pnpm add -D ember-intl @ember-intl/vite
+```
+
+In `vite.config.mjs`, add `loadTranslations` to the list of plugins.
+
+```diff
++ import { loadTranslations } from '@ember-intl/vite';
+import { classicEmberSupport, ember, extensions } from '@embroider/vite';
+import { babel } from '@rollup/plugin-babel';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [
+    classicEmberSupport(),
+    ember(),
+    babel({
+      babelHelpers: 'runtime',
+      extensions,
+    }),
++     loadTranslations(),
+  ],
+});
+```
+
+Next, create the folder `translations` as a sibling to `app`.
+
+```
+my-app
+├── app
+└── translations
+```
+
+When you run the app, `@ember-intl/vite` won't automatically load translations. For more information, see [4. Set up ember-intl](#4-set-up-ember-intl) below and the [`README` for `@ember-intl/vite`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-vite/README.md).
+
+
+## 2. Define translations
 
 Create a translation in `translations/en-us.yaml`.
 
@@ -59,9 +103,9 @@ export default Hello;
 ```
 
 
-## 3. Add a language
+## 3. Define languages
 
-Create the file `translations/de-de.yaml`.
+Create the file `translations/de-de.yaml` to support the `de-de` locale. (Throughout the guide, we use the terms "language" and "locale" interchangeably.)
 
 ```yaml
 hello:
@@ -71,9 +115,14 @@ hello:
 Note, you may also use `.yml` or `.json` for file extension.
 
 
-## 4. Set app locale
+## 4. Set up ember-intl
 
-Before your app runs, you need to tell `ember-intl` which locale(s) to use. Call `setLocale()` in the `application` route's `beforeModel` hook.
+Before your app renders, you need to tell `ember-intl` which locale(s) to use.
+
+
+### v1 apps
+
+Call `setLocale()` in the `application` route's `beforeModel` hook.
 
 ```ts
 /* app/routes/application.ts */
@@ -94,35 +143,39 @@ export default class ApplicationRoute extends Route {
 ```
 
 
+### v2 apps
+
+Recall that `@ember-intl/vite` doesn't automatically load translations. Import the translations that you need, then call `addTranslations()`.
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+import translationsForDeDe from 'virtual:ember-intl/translations/de-de';
+import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
+    this.intl.addTranslations('de-de', translationsForDeDe);
+    this.intl.addTranslations('en-us', translationsForEnUs);
+
+    this.intl.setLocale(['en-us']);
+  }
+}
+```
+
+
 ## 5. Configure linters
 
 ### @ember-intl/lint
 
-[`@ember-intl/lint`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-lint/README.md) is the official linter for `ember-intl`. It removes the need for [`ember-intl-analyzer`](https://github.com/mainmatter/ember-intl-analyzer), separates linting and building translations, and strives to be "zero config."
-
-1\. Install `@ember-intl/lint` as a development dependency.
-
-```sh
-pnpm add -D @ember-intl/lint
-```
-
-2\. In `package.json`, add the scripts `lint:intl` and `lint:intl:fix`. They will run as a part of `lint` and `lint:fix`.
-
-```diff
-/* package.json */
-{
-  "scripts": {
-    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
-+     "lint:intl": "ember-intl-lint",
-+     "lint:intl:fix": "ember-intl-lint --fix"
-  },
-  "devDependencies": {
-    "@ember-intl/lint": "...",
-    "concurrently": "...",
-  }
-}
-```
+[`@ember-intl/lint`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-lint/README.md) is the official linter for `ember-intl`.
 
 
 ### ember-template-lint

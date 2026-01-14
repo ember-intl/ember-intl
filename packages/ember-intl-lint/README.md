@@ -14,7 +14,6 @@ pnpm add -D @ember-intl/lint
 2\. In `package.json`, add the scripts `lint:intl` and `lint:intl:fix`. They will run as a part of `lint` and `lint:fix`.
 
 ```diff
-/* package.json */
 {
   "scripts": {
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
