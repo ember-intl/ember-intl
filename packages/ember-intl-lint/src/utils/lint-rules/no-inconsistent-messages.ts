@@ -48,17 +48,6 @@ export function noInconsistentMessages(
       return;
     }
 
-    const allIcuArguments: IcuArguments[] = [];
-
-    mappingSubset.forEach((data) => {
-      allIcuArguments.push(data.icuArguments);
-    });
-
-    if (!allIcuArgumentsMatch(allIcuArguments)) {
-      lintErrors.push(key);
-      return;
-    }
-
     let hasTranslation = true;
 
     ownLocales.forEach((locale) => {
@@ -69,6 +58,17 @@ export function noInconsistentMessages(
 
     if (!hasTranslation) {
       lintErrors.push(key);
+    }
+
+    const allIcuArguments: IcuArguments[] = [];
+
+    mappingSubset.forEach((data) => {
+      allIcuArguments.push(data.icuArguments);
+    });
+
+    if (!allIcuArgumentsMatch(allIcuArguments)) {
+      lintErrors.push(key);
+      return;
     }
   });
 
