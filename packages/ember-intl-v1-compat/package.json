@@ -1,7 +1,7 @@
 {
   "name": "@ember-intl/v1-compat",
   "version": "1.0.2",
-  "description": "Loads translations for ember-intl",
+  "description": "Loads translations in v1 apps with ember-intl",
   "keywords": [
     "ember",
     "ember-addon",

@@ -1,6 +1,6 @@
 # @ember-intl/v1-compat
 
-_Loads translations for `ember-intl`_
+_Loads translations in v1 apps with `ember-intl`_
 
 
 ## Quickstart
@@ -11,9 +11,9 @@ _Loads translations for `ember-intl`_
 pnpm add -D @ember-intl/v1-compat
 ```
 
-<sup>1. Apps need this package.</sup>
+<sup>1. V1 apps (classic build, Embroider + Webpack) need this package.</sup>
 
-<sup>2. V1 addons need it if their `dummy` app needs translations for documentation or testing. The same goes for v2 addons without a separate test package.</sup>
+<sup>2. V1 addons need it if their `dummy` app needs translations for documentation or testing.</sup>
 
 
 ## Compatibility
