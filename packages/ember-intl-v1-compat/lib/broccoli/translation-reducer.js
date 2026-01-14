@@ -12,11 +12,7 @@ function isApp(filePath) {
 }
 
 function normalizeLocale(locale) {
-  if (typeof locale === 'string') {
-    return locale.replace(/_/g, '-').trim().toLowerCase();
-  }
-
-  return locale;
+  return locale.replace(/_/g, '-').toLowerCase();
 }
 
 class TranslationReducer extends CachingWriter {
@@ -36,7 +32,11 @@ class TranslationReducer extends CachingWriter {
       ...options,
     };
 
-    this.options.fallbackLocale = normalizeLocale(this.options.fallbackLocale);
+    if (this.options.fallbackLocale !== undefined) {
+      this.options.fallbackLocale = normalizeLocale(
+        this.options.fallbackLocale,
+      );
+    }
   }
 
   build() {

@@ -8,6 +8,10 @@ function getFormat(ext: string): 'json' | 'yaml' {
   return ext === '.json' ? 'json' : 'yaml';
 }
 
+function normalizeLocale(locale: string): string {
+  return locale.replace(/_/g, '-').toLowerCase();
+}
+
 export function findTranslationFiles(
   options: Options,
 ): Project['translationFiles'] {
@@ -27,12 +31,12 @@ export function findTranslationFiles(
     );
 
     filePaths.forEach((filePath) => {
-      const { ext, name } = parseFilePath(filePath);
+      const { ext, name: locale } = parseFilePath(filePath);
 
       translationFiles.set(filePath, {
         format: getFormat(ext),
         isInternal: false,
-        locale: name,
+        locale: normalizeLocale(locale),
         translationsDir,
       });
     });
@@ -48,12 +52,12 @@ export function findTranslationFiles(
   );
 
   filePaths.forEach((filePath) => {
-    const { ext, name } = parseFilePath(filePath);
+    const { ext, name: locale } = parseFilePath(filePath);
 
     translationFiles.set(filePath, {
       format: getFormat(ext),
       isInternal: true,
-      locale: name,
+      locale: normalizeLocale(locale),
       translationsDir,
     });
   });
