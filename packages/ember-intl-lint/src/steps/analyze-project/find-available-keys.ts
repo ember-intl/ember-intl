@@ -35,22 +35,11 @@ export function findAvailableKeys(
 
       const mapping = availableKeys.get(key)!;
 
-      if (mapping.has(data.locale)) {
-        // App's translation takes precedence
-        if (data.isInternal) {
-          mapping.set(data.locale, {
-            filePath,
-            icuArguments,
-            message,
-          });
-        }
-      } else {
-        mapping.set(data.locale, {
-          filePath,
-          icuArguments,
-          message,
-        });
-      }
+      mapping.set(data.locale, {
+        filePath,
+        icuArguments,
+        message,
+      });
     }
   });
 
