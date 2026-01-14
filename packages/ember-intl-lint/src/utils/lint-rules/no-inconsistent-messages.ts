@@ -54,19 +54,22 @@ export function noInconsistentMessages(
       allIcuArguments.push(data.icuArguments);
     });
 
-    let isConsistent = allIcuArgumentsMatch(allIcuArguments);
-
-    ownLocales.forEach((locale) => {
-      if (!mappingSubset.has(locale)) {
-        isConsistent = false;
-      }
-    });
-
-    if (isConsistent) {
+    if (!allIcuArgumentsMatch(allIcuArguments)) {
+      lintErrors.push(key);
       return;
     }
 
-    lintErrors.push(key);
+    let hasTranslation = true;
+
+    ownLocales.forEach((locale) => {
+      if (!mappingSubset.has(locale)) {
+        hasTranslation = false;
+      }
+    });
+
+    if (!hasTranslation) {
+      lintErrors.push(key);
+    }
   });
 
   return lintErrors;
