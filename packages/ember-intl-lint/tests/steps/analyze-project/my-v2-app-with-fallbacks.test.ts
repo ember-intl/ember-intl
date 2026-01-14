@@ -21,6 +21,21 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
           'components.title',
           new Map([
             [
+              'de-de',
+              {
+                filePath: 'translations/components/en-us.yml',
+                icuArguments: {
+                  argument: new Set(),
+                  date: new Set(),
+                  number: new Set(),
+                  plural: new Set(),
+                  select: new Set(),
+                  time: new Set(),
+                },
+                message: 'Components',
+              },
+            ],
+            [
               'en-us',
               {
                 filePath: 'translations/components/en-us.yml',
