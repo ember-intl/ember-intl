@@ -2552,6 +2552,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5(supports-color@8.1.1)
+      '@ember-intl/lint':
+        specifier: workspace:*
+        version: link:../../packages/ember-intl-lint
       '@ember-intl/v1-compat':
         specifier: workspace:*
         version: link:../../packages/ember-intl-v1-compat
