@@ -1,5 +1,11 @@
 # my-v1-app-with-lazy-loaded-translations
 
+## 1.3.8
+
+### Patch Changes
+
+- [#2069](https://github.com/ember-intl/ember-intl/pull/2069) Added missing buildOptions ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.7
 
 ### Patch Changes

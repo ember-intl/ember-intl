@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 0.4.1
+
+### Patch Changes
+
+- [#2070](https://github.com/ember-intl/ember-intl/pull/2070) Improved log readability ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.4.0
 
 ### Minor Changes

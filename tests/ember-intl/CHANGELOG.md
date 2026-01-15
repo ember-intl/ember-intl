@@ -1,5 +1,11 @@
 # test-app-for-ember-intl
 
+## 1.7.0
+
+### Minor Changes
+
+- [#2069](https://github.com/ember-intl/ember-intl/pull/2069) Set up @ember-intl/lint ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.6.8
 
 ### Patch Changes
