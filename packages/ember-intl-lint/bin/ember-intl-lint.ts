@@ -41,8 +41,8 @@ runCodemod(codemodOptions)
 
       runFailed = true;
 
-      console.log(`❌ ${lintRule} (${lintErrors.length} issues)\n`);
-      console.log(lintErrors.join('\n'));
+      console.log(`❌ ${lintRule} (${lintErrors.length} issues)`);
+      console.log(lintErrors.map((lintError) => `  - ${lintError}`).join('\n'));
     }
 
     process.exitCode = runFailed ? 1 : 0;
