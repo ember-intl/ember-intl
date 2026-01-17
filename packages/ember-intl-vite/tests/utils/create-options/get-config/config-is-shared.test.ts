@@ -44,7 +44,6 @@ test('utils | create-options | get-config > config is shared', async function ()
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
   });

@@ -9,7 +9,6 @@ test('utils | create-options | get-config > config has buildOptions', async func
       `  buildOptions: {`,
       `    fallbackLocale: 'en-us',`,
       `    inputPath: 'public/assets/translations',`,
-      `    publicOnly: true,`,
       `    wrapTranslationsWithNamespace: true,`,
       `  },`,
       `};`,
@@ -28,7 +27,6 @@ test('utils | create-options | get-config > config has buildOptions', async func
     buildOptions: {
       fallbackLocale: 'en-us',
       inputPath: 'public/assets/translations',
-      publicOnly: true,
       wrapTranslationsWithNamespace: true,
     },
   });
