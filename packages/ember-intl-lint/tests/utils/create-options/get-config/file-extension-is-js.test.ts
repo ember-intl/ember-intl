@@ -18,7 +18,6 @@ test('utils | create-options | get-config > file extension is js', async functio
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: {

@@ -12,7 +12,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
       buildOptions: {
         fallbackLocale: undefined,
         inputPath: 'translations',
-        publicOnly: false,
         wrapTranslationsWithNamespace: false,
       },
       lintRules: {

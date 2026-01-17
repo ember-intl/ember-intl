@@ -17,7 +17,6 @@ test('steps | lint-project > base case', function () {
       buildOptions: {
         fallbackLocale: undefined,
         inputPath: 'translations',
-        publicOnly: false,
         wrapTranslationsWithNamespace: false,
       },
       lintRules: {

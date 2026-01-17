@@ -11,7 +11,6 @@ const options: Options = {
     buildOptions: {
       fallbackLocale: 'en-us',
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
     lintRules: {
