@@ -8,7 +8,6 @@ const options: Options = {
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
   },

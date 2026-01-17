@@ -13,7 +13,6 @@ function getDefaultConfig(): Config {
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
   };

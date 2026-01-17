@@ -26,7 +26,6 @@ test('utils | create-options | get-config > config has addonPaths', async functi
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
   });

@@ -6,7 +6,6 @@ type Config = {
 type ConfigBuildOptions = {
   fallbackLocale: string | undefined;
   inputPath: string;
-  publicOnly: boolean;
   wrapTranslationsWithNamespace: boolean;
 };
 

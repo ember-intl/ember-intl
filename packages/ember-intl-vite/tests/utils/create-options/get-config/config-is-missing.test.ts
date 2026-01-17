@@ -16,7 +16,6 @@ test('utils | create-options | get-config > config is missing', async function (
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
   });

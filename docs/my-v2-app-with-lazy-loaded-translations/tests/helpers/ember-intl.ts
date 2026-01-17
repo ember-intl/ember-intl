@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment */
 import type { Registry as Services } from '@ember/service';
 import { settled } from '@ember/test-helpers';
+
+const lazyLoad = {
+  'de-de': import('virtual:ember-intl/translations/de-de'),
+  'en-us': import('virtual:ember-intl/translations/en-us'),
+} as const;
 
 async function loadTranslations(
   intl: Services['intl'],
   locale: 'de-de' | 'en-us',
-) {
-  const { default: translations } = await import(
-    `../../translations/${locale}.json`
-  );
+): Promise<void> {
+  const { default: translations } = await lazyLoad[locale];
 
   intl.addTranslations(locale, translations);
 }

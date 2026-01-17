@@ -20,7 +20,6 @@ type UserConfig = Partial<{
   buildOptions: Partial<{
     fallbackLocale: string | undefined;
     inputPath: string;
-    publicOnly: boolean;
     wrapTranslationsWithNamespace: boolean;
   }>;
   lintRules: Partial<Record<LintRule, boolean | LintOptions>>;

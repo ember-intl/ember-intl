@@ -28,7 +28,6 @@ test('utils | create-options | get-config > config has unknown lint rules', asyn
     buildOptions: {
       fallbackLocale: undefined,
       inputPath: 'translations',
-      publicOnly: false,
       wrapTranslationsWithNamespace: false,
     },
   });
