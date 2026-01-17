@@ -1,6 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment */
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
+
+const lazyLoad = {
+  'de-de': () => import('virtual:ember-intl/translations/de-de'),
+  'en-us': () => import('virtual:ember-intl/translations/en-us'),
+} as const;
 
 export default class ApplicationRoute extends Route {
   @service declare intl: Services['intl'];
@@ -10,9 +14,7 @@ export default class ApplicationRoute extends Route {
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
-    const { default: translations } = await import(
-      `../../translations/${locale}.json`
-    );
+    const { default: translations } = await lazyLoad[locale]();
 
     this.intl.addTranslations(locale, translations);
   }
