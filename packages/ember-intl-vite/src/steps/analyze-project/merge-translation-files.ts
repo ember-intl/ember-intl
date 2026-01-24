@@ -3,8 +3,7 @@ import { join } from 'node:path';
 
 import type { Options, Project } from '../../types/index.js';
 import {
-  inJson,
-  inYaml,
+  extractTranslations,
   sortTranslationKeys,
 } from '../../utils/analyze-project/merge-translation-files/index.js';
 
@@ -20,9 +19,7 @@ export function mergeTranslationFiles(
   translationFiles.forEach((data, filePath) => {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
 
-    const parser = data.format === 'json' ? inJson : inYaml;
-
-    const translationObject = parser(file, {
+    const translationObject = extractTranslations(file, {
       filePath,
       namespaceKeys: buildOptions.wrapTranslationsWithNamespace,
       translationsDir: data.translationsDir,

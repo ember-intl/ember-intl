@@ -4,54 +4,49 @@ import { findFiles, parseFilePath } from '@codemod-utils/files';
 
 import type { Options, Project } from '../../types/index.js';
 
-function getFormat(ext: string): 'json' | 'yaml' {
-  return ext === '.json' ? 'json' : 'yaml';
+function getPattern(translationsDir: string): string {
+  return join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/');
 }
 
 export function findTranslationFiles(
   options: Options,
 ): Project['translationFiles'] {
   const { config, projectRoot } = options;
+  const { addonPaths, buildOptions } = config;
+
   const translationFiles: Project['translationFiles'] = new Map();
 
-  config.addonPaths.forEach((addonPath) => {
+  addonPaths.forEach((addonPath) => {
     const translationsDir = join(addonPath, 'translations');
 
-    const filePaths = findFiles(
-      join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/'),
-      {
-        projectRoot,
-      },
-    );
+    const filePaths = findFiles(getPattern(translationsDir), {
+      projectRoot,
+    });
 
     filePaths.forEach((filePath) => {
-      const { ext, name: locale } = parseFilePath(filePath);
+      const { name } = parseFilePath(filePath);
 
       translationFiles.set(filePath, {
-        format: getFormat(ext),
         isInternal: false,
-        locale,
+        locale: name,
         translationsDir,
       });
     });
   });
 
-  const translationsDir = normalize(config.buildOptions.inputPath);
+  // App's translations take precedence
+  const translationsDir = normalize(buildOptions.inputPath);
 
-  const filePaths = findFiles(
-    join(translationsDir, '**/*.{json,yaml,yml}').replaceAll(sep, '/'),
-    {
-      projectRoot,
-    },
-  );
+  const filePaths = findFiles(getPattern(translationsDir), {
+    projectRoot,
+  });
 
   filePaths.forEach((filePath) => {
-    const { ext, name: locale } = parseFilePath(filePath);
+    const { name } = parseFilePath(filePath);
 
     translationFiles.set(filePath, {
-      format: getFormat(ext),
       isInternal: true,
-      locale,
+      locale: name,
       translationsDir,
     });
   });

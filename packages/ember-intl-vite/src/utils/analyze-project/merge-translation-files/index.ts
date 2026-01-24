@@ -1,3 +1,2 @@
-export { inJson } from './in-json.js';
-export { inYaml } from './in-yaml.js';
+export { extractTranslations } from './extract-translations.js';
 export { sortTranslationKeys } from './sort-translation-keys.js';

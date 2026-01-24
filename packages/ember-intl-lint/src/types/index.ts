@@ -62,7 +62,6 @@ type Project = {
   translationFiles: Map<
     TranslationFilePath,
     {
-      format: 'json' | 'yaml';
       isInternal: boolean;
       locale: Locale;
       translationsDir: string;

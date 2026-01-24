@@ -276,7 +276,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/components/component-from-app/de-de.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -285,7 +284,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/components/component-from-app/en-us.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -294,7 +292,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/components/de-de.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -303,7 +300,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/components/en-us.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -312,7 +308,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/components/translation-with-arguments/de-de.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -321,7 +316,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/components/translation-with-arguments/en-us.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -330,7 +324,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/routes/application/de-de.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -339,7 +332,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/routes/application/en-us.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -348,7 +340,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/routes/index/de-de.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -357,7 +348,6 @@ test('steps | analyze-project > my-v2-app', function () {
         [
           'translations/routes/index/en-us.yml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
