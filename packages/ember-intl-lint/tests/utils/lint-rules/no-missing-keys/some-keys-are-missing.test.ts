@@ -45,7 +45,6 @@ test('utils | lint-rules | no-missing-keys > some keys are missing', function ()
         }),
       ],
     ]),
-    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Set(['key03', 'key04', 'key05', 'key06']),
   });

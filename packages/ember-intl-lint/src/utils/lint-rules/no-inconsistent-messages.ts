@@ -18,6 +18,18 @@ function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   return true;
 }
 
+function getLocales(
+  translationFiles: Project['translationFiles'],
+): Set<string> {
+  const locales = new Set<string>();
+
+  translationFiles.forEach((data) => {
+    locales.add(data.locale);
+  });
+
+  return locales;
+}
+
 export function noInconsistentMessages(
   project: Project,
   lintOptions?: Partial<{
@@ -27,6 +39,8 @@ export function noInconsistentMessages(
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
 
+  const locales = getLocales(project.translationFiles);
+
   project.availableKeys.forEach((mapping, key) => {
     if (ignores.has(key)) {
       return;
@@ -34,7 +48,7 @@ export function noInconsistentMessages(
 
     let hasTranslation = true;
 
-    project.locales.forEach((locale) => {
+    locales.forEach((locale) => {
       if (!mapping.has(locale)) {
         hasTranslation = false;
       }
@@ -50,10 +64,11 @@ export function noInconsistentMessages(
       allIcuArguments.push(data.icuArguments);
     });
 
-    if (!allIcuArgumentsMatch(allIcuArguments)) {
-      lintErrors.push(key);
+    if (allIcuArgumentsMatch(allIcuArguments)) {
       return;
     }
+
+    lintErrors.push(key);
   });
 
   return lintErrors;

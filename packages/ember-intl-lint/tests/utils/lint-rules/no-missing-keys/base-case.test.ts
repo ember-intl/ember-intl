@@ -6,7 +6,6 @@ import { normalizeProject } from '../../../helpers/normalize-project.js';
 test('utils | lint-rules | no-missing-keys > base case', function () {
   const project = normalizeProject({
     availableKeys: new Map(),
-    locales: [],
     translationFiles: new Map(),
     usedKeys: new Set(),
   });

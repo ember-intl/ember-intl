@@ -58,7 +58,6 @@ type Project = {
       }
     >
   >;
-  locales: string[];
   translationFiles: Map<
     TranslationFilePath,
     {

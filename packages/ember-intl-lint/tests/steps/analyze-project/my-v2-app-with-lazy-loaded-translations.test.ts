@@ -265,7 +265,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
           ]),
         ],
       ]),
-      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'public/assets/translations/de-de.json',

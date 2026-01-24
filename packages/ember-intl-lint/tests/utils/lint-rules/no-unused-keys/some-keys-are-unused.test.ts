@@ -45,7 +45,6 @@ test('utils | lint-rules | no-unused-keys > some keys are unused', function () {
         }),
       ],
     ]),
-    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Set(['key03', 'key04', 'key05', 'key06']),
   });

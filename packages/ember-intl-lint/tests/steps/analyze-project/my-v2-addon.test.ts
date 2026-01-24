@@ -230,7 +230,6 @@ test('steps | analyze-project > my-v2-addon', function () {
           ]),
         ],
       ]),
-      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'translations/components/component-from-v2-addon/de-de.json',

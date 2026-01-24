@@ -29,7 +29,6 @@ test('steps | lint-project > edge-case (lint rules are disabled)', function () {
 
   const project = normalizeProject({
     availableKeys: new Map(),
-    locales: [],
     translationFiles: new Map(),
     usedKeys: new Set(),
   });

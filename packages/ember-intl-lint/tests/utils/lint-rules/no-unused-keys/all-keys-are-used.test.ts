@@ -75,7 +75,6 @@ test('utils | lint-rules | no-unused-keys > all keys are used', function () {
         }),
       ],
     ]),
-    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
     usedKeys: new Set([
       'key01',
