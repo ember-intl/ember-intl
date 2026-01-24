@@ -1,21 +1,4 @@
-import type {
-  LintErrors,
-  Project,
-  TranslationFilePath,
-  TranslationKey,
-} from '../../types/index.js';
-
-function getOwnTranslations(project: Project): Set<TranslationFilePath> {
-  const filePaths = new Set<TranslationFilePath>();
-
-  project.translationFiles.forEach((data, filePath) => {
-    if (data.isInternal) {
-      filePaths.add(filePath);
-    }
-  });
-
-  return filePaths;
-}
+import type { LintErrors, Project, TranslationKey } from '../../types/index.js';
 
 export function noUnusedKeys(
   project: Project,
@@ -23,8 +6,6 @@ export function noUnusedKeys(
     ignores: TranslationKey[];
   }>,
 ): LintErrors {
-  const ownTranslations = getOwnTranslations(project);
-
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
 
@@ -37,15 +18,17 @@ export function noUnusedKeys(
       return;
     }
 
-    const mappingSubset: typeof mapping = new Map();
+    let isTranslationExternal = true;
 
-    mapping.forEach((data, locale) => {
-      if (ownTranslations.has(data.filePath)) {
-        mappingSubset.set(locale, data);
+    mapping.forEach((data) => {
+      const { isInternal } = project.translationFiles.get(data.filePath)!;
+
+      if (isInternal) {
+        isTranslationExternal = false;
       }
     });
 
-    if (mappingSubset.size === 0) {
+    if (isTranslationExternal) {
       return;
     }
 

@@ -109,9 +109,8 @@ test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not 
         ]),
       ],
     ]),
-    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
-    usedKeys: new Map(),
+    usedKeys: new Set(),
   });
 
   const lintErrors = noInconsistentMessages(project);

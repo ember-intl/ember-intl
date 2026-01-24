@@ -5,9 +5,20 @@ import type { Options, Project } from '../../types/index.js';
 import { extractTranslations } from '../../utils/analyze-project/merge-translation-files/index.js';
 import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js';
 
+function getLocales(
+  translationFiles: Project['translationFiles'],
+): Set<string> {
+  const locales = new Set<string>();
+
+  translationFiles.forEach((data) => {
+    locales.add(data.locale);
+  });
+
+  return locales;
+}
+
 export function findAvailableKeys(
   translationFiles: Project['translationFiles'],
-  locales: Project['locales'],
   options: Options,
 ): Project['availableKeys'] {
   const { config, projectRoot } = options;
@@ -45,6 +56,7 @@ export function findAvailableKeys(
     return new Map(Array.from(availableKeys).sort());
   }
 
+  const locales = Array.from(getLocales(translationFiles)).sort();
   const newAvailableKeys: Project['availableKeys'] = new Map();
 
   availableKeys.forEach((mapping, key) => {

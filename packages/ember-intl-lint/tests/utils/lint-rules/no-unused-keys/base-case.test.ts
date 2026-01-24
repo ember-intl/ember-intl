@@ -6,9 +6,8 @@ import { normalizeProject } from '../../../helpers/normalize-project.js';
 test('utils | lint-rules | no-unused-keys > base case', function () {
   const project = normalizeProject({
     availableKeys: new Map(),
-    locales: [],
     translationFiles: new Map(),
-    usedKeys: new Map(),
+    usedKeys: new Set(),
   });
 
   const lintErrors = noUnusedKeys(project);

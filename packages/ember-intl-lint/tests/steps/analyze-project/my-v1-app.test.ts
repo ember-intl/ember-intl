@@ -271,7 +271,6 @@ test('steps | analyze-project > my-v1-app', function () {
           ]),
         ],
       ]),
-      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'translations/components/component-from-app/de-de.yml',
@@ -354,24 +353,15 @@ test('steps | analyze-project > my-v1-app', function () {
           },
         ],
       ]),
-      usedKeys: new Map([
-        [
-          'components.component-from-app.message',
-          ['app/components/component-from-app.gts'],
-        ],
-        ['components.title', ['app/templates/index.gts']],
-        [
-          'components.translation-with-arguments.message',
-          ['app/components/translation-with-arguments.gts'],
-        ],
-        [
-          'components.translation-with-arguments.title',
-          ['app/templates/index.gts'],
-        ],
-        ['routes.application.title', ['app/templates/application.gts']],
-        ['routes.index.key-to-overwrite', ['app/templates/index.gts']],
-        ['routes.index.key-without-translation', ['app/templates/index.gts']],
-        ['routes.index.title', ['app/templates/index.gts']],
+      usedKeys: new Set([
+        'components.component-from-app.message',
+        'components.title',
+        'components.translation-with-arguments.message',
+        'components.translation-with-arguments.title',
+        'routes.application.title',
+        'routes.index.key-to-overwrite',
+        'routes.index.key-without-translation',
+        'routes.index.title',
       ]),
     }),
   );

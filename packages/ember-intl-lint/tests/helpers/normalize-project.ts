@@ -5,9 +5,8 @@ import type { Project } from '../../src/types/index.js';
 export function normalizeProject(project: Project): Project {
   const normalized: Project = {
     availableKeys: new Map(),
-    locales: [],
     translationFiles: new Map(),
-    usedKeys: new Map(),
+    usedKeys: new Set(),
   };
 
   project.availableKeys.forEach((mapping, key) => {
@@ -23,10 +22,6 @@ export function normalizeProject(project: Project): Project {
     normalized.availableKeys.set(key, mappingNormalized);
   });
 
-  project.locales.forEach((locale) => {
-    normalized.locales.push(locale);
-  });
-
   project.translationFiles.forEach((data, translationFilePath) => {
     normalized.translationFiles.set(normalize(translationFilePath), {
       ...data,
@@ -34,8 +29,8 @@ export function normalizeProject(project: Project): Project {
     });
   });
 
-  project.usedKeys.forEach((filePaths, key) => {
-    normalized.usedKeys.set(key, filePaths.map(normalize));
+  project.usedKeys.forEach((key) => {
+    normalized.usedKeys.add(key);
   });
 
   return normalized;

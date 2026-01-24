@@ -90,7 +90,6 @@ test('steps | analyze-project > my-v1-addon', function () {
           ]),
         ],
       ]),
-      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'translations/components/component-from-v1-addon/de-de.yaml',
@@ -125,12 +124,7 @@ test('steps | analyze-project > my-v1-addon', function () {
           },
         ],
       ]),
-      usedKeys: new Map([
-        [
-          'components.component-from-v1-addon.message',
-          ['addon/components/component-from-v1-addon.gts'],
-        ],
-      ]),
+      usedKeys: new Set(['components.component-from-v1-addon.message']),
     }),
   );
 });

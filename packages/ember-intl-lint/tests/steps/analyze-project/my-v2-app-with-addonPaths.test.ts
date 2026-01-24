@@ -487,7 +487,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
           ]),
         ],
       ]),
-      locales: ['de-de', 'en-us'],
       translationFiles: new Map([
         [
           'node_modules/my-v1-addon/translations/components/component-from-v1-addon/de-de.yml',
@@ -586,7 +585,7 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
           },
         ],
       ]),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });

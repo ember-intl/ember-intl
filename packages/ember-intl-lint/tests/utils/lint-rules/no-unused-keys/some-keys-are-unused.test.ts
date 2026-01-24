@@ -45,21 +45,8 @@ test('utils | lint-rules | no-unused-keys > some keys are unused', function () {
         }),
       ],
     ]),
-    locales: ['de-de', 'en-us'],
     translationFiles: stubTranslationFiles(),
-    usedKeys: new Map([
-      ['key03', ['app/components/file03.gts']],
-      ['key04', ['app/components/file02.gjs', 'app/components/file03.gts']],
-      [
-        'key05',
-        [
-          'app/components/file01.hbs',
-          'app/components/file02.gjs',
-          'app/components/file03.gts',
-        ],
-      ],
-      ['key06', ['app/templates/file01.hbs', 'app/templates/file02.gjs']],
-    ]),
+    usedKeys: new Set(['key03', 'key04', 'key05', 'key06']),
   });
 
   const lintErrors = noUnusedKeys(project);
