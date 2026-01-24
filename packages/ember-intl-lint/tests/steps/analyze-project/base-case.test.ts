@@ -40,7 +40,7 @@ test('steps | analyze-project > base case', function () {
       availableKeys: new Map(),
       locales: [],
       translationFiles: new Map(),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });

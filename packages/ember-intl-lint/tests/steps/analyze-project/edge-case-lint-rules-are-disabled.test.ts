@@ -370,7 +370,7 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
           },
         ],
       ]),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });

@@ -354,7 +354,7 @@ test('steps | analyze-project > my-v2-app-with-namespace-from-folders', function
           },
         ],
       ]),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });

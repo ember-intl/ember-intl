@@ -9,7 +9,7 @@ export function noMissingKeys(
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
 
-  project.usedKeys.forEach((_filePaths, key) => {
+  project.usedKeys.forEach((key) => {
     if (ignores.has(key)) {
       return;
     }

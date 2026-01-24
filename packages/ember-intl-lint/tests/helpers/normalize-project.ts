@@ -7,7 +7,7 @@ export function normalizeProject(project: Project): Project {
     availableKeys: new Map(),
     locales: [],
     translationFiles: new Map(),
-    usedKeys: new Map(),
+    usedKeys: new Set(),
   };
 
   project.availableKeys.forEach((mapping, key) => {
@@ -34,8 +34,8 @@ export function normalizeProject(project: Project): Project {
     });
   });
 
-  project.usedKeys.forEach((filePaths, key) => {
-    normalized.usedKeys.set(key, filePaths.map(normalize));
+  project.usedKeys.forEach((key) => {
+    normalized.usedKeys.add(key);
   });
 
   return normalized;

@@ -302,7 +302,7 @@ test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
           },
         ],
       ]),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });

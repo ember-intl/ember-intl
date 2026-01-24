@@ -67,10 +67,8 @@ type Project = {
       translationsDir: string;
     }
   >;
-  usedKeys: Map<TranslationKey, SourceFilePath[]>;
+  usedKeys: Set<TranslationKey>;
 };
-
-type SourceFilePath = string;
 
 type TranslationFilePath = string;
 

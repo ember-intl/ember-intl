@@ -586,7 +586,7 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
           },
         ],
       ]),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });

@@ -12,7 +12,7 @@ import {
 
 export function findUsedKeys(options: Options): Project['usedKeys'] {
   const { projectRoot, src } = options;
-  const usedKeys: Project['usedKeys'] = new Map();
+  const usedKeys: Project['usedKeys'] = new Set();
 
   const filePaths = findFiles(`${src}/**/*.{gjs,gts,hbs,js,ts}`, {
     ignoreList: ['**/*.d.ts'],
@@ -49,13 +49,9 @@ export function findUsedKeys(options: Options): Project['usedKeys'] {
     }
 
     keys.forEach((key) => {
-      if (usedKeys.has(key)) {
-        usedKeys.get(key)!.push(filePath);
-      } else {
-        usedKeys.set(key, [filePath]);
-      }
+      usedKeys.add(key);
     });
   });
 
-  return new Map(Array.from(usedKeys).sort());
+  return new Set(Array.from(usedKeys).sort());
 }

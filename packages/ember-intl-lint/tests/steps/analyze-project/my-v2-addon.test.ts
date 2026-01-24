@@ -281,27 +281,12 @@ test('steps | analyze-project > my-v2-addon', function () {
           },
         ],
       ]),
-      usedKeys: new Map([
-        [
-          'components.component-from-v2-addon.message',
-          ['src/components/component-from-v2-addon.gts'],
-        ],
-        [
-          'components.select-locale.label',
-          ['src/components/select-locale.gts'],
-        ],
-        [
-          'components.select-locale.option.de-de',
-          ['src/components/select-locale.gts'],
-        ],
-        [
-          'components.select-locale.option.default',
-          ['src/components/select-locale.gts'],
-        ],
-        [
-          'components.select-locale.option.en-us',
-          ['src/components/select-locale.gts'],
-        ],
+      usedKeys: new Set([
+        'components.component-from-v2-addon.message',
+        'components.select-locale.label',
+        'components.select-locale.option.de-de',
+        'components.select-locale.option.default',
+        'components.select-locale.option.en-us',
       ]),
     }),
   );

@@ -8,7 +8,7 @@ test('utils | lint-rules | no-inconsistent-messages > base case', function () {
     availableKeys: new Map(),
     locales: [],
     translationFiles: new Map(),
-    usedKeys: new Map(),
+    usedKeys: new Set(),
   });
 
   const lintErrors = noInconsistentMessages(project);

@@ -31,7 +31,7 @@ test('steps | lint-project > edge-case (lint rules are disabled)', function () {
     availableKeys: new Map(),
     locales: [],
     translationFiles: new Map(),
-    usedKeys: new Map(),
+    usedKeys: new Set(),
   });
 
   const lintResults = lintProject(project, options);

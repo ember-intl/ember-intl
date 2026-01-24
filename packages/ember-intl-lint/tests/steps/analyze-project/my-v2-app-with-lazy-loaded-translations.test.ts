@@ -284,7 +284,7 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
           },
         ],
       ]),
-      usedKeys: new Map(),
+      usedKeys: new Set(),
     }),
   );
 });
