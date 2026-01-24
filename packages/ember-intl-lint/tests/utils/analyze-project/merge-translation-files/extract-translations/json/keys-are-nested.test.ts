@@ -1,8 +1,8 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { inJson } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
+import { extractTranslations } from '../../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | merge-translation-files | in-json > keys are nested', function () {
+test('utils | analyze-project | merge-translation-files | extract-translations | json > keys are nested', function () {
   const file = JSON.stringify({
     components: {
       products: {
@@ -103,7 +103,7 @@ test('utils | analyze-project | merge-translation-files | in-json > keys are nes
     },
   });
 
-  const translationObject = inJson(file, {
+  const translationObject = extractTranslations(file, {
     filePath: 'translations/en-us.json',
     namespaceKeys: false,
     translationsDir: 'translations',

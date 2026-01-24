@@ -1,8 +1,8 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { inJson } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
+import { extractTranslations } from '../../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | merge-translation-files | in-json > keys are namespaced (1)', function () {
+test('utils | analyze-project | merge-translation-files | extract-translations | json > keys are namespaced (1)', function () {
   const file = JSON.stringify({
     'card.learn-more.aria-label': 'Learn more about {productName}',
     'card.learn-more.label': 'Learn more',
@@ -15,7 +15,7 @@ test('utils | analyze-project | merge-translation-files | in-json > keys are nam
     title: '{productName}',
   });
 
-  const translationObject = inJson(file, {
+  const translationObject = extractTranslations(file, {
     filePath: 'translations/en-us.json',
     namespaceKeys: true,
     translationsDir: 'translations',

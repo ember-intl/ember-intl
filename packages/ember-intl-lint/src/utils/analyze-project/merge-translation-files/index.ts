@@ -1,2 +1,1 @@
-export * from './in-json.js';
-export * from './in-yaml.js';
+export * from './extract-translations.js';

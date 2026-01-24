@@ -2,10 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import type { Options, Project } from '../../types/index.js';
-import {
-  inJson,
-  inYaml,
-} from '../../utils/analyze-project/merge-translation-files/index.js';
+import { extractTranslations } from '../../utils/analyze-project/merge-translation-files/index.js';
 import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js';
 
 export function findAvailableKeys(
@@ -19,9 +16,7 @@ export function findAvailableKeys(
   translationFiles.forEach((data, filePath) => {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
 
-    const parser = data.format === 'json' ? inJson : inYaml;
-
-    const translationObject = parser(file, {
+    const translationObject = extractTranslations(file, {
       filePath,
       namespaceKeys: config.buildOptions.wrapTranslationsWithNamespace,
       translationsDir: data.translationsDir,

@@ -1,8 +1,8 @@
 import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
-import { inYaml } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
+import { extractTranslations } from '../../../../../../src/utils/analyze-project/merge-translation-files/index.js';
 
-test('utils | analyze-project | merge-translation-files | in-yaml > base case', function () {
+test('utils | analyze-project | merge-translation-files | extract-translations | yaml > base case', function () {
   const file = normalizeFile([
     `components.products.product.card.learn-more.aria-label: Learn more about {productName}`,
     `components.products.product.card.learn-more.label: Learn more`,
@@ -52,7 +52,7 @@ test('utils | analyze-project | merge-translation-files | in-yaml > base case', 
     ``,
   ]);
 
-  const translationObject = inYaml(file, {
+  const translationObject = extractTranslations(file, {
     filePath: 'translations/en-us.yaml',
     namespaceKeys: false,
     translationsDir: 'translations',
