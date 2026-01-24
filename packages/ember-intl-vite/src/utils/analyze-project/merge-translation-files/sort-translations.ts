@@ -1,6 +1,6 @@
 import type { Project, TranslationObject } from '../../../types/index.js';
 
-export function sortTranslationKeys(
+export function sortTranslations(
   translations: Project['translations'],
 ): Project['translations'] {
   const translationsSorted: Project['translations'] = new Map();

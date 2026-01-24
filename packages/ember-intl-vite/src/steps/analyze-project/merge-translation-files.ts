@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import type { Options, Project } from '../../types/index.js';
 import {
   extractTranslations,
-  sortTranslationKeys,
+  sortTranslations,
 } from '../../utils/analyze-project/merge-translation-files/index.js';
 
 export function mergeTranslationFiles(
@@ -35,7 +35,7 @@ export function mergeTranslationFiles(
   });
 
   if (buildOptions.fallbackLocale === undefined) {
-    return sortTranslationKeys(translations);
+    return sortTranslations(translations);
   }
 
   const translationsWithFallback: Project['translations'] = new Map();
@@ -54,5 +54,5 @@ export function mergeTranslationFiles(
     translationsWithFallback.set(locale, newTranslationObject);
   });
 
-  return sortTranslationKeys(translationsWithFallback);
+  return sortTranslations(translationsWithFallback);
 }
