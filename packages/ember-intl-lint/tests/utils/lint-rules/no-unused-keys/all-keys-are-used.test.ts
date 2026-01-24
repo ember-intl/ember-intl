@@ -1,81 +1,104 @@
 import { assert, test } from '@codemod-utils/tests';
 
+import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noUnusedKeys } from '../../../../src/utils/lint-rules/index.js';
 import {
   normalizeProject,
-  stubMapping,
   stubTranslationFiles,
 } from '../../../helpers/index.js';
 
 test('utils | lint-rules | no-unused-keys > all keys are used', function () {
+  const translations = new Map([
+    [
+      'de-de',
+      new Map([
+        [
+          'key01',
+          {
+            filePath: 'translations/de-de.json',
+            message: 'Hello!',
+          },
+        ],
+        [
+          'key03',
+          {
+            filePath: 'translations/de-de.json',
+            message: '{name}',
+          },
+        ],
+        [
+          'key04',
+          {
+            filePath: 'translations/de-de.json',
+            message:
+              '{itemCount, plural, =0 {You have no items.} one {You have {itemCount, number} item.} other {You have {itemCount, number} items.}}',
+          },
+        ],
+        [
+          'key06',
+          {
+            filePath: 'node_modules/my-v1-addon/translations/de-de.json',
+            message: 'It is now {timestamp, time, short}.',
+          },
+        ],
+        [
+          'key07',
+          {
+            filePath: 'node_modules/my-v2-addon/translations/de-de.json',
+            message:
+              '{isTaxed, select, yes {An additional {tax, number, percent} tax will be collected.} other {No taxes apply.}}',
+          },
+        ],
+      ]),
+    ],
+    [
+      'en-us',
+      new Map([
+        [
+          'key02',
+          {
+            filePath: 'translations/en-us.json',
+            message: '{timestamp, date, long}',
+          },
+        ],
+        [
+          'key03',
+          {
+            filePath: 'translations/en-us.json',
+            message: '{name}',
+          },
+        ],
+        [
+          'key04',
+          {
+            filePath: 'translations/en-us.json',
+            message:
+              '{itemCount, plural, =0 {You have no items.} one {You have {itemCount, number} item.} other {You have {itemCount, number} items.}}',
+          },
+        ],
+        [
+          'key05',
+          {
+            filePath: 'node_modules/my-v1-addon/translations/en-us.json',
+            message: '{proportion, number, ::percent}',
+          },
+        ],
+        [
+          'key07',
+          {
+            filePath: 'node_modules/my-v2-addon/translations/en-us.json',
+            message:
+              '{isTaxed, select, yes {An additional {tax, number, percent} tax will be collected.} other {No taxes apply.}}',
+          },
+        ],
+      ]),
+    ],
+  ]);
+
   const project = normalizeProject({
-    availableKeys: new Map([
-      [
-        'key01',
-        stubMapping({
-          message: 'Hello!',
-          translationFilePaths: ['translations/de-de.json'],
-        }),
-      ],
-      [
-        'key02',
-        stubMapping({
-          message: '{timestamp, date, long}',
-          translationFilePaths: ['translations/en-us.json'],
-        }),
-      ],
-      [
-        'key03',
-        stubMapping({
-          message: '{name}',
-          translationFilePaths: [
-            'translations/de-de.json',
-            'translations/en-us.json',
-          ],
-        }),
-      ],
-      [
-        'key04',
-        stubMapping({
-          message:
-            '{itemCount, plural, =0 {You have no items.} one {You have {itemCount, number} item.} other {You have {itemCount, number} items.}}',
-          translationFilePaths: [
-            'translations/de-de.json',
-            'translations/en-us.json',
-          ],
-        }),
-      ],
-      [
-        'key05',
-        stubMapping({
-          message: '{proportion, number, ::percent}',
-          translationFilePaths: [
-            'node_modules/my-v1-addon/translations/en-us.json',
-          ],
-        }),
-      ],
-      [
-        'key06',
-        stubMapping({
-          message: 'It is now {timestamp, time, short}.',
-          translationFilePaths: [
-            'node_modules/my-v1-addon/translations/de-de.json',
-          ],
-        }),
-      ],
-      [
-        'key07',
-        stubMapping({
-          message:
-            '{isTaxed, select, yes {An additional {tax, number, percent} tax will be collected.} other {No taxes apply.}}',
-          translationFilePaths: [
-            'node_modules/my-v2-addon/translations/de-de.json',
-            'node_modules/my-v2-addon/translations/en-us.json',
-          ],
-        }),
-      ],
-    ]),
+    availableKeys: findAvailableKeys(translations),
     translationFiles: stubTranslationFiles(),
+    translations,
     usedKeys: new Set([
       'key01',
       'key02',

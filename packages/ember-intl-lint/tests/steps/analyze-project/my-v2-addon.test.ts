@@ -25,14 +25,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               {
                 filePath:
                   'translations/components/component-from-v2-addon/de-de.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Dies ist eine Komponente aus einem v2 Addon.',
               },
             ],
@@ -41,14 +33,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               {
                 filePath:
                   'translations/components/component-from-v2-addon/en-us.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'This is a component from a v2 addon.',
               },
             ],
@@ -61,14 +45,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'de-de',
               {
                 filePath: 'translations/components/select-locale/de-de.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Sprache',
               },
             ],
@@ -76,14 +52,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'en-us',
               {
                 filePath: 'translations/components/select-locale/en-us.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Language',
               },
             ],
@@ -96,14 +64,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'de-de',
               {
                 filePath: 'translations/components/select-locale/de-de.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Deutsch',
               },
             ],
@@ -111,14 +71,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'en-us',
               {
                 filePath: 'translations/components/select-locale/en-us.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'German',
               },
             ],
@@ -131,14 +83,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'de-de',
               {
                 filePath: 'translations/components/select-locale/de-de.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Sprache auswählen',
               },
             ],
@@ -146,14 +90,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'en-us',
               {
                 filePath: 'translations/components/select-locale/en-us.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Choose your language',
               },
             ],
@@ -166,14 +102,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'de-de',
               {
                 filePath: 'translations/components/select-locale/de-de.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Englisch',
               },
             ],
@@ -181,14 +109,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'en-us',
               {
                 filePath: 'translations/components/select-locale/en-us.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'English',
               },
             ],
@@ -201,14 +121,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'de-de',
               {
                 filePath: 'translations/routes/index/de-de.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Das v2 Addons Übersetzungen haben Vorrang.',
               },
             ],
@@ -216,14 +128,6 @@ test('steps | analyze-project > my-v2-addon', function () {
               'en-us',
               {
                 filePath: 'translations/routes/index/en-us.json',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: "The v2 addon's translations take precedence.",
               },
             ],
@@ -278,6 +182,104 @@ test('steps | analyze-project > my-v2-addon', function () {
             locale: 'en-us',
             translationsDir: 'translations',
           },
+        ],
+      ]),
+      translations: new Map([
+        [
+          'de-de',
+          new Map([
+            [
+              'components.component-from-v2-addon.message',
+              {
+                filePath:
+                  'translations/components/component-from-v2-addon/de-de.json',
+                message: 'Dies ist eine Komponente aus einem v2 Addon.',
+              },
+            ],
+            [
+              'components.select-locale.label',
+              {
+                filePath: 'translations/components/select-locale/de-de.json',
+                message: 'Sprache',
+              },
+            ],
+            [
+              'components.select-locale.option.de-de',
+              {
+                filePath: 'translations/components/select-locale/de-de.json',
+                message: 'Deutsch',
+              },
+            ],
+            [
+              'components.select-locale.option.default',
+              {
+                filePath: 'translations/components/select-locale/de-de.json',
+                message: 'Sprache auswählen',
+              },
+            ],
+            [
+              'components.select-locale.option.en-us',
+              {
+                filePath: 'translations/components/select-locale/de-de.json',
+                message: 'Englisch',
+              },
+            ],
+            [
+              'routes.index.key-to-overwrite',
+              {
+                filePath: 'translations/routes/index/de-de.json',
+                message: 'Das v2 Addons Übersetzungen haben Vorrang.',
+              },
+            ],
+          ]),
+        ],
+        [
+          'en-us',
+          new Map([
+            [
+              'components.component-from-v2-addon.message',
+              {
+                filePath:
+                  'translations/components/component-from-v2-addon/en-us.json',
+                message: 'This is a component from a v2 addon.',
+              },
+            ],
+            [
+              'components.select-locale.label',
+              {
+                filePath: 'translations/components/select-locale/en-us.json',
+                message: 'Language',
+              },
+            ],
+            [
+              'components.select-locale.option.de-de',
+              {
+                filePath: 'translations/components/select-locale/en-us.json',
+                message: 'German',
+              },
+            ],
+            [
+              'components.select-locale.option.default',
+              {
+                filePath: 'translations/components/select-locale/en-us.json',
+                message: 'Choose your language',
+              },
+            ],
+            [
+              'components.select-locale.option.en-us',
+              {
+                filePath: 'translations/components/select-locale/en-us.json',
+                message: 'English',
+              },
+            ],
+            [
+              'routes.index.key-to-overwrite',
+              {
+                filePath: 'translations/routes/index/en-us.json',
+                message: "The v2 addon's translations take precedence.",
+              },
+            ],
+          ]),
         ],
       ]),
       usedKeys: new Set([

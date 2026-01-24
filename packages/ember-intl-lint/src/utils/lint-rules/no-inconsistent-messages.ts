@@ -4,7 +4,7 @@ import type {
   Project,
   TranslationKey,
 } from '../../types/index.js';
-import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
+import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -41,7 +41,7 @@ export function noInconsistentMessages(
 
   const locales = getLocales(project.translationFiles);
 
-  project.availableKeys.forEach((mapping, key) => {
+  project.availableKeys.forEach((localeToData, key) => {
     if (ignores.has(key)) {
       return;
     }
@@ -49,7 +49,7 @@ export function noInconsistentMessages(
     let hasTranslation = true;
 
     locales.forEach((locale) => {
-      if (!mapping.has(locale)) {
+      if (!localeToData.has(locale)) {
         hasTranslation = false;
       }
     });
@@ -60,8 +60,8 @@ export function noInconsistentMessages(
 
     const allIcuArguments: IcuArguments[] = [];
 
-    mapping.forEach((data) => {
-      allIcuArguments.push(data.icuArguments);
+    localeToData.forEach((data) => {
+      allIcuArguments.push(findIcuArguments(data.message));
     });
 
     if (allIcuArgumentsMatch(allIcuArguments)) {

@@ -9,7 +9,7 @@ export function noUnusedKeys(
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
 
-  project.availableKeys.forEach((mapping, key) => {
+  project.availableKeys.forEach((localeToData, key) => {
     if (ignores.has(key)) {
       return;
     }
@@ -20,7 +20,7 @@ export function noUnusedKeys(
 
     let isTranslationExternal = true;
 
-    mapping.forEach((data) => {
+    localeToData.forEach((data) => {
       const { isInternal } = project.translationFiles.get(data.filePath)!;
 
       if (isInternal) {

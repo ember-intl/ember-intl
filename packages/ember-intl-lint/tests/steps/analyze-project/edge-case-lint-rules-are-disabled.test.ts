@@ -41,14 +41,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               {
                 filePath:
                   'translations/components/component-from-app/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Dies ist eine Komponente aus der App.',
               },
             ],
@@ -57,14 +49,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               {
                 filePath:
                   'translations/components/component-from-app/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'This is a component from the app.',
               },
             ],
@@ -77,14 +61,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'de-de',
               {
                 filePath: 'translations/components/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Komponenten',
               },
             ],
@@ -92,14 +68,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'en-us',
               {
                 filePath: 'translations/components/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Components',
               },
             ],
@@ -113,14 +81,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               {
                 filePath:
                   'translations/components/translation-with-arguments/de-de.yml',
-                icuArguments: {
-                  argument: new Set(['name']),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(['numPhotos']),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message:
                   '{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.',
               },
@@ -130,14 +90,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               {
                 filePath:
                   'translations/components/translation-with-arguments/en-us.yml',
-                icuArguments: {
-                  argument: new Set(['name']),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(['numPhotos']),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message:
                   '{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}.',
               },
@@ -152,14 +104,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               {
                 filePath:
                   'translations/components/translation-with-arguments/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Übersetzung mit Argumenten',
               },
             ],
@@ -168,14 +112,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               {
                 filePath:
                   'translations/components/translation-with-arguments/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Translation with Arguments',
               },
             ],
@@ -188,14 +124,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'de-de',
               {
                 filePath: 'translations/routes/application/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'ember-intl',
               },
             ],
@@ -203,14 +131,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'en-us',
               {
                 filePath: 'translations/routes/application/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'ember-intl',
               },
             ],
@@ -223,14 +143,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'de-de',
               {
                 filePath: 'translations/routes/index/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Die Apps Übersetzungen haben Vorrang.',
               },
             ],
@@ -238,14 +150,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'en-us',
               {
                 filePath: 'translations/routes/index/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: "The app's translations take precedence.",
               },
             ],
@@ -258,14 +162,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'de-de',
               {
                 filePath: 'translations/routes/index/de-de.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Willkommen bei <code>ember-intl</code>',
               },
             ],
@@ -273,14 +169,6 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
               'en-us',
               {
                 filePath: 'translations/routes/index/en-us.yml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Welcome to <code>ember-intl</code>',
               },
             ],
@@ -367,6 +255,124 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
             locale: 'en-us',
             translationsDir: 'translations',
           },
+        ],
+      ]),
+      translations: new Map([
+        [
+          'de-de',
+          new Map([
+            [
+              'components.component-from-app.message',
+              {
+                filePath:
+                  'translations/components/component-from-app/de-de.yml',
+                message: 'Dies ist eine Komponente aus der App.',
+              },
+            ],
+            [
+              'components.title',
+              {
+                filePath: 'translations/components/de-de.yml',
+                message: 'Komponenten',
+              },
+            ],
+            [
+              'components.translation-with-arguments.message',
+              {
+                filePath:
+                  'translations/components/translation-with-arguments/de-de.yml',
+                message:
+                  '{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.',
+              },
+            ],
+            [
+              'components.translation-with-arguments.title',
+              {
+                filePath:
+                  'translations/components/translation-with-arguments/de-de.yml',
+                message: 'Übersetzung mit Argumenten',
+              },
+            ],
+            [
+              'routes.application.title',
+              {
+                filePath: 'translations/routes/application/de-de.yml',
+                message: 'ember-intl',
+              },
+            ],
+            [
+              'routes.index.key-to-overwrite',
+              {
+                filePath: 'translations/routes/index/de-de.yml',
+                message: 'Die Apps Übersetzungen haben Vorrang.',
+              },
+            ],
+            [
+              'routes.index.title',
+              {
+                filePath: 'translations/routes/index/de-de.yml',
+                message: 'Willkommen bei <code>ember-intl</code>',
+              },
+            ],
+          ]),
+        ],
+        [
+          'en-us',
+          new Map([
+            [
+              'components.component-from-app.message',
+              {
+                filePath:
+                  'translations/components/component-from-app/en-us.yml',
+                message: 'This is a component from the app.',
+              },
+            ],
+            [
+              'components.title',
+              {
+                filePath: 'translations/components/en-us.yml',
+                message: 'Components',
+              },
+            ],
+            [
+              'components.translation-with-arguments.message',
+              {
+                filePath:
+                  'translations/components/translation-with-arguments/en-us.yml',
+                message:
+                  '{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}.',
+              },
+            ],
+            [
+              'components.translation-with-arguments.title',
+              {
+                filePath:
+                  'translations/components/translation-with-arguments/en-us.yml',
+                message: 'Translation with Arguments',
+              },
+            ],
+            [
+              'routes.application.title',
+              {
+                filePath: 'translations/routes/application/en-us.yml',
+                message: 'ember-intl',
+              },
+            ],
+            [
+              'routes.index.key-to-overwrite',
+              {
+                filePath: 'translations/routes/index/en-us.yml',
+                message: "The app's translations take precedence.",
+              },
+            ],
+            [
+              'routes.index.title',
+              {
+                filePath: 'translations/routes/index/en-us.yml',
+                message: 'Welcome to <code>ember-intl</code>',
+              },
+            ],
+          ]),
         ],
       ]),
       usedKeys: new Set(),

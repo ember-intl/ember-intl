@@ -1,8 +1,10 @@
-import { EOL } from 'node:os';
-
 import type { Plugin } from 'vite';
 
-import { analyzeProject, createOptions } from './steps/index.js';
+import {
+  analyzeProject,
+  createOptions,
+  getTranslationFile,
+} from './steps/index.js';
 import type { Options, Project } from './types/index.js';
 import { isTranslationFile, ModuleTracker } from './utils/vite.js';
 
@@ -29,20 +31,11 @@ export function loadTranslations(): Plugin {
     load(id) {
       const locale = moduleTracker.getLocale(id);
 
-      if (locale === undefined) {
+      if (translations === undefined || locale === undefined) {
         return;
       }
 
-      const translationsForLocale = translations?.get(locale);
-
-      if (translationsForLocale === undefined) {
-        return;
-      }
-
-      return [
-        `const translations = ${JSON.stringify(translationsForLocale)};`,
-        `export default translations;`,
-      ].join(EOL);
+      return getTranslationFile(translations, locale);
     },
 
     async handleHotUpdate({ file: filePath, server }) {

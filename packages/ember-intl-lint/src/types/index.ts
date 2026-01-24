@@ -47,17 +47,7 @@ type LintResults = Record<LintRule, LintErrors>;
 type Locale = string;
 
 type Project = {
-  availableKeys: Map<
-    TranslationKey,
-    Map<
-      Locale,
-      {
-        filePath: TranslationFilePath;
-        icuArguments: IcuArguments;
-        message: TranslationMessage;
-      }
-    >
-  >;
+  availableKeys: Map<TranslationKey, Map<Locale, ProjectTranslationData>>;
   translationFiles: Map<
     TranslationFilePath,
     {
@@ -66,7 +56,13 @@ type Project = {
       translationsDir: string;
     }
   >;
+  translations: Map<Locale, Map<TranslationKey, ProjectTranslationData>>;
   usedKeys: Set<TranslationKey>;
+};
+
+type ProjectTranslationData = {
+  filePath: TranslationFilePath;
+  message: TranslationMessage;
 };
 
 type TranslationFilePath = string;
@@ -96,8 +92,10 @@ export type {
   LintMethod,
   LintOptions,
   LintResults,
+  Locale,
   Options,
   Project,
+  ProjectTranslationData,
   TranslationFilePath,
   TranslationJson,
   TranslationKey,

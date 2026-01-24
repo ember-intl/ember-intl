@@ -39,6 +39,7 @@ test('steps | analyze-project > base case', function () {
     normalizeProject({
       availableKeys: new Map(),
       translationFiles: new Map(),
+      translations: new Map(),
       usedKeys: new Set(),
     }),
   );

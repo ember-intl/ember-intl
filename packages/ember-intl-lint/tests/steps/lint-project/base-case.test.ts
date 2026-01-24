@@ -35,6 +35,7 @@ test('steps | lint-project > base case', function () {
   const project = normalizeProject({
     availableKeys: new Map(),
     translationFiles: new Map(),
+    translations: new Map(),
     usedKeys: new Set(),
   });
 

@@ -1,77 +1,23 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-
-import type { Options, Project } from '../../types/index.js';
-import { extractTranslations } from '../../utils/analyze-project/merge-translation-files/index.js';
-import { findIcuArguments } from '../../utils/icu-message/find-icu-arguments.js';
-
-function getLocales(
-  translationFiles: Project['translationFiles'],
-): Set<string> {
-  const locales = new Set<string>();
-
-  translationFiles.forEach((data) => {
-    locales.add(data.locale);
-  });
-
-  return locales;
-}
+import type {
+  Locale,
+  Project,
+  ProjectTranslationData,
+} from '../../types/index.js';
 
 export function findAvailableKeys(
-  translationFiles: Project['translationFiles'],
-  options: Options,
+  translations: Project['translations'],
 ): Project['availableKeys'] {
-  const { config, projectRoot } = options;
   const availableKeys: Project['availableKeys'] = new Map();
 
-  translationFiles.forEach((data, filePath) => {
-    const file = readFileSync(join(projectRoot, filePath), 'utf8');
+  translations.forEach((keyToData, locale) => {
+    keyToData.forEach((data, key) => {
+      const localeToData =
+        availableKeys.get(key) ?? new Map<Locale, ProjectTranslationData>();
 
-    const translationObject = extractTranslations(file, {
-      filePath,
-      namespaceKeys: config.buildOptions.wrapTranslationsWithNamespace,
-      translationsDir: data.translationsDir,
+      localeToData.set(locale, data);
+      availableKeys.set(key, localeToData);
     });
-
-    for (const [key, message] of Object.entries(translationObject)) {
-      const icuArguments = findIcuArguments(message);
-
-      if (!availableKeys.has(key)) {
-        availableKeys.set(key, new Map());
-      }
-
-      const mapping = availableKeys.get(key)!;
-
-      mapping.set(data.locale, {
-        filePath,
-        icuArguments,
-        message,
-      });
-    }
   });
 
-  const { fallbackLocale } = config.buildOptions;
-
-  if (!fallbackLocale) {
-    return new Map(Array.from(availableKeys).sort());
-  }
-
-  const locales = Array.from(getLocales(translationFiles)).sort();
-  const newAvailableKeys: Project['availableKeys'] = new Map();
-
-  availableKeys.forEach((mapping, key) => {
-    const newMapping: typeof mapping = new Map();
-
-    locales.forEach((locale) => {
-      const data = mapping.get(locale) ?? mapping.get(fallbackLocale);
-
-      if (data) {
-        newMapping.set(locale, data);
-      }
-    });
-
-    newAvailableKeys.set(key, newMapping);
-  });
-
-  return new Map(Array.from(newAvailableKeys).sort());
+  return new Map(Array.from(availableKeys).sort());
 }
