@@ -66,7 +66,13 @@ type Project = {
       translationsDir: string;
     }
   >;
+  translations: Map<Locale, Map<TranslationKey, ProjectTranslationData>>;
   usedKeys: Set<TranslationKey>;
+};
+
+type ProjectTranslationData = {
+  filePath: TranslationFilePath;
+  message: TranslationMessage;
 };
 
 type TranslationFilePath = string;
@@ -98,6 +104,7 @@ export type {
   LintResults,
   Options,
   Project,
+  ProjectTranslationData,
   TranslationFilePath,
   TranslationJson,
   TranslationKey,

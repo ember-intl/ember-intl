@@ -27,7 +27,12 @@ type Project = {
       translationsDir: string;
     }
   >;
-  translations: Map<Locale, TranslationObject>;
+  translations: Map<Locale, Map<TranslationKey, ProjectTranslationData>>;
+};
+
+type ProjectTranslationData = {
+  filePath: TranslationFilePath;
+  message: TranslationMessage;
 };
 
 type TranslationFilePath = string;
@@ -53,6 +58,7 @@ export type {
   Locale,
   Options,
   Project,
+  ProjectTranslationData,
   TranslationFilePath,
   TranslationJson,
   TranslationKey,
