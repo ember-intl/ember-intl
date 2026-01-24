@@ -25,14 +25,6 @@ test('steps | analyze-project > my-v1-addon', function () {
               {
                 filePath:
                   'translations/components/component-from-v1-addon/de-de.yaml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Dies ist eine Komponente aus einem v1 Addon.',
               },
             ],
@@ -41,14 +33,6 @@ test('steps | analyze-project > my-v1-addon', function () {
               {
                 filePath:
                   'translations/components/component-from-v1-addon/en-us.yaml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'This is a component from a v1 addon.',
               },
             ],
@@ -61,14 +45,6 @@ test('steps | analyze-project > my-v1-addon', function () {
               'de-de',
               {
                 filePath: 'translations/routes/index/de-de.yaml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: 'Das v1 Addons Übersetzungen haben Vorrang.',
               },
             ],
@@ -76,14 +52,6 @@ test('steps | analyze-project > my-v1-addon', function () {
               'en-us',
               {
                 filePath: 'translations/routes/index/en-us.yaml',
-                icuArguments: {
-                  argument: new Set(),
-                  date: new Set(),
-                  number: new Set(),
-                  plural: new Set(),
-                  select: new Set(),
-                  time: new Set(),
-                },
                 message: "The v1 addon's translations take precedence.",
               },
             ],
@@ -122,6 +90,48 @@ test('steps | analyze-project > my-v1-addon', function () {
             locale: 'en-us',
             translationsDir: 'translations',
           },
+        ],
+      ]),
+      translations: new Map([
+        [
+          'de-de',
+          new Map([
+            [
+              'components.component-from-v1-addon.message',
+              {
+                filePath:
+                  'translations/components/component-from-v1-addon/de-de.yaml',
+                message: 'Dies ist eine Komponente aus einem v1 Addon.',
+              },
+            ],
+            [
+              'routes.index.key-to-overwrite',
+              {
+                filePath: 'translations/routes/index/de-de.yaml',
+                message: 'Das v1 Addons Übersetzungen haben Vorrang.',
+              },
+            ],
+          ]),
+        ],
+        [
+          'en-us',
+          new Map([
+            [
+              'components.component-from-v1-addon.message',
+              {
+                filePath:
+                  'translations/components/component-from-v1-addon/en-us.yaml',
+                message: 'This is a component from a v1 addon.',
+              },
+            ],
+            [
+              'routes.index.key-to-overwrite',
+              {
+                filePath: 'translations/routes/index/en-us.yaml',
+                message: "The v1 addon's translations take precedence.",
+              },
+            ],
+          ]),
         ],
       ]),
       usedKeys: new Set(['components.component-from-v1-addon.message']),

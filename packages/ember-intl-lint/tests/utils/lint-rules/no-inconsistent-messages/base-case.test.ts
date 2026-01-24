@@ -1,12 +1,17 @@
 import { assert, test } from '@codemod-utils/tests';
 
+import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
+import type { Project } from '../../../../src/types/index.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 
 test('utils | lint-rules | no-inconsistent-messages > base case', function () {
+  const translations: Project['translations'] = new Map();
+
   const project = normalizeProject({
-    availableKeys: new Map(),
+    availableKeys: findAvailableKeys(translations),
     translationFiles: new Map(),
+    translations,
     usedKeys: new Set(),
   });
 

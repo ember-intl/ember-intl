@@ -1,47 +1,46 @@
 import { assert, test } from '@codemod-utils/tests';
 
-import { findIcuArguments } from '../../../../src/utils/icu-message/find-icu-arguments.js';
+import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
-import { normalizeProject } from '../../../helpers/normalize-project.js';
+import { normalizeProject } from '../../../helpers/index.js';
 
 test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)', function () {
+  const translations = new Map([
+    [
+      'de-de',
+      new Map([
+        [
+          'key01',
+          {
+            filePath: 'translations/de-de.json',
+            message: 'Hallo!',
+          },
+        ],
+      ]),
+    ],
+    [
+      'en-us',
+      new Map([
+        [
+          'key01',
+          {
+            filePath: 'translations/en-us.json',
+            message: 'Hello!',
+          },
+        ],
+        [
+          'key02',
+          {
+            filePath: 'translations/en-us.json',
+            message: 'Hello, {name}!',
+          },
+        ],
+      ]),
+    ],
+  ]);
+
   const project = normalizeProject({
-    availableKeys: new Map([
-      [
-        'key01',
-        new Map([
-          [
-            'de-de',
-            {
-              filePath: 'translations/de-de.json',
-              icuArguments: findIcuArguments('Hallo!'),
-              message: 'Hallo!',
-            },
-          ],
-          [
-            'en-us',
-            {
-              filePath: 'translations/en-us.json',
-              icuArguments: findIcuArguments('Hello!'),
-              message: 'Hello!',
-            },
-          ],
-        ]),
-      ],
-      [
-        'key02',
-        new Map([
-          [
-            'en-us',
-            {
-              filePath: 'translations/en-us.json',
-              icuArguments: findIcuArguments('Hello, {name}!'),
-              message: 'Hello, {name}!',
-            },
-          ],
-        ]),
-      ],
-    ]),
+    availableKeys: findAvailableKeys(translations),
     translationFiles: new Map([
       [
         'translations/de-de.json',
@@ -107,6 +106,7 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
         },
       ],
     ]),
+    translations,
     usedKeys: new Set(),
   });
 
