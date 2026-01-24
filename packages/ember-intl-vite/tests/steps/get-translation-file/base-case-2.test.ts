@@ -1,11 +1,9 @@
-import { assert, test } from '@codemod-utils/tests';
+import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
-import type { Project } from '../../../../../src/types/index.js';
-import { sortTranslations } from '../../../../../src/utils/analyze-project/merge-translation-files/index.js';
-import { getTranslationKeys } from '../../../../helpers/index.js';
+import { getTranslationFile } from '../../../src/steps/index.js';
 
-test('utils | analyze-project | merge-translation-files | sort-translations > keys are sorted', function () {
-  const translations: Project['translations'] = new Map([
+test('steps | get-translation-file > base case (2)', function () {
+  const translations = new Map([
     [
       'de-de',
       new Map([
@@ -122,27 +120,23 @@ test('utils | analyze-project | merge-translation-files | sort-translations > ke
     ],
   ]);
 
-  const translationsSorted = sortTranslations(translations);
+  let translationFile = getTranslationFile(translations, 'de-de');
 
-  assert.deepStrictEqual(translationsSorted, translations);
+  assert.strictEqual(
+    translationFile,
+    normalizeFile([
+      `const translations = {"components.component-from-app.message":"Dies ist eine Komponente aus der App.","components.title":"Komponenten","components.translation-with-arguments.message":"{name} hat {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}.","components.translation-with-arguments.title":"Übersetzung mit Argumenten","routes.application.title":"ember-intl","routes.index.key-to-overwrite":"Die Apps Übersetzungen haben Vorrang.","routes.index.title":"Willkommen bei <code>ember-intl</code>"};`,
+      `export default translations;`,
+    ]),
+  );
 
-  assert.deepStrictEqual(getTranslationKeys(translationsSorted, 'de-de'), [
-    'components.component-from-app.message',
-    'components.title',
-    'components.translation-with-arguments.message',
-    'components.translation-with-arguments.title',
-    'routes.application.title',
-    'routes.index.key-to-overwrite',
-    'routes.index.title',
-  ]);
+  translationFile = getTranslationFile(translations, 'en-us');
 
-  assert.deepStrictEqual(getTranslationKeys(translationsSorted, 'en-us'), [
-    'components.component-from-app.message',
-    'components.title',
-    'components.translation-with-arguments.message',
-    'components.translation-with-arguments.title',
-    'routes.application.title',
-    'routes.index.key-to-overwrite',
-    'routes.index.title',
-  ]);
+  assert.strictEqual(
+    translationFile,
+    normalizeFile([
+      `const translations = {"components.component-from-app.message":"This is a component from the app.","components.title":"Components","components.translation-with-arguments.message":"{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}.","components.translation-with-arguments.title":"Translation with Arguments","routes.application.title":"ember-intl","routes.index.key-to-overwrite":"The app's translations take precedence.","routes.index.title":"Welcome to <code>ember-intl</code>"};`,
+      `export default translations;`,
+    ]),
+  );
 });

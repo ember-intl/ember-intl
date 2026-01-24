@@ -1,6 +1,7 @@
 import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { analyzeProject } from '../../../src/steps/index.js';
+import { normalizeProject } from '../../helpers/index.js';
 
 test('steps | analyze-project > base case', function () {
   const inputProject = {};
@@ -20,7 +21,13 @@ test('steps | analyze-project > base case', function () {
     projectRoot: 'tmp/my-v2-app',
   };
 
-  const { translations } = analyzeProject(options);
+  const project = analyzeProject(options);
 
-  assert.deepStrictEqual(translations, new Map());
+  assert.deepStrictEqual(
+    project,
+    normalizeProject({
+      translationFiles: new Map(),
+      translations: new Map(),
+    }),
+  );
 });
