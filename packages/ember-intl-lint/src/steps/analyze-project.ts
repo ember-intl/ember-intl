@@ -10,7 +10,7 @@ export function analyzeProject(options: Options): Project {
   const translationFiles = findTranslationFiles(options);
   const translations = mergeTranslationFiles(translationFiles, options);
 
-  const availableKeys = findAvailableKeys(translationFiles, options);
+  const availableKeys = findAvailableKeys(translations);
   const usedKeys = findUsedKeys(options);
 
   return {

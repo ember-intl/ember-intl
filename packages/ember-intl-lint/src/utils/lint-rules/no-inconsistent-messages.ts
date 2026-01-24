@@ -4,7 +4,7 @@ import type {
   Project,
   TranslationKey,
 } from '../../types/index.js';
-import { compareIcuArguments } from '../icu-message/compare-icu-arguments.js';
+import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 0; i < allIcuArguments.length; i++) {
@@ -61,7 +61,7 @@ export function noInconsistentMessages(
     const allIcuArguments: IcuArguments[] = [];
 
     mapping.forEach((data) => {
-      allIcuArguments.push(data.icuArguments);
+      allIcuArguments.push(findIcuArguments(data.message));
     });
 
     if (allIcuArgumentsMatch(allIcuArguments)) {
