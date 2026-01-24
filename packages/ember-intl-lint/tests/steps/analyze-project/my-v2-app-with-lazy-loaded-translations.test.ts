@@ -270,7 +270,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
         [
           'public/assets/translations/de-de.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'public/assets/translations',
@@ -279,7 +278,6 @@ test('steps | analyze-project > my-v2-app-with-lazy-loaded-translations', functi
         [
           'public/assets/translations/en-us.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'public/assets/translations',

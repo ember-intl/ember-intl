@@ -95,7 +95,6 @@ test('steps | analyze-project > my-v1-addon', function () {
         [
           'translations/components/component-from-v1-addon/de-de.yaml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -104,7 +103,6 @@ test('steps | analyze-project > my-v1-addon', function () {
         [
           'translations/components/component-from-v1-addon/en-us.yaml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -113,7 +111,6 @@ test('steps | analyze-project > my-v1-addon', function () {
         [
           'translations/routes/index/de-de.yaml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -122,7 +119,6 @@ test('steps | analyze-project > my-v1-addon', function () {
         [
           'translations/routes/index/en-us.yaml',
           {
-            format: 'yaml',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',

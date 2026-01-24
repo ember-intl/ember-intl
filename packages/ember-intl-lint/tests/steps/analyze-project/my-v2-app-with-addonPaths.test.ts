@@ -492,7 +492,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v1-addon/translations/components/component-from-v1-addon/de-de.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'de-de',
             translationsDir: 'node_modules/my-v1-addon/translations',
@@ -501,7 +500,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v1-addon/translations/components/component-from-v1-addon/en-us.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'en-us',
             translationsDir: 'node_modules/my-v1-addon/translations',
@@ -510,7 +508,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v1-addon/translations/routes/index/de-de.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'de-de',
             translationsDir: 'node_modules/my-v1-addon/translations',
@@ -519,7 +516,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v1-addon/translations/routes/index/en-us.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'en-us',
             translationsDir: 'node_modules/my-v1-addon/translations',
@@ -528,7 +524,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v2-addon/translations/components/component-from-v2-addon/de-de.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'de-de',
             translationsDir: 'node_modules/my-v2-addon/translations',
@@ -537,7 +532,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v2-addon/translations/components/component-from-v2-addon/en-us.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'en-us',
             translationsDir: 'node_modules/my-v2-addon/translations',
@@ -546,7 +540,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v2-addon/translations/components/select-locale/de-de.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'de-de',
             translationsDir: 'node_modules/my-v2-addon/translations',
@@ -555,7 +548,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v2-addon/translations/components/select-locale/en-us.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'en-us',
             translationsDir: 'node_modules/my-v2-addon/translations',
@@ -564,7 +556,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v2-addon/translations/routes/index/de-de.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'de-de',
             translationsDir: 'node_modules/my-v2-addon/translations',
@@ -573,7 +564,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'node_modules/my-v2-addon/translations/routes/index/en-us.yml',
           {
-            format: 'yaml',
             isInternal: false,
             locale: 'en-us',
             translationsDir: 'node_modules/my-v2-addon/translations',
@@ -582,7 +572,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'translations/de-de.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -591,7 +580,6 @@ test('steps | analyze-project > my-v2-app-with-addonPaths', function () {
         [
           'translations/en-us.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',

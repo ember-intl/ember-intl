@@ -235,7 +235,6 @@ test('steps | analyze-project > my-v2-addon', function () {
         [
           'translations/components/component-from-v2-addon/de-de.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -244,7 +243,6 @@ test('steps | analyze-project > my-v2-addon', function () {
         [
           'translations/components/component-from-v2-addon/en-us.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -253,7 +251,6 @@ test('steps | analyze-project > my-v2-addon', function () {
         [
           'translations/components/select-locale/de-de.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -262,7 +259,6 @@ test('steps | analyze-project > my-v2-addon', function () {
         [
           'translations/components/select-locale/en-us.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
@@ -271,7 +267,6 @@ test('steps | analyze-project > my-v2-addon', function () {
         [
           'translations/routes/index/de-de.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'de-de',
             translationsDir: 'translations',
@@ -280,7 +275,6 @@ test('steps | analyze-project > my-v2-addon', function () {
         [
           'translations/routes/index/en-us.json',
           {
-            format: 'json',
             isInternal: true,
             locale: 'en-us',
             translationsDir: 'translations',
