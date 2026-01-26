@@ -1,6 +1,7 @@
 import type {
   IcuArguments,
   LintErrors,
+  OptionsWithoutConfig,
   Project,
   TranslationKey,
 } from '../../types/index.js';
@@ -32,9 +33,10 @@ function getLocales(
 
 export function noInconsistentMessages(
   project: Project,
-  lintOptions?: Partial<{
+  lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
+  options: OptionsWithoutConfig,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
@@ -42,10 +44,6 @@ export function noInconsistentMessages(
   const locales = getLocales(project.translationFiles);
 
   project.availableKeys.forEach((localeToData, key) => {
-    if (ignores.has(key)) {
-      return;
-    }
-
     let hasTranslation = true;
 
     locales.forEach((locale) => {
@@ -54,22 +52,28 @@ export function noInconsistentMessages(
       }
     });
 
-    if (!hasTranslation) {
-      lintErrors.push(key);
+    if (hasTranslation) {
+      const allIcuArguments: IcuArguments[] = [];
+
+      localeToData.forEach((data) => {
+        allIcuArguments.push(findIcuArguments(data.message));
+      });
+
+      if (allIcuArgumentsMatch(allIcuArguments)) {
+        return;
+      }
     }
 
-    const allIcuArguments: IcuArguments[] = [];
-
-    localeToData.forEach((data) => {
-      allIcuArguments.push(findIcuArguments(data.message));
-    });
-
-    if (allIcuArgumentsMatch(allIcuArguments)) {
+    if (ignores.has(key)) {
       return;
     }
 
     lintErrors.push(key);
   });
+
+  if (options.fix) {
+    // TODO: Update ignores
+  }
 
   return lintErrors;
 }

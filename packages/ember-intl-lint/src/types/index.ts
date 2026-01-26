@@ -5,6 +5,12 @@ type CodemodOptions = {
   projectRoot: string;
 };
 
+type Config = {
+  addonPaths: string[];
+  buildOptions: ConfigBuildOptions;
+  lintRules: ConfigLintRules;
+};
+
 type Options = {
   config: Config;
   fix: boolean;
@@ -12,11 +18,7 @@ type Options = {
   src: 'addon' | 'app' | 'src';
 };
 
-type Config = {
-  addonPaths: string[];
-  buildOptions: ConfigBuildOptions;
-  lintRules: ConfigLintRules;
-};
+type OptionsWithoutConfig = Omit<Options, 'config'>;
 
 type ConfigBuildOptions = {
   fallbackLocale: string | undefined;
@@ -38,7 +40,11 @@ type IcuArgumentType =
 
 type LintErrors = string[];
 
-type LintMethod = (project: Project, lintOptions?: LintOptions) => LintErrors;
+type LintMethod = (
+  project: Project,
+  lintOptions: LintOptions,
+  options: OptionsWithoutConfig,
+) => LintErrors;
 
 type LintOptions = Record<string, unknown>;
 
@@ -94,6 +100,7 @@ export type {
   LintResults,
   Locale,
   Options,
+  OptionsWithoutConfig,
   Project,
   ProjectTranslationData,
   TranslationFilePath,

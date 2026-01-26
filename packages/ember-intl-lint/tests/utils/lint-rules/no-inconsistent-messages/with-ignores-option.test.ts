@@ -6,6 +6,7 @@ import {
   normalizeProject,
   stubTranslationFiles,
 } from '../../../helpers/index.js';
+import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-inconsistent-messages > with ignores option', function () {
   const translations = new Map([
@@ -88,9 +89,13 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {
-    ignores: ['key02', 'key04'],
-  });
+  const lintErrors = noInconsistentMessages(
+    project,
+    {
+      ignores: ['key02', 'key04'],
+    },
+    options,
+  );
 
   assert.deepStrictEqual(lintErrors, ['key01', 'key03']);
 });
