@@ -4,6 +4,7 @@ import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.j
 import type { Project } from '../../../../src/types/index.js';
 import { noUnusedKeys } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
+import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-unused-keys > base case', function () {
   const translations: Project['translations'] = new Map();
@@ -15,7 +16,7 @@ test('utils | lint-rules | no-unused-keys > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintErrors = noUnusedKeys(project, {});
+  const lintErrors = noUnusedKeys(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

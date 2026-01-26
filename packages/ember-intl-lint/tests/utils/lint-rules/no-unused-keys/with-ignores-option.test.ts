@@ -6,6 +6,7 @@ import {
   normalizeProject,
   stubTranslationFiles,
 } from '../../../helpers/index.js';
+import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-unused-keys > with ignores option', function () {
   const translations = new Map([
@@ -65,9 +66,13 @@ test('utils | lint-rules | no-unused-keys > with ignores option', function () {
     usedKeys: new Set(['key03', 'key04', 'key05', 'key06']),
   });
 
-  const lintErrors = noUnusedKeys(project, {
-    ignores: ['key01', 'key03', 'key05', 'key07'],
-  });
+  const lintErrors = noUnusedKeys(
+    project,
+    {
+      ignores: ['key01', 'key03', 'key05', 'key07'],
+    },
+    options,
+  );
 
   assert.deepStrictEqual(lintErrors, ['key02']);
 });

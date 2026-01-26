@@ -1,10 +1,16 @@
-import type { LintErrors, Project, TranslationKey } from '../../types/index.js';
+import type {
+  LintErrors,
+  OptionsWithoutConfig,
+  Project,
+  TranslationKey,
+} from '../../types/index.js';
 
 export function noUnusedKeys(
   project: Project,
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
+  options: OptionsWithoutConfig,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
@@ -34,6 +40,10 @@ export function noUnusedKeys(
 
     lintErrors.push(key);
   });
+
+  if (options.fix) {
+    // TODO: Update ignores
+  }
 
   return lintErrors;
 }

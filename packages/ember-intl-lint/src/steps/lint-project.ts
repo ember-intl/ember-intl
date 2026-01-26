@@ -7,7 +7,7 @@ import type {
 import { type LintRule, lintRuleMapping } from '../utils/lint-rules.js';
 
 export function lintProject(project: Project, options: Options): LintResults {
-  const { config } = options;
+  const { config, ...optionsWithoutConfig } = options;
   const lintResults: Partial<LintResults> = {};
 
   for (const [lintRule, lintMethod] of Object.entries(lintRuleMapping) as [
@@ -23,6 +23,7 @@ export function lintProject(project: Project, options: Options): LintResults {
     lintResults[lintRule] = lintMethod(
       project,
       lintOptions === true ? {} : lintOptions,
+      optionsWithoutConfig,
     );
   }
 

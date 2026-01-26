@@ -1,6 +1,7 @@
 import type {
   IcuArguments,
   LintErrors,
+  OptionsWithoutConfig,
   Project,
   TranslationKey,
 } from '../../types/index.js';
@@ -35,6 +36,7 @@ export function noInconsistentMessages(
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
+  options: OptionsWithoutConfig,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];
@@ -68,6 +70,10 @@ export function noInconsistentMessages(
 
     lintErrors.push(key);
   });
+
+  if (options.fix) {
+    // TODO: Update ignores
+  }
 
   return lintErrors;
 }

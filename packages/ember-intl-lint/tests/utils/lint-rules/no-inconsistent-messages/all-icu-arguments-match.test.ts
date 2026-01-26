@@ -6,6 +6,7 @@ import {
   normalizeProject,
   stubTranslationFiles,
 } from '../../../helpers/index.js';
+import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', function () {
   const translations = new Map([
@@ -132,7 +133,7 @@ test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', 
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {});
+  const lintErrors = noInconsistentMessages(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

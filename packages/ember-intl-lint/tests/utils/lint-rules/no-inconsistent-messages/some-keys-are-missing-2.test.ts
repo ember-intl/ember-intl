@@ -3,6 +3,7 @@ import { assert, test } from '@codemod-utils/tests';
 import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/index.js';
+import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)', function () {
   const translations = new Map([
@@ -110,7 +111,7 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {});
+  const lintErrors = noInconsistentMessages(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, ['key01', 'key02']);
 });
