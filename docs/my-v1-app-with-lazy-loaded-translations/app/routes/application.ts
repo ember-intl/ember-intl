@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment */
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import type { IntlService } from 'ember-intl';
@@ -11,8 +10,12 @@ export default class ApplicationRoute extends Route {
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
-    const { default: resource } = await import(`/translations/${locale}.json`);
-    const translations = JSON.parse(resource);
+    const { default: file } = (await import(
+      `/translations/${locale}.json`
+    )) as {
+      default: string;
+    };
+    const translations = JSON.parse(file) as Record<string, string>;
 
     this.intl.addTranslations(locale, translations);
   }

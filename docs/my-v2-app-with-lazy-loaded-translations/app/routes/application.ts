@@ -1,9 +1,9 @@
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 
-const lazyLoad = {
-  'de-de': import('virtual:ember-intl/translations/de-de'),
-  'en-us': import('virtual:ember-intl/translations/en-us'),
+const translationModules = {
+  'de-de': () => import('virtual:ember-intl/translations/de-de'),
+  'en-us': () => import('virtual:ember-intl/translations/en-us'),
 } as const;
 
 export default class ApplicationRoute extends Route {
@@ -14,7 +14,7 @@ export default class ApplicationRoute extends Route {
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
-    const { default: translations } = await lazyLoad[locale];
+    const { default: translations } = await translationModules[locale]();
 
     this.intl.addTranslations(locale, translations);
   }
