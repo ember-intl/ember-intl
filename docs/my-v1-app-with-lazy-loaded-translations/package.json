@@ -1,6 +1,6 @@
 {
   "name": "my-v1-app-with-lazy-loaded-translations",
-  "version": "1.3.8",
+  "version": "1.4.0",
   "private": true,
   "description": "A Webpack app to test publicOnly",
   "keywords": [],

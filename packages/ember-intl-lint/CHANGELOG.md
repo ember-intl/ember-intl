@@ -1,5 +1,18 @@
 # @ember-intl/lint
 
+## 0.5.0
+
+### Minor Changes
+
+- [#2074](https://github.com/ember-intl/ember-intl/pull/2074) Simplified analyze-project step ([@ijlee2](https://github.com/ijlee2))
+- [#2071](https://github.com/ember-intl/ember-intl/pull/2071) Removed publicOnly ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2075](https://github.com/ember-intl/ember-intl/pull/2075) Allowed each lint method to define a fix ([@ijlee2](https://github.com/ijlee2))
+- [#2073](https://github.com/ember-intl/ember-intl/pull/2073) Simplified interfaces and removed unused code ([@ijlee2](https://github.com/ijlee2))
+- [#2072](https://github.com/ember-intl/ember-intl/pull/2072) Simplified analyze-project step ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.4.1
 
 ### Patch Changes

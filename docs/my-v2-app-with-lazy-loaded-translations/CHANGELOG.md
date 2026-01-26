@@ -1,5 +1,12 @@
 # my-v2-app-with-lazy-loaded-translations
 
+## 1.3.0
+
+### Minor Changes
+
+- [#2076](https://github.com/ember-intl/ember-intl/pull/2076) Documented how to lazy-load translations ([@ijlee2](https://github.com/ijlee2))
+- [#2071](https://github.com/ember-intl/ember-intl/pull/2071) Implemented lazy loading ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # docs-app-for-ember-intl
 
+## 1.9.0
+
+### Minor Changes
+
+- [#2076](https://github.com/ember-intl/ember-intl/pull/2076) Documented how to lazy-load translations ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.8.11
 
 ### Patch Changes
