@@ -10,10 +10,6 @@ export function noUnusedKeys(
   const lintErrors: LintErrors = [];
 
   project.availableKeys.forEach((localeToData, key) => {
-    if (ignores.has(key)) {
-      return;
-    }
-
     if (project.usedKeys.has(key)) {
       return;
     }
@@ -29,6 +25,10 @@ export function noUnusedKeys(
     });
 
     if (isTranslationExternal) {
+      return;
+    }
+
+    if (ignores.has(key)) {
       return;
     }
 

@@ -10,11 +10,11 @@ export function noMissingKeys(
   const lintErrors: LintErrors = [];
 
   project.usedKeys.forEach((key) => {
-    if (ignores.has(key)) {
+    if (project.availableKeys.has(key)) {
       return;
     }
 
-    if (project.availableKeys.has(key)) {
+    if (ignores.has(key)) {
       return;
     }
 

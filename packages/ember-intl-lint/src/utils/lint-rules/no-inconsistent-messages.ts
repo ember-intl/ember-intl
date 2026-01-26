@@ -42,10 +42,6 @@ export function noInconsistentMessages(
   const locales = getLocales(project.translationFiles);
 
   project.availableKeys.forEach((localeToData, key) => {
-    if (ignores.has(key)) {
-      return;
-    }
-
     let hasTranslation = true;
 
     locales.forEach((locale) => {
@@ -54,17 +50,19 @@ export function noInconsistentMessages(
       }
     });
 
-    if (!hasTranslation) {
-      lintErrors.push(key);
+    if (hasTranslation) {
+      const allIcuArguments: IcuArguments[] = [];
+
+      localeToData.forEach((data) => {
+        allIcuArguments.push(findIcuArguments(data.message));
+      });
+
+      if (allIcuArgumentsMatch(allIcuArguments)) {
+        return;
+      }
     }
 
-    const allIcuArguments: IcuArguments[] = [];
-
-    localeToData.forEach((data) => {
-      allIcuArguments.push(findIcuArguments(data.message));
-    });
-
-    if (allIcuArgumentsMatch(allIcuArguments)) {
+    if (ignores.has(key)) {
       return;
     }
 
