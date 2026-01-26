@@ -132,7 +132,7 @@ test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', 
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project);
+  const lintErrors = noInconsistentMessages(project, {});
 
   assert.deepStrictEqual(lintErrors, []);
 });

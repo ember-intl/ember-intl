@@ -15,7 +15,7 @@ test('utils | lint-rules | no-inconsistent-messages > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project);
+  const lintErrors = noInconsistentMessages(project, {});
 
   assert.deepStrictEqual(lintErrors, []);
 });

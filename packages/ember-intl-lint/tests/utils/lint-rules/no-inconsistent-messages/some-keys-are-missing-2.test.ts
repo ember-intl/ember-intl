@@ -110,7 +110,7 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project);
+  const lintErrors = noInconsistentMessages(project, {});
 
   assert.deepStrictEqual(lintErrors, ['key01', 'key02']);
 });

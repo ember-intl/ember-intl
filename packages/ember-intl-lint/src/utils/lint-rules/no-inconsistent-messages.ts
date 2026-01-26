@@ -32,7 +32,7 @@ function getLocales(
 
 export function noInconsistentMessages(
   project: Project,
-  lintOptions?: Partial<{
+  lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
 ): LintErrors {

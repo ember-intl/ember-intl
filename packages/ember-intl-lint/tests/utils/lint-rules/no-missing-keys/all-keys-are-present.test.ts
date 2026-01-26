@@ -110,7 +110,7 @@ test('utils | lint-rules | no-missing-keys > all keys are present', function () 
     ]),
   });
 
-  const lintErrors = noMissingKeys(project);
+  const lintErrors = noMissingKeys(project, {});
 
   assert.deepStrictEqual(lintErrors, []);
 });

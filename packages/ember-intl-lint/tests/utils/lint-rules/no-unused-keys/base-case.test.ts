@@ -15,7 +15,7 @@ test('utils | lint-rules | no-unused-keys > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintErrors = noUnusedKeys(project);
+  const lintErrors = noUnusedKeys(project, {});
 
   assert.deepStrictEqual(lintErrors, []);
 });

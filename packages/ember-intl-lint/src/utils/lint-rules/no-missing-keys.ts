@@ -2,7 +2,7 @@ import type { LintErrors, Project, TranslationKey } from '../../types/index.js';
 
 export function noMissingKeys(
   project: Project,
-  lintOptions?: Partial<{
+  lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
 ): LintErrors {

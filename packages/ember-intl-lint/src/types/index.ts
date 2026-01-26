@@ -38,7 +38,7 @@ type IcuArgumentType =
 
 type LintErrors = string[];
 
-type LintMethod = (project: Project, lintOptions?: LintOptions) => LintErrors;
+type LintMethod = (project: Project, lintOptions: LintOptions) => LintErrors;
 
 type LintOptions = Record<string, unknown>;
 

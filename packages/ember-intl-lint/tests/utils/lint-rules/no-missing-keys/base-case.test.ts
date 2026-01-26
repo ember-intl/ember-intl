@@ -15,7 +15,7 @@ test('utils | lint-rules | no-missing-keys > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintErrors = noMissingKeys(project);
+  const lintErrors = noMissingKeys(project, {});
 
   assert.deepStrictEqual(lintErrors, []);
 });

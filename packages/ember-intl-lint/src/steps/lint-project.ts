@@ -20,11 +20,10 @@ export function lintProject(project: Project, options: Options): LintResults {
       continue;
     }
 
-    if (lintOptions === true) {
-      lintResults[lintRule] = lintMethod(project);
-    } else {
-      lintResults[lintRule] = lintMethod(project, lintOptions);
-    }
+    lintResults[lintRule] = lintMethod(
+      project,
+      lintOptions === true ? {} : lintOptions,
+    );
   }
 
   return lintResults as LintResults;

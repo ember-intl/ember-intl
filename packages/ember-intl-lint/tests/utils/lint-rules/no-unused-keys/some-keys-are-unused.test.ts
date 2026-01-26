@@ -65,7 +65,7 @@ test('utils | lint-rules | no-unused-keys > some keys are unused', function () {
     usedKeys: new Set(['key03', 'key04', 'key05', 'key06']),
   });
 
-  const lintErrors = noUnusedKeys(project);
+  const lintErrors = noUnusedKeys(project, {});
 
   assert.deepStrictEqual(lintErrors, ['key01', 'key02']);
 });
