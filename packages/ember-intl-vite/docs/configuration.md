@@ -46,7 +46,7 @@ Note, if multiple addons define the same key, the last appearing addon's transla
 
 ## buildOptions
 
-Build options dictate how translations are loaded and merged.
+Build options change how translations are loaded and merged.
 
 ```js
 export default {
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-For more information, see the [documentation site](https://ember-intl.github.io/ember-intl/docs/advanced/customizing-loading-of-translations#build-options).
+For more information, see the [documentation site](https://ember-intl.github.io/ember-intl/docs/advanced/build-options#buildoptions).
 
 
 ## lintRules
