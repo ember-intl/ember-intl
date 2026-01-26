@@ -5,6 +5,8 @@ By default, translations in the `translations` folder are bundled with `app.js`.
 
 ## 1. Configure ember-intl
 
+### v1 apps (Classic)
+
 In `config/ember-intl.js`, set `publicOnly` to `true`.
 
 ```js
@@ -25,51 +27,16 @@ my-app
         └── en-us.json
 ```
 
+### v1 apps (Embroider + Webpack)
 
-## 2. Load translations at runtime
+Update `config/ember-intl.js` as shown above.
 
-### Classic apps
-
-Use native `fetch` to load a translation file.
-
-```ts
-/* app/routes/application.ts */
-import Route from '@ember/routing/route';
-import { type Registry as Services, service } from '@ember/service';
-
-export default class ApplicationRoute extends Route {
-  @service declare intl: Services['intl'];
-
-  async beforeModel(): Promise<void> {
-    await this.setupIntl();
-  }
-
-  private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
-    const response = await fetch(`/translations/${locale}.json`);
-    const translations = await response.json();
-
-    this.intl.addTranslations(locale, translations);
-  }
-
-  private async setupIntl(): Promise<void> {
-    await Promise.allSettled([
-      this.loadTranslations('de-de'),
-      this.loadTranslations('en-us'),
-    ]);
-
-    this.intl.setLocale(['en-us']);
-  }
-}
-```
-
-
-### Embroider apps (Webpack)
-
-In `ember-cli-build.js`, configure Webpack to [treat translations as assets](https://webpack.js.org/guides/asset-modules/).
+Then, in `ember-cli-build.js`, configure Webpack to [treat translations as assets](https://webpack.js.org/guides/asset-modules/).
 
 ```js
 'use strict';
 
+const { compatBuild } = require('@embroider/compat');
 const { Webpack } = require('@embroider/webpack');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
@@ -94,11 +61,19 @@ module.exports = function (defaults) {
     // ...
   };
 
-  return require('@embroider/compat').compatBuild(app, Webpack, options);
+  return compatBuild(app, Webpack, options);
 };
 ```
 
-Afterwards, use dynamic import to get the file content.
+
+### v2 apps
+
+There is nothing to do. The files `ember-intl.config.{js,mjs}`, `ember-cli-build.js`, and `vite.config.mjs` remain the same.
+
+
+## 2. Lazy-load translations
+
+No matter how the app is built, we can abstract how to lazy-load translations like this:
 
 ```ts
 /* app/routes/application.ts */
@@ -113,10 +88,7 @@ export default class ApplicationRoute extends Route {
   }
 
   private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
-    const { default: resource } = await import(`/translations/${locale}.json`);
-    const translations = JSON.parse(resource);
-
-    this.intl.addTranslations(locale, translations);
+    // ...
   }
 
   private async setupIntl(): Promise<void> {
@@ -130,12 +102,65 @@ export default class ApplicationRoute extends Route {
 }
 ```
 
+For brevity, the guide will only show what's to be done differently below.
+
+
+### v1 apps (Classic)
+
+Use native `fetch` to load translation files.
+
+```ts
+private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+  const response = await fetch(`/translations/${locale}.json`);
+  const translations = await response.json() as Record<string, string>;
+
+  this.intl.addTranslations(locale, translations);
+}
+```
+
+
+### v1 apps (Embroider + Webpack)
+
+Use dynamic import to load translation files.
+
+```ts
+private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+  const { default: file } = (await import(
+    `/translations/${locale}.json`
+  )) as {
+    default: string;
+  };
+  const translations = JSON.parse(file) as Record<string, string>;
+
+  this.intl.addTranslations(locale, translations);
+}
+```
+
+
+### v2 apps
+
+Use dynamic import to load translation files. (Note, file paths prefixed with `virtual:` are called a "virtual module" in Vite. They don't physically exist on disk.)
+
+```ts
+const translationModules = {
+  'de-de': () => import('virtual:ember-intl/translations/de-de'),
+  'en-us': () => import('virtual:ember-intl/translations/en-us'),
+} as const;
+
+private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+  const { default: translations } = await translationModules[locale]();
+
+  this.intl.addTranslations(locale, translations);
+}
+```
+
 
 ## 3. Fingerprint translations
 
 This step applies to classic apps only.
 
-### Classic apps
+
+### v1 apps (Classic)
 
 In Ember apps with a classic build, we use [`broccoli-asset-rev`](https://github.com/ember-cli/broccoli-asset-rev) to fingerprint files.
 
@@ -163,22 +188,23 @@ const app = new EmberApp(defaults, {
 });
 ```
 
-```ts
+```diff
 private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
-  const filePath = `translations/${locale}.json`;
-  let resource: string;
-
-  if (ENV.environment === 'production') {
-    const response = await fetch('/assets/assetMap.json');
-    const assetMap = await response.json();
-
-    resource = `/${assetMap.assets[filePath]}`;
-  } else {
-    resource = `/${filePath}`;
-  }
-
-  const response = await fetch(resource);
-  const translations = await response.json();
++   const filePath = `translations/${locale}.json`;
++   let resource: string;
++
++   if (ENV.environment === 'production') {
++     const response = await fetch('/assets/assetMap.json');
++     const assetMap = await response.json();
++
++     resource = `/${assetMap.assets[filePath]}`;
++   } else {
++     resource = `/${filePath}`;
++   }
++
+-   const response = await fetch(`/translations/${locale}.json`);
++   const response = await fetch(resource);
+  const translations = await response.json() as Record<string, string>;
 
   this.intl.addTranslations(locale, translations);
 }
