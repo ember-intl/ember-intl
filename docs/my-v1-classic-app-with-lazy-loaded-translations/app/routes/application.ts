@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import type { IntlService } from 'ember-intl';
@@ -17,15 +16,17 @@ export default class ApplicationRoute extends Route {
 
     if (ENV.environment === 'production') {
       const response = await fetch('/assets/assetMap.json');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const assetMap = await response.json();
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       resource = `/${assetMap.assets[filePath]}`;
     } else {
       resource = `/${filePath}`;
     }
 
     const response = await fetch(resource);
-    const translations = await response.json();
+    const translations = (await response.json()) as Record<string, string>;
 
     this.intl.addTranslations(locale, translations);
   }
