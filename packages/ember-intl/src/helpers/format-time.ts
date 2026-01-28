@@ -21,7 +21,7 @@ export default class FormatTimeHelper extends Helper<FormatTimeSignature> {
   compute(
     [value]: FormatTimeSignature['Args']['Positional'],
     options: FormatTimeSignature['Args']['Named'],
-  ): FormatTimeSignature['Return'] {
+  ) {
     return this.intl.formatTime(value, options);
   }
 }

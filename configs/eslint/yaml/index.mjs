@@ -1,7 +1,7 @@
 import eslintPluginYml from 'eslint-plugin-yml';
 
 export default [
-  ...eslintPluginYml.configs.recommended,
+  ...eslintPluginYml.configs['flat/standard'],
   {
     rules: {
       'yml/key-name-casing': [

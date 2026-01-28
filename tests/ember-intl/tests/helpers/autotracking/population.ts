@@ -3,11 +3,7 @@ import { type Registry as Services, service } from '@ember/service';
 export class Population {
   @service declare intl: Services['intl'];
 
-  get data(): {
-    censusDate: Date;
-    city: string;
-    population: number;
-  } {
+  get data() {
     return {
       censusDate: new Date('2020-01-01'),
       city: 'Atlanta',

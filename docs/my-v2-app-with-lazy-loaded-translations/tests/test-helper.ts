@@ -5,7 +5,7 @@ import config from 'my-v2-app-with-lazy-loaded-translations/config/environment';
 import QUnit from 'qunit';
 import { setup } from 'qunit-dom';
 
-export function start(): void {
+export function start() {
   setApplication(Application.create(config.APP));
 
   setup(QUnit.assert);

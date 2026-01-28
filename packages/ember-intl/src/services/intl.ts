@@ -94,7 +94,7 @@ export default class IntlService extends Service {
     return this._locale[0];
   }
 
-  addTranslations(locale: string, translations: TranslationJson): void {
+  addTranslations(locale: string, translations: TranslationJson) {
     const messages = flattenKeys(translations);
 
     this.updateIntl(locale, messages);
@@ -361,16 +361,16 @@ export default class IntlService extends Service {
   }
 
   private updateDocumentLanguage(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const dom = getDOM(this);
-    const { primaryLocale } = this;
 
-    if (!dom || !primaryLocale) {
-      return;
+    if (dom) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const html = dom.documentElement;
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      html.setAttribute('lang', this.primaryLocale);
     }
-
-    const html = dom.documentElement;
-
-    html.setAttribute('lang', primaryLocale);
   }
 
   private updateIntl(
@@ -401,7 +401,7 @@ export default class IntlService extends Service {
     };
   }
 
-  willDestroy(): void {
+  willDestroy() {
     super.willDestroy();
 
     // eslint-disable-next-line ember/no-runloop

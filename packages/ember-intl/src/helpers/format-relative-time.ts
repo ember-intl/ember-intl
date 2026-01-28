@@ -21,7 +21,7 @@ export default class FormatRelativeTimeHelper extends Helper<FormatRelativeTimeS
   compute(
     [value]: FormatRelativeTimeSignature['Args']['Positional'],
     options: FormatRelativeTimeSignature['Args']['Named'],
-  ): FormatRelativeTimeSignature['Return'] {
+  ) {
     return this.intl.formatRelativeTime(value, options);
   }
 }
