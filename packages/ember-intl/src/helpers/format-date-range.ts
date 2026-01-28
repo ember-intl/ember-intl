@@ -22,7 +22,7 @@ export default class FormatDateRangeHelper extends Helper<FormatDateRangeSignatu
   compute(
     [from, to]: FormatDateRangeSignature['Args']['Positional'],
     options: FormatDateRangeSignature['Args']['Named'],
-  ) {
+  ): FormatDateRangeSignature['Return'] {
     return this.intl.formatDateRange(from, to, options);
   }
 }

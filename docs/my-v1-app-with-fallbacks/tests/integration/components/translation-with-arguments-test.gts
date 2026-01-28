@@ -11,7 +11,7 @@ import TranslationWithArguments from 'my-v1-app-with-fallbacks/components/transl
 import { setupRenderingTest } from 'my-v1-app-with-fallbacks/tests/helpers';
 import { module, test } from 'qunit';
 
-function ignoreFormatError() {
+function ignoreFormatError(): void {
   const { owner } = getContext() as TestContext;
 
   const intl = owner.lookup('service:intl');
