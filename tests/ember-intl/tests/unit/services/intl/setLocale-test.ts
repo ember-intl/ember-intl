@@ -20,8 +20,8 @@ module('Unit | Service | intl > setLocale()', function (hooks) {
   });
 
   test("updates the document's lang attribute", async function (this: TestContext, assert) {
-    function getLang() {
-      return document.documentElement.getAttribute('lang');
+    function getLang(): string {
+      return document.documentElement.getAttribute('lang')!;
     }
 
     assert.strictEqual(getLang(), 'en-us');

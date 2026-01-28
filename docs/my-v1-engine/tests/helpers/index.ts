@@ -16,7 +16,10 @@ import {
 // test setup functions. This way, you can easily extend the setup that is
 // needed per test type.
 
-function setupApplicationTest(hooks: NestedHooks, options?: SetupTestOptions) {
+function setupApplicationTest(
+  hooks: NestedHooks,
+  options?: SetupTestOptions,
+): void {
   upstreamSetupApplicationTest(hooks, options);
 
   // Additional setup for application tests can be done here.
@@ -35,7 +38,10 @@ function setupApplicationTest(hooks: NestedHooks, options?: SetupTestOptions) {
   // setupMirage(hooks); // ember-cli-mirage
 }
 
-function setupRenderingTest(hooks: NestedHooks, options?: SetupTestOptions) {
+function setupRenderingTest(
+  hooks: NestedHooks,
+  options?: SetupTestOptions,
+): void {
   upstreamSetupRenderingTest(hooks, options);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   setupEngine(hooks, 'my-v1-engine');
@@ -43,7 +49,7 @@ function setupRenderingTest(hooks: NestedHooks, options?: SetupTestOptions) {
   // Additional setup for rendering tests can be done here.
 }
 
-function setupTest(hooks: NestedHooks, options?: SetupTestOptions) {
+function setupTest(hooks: NestedHooks, options?: SetupTestOptions): void {
   upstreamSetupTest(hooks, options);
 
   // Additional setup for unit tests can be done here.
