@@ -664,5 +664,11 @@
     "name": "8.0.10",
     "sha": "bc0cc2f8c1f735cab6af60010fa271c5b2c35066",
     "tag": "8.0.10"
+  },
+  "merge": {
+    "path": "versions/merge",
+    "name": "merge",
+    "sha": "3348d38512567e4c5ee8220fed9ea6b13a3d34eb",
+    "tag": null
   }
 }
