@@ -18,12 +18,12 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/eslint-config-node": "^2.3.3"
+    "@ijlee2-frontend-configs/eslint-config-node": "^2.4.0"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "eslint": "^9.39.2",
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.1"
   },
   "peerDependencies": {
     "eslint": "^9.39.2",
