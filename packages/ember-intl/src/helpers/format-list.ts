@@ -21,7 +21,7 @@ export default class FormatListHelper extends Helper<FormatListSignature> {
   compute(
     [value]: FormatListSignature['Args']['Positional'],
     options: FormatListSignature['Args']['Named'],
-  ) {
+  ): FormatListSignature['Return'] {
     return this.intl.formatList(value, options);
   }
 }

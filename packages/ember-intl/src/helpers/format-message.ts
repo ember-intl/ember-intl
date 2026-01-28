@@ -21,7 +21,7 @@ export default class FormatMessageHelper extends Helper<FormatMessageSignature> 
   compute(
     [value]: FormatMessageSignature['Args']['Positional'],
     options: FormatMessageSignature['Args']['Named'],
-  ) {
+  ): FormatMessageSignature['Return'] {
     return this.intl.formatMessage(value, options);
   }
 }

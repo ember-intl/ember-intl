@@ -11,7 +11,9 @@ const SOURCE = {
   'v2-app': 'app',
 } as const;
 
-function getSrc(projectRoot: string) {
+type Src = (typeof SOURCE)[keyof typeof SOURCE];
+
+function getSrc(projectRoot: string): Src {
   const packageJson = readPackageJson({ projectRoot });
   const packageType = getPackageType(packageJson);
 

@@ -9,7 +9,7 @@ interface LocaleSwitcherSignature {
 export default class LocaleSwitcher extends Component<LocaleSwitcherSignature> {
   @service declare intl: Services['intl'];
 
-  @action updateLocale(locale: string) {
+  @action updateLocale(locale: string): void {
     this.intl.setLocale([locale]);
   }
 }

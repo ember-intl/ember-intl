@@ -21,7 +21,7 @@ export default class FormatDateHelper extends Helper<FormatDateSignature> {
   compute(
     [value]: FormatDateSignature['Args']['Positional'],
     options: FormatDateSignature['Args']['Named'],
-  ) {
+  ): FormatDateSignature['Return'] {
     return this.intl.formatDate(value, options);
   }
 }
