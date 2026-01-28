@@ -21,7 +21,7 @@ export default class FormatNumberHelper extends Helper<FormatNumberSignature> {
   compute(
     [value]: FormatNumberSignature['Args']['Positional'],
     options: FormatNumberSignature['Args']['Named'],
-  ) {
+  ): FormatNumberSignature['Return'] {
     return this.intl.formatNumber(value, options);
   }
 }

@@ -21,7 +21,7 @@ export default class THelper extends Helper<TSignature> {
   compute(
     [key, positionalOptions]: TSignature['Args']['Positional'],
     namedOptions: TSignature['Args']['Named'],
-  ) {
+  ): TSignature['Return'] {
     const options = positionalOptions
       ? Object.assign({}, positionalOptions, namedOptions)
       : namedOptions;
