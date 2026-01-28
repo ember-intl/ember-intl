@@ -9,9 +9,7 @@ interface RootUrlSignature {
 }
 
 export default class RootUrlHelper extends Helper<RootUrlSignature> {
-  compute(
-    positional: RootUrlSignature['Args']['Positional'],
-  ): RootUrlSignature['Return'] {
+  compute(positional: RootUrlSignature['Args']['Positional']) {
     const [relativeURL] = positional;
 
     // @ts-expect-error: Property 'resolveRegistration' does not exist on type 'Owner'.

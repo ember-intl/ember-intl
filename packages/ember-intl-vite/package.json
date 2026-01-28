@@ -46,22 +46,22 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "dependencies": {
-    "@codemod-utils/files": "^3.2.4",
+    "@codemod-utils/files": "^3.2.3",
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^2.2.3",
+    "@codemod-utils/tests": "^2.2.2",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.30",
+    "@types/node": "^20.19.27",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
-    "prettier": "^3.8.1",
+    "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.0"
   },
   "engines": {
     "node": "20.* || >= 22"

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 import { getOwner } from '@ember/application';
 
 // https://github.com/yapplabs/ember-wormhole/blob/0.6.0/addon/utils/dom.js#L45-L63
@@ -6,11 +6,7 @@ import { getOwner } from '@ember/application';
  * @private
  * @hide
  */
-export function getDOM(context: unknown):
-  | {
-      documentElement: Element;
-    }
-  | undefined {
+export function getDOM(context: unknown) {
   // @ts-expect-error: Property 'renderer' does not exist on type 'unknown'.
   let { renderer } = context;
 
@@ -21,7 +17,6 @@ export function getDOM(context: unknown):
     const document = container.lookup('service:-document');
 
     if (document) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return document;
     }
 
@@ -30,9 +25,8 @@ export function getDOM(context: unknown):
 
   // Pre-Ember 2.6
   if (renderer._dom && renderer._dom.document) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return renderer._dom.document;
   }
 
-  return undefined;
+  return null;
 }

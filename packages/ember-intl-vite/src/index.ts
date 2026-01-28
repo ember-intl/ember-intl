@@ -17,18 +17,18 @@ export function loadTranslations(): Plugin {
   return {
     name: 'ember-intl-load-translations',
 
-    async buildStart(): Promise<void> {
+    async buildStart() {
       const projectRoot = process.cwd();
       options = await createOptions(projectRoot);
 
       ({ translations } = analyzeProject(options));
     },
 
-    resolveId(id): string | undefined {
+    resolveId(id) {
       return moduleTracker.resolveModuleId(id);
     },
 
-    load(id): string | undefined {
+    load(id) {
       const locale = moduleTracker.getLocale(id);
 
       if (translations === undefined || locale === undefined) {
@@ -38,7 +38,7 @@ export function loadTranslations(): Plugin {
       return getTranslationFile(translations, locale);
     },
 
-    async handleHotUpdate({ file: filePath, server }): Promise<void> {
+    async handleHotUpdate({ file: filePath, server }) {
       if (options === undefined) {
         return;
       }

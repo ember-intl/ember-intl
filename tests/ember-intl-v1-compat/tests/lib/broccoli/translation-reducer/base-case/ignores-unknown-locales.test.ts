@@ -19,7 +19,7 @@ test('lib | broccoli | translation-reducer | base case > ignores unknown locales
   const logs: string[] = [];
 
   const outputNode = new TranslationReducer(inputPath, {
-    log: (message: string): void => {
+    log: (message: string) => {
       logs.push(message);
     },
   });

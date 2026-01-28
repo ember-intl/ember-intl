@@ -23,18 +23,16 @@ function escapeExpression(value: string): string {
   });
 }
 
-type EscapedOptions<T extends Record<string, unknown>> = {
-  [K in keyof T]: T[K] extends SafeString ? string : T[K];
-};
-
 /**
  * @private
  * @hide
  */
 export function escapeFormatMessageOptions<T extends Record<string, unknown>>(
   options: T,
-): EscapedOptions<T> {
-  const escapedOptions = {} as EscapedOptions<T>;
+) {
+  const escapedOptions = {} as {
+    [K in keyof T]: T[K] extends SafeString ? string : T[K];
+  };
 
   for (const [key, value] of Object.entries(options)) {
     let newValue;
