@@ -5,43 +5,8 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > with ignores option', function () {
+test('utils | lint-rules | no-inconsistent-messages > edge case (has 1 locale)', function () {
   const translations = new Map([
-    [
-      'de-de',
-      new Map([
-        [
-          'key01',
-          {
-            filePath: 'translations/de-de.json',
-            message: '{name}',
-          },
-        ],
-        [
-          'key02',
-          {
-            filePath: 'translations/de-de.json',
-            message: 'Es ist jetzt {timestamp, time, short}.',
-          },
-        ],
-        [
-          'key03',
-          {
-            filePath: 'translations/de-de.json',
-            message:
-              'Du hast {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}. {percentage}% davon sind neu.',
-          },
-        ],
-        [
-          'key04',
-          {
-            filePath: 'translations/de-de.json',
-            message:
-              '<a href="{url}" rel="noopener noreferrer" target="_blank">AGB</a>',
-          },
-        ],
-      ]),
-    ],
     [
       'en-us',
       new Map([
@@ -49,18 +14,32 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
           'key01',
           {
             filePath: 'translations/en-us.json',
-            message: 'name',
+            message: 'Hello!',
           },
         ],
         [
           'key02',
           {
             filePath: 'translations/en-us.json',
-            message: 'It is now {timestamp, date, short}',
+            message: 'Hello, {name}!',
           },
         ],
         [
           'key03',
+          {
+            filePath: 'translations/en-us.json',
+            message: 'It is now {timestamp, time, short}',
+          },
+        ],
+        [
+          'key04',
+          {
+            filePath: 'translations/en-us.json',
+            message: 'It is now {timestamp, time, long}',
+          },
+        ],
+        [
+          'key05',
           {
             filePath: 'translations/en-us.json',
             message:
@@ -68,7 +47,15 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
           },
         ],
         [
-          'key04',
+          'key06',
+          {
+            filePath: 'translations/en-us.json',
+            message:
+              '<a class="link" href="https://my-domain.com/terms" target="_blank">Terms and Conditions</a>',
+          },
+        ],
+        [
+          'key07',
           {
             filePath: 'translations/en-us.json',
             message:
@@ -83,14 +70,6 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
     availableKeys: findAvailableKeys(translations),
     translationFiles: new Map([
       [
-        'translations/de-de.json',
-        {
-          isInternal: true,
-          locale: 'de-de',
-          translationsDir: 'translations',
-        },
-      ],
-      [
         'translations/en-us.json',
         {
           isInternal: true,
@@ -103,13 +82,7 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(
-    project,
-    {
-      ignores: ['key02', 'key04'],
-    },
-    options,
-  );
+  const lintErrors = noInconsistentMessages(project, {}, options);
 
-  assert.deepStrictEqual(lintErrors, ['key01', 'key03']);
+  assert.deepStrictEqual(lintErrors, []);
 });

@@ -150,7 +150,6 @@ test('utils | lint-rules | no-inconsistent-messages > number with different plur
       [
         'translations/en-us.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'en-us',
           translationsDir: 'translations',
@@ -159,7 +158,6 @@ test('utils | lint-rules | no-inconsistent-messages > number with different plur
       [
         'translations/ja.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'ja',
           translationsDir: 'translations',
@@ -168,7 +166,6 @@ test('utils | lint-rules | no-inconsistent-messages > number with different plur
       [
         'translations/pt.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'pt',
           translationsDir: 'translations',
@@ -177,7 +174,6 @@ test('utils | lint-rules | no-inconsistent-messages > number with different plur
       [
         'translations/zh.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'zh',
           translationsDir: 'translations',

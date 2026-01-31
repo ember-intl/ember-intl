@@ -2,10 +2,7 @@ import { assert, test } from '@codemod-utils/tests';
 
 import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
-import {
-  normalizeProject,
-  stubTranslationFiles,
-} from '../../../helpers/index.js';
+import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not match (1)', function () {
@@ -58,14 +55,14 @@ test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not 
         [
           'key02',
           {
-            filePath: 'translations/de-de.json',
+            filePath: 'translations/en-us.json',
             message: 'It is now {timestamp, date, short}',
           },
         ],
         [
           'key03',
           {
-            filePath: 'translations/de-de.json',
+            filePath: 'translations/en-us.json',
             message:
               'You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}. {proportion, number, ::percent} of them are new.',
           },
@@ -73,7 +70,7 @@ test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not 
         [
           'key04',
           {
-            filePath: 'translations/de-de.json',
+            filePath: 'translations/en-us.json',
             message:
               '<a class="{class}" href="{url}" target="_blank">Terms and Conditions</a>',
           },
@@ -84,7 +81,24 @@ test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not 
 
   const project = normalizeProject({
     availableKeys: findAvailableKeys(translations),
-    translationFiles: stubTranslationFiles(),
+    translationFiles: new Map([
+      [
+        'translations/de-de.json',
+        {
+          isInternal: true,
+          locale: 'de-de',
+          translationsDir: 'translations',
+        },
+      ],
+      [
+        'translations/en-us.json',
+        {
+          isInternal: true,
+          locale: 'en-us',
+          translationsDir: 'translations',
+        },
+      ],
+    ]),
     translations,
     usedKeys: new Set(),
   });

@@ -46,7 +46,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'translations/de-de.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'de-de',
           translationsDir: 'translations',
@@ -55,7 +54,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'translations/en-us.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'en-us',
           translationsDir: 'translations',
@@ -64,7 +62,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'translations/es-es.json',
         {
-          format: 'json',
           isInternal: true,
           locale: 'es-es',
           translationsDir: 'translations',
@@ -73,7 +70,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'node_modules/my-v1-addon/translations/de-de.json',
         {
-          format: 'json',
           isInternal: false,
           locale: 'de-de',
           translationsDir: 'node_modules/my-v1-addon/translations',
@@ -82,7 +78,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'node_modules/my-v1-addon/translations/en-us.json',
         {
-          format: 'json',
           isInternal: false,
           locale: 'en-us',
           translationsDir: 'node_modules/my-v1-addon/translations',
@@ -91,7 +86,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'node_modules/my-v2-addon/translations/de-de.json',
         {
-          format: 'json',
           isInternal: false,
           locale: 'de-de',
           translationsDir: 'node_modules/my-v2-addon/translations',
@@ -100,7 +94,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
       [
         'node_modules/my-v2-addon/translations/en-us.json',
         {
-          format: 'json',
           isInternal: false,
           locale: 'en-us',
           translationsDir: 'node_modules/my-v2-addon/translations',

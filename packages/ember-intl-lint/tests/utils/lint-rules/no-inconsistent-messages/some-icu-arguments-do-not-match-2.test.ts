@@ -2,10 +2,7 @@ import { assert, test } from '@codemod-utils/tests';
 
 import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
-import {
-  normalizeProject,
-  stubTranslationFiles,
-} from '../../../helpers/index.js';
+import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not match (2)', function () {
@@ -84,7 +81,40 @@ test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not 
 
   const project = normalizeProject({
     availableKeys: findAvailableKeys(translations),
-    translationFiles: stubTranslationFiles(),
+    translationFiles: new Map([
+      [
+        'node_modules/my-v1-addon/translations/de-de.json',
+        {
+          isInternal: false,
+          locale: 'de-de',
+          translationsDir: 'node_modules/my-v1-addon/translations',
+        },
+      ],
+      [
+        'node_modules/my-v1-addon/translations/en-us.json',
+        {
+          isInternal: false,
+          locale: 'en-us',
+          translationsDir: 'node_modules/my-v1-addon/translations',
+        },
+      ],
+      [
+        'node_modules/my-v2-addon/translations/de-de.json',
+        {
+          isInternal: false,
+          locale: 'de-de',
+          translationsDir: 'node_modules/my-v2-addon/translations',
+        },
+      ],
+      [
+        'node_modules/my-v2-addon/translations/en-us.json',
+        {
+          isInternal: false,
+          locale: 'en-us',
+          translationsDir: 'node_modules/my-v2-addon/translations',
+        },
+      ],
+    ]),
     translations,
     usedKeys: new Set(),
   });
