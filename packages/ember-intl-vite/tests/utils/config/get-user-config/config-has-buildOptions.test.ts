@@ -1,8 +1,8 @@
 import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
-import { getConfig } from '../../../../src/utils/create-options/index.js';
+import { getUserConfig } from '../../../../src/utils/config/index.js';
 
-test('utils | create-options | get-config > config has buildOptions', async function () {
+test('utils | config | get-user-config > config has buildOptions', async function () {
   const inputProject = {
     'ember-intl.config.mjs': normalizeFile([
       `export default {`,
@@ -16,14 +16,14 @@ test('utils | create-options | get-config > config has buildOptions', async func
     ]),
   };
 
-  const projectRoot = 'tmp/utils/get-config/config-has-buildOptions-inputPath';
+  const projectRoot =
+    'tmp/utils/config/get-user-config/config-has-buildOptions-inputPath';
 
   loadFixture(inputProject, { projectRoot });
 
-  const config = await getConfig(projectRoot);
+  const userConfig = await getUserConfig(projectRoot);
 
-  assert.deepStrictEqual(config, {
-    addonPaths: [],
+  assert.deepStrictEqual(userConfig, {
     buildOptions: {
       fallbackLocale: 'en-us',
       inputPath: 'public/assets/translations',

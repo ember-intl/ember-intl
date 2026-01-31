@@ -1,25 +1,25 @@
 import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
-import { getConfig } from '../../../../src/utils/create-options/index.js';
+import { getUserConfig } from '../../../../src/utils/config/index.js';
 
-test('utils | create-options | get-config > multiple configs exist', async function () {
+test('utils | config | get-user-config > multiple configs exist', async function () {
   const inputProject = {
     'ember-intl.config.js': normalizeFile([`export default {};`, ``]),
     'ember-intl.config.mjs': normalizeFile([`export default {};`, ``]),
   };
 
-  const projectRoot = 'tmp/utils/get-config/multiple-configs-exist';
+  const projectRoot = 'tmp/utils/config/get-user-config/multiple-configs-exist';
 
   loadFixture(inputProject, { projectRoot });
 
   await assert.rejects(
     async () => {
-      await getConfig(projectRoot);
+      await getUserConfig(projectRoot);
     },
     (error: Error) => {
       assert.strictEqual(
         error.message,
-        `ERROR: Unable to read the config file. (found multiple config files)`,
+        `ERROR: Unable to read the config file. (Found multiple config files)`,
       );
 
       return true;
