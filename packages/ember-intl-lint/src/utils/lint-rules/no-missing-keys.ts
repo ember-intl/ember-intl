@@ -13,10 +13,15 @@ export function noMissingKeys(
   options: Options,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
+  const ignoresUnused: TranslationKey[] = [];
   const lintErrors: LintErrors = [];
 
   project.usedKeys.forEach((key) => {
     if (project.availableKeys.has(key)) {
+      if (ignores.has(key)) {
+        ignoresUnused.push(key);
+      }
+
       return;
     }
 
@@ -28,7 +33,11 @@ export function noMissingKeys(
   });
 
   if (options.fix) {
-    // TODO: Update ignores
+    if (ignoresUnused.length > 0) {
+      const list = ignoresUnused.sort().join(',');
+
+      console.log(`⚠️ no-missing-keys has unused ignores (${list})`);
+    }
   }
 
   return lintErrors;

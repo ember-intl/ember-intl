@@ -37,6 +37,7 @@ export function noInconsistentMessages(
   options: Options,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
+  const ignoresUnused: TranslationKey[] = [];
   const lintErrors: LintErrors = [];
 
   const locales = getLocales(project.translationFiles);
@@ -58,6 +59,10 @@ export function noInconsistentMessages(
       });
 
       if (allIcuArgumentsMatch(allIcuArguments)) {
+        if (ignores.has(key)) {
+          ignoresUnused.push(key);
+        }
+
         return;
       }
     }
@@ -70,7 +75,11 @@ export function noInconsistentMessages(
   });
 
   if (options.fix) {
-    // TODO: Update ignores
+    if (ignoresUnused.length > 0) {
+      const list = ignoresUnused.sort().join(',');
+
+      console.log(`⚠️ no-inconsistent-messages has unused ignores (${list})`);
+    }
   }
 
   return lintErrors;

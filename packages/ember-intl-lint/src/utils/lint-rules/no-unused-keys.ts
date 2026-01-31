@@ -13,10 +13,15 @@ export function noUnusedKeys(
   options: Options,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
+  const ignoresUnused: TranslationKey[] = [];
   const lintErrors: LintErrors = [];
 
   project.availableKeys.forEach((localeToData, key) => {
     if (project.usedKeys.has(key)) {
+      if (ignores.has(key)) {
+        ignoresUnused.push(key);
+      }
+
       return;
     }
 
@@ -31,6 +36,10 @@ export function noUnusedKeys(
     });
 
     if (isTranslationExternal) {
+      if (ignores.has(key)) {
+        ignoresUnused.push(key);
+      }
+
       return;
     }
 
@@ -42,7 +51,11 @@ export function noUnusedKeys(
   });
 
   if (options.fix) {
-    // TODO: Update ignores
+    if (ignoresUnused.length > 0) {
+      const list = ignoresUnused.sort().join(',');
+
+      console.log(`⚠️ no-unused-keys has unused ignores (${list})`);
+    }
   }
 
   return lintErrors;
