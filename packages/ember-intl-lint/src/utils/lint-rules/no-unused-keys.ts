@@ -4,6 +4,7 @@ import type {
   Project,
   TranslationKey,
 } from '../../types/index.js';
+import { LintRunWithIgnores } from './shared/index.js';
 
 export function noUnusedKeys(
   project: Project,
@@ -12,12 +13,14 @@ export function noUnusedKeys(
   }>,
   options: Options,
 ): LintErrors {
-  const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
-  const lintErrors: LintErrors = [];
+  const lintRun = new LintRunWithIgnores({
+    ignores: lintOptions.ignores,
+    lintRule: 'no-unused-keys',
+  });
 
   project.availableKeys.forEach((localeToData, key) => {
     if (project.usedKeys.has(key)) {
-      return;
+      return lintRun.record('pass', key);
     }
 
     let isTranslationExternal = true;
@@ -31,19 +34,15 @@ export function noUnusedKeys(
     });
 
     if (isTranslationExternal) {
-      return;
+      return lintRun.record('pass', key);
     }
 
-    if (ignores.has(key)) {
-      return;
-    }
-
-    lintErrors.push(key);
+    return lintRun.record('fail', key);
   });
 
   if (options.fix) {
-    // TODO: Update ignores
+    lintRun.reportUnusedIgnores();
   }
 
-  return lintErrors;
+  return lintRun.getLintErrors();
 }

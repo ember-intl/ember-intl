@@ -6,6 +6,7 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
+import { LintRunWithIgnores } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 1; i < allIcuArguments.length; i++) {
@@ -36,8 +37,10 @@ export function noInconsistentMessages(
   }>,
   options: Options,
 ): LintErrors {
-  const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
-  const lintErrors: LintErrors = [];
+  const lintRun = new LintRunWithIgnores({
+    ignores: lintOptions.ignores,
+    lintRule: 'no-inconsistent-messages',
+  });
 
   const locales = getLocales(project.translationFiles);
 
@@ -58,20 +61,16 @@ export function noInconsistentMessages(
       });
 
       if (allIcuArgumentsMatch(allIcuArguments)) {
-        return;
+        return lintRun.record('pass', key);
       }
     }
 
-    if (ignores.has(key)) {
-      return;
-    }
-
-    lintErrors.push(key);
+    return lintRun.record('fail', key);
   });
 
   if (options.fix) {
-    // TODO: Update ignores
+    lintRun.reportUnusedIgnores();
   }
 
-  return lintErrors;
+  return lintRun.getLintErrors();
 }
