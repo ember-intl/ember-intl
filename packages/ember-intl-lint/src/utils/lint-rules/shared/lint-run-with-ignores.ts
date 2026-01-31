@@ -1,20 +1,20 @@
 import type { LintErrors } from '../../../types/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
-type StateArgs<T extends string> = {
-  ignores: T[] | undefined;
+type Args<T extends string> = {
+  ignores?: T[] | undefined;
   lintRule: LintRule;
 };
 
 export class LintRunWithIgnores<T extends string> {
   private ignores: Set<T>;
-  private ignoresUnused: T[];
+  private ignoresUnused: Set<T>;
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
-  constructor(args: StateArgs<T>) {
+  constructor(args: Args<T>) {
     this.ignores = new Set<T>(args.ignores ?? []);
-    this.ignoresUnused = [];
+    this.ignoresUnused = new Set<T>();
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
@@ -33,18 +33,18 @@ export class LintRunWithIgnores<T extends string> {
     }
 
     if (this.ignores.has(key)) {
-      this.ignoresUnused.push(key);
+      this.ignoresUnused.add(key);
     }
   }
 
   reportUnusedIgnores(): void {
     const { ignoresUnused, lintRule } = this;
 
-    if (ignoresUnused.length === 0) {
+    if (ignoresUnused.size === 0) {
       return;
     }
 
-    const list = ignoresUnused.sort().join(',');
+    const list = Array.from(ignoresUnused).sort().join(',');
 
     console.log(`⚠️ ${lintRule} has unused ignores (${list})`);
   }
