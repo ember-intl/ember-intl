@@ -1,7 +1,11 @@
 import { getPackageType, readPackageJson } from '@codemod-utils/package-json';
 
 import type { CodemodOptions, Options } from '../types/index.js';
-import { getConfig } from '../utils/create-options/index.js';
+import {
+  getDefaultConfig,
+  getUserConfig,
+  mergeConfigs,
+} from '../utils/config/index.js';
 
 const SOURCE = {
   node: undefined,
@@ -24,13 +28,14 @@ export async function createOptions(
   codemodOptions: CodemodOptions,
 ): Promise<Options> {
   const { fix, projectRoot } = codemodOptions;
-
-  const config = await getConfig(projectRoot);
   const src = getSrc(projectRoot);
 
   if (src === undefined) {
     throw new Error('Unable to find an Ember project');
   }
+
+  const userConfig = await getUserConfig(projectRoot);
+  const config = mergeConfigs(getDefaultConfig(), userConfig);
 
   return {
     config,
