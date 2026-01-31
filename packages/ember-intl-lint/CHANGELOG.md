@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 0.6.1
+
+### Patch Changes
+
+- [#2090](https://github.com/ember-intl/ember-intl/pull/2090) Refactored LintRunWithIgnores ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.6.0
 
 ### Minor Changes

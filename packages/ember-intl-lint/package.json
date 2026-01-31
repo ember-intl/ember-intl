@@ -1,6 +1,6 @@
 {
   "name": "@ember-intl/lint",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Official linter for ember-intl",
   "keywords": [
     "codemod",
