@@ -6,6 +6,7 @@ import type {
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
+import { LintRunWithIgnores } from './shared/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
   for (let i = 1; i < allIcuArguments.length; i++) {
@@ -36,25 +37,12 @@ export function noInconsistentMessages(
   }>,
   options: Options,
 ): LintErrors {
-  const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
-  const ignoresUnused: TranslationKey[] = [];
-  const lintErrors: LintErrors = [];
+  const lintRun = new LintRunWithIgnores({
+    ignores: lintOptions.ignores,
+    lintRule: 'no-inconsistent-messages',
+  });
 
   const locales = getLocales(project.translationFiles);
-
-  function record(status: 'fail' | 'pass', key: TranslationKey): void {
-    if (status === 'fail') {
-      if (!ignores.has(key)) {
-        lintErrors.push(key);
-      }
-
-      return;
-    }
-
-    if (ignores.has(key)) {
-      ignoresUnused.push(key);
-    }
-  }
 
   project.availableKeys.forEach((localeToData, key) => {
     let hasTranslation = true;
@@ -73,20 +61,16 @@ export function noInconsistentMessages(
       });
 
       if (allIcuArgumentsMatch(allIcuArguments)) {
-        return record('pass', key);
+        return lintRun.record('pass', key);
       }
     }
 
-    return record('fail', key);
+    return lintRun.record('fail', key);
   });
 
   if (options.fix) {
-    if (ignoresUnused.length > 0) {
-      const list = ignoresUnused.sort().join(',');
-
-      console.log(`⚠️ no-inconsistent-messages has unused ignores (${list})`);
-    }
+    lintRun.reportUnusedIgnores();
   }
 
-  return lintErrors;
+  return lintRun.getLintErrors();
 }

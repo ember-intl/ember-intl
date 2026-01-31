@@ -4,6 +4,7 @@ import type {
   Project,
   TranslationKey,
 } from '../../types/index.js';
+import { LintRunWithIgnores } from './shared/index.js';
 
 export function noMissingKeys(
   project: Project,
@@ -12,39 +13,22 @@ export function noMissingKeys(
   }>,
   options: Options,
 ): LintErrors {
-  const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
-  const ignoresUnused: TranslationKey[] = [];
-  const lintErrors: LintErrors = [];
-
-  function record(status: 'fail' | 'pass', key: TranslationKey): void {
-    if (status === 'fail') {
-      if (!ignores.has(key)) {
-        lintErrors.push(key);
-      }
-
-      return;
-    }
-
-    if (ignores.has(key)) {
-      ignoresUnused.push(key);
-    }
-  }
+  const lintRun = new LintRunWithIgnores({
+    ignores: lintOptions.ignores,
+    lintRule: 'no-missing-keys',
+  });
 
   project.usedKeys.forEach((key) => {
     if (project.availableKeys.has(key)) {
-      return record('pass', key);
+      return lintRun.record('pass', key);
     }
 
-    return record('fail', key);
+    return lintRun.record('fail', key);
   });
 
   if (options.fix) {
-    if (ignoresUnused.length > 0) {
-      const list = ignoresUnused.sort().join(',');
-
-      console.log(`⚠️ no-missing-keys has unused ignores (${list})`);
-    }
+    lintRun.reportUnusedIgnores();
   }
 
-  return lintErrors;
+  return lintRun.getLintErrors();
 }
