@@ -1,20 +1,31 @@
 import type { LintErrors } from '../../../types/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
-type StateArgs<T extends string> = {
-  ignores: T[] | undefined;
+type Args<T extends string> = {
+  ignores?: T[] | undefined;
   lintRule: LintRule;
 };
 
+type DataForRecord<T extends string> =
+  | {
+      ignore: T;
+      lintError: string;
+      status: 'fail';
+    }
+  | {
+      ignore: T;
+      status: 'pass';
+    };
+
 export class LintRunWithIgnores<T extends string> {
   private ignores: Set<T>;
-  private ignoresUnused: T[];
+  private ignoresUnused: Set<T>;
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
-  constructor(args: StateArgs<T>) {
+  constructor(args: Args<T>) {
     this.ignores = new Set<T>(args.ignores ?? []);
-    this.ignoresUnused = [];
+    this.ignoresUnused = new Set<T>();
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
@@ -23,29 +34,33 @@ export class LintRunWithIgnores<T extends string> {
     return this.lintErrors;
   }
 
-  record(status: 'fail' | 'pass', key: T): void {
-    if (status === 'fail') {
-      if (!this.ignores.has(key)) {
-        this.lintErrors.push(key);
+  getUnusedIgnores(): T[] {
+    return Array.from(this.ignoresUnused).sort();
+  }
+
+  record(data: DataForRecord<T>): void {
+    if (data.status === 'fail') {
+      if (!this.ignores.has(data.ignore)) {
+        this.lintErrors.push(data.lintError);
       }
 
       return;
     }
 
-    if (this.ignores.has(key)) {
-      this.ignoresUnused.push(key);
+    if (this.ignores.has(data.ignore)) {
+      this.ignoresUnused.add(data.ignore);
     }
   }
 
   reportUnusedIgnores(): void {
-    const { ignoresUnused, lintRule } = this;
+    const unusedIgnores = this.getUnusedIgnores();
 
-    if (ignoresUnused.length === 0) {
+    if (unusedIgnores.length === 0) {
       return;
     }
 
-    const list = ignoresUnused.sort().join(',');
-
-    console.log(`⚠️ ${lintRule} has unused ignores (${list})`);
+    console.log(
+      `⚠️ ${this.lintRule} has unused ignores (${unusedIgnores.join(',')})`,
+    );
   }
 }

@@ -20,7 +20,10 @@ export function noUnusedKeys(
 
   project.availableKeys.forEach((localeToData, key) => {
     if (project.usedKeys.has(key)) {
-      return lintRun.record('pass', key);
+      return lintRun.record({
+        ignore: key,
+        status: 'pass',
+      });
     }
 
     let isTranslationExternal = true;
@@ -34,10 +37,17 @@ export function noUnusedKeys(
     });
 
     if (isTranslationExternal) {
-      return lintRun.record('pass', key);
+      return lintRun.record({
+        ignore: key,
+        status: 'pass',
+      });
     }
 
-    return lintRun.record('fail', key);
+    return lintRun.record({
+      ignore: key,
+      lintError: key,
+      status: 'fail',
+    });
   });
 
   if (options.fix) {
