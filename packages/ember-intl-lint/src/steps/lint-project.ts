@@ -7,14 +7,16 @@ import type {
 import { type LintRule, lintRuleMapping } from '../utils/lint-rules.js';
 
 export function lintProject(project: Project, options: Options): LintResults {
-  const { config, ...optionsWithoutConfig } = options;
+  const { config } = options;
+  const { lintRules } = config;
+
   const lintResults: Partial<LintResults> = {};
 
   for (const [lintRule, lintMethod] of Object.entries(lintRuleMapping) as [
     LintRule,
     LintMethod,
   ][]) {
-    const lintOptions = config.lintRules[lintRule];
+    const lintOptions = lintRules[lintRule];
 
     if (lintOptions === false) {
       continue;
@@ -23,7 +25,7 @@ export function lintProject(project: Project, options: Options): LintResults {
     lintResults[lintRule] = lintMethod(
       project,
       lintOptions === true ? {} : lintOptions,
-      optionsWithoutConfig,
+      options,
     );
   }
 

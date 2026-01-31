@@ -2,10 +2,7 @@ import { assert, test } from '@codemod-utils/tests';
 
 import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noUnusedKeys } from '../../../../src/utils/lint-rules/index.js';
-import {
-  normalizeProject,
-  stubTranslationFiles,
-} from '../../../helpers/index.js';
+import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-unused-keys > some keys are unused', function () {
@@ -61,7 +58,56 @@ test('utils | lint-rules | no-unused-keys > some keys are unused', function () {
 
   const project = normalizeProject({
     availableKeys: findAvailableKeys(translations),
-    translationFiles: stubTranslationFiles(),
+    translationFiles: new Map([
+      [
+        'translations/de-de.json',
+        {
+          isInternal: true,
+          locale: 'de-de',
+          translationsDir: 'translations',
+        },
+      ],
+      [
+        'translations/en-us.json',
+        {
+          isInternal: true,
+          locale: 'en-us',
+          translationsDir: 'translations',
+        },
+      ],
+      [
+        'node_modules/my-v1-addon/translations/de-de.json',
+        {
+          isInternal: false,
+          locale: 'de-de',
+          translationsDir: 'node_modules/my-v1-addon/translations',
+        },
+      ],
+      [
+        'node_modules/my-v1-addon/translations/en-us.json',
+        {
+          isInternal: false,
+          locale: 'en-us',
+          translationsDir: 'node_modules/my-v1-addon/translations',
+        },
+      ],
+      [
+        'node_modules/my-v2-addon/translations/de-de.json',
+        {
+          isInternal: false,
+          locale: 'de-de',
+          translationsDir: 'node_modules/my-v2-addon/translations',
+        },
+      ],
+      [
+        'node_modules/my-v2-addon/translations/en-us.json',
+        {
+          isInternal: false,
+          locale: 'en-us',
+          translationsDir: 'node_modules/my-v2-addon/translations',
+        },
+      ],
+    ]),
     translations,
     usedKeys: new Set(['key03', 'key04', 'key05', 'key06']),
   });

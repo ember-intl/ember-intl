@@ -1,6 +1,6 @@
 import type {
   LintErrors,
-  OptionsWithoutConfig,
+  Options,
   Project,
   TranslationKey,
 } from '../../types/index.js';
@@ -10,7 +10,7 @@ export function noUnusedKeys(
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
-  options: OptionsWithoutConfig,
+  options: Options,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];

@@ -1,18 +1,16 @@
 import type {
   IcuArguments,
   LintErrors,
-  OptionsWithoutConfig,
+  Options,
   Project,
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
-  for (let i = 0; i < allIcuArguments.length; i++) {
-    for (let j = i + 1; j < allIcuArguments.length; j++) {
-      if (!compareIcuArguments(allIcuArguments[i]!, allIcuArguments[j]!)) {
-        return false;
-      }
+  for (let i = 1; i < allIcuArguments.length; i++) {
+    if (!compareIcuArguments(allIcuArguments[i]!, allIcuArguments[0]!)) {
+      return false;
     }
   }
 
@@ -36,7 +34,7 @@ export function noInconsistentMessages(
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
-  options: OptionsWithoutConfig,
+  options: Options,
 ): LintErrors {
   const ignores = new Set<TranslationKey>(lintOptions?.ignores ?? []);
   const lintErrors: LintErrors = [];

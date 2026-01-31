@@ -2,10 +2,7 @@ import { assert, test } from '@codemod-utils/tests';
 
 import { findAvailableKeys } from '../../../../src/steps/analyze-project/index.js';
 import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.js';
-import {
-  normalizeProject,
-  stubTranslationFiles,
-} from '../../../helpers/index.js';
+import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
 test('utils | lint-rules | no-inconsistent-messages > with ignores option', function () {
@@ -84,7 +81,24 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
 
   const project = normalizeProject({
     availableKeys: findAvailableKeys(translations),
-    translationFiles: stubTranslationFiles(),
+    translationFiles: new Map([
+      [
+        'translations/de-de.json',
+        {
+          isInternal: true,
+          locale: 'de-de',
+          translationsDir: 'translations',
+        },
+      ],
+      [
+        'translations/en-us.json',
+        {
+          isInternal: true,
+          locale: 'en-us',
+          translationsDir: 'translations',
+        },
+      ],
+    ]),
     translations,
     usedKeys: new Set(),
   });
