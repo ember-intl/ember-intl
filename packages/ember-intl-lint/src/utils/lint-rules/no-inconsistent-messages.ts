@@ -8,11 +8,9 @@ import type {
 import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
 
 function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
-  for (let i = 0; i < allIcuArguments.length; i++) {
-    for (let j = i + 1; j < allIcuArguments.length; j++) {
-      if (!compareIcuArguments(allIcuArguments[i]!, allIcuArguments[j]!)) {
-        return false;
-      }
+  for (let i = 1; i < allIcuArguments.length; i++) {
+    if (!compareIcuArguments(allIcuArguments[i]!, allIcuArguments[0]!)) {
+      return false;
     }
   }
 
