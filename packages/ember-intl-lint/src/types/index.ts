@@ -18,8 +18,6 @@ type Options = {
   src: 'addon' | 'app' | 'src';
 };
 
-type OptionsWithoutConfig = Omit<Options, 'config'>;
-
 type ConfigBuildOptions = {
   fallbackLocale: string | undefined;
   inputPath: string;
@@ -43,7 +41,7 @@ type LintErrors = string[];
 type LintMethod = (
   project: Project,
   lintOptions: LintOptions,
-  options: OptionsWithoutConfig,
+  options: Options,
 ) => LintErrors;
 
 type LintOptions = Record<string, unknown>;
@@ -100,7 +98,6 @@ export type {
   LintResults,
   Locale,
   Options,
-  OptionsWithoutConfig,
   Project,
   ProjectTranslationData,
   TranslationFilePath,
