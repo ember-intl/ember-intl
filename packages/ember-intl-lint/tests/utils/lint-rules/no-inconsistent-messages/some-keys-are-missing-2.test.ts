@@ -106,5 +106,8 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (2)'
 
   const lintErrors = noInconsistentMessages(project, {}, options);
 
-  assert.deepStrictEqual(lintErrors, ['key01', 'key02']);
+  assert.deepStrictEqual(lintErrors, [
+    'key01 (missing in: es-es)',
+    'key02 (missing in: de-de, es-es)',
+  ]);
 });

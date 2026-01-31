@@ -105,5 +105,10 @@ test('utils | lint-rules | no-inconsistent-messages > some ICU arguments do not 
 
   const lintErrors = noInconsistentMessages(project, {}, options);
 
-  assert.deepStrictEqual(lintErrors, ['key01', 'key02', 'key03', 'key04']);
+  assert.deepStrictEqual(lintErrors, [
+    'key01 (de-de ≠ en-us)',
+    'key02 (de-de ≠ en-us)',
+    'key03 (de-de ≠ en-us)',
+    'key04 (de-de ≠ en-us)',
+  ]);
 });

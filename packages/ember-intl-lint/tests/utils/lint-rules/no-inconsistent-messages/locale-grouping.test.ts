@@ -5,7 +5,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)', function () {
+test('utils | lint-rules | no-inconsistent-messages > locale grouping', function () {
   const translations = new Map([
     [
       'de-de',
@@ -14,7 +14,7 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
           'key01',
           {
             filePath: 'translations/de-de.json',
-            message: 'Hallo!',
+            message: 'Hallo, {name}!',
           },
         ],
       ]),
@@ -29,11 +29,16 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
             message: 'Hello!',
           },
         ],
+      ]),
+    ],
+    [
+      'fr-fr',
+      new Map([
         [
-          'key02',
+          'key01',
           {
-            filePath: 'translations/en-us.json',
-            message: 'Hello, {name}!',
+            filePath: 'translations/fr-fr.json',
+            message: 'Bonjour, {name}!',
           },
         ],
       ]),
@@ -60,10 +65,10 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
         },
       ],
       [
-        'translations/es-es.json',
+        'translations/fr-fr.json',
         {
           isInternal: true,
-          locale: 'es-es',
+          locale: 'fr-fr',
           translationsDir: 'translations',
         },
       ],
@@ -74,8 +79,6 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
 
   const lintErrors = noInconsistentMessages(project, {}, options);
 
-  assert.deepStrictEqual(lintErrors, [
-    'key01 (missing in: es-es)',
-    'key02 (missing in: de-de, es-es)',
-  ]);
+  // de-de and fr-fr both use {name}, en-us does not
+  assert.deepStrictEqual(lintErrors, ['key01 (de-de, fr-fr ≠ en-us)']);
 });

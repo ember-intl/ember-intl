@@ -42,31 +42,70 @@ export function noInconsistentMessages(
   const locales = getLocales(project.translationFiles);
 
   project.availableKeys.forEach((localeToData, key) => {
-    let hasTranslation = true;
+    const missingLocales: string[] = [];
 
     locales.forEach((locale) => {
       if (!localeToData.has(locale)) {
-        hasTranslation = false;
+        missingLocales.push(locale);
       }
     });
 
-    if (hasTranslation) {
-      const allIcuArguments: IcuArguments[] = [];
-
-      localeToData.forEach((data) => {
-        allIcuArguments.push(findIcuArguments(data.message));
-      });
-
-      if (allIcuArgumentsMatch(allIcuArguments)) {
-        return;
+    if (missingLocales.length > 0) {
+      if (!ignores.has(key)) {
+        lintErrors.push(
+          `${key} (missing in: ${missingLocales.sort().join(', ')})`,
+        );
       }
+
+      return;
+    }
+
+    const allIcuArguments: IcuArguments[] = [];
+    const localeList: string[] = [];
+
+    localeToData.forEach((data, locale) => {
+      allIcuArguments.push(findIcuArguments(data.message));
+      localeList.push(locale);
+    });
+
+    if (allIcuArgumentsMatch(allIcuArguments)) {
+      return;
     }
 
     if (ignores.has(key)) {
       return;
     }
 
-    lintErrors.push(key);
+    const groups: string[][] = [];
+    const assigned = new Set<number>();
+
+    for (let i = 0; i < allIcuArguments.length; i++) {
+      if (assigned.has(i)) {
+        continue;
+      }
+
+      const group = [localeList[i]!];
+      assigned.add(i);
+
+      for (let j = i + 1; j < allIcuArguments.length; j++) {
+        if (assigned.has(j)) {
+          continue;
+        }
+
+        if (compareIcuArguments(allIcuArguments[i]!, allIcuArguments[j]!)) {
+          group.push(localeList[j]!);
+          assigned.add(j);
+        }
+      }
+
+      groups.push(group.sort());
+    }
+
+    groups.sort((a, b) => a[0]!.localeCompare(b[0]!));
+
+    const detail = groups.map((g) => g.join(', ')).join(' ≠ ');
+
+    lintErrors.push(`${key} (${detail})`);
   });
 
   if (options.fix) {
