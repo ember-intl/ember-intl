@@ -16,13 +16,23 @@ export function noUnusedKeys(
   const ignoresUnused: TranslationKey[] = [];
   const lintErrors: LintErrors = [];
 
-  project.availableKeys.forEach((localeToData, key) => {
-    if (project.usedKeys.has(key)) {
-      if (ignores.has(key)) {
-        ignoresUnused.push(key);
+  function record(status: 'fail' | 'pass', key: TranslationKey): void {
+    if (status === 'fail') {
+      if (!ignores.has(key)) {
+        lintErrors.push(key);
       }
 
       return;
+    }
+
+    if (ignores.has(key)) {
+      ignoresUnused.push(key);
+    }
+  }
+
+  project.availableKeys.forEach((localeToData, key) => {
+    if (project.usedKeys.has(key)) {
+      return record('pass', key);
     }
 
     let isTranslationExternal = true;
@@ -36,18 +46,10 @@ export function noUnusedKeys(
     });
 
     if (isTranslationExternal) {
-      if (ignores.has(key)) {
-        ignoresUnused.push(key);
-      }
-
-      return;
+      return record('pass', key);
     }
 
-    if (ignores.has(key)) {
-      return;
-    }
-
-    lintErrors.push(key);
+    return record('fail', key);
   });
 
   if (options.fix) {

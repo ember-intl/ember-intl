@@ -16,20 +16,26 @@ export function noMissingKeys(
   const ignoresUnused: TranslationKey[] = [];
   const lintErrors: LintErrors = [];
 
-  project.usedKeys.forEach((key) => {
-    if (project.availableKeys.has(key)) {
-      if (ignores.has(key)) {
-        ignoresUnused.push(key);
+  function record(status: 'fail' | 'pass', key: TranslationKey): void {
+    if (status === 'fail') {
+      if (!ignores.has(key)) {
+        lintErrors.push(key);
       }
 
       return;
     }
 
     if (ignores.has(key)) {
-      return;
+      ignoresUnused.push(key);
+    }
+  }
+
+  project.usedKeys.forEach((key) => {
+    if (project.availableKeys.has(key)) {
+      return record('pass', key);
     }
 
-    lintErrors.push(key);
+    return record('fail', key);
   });
 
   if (options.fix) {

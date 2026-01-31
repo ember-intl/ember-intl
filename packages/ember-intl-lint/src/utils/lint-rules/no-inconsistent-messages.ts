@@ -42,6 +42,20 @@ export function noInconsistentMessages(
 
   const locales = getLocales(project.translationFiles);
 
+  function record(status: 'fail' | 'pass', key: TranslationKey): void {
+    if (status === 'fail') {
+      if (!ignores.has(key)) {
+        lintErrors.push(key);
+      }
+
+      return;
+    }
+
+    if (ignores.has(key)) {
+      ignoresUnused.push(key);
+    }
+  }
+
   project.availableKeys.forEach((localeToData, key) => {
     let hasTranslation = true;
 
@@ -59,19 +73,11 @@ export function noInconsistentMessages(
       });
 
       if (allIcuArgumentsMatch(allIcuArguments)) {
-        if (ignores.has(key)) {
-          ignoresUnused.push(key);
-        }
-
-        return;
+        return record('pass', key);
       }
     }
 
-    if (ignores.has(key)) {
-      return;
-    }
-
-    lintErrors.push(key);
+    return record('fail', key);
   });
 
   if (options.fix) {
