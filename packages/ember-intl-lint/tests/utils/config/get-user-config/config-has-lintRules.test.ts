@@ -1,8 +1,8 @@
 import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
-import { getConfig } from '../../../../src/utils/create-options/index.js';
+import { getUserConfig } from '../../../../src/utils/config/index.js';
 
-test('utils | create-options | get-config > config has lintRules', async function () {
+test('utils | config | get-user-config > config has lintRules', async function () {
   const inputProject = {
     'ember-intl.config.mjs': normalizeFile([
       `export default {`,
@@ -17,21 +17,14 @@ test('utils | create-options | get-config > config has lintRules', async functio
     ]),
   };
 
-  const projectRoot = 'tmp/utils/get-config/config-has-lintRules';
+  const projectRoot = 'tmp/utils/config/get-user-config/config-has-lintRules';
 
   loadFixture(inputProject, { projectRoot });
 
-  const config = await getConfig(projectRoot);
+  const userConfig = await getUserConfig(projectRoot);
 
-  assert.deepStrictEqual(config, {
-    addonPaths: [],
-    buildOptions: {
-      fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
-    },
+  assert.deepStrictEqual(userConfig, {
     lintRules: {
-      'no-inconsistent-messages': true,
       'no-missing-keys': {
         ignores: ['hello.message'],
       },

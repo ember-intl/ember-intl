@@ -1,8 +1,8 @@
 import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
-import { getConfig } from '../../../../src/utils/create-options/index.js';
+import { getUserConfig } from '../../../../src/utils/config/index.js';
 
-test('utils | create-options | get-config > config has unknown lint rules', async function () {
+test('utils | config | get-user-config > config has unknown lint rules', async function () {
   const inputProject = {
     'ember-intl.config.mjs': normalizeFile([
       `export default {`,
@@ -17,18 +17,19 @@ test('utils | create-options | get-config > config has unknown lint rules', asyn
     ]),
   };
 
-  const projectRoot = 'tmp/utils/get-config/config-has-unknown-lint-rules';
+  const projectRoot =
+    'tmp/utils/config/get-user-config/config-has-unknown-lint-rules';
 
   loadFixture(inputProject, { projectRoot });
 
   await assert.rejects(
     async () => {
-      await getConfig(projectRoot);
+      await getUserConfig(projectRoot);
     },
     (error: Error) => {
       assert.strictEqual(
         error.message,
-        `ERROR: Unable to read the config file. (unknown lint rule: unknown-rule-1)`,
+        `ERROR: Unable to read the config file. (Unknown lint rule: unknown-rule-1)`,
       );
 
       return true;

@@ -1,8 +1,8 @@
 import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 
-import { getConfig } from '../../../../src/utils/create-options/index.js';
+import { getUserConfig } from '../../../../src/utils/config/index.js';
 
-test('utils | create-options | get-config > config is shared', async function () {
+test('utils | config | get-user-config > edge case (config is shared)', async function () {
   const inputProject = {
     apps: {
       'my-app': {
@@ -33,21 +33,16 @@ test('utils | create-options | get-config > config is shared', async function ()
     },
   };
 
-  const projectRoot = 'tmp/utils/get-config/config-is-shared';
+  const projectRoot =
+    'tmp/utils/config/get-user-config/edge-case-config-is-shared';
 
   loadFixture(inputProject, { projectRoot });
 
-  const config = await getConfig(`${projectRoot}/apps/my-app`);
+  const userConfig = await getUserConfig(`${projectRoot}/apps/my-app`);
 
-  assert.deepStrictEqual(config, {
+  assert.deepStrictEqual(userConfig, {
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
-    buildOptions: {
-      fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
-    },
     lintRules: {
-      'no-inconsistent-messages': true,
       'no-missing-keys': {
         ignores: ['hello.message'],
       },
