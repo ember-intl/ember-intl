@@ -1,5 +1,12 @@
 # test-app-for-ember-intl
 
+## 1.7.1
+
+### Patch Changes
+
+- [#2086](https://github.com/ember-intl/ember-intl/pull/2086) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2079](https://github.com/ember-intl/ember-intl/pull/2079) Added ember-source@6.8 to ember-try scenarios ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.7.0
 
 ### Minor Changes

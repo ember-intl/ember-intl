@@ -1,6 +1,6 @@
 {
   "name": "my-v2-app-with-fallbacks",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": true,
   "description": "A Vite app to test fallbackLocale",
   "repository": {

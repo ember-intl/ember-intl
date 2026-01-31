@@ -1,5 +1,12 @@
 # docs-app-for-ember-intl
 
+## 1.9.1
+
+### Patch Changes
+
+- [#2086](https://github.com/ember-intl/ember-intl/pull/2086) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2077](https://github.com/ember-intl/ember-intl/pull/2077) Restored accidentally removed page ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.9.0
 
 ### Minor Changes

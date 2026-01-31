@@ -1,5 +1,14 @@
 # @ember-intl/vite
 
+## 0.5.1
+
+### Patch Changes
+
+- [#2088](https://github.com/ember-intl/ember-intl/pull/2088) Improved separation of responsibilities (create-options) ([@ijlee2](https://github.com/ijlee2))
+- [#2088](https://github.com/ember-intl/ember-intl/pull/2088) Updated test setups ([@ijlee2](https://github.com/ijlee2))
+- [#2086](https://github.com/ember-intl/ember-intl/pull/2086) Specified return types ([@ijlee2](https://github.com/ijlee2))
+- [#2086](https://github.com/ember-intl/ember-intl/pull/2086) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.5.0
 
 ### Minor Changes
