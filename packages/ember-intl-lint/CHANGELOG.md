@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 0.7.0
+
+### Minor Changes
+
+- [#2091](https://github.com/ember-intl/ember-intl/pull/2091) Parallelized findUsedKeys() ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.6.1
 
 ### Patch Changes
