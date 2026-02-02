@@ -6,7 +6,7 @@ import {
   mergeTranslationFiles,
 } from './analyze-project/index.js';
 
-export function analyzeProject(options: Options): Project {
+export async function analyzeProject(options: Options): Promise<Project> {
   console.time('analyzeProject - findTranslationFiles');
   const translationFiles = findTranslationFiles(options);
   console.timeEnd('analyzeProject - findTranslationFiles');
@@ -20,7 +20,7 @@ export function analyzeProject(options: Options): Project {
   console.timeEnd('analyzeProject - availableKeys');
 
   console.time('analyzeProject - findUsedKeys');
-  const usedKeys = findUsedKeys(options);
+  const usedKeys = await findUsedKeys(options);
   console.timeEnd('analyzeProject - findUsedKeys');
 
   return {

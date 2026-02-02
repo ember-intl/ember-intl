@@ -8,10 +8,10 @@ import {
   options,
 } from '../../helpers/shared-test-setups/my-v2-app-with-fallbacks.js';
 
-test('steps | analyze-project > my-v2-app-with-fallbacks', function () {
+test('steps | analyze-project > my-v2-app-with-fallbacks', async function () {
   loadFixture(inputProject, codemodOptions);
 
-  const project = analyzeProject(options);
+  const project = await analyzeProject(options);
 
   assert.deepStrictEqual(
     project,
