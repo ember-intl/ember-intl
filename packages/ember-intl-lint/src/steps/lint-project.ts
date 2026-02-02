@@ -22,11 +22,13 @@ export function lintProject(project: Project, options: Options): LintResults {
       continue;
     }
 
+    console.time(`lintProject - ${lintRule}`);
     lintResults[lintRule] = lintMethod(
       project,
       lintOptions === true ? {} : lintOptions,
       options,
     );
+    console.timeEnd(`lintProject - ${lintRule}`);
   }
 
   return lintResults as LintResults;
