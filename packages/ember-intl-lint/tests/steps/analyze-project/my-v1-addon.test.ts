@@ -8,10 +8,10 @@ import {
   options,
 } from '../../helpers/shared-test-setups/my-v1-addon.js';
 
-test('steps | analyze-project > my-v1-addon', function () {
+test('steps | analyze-project > my-v1-addon', async function () {
   loadFixture(inputProject, codemodOptions);
 
-  const project = analyzeProject(options);
+  const project = await analyzeProject(options);
 
   assert.deepStrictEqual(
     project,

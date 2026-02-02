@@ -5,7 +5,7 @@ import { inputProject } from '../../fixtures/my-v2-app/index.js';
 import { normalizeProject } from '../../helpers/index.js';
 import { codemodOptions } from '../../helpers/shared-test-setups/my-v2-app.js';
 
-test('steps | analyze-project > edge case (lint rules are disabled)', function () {
+test('steps | analyze-project > edge case (lint rules are disabled)', async function () {
   const options = {
     config: {
       addonPaths: [],
@@ -27,7 +27,7 @@ test('steps | analyze-project > edge case (lint rules are disabled)', function (
 
   loadFixture(inputProject, codemodOptions);
 
-  const project = analyzeProject(options);
+  const project = await analyzeProject(options);
 
   assert.deepStrictEqual(
     project,

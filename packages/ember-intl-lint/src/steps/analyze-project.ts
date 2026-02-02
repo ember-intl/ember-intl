@@ -6,12 +6,12 @@ import {
   mergeTranslationFiles,
 } from './analyze-project/index.js';
 
-export function analyzeProject(options: Options): Project {
+export async function analyzeProject(options: Options): Promise<Project> {
   const translationFiles = findTranslationFiles(options);
   const translations = mergeTranslationFiles(translationFiles, options);
 
   const availableKeys = findAvailableKeys(translations);
-  const usedKeys = findUsedKeys(options);
+  const usedKeys = await findUsedKeys(options);
 
   return {
     availableKeys,

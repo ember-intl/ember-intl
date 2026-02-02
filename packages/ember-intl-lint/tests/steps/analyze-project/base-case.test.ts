@@ -7,12 +7,12 @@ import {
   options,
 } from '../../helpers/shared-test-setups/my-v2-app.js';
 
-test('steps | analyze-project > base case', function () {
+test('steps | analyze-project > base case', async function () {
   const inputProject = {};
 
   loadFixture(inputProject, codemodOptions);
 
-  const project = analyzeProject(options);
+  const project = await analyzeProject(options);
 
   assert.deepStrictEqual(
     project,
