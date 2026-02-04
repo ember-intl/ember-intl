@@ -56,19 +56,19 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.2",
-    "@formatjs/intl": "^4.1.1",
+    "@formatjs/intl": "^4.1.2",
     "decorator-transforms": "^2.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.6",
+    "@babel/core": "^7.29.0",
     "@babel/plugin-transform-typescript": "^7.28.6",
     "@babel/runtime": "^7.28.6",
     "@ember/test-helpers": "^5.4.1",
-    "@embroider/addon-dev": "^8.2.0",
+    "@embroider/addon-dev": "^8.3.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/ember-tsc": "^1.0.9",
-    "@glint/template": "^1.7.3",
+    "@glint/ember-tsc": "^1.1.1",
+    "@glint/template": "^1.7.4",
     "@rollup/plugin-babel": "^6.1.0",
     "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
@@ -77,11 +77,11 @@
     "babel-plugin-ember-template-compilation": "^4.0.0",
     "concurrently": "^9.2.1",
     "ember-qunit": "^9.0.4",
-    "ember-source": "~6.10.0",
+    "ember-source": "~6.10.1",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.2",
     "prettier": "^3.8.1",
-    "rollup": "^4.57.0",
+    "rollup": "^4.57.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

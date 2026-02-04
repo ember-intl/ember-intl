@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@tsconfig/ember": "^3.0.12",
-    "@tsconfig/node20": "^20.1.8",
+    "@tsconfig/node20": "^20.1.9",
     "@tsconfig/strictest": "^2.0.8"
   },
   "devDependencies": {
