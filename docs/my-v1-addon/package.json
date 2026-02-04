@@ -48,9 +48,9 @@
     "test": "ember test --test-port=0"
   },
   "dependencies": {
-    "@babel/core": "^7.28.6",
+    "@babel/core": "^7.29.0",
     "ember-auto-import": "^2.12.0",
-    "ember-cli-babel": "^8.2.0",
+    "ember-cli-babel": "^8.3.1",
     "ember-cli-htmlbars": "^7.0.0",
     "ember-intl": "workspace:*",
     "ember-template-imports": "^4.4.0"
@@ -63,8 +63,8 @@
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/ember-tsc": "^1.0.9",
-    "@glint/template": "^1.7.3",
+    "@glint/ember-tsc": "^1.1.1",
+    "@glint/template": "^1.7.4",
     "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
@@ -84,7 +84,7 @@
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
-    "ember-source": "~6.10.0",
+    "ember-source": "~6.10.1",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
     "eslint": "^9.39.2",
@@ -93,7 +93,7 @@
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
     "typescript": "^5.9.3",
-    "webpack": "^5.104.1"
+    "webpack": "^5.105.0"
   },
   "peerDependencies": {
     "ember-intl": "workspace:*"
