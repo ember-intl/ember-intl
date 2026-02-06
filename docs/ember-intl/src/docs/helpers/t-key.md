@@ -1,37 +1,32 @@
-# &#123;&#123;t-key&#125;&#125;
+---
+title: \{{t-key}}
+---
+
+# &#123;&#123;t-key&#125;&#125; {#t-key}
 
 In JavaScript files (`*.{gjs,gts,js,ts}`), you can use `tKey()` to mark strings that are actually translation keys. This will help programs (e.g. linters like [`@ember-intl/lint`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-lint/README.md), codemods) check how you use translations.
 
-<DocsDemo as |demo|>
-  <demo.snippet
-    @label="components/select-locale.hbs"
-    @name="docs__helpers__t-key__example-1__example.hbs"
-  />
+::: code-group
 
-  <demo.snippet
-    @label="components/select-locale.ts"
-    @name="docs__helpers__t-key__example-1__example.ts"
-  />
-</DocsDemo>
+<<< @/snippets/helpers/t-key/example-1/template.hbs [app/components/select-locale.hbs]
 
-<DocsDemo as |demo|>
-  <demo.snippet
-    @label="components/payment-method.hbs"
-    @name="docs__helpers__t-key__example-2__example.hbs"
-  />
+<<< @/snippets/helpers/t-key/example-1/component.ts [app/components/select-locale.ts]
 
-  <demo.snippet
-    @label="components/payment-method.ts"
-    @name="docs__helpers__t-key__example-2__example.ts"
-  />
+:::
 
-  <demo.snippet
-    @label="utils/payment.ts"
-    @name="docs__helpers__t-key__example-2__util.ts"
-  />
-</DocsDemo>
+::: code-group
 
-Note, `tKey()` is an identity function. The input string and its type (`string` or a string literal) are unchanged.
+<<< @/snippets/helpers/t-key/example-2/template.hbs [app/components/payment-method.hbs]
+
+<<< @/snippets/helpers/t-key/example-2/component.ts [app/components/payment-method.ts]
+
+<<< @/snippets/helpers/t-key/example-2/util.ts [app/utils/payment.ts]
+
+:::
+
+> [!NOTE]
+> 
+> `tKey()` is an identity function. The input string and its type (`string` or a string literal) are unchanged.
 
 
 ## What not to do

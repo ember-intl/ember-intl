@@ -1,7 +1,20 @@
-# &#123;&#123;format-date&#125;&#125;
+---
+title: \{{format-date}}
+---
+
+# &#123;&#123;format-date&#125;&#125; {#format-date}
 
 Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/format) to format a date.
 
+::: code-group
+
+<<< @/snippets/helpers/format-date/example-1/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-date/example-1/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -14,23 +27,25 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
       Yesterday: {{format-date this.yesterday}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-date__example-1__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-date__example-1__example.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## options.format
 
 In `app/ember-intl.{js,ts}`, you can use the `formatDate` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
 
+::: code-group
+
+<<< @/snippets/helpers/format-date/example-2/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-date/example-2/component.ts [app/components/example.ts]
+
+<<< @/snippets/helpers/format-date/example-2/ember-intl.ts [app/ember-intl.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -39,28 +54,23 @@ In `app/ember-intl.{js,ts}`, you can use the `formatDate` key to define the form
       {{format-date this.today format="user-friendly"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-date__example-2__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-date__example-2__example.ts"
-  />
-
-  <demo.snippet
-    @label="ember-intl.ts"
-    @name="docs__helpers__format-date__example-2__app__ember-intl.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## options.locale
 
 You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
+::: code-group
+
+<<< @/snippets/helpers/format-date/example-3/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-date/example-3/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -73,17 +83,8 @@ You can display the text in another locale (i.e. independently from the user's p
       {{format-date this.today locale="de-de"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-date__example-3__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-date__example-3__example.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## Additional options
@@ -95,6 +96,15 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
 - `timeZone`
 - `weekday`
 
+::: code-group
+
+<<< @/snippets/helpers/format-date/example-4/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-date/example-4/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -107,14 +117,5 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
       }}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-date__example-4__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-date__example-4__example.ts"
-  />
 </DocsDemo>
+-->

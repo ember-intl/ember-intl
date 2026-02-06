@@ -1,7 +1,20 @@
-# &#123;&#123;format-list&#125;&#125;
+---
+title: \{{format-list}}
+---
+
+# &#123;&#123;format-list&#125;&#125; {#format-list}
 
 Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/format) to join an array of strings.
 
+::: code-group
+
+<<< @/snippets/helpers/format-list/example-1/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-list/example-1/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -10,23 +23,23 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
       {{format-list this.letters}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-list__example-1__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-list__example-1__example.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## options.locale
 
 You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
+::: code-group
+
+<<< @/snippets/helpers/format-list/example-2/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-list/example-2/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -39,17 +52,8 @@ You can display the text in another locale (i.e. independently from the user's p
       {{format-list this.letters locale="de-de"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-list__example-2__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-list__example-2__example.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## Additional options
@@ -60,6 +64,15 @@ You can use named arguments to pass the [options that `Intl.ListFormat` supports
 - `style`
 - `type`
 
+::: code-group
+
+<<< @/snippets/helpers/format-list/example-3/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-list/example-3/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -68,14 +81,5 @@ You can use named arguments to pass the [options that `Intl.ListFormat` supports
       {{format-list this.letters type="disjunction"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-list__example-3__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-list__example-3__example.ts"
-  />
 </DocsDemo>
+-->

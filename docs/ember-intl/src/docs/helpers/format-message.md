@@ -1,7 +1,20 @@
-# &#123;&#123;format-message&#125;&#125;
+---
+title: \{{format-message}}
+---
+
+# &#123;&#123;format-message&#125;&#125; {#format-message}
 
 Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/).
 
+::: code-group
+
+<<< @/snippets/helpers/format-message/example-1/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-message/example-1/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -33,17 +46,8 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
       }}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-message__example-1__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-message__example-1__example.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## Passing a string instead of a descriptor
@@ -73,6 +77,15 @@ Currently, `ember-intl` allows you to pass a string instead. If possible, avoid 
 
 To render an HTML in a translation message, set `htmlSafe` to `true`.
 
+::: code-group
+
+<<< @/snippets/helpers/format-message/example-2/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-message/example-2/component.ts [app/components/example.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <demo.example>
     <div>
@@ -83,14 +96,5 @@ To render an HTML in a translation message, set `htmlSafe` to `true`.
       }}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-message__example-2__example.hbs"
-  />
-
-  <demo.snippet
-    @label="components/example.ts"
-    @name="docs__helpers__format-message__example-2__example.ts"
-  />
 </DocsDemo>
+-->

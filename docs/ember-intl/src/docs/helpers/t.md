@@ -1,7 +1,22 @@
-# &#123;&#123;t&#125;&#125;
+---
+title: \{{t}}
+---
+
+# &#123;&#123;t&#125;&#125; {#t}
 
 The `{{t}}` helper finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.github.io/docs/core-concepts/icu-syntax/). The helper returns the resulting string.
 
+::: code-group
+
+<<< @/snippets/helpers/t/example-1/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/t/example-1/de-de.yaml [translations/de-de.yaml]
+
+<<< @/snippets/helpers/t/example-1/en-us.yaml [translations/en-us.yaml]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -10,35 +25,21 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
       {{t "hello.message"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__t__example-1__example.hbs"
-  />
-
-  <demo.snippet
-    @label="translations/de-de.yaml"
-    @name="docs__helpers__t__example-1__translations__de-de.yaml"
-  />
-
-  <demo.snippet
-    @label="translations/en-us.yaml"
-    @name="docs__helpers__t__example-1__translations__en-us.yaml"
-  />
 </DocsDemo>
+-->
 
 
 ## Passing data
 
 We use the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/) to pass data to translations. Data can also be formatted when you specify their type.
 
-```yml
+```yaml
 # A simple argument
 hello:
   message: Hello, {name}!
 ```
 
-```yml
+```yaml
 # A plural-type argument
 photo-album:
   summary: You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
@@ -46,6 +47,17 @@ photo-album:
 
 To pass data to the `{{t}}` helper, you can use named arguments, a positional argument (2nd position), or a combination of both. In the combined case, data passed as named arguments will take precedence.
 
+::: code-group
+
+<<< @/snippets/helpers/t/example-2/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/t/example-2/de-de.yaml [translations/de-de.yaml]
+
+<<< @/snippets/helpers/t/example-2/en-us.yaml [translations/en-us.yaml]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -54,48 +66,34 @@ To pass data to the `{{t}}` helper, you can use named arguments, a positional ar
       {{t "photo-album.summary" (hash numPhotos=3)}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__t__example-2__example.hbs"
-  />
-
-  <demo.snippet
-    @label="translations/de-de.yaml"
-    @name="docs__helpers__t__example-2__translations__de-de.yaml"
-  />
-
-  <demo.snippet
-    @label="translations/en-us.yaml"
-    @name="docs__helpers__t__example-2__translations__en-us.yaml"
-  />
 </DocsDemo>
+-->
 
-Note, when an argument doesn't have a value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#setonformatjserror-), `@formatjs/intl` will return the message as is.
-
-```html
-<!-- What users see when `numPhotos` is undefined -->
-You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
-```
-
-Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider [creating default values](../services/intl-part-2#gettranslation-).
-
-```hbs
-{{#let (hash numPhotos=0) as |fallback|}}
-  {{t
-    "photo-album.summary"
-    fallback
-    numPhotos=@user.numPhotos
-  }}
-{{/let}}
-```
+> [!NOTE]
+> 
+> When an argument doesn't have a value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#setonformatjserror-), `@formatjs/intl` will return the message as is.
+>
+> ```html
+> <!-- What users see when `numPhotos` is undefined -->
+> You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
+> ```
+>
+> Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider [creating default values](../services/intl-part-2#gettranslation-).
+>
+> ```hbs
+> {{#let (hash numPhotos=0) as |fallback|}}
+>   {{t
+>     "photo-album.summary"
+>     fallback
+>     numPhotos=@user.numPhotos
+>   }}
+> {{/let}}
+> ```
 
 
 ## options.htmlSafe
 
 To render an HTML in a translation message, set `htmlSafe` to `true`. The `{{t}}` helper returns a `SafeString` (casted as `string` to improve DX).
-
-**Warning: Do not use triple curly braces (e.g. `{{{t "call-to-action"}}}`), as it can allow XSS (cross-site scripting).**
 
 ```hbs
 {{! components/example.hbs }}
@@ -107,6 +105,10 @@ To render an HTML in a translation message, set `htmlSafe` to `true`. The `{{t}}
 ember:
   visit-homepage: Visit <a href="https://www.emberjs.com">Ember.js</a>.
 ```
+
+> [!CAUTION]
+> 
+> Do not use triple curly braces (e.g. `{{{t "call-to-action"}}}`), as it can allow XSS (cross-site scripting).
 
 To pass data to an HTML tag, escape the angle brackets:
 
@@ -132,6 +134,13 @@ ember:
 
 You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
+::: code-group
+
+<<< @/snippets/helpers/t/example-3/template.hbs [app/components/example.hbs]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -156,9 +165,5 @@ You can display the text in another locale (i.e. independently from the user's p
       }}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__t__example-3__example.hbs"
-  />
 </DocsDemo>
+-->

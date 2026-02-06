@@ -1,7 +1,18 @@
-# &#123;&#123;format-number&#125;&#125;
+---
+title: \{{format-number}}
+---
+
+# &#123;&#123;format-number&#125;&#125; {#format-number}
 
 Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/format) to format a number.
 
+::: code-group
+
+<<< @/snippets/helpers/format-number/example-1/template.hbs [app/components/example.hbs]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -10,18 +21,23 @@ Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Ref
       {{format-number 12345}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-number__example-1__example.hbs"
-  />
 </DocsDemo>
+-->
 
 
 ## options.format
 
 In `app/ember-intl.{js,ts}`, you can use the `formatNumber` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
 
+::: code-group
+
+<<< @/snippets/helpers/format-number/example-2/template.hbs [app/components/example.hbs]
+
+<<< @/snippets/helpers/format-number/example-2/ember-intl.ts [app/ember-intl.ts]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -30,23 +46,21 @@ In `app/ember-intl.{js,ts}`, you can use the `formatNumber` key to define the fo
       {{format-number 12345 format="EUR"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-number__example-2__example.hbs"
-  />
-
-  <demo.snippet
-    @label="ember-intl.ts"
-    @name="docs__helpers__format-number__example-2__app__ember-intl.ts"
-  />
 </DocsDemo>
+-->
 
 
 ## options.locale
 
 You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
+::: code-group
+
+<<< @/snippets/helpers/format-number/example-3/template.hbs [app/components/example.hbs]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -59,12 +73,8 @@ You can display the text in another locale (i.e. independently from the user's p
       {{format-number 12345 locale="de-de"}}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-number__example-3__example.hbs"
-  />
 </DocsDemo>
+-->
 
 
 ## Additional options
@@ -77,6 +87,13 @@ You can use named arguments to pass [options that `Intl.NumberFormat` supports](
 - `signDisplay`
 - `style`
 
+::: code-group
+
+<<< @/snippets/helpers/format-number/example-4/template.hbs [app/components/example.hbs]
+
+:::
+
+<!--
 <DocsDemo as |demo|>
   <LocaleSwitcher />
 
@@ -92,9 +109,5 @@ You can use named arguments to pass [options that `Intl.NumberFormat` supports](
       }}
     </div>
   </demo.example>
-
-  <demo.snippet
-    @label="components/example.hbs"
-    @name="docs__helpers__format-number__example-4__example.hbs"
-  />
 </DocsDemo>
+-->
