@@ -29,16 +29,16 @@
 
 <details>
 
-<summary>Run the demo app</summary>
+<summary>Run the documentation site</summary>
 
-1. Once dependencies have been installed, you can run the [demo app](./docs/ember-intl).
+1. Once dependencies have been installed, you can run the [documentation site](./docs/ember-intl).
 
     ```sh
     # From the workspace root
     pnpm start
     ```
 
-1. Open the app at [http://localhost:4200](http://localhost:4200).
+1. Open the app at [http://localhost:5173/ember-intl/](http://localhost:5173/ember-intl/).
 
 </details>
 
