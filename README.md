@@ -26,8 +26,7 @@ _Internationalization for Ember projects_
 
 ## Documentation
 
-- [Changelog](./packages/ember-intl/CHANGELOG.md)
-- [Quickstart](https://ember-intl.github.io/ember-intl/docs/quickstart)
+Visit https://ember-intl.github.io/.
 
 
 ## Compatibility

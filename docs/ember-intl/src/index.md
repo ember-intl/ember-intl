@@ -10,11 +10,11 @@ hero:
       text: Docs
       theme: brand
 
-    - link: /docs/getting-started/quickstart
+    - link: /docs/quickstart
       text: Quickstart (Apps)
       theme: alt
 
-    - link: /docs/getting-started/quickstart-addons
+    - link: /docs/quickstart-addons
       text: Quickstart (Addons)
       theme: alt
 
