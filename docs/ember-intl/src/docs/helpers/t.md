@@ -71,14 +71,14 @@ To pass data to the `{{t}}` helper, you can use named arguments, a positional ar
 
 > [!NOTE]
 > 
-> When an argument doesn't have a value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#setonformatjserror-), `@formatjs/intl` will return the message as is.
+> When an argument doesn't have a value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#methods-set-on-formatjs-error), `@formatjs/intl` will return the message as is.
 >
 > ```html
 > <!-- What users see when `numPhotos` is undefined -->
 > You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
 > ```
 >
-> Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider [creating default values](../services/intl-part-2#gettranslation-).
+> Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider [creating default values](../services/intl-part-2#methods-get-translation).
 >
 > ```hbs
 > {{#let (hash numPhotos=0) as |fallback|}}

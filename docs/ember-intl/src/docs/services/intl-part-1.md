@@ -12,7 +12,7 @@ export default class Example extends Component {
 }
 ```
 
-Here, we'll focus on parts of the API that you may frequently use. Note, each of these methods has a [corresponding helper](../helpers/introduction), so please check its documentation page for more examples.
+Here, we'll focus on parts of the API that you may frequently use. Each of these methods has a [corresponding helper](../helpers/introduction), so check its documentation page for more examples.
 
 
 ## Methods
@@ -20,7 +20,7 @@ Here, we'll focus on parts of the API that you may frequently use. Note, each of
 Every `format*()` method returns an empty string when `value` (the 1st positional argument) is `undefined` or `null`. The expected types, which are mentioned below, ignore these 2 possible values to keep the documentation brief.
 
 
-### formatDate()
+### formatDate() {#methods-format-date}
 
 Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/format) to format a date.
 
@@ -32,7 +32,7 @@ const output = this.intl.formatDate('2014-01-23T18:00:44');
 ```
 
 
-### formatDateRange()
+### formatDateRange() {#methods-format-date-range}
 
 Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange) to format a date range.
 
@@ -47,7 +47,7 @@ const output = this.intl.formatDateRange(date1, date2);
 ```
 
 
-### formatList()
+### formatList() {#methods-format-list}
 
 Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/format) to join an array of strings.
 
@@ -59,7 +59,7 @@ const output = this.intl.formatList(['apples', 'bananas', 'oranges']);
 ```
 
 
-### formatMessage()
+### formatMessage() {#methods-format-message}
 
 Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/).
 
@@ -97,7 +97,7 @@ const output = this.intl.formatMessage(
 ```
 
 
-### formatNumber()
+### formatNumber() {#methods-format-number}
 
 Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/format) to format a number.
 
@@ -109,7 +109,7 @@ const output = this.intl.formatNumber(12345);
 ```
 
 
-### formatRelativeTime()
+### formatRelativeTime() {#methods-format-relative-time}
 
 Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/format) to format the time relative to now.
 
@@ -121,7 +121,7 @@ const output = this.intl.formatRelativeTime(-1);
 ```
 
 
-### formatTime()
+### formatTime() {#methods-format-time}
 
 Behaves like `formatDate()`, except it focuses on the time.
 
@@ -133,7 +133,7 @@ const output = this.intl.formatTime('2014-01-23T18:00:44');
 ```
 
 
-### t()
+### t() {#methods-t}
 
 Finds the translation message corresponding to a key, then [populates the message with data](https://formatjs.github.io/docs/core-concepts/icu-syntax/) (optional).
 

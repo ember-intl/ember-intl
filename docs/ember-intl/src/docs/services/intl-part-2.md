@@ -5,19 +5,21 @@ We continue from [Part 1](./intl-part-1) and will examine parts of the API that 
 
 ## Getters
 
-### locales
+### locales {#getters-locales}
 
 Returns all locales that have translations.
-
-**WARNING: The values of `locales` have been "normalized," and are meant to be identifiers for the `intl` service. Avoid writing logic based on `locales`.**
 
 ```ts
 console.log(this.intl.locales);
 // ['de-de', 'en-us', 'es-es', 'fr-fr']
 ```
 
+> [!WARNING]
+> 
+> The values of `locales` have been "normalized," and are meant to be identifiers for the `intl` service. Avoid writing logic based on `locales`.
 
-### primaryLocale
+
+### primaryLocale {#getters-primary-locale}
 
 Returns the first locale among the locales that are currently active.
 
@@ -29,7 +31,7 @@ console.log(this.intl.primaryLocale);
 
 ## Methods
 
-### addTranslations()
+### addTranslations() {#methods-add-translations}
 
 Register translations for a particular locale. Used to lazy-load translations.
 
@@ -64,7 +66,7 @@ export default class ApplicationRoute extends Route {
 ```
 
 
-### exists()
+### exists() {#methods-exists}
 
 Returns `true` if a translation key exists in one of the locales that are currently active.
 
@@ -91,7 +93,7 @@ if (this.intl.exists('components.example.option-1', 'de-de')) {
 ```
 
 
-### getTranslation()
+### getTranslation() {#methods-get-translation}
 
 Returns the translation message for a given key and locale.
 
@@ -103,7 +105,7 @@ console.log(this.intl.getTranslation('hello.message', 'de-de'));
 This method could be used to create default values for arguments, so that users don't see the raw message when an argument doesn't have a value. To extract the message arguments, you can use [`@formatjs/icu-messageformat-parser`](https://formatjs.github.io/docs/icu-messageformat-parser/).
 
 
-### setFormats()
+### setFormats() {#methods-set-formats}
 
 Specify your reusable formats (defined in `app/ember-intl.{js,ts}`).
 
@@ -143,7 +145,7 @@ export default class ApplicationRoute extends Route {
 ```
 
 
-### setLocale()
+### setLocale() {#methods-set-locale}
 
 Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
 
@@ -180,7 +182,7 @@ this.intl.setLocale(['de-AT', 'de-DE', 'en-US']);
 ```
 
 
-### setOnFormatjsError()
+### setOnFormatjsError() {#methods-set-on-formatjs-error}
 
 Specify what to do when `@formatjs/intl` errors. Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.github.io/docs/guides/develop#error-codes).
 
@@ -221,7 +223,7 @@ export default class ApplicationRoute extends Route {
 ```
 
 
-### setOnMissingTranslation()
+### setOnMissingTranslation() {#methods-set-on-missing-translation}
 
 Specify what to display when a translation is missing. Your callback function has access to `key`, `locales`, and `data` (this includes `options.htmlSafe` and `options.locale`).
 
