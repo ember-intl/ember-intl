@@ -23,7 +23,7 @@ Maintaining and extending these keys can be difficult if you have a production p
 The steps below describe how [keys can be created automatically](https://formatjs.github.io/docs/getting-started/message-extraction/).
 
 
-## 1. Use `{{format-message}}`
+## 1. Use `{{format-message}}` {#1-use-format-message}
 
 In templates, use the `{{format-message}}` helper and pass the translation that you want for the default locale.
 
@@ -48,7 +48,7 @@ export default class ApplicationController extends Controller {
 ```
 
 
-## 2. Extract translations
+## 2. Extract translations {#2-extract-translations}
 
 Install `@formatjs/cli` as a development dependency, then add the following script:
 
@@ -79,7 +79,7 @@ Now that you have a translation file with unique keys, you can create translatio
 - Use a Translation Management System (TMS).
 
 
-## 3. Convert `{{format-message}}` to `{{t}}`
+## 3. Convert `{{format-message}}` to `{{t}}` {#3-convert-format-message-to-t}
 
 Finally, we need to change `{{format-message}}` and `formatMessage()` to `{{t}}` and `t()`, so that your app displays the correct translations to your users.
 

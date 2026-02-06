@@ -129,8 +129,8 @@ export const sidebar: DefaultTheme.Sidebar = [
         text: 'Organizing translations',
       },
       {
-        link: '/docs/advanced/runtime-requirements',
-        text: 'Runtime requirements',
+        link: '/docs/advanced/polyfills',
+        text: 'Polyfills',
       },
     ],
     text: 'Advanced',

@@ -22,7 +22,7 @@ export default {
 };
 ```
 
-## addonPaths
+## addonPaths {#config-addon-paths}
 
 For v2 apps, to include an addon's translations, specify the relative path to the addon's root.
 
@@ -32,10 +32,14 @@ export default {
 };
 ```
 
-Note, if multiple addons define the same key, the last appearing addon's translation wins. (This isn't possible with `@ember-intl/v1-compat`. As always, the app's translation takes precedence over an addon's.)
+> [!NOTE]
+> 
+> If multiple addons define the same key, the last appearing addon's translation wins. (This isn't possible with `@ember-intl/v1-compat`.)
+> 
+> The app's translation always takes precedence over an addon's.
 
 
-## buildOptions
+## buildOptions {#config-build-options}
 
 Here are the options' names and default values.
 
@@ -57,7 +61,7 @@ const defaultBuildOptions: ConfigBuildOptions = {
 
 
 
-### fallbackLocale
+### fallbackLocale {#config-build-options-fallback-locale}
 
 Copy the fallback locale's translations to all other locales as a fallback strategy.
 
@@ -68,7 +72,7 @@ Copy the fallback locale's translations to all other locales as a fallback strat
 ```
 
 
-### inputPath
+### inputPath {#config-build-options-input-path}
 
 Where translations live relative to the project root.
 
@@ -90,7 +94,7 @@ If a v1 addon's `dummy` app provides its own translations (these aren't publishe
 ```
 
 
-### publicOnly
+### publicOnly {#config-build-options-public-only}
 
 Prevents the translations from being bundled with the application code. This enables lazily loading the translations.
 
@@ -103,7 +107,7 @@ Prevents the translations from being bundled with the application code. This ena
 For more information, see [Lazy-loading translations](./lazy-loading-translations).
 
 
-### wrapTranslationsWithNamespace
+### wrapTranslationsWithNamespace {#config-build-options-wrap-translations-with-namespace}
 
 Derive the key's namespace from the folder path. This enables storing translations in subfolders whose structure closely resembles that of `app/components` and `app/templates`.
 

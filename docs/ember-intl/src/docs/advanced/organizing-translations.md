@@ -23,7 +23,7 @@ my-v2-addon
 As the project grows, you will find the need to organize your translations. Here are a couple of ways to do so.
 
 
-### Nested folders
+## Nested folders
 
 You may create subdirectories to organize your translations.
 
@@ -43,33 +43,27 @@ my-app
 
 Each translation file should have a "namespace," an identifier that helps you localize the translations to that file.
 
-<DocsDemo as |demo|>
-  <demo.snippet
-    @label="translations/components/hello/de-de.yaml"
-    @name="docs__advanced__organizing-translations__example-1__components-hello-de-de.yaml"
-  />
+::: code-group
 
-  <demo.snippet
-    @label="translations/routes/application/de-de.yaml"
-    @name="docs__advanced__organizing-translations__example-1__routes-application-de-de.yaml"
-  />
-</DocsDemo>
+<<< @/snippets/advanced/organizing-translations/example-1/components-hello-de-de.yaml [translations/components/hello/de-de.yaml]
+
+<<< @/snippets/advanced/organizing-translations/example-1/routes-application-de-de.yaml [translations/routes/application/de-de.yaml]
+
+:::
 
 
-### Namespace from folders
+## Namespaced keys
 
-In `config/ember-intl.js`, set `wrapTranslationsWithNamespace` to `true` to derive the namespace from folder names.
+In `ember-intl.config.mjs`, set `buildOptions.wrapTranslationsWithNamespace` to `true` to derive the namespace from folder names.
 
-<DocsDemo as |demo|>
-  <demo.snippet
-    @label="translations/components/hello/de-de.yaml"
-    @name="docs__advanced__organizing-translations__example-2__components-hello-de-de.yaml"
-  />
+::: code-group
 
-  <demo.snippet
-    @label="translations/routes/application/de-de.yaml"
-    @name="docs__advanced__organizing-translations__example-2__routes-application-de-de.yaml"
-  />
-</DocsDemo>
+<<< @/snippets/advanced/organizing-translations/example-2/components-hello-de-de.yaml [translations/components/hello/de-de.yaml]
 
-Note, spaces in a folder name will be converted to underscores.
+<<< @/snippets/advanced/organizing-translations/example-2/routes-application-de-de.yaml [translations/routes/application/de-de.yaml]
+
+:::
+
+> [!NOTE]
+> 
+> Spaces in a folder name are converted to underscores.

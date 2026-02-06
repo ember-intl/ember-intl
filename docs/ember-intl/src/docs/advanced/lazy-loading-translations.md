@@ -3,9 +3,9 @@
 By default, translations in the `translations` folder are bundled with `app.js`. For large apps, you may prefer to have translations in the `dist` folder and load them at runtime.
 
 
-## 1. Configure ember-intl
+## 1. Configure ember-intl {#1-configure-ember-intl}
 
-### v1 apps (Classic)
+### v1 apps (Classic) {#1-configure-ember-intl-v1-apps-classic}
 
 In `config/ember-intl.js`, set `publicOnly` to `true`.
 
@@ -27,7 +27,7 @@ my-app
         └── en-us.json
 ```
 
-### v1 apps (Embroider + Webpack)
+### v1 apps (Embroider + Webpack) {#1-configure-ember-intl-v1-apps}
 
 Update `config/ember-intl.js` as shown above.
 
@@ -66,12 +66,12 @@ module.exports = function (defaults) {
 ```
 
 
-### v2 apps
+### v2 apps {#1-configure-ember-intl-v2-apps}
 
 There is nothing to do. The files `ember-intl.config.{js,mjs}`, `ember-cli-build.js`, and `vite.config.mjs` remain the same.
 
 
-## 2. Lazy-load translations
+## 2. Lazy-load translations {#2-lazy-load-translations}
 
 No matter how the app is built, we can abstract how to lazy-load translations like this:
 
@@ -105,7 +105,7 @@ export default class ApplicationRoute extends Route {
 For brevity, the guide will only show what's to be done differently below.
 
 
-### v1 apps (Classic)
+### v1 apps (Classic) {#2-lazy-load-translations-v1-apps-classic}
 
 Use native `fetch` to load translation files.
 
@@ -119,7 +119,7 @@ private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
 ```
 
 
-### v1 apps (Embroider + Webpack)
+### v1 apps (Embroider + Webpack) {#2-lazy-load-translations-v1-apps}
 
 Use dynamic import to load translation files.
 
@@ -137,9 +137,9 @@ private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
 ```
 
 
-### v2 apps
+### v2 apps {#2-lazy-load-translations-v2-apps}
 
-Use dynamic import to load translation files. (Note, file paths prefixed with `virtual:` are called a "virtual module" in Vite. They don't physically exist on disk.)
+Use dynamic import to load translation files.
 
 ```ts
 const translationModules = {
@@ -154,13 +154,17 @@ private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
 }
 ```
 
+> [!NOTE]
+> 
+> File paths prefixed with `virtual:` are called a "virtual module" in Vite. They don't physically exist on disk.
 
-## 3. Fingerprint translations
+
+## 3. Fingerprint translations {#3-fingerprint-translations}
 
 This step applies to classic apps only.
 
 
-### v1 apps (Classic)
+### v1 apps (Classic) {#3-fingerprint-translations-v1-apps-classic}
 
 In Ember apps with a classic build, we use [`broccoli-asset-rev`](https://github.com/ember-cli/broccoli-asset-rev) to fingerprint files.
 
