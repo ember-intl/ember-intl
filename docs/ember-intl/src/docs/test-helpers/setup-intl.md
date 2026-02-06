@@ -1,11 +1,13 @@
-# setupIntl()
+# setupIntl() {#setup-intl}
 
 In rendering and unit tests, you should add `setupIntl()` if they depend on `ember-intl`, e.g. you used the `{{t}}` helper in the template, or injected the `intl` service in the class.
 
 In application tests, it's not necessary to call `setupIntl()`. The only time you might do this is to run a test module with a particular locale.
 
 
-## setupIntl(hooks, locale)
+## API
+
+### setupIntl(hooks, locale) {#api-option-1}
 
 The default syntax helps you check the translations for a specific locale.
 
@@ -31,7 +33,7 @@ module('Integration | Component | hello', function (hooks) {
 ```
 
 
-## setupIntl(hooks, locale, translations)
+### setupIntl(hooks, locale, translations) {#api-option-2}
 
 You can pass a translation object to stub the translations for a specific locale.
 

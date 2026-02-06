@@ -1,4 +1,4 @@
-# t()
+# t() {#t}
 
 The test helper `t()` returns what the `intl` service's `t()` method returns. You may use it for these cases:
 
@@ -6,7 +6,9 @@ The test helper `t()` returns what the `intl` service's `t()` method returns. Yo
 - You _can't_ get the value because of your project setup (e.g. lazy loading).
 
 
-## t(key, [options])
+## API
+
+### t(key, [data]) {#api-option-1}
 
 ```ts
 import { render } from '@ember/test-helpers';

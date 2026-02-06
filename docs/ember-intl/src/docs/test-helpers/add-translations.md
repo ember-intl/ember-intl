@@ -1,9 +1,11 @@
-# addTranslations()
+# addTranslations() {#add-translations}
 
 Updates translations as if you had somehow added them (e.g. via lazy loading).
 
 
-## addTranslations(locale, translations)
+## API
+
+### addTranslations(locale, translations) {#api-option-1}
 
 ```ts
 import { render } from '@ember/test-helpers';

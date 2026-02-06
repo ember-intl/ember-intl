@@ -1,9 +1,11 @@
-# setLocale()
+# setLocale() {#set-locale}
 
 Updates the locale as if the user had changed their preferred language.
 
 
-## setLocale(locale)
+## API
+
+### setLocale(locale) {#api-option-1}
 
 ```ts
 import { render } from '@ember/test-helpers';
