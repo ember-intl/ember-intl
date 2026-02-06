@@ -1,0 +1,43 @@
+/* stylelint-disable selector-class-pattern */
+:root {
+  --ember-black: #212121;
+  --ember-brand: #db3122;
+  --ember-brand-old: #e04e39;
+  --ember-faint-gray: #efebea;
+  --ember-gray: #817f7f;
+  --ember-linen: #fdf7f6;
+}
+
+html:not(.dark) {
+  --vp-button-brand-bg: var(--ember-brand) !important;
+  --vp-button-brand-hover-bg: var(--ember-brand-old) !important;
+  --vp-c-brand-1: var(--ember-brand) !important;
+  --vp-c-brand-2: var(--ember-brand-old) !important;
+  --vp-c-text-1: var(--ember-black) !important;
+  --vp-c-text-2: var(--ember-gray) !important;
+  --vp-c-text-3: var(--ember-faint-gray) !important;
+  --vp-code-block-bg: var(--ember-linen) !important;
+  --vp-home-hero-name-color: var(--ember-brand) !important;
+}
+
+html:not(.dark) :focus-visible {
+  outline-color: var(--ember-brand-old) !important;
+}
+
+html:not(.dark) .VPSidebarItem .caret {
+  color: var(--ember-black) !important;
+}
+
+html:not(.dark) .VPSidebarItem.level-1 .text {
+  font-weight: 400 !important;
+}
+
+html.dark {
+  --vp-button-brand-bg: var(--ember-brand) !important;
+  --vp-button-brand-hover-bg: var(--ember-brand-old) !important;
+  --vp-home-hero-name-color: var(--ember-brand) !important;
+}
+
+html.dark .VPSidebarItem.level-1 .text {
+  font-weight: 400 !important;
+}

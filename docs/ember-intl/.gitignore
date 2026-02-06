@@ -1,6 +1,6 @@
 # compiled output
-/dist/
-/declarations/
+/.vitepress/cache/
+/.vitepress/dist/
 
 # dependencies
 /node_modules/
@@ -10,10 +10,3 @@
 /.pnp*
 /.eslintcache
 /.stylelintcache
-/coverage/
-/npm-debug.log*
-/testem.log
-/yarn-error.log
-
-# broccoli-debug
-/DEBUG/

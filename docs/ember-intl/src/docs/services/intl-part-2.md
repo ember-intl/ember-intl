@@ -1,0 +1,250 @@
+# intl (Part 2)
+
+We continue from [Part 1](./intl-part-1) and will examine parts of the API that are used less often. Some of these methods, such as `setLocale()` and `addTranslations()`, are critical for setting up `ember-intl`.
+
+
+## Getters
+
+### locales {#getters-locales}
+
+Returns all locales that have translations.
+
+```ts
+console.log(this.intl.locales);
+// ['de-de', 'en-us', 'es-es', 'fr-fr']
+```
+
+> [!WARNING]
+> 
+> The values of `locales` have been "normalized," and are meant to be identifiers for the `intl` service. Avoid writing logic based on `locales`.
+
+
+### primaryLocale {#getters-primary-locale}
+
+Returns the first locale among the locales that are currently active.
+
+```ts
+console.log(this.intl.primaryLocale);
+// 'en-us'
+```
+
+
+## Methods
+
+### addTranslations() {#methods-add-translations}
+
+Register translations for a particular locale. Used to lazy-load translations.
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  async beforeModel(): Promise<void> {
+    await this.setupIntl();
+  }
+
+  private async loadTranslations(locale: 'de-de' | 'en-us'): Promise<void> {
+    const response = await fetch(`/translations/${locale}.json`);
+    const translations = await response.json();
+
+    this.intl.addTranslations(locale, translations);
+  }
+
+  private async setupIntl(): Promise<void> {
+    await Promise.allSettled([
+      this.loadTranslations('de-de'),
+      this.loadTranslations('en-us'),
+    ]);
+
+    this.intl.setLocale(['en-us']);
+  }
+}
+```
+
+
+### exists() {#methods-exists}
+
+Returns `true` if a translation key exists in one of the locales that are currently active.
+
+```ts
+get options(): string[] {
+  const options: string[] = [];
+  let count = 1;
+
+  while (this.intl.exists(`components.example.option-${count}`)) {
+    options.push(this.intl.t(`components.example.option-${count}`));
+    count++;
+  }
+
+  return options;
+}
+```
+
+You may query against a particular locale:
+
+```ts
+if (this.intl.exists('components.example.option-1', 'de-de')) {
+  // Do something
+}
+```
+
+
+### getTranslation() {#methods-get-translation}
+
+Returns the translation message for a given key and locale.
+
+```ts
+console.log(this.intl.getTranslation('hello.message', 'de-de'));
+// 'Hallo, {name}!'
+```
+
+This method could be used to create default values for arguments, so that users don't see the raw message when an argument doesn't have a value. To extract the message arguments, you can use [`@formatjs/icu-messageformat-parser`](https://formatjs.github.io/docs/icu-messageformat-parser/).
+
+
+### setFormats() {#methods-set-formats}
+
+Specify your reusable formats (defined in `app/ember-intl.{js,ts}`).
+
+```ts
+/* app/ember-intl.ts */
+import type { Formats } from 'ember-intl';
+
+export const formats: Formats = {
+  formatTime: {
+    hhmmss: {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    },
+  },
+};
+```
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+import { formats } from 'my-app/ember-intl';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
+    this.intl.setFormats(formats);
+    this.intl.setLocale(['de-de']);
+  }
+}
+```
+
+
+### setLocale() {#methods-set-locale}
+
+Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or in a component that allows users to set their preferred language.
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
+    this.intl.setLocale(['de-de']);
+  }
+}
+```
+
+The order in which you list the locales in `setLocale()` decides the order in which translations are looked up.
+
+```ts
+// Given a translation key, check 'de-at' (Austria) first, then 'de-de' (Germany), then 'en-us'
+this.intl.setLocale(['de-at', 'de-de', 'en-us']);
+```
+
+When you call `setLocale()`, `ember-intl` sets the `lang` global attribute to the first locale, also called the primary locale (recall the getter `primaryLocale`). We recommend providing Unicode locale identifiers to set the `lang` attribute correctly.
+
+```ts
+// Recommended
+this.intl.setLocale(['de-AT', 'de-DE', 'en-US']);
+```
+
+
+### setOnFormatjsError() {#methods-set-on-formatjs-error}
+
+Specify what to do when `@formatjs/intl` errors. Your callback function has access to `error`, [one that is provided by `@formatjs/intl`](https://formatjs.github.io/docs/guides/develop#error-codes).
+
+By default, `ember-intl` warns `MISSING_DATA` (browser doesn't support an Intl API) and ignores `MISSING_TRANSLATION` (translation message doesn't exist).
+
+Suppose you want to ignore `FORMAT_ERROR` (incorrect or missing argument values) and `MISSING_TRANSLATION`:
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
+    this.intl.setLocale(['de-de']);
+
+    this.intl.setOnFormatjsError((error) => {
+      switch (error.code) {
+        case 'FORMAT_ERROR':
+        case 'MISSING_TRANSLATION': {
+          // Do nothing
+          break;
+        }
+
+        default: {
+          throw error;
+        }
+      }
+    });
+  }
+}
+```
+
+
+### setOnMissingTranslation() {#methods-set-on-missing-translation}
+
+Specify what to display when a translation is missing. Your callback function has access to `key`, `locales`, and `data` (this includes `options.htmlSafe` and `options.locale`).
+
+```ts
+/* app/routes/application.ts */
+import Route from '@ember/routing/route';
+import { type Registry as Services, service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+  @service declare intl: Services['intl'];
+
+  beforeModel(): void {
+    this.setupIntl();
+  }
+
+  private setupIntl(): void {
+    this.intl.setLocale(['de-de']);
+
+    this.intl.setOnMissingTranslation((key) => {
+      return `🐹🐹🐹 Missing: ${key} 🐹🐹🐹`;
+    });
+  }
+}
+```

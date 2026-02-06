@@ -1,16 +1,11 @@
-# unconventional js
-/blueprints/*/files/
-
 # compiled output
-/dist/
+/.vitepress/cache/
+/.vitepress/dist/
 
 # misc
-/coverage/
 !.*
-.*/
-*.html
 README.md
 
 # specific to this package
-app/snippets/**/*
-app/templates/**/*.md
+/src/docs/
+/src/snippets/

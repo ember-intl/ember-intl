@@ -1,17 +1,9 @@
 {
-  "extends": "@shared-configs/typescript/ember",
+  "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "docs-app-for-ember-intl/tests/*": ["tests/*"],
-      "docs-app-for-ember-intl/*": ["app/*"],
-      "*": ["types/*"]
-    },
-    "types": ["ember-source/types"]
+    "allowImportingTsExtensions": true,
+    "declaration": false
   },
-  "exclude": ["app/snippets/**/*"],
-  "include": ["app/**/*", "tests/**/*", "types/**/*"],
-  "glint": {
-    "environment": ["ember-loose", "ember-template-imports"]
-  }
+  "include": [".vitepress/config.mts", ".vitepress/sidebar.mts"],
+  "exclude": []
 }

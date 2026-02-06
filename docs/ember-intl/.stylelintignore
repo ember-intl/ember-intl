@@ -1,5 +1,7 @@
-# unconventional files
-/blueprints/*/files/
-
 # compiled output
-/dist/
+/.vitepress/cache/
+/.vitepress/dist/
+
+# specific to this package
+/src/docs/
+/src/snippets/
