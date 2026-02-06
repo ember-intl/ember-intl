@@ -6,7 +6,6 @@ settings:
 
 overrides:
   ansi-html: ^0.0.9
-  form-data: ^4.0.5
 
 importers:
 
