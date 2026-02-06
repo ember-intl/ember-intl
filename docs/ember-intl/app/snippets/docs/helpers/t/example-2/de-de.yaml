@@ -1,4 +1,0 @@
-# BEGIN-SNIPPET docs__helpers__t__example-2__translations__de-de.yaml
-photo-album:
-  summary: Du hast {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {{numPhotos} Fotos}}.
-# END-SNIPPET

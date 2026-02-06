@@ -1,4 +1,0 @@
-# BEGIN-SNIPPET docs__advanced__organizing-translations__example-1__components-hello-de-de.yaml
-components.hello:
-  message: Hallo, {name}!
-# END-SNIPPET
