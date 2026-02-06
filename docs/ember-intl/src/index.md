@@ -10,6 +10,14 @@ hero:
       text: Docs
       theme: brand
 
+    - link: /docs/getting-started/quickstart
+      text: Quickstart (Apps)
+      theme: alt
+
+    - link: /docs/getting-started/quickstart-addons
+      text: Quickstart (Addons)
+      theme: alt
+
 features:
   - details: All apps and addons (v1 and v2) supported.
     icon: 🐹
