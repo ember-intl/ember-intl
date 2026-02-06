@@ -140,31 +140,31 @@ export const sidebar: DefaultTheme.Sidebar = [
     items: [
       {
         link: '/docs/migration/v8',
-        text: 'From 7.0 to 8.0',
+        text: 'From v7 to v8',
       },
       {
         link: '/docs/migration/v7',
-        text: 'From 6.1 to 7.0',
+        text: 'From v6 to v7',
       },
       {
         link: '/docs/migration/v6',
-        text: 'From 5.0 to 6.0',
+        text: 'From v5 to v6',
       },
       {
         link: '/docs/migration/v5',
-        text: 'From 4.0 to 5.0',
+        text: 'From v4 to v5',
       },
       {
         link: '/docs/migration/v4',
-        text: 'From 3.0 to 4.0',
+        text: 'From v3 to v4',
       },
       {
         link: '/docs/migration/v3',
-        text: 'From 2.0 to 3.0',
+        text: 'From v2 to v3',
       },
       {
-        link: '/docs/migration/v2',
-        text: 'Documentation for 2.x',
+        link: '/docs/migration/past-documentations',
+        text: 'Past documentations',
       },
     ],
     text: 'Migration',
