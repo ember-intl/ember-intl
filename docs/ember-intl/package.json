@@ -1,0 +1,43 @@
+{
+  "name": "docs-app-for-ember-intl",
+  "version": "1.9.2",
+  "private": true,
+  "description": "Docs app for ember-intl",
+  "homepage": "https://ember-intl.github.io/ember-intl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ember-intl/ember-intl.git"
+  },
+  "author": "Isaac J. Lee",
+  "scripts": {
+    "build": "vitepress build",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:css": "stylelint \".vitepress/theme/**/*.css\" --allow-empty-input --cache",
+    "lint:css:fix": "stylelint \".vitepress/theme/**/*.css\" --allow-empty-input --fix",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
+    "lint:format": "prettier . --cache --check",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "tsc --noEmit",
+    "preview": "vitepress preview",
+    "start": "vitepress dev",
+    "test": "exit 0"
+  },
+  "devDependencies": {
+    "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/prettier": "workspace:*",
+    "@shared-configs/stylelint": "workspace:*",
+    "@shared-configs/typescript": "workspace:*",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.2",
+    "prettier": "^3.8.1",
+    "stylelint": "^17.1.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vitepress": "^1.6.4"
+  },
+  "engines": {
+    "node": "20.* || >= 22"
+  }
+}

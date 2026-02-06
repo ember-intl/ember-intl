@@ -1,0 +1,9 @@
+{
+  "extends": "@shared-configs/typescript/node",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "declaration": false
+  },
+  "include": [".vitepress/config.mts", ".vitepress/sidebar.mts"],
+  "exclude": []
+}

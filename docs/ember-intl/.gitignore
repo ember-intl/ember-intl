@@ -1,0 +1,12 @@
+# compiled output
+/.vitepress/cache/
+/.vitepress/dist/
+
+# dependencies
+/node_modules/
+
+# misc
+/.env*
+/.pnp*
+/.eslintcache
+/.stylelintcache

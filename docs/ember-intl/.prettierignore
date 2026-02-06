@@ -1,0 +1,11 @@
+# compiled output
+/.vitepress/cache/
+/.vitepress/dist/
+
+# misc
+!.*
+README.md
+
+# specific to this package
+/src/docs/
+/src/snippets/
