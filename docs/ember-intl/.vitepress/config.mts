@@ -35,7 +35,7 @@ export default defineConfig({
     nav: [
       {
         link: '/docs',
-        text: 'Docs',
+        text: 'Overview',
       },
       {
         items: [
@@ -61,6 +61,9 @@ export default defineConfig({
     ],
     outline: {
       level: [2, 3],
+    },
+    search: {
+      provider: 'local',
     },
     sidebar,
     socialLinks: [
