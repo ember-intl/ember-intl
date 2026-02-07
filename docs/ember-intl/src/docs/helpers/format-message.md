@@ -8,9 +8,7 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
 
 ::: code-group
 
-<<< @/snippets/helpers/format-message/example-1/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-message/example-1/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-message/example-1/component.gts{2,20,24,28} [app/components/example.gts]
 
 :::
 
@@ -50,11 +48,11 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
 -->
 
 
-## Passing a string instead of a descriptor
+## Pass message only
 
 `@formatjs/intl`'s `formatMessage()` requires an object called `descriptor`. In the simplest form, `descriptor` has the following type:
 
-```ts
+```ts {:no-line-numbers}
 interface MessageDescriptor {
   defaultMessage?: string;
   description?: string;
@@ -62,15 +60,25 @@ interface MessageDescriptor {
 }
 ```
 
-Currently, `ember-intl` allows you to pass a string instead. If possible, avoid using this feature and favor writing code explicitly.
+`ember-intl`'s `formatMessage()` allows you to pass just the translation message.
 
-```hbs
-{{format-message
-  "<em>{numPhotos, number} photos taken.</em>"
-  htmlSafe=true
-  numPhotos=3
-}}
+::: code-group
+
+```gts [app/components/example.gts]{5}
+import { formatMessage } from 'ember-intl';
+
+<template>
+  {{formatMessage
+    "<em>{numPhotos, number} photos taken.</em>"
+    htmlSafe=true
+    numPhotos=3
+  }}
+</template>
 ```
+
+:::
+
+For more information, see [Advanced - Auto-generating keys](../advanced/auto-generating-keys).
 
 
 ## options.htmlSafe
@@ -79,9 +87,7 @@ To render an HTML in a translation message, set `htmlSafe` to `true`.
 
 ::: code-group
 
-<<< @/snippets/helpers/format-message/example-2/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-message/example-2/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-message/example-2/component.gts{2,15} [app/components/example.gts]
 
 :::
 

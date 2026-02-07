@@ -8,7 +8,7 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-1/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/t/example-1/component.gts{2,9} [app/components/hello.gts]
 
 <<< @/snippets/helpers/t/example-1/de-de.yaml [translations/de-de.yaml]
 
@@ -33,27 +33,25 @@ The `{{t}}` helper finds the translation message corresponding to a key, then [p
 
 We use the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/) to pass data to translations. Data can also be formatted when you specify their type.
 
-```yaml
-# A simple argument
-hello:
-  message: Hello, {name}!
-```
+::: code-group
 
-```yaml
-# A plural-type argument
-photo-album:
-  summary: You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
-```
+<<< @/snippets/helpers/t/example-2/component.gts{2,11} [app/components/hello.gts]
+
+<<< @/snippets/helpers/t/example-2/de-de.yaml{2} [translations/de-de.yaml]
+
+<<< @/snippets/helpers/t/example-2/en-us.yaml{2} [translations/en-us.yaml]
+
+:::
 
 To pass data to the `{{t}}` helper, you can use named arguments, a positional argument (2nd position), or a combination of both. In the combined case, data passed as named arguments will take precedence.
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-2/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/t/example-3/component.gts{2,3,13,16} [app/components/photo-album.gts]
 
-<<< @/snippets/helpers/t/example-2/de-de.yaml [translations/de-de.yaml]
+<<< @/snippets/helpers/t/example-3/de-de.yaml{2} [translations/de-de.yaml]
 
-<<< @/snippets/helpers/t/example-2/en-us.yaml [translations/en-us.yaml]
+<<< @/snippets/helpers/t/example-3/en-us.yaml{2} [translations/en-us.yaml]
 
 :::
 
@@ -69,25 +67,29 @@ To pass data to the `{{t}}` helper, you can use named arguments, a positional ar
 </DocsDemo>
 -->
 
-> [!NOTE]
+> [!IMPORTANT]
 > 
 > When an argument doesn't have a value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#methods-set-on-formatjs-error), `@formatjs/intl` will return the message as is.
 >
-> ```html
+> ```html {:no-line-numbers}
 > <!-- What users see when `numPhotos` is undefined -->
 > You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
 > ```
 >
 > Please check that all arguments are well-defined when using the `{{t}}` helper. You might consider [creating default values](../services/intl-part-2#methods-get-translation).
 >
-> ```hbs
-> {{#let (hash numPhotos=0) as |fallback|}}
->   {{t
->     "photo-album.summary"
->     fallback
->     numPhotos=@user.numPhotos
->   }}
-> {{/let}}
+> ```gts {8-10}
+> interface PhotoAlbumSignature {
+>   Args: {
+>     numPhotos?: number;
+>   };
+> }
+>
+> const PhotoAlbum: TOC<PhotoAlbumSignature> = <template>
+>   {{#let (hash numPhotos=0) as |fallback|}}
+>     {{t "photo-album.summary" fallback numPhotos=@numPhotos}}
+>   {{/let}}
+> </template>
 > ```
 
 
@@ -95,16 +97,21 @@ To pass data to the `{{t}}` helper, you can use named arguments, a positional ar
 
 To render an HTML in a translation message, set `htmlSafe` to `true`. The `{{t}}` helper returns a `SafeString` (casted as `string` to improve DX).
 
-```hbs
-{{! components/example.hbs }}
-{{t "ember.visit-homepage" htmlSafe=true}}
+::: code-group
+
+```gts [app/components/example.gts]
+import { t } from 'ember-intl';
+
+<template>
+  {{t "visit-homepage" htmlSafe=true}}
+</template>
 ```
 
-```yaml
-# translations/en-us.yaml
-ember:
-  visit-homepage: Visit <a href="https://www.emberjs.com">Ember.js</a>.
+```yaml [translations/en-us.yaml]
+visit-homepage: Visit <a href="https://www.emberjs.com">Ember.js</a>.
 ```
+
+:::
 
 > [!CAUTION]
 > 
@@ -112,22 +119,21 @@ ember:
 
 To pass data to an HTML tag, escape the angle brackets:
 
-```hbs
-{{! components/example.hbs }}
-{{t
-  "ember.visit-legal"
-  (hash
-    url="https://emberjs.com/about/legal"
-  )
-  htmlSafe=true
-}}
+::: code-group
+
+```gts [app/components/example.gts]
+import { t } from 'ember-intl';
+
+<template>
+  {{t "visit-legal" htmlSafe=true url="https://emberjs.com/about/legal"}}
+</template>
 ```
 
-```yaml
-# translations/en-us.yaml
-ember:
-  visit-legal: See our '<'a href="{url}"'>'Terms and Conditions'</a>'.
+```yaml [translations/en-us.yaml]
+visit-legal: See our '<'a href="{url}"'>'Terms and Conditions'</a>'.
 ```
+
+:::
 
 
 ## options.locale
@@ -136,7 +142,7 @@ You can display the text in another locale (i.e. independently from the user's p
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-3/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/t/example-4/component.gts{2,3,12,17} [app/components/example.gts]
 
 :::
 

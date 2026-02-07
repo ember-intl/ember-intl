@@ -1,2 +1,1 @@
-hello:
-  message: Hello!
+hello.message: Hello!

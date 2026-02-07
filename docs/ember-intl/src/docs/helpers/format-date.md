@@ -8,9 +8,7 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-1/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-date/example-1/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-date/example-1/component.gts{2,11} [app/components/example.gts]
 
 :::
 
@@ -37,11 +35,9 @@ In `app/ember-intl.{js,ts}`, you can use the `formatDate` key to define the form
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-2/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/format-date/example-2/component.gts{2,11} [app/components/example.gts]
 
-<<< @/snippets/helpers/format-date/example-2/component.ts [app/components/example.ts]
-
-<<< @/snippets/helpers/format-date/example-2/ember-intl.ts [app/ember-intl.ts]
+<<< @/snippets/helpers/format-date/example-2/ember-intl.ts{4-10} [app/ember-intl.ts]
 
 :::
 
@@ -64,9 +60,7 @@ You can display the text in another locale (i.e. independently from the user's p
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-3/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-date/example-3/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-date/example-3/component.gts{2,12,16} [app/components/example.gts]
 
 :::
 
@@ -98,9 +92,7 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-4/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-date/example-4/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-date/example-4/component.gts{2,11} [app/components/example.gts]
 
 :::
 

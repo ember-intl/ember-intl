@@ -8,9 +8,7 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
 
 ::: code-group
 
-<<< @/snippets/helpers/format-list/example-1/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-list/example-1/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-list/example-1/component.gts{2,11} [app/components/example.gts]
 
 :::
 
@@ -33,9 +31,7 @@ You can display the text in another locale (i.e. independently from the user's p
 
 ::: code-group
 
-<<< @/snippets/helpers/format-list/example-2/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-list/example-2/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-list/example-2/component.gts{2,12,16} [app/components/example.gts]
 
 :::
 
@@ -66,9 +62,7 @@ You can use named arguments to pass the [options that `Intl.ListFormat` supports
 
 ::: code-group
 
-<<< @/snippets/helpers/format-list/example-3/template.hbs [app/components/example.hbs]
-
-<<< @/snippets/helpers/format-list/example-3/component.ts [app/components/example.ts]
+<<< @/snippets/helpers/format-list/example-3/component.gts{2,11} [app/components/example.gts]
 
 :::
 
