@@ -17,6 +17,8 @@ html:not(.dark) {
   --vp-c-text-2: var(--ember-gray) !important;
   --vp-c-text-3: var(--ember-faint-gray) !important;
   --vp-code-block-bg: var(--ember-linen) !important;
+  --vp-code-line-highlight-color: rgb(251 200 64 / 38%) !important;
+  --vp-code-line-number-color: var(--ember-gray) !important;
   --vp-home-hero-name-color: var(--ember-brand) !important;
 }
 

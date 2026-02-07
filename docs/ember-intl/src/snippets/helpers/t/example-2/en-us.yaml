@@ -1,2 +1,2 @@
-photo-album:
-  summary: You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
+# A simple argument
+hello.message: "Hello, {name}!"

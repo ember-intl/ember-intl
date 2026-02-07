@@ -8,7 +8,7 @@ Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Ref
 
 ::: code-group
 
-<<< @/snippets/helpers/format-number/example-1/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/format-number/example-1/component.gts{2,9} [app/components/example.gts]
 
 :::
 
@@ -31,9 +31,9 @@ In `app/ember-intl.{js,ts}`, you can use the `formatNumber` key to define the fo
 
 ::: code-group
 
-<<< @/snippets/helpers/format-number/example-2/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/format-number/example-2/component.gts{2,9} [app/components/example.gts]
 
-<<< @/snippets/helpers/format-number/example-2/ember-intl.ts [app/ember-intl.ts]
+<<< @/snippets/helpers/format-number/example-2/ember-intl.ts{4-9} [app/ember-intl.ts]
 
 :::
 
@@ -56,7 +56,7 @@ You can display the text in another locale (i.e. independently from the user's p
 
 ::: code-group
 
-<<< @/snippets/helpers/format-number/example-3/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/format-number/example-3/component.gts{2,10,14} [app/components/example.gts]
 
 :::
 
@@ -89,7 +89,7 @@ You can use named arguments to pass [options that `Intl.NumberFormat` supports](
 
 ::: code-group
 
-<<< @/snippets/helpers/format-number/example-4/template.hbs [app/components/example.hbs]
+<<< @/snippets/helpers/format-number/example-4/component.gts{2,9-16} [app/components/example.gts]
 
 :::
 
