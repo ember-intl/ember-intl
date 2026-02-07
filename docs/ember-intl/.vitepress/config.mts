@@ -8,7 +8,7 @@ export default defineConfig({
   description: 'Internationalization for Ember projects',
   markdown: {
     anchor: {
-      level: [2, 6],
+      level: [2, 3],
     },
     // https://github.com/vuejs/vitepress/discussions/3724
     config(md) {
@@ -20,6 +20,7 @@ export default defineConfig({
         return defaultCodeInline(tokens, idx, options, env, self);
       };
     },
+    lineNumbers: true,
     theme: {
       light: 'github-light-default',
       dark: 'github-dark-default',
