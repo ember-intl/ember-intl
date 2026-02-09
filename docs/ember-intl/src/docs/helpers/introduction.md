@@ -25,4 +25,4 @@
 > 
 > :::
 
-The helper that you will most frequently use is `t` (the "t helper" or "translation helper"). You may want to check [Helpers - t](./t) first.
+The helper that you will most frequently use is `t` (the "t helper" or "translation helper"). You may want to check the [documentation for `t`](./t) first.
