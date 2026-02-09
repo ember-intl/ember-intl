@@ -1,8 +1,4 @@
----
-title: \{{format-relative-time}}
----
-
-# &#123;&#123;format-relative-time&#125;&#125; {#format-relative-time}
+# formatRelativeTime
 
 Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/format) to format the time relative to now.
 
@@ -33,15 +29,17 @@ Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScri
 -->
 
 
-## options.format
+## Options
 
-In `app/ember-intl.{js,ts}`, you can use the `formatRelativeTime` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
+### format {#options-format}
+
+In `app/ember-intl.{js,ts}`, use the `formatRelativeTime` key to define the `format`'s that you want to use in the app.
 
 ::: code-group
 
-<<< @/snippets/helpers/format-relative-time/example-2/component.gts{2,9} [app/components/example.gts]
+<<< @/snippets/helpers/format-relative-time/example-2/component.gts{9} [app/components/example.gts]
 
-<<< @/snippets/helpers/format-relative-time/example-2/ember-intl.ts{4-8} [app/ember-intl.ts]
+<<< @/snippets/helpers/format-relative-time/example-2/ember-intl.ts{5-7} [app/ember-intl.ts]
 
 :::
 
@@ -58,13 +56,13 @@ In `app/ember-intl.{js,ts}`, you can use the `formatRelativeTime` key to define 
 -->
 
 
-## options.locale
+### locale {#options-locale}
 
 You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
 ::: code-group
 
-<<< @/snippets/helpers/format-relative-time/example-3/component.gts{2,10,14} [app/components/example.gts]
+<<< @/snippets/helpers/format-relative-time/example-3/component.gts{10,14} [app/components/example.gts]
 
 :::
 
@@ -85,7 +83,7 @@ You can display the text in another locale (i.e. independently from the user's p
 -->
 
 
-## Additional options
+### Intl {#options-intl}
 
 You can use named arguments to pass the [options that `Intl.RelativeTimeFormat` supports](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/RelativeTimeFormat#options). Some of these options are listed below.
 
@@ -95,7 +93,7 @@ You can use named arguments to pass the [options that `Intl.RelativeTimeFormat` 
 
 ::: code-group
 
-<<< @/snippets/helpers/format-relative-time/example-4/component.gts{2,9-11} [app/components/example.gts]
+<<< @/snippets/helpers/format-relative-time/example-4/component.gts{9-11} [app/components/example.gts]
 
 :::
 

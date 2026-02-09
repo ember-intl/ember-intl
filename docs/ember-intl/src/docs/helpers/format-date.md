@@ -1,10 +1,6 @@
----
-title: \{{format-date}}
----
+# formatDate
 
-# &#123;&#123;format-date&#125;&#125; {#format-date}
-
-Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/format) to format a date.
+Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/format) to format the date part of a `Date` object.
 
 ::: code-group
 
@@ -29,15 +25,17 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 -->
 
 
-## options.format
+## Options
 
-In `app/ember-intl.{js,ts}`, you can use the `formatDate` key to define the formats that you want to reuse for the helper. Pass the name of your format to `format`.
+### format {#options-format}
+
+In `app/ember-intl.{js,ts}`, use the `formatDate` key to define the `format`'s that you want to use in the app.
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-2/component.gts{2,11} [app/components/example.gts]
+<<< @/snippets/helpers/format-date/example-2/component.gts{11} [app/components/example.gts]
 
-<<< @/snippets/helpers/format-date/example-2/ember-intl.ts{4-10} [app/ember-intl.ts]
+<<< @/snippets/helpers/format-date/example-2/ember-intl.ts{5-9} [app/ember-intl.ts]
 
 :::
 
@@ -53,14 +51,16 @@ In `app/ember-intl.{js,ts}`, you can use the `formatDate` key to define the form
 </DocsDemo>
 -->
 
+For more information, see [Services - intl (Part 2) - setFormats](../services/intl-part-2#methods-set-formats).
 
-## options.locale
+
+### locale {#options-locale}
 
 You can display the text in another locale (i.e. independently from the user's preferred locale). Pass the name of the locale to `locale`.
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-3/component.gts{2,12,16} [app/components/example.gts]
+<<< @/snippets/helpers/format-date/example-3/component.gts{12,16} [app/components/example.gts]
 
 :::
 
@@ -81,7 +81,7 @@ You can display the text in another locale (i.e. independently from the user's p
 -->
 
 
-## Additional options
+### Intl {#options-intl}
 
 You can use named arguments to pass the [options that `Intl.DateTimeFormat` supports](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options). Some of these options are listed below.
 
@@ -92,7 +92,7 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
 
 ::: code-group
 
-<<< @/snippets/helpers/format-date/example-4/component.gts{2,11} [app/components/example.gts]
+<<< @/snippets/helpers/format-date/example-4/component.gts{11} [app/components/example.gts]
 
 :::
 

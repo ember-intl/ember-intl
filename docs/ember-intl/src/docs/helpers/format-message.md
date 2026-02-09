@@ -1,8 +1,4 @@
----
-title: \{{format-message}}
----
-
-# &#123;&#123;format-message&#125;&#125; {#format-message}
+# formatMessage
 
 Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/).
 
@@ -50,7 +46,7 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
 
 ## Pass message only
 
-`@formatjs/intl`'s `formatMessage()` requires an object called `descriptor`. In the simplest form, `descriptor` has the following type:
+`@formatjs/intl`'s `formatMessage` requires an object called `descriptor`. In the simplest form, `descriptor` has the following type:
 
 ```ts {:no-line-numbers}
 interface MessageDescriptor {
@@ -60,7 +56,7 @@ interface MessageDescriptor {
 }
 ```
 
-`ember-intl`'s `formatMessage()` allows you to pass just the translation message.
+`ember-intl`'s `formatMessage` allows you to pass just the translation message.
 
 ::: code-group
 
@@ -81,13 +77,15 @@ import { formatMessage } from 'ember-intl';
 For more information, see [Advanced - Auto-generating keys](../advanced/auto-generating-keys).
 
 
-## options.htmlSafe
+## Options
+
+### htmlSafe {#options-html-safe}
 
 To render an HTML in a translation message, set `htmlSafe` to `true`.
 
 ::: code-group
 
-<<< @/snippets/helpers/format-message/example-2/component.gts{2,15} [app/components/example.gts]
+<<< @/snippets/helpers/format-message/example-2/component.gts{15} [app/components/example.gts]
 
 :::
 
