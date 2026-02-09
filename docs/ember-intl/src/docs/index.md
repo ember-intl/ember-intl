@@ -1,6 +1,5 @@
 # Overview
 
-
 ## What is ember-intl?
 
 `ember-intl` is an addon that helps you internationalize your Ember projects. It is built upon the JavaScript-native [Internationalization API](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl), which is supported by [all modern browsers](https://caniuse.com/#feat=internationalization).

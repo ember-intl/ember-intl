@@ -24,39 +24,39 @@ export const sidebar: DefaultTheme.Sidebar = [
       },
       {
         link: '/docs/helpers/format-date',
-        text: '{{format-date}}',
+        text: 'formatDate',
       },
       {
         link: '/docs/helpers/format-date-range',
-        text: '{{format-date-range}}',
+        text: 'formatDateRange',
       },
       {
         link: '/docs/helpers/format-list',
-        text: '{{format-list}}',
+        text: 'formatList',
       },
       {
         link: '/docs/helpers/format-message',
-        text: '{{format-message}}',
+        text: 'formatMessage',
       },
       {
         link: '/docs/helpers/format-number',
-        text: '{{format-number}}',
+        text: 'formatNumber',
       },
       {
         link: '/docs/helpers/format-relative-time',
-        text: '{{format-relative-time}}',
+        text: 'formatRelativeTime',
       },
       {
         link: '/docs/helpers/format-time',
-        text: '{{format-time}}',
+        text: 'formatTime',
       },
       {
         link: '/docs/helpers/t',
-        text: '{{t}}',
+        text: 't',
       },
       {
         link: '/docs/helpers/t-key',
-        text: '{{t-key}}',
+        text: 'tKey',
       },
       {
         link: '/docs/helpers/template-tag',

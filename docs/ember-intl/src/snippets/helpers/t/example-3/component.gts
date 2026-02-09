@@ -9,10 +9,10 @@ interface PhotoAlbumSignature {
 }
 
 const PhotoAlbum: TOC<PhotoAlbumSignature> = <template>
-  {{! Data passed as a named argument }}
+  {{! Use a named argument }}
   {{t "photo-album.summary" numPhotos=@numPhotos}}
 
-  {{! Data passed as a positional argument }}
+  {{! Use the 2nd positional argument }}
   {{t "photo-album.summary" (hash numPhotos=@numPhotos)}}
 </template>;
 

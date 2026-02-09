@@ -1,6 +1,5 @@
 # Quickstart (Addons)
 
-
 ## 1. Install ember-intl {#1-install-ember-intl}
 
 ### v1 addons {#1-install-ember-intl-v1-addons}

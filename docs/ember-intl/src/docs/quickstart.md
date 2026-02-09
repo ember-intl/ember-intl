@@ -1,6 +1,5 @@
 # Quickstart (Apps)
 
-
 ## 1. Install ember-intl {#1-install-ember-intl}
 
 ### v1 apps {#1-install-ember-intl-v1-apps}
@@ -98,7 +97,7 @@ import { t } from 'ember-intl';
 >
 > In older projects, you can still use `ember-intl`'s helpers in "loose mode," i.e. in an `*.hbs` file or an `<hbs>` tag in rendering tests. To do so, you skip the import and dasherize a helper's name (e.g. `formatDate` in strict mode becomes `format-date` in loose, while `t` is the same by chance).
 > 
-> :::code-group
+> ::: code-group
 > 
 > ```hbs [app/templates/application.hbs]
 > {{t "hello.message" name="Zoey"}}
@@ -126,7 +125,7 @@ hello.message: "Hallo, {name}!"
 > 
 > You can also use `.yml` or `.json`. Here is the JSON equivalent of the YAML code above.
 > 
-> :::code-group
+> ::: code-group
 > 
 > ```json [translations/de-de.json]
 > {
@@ -145,7 +144,7 @@ Before your app renders, you need to tell `ember-intl` which locale(s) to use. S
 
 Recall that `@ember-intl/v1-compat` automatically loads translations. What remains for you is to call `setLocale` to specify which language(s) the app should use initially.
 
-:::code-group
+::: code-group
 
 ```ts [app/routes/application.ts]{8,12}
 import Route from '@ember/routing/route';
@@ -173,7 +172,7 @@ export default class ApplicationRoute extends Route {
 
 Finally, call `setLocale` to specify which language(s) the app should use initially.
 
-:::code-group
+::: code-group
 
 ```ts [app/routes/application.ts]{3-4,10,14-15,17}
 import Route from '@ember/routing/route';
@@ -215,7 +214,7 @@ export default class ApplicationRoute extends Route {
 
 [`ember-template-lint`](https://github.com/ember-template-lint/ember-template-lint) provides [`no-bare-strings`](https://github.com/ember-template-lint/ember-template-lint/blob/v7.9.3-ember-template-lint/docs/rule/no-bare-strings.md). This finds hard-coded texts in templates.
 
-:::code-group
+::: code-group
 
 ```js [.template-lintrc.cjs]
 'use strict';
@@ -237,7 +236,7 @@ At the end of September 2025, [`glint`](https://typed-ember.gitbook.io/glint) re
 
 - If you use v1 and "loose mode" templates (you have `*.hbs` files or `hbs` tags), then extend `ember-intl`'s template registry.
 
-    :::code-group
+    ::: code-group
 
     ```ts [types/global.d.ts]
     import '@glint/environment-ember-loose';

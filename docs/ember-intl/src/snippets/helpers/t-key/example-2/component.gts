@@ -1,9 +1,6 @@
 import { type Registry as Services, service } from '@ember/service';
 import Component from '@glimmer/component';
-import {
-  PAYMENT_METHOD,
-  PAYMENT_METHOD_TRANSLATION_KEYS,
-} from 'my-app/utils/payment';
+import { PAYMENT_METHOD, TRANSLATION_KEYS } from 'my-app/utils/payment';
 
 type Option = {
   label: string;
@@ -19,10 +16,8 @@ export default class PaymentMethod extends Component<PaymentMethodSignature> {
 
   get options(): Option[] {
     return Object.values(PAYMENT_METHOD).map((paymentMethod) => {
-      const key = PAYMENT_METHOD_TRANSLATION_KEYS[paymentMethod]!;
-
       return {
-        label: this.intl.t(key),
+        label: this.intl.t(TRANSLATION_KEYS[paymentMethod]),
         value: paymentMethod,
       };
     });
