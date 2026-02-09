@@ -92,19 +92,19 @@ export const sidebar: DefaultTheme.Sidebar = [
       },
       {
         link: '/docs/test-helpers/add-translations',
-        text: 'addTranslations()',
+        text: 'addTranslations',
       },
       {
         link: '/docs/test-helpers/set-locale',
-        text: 'setLocale()',
+        text: 'setLocale',
       },
       {
         link: '/docs/test-helpers/setup-intl',
-        text: 'setupIntl()',
+        text: 'setupIntl',
       },
       {
         link: '/docs/test-helpers/t',
-        text: 't()',
+        text: 't',
       },
     ],
     text: 'Test Helpers',

@@ -1,30 +1,45 @@
-# t() {#t}
+# t {#t}
 
-The test helper `t()` returns what the `intl` service's `t()` method returns. You may use it for these cases:
+> [!CAUTION]
+> 
+> Do not use this test helper. See [Alternatives](#alternatives) below.
+
+Returns what the `intl` service's `t` returns.
+
+::: code-group
+
+```ts [Signature]
+type TParameters = Parameters<IntlService['t']>;
+
+function t(key: TParameters[0], options?: TParameters[1]): string;
+```
+
+:::
+
+You might use it for these cases:
 
 - You don't need to check the actual value of a translation.
-- You _can't_ get the value because of your project setup (e.g. lazy loading).
+
+- You can't load translations because of your project setup (e.g. lazy loading, translations defined in an external package).
 
 
-## API
+## Examples
 
-### t(key, [data]) {#api-option-1}
+::: code-group
 
-```ts
+```gts [tests/integration/components/hello-test.gts]{2,14-16}
 import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl, t } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
+import Hello from 'my-app/components/hello';
 import { module, test } from 'qunit';
 
 module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
+  setupIntl(hooks, 'de-de');
 
   test('it renders', async function (assert) {
-    await render(hbs`
-      <Hello @name="Zoey" />
-    `);
+    await render(<template><Hello @name="Zoey" /></template>);
 
     assert
       .dom('[data-test-message]')
@@ -33,59 +48,36 @@ module('Integration | Component | hello', function (hooks) {
 });
 ```
 
+:::
 
-## Alternative approaches
 
-In general, we recommend _not_ using this test helper. In essence, you are writing a tautology (`t()` is equal to `t()`), which may be considered useless.
+## Alternatives
 
-When possible, make an `.hasText()` or `.includesText()` assertion. This way, you know what your app displayed at a given point of time. If the translation is changed later, you can get immediate feedback from failing assertions. (Was the change correct?)
+In general, _avoid_ the test helper `t`, because it creates a tautology: `t(...)` is equal to `t(...)` (here, the `t` refers to that from the `intl` service).
 
-```ts
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
-import { setupRenderingTest } from 'ember-qunit';
-import { module, test } from 'qunit';
+An `hasText` or `includesText`, when combined with the test helper `t`, becomes a weak assertion: It can only guarantee that the translation key is correct (i.e. there is no typo), not the rendered message.
 
+If possible, [load translations in tests](./add-translations#alternatives) and always pass the string that you expect to see to `hasText` and `includesText`. This way, you can easily know what the app displayed at a given time (static code analysis). You can also change translations with more confidence when assertions begin to fail.
+
+::: code-group
+
+```gts [tests/integration/components/hello-test.gts]{8}
 module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
+  setupIntl(hooks, 'de-de');
 
   test('it renders', async function (assert) {
-    await render(hbs`
-      <Hello @name="Zoey" />
-    `);
+    await render(<template><Hello @name="Zoey" /></template>);
 
-    assert.dom('[data-test-message]').hasText('t:hello.message');
+    assert.dom('[data-test-message]').hasText('Hallo, Zoey!');
   });
 });
 ```
 
-If you want to check the actual value, consider writing a test helper that lazy-loads the translations.
+:::
 
-```ts
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
-import { setupRenderingTest } from 'ember-qunit';
-import { module, test } from 'qunit';
-
-import { loadTranslations } from '../../helpers';
-
-module('Integration | Component | hello', function (hooks) {
-  setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
-
-  hooks.beforeEach(async function () {
-    await loadTranslations('en-us');
-  });
-
-  test('it renders', async function (assert) {
-    await render(hbs`
-      <Hello @name="Zoey" />
-    `);
-
-    assert.dom('[data-test-message]').hasText('Hello, Zoey!');
-  });
-});
-```
+> [!TIP]
+> 
+> If assertions fail in multiple test files after changing a translation, then treat this as a sign that your tests didn't separate concerns well (i.e. tests don't trust one another). It's also possible that you need a test helper that hides how assertions are implemented.
+> 
+> Don't use the possible domino effect as a reason for using the test helper `t`.
