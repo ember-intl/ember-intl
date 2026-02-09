@@ -68,7 +68,7 @@ The `buildOptions` object assumes the following shape and default values.
 
 ::: code-group
 
-```ts [Type]
+```ts [Signature]
 type BuildOptions = {
   fallbackLocale: string | undefined;
   inputPath: string;

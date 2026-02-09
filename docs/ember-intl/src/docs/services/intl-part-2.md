@@ -167,7 +167,7 @@ export default class ApplicationRoute extends Route {
 >
 > ::: code-group
 >
-> ```ts [tests/integration/components/example-test.gts]
+> ```gts [tests/integration/components/example-test.gts]
 > import { setupIntl } from 'ember-intl/test-support';
 > import { formats } from 'my-app/ember-intl';
 > 
