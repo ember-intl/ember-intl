@@ -1,33 +1,46 @@
 # Organizing translations
 
-Translations are stored in the `translations` folder, either as a `*.json` or `*.{yaml,yml}` file.
+Translations are stored in `/translations`, either as a `*.json` or `*.{yaml,yml}` file.
 
-```
+```sh {:no-line-numbers}
 my-app
 ├── app
 └── translations
-```
-
-```
-my-v1-addon
-├── addon
-└── translations
-```
-
-```
-my-v2-addon
-├── src
-└── translations
+    ├── de-de.yaml
+    └── en-us.yaml
 ```
 
 As the project grows, you will find the need to organize your translations. Here are a couple of ways to do so.
 
 
+## Nested keys
+
+You can nest translation keys to depict relations.
+
+::: code-group
+
+```yaml [translations/de-de.yaml]
+components:
+  hello:
+    message: "Hallo, {name}!"
+
+routes:
+  application:
+    title: Willkommen bei ember-intl
+```
+
+:::
+
+> [!NOTE]
+> 
+> `@ember-intl/v1-compat` and `@ember-intl/vite` will flatten all keys. As a result, you can always write `{{t "hello.message"}}` in a template, whether keys are flat or nested in translation files.
+
+
 ## Nested folders
 
-You may create subdirectories to organize your translations.
+You can create subfolders to split one locale file into multiple files.
 
-```
+```sh {:no-line-numbers}
 my-app
 ├── app
 └── translations
@@ -41,26 +54,44 @@ my-app
             └── en-us.yaml
 ```
 
-Each translation file should have a "namespace," an identifier that helps you localize the translations to that file.
+Each file should have a "namespace," an identifier that helps the translation keys, which are now separated, be still unique.
 
 ::: code-group
 
-<<< @/snippets/advanced/organizing-translations/example-1/components-hello-de-de.yaml [translations/components/hello/de-de.yaml]
+```yaml [translations/components/hello/de-de.yaml]
+components.hello:
+  message: Hallo, {name}!
+```
 
-<<< @/snippets/advanced/organizing-translations/example-1/routes-application-de-de.yaml [translations/routes/application/de-de.yaml]
+```yaml [translations/routes/application/de-de.yaml]
+routes.application:
+  title: Willkommen bei ember-intl
+```
 
 :::
 
 
-## Namespaced keys
+### Auto-namespace keys {#nested-folders-auto-namespace-keys}
 
-In `ember-intl.config.mjs`, set `buildOptions.wrapTranslationsWithNamespace` to `true` to derive the namespace from folder names.
+In your [configuration file](./configuration-file), you can set `wrapTranslationsWithNamespace` to `true` to derive the namespace from the folder path.
 
 ::: code-group
 
-<<< @/snippets/advanced/organizing-translations/example-2/components-hello-de-de.yaml [translations/components/hello/de-de.yaml]
+```js [ember-intl.config.mjs]{3}
+export default {
+  buildOptions: {
+    wrapTranslationsWithNamespace: true,
+  },
+};
+```
 
-<<< @/snippets/advanced/organizing-translations/example-2/routes-application-de-de.yaml [translations/routes/application/de-de.yaml]
+```yaml [translations/components/hello/de-de.yaml]
+message: Hallo, {name}!
+```
+
+```yaml [translations/routes/application/de-de.yaml]
+title: Willkommen bei ember-intl
+```
 
 :::
 

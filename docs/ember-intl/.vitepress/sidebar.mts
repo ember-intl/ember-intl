@@ -117,8 +117,8 @@ export const sidebar: DefaultTheme.Sidebar = [
         text: 'Auto-generating keys',
       },
       {
-        link: '/docs/advanced/build-options',
-        text: 'Build options',
+        link: '/docs/advanced/configuration-file',
+        text: 'Configuration file',
       },
       {
         link: '/docs/advanced/lazy-loading-translations',

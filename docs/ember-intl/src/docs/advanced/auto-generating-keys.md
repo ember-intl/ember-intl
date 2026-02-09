@@ -1,62 +1,89 @@
 # Auto-generating keys
 
-By default, `ember-intl` asks developers to create translation keys in `*.json` or `*.yml` files, then to render translations using the `{{t}}` helper.
+By default, `ember-intl` asks you to come up with translation keys in `/translations`.
 
-```json
-/* translations/en-us.json */
+::: code-group
+
+```gts [app/templates/application.gts]
+import { t } from 'ember-intl';
+
+<template>
+  {{t "hello.message" name="Zoey"}}
+</template>
+```
+
+```json [translations/en-us.json]
 {
-  "hello": {
-    "message": "Hello, {name}!"
-  }
+  "hello.message": "Hello, {name}!"
 }
 ```
 
-```hbs
-{{! app/templates/application.hbs }}
-<div>
-  {{t "hello.message" name="Zoey"}}
-</div>
+:::
+
+Manually creating and maintaining keys can be cumbersome if you have a production app and need to support many locales.
+
+Here's how you can [auto-generate keys](https://formatjs.github.io/docs/getting-started/message-extraction/).
+
+
+## 1. Use `formatMessage` {#1-use-format-message}
+
+In templates, use the `formatMessage` helper and pass the translation that you want for your default locale.
+
+::: code-group
+
+```gts [app/templates/application.gts]{4}
+import { formatMessage } from 'ember-intl';
+
+<template>
+  {{formatMessage "Hello, {name}!" name="Zoey"}}
+</template>
 ```
 
-Maintaining and extending these keys can be difficult if you have a production project and need to support many locales.
+:::
 
-The steps below describe how [keys can be created automatically](https://formatjs.github.io/docs/getting-started/message-extraction/).
+In classes, you have the option to inject the `intl` service.
 
+::: code-group
 
-## 1. Use `{{format-message}}` {#1-use-format-message}
+```gts [app/components/hello.gts]{15}
+import { type Registry as Services, service } from '@ember/service';
+import Component from '@glimmer/component';
+import { t } from 'ember-intl';
 
-In templates, use the `{{format-message}}` helper and pass the translation that you want for the default locale.
+interface HelloSignature {
+  Args: {
+    name: string;
+  };
+}
 
-```hbs
-{{! app/templates/application.hbs }}
-<div>
-  {{format-message "Hello, {name}!" name="Zoey"}}
-</div>
-```
+export default class Hello extends Component<HelloSignature> {
+  get message(): string {
+    const { name } = this.args;
 
-In classes, you would use the `intl` service's `formatMessage()` method instead.
-
-```ts
-// app/controller/application.ts
-export default class ApplicationController extends Controller {
-  get helloMessage(): string {
     return this.intl.formatMessage('Hello, {name}!', {
-      name: 'Zoey',
+      name,
     });
   }
+
+  <template>
+    {{this.message}}
+  </template>
 }
 ```
+
+:::
 
 
 ## 2. Extract translations {#2-extract-translations}
 
 Install `@formatjs/cli` as a development dependency, then add the following script:
 
-```json
-/* package.json */
+::: code-group
+
+```json [package.json]
 {
   "scripts": {
-    "intl:extract": "formatjs extract \"app/**/*.{gjs,gts,hbs,js,ts}\" --format simple --ignore \"**/*.d.ts\" > translations/en-us.json"
+    "extract-translations": "formatjs extract \"app/**/*.{gjs,gts,hbs,js,ts}\" --format simple --ignore \"**/*.d.ts\" > translations/en-us.json"
   },
   "devDependencies": {
     "@formatjs/cli": "..."
@@ -64,39 +91,40 @@ Install `@formatjs/cli` as a development dependency, then add the following scri
 }
 ```
 
+:::
+
 Run the script to get the translation file for the default locale.
 
-```json
-/* translations/en-us.json */
+::: code-group
+
+```json [translations/en-us.json]
 {
   "tBFOH1": "Hello, {name}!"
 }
 ```
 
-Now that you have a translation file with unique keys, you can create translation files for your other locales in one of two ways:
+:::
+
+Now that you have a translation file with unique keys, you can create translation files for the other locales in one of two ways:
 
 - Manual: Duplicate the default locale file, then update translations.
 - Use a Translation Management System (TMS).
 
 
-## 3. Convert `{{format-message}}` to `{{t}}` {#3-convert-format-message-to-t}
+## 3. Convert `formatMessage` to `t` {#3-convert-format-message-to-t}
 
-Finally, we need to change `{{format-message}}` and `formatMessage()` to `{{t}}` and `t()`, so that your app displays the correct translations to your users.
+Lastly, we need to change all the `formatMessage`'s to `t`'s, so that your users see the right translations when the locale is changed. You can install [`ember-formatjs`](https://github.com/mainmatter/ember-formatjs/blob/main/README.md) to transform code at build time.
 
-Install [`ember-formatjs`](https://github.com/mainmatter/ember-formatjs/blob/main/README.md) as a development dependency. The addon will transform your code at build time.
+::: code-group
 
-```json
-/* package.json */
-{
-  "devDependencies": {
-    "ember-formatjs": "..."
-  }  
-}
+```gts [app/templates/application.gts]
+import { t } from 'ember-intl';
+
+<template>
+  <div>
+    {{t "tBFOH1" name="Zoey"}}
+  </div>
+</template>
 ```
 
-```hbs
-{{! What gets built for app/templates/application.hbs }}
-<div>
-  {{t "tBFOH1" name="Zoey"}}
-</div>
-```
+:::
