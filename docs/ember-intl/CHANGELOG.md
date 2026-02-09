@@ -1,5 +1,22 @@
 # docs-app-for-ember-intl
 
+## 2.0.0
+
+### Major Changes
+
+- [#2093](https://github.com/ember-intl/ember-intl/pull/2093) Migrated to VitePress ([@ijlee2](https://github.com/ijlee2))
+
+### Minor Changes
+
+- [#2097](https://github.com/ember-intl/ember-intl/pull/2097) Showed examples in strict mode (Part 3) ([@ijlee2](https://github.com/ijlee2))
+- [#2096](https://github.com/ember-intl/ember-intl/pull/2096) Showed examples in strict mode (Part 2) ([@ijlee2](https://github.com/ijlee2))
+- [#2095](https://github.com/ember-intl/ember-intl/pull/2095) Showed examples in strict mode (Part 1) ([@ijlee2](https://github.com/ijlee2))
+- [#2094](https://github.com/ember-intl/ember-intl/pull/2094) Enabled basic search ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2094](https://github.com/ember-intl/ember-intl/pull/2094) Fixed incorrect URLs ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.9.2
 
 ### Patch Changes
