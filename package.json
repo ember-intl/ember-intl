@@ -10,7 +10,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "pnpm --filter ember-intl --filter @ember-intl/lint --filter @ember-intl/vite --filter my-v2-addon build",
+    "build": "pnpm build:packages && pnpm build:my-v2-addon",
+    "build:my-v2-addon": "pnpm --filter my-v2-addon build",
+    "build:packages": "pnpm --filter \"./packages/**\" build",
     "format": "pnpm --filter \"*\" format",
     "lint": "pnpm --filter \"*\" lint && pnpm lint:package-json",
     "lint:fix": "pnpm --filter \"*\" lint:fix && pnpm lint:package-json:fix",
@@ -18,7 +20,7 @@
     "lint:package-json:fix": "sort-package-json \"**/package.json\" --ignore \"**/{dist,node_modules}/**\"",
     "prepare": "pnpm build",
     "release:prepare": "changeset version; update-workspace-root-version",
-    "release:publish": "changeset publish",
+    "release:publish": "pnpm build:packages && changeset publish",
     "start": "pnpm --filter docs-app-for-ember-intl start",
     "test": "pnpm --filter \"*\" test"
   },

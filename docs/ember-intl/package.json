@@ -25,7 +25,7 @@
     "test": "exit 0"
   },
   "devDependencies": {
-    "@shared-configs/eslint-config-ember": "workspace:*",
+    "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/stylelint": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
