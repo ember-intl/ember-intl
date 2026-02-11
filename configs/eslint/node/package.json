@@ -14,14 +14,19 @@
     "./typescript": "./typescript/index.mjs"
   },
   "scripts": {
-    "lint": "eslint . --cache",
-    "lint:fix": "eslint . --fix"
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
+    "lint:format": "prettier . --cache --check",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
     "@ijlee2-frontend-configs/eslint-config-node": "^2.4.1"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "prettier": "^3.8.1"
   },
