@@ -12,10 +12,6 @@
     "./tests/*": "./tests/*",
     "./*": "./app/*"
   },
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
   "scripts": {
     "build": "vite build",
     "format": "prettier . --cache --write",

@@ -27,9 +27,6 @@
       "types": "./dist/virtual.d.ts"
     }
   },
-  "directories": {
-    "test": "tests"
-  },
   "files": [
     "dist"
   ],

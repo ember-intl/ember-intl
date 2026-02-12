@@ -23,9 +23,6 @@
   "bin": {
     "ember-intl-lint": "dist/bin/ember-intl-lint.js"
   },
-  "directories": {
-    "test": "tests"
-  },
   "files": [
     "dist"
   ],

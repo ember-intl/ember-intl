@@ -16,10 +16,6 @@
     "directory": "packages/ember-intl-v1-compat"
   },
   "license": "MIT",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
   "scripts": {
     "build": "ember build --environment=production",
     "format": "prettier . --cache --write",
