@@ -9,7 +9,6 @@
 /.env*
 /.pnp*
 /.eslintcache
-/coverage/
 /.pnpm-debug.log
 /testem.log
 

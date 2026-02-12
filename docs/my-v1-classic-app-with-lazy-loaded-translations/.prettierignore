@@ -5,7 +5,6 @@
 /dist/
 
 # misc
-/coverage/
 !.*
 .*/
 *.html

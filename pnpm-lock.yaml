@@ -262,9 +262,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-inject-live-reload:
         specifier: ^2.1.0
         version: 2.1.0
@@ -409,9 +406,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -565,9 +559,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -721,9 +712,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -877,9 +865,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1021,9 +1006,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1177,9 +1159,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1340,9 +1319,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-inject-live-reload:
         specifier: ^2.1.0
         version: 2.1.0
@@ -2485,9 +2461,6 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.3
-        version: 3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-htmlbars:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.29.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -6551,12 +6524,6 @@ packages:
   ember-cli-clean-css@3.0.0:
     resolution: {integrity: sha512-BbveJCyRvzzkaTH1llLW+MpHe/yzA5zpHOpMIg2vp/3JD9mban9zUm7lphaB0TSpPuMuby9rAhTI8pgXq0ifIA==}
     engines: {node: 16.* || >= 18}
-
-  ember-cli-dependency-checker@3.3.3:
-    resolution: {integrity: sha512-mvp+HrE0M5Zhc2oW8cqs8wdhtqq0CfQXAYzaIstOzHJJn/U01NZEGu3hz7J7zl/+jxZkyygylzcS57QqmPXMuQ==}
-    engines: {node: '>= 6'}
-    peerDependencies:
-      ember-cli: ^3.2.0 || >=4.0.0
 
   ember-cli-get-component-path-option@1.0.0:
     resolution: {integrity: sha512-k47TDwcJ2zPideBCZE8sCiShSxQSpebY2BHcX2DdipMmBox5gsfyVrbKJWIHeSTTKyEUgmBIvQkqTOozEziCZA==}
@@ -15655,15 +15622,6 @@ snapshots:
       json-stable-stringify: 1.3.0
     transitivePeerDependencies:
       - supports-color
-
-  ember-cli-dependency-checker@3.3.3(ember-cli@6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)):
-    dependencies:
-      chalk: 2.4.2
-      ember-cli: 6.10.0(@types/node@20.19.31)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)
-      find-yarn-workspace-root: 2.0.0
-      is-git-url: 1.0.0
-      resolve: 1.22.11
-      semver: 5.7.2
 
   ember-cli-get-component-path-option@1.0.0: {}
 

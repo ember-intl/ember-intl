@@ -27,7 +27,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
     "start": "ember serve",
-    "test": "ember test --test-port=0"
+    "test": "ember test --test-port 0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -56,7 +56,6 @@
     "ember-cli-app-version": "^7.0.0",
     "ember-cli-babel": "^8.3.1",
     "ember-cli-clean-css": "^3.0.0",
-    "ember-cli-dependency-checker": "^3.3.3",
     "ember-cli-htmlbars": "^7.0.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
