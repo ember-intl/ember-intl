@@ -6,6 +6,4 @@ export default class Router extends EmberRouter {
   rootURL = config.rootURL;
 }
 
-Router.map(function () {
-  this.route('smoke-tests');
-});
+Router.map(function () {});
