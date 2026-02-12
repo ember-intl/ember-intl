@@ -29,11 +29,11 @@ Use your package manager to install `ember-intl` and `@ember-intl/vite`.
 pnpm add -D ember-intl @ember-intl/vite
 ```
 
-In `vite.config.mjs`, add `loadTranslations` to the list of plugins.
+In `vite.config.{mjs,mts}`, add `loadTranslations` to the list of plugins.
 
 ::: code-group
 
-```js [vite.config.mjs]{1,14}
+```ts [vite.config.mts]{1,14}
 import { loadTranslations } from '@ember-intl/vite';
 import { classicEmberSupport, ember, extensions } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
