@@ -9,6 +9,7 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
+  "type": "module",
   "scripts": {
     "build": "vitepress build",
     "format": "prettier . --cache --write",

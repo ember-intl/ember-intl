@@ -20,6 +20,9 @@ export default defineConfig({
         return defaultCodeInline(tokens, idx, options, env, self);
       };
     },
+    image: {
+      lazyLoading: true,
+    },
     lineNumbers: true,
     theme: {
       light: 'github-light-default',

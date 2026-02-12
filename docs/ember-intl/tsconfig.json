@@ -4,6 +4,5 @@
     "allowImportingTsExtensions": true,
     "declaration": false
   },
-  "include": [".vitepress/config.mts", ".vitepress/sidebar.mts"],
-  "exclude": []
+  "include": [".vitepress/**/*"]
 }
