@@ -26,7 +26,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
     "start": "vite",
-    "test": "vite build --mode development && ember test --path dist --test-port=0"
+    "test": "vite build --mode development && ember test --path dist --test-port 0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

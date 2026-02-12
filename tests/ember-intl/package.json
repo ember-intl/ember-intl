@@ -22,7 +22,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
     "start": "ember serve",
-    "test": "ember test --test-port=0",
+    "test": "ember test --test-port 0",
     "test:ember-compatibility": "ember try:one"
   },
   "devDependencies": {
