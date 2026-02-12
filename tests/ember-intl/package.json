@@ -8,8 +8,12 @@
     "url": "https://github.com/ember-intl/ember-intl.git"
   },
   "author": "Isaac J. Lee",
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
+  },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build": "vite build",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
@@ -21,24 +25,28 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
-    "start": "ember serve",
-    "test": "ember test --test-port 0",
-    "test:ember-compatibility": "ember try:one"
+    "start": "vite",
+    "test": "vite build --mode test && ember test --config-file \"./testem.cjs\" --path dist --test-port 0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
+    "@babel/plugin-transform-runtime": "^7.29.0",
+    "@babel/plugin-transform-typescript": "^7.28.6",
     "@ember-intl/lint": "workspace:*",
-    "@ember-intl/v1-compat": "workspace:*",
+    "@ember-intl/vite": "workspace:*",
     "@ember/optional-features": "^3.0.0",
     "@ember/string": "^4.0.1",
     "@ember/test-helpers": "^5.4.1",
-    "@embroider/broccoli-side-watch": "^1.1.0",
+    "@embroider/compat": "^4.1.13",
     "@embroider/config-meta-loader": "^1.0.0",
-    "@embroider/test-setup": "^4.0.0",
+    "@embroider/core": "^4.4.3",
+    "@embroider/router": "^3.0.6",
+    "@embroider/vite": "^1.5.1",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/ember-tsc": "^1.1.1",
     "@glint/template": "^1.7.4",
+    "@rollup/plugin-babel": "^6.1.0",
     "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
@@ -46,8 +54,10 @@
     "@shared-configs/testem": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@types/qunit": "^2.19.13",
+    "babel-plugin-ember-template-compilation": "^4.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.2.1",
+    "decorator-transforms": "^2.3.1",
     "ember-auto-import": "^2.12.0",
     "ember-cli": "~6.10.2",
     "ember-cli-app-version": "^7.0.0",
@@ -62,20 +72,15 @@
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
-    "ember-route-template": "^1.0.3",
     "ember-source": "~6.10.1",
-    "ember-template-imports": "^4.4.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "ember-try": "^4.0.0",
     "eslint": "^9.39.2",
-    "latest-version": "^9.0.0",
-    "loader.js": "^4.7.0",
     "prettier": "^3.8.1",
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
     "typescript": "^5.9.3",
-    "webpack": "^5.105.1"
+    "vite": "^7.3.1"
   },
   "dependenciesMeta": {
     "ember-intl": {
@@ -87,5 +92,9 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "ember-addon": {
+    "type": "app",
+    "version": 2
   }
 }
