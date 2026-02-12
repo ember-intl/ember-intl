@@ -26,8 +26,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
     "start": "vite",
-    "test": "vite build --mode test && ember test --config-file \"./testem.cjs\" --path dist --test-port 0",
-    "test:ember-compatibility": "ember try:one"
+    "test": "vite build --mode test && ember test --config-file \"./testem.cjs\" --path dist --test-port 0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -42,7 +41,6 @@
     "@embroider/config-meta-loader": "^1.0.0",
     "@embroider/core": "^4.4.3",
     "@embroider/router": "^3.0.6",
-    "@embroider/test-setup": "^4.0.0",
     "@embroider/vite": "^1.5.1",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
@@ -77,9 +75,7 @@
     "ember-source": "~6.10.1",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "ember-try": "^4.0.0",
     "eslint": "^9.39.2",
-    "latest-version": "^9.0.0",
     "prettier": "^3.8.1",
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
