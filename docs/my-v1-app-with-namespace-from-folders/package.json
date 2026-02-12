@@ -1,6 +1,6 @@
 {
   "name": "my-v1-app-with-namespace-from-folders",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "private": true,
   "description": "A Webpack app to test wrapTranslationsWithNamespace",
   "keywords": [],

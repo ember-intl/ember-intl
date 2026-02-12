@@ -1,5 +1,13 @@
 # docs-app-for-ember-intl
 
+## 2.0.1
+
+### Patch Changes
+
+- [#2103](https://github.com/ember-intl/ember-intl/pull/2103) Updated project configurations ([@ijlee2](https://github.com/ijlee2))
+- [#2101](https://github.com/ember-intl/ember-intl/pull/2101) Recommended `vite.config.mts` in documentation ([@ijlee2](https://github.com/ijlee2))
+- [#2101](https://github.com/ember-intl/ember-intl/pull/2101) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0
 
 ### Major Changes

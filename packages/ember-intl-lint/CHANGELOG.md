@@ -1,5 +1,12 @@
 # @ember-intl/lint
 
+## 0.7.2
+
+### Patch Changes
+
+- [#2101](https://github.com/ember-intl/ember-intl/pull/2101) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2100](https://github.com/ember-intl/ember-intl/pull/2100) Removed directories field (unused) ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.7.1
 
 ### Patch Changes

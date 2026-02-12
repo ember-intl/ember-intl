@@ -1,5 +1,11 @@
 # @ember-intl/v1-compat
 
+## 1.0.6
+
+### Patch Changes
+
+- [#2100](https://github.com/ember-intl/ember-intl/pull/2100) Removed directories field (unused) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.5
 
 ### Patch Changes

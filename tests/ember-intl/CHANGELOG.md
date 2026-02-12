@@ -1,5 +1,17 @@
 # test-app-for-ember-intl
 
+## 2.0.0
+
+### Major Changes
+
+- [#2102](https://github.com/ember-intl/ember-intl/pull/2102) Replaced ember-try with @embroider/try ([@ijlee2](https://github.com/ijlee2))
+- [#2102](https://github.com/ember-intl/ember-intl/pull/2102) Migrated to Vite ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2101](https://github.com/ember-intl/ember-intl/pull/2101) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2100](https://github.com/ember-intl/ember-intl/pull/2100) Updated project configurations ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.7.2
 
 ### Patch Changes
