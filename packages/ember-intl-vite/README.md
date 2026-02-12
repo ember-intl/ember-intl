@@ -15,7 +15,7 @@ pnpm add -D @ember-intl/vite
 
 <sup>2. V2 addons need it if their test app lives in the same package as the addon (not recommended).</sup>
 
-2\. In `vite.config.mjs`, add `loadTranslations` to the list of plugins.
+2\. In `vite.config.{mjs,mts}`, add `loadTranslations` to the list of plugins.
 
 ```diff
 + import { loadTranslations } from '@ember-intl/vite';

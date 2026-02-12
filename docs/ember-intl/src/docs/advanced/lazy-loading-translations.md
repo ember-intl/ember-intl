@@ -74,7 +74,7 @@ module.exports = function (defaults) {
 
 ### v2 apps {#1-configure-ember-intl-v2-apps}
 
-There is nothing to do. The configuration files `ember-intl.config.{js,mjs}`, `ember-cli-build.js`, and `vite.config.mjs` remain the same.
+There is nothing to do. The configuration files `ember-intl.config.{js,mjs}`, `ember-cli-build.js`, and `vite.config.{mjs,mts}` remain the same.
 
 
 ## 2. Lazy-load translations {#2-lazy-load-translations}

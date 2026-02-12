@@ -58,7 +58,7 @@
   "devDependencies": {
     "@ember-intl/lint": "workspace:*",
     "@ember-intl/v1-compat": "workspace:*",
-    "@ember/optional-features": "^2.3.0",
+    "@ember/optional-features": "^3.0.0",
     "@ember/test-helpers": "^5.4.1",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.0.0",
@@ -74,7 +74,7 @@
     "@types/qunit": "^2.19.13",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.2.1",
-    "ember-cli": "~6.10.0",
+    "ember-cli": "~6.10.2",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
@@ -92,7 +92,7 @@
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
     "typescript": "^5.9.3",
-    "webpack": "^5.105.0"
+    "webpack": "^5.105.1"
   },
   "peerDependencies": {
     "ember-intl": "workspace:*"
