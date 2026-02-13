@@ -1,4 +1,4 @@
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 
 type SimpleDocument = {
   documentElement: HTMLHtmlElement;
