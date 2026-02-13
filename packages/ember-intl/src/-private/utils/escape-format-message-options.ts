@@ -29,7 +29,6 @@ type EscapedOptions<T extends Record<string, unknown>> = {
 
 /**
  * @private
- * @hide
  */
 export function escapeFormatMessageOptions<T extends Record<string, unknown>>(
   options: T,

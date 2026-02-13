@@ -6,7 +6,6 @@ type SimpleDocument = {
 
 /**
  * @private
- * @hide
  */
 export function getHtmlElement(context: object): HTMLHtmlElement | undefined {
   const owner = getOwner(context);

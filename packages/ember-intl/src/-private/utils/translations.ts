@@ -8,7 +8,6 @@ export type TranslationJson = {
 
 /**
  * @private
- * @hide
  */
 export function flattenKeys(object: TranslationJson): TranslationJson {
   const result: TranslationJson = {};
