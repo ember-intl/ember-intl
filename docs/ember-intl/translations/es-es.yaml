@@ -1,0 +1,3 @@
+hello.call-by-name: ¡Hola {name}!
+hello.message: ¡Hola!
+photo-album.summary: "{numPhotos, plural, =0 {No tienes fotos} =1 {Tienes una foto} other {Tienes # fotos}}."
