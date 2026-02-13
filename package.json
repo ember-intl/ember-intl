@@ -38,9 +38,6 @@
   "pnpm": {
     "overrides": {
       "ansi-html": "^0.0.9"
-    },
-    "patchedDependencies": {
-      "vite-plugin-ember": "patches/vite-plugin-ember.patch"
     }
   }
 }
