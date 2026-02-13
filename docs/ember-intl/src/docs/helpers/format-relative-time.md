@@ -8,8 +8,9 @@ Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScri
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-relative-time/example-1/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-relative-time/example-1/component.gts" />
+</CodePreview>
 
 
 ## Options
@@ -26,8 +27,9 @@ In `app/ember-intl.{js,ts}`, use the `formatRelativeTime` key to define the `for
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-relative-time/example-2/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-relative-time/example-2/component.gts" />
+</CodePreview>
 
 
 ### locale {#options-locale}
@@ -40,8 +42,9 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-relative-time/example-3/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-relative-time/example-3/component.gts" />
+</CodePreview>
 
 
 ### Intl {#options-intl}
@@ -58,5 +61,6 @@ You can use named arguments to pass the [options that `Intl.RelativeTimeFormat` 
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-relative-time/example-4/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-relative-time/example-4/component.gts" />
+</CodePreview>

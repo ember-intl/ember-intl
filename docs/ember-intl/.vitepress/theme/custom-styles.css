@@ -43,3 +43,27 @@ html.dark {
 html.dark .VPSidebarItem.level-1 .text {
   font-weight: 400 !important;
 }
+
+.locale-switcher.container {
+  display: flex;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.locale-switcher .list-item {
+  list-style: none;
+  margin: 0;
+  margin-right: 0.25rem;
+}
+
+.locale-switcher .list-item:last-of-type {
+  margin-right: 0;
+}
+
+.locale-switcher .button {
+  background-color: #397279;
+  border-radius: 0.15rem;
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+}

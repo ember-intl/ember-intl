@@ -8,8 +8,9 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-list/example-1/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-list/example-1/component.gts" />
+</CodePreview>
 
 
 ## Options
@@ -24,8 +25,9 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-list/example-2/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-list/example-2/component.gts" />
+</CodePreview>
 
 
 ### Intl {#options-intl}
@@ -42,5 +44,6 @@ You can use named arguments to pass the [options that `Intl.ListFormat` supports
 
 :::
 
-<!-- <LocaleSwitcher /> -->
-<CodePreview src="/snippets/helpers/format-list/example-3/component.gts" />
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-list/example-3/component.gts" />
+</CodePreview>
