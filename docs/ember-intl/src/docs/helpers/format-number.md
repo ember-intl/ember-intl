@@ -8,17 +8,9 @@ Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Ref
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-number__example-1">
-    <div data-test-output="format-number">
-      {{format-number 12345}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-number/example-1/component.gts" />
+</CodePreview>
 
 
 ## Options
@@ -35,17 +27,9 @@ In `app/ember-intl.{js,ts}`, use the `formatNumber` key to define the `format`'s
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-number__example-2">
-    <div data-test-output="format-number, format">
-      {{format-number 12345 format="EUR"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-number/example-2/component.gts" />
+</CodePreview>
 
 For more information, see [Services - intl (Part 2) - setFormats](../services/intl-part-2#methods-set-formats).
 
@@ -60,21 +44,9 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-number__example-3">
-    <div lang="en-us">
-      {{format-number 12345 locale="en-us"}}
-    </div>
-
-    <div data-test-output="format-number, locale" lang="de-de">
-      {{format-number 12345 locale="de-de"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-number/example-3/component.gts" />
+</CodePreview>
 
 
 ### Intl {#options-intl}
@@ -93,21 +65,6 @@ You can use named arguments to pass [options that `Intl.NumberFormat` supports](
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-number__example-4">
-    <div>
-      {{format-number
-        12345
-        currency="EUR"
-        maximumFractionDigits=1
-        notation="compact"
-        roundingMode="ceil"
-        style="currency"
-      }}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-number/example-4/component.gts" />
+</CodePreview>

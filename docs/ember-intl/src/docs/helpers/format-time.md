@@ -8,17 +8,9 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-time__example-1">
-    <div>
-      {{format-time this.today}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-time/example-1/component.gts" />
+</CodePreview>
 
 
 ## Options
@@ -35,17 +27,9 @@ In `app/ember-intl.{js,ts}`, use the `formatTime` key to define the `format`'s t
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-time__example-2">
-    <div>
-      {{format-time this.today format="hhmmss"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-time/example-2/component.gts" />
+</CodePreview>
 
 
 ### locale {#options-locale}
@@ -58,21 +42,9 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-time__example-3">
-    <div lang="en-us">
-      {{format-time this.today locale="en-us"}}
-    </div>
-
-    <div lang="de-de">
-      {{format-time this.today locale="de-de"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-time/example-3/component.gts" />
+</CodePreview>
 
 
 ### Intl {#options-intl}
@@ -90,18 +62,6 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-time__example-4">
-    <div>
-      {{format-time
-        this.today
-        timeStyle="full"
-        timeZone="America/New_York"
-      }}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-time/example-4/component.gts" />
+</CodePreview>

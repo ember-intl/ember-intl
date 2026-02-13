@@ -6,9 +6,17 @@ interface ExampleSignature {
 }
 
 const Example: TOC<ExampleSignature> = <template>
-  Past: {{formatRelativeTime -1 unit="month"}}
-  Now: {{formatRelativeTime 0 unit="day"}}
-  Future: {{formatRelativeTime 3 unit="week"}}
+  <div>
+    Past: {{formatRelativeTime -1 unit="month"}}
+  </div>
+
+  <div>
+    Now: {{formatRelativeTime 0 unit="day"}}
+  </div>
+
+  <div>
+    Future: {{formatRelativeTime 3 unit="week"}}
+  </div>
 </template>;
 
 export default Example;

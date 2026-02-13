@@ -8,17 +8,9 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-list__example-1">
-    <div data-test-output="format-list">
-      {{format-list this.letters}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-list/example-1/component.gts" />
+</CodePreview>
 
 
 ## Options
@@ -33,21 +25,9 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-list__example-2">
-    <div lang="en-us">
-      {{format-list this.letters locale="en-us"}}
-    </div>
-
-    <div data-test-output="format-list, locale" lang="de-de">
-      {{format-list this.letters locale="de-de"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-list/example-2/component.gts" />
+</CodePreview>
 
 
 ### Intl {#options-intl}
@@ -64,14 +44,6 @@ You can use named arguments to pass the [options that `Intl.ListFormat` supports
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-list__example-3">
-    <div>
-      {{format-list this.letters type="disjunction"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-list/example-3/component.gts" />
+</CodePreview>

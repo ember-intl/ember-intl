@@ -8,40 +8,9 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-message__example-1">
-    <div>
-      {{format-message
-        this.descriptor1
-        name="Sonja"
-        numPhotos=12
-        timestamp=this.yesterday
-      }}
-    </div>
-
-    <div>
-      {{format-message
-        this.descriptor1
-        name="Chris"
-        numPhotos=0
-        timestamp=this.yesterday
-      }}
-    </div>
-
-    <div data-test-output="format-message">
-      {{format-message
-        this.descriptor1
-        name="Maki"
-        numPhotos=1
-        timestamp=this.today
-      }}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-message/example-1/component.gts" />
+</CodePreview>
 
 
 ## Pass message only
@@ -89,16 +58,6 @@ To render an HTML in a translation message, set `htmlSafe` to `true`.
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <demo.example>
-    <div>
-      {{format-message
-        this.descriptor2
-        htmlSafe=true
-        numPhotos=3
-      }}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/format-message/example-2/component.gts" />
+</CodePreview>

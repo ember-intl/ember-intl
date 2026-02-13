@@ -1,2 +1,3 @@
-# A plural-type argument
+hello.call-by-name: Hallo, {name}!
+hello.message: Hallo!
 photo-album.summary: "Du hast {numPhotos, plural, =0 {keine Fotos} =1 {ein Foto} other {# Fotos}}."

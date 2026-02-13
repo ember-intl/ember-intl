@@ -18,6 +18,8 @@
     "lint:css:fix": "stylelint \".vitepress/theme/**/*.css\" --allow-empty-input --fix",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
     "lint:format": "prettier . --cache --check",
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "tsc --noEmit",
@@ -26,16 +28,22 @@
     "test": "exit 0"
   },
   "devDependencies": {
+    "@ember-intl/lint": "workspace:*",
+    "@ember-intl/vite": "workspace:*",
+    "@glimmer/component": "^2.0.0",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/stylelint": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "concurrently": "^9.2.1",
+    "ember-intl": "workspace:*",
+    "ember-source": "~6.10.1",
     "eslint": "^9.39.2",
     "prettier": "^3.8.1",
     "stylelint": "^17.2.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
+    "vite-plugin-ember": "^0.3.0",
     "vitepress": "^1.6.4"
   },
   "engines": {

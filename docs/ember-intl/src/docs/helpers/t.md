@@ -12,17 +12,9 @@ Finds the translation message and fills its [arguments](https://formatjs.github.
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__t__example-1">
-    <div data-test-output="t">
-      {{t "hello.message"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/t/example-1/component.gts" />
+</CodePreview>
 
 
 ## Pass data
@@ -31,11 +23,15 @@ We use the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/ic
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-2/component.gts{11} [app/components/hello.gts]
+<<< @/snippets/helpers/t/example-2/component.gts{9} [app/components/hello.gts]
 
 <<< @/snippets/helpers/t/example-2/de-de.yaml{2} [translations/de-de.yaml]
 
 <<< @/snippets/helpers/t/example-2/en-us.yaml{2} [translations/en-us.yaml]
+
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/t/example-2/component.gts" />
+</CodePreview>
 
 
 ### Named vs. positional
@@ -46,7 +42,7 @@ You can pass data to the `t` helper using named arguments, the 2nd positional ar
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-3/component.gts{13,16} [app/components/photo-album.gts]
+<<< @/snippets/helpers/t/example-3/component.gts{11,14} [app/components/photo-album.gts]
 
 <<< @/snippets/helpers/t/example-3/de-de.yaml{2} [translations/de-de.yaml]
 
@@ -54,17 +50,9 @@ You can pass data to the `t` helper using named arguments, the 2nd positional ar
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__t__example-2">
-    <div data-test-output="t, data">
-      {{t "photo-album.summary" (hash numPhotos=3)}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/t/example-3/component.gts" />
+</CodePreview>
 
 
 ## What to avoid
@@ -216,30 +204,6 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__t__example-3">
-    <div lang="en-us">
-      {{t
-        "photo-album.summary"
-        (hash
-          numPhotos=3
-        )
-        locale="en-us"
-      }}
-    </div>
-
-    <div data-test-output="t, locale" lang="de-de">
-      {{t
-        "photo-album.summary"
-        (hash
-          numPhotos=3
-        )
-        locale="de-de"
-      }}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<CodePreview src="/components/locale-switcher.gts">
+  <CodePreview src="/snippets/helpers/t/example-4/component.gts" />
+</CodePreview>

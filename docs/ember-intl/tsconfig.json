@@ -2,7 +2,8 @@
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "declaration": false
+    "declaration": false,
+    "types": ["ember-source/types", "@ember-intl/vite/virtual"]
   },
-  "include": [".vitepress/**/*"]
+  "include": [".vitepress/**/*", "types/**/*"]
 }
