@@ -198,8 +198,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.19.33)(terser@5.46.0)(yaml@2.8.2)
       vite-plugin-ember:
-        specifier: ^0.3.0
-        version: 0.3.0(patch_hash=65eb31805e7c65a388b3d7c2d8636f2fef23dc8332182d25edddf44eeecb4bf9)(@glimmer/component@2.0.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))(vite@7.3.1(@types/node@20.19.33)(terser@5.46.0)(yaml@2.8.2))(vitepress@1.6.4(@algolia/client-search@5.48.0)(@types/node@20.19.33)(postcss@8.5.6)(terser@5.46.0)(typescript@5.9.3))(vue@3.5.27(typescript@5.9.3))
+        specifier: ^0.3.1
+        version: 0.3.1(patch_hash=65eb31805e7c65a388b3d7c2d8636f2fef23dc8332182d25edddf44eeecb4bf9)(@glimmer/component@2.0.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))(vite@7.3.1(@types/node@20.19.33)(terser@5.46.0)(yaml@2.8.2))(vitepress@1.6.4(@algolia/client-search@5.48.0)(@types/node@20.19.33)(postcss@8.5.6)(terser@5.46.0)(typescript@5.9.3))(vue@3.5.27(typescript@5.9.3))
       vitepress:
         specifier: ^1.6.4
         version: 1.6.4(@algolia/client-search@5.48.0)(@types/node@20.19.33)(postcss@8.5.6)(terser@5.46.0)(typescript@5.9.3)
@@ -10187,8 +10187,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vite-plugin-ember@0.3.0:
-    resolution: {integrity: sha512-UmSaGgtCBSDT8Gs/MVgjMus62uKyaTUkuMsKwmXZ4AKVD/hNeXYRd61Ekv6ssXOxgDYem14mnksO7OIKubpGOA==}
+  vite-plugin-ember@0.3.1:
+    resolution: {integrity: sha512-xlwNgSFAkc+dVDHyqk0ehnmq7n/aB7JbUUuuev324OgReiKBCVTQEpy51jGR0ccfk+2PrqsF5vJ1+E2avwMK2Q==}
     peerDependencies:
       '@glimmer/component': '>=1'
       ember-source: '>=5'
@@ -20045,7 +20045,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-plugin-ember@0.3.0(patch_hash=65eb31805e7c65a388b3d7c2d8636f2fef23dc8332182d25edddf44eeecb4bf9)(@glimmer/component@2.0.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))(vite@7.3.1(@types/node@20.19.33)(terser@5.46.0)(yaml@2.8.2))(vitepress@1.6.4(@algolia/client-search@5.48.0)(@types/node@20.19.33)(postcss@8.5.6)(terser@5.46.0)(typescript@5.9.3))(vue@3.5.27(typescript@5.9.3)):
+  vite-plugin-ember@0.3.1(patch_hash=65eb31805e7c65a388b3d7c2d8636f2fef23dc8332182d25edddf44eeecb4bf9)(@glimmer/component@2.0.0)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))(vite@7.3.1(@types/node@20.19.33)(terser@5.46.0)(yaml@2.8.2))(vitepress@1.6.4(@algolia/client-search@5.48.0)(@types/node@20.19.33)(postcss@8.5.6)(terser@5.46.0)(typescript@5.9.3))(vue@3.5.27(typescript@5.9.3)):
     dependencies:
       '@babel/core': 7.29.0(supports-color@8.1.1)
       '@babel/plugin-transform-typescript': 7.28.6(@babel/core@7.29.0)
