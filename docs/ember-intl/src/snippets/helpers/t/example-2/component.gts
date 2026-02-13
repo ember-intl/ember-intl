@@ -2,13 +2,11 @@ import type { TOC } from '@ember/component/template-only';
 import { t } from 'ember-intl';
 
 interface HelloSignature {
-  Args: {
-    name: string;
-  };
+  Args: {};
 }
 
 const Hello: TOC<HelloSignature> = <template>
-  {{t "hello.message" name=@name}}
+  {{t "hello.call-by-name" name="Zoey"}}
 </template>;
 
 export default Hello;

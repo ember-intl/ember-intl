@@ -1,2 +1,2 @@
 # A plural-type argument
-photo-album.summary: You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
+photo-album.summary: "You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}."

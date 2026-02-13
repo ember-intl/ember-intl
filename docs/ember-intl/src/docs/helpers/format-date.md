@@ -8,21 +8,8 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-date__example-1">
-    <div data-test-output="format-date">
-      Today: {{format-date this.today}}
-    </div>
-
-    <div>
-      Yesterday: {{format-date this.yesterday}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<!-- <LocaleSwitcher /> -->
+<CodePreview src="/snippets/helpers/format-date/example-1/component.gts" />
 
 
 ## Options
@@ -39,17 +26,8 @@ In `app/ember-intl.{js,ts}`, use the `formatDate` key to define the `format`'s t
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-date__example-2">
-    <div data-test-output="format-date, format">
-      {{format-date this.today format="user-friendly"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<!-- <LocaleSwitcher /> -->
+<CodePreview src="/snippets/helpers/format-date/example-2/component.gts" />
 
 For more information, see [Services - intl (Part 2) - setFormats](../services/intl-part-2#methods-set-formats).
 
@@ -64,21 +42,8 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-date__example-3">
-    <div lang="en-us">
-      {{format-date this.today locale="en-us"}}
-    </div>
-
-    <div data-test-output="format-date, locale" lang="de-de">
-      {{format-date this.today locale="de-de"}}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<!-- <LocaleSwitcher /> -->
+<CodePreview src="/snippets/helpers/format-date/example-3/component.gts" />
 
 
 ### Intl {#options-intl}
@@ -96,18 +61,5 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
 
 :::
 
-<!--
-<DocsDemo as |demo|>
-  <LocaleSwitcher />
-
-  <demo.example @name="docs__helpers__format-date__example-4">
-    <div>
-      {{format-date
-        this.today
-        dateStyle="full"
-        timeZone="America/New_York"
-      }}
-    </div>
-  </demo.example>
-</DocsDemo>
--->
+<!-- <LocaleSwitcher /> -->
+<CodePreview src="/snippets/helpers/format-date/example-4/component.gts" />
