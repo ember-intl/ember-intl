@@ -43,7 +43,7 @@
     "stylelint": "^17.2.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vite-plugin-ember": "^0.3.0",
+    "vite-plugin-ember": "^0.3.1",
     "vitepress": "^1.6.4"
   },
   "engines": {
