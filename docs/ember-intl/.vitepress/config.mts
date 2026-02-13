@@ -1,3 +1,4 @@
+import { loadTranslations } from '@ember-intl/vite';
 import { defineConfig } from 'vitepress';
 import vitePluginEmber, { emberFence } from 'vite-plugin-ember';
 
@@ -82,6 +83,6 @@ export default defineConfig({
   },
   title: 'ember-intl',
   vite: {
-    plugins: [vitePluginEmber()],
+    plugins: [loadTranslations(), vitePluginEmber()],
   },
 });
