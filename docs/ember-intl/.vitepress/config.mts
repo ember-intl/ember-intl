@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import vitePluginEmber, { emberFence } from 'vite-plugin-ember';
 
 import { sidebar } from './sidebar.mts';
 
@@ -19,6 +20,8 @@ export default defineConfig({
 
         return defaultCodeInline(tokens, idx, options, env, self);
       };
+
+      emberFence(md);
     },
     image: {
       lazyLoading: true,
@@ -79,6 +82,6 @@ export default defineConfig({
   },
   title: 'ember-intl',
   vite: {
-    plugins: [],
+    plugins: [vitePluginEmber()],
   },
 });

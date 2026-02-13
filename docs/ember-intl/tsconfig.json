@@ -4,5 +4,5 @@
     "allowImportingTsExtensions": true,
     "declaration": false
   },
-  "include": [".vitepress/**/*"]
+  "include": [".vitepress/**/*", "types/**/*"]
 }

@@ -26,16 +26,19 @@
     "test": "exit 0"
   },
   "devDependencies": {
+    "@glimmer/component": "^2.0.0",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/stylelint": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "concurrently": "^9.2.1",
+    "ember-source": "~6.10.1",
     "eslint": "^9.39.2",
     "prettier": "^3.8.1",
     "stylelint": "^17.2.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
+    "vite-plugin-ember": "^0.3.0",
     "vitepress": "^1.6.4"
   },
   "engines": {
