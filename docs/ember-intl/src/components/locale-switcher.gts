@@ -6,9 +6,6 @@ import Component from '@glimmer/component';
 
 interface LocaleSwitcherSignature {
   Args: {};
-  Blocks: {
-    default: [];
-  };
 }
 
 export default class LocaleSwitcher extends Component<LocaleSwitcherSignature> {
@@ -36,7 +33,5 @@ export default class LocaleSwitcher extends Component<LocaleSwitcherSignature> {
         </li>
       {{/each}}
     </ul>
-
-    {{yield}}
   </template>
 }

@@ -8,9 +8,8 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/format-date-range/example-1/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/format-date-range/example-1/component.gts" />
 
 ## Options
 
@@ -26,9 +25,8 @@ In `app/ember-intl.{js,ts}`, use the `formatDateRange` key to define the `format
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/format-date-range/example-2/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/format-date-range/example-2/component.gts" />
 
 For more information, see [Services - intl (Part 2) - setFormats](../services/intl-part-2#methods-set-formats).
 
@@ -43,9 +41,8 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/format-date-range/example-3/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/format-date-range/example-3/component.gts" />
 
 ### Intl {#options-intl}
 
@@ -62,6 +59,5 @@ You can use named arguments to pass the [options that `Intl.DateTimeFormat` supp
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/format-date-range/example-4/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/format-date-range/example-4/component.gts" />

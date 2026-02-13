@@ -8,9 +8,8 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/format-message/example-1/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/format-message/example-1/component.gts" />
 
 
 ## Pass message only
@@ -58,6 +57,5 @@ To render an HTML in a translation message, set `htmlSafe` to `true`.
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/format-message/example-2/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/format-message/example-2/component.gts" />

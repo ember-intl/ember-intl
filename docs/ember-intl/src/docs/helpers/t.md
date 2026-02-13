@@ -12,9 +12,8 @@ Finds the translation message and fills its [arguments](https://formatjs.github.
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/t/example-1/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/t/example-1/component.gts" />
 
 
 ## Pass data
@@ -29,9 +28,8 @@ We use the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/ic
 
 <<< @/snippets/helpers/t/example-2/en-us.yaml{2} [translations/en-us.yaml]
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/t/example-2/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/t/example-2/component.gts" />
 
 
 ### Named vs. positional
@@ -50,9 +48,8 @@ You can pass data to the `t` helper using named arguments, the 2nd positional ar
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/t/example-3/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/t/example-3/component.gts" />
 
 
 ## What to avoid
@@ -204,6 +201,5 @@ You can display the text in another locale (i.e. independently from the user's p
 
 :::
 
-<CodePreview src="/components/locale-switcher.gts">
-  <CodePreview src="/snippets/helpers/t/example-4/component.gts" />
-</CodePreview>
+<CodePreview src="/components/locale-switcher.gts" />
+<CodePreview src="/snippets/helpers/t/example-4/component.gts" />
