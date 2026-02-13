@@ -28,7 +28,7 @@ import {
   formatTime,
 } from '../-private/formatjs/index.ts';
 import { escapeFormatMessageOptions } from '../-private/utils/escape-format-message-options.ts';
-import { getDOM } from '../-private/utils/get-dom.ts';
+import { getHtmlElement } from '../-private/utils/get-html-element.ts';
 import {
   convertToArray,
   convertToString,
@@ -361,14 +361,12 @@ export default class IntlService extends Service {
   }
 
   private updateDocumentLanguage(): void {
-    const dom = getDOM(this);
+    const html = getHtmlElement(this);
     const { primaryLocale } = this;
 
-    if (!dom || !primaryLocale) {
+    if (!html || !primaryLocale) {
       return;
     }
-
-    const html = dom.documentElement;
 
     html.setAttribute('lang', primaryLocale);
   }

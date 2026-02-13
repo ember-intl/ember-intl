@@ -1,4 +1,4 @@
-import { setOwner } from '@ember/application';
+import { setOwner } from '@ember/owner';
 import { htmlSafe } from '@ember/template';
 import {
   render,

@@ -1,6 +1,5 @@
 /**
  * @private
- * @hide
  */
 export function convertToArray(locale: string | string[]): string[] {
   if (Array.isArray(locale)) {
@@ -12,7 +11,6 @@ export function convertToArray(locale: string | string[]): string[] {
 
 /**
  * @private
- * @hide
  */
 export function convertToString(locale: string | string[]): string {
   if (Array.isArray(locale)) {
@@ -26,7 +24,6 @@ type MaybeLocale = string[] | string | null | undefined;
 
 /**
  * @private
- * @hide
  */
 export function hasLocaleChanged(
   locale1: string[],
@@ -41,7 +38,6 @@ export function hasLocaleChanged(
 
 /**
  * @private
- * @hide
  */
 export function normalizeLocale(locale: string): string {
   return locale.replace(/_/g, '-').toLowerCase();
