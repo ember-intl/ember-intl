@@ -4,7 +4,7 @@ Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Refer
 
 ::: code-group
 
-<<< @/snippets/helpers/format-list/example-1/component.gts{2,11} [app/components/example.gts]
+<<< @/snippets/helpers/format-list/example-1/component.gts{11} [app/components/example.gts]
 
 :::
 

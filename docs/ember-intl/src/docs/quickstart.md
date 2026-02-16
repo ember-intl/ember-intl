@@ -146,7 +146,7 @@ Recall that `@ember-intl/v1-compat` automatically loads translations. What remai
 
 ::: code-group
 
-```ts [app/routes/application.ts]{8,12}
+```ts [app/routes/application.ts]{12}
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 
@@ -174,7 +174,7 @@ Finally, call `setLocale` to specify which language(s) the app should use initia
 
 ::: code-group
 
-```ts [app/routes/application.ts]{3-4,10,14-15,17}
+```ts [app/routes/application.ts]{3-4,14-17}
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 import translationsForDeDe from 'virtual:ember-intl/translations/de-de';

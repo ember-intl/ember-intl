@@ -4,7 +4,7 @@ Uses [`Intl.DateTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 ::: code-group
 
-<<< @/snippets/helpers/format-time/example-1/component.gts{2,11} [app/components/example.gts]
+<<< @/snippets/helpers/format-time/example-1/component.gts{11} [app/components/example.gts]
 
 :::
 

@@ -7,11 +7,15 @@ interface PhotoAlbumSignature {
 }
 
 const PhotoAlbum: TOC<PhotoAlbumSignature> = <template>
-  {{! Use a named argument }}
-  {{t "photo-album.summary" numPhotos=3}}
+  <div>
+    {{! Use a named argument }}
+    {{t "photo-album.summary" numPhotos=3}}
+  </div>
 
-  {{! Use the 2nd positional argument }}
-  {{t "photo-album.summary" (hash numPhotos=3)}}
+  <div>
+    {{! Use the 2nd positional argument }}
+    {{t "photo-album.summary" (hash numPhotos=3)}}
+  </div>
 </template>;
 
 export default PhotoAlbum;

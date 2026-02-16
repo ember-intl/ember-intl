@@ -15,7 +15,7 @@ function setLocale(locale: string): Promise<void>;
 
 ::: code-group
 
-```gts [tests/integration/components/hello-test.gts]{2,16-18}
+```gts [tests/integration/components/hello-test.gts]{16-18}
 import { render } from '@ember/test-helpers';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';

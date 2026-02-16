@@ -2,7 +2,7 @@
 title: \<template> tag
 ---
 
-# &#60;template&#62; tag {#template-tag}
+# &#60;template&#62; tag {#template-tag} #
 
 You can use `ember-intl`'s helpers in a `<template>` tag. Every helper has a camel-cased name and can be name-imported from the barrel file (the `index` file).
 

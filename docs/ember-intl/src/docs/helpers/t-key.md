@@ -8,7 +8,7 @@ Use `tKey` to mark strings that you know are actually translation keys. This hel
 
 ::: code-group
 
-<<< @/snippets/helpers/t-key/example-1/component.gts{2,17,21} [app/components/select-locale.gts]
+<<< @/snippets/helpers/t-key/example-1/component.gts{17,21} [app/components/select-locale.gts]
 
 :::
 
@@ -18,7 +18,7 @@ Here is another example, where translation keys appear in a utility file (a norm
 
 <<< @/snippets/helpers/t-key/example-2/component.gts [app/components/payment-method.gts]
 
-<<< @/snippets/helpers/t-key/example-2/utility.ts{1,11-13} [app/utils/payment.ts]
+<<< @/snippets/helpers/t-key/example-2/utility.ts{11-13} [app/utils/payment.ts]
 
 :::
 
@@ -31,7 +31,7 @@ Refactor code so that you always pass strings or string literals to `tKey`.
 
 ::: code-group
 
-```gts [app/components/counterexample.gts]{10}
+```gts [Counterexample 1]{10}
 import { concat } from '@ember/helper';
 import { t, tKey } from 'ember-intl';
 
@@ -47,7 +47,7 @@ const locales = ['de-de', 'en-us'] as const;
 </template>
 ```
 
-```gts [app/components/counterexample.gts (fixed)]{7-8}
+```gts [Counterexample 1 (Fixed)]{7-8}
 import { get } from '@ember/helper';
 import { t, tKey } from 'ember-intl';
 
@@ -71,7 +71,7 @@ const localeToKey = {
 
 ::: code-group
 
-```gts [app/components/counterexample.gts]{15}
+```gts [Counterexample 2]{15}
 import { array, hash } from '@ember/helper';
 import { t, tKey } from 'ember-intl';
 
@@ -93,7 +93,7 @@ import { t, tKey } from 'ember-intl';
 </template>
 ```
 
-```gts [app/components/counterexample.gts (fixed)]{7-8}
+```gts [Counterexample 2 (Fixed)]{7-8}
 import { array, hash } from '@ember/helper';
 import { t, tKey } from 'ember-intl';
 
