@@ -1,5 +1,15 @@
 # ember-intl
 
+## 8.1.0
+
+### Minor Changes
+
+- [#2104](https://github.com/ember-intl/ember-intl/pull/2104) Removed outdated assumptions for updating the lang attribute ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2104](https://github.com/ember-intl/ember-intl/pull/2104) Imported `getOwner` from `@ember/owner` ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.0.5
 
 ### Patch Changes

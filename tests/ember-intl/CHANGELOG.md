@@ -1,5 +1,11 @@
 # test-app-for-ember-intl
 
+## 2.0.1
+
+### Patch Changes
+
+- [#2104](https://github.com/ember-intl/ember-intl/pull/2104) Imported `setOwner` from `@ember/owner` ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0
 
 ### Major Changes

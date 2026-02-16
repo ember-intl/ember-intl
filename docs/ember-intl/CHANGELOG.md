@@ -1,5 +1,18 @@
 # docs-app-for-ember-intl
 
+## 2.1.0
+
+### Minor Changes
+
+- [#2105](https://github.com/ember-intl/ember-intl/pull/2105) Enabled live demos ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2108](https://github.com/ember-intl/ember-intl/pull/2108) Updated line numbers to highlight ([@ijlee2](https://github.com/ijlee2))
+- [#2108](https://github.com/ember-intl/ember-intl/pull/2108) Updated ember-source to 6.12.0-alpha.4 to fix the syscall errors ([@ijlee2](https://github.com/ijlee2))
+- [#2107](https://github.com/ember-intl/ember-intl/pull/2107) Fixed typo in the v8 migration guide ([@elidupuis](https://github.com/elidupuis))
+- [#2106](https://github.com/ember-intl/ember-intl/pull/2106) Updated vite-plugin-ember to 0.3.1 ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.1
 
 ### Patch Changes
