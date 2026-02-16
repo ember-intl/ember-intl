@@ -4,7 +4,7 @@ Formats a string with the [ICU message syntax](https://formatjs.github.io/docs/c
 
 ::: code-group
 
-<<< @/snippets/helpers/format-message/example-1/component.gts{2,20,24,28} [app/components/example.gts]
+<<< @/snippets/helpers/format-message/example-1/component.gts{20,24,28} [app/components/example.gts]
 
 :::
 

@@ -26,7 +26,7 @@ function addTranslations(
 
 ::: code-group
 
-```gts [tests/integration/components/hello-test.gts]{2,16-22}
+```gts [tests/integration/components/hello-test.gts]{16-22}
 import { render } from '@ember/test-helpers';
 import { addTranslations, setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';

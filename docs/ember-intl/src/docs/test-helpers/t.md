@@ -27,7 +27,7 @@ You might use it for these cases:
 
 ::: code-group
 
-```gts [tests/integration/components/hello-test.gts]{2,14-16}
+```gts [tests/integration/components/hello-test.gts]{14-16}
 import { render } from '@ember/test-helpers';
 import { setupIntl, t } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
@@ -53,9 +53,13 @@ module('Integration | Component | hello', function (hooks) {
 
 ## Alternatives
 
-In general, _avoid_ the test helper `t`, because it creates a tautology: `t(...)` is equal to `t(...)` (here, the `t` refers to that from the `intl` service).
+In general, _don't_ use the test helper `t`, because it creates a tautology: `t(...)` is equal to `t(...)` (here, the `t` refers to that from the `intl` service).
 
-An `hasText` or `includesText`, when combined with the test helper `t`, becomes a weak assertion: It can only guarantee that the translation key is correct (i.e. there is no typo), not the rendered message.
+An `hasText` or `includesText` assertion, when combined with the test helper `t`, becomes weak: It only guarantees that the translation key is correct, not the rendered message.
+
+> [!IMPORTANT]
+> 
+> Even when a translation is missing (by accident), the `hasText` or `includesText` assertion will pass, since the test helper `t` can't help you verify the rendered message.
 
 If possible, [load translations in tests](./add-translations#alternatives) and always pass the string that you expect to see to `hasText` and `includesText`. This way, you can easily know what the app displayed at a given time (static code analysis). You can also change translations with more confidence when assertions begin to fail.
 

@@ -4,7 +4,7 @@ Uses [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/docs/Web/JavaScri
 
 ::: code-group
 
-<<< @/snippets/helpers/format-relative-time/example-1/component.gts{2,10,14,18} [app/components/example.gts]
+<<< @/snippets/helpers/format-relative-time/example-1/component.gts{10,14,18} [app/components/example.gts]
 
 :::
 

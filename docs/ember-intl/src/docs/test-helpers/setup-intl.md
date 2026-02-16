@@ -35,7 +35,7 @@ The default syntax (with 2 arguments) helps you check translations for a given l
 
 ::: code-group
 
-```gts [tests/integration/components/hello-test.gts]{2,9,14}
+```gts [tests/integration/components/hello-test.gts]{9,14}
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';

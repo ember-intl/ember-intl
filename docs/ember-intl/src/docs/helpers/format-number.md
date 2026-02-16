@@ -4,7 +4,7 @@ Uses [`Intl.NumberFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Ref
 
 ::: code-group
 
-<<< @/snippets/helpers/format-number/example-1/component.gts{2,9} [app/components/example.gts]
+<<< @/snippets/helpers/format-number/example-1/component.gts{9} [app/components/example.gts]
 
 :::
 

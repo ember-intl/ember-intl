@@ -18,7 +18,7 @@ export default class LocaleSwitcher extends Component<LocaleSwitcherSignature> {
     return ['en-us', 'de-de', 'es-es', 'fr-fr'];
   }
 
-  @action updateLocale(locale: string) {
+  @action updateLocale(locale: string): void {
     this.intl.setLocale([locale]);
   }
 

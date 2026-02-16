@@ -4,7 +4,7 @@ Finds the translation message and fills its [arguments](https://formatjs.github.
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-1/component.gts{2,9} [app/components/hello.gts]
+<<< @/snippets/helpers/t/example-1/component.gts{9} [app/components/hello.gts]
 
 <<< @/snippets/helpers/t/example-1/de-de.yaml [translations/de-de.yaml]
 
@@ -25,9 +25,9 @@ We use the [ICU message syntax](https://formatjs.github.io/docs/core-concepts/ic
 
 <<< @/snippets/helpers/t/example-2/component.gts{9} [app/components/hello.gts]
 
-<<< @/snippets/helpers/t/example-2/de-de.yaml{2} [translations/de-de.yaml]
+<<< @/snippets/helpers/t/example-2/de-de.yaml [translations/de-de.yaml]
 
-<<< @/snippets/helpers/t/example-2/en-us.yaml{2} [translations/en-us.yaml]
+<<< @/snippets/helpers/t/example-2/en-us.yaml [translations/en-us.yaml]
 
 <CodePreview src="/components/locale-switcher.gts">
   <CodePreview src="/snippets/helpers/t/example-2/component.gts" />
@@ -42,11 +42,11 @@ You can pass data to the `t` helper using named arguments, the 2nd positional ar
 
 ::: code-group
 
-<<< @/snippets/helpers/t/example-3/component.gts{11,14} [app/components/photo-album.gts]
+<<< @/snippets/helpers/t/example-3/component.gts{12,17} [app/components/photo-album.gts]
 
-<<< @/snippets/helpers/t/example-3/de-de.yaml{2} [translations/de-de.yaml]
+<<< @/snippets/helpers/t/example-3/de-de.yaml [translations/de-de.yaml]
 
-<<< @/snippets/helpers/t/example-3/en-us.yaml{2} [translations/en-us.yaml]
+<<< @/snippets/helpers/t/example-3/en-us.yaml [translations/en-us.yaml]
 
 :::
 
