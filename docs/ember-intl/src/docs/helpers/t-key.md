@@ -41,7 +41,7 @@ const locales = ['de-de', 'en-us'] as const;
   {{#each locales as |locale|}}
     <option value={{locale}}>
       {{! ❌ Helpers like `concat` will be ignored }}
-      {{t (tKey (concat "select-language." locale))}}
+      {{t (tKey (concat "select-locale." locale))}}
     </option>
   {{/each}}
 </template>
@@ -54,8 +54,8 @@ import { t, tKey } from 'ember-intl';
 const locales = ['de-de', 'en-us'] as const;
 
 const localeToKey = {
-  'de-de': tKey('select-language.de-de'),
-  'en-us': tKey('select-language.en-us'),
+  'de-de': tKey('select-locale.de-de'),
+  'en-us': tKey('select-locale.en-us'),
 } as const;
 
 <template>
@@ -78,8 +78,8 @@ import { t, tKey } from 'ember-intl';
 <template>
   {{#let
     (array
-      (hash labelKey="select-language.de-de" value="de-de")
-      (hash labelKey="select-language.en-us" value="en-us")
+      (hash labelKey="select-locale.de-de" value="de-de")
+      (hash labelKey="select-locale.en-us" value="en-us")
     )
     as |options|
   }}
@@ -100,8 +100,8 @@ import { t, tKey } from 'ember-intl';
 <template>
   {{#let
     (array
-      (hash labelKey=(tKey "select-language.de-de") value="de-de")
-      (hash labelKey=(tKey "select-language.en-us") value="en-us")
+      (hash labelKey=(tKey "select-locale.de-de") value="de-de")
+      (hash labelKey=(tKey "select-locale.en-us") value="en-us")
     )
     as |options|
   }}

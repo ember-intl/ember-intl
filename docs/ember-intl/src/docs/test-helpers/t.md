@@ -57,7 +57,7 @@ In general, _don't_ use the test helper `t`, because it creates a tautology: `t(
 
 An `hasText` or `includesText` assertion, when combined with the test helper `t`, becomes weak: It only guarantees that the translation key is correct, not the rendered message.
 
-> [!IMPORTANT]
+> [!NOTE]
 > 
 > Even when a translation is missing (by accident), the `hasText` or `includesText` assertion will pass, since the test helper `t` can't help you verify the rendered message.
 

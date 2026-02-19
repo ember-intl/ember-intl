@@ -61,13 +61,34 @@ You can pass data to the `t` helper using named arguments, the 2nd positional ar
 > 
 > When a translation's argument is missing its value, `@formatjs/intl` will throw a `FORMAT_ERROR` error. Even when you [ignore this error](../services/intl-part-2#methods-set-on-formatjs-error), `@formatjs/intl` will return the raw message, instead of trying to fill the arguments.
 
-Suppose `<PhotoAlbum>` now allows `numPhotos?: number` and its template remains the same. Your users will see the raw message when `@numPhotos` is `undefined`.
+Suppose `<PhotoAlbum>` now allows an optional argument `@numPhotos`. Your users will see the raw message when `@numPhotos` is `undefined`.
 
-```html {:no-line-numbers}
+::: code-group
+
+```gts [app/components/photo-album.gts]{6,11}
+import type { TOC } from '@ember/component/template-only';
+import { t } from 'ember-intl';
+
+interface PhotoAlbumSignature {
+  Args: {
+    numPhotos?: number;
+  };
+}
+
+const PhotoAlbum: TOC<PhotoAlbumSignature> = <template>
+  {{t "photo-album.summary" numPhotos=@numPhotos}}
+</template>;
+
+export default PhotoAlbum;
+```
+
+```html [Output (@numPhotos is undefined)]{:no-line-numbers}
 You have {numPhotos, plural, =0 {no photos} =1 {one photo} other {# photos}}.
 ```
 
-You'll want to ensure that all arguments are well-defined before calling `t`. Some strategies include:
+:::
+
+To avoid this scenario, please ensure that all arguments are well-defined before calling `t`. Some strategies include:
 
 - Use `if` to assert that all arguments are well-defined.
 

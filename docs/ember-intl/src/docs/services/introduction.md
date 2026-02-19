@@ -38,7 +38,7 @@ export default class Example extends Component<ExampleSignature> {
 
 > [!TIP]
 > 
-> Use `getOwner()` and `setOwner()` to inject services in a native class.
+> Use `getOwner` and `setOwner` to inject services in a native class.
 
 ::: code-group
 

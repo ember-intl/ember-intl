@@ -19,6 +19,8 @@ my-v1-addon
 └── translations
 ```
 
+There's nothing more to do for publishing your addon with translations. Ember automatically includes the files in the `translations` folder.
+
 
 ### v2 addons {#1-install-ember-intl-v2-addons}
 
@@ -36,7 +38,7 @@ my-v2-addon
 └── translations
 ```
 
-Then, add `translations` to the `files` field in `package.json`.
+To publish your addon with translations, you need to add the `translations` folder to the `files` field in `package.json`.
 
 ::: code-group
 
