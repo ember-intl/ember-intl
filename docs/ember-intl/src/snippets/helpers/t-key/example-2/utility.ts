@@ -8,7 +8,7 @@ export const PAYMENT_METHOD = {
 } as const;
 
 export const TRANSLATION_KEYS = {
-  [PAYMENT_METHOD.BANK_TRANSFER]: tKey('payment.method.bank-transfer'),
-  [PAYMENT_METHOD.CREDIT_CARD]: tKey('payment.method.credit-card'),
-  [PAYMENT_METHOD.DIRECT_DEBIT]: tKey('payment.method.direct-debit'),
+  [PAYMENT_METHOD.BANK_TRANSFER]: tKey('payment-method.bank-transfer'),
+  [PAYMENT_METHOD.CREDIT_CARD]: tKey('payment-method.credit-card'),
+  [PAYMENT_METHOD.DIRECT_DEBIT]: tKey('payment-method.direct-debit'),
 } as const;

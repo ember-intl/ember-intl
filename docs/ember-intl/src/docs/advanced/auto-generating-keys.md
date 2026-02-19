@@ -117,13 +117,11 @@ Lastly, we need to change all the `formatMessage`'s to `t`'s, so that your users
 
 ::: code-group
 
-```gts [app/templates/application.gts]
+```gts [app/templates/application.gts]{4}
 import { t } from 'ember-intl';
 
 <template>
-  <div>
-    {{t "tBFOH1" name="Zoey"}}
-  </div>
+  {{t "tBFOH1" name="Zoey"}}
 </template>
 ```
 

@@ -14,11 +14,11 @@ export default class SelectLocale extends Component<SelectLocaleSignature> {
   get options(): Option[] {
     return [
       {
-        labelKey: tKey('components.select-locale.option.de-de'),
+        labelKey: tKey('select-locale.de-de'),
         value: 'de-de',
       },
       {
-        labelKey: tKey('components.select-locale.option.en-us'),
+        labelKey: tKey('select-locale.en-us'),
         value: 'en-us',
       },
     ];

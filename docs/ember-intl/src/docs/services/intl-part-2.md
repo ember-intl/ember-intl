@@ -187,7 +187,7 @@ export default class ApplicationRoute extends Route {
 
 ### setLocale {#methods-set-locale}
 
-Specify which locales are active. Used in the `application` route's `beforeModel()` hook, or a component that allows users to set their preferred language.
+Specify which locales are active. Used in the `application` route's `beforeModel` hook, or a component that allows users to set their preferred language.
 
 ::: code-group
 
