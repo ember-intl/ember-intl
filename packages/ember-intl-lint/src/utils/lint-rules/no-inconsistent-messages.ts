@@ -9,16 +9,6 @@ import type {
 import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
 import { LintRunWithIgnores } from './shared/index.js';
 
-function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
-  for (let i = 1; i < allIcuArguments.length; i++) {
-    if (!compareIcuArguments(allIcuArguments[i]!, allIcuArguments[0]!)) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
 function getLocales(
   translationFiles: Project['translationFiles'],
 ): Set<string> {
@@ -47,6 +37,7 @@ export function noInconsistentMessages(
 
   project.availableKeys.forEach((localeToData, key) => {
     const localesWithMissingTranslation = new Set<Locale>();
+    const localesWithInconsistentArguments = new Set<Locale>();
 
     locales.forEach((locale) => {
       if (!localeToData.has(locale)) {
@@ -62,13 +53,32 @@ export function noInconsistentMessages(
       });
     }
 
-    const allIcuArguments: IcuArguments[] = [];
+    let target:
+      | {
+          icuArguments: IcuArguments;
+          locale: Locale;
+        }
+      | undefined;
 
-    localeToData.forEach((data) => {
-      allIcuArguments.push(findIcuArguments(data.message));
-    });
+    for (const [locale, data] of localeToData.entries()) {
+      const icuArguments = findIcuArguments(data.message);
 
-    if (allIcuArgumentsMatch(allIcuArguments)) {
+      if (target === undefined) {
+        target = {
+          icuArguments,
+          locale,
+        };
+
+        continue;
+      }
+
+      if (!compareIcuArguments(icuArguments, target.icuArguments)) {
+        localesWithInconsistentArguments.add(locale);
+        localesWithInconsistentArguments.add(target.locale);
+      }
+    }
+
+    if (localesWithInconsistentArguments.size === 0) {
       return lintRun.record({
         ignore: key,
         status: 'pass',
@@ -77,7 +87,7 @@ export function noInconsistentMessages(
 
     return lintRun.record({
       ignore: key,
-      lintError: key,
+      lintError: `${key}`,
       status: 'fail',
     });
   });
