@@ -1,6 +1,7 @@
 import type {
   IcuArguments,
   LintErrors,
+  Locale,
   Options,
   Project,
   TranslationKey,
@@ -45,27 +46,33 @@ export function noInconsistentMessages(
   const locales = getLocales(project.translationFiles);
 
   project.availableKeys.forEach((localeToData, key) => {
-    let hasTranslation = true;
+    const localesWithMissingTranslation = new Set<Locale>();
 
     locales.forEach((locale) => {
       if (!localeToData.has(locale)) {
-        hasTranslation = false;
+        localesWithMissingTranslation.add(locale);
       }
     });
 
-    if (hasTranslation) {
-      const allIcuArguments: IcuArguments[] = [];
-
-      localeToData.forEach((data) => {
-        allIcuArguments.push(findIcuArguments(data.message));
+    if (localesWithMissingTranslation.size > 0) {
+      return lintRun.record({
+        ignore: key,
+        lintError: `${key}`,
+        status: 'fail',
       });
+    }
 
-      if (allIcuArgumentsMatch(allIcuArguments)) {
-        return lintRun.record({
-          ignore: key,
-          status: 'pass',
-        });
-      }
+    const allIcuArguments: IcuArguments[] = [];
+
+    localeToData.forEach((data) => {
+      allIcuArguments.push(findIcuArguments(data.message));
+    });
+
+    if (allIcuArgumentsMatch(allIcuArguments)) {
+      return lintRun.record({
+        ignore: key,
+        status: 'pass',
+      });
     }
 
     return lintRun.record({
