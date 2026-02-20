@@ -21,6 +21,10 @@ function getLocales(
   return locales;
 }
 
+function listLocales(locales: Set<Locale>): string {
+  return Array.from(locales).sort().join(', ');
+}
+
 export function noInconsistentMessages(
   project: Project,
   lintOptions: Partial<{
@@ -48,7 +52,7 @@ export function noInconsistentMessages(
     if (localesWithMissingTranslation.size > 0) {
       return lintRun.record({
         ignore: key,
-        lintError: `${key}`,
+        lintError: `${key} (missing translation: ${listLocales(localesWithMissingTranslation)})`,
         status: 'fail',
       });
     }
@@ -87,7 +91,7 @@ export function noInconsistentMessages(
 
     return lintRun.record({
       ignore: key,
-      lintError: `${key}`,
+      lintError: `${key} (inconsistent arguments: ${listLocales(localesWithInconsistentArguments)})`,
       status: 'fail',
     });
   });
