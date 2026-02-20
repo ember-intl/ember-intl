@@ -1,4 +1,4 @@
-import { relative, sep as separator } from 'node:path';
+import { relative, sep } from 'node:path';
 
 import { parseFilePath } from '@codemod-utils/files';
 import yaml from 'js-yaml';
@@ -29,7 +29,9 @@ function getPrefix(data: Data): string {
     return '';
   }
 
-  return `${relativePath.replaceAll(separator, '.')}.`;
+  const prefix = relativePath.replaceAll(sep, '.').replaceAll(' ', '_');
+
+  return `${prefix}.`;
 }
 
 function traverse(

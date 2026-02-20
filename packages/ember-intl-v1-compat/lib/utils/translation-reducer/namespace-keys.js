@@ -1,4 +1,4 @@
-const { dirname, normalize, sep: separator } = require('node:path');
+const { dirname, normalize, sep } = require('node:path');
 
 /**
  * Wraps the root object with a namespace.
@@ -22,12 +22,12 @@ function namespaceKeys(translations, data) {
   }
 
   const normalizedAddonNames = addonNames.map(normalize);
-  let prefix = separator;
+  let prefix = sep;
 
   for (const addon of normalizedAddonNames) {
-    const addonPrefix = `${separator}__ember-intl-addon__${separator}${addon}`;
+    const addonPrefix = `${sep}__ember-intl-addon__${sep}${addon}`;
 
-    if (`${folderPath}${separator}`.startsWith(`${addonPrefix}${separator}`)) {
+    if (`${folderPath}${sep}`.startsWith(`${addonPrefix}${sep}`)) {
       prefix = addonPrefix;
       break;
     }
@@ -35,14 +35,14 @@ function namespaceKeys(translations, data) {
 
   const folderNames = folderPath
     .replace(prefix, '')
-    .split(separator)
+    .split(sep)
     .filter(Boolean)
     .reverse();
 
   if (folderNames.length > 0) {
     for (const folderName of folderNames) {
       translations = {
-        [folderName.replace(/ /g, '_')]: translations,
+        [folderName.replaceAll(' ', '_')]: translations,
       };
     }
   }
