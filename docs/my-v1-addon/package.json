@@ -74,7 +74,7 @@
     "@types/qunit": "^2.19.13",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.2.1",
-    "ember-cli": "~6.10.2",
+    "ember-cli": "~6.11.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
@@ -82,8 +82,8 @@
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
-    "ember-resolver": "^13.1.1",
-    "ember-source": "~6.10.1",
+    "ember-resolver": "^13.2.0",
+    "ember-source": "~6.11.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
     "eslint": "^9.39.2",
@@ -92,7 +92,7 @@
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
     "typescript": "^5.9.3",
-    "webpack": "^5.105.1"
+    "webpack": "^5.105.2"
   },
   "peerDependencies": {
     "ember-intl": "workspace:*"
