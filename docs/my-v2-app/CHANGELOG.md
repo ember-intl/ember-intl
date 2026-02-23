@@ -1,5 +1,11 @@
 # my-v2-app
 
+## 1.4.6
+
+### Patch Changes
+
+- [#2113](https://github.com/ember-intl/ember-intl/pull/2113) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.5
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # test-ember-intl-v1-compat
 
+## 1.4.6
+
+### Patch Changes
+
+- [#2113](https://github.com/ember-intl/ember-intl/pull/2113) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2110](https://github.com/ember-intl/ember-intl/pull/2110) Standardized how to handle spaces in a folder name ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.5
 
 ### Patch Changes

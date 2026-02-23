@@ -1,5 +1,11 @@
 # ember-intl
 
+## 8.1.1
+
+### Patch Changes
+
+- [#2113](https://github.com/ember-intl/ember-intl/pull/2113) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.1.0
 
 ### Minor Changes

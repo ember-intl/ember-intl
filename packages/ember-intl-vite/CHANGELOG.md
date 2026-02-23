@@ -1,5 +1,12 @@
 # @ember-intl/vite
 
+## 0.5.4
+
+### Patch Changes
+
+- [#2113](https://github.com/ember-intl/ember-intl/pull/2113) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2110](https://github.com/ember-intl/ember-intl/pull/2110) Handled spaces in a folder name ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.5.3
 
 ### Patch Changes
