@@ -54,14 +54,14 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
     "concurrently": "^9.2.1",
-    "ember-cli": "~6.10.2",
+    "ember-cli": "~6.11.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-htmlbars": "^7.0.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-load-initializers": "^3.0.1",
     "ember-qunit": "^9.0.4",
-    "ember-resolver": "^13.1.1",
-    "ember-source": "~6.10.1",
+    "ember-resolver": "^13.2.0",
+    "ember-source": "~6.11.0",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.2",
     "globals": "^17.3.0",
@@ -69,7 +69,7 @@
     "prettier": "^3.8.1",
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
-    "webpack": "^5.105.1"
+    "webpack": "^5.105.2"
   },
   "engines": {
     "node": "20.* || >= 22"
