@@ -1,22 +1,13 @@
 import type {
   IcuArguments,
   LintErrors,
+  Locale,
   Options,
   Project,
   TranslationKey,
 } from '../../types/index.js';
 import { compareIcuArguments, findIcuArguments } from '../icu-message/index.js';
 import { LintRunWithIgnores } from './shared/index.js';
-
-function allIcuArgumentsMatch(allIcuArguments: IcuArguments[]): boolean {
-  for (let i = 1; i < allIcuArguments.length; i++) {
-    if (!compareIcuArguments(allIcuArguments[i]!, allIcuArguments[0]!)) {
-      return false;
-    }
-  }
-
-  return true;
-}
 
 function getLocales(
   translationFiles: Project['translationFiles'],
@@ -28,6 +19,10 @@ function getLocales(
   });
 
   return locales;
+}
+
+function listLocales(locales: Set<Locale>): string {
+  return Array.from(locales).sort().join(', ');
 }
 
 export function noInconsistentMessages(
@@ -45,32 +40,58 @@ export function noInconsistentMessages(
   const locales = getLocales(project.translationFiles);
 
   project.availableKeys.forEach((localeToData, key) => {
-    let hasTranslation = true;
+    const localesWithMissingTranslation = new Set<Locale>();
+    const localesWithInconsistentArguments = new Set<Locale>();
 
     locales.forEach((locale) => {
       if (!localeToData.has(locale)) {
-        hasTranslation = false;
+        localesWithMissingTranslation.add(locale);
       }
     });
 
-    if (hasTranslation) {
-      const allIcuArguments: IcuArguments[] = [];
-
-      localeToData.forEach((data) => {
-        allIcuArguments.push(findIcuArguments(data.message));
+    if (localesWithMissingTranslation.size > 0) {
+      return lintRun.record({
+        ignore: key,
+        lintError: `${key} (missing translation: ${listLocales(localesWithMissingTranslation)})`,
+        status: 'fail',
       });
+    }
 
-      if (allIcuArgumentsMatch(allIcuArguments)) {
-        return lintRun.record({
-          ignore: key,
-          status: 'pass',
-        });
+    let target:
+      | {
+          icuArguments: IcuArguments;
+          locale: Locale;
+        }
+      | undefined;
+
+    for (const [locale, data] of localeToData.entries()) {
+      const icuArguments = findIcuArguments(data.message);
+
+      if (target === undefined) {
+        target = {
+          icuArguments,
+          locale,
+        };
+
+        continue;
       }
+
+      if (!compareIcuArguments(icuArguments, target.icuArguments)) {
+        localesWithInconsistentArguments.add(locale);
+        localesWithInconsistentArguments.add(target.locale);
+      }
+    }
+
+    if (localesWithInconsistentArguments.size === 0) {
+      return lintRun.record({
+        ignore: key,
+        status: 'pass',
+      });
     }
 
     return lintRun.record({
       ignore: key,
-      lintError: key,
+      lintError: `${key} (inconsistent arguments: ${listLocales(localesWithInconsistentArguments)})`,
       status: 'fail',
     });
   });

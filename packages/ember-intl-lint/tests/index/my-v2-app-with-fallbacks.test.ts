@@ -13,7 +13,9 @@ test('index > my-v2-app-with-fallbacks', async function () {
   let lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
-    'no-inconsistent-messages': ['routes.index.title'],
+    'no-inconsistent-messages': [
+      'routes.index.title (missing translation: en-us)',
+    ],
     'no-missing-keys': [],
     'no-unused-keys': [
       'components.title',
@@ -31,7 +33,9 @@ test('index > my-v2-app-with-fallbacks', async function () {
   lintResults = await runCodemod(codemodOptions);
 
   assert.deepStrictEqual(lintResults, {
-    'no-inconsistent-messages': ['routes.index.title'],
+    'no-inconsistent-messages': [
+      'routes.index.title (missing translation: en-us)',
+    ],
     'no-missing-keys': [],
     'no-unused-keys': [
       'components.title',

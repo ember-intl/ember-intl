@@ -111,5 +111,8 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
     options,
   );
 
-  assert.deepStrictEqual(lintErrors, ['key01', 'key03']);
+  assert.deepStrictEqual(lintErrors, [
+    'key01 (inconsistent arguments: de-de, en-us)',
+    'key03 (inconsistent arguments: de-de, en-us)',
+  ]);
 });
