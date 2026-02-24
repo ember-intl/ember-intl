@@ -1020,6 +1020,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      ember-asset-loader:
+        specifier: ^1.0.0
+        version: 1.0.0
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.12.0(@glint/template@1.7.4)(webpack@5.105.2)
@@ -1173,6 +1176,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      ember-asset-loader:
+        specifier: ^1.0.0
+        version: 1.0.0
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.12.0(@glint/template@1.7.4)(webpack@5.105.2)
@@ -1342,6 +1348,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      ember-asset-loader:
+        specifier: ^1.0.0
+        version: 1.0.0
       ember-cli:
         specifier: ~6.11.0
         version: 6.11.0(@types/node@20.19.33)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)
