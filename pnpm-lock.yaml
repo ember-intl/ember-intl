@@ -1020,6 +1020,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      ember-asset-loader:
+        specifier: ^1.0.0
+        version: 1.0.0
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.12.0(@glint/template@1.7.4)(webpack@5.105.2)
@@ -1048,8 +1051,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-engines:
-        specifier: ^0.12.0
-        version: 0.12.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^0.13.0
+        version: 0.13.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-intl:
         specifier: workspace:*
         version: link:../../packages/ember-intl
@@ -1173,6 +1176,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      ember-asset-loader:
+        specifier: ^1.0.0
+        version: 1.0.0
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.12.0(@glint/template@1.7.4)(webpack@5.105.2)
@@ -1201,8 +1207,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-engines:
-        specifier: ^0.12.0
-        version: 0.12.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^0.13.0
+        version: 0.13.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-intl:
         specifier: workspace:*
         version: link:../../packages/ember-intl
@@ -1342,6 +1348,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      ember-asset-loader:
+        specifier: ^1.0.0
+        version: 1.0.0
       ember-cli:
         specifier: ~6.11.0
         version: 6.11.0(@types/node@20.19.33)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)
@@ -1358,8 +1367,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-engines:
-        specifier: ^0.12.0
-        version: 0.12.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^0.13.0
+        version: 0.13.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -6572,12 +6581,12 @@ packages:
     engines: {node: '>= 20.19.0'}
     hasBin: true
 
-  ember-engines@0.12.0:
-    resolution: {integrity: sha512-AsABgJpkrCoC2y/F1cNmcQI5Ia2VhlW2jyw5pAU1g3/XpeIJGV/4xRMbqNGwvs1KRxu78tW/ll20zVNl58N2jg==}
+  ember-engines@0.13.0:
+    resolution: {integrity: sha512-7lNKEdYj5bu6Y6ReFGeU45xlVV3m1/wb9Mn2W0d/spkiLJI1RvSFXWxpaOpAxTl6ATMKO4ep0LKSTj3Be/cvIA==}
     engines: {node: 16.* || 18.* || >= 20}
     peerDependencies:
       ember-engines-router-service: '>=0.5.0'
-      ember-source: ^3.28 || >= 4.0.0
+      ember-source: '>=3.28.12'
     peerDependenciesMeta:
       ember-engines-router-service:
         optional: true
@@ -15664,7 +15673,7 @@ snapshots:
       - walrus
       - whiskers
 
-  ember-engines@0.12.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
+  ember-engines@0.13.0(@glint/template@1.7.4)(ember-source@6.11.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
       '@babel/core': 7.29.0(supports-color@8.1.1)
       '@embroider/macros': 1.19.7(@babel/core@7.29.0)(@glint/template@1.7.4)
@@ -15679,7 +15688,7 @@ snapshots:
       broccoli-merge-trees: 4.2.0
       calculate-cache-key-for-tree: 2.0.0
       ember-asset-loader: 1.0.0
-      ember-cli-babel: 7.26.11
+      ember-cli-babel: 8.3.1(@babel/core@7.29.0)
       ember-cli-htmlbars: 6.3.0
       ember-cli-preprocess-registry: 5.0.1
       ember-cli-string-utils: 1.1.0
