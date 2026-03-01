@@ -23,10 +23,9 @@ export async function findUsedKeys(
     return join(projectRoot, filePath);
   });
 
-  const allUsedKeys = await parallelize({
+  const allUsedKeys = await parallelize(findTranslationKeys, {
     items,
     runWorker,
-    task: findTranslationKeys,
   });
 
   return new Set(allUsedKeys.flat().sort());
