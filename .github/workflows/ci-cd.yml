@@ -16,6 +16,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         package-location:
           - 'docs/ember-intl'
@@ -64,6 +65,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         package-location:
           - 'docs/ember-intl'
@@ -170,6 +172,7 @@ jobs:
     name: Test on Windows
     runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
         package-location:
           - 'packages/ember-intl-lint'
