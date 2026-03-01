@@ -1,17 +1,21 @@
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import { parseFilePath } from '@codemod-utils/files';
 
-import type { TranslationKey } from '../../../types/index.js';
+import type { Options, TranslationKey } from '../../../types/index.js';
 import { inGjsGts } from './in-gjs-gts.js';
 import { inHbs } from './in-hbs.js';
 import { inJsTs } from './in-js-ts.js';
 
 export function findTranslationKeys(
-  absoluteFilePath: string,
+  filePath: string,
+  options: Options,
 ): TranslationKey[] {
-  const file = readFileSync(absoluteFilePath, 'utf8');
-  const { ext } = parseFilePath(absoluteFilePath);
+  const { projectRoot } = options;
+
+  const file = readFileSync(join(projectRoot, filePath), 'utf8');
+  const { ext } = parseFilePath(filePath);
 
   switch (ext) {
     case '.gjs':

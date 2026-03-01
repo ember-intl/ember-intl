@@ -1,5 +1,3 @@
-import { join } from 'node:path';
-
 import { findFiles } from '@codemod-utils/files';
 
 import type { Options, Project, TranslationKey } from '../../types/index.js';
@@ -20,8 +18,8 @@ export async function findUsedKeys(
     '../../utils/analyze-project/find-used-keys/worker.js',
   );
 
-  const taskDatas = filePaths.map((filePath) => {
-    return join(projectRoot, filePath);
+  const taskDatas: [string, Options][] = filePaths.map((filePath) => {
+    return [filePath, options];
   });
 
   const allUsedKeys = await parallelize(findTranslationKeys, {

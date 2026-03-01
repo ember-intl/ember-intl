@@ -20,7 +20,7 @@ function batchDatas<T>(
   return [mainThreadData, workerDatas];
 }
 
-export async function parallelize<T, U>(
+export async function parallelize<T extends unknown[], U>(
   task: Task<T, U>,
   options: {
     runWorker: (taskDatas: T[]) => Promise<U[]>;
