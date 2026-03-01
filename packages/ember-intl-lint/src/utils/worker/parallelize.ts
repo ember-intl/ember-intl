@@ -1,5 +1,6 @@
 import { availableParallelism } from 'node:os';
 
+import { createRunWorker } from './create-run-worker.js';
 import { runTask, type Task } from './run-task.js';
 
 const MIN_NUM_TASKS_PER_WORKER = 100;
@@ -23,11 +24,11 @@ function batchDatas<T>(
 export async function parallelize<T extends unknown[], U>(
   task: Task<T, U>,
   options: {
-    runWorker: (taskDatas: T[]) => Promise<U[]>;
     taskDatas: T[];
+    workerFilePath: string;
   },
 ): Promise<U[]> {
-  const { runWorker, taskDatas } = options;
+  const { taskDatas, workerFilePath } = options;
   const numTasks = taskDatas.length;
 
   if (numTasks < MIN_NUM_TASKS_PER_WORKER) {
@@ -45,6 +46,8 @@ export async function parallelize<T extends unknown[], U>(
     taskDatas,
     numTasksPerWorker,
   );
+
+  const runWorker = createRunWorker<U>(workerFilePath);
 
   const [mainThreadResults, ...workerResults] = await Promise.all([
     runTask(task, mainThreadData),
