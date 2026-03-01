@@ -1,4 +1,4 @@
-const MAX_NUM_RUNNING_TASKS = 10;
+const MAX_NUM_TASKS_RUNNING = 10;
 
 export type Task<T extends unknown[], U> = (...data: T) => U | Promise<U>;
 
@@ -6,14 +6,14 @@ export async function runTask<T extends unknown[], U>(
   task: Task<T, U>,
   taskDatas: T[],
 ): Promise<U[]> {
-  const runningTasks = new Set();
+  const tasksRunning = new Set();
   const results: U[] = [];
 
   let firstCaughtError: Error | undefined = undefined;
 
   async function runTask(...data: T): Promise<U> {
     const promise = task(...data);
-    runningTasks.add(promise);
+    tasksRunning.add(promise);
 
     try {
       const resolved = await promise;
@@ -28,7 +28,7 @@ export async function runTask<T extends unknown[], U>(
       // Re-throw to reject `promise`
       throw error;
     } finally {
-      runningTasks.delete(promise);
+      tasksRunning.delete(promise);
     }
   }
 
@@ -39,10 +39,10 @@ export async function runTask<T extends unknown[], U>(
         break;
       }
 
-      if (runningTasks.size > MAX_NUM_RUNNING_TASKS) {
+      if (tasksRunning.size > MAX_NUM_TASKS_RUNNING) {
         try {
           // Wait for at least one task to complete before spawning more
-          await Promise.race(runningTasks);
+          await Promise.race(tasksRunning);
         } catch {
           // Error is caught here, but handled in `runTask`.
           // Continue to process the remaining tasks.
@@ -58,8 +58,8 @@ export async function runTask<T extends unknown[], U>(
 
     try {
       // Wait for all remaining tasks to complete
-      if (runningTasks.size > 0) {
-        await Promise.all(runningTasks);
+      if (tasksRunning.size > 0) {
+        await Promise.all(tasksRunning);
       }
     } catch {
       // Error is caught here, but `firstCaughtError` has already been
