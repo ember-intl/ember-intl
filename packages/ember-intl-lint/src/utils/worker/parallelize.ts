@@ -1,10 +1,10 @@
 import { availableParallelism } from 'node:os';
 
-import { runTaskOnItems } from './run-task-on-items.js';
+import { runTask, type Task } from './run-task.js';
 
 const MIN_NUM_ITEMS_PER_WORKER = 100;
 
-function batchItems<T>(items: T[]): [T[], T[][]] {
+function batchDatas<T>(items: T[]): [T[], T[][]] {
   const numItems = items.length;
   const numWorkers = availableParallelism();
 
@@ -24,21 +24,21 @@ function batchItems<T>(items: T[]): [T[], T[][]] {
   return [batchForMainThread, batches];
 }
 
-export async function processItems<T, U>(data: {
+export async function parallelize<T, U>(data: {
   items: T[];
   runWorker: (subitems: T[]) => Promise<U[]>;
-  task: (item: T) => U | Promise<U>;
+  task: Task<T, U>;
 }): Promise<U[]> {
   const { items, runWorker, task } = data;
 
   if (items.length < MIN_NUM_ITEMS_PER_WORKER) {
-    return await runTaskOnItems(task, items);
+    return await runTask(task, items);
   }
 
-  const [batchForMainThread, batchesForWorkers] = batchItems(items);
+  const [batchForMainThread, batchesForWorkers] = batchDatas(items);
 
   const [resultsForMainThread, ...resultsForWorkers] = await Promise.all([
-    runTaskOnItems(task, batchForMainThread),
+    runTask(task, batchForMainThread),
     ...batchesForWorkers.map((batch) => {
       return runWorker(batch);
     }),

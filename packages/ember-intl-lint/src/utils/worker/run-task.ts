@@ -1,7 +1,9 @@
 const MAX_NUM_RUNNING_TASKS = 10;
 
-export async function runTaskOnItems<T, U>(
-  task: (item: T) => U | Promise<U>,
+export type Task<T, U> = (item: T) => U | Promise<U>;
+
+export async function runTask<T, U>(
+  task: Task<T, U>,
   items: T[],
 ): Promise<U[]> {
   const runningTasks = new Set();

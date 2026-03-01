@@ -1,7 +1,7 @@
 import { parentPort, workerData } from 'node:worker_threads';
 
 import type { TranslationKey } from '../../../../types/index.js';
-import { runTaskOnItems } from '../../../worker/index.js';
+import { runTask } from '../../../worker/index.js';
 import { findTranslationKeys } from '../find-translation-keys.js';
 
 type WorkerData = {
@@ -13,7 +13,7 @@ const WORKER_ID = `WORKER_FOR_ANALYZE_PROJECT_FIND_USED_KEYS_${Math.random().toS
 async function processFiles(): Promise<TranslationKey[][]> {
   const { items } = workerData as WorkerData;
 
-  return await runTaskOnItems(findTranslationKeys, items);
+  return await runTask(findTranslationKeys, items);
 }
 
 processFiles()

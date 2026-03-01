@@ -7,7 +7,7 @@ import {
   findTranslationKeys,
   runWorker,
 } from '../../utils/analyze-project/find-used-keys/index.js';
-import { processItems } from '../../utils/worker/index.js';
+import { parallelize } from '../../utils/worker/index.js';
 
 export async function findUsedKeys(
   options: Options,
@@ -23,7 +23,7 @@ export async function findUsedKeys(
     return join(projectRoot, filePath);
   });
 
-  const allUsedKeys = await processItems({
+  const allUsedKeys = await parallelize({
     items,
     runWorker,
     task: findTranslationKeys,
