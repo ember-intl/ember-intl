@@ -14,7 +14,7 @@ export async function findUsedKeys(
     projectRoot,
   });
 
-  const runWorker = createRunWorker<TranslationKey>(
+  const runWorker = createRunWorker<TranslationKey[]>(
     '../../utils/analyze-project/find-used-keys/worker.js',
   );
 

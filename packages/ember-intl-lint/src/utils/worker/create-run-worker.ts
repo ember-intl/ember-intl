@@ -2,8 +2,8 @@ import { SHARE_ENV, Worker } from 'node:worker_threads';
 
 export function createRunWorker<U>(
   workerFilePath: string,
-): <T>(taskDatas: T[]) => Promise<U[][]> {
-  function runWorker<T>(taskDatas: T[]): Promise<U[][]> {
+): <T>(taskDatas: T[]) => Promise<U[]> {
+  function runWorker<T>(taskDatas: T[]): Promise<U[]> {
     return new Promise((resolve, reject) => {
       const workerUrl = new URL(workerFilePath, import.meta.url);
 
