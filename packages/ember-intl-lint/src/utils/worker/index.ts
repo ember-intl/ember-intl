@@ -1,2 +1,3 @@
-export * from './process-items.js';
-export * from './run-task-on-items.js';
+export * from './create-run-worker.js';
+export * from './parallelize.js';
+export * from './run-task.js';

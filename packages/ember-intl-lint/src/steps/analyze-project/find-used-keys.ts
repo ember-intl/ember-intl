@@ -1,13 +1,8 @@
-import { join } from 'node:path';
-
 import { findFiles } from '@codemod-utils/files';
 
-import type { Options, Project } from '../../types/index.js';
-import {
-  findTranslationKeys,
-  runWorker,
-} from '../../utils/analyze-project/find-used-keys/index.js';
-import { processItems } from '../../utils/worker/index.js';
+import type { Options, Project, TranslationKey } from '../../types/index.js';
+import { findTranslationKeys } from '../../utils/analyze-project/find-used-keys/index.js';
+import { createRunWorker, parallelize } from '../../utils/worker/index.js';
 
 export async function findUsedKeys(
   options: Options,
@@ -19,14 +14,17 @@ export async function findUsedKeys(
     projectRoot,
   });
 
-  const items = filePaths.map((filePath) => {
-    return join(projectRoot, filePath);
+  const runWorker = createRunWorker<TranslationKey>(
+    '../../utils/analyze-project/find-used-keys/worker.js',
+  );
+
+  const taskDatas: [string, Options][] = filePaths.map((filePath) => {
+    return [filePath, options];
   });
 
-  const allUsedKeys = await processItems({
-    items,
+  const allUsedKeys = await parallelize(findTranslationKeys, {
     runWorker,
-    task: findTranslationKeys,
+    taskDatas,
   });
 
   return new Set(allUsedKeys.flat().sort());
