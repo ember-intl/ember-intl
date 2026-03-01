@@ -1,18 +1,18 @@
 const MAX_NUM_RUNNING_TASKS = 10;
 
-export type Task<T, U> = (item: T) => U | Promise<U>;
+export type Task<T, U> = (data: T) => U | Promise<U>;
 
 export async function runTask<T, U>(
   task: Task<T, U>,
-  items: T[],
+  taskDatas: T[],
 ): Promise<U[]> {
   const runningTasks = new Set();
   const results: U[] = [];
 
   let firstCaughtError: Error | undefined = undefined;
 
-  async function runTask(item: T): Promise<U> {
-    const promise = task(item);
+  async function runTask(data: T): Promise<U> {
+    const promise = task(data);
     runningTasks.add(promise);
 
     try {
@@ -33,7 +33,7 @@ export async function runTask<T, U>(
   }
 
   async function spawnTasks(): Promise<void> {
-    for (const item of items) {
+    for (const data of taskDatas) {
       // Don't start new tasks if an error has occurred
       if (firstCaughtError) {
         break;
@@ -50,7 +50,7 @@ export async function runTask<T, U>(
       }
 
       // Don't use `await` here. Just spawn the task.
-      runTask(item).catch(() => {
+      runTask(data).catch(() => {
         // Errors are already handled in `runTask`.
         // This catch is to prevent `unhandled rejection`` warnings.
       });

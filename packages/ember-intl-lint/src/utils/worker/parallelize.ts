@@ -2,53 +2,54 @@ import { availableParallelism } from 'node:os';
 
 import { runTask, type Task } from './run-task.js';
 
-const MIN_NUM_ITEMS_PER_WORKER = 100;
+const MIN_NUM_TASKS_PER_WORKER = 100;
 
-function batchDatas<T>(items: T[], numItemsPerWorker: number): [T[], T[][]] {
-  const numItems = items.length;
-  const batches: T[][] = [];
+function batchDatas<T>(
+  taskDatas: T[],
+  numTasksPerWorker: number,
+): [T[], T[][]] {
+  const numTasks = taskDatas.length;
+  const workerDatas: T[][] = [];
 
-  for (let i = 0; i < numItems; i += numItemsPerWorker) {
-    batches.push(items.slice(i, i + numItemsPerWorker));
+  for (let i = 0; i < numTasks; i += numTasksPerWorker) {
+    workerDatas.push(taskDatas.slice(i, i + numTasksPerWorker));
   }
 
-  const batchForMainThread: T[] = batches.shift() ?? [];
+  const mainThreadData: T[] = workerDatas.shift() ?? [];
 
-  return [batchForMainThread, batches];
+  return [mainThreadData, workerDatas];
 }
 
 export async function parallelize<T, U>(
   task: Task<T, U>,
   options: {
-    items: T[];
-    runWorker: (subitems: T[]) => Promise<U[]>;
+    runWorker: (taskDatas: T[]) => Promise<U[]>;
+    taskDatas: T[];
   },
 ): Promise<U[]> {
-  const { items, runWorker } = options;
-  const numItems = items.length;
+  const { runWorker, taskDatas } = options;
+  const numTasks = taskDatas.length;
 
-  if (numItems < MIN_NUM_ITEMS_PER_WORKER) {
-    return await runTask(task, items);
+  if (numTasks < MIN_NUM_TASKS_PER_WORKER) {
+    return await runTask(task, taskDatas);
   }
 
   const numWorkers = availableParallelism();
 
-  const numItemsPerWorker = Math.max(
-    Math.ceil(numItems / numWorkers),
-    MIN_NUM_ITEMS_PER_WORKER,
+  const numTasksPerWorker = Math.max(
+    Math.ceil(numTasks / numWorkers),
+    MIN_NUM_TASKS_PER_WORKER,
   );
 
-  const [batchForMainThread, batchesForWorkers] = batchDatas(
-    items,
-    numItemsPerWorker,
+  const [mainThreadData, workerDatas] = batchDatas(
+    taskDatas,
+    numTasksPerWorker,
   );
 
-  const [resultsForMainThread, ...resultsForWorkers] = await Promise.all([
-    runTask(task, batchForMainThread),
-    ...batchesForWorkers.map((batch) => {
-      return runWorker(batch);
-    }),
+  const [mainThreadResults, ...workerResults] = await Promise.all([
+    runTask(task, mainThreadData),
+    ...workerDatas.map(runWorker),
   ]);
 
-  return [...resultsForMainThread, ...resultsForWorkers.flat()];
+  return [...mainThreadResults, ...workerResults.flat()];
 }

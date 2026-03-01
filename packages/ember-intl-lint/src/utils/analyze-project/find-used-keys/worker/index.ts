@@ -5,20 +5,21 @@ import { runTask } from '../../../worker/index.js';
 import { findTranslationKeys } from '../find-translation-keys.js';
 
 type WorkerData = {
-  items: string[];
+  taskDatas: string[];
 };
 
 const WORKER_ID = `WORKER_FOR_ANALYZE_PROJECT_FIND_USED_KEYS_${Math.random().toString(16).slice(2)}`;
 
 async function processFiles(): Promise<TranslationKey[][]> {
-  const { items } = workerData as WorkerData;
+  const { taskDatas } = workerData as WorkerData;
 
-  return await runTask(findTranslationKeys, items);
+  return await runTask(findTranslationKeys, taskDatas);
 }
 
 processFiles()
   .then((results) => {
     process.env[WORKER_ID] = `${performance.now()}`;
+
     parentPort!.postMessage(results);
   })
   .catch((error) => {

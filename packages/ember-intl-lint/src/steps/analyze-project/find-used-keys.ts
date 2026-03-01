@@ -19,13 +19,13 @@ export async function findUsedKeys(
     projectRoot,
   });
 
-  const items = filePaths.map((filePath) => {
+  const taskDatas = filePaths.map((filePath) => {
     return join(projectRoot, filePath);
   });
 
   const allUsedKeys = await parallelize(findTranslationKeys, {
-    items,
     runWorker,
+    taskDatas,
   });
 
   return new Set(allUsedKeys.flat().sort());
