@@ -1,11 +1,12 @@
-import { cpus } from 'node:os';
+import { availableParallelism } from 'node:os';
 
 import { runTaskOnItems } from './run-task-on-items.js';
 
 const MIN_NUM_ITEMS_PER_WORKER = 100;
 
-function batchItems<T>(items: T[], numWorkers: number): [T[], T[][]] {
+function batchItems<T>(items: T[]): [T[], T[][]] {
   const numItems = items.length;
+  const numWorkers = availableParallelism();
 
   const numItemsPerWorker = Math.max(
     Math.ceil(numItems / numWorkers),
@@ -34,10 +35,7 @@ export async function processItems<T, U>(data: {
     return await runTaskOnItems(task, items);
   }
 
-  const [batchForMainThread, batchesForWorkers] = batchItems(
-    items,
-    Math.max(cpus().length - 1, 1),
-  );
+  const [batchForMainThread, batchesForWorkers] = batchItems(items);
 
   const [resultsForMainThread, ...resultsForWorkers] = await Promise.all([
     runTaskOnItems(task, batchForMainThread),
