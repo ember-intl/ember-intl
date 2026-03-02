@@ -2202,6 +2202,9 @@ importers:
       '@codemod-utils/package-json':
         specifier: ^4.0.0
         version: 4.0.0
+      '@codemod-utils/threads':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@formatjs/icu-messageformat-parser':
         specifier: ^3.5.1
         version: 3.5.1
@@ -3360,6 +3363,10 @@ packages:
     engines: {node: 22.* || >= 24}
     peerDependencies:
       '@sondr3/minitest': ^0.1.2
+
+  '@codemod-utils/threads@0.2.0':
+    resolution: {integrity: sha512-nuKclqIUiubNLCStRSflWPAklcA5mLD2+xZTZHeNk/wQ5NCOMeUCnxa3G0hki0tKt53tvbUhHQKW2TyhQGjLbA==}
+    engines: {node: 22.* || >= 24}
 
   '@csstools/color-helpers@5.1.0':
     resolution: {integrity: sha512-S11EXWJyy0Mz5SYvRmY8nJYTFFd1LCNV+7cXyAgQtOOuzb4EsgfqDufL+9esx72/eLhsRdGZwaldu/h+E4t4BA==}
@@ -11679,6 +11686,8 @@ snapshots:
       '@sondr3/minitest': 0.1.2
       fixturify: 3.0.0
       glob: 13.0.6
+
+  '@codemod-utils/threads@0.2.0': {}
 
   '@csstools/color-helpers@5.1.0': {}
 
