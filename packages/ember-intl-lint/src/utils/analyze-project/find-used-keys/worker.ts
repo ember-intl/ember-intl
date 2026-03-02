@@ -1,18 +1,18 @@
 import { parentPort, workerData } from 'node:worker_threads';
 
-import type { Options } from '../../../types/index.js';
-import { runTask } from '../../worker/index.js';
+import { runTask } from '@codemod-utils/threads';
+
 import { findTranslationKeys } from './find-translation-keys.js';
 
 type WorkerData = {
-  taskDatas: [string, Options][];
+  datasets: Parameters<typeof findTranslationKeys>[];
 };
 
 const WORKER_ID = `EMBER_INTL_LINT_ANALYZE_PROJECT_${Math.random().toString(16).slice(2)}`;
 
-const { taskDatas } = workerData as WorkerData;
+const { datasets } = workerData as WorkerData;
 
-runTask(findTranslationKeys, taskDatas)
+runTask(findTranslationKeys, datasets)
   .then((results) => {
     process.env[WORKER_ID] = `${performance.now()}`;
 
