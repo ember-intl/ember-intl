@@ -1,5 +1,16 @@
 # @ember-intl/lint
 
+## 0.9.0
+
+### Minor Changes
+
+- [#2119](https://github.com/ember-intl/ember-intl/pull/2119) Installed @codemod-utils/threads ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2118](https://github.com/ember-intl/ember-intl/pull/2118) Refactored worker utilities ([@ijlee2](https://github.com/ijlee2))
+- [#2117](https://github.com/ember-intl/ember-intl/pull/2117) Refactored worker utilities ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.8.0
 
 ### Minor Changes

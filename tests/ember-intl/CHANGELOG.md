@@ -1,5 +1,11 @@
 # test-app-for-ember-intl
 
+## 2.0.3
+
+### Patch Changes
+
+- [#2120](https://github.com/ember-intl/ember-intl/pull/2120) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.2
 
 ### Patch Changes

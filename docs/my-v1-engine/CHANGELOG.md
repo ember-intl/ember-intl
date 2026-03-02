@@ -1,5 +1,12 @@
 # my-v1-engine
 
+## 1.1.11
+
+### Patch Changes
+
+- [#2114](https://github.com/ember-intl/ember-intl/pull/2114) Updated ember-engines to 0.13.0 ([@ijlee2](https://github.com/ijlee2))
+- [#2120](https://github.com/ember-intl/ember-intl/pull/2120) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.10
 
 ### Patch Changes
