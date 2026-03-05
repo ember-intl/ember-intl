@@ -2,7 +2,7 @@ import { findFiles } from '@codemod-utils/files';
 import { parallelize } from '@codemod-utils/threads';
 
 import type { Options, Project } from '../../types/index.js';
-import { findTranslationKeys } from '../../utils/analyze-project/find-used-keys/index.js';
+import { task } from './find-used-keys/task.js';
 
 export async function findUsedKeys(
   options: Options,
@@ -18,9 +18,9 @@ export async function findUsedKeys(
     return [filePath, options];
   });
 
-  const allUsedKeys = await parallelize(findTranslationKeys, datasets, {
+  const allUsedKeys = await parallelize(task, datasets, {
     importMetaUrl: import.meta.url,
-    workerFilePath: '../../utils/analyze-project/find-used-keys/worker.js',
+    workerFilePath: './find-used-keys/worker.js',
   });
 
   return new Set(allUsedKeys.flat().sort());
