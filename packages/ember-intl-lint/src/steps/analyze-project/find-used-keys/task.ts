@@ -4,14 +4,13 @@ import { join } from 'node:path';
 import { parseFilePath } from '@codemod-utils/files';
 
 import type { Options, TranslationKey } from '../../../types/index.js';
-import { inGjsGts } from './in-gjs-gts.js';
-import { inHbs } from './in-hbs.js';
-import { inJsTs } from './in-js-ts.js';
+import {
+  inGjsGts,
+  inHbs,
+  inJsTs,
+} from '../../../utils/analyze-project/find-used-keys/index.js';
 
-export function findTranslationKeys(
-  filePath: string,
-  options: Options,
-): TranslationKey[] {
+export function task(filePath: string, options: Options): TranslationKey[] {
   const { projectRoot } = options;
 
   const file = readFileSync(join(projectRoot, filePath), 'utf8');
