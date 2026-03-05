@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 0.9.1
+
+### Patch Changes
+
+- [#2121](https://github.com/ember-intl/ember-intl/pull/2121) Standardized usage of @codemod-utils/threads ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.9.0
 
 ### Minor Changes
