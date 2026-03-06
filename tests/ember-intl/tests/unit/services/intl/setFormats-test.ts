@@ -8,7 +8,7 @@ interface TestContext extends BaseTestContext {
   intl: IntlService;
 }
 
-module('Unit | Service | intl > setFormats()', function (hooks) {
+module('Unit | Service | intl > setFormats', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks, 'en-us');
 
