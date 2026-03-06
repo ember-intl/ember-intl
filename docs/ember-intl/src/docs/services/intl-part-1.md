@@ -50,6 +50,24 @@ const output = this.intl.formatDateRange(date1, date2);
 ```
 
 
+### formatDisplayName {#methods-format-display-name}
+
+Uses [`Intl.DisplayNames`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames) to format the name of a currency, language, region, etc.
+
+The 1st argument `value` is required and expects a `string`. You can pass options for `Intl.DisplayNames` in the 2nd argument.
+
+```ts {:no-line-numbers}
+const output = this.intl.formatDisplayName('USD', {
+  type: 'currency',
+});
+// 'US Dollar'
+```
+
+> [!IMPORTANT]
+> 
+> `type` is a required option because `Intl` doesn't specify the default value. The possible values are `"calendar"`, `"currency"`, `"dateTimeField"`, `"language"`, `"region"`, and `"script"`.
+
+
 ### formatList {#methods-format-list}
 
 Uses [`Intl.ListFormat`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/format) to join an array of strings.

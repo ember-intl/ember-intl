@@ -10,6 +10,7 @@ You can use `ember-intl`'s helpers in a `<template>` tag. Every helper has a cam
 import {
   formatDate,
   formatDateRange,
+  formatDisplayName,
   formatList,
   formatMessage,
   formatNumber,
