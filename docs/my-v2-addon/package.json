@@ -68,7 +68,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@glint/ember-tsc": "^1.1.1",
     "@glint/template": "^1.7.4",
-    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-babel": "^7.0.0",
     "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
@@ -79,7 +79,7 @@
     "ember-intl": "workspace:*",
     "ember-source": "~6.11.0",
     "ember-template-lint": "^7.9.3",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.3",
     "prettier": "^3.8.1",
     "rollup": "^4.59.0",
     "typescript": "^5.9.3"

@@ -27,10 +27,10 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
-    "@types/node": "^20.19.33",
+    "@types/node": "^20.19.37",
     "broccoli-test-helper": "^2.0.0",
     "concurrently": "^9.2.1",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.3",
     "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   },
