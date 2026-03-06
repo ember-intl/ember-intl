@@ -1,5 +1,6 @@
 export * from './format-date.ts';
 export * from './format-date-range.ts';
+export * from './format-display-name.ts';
 export * from './format-list.ts';
 export * from './format-message.ts';
 export * from './format-number.ts';

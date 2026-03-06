@@ -11,7 +11,7 @@ interface TestContext extends BaseTestContext {
   intl: IntlService;
 }
 
-module('Unit | Service | intl > setLocale()', function (hooks) {
+module('Unit | Service | intl > setLocale', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks, 'en-us');
 

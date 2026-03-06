@@ -4,13 +4,14 @@
 
 | API | Polyfill | Requirements |
 |--|--|--|
-| [Intl.getCanonicalLocales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales#browser_compatibility) | [@formatjs/intl-getcanonicallocales](https://formatjs.github.io/docs/polyfills/intl-getcanonicallocales/) | - |
-| [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#browser_compatibility) | [@formatjs/intl-datetimeformat](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/) | `Intl.getCanonicalLocales`, `Intl.Locale`, `Intl.NumberFormat` |
-| [Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ListFormat#browser_compatibility) | [@formatjs/intl-listformat](https://formatjs.github.io/docs/polyfills/intl-listformat/) | `Intl.getCanonicalLocales`, `Intl.Locale` |
-| [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale#browser_compatibility) | [@formatjs/intl-locale](https://formatjs.github.io/docs/polyfills/intl-locale/) | `Intl.getCanonicalLocales` |
-| [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#browser_compatibility) | [@formatjs/intl-numberformat](https://formatjs.github.io/docs/polyfills/intl-numberformat/) | `Intl.getCanonicalLocales`, `Intl.Locale`, `Intl.PluralRules` |
-| [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules#browser_compatibility) | [@formatjs/intl-pluralrules](https://formatjs.github.io/docs/polyfills/intl-pluralrules/) | `Intl.getCanonicalLocales`, `Intl.Locale` |
-| [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat#browser_compatibility) | [@formatjs/intl-relativetimeformat](https://formatjs.github.io/docs/polyfills/intl-relativetimeformat/) | `Intl.getCanonicalLocales`, `Intl.Locale`, `Intl.PluralRules` |
+| [Intl.getCanonicalLocales](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales#browser_compatibility) | [@formatjs/intl-getcanonicallocales](https://formatjs.github.io/docs/polyfills/intl-getcanonicallocales/) | - |
+| [Intl.DateTimeFormat](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat#browser_compatibility) | [@formatjs/intl-datetimeformat](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/) | `Intl.getCanonicalLocales`, `Intl.Locale`, `Intl.NumberFormat` |
+| [Intl.DisplayNames](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames#browser_compatibility) | [@formatjs/intl-displaynames](https://formatjs.github.io/docs/polyfills/intl-displaynames/) | `Intl.getCanonicalLocales`, `Intl.Locale` |
+| [Intl.ListFormat](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ListFormat#browser_compatibility) | [@formatjs/intl-listformat](https://formatjs.github.io/docs/polyfills/intl-listformat/) | `Intl.getCanonicalLocales`, `Intl.Locale` |
+| [Intl.Locale](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale#browser_compatibility) | [@formatjs/intl-locale](https://formatjs.github.io/docs/polyfills/intl-locale/) | `Intl.getCanonicalLocales` |
+| [Intl.NumberFormat](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat#browser_compatibility) | [@formatjs/intl-numberformat](https://formatjs.github.io/docs/polyfills/intl-numberformat/) | `Intl.getCanonicalLocales`, `Intl.Locale`, `Intl.PluralRules` |
+| [Intl.PluralRules](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/PluralRules#browser_compatibility) | [@formatjs/intl-pluralrules](https://formatjs.github.io/docs/polyfills/intl-pluralrules/) | `Intl.getCanonicalLocales`, `Intl.Locale` |
+| [Intl.RelativeTimeFormat](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RelativeTimeFormat#browser_compatibility) | [@formatjs/intl-relativetimeformat](https://formatjs.github.io/docs/polyfills/intl-relativetimeformat/) | `Intl.getCanonicalLocales`, `Intl.Locale`, `Intl.PluralRules` |
 
 For a comprehensive list of polyfills, see https://formatjs.github.io/docs/polyfills.
 

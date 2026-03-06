@@ -102,6 +102,7 @@
     "app-js": {
       "./helpers/format-date-range.js": "./dist/_app_/helpers/format-date-range.js",
       "./helpers/format-date.js": "./dist/_app_/helpers/format-date.js",
+      "./helpers/format-display-name.js": "./dist/_app_/helpers/format-display-name.js",
       "./helpers/format-list.js": "./dist/_app_/helpers/format-list.js",
       "./helpers/format-message.js": "./dist/_app_/helpers/format-message.js",
       "./helpers/format-number.js": "./dist/_app_/helpers/format-number.js",

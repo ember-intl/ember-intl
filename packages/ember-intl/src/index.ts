@@ -1,5 +1,6 @@
 export { default as formatDate } from './helpers/format-date.ts';
 export { default as formatDateRange } from './helpers/format-date-range.ts';
+export { default as formatDisplayName } from './helpers/format-display-name.ts';
 export { default as formatList } from './helpers/format-list.ts';
 export { default as formatMessage } from './helpers/format-message.ts';
 export { default as formatNumber } from './helpers/format-number.ts';

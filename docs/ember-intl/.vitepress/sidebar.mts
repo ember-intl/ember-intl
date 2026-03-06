@@ -31,6 +31,10 @@ export const sidebar: DefaultTheme.Sidebar = [
         text: 'formatDateRange',
       },
       {
+        link: '/docs/helpers/format-display-name',
+        text: 'formatDisplayName',
+      },
+      {
         link: '/docs/helpers/format-list',
         text: 'formatList',
       },
