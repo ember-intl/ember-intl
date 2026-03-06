@@ -92,13 +92,13 @@
     "ember-template-imports": "^4.4.0",
     "ember-template-lint": "^7.9.3",
     "ember-test-selectors": "^7.1.0",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.3",
     "loader.js": "^4.7.0",
     "prettier": "^3.8.1",
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
     "typescript": "^5.9.3",
-    "webpack": "^5.105.3"
+    "webpack": "^5.105.4"
   },
   "peerDependencies": {
     "ember-engines": "^0.13.0",
