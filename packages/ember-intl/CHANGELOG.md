@@ -1,5 +1,15 @@
 # ember-intl
 
+## 8.2.0
+
+### Minor Changes
+
+- [#2122](https://github.com/ember-intl/ember-intl/pull/2122) Created formatDisplayName ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2123](https://github.com/ember-intl/ember-intl/pull/2123) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.1.1
 
 ### Patch Changes
