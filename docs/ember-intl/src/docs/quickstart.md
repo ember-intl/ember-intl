@@ -18,8 +18,6 @@ my-app
 └── translations
 ```
 
-When you run the app, `@ember-intl/v1-compat` will automatically load the translation files.
-
 
 ### v2 apps {#1-install-ember-intl-v2-apps}
 
@@ -75,8 +73,6 @@ my-app
 ├── app
 └── translations
 ```
-
-When you run the app, you will see that `@ember-intl/vite` doesn't automatically load the translation files. You will manually load them in [4. Set up ember-intl - v2 apps](#4-set-up-ember-intl-v2-apps).
 
 
 ## 2. Define translations {#2-define-translations}
@@ -151,12 +147,14 @@ hello.message: "Hallo, {name}!"
 
 ## 4. Set up ember-intl {#4-set-up-ember-intl}
 
-Before your app renders, you need to tell `ember-intl` which locale(s) to use. Since timing is a factor, we set up `ember-intl` in the `application` route's `beforeModel` hook.
+`ember-intl` provides the `intl` service, which acts as the source of truth when it comes to internationalization.
+
+Before your app renders, you need to tell the `intl` service which translations are available and which locale(s) to use. Since timing is a factor, we will set up `ember-intl` in the `application` route's `beforeModel` hook.
 
 
 ### v1 apps {#4-set-up-ember-intl-v1-apps}
 
-Recall that `@ember-intl/v1-compat` automatically loads translations. What remains for you is to call `setLocale` to specify which language(s) the app should use initially.
+When the app starts, `@ember-intl/v1-compat` automatically loads your translations, then passes them to the `intl` service. So your only job is to call `setLocale` to specify which language(s) the app should use initially.
 
 ::: code-group
 
@@ -182,13 +180,13 @@ export default class ApplicationRoute extends Route {
 
 ### v2 apps {#4-set-up-ember-intl-v2-apps}
 
-`@ember-intl/vite` doesn't automatically load translations. Import the files that you need, then call `addTranslations` to pass the translations to the `intl` service.
+When the app starts, `@ember-intl/vite` automatically loads your translations, but it does not pass them to the `intl` service. You are responsible for importing the translations that you need, then calling `addTranslations` to pass them to the `intl` service.
 
-Finally, call `setLocale` to specify which language(s) the app should use initially.
+Like in v1 apps, you call `setLocale` to specify the initial locale(s).
 
 ::: code-group
 
-```ts [app/routes/application.ts]{3-4,14-17}
+```ts [app/routes/application.ts]{3-4,14-15}
 import Route from '@ember/routing/route';
 import { type Registry as Services, service } from '@ember/service';
 import translationsForDeDe from 'virtual:ember-intl/translations/de-de';
