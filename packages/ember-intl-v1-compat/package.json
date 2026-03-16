@@ -63,7 +63,7 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.11.0",
     "ember-template-lint": "^7.9.3",
-    "eslint": "^9.39.3",
+    "eslint": "^9.39.4",
     "globals": "^17.4.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.8.1",
