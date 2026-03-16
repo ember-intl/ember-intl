@@ -1,5 +1,16 @@
 # docs-app-for-ember-intl
 
+## 2.3.0
+
+### Minor Changes
+
+- [#2124](https://github.com/ember-intl/ember-intl/pull/2124) Explained how to provide types for virtual files ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2126](https://github.com/ember-intl/ember-intl/pull/2126) Removed ambiguity in the meaning of loading translations ([@ijlee2](https://github.com/ijlee2))
+- [#2125](https://github.com/ember-intl/ember-intl/pull/2125) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.2.0
 
 ### Minor Changes

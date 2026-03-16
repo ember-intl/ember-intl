@@ -1,5 +1,11 @@
 # @ember-intl/vite
 
+## 0.5.5
+
+### Patch Changes
+
+- [#2125](https://github.com/ember-intl/ember-intl/pull/2125) Began testing with vite@8.0.0 ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.5.4
 
 ### Patch Changes
