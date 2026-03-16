@@ -29,7 +29,7 @@ Use your package manager to install `ember-intl` and `@ember-intl/vite`.
 pnpm add -D ember-intl @ember-intl/vite
 ```
 
-In `vite.config.{mjs,mts}`, add `loadTranslations` to the list of plugins.
+To prepare for loading translations, you will need to update 2 configuration files. The first is `vite.config.{mjs,mts}`, where you add `loadTranslations` to the list of plugins for Vite. The second is if you use TypeScript: Add the path `@ember-intl/vite/virtual` to `compilerOptions.types` in `tsconfig.json`.
 
 ::: code-group
 
@@ -52,9 +52,23 @@ export default defineConfig({
 });
 ```
 
+```json [tsconfig.json]{8}
+{
+  "compilerOptions": {
+    "types": [
+      "ember-source/types",
+      "@embroider/core/virtual",
+      "@glint/ember-tsc/types",
+      "vite/client",
+      "@ember-intl/vite/virtual"
+    ]
+  }
+}
+```
+
 :::
 
-Next, create the folder `translations` as a sibling to `app`.
+Finally, create the folder `translations` as a sibling to `app`.
 
 ```sh {:no-line-numbers}
 my-app
@@ -62,7 +76,7 @@ my-app
 └── translations
 ```
 
-When you run the app, `@ember-intl/vite` won't automatically load the translation files. You will manually load them in [4. Set up ember-intl - v2 apps](#4-set-up-ember-intl-v2-apps).
+When you run the app, you will see that `@ember-intl/vite` doesn't automatically load the translation files. You will manually load them in [4. Set up ember-intl - v2 apps](#4-set-up-ember-intl-v2-apps).
 
 
 ## 2. Define translations {#2-define-translations}
