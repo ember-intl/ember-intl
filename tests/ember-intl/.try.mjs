@@ -33,21 +33,21 @@ export default {
         },
       },
     },
-    {
-      name: 'ember-beta',
-      npm: {
-        devDependencies: {
-          'ember-source': 'npm:ember-source@beta',
-        },
-      },
-    },
-    {
-      name: 'ember-canary',
-      npm: {
-        devDependencies: {
-          'ember-source': 'npm:ember-source@alpha',
-        },
-      },
-    },
+    // {
+    //   name: 'ember-beta',
+    //   npm: {
+    //     devDependencies: {
+    //       'ember-source': 'npm:ember-source@beta',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'ember-canary',
+    //   npm: {
+    //     devDependencies: {
+    //       'ember-source': 'npm:ember-source@alpha',
+    //     },
+    //   },
+    // },
   ],
 };
