@@ -37,13 +37,13 @@
     "@shared-configs/typescript": "workspace:*",
     "concurrently": "^9.2.1",
     "ember-intl": "workspace:*",
-    "ember-source": "6.12.0-beta.1",
+    "ember-source": "6.12.0-beta.2",
     "eslint": "^9.39.4",
     "prettier": "^3.8.1",
-    "stylelint": "^17.4.0",
+    "stylelint": "^17.6.0",
     "typescript": "^5.9.3",
-    "vite": "^8.0.0",
-    "vite-plugin-ember": "^0.3.1",
+    "vite": "^8.0.3",
+    "vite-plugin-ember": "^0.4.0",
     "vitepress": "^1.6.4"
   },
   "engines": {
