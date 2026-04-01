@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
@@ -93,7 +93,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
@@ -120,7 +120,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
@@ -130,7 +130,7 @@ jobs:
 
       - id: set-test-matrix
         name: Set test matrix
-        run: echo "matrix=$(pnpx -s @embroider/try list)" >> $GITHUB_OUTPUT
+        run: echo "matrix=$(pnpx @embroider/try list)" >> $GITHUB_OUTPUT
         working-directory: 'tests/ember-intl'
 
 
@@ -147,7 +147,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
@@ -156,7 +156,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Make file changes
-        run: pnpm dlx @embroider/try apply ${{ matrix.name }}
+        run: pnpx @embroider/try apply ${{ matrix.name }}
         working-directory: 'tests/ember-intl'
 
       - name: Install dependencies
@@ -183,7 +183,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
@@ -221,7 +221,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
@@ -230,7 +230,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -246,7 +246,7 @@ jobs:
 
       - name: Deploy app
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
         env:
           name: github-pages
           url: ${{ steps.deployment.outputs.page_url }}
