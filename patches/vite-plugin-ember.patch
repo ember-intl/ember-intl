@@ -1,21 +1,22 @@
 diff --git a/src/vitepress/code-preview.vue b/src/vitepress/code-preview.vue
-index bed09009a4df8abe9ed538deef8672a5d859faff..9daaabf6375b2cc93237d05252ac1bda18d0aafe 100644
+index 4775e7ea3a11bf22ec0ee419883348ad6440b898..99422d145b62036d564d2c0b7f9a218dce571ee1 100644
 --- a/src/vitepress/code-preview.vue
 +++ b/src/vitepress/code-preview.vue
-@@ -57,10 +57,9 @@ onBeforeUnmount(() => {
-   <div class="ember-playground">
-     <div v-if="error" class="ember-playground__error">{{ error }}</div>
+@@ -60,12 +60,11 @@ onBeforeUnmount(() => {
      <div ref="mountEl"></div>
--    <details v-if="$slots.default" class="ember-playground__source">
--      <summary>Show code</summary>
-+    <div v-if="$slots.default">
+     <details
+       v-if="$slots.default && collapsible"
+-      class="ember-playground__source"
+     >
+       <summary>Show code</summary>
        <slot />
--    </details>
-+    </div>
+     </details>
+-    <div v-else-if="$slots.default" class="ember-playground__source">
++    <div v-else-if="$slots.default">
+       <slot />
+     </div>
    </div>
- </template>
- 
-@@ -82,26 +81,4 @@ onBeforeUnmount(() => {
+@@ -89,26 +88,4 @@ onBeforeUnmount(() => {
    white-space: pre-wrap;
    word-break: break-word;
  }
