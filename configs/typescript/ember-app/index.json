@@ -1,0 +1,6 @@
+{
+  "extends": "@ember/app-tsconfig",
+  "compilerOptions": {
+    "target": "esnext"
+  }
+}

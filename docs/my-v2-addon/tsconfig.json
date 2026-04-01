@@ -1,12 +1,7 @@
 {
-  "extends": "@shared-configs/typescript/ember",
+  "extends": "@shared-configs/typescript/ember-addon",
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "declaration": true,
     "declarationDir": "declarations",
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "noEmit": false,
     "rootDir": "./src",
     "types": ["ember-source/types", "@glint/ember-tsc/types"]
   },
