@@ -1,5 +1,14 @@
 # test-app-for-ember-intl
 
+## 2.1.2
+
+### Patch Changes
+
+- [#2130](https://github.com/ember-intl/ember-intl/pull/2130) Replaced @tsconfig/ember with @ember/app-tsconfig ([@ijlee2](https://github.com/ijlee2))
+- [#2130](https://github.com/ember-intl/ember-intl/pull/2130) Set target to esnext ([@ijlee2](https://github.com/ijlee2))
+- [#2129](https://github.com/ember-intl/ember-intl/pull/2129) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2128](https://github.com/ember-intl/ember-intl/pull/2128) Skipped ember-beta and ember-canary to avoid issues with 7.0 pre-release ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.1.1
 
 ### Patch Changes

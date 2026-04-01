@@ -1,6 +1,6 @@
 {
   "name": "@ember-intl/v1-compat",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Loads translations in v1 apps with ember-intl",
   "keywords": [
     "ember",

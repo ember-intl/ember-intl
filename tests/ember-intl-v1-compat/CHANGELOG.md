@@ -1,5 +1,12 @@
 # test-ember-intl-v1-compat
 
+## 1.4.9
+
+### Patch Changes
+
+- [#2130](https://github.com/ember-intl/ember-intl/pull/2130) Set target to esnext ([@ijlee2](https://github.com/ijlee2))
+- [#2129](https://github.com/ember-intl/ember-intl/pull/2129) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.8
 
 ### Patch Changes
