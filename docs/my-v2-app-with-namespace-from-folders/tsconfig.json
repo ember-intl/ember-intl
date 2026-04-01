@@ -1,5 +1,5 @@
 {
-  "extends": "@shared-configs/typescript/ember",
+  "extends": "@shared-configs/typescript/ember-app",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

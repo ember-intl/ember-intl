@@ -32,7 +32,7 @@
   },
   "scripts": {
     "_build": "ember build --environment=production",
-    "_prepack": "tsc --project tsconfig.declarations.json",
+    "_prepack": "tsc --project tsconfig.build.json",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",

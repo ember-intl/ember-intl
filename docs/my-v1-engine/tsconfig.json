@@ -1,7 +1,10 @@
 {
-  "extends": "@shared-configs/typescript/ember",
+  "extends": "@shared-configs/typescript/ember-addon",
   "compilerOptions": {
     "baseUrl": ".",
+    "declaration": false,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
@@ -15,5 +18,11 @@
   },
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
-  }
+  },
+  "include": [
+    "addon/**/*",
+    "addon-test-support/**/*",
+    "tests/**/*",
+    "types/**/*"
+  ]
 }
