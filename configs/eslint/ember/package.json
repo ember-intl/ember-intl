@@ -24,7 +24,7 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/eslint-config-ember": "^3.1.0"
+    "@ijlee2-frontend-configs/eslint-config-ember": "^3.1.1"
   },
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
