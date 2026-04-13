@@ -26,7 +26,7 @@
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.2"
   },
   "peerDependencies": {
     "eslint": "^9.39.4"
