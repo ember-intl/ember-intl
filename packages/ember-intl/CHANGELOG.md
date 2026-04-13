@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.5.0
+
+### Minor Changes
+
+- [#2019](https://github.com/ember-intl/ember-intl/pull/1993) Created {{t-key}} helper ([@ijlee2](https://github.com/ijlee2))
+
 ## 7.4.1
 
 ### Patch Changes

@@ -7,6 +7,7 @@ import type FormatRelativeHelper from './helpers/format-relative';
 import type FormatRelativeTimeHelper from './helpers/format-relative-time';
 import type FormatTimeHelper from './helpers/format-time';
 import type THelper from './helpers/t';
+import type TKeyHelper from './helpers/t-key';
 
 export default interface EmberIntlRegistry {
   'format-date': typeof FormatDateHelper;
@@ -18,4 +19,5 @@ export default interface EmberIntlRegistry {
   'format-relative-time': typeof FormatRelativeTimeHelper;
   'format-time': typeof FormatTimeHelper;
   t: typeof THelper;
+  't-key': typeof TKeyHelper;
 }
