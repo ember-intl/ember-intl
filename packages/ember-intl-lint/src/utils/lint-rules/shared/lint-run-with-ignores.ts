@@ -1,4 +1,9 @@
+import { writeFileSync } from 'node:fs';
+import { EOL } from 'node:os';
+import { join } from 'node:path';
+
 import type { LintErrors } from '../../../types/index.js';
+import { findUserConfig, getUserConfig } from '../../config/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
 type Args<T extends string> = {
@@ -18,29 +23,56 @@ type DataForRecord<T extends string> =
     };
 
 export class LintRunWithIgnores<T extends string> {
+  private hasIgnoresChanged: boolean;
   private ignores: Set<T>;
-  private ignoresUnused: Set<T>;
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
   constructor(args: Args<T>) {
+    this.hasIgnoresChanged = false;
     this.ignores = new Set<T>(args.ignores ?? []);
-    this.ignoresUnused = new Set<T>();
     this.lintErrors = [];
     this.lintRule = args.lintRule;
+  }
+
+  async fix(projectRoot: string): Promise<void> {
+    if (!this.hasIgnoresChanged) {
+      return;
+    }
+
+    const filePath = findUserConfig(projectRoot) ?? 'ember-intl.config.mjs';
+    const userConfig = (await getUserConfig(projectRoot)) ?? {};
+
+    const ignores = Array.from(this.ignores).sort();
+
+    userConfig.lintRules = {
+      ...(userConfig.lintRules ?? {}),
+      [this.lintRule]: {
+        ignores,
+      },
+    };
+
+    const file = [
+      `export default ${JSON.stringify(userConfig, null, 2).replaceAll('\n', EOL)};`,
+      '',
+    ].join(EOL);
+
+    writeFileSync(join(projectRoot, filePath), file, 'utf8');
+
+    // Mark all errors as fixed
+    this.lintErrors = [];
   }
 
   getLintErrors(): LintErrors {
     return this.lintErrors;
   }
 
-  getUnusedIgnores(): T[] {
-    return Array.from(this.ignoresUnused).sort();
-  }
-
   record(data: DataForRecord<T>): void {
     if (data.status === 'fail') {
       if (!this.ignores.has(data.ignore)) {
+        this.ignores.add(data.ignore);
+        this.hasIgnoresChanged = true;
+
         this.lintErrors.push(data.lintError);
       }
 
@@ -48,23 +80,8 @@ export class LintRunWithIgnores<T extends string> {
     }
 
     if (this.ignores.has(data.ignore)) {
-      this.ignoresUnused.add(data.ignore);
+      this.ignores.delete(data.ignore);
+      this.hasIgnoresChanged = true;
     }
-  }
-
-  reportUnusedIgnores(): void {
-    const unusedIgnores = this.getUnusedIgnores();
-
-    if (unusedIgnores.length === 0) {
-      return;
-    }
-
-    console.log(
-      `⚠️ ${this.lintRule} has unused ignores (${unusedIgnores.join(',')})`,
-    );
-  }
-
-  async updateConfiguration(): Promise<void> {
-    // TODO
   }
 }

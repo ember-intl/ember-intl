@@ -15,15 +15,7 @@ test('index > my-v2-app (fix)', async function () {
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
     'no-missing-keys': [],
-    'no-unused-keys': [
-      'components.component-from-app.message',
-      'components.title',
-      'components.translation-with-arguments.message',
-      'components.translation-with-arguments.title',
-      'routes.application.title',
-      'routes.index.key-to-overwrite',
-      'routes.index.title',
-    ],
+    'no-unused-keys': [],
   });
 
   assertFixture(outputProject, codemodOptions);
@@ -34,15 +26,7 @@ test('index > my-v2-app (fix)', async function () {
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
     'no-missing-keys': [],
-    'no-unused-keys': [
-      'components.component-from-app.message',
-      'components.title',
-      'components.translation-with-arguments.message',
-      'components.translation-with-arguments.title',
-      'routes.application.title',
-      'routes.index.key-to-overwrite',
-      'routes.index.title',
-    ],
+    'no-unused-keys': [],
   });
 
   assertFixture(outputProject, codemodOptions);

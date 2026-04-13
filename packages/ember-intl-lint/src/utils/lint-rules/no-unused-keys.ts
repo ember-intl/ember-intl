@@ -51,7 +51,7 @@ export async function noUnusedKeys(
   });
 
   if (options.fix) {
-    await lintRun.updateConfiguration();
+    await lintRun.fix(options.projectRoot);
   }
 
   return lintRun.getLintErrors();

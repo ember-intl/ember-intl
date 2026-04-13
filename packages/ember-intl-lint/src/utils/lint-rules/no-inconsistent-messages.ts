@@ -97,7 +97,7 @@ export async function noInconsistentMessages(
   });
 
   if (options.fix) {
-    await lintRun.updateConfiguration();
+    await lintRun.fix(options.projectRoot);
   }
 
   return lintRun.getLintErrors();
