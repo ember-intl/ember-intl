@@ -1,0 +1,16 @@
+{
+  "name": "my-v2-app",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "@embroider/vite": "^1.4.3",
+    "ember-source": "~6.8.0"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "type": "app",
+    "version": 2
+  }
+}

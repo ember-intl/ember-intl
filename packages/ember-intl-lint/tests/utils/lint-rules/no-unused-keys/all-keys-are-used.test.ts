@@ -5,7 +5,7 @@ import { noUnusedKeys } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-unused-keys > all keys are used', function () {
+test('utils | lint-rules | no-unused-keys > all keys are used', async function () {
   const translations = new Map([
     [
       'de-de',
@@ -157,7 +157,7 @@ test('utils | lint-rules | no-unused-keys > all keys are used', function () {
     ]),
   });
 
-  const lintErrors = noUnusedKeys(project, {}, options);
+  const lintErrors = await noUnusedKeys(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

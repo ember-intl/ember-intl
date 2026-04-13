@@ -5,7 +5,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > number with different pluralization rules', function () {
+test('utils | lint-rules | no-inconsistent-messages > number with different pluralization rules', async function () {
   const translations = new Map([
     [
       'en-us',
@@ -184,7 +184,7 @@ test('utils | lint-rules | no-inconsistent-messages > number with different plur
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {}, options);
+  const lintErrors = await noInconsistentMessages(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

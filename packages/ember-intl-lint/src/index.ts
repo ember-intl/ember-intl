@@ -7,5 +7,5 @@ export async function runCodemod(
   const options = await createOptions(codemodOptions);
   const project = await analyzeProject(options);
 
-  return lintProject(project, options);
+  return await lintProject(project, options);
 }

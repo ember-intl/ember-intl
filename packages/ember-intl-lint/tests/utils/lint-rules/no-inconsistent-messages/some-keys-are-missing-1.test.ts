@@ -5,7 +5,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)', function () {
+test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)', async function () {
   const translations = new Map([
     [
       'de-de',
@@ -72,7 +72,7 @@ test('utils | lint-rules | no-inconsistent-messages > some keys are missing (1)'
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {}, options);
+  const lintErrors = await noInconsistentMessages(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, [
     'key01 (missing translation: es-es)',

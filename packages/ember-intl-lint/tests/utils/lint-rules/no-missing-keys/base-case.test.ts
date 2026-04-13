@@ -6,7 +6,7 @@ import { noMissingKeys } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-missing-keys > base case', function () {
+test('utils | lint-rules | no-missing-keys > base case', async function () {
   const translations: Project['translations'] = new Map();
 
   const project = normalizeProject({
@@ -16,7 +16,7 @@ test('utils | lint-rules | no-missing-keys > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintErrors = noMissingKeys(project, {}, options);
+  const lintErrors = await noMissingKeys(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

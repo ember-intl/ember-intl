@@ -28,7 +28,7 @@ pnpm add -D @ember-intl/lint
 }
 ```
 
-Optional: [Create a configuration file](./docs/configuration.md).
+3\. If `lint:intl` doesn't pass out of the box, [create a configuration file](./docs/configuration.md) to document your app or addon. You may run `lint:intl:fix` to get started.
 
 
 ## Lint Rules

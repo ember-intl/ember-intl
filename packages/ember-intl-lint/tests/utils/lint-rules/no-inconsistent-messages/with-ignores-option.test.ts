@@ -5,7 +5,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > with ignores option', function () {
+test('utils | lint-rules | no-inconsistent-messages > with ignores option', async function () {
   const translations = new Map([
     [
       'de-de',
@@ -103,7 +103,7 @@ test('utils | lint-rules | no-inconsistent-messages > with ignores option', func
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(
+  const lintErrors = await noInconsistentMessages(
     project,
     {
       ignores: ['key02', 'key04'],

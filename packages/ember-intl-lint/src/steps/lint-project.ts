@@ -6,7 +6,10 @@ import type {
 } from '../types/index.js';
 import { type LintRule, lintRuleMapping } from '../utils/lint-rules.js';
 
-export function lintProject(project: Project, options: Options): LintResults {
+export async function lintProject(
+  project: Project,
+  options: Options,
+): Promise<LintResults> {
   const { config } = options;
   const { lintRules } = config;
 
@@ -22,7 +25,7 @@ export function lintProject(project: Project, options: Options): LintResults {
       continue;
     }
 
-    lintResults[lintRule] = lintMethod(
+    lintResults[lintRule] = await lintMethod(
       project,
       lintOptions === true ? {} : lintOptions,
       options,

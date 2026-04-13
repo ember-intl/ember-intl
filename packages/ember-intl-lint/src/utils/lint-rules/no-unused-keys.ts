@@ -6,13 +6,13 @@ import type {
 } from '../../types/index.js';
 import { LintRunWithIgnores } from './shared/index.js';
 
-export function noUnusedKeys(
+export async function noUnusedKeys(
   project: Project,
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
   options: Options,
-): LintErrors {
+): Promise<LintErrors> {
   const lintRun = new LintRunWithIgnores({
     ignores: lintOptions.ignores,
     lintRule: 'no-unused-keys',
@@ -51,7 +51,7 @@ export function noUnusedKeys(
   });
 
   if (options.fix) {
-    lintRun.reportUnusedIgnores();
+    await lintRun.fix(options.projectRoot);
   }
 
   return lintRun.getLintErrors();
