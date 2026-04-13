@@ -1,2 +1,1 @@
-# A simple argument
-hello.message: Hello, {name}!
+hello.call-by-name: Hello, {name}!

@@ -33,7 +33,7 @@ routes:
 
 > [!NOTE]
 > 
-> `@ember-intl/v1-compat` and `@ember-intl/vite` will flatten all keys. As a result, you can always write `{{t "hello.message"}}` in a template, whether keys are flat or nested in translation files.
+> `@ember-intl/v1-compat` and `@ember-intl/vite` will flatten all keys. As a result, you can always write `{{t "components.hello.message"}}` in a template, whether keys are flat or nested in translation files.
 
 
 ## Nested folders

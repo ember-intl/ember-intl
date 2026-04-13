@@ -20,7 +20,7 @@ In Part 1, we'll focus on the API that you will frequently use. Every method lis
 
 ## Methods
 
-Every `format*` method returns an empty string when the input value(s) is `undefined` or `null`. To keep this page brief, these 2 values aren't mentioned again when discussing the possible types for the input value(s).
+Every `format*` method returns an empty string when the input value(s) is `undefined` or `null`. To keep this page brief, these 2 values aren't mentioned again when discussing the possible input value(s).
 
 
 ### formatDate {#methods-format-date}

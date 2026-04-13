@@ -4,7 +4,7 @@ Use `tKey` to mark strings that you know are actually translation keys. This hel
 
 > [!NOTE]
 > 
-> `tKey` is an identity function. The output string and its type (`string` or a string literal) are the same as the input.
+> `tKey` is an identity function. The output's value and type (`string` or a string literal) are the same as the input's.
 
 ::: code-group
 
@@ -25,7 +25,7 @@ Here is another example, where translation keys appear in a utility file (a norm
 
 ## What to avoid
 
-Don't pass a dynamic expression (code that can easily be determined only at runtime) to `tKey`. It's difficult and costly for programs to accurately find all possible values.
+Don't pass a dynamic expression (code that can be determined easily only at runtime) to `tKey`. It's difficult and costly for programs to accurately find all possible values.
 
 Refactor code so that you always pass strings or string literals to `tKey`.
 

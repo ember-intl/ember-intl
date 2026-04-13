@@ -4,7 +4,7 @@
 
 > [!IMPORTANT]
 > 
-> Every helper from `ember-intl` always returns a string.
+> Helpers from `ember-intl` always return a string.
 
 > [!TIP]
 > 
