@@ -3,5 +3,6 @@
   "default-async-observers": true,
   "jquery-integration": false,
   "no-implicit-route-model": true,
-  "template-only-glimmer-components": true
+  "template-only-glimmer-components": true,
+  "use-ember-modules": false
 }
