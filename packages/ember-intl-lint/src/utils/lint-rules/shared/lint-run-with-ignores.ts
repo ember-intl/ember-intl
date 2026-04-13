@@ -63,4 +63,8 @@ export class LintRunWithIgnores<T extends string> {
       `⚠️ ${this.lintRule} has unused ignores (${unusedIgnores.join(',')})`,
     );
   }
+
+  async updateConfiguration(): Promise<void> {
+    // TODO
+  }
 }

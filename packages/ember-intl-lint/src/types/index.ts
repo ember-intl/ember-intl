@@ -42,7 +42,7 @@ type LintMethod = (
   project: Project,
   lintOptions: LintOptions,
   options: Options,
-) => LintErrors;
+) => LintErrors | Promise<LintErrors>;
 
 type LintOptions = Record<string, unknown>;
 

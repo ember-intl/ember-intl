@@ -25,13 +25,13 @@ function listLocales(locales: Set<Locale>): string {
   return Array.from(locales).sort().join(', ');
 }
 
-export function noInconsistentMessages(
+export async function noInconsistentMessages(
   project: Project,
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
   options: Options,
-): LintErrors {
+): Promise<LintErrors> {
   const lintRun = new LintRunWithIgnores({
     ignores: lintOptions.ignores,
     lintRule: 'no-inconsistent-messages',
@@ -97,7 +97,7 @@ export function noInconsistentMessages(
   });
 
   if (options.fix) {
-    lintRun.reportUnusedIgnores();
+    await lintRun.updateConfiguration();
   }
 
   return lintRun.getLintErrors();

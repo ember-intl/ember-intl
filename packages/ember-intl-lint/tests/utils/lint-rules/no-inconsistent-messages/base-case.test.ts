@@ -6,7 +6,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/normalize-project.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > base case', function () {
+test('utils | lint-rules | no-inconsistent-messages > base case', async function () {
   const translations: Project['translations'] = new Map();
 
   const project = normalizeProject({
@@ -16,7 +16,7 @@ test('utils | lint-rules | no-inconsistent-messages > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {}, options);
+  const lintErrors = await noInconsistentMessages(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

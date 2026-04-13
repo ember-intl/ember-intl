@@ -5,7 +5,7 @@ import { noInconsistentMessages } from '../../../../src/utils/lint-rules/index.j
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', function () {
+test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', async function () {
   const translations = new Map([
     [
       'de-de',
@@ -147,7 +147,7 @@ test('utils | lint-rules | no-inconsistent-messages > all ICU arguments match', 
     usedKeys: new Set(),
   });
 
-  const lintErrors = noInconsistentMessages(project, {}, options);
+  const lintErrors = await noInconsistentMessages(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

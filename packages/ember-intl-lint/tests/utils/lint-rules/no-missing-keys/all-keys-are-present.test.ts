@@ -5,7 +5,7 @@ import { noMissingKeys } from '../../../../src/utils/lint-rules/index.js';
 import { normalizeProject } from '../../../helpers/index.js';
 import { options } from '../../../helpers/shared-test-setups/my-v2-app.js';
 
-test('utils | lint-rules | no-missing-keys > all keys are present', function () {
+test('utils | lint-rules | no-missing-keys > all keys are present', async function () {
   const translations = new Map([
     [
       'de-de',
@@ -157,7 +157,7 @@ test('utils | lint-rules | no-missing-keys > all keys are present', function () 
     ]),
   });
 
-  const lintErrors = noMissingKeys(project, {}, options);
+  const lintErrors = await noMissingKeys(project, {}, options);
 
   assert.deepStrictEqual(lintErrors, []);
 });

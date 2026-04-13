@@ -7,7 +7,7 @@ import {
   options,
 } from '../../helpers/shared-test-setups/my-v2-app.js';
 
-test('steps | lint-project > base case', function () {
+test('steps | lint-project > base case', async function () {
   const inputProject = {};
 
   loadFixture(inputProject, codemodOptions);
@@ -19,7 +19,7 @@ test('steps | lint-project > base case', function () {
     usedKeys: new Set(),
   });
 
-  const lintResults = lintProject(project, options);
+  const lintResults = await lintProject(project, options);
 
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],

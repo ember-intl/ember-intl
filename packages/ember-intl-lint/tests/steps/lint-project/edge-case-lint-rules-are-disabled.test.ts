@@ -5,7 +5,7 @@ import { inputProject } from '../../fixtures/my-v2-app/index.js';
 import { normalizeProject } from '../../helpers/index.js';
 import { codemodOptions } from '../../helpers/shared-test-setups/my-v2-app.js';
 
-test('steps | lint-project > edge-case (lint rules are disabled)', function () {
+test('steps | lint-project > edge-case (lint rules are disabled)', async function () {
   const options = {
     config: {
       addonPaths: [],
@@ -34,7 +34,7 @@ test('steps | lint-project > edge-case (lint rules are disabled)', function () {
     usedKeys: new Set(),
   });
 
-  const lintResults = lintProject(project, options);
+  const lintResults = await lintProject(project, options);
 
   assert.deepStrictEqual(lintResults, {});
 });

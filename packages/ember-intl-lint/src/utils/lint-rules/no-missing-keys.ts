@@ -6,13 +6,13 @@ import type {
 } from '../../types/index.js';
 import { LintRunWithIgnores } from './shared/index.js';
 
-export function noMissingKeys(
+export async function noMissingKeys(
   project: Project,
   lintOptions: Partial<{
     ignores: TranslationKey[];
   }>,
   options: Options,
-): LintErrors {
+): Promise<LintErrors> {
   const lintRun = new LintRunWithIgnores({
     ignores: lintOptions.ignores,
     lintRule: 'no-missing-keys',
@@ -34,7 +34,7 @@ export function noMissingKeys(
   });
 
   if (options.fix) {
-    lintRun.reportUnusedIgnores();
+    await lintRun.updateConfiguration();
   }
 
   return lintRun.getLintErrors();
