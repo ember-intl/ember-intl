@@ -53,7 +53,7 @@ export default defineConfig({
 }
 ```
 
-4\. Use `import` to load translations.
+4\. Import the translations that you need, then call `addTranslations` to pass them to the `intl` service.
 
 ```diff
 /* app/routes/application.ts */
@@ -78,7 +78,7 @@ export default class ApplicationRoute extends Route {
 }
 ```
 
-You can also load translations for all rendering and unit tests.
+You can also make translations available in rendering and unit tests.
 
 ```diff
 /* tests/helpers/index.ts */

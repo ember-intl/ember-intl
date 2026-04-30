@@ -35,14 +35,14 @@ pnpm add -D @ember-intl/lint
 
 | Name | ✅ | 🔧 |
 |:--|--|--|
-| [no-inconsistent-messages](./docs/lint-rules/no-inconsistent-messages.md) | ✅ |  |
-| [no-missing-keys](./docs/lint-rules/no-missing-keys.md) | ✅ |  |
-| [no-unused-keys](./docs/lint-rules/no-unused-keys.md) | ✅ |  |
+| [no-inconsistent-messages](./docs/lint-rules/no-inconsistent-messages.md) | ✅ | 🔧 |
+| [no-missing-keys](./docs/lint-rules/no-missing-keys.md) | ✅ | 🔧 |
+| [no-unused-keys](./docs/lint-rules/no-unused-keys.md) | ✅ | 🔧 |
 
 Notations:
 
 - ✅ Recommended (enabled by default)
-- 🔧 Some issues reported by this rule can be fixed (or ignored) with `--fix`
+- 🔧 Issues reported by this rule can be fixed (possibly ignored) with `--fix`
 
 
 ## Compatibility
