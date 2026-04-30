@@ -56,8 +56,8 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.2",
-    "@formatjs/intl": "^4.1.5",
-    "decorator-transforms": "^2.3.1"
+    "@formatjs/intl": "^4.1.8",
+    "decorator-transforms": "^2.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -80,8 +80,8 @@
     "ember-source": "~6.12.0",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.4",
-    "prettier": "^3.8.2",
-    "rollup": "^4.60.1",
+    "prettier": "^3.8.3",
+    "rollup": "^4.60.2",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

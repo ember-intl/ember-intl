@@ -55,7 +55,7 @@
   "dependencies": {
     "@embroider/addon-shim": "^1.10.2",
     "@glimmer/component": "^2.1.1",
-    "decorator-transforms": "^2.3.1",
+    "decorator-transforms": "^2.3.2",
     "ember-truth-helpers": "^5.0.0"
   },
   "devDependencies": {
@@ -80,8 +80,8 @@
     "ember-source": "~6.12.0",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.4",
-    "prettier": "^3.8.2",
-    "rollup": "^4.60.1",
+    "prettier": "^3.8.3",
+    "rollup": "^4.60.2",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

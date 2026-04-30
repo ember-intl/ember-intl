@@ -5,7 +5,7 @@ export default {
   },
   lintRules: {
     'no-inconsistent-messages': {
-      ignores: ['components.title', 'routes.index.title'],
+      ignores: ['routes.index.title'],
     },
     'no-missing-keys': {
       ignores: [
