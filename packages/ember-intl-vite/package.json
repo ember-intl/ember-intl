@@ -47,7 +47,7 @@
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^3.0.1",
+    "@codemod-utils/tests": "^3.0.2",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
@@ -56,9 +56,9 @@
     "@types/node": "^20.19.39",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "typescript": "^5.9.3",
-    "vite": "^8.0.8"
+    "vite": "^8.0.10"
   },
   "engines": {
     "node": "20.* || >= 22"

@@ -75,11 +75,11 @@
     "loader.js": "^4.7.0",
     "my-v1-addon": "workspace:*",
     "my-v2-addon": "workspace:*",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "qunit": "^2.25.0",
-    "qunit-dom": "^3.5.0",
+    "qunit-dom": "^3.5.1",
     "typescript": "^5.9.3",
-    "webpack": "^5.105.4"
+    "webpack": "^5.106.2"
   },
   "engines": {
     "node": "20.* || >= 22"

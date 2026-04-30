@@ -66,10 +66,10 @@
     "eslint": "^9.39.4",
     "globals": "^17.5.0",
     "loader.js": "^4.7.0",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "qunit": "^2.25.0",
-    "qunit-dom": "^3.5.0",
-    "webpack": "^5.105.4"
+    "qunit-dom": "^3.5.1",
+    "webpack": "^5.106.2"
   },
   "engines": {
     "node": "20.* || >= 22"
