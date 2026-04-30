@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 1.1.0
+
+### Minor Changes
+
+- [#2138](https://github.com/ember-intl/ember-intl/pull/2138) Fixed lint errors ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.1
 
 ### Patch Changes
