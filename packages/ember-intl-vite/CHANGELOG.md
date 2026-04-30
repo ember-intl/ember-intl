@@ -1,5 +1,11 @@
 # @ember-intl/vite
 
+## 1.0.1
+
+### Patch Changes
+
+- [#2137](https://github.com/ember-intl/ember-intl/pull/2137) Updated README ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.0
 
 ### Major Changes

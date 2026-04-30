@@ -1,6 +1,6 @@
 {
   "name": "@ember-intl/vite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Loads translations in v2 apps with ember-intl",
   "keywords": [
     "ember",
