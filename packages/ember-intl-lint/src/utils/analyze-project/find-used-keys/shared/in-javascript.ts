@@ -3,31 +3,31 @@ import { AST } from '@codemod-utils/ast-javascript';
 import type { TranslationKey } from '../../../../types/index.js';
 import type { Dependencies } from './find-dependencies.js';
 
-type ExpressionStatement = ReturnType<typeof AST.builders.expressionStatement>;
-type Expression = ExpressionStatement['expression'];
+type ExpressionStatement = typeof AST.builders.expressionStatement;
+type ExpressionKind = Parameters<ExpressionStatement>[0];
 
 type Data = {
   dependencies: NonNullable<Dependencies>;
   isTypeScript: boolean;
 };
 
-function saveKeys(keys: TranslationKey[], node: Expression): void {
-  switch (node.type) {
+function saveKeys(keys: TranslationKey[], path: ExpressionKind): void {
+  switch (path.type) {
     case 'ConditionalExpression': {
-      saveKeys(keys, node.consequent);
-      saveKeys(keys, node.alternate);
+      saveKeys(keys, path.consequent);
+      saveKeys(keys, path.alternate);
       break;
     }
 
     case 'Literal':
     case 'StringLiteral': {
-      keys.push(node.value as TranslationKey);
+      keys.push(path.value as TranslationKey);
       break;
     }
 
     case 'TemplateLiteral': {
-      if (node.quasis[0]?.tail === true) {
-        keys.push(node.quasis[0].value.raw);
+      if (path.quasis[0]?.tail === true) {
+        keys.push(path.quasis[0].value.raw);
       }
       break;
     }
@@ -50,19 +50,16 @@ export function inJavascript(file: string, data: Data): TranslationKey[] {
   const keys: TranslationKey[] = [];
 
   traverse(file, {
-    visitCallExpression(node) {
-      this.traverse(node);
+    visitCallExpression(path) {
+      this.traverse(path);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (node.value.arguments.length === 0) {
+      if (path.node.arguments.length === 0) {
         return false;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      switch (node.value.callee.type) {
+      switch (path.node.callee.type) {
         case 'Identifier': {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-          const { name } = node.value.callee;
+          const { name } = path.node.callee;
 
           if (
             name !== dependencies.helpers.t &&
@@ -71,23 +68,21 @@ export function inJavascript(file: string, data: Data): TranslationKey[] {
             return false;
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-          saveKeys(keys, node.value.arguments[0]);
+          saveKeys(keys, path.node.arguments[0] as ExpressionKind);
 
           break;
         }
 
         case 'MemberExpression': {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-          const { object, property } = node.value.callee;
+          const { object, property } = path.node.callee;
 
           const isIntlService =
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             (object.type === 'Identifier' &&
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               object.name === dependencies.services.intl) ||
+            // @ts-expect-error: Incorrect type
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             (object.property?.type === 'Identifier' &&
+              // @ts-expect-error: Incorrect type
               // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               object.property.name === dependencies.services.intl);
 
@@ -95,13 +90,11 @@ export function inJavascript(file: string, data: Data): TranslationKey[] {
             return false;
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           if (property.type !== 'Identifier' || property.name !== 't') {
             return false;
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-          saveKeys(keys, node.value.arguments[0]);
+          saveKeys(keys, path.node.arguments[0] as ExpressionKind);
 
           break;
         }

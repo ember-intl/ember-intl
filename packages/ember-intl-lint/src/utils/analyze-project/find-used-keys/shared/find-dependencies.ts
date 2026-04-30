@@ -30,9 +30,9 @@ export function findDependencies(file: string, data: Data): Dependencies {
   };
 
   traverse(file, {
-    visitClassProperty(node) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const decorators = node.value.decorators as Decorator[] | undefined;
+    visitClassProperty(path) {
+      // @ts-expect-error: Incorrect type
+      const decorators = path.node.decorators as Decorator[] | undefined;
 
       if (decorators === undefined || decorators.length !== 1) {
         return false;
@@ -58,8 +58,8 @@ export function findDependencies(file: string, data: Data): Dependencies {
             return false;
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          dependencies.services.intl = node.value.key.name as string;
+          // @ts-expect-error: Incorrect type
+          dependencies.services.intl = path.node.key.name as string;
 
           break;
         }
@@ -70,16 +70,13 @@ export function findDependencies(file: string, data: Data): Dependencies {
           }
 
           if (
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            node.value.key.type !== 'Identifier' ||
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            node.value.key.name !== 'intl'
+            path.node.key.type !== 'Identifier' ||
+            path.node.key.name !== 'intl'
           ) {
             return false;
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          dependencies.services.intl = node.value.key.name as string;
+          dependencies.services.intl = path.node.key.name;
 
           break;
         }
@@ -88,48 +85,39 @@ export function findDependencies(file: string, data: Data): Dependencies {
       return false;
     },
 
-    visitImportDeclaration(node) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (data.isTypeScript && node.value.importKind !== 'value') {
+    visitImportDeclaration(path) {
+      if (data.isTypeScript && path.node.importKind !== 'value') {
         return false;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      const importPath = node.value.source.value;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      const specifiers = node.value.specifiers;
+      const importPath = path.node.source.value;
+      const specifiers = path.node.specifiers;
 
       switch (importPath) {
         case 'ember-intl': {
           // @ts-expect-error: Incorrect type
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           const t = specifiers.find((specifier) => {
             return (
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               specifier.type === 'ImportSpecifier' &&
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               specifier.imported.name === 't'
             );
           });
 
           if (t) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // @ts-expect-error: Incorrect type
             dependencies.helpers.t = t.local.name as string;
           }
 
           // @ts-expect-error: Incorrect type
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           const tKey = specifiers.find((specifier) => {
             return (
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               specifier.type === 'ImportSpecifier' &&
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               specifier.imported.name === 'tKey'
             );
           });
 
           if (tKey) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // @ts-expect-error: Incorrect type
             dependencies.helpers.tKey = tKey.local.name as string;
           }
 
@@ -138,18 +126,16 @@ export function findDependencies(file: string, data: Data): Dependencies {
 
         case 'ember-intl/helpers/t': {
           // @ts-expect-error: Incorrect type
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           const t = specifiers.find((specifier) => {
             return (
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               specifier.type === 'ImportDefaultSpecifier' &&
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              // @ts-expect-error: Incorrect type
               specifier.local.type === 'Identifier'
             );
           });
 
           if (t) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // @ts-expect-error: Incorrect type
             dependencies.helpers.t = t.local.name as string;
           }
 
@@ -158,18 +144,16 @@ export function findDependencies(file: string, data: Data): Dependencies {
 
         case 'ember-intl/helpers/t-key': {
           // @ts-expect-error: Incorrect type
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           const tKey = specifiers.find((specifier) => {
             return (
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               specifier.type === 'ImportDefaultSpecifier' &&
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              // @ts-expect-error: Incorrect type
               specifier.local.type === 'Identifier'
             );
           });
 
           if (tKey) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // @ts-expect-error: Incorrect type
             dependencies.helpers.tKey = tKey.local.name as string;
           }
 
