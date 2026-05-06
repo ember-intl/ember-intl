@@ -56,14 +56,14 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.2",
-    "@formatjs/intl": "^4.1.8",
+    "@formatjs/intl": "^4.1.9",
     "decorator-transforms": "^2.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/plugin-transform-typescript": "^7.28.6",
     "@babel/runtime": "^7.29.2",
-    "@ember/test-helpers": "^5.4.1",
+    "@ember/test-helpers": "^5.4.2",
     "@embroider/addon-dev": "^8.3.0",
     "@glimmer/component": "^2.1.1",
     "@glimmer/tracking": "^1.1.2",
@@ -81,7 +81,7 @@
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.4",
     "prettier": "^3.8.3",
-    "rollup": "^4.60.2",
+    "rollup": "^4.60.3",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
