@@ -18,10 +18,10 @@ export default {
       },
     },
     {
-      name: 'ember-lts-6.8',
+      name: 'ember-lts-6.12',
       npm: {
         devDependencies: {
-          'ember-source': '~6.8.0',
+          'ember-source': '~6.12.0',
         },
       },
     },
@@ -33,21 +33,21 @@ export default {
         },
       },
     },
-    // {
-    //   name: 'ember-beta',
-    //   npm: {
-    //     devDependencies: {
-    //       'ember-source': 'npm:ember-source@beta',
-    //     },
-    //   },
-    // },
-    // {
-    //   name: 'ember-canary',
-    //   npm: {
-    //     devDependencies: {
-    //       'ember-source': 'npm:ember-source@alpha',
-    //     },
-    //   },
-    // },
+    {
+      name: 'ember-beta',
+      npm: {
+        devDependencies: {
+          'ember-source': 'npm:ember-source@beta',
+        },
+      },
+    },
+    {
+      name: 'ember-canary',
+      npm: {
+        devDependencies: {
+          'ember-source': 'npm:ember-source@alpha',
+        },
+      },
+    },
   ],
 };
