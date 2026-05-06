@@ -18,10 +18,10 @@ export default {
       },
     },
     {
-      name: 'ember-lts-6.8',
+      name: 'ember-lts-6.12',
       npm: {
         devDependencies: {
-          'ember-source': '~6.8.0',
+          'ember-source': '~6.12.0',
         },
       },
     },
