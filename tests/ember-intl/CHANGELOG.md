@@ -1,5 +1,12 @@
 # test-app-for-ember-intl
 
+## 2.1.5
+
+### Patch Changes
+
+- [#2141](https://github.com/ember-intl/ember-intl/pull/2141) Began testing ember-lts-6.12, ember-beta, and ember-canary scenarios ([@ijlee2](https://github.com/ijlee2))
+- [#2140](https://github.com/ember-intl/ember-intl/pull/2140) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.1.4
 
 ### Patch Changes
