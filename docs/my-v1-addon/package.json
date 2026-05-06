@@ -59,7 +59,7 @@
     "@ember-intl/lint": "workspace:*",
     "@ember-intl/v1-compat": "workspace:*",
     "@ember/optional-features": "^3.0.0",
-    "@ember/test-helpers": "^5.4.1",
+    "@ember/test-helpers": "^5.4.2",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.1.1",
     "@glimmer/tracking": "^1.1.2",

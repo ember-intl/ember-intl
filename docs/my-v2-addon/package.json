@@ -63,7 +63,7 @@
     "@babel/plugin-transform-typescript": "^7.28.6",
     "@babel/runtime": "^7.29.2",
     "@ember-intl/lint": "workspace:*",
-    "@ember/test-helpers": "^5.4.1",
+    "@ember/test-helpers": "^5.4.2",
     "@embroider/addon-dev": "^8.3.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/ember-tsc": "^1.5.0",
@@ -81,7 +81,7 @@
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.4",
     "prettier": "^3.8.3",
-    "rollup": "^4.60.2",
+    "rollup": "^4.60.3",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
