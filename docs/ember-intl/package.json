@@ -43,7 +43,7 @@
     "prettier": "^3.8.3",
     "stylelint": "^17.11.0",
     "typescript": "^5.9.3",
-    "vite": "^8.0.10",
+    "vite": "^8.0.12",
     "vite-plugin-ember": "^0.4.0",
     "vitepress": "^2.0.0-alpha.17"
   },
