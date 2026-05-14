@@ -6,4 +6,6 @@ type Options = {
   projectRoot: string;
 };
 
-export type { CodemodOptions, Options };
+type TargetVersion = 7 | 8;
+
+export type { CodemodOptions, Options, TargetVersion };
