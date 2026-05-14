@@ -6,6 +6,8 @@ const codemodOptions: CodemodOptions = {
 
 const options: Options = {
   projectRoot: 'tmp/v1-app-v6',
+  src: 'app',
+  targetVersion: 7,
 };
 
 export { codemodOptions, options };
