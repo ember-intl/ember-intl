@@ -2259,6 +2259,52 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/ember-intl-update:
+    dependencies:
+      '@codemod-utils/files':
+        specifier: ^4.0.1
+        version: 4.0.1
+      '@codemod-utils/package-json':
+        specifier: ^4.0.2
+        version: 4.0.2
+      yargs:
+        specifier: ^18.0.0
+        version: 18.0.0
+    devDependencies:
+      '@codemod-utils/tests':
+        specifier: ^3.0.2
+        version: 3.0.2(@sondr3/minitest@0.1.2)
+      '@shared-configs/eslint-config-node':
+        specifier: workspace:*
+        version: link:../../configs/eslint/node
+      '@shared-configs/prettier':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@shared-configs/typescript':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      '@sondr3/minitest':
+        specifier: ^0.1.2
+        version: 0.1.2
+      '@types/node':
+        specifier: ^20.19.39
+        version: 20.19.39
+      '@types/yargs':
+        specifier: ^17.0.35
+        version: 17.0.35
+      concurrently:
+        specifier: ^9.2.1
+        version: 9.2.1
+      eslint:
+        specifier: ^9.39.4
+        version: 9.39.4
+      prettier:
+        specifier: ^3.8.3
+        version: 3.8.3
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/ember-intl-v1-compat:
     dependencies:
       '@babel/core':
