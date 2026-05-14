@@ -35,6 +35,7 @@ jobs:
           - 'docs/my-v2-app-with-namespace-from-folders'
           - 'packages/ember-intl'
           - 'packages/ember-intl-lint'
+          - 'packages/ember-intl-update'
           - 'packages/ember-intl-v1-compat'
           - 'packages/ember-intl-vite'
           - 'tests/ember-intl'
@@ -83,6 +84,7 @@ jobs:
           - 'docs/my-v2-app-with-lazy-loaded-translations'
           - 'docs/my-v2-app-with-namespace-from-folders'
           - 'packages/ember-intl-lint'
+          - 'packages/ember-intl-update'
           - 'packages/ember-intl-v1-compat'
           - 'packages/ember-intl-vite'
           - 'tests/ember-intl'
@@ -176,6 +178,8 @@ jobs:
       matrix:
         package-location:
           - 'packages/ember-intl-lint'
+          - 'packages/ember-intl-update'
+          - 'packages/ember-intl-vite'
           - 'tests/ember-intl-v1-compat'
     timeout-minutes: 5
     steps:
