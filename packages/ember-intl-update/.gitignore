@@ -1,0 +1,12 @@
+# compiled output
+dist/
+dist-for-testing/
+tmp/
+
+# dependencies
+node_modules/
+
+# misc
+.DS_Store
+.env*
+.eslintcache
