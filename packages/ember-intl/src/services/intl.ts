@@ -88,12 +88,16 @@ export default class IntlService extends Service {
     return Object.keys(this._intls);
   }
 
-  get primaryLocale(): string | undefined {
-    if (!this._locale) {
-      return;
+  get primaryLocale(): string {
+    const primary = this._locale?.[0];
+
+    if (!primary) {
+      throw new Error(
+        'ember-intl: locale is missing. Make sure to call `intl.setLocale(...)` first.',
+      );
     }
 
-    return this._locale[0];
+    return primary;
   }
 
   addTranslations(locale: string, translations: TranslationJson): void {
@@ -379,13 +383,12 @@ export default class IntlService extends Service {
 
   private updateDocumentLanguage(): void {
     const html = getHtmlElement(this);
-    const { primaryLocale } = this;
 
-    if (!html || !primaryLocale) {
+    if (!html) {
       return;
     }
 
-    html.setAttribute('lang', primaryLocale);
+    html.setAttribute('lang', this.primaryLocale);
   }
 
   private updateIntl(
