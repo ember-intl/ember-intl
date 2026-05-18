@@ -5,6 +5,7 @@ const codemodOptions: CodemodOptions = {
 };
 
 const options: Options = {
+  packageType: 'v2-app',
   projectRoot: 'tmp/v2-app-v7',
   src: 'app',
   targetVersion: 8,
