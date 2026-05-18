@@ -37,7 +37,7 @@ module(
       assert
         .dom('[data-test-output]')
         .hasText(/1\/23\/2014\s–\s1\/26\/2014/)
-        .hasText('1/23/2014 – 1/26/2014');
+        .hasText('1/23/2014 – 1/26/2014');
     });
 
     test('it returns a new value when the locale is changed', async function (this: TestContext, assert) {
@@ -79,7 +79,7 @@ module(
       assert
         .dom('[data-test-output="2"]')
         .hasText(/January 23 at 6:00\sPM\s–\sJanuary 26 at 7:30\sPM/)
-        .hasText('January 23 at 6:00 PM – January 26 at 7:30 PM');
+        .hasText('January 23 at 6:00 PM – January 26 at 7:30 PM');
     });
 
     test('we can specify the time zone', async function (this: TestContext, assert) {
@@ -96,7 +96,7 @@ module(
       assert
         .dom('[data-test-output]')
         .hasText(/1\/23\/2014\s–\s1\/26\/2014/)
-        .hasText('1/23/2014 – 1/26/2014');
+        .hasText('1/23/2014 – 1/26/2014');
     });
   },
 );

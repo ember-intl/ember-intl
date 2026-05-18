@@ -10,7 +10,7 @@
 
       <p>
         Visit
-        <a href="/tests?hidepassed&nolint">/tests</a>
+        <a href="/tests?hidepassed">/tests</a>
         to run tests.
       </p>
     </div>
