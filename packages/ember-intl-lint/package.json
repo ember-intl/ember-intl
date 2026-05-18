@@ -45,7 +45,7 @@
     "@codemod-utils/files": "^4.0.1",
     "@codemod-utils/package-json": "^4.0.2",
     "@codemod-utils/threads": "^1.0.0",
-    "@formatjs/icu-messageformat-parser": "^3.5.7",
+    "@formatjs/icu-messageformat-parser": "^3.5.9",
     "js-yaml": "^4.1.1",
     "yargs": "^18.0.0"
   },

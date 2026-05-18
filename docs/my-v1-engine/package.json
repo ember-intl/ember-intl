@@ -74,7 +74,7 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
-    "@types/qunit": "^2.19.13",
+    "@types/qunit": "^2.19.14",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^9.2.1",
     "ember-asset-loader": "^1.0.0",
