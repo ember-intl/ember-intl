@@ -1,15 +1,16 @@
+import type { PackageType } from '@codemod-utils/package-json';
+
 type CodemodOptions = {
   projectRoot: string;
 };
 
 type Options = {
+  packageType: Exclude<PackageType, 'node'>;
   projectRoot: string;
-  src: Src;
+  src: 'addon' | 'app' | 'src';
   targetVersion: TargetVersion;
 };
 
-type Src = 'addon' | 'app' | 'src';
-
 type TargetVersion = 7 | 8;
 
-export type { CodemodOptions, Options, Src, TargetVersion };
+export type { CodemodOptions, Options, TargetVersion };
