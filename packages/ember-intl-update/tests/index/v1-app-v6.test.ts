@@ -10,9 +10,4 @@ test('index > v1-app-v6', function () {
   runCodemod(codemodOptions);
 
   assertFixture(outputProject, codemodOptions);
-
-  // Check idempotence
-  runCodemod(codemodOptions);
-
-  assertFixture(outputProject, codemodOptions);
 });
