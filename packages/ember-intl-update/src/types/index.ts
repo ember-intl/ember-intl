@@ -13,4 +13,6 @@ type Options = {
 
 type TargetVersion = 7 | 8;
 
-export type { CodemodOptions, Options, TargetVersion };
+type Todos = string[];
+
+export type { CodemodOptions, Options, TargetVersion, Todos };
