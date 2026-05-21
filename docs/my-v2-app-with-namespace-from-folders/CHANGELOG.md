@@ -1,5 +1,11 @@
 # my-v2-app-with-namespace-from-folders
 
+## 1.2.15
+
+### Patch Changes
+
+- [#2149](https://github.com/ember-intl/ember-intl/pull/2149) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.14
 
 ### Patch Changes

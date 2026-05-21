@@ -1,6 +1,6 @@
 {
   "name": "my-v2-app-with-namespace-from-folders",
-  "version": "1.2.14",
+  "version": "1.2.15",
   "private": true,
   "description": "A Vite app to test wrapTranslationsWithNamespace",
   "repository": {
