@@ -15,5 +15,9 @@
   "ember-addon": {
     "type": "app",
     "version": 2
+  },
+  "scripts": {
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix"
   }
 }

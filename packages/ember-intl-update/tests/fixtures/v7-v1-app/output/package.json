@@ -11,5 +11,9 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "scripts": {
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix"
   }
 }

@@ -12,6 +12,7 @@ test('index > v7-v1-app', async function () {
   assertFixture(outputProject, codemodOptions);
 
   assert.deepEqual(todos, [
-    'Import `formats` from `app/ember-intl.js`. Then, pass it to the `intl` service by calling `setFormats`.',
+    "The codemod added `@ember-intl/lint` to `package.json`. If the script `lint:intl` doesn't pass, then run `lint:intl:fix` to create `ember-intl.config.mjs`.",
+    'The codemod moved `app/formats.js` to `app/ember-intl.js`. Import `formats` from `app/ember-intl.js`. Then, pass it to the `intl` service by calling `setFormats`.',
   ]);
 });

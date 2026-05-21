@@ -11,5 +11,8 @@ test('index > v7-v2-app', async function () {
 
   assertFixture(outputProject, codemodOptions);
 
-  assert.deepEqual(todos, []);
+  assert.deepEqual(todos, [
+    "The codemod added `@ember-intl/lint` to `package.json`. If the script `lint:intl` doesn't pass, then run `lint:intl:fix` to create `ember-intl.config.mjs`.",
+    'The codemod added `@ember-intl/vite` to `package.json`. In `vite.config.{mjs,mts}`, add `loadTranslations` to the list of plugins. In `tsconfig.json`, add `@ember-intl/vite/virtual` to `compilerOptions.types`.',
+  ]);
 });

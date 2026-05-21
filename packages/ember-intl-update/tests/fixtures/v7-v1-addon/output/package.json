@@ -17,5 +17,9 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "scripts": {
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix"
   }
 }
