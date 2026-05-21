@@ -1,6 +1,6 @@
 # @ember-intl/update
 
-_Codemod to update ember-intl to the next major version_
+_Codemod to update `ember-intl` to the next major version_
 
 
 ## Usage
@@ -16,8 +16,6 @@ Step 2. Address the remaining breaking changes listed in the [documentation site
 
 
 ### Arguments
-
-[PROVIDE REQUIRED AND OPTIONAL ARGUMENTS.]
 
 <details>
 
