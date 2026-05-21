@@ -2264,12 +2264,21 @@ importers:
       '@codemod-utils/ast-javascript':
         specifier: ^3.0.2
         version: 3.0.2
+      '@codemod-utils/ast-template':
+        specifier: ^3.1.0
+        version: 3.1.0
+      '@codemod-utils/ast-template-tag':
+        specifier: ^2.4.0
+        version: 2.4.0
       '@codemod-utils/files':
         specifier: ^4.0.1
         version: 4.0.1
       '@codemod-utils/package-json':
         specifier: ^4.0.2
         version: 4.0.2
+      '@codemod-utils/threads':
+        specifier: ^1.0.0
+        version: 1.0.0
       yargs:
         specifier: ^18.0.0
         version: 18.0.0
