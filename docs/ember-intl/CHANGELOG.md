@@ -1,5 +1,11 @@
 # docs-app-for-ember-intl
 
+## 2.6.2
+
+### Patch Changes
+
+- [#2156](https://github.com/ember-intl/ember-intl/pull/2156) Updated text assertions (v8) ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.6.1
 
 ### Patch Changes
