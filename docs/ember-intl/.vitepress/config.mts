@@ -57,6 +57,10 @@ export default defineConfig({
             text: '@ember-intl/lint',
           },
           {
+            link: 'https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-update/CHANGELOG.md',
+            text: '@ember-intl/update',
+          },
+          {
             link: 'https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-v1-compat/CHANGELOG.md',
             text: '@ember-intl/v1-compat',
           },
