@@ -98,7 +98,10 @@ export function updateFormatsConfig(options: Options): Todos {
   removeFiles([filePath], { projectRoot });
 
   todos.push(
-    'The codemod moved `app/formats.js` to `app/ember-intl.js`. Import `formats` from `app/ember-intl.js`. Then, pass it to the `intl` service by calling `setFormats`.',
+    [
+      'The codemod moved `app/formats.js` to `app/ember-intl.js`.',
+      'Import `formats` from `app/ember-intl.js`. Then, pass it to the `intl` service by calling `setFormats`.',
+    ].join(' '),
   );
 
   return todos;
