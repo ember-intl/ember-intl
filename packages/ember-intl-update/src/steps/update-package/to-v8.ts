@@ -1,5 +1,6 @@
 import type { Options, Todos } from '../../types/index.js';
 import {
+  renameFormatRelative,
   updateEmberIntlConfig,
   updateFormatsConfig,
   updatePackageJson,
@@ -12,6 +13,7 @@ export async function updatePackageToV8(options: Options): Promise<Todos> {
   todosAll.push(updatePackageJson(options));
   updateEmberIntlConfig(options);
   todosAll.push(updateFormatsConfig(options));
+  renameFormatRelative(options);
 
   return todosAll.flat();
 }
