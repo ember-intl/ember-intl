@@ -11,5 +11,7 @@ test('index > v7-v2-addon', async function () {
 
   assertFixture(outputProject, codemodOptions);
 
-  assert.deepEqual(todos, []);
+  assert.deepEqual(todos, [
+    "The codemod added `@ember-intl/lint` to `package.json`. If the script `lint:intl` doesn't pass, then run `lint:intl:fix` to create `ember-intl.config.mjs`.",
+  ]);
 });
