@@ -15,28 +15,52 @@
 # Compile TypeScript
 pnpm build
 
-# Update fixtures (v6 to v7)
-rm -r "tests/fixtures/v1-addon-v6/output"
-cp -r "tests/fixtures/v1-addon-v6/input" "tests/fixtures/v1-addon-v6/output"
+# Update fixtures (v6)
+rm -r "tests/fixtures/v6-v1-addon/output"
+cp -r "tests/fixtures/v6-v1-addon/input" "tests/fixtures/v6-v1-addon/output"
 
 ./dist/bin/ember-intl-update.js \
-  --root "tests/fixtures/v1-addon-v6/output"
+  --root "tests/fixtures/v6-v1-addon/output"
 
-rm -r "tests/fixtures/v1-app-v6/output"
-cp -r "tests/fixtures/v1-app-v6/input" "tests/fixtures/v1-app-v6/output"
-
-./dist/bin/ember-intl-update.js \
-  --root "tests/fixtures/v1-app-v6/output"
-
-# Update fixtures (v7 to v8)
-rm -r "tests/fixtures/v1-app-v7/output"
-cp -r "tests/fixtures/v1-app-v7/input" "tests/fixtures/v1-app-v7/output"
+rm -r "tests/fixtures/v6-v1-app/output"
+cp -r "tests/fixtures/v6-v1-app/input" "tests/fixtures/v6-v1-app/output"
 
 ./dist/bin/ember-intl-update.js \
-  --root "tests/fixtures/v1-app-v7/output"
+  --root "tests/fixtures/v6-v1-app/output"
 
-rm -r "tests/fixtures/v2-app-v7/output"
-cp -r "tests/fixtures/v2-app-v7/input" "tests/fixtures/v2-app-v7/output"
+rm -r "tests/fixtures/v6-v2-addon/output"
+cp -r "tests/fixtures/v6-v2-addon/input" "tests/fixtures/v6-v2-addon/output"
 
 ./dist/bin/ember-intl-update.js \
-  --root "tests/fixtures/v2-app-v7/output"
+  --root "tests/fixtures/v6-v2-addon/output"
+
+rm -r "tests/fixtures/v6-v2-app/output"
+cp -r "tests/fixtures/v6-v2-app/input" "tests/fixtures/v6-v2-app/output"
+
+./dist/bin/ember-intl-update.js \
+  --root "tests/fixtures/v6-v2-app/output"
+
+# Update fixtures (v7)
+rm -r "tests/fixtures/v7-v1-addon/output"
+cp -r "tests/fixtures/v7-v1-addon/input" "tests/fixtures/v7-v1-addon/output"
+
+./dist/bin/ember-intl-update.js \
+  --root "tests/fixtures/v7-v1-addon/output"
+
+rm -r "tests/fixtures/v7-v1-app/output"
+cp -r "tests/fixtures/v7-v1-app/input" "tests/fixtures/v7-v1-app/output"
+
+./dist/bin/ember-intl-update.js \
+  --root "tests/fixtures/v7-v1-app/output"
+
+rm -r "tests/fixtures/v7-v2-addon/output"
+cp -r "tests/fixtures/v7-v2-addon/input" "tests/fixtures/v7-v2-addon/output"
+
+./dist/bin/ember-intl-update.js \
+  --root "tests/fixtures/v7-v2-addon/output"
+
+rm -r "tests/fixtures/v7-v2-app/output"
+cp -r "tests/fixtures/v7-v2-app/input" "tests/fixtures/v7-v2-app/output"
+
+./dist/bin/ember-intl-update.js \
+  --root "tests/fixtures/v7-v2-app/output"

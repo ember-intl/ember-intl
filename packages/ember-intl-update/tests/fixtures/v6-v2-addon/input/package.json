@@ -11,16 +11,14 @@
     "translations"
   ],
   "devDependencies": {
+    "ember-intl": "^6.5.6",
     "ember-source": "~6.8.0"
   },
   "ember": {
     "edition": "octane"
   },
   "ember-addon": {
-    "app-js": {
-      "./components/component-from-v2-addon.js": "./dist/_app_/components/component-from-v2-addon.js",
-      "./components/select-locale.js": "./dist/_app_/components/select-locale.js"
-    },
+    "app-js": {},
     "main": "addon-main.cjs",
     "type": "addon",
     "version": 2
