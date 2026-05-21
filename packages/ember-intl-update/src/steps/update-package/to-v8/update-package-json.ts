@@ -9,7 +9,7 @@ import {
   readPackageJson,
 } from '@codemod-utils/package-json';
 
-import type { Options } from '../../../types/index.js';
+import type { Options, Todos } from '../../../types/index.js';
 
 const latestVersions = {
   '@ember-intl/lint': '^1.1.2',
@@ -69,14 +69,37 @@ function updateDependencies(packageJson: PackageJson, options: Options): void {
   >;
 }
 
-export function updatePackageJson(options: Options): void {
-  const { projectRoot } = options;
+function updateScripts(packageJson: PackageJson): void {
+  const scripts = convertToMap(packageJson['scripts']);
+
+  scripts.set('lint:intl', 'ember-intl-lint');
+  scripts.set('lint:intl:fix', 'ember-intl-lint --fix');
+
+  packageJson['scripts'] = convertToObject(scripts) as Record<string, string>;
+}
+
+export function updatePackageJson(options: Options): Todos {
+  const { packageType, projectRoot } = options;
+  const todos: Todos = [];
 
   const packageJson = readPackageJson({ projectRoot });
   updateDependencies(packageJson, options);
+  updateScripts(packageJson);
+
+  todos.push(
+    "The codemod added `@ember-intl/lint` to `package.json`. If the script `lint:intl` doesn't pass, then run `lint:intl:fix` to create `ember-intl.config.mjs`.",
+  );
+
+  if (packageType === 'v2-app') {
+    todos.push(
+      'The codemod added `@ember-intl/vite` to `package.json`. In `vite.config.{mjs,mts}`, add `loadTranslations` to the list of plugins. In `tsconfig.json`, add `@ember-intl/vite/virtual` to `compilerOptions.types`.',
+    );
+  }
 
   const destination = join(projectRoot, 'package.json');
   const file = JSON.stringify(packageJson, null, 2).replaceAll('\n', EOL) + EOL;
 
   writeFileSync(destination, file, 'utf8');
+
+  return todos;
 }

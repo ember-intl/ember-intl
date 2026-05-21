@@ -9,7 +9,7 @@ import {
 export async function updatePackageToV8(options: Options): Promise<Todos> {
   const todosAll: Todos[] = [];
 
-  updatePackageJson(options);
+  todosAll.push(updatePackageJson(options));
   updateEmberIntlConfig(options);
   todosAll.push(updateFormatsConfig(options));
 
