@@ -4,6 +4,7 @@ import {
   updateEmberIntlConfig,
   updateFormatsConfig,
   updatePackageJson,
+  updateTextAssertions,
 } from './to-v8/index.js';
 
 export async function updatePackageToV8(options: Options): Promise<Todos> {
@@ -13,6 +14,7 @@ export async function updatePackageToV8(options: Options): Promise<Todos> {
   updateEmberIntlConfig(options);
   todosAll.push(updateFormatsConfig(options));
   await renameFormatRelative(options);
+  await updateTextAssertions(options);
 
   return todosAll.flat();
 }
