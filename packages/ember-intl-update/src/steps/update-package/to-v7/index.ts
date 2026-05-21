@@ -1,1 +1,1 @@
-export * from './update-dependencies.js';
+export * from './update-package-json.js';
