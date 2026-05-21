@@ -1,6 +1,11 @@
-import type { Options } from '../../types/index.js';
-import { updateDependencies } from './to-v7/update-dependencies.js';
+import type { Options, Todos } from '../../types/index.js';
+import { updateDependencies } from './to-v7/index.js';
 
-export function updatePackageToV7(options: Options): void {
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function updatePackageToV7(options: Options): Promise<Todos> {
+  const todosAll: Todos[] = [];
+
   updateDependencies(options);
+
+  return todosAll.flat();
 }

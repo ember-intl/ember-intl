@@ -36,6 +36,7 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "dependencies": {
+    "@codemod-utils/ast-javascript": "^3.0.2",
     "@codemod-utils/files": "^4.0.1",
     "@codemod-utils/package-json": "^4.0.2",
     "yargs": "^18.0.0"

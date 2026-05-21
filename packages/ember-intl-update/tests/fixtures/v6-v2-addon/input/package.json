@@ -1,0 +1,26 @@
+{
+  "name": "my-v2-addon",
+  "version": "0.0.0",
+  "keywords": [
+    "ember-addon"
+  ],
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist",
+    "translations"
+  ],
+  "devDependencies": {
+    "ember-intl": "^6.5.6",
+    "ember-source": "~6.8.0"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "app-js": {},
+    "main": "addon-main.cjs",
+    "type": "addon",
+    "version": 2
+  }
+}

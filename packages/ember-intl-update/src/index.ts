@@ -1,7 +1,11 @@
 import { createOptions, updatePackage } from './steps/index.js';
-import type { CodemodOptions } from './types/index.js';
+import type { CodemodOptions, Todos } from './types/index.js';
 
-export function runCodemod(codemodOptions: CodemodOptions): void {
+export async function runCodemod(
+  codemodOptions: CodemodOptions,
+): Promise<Todos> {
   const options = createOptions(codemodOptions);
-  updatePackage(options);
+  const todos = await updatePackage(options);
+
+  return todos.sort();
 }

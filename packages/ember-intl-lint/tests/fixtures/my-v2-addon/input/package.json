@@ -4,6 +4,12 @@
   "keywords": [
     "ember-addon"
   ],
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist",
+    "translations"
+  ],
   "devDependencies": {
     "ember-source": "~6.8.0"
   },

@@ -22,4 +22,10 @@ const codemodOptions: CodemodOptions = {
   projectRoot: argv['root'] ?? process.cwd(),
 };
 
-runCodemod(codemodOptions);
+runCodemod(codemodOptions)
+  .then((todos) => {
+    console.log(todos.map((todo) => `- ${todo}`).join('\n'));
+  })
+  .catch((error) => {
+    console.log((error as Error).message);
+  });
