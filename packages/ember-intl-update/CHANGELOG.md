@@ -1,5 +1,12 @@
 # @ember-intl/update
 
+## 0.2.0
+
+### Minor Changes
+
+- [#2155](https://github.com/ember-intl/ember-intl/pull/2155) Renamed {{format-relative}} (v8) ([@ijlee2](https://github.com/ijlee2))
+- [#2154](https://github.com/ember-intl/ember-intl/pull/2154) Added lint scripts (v8) ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.1.0
 
 ### Minor Changes
