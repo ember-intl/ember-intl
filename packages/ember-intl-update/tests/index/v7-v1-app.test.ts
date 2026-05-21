@@ -11,5 +11,7 @@ test('index > v7-v1-app', async function () {
 
   assertFixture(outputProject, codemodOptions);
 
-  assert.deepEqual(todos, []);
+  assert.deepEqual(todos, [
+    'Import `formats` from `app/ember-intl.js`. Then, pass it to the `intl` service by calling `setFormats`.',
+  ]);
 });

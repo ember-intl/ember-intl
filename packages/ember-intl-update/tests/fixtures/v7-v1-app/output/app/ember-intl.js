@@ -1,5 +1,5 @@
-export default {
-  date: {
+export const formats = {
+  formatDate: {
     'user-friendly': {
       day: 'numeric',
       month: 'long',
@@ -7,7 +7,7 @@ export default {
     },
   },
 
-  number: {
+  formatNumber: {
     compact: {
       notation: 'compact',
     },
@@ -21,11 +21,11 @@ export default {
     },
   },
 
-  time: {
+  formatTime: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
     },
-  },
+  }
 };
