@@ -9,16 +9,12 @@ module('Integration | Component | example-text-assertion', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(
-      <template>
-        <ExampleTextAssertion />
-      </template>,
-    );
+    await render(<template><ExampleTextAssertion /></template>);
 
-    assert.dom().hasText('t:hello.message:()');
+    assert.dom().hasText('t:hello.message');
 
     assert
       .dom()
-      .includesText('t:hello.message:()', 'We see the correct message.');
+      .includesText('t:hello.message', 'We see the correct message.');
   });
 });

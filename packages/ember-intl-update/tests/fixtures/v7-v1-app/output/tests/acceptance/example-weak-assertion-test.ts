@@ -13,7 +13,7 @@ module('Acceptance | index', function (hooks) {
       assert
         .dom()
         .hasText(
-          't:hello.message:("name":"Zoey")',
+          't:hello.message',
           'We see the correct message.',
         );
     });
@@ -24,7 +24,7 @@ module('Acceptance | index', function (hooks) {
       await visit('/');
       await selectLocale('en-us');
 
-      assert.dom().hasText('t:hello.message:("name":"Zoey")');
+      assert.dom().hasText('t:hello.message');
     });
   });
 });
