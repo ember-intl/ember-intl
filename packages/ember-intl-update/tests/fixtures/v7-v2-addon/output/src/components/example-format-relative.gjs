@@ -2,13 +2,11 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 
 export default class ExampleFormatRelative extends Component {
-  @service intl;
+    @service intl;
 
-  get output() {
-    return this.intl.formatRelative(-1);
-  }
+    get output() {
+      return this.intl.formatRelativeTime(-1);
+    }
 
-  <template>
-    {{this.output}}
-  </template>
+    <template>{{this.output}}</template>
 }

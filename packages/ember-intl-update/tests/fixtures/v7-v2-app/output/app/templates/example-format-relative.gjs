@@ -1,5 +1,3 @@
-import x from 'ember-intl/helpers/format-relative';
+import formatRelativeTime from 'ember-intl/helpers/format-relative-time';
 
-<template>
-  {{x -1}}
-</template>
+<template>{{formatRelativeTime -1}}</template>
