@@ -14,7 +14,7 @@ export async function updatePackageToV8(options: Options): Promise<Todos> {
   updateEmberIntlConfig(options);
   todosAll.push(updateFormatsConfig(options));
   await renameFormatRelative(options);
-  updateTextAssertions(options);
+  await updateTextAssertions(options);
 
   return todosAll.flat();
 }
