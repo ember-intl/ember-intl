@@ -20,6 +20,6 @@ export async function updateTextAssertions(options: Options): Promise<void> {
 
   await parallelize(task, datasets, {
     importMetaUrl: import.meta.url,
-    workerFilePath: './rename-format-releative/worker.js',
+    workerFilePath: './update-text-assertions/worker.js',
   });
 }
