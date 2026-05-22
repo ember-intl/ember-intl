@@ -1,5 +1,11 @@
 # @ember-intl/v1-compat
 
+## 1.1.0
+
+### Minor Changes
+
+- [#2158](https://github.com/ember-intl/ember-intl/pull/2158) Funneled project translations folder to ignore non-translation files ([@mlenderink](https://github.com/mlenderink))
+
 ## 1.0.9
 
 ### Patch Changes
