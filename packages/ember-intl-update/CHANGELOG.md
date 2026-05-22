@@ -1,5 +1,12 @@
 # @ember-intl/update
 
+## 0.3.1
+
+### Patch Changes
+
+- [#2159](https://github.com/ember-intl/ember-intl/pull/2159) Fixed typos in file paths ([@ijlee2](https://github.com/ijlee2))
+- [#2159](https://github.com/ember-intl/ember-intl/pull/2159) Updated latestVersions (v8) ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.3.0
 
 ### Minor Changes
