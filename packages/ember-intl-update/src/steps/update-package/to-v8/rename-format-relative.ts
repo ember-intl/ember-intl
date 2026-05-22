@@ -2,7 +2,7 @@ import { findFiles } from '@codemod-utils/files';
 import { parallelize } from '@codemod-utils/threads';
 
 import type { Options } from '../../../types/index.js';
-import { task } from './rename-format-releative/task.js';
+import { task } from './rename-format-relative/task.js';
 
 export async function renameFormatRelative(options: Options): Promise<void> {
   const { projectRoot, src } = options;
@@ -23,6 +23,6 @@ export async function renameFormatRelative(options: Options): Promise<void> {
 
   await parallelize(task, datasets, {
     importMetaUrl: import.meta.url,
-    workerFilePath: './rename-format-releative/worker.js',
+    workerFilePath: './rename-format-relative/worker.js',
   });
 }
