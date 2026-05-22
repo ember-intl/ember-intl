@@ -80,7 +80,10 @@ function buildTranslationTree(project, inputPath, treeGenerator) {
   const projectTranslations = join(project.root, inputPath);
 
   if (existsSync(projectTranslations)) {
-    trees.push(new WatchedDir(projectTranslations));
+    // Funnel so that non-translation files (e.g. a `.gitkeep` used to keep
+    // the folder in git) are filtered out before reaching the reducer. The
+    // addon translation trees above are already funneled the same way.
+    trees.push(funnelTranslations(new WatchedDir(projectTranslations)));
   }
 
   return [mergeTrees(trees, { overwrite: true }), addonsWithTranslations];
