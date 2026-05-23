@@ -42,7 +42,48 @@ import {
   type TranslationJson,
 } from '../-private/utils/translations.ts';
 
-export type { Formats };
+type FormatDateArg = FormatDateParameters[0] | undefined | null;
+type FormatDateOptions = FormatDateParameters[1] & {
+  locale?: string;
+};
+
+type FormatDateRangeFrom = FormatDateRangeParameters[0] | undefined | null;
+type FormatDateRangeTo = FormatDateRangeParameters[1] | undefined | null;
+type FormatDateRangeOptions = FormatDateRangeParameters[2] & {
+  locale?: string;
+};
+
+type FormatDisplayNameArg = FormatDisplayNameParameters[0] | undefined | null;
+type FormatDisplayNameOptions = FormatDisplayNameParameters[1] & {
+  locale?: string;
+};
+
+type FormatListArg = FormatListParameters[0] | undefined | null;
+type FormatListOptions = FormatListParameters[1] & {
+  locale?: string;
+};
+
+type FormatMessageArg = FormatMessageParameters[0] | string | undefined | null;
+type FormatMessageOptions = FormatMessageParameters[1] & {
+  htmlSafe?: boolean;
+  locale?: string;
+};
+
+type FormatNumberArg = FormatNumberParameters[0] | undefined | null;
+type FormatNumberOptions = FormatNumberParameters[1] & {
+  locale?: string;
+};
+
+type FormatRelativeTimeArg = FormatRelativeTimeParameters[0] | undefined | null;
+type FormatRelativeTimeOptions = FormatRelativeTimeParameters[2] & {
+  locale?: string;
+  unit?: FormatRelativeTimeParameters[1];
+};
+
+type FormatTimeArg = FormatTimeParameters[0] | undefined | null;
+type FormatTimeOptions = FormatTimeParameters[1] & {
+  locale?: string;
+};
 
 type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
@@ -51,6 +92,30 @@ type OnMissingTranslation = (
   locales: string[],
   data?: Record<string, unknown>,
 ) => string;
+
+export type {
+  FormatDateArg,
+  FormatDateOptions,
+  FormatDateRangeFrom,
+  FormatDateRangeOptions,
+  FormatDateRangeTo,
+  FormatDisplayNameArg,
+  FormatDisplayNameOptions,
+  FormatListArg,
+  FormatListOptions,
+  FormatMessageArg,
+  FormatMessageOptions,
+  FormatNumberArg,
+  FormatNumberOptions,
+  FormatRelativeTimeArg,
+  FormatRelativeTimeOptions,
+  FormatTimeArg,
+  FormatTimeOptions,
+  Formats,
+  OnFormatjsError,
+  OnMissingTranslation,
+  TranslationJson,
+};
 
 export default class IntlService extends Service {
   @tracked private _intls: Record<string, IntlShape> = {};
@@ -131,12 +196,7 @@ export default class IntlService extends Service {
     });
   }
 
-  formatDate(
-    value: FormatDateParameters[0] | undefined | null,
-    options?: FormatDateParameters[1] & {
-      locale?: string;
-    },
-  ): string {
+  formatDate(value: FormatDateArg, options?: FormatDateOptions): string {
     if (value === undefined || value === null) {
       return '';
     }
@@ -147,11 +207,9 @@ export default class IntlService extends Service {
   }
 
   formatDateRange(
-    from: FormatDateRangeParameters[0] | undefined | null,
-    to: FormatDateRangeParameters[1] | undefined | null,
-    options?: FormatDateRangeParameters[2] & {
-      locale?: string;
-    },
+    from: FormatDateRangeFrom,
+    to: FormatDateRangeTo,
+    options?: FormatDateRangeOptions,
   ): string {
     if (from === undefined || from === null) {
       return '';
@@ -167,10 +225,8 @@ export default class IntlService extends Service {
   }
 
   formatDisplayName(
-    value: FormatDisplayNameParameters[0] | undefined | null,
-    options: FormatDisplayNameParameters[1] & {
-      locale?: string;
-    },
+    value: FormatDisplayNameArg,
+    options: FormatDisplayNameOptions,
   ): string {
     if (value === undefined || value === null) {
       return '';
@@ -181,12 +237,7 @@ export default class IntlService extends Service {
     return formatDisplayName(intlShape, value, options);
   }
 
-  formatList(
-    value: FormatListParameters[0] | undefined | null,
-    options?: FormatListParameters[1] & {
-      locale?: string;
-    },
-  ): string {
+  formatList(value: FormatListArg, options?: FormatListOptions): string {
     if (value === undefined || value === null) {
       return '';
     }
@@ -197,11 +248,8 @@ export default class IntlService extends Service {
   }
 
   formatMessage(
-    value: FormatMessageParameters[0] | string | undefined | null,
-    options?: FormatMessageParameters[1] & {
-      htmlSafe?: boolean;
-      locale?: string;
-    },
+    value: FormatMessageArg,
+    options?: FormatMessageOptions,
   ): string {
     if (value === undefined || value === null) {
       return '';
@@ -231,12 +279,7 @@ export default class IntlService extends Service {
     return formatMessage(intlShape, descriptor, options);
   }
 
-  formatNumber(
-    value: FormatNumberParameters[0] | undefined | null,
-    options?: FormatNumberParameters[1] & {
-      locale?: string;
-    },
-  ): string {
+  formatNumber(value: FormatNumberArg, options?: FormatNumberOptions): string {
     if (value === undefined || value === null) {
       return '';
     }
@@ -247,11 +290,8 @@ export default class IntlService extends Service {
   }
 
   formatRelativeTime(
-    value: FormatRelativeTimeParameters[0] | undefined | null,
-    options?: FormatRelativeTimeParameters[2] & {
-      locale?: string;
-      unit?: FormatRelativeTimeParameters[1];
-    },
+    value: FormatRelativeTimeArg,
+    options?: FormatRelativeTimeOptions,
   ): string {
     if (value === undefined || value === null) {
       return '';
@@ -262,12 +302,7 @@ export default class IntlService extends Service {
     return formatRelativeTime(intlShape, value, options?.unit, options);
   }
 
-  formatTime(
-    value: FormatTimeParameters[0] | undefined | null,
-    options?: FormatTimeParameters[1] & {
-      locale?: string;
-    },
-  ): string {
+  formatTime(value: FormatTimeArg, options?: FormatTimeOptions): string {
     if (value === undefined || value === null) {
       return '';
     }
@@ -341,13 +376,7 @@ export default class IntlService extends Service {
     this._onMissingTranslation = onMissingTranslation;
   }
 
-  t(
-    key: string,
-    options?: FormatMessageParameters[1] & {
-      htmlSafe?: boolean;
-      locale?: string;
-    },
-  ): string {
+  t(key: string, options?: FormatMessageOptions): string {
     const locales = options?.locale ? [options.locale] : this._locale!;
     let translation: string | undefined;
 
