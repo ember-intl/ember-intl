@@ -55,9 +55,7 @@ test('utils | analyze-project | find-used-keys | in-ts > edge case (1)', functio
     ``,
   ]);
 
-  const keys = inJsTs(file, {
-    isTypeScript: true,
-  });
+  const keys = inJsTs(file);
 
   assert.deepStrictEqual(keys, ['key06', 'key07', 'key08', 'key09', 'key10']);
 });
