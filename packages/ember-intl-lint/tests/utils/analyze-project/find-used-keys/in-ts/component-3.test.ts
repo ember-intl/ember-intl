@@ -71,9 +71,7 @@ test('utils | analyze-project | find-used-keys | in-ts > component (3)', functio
     ``,
   ]);
 
-  const keys = inJsTs(file, {
-    isTypeScript: true,
-  });
+  const keys = inJsTs(file);
 
   assert.deepStrictEqual(keys, [
     'key01',

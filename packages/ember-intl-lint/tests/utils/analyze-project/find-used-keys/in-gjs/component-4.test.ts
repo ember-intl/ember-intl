@@ -28,9 +28,7 @@ test('utils | analyze-project | find-used-keys | in-gjs > component (4)', functi
     ``,
   ]);
 
-  const keys = inGjsGts(file, {
-    isTypeScript: false,
-  });
+  const keys = inGjsGts(file);
 
   assert.deepStrictEqual(keys, [
     'key01',

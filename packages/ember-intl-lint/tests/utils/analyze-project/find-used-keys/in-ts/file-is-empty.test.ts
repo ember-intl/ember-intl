@@ -5,9 +5,7 @@ import { inJsTs } from '../../../../../src/utils/analyze-project/find-used-keys/
 test('utils | analyze-project | find-used-keys | in-ts > file is empty', function () {
   const file = '';
 
-  const keys = inJsTs(file, {
-    isTypeScript: true,
-  });
+  const keys = inJsTs(file);
 
   assert.deepStrictEqual(keys, []);
 });

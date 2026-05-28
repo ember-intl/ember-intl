@@ -5,9 +5,7 @@ import { inGjsGts } from '../../../../../src/utils/analyze-project/find-used-key
 test('utils | analyze-project | find-used-keys | in-gjs > component (1)', function () {
   const file = normalizeFile([`<template></template>`, ``]);
 
-  const keys = inGjsGts(file, {
-    isTypeScript: false,
-  });
+  const keys = inGjsGts(file);
 
   assert.deepStrictEqual(keys, []);
 });
