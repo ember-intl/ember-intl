@@ -49,10 +49,9 @@ export function inTemplate(file: string, data: Data): TranslationKey[] {
     return [];
   }
 
-  const traverse = AST.traverse();
   const keys: TranslationKey[] = [];
 
-  traverse(file, {
+  AST.traverse(file, {
     MustacheStatement(node) {
       if (node.path.type !== 'PathExpression') {
         return;

@@ -15,14 +15,14 @@
     "lint:fix": "prettier \"**/*.mjs\" --cache --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/stylelint": "^3.1.4"
+    "@ijlee2-frontend-configs/stylelint": "^3.1.5"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "prettier": "^3.8.3"
   },
   "peerDependencies": {
-    "stylelint": "^17.11.1"
+    "stylelint": "^17.12.0"
   },
   "peerDependenciesMeta": {
     "stylelint": {

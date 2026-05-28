@@ -8,7 +8,6 @@ type ExpressionKind = Parameters<ExpressionStatement>[0];
 
 type Data = {
   dependencies: NonNullable<Dependencies>;
-  isTypeScript: boolean;
 };
 
 function saveKeys(keys: TranslationKey[], path: ExpressionKind): void {
@@ -35,7 +34,7 @@ function saveKeys(keys: TranslationKey[], path: ExpressionKind): void {
 }
 
 export function inJavascript(file: string, data: Data): TranslationKey[] {
-  const { dependencies, isTypeScript } = data;
+  const { dependencies } = data;
 
   const canSkip =
     dependencies.helpers.t === undefined &&
@@ -46,10 +45,9 @@ export function inJavascript(file: string, data: Data): TranslationKey[] {
     return [];
   }
 
-  const traverse = AST.traverse(isTypeScript);
   const keys: TranslationKey[] = [];
 
-  traverse(file, {
+  AST.traverse(file, {
     visitCallExpression(path) {
       this.traverse(path);
 

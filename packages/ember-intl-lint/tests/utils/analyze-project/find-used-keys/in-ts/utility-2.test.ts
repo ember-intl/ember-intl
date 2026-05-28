@@ -52,9 +52,7 @@ test('utils | analyze-project | find-used-keys | in-ts > utility (2)', function 
     ``,
   ]);
 
-  const keys = inJsTs(file, {
-    isTypeScript: true,
-  });
+  const keys = inJsTs(file);
 
   assert.deepStrictEqual(keys, ['key01', 'key04', 'key05', 'key06', 'key07']);
 });

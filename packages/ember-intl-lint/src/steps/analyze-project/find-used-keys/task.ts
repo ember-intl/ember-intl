@@ -19,9 +19,7 @@ export function task(filePath: string, options: Options): TranslationKey[] {
   switch (ext) {
     case '.gjs':
     case '.gts': {
-      return inGjsGts(file, {
-        isTypeScript: ext === '.gts',
-      });
+      return inGjsGts(file);
     }
 
     case '.hbs': {
@@ -30,9 +28,7 @@ export function task(filePath: string, options: Options): TranslationKey[] {
 
     case '.js':
     case '.ts': {
-      return inJsTs(file, {
-        isTypeScript: ext === '.ts',
-      });
+      return inJsTs(file);
     }
 
     default: {

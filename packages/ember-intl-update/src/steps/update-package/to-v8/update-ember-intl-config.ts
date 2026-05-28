@@ -13,11 +13,9 @@ type Data = {
 };
 
 function removeBuildOptions(file: string, data: Data): string {
-  const traverse = AST.traverse(true);
-
   let argumentProperties: ObjectProperty[] = [];
 
-  let ast = traverse(file, {
+  let ast = AST.traverse(file, {
     visitReturnStatement(path) {
       if (path.node?.argument?.type !== 'ObjectExpression') {
         return false;
@@ -57,7 +55,7 @@ function removeBuildOptions(file: string, data: Data): string {
   });
 
   if (data.convertToEsm && argumentProperties.length > 0) {
-    ast = traverse(file, {
+    ast = AST.traverse(file, {
       visitExpressionStatement(path) {
         if (path.node.expression.type !== 'AssignmentExpression') {
           return false;

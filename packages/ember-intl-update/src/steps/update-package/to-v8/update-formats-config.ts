@@ -17,9 +17,7 @@ const mapping = new Map([
 ]);
 
 function renameKeys(file: string): string {
-  const traverse = AST.traverse(true);
-
-  const ast = traverse(file, {
+  const ast = AST.traverse(file, {
     visitExportDefaultDeclaration(path) {
       if (path.node.declaration.type !== 'ObjectExpression') {
         return false;
