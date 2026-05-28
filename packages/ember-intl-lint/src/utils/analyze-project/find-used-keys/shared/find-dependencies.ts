@@ -2,10 +2,6 @@ import { AST } from '@codemod-utils/ast-javascript';
 
 type Decorator = ReturnType<typeof AST.builders.decorator>;
 
-type Data = {
-  isTypeScript: boolean;
-};
-
 export type Dependencies = {
   helpers: {
     t: string | undefined;
@@ -16,8 +12,8 @@ export type Dependencies = {
   };
 };
 
-export function findDependencies(file: string, data: Data): Dependencies {
-  const traverse = AST.traverse(data.isTypeScript);
+export function findDependencies(file: string): Dependencies {
+  const traverse = AST.traverse(true);
 
   const dependencies: Dependencies = {
     helpers: {
@@ -51,10 +47,7 @@ export function findDependencies(file: string, data: Data): Dependencies {
 
           const param = decorator.expression.arguments[0]!;
 
-          if (
-            (param.type !== 'Literal' && param.type !== 'StringLiteral') ||
-            param.value !== 'intl'
-          ) {
+          if (param.type !== 'StringLiteral' || param.value !== 'intl') {
             return false;
           }
 
@@ -86,7 +79,7 @@ export function findDependencies(file: string, data: Data): Dependencies {
     },
 
     visitImportDeclaration(path) {
-      if (data.isTypeScript && path.node.importKind !== 'value') {
+      if (path.node.importKind !== 'value') {
         return false;
       }
 
