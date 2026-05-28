@@ -1,5 +1,11 @@
 # @ember-intl/v1-compat
 
+## 1.1.1
+
+### Patch Changes
+
+- [#2161](https://github.com/ember-intl/ember-intl/pull/2161) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.0
 
 ### Minor Changes
