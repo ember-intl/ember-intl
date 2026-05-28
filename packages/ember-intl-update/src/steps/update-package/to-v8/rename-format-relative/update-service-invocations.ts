@@ -12,10 +12,9 @@ export function updateServiceInvocations(
   file: string;
   update: boolean;
 } {
-  const traverse = AST.traverse(true);
   let update = false;
 
-  const ast = traverse(file, {
+  const ast = AST.traverse(file, {
     visitMemberExpression(path) {
       this.traverse(path);
 

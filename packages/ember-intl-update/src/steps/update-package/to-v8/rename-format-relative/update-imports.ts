@@ -5,11 +5,10 @@ export function updateImports(file: string): {
   localName: string | undefined;
   update: boolean;
 } {
-  const traverse = AST.traverse(true);
   let localName: string | undefined;
   let update = false;
 
-  const ast = traverse(file, {
+  const ast = AST.traverse(file, {
     visitImportDeclaration(path) {
       switch (path.node.source.value) {
         case 'ember-intl': {

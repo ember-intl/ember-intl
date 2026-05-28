@@ -12,10 +12,9 @@ export function updateHelperInvocations(
   file: string;
   update: boolean;
 } {
-  const traverse = AST.traverse();
   let update = false;
 
-  const ast = traverse(file, {
+  const ast = AST.traverse(file, {
     MustacheStatement(node) {
       if (
         node.path.type !== 'PathExpression' ||

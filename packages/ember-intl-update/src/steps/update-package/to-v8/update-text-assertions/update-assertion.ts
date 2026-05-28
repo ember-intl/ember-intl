@@ -14,10 +14,9 @@ export function updateAssertion(file: string): {
   file: string;
   update: boolean;
 } {
-  const traverse = AST.traverse(true);
   let update = false;
 
-  const ast = traverse(file, {
+  const ast = AST.traverse(file, {
     visitCallExpression(path) {
       this.traverse(path);
 
