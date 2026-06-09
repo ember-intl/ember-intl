@@ -19,12 +19,12 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "eslint-plugin-yml": "^3.3.2"
+    "eslint-plugin-yml": "^3.4.0"
   },
   "devDependencies": {
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
-    "concurrently": "^10.0.0",
+    "concurrently": "^10.0.3",
     "eslint": "^9.39.4",
     "prettier": "^3.8.3"
   },

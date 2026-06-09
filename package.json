@@ -27,7 +27,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "@ijlee2-frontend-configs/changesets": "^2.1.1",
-    "sort-package-json": "^3.6.1",
+    "sort-package-json": "^4.0.0",
     "update-workspace-root-version": "^3.0.2"
   },
   "packageManager": "pnpm@10.34.1",
@@ -37,11 +37,8 @@
   },
   "pnpm": {
     "overrides": {
-      "ansi-html": "^0.0.9",
-      "vite": "^8.0.10"
-    },
-    "patchedDependencies": {
-      "vite-plugin-ember": "patches/vite-plugin-ember.patch"
+      "ember-cli-htmlbars": "^7.0.1",
+      "vite": "^8.0.16"
     }
   }
 }

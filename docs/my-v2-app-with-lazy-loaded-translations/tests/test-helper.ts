@@ -7,7 +7,6 @@ import { setup } from 'qunit-dom';
 
 export function start(): void {
   setApplication(Application.create(config.APP));
-
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
   qunitStart();

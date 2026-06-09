@@ -22,7 +22,6 @@ export default defineConfig({
         return defaultCodeInline(tokens, idx, options, env, self);
       };
 
-      // @ts-expect-error: vite-plugin-ember needs to use markdown-it-async
       emberFence(md);
     },
     image: {
