@@ -54,7 +54,7 @@
     "@shared-configs/typescript": "workspace:*",
     "@types/qunit": "^2.19.14",
     "broccoli-asset-rev": "^3.0.0",
-    "concurrently": "^10.0.0",
+    "concurrently": "^10.0.3",
     "ember-auto-import": "^2.13.1",
     "ember-cli": "~6.12.0",
     "ember-cli-app-version": "^7.0.0",
@@ -76,7 +76,7 @@
     "my-v1-addon": "workspace:*",
     "my-v2-addon": "workspace:*",
     "prettier": "^3.8.3",
-    "qunit": "^2.25.0",
+    "qunit": "^2.26.0",
     "qunit-dom": "^3.5.1",
     "typescript": "^5.9.3",
     "webpack": "^5.107.2"
