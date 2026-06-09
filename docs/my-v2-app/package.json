@@ -26,7 +26,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
     "start": "vite",
-    "test": "NODE_ENV=development vite build --mode development && ember test --config-file \"./testem.cjs\" --path dist --test-port 0"
+    "test": "NODE_ENV=development vite build --mode development && ember test --path dist --test-port 0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
@@ -55,13 +55,10 @@
     "@shared-configs/typescript": "workspace:*",
     "@types/qunit": "^2.19.14",
     "babel-plugin-ember-template-compilation": "^4.0.0",
-    "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^10.0.3",
     "decorator-transforms": "^2.3.2",
-    "ember-auto-import": "^2.13.1",
     "ember-cli": "~6.12.0",
     "ember-cli-babel": "^8.3.1",
-    "ember-cli-htmlbars": "^7.0.1",
     "ember-intl": "workspace:*",
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^9.0.3",
@@ -69,7 +66,6 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
     "ember-template-lint": "^7.9.3",
-    "ember-test-selectors": "^7.1.0",
     "eslint": "^9.39.4",
     "my-v1-addon": "workspace:*",
     "my-v2-addon": "workspace:*",

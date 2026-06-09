@@ -7,7 +7,6 @@ import config from 'test-app-for-ember-intl/config/environment';
 
 export function start(): void {
   setApplication(Application.create(config.APP));
-
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
   qunitStart();
