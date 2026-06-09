@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 1.2.1
+
+### Patch Changes
+
+- [#2162](https://github.com/ember-intl/ember-intl/pull/2162) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.0
 
 ### Minor Changes
