@@ -8,4 +8,27 @@ export { default as formatRelativeTime } from './helpers/format-relative-time.ts
 export { default as formatTime } from './helpers/format-time.ts';
 export { default as t } from './helpers/t.ts';
 export { default as tKey } from './helpers/t-key.ts';
-export type { Formats, default as IntlService } from './services/intl.ts';
+export type {
+  FormatDateArg,
+  FormatDateOptions,
+  FormatDateRangeFrom,
+  FormatDateRangeOptions,
+  FormatDateRangeTo,
+  FormatDisplayNameArg,
+  FormatDisplayNameOptions,
+  FormatListArg,
+  FormatListOptions,
+  FormatMessageArg,
+  FormatMessageOptions,
+  FormatNumberArg,
+  FormatNumberOptions,
+  FormatRelativeTimeArg,
+  FormatRelativeTimeOptions,
+  Formats,
+  FormatTimeArg,
+  FormatTimeOptions,
+  default as IntlService,
+  OnFormatjsError,
+  OnMissingTranslation,
+  TranslationJson,
+} from './services/intl.ts';
