@@ -1,7 +1,7 @@
 import { relative, sep } from 'node:path';
 
 import { parseFilePath } from '@codemod-utils/files';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 
 import type {
   TranslationFilePath,
@@ -73,19 +73,23 @@ export function extractTranslations(
 
   const { ext } = parseFilePath(data.filePath);
 
-  const translationJson =
-    ext === '.json'
-      ? (JSON.parse(file) as TranslationJson)
-      : (yaml.load(file) as TranslationJson);
+  try {
+    const translationJson =
+      ext === '.json'
+        ? (JSON.parse(file) as TranslationJson)
+        : (load(file) as TranslationJson);
 
-  const prefix = getPrefix(data);
+    const prefix = getPrefix(data);
 
-  traverse(translationJson, {
-    callback(key, message) {
-      translationObject[key] = message;
-    },
-    prefix,
-  });
+    traverse(translationJson, {
+      callback(key, message) {
+        translationObject[key] = message;
+      },
+      prefix,
+    });
+  } catch {
+    // Do nothing
+  }
 
   return translationObject;
 }
