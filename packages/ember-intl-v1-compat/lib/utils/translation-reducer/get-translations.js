@@ -1,6 +1,6 @@
 const { readFileSync } = require('node:fs');
 const { extname } = require('node:path');
-const yaml = require('js-yaml');
+const { load } = require('js-yaml');
 
 function getTranslations(filePath) {
   const file = readFileSync(filePath, 'utf8');
@@ -18,7 +18,15 @@ function getTranslations(filePath) {
 
     case '.yaml':
     case '.yml': {
-      return yaml.load(file);
+      let translations = {};
+
+      try {
+        translations = load(file);
+      } catch {
+        // Do nothing
+      }
+
+      return translations;
     }
   }
 }
