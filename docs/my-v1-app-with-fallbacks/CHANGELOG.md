@@ -1,5 +1,11 @@
 # my-v1-app-with-fallbacks
 
+## 1.1.23
+
+### Patch Changes
+
+- [#2164](https://github.com/ember-intl/ember-intl/pull/2164) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.1.22
 
 ### Patch Changes
