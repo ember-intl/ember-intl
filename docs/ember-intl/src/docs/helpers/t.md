@@ -174,7 +174,7 @@ To avoid this scenario, please ensure that all arguments are well-defined before
 
 ### htmlSafe {#options-html-safe}
 
-To render an HTML in a translation message, set `htmlSafe` to `true`. The `t` helper returns a `SafeString` (casted as `string` to improve DX).
+To render an HTML in a translation message, set `htmlSafe` to `true`. The `t` helper returns a `SafeString`, casted as `string` to improve DX.
 
 ::: code-group
 
@@ -191,6 +191,23 @@ visit-homepage: Visit <a href="https://www.emberjs.com">Ember.js</a>.
 ```
 
 :::
+
+> [!TIP]
+>
+> If the version of your `ember-source` is `6.7` or above, use Ember's `trustHTML` instead.
+>
+> ::: code-group
+>
+> ```gts [app/components/example.gts]
+> import { trustHTML } from '@ember/template';
+> import { t } from 'ember-intl';
+>
+> <template>
+>   {{trustHTML (t "visit-homepage")}}
+> </template>
+> ```
+>
+> :::
 
 > [!CAUTION]
 > 
