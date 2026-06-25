@@ -22,13 +22,13 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/eslint-config-node": "^3.4.3"
+    "@ijlee2-frontend-configs/eslint-config-node": "^3.4.4"
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^10.0.3",
     "eslint": "^9.39.4",
-    "prettier": "^3.8.3"
+    "prettier": "^3.8.4"
   },
   "peerDependencies": {
     "eslint": "^9.39.4",
