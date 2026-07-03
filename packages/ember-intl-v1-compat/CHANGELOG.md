@@ -1,5 +1,12 @@
 # @ember-intl/v1-compat
 
+## 1.2.1
+
+### Patch Changes
+
+- [#2166](https://github.com/ember-intl/ember-intl/pull/2166) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2166](https://github.com/ember-intl/ember-intl/pull/2166) Removed ember-template-lint ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.0
 
 ### Minor Changes

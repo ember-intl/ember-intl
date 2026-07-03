@@ -1,5 +1,12 @@
 # ember-intl
 
+## 8.2.9
+
+### Patch Changes
+
+- [#2166](https://github.com/ember-intl/ember-intl/pull/2166) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2166](https://github.com/ember-intl/ember-intl/pull/2166) Removed ember-template-lint ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.2.8
 
 ### Patch Changes
