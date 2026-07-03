@@ -15,8 +15,7 @@ export function getHtmlElement(context: object): HTMLHtmlElement | undefined {
   }
 
   const documentService = owner.lookup('service:-document') as
-    | SimpleDocument
-    | undefined;
+    SimpleDocument | undefined;
 
   return documentService?.documentElement;
 }
