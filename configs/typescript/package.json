@@ -15,8 +15,8 @@
     "./node": "./node/index.json"
   },
   "scripts": {
-    "lint:js": "prettier \"**/*.{json,mjs}\" --cache --check",
-    "lint:js:fix": "prettier \"**/*.{json,mjs}\" --cache --write"
+    "lint": "prettier \"**/*.{json,mjs}\" --cache --check",
+    "lint:fix": "prettier \"**/*.{json,mjs}\" --cache --write"
   },
   "dependencies": {
     "@ember/app-tsconfig": "^2.0.0",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "prettier": "^3.8.4"
+    "prettier": "^3.9.4"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"

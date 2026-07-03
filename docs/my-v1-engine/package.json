@@ -38,8 +38,6 @@
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
     "lint:format": "prettier . --cache --check",
-    "lint:hbs": "ember-template-lint .",
-    "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:intl": "ember-intl-lint",
     "lint:intl:fix": "ember-intl-lint --fix",
     "lint:js": "eslint . --cache",
@@ -68,7 +66,6 @@
     "@glint/environment-ember-loose": "1.5.2",
     "@glint/environment-ember-template-imports": "1.5.2",
     "@glint/template": "^1.7.8",
-    "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
@@ -89,14 +86,13 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
     "ember-template-imports": "^4.4.0",
-    "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.4",
     "loader.js": "^4.7.0",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.4",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.5.1",
     "typescript": "^5.9.3",
-    "webpack": "^5.107.2"
+    "webpack": "^5.108.3"
   },
   "peerDependencies": {
     "ember-engines": "^0.13.0",

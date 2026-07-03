@@ -22,8 +22,6 @@
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
     "lint:format": "prettier . --cache --check",
-    "lint:hbs": "ember-template-lint .",
-    "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
@@ -39,7 +37,7 @@
     "ember-auto-import": "^2.13.1",
     "ember-cli-babel": "^8.3.1",
     "extend": "^3.0.2",
-    "js-yaml": "^5.1.0",
+    "js-yaml": "^5.2.1",
     "json-stable-stringify": "^1.3.0"
   },
   "devDependencies": {
@@ -49,25 +47,23 @@
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.1.1",
     "@glimmer/tracking": "^1.1.2",
-    "@shared-configs/ember-template-lint": "workspace:*",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
     "concurrently": "^10.0.3",
-    "ember-cli": "~7.0.1",
+    "ember-cli": "~7.1.0",
     "ember-cli-htmlbars": "^7.0.1",
     "ember-load-initializers": "^3.0.1",
     "ember-qunit": "^9.1.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~7.1.0",
-    "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.4",
     "globals": "^17.7.0",
     "loader.js": "^4.7.0",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.4",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.5.1",
-    "webpack": "^5.107.2"
+    "webpack": "^5.108.3"
   },
   "engines": {
     "node": "20.* || >= 22"

@@ -29,12 +29,7 @@ type ConfigLintRules = Record<LintRule, boolean | LintOptions>;
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 
 type IcuArgumentType =
-  | 'argument'
-  | 'date'
-  | 'number'
-  | 'plural'
-  | 'select'
-  | 'time';
+  'argument' | 'date' | 'number' | 'plural' | 'select' | 'time';
 
 type LintErrors = string[];
 
