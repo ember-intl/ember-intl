@@ -209,9 +209,9 @@ jobs:
     timeout-minutes: 5
     # Only run on pushes to the main branch (i.e. ignore pull requests)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # `concurrency`, `environment`, and `permissions` have been set for GitHub Pages
+    # One deployment at a time. Cancel a deploy that is stuck when a newer push lands.
     concurrency:
-      cancel-in-progress: false
+      cancel-in-progress: true
       group: pages
     environment:
       name: github-pages
@@ -244,7 +244,7 @@ jobs:
         working-directory: 'docs/ember-intl'
 
       - name: Upload dist
-        uses: actions/upload-pages-artifact@v5.0.0
+        uses: actions/upload-pages-artifact@v5
         with:
           path: 'docs/ember-intl/.vitepress/dist'
 
