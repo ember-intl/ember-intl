@@ -17,7 +17,7 @@
     "lint": "pnpm --filter \"*\" lint && pnpm lint:package-json",
     "lint:fix": "pnpm --filter \"*\" lint:fix && pnpm lint:package-json:fix",
     "lint:package-json": "pnpm lint:package-json:fix --check",
-    "lint:package-json:fix": "sort-package-json \"**/package.json\" --ignore \"**/{dist,node_modules}/**\"",
+    "lint:package-json:fix": "sort-package-json \"**/package.json\" --ignore \"**/{blueprints,dist,dist-for-testing,node_modules,tests,tmp}/**\"",
     "prepare": "pnpm build",
     "release:prepare": "changeset version; update-workspace-root-version",
     "release:publish": "pnpm build:packages && changeset publish",
@@ -38,7 +38,7 @@
   "pnpm": {
     "overrides": {
       "ember-cli-htmlbars": "^7.0.1",
-      "vite": "^8.1.0"
+      "vite": "^8.1.3"
     }
   }
 }
