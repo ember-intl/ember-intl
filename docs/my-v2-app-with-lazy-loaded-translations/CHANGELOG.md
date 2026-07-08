@@ -1,5 +1,11 @@
 # my-v2-app-with-lazy-loaded-translations
 
+## 1.6.0
+
+### Minor Changes
+
+- [#2168](https://github.com/ember-intl/ember-intl/pull/2168) Updated dependencies (babel@v8, eslint@v10, typescript@v6) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.5.0
 
 ### Minor Changes

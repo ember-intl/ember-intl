@@ -1,5 +1,11 @@
 # ember-intl
 
+## 8.3.0
+
+### Minor Changes
+
+- [#2168](https://github.com/ember-intl/ember-intl/pull/2168) Updated dependencies (babel@v8, eslint@v10, typescript@v6) ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.2.9
 
 ### Patch Changes

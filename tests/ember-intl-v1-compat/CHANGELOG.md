@@ -1,5 +1,11 @@
 # test-ember-intl-v1-compat
 
+## 1.5.0
+
+### Minor Changes
+
+- [#2168](https://github.com/ember-intl/ember-intl/pull/2168) Updated dependencies (eslint@v10, typescript@v6) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.4.15
 
 ### Patch Changes
