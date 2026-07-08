@@ -3,7 +3,9 @@
   "compilerOptions": {
     "allowJs": true,
     "declaration": false,
-    "outDir": "dist-for-testing"
+    "outDir": "dist-for-testing",
+    "rootDir": ".",
+    "types": ["@types/node"]
   },
   "include": ["bin", "src", "tests"],
   "exclude": ["src/blueprints", "tests/fixtures"]

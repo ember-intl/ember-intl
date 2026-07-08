@@ -2,8 +2,9 @@
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "./src",
+    "types": ["@types/js-yaml", "@types/node"]
   },
-  "include": ["bin", "src"],
-  "exclude": ["src/blueprints"]
+  "include": ["src"]
 }

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "declaration": false,
-    "types": ["ember-source/types", "@ember-intl/vite/virtual"]
+    "rootDir": ".",
+    "types": ["@ember-intl/vite/virtual", "ember-source/types"]
   },
   "include": [".vitepress/**/*", "types/**/*"]
 }

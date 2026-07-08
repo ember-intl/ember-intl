@@ -2,8 +2,10 @@
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "dist-for-testing"
+    "outDir": "dist-for-testing",
+    "rootDir": ".",
+    "types": ["@types/js-yaml", "@types/node"]
   },
-  "include": ["bin", "src", "tests"],
+  "include": ["src", "tests"],
   "exclude": ["tests/fixtures"]
 }
