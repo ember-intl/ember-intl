@@ -86,13 +86,13 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
     "ember-template-imports": "^4.4.0",
-    "eslint": "^9.39.4",
+    "eslint": "^10.6.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.4",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.5.1",
-    "typescript": "^5.9.3",
-    "webpack": "^5.108.3"
+    "typescript": "^6.0.3",
+    "webpack": "^5.108.4"
   },
   "peerDependencies": {
     "ember-engines": "^0.13.0",

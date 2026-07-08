@@ -2,7 +2,9 @@
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": ".",
+    "types": ["@types/node", "@types/yargs"]
   },
   "include": ["bin", "src"],
   "exclude": ["src/blueprints"]

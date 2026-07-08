@@ -1,15 +1,15 @@
 {
   "extends": "@shared-configs/typescript/ember-app",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "my-v1-app-with-lazy-loaded-translations/tests/*": ["tests/*"],
-      "my-v1-app-with-lazy-loaded-translations/*": ["app/*"],
+      "my-v1-app-with-lazy-loaded-translations/tests/*": ["./tests/*"],
+      "my-v1-app-with-lazy-loaded-translations/*": ["./app/*"],
       "my-v1-addon": ["../my-v1-addon/addon/index"],
       "my-v1-addon/*": ["../my-v1-addon/addon/*"],
-      "*": ["types/*"]
+      "*": ["./types/*"]
     },
-    "types": ["ember-source/types", "@glint/ember-tsc/types"]
+    "rootDir": "..",
+    "types": ["@glint/ember-tsc/types", "ember-source/types"]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

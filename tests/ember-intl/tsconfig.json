@@ -1,18 +1,19 @@
 {
   "extends": "@shared-configs/typescript/ember-app",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "test-app-for-ember-intl/tests/*": ["tests/*"],
-      "test-app-for-ember-intl/*": ["app/*"],
-      "*": ["types/*"]
+      "test-app-for-ember-intl/tests/*": ["./tests/*"],
+      "test-app-for-ember-intl/*": ["./app/*"],
+      "*": ["./types/*"]
     },
+    "rootDir": ".",
     "types": [
-      "ember-source/types",
+      "@ember-intl/vite/virtual",
       "@embroider/core/virtual",
       "@glint/ember-tsc/types",
-      "vite/client",
-      "@ember-intl/vite/virtual"
+      "@types/qunit",
+      "ember-source/types",
+      "vite/client"
     ]
   },
   "include": ["app/**/*", "tests/**/*", "types/**/*", "vite.config.mts"]

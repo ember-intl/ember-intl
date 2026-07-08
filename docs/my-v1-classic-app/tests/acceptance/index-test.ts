@@ -5,7 +5,7 @@ import {
 } from 'my-v1-classic-app/tests/helpers';
 import { module, test } from 'qunit';
 
-function getGlobalLang(): string | null {
+function getGlobalLang(): null | string {
   return document.querySelector('html')!.getAttribute('lang');
 }
 

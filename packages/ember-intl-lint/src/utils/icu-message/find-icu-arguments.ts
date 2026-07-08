@@ -44,6 +44,9 @@ export function findIcuArguments(message: string): IcuArguments {
   } catch (error) {
     throw new Error(
       `Unable to parse \`${message}\` (${(error as Error).message})`,
+      {
+        cause: error,
+      },
     );
   }
 }

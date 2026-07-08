@@ -1,21 +1,20 @@
 {
   "extends": "@shared-configs/typescript/ember-addon",
   "compilerOptions": {
-    "baseUrl": ".",
     "declaration": false,
     "declarationMap": false,
     "emitDeclarationOnly": false,
     "paths": {
-      "dummy/tests/*": ["tests/*"],
-      "dummy/*": ["tests/dummy/app/*", "app/*"],
-      "my-v1-addon": ["addon"],
-      "my-v1-addon/*": ["addon/*"],
-      "my-v1-addon/test-support": ["addon-test-support"],
-      "my-v1-addon/test-support/*": ["addon-test-support/*"],
-      "*": ["types/*"]
+      "dummy/tests/*": ["./tests/*"],
+      "dummy/*": ["./tests/dummy/app/*"],
+      "my-v1-addon": ["./addon"],
+      "my-v1-addon/*": ["./addon/*"],
+      "my-v1-addon/test-support": ["./addon-test-support"],
+      "my-v1-addon/test-support/*": ["./addon-test-support/*"],
+      "*": ["./types/*"]
     },
     "rootDir": ".",
-    "types": ["ember-source/types", "@glint/ember-tsc/types"]
+    "types": ["@glint/ember-tsc/types", "ember-source/types"]
   },
   "include": [
     "addon/**/*",

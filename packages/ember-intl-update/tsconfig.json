@@ -2,7 +2,9 @@
   "extends": "@shared-configs/typescript/node",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "dist-for-testing"
+    "outDir": "dist-for-testing",
+    "rootDir": ".",
+    "types": ["@types/node", "@types/yargs"]
   },
   "include": ["bin", "src", "tests"],
   "exclude": ["src/blueprints", "tests/fixtures"]

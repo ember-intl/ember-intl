@@ -3,7 +3,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import { setLocale } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 
-function getGlobalLang(): string | null {
+function getGlobalLang(): null | string {
   return document.querySelector('html')!.getAttribute('lang');
 }
 
