@@ -2,7 +2,7 @@ import { visit } from '@ember/test-helpers';
 import { selectLocale, setupApplicationTest } from 'my-v2-app/tests/helpers';
 import { module, test } from 'qunit';
 
-function getGlobalLang(): string | null {
+function getGlobalLang(): null | string {
   return document.querySelector('html')!.getAttribute('lang');
 }
 

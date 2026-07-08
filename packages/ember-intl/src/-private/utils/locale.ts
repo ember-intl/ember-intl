@@ -20,7 +20,7 @@ export function convertToString(locale: string | string[]): string {
   return locale;
 }
 
-type MaybeLocale = string[] | string | null | undefined;
+type MaybeLocale = null | string | string[] | undefined;
 
 /**
  * @private

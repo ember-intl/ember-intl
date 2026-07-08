@@ -5,7 +5,7 @@ import {
 } from 'my-v2-app-with-namespace-from-folders/tests/helpers';
 import { module, test } from 'qunit';
 
-function getGlobalLang(): string | null {
+function getGlobalLang(): null | string {
   return document.querySelector('html')!.getAttribute('lang');
 }
 

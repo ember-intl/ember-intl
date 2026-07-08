@@ -132,7 +132,7 @@ export default class IntlService extends Service {
   }
 
   formatDate(
-    value: FormatDateParameters[0] | undefined | null,
+    value: FormatDateParameters[0] | null | undefined,
     options?: FormatDateParameters[1] & {
       locale?: string;
     },
@@ -147,8 +147,8 @@ export default class IntlService extends Service {
   }
 
   formatDateRange(
-    from: FormatDateRangeParameters[0] | undefined | null,
-    to: FormatDateRangeParameters[1] | undefined | null,
+    from: FormatDateRangeParameters[0] | null | undefined,
+    to: FormatDateRangeParameters[1] | null | undefined,
     options?: FormatDateRangeParameters[2] & {
       locale?: string;
     },
@@ -167,7 +167,7 @@ export default class IntlService extends Service {
   }
 
   formatDisplayName(
-    value: FormatDisplayNameParameters[0] | undefined | null,
+    value: FormatDisplayNameParameters[0] | null | undefined,
     options: FormatDisplayNameParameters[1] & {
       locale?: string;
     },
@@ -182,7 +182,7 @@ export default class IntlService extends Service {
   }
 
   formatList(
-    value: FormatListParameters[0] | undefined | null,
+    value: FormatListParameters[0] | null | undefined,
     options?: FormatListParameters[1] & {
       locale?: string;
     },
@@ -197,7 +197,7 @@ export default class IntlService extends Service {
   }
 
   formatMessage(
-    value: FormatMessageParameters[0] | string | undefined | null,
+    value: FormatMessageParameters[0] | null | string | undefined,
     options?: FormatMessageParameters[1] & {
       htmlSafe?: boolean;
       locale?: string;
@@ -232,7 +232,7 @@ export default class IntlService extends Service {
   }
 
   formatNumber(
-    value: FormatNumberParameters[0] | undefined | null,
+    value: FormatNumberParameters[0] | null | undefined,
     options?: FormatNumberParameters[1] & {
       locale?: string;
     },
@@ -247,7 +247,7 @@ export default class IntlService extends Service {
   }
 
   formatRelativeTime(
-    value: FormatRelativeTimeParameters[0] | undefined | null,
+    value: FormatRelativeTimeParameters[0] | null | undefined,
     options?: FormatRelativeTimeParameters[2] & {
       locale?: string;
       unit?: FormatRelativeTimeParameters[1];
@@ -263,7 +263,7 @@ export default class IntlService extends Service {
   }
 
   formatTime(
-    value: FormatTimeParameters[0] | undefined | null,
+    value: FormatTimeParameters[0] | null | undefined,
     options?: FormatTimeParameters[1] & {
       locale?: string;
     },

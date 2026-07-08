@@ -5,7 +5,7 @@
 declare const config: {
   APP: Record<string, unknown>;
   environment: string;
-  locationType: 'history' | 'hash' | 'none';
+  locationType: 'hash' | 'history' | 'none';
   modulePrefix: string;
   podModulePrefix: string;
   rootURL: string;

@@ -11,7 +11,7 @@ export default ComponentFromV1EngineComponent;
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ComponentFromV1Engine: typeof ComponentFromV1EngineComponent;
     'component-from-v1-engine': typeof ComponentFromV1EngineComponent;
+    ComponentFromV1Engine: typeof ComponentFromV1EngineComponent;
   }
 }

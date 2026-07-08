@@ -2,7 +2,7 @@ import type { Config, UserConfig } from '../../types/index.js';
 
 export function mergeConfigs(
   config: Config,
-  userConfig: UserConfig | undefined,
+  userConfig: undefined | UserConfig,
 ): Config {
   if (userConfig === undefined) {
     return config;

@@ -10,7 +10,7 @@ type Options = TParameters[1];
 interface TSignature {
   Args: {
     Named?: Options;
-    Positional: [Key] | [Key, Options];
+    Positional: [Key, Options] | [Key];
   };
   Return: string;
 }

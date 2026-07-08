@@ -7,7 +7,7 @@ import { getDefaultConfig } from './get-default-config.js';
 
 type BuildOption = keyof Config['buildOptions'];
 
-function validateConfig(userConfig: UserConfig | undefined): void {
+function validateConfig(userConfig: undefined | UserConfig): void {
   if (userConfig === undefined) {
     return;
   }
@@ -29,7 +29,7 @@ function validateConfig(userConfig: UserConfig | undefined): void {
 
 export async function getUserConfig(
   projectRoot: string,
-): Promise<UserConfig | undefined> {
+): Promise<undefined | UserConfig> {
   try {
     const configFilePath = findUserConfig(projectRoot);
 
@@ -40,7 +40,7 @@ export async function getUserConfig(
     const fileURL = pathToFileURL(join(projectRoot, configFilePath));
 
     const { default: userConfig } = (await import(fileURL.pathname)) as {
-      default: UserConfig | undefined;
+      default: undefined | UserConfig;
     };
 
     validateConfig(userConfig);
@@ -49,6 +49,9 @@ export async function getUserConfig(
   } catch (error) {
     throw new Error(
       `ERROR: Unable to read the config file. (${(error as Error).message})`,
+      {
+        cause: error,
+      },
     );
   }
 }
