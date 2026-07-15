@@ -35,7 +35,7 @@ export function findTranslationFiles(
   });
 
   // App's translations take precedence
-  const translationsDir = normalize(buildOptions.inputPath);
+  const translationsDir = normalize(buildOptions.translationsDir);
 
   const filePaths = findFiles(getPattern(translationsDir), {
     projectRoot,
