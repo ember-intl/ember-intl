@@ -11,9 +11,9 @@ const findEngine = require('./lib/utils/ember-engine');
 
 const defaultBuildOptions = {
   fallbackLocale: undefined,
-  inputPath: 'translations',
+  namespaceKeysByDir: false,
   publicOnly: false,
-  wrapTranslationsWithNamespace: false,
+  translationsDir: 'translations',
 };
 
 module.exports = {
@@ -77,12 +77,12 @@ module.exports = {
   },
 
   getTranslationTree({ mergeTranslationFiles, outputPath }) {
-    const { fallbackLocale, inputPath, wrapTranslationsWithNamespace } =
+    const { fallbackLocale, namespaceKeysByDir, translationsDir } =
       this.buildOptions;
 
     const [translationTree, addonsWithTranslations] = buildTranslationTree(
       this.project,
-      inputPath,
+      translationsDir,
       this.treeGenerator,
     );
 
@@ -90,8 +90,8 @@ module.exports = {
       addonsWithTranslations,
       fallbackLocale,
       mergeTranslationFiles,
+      namespaceKeysByDir,
       outputPath,
-      wrapTranslationsWithNamespace,
     });
   },
 
@@ -106,16 +106,56 @@ module.exports = {
     }
 
     const userConfig = require(configFile)(environment);
-    const buildOptions = Object.keys(defaultBuildOptions);
+    const buildOptions = new Set([
+      ...Object.keys(defaultBuildOptions),
+      'fallbackLocale',
+      'inputPath',
+      'publicOnly',
+      'wrapTranslationsWithNamespace',
+    ]);
 
     for (const [buildOption, value] of Object.entries(userConfig)) {
-      if (!buildOptions.includes(buildOption)) {
+      if (!buildOptions.has(buildOption)) {
         throw new Error(
           `ERROR: Unable to read \`config/ember-intl.js\`. (unknown build option: ${buildOption})`,
         );
       }
 
-      config[buildOption] = value;
+      switch (buildOption) {
+        case 'inputPath': {
+          console.log(
+            'WARNING: `inputPath` will be replaced by `translationsDir` in @ember-intl/v1-compat@2.0.0. You can rename the key now to ease migration.',
+          );
+
+          config['translationsDir'] = value;
+
+          break;
+        }
+
+        case 'publicOnly': {
+          console.log(
+            'WARNING: `publicOnly` will be derived from `namespaceKeysByDir` (currently called `wrapTranslationsWithNamespace`) in @ember-intl/v1-compat@2.0.0. You do not need to take any action.',
+          );
+
+          config['publicOnly'] = value;
+
+          break;
+        }
+
+        case 'wrapTranslationsWithNamespace': {
+          console.log(
+            'WARNING: `wrapTranslationsWithNamespace` will be replaced by `namespaceKeysByDir` in @ember-intl/v1-compat@2.0.0. You can rename the key now to ease migration.',
+          );
+
+          config['namespaceKeysByDir'] = value;
+
+          break;
+        }
+
+        default: {
+          config[buildOption] = value;
+        }
+      }
     }
 
     return config;

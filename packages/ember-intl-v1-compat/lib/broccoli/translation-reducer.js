@@ -112,11 +112,11 @@ class TranslationReducer extends CachingWriter {
         return accumulator;
       }
 
-      if (this.options.wrapTranslationsWithNamespace === true) {
+      if (this.options.namespaceKeysByDir === true) {
         translationObject = namespaceKeys(translationObject, {
           addonNames: this.options.addonsWithTranslations,
           filePath,
-          inputPath: this.inputPaths[0],
+          translationsDir: this.inputPaths[0],
         });
       }
 

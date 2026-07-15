@@ -57,7 +57,7 @@ function processAddons(addons, options) {
   });
 }
 
-function buildTranslationTree(project, inputPath, treeGenerator) {
+function buildTranslationTree(project, translationsDir, treeGenerator) {
   const addonsWithTranslations = [];
   const translationTrees = [];
   const trees = [];
@@ -77,7 +77,7 @@ function buildTranslationTree(project, inputPath, treeGenerator) {
     );
   }
 
-  const projectTranslations = join(project.root, inputPath);
+  const projectTranslations = join(project.root, translationsDir);
 
   if (existsSync(projectTranslations)) {
     // Funnel so that non-translation files (e.g. a `.gitkeep` used to keep

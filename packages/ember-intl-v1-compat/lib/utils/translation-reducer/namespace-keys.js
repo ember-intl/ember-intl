@@ -7,13 +7,10 @@ const { dirname, normalize, sep } = require('node:path');
  * then `translationObject` will have `foo.bar.baz` instead.
  */
 function namespaceKeys(translations, data) {
-  const { addonNames, filePath, inputPath } = data;
+  const { addonNames, filePath, translationsDir } = data;
 
-  const normalizedFilePath = normalize(filePath);
-  const normalizedInputPath = normalize(inputPath);
-
-  const folderPath = dirname(normalizedFilePath).replace(
-    normalizedInputPath,
+  const folderPath = dirname(normalize(filePath)).replace(
+    normalize(translationsDir),
     '',
   );
 
