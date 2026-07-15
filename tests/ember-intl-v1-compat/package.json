@@ -30,8 +30,8 @@
     "@types/node": "^20.19.43",
     "broccoli-test-helper": "^2.0.0",
     "concurrently": "^10.0.3",
-    "eslint": "^10.6.0",
-    "prettier": "^3.9.4",
+    "eslint": "^10.7.0",
+    "prettier": "^3.9.5",
     "typescript": "^6.0.3"
   },
   "engines": {
