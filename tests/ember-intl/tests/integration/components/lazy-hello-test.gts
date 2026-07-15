@@ -1,4 +1,4 @@
-import { render } from '@ember/test-helpers';
+import { getDeprecations, render } from '@ember/test-helpers';
 import { addTranslations, setupIntl, t } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import LazyHello from 'test-app-for-ember-intl/components/lazy-hello';
@@ -30,6 +30,16 @@ module('Integration | Component | lazy-hello', function (hooks) {
           t('lazy-hello.message', { name: 'Zoey' }),
           'We can write assertions against the test helper t().',
         );
+
+      const deprecationMessages = getDeprecations().map(
+        ({ message }) => message,
+      );
+
+      assert.true(
+        deprecationMessages.includes(
+          'The test helper t will be removed to encourage writing strong assertions. If possible, load translations in tests and always pass the string that you expect to see to hasText and includesText.',
+        ),
+      );
     });
 
     test('Translations are loaded after the component is rendered', async function (assert) {
