@@ -7,8 +7,8 @@ const options: Options = {
     addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'translations',
     },
   },
   projectRoot: 'tmp/my-v2-app-with-namespace-from-folders',

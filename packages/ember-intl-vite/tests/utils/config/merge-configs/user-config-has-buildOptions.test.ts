@@ -9,8 +9,8 @@ test('utils | config | merge-configs > user config has buildOptions', function (
   const userConfig = {
     buildOptions: {
       fallbackLocale: 'en-us',
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
     },
   };
 
@@ -20,8 +20,8 @@ test('utils | config | merge-configs > user config has buildOptions', function (
     addonPaths: [],
     buildOptions: {
       fallbackLocale: 'en-us',
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
     },
   });
 });

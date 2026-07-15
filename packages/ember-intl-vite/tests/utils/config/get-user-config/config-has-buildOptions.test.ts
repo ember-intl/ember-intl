@@ -8,8 +8,8 @@ test('utils | config | get-user-config > config has buildOptions', async functio
       `export default {`,
       `  buildOptions: {`,
       `    fallbackLocale: 'en-us',`,
-      `    inputPath: 'public/assets/translations',`,
-      `    wrapTranslationsWithNamespace: true,`,
+      `    namespaceKeysByDir: true,`,
+      `    translationsDir: 'public/assets/translations',`,
       `  },`,
       `};`,
       ``,
@@ -17,7 +17,7 @@ test('utils | config | get-user-config > config has buildOptions', async functio
   };
 
   const projectRoot =
-    'tmp/utils/config/get-user-config/config-has-buildOptions-inputPath';
+    'tmp/utils/config/get-user-config/config-has-buildOptions-translationsDir';
 
   loadFixture(inputProject, { projectRoot });
 
@@ -26,8 +26,8 @@ test('utils | config | get-user-config > config has buildOptions', async functio
   assert.deepStrictEqual(userConfig, {
     buildOptions: {
       fallbackLocale: 'en-us',
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
     },
   });
 });

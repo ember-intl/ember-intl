@@ -12,8 +12,8 @@ test('utils | config | get-user-config > config has all options', async function
       `  ],`,
       `  buildOptions: {`,
       `    fallbackLocale: 'en-us',`,
-      `    inputPath: 'public/assets/translations',`,
-      `    wrapTranslationsWithNamespace: true,`,
+      `    namespaceKeysByDir: true,`,
+      `    translationsDir: 'public/assets/translations',`,
       `  },`,
       `  lintRules: {`,
       `    'no-missing-keys': {`,
@@ -36,8 +36,8 @@ test('utils | config | get-user-config > config has all options', async function
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     buildOptions: {
       fallbackLocale: 'en-us',
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
     },
     lintRules: {
       'no-missing-keys': {
