@@ -5,8 +5,8 @@ type Config = {
 
 type ConfigBuildOptions = {
   fallbackLocale: string | undefined;
-  inputPath: string;
-  wrapTranslationsWithNamespace: boolean;
+  namespaceKeysByDir: boolean;
+  translationsDir: string;
 };
 
 type ConfigLintRules = Record<string, boolean | Record<string, unknown>>;
@@ -53,6 +53,17 @@ type UserConfig = Partial<{
   lintRules: Partial<ConfigLintRules>;
 }>;
 
+type UserConfigV1 = Partial<{
+  addonPaths: string[];
+  buildOptions: Partial<
+    ConfigBuildOptions & {
+      inputPath: string;
+      wrapTranslationsWithNamespace: boolean;
+    }
+  >;
+  lintRules: Partial<ConfigLintRules>;
+}>;
+
 export type {
   Config,
   Locale,
@@ -65,4 +76,5 @@ export type {
   TranslationMessage,
   TranslationObject,
   UserConfig,
+  UserConfigV1,
 };

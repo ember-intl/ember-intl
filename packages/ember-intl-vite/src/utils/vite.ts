@@ -24,7 +24,7 @@ export function isTranslationFile(filePath: string, options: Options): boolean {
     ...addonPaths.map((addonPath) => {
       return join(projectRoot, addonPath, 'translations');
     }),
-    join(projectRoot, buildOptions.inputPath),
+    join(projectRoot, buildOptions.translationsDir),
   ];
 
   return foldersToWatch.some((folder) => filePath.startsWith(folder));
