@@ -27,7 +27,7 @@ test('lib | broccoli | translation-reducer | mergeTranslations > edge case (fold
 
   const outputNode = new TranslationReducer([projectRoot], {
     addonsWithTranslations: [],
-    wrapTranslationsWithNamespace: true,
+    namespaceKeysByDir: true,
   });
 
   // @ts-expect-error: Incorrect type

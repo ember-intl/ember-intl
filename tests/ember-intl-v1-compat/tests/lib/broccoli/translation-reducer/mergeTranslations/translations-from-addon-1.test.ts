@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { assert, loadFixture, normalizeFile, test } from '@codemod-utils/tests';
 import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer.js';
 
-test('lib | broccoli | translation-reducer | mergeTranslations > translations from addon (wrapTranslationsWithNamespace is false)', function () {
+test('lib | broccoli | translation-reducer | mergeTranslations > translations from addon (namespaceKeysByDir is false)', function () {
   const inputProject = {
     '__ember-intl-addon__': {
       'my-v1-addon': {

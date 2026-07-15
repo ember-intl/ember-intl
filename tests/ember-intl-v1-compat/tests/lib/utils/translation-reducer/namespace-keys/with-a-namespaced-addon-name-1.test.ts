@@ -18,7 +18,7 @@ test('lib | utils | translation-reducer | namespace-keys > with a namespaced add
   let output = namespaceKeys(translations, {
     addonNames: ['my-addon'],
     filePath: join(translationsDir, '__ember-intl-addon__/my-addon/en-us.json'),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {});
@@ -30,7 +30,7 @@ test('lib | utils | translation-reducer | namespace-keys > with a namespaced add
       translationsDir,
       '__ember-intl-addon__/my-addon/components/hello/en-us.json',
     ),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {
@@ -46,7 +46,7 @@ test('lib | utils | translation-reducer | namespace-keys > with a namespaced add
       translationsDir,
       '__ember-intl-addon__/@my-org/my-addon/en-us.json',
     ),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {});

@@ -18,7 +18,7 @@ test('lib | utils | translation-reducer | namespace-keys > without a namespaced 
   let output = namespaceKeys(translations, {
     addonNames: ['my-addon'],
     filePath: join(translationsDir, 'my-addon/en-us.json'),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {
@@ -29,7 +29,7 @@ test('lib | utils | translation-reducer | namespace-keys > without a namespaced 
   output = namespaceKeys(translations, {
     addonNames: ['my-addon'],
     filePath: join(translationsDir, 'my-addon/components/hello/en-us.json'),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {
@@ -44,7 +44,7 @@ test('lib | utils | translation-reducer | namespace-keys > without a namespaced 
   output = namespaceKeys(translations, {
     addonNames: ['@my-org/my-addon'],
     filePath: join(translationsDir, '@my-org/my-addon/en-us.json'),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {

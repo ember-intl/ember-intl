@@ -27,7 +27,7 @@ test('lib | utils | translation-reducer | namespace-keys > base case (2)', funct
   const output = namespaceKeys(translations, {
     addonNames: [],
     filePath: join(projectRoot, 'translations/en-us.json'),
-    inputPath: translationsDir,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {
