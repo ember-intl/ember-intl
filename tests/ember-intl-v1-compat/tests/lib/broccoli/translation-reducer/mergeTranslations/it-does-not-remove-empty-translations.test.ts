@@ -21,17 +21,16 @@ test('lib | broccoli | translation-reducer | mergeTranslations > it does not rem
   };
 
   const projectRoot = 'tmp/broccoli_merge_trees';
-  const inputPath = join(projectRoot);
 
   loadFixture(inputProject, { projectRoot });
 
-  const outputNode = new TranslationReducer(inputPath, {
+  const outputNode = new TranslationReducer([projectRoot], {
     addonsWithTranslations: [],
   });
 
   const translations = outputNode.mergeTranslations([
-    join(inputPath, 'de-de.yaml'),
-    join(inputPath, 'en-us.yaml'),
+    join(projectRoot, 'de-de.yaml'),
+    join(projectRoot, 'en-us.yaml'),
   ]);
 
   assert.deepStrictEqual(translations, {

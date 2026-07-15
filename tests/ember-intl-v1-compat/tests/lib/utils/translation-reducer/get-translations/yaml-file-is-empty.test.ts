@@ -19,15 +19,15 @@ test('lib | utils | translation-reducer | get-translations > yaml file is empty'
   };
 
   const projectRoot = 'tmp/my-app';
-  const inputPath = join(projectRoot, 'translations');
+  const translationsDir = join(projectRoot, 'translations');
 
   loadFixture(inputProject, { projectRoot });
 
-  let output = getTranslations(join(inputPath, 'en-us.yaml'));
+  let output = getTranslations(join(translationsDir, 'en-us.yaml'));
 
   assert.deepStrictEqual(output, {});
 
-  output = getTranslations(join(inputPath, 'es.yaml'));
+  output = getTranslations(join(translationsDir, 'es.yaml'));
 
   assert.deepStrictEqual(output, {});
 });

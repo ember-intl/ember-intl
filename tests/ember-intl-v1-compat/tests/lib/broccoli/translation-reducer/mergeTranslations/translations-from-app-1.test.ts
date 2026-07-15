@@ -19,18 +19,17 @@ test('lib | broccoli | translation-reducer | mergeTranslations > translations fr
   };
 
   const projectRoot = 'tmp/broccoli_merge_trees';
-  const inputPath = join(projectRoot);
 
   loadFixture(inputProject, { projectRoot });
 
-  const outputNode = new TranslationReducer(inputPath, {
+  const outputNode = new TranslationReducer([projectRoot], {
     addonsWithTranslations: [],
   });
 
   let translations = outputNode.mergeTranslations([
-    join(inputPath, 'components/hello/en-us.yaml'),
-    join(inputPath, 'components/en-us.yaml'),
-    join(inputPath, 'en-us.yaml'),
+    join(projectRoot, 'components/hello/en-us.yaml'),
+    join(projectRoot, 'components/en-us.yaml'),
+    join(projectRoot, 'en-us.yaml'),
   ]);
 
   assert.deepStrictEqual(translations, {
@@ -43,9 +42,9 @@ test('lib | broccoli | translation-reducer | mergeTranslations > translations fr
 
   // Check order dependency
   translations = outputNode.mergeTranslations([
-    join(inputPath, 'en-us.yaml'),
-    join(inputPath, 'components/en-us.yaml'),
-    join(inputPath, 'components/hello/en-us.yaml'),
+    join(projectRoot, 'en-us.yaml'),
+    join(projectRoot, 'components/en-us.yaml'),
+    join(projectRoot, 'components/hello/en-us.yaml'),
   ]);
 
   assert.deepStrictEqual(translations, {

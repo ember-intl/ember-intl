@@ -21,11 +21,11 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
   };
 
   const projectRoot = 'tmp/my-app';
-  const inputPath = join(projectRoot, 'translations');
+  const translationsDir = join(projectRoot, 'translations');
 
   loadFixture(inputProject, { projectRoot });
 
-  let output = getTranslations(join(inputPath, 'de-de.yml'));
+  let output = getTranslations(join(translationsDir, 'de-de.yml'));
 
   assert.deepStrictEqual(output, {
     nested: {
@@ -34,7 +34,7 @@ test('lib | utils | translation-reducer | get-translations > file extension is .
     'no-arguments': 'Hallo Welt!',
   });
 
-  output = getTranslations(join(inputPath, 'es.yml'));
+  output = getTranslations(join(translationsDir, 'es.yml'));
 
   assert.deepStrictEqual(output, {});
 });

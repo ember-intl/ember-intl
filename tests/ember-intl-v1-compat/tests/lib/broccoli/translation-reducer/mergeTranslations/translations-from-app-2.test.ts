@@ -19,22 +19,21 @@ test('lib | broccoli | translation-reducer | mergeTranslations > translations fr
   };
 
   const projectRoot = 'tmp/broccoli_merge_trees';
-  const inputPath = join(projectRoot);
 
   loadFixture(inputProject, { projectRoot });
 
-  const outputNode = new TranslationReducer(inputPath, {
+  const outputNode = new TranslationReducer([projectRoot], {
     addonsWithTranslations: [],
     wrapTranslationsWithNamespace: true,
   });
 
   // @ts-expect-error: Incorrect type
-  outputNode.inputPaths = [inputPath];
+  outputNode.inputPaths = [projectRoot];
 
   const translations = outputNode.mergeTranslations([
-    join(inputPath, 'components/hello/en-us.yaml'),
-    join(inputPath, 'components/en-us.yaml'),
-    join(inputPath, 'en-us.yaml'),
+    join(projectRoot, 'components/hello/en-us.yaml'),
+    join(projectRoot, 'components/en-us.yaml'),
+    join(projectRoot, 'en-us.yaml'),
   ]);
 
   assert.deepStrictEqual(translations, {

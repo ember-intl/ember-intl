@@ -23,25 +23,24 @@ test('lib | broccoli | translation-reducer | mergeTranslations > translations fr
   };
 
   const projectRoot = 'tmp/broccoli_merge_trees';
-  const inputPath = join(projectRoot);
 
   loadFixture(inputProject, { projectRoot });
 
-  const outputNode = new TranslationReducer(inputPath, {
+  const outputNode = new TranslationReducer([projectRoot], {
     addonsWithTranslations: ['my-v1-addon'],
     wrapTranslationsWithNamespace: true,
   });
 
   // @ts-expect-error: Incorrect type
-  outputNode.inputPaths = [inputPath];
+  outputNode.inputPaths = [projectRoot];
 
   const translations = outputNode.mergeTranslations([
     join(
-      inputPath,
+      projectRoot,
       '__ember-intl-addon__/my-v1-addon/components/hello/en-us.yaml',
     ),
-    join(inputPath, '__ember-intl-addon__/my-v1-addon/components/en-us.yaml'),
-    join(inputPath, '__ember-intl-addon__/my-v1-addon/en-us.yaml'),
+    join(projectRoot, '__ember-intl-addon__/my-v1-addon/components/en-us.yaml'),
+    join(projectRoot, '__ember-intl-addon__/my-v1-addon/en-us.yaml'),
   ]);
 
   assert.deepStrictEqual(translations, {
