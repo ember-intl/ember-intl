@@ -16,8 +16,8 @@ test('utils | config | merge-configs > user config has addonPaths', function () 
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
+      namespaceKeysByDir: false,
+      translationsDir: 'translations',
     },
   });
 });

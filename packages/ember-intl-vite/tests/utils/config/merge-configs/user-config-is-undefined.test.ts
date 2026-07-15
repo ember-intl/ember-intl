@@ -12,8 +12,8 @@ test('utils | config | merge-configs > user config is undefined', function () {
     addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
+      namespaceKeysByDir: false,
+      translationsDir: 'translations',
     },
   });
 });

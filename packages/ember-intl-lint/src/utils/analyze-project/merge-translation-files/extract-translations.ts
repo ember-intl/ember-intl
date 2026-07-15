@@ -13,12 +13,12 @@ import type {
 
 type Data = {
   filePath: TranslationFilePath;
-  namespaceKeys: boolean;
+  namespaceKeysByDir: boolean;
   translationsDir: string;
 };
 
 function getPrefix(data: Data): string {
-  if (!data.namespaceKeys) {
+  if (!data.namespaceKeysByDir) {
     return '';
   }
 

@@ -1,5 +1,5 @@
 export default {
   buildOptions: {
-    wrapTranslationsWithNamespace: true,
+    namespaceKeysByDir: true,
   },
 };

@@ -21,8 +21,8 @@ test('utils | config | merge-configs > user config has lintRules', function () {
     addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
+      namespaceKeysByDir: false,
+      translationsDir: 'translations',
     },
     lintRules: {
       'no-inconsistent-messages': true,

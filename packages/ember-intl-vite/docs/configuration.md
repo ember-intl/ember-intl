@@ -19,8 +19,8 @@ type UserConfig = Partial<{
   addonPaths: string[];
   buildOptions: Partial<{
     fallbackLocale: string | undefined;
-    inputPath: string;
-    wrapTranslationsWithNamespace: boolean;
+    namespaceKeysByDir: boolean;
+    translationsDir: string;
   }>;
   lintRules: Partial<Record<LintRule, boolean | LintOptions>>;
 }>;

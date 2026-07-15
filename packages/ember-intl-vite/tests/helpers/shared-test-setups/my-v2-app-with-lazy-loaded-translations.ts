@@ -7,8 +7,8 @@ const options: Options = {
     addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: false,
+      namespaceKeysByDir: false,
+      translationsDir: 'public/assets/translations',
     },
   },
   projectRoot: 'tmp/my-v2-app-with-lazy-loaded-translations',

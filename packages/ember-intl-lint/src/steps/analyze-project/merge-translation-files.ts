@@ -26,7 +26,7 @@ export function mergeTranslationFiles(
 
     const translationObject = extractTranslations(file, {
       filePath,
-      namespaceKeys: buildOptions.wrapTranslationsWithNamespace,
+      namespaceKeysByDir: buildOptions.namespaceKeysByDir,
       translationsDir: data.translationsDir,
     });
 

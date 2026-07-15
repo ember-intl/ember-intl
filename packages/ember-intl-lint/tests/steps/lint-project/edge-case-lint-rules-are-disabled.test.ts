@@ -11,8 +11,8 @@ test('steps | lint-project > edge-case (lint rules are disabled)', async functio
       addonPaths: [],
       buildOptions: {
         fallbackLocale: undefined,
-        inputPath: 'translations',
-        wrapTranslationsWithNamespace: false,
+        namespaceKeysByDir: false,
+        translationsDir: 'translations',
       },
       lintRules: {
         'no-inconsistent-messages': false,

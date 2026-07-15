@@ -17,7 +17,7 @@ test('utils | analyze-project | merge-translation-files | extract-translations |
 
   const translationObject = extractTranslations(file, {
     filePath: 'translations/en-us.json',
-    namespaceKeys: true,
+    namespaceKeysByDir: true,
     translationsDir: 'translations',
   });
 

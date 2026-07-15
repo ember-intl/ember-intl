@@ -10,8 +10,8 @@ test('utils | config | merge-configs > user config has all options', function ()
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     buildOptions: {
       fallbackLocale: 'en-us',
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
     },
     lintRules: {
       'no-missing-keys': {
@@ -27,8 +27,8 @@ test('utils | config | merge-configs > user config has all options', function ()
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     buildOptions: {
       fallbackLocale: 'en-us',
-      inputPath: 'public/assets/translations',
-      wrapTranslationsWithNamespace: true,
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
     },
     lintRules: {
       'no-inconsistent-messages': true,
