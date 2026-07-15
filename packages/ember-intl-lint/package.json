@@ -45,7 +45,7 @@
     "@codemod-utils/files": "^4.1.0",
     "@codemod-utils/package-json": "^4.1.0",
     "@codemod-utils/threads": "^1.1.0",
-    "@formatjs/icu-messageformat-parser": "^3.5.12",
+    "@formatjs/icu-messageformat-parser": "^3.5.14",
     "js-yaml": "^5.2.1",
     "yargs": "^18.0.0"
   },
@@ -59,8 +59,8 @@
     "@types/node": "^20.19.43",
     "@types/yargs": "^17.0.35",
     "concurrently": "^10.0.3",
-    "eslint": "^10.6.0",
-    "prettier": "^3.9.4",
+    "eslint": "^10.7.0",
+    "prettier": "^3.9.5",
     "typescript": "^6.0.3"
   },
   "engines": {
