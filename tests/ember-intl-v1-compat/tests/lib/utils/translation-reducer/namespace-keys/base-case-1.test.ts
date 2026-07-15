@@ -11,14 +11,14 @@ test('lib | utils | translation-reducer | namespace-keys > base case (1)', funct
   };
 
   const projectRoot = 'tmp/my-app';
-  const inputPath = join(projectRoot, 'translations');
+  const translationsDir = join(projectRoot, 'translations');
 
   loadFixture(inputProject, { projectRoot });
 
   const output = namespaceKeys(translations, {
     addonNames: [],
     filePath: join(projectRoot, 'translations/en-us.json'),
-    inputPath,
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {});

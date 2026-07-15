@@ -11,14 +11,14 @@ test('lib | utils | translation-reducer | namespace-keys > without a namespaced 
   };
 
   const projectRoot = 'tmp/my-app';
-  const inputPath = join(projectRoot, 'translations');
+  const translationsDir = join(projectRoot, 'translations');
 
   loadFixture(inputProject, { projectRoot });
 
   let output = namespaceKeys(translations, {
     addonNames: ['my-addon'],
-    filePath: join(inputPath, 'my-addon/en-us.json'),
-    inputPath,
+    filePath: join(translationsDir, 'my-addon/en-us.json'),
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {
@@ -28,8 +28,8 @@ test('lib | utils | translation-reducer | namespace-keys > without a namespaced 
   // Check nested translations
   output = namespaceKeys(translations, {
     addonNames: ['my-addon'],
-    filePath: join(inputPath, 'my-addon/components/hello/en-us.json'),
-    inputPath,
+    filePath: join(translationsDir, 'my-addon/components/hello/en-us.json'),
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {
@@ -43,8 +43,8 @@ test('lib | utils | translation-reducer | namespace-keys > without a namespaced 
   // Check scoped packages
   output = namespaceKeys(translations, {
     addonNames: ['@my-org/my-addon'],
-    filePath: join(inputPath, '@my-org/my-addon/en-us.json'),
-    inputPath,
+    filePath: join(translationsDir, '@my-org/my-addon/en-us.json'),
+    translationsDir,
   });
 
   assert.deepStrictEqual(output, {

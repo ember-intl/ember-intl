@@ -1,5 +1,3 @@
-import { join } from 'node:path';
-
 import { assert, loadFixture, test } from '@codemod-utils/tests';
 import TranslationReducer from '@ember-intl/v1-compat/lib/broccoli/translation-reducer.js';
 
@@ -12,11 +10,10 @@ test('lib | broccoli | translation-reducer | outputPath > it works', async funct
   };
 
   const projectRoot = 'tmp/broccoli_merge_trees';
-  const inputPath = join(projectRoot);
 
   loadFixture(inputProject, { projectRoot });
 
-  const outputNode = new TranslationReducer(inputPath, {
+  const outputNode = new TranslationReducer([projectRoot], {
     outputPath: 'custom/output/path',
   });
 
