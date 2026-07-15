@@ -1,5 +1,11 @@
 # @ember-intl/v1-compat
 
+## 1.3.0
+
+### Minor Changes
+
+- [#2170](https://github.com/ember-intl/ember-intl/pull/2170) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/v1-compat) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.2
 
 ### Patch Changes

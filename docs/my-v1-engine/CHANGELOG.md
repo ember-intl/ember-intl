@@ -1,5 +1,13 @@
 # my-v1-engine
 
+## 1.3.1
+
+### Patch Changes
+
+- [#2173](https://github.com/ember-intl/ember-intl/pull/2173) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2171](https://github.com/ember-intl/ember-intl/pull/2171) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/lint) ([@ijlee2](https://github.com/ijlee2))
+- [#2170](https://github.com/ember-intl/ember-intl/pull/2170) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/v1-compat) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.0
 
 ### Minor Changes

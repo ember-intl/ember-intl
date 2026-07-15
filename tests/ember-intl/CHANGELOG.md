@@ -1,5 +1,14 @@
 # test-app-for-ember-intl
 
+## 2.4.1
+
+### Patch Changes
+
+- [#2173](https://github.com/ember-intl/ember-intl/pull/2173) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2172](https://github.com/ember-intl/ember-intl/pull/2172) Deprecated test helper t ([@ijlee2](https://github.com/ijlee2))
+- [#2171](https://github.com/ember-intl/ember-intl/pull/2171) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/vite) ([@ijlee2](https://github.com/ijlee2))
+- [#2171](https://github.com/ember-intl/ember-intl/pull/2171) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/lint) ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.4.0
 
 ### Minor Changes

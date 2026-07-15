@@ -1,5 +1,12 @@
 # test-ember-intl-v1-compat
 
+## 1.5.1
+
+### Patch Changes
+
+- [#2173](https://github.com/ember-intl/ember-intl/pull/2173) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2170](https://github.com/ember-intl/ember-intl/pull/2170) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/v1-compat) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.5.0
 
 ### Minor Changes

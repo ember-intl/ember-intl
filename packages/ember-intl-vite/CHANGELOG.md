@@ -1,5 +1,15 @@
 # @ember-intl/vite
 
+## 1.3.0
+
+### Minor Changes
+
+- [#2171](https://github.com/ember-intl/ember-intl/pull/2171) Supported buildOptions keys namespaceKeysByDir and translationsDir (@ember-intl/vite) ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2173](https://github.com/ember-intl/ember-intl/pull/2173) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.2.0
 
 ### Minor Changes
