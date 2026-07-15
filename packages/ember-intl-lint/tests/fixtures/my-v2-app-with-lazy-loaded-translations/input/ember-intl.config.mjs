@@ -1,5 +1,5 @@
 export default {
   buildOptions: {
-    inputPath: 'public/assets/translations',
+    translationsDir: 'public/assets/translations',
   },
 };

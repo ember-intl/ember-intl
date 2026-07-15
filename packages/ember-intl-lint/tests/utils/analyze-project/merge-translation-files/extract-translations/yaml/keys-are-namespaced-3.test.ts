@@ -21,7 +21,7 @@ test('utils | analyze-project | merge-translation-files | extract-translations |
 
   const translationObject = extractTranslations(file, {
     filePath: 'translations/components/products/product/en-us.yaml',
-    namespaceKeys: true,
+    namespaceKeysByDir: true,
     translationsDir: 'translations',
   });
 

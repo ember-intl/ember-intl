@@ -10,8 +10,8 @@ const options: Options = {
     addonPaths: [],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
+      namespaceKeysByDir: false,
+      translationsDir: 'translations',
     },
     lintRules: {
       'no-inconsistent-messages': true,

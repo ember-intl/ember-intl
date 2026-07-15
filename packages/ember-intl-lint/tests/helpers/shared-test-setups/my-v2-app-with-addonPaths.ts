@@ -10,8 +10,8 @@ const options: Options = {
     addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
     buildOptions: {
       fallbackLocale: undefined,
-      inputPath: 'translations',
-      wrapTranslationsWithNamespace: false,
+      namespaceKeysByDir: false,
+      translationsDir: 'translations',
     },
     lintRules: {
       'no-inconsistent-messages': true,
