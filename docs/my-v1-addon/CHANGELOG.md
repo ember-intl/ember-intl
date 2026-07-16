@@ -1,5 +1,11 @@
 # my-v1-addon
 
+## 1.4.0
+
+### Minor Changes
+
+- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # docs-app-for-ember-intl
 
+## 2.10.0
+
+### Minor Changes
+
+- [#2178](https://github.com/ember-intl/ember-intl/pull/2178) Documented removal of test helper `t` in v9 ([@ijlee2](https://github.com/ijlee2))
+- [#2178](https://github.com/ember-intl/ember-intl/pull/2178) Documented minimum requirements for v9 ([@ijlee2](https://github.com/ijlee2))
+- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.9.1
 
 ### Patch Changes

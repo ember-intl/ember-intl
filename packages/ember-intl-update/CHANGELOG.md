@@ -1,5 +1,11 @@
 # @ember-intl/update
 
+## 2.0.0-beta.1
+
+### Major Changes
+
+- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.0.0
 
 ### Major Changes

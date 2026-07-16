@@ -1,5 +1,13 @@
 # ember-intl
 
+## 9.0.0-beta.1
+
+### Major Changes
+
+- [#2177](https://github.com/ember-intl/ember-intl/pull/2177) Dropped support for `@ember/test-helpers@v4` ([@ijlee2](https://github.com/ijlee2))
+- [#2176](https://github.com/ember-intl/ember-intl/pull/2176) Removed test helper `t` ([@ijlee2](https://github.com/ijlee2))
+- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
 ## 8.4.0
 
 ### Minor Changes

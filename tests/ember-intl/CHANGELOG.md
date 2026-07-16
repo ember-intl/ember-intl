@@ -1,5 +1,12 @@
 # test-app-for-ember-intl
 
+## 2.5.0
+
+### Minor Changes
+
+- [#2176](https://github.com/ember-intl/ember-intl/pull/2176) Removed test helper `t` ([@ijlee2](https://github.com/ijlee2))
+- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.4.1
 
 ### Patch Changes
