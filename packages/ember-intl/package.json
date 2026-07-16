@@ -81,7 +81,7 @@
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@ember/test-helpers": "^4.0.0 || ^5.0.0"
+    "@ember/test-helpers": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "@ember/test-helpers": {
