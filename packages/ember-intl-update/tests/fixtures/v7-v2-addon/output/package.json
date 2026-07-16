@@ -11,8 +11,8 @@
     "translations"
   ],
   "devDependencies": {
-    "@ember-intl/lint": "^1.1.3",
-    "ember-intl": "^8.2.5",
+    "@ember-intl/lint": "^1.5.0",
+    "ember-intl": "^8.4.0",
     "ember-source": "~6.8.0"
   },
   "ember": {
