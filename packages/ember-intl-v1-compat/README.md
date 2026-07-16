@@ -20,7 +20,7 @@ pnpm add -D @ember-intl/v1-compat
 
 - `ember-intl` v8.0.0 or above
 - Ember.js v4.12 or above
-- Node.js v20 or above
+- Node.js v22 or above
 
 
 ## Contributing

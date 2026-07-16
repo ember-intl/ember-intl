@@ -72,7 +72,7 @@
     "vite": "^8.1.4"
   },
   "engines": {
-    "node": "20.* || >= 22"
+    "node": "22.* || >= 24"
   },
   "ember": {
     "edition": "octane"

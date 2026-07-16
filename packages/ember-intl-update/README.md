@@ -50,7 +50,7 @@ pnpm build
 ## Compatibility
 
 - `ember-intl` v6.1.0 or above
-- Node.js v20 or above
+- Node.js v22 or above
 
 
 ## Contributing

@@ -1,5 +1,5 @@
 {
-  "extends": ["@tsconfig/node20/tsconfig", "@tsconfig/strictest/tsconfig"],
+  "extends": ["@tsconfig/node22/tsconfig", "@tsconfig/strictest/tsconfig"],
   "compilerOptions": {
     "module": "nodenext",
     "moduleResolution": "nodenext",
