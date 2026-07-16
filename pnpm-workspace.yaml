@@ -1,9 +1,32 @@
+allowBuilds:
+  core-js: false
+  unrs-resolver: false
+
+autoInstallPeers: false
+
+minimumReleaseAgeExclude:
+  - "@codemod-utils/*"
+  - "@ijlee2-frontend-configs/*"
+
+overrides:
+  ember-cli-htmlbars: ^7.0.1
+  vite: ^8.1.4
+
 packages:
-  - configs/**
-  - docs/**
-  - packages/ember-intl
-  - packages/ember-intl-lint
-  - packages/ember-intl-update
-  - packages/ember-intl-v1-compat
-  - packages/ember-intl-vite
-  - tests/**
+  - "configs/**"
+  - "docs/**"
+  - "packages/ember-intl"
+  - "packages/ember-intl-lint"
+  - "packages/ember-intl-update"
+  - "packages/ember-intl-v1-compat"
+  - "packages/ember-intl-vite"
+  - "tests/**"
+
+publicHoistPattern:
+  - "*eslint*"
+  - "*prettier*"
+  - "*stylelint*"
+
+resolvePeersFromWorkspaceRoot: false
+
+verifyDepsBeforeRun: "warn"
