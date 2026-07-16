@@ -1,10 +1,6 @@
 import { render, resetOnerror, setupOnerror } from '@ember/test-helpers';
 import { t } from 'ember-intl';
-import {
-  addTranslations,
-  setupIntl,
-  t as testHelperT,
-} from 'ember-intl/test-support';
+import { addTranslations, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
 
@@ -84,9 +80,7 @@ module(
         </template>,
       );
 
-      assert
-        .dom('[data-test-output="1"]')
-        .hasText(testHelperT('key.does.not.exist'));
+      assert.dom('[data-test-output="1"]').hasText('t:key.does.not.exist');
     });
   },
 );
