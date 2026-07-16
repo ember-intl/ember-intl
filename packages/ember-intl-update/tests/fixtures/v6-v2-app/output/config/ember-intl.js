@@ -3,7 +3,7 @@ module.exports = function () {
     errorOnNamedArgumentMismatch: true,
     errorOnMissingTranslations: true,
     fallbackLocale: 'en-us',
-    publicOnly: true,
+    publicOnly: false,
     wrapTranslationsWithNamespace: false,
   };
 };
