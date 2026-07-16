@@ -1,5 +1,5 @@
-import { getDeprecations, render } from '@ember/test-helpers';
-import { addTranslations, setupIntl, t } from 'ember-intl/test-support';
+import { render } from '@ember/test-helpers';
+import { addTranslations, setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import LazyHello from 'test-app-for-ember-intl/components/lazy-hello';
 import { setupRenderingTest } from 'test-app-for-ember-intl/tests/helpers';
@@ -25,21 +25,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .doesNotIncludeText(
           't:lazy-hello.message',
           'We should not see the missing-message string.',
-        )
-        .hasText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          'We can write assertions against the test helper t().',
         );
-
-      const deprecationMessages = getDeprecations().map(
-        ({ message }) => message,
-      );
-
-      assert.true(
-        deprecationMessages.includes(
-          'The test helper t will be removed to encourage writing strong assertions. If possible, load translations in tests and always pass the string that you expect to see to hasText and includesText.',
-        ),
-      );
     });
 
     test('Translations are loaded after the component is rendered', async function (assert) {
@@ -54,10 +40,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .hasText(
           't:lazy-hello.message',
           'Before translations are loaded, we should see the missing-message string.',
-        )
-        .hasText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          'Before translations are loaded, we can write assertions against the test helper t().',
         );
 
       await addTranslations('en-us', {
@@ -75,10 +57,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .doesNotIncludeText(
           't:lazy-hello.message',
           'After translations are loaded, we should not see the missing-message string.',
-        )
-        .hasText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          'After translations are loaded, we can write assertions against the test helper t().',
         );
     });
 
@@ -101,10 +79,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .hasText(
           't:lazy-hello.message',
           "Because we didn't add `await`, we still see the missing-message string.",
-        )
-        .doesNotIncludeText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          "Because we didn't add `await`, we no longer can write assertions against the test helper t().",
         );
     });
   });
@@ -127,10 +101,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .doesNotIncludeText(
           't:lazy-hello.message',
           'We should not see the missing-message string.',
-        )
-        .hasText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          'We can write assertions against the test helper t().',
         );
     });
 
@@ -146,10 +116,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .hasText(
           't:lazy-hello.message',
           'Before translations are loaded, we should see the missing-message string.',
-        )
-        .hasText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          'Before translations are loaded, we can write assertions against the test helper t().',
         );
 
       await addTranslations('de-de', {
@@ -167,10 +133,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .doesNotIncludeText(
           't:lazy-hello.message',
           'After translations are loaded, we should not see the missing-message string.',
-        )
-        .hasText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          'After translations are loaded, we can write assertions against the test helper t().',
         );
     });
 
@@ -193,10 +155,6 @@ module('Integration | Component | lazy-hello', function (hooks) {
         .hasText(
           't:lazy-hello.message',
           "Because we didn't add `await`, we still see the missing-message string.",
-        )
-        .doesNotIncludeText(
-          t('lazy-hello.message', { name: 'Zoey' }),
-          "Because we didn't add `await`, we no longer can write assertions against the test helper t().",
         );
     });
   });
