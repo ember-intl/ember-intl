@@ -143,6 +143,10 @@ export const sidebar: DefaultTheme.Sidebar = [
     collapsed: true,
     items: [
       {
+        link: '/docs/migration/v9',
+        text: 'From v8 to v9',
+      },
+      {
         link: '/docs/migration/v8',
         text: 'From v7 to v8',
       },
