@@ -12,10 +12,10 @@ import {
 import type { Options, Todos } from '../../../types/index.js';
 
 const latestVersions = {
-  '@ember-intl/lint': '^1.1.3',
-  '@ember-intl/v1-compat': '^1.1.0',
-  '@ember-intl/vite': '^1.0.1',
-  'ember-intl': '^8.2.5',
+  '@ember-intl/lint': '^1.5.0',
+  '@ember-intl/v1-compat': '^1.3.0',
+  '@ember-intl/vite': '^1.3.0',
+  'ember-intl': '^8.4.0',
 } as const;
 
 function updateDependencies(packageJson: PackageJson, options: Options): void {
