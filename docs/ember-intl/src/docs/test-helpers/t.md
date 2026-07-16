@@ -2,7 +2,7 @@
 
 > [!CAUTION]
 > 
-> Do not use this test helper. See [Alternatives](#alternatives) below.
+> Do not use this test helper. It will be removed in `ember-intl@9.0.0`. See [Alternatives](#alternatives) below.
 
 Returns what the `intl` service's `t` returns.
 

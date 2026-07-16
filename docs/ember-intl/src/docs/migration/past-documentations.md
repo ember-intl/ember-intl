@@ -2,6 +2,7 @@
 
 These links may provide help if you are on an older version of `ember-intl`.
 
+- [8.x](https://github.com/ember-intl/ember-intl/tree/8.4.0/docs/ember-intl/src/docs)
 - [7.x](https://github.com/ember-intl/ember-intl/tree/v7.5.0/docs/ember-intl/app/templates/docs)
 - [6.x](https://github.com/ember-intl/ember-intl/tree/v6.5.6/docs/ember-intl/app/templates/docs)
 - [5.x](https://github.com/ember-intl/ember-intl/tree/v5.7.0/tests/dummy/app/pods/docs)
