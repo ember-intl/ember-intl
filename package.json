@@ -30,15 +30,9 @@
     "sort-package-json": "^4.0.0",
     "update-workspace-root-version": "^3.0.4"
   },
-  "packageManager": "pnpm@10.34.5",
+  "packageManager": "pnpm@11.13.1",
   "engines": {
     "node": "22.* || >= 24",
-    "pnpm": ">= 10"
-  },
-  "pnpm": {
-    "overrides": {
-      "ember-cli-htmlbars": "^7.0.1",
-      "vite": "^8.1.4"
-    }
+    "pnpm": ">= 11"
   }
 }
