@@ -27,7 +27,7 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
-    "@types/node": "^20.19.43",
+    "@types/node": "^22.20.1",
     "broccoli-test-helper": "^2.0.0",
     "concurrently": "^10.0.3",
     "eslint": "^10.7.0",
@@ -35,6 +35,6 @@
     "typescript": "^6.0.3"
   },
   "engines": {
-    "node": "20.* || >= 22"
+    "node": "22.* || >= 24"
   }
 }

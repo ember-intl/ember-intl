@@ -113,7 +113,7 @@ Optional: [Create a configuration file](./docs/configuration.md).
 ## Compatibility
 
 - `ember-intl` v8.0.0 or above
-- Node.js v20 or above
+- Node.js v22 or above
 
 
 ## Contributing

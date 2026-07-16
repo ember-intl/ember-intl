@@ -49,7 +49,7 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
-    "@types/node": "^20.19.43",
+    "@types/node": "^22.20.1",
     "@types/yargs": "^17.0.35",
     "concurrently": "^10.0.3",
     "eslint": "^10.7.0",

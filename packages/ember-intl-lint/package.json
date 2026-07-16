@@ -56,7 +56,7 @@
     "@shared-configs/typescript": "workspace:*",
     "@sondr3/minitest": "^0.1.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.43",
+    "@types/node": "^22.20.1",
     "@types/yargs": "^17.0.35",
     "concurrently": "^10.0.3",
     "eslint": "^10.7.0",
@@ -64,6 +64,6 @@
     "typescript": "^6.0.3"
   },
   "engines": {
-    "node": "20.* || >= 22"
+    "node": "22.* || >= 24"
   }
 }
