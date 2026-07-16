@@ -1,5 +1,15 @@
 # @ember-intl/update
 
+## 1.0.0
+
+### Major Changes
+
+- [#2174](https://github.com/ember-intl/ember-intl/pull/2174) Marked stable release ([@ijlee2](https://github.com/ijlee2))
+
+### Minor Changes
+
+- [#2174](https://github.com/ember-intl/ember-intl/pull/2174) Updated latestVersions ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.5.0
 
 ### Minor Changes
