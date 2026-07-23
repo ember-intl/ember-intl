@@ -1,7 +1,7 @@
 export default {
   addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
   buildOptions: {
-    inputPath: 'public/assets/translations',
+    translationsDir: 'public/assets/translations',
   },
   lintRules: {
     'no-missing-keys': {

@@ -21,6 +21,10 @@ module.exports = function (/* environment */) {
 
 :::
 
+> [!CAUTION]
+> 
+> `publicOnly` will be removed in `ember-intl@9.0.0`. Use [bundleSeparately](./configuration-file#build-options-bundle-separately) instead.
+
 When you run `ember serve` or `ember build -prod`, you will find translations (as JSON) in `/dist/translations`.
 
 ```sh {:no-line-numbers}

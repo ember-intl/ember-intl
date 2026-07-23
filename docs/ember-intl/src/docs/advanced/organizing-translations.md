@@ -95,6 +95,10 @@ title: Willkommen bei ember-intl
 
 :::
 
+> [!CAUTION]
+> 
+> `wrapTranslationsWithNamespace` will be removed in `ember-intl@9.0.0`. Use [namespaceKeysByDir](./configuration-file#build-options-namespace-keys-by-dir) instead.
+
 > [!NOTE]
 > 
 > Spaces in a folder name are converted to underscores.

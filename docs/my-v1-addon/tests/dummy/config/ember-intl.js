@@ -1,5 +1,5 @@
 module.exports = function (/* environment */) {
   return {
-    inputPath: 'tests/dummy/translations',
+    translationsDir: 'tests/dummy/translations',
   };
 };

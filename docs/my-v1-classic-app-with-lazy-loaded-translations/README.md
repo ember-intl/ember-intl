@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-classic-app-with-lazy-loaded-translations` is an Ember app. We use it to check that `publicOnly: true` works on the classic build.
+`my-v1-classic-app-with-lazy-loaded-translations` is a classic Ember app. We use it to test `ember-intl` with lazily loaded translations.
 
 
 ## Local development

@@ -1,6 +1,6 @@
 module.exports = function (/* environment */) {
   return {
-    inputPath: 'public/assets/translations',
-    publicOnly: true,
+    bundleSeparately: true,
+    translationsDir: 'public/assets/translations',
   };
 };

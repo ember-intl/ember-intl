@@ -1,5 +1,5 @@
 module.exports = function (/* environment */) {
   return {
-    wrapTranslationsWithNamespace: true,
+    namespaceKeysByDir: true,
   };
 };

@@ -10,9 +10,9 @@ const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/ember-engine');
 
 const defaultBuildOptions = {
+  bundleSeparately: false,
   fallbackLocale: undefined,
   namespaceKeysByDir: false,
-  publicOnly: false,
   translationsDir: 'translations',
 };
 
@@ -46,7 +46,7 @@ module.exports = {
   treeForAddon(tree) {
     let trees = [tree];
 
-    if (!this.buildOptions.publicOnly) {
+    if (!this.buildOptions.bundleSeparately) {
       const translationTree = this.getTranslationTree({
         mergeTranslationFiles: true,
         outputPath: '',
@@ -64,7 +64,7 @@ module.exports = {
   treeForPublic() {
     let trees = [];
 
-    if (this.buildOptions.publicOnly) {
+    if (this.buildOptions.bundleSeparately) {
       const translationTree = this.getTranslationTree({
         mergeTranslationFiles: false,
         outputPath: 'translations',
@@ -106,13 +106,7 @@ module.exports = {
     }
 
     const userConfig = require(configFile)(environment);
-    const buildOptions = new Set([
-      ...Object.keys(defaultBuildOptions),
-      'fallbackLocale',
-      'inputPath',
-      'publicOnly',
-      'wrapTranslationsWithNamespace',
-    ]);
+    const buildOptions = new Set(Object.keys(defaultBuildOptions));
 
     for (const [buildOption, value] of Object.entries(userConfig)) {
       if (!buildOptions.has(buildOption)) {
@@ -121,41 +115,7 @@ module.exports = {
         );
       }
 
-      switch (buildOption) {
-        case 'inputPath': {
-          console.log(
-            'WARNING: `inputPath` will be replaced by `translationsDir` in @ember-intl/v1-compat@2.0.0. You can rename the key now to ease migration.',
-          );
-
-          config['translationsDir'] = value;
-
-          break;
-        }
-
-        case 'publicOnly': {
-          console.log(
-            'WARNING: `publicOnly` will be derived from `namespaceKeysByDir` (currently called `wrapTranslationsWithNamespace`) in @ember-intl/v1-compat@2.0.0. You do not need to take any action.',
-          );
-
-          config['publicOnly'] = value;
-
-          break;
-        }
-
-        case 'wrapTranslationsWithNamespace': {
-          console.log(
-            'WARNING: `wrapTranslationsWithNamespace` will be replaced by `namespaceKeysByDir` in @ember-intl/v1-compat@2.0.0. You can rename the key now to ease migration.',
-          );
-
-          config['namespaceKeysByDir'] = value;
-
-          break;
-        }
-
-        default: {
-          config[buildOption] = value;
-        }
-      }
+      config[buildOption] = value;
     }
 
     return config;

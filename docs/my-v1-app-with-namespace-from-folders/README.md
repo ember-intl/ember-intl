@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-app-with-namespace-from-folders` is an Embroider app built with Webpack. We use it to test `ember-intl` with the build option `wrapTranslationsWithNamespace`.
+`my-v1-app-with-namespace-from-folders` is an Embroider app built with Webpack. We use it to test `ember-intl` with the build option `namespaceKeysByDir`.
 
 
 ## Local development

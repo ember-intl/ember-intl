@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-classic-app` is an Ember app. We use it to check that `ember-intl` works on the classic build.
+`my-v1-classic-app` is a classic Ember app. We use it to check that `ember-intl` works on the classic build.
 
 
 ## Local development

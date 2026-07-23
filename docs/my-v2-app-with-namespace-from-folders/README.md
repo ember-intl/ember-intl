@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v2-app-with-namespace-from-folders` is an Embroider app built with Vite. We use it to test `ember-intl` with the build option `wrapTranslationsWithNamespace`.
+`my-v2-app-with-namespace-from-folders` is an Embroider app built with Vite. We use it to test `ember-intl` with the build option `namespaceKeysByDir`.
 
 
 ## Local development

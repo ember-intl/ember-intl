@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v1-app-with-lazy-loaded-translations` is an Embroider app built with Webpack. We use it to test `ember-intl` with the build option `publicOnly`.
+`my-v1-app-with-lazy-loaded-translations` is an Embroider app built with Webpack. We use it to test `ember-intl` with lazily loaded translations.
 
 
 ## Local development

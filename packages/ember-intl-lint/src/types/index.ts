@@ -82,17 +82,6 @@ type UserConfig = Partial<{
   lintRules: Partial<ConfigLintRules>;
 }>;
 
-type UserConfigV1 = Partial<{
-  addonPaths: string[];
-  buildOptions: Partial<
-    ConfigBuildOptions & {
-      inputPath: string;
-      wrapTranslationsWithNamespace: boolean;
-    }
-  >;
-  lintRules: Partial<ConfigLintRules>;
-}>;
-
 export type {
   CodemodOptions,
   Config,
@@ -112,5 +101,4 @@ export type {
   TranslationMessage,
   TranslationObject,
   UserConfig,
-  UserConfigV1,
 };

@@ -1,6 +1,6 @@
 export default {
   buildOptions: {
-    wrapTranslationsWithNamespace: true,
+    namespaceKeysByDir: true,
   },
   lintRules: {
     'no-missing-keys': {
