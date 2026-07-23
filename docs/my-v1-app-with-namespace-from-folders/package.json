@@ -2,7 +2,7 @@
   "name": "my-v1-app-with-namespace-from-folders",
   "version": "1.4.0",
   "private": true,
-  "description": "A Webpack app to test wrapTranslationsWithNamespace",
+  "description": "A Webpack app to test namespaceKeysByDir",
   "keywords": [],
   "repository": {
     "type": "git",

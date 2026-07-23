@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`my-v2-app-with-lazy-loaded-translations` is an Embroider app built with Vite. We use it to test `ember-intl` with the build option `publicOnly`.
+`my-v2-app-with-lazy-loaded-translations` is an Embroider app built with Vite. We use it to test `ember-intl` with lazily loaded translations.
 
 
 ## Local development
