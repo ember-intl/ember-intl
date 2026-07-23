@@ -70,23 +70,42 @@ The `buildOptions` object assumes the following shape and default values.
 
 ```ts [Signature]
 type BuildOptions = {
+  bundleSeparately: boolean;  // Only for `@ember-intl/v1-compat`
   fallbackLocale: string | undefined;
-  inputPath: string;
-  publicOnly: boolean;  // Only for `@ember-intl/v1-compat`
-  wrapTranslationsWithNamespace: boolean;
+  namespaceKeysByDir: boolean;
+  translationsDir: string;
 };
 ```
 
 ```ts [Default values]
 const defaultBuildOptions = {
+  bundleSeparately: false,  // Only for `@ember-intl/v1-compat`
   fallbackLocale: undefined,
-  inputPath: 'translations',
-  publicOnly: false,  // Only for `@ember-intl/v1-compat`
-  wrapTranslationsWithNamespace: false,
+  namespaceKeysByDir: false,
+  translationsDir: 'translations',
 };
 ```
 
 :::
+
+
+### bundleSeparately <Badge text="Only for v1 apps" type="warning" /> {#build-options-bundle-separately}
+
+Prevents the translations from being bundled with the application code. This enables lazily loading the translations.
+
+::: code-group
+
+```js [config/ember-intl.js]{3}
+module.exports = function (/* environment */) {
+  return {
+    bundleSeparately: true,
+  };
+};
+```
+
+:::
+
+For more information, see [Advanced - Lazy-loading translations](./lazy-loading-translations).
 
 
 ### fallbackLocale {#build-options-fallback-locale}
@@ -108,6 +127,39 @@ export default {
 
 ### inputPath {#build-options-input-path}
 
+> [!CAUTION]
+> 
+> `inputPath` will be removed in `ember-intl@9.0.0`. Use [translationsDir](#build-options-translations-dir) instead.
+
+
+### namespaceKeysByDir {#build-options-namespace-keys-by-dir}
+
+Derives the key's namespace from the folder path. Can be used to separate translations by where they are used in the source directory.
+
+::: code-group
+
+```js [ember-intl.config.mjs]{3}
+export default {
+  buildOptions: {
+    namespaceKeysByDir: true,
+  },
+};
+```
+
+:::
+
+For more information, see [Advanced - Organizing translations](./organizing-translations).
+
+
+### publicOnly <Badge text="Only for v1 apps" type="warning" /> {#build-options-public-only}
+
+> [!CAUTION]
+> 
+> `publicOnly` will be removed in `ember-intl@9.0.0`. Use [bundleSeparately](#build-options-bundle-separately) instead.
+
+
+### translationsDir {#build-options-translations-dir}
+
 Specifies where translations live relative to the project root.
 
 For example, if an app has stored them in `public/assets/translations`:
@@ -117,7 +169,7 @@ For example, if an app has stored them in `public/assets/translations`:
 ```js [ember-intl.config.mjs]{3}
 export default {
   buildOptions: {
-    inputPath: 'public/assets/translations',
+    translationsDir: 'public/assets/translations',
   },
 };
 ```
@@ -131,50 +183,19 @@ If a v1 addon's `dummy` app provides its own translations (these aren't publishe
 ```js [tests/dummy/config/ember-intl.js]{3}
 module.exports = function (/* environment */) {
   return {
-    inputPath: 'tests/dummy/translations',
+    translationsDir: 'tests/dummy/translations',
   };
 };
 ```
 
 :::
-
-
-### publicOnly <Badge text="Only for v1 apps" type="warning" /> {#build-options-public-only}
-
-Prevents the translations from being bundled with the application code. This enables lazily loading the translations.
-
-::: code-group
-
-```js [config/ember-intl.js]{3}
-module.exports = function (/* environment */) {
-  return {
-    publicOnly: true,
-  };
-};
-```
-
-:::
-
-For more information, see [Advanced - Lazy-loading translations](./lazy-loading-translations).
 
 
 ### wrapTranslationsWithNamespace {#build-options-wrap-translations-with-namespace}
 
-Derives the key's namespace from the folder path. Can be used to separate translations by where they are used in the source directory.
-
-::: code-group
-
-```js [ember-intl.config.mjs]{3}
-export default {
-  buildOptions: {
-    wrapTranslationsWithNamespace: true,
-  },
-};
-```
-
-:::
-
-For more information, see [Advanced - Organizing translations](./organizing-translations).
+> [!CAUTION]
+> 
+> `wrapTranslationsWithNamespace` will be removed in `ember-intl@9.0.0`. Use [namespaceKeysByDir](#build-options-namespace-keys-by-dir) instead.
 
 
 ## lintRules <Badge text="Only for @ember-intl/lint" type="warning" /> {#lint-rules}
