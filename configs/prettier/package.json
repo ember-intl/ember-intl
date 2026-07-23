@@ -21,10 +21,10 @@
     "@ijlee2-frontend-configs/prettier": "^3.3.1"
   },
   "devDependencies": {
-    "prettier": "^3.9.5"
+    "prettier": "^3.9.6"
   },
   "peerDependencies": {
-    "prettier": "^3.9.5"
+    "prettier": "^3.9.6"
   },
   "peerDependenciesMeta": {
     "prettier": {

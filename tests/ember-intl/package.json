@@ -66,11 +66,11 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~7.1.0",
     "eslint": "^10.7.0",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",
-    "vite": "^8.1.4"
+    "vite": "^8.1.5"
   },
   "dependenciesMeta": {
     "ember-intl": {

@@ -69,7 +69,7 @@
     "loader.js": "^4.7.0",
     "my-v1-addon": "workspace:*",
     "my-v2-addon": "workspace:*",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",

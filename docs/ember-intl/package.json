@@ -39,13 +39,13 @@
     "ember-intl": "workspace:*",
     "ember-source": "~7.1.0",
     "eslint": "^10.7.0",
-    "oxc-minify": "^0.140.0",
-    "prettier": "^3.9.5",
-    "stylelint": "^17.14.0",
+    "oxc-minify": "^0.141.0",
+    "prettier": "^3.9.6",
+    "stylelint": "^17.14.1",
     "typescript": "^6.0.3",
-    "vite": "^8.1.4",
+    "vite": "^8.1.5",
     "vite-plugin-ember": "^0.8.1",
-    "vitepress": "^2.0.0-alpha.17"
+    "vitepress": "^2.0.0-alpha.18"
   },
   "engines": {
     "node": "22.* || >= 24"

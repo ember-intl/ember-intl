@@ -25,12 +25,12 @@
     "test": "pnpm --filter \"*\" test"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^2.31.1",
     "@ijlee2-frontend-configs/changesets": "^2.1.1",
     "sort-package-json": "^4.0.0",
     "update-workspace-root-version": "^3.0.4"
   },
-  "packageManager": "pnpm@11.13.1",
+  "packageManager": "pnpm@11.16.0",
   "engines": {
     "node": "22.* || >= 24",
     "pnpm": ">= 11"

@@ -56,9 +56,9 @@
     "@types/node": "^22.20.1",
     "concurrently": "^10.0.3",
     "eslint": "^10.7.0",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "typescript": "^6.0.3",
-    "vite": "^8.1.4"
+    "vite": "^8.1.5"
   },
   "engines": {
     "node": "22.* || >= 24"
