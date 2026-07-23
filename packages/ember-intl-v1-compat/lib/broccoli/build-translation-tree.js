@@ -1,6 +1,6 @@
 const { existsSync } = require('node:fs');
 const { join } = require('node:path');
-const funnel = require('broccoli-funnel');
+const { default: funnel } = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
 const { WatchedDir } = require('broccoli-source');
 
