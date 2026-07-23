@@ -1,5 +1,11 @@
 # ember-intl
 
+## 9.0.0-beta.2
+
+### Patch Changes
+
+- [#2180](https://github.com/ember-intl/ember-intl/pull/2180) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 9.0.0-beta.1
 
 ### Major Changes
