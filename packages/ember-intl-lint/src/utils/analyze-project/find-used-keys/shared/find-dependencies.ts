@@ -88,9 +88,12 @@ export function findDependencies(file: string): Dependencies {
       const importPath = path.node.source.value;
       const specifiers = path.node.specifiers;
 
+      if (specifiers === undefined) {
+        return false;
+      }
+
       switch (importPath) {
         case 'ember-intl': {
-          // @ts-expect-error: Incorrect type
           const t = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportSpecifier' &&
@@ -99,11 +102,9 @@ export function findDependencies(file: string): Dependencies {
           });
 
           if (t) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.t = t.local.name as string;
+            dependencies.helpers.t = t.local!.name as string;
           }
 
-          // @ts-expect-error: Incorrect type
           const tKey = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportSpecifier' &&
@@ -112,44 +113,37 @@ export function findDependencies(file: string): Dependencies {
           });
 
           if (tKey) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.tKey = tKey.local.name as string;
+            dependencies.helpers.tKey = tKey.local!.name as string;
           }
 
           break;
         }
 
         case 'ember-intl/helpers/t': {
-          // @ts-expect-error: Incorrect type
           const t = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportDefaultSpecifier' &&
-              // @ts-expect-error: Incorrect type
-              specifier.local.type === 'Identifier'
+              specifier.local!.type === 'Identifier'
             );
           });
 
           if (t) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.t = t.local.name as string;
+            dependencies.helpers.t = t.local!.name as string;
           }
 
           break;
         }
 
         case 'ember-intl/helpers/t-key': {
-          // @ts-expect-error: Incorrect type
           const tKey = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportDefaultSpecifier' &&
-              // @ts-expect-error: Incorrect type
-              specifier.local.type === 'Identifier'
+              specifier.local!.type === 'Identifier'
             );
           });
 
           if (tKey) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.tKey = tKey.local.name as string;
+            dependencies.helpers.tKey = tKey.local!.name as string;
           }
 
           break;
