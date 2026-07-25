@@ -2,7 +2,7 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { inGjsGts } from '../../../../../src/utils/analyze-project/find-used-keys/index.js';
 
-test('utils | analyze-project | find-used-keys | in-gjs > component (4)', function () {
+test('utils | analyze-project | find-used-keys | in-gjs > edge case (2)', function () {
   const file = normalizeFile([
     `import { service } from '@ember/service';`,
     `import Component from '@glimmer/component';`,

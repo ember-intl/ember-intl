@@ -38,36 +38,40 @@ export function findDependencies(file: string): Dependencies {
         case 'CallExpression': {
           if (
             decorator.expression.callee.type !== 'Identifier' ||
-            decorator.expression.callee.name !== 'service'
+            decorator.expression.callee.name !== 'service' ||
+            path.node.key.type !== 'Identifier'
           ) {
             return false;
           }
 
-          const param = decorator.expression.arguments[0]!;
+          const param = decorator.expression.arguments[0];
 
-          if (param.type !== 'StringLiteral' || param.value !== 'intl') {
+          if (param === undefined) {
+            if (path.node.key.name === 'intl') {
+              dependencies.services.intl = path.node.key.name;
+            }
+
             return false;
           }
 
-          // @ts-expect-error: Incorrect type
-          dependencies.services.intl = path.node.key.name as string;
+          if (param.type === 'StringLiteral' && param.value === 'intl') {
+            dependencies.services.intl = path.node.key.name;
+          }
 
           break;
         }
 
         case 'Identifier': {
-          if (decorator.expression.name !== 'service') {
-            return false;
-          }
-
           if (
-            path.node.key.type !== 'Identifier' ||
-            path.node.key.name !== 'intl'
+            decorator.expression.name !== 'service' ||
+            path.node.key.type !== 'Identifier'
           ) {
             return false;
           }
 
-          dependencies.services.intl = path.node.key.name;
+          if (path.node.key.name === 'intl') {
+            dependencies.services.intl = path.node.key.name;
+          }
 
           break;
         }
@@ -84,9 +88,12 @@ export function findDependencies(file: string): Dependencies {
       const importPath = path.node.source.value;
       const specifiers = path.node.specifiers;
 
+      if (specifiers === undefined) {
+        return false;
+      }
+
       switch (importPath) {
         case 'ember-intl': {
-          // @ts-expect-error: Incorrect type
           const t = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportSpecifier' &&
@@ -95,11 +102,9 @@ export function findDependencies(file: string): Dependencies {
           });
 
           if (t) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.t = t.local.name as string;
+            dependencies.helpers.t = t.local!.name as string;
           }
 
-          // @ts-expect-error: Incorrect type
           const tKey = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportSpecifier' &&
@@ -108,44 +113,37 @@ export function findDependencies(file: string): Dependencies {
           });
 
           if (tKey) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.tKey = tKey.local.name as string;
+            dependencies.helpers.tKey = tKey.local!.name as string;
           }
 
           break;
         }
 
         case 'ember-intl/helpers/t': {
-          // @ts-expect-error: Incorrect type
           const t = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportDefaultSpecifier' &&
-              // @ts-expect-error: Incorrect type
-              specifier.local.type === 'Identifier'
+              specifier.local!.type === 'Identifier'
             );
           });
 
           if (t) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.t = t.local.name as string;
+            dependencies.helpers.t = t.local!.name as string;
           }
 
           break;
         }
 
         case 'ember-intl/helpers/t-key': {
-          // @ts-expect-error: Incorrect type
           const tKey = specifiers.find((specifier) => {
             return (
               specifier.type === 'ImportDefaultSpecifier' &&
-              // @ts-expect-error: Incorrect type
-              specifier.local.type === 'Identifier'
+              specifier.local!.type === 'Identifier'
             );
           });
 
           if (tKey) {
-            // @ts-expect-error: Incorrect type
-            dependencies.helpers.tKey = tKey.local.name as string;
+            dependencies.helpers.tKey = tKey.local!.name as string;
           }
 
           break;
