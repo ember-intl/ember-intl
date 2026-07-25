@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 2.0.0-beta.3
+
+### Patch Changes
+
+- [#2182](https://github.com/ember-intl/ember-intl/pull/2182) Supported the syntax `@service()` ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0-beta.2
 
 ### Major Changes
