@@ -38,7 +38,8 @@ export function findDependencies(file: string): Dependencies {
         case 'CallExpression': {
           if (
             decorator.expression.callee.type !== 'Identifier' ||
-            decorator.expression.callee.name !== 'service'
+            decorator.expression.callee.name !== 'service' ||
+            path.node.key.type !== 'Identifier'
           ) {
             return false;
           }
@@ -46,41 +47,31 @@ export function findDependencies(file: string): Dependencies {
           const param = decorator.expression.arguments[0];
 
           if (param === undefined) {
-            if (
-              path.node.key.type !== 'Identifier' ||
-              path.node.key.name !== 'intl'
-            ) {
-              return false;
+            if (path.node.key.name === 'intl') {
+              dependencies.services.intl = path.node.key.name;
             }
 
+            return false;
+          }
+
+          if (param.type === 'StringLiteral' && param.value === 'intl') {
             dependencies.services.intl = path.node.key.name;
-
-            return false;
           }
-
-          if (param.type !== 'StringLiteral' || param.value !== 'intl') {
-            return false;
-          }
-
-          // @ts-expect-error: Incorrect type
-          dependencies.services.intl = path.node.key.name as string;
 
           break;
         }
 
         case 'Identifier': {
-          if (decorator.expression.name !== 'service') {
-            return false;
-          }
-
           if (
-            path.node.key.type !== 'Identifier' ||
-            path.node.key.name !== 'intl'
+            decorator.expression.name !== 'service' ||
+            path.node.key.type !== 'Identifier'
           ) {
             return false;
           }
 
-          dependencies.services.intl = path.node.key.name;
+          if (path.node.key.name === 'intl') {
+            dependencies.services.intl = path.node.key.name;
+          }
 
           break;
         }
