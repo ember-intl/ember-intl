@@ -43,7 +43,20 @@ export function findDependencies(file: string): Dependencies {
             return false;
           }
 
-          const param = decorator.expression.arguments[0]!;
+          const param = decorator.expression.arguments[0];
+
+          if (param === undefined) {
+            if (
+              path.node.key.type !== 'Identifier' ||
+              path.node.key.name !== 'intl'
+            ) {
+              return false;
+            }
+
+            dependencies.services.intl = path.node.key.name;
+
+            return false;
+          }
 
           if (param.type !== 'StringLiteral' || param.value !== 'intl') {
             return false;
