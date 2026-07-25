@@ -10,9 +10,9 @@ const TranslationReducer = require('./lib/broccoli/translation-reducer');
 const findEngine = require('./lib/utils/ember-engine');
 
 const defaultBuildOptions = {
+  bundleSeparately: false,
   fallbackLocale: undefined,
   namespaceKeysByDir: false,
-  publicOnly: false,
   translationsDir: 'translations',
 };
 
@@ -46,7 +46,7 @@ module.exports = {
   treeForAddon(tree) {
     let trees = [tree];
 
-    if (!this.buildOptions.publicOnly) {
+    if (!this.buildOptions.bundleSeparately) {
       const translationTree = this.getTranslationTree({
         mergeTranslationFiles: true,
         outputPath: '',
@@ -64,7 +64,7 @@ module.exports = {
   treeForPublic() {
     let trees = [];
 
-    if (this.buildOptions.publicOnly) {
+    if (this.buildOptions.bundleSeparately) {
       const translationTree = this.getTranslationTree({
         mergeTranslationFiles: false,
         outputPath: 'translations',
@@ -134,10 +134,10 @@ module.exports = {
 
         case 'publicOnly': {
           console.log(
-            'WARNING: `publicOnly` will be derived from `namespaceKeysByDir` (currently called `wrapTranslationsWithNamespace`) in @ember-intl/v1-compat@2.0.0. You do not need to take any action.',
+            'WARNING: `publicOnly` will be replaced by `bundleSeparately` in @ember-intl/v1-compat@2.0.0. You can rename the key now to ease migration.',
           );
 
-          config['publicOnly'] = value;
+          config['bundleSeparately'] = value;
 
           break;
         }
