@@ -1,5 +1,11 @@
 # @ember-intl/v1-compat
 
+## 1.3.1
+
+### Patch Changes
+
+- Supported buildOptions key bundleSeparately (backported #2179) ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.3.0
 
 ### Minor Changes
