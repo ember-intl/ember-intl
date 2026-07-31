@@ -37,7 +37,7 @@
     "ember-auto-import": "^2.13.1",
     "ember-cli-babel": "^8.3.1",
     "extend": "^3.0.2",
-    "js-yaml": "^5.2.1",
+    "js-yaml": "^5.2.2",
     "json-stable-stringify": "^1.3.0"
   },
   "devDependencies": {
@@ -50,20 +50,20 @@
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/testem": "workspace:*",
-    "concurrently": "^10.0.3",
+    "concurrently": "^10.0.4",
     "ember-cli": "~7.1.0",
     "ember-cli-htmlbars": "^7.0.1",
     "ember-load-initializers": "^3.0.1",
     "ember-qunit": "^9.1.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~7.1.0",
-    "eslint": "^10.7.0",
-    "globals": "^17.7.0",
+    "eslint": "^10.8.0",
+    "globals": "^17.8.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
-    "webpack": "^5.108.4"
+    "webpack": "^5.109.2"
   },
   "engines": {
     "node": "22.* || >= 24"

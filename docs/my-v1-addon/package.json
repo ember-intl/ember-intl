@@ -61,8 +61,8 @@
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^2.1.1",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/ember-tsc": "^1.8.12",
-    "@glint/template": "^1.7.8",
+    "@glint/ember-tsc": "^1.8.14",
+    "@glint/template": "^1.7.10",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
@@ -70,7 +70,7 @@
     "@shared-configs/typescript": "workspace:*",
     "@types/qunit": "^2.19.14",
     "broccoli-asset-rev": "^3.0.0",
-    "concurrently": "^10.0.3",
+    "concurrently": "^10.0.4",
     "ember-cli": "~6.12.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
@@ -80,13 +80,13 @@
     "ember-qunit": "^9.1.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
-    "eslint": "^10.7.0",
+    "eslint": "^10.8.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",
-    "webpack": "^5.108.4"
+    "webpack": "^5.109.2"
   },
   "peerDependencies": {
     "ember-intl": "workspace:*"

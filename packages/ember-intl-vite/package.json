@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@codemod-utils/files": "^4.1.0",
-    "js-yaml": "^5.2.1"
+    "js-yaml": "^5.2.2"
   },
   "devDependencies": {
     "@codemod-utils/tests": "^3.1.0",
@@ -54,8 +54,8 @@
     "@sondr3/minitest": "^0.1.2",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.20.1",
-    "concurrently": "^10.0.3",
-    "eslint": "^10.7.0",
+    "concurrently": "^10.0.4",
+    "eslint": "^10.8.0",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3",
     "vite": "^8.1.5"
