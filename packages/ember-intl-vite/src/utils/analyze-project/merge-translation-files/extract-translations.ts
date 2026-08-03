@@ -29,7 +29,7 @@ function getPrefix(data: Data): string {
     return '';
   }
 
-  const prefix = relativePath.replaceAll(sep, '.').replaceAll(' ', '_');
+  const prefix = relativePath.replaceAll(sep, '.');
 
   return `${prefix}.`;
 }
