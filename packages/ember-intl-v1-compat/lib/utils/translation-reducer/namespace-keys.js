@@ -39,7 +39,7 @@ function namespaceKeys(translations, data) {
   if (folderNames.length > 0) {
     for (const folderName of folderNames) {
       translations = {
-        [folderName.replaceAll(' ', '_')]: translations,
+        [folderName]: translations,
       };
     }
   }

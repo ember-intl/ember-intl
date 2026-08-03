@@ -39,7 +39,7 @@ test('lib | broccoli | translation-reducer | mergeTranslations > edge case (fold
 
   assert.deepStrictEqual(translations, {
     'en-us': {
-      __things_for__product_: {
+      '  things for  product ': {
         'card.learn-more.aria-label': 'Learn more about {productName}',
         'card.learn-more.label': 'Learn more',
         'details.add-to-cart': 'Add to Cart',
