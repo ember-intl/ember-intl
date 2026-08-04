@@ -60,7 +60,7 @@ module('Unit | Service | intl > t', function (hooks) {
           name: '<em>Tom</em>',
         })
         .toString(),
-      '<strong class="example">Hello, &lt;em&gt;Tom&lt;/em&gt;!</strong>',
+      '<strong class="example">Hello, <em>Tom</em>!</strong>',
     );
 
     assert.strictEqual(
@@ -70,7 +70,7 @@ module('Unit | Service | intl > t', function (hooks) {
           name: '<em>Tom</em>',
         })
         .toString(),
-      '<strong class="example">Hello, &lt;em&gt;Tom&lt;/em&gt;!</strong>',
+      '<strong class="example">Hello, <em>Tom</em>!</strong>',
     );
   });
 

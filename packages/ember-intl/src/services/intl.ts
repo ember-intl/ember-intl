@@ -29,7 +29,6 @@ import {
   formatRelativeTime,
   formatTime,
 } from '../-private/formatjs/index.ts';
-import { escapeFormatMessageOptions } from '../-private/utils/escape-format-message-options.ts';
 import { getHtmlElement } from '../-private/utils/get-html-element.ts';
 import {
   convertToArray,
@@ -214,11 +213,7 @@ export default class IntlService extends Service {
           };
 
     if (options?.htmlSafe) {
-      const output = formatMessage(
-        intlShape,
-        descriptor,
-        escapeFormatMessageOptions(options),
-      );
+      const output = formatMessage(intlShape, descriptor, options);
 
       return htmlSafe(output) as unknown as string;
     }
