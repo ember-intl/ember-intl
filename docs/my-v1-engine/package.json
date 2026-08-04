@@ -65,7 +65,7 @@
     "@glint/core": "1.5.2",
     "@glint/environment-ember-loose": "1.5.2",
     "@glint/environment-ember-template-imports": "1.5.2",
-    "@glint/template": "^1.7.10",
+    "@glint/template": "^1.8.0",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
