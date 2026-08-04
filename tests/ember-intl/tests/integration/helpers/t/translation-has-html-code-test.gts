@@ -1,4 +1,3 @@
-import { htmlSafe } from '@ember/template';
 import {
   render,
   type TestContext as BaseTestContext,
@@ -78,9 +77,7 @@ module(
     });
 
     test('we can pass an HTML code as argument', async function (this: TestContext, assert) {
-      this.name = htmlSafe(
-        `<span class="emphasize">Zoey</span>`,
-      ) as unknown as string;
+      this.name = `<span class="emphasize">Zoey</span>`;
 
       const self = this;
 
