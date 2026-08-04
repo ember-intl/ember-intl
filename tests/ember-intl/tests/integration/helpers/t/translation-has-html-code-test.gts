@@ -17,16 +17,12 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'de-de', {
-      royalty: {
-        message:
-          '<div class="message">Hallo, {name}! Du hast {points, number} Treuepunkte.</div>',
-      },
+      'royalty.message':
+        '<div class="message">Hallo, {name}! Du hast {points, number} Treuepunkte.</div>',
     });
     setupIntl(hooks, 'en-us', {
-      royalty: {
-        message:
-          '<div class="message">Hello, {name}! You have {points, number} royalty points.</div>',
-      },
+      'royalty.message':
+        '<div class="message">Hello, {name}! You have {points, number} royalty points.</div>',
     });
 
     hooks.beforeEach(function (this: TestContext) {

@@ -8,13 +8,16 @@ import type {
   TranslationJson,
   TranslationKey,
   TranslationMessage,
-  TranslationObject,
 } from '../../../types/index.js';
 
 type Data = {
   filePath: TranslationFilePath;
   namespaceKeysByDir: boolean;
   translationsDir: string;
+};
+
+type TranslationJsonRaw = {
+  [key: TranslationKey]: TranslationJsonRaw | TranslationMessage;
 };
 
 function getPrefix(data: Data): string {
@@ -35,18 +38,18 @@ function getPrefix(data: Data): string {
 }
 
 function traverse(
-  translationJson: TranslationJson,
+  json: TranslationJsonRaw,
   data: {
     callback: (key: TranslationKey, message: TranslationMessage) => void;
     prefix: string;
   },
 ): void {
-  for (const key in translationJson) {
-    if (!Object.hasOwn(translationJson, key)) {
+  for (const key in json) {
+    if (!Object.hasOwn(json, key)) {
       continue;
     }
 
-    const value = translationJson[key]!;
+    const value = json[key]!;
 
     if (typeof value === 'object') {
       traverse(value, {
@@ -61,29 +64,26 @@ function traverse(
   }
 }
 
-export function extractTranslations(
-  file: string,
-  data: Data,
-): TranslationObject {
-  const translationObject: TranslationObject = {};
+export function extractTranslations(file: string, data: Data): TranslationJson {
+  const translationJson: TranslationJson = {};
 
   if (file === '') {
-    return translationObject;
+    return translationJson;
   }
 
   const { ext } = parseFilePath(data.filePath);
 
   try {
-    const translationJson =
+    const json =
       ext === '.json'
-        ? (JSON.parse(file) as TranslationJson)
-        : (load(file) as TranslationJson);
+        ? (JSON.parse(file) as TranslationJsonRaw)
+        : (load(file) as TranslationJsonRaw);
 
     const prefix = getPrefix(data);
 
-    traverse(translationJson, {
+    traverse(json, {
       callback(key, message) {
-        translationObject[key] = message;
+        translationJson[key] = message;
       },
       prefix,
     });
@@ -91,5 +91,5 @@ export function extractTranslations(
     // Do nothing
   }
 
-  return translationObject;
+  return translationJson;
 }

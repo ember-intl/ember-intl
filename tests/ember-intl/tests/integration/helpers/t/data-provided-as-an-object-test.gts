@@ -20,16 +20,12 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks, 'de-de', {
-      population: {
-        description:
-          '{city} hat eine Bevölkerung von {population, number, integer} zum {censusDate, date, long}.',
-      },
+      'population.description':
+        '{city} hat eine Bevölkerung von {population, number, integer} zum {censusDate, date, long}.',
     });
     setupIntl(hooks, 'en-us', {
-      population: {
-        description:
-          '{city} has a population of {population, number, integer} as of {censusDate, date, long}.',
-      },
+      'population.description':
+        '{city} has a population of {population, number, integer} as of {censusDate, date, long}.',
     });
 
     hooks.beforeEach(function (this: TestContext) {

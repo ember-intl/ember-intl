@@ -18,7 +18,7 @@ test('lib | broccoli | translation-reducer | base case > it works', async functi
   const translationsDir = await buildTranslationsDir(outputNode);
 
   assert.deepStrictEqual(translationsDir, {
-    'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
-    'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+    'de-de.json': `{"nested.key":"Hallo {name}!","no-arguments":"Hallo Welt!"}`,
+    'en-us.json': `{"nested.key":"Hello {name}!","no-arguments":"Hello world!"}`,
   });
 });

@@ -15,13 +15,13 @@ test('utils | analyze-project | merge-translation-files | extract-translations |
     title: '{productName}',
   });
 
-  const translationObject = extractTranslations(file, {
+  const translationJson = extractTranslations(file, {
     filePath: 'translations/en-us.json',
     namespaceKeysByDir: true,
     translationsDir: 'translations',
   });
 
-  assert.deepStrictEqual(translationObject, {
+  assert.deepStrictEqual(translationJson, {
     'card.learn-more.aria-label': 'Learn more about {productName}',
     'card.learn-more.label': 'Learn more',
     'details.add-to-cart': 'Add to Cart',

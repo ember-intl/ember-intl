@@ -5,11 +5,11 @@ import { extractTranslations } from '../../../../../../src/utils/analyze-project
 test('utils | analyze-project | merge-translation-files | extract-translations | yaml > file is empty', function () {
   const file = '';
 
-  const translationObject = extractTranslations(file, {
+  const translationJson = extractTranslations(file, {
     filePath: 'translations/en-us.yaml',
     namespaceKeysByDir: false,
     translationsDir: 'translations',
   });
 
-  assert.deepStrictEqual(translationObject, {});
+  assert.deepStrictEqual(translationJson, {});
 });

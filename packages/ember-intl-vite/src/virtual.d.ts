@@ -1,6 +1,4 @@
-type TranslationJson = {
-  [key: TranslationKey]: TranslationJson | TranslationMessage;
-};
+type TranslationJson = Record<TranslationKey, TranslationMessage>;
 
 type TranslationKey = string;
 

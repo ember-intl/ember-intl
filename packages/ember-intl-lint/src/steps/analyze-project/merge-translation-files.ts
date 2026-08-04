@@ -24,7 +24,7 @@ export function mergeTranslationFiles(
   translationFiles.forEach((data, filePath) => {
     const file = readFileSync(join(projectRoot, filePath), 'utf8');
 
-    const translationObject = extractTranslations(file, {
+    const translationJson = extractTranslations(file, {
       filePath,
       namespaceKeysByDir: buildOptions.namespaceKeysByDir,
       translationsDir: data.translationsDir,
@@ -34,7 +34,7 @@ export function mergeTranslationFiles(
       translations.get(data.locale) ??
       new Map<TranslationKey, ProjectTranslationData>();
 
-    for (const [key, message] of Object.entries(translationObject)) {
+    for (const [key, message] of Object.entries(translationJson)) {
       keyToData.set(key, {
         filePath,
         message,

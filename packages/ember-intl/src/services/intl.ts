@@ -37,10 +37,7 @@ import {
   hasLocaleChanged,
   normalizeLocale,
 } from '../-private/utils/locale.ts';
-import {
-  flattenKeys,
-  type TranslationJson,
-} from '../-private/utils/translations.ts';
+import type { TranslationJson } from '../-private/utils/translations.ts';
 
 export type { Formats };
 
@@ -97,9 +94,7 @@ export default class IntlService extends Service {
   }
 
   addTranslations(locale: string, translations: TranslationJson): void {
-    const messages = flattenKeys(translations);
-
-    this.updateIntl(locale, messages);
+    this.updateIntl(locale, translations);
   }
 
   private createIntl(

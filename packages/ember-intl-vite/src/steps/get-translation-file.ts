@@ -1,6 +1,6 @@
 import { EOL } from 'node:os';
 
-import type { Locale, Project, TranslationObject } from '../types/index.js';
+import type { Locale, Project, TranslationJson } from '../types/index.js';
 
 export function getTranslationFile(
   translations: Project['translations'],
@@ -14,14 +14,14 @@ export function getTranslationFile(
     );
   }
 
-  const translationObject: TranslationObject = {};
+  const translationJson: TranslationJson = {};
 
   keyToData.forEach((data, key) => {
-    translationObject[key] = data.message;
+    translationJson[key] = data.message;
   });
 
   return [
-    `const translations = ${JSON.stringify(translationObject)};`,
+    `const translations = ${JSON.stringify(translationJson)};`,
     `export default translations;`,
   ].join(EOL);
 }

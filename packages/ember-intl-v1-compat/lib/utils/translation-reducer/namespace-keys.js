@@ -4,7 +4,7 @@ const { dirname, normalize, sep } = require('node:path');
  * Wraps the root object with a namespace.
  *
  * If the file `translations/foo/bar/en-us.json` has a `baz` key,
- * then `translationObject` will have `foo.bar.baz` instead.
+ * then `translationJson` will have `foo.bar.baz` instead.
  */
 function namespaceKeys(translations, data) {
   const { addonNames, filePath, translationsDir } = data;

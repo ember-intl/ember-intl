@@ -12,9 +12,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
 
     test('Translations are loaded before the component is rendered', async function (assert) {
       await addTranslations('en-us', {
-        'lazy-hello': {
-          message: 'Hello, {name}!',
-        },
+        'lazy-hello.message': 'Hello, {name}!',
       });
 
       await render(<template><LazyHello @name="Zoey" /></template>);
@@ -43,9 +41,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         );
 
       await addTranslations('en-us', {
-        'lazy-hello': {
-          message: 'Hello, {name}!',
-        },
+        'lazy-hello.message': 'Hello, {name}!',
       });
 
       assert
@@ -65,9 +61,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       addTranslations('en-us', {
-        'lazy-hello': {
-          message: 'Hello, {name}!',
-        },
+        'lazy-hello.message': 'Hello, {name}!',
       });
 
       assert
@@ -88,9 +82,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
 
     test('Translations are loaded before the component is rendered', async function (assert) {
       await addTranslations('de-de', {
-        'lazy-hello': {
-          message: 'Hallo, {name}!',
-        },
+        'lazy-hello.message': 'Hallo, {name}!',
       });
 
       await render(<template><LazyHello @name="Zoey" /></template>);
@@ -119,9 +111,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
         );
 
       await addTranslations('de-de', {
-        'lazy-hello': {
-          message: 'Hallo, {name}!',
-        },
+        'lazy-hello.message': 'Hallo, {name}!',
       });
 
       assert
@@ -141,9 +131,7 @@ module('Integration | Component | lazy-hello', function (hooks) {
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       addTranslations('de-de', {
-        'lazy-hello': {
-          message: 'Hallo, {name}!',
-        },
+        'lazy-hello.message': 'Hallo, {name}!',
       });
 
       assert

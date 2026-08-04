@@ -41,13 +41,9 @@ module('Unit | Service | intl > addTranslations', function (hooks) {
 
   test('keys can include a period', function (this: TestContext, assert) {
     this.intl.addTranslations('en-us', {
-      foo: {
-        'bar.baz': 'Hello!',
-      },
+      'foo.bar.baz': 'Hello!',
       'foo2.bar.baz': 'Hi!',
-      'foo3.bar': {
-        baz: 'Bye!',
-      },
+      'foo3.bar.baz': 'Bye!',
     });
 
     assert.strictEqual(this.intl.t('foo.bar.baz'), 'Hello!');
@@ -57,21 +53,12 @@ module('Unit | Service | intl > addTranslations', function (hooks) {
 
   test('can be called multiple times', function (this: TestContext, assert) {
     this.intl.addTranslations('en-us', {
-      foo: {
-        bar: {
-          baz: 'Hello!',
-        },
-      },
+      'foo.bar.baz': 'Hello!',
     });
 
     this.intl.addTranslations('en-us', {
-      foo: {
-        bar: {
-          baz: 'Hi!',
-          quux: 'Bye!',
-        },
-        bar2: {},
-      },
+      'foo.bar.baz': 'Hi!',
+      'foo.bar.quux': 'Bye!',
     });
 
     assert.strictEqual(this.intl.t('foo.bar.baz'), 'Hi!');
