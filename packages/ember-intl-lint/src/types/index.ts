@@ -66,15 +66,11 @@ type ProjectTranslationData = {
 
 type TranslationFilePath = string;
 
-type TranslationJson = {
-  [key: TranslationKey]: TranslationJson | TranslationMessage;
-};
+type TranslationJson = Record<TranslationKey, TranslationMessage>;
 
 type TranslationKey = string;
 
 type TranslationMessage = string;
-
-type TranslationObject = Record<TranslationKey, TranslationMessage>;
 
 type UserConfig = Partial<{
   addonPaths: string[];
@@ -99,6 +95,5 @@ export type {
   TranslationJson,
   TranslationKey,
   TranslationMessage,
-  TranslationObject,
   UserConfig,
 };
