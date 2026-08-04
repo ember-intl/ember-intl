@@ -1,5 +1,17 @@
 # ember-intl
 
+## 9.0.0-beta.3
+
+### Major Changes
+
+- [#2186](https://github.com/ember-intl/ember-intl/pull/2186) Removed handling options for formatMessage and t ([@ijlee2](https://github.com/ijlee2))
+- [#2185](https://github.com/ember-intl/ember-intl/pull/2185) Removed handling nested translation JSON ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2187](https://github.com/ember-intl/ember-intl/pull/2187) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2183](https://github.com/ember-intl/ember-intl/pull/2183) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 9.0.0-beta.2
 
 ### Patch Changes

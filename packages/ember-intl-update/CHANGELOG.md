@@ -1,5 +1,12 @@
 # @ember-intl/update
 
+## 2.0.0-beta.2
+
+### Patch Changes
+
+- [#2187](https://github.com/ember-intl/ember-intl/pull/2187) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2183](https://github.com/ember-intl/ember-intl/pull/2183) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0-beta.1
 
 ### Major Changes

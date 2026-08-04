@@ -1,5 +1,17 @@
 # @ember-intl/lint
 
+## 2.0.0-beta.4
+
+### Major Changes
+
+- [#2185](https://github.com/ember-intl/ember-intl/pull/2185) Removed handling nested translation JSON ([@ijlee2](https://github.com/ijlee2))
+- [#2184](https://github.com/ember-intl/ember-intl/pull/2184) Removed handling spaces in translation folder names ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2187](https://github.com/ember-intl/ember-intl/pull/2187) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2183](https://github.com/ember-intl/ember-intl/pull/2183) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0-beta.3
 
 ### Patch Changes
@@ -21,6 +33,12 @@
 ### Major Changes
 
 - [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
+## 1.5.1
+
+### Patch Changes
+
+- [#2182](https://github.com/ember-intl/ember-intl/pull/2182) Supported the syntax `@service()` ([@ijlee2](https://github.com/ijlee2))
 
 ## 1.5.0
 
