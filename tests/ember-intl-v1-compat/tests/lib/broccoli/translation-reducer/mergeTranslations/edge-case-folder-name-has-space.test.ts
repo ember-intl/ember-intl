@@ -39,17 +39,17 @@ test('lib | broccoli | translation-reducer | mergeTranslations > edge case (fold
 
   assert.deepStrictEqual(translations, {
     'en-us': {
-      '  things for  product ': {
-        'card.learn-more.aria-label': 'Learn more about {productName}',
-        'card.learn-more.label': 'Learn more',
-        'details.add-to-cart': 'Add to Cart',
-        'details.description': 'Description',
-        'details.price': 'Price',
-        'details.rating': 'Rating',
-        'details.rating-value': '{productRating} out of 5 stars',
-        'details.seller': 'Seller',
-        title: '{productName}',
-      },
+      '  things for  product .card.learn-more.aria-label':
+        'Learn more about {productName}',
+      '  things for  product .card.learn-more.label': 'Learn more',
+      '  things for  product .details.add-to-cart': 'Add to Cart',
+      '  things for  product .details.description': 'Description',
+      '  things for  product .details.price': 'Price',
+      '  things for  product .details.rating': 'Rating',
+      '  things for  product .details.rating-value':
+        '{productRating} out of 5 stars',
+      '  things for  product .details.seller': 'Seller',
+      '  things for  product .title': '{productName}',
     },
   });
 });

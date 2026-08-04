@@ -35,17 +35,12 @@ test('lib | broccoli | translation-reducer | mergeTranslations > it does not rem
 
   assert.deepStrictEqual(translations, {
     'de-de': {
-      sample_translation: {
-        translation_1: 'Lorem ipsum',
-        translation_2: '',
-        translation_3: null,
-      },
+      'sample_translation.translation_1': 'Lorem ipsum',
+      'sample_translation.translation_2': '',
     },
     'en-us': {
-      sample_translation: {
-        translation_1: 'Lorem ipsum',
-        translation_2: 'dolor sit amet',
-      },
+      'sample_translation.translation_1': 'Lorem ipsum',
+      'sample_translation.translation_2': 'dolor sit amet',
     },
   });
 });

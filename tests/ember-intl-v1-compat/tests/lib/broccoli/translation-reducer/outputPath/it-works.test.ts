@@ -23,8 +23,8 @@ test('lib | broccoli | translation-reducer | outputPath > it works', async funct
     custom: {
       output: {
         path: {
-          'de-de.json': `{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}`,
-          'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+          'de-de.json': `{"nested.key":"Hallo {name}!","no-arguments":"Hallo Welt!"}`,
+          'en-us.json': `{"nested.key":"Hello {name}!","no-arguments":"Hello world!"}`,
         },
       },
     },

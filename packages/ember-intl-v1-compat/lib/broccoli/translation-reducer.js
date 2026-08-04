@@ -4,6 +4,7 @@ const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
 const stringify = require('json-stable-stringify');
 
+const flattenKeys = require('../utils/translation-reducer/flatten-keys');
 const getTranslations = require('../utils/translation-reducer/get-translations');
 const namespaceKeys = require('../utils/translation-reducer/namespace-keys');
 
@@ -45,16 +46,16 @@ class TranslationReducer extends CachingWriter {
     const translations = this.mergeTranslations(translationFilePaths);
 
     const filePath = join(this.outputPath, this.options.outputPath);
-    const fallbackTranslationObject = translations[this.options.fallbackLocale];
+    const fallbackTranslationJson = translations[this.options.fallbackLocale];
 
     mkdirSync(filePath, { recursive: true });
 
     for (const locale in translations) {
-      if (fallbackTranslationObject && this.options.fallbackLocale !== locale) {
+      if (fallbackTranslationJson && this.options.fallbackLocale !== locale) {
         translations[locale] = extend(
           true,
           {},
-          fallbackTranslationObject,
+          fallbackTranslationJson,
           translations[locale],
         );
       }
@@ -119,6 +120,13 @@ class TranslationReducer extends CachingWriter {
           translationsDir: this.inputPaths[0],
         });
       }
+
+      translationObject = flattenKeys(translationObject, {
+        callback(key, message) {
+          translationObject[key] = message;
+        },
+        prefix: '',
+      });
 
       const fileName = basename(filePath).split('.')[0];
       const locale = normalizeLocale(fileName);

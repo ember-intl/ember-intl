@@ -20,7 +20,7 @@ test('lib | broccoli | translation-reducer | fallbackLocale > falls back for mis
   const translationsDir = await buildTranslationsDir(outputNode);
 
   assert.deepStrictEqual(translationsDir, {
-    'de-de.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
-    'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+    'de-de.json': `{"nested.key":"Hello {name}!","no-arguments":"Hello world!"}`,
+    'en-us.json': `{"nested.key":"Hello {name}!","no-arguments":"Hello world!"}`,
   });
 });

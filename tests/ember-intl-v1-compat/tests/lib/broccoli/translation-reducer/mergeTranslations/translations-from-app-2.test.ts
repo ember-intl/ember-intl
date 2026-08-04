@@ -38,14 +38,10 @@ test('lib | broccoli | translation-reducer | mergeTranslations > translations fr
 
   assert.deepStrictEqual(translations, {
     'en-us': {
-      components: {
-        foo: 'bar',
-        hello: {
-          message: 'Hello, {name}!',
-          title: '<Hello> component',
-        },
-        title: 'Components',
-      },
+      'components.foo': 'bar',
+      'components.hello.message': 'Hello, {name}!',
+      'components.hello.title': '<Hello> component',
+      'components.title': 'Components',
       title: 'Homepage',
     },
   });

@@ -4,9 +4,10 @@ const { load } = require('js-yaml');
 
 function getTranslations(filePath) {
   const file = readFileSync(filePath, 'utf8');
+  const translationJson = {};
 
   if (file === '') {
-    return {};
+    return translationJson;
   }
 
   const ext = extname(filePath);
@@ -18,15 +19,15 @@ function getTranslations(filePath) {
 
     case '.yaml':
     case '.yml': {
-      let translations = {};
+      let translationJson = {};
 
       try {
-        translations = load(file);
+        translationJson = load(file);
       } catch {
         // Do nothing
       }
 
-      return translations;
+      return translationJson;
     }
   }
 }

@@ -24,9 +24,9 @@ test('lib | broccoli | translation-reducer | base case > ignores unknown locales
   const translationsDir = await buildTranslationsDir(outputNode);
 
   assert.deepStrictEqual(translationsDir, {
-    'en-us.json': `{"nested":{"key":"Hello {name}!"},"no-arguments":"Hello world!"}`,
+    'en-us.json': `{"nested.key":"Hello {name}!","no-arguments":"Hello world!"}`,
     'unknown-language.json':
-      '{"nested":{"key":"Hallo {name}!"},"no-arguments":"Hallo Welt!"}',
+      '{"nested.key":"Hallo {name}!","no-arguments":"Hallo Welt!"}',
   });
 
   assert.deepStrictEqual(logs, []);
