@@ -4,13 +4,15 @@ allowBuilds:
 
 autoInstallPeers: false
 
+minimumReleaseAge: 720
+
 minimumReleaseAgeExclude:
   - "@codemod-utils/*"
   - "@ijlee2-frontend-configs/*"
 
 overrides:
   ember-cli-htmlbars: ^7.0.1
-  vite: ^8.1.5
+  vite: ^8.2.0
 
 packages:
   - "configs/**"

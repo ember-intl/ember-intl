@@ -25,7 +25,7 @@ export default defineConfig({
       emberFence(md);
     },
     image: {
-      lazyLoading: true,
+      lazyLoad: true,
     },
     lineNumbers: true,
     theme: {
