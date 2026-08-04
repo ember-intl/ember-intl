@@ -47,19 +47,11 @@ module('Unit | Service | intl > exists', function (hooks) {
 
     test('returns true, if and only if, the key exists for an active locale (3)', function (this: TestContext, assert) {
       this.intl.addTranslations('de-de', {
-        foo1: {
-          bar: {
-            baz: 'Hallo!',
-          },
-        },
+        'foo1.bar.baz': 'Hallo!',
       });
 
       this.intl.addTranslations('en-us', {
-        foo2: {
-          bar: {
-            baz: 'Hello!',
-          },
-        },
+        'foo2.bar.baz': 'Hello!',
       });
 
       this.intl.setLocale(['de-de', 'en-us']);
@@ -118,19 +110,11 @@ module('Unit | Service | intl > exists', function (hooks) {
 
     test('returns true, if and only if, the key exists for the specified locale (3)', function (this: TestContext, assert) {
       this.intl.addTranslations('de-de', {
-        foo1: {
-          bar: {
-            baz: 'Hallo!',
-          },
-        },
+        'foo1.bar.baz': 'Hallo!',
       });
 
       this.intl.addTranslations('en-us', {
-        foo2: {
-          bar: {
-            baz: 'Hello!',
-          },
-        },
+        'foo2.bar.baz': 'Hello!',
       });
 
       this.intl.setLocale(['en-us']);
