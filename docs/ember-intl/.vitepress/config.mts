@@ -8,6 +8,7 @@ export default defineConfig({
   base: '/ember-intl/',
   cleanUrls: true,
   description: 'Internationalization for Ember projects',
+  lastUpdated: true,
   markdown: {
     anchor: {
       level: [2, 3],
@@ -32,6 +33,9 @@ export default defineConfig({
       light: 'github-light-default',
       dark: 'github-dark-default',
     },
+  },
+  sitemap: {
+    hostname: 'https://ember-intl.github.io/ember-intl/',
   },
   srcDir: 'src',
   themeConfig: {
