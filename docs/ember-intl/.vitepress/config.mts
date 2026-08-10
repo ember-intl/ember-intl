@@ -8,6 +8,23 @@ export default defineConfig({
   base: '/ember-intl/',
   cleanUrls: true,
   description: 'Internationalization for Ember projects',
+  head: [
+    [
+      'script',
+      {
+        async: '',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-M7PB2F0EG6',
+      },
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-M7PB2F0EG6');`,
+    ],
+  ],
   lastUpdated: true,
   markdown: {
     anchor: {
