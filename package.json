@@ -25,8 +25,8 @@
     "test": "pnpm --filter \"*\" test"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.1",
-    "@ijlee2-frontend-configs/changesets": "^2.1.2",
+    "@changesets/cli": "^3.0.0",
+    "@ijlee2-frontend-configs/changesets": "^3.0.1",
     "sort-package-json": "^4.0.0",
     "update-workspace-root-version": "^3.0.5"
   },
