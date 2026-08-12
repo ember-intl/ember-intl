@@ -1,6 +1,5 @@
 import type { TestContext as BaseTestContext } from '@ember/test-helpers';
 import type { IntlService } from 'ember-intl';
-import { setupIntl } from 'ember-intl/test-support';
 import { module, test } from 'qunit';
 import { setupTest } from 'test-app-for-ember-intl/tests/helpers';
 
@@ -10,7 +9,6 @@ interface TestContext extends BaseTestContext {
 
 module('Unit | Service | intl > getters', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function (this: TestContext) {
     this.intl = this.owner.lookup('service:intl');
@@ -21,6 +19,21 @@ module('Unit | Service | intl > getters', function (hooks) {
   });
 
   test('primaryLocale', function (this: TestContext, assert) {
+    this.intl.setLocale('en-us');
+
     assert.strictEqual(this.intl.primaryLocale, 'en-us');
+  });
+
+  test('primaryLocale returns first locale of fallback chain', function (this: TestContext, assert) {
+    this.intl.setLocale(['fr-ca', 'fr', 'en-us']);
+
+    assert.strictEqual(this.intl.primaryLocale, 'fr-ca');
+  });
+
+  test('primaryLocale throws when setLocale has not been called', function (this: TestContext, assert) {
+    assert.throws(
+      () => this.intl.primaryLocale,
+      /ember-intl: locale is missing\. Make sure to call `intl\.setLocale\(\.\.\.\)` first\./,
+    );
   });
 });
