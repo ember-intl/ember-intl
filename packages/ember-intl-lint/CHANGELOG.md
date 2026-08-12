@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 2.0.0-beta.5
+
+### Patch Changes
+
+- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0-beta.4
 
 ### Major Changes

@@ -1,5 +1,16 @@
 # my-v2-addon
 
+## 1.8.0
+
+### Minor Changes
+
+- [#2192](https://github.com/ember-intl/ember-intl/pull/2192) Strictened type for `setLocale()` ([@ijlee2](https://github.com/ijlee2))
+- [#2192](https://github.com/ember-intl/ember-intl/pull/2192) Updated the type of `primaryLocale` to be `string` ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.7.0
 
 ### Minor Changes

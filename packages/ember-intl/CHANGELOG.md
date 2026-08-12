@@ -1,5 +1,16 @@
 # ember-intl
 
+## 9.0.0-beta.4
+
+### Major Changes
+
+- [#2192](https://github.com/ember-intl/ember-intl/pull/2192) Updated the type of `primaryLocale` to be `string` ([@ijlee2](https://github.com/ijlee2))
+- [#2192](https://github.com/ember-intl/ember-intl/pull/2192) Strictened type for `setLocale()` ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 9.0.0-beta.3
 
 ### Major Changes

@@ -1,5 +1,20 @@
 # docs-app-for-ember-intl
 
+## 2.13.0
+
+### Minor Changes
+
+- [#2192](https://github.com/ember-intl/ember-intl/pull/2192) Updated the type of `primaryLocale` to be `string` ([@ijlee2](https://github.com/ijlee2))
+- [#2192](https://github.com/ember-intl/ember-intl/pull/2192) Strictened type for `setLocale()` ([@ijlee2](https://github.com/ijlee2))
+- [#2191](https://github.com/ember-intl/ember-intl/pull/2191) Improved documentation search ([@ijlee2](https://github.com/ijlee2))
+- [#2190](https://github.com/ember-intl/ember-intl/pull/2190) Enabled Google Analytics ([@ijlee2](https://github.com/ijlee2))
+- [#2189](https://github.com/ember-intl/ember-intl/pull/2189) Allowed Vitepress to generate sitemap ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2188](https://github.com/ember-intl/ember-intl/pull/2188) Updated migration guide ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.12.0
 
 ### Minor Changes
