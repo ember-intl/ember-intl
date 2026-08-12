@@ -34,6 +34,7 @@ import {
   convertToArray,
   convertToString,
   hasLocaleChanged,
+  type Locales,
   normalizeLocale,
 } from '../-private/utils/locale.ts';
 import type { TranslationJson } from '../-private/utils/translations.ts';
@@ -44,13 +45,13 @@ type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
 type OnMissingTranslation = (
   key: string,
-  locales: string[],
+  locales: Locales,
   data?: Record<string, unknown>,
 ) => string;
 
 export default class IntlService extends Service {
   @tracked private _intls: Record<string, IntlShape> = {};
-  @tracked private _locales?: string[];
+  @tracked private _locales?: Locales;
 
   private _cache = createIntlCache();
   private _formats: Formats = {};
@@ -97,7 +98,7 @@ export default class IntlService extends Service {
   }
 
   private createIntl(
-    locale: string | string[],
+    locale: Locales | string,
     messages: Record<string, unknown> = {},
   ): IntlShape {
     const resolvedLocale = convertToString(locale);
@@ -117,7 +118,7 @@ export default class IntlService extends Service {
     );
   }
 
-  exists(key: string, locale?: string | string[]): boolean {
+  exists(key: string, locale?: Locales | string): boolean {
     const locales = locale ? convertToArray(locale) : this._locales!;
 
     return locales.some((locale) => {
@@ -267,7 +268,7 @@ export default class IntlService extends Service {
     return formatTime(intlShape, value, options);
   }
 
-  private getIntl(locale: string | string[]): IntlShape | undefined {
+  private getIntl(locale: Locales | string): IntlShape | undefined {
     const resolvedLocale = normalizeLocale(convertToString(locale));
 
     return this._intls[resolvedLocale];
@@ -300,7 +301,7 @@ export default class IntlService extends Service {
     });
   }
 
-  setLocale(locale: string | string[]): void {
+  setLocale(locale: Locales | string): void {
     const proposedLocale = convertToArray(locale);
 
     if (hasLocaleChanged(proposedLocale, this._locales)) {
@@ -338,7 +339,10 @@ export default class IntlService extends Service {
       locale?: string;
     },
   ): string {
-    const locales = options?.locale ? [options.locale] : this._locales!;
+    const locales: Locales = options?.locale
+      ? [options.locale]
+      : this._locales!;
+
     let translation: string | undefined;
 
     for (const locale of locales) {
@@ -379,7 +383,7 @@ export default class IntlService extends Service {
   }
 
   private updateIntl(
-    locale: string | string[],
+    locale: Locales | string,
     messages?: Record<string, unknown>,
   ): void {
     const resolvedLocale = normalizeLocale(convertToString(locale));
