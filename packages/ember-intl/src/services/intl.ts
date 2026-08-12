@@ -50,7 +50,7 @@ type OnMissingTranslation = (
 
 export default class IntlService extends Service {
   @tracked private _intls: Record<string, IntlShape> = {};
-  @tracked private _locale?: string[];
+  @tracked private _locales?: string[];
 
   private _cache = createIntlCache();
   private _formats: Formats = {};
@@ -85,11 +85,11 @@ export default class IntlService extends Service {
   }
 
   get primaryLocale(): string | undefined {
-    if (!this._locale) {
+    if (!this._locales) {
       return;
     }
 
-    return this._locale[0];
+    return this._locales[0];
   }
 
   addTranslations(locale: string, translations: TranslationJson): void {
@@ -118,7 +118,7 @@ export default class IntlService extends Service {
   }
 
   exists(key: string, locale?: string | string[]): boolean {
-    const locales = locale ? convertToArray(locale) : this._locale!;
+    const locales = locale ? convertToArray(locale) : this._locales!;
 
     return locales.some((locale) => {
       return this.getTranslation(key, locale) !== undefined;
@@ -278,7 +278,7 @@ export default class IntlService extends Service {
       return this.createIntl(locale);
     }
 
-    return this.getIntl(this._locale!)!;
+    return this.getIntl(this._locales!)!;
   }
 
   getTranslation(key: string, locale: string): string | undefined {
@@ -303,8 +303,8 @@ export default class IntlService extends Service {
   setLocale(locale: string | string[]): void {
     const proposedLocale = convertToArray(locale);
 
-    if (hasLocaleChanged(proposedLocale, this._locale)) {
-      this._locale = proposedLocale;
+    if (hasLocaleChanged(proposedLocale, this._locales)) {
+      this._locales = proposedLocale;
 
       // eslint-disable-next-line ember/no-runloop
       cancel(this._timer);
@@ -338,7 +338,7 @@ export default class IntlService extends Service {
       locale?: string;
     },
   ): string {
-    const locales = options?.locale ? [options.locale] : this._locale!;
+    const locales = options?.locale ? [options.locale] : this._locales!;
     let translation: string | undefined;
 
     for (const locale of locales) {
