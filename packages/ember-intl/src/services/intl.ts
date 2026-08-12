@@ -1,3 +1,4 @@
+import { assert } from '@ember/debug';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
@@ -88,11 +89,10 @@ export default class IntlService extends Service {
   get primaryLocale(): string {
     const primaryLocale = this._locales?.[0];
 
-    if (!primaryLocale) {
-      throw new Error(
-        'ember-intl: locale is missing. Make sure to call `intl.setLocale(...)` first.',
-      );
-    }
+    assert(
+      'intl.primaryLocale is undefined. Did you call intl.setLocale()?',
+      primaryLocale,
+    );
 
     return primaryLocale;
   }
