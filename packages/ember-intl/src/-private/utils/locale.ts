@@ -1,7 +1,9 @@
+export type Locales = [string, ...string[]];
+
 /**
  * @private
  */
-export function convertToArray(locale: string | string[]): string[] {
+export function convertToArray(locale: Locales | string): Locales {
   if (Array.isArray(locale)) {
     return locale;
   }
@@ -12,24 +14,19 @@ export function convertToArray(locale: string | string[]): string[] {
 /**
  * @private
  */
-export function convertToString(locale: string | string[]): string {
+export function convertToString(locale: Locales | string): string {
   if (Array.isArray(locale)) {
-    return locale[0]!;
+    return locale[0];
   }
 
   return locale;
 }
 
-type MaybeLocale = null | string | string[] | undefined;
-
 /**
  * @private
  */
-export function hasLocaleChanged(
-  locale1: string[],
-  locale2: MaybeLocale,
-): boolean {
-  if (!Array.isArray(locale2)) {
+export function hasLocaleChanged(locale1: Locales, locale2?: Locales): boolean {
+  if (locale2 === undefined) {
     return true;
   }
 

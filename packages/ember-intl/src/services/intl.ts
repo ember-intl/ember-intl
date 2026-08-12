@@ -1,3 +1,4 @@
+import { assert } from '@ember/debug';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
@@ -34,6 +35,7 @@ import {
   convertToArray,
   convertToString,
   hasLocaleChanged,
+  type Locales,
   normalizeLocale,
 } from '../-private/utils/locale.ts';
 import type { TranslationJson } from '../-private/utils/translations.ts';
@@ -44,13 +46,13 @@ type OnFormatjsError = (error: Parameters<OnErrorFn>[0]) => void;
 
 type OnMissingTranslation = (
   key: string,
-  locales: string[],
+  locales: Locales,
   data?: Record<string, unknown>,
 ) => string;
 
 export default class IntlService extends Service {
   @tracked private _intls: Record<string, IntlShape> = {};
-  @tracked private _locale?: string[];
+  @tracked private _locales?: Locales;
 
   private _cache = createIntlCache();
   private _formats: Formats = {};
@@ -84,12 +86,15 @@ export default class IntlService extends Service {
     return Object.keys(this._intls);
   }
 
-  get primaryLocale(): string | undefined {
-    if (!this._locale) {
-      return;
-    }
+  get primaryLocale(): string {
+    const primaryLocale = this._locales?.[0];
 
-    return this._locale[0];
+    assert(
+      'intl.primaryLocale is undefined. Did you call intl.setLocale()?',
+      primaryLocale,
+    );
+
+    return primaryLocale;
   }
 
   addTranslations(locale: string, translations: TranslationJson): void {
@@ -97,7 +102,7 @@ export default class IntlService extends Service {
   }
 
   private createIntl(
-    locale: string | string[],
+    locale: Locales | string,
     messages: Record<string, unknown> = {},
   ): IntlShape {
     const resolvedLocale = convertToString(locale);
@@ -117,8 +122,8 @@ export default class IntlService extends Service {
     );
   }
 
-  exists(key: string, locale?: string | string[]): boolean {
-    const locales = locale ? convertToArray(locale) : this._locale!;
+  exists(key: string, locale?: Locales | string): boolean {
+    const locales = locale ? convertToArray(locale) : this._locales!;
 
     return locales.some((locale) => {
       return this.getTranslation(key, locale) !== undefined;
@@ -267,7 +272,7 @@ export default class IntlService extends Service {
     return formatTime(intlShape, value, options);
   }
 
-  private getIntl(locale: string | string[]): IntlShape | undefined {
+  private getIntl(locale: Locales | string): IntlShape | undefined {
     const resolvedLocale = normalizeLocale(convertToString(locale));
 
     return this._intls[resolvedLocale];
@@ -278,7 +283,7 @@ export default class IntlService extends Service {
       return this.createIntl(locale);
     }
 
-    return this.getIntl(this._locale!)!;
+    return this.getIntl(this._locales!)!;
   }
 
   getTranslation(key: string, locale: string): string | undefined {
@@ -300,11 +305,11 @@ export default class IntlService extends Service {
     });
   }
 
-  setLocale(locale: string | string[]): void {
+  setLocale(locale: Locales | string): void {
     const proposedLocale = convertToArray(locale);
 
-    if (hasLocaleChanged(proposedLocale, this._locale)) {
-      this._locale = proposedLocale;
+    if (hasLocaleChanged(proposedLocale, this._locales)) {
+      this._locales = proposedLocale;
 
       // eslint-disable-next-line ember/no-runloop
       cancel(this._timer);
@@ -338,7 +343,10 @@ export default class IntlService extends Service {
       locale?: string;
     },
   ): string {
-    const locales = options?.locale ? [options.locale] : this._locale!;
+    const locales: Locales = options?.locale
+      ? [options.locale]
+      : this._locales!;
+
     let translation: string | undefined;
 
     for (const locale of locales) {
@@ -369,17 +377,16 @@ export default class IntlService extends Service {
 
   private updateDocumentLanguage(): void {
     const html = getHtmlElement(this);
-    const { primaryLocale } = this;
 
-    if (!html || !primaryLocale) {
+    if (!html) {
       return;
     }
 
-    html.setAttribute('lang', primaryLocale);
+    html.setAttribute('lang', this.primaryLocale);
   }
 
   private updateIntl(
-    locale: string | string[],
+    locale: Locales | string,
     messages?: Record<string, unknown>,
   ): void {
     const resolvedLocale = normalizeLocale(convertToString(locale));

@@ -46,7 +46,7 @@ export default class SelectLocale extends Component<SelectLocaleSignature> {
   }
 
   updateLocale(value: SupportedLocale): void {
-    let locale: string[];
+    let locale: [string, ...string[]];
 
     switch (value) {
       case 'de-de': {
