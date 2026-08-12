@@ -20,16 +20,14 @@ export function convertToString(locale: string | string[]): string {
   return locale;
 }
 
-type MaybeLocale = null | string | string[] | undefined;
-
 /**
  * @private
  */
 export function hasLocaleChanged(
   locale1: string[],
-  locale2: MaybeLocale,
+  locale2?: string[],
 ): boolean {
-  if (!Array.isArray(locale2)) {
+  if (locale2 === undefined) {
     return true;
   }
 
