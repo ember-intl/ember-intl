@@ -1,6 +1,6 @@
 module.exports = function (/* environment */) {
   return {
-    inputPath: 'tests/dummy/translations',
-    wrapTranslationsWithNamespace: true,
+    translationsDir: 'tests/dummy/translations',
+    namespaceKeysByDir: true,
   };
 };
