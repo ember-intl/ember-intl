@@ -21,7 +21,7 @@
   "dependencies": {
     "@ember/app-tsconfig": "^2.0.0",
     "@ember/library-tsconfig": "^2.0.0",
-    "@tsconfig/node22": "^22.0.5",
+    "@tsconfig/node22": "^22.0.6",
     "@tsconfig/strictest": "^2.0.8"
   },
   "devDependencies": {

@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.3",
-    "@formatjs/intl": "^4.1.18",
+    "@formatjs/intl": "^4.1.19",
     "decorator-transforms": "^2.4.0"
   },
   "devDependencies": {
@@ -72,12 +72,12 @@
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "babel-plugin-ember-template-compilation": "^4.0.0",
-    "concurrently": "^10.0.4",
+    "concurrently": "^10.0.5",
     "ember-qunit": "^9.1.0",
     "ember-source": "~7.2.0",
-    "eslint": "^10.8.1",
+    "eslint": "^10.9.0",
     "prettier": "^3.9.6",
-    "rollup": "^4.62.4",
+    "rollup": "^4.62.5",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
