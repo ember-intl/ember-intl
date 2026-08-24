@@ -1,0 +1,21 @@
+{
+  "name": "my-v1-addon",
+  "version": "0.0.0",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "ember-intl": "^9.0.0"
+  },
+  "devDependencies": {
+    "@ember-intl/lint": "^2.0.0",
+    "@ember-intl/v1-compat": "^2.0.0",
+    "ember-source": "~6.12.0"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  }
+}

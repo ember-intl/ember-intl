@@ -11,7 +11,7 @@ type Options = {
   targetVersion: TargetVersion;
 };
 
-type TargetVersion = 7 | 8;
+type TargetVersion = 7 | 8 | 9;
 
 type Todos = string[];
 
