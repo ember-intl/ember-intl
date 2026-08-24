@@ -39,27 +39,26 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "dependencies": {
-    "@codemod-utils/ast-javascript": "^4.3.1",
+    "@codemod-utils/ast-javascript": "^4.3.2",
     "@codemod-utils/ast-template": "^4.1.0",
     "@codemod-utils/ast-template-tag": "^2.7.0",
     "@codemod-utils/files": "^4.1.0",
     "@codemod-utils/package-json": "^4.1.0",
     "@codemod-utils/threads": "^1.1.0",
-    "@formatjs/icu-messageformat-parser": "^3.5.16",
-    "js-yaml": "^5.2.3",
+    "@formatjs/icu-messageformat-parser": "^3.5.17",
+    "js-yaml": "^5.3.0",
     "yargs": "^18.1.0"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^3.1.0",
+    "@codemod-utils/tests": "^3.2.0",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
-    "@sondr3/minitest": "^0.1.2",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.20.1",
     "@types/yargs": "^17.0.35",
-    "concurrently": "^10.0.4",
-    "eslint": "^10.8.1",
+    "concurrently": "^10.0.5",
+    "eslint": "^10.9.0",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3"
   },
