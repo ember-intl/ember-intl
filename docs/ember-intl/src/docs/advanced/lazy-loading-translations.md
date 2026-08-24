@@ -7,23 +7,19 @@ By default, translations in `/translations` are bundled with `app.js`. For large
 
 ### v1 apps (classic) {#1-configure-ember-intl-v1-apps-classic}
 
-Create `config/ember-intl.js` to set `publicOnly` to `true`.
+Create `config/ember-intl.js` to set `bundleSeparately` to `true`.
 
 ::: code-group
 
 ```js [config/ember-intl.js]{3}
 module.exports = function (/* environment */) {
   return {
-    publicOnly: true,
+    bundleSeparately: true,
   };
 };
 ```
 
 :::
-
-> [!CAUTION]
-> 
-> `publicOnly` will be removed in `ember-intl@9.0.0`. Use [bundleSeparately](./configuration-file#build-options-bundle-separately) instead.
 
 When you run `ember serve` or `ember build -prod`, you will find translations (as JSON) in `/dist/translations`.
 

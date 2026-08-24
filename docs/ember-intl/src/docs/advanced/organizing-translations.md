@@ -73,14 +73,14 @@ routes.application:
 
 ### Auto-namespace keys {#nested-folders-auto-namespace-keys}
 
-In your [configuration file](./configuration-file), you can set `wrapTranslationsWithNamespace` to `true` to derive the namespace from the folder path.
+In your [configuration file](./configuration-file), you can set `namespaceKeysByDir` to `true` to derive the namespace from the folder path.
 
 ::: code-group
 
 ```js [ember-intl.config.mjs]{3}
 export default {
   buildOptions: {
-    wrapTranslationsWithNamespace: true,
+    namespaceKeysByDir: true,
   },
 };
 ```
@@ -94,10 +94,6 @@ title: Willkommen bei ember-intl
 ```
 
 :::
-
-> [!CAUTION]
-> 
-> `wrapTranslationsWithNamespace` will be removed in `ember-intl@9.0.0`. Use [namespaceKeysByDir](./configuration-file#build-options-namespace-keys-by-dir) instead.
 
 > [!NOTE]
 > 
