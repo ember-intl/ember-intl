@@ -15,8 +15,8 @@
     "lint:intl:fix": "ember-intl-lint --fix"
   },
   "devDependencies": {
-    "@ember-intl/lint": "^1.5.1",
-    "ember-intl": "^8.4.0",
+    "@ember-intl/lint": "^2.0.0",
+    "ember-intl": "^9.0.0",
     "ember-source": "~7.2.0"
   },
   "ember": {

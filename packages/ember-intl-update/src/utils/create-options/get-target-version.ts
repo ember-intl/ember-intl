@@ -48,6 +48,10 @@ export function getTargetVersion(
       return 8;
     }
 
+    case 8: {
+      return 9;
+    }
+
     default: {
       return undefined;
     }
