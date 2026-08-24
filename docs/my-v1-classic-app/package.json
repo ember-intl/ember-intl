@@ -1,6 +1,6 @@
 {
   "name": "my-v1-classic-app",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "description": "A classic app to test the default build options",
   "keywords": [],

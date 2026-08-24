@@ -1,5 +1,0 @@
----
-"@ember-intl/update": minor
----
-
-Specified latest versions

@@ -1,6 +1,6 @@
 {
   "name": "my-v1-classic-app-with-lazy-loaded-translations",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "description": "A classic app to test lazily loaded translations",
   "keywords": [],

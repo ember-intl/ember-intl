@@ -1,5 +1,16 @@
 # docs-app-for-ember-intl
 
+## 2.14.0
+
+### Minor Changes
+
+- [#2198](https://github.com/ember-intl/ember-intl/pull/2198) Marked breaking changes that can be handled by codemod ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2196](https://github.com/ember-intl/ember-intl/pull/2196) Removed remaining references to deprecated code ([@ijlee2](https://github.com/ijlee2))
+- [#2195](https://github.com/ember-intl/ember-intl/pull/2195) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.13.0
 
 ### Minor Changes

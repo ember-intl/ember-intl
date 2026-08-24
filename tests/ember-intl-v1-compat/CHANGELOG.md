@@ -1,5 +1,11 @@
 # test-ember-intl-v1-compat
 
+## 1.8.2
+
+### Patch Changes
+
+- [#2195](https://github.com/ember-intl/ember-intl/pull/2195) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.8.1
 
 ### Patch Changes

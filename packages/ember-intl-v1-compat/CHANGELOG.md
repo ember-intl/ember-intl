@@ -1,38 +1,21 @@
 # @ember-intl/v1-compat
 
-## 2.0.0-beta.4
-
-### Patch Changes
-
-- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
-
-## 2.0.0-beta.3
+## 2.0.0
 
 ### Major Changes
 
 - [#2185](https://github.com/ember-intl/ember-intl/pull/2185) Removed handling nested translation JSON ([@ijlee2](https://github.com/ijlee2))
 - [#2184](https://github.com/ember-intl/ember-intl/pull/2184) Removed handling spaces in translation folder names ([@ijlee2](https://github.com/ijlee2))
+- [#2179](https://github.com/ember-intl/ember-intl/pull/2179) Removed inputPath, publicOnly, and wrapTranslationsWithNamespace ([@ijlee2](https://github.com/ijlee2))
+- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
 
 ### Patch Changes
 
+- [#2195](https://github.com/ember-intl/ember-intl/pull/2195) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#2187](https://github.com/ember-intl/ember-intl/pull/2187) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
 - [#2183](https://github.com/ember-intl/ember-intl/pull/2183) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
-
-## 2.0.0-beta.2
-
-### Major Changes
-
-- [#2179](https://github.com/ember-intl/ember-intl/pull/2179) Removed inputPath, publicOnly, and wrapTranslationsWithNamespace ([@ijlee2](https://github.com/ijlee2))
-
-### Patch Changes
-
 - [#2180](https://github.com/ember-intl/ember-intl/pull/2180) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
-
-## 2.0.0-beta.1
-
-### Major Changes
-
-- [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
 
 ## 1.3.0
 

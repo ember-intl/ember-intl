@@ -1,23 +1,25 @@
 # @ember-intl/update
 
-## 2.0.0-beta.3
-
-### Patch Changes
-
-- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
-
-## 2.0.0-beta.2
-
-### Patch Changes
-
-- [#2187](https://github.com/ember-intl/ember-intl/pull/2187) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
-- [#2183](https://github.com/ember-intl/ember-intl/pull/2183) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
-
-## 2.0.0-beta.1
+## 2.0.0
 
 ### Major Changes
 
 - [#2175](https://github.com/ember-intl/ember-intl/pull/2175) Dropped support for Node 20 ([@ijlee2](https://github.com/ijlee2))
+
+### Minor Changes
+
+- [#2198](https://github.com/ember-intl/ember-intl/pull/2198) Removed imports of test helper t ([@ijlee2](https://github.com/ijlee2))
+- [#2198](https://github.com/ember-intl/ember-intl/pull/2198) Handled nested translation JSON in setupIntl calls ([@ijlee2](https://github.com/ijlee2))
+- [#2198](https://github.com/ember-intl/ember-intl/pull/2198) Handled spaces in translation folder name ([@ijlee2](https://github.com/ijlee2))
+- [#2198](https://github.com/ember-intl/ember-intl/pull/2198) Renamed build options ([@ijlee2](https://github.com/ijlee2))
+- [#2197](https://github.com/ember-intl/ember-intl/pull/2197) Specified latest versions ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2195](https://github.com/ember-intl/ember-intl/pull/2195) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2193](https://github.com/ember-intl/ember-intl/pull/2193) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2187](https://github.com/ember-intl/ember-intl/pull/2187) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2183](https://github.com/ember-intl/ember-intl/pull/2183) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
 
 ## 1.0.0
 
