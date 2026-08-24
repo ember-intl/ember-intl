@@ -12,8 +12,8 @@ import {
 import type { Options, Todos } from '../../../types/index.js';
 
 const latestVersions = {
-  '@ember-intl/lint': '^1.5.0',
-  '@ember-intl/v1-compat': '^1.3.0',
+  '@ember-intl/lint': '^1.5.1',
+  '@ember-intl/v1-compat': '^1.3.1',
   '@ember-intl/vite': '^1.3.0',
   'ember-intl': '^8.4.0',
 } as const;

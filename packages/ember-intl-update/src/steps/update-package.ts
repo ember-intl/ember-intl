@@ -5,7 +5,7 @@ import { updatePackageToV8 } from './update-package/to-v8.js';
 export async function updatePackage(options: Options): Promise<Todos> {
   switch (options.targetVersion) {
     case 7: {
-      return await updatePackageToV7(options);
+      return updatePackageToV7(options);
     }
 
     case 8: {
