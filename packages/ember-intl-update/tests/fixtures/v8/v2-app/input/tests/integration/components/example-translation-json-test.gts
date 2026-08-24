@@ -8,8 +8,13 @@ module('Integration | Component | example-translation-json', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us', {
     hello: {
+      actions: {
+        'clear-tasks': 'Clear tasks',
+        'review-tasks': 'Review tasks',
+      },
       message: 'Hi, {name}!',
     },
+    title: '',
   });
 
   test('it renders', async function (assert) {

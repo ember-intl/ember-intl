@@ -1,7 +1,7 @@
 module.exports = function (/* environment */) {
   return {
-    inputPath: 'translations',
-    publicOnly: false,
-    wrapTranslationsWithNamespace: true,
+    translationsDir: 'translations',
+    bundleSeparately: false,
+    namespaceKeysByDir: true,
   };
 };

@@ -2,4 +2,4 @@
 "@ember-intl/update": minor
 ---
 
-Specified latest versions
+Renamed build options

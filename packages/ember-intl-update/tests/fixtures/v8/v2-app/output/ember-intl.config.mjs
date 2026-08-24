@@ -1,7 +1,7 @@
 export default {
   buildOptions: {
     fallbackLocale: 'en-us',
-    inputPath: 'translations',
-    wrapTranslationsWithNamespace: false,
+    translationsDir: 'translations',
+    namespaceKeysByDir: false,
   },
 };
