@@ -125,13 +125,6 @@ export default {
 :::
 
 
-### inputPath {#build-options-input-path}
-
-> [!CAUTION]
-> 
-> `inputPath` will be removed in `ember-intl@9.0.0`. Use [translationsDir](#build-options-translations-dir) instead.
-
-
 ### namespaceKeysByDir {#build-options-namespace-keys-by-dir}
 
 Derives the key's namespace from the folder path. Can be used to separate translations by where they are used in the source directory.
@@ -149,13 +142,6 @@ export default {
 :::
 
 For more information, see [Advanced - Organizing translations](./organizing-translations).
-
-
-### publicOnly <Badge text="Only for v1 apps" type="warning" /> {#build-options-public-only}
-
-> [!CAUTION]
-> 
-> `publicOnly` will be removed in `ember-intl@9.0.0`. Use [bundleSeparately](#build-options-bundle-separately) instead.
 
 
 ### translationsDir {#build-options-translations-dir}
@@ -189,13 +175,6 @@ module.exports = function (/* environment */) {
 ```
 
 :::
-
-
-### wrapTranslationsWithNamespace {#build-options-wrap-translations-with-namespace}
-
-> [!CAUTION]
-> 
-> `wrapTranslationsWithNamespace` will be removed in `ember-intl@9.0.0`. Use [namespaceKeysByDir](#build-options-namespace-keys-by-dir) instead.
 
 
 ## lintRules <Badge text="Only for @ember-intl/lint" type="warning" /> {#lint-rules}

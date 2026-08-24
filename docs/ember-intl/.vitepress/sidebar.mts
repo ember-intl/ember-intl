@@ -106,10 +106,6 @@ export const sidebar: DefaultTheme.Sidebar = [
         link: '/docs/test-helpers/setup-intl',
         text: 'setupIntl',
       },
-      {
-        link: '/docs/test-helpers/t',
-        text: 't',
-      },
     ],
     text: 'Test Helpers',
   },
