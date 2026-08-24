@@ -7,17 +7,14 @@ import { module, test } from 'qunit';
 module('Integration | Component | example-translation-json', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us', {
-    hello: {
-      message: 'Hi, {name}!',
-    },
+    'hello.actions.clear-tasks': 'Clear tasks',
+    'hello.actions.review-tasks': 'Review tasks',
+    'hello.message': 'Hi, {name}!',
+    'title': ''
   });
 
   test('it renders', async function (assert) {
-    await render(
-      <template>
-        <ExampleT @name="Zoey" />
-      </template>,
-    );
+    await render(<template><ExampleT @name="Zoey" /></template>);
 
     assert.dom().hasText('Hi, Zoey!');
   });

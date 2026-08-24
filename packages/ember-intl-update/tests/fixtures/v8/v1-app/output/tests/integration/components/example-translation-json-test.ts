@@ -7,9 +7,7 @@ import { module, test } from 'qunit';
 module('Integration | Component | example-translation-json', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us', {
-    'hello world': {
-      message: 'Hi, {name}!',
-    },
+    'hello_world.message': 'Hi, {name}!',
   });
 
   test('it renders', async function (assert) {
