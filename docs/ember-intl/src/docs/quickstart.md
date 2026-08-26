@@ -105,7 +105,7 @@ import { t } from 'ember-intl';
 > 
 > This guide will show examples of templates only in "strict mode." Strict means, the template lives inside a `<template>` tag in a `*.{gjs,gts}` file, and you use `import` to get what you need from `ember-intl`.
 >
-> In older projects, you can still use `ember-intl`'s helpers in "loose mode," i.e. in an `*.hbs` file or an `<hbs>` tag in rendering tests. To do so, you skip the import and dasherize a helper's name (e.g. `formatDate` in strict mode becomes `format-date` in loose, while `t` is the same by chance).
+> In older projects, you can still use `ember-intl`'s helpers in "loose mode," i.e. in an `*.hbs` file or an `hbs` tag in rendering tests. To do so, you skip the import and dasherize a helper's name (e.g. `formatDate` in strict mode becomes `format-date` in loose, while `t` is the same by chance).
 > 
 > ::: code-group
 > 
@@ -133,7 +133,7 @@ hello.message: "Hallo, {name}!"
 
 > [!NOTE]
 > 
-> You can also use `.yml` or `.json`. Here is the JSON equivalent of the YAML code above.
+> You can also use `.yml` or `.json` to define translations. Here is the JSON equivalent of the YAML code above.
 > 
 > ::: code-group
 > 
@@ -141,7 +141,8 @@ hello.message: "Hallo, {name}!"
 > {
 >   "hello.message": "Hallo, {name}!"
 > }
-> 
+> ```
+>
 > :::
 
 
@@ -154,7 +155,7 @@ Before your app renders, you need to tell the `intl` service which translations 
 
 ### v1 apps {#4-set-up-ember-intl-v1-apps}
 
-When the app starts, `@ember-intl/v1-compat` automatically loads your translations, then passes them to the `intl` service. So your only job is to call `setLocale` to specify which language(s) the app should use initially.
+When the app starts, `@ember-intl/v1-compat` automatically loads your translations, then passes them to the `intl` service. Your only remaining job is to call `setLocale` to specify which language(s) the app should use initially.
 
 ::: code-group
 
@@ -222,21 +223,31 @@ export default class ApplicationRoute extends Route {
 [`@ember-intl/lint`](https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-lint/README.md) is the official linter for `ember-intl`.
 
 
-### ember-template-lint {#5-configure-linters-ember-template-lint}
+### eslint {#5-configure-linters-eslint}
 
-[`ember-template-lint`](https://github.com/ember-template-lint/ember-template-lint) provides [`no-bare-strings`](https://github.com/ember-template-lint/ember-template-lint/blob/v7.9.3-ember-template-lint/docs/rule/no-bare-strings.md). This finds hard-coded texts in templates.
+Starting with v13, [`eslint-plugin-ember`](https://github.com/ember-cli/eslint-plugin-ember) provides lint rules for templates. You can use the rule [`ember/template-no-bare-strings`](https://github.com/ember-cli/eslint-plugin-ember/blob/v13.5.0/docs/rules/template-no-bare-strings.md) to find hard-coded texts in templates.
 
 ::: code-group
 
-```js [.template-lintrc.cjs]
-'use strict';
+```js [eslint.config.mjs]{12-17}
+import eslint from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import eslintPluginEmberTemplateLint from 'eslint-plugin-ember/configs/template-lint-migration';
+import eslintPluginEmber from 'eslint-plugin-ember/recommended';
 
-module.exports = {
-  extends: ['recommended'],
-  rules: {
-    'no-bare-strings': true,
+export default defineConfig([
+  globalIgnores(['dist/', 'node_modules/', '.*/']),
+  eslint.configs.recommended,
+  eslintPluginEmber.configs.base,
+  eslintPluginEmber.configs.gjs,
+  eslintPluginEmberTemplateLint,
+  {
+    files: ['**/*.{gjs,gts}'],
+    rules: {
+      'ember/template-no-bare-strings': 'error',
+    },
   },
-};
+]);
 ```
 
 :::
