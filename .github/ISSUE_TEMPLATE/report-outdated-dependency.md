@@ -14,15 +14,7 @@ Before you make a new issue, please search for similar issues. It's possible tha
 
 ## List outdated dependencies 🔗
 
-When you ran `pnpm outdated -r`, what did you see?
-
-```sh
-┌────────────────┬─────────┬────────┬────────────┐
-│ Package        │ Current │ Latest │ Dependents │
-├────────────────┼─────────┼────────┼────────────┤
-│ @formatjs/intl │ 3.1.0   │ 3.2.0  │ ember-intl │
-└────────────────┴─────────┴────────┴────────────┘
-```
+When you ran `pnpm outdated -r`, what did you see? Please provide the table output.
 
 
 ## Risk analysis ⚠️
