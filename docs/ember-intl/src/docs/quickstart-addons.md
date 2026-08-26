@@ -157,7 +157,7 @@ For more information, see [Quickstart (Apps) - 5. Configure linters](./quickstar
 There are no differences.
 
 
-### ember-template-lint {#5-configure-linters-ember-template-lint}
+### eslint {#5-configure-linters-eslint}
 
 There are no differences.
 
