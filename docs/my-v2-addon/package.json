@@ -64,8 +64,8 @@
     "@ember/test-helpers": "^5.4.3",
     "@embroider/addon-dev": "^8.3.1",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/ember-tsc": "^1.10.0",
-    "@glint/template": "^1.8.0",
+    "@glint/ember-tsc": "^1.11.4",
+    "@glint/template": "^1.9.0",
     "@rollup/plugin-babel": "^7.1.0",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
@@ -75,9 +75,9 @@
     "concurrently": "^10.0.5",
     "ember-intl": "workspace:*",
     "ember-source": "~7.2.0",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "prettier": "^3.9.6",
-    "rollup": "^4.62.5",
+    "rollup": "^4.63.1",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
