@@ -4,6 +4,10 @@ import ExampleT from 'my-v1-app/components/example-t';
 import { setupRenderingTest } from 'my-v1-app/tests/helpers';
 import { module, test } from 'qunit';
 
+function t(key) {
+  return `TODO: Add message for ${key}`;
+}
+
 module('Integration | Component | example-test-helper-t', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
