@@ -44,14 +44,14 @@
     "yargs": "^18.1.0"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^3.2.0",
+    "@codemod-utils/tests": "^3.3.0",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@types/node": "^22.20.1",
     "@types/yargs": "^17.0.35",
     "concurrently": "^10.0.5",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3"
   },

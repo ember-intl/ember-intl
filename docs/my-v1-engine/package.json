@@ -49,7 +49,7 @@
   "dependencies": {
     "@babel/core": "^7.29.7",
     "ember-auto-import": "^2.13.1",
-    "ember-cli-babel": "^8.3.1",
+    "ember-cli-babel": "^8.3.2",
     "ember-cli-htmlbars": "^7.0.1",
     "ember-intl": "workspace:*"
   },
@@ -65,7 +65,7 @@
     "@glint/core": "1.5.2",
     "@glint/environment-ember-loose": "1.5.2",
     "@glint/environment-ember-template-imports": "1.5.2",
-    "@glint/template": "^1.8.0",
+    "@glint/template": "^1.9.0",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
@@ -86,13 +86,13 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
     "ember-template-imports": "^4.4.0",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",
-    "webpack": "^5.109.2"
+    "webpack": "^5.110.2"
   },
   "peerDependencies": {
     "ember-engines": "^0.13.0",

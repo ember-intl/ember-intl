@@ -25,11 +25,11 @@
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "concurrently": "^10.0.5",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "prettier": "^3.9.6"
   },
   "peerDependencies": {
-    "eslint": "^10.9.0"
+    "eslint": "^10.9.1"
   },
   "peerDependenciesMeta": {
     "eslint": {

@@ -35,9 +35,9 @@
     "broccoli-source": "^3.0.1",
     "calculate-cache-key-for-tree": "^2.0.0",
     "ember-auto-import": "^2.13.1",
-    "ember-cli-babel": "^8.3.1",
+    "ember-cli-babel": "^8.3.2",
     "extend": "^3.0.2",
-    "js-yaml": "^5.3.0",
+    "js-yaml": "^5.4.1",
     "json-stable-stringify": "^1.3.0"
   },
   "devDependencies": {
@@ -57,13 +57,13 @@
     "ember-qunit": "^9.1.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~7.2.0",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "globals": "^17.11.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
-    "webpack": "^5.109.2"
+    "webpack": "^5.110.2"
   },
   "engines": {
     "node": "22.* || >= 24"
