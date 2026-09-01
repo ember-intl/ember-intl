@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { updateJavaScript } from '@codemod-utils/ast-template-tag';
 import { parseFilePath } from '@codemod-utils/files';
 
-import { updateImportStatements } from './update-import-statements.js';
+import { replaceT } from './replace-t.js';
 
 export function task(filePath: string, projectRoot: string): void {
   let file = readFileSync(join(projectRoot, filePath), 'utf8');
@@ -16,7 +16,7 @@ export function task(filePath: string, projectRoot: string): void {
     case '.gjs':
     case '.gts': {
       file = updateJavaScript(file, (code) => {
-        const results = updateImportStatements(code);
+        const results = replaceT(code);
 
         if (results.update) {
           update = true;
@@ -31,7 +31,7 @@ export function task(filePath: string, projectRoot: string): void {
 
     case '.js':
     case '.ts': {
-      const results = updateImportStatements(file);
+      const results = replaceT(file);
 
       if (results.update) {
         file = results.file;
