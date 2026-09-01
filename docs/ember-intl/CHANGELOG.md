@@ -1,5 +1,17 @@
 # docs-app-for-ember-intl
 
+## 2.15.0
+
+### Minor Changes
+
+- [#2199](https://github.com/ember-intl/ember-intl/pull/2199) Documented how to configure eslint ([@ijlee2](https://github.com/ijlee2))
+- [#2199](https://github.com/ember-intl/ember-intl/pull/2199) Provided additional information for migration to v9 ([@ijlee2](https://github.com/ijlee2))
+
+### Patch Changes
+
+- [#2201](https://github.com/ember-intl/ember-intl/pull/2201) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2200](https://github.com/ember-intl/ember-intl/pull/2200) Provided additional information for handling the removal of `t` ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.14.0
 
 ### Minor Changes

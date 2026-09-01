@@ -1,5 +1,11 @@
 # my-v1-classic-app
 
+## 1.7.3
+
+### Patch Changes
+
+- [#2201](https://github.com/ember-intl/ember-intl/pull/2201) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.7.2
 
 ### Patch Changes

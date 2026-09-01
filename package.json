@@ -1,6 +1,6 @@
 {
   "name": "workspace-root",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "private": true,
   "description": "Workspace root for ember-intl",
   "repository": {

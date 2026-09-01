@@ -1,5 +1,11 @@
 # @ember-intl/update
 
+## 2.1.0
+
+### Minor Changes
+
+- [#2200](https://github.com/ember-intl/ember-intl/pull/2200) Prevented build errors when removing the test helper `t` ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.0
 
 ### Major Changes

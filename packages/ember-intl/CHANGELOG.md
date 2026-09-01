@@ -1,5 +1,11 @@
 # ember-intl
 
+## 9.0.1
+
+### Patch Changes
+
+- [#2201](https://github.com/ember-intl/ember-intl/pull/2201) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 9.0.0
 
 ### Major Changes
