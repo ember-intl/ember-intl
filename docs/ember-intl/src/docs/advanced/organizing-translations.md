@@ -97,4 +97,4 @@ title: Willkommen bei ember-intl
 
 > [!NOTE]
 > 
-> Spaces in a folder name are converted to underscores.
+> A folder name cannot include a space. Use a hyphen or an underscore instead.

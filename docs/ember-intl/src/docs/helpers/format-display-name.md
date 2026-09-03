@@ -14,7 +14,7 @@ Uses [`Intl.DisplayNames`](https://developer.mozilla.org/docs/Web/JavaScript/Ref
 
 > [!IMPORTANT]
 > 
-> `type` is a required option because `Intl` doesn't specify the default value. The possible values are `"calendar"`, `"currency"`, `"dateTimeField"`, `"language"`, `"region"`, and `"script"`.
+> `type` is a required option because `Intl` doesn't specify the default value. The possible values are `'calendar'`, `'currency'`, `'dateTimeField'`, `'language'`, `'region'`, and `'script'`.
 
 
 ## Options
