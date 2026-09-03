@@ -6,7 +6,7 @@
 
 ## What is it?
 
-`docs-app-for-ember-intl` provides the documentation site for `ember-intl`. The app is deployed on https://ember-intl.github.io/.
+`docs-app-for-ember-intl` provides the documentation site for `ember-intl`. Markdown files for documentation live in the `src/docs` folder. The app is deployed on https://ember-intl.github.io/ember-intl.
 
 
 ## Local development

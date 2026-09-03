@@ -27,7 +27,7 @@ _Internationalization for Ember projects_
 
 ## Documentation
 
-Visit https://ember-intl.github.io/.
+Visit https://ember-intl.github.io/ember-intl.
 
 
 ## Compatibility
