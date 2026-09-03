@@ -2,12 +2,19 @@
 
 ## 1. Install ember-intl {#1-install-ember-intl}
 
+> [!TIP]
+>
+> `ember-intl` adds helpers and a service to an app's namespace. To ensure that the app ends up with a single copy of `ember-intl`, we recommend installing `ember-intl` in the addon as a peer dependency, not as a dependency. The addon may decide which major version(s) of `ember-intl` to support at a given time.
+>
+> To lint and test files within the addon package, install `ember-intl` as a development dependency as well. `pnpm` provides the option `--save-peer` to do both installations at once.
+
+
 ### v1 addons {#1-install-ember-intl-v1-addons}
 
-Use your package manager to install `ember-intl` (as a dependency or peer dependency). Install `@ember-intl/v1-compat` (as a development dependency) if the `dummy` app needs translations for documentation or testing.
+Use your package manager to install `ember-intl` as a peer and development dependency. If the `dummy` app needs translations for documentation or testing, install `@ember-intl/v1-compat` as a development dependency.
 
 ```sh {:no-line-numbers}
-pnpm add ember-intl
+pnpm add --save-peer ember-intl
 pnpm add -D @ember-intl/v1-compat
 ```
 
@@ -24,10 +31,10 @@ There's nothing more to do for publishing your addon with translations. Ember au
 
 ### v2 addons {#1-install-ember-intl-v2-addons}
 
-Use your package manager to install `ember-intl` (as a dependency or peer dependency).
+Use your package manager to install `ember-intl` as a peer and development dependency.
 
 ```sh {:no-line-numbers}
-pnpm add ember-intl
+pnpm add --save-peer ember-intl
 ```
 
 If your addon provides translations, create the folder `translations` as a sibling to `src`.
