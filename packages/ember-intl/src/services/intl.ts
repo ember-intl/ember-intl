@@ -82,19 +82,21 @@ export default class IntlService extends Service {
   };
   private _timer?: EmberRunTimer;
 
+  private get _localesOrThrow(): Locales {
+    assert(
+      'No locales set. Did you call `intl.setLocale()`?',
+      this._locales?.length,
+    );
+
+    return this._locales;
+  }
+
   get locales(): string[] {
     return Object.keys(this._intls);
   }
 
   get primaryLocale(): string {
-    const primaryLocale = this._locales?.[0];
-
-    assert(
-      'intl.primaryLocale is undefined. Did you call intl.setLocale()?',
-      primaryLocale,
-    );
-
-    return primaryLocale;
+    return this._localesOrThrow[0];
   }
 
   addTranslations(locale: string, translations: TranslationJson): void {
@@ -123,7 +125,7 @@ export default class IntlService extends Service {
   }
 
   exists(key: string, locale?: Locales | string): boolean {
-    const locales = locale ? convertToArray(locale) : this._locales!;
+    const locales = locale ? convertToArray(locale) : this._localesOrThrow;
 
     return locales.some((locale) => {
       return this.getTranslation(key, locale) !== undefined;
@@ -283,7 +285,7 @@ export default class IntlService extends Service {
       return this.createIntl(locale);
     }
 
-    return this.getIntl(this._locales!)!;
+    return this.getIntl(this._localesOrThrow)!;
   }
 
   getTranslation(key: string, locale: string): string | undefined {
@@ -345,7 +347,7 @@ export default class IntlService extends Service {
   ): string {
     const locales: Locales = options?.locale
       ? [options.locale]
-      : this._locales!;
+      : this._localesOrThrow;
 
     let translation: string | undefined;
 

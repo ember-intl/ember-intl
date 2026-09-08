@@ -45,7 +45,7 @@ module('Unit | Service | intl > getters', function (hooks) {
         (error: Error) => {
           return (
             error.message ===
-            'Assertion Failed: intl.primaryLocale is undefined. Did you call intl.setLocale()?'
+            'Assertion Failed: No locales set. Did you call `intl.setLocale()`?'
           );
         },
       );
