@@ -1,5 +1,11 @@
 # ember-intl
 
+## 9.0.2
+
+### Patch Changes
+
+- [#2203](https://github.com/ember-intl/ember-intl/pull/2203) Improved assertion that the user has called `setLocale` ([@bertdeblock](https://github.com/bertdeblock))
+
 ## 9.0.1
 
 ### Patch Changes

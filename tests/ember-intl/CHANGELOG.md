@@ -1,5 +1,11 @@
 # test-app-for-ember-intl
 
+## 2.8.3
+
+### Patch Changes
+
+- [#2203](https://github.com/ember-intl/ember-intl/pull/2203) Improved assertion that the user has called `setLocale` ([@bertdeblock](https://github.com/bertdeblock))
+
 ## 2.8.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 2.0.2
+
+### Patch Changes
+
+- [#2205](https://github.com/ember-intl/ember-intl/pull/2205) Updated compatibility in README ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.1
 
 ### Patch Changes

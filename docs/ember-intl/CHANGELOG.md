@@ -1,5 +1,11 @@
 # docs-app-for-ember-intl
 
+## 2.16.0
+
+### Minor Changes
+
+- [#2202](https://github.com/ember-intl/ember-intl/pull/2202) Recommended installing ember-intl in addons as a peer dependency ([@abeforgit](https://github.com/abeforgit))
+
 ## 2.15.0
 
 ### Minor Changes
