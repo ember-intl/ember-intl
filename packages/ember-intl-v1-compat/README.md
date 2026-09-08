@@ -18,7 +18,7 @@ pnpm add -D @ember-intl/v1-compat
 
 ## Compatibility
 
-- `ember-intl` v8.0.0 or above
+- `ember-intl` v9.0.0 or above
 - Ember.js v4.12 or above
 - Node.js v22 or above
 
