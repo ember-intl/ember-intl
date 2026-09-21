@@ -38,14 +38,14 @@
     "concurrently": "^10.0.5",
     "ember-intl": "workspace:*",
     "ember-source": "~7.2.0",
-    "eslint": "^10.9.1",
-    "oxc-minify": "^0.147.0",
-    "prettier": "^3.9.6",
-    "stylelint": "^17.14.1",
+    "eslint": "^10.11.0",
+    "oxc-minify": "^0.150.0",
+    "prettier": "^3.9.8",
+    "stylelint": "^17.15.0",
     "typescript": "^6.0.3",
-    "vite": "^8.2.2",
-    "vite-plugin-ember": "^0.8.1",
-    "vitepress": "^2.0.0-alpha.19"
+    "vite": "^8.3.0",
+    "vite-plugin-ember": "^0.8.2",
+    "vitepress": "^2.0.0-alpha.20"
   },
   "engines": {
     "node": "22.* || >= 24"
