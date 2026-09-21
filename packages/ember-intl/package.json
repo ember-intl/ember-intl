@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.3",
-    "@formatjs/intl": "^4.2.1",
+    "@formatjs/intl": "^6.1.2",
     "decorator-transforms": "^2.4.0"
   },
   "devDependencies": {

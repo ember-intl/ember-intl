@@ -1,14 +1,15 @@
-import type { IntlShape } from '@formatjs/intl';
+import type { IntlShape, MessageDescriptor } from '@formatjs/intl';
 
-export type FormatMessageParameters = Parameters<
-  IntlShape<string>['formatMessage']
->;
+export type FormatMessageParameters = [
+  descriptor: MessageDescriptor,
+  data?: Parameters<IntlShape<string>['formatMessage']>[1],
+];
 
 export function formatMessage(
   intlShape: IntlShape,
-  ...[descriptor, parameters]: FormatMessageParameters
+  ...[descriptor, data]: FormatMessageParameters
 ): string {
-  return intlShape.formatMessage(descriptor, parameters, {
+  return intlShape.formatMessage(descriptor, data, {
     ignoreTag: true,
   }) as string;
 }
