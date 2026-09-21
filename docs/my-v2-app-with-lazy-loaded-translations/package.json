@@ -1,6 +1,6 @@
 {
   "name": "my-v2-app-with-lazy-loaded-translations",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "private": true,
   "description": "A Vite app to test lazily loaded translations",
   "repository": {
