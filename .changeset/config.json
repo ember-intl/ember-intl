@@ -1,6 +1,7 @@
 {
   "access": "public",
   "changelog": "./formatter.mjs",
+  "ignore": ["@shared-configs/*"],
   "privatePackages": {
     "tag": false,
     "version": true

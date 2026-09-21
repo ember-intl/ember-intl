@@ -50,7 +50,6 @@
     "ember-auto-import": "^2.13.1",
     "ember-cli-babel": "^8.3.2",
     "ember-cli-htmlbars": "^7.0.1",
-    "ember-intl": "workspace:*",
     "ember-template-imports": "^4.4.0"
   },
   "devDependencies": {
@@ -75,18 +74,19 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-intl": "workspace:*",
     "ember-load-initializers": "^3.0.1",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.1.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
-    "eslint": "^10.9.1",
+    "eslint": "^10.11.0",
     "loader.js": "^4.7.0",
-    "prettier": "^3.9.6",
+    "prettier": "^3.9.8",
     "qunit": "^2.26.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",
-    "webpack": "^5.110.2"
+    "webpack": "^5.111.1"
   },
   "peerDependencies": {
     "ember-intl": "workspace:*"
