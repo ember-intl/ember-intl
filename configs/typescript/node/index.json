@@ -1,9 +1,3 @@
 {
-  "extends": ["@tsconfig/node22/tsconfig", "@tsconfig/strictest/tsconfig"],
-  "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "target": "esnext",
-    "verbatimModuleSyntax": true
-  }
+  "extends": "@ijlee2-frontend-configs/typescript/node22"
 }

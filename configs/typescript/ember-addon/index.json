@@ -1,6 +1,3 @@
 {
-  "extends": "@ember/library-tsconfig",
-  "compilerOptions": {
-    "target": "esnext"
-  }
+  "extends": "@ijlee2-frontend-configs/typescript/ember-addon"
 }
