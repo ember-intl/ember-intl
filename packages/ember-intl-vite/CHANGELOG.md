@@ -1,5 +1,11 @@
 # @ember-intl/vite
 
+## 2.0.4
+
+### Patch Changes
+
+- [#2211](https://github.com/ember-intl/ember-intl/pull/2211) Added timestamp to discourage caching the user config across tests ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.3
 
 ### Patch Changes
