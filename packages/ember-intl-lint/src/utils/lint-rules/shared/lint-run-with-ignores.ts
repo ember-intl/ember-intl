@@ -23,7 +23,26 @@ type DataForRecord =
     };
 
 function stringify(userConfig: UserConfig): string {
-  return JSON.stringify(userConfig, null, 2);
+  const regexs: RegExp[] = [];
+
+  function replacer(_key: string, value: RegExp | string): string {
+    if (value instanceof RegExp) {
+      regexs.push(value);
+
+      return `__REGEX-PLACEHOLDER-${regexs.length - 1}__`;
+    }
+
+    return value;
+  }
+
+  return JSON.stringify(userConfig, replacer, 2).replaceAll(
+    /"__REGEX-PLACEHOLDER-(\d+)__"/g,
+    (_match, id) => {
+      const index = Number(id);
+
+      return regexs[index]!.toString();
+    },
+  );
 }
 
 export class LintRunWithIgnores {
@@ -103,9 +122,10 @@ export class LintRunWithIgnores {
     const { ignores, ignoresNew, lintErrors } = this;
 
     const ignoreByExact = ignores.exact.has(data.key);
+    const ignoreByRegex = ignores.regex.some((regex) => regex.test(data.key));
 
     if (data.status === 'fail') {
-      if (!ignoreByExact) {
+      if (!ignoreByExact && !ignoreByRegex) {
         ignoresNew.exact.add(data.key);
         lintErrors.push(data.lintError);
       }

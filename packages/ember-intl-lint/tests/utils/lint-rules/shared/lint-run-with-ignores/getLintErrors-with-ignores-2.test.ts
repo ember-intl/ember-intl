@@ -30,7 +30,7 @@ test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors with i
     status: 'fail',
   });
 
-  assert.deepStrictEqual(lintRun.getLintErrors(), ['global.03']);
+  assert.deepStrictEqual(lintRun.getLintErrors(), []);
 
   lintRun.record({
     key: 'global.04',
@@ -38,5 +38,5 @@ test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors with i
     status: 'fail',
   });
 
-  assert.deepStrictEqual(lintRun.getLintErrors(), ['global.03', 'global.04']);
+  assert.deepStrictEqual(lintRun.getLintErrors(), []);
 });

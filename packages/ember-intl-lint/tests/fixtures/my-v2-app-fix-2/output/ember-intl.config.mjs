@@ -3,10 +3,10 @@ export default {
     "no-inconsistent-messages": {
       "ignores": [
         "components.translation-with-arguments.message",
-        {},
-        {},
-        {},
-        {}
+        /^routes\.index\./,
+        /^routes\.application\./,
+        /\.title$/,
+        /\.message$/
       ]
     },
     "no-missing-keys": {
@@ -14,17 +14,15 @@ export default {
         "components.title",
         "routes.index.description",
         "routes.index.key-to-overwrite",
-        {}
+        /^routes\.application\./
       ]
     },
     "no-unused-keys": {
       "ignores": [
         "components.component-from-app.message",
         "components.title",
-        "components.translation-with-arguments.message",
-        "components.translation-with-arguments.title",
         "routes.index.key-to-overwrite",
-        {}
+        /^components\.translation-with-arguments\./
       ]
     }
   }
