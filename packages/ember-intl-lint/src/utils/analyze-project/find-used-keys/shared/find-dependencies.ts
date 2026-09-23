@@ -1,5 +1,7 @@
 import { AST } from '@codemod-utils/ast-javascript';
 
+import type { TranslationHelper } from '../../../../types/index.js';
+
 type Decorator = ReturnType<typeof AST.builders.decorator>;
 
 export type Dependencies = {
@@ -12,7 +14,10 @@ export type Dependencies = {
   };
 };
 
-export function findDependencies(file: string): Dependencies {
+export function findDependencies(
+  file: string,
+  translationHelpers: TranslationHelper[] = [],
+): Dependencies {
   const dependencies: Dependencies = {
     helpers: {
       t: undefined,
@@ -149,6 +154,28 @@ export function findDependencies(file: string): Dependencies {
           break;
         }
       }
+
+      translationHelpers.forEach((translationHelper) => {
+        if (translationHelper.source !== importPath) {
+          return;
+        }
+
+        const helper = specifiers.find((specifier) => {
+          if (translationHelper.export === 'default') {
+            return specifier.type === 'ImportDefaultSpecifier';
+          }
+
+          return (
+            specifier.type === 'ImportSpecifier' &&
+            specifier.imported.name === translationHelper.export
+          );
+        });
+
+        if (helper) {
+          dependencies.helpers[translationHelper.kind] = helper.local!
+            .name as string;
+        }
+      });
 
       return false;
     },

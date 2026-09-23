@@ -19,6 +19,9 @@ test('utils | config | merge-configs > user config has all options', function ()
       },
       'no-unused-keys': false,
     },
+    translationHelpers: [
+      { export: 't', kind: 't' as const, source: 'my-app/utils/intl' },
+    ],
   };
 
   const config = mergeConfigs(getDefaultConfig(), userConfig);
@@ -37,5 +40,8 @@ test('utils | config | merge-configs > user config has all options', function ()
       },
       'no-unused-keys': false,
     },
+    translationHelpers: [
+      { export: 't', kind: 't', source: 'my-app/utils/intl' },
+    ],
   });
 });
