@@ -2,7 +2,7 @@ import { writeFileSync } from 'node:fs';
 import { EOL } from 'node:os';
 import { join } from 'node:path';
 
-import type { LintErrors } from '../../../types/index.js';
+import type { LintErrors, UserConfig } from '../../../types/index.js';
 import { findUserConfig, getUserConfig } from '../../config/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
@@ -21,6 +21,10 @@ type DataForRecord =
       key: string;
       status: 'pass';
     };
+
+function stringify(userConfig: UserConfig): string {
+  return JSON.stringify(userConfig, null, 2);
+}
 
 export class LintRunWithIgnores {
   private hasIgnoresChanged: boolean;
@@ -43,17 +47,15 @@ export class LintRunWithIgnores {
     const filePath = findUserConfig(projectRoot) ?? 'ember-intl.config.mjs';
     const userConfig = (await getUserConfig(projectRoot)) ?? {};
 
-    const ignores = Array.from(this.ignores).sort();
-
     userConfig.lintRules = {
       ...(userConfig.lintRules ?? {}),
       [this.lintRule]: {
-        ignores,
+        ignores: Array.from(this.ignores).sort(),
       },
     };
 
     const file = [
-      `export default ${JSON.stringify(userConfig, null, 2).replaceAll('\n', EOL)};`,
+      `export default ${stringify(userConfig).replaceAll('\n', EOL)};`,
       '',
     ].join(EOL);
 
