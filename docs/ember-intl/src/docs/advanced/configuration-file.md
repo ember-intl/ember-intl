@@ -193,7 +193,7 @@ export default {
 
 :::
 
-Lint rules may provide options (always configured as an object). For example, a rule may allow the `ignores` option so that you can ignore translation keys that fail. For simplicity, this option only supports exact matches.
+Lint rules may provide options (always configured as an object). For example, a rule may allow the `ignores` option so that you can ignore translation keys that fail.
 
 ::: code-group
 
@@ -201,7 +201,7 @@ Lint rules may provide options (always configured as an object). For example, a 
 export default {
   lintRules: {
     'no-unused-keys': {
-      ignores: ['hello.message'],
+      ignores: ['hello.message', /^backend\.error\./],
     },
   },
 };
