@@ -1,1 +1,5 @@
-export { defineConfig, type UserConfig } from '@ember-intl/utils/config';
+export {
+  defineConfig,
+  type Dependency,
+  type UserConfig,
+} from '@ember-intl/utils/config';

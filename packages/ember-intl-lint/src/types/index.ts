@@ -1,4 +1,4 @@
-import type { Config, UserConfig } from '@ember-intl/utils/config';
+import type { Config, Dependency, UserConfig } from '@ember-intl/utils/config';
 import type { LintRule } from '@ember-intl/utils/lint-rules';
 import type {
   Project as UpstreamProject,
@@ -42,6 +42,7 @@ type Project = UpstreamProject & {
 
 export type {
   CodemodOptions,
+  Dependency,
   IcuArguments,
   IcuArgumentType,
   LintErrors,
