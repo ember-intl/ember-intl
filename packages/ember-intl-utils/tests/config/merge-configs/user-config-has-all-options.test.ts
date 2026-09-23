@@ -16,6 +16,7 @@ test('src | config | merge-configs > user config has all options', function () {
       },
       'no-unused-keys': false,
     },
+    translationHelpers: [{ importName: 't', importPath: 'my-app/utils/intl' }],
   };
 
   const config = mergeConfigs(getDefaultConfig(), userConfig);
@@ -34,5 +35,6 @@ test('src | config | merge-configs > user config has all options', function () {
       },
       'no-unused-keys': false,
     },
+    translationHelpers: [{ importName: 't', importPath: 'my-app/utils/intl' }],
   });
 });

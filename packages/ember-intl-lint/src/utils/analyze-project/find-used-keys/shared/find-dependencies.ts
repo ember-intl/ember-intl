@@ -1,23 +1,31 @@
 import { AST } from '@codemod-utils/ast-javascript';
 
+import type { TranslationHelper } from '../../../../types/index.js';
+
 type Decorator = ReturnType<typeof AST.builders.decorator>;
 
 export type Dependencies = {
-  helpers: {
-    t: string | undefined;
-    tKey: string | undefined;
-  };
+  helpers: Set<string>;
   services: {
     intl: string | undefined;
   };
 };
 
-export function findDependencies(file: string): Dependencies {
+const builtInHelpers: readonly TranslationHelper[] = [
+  { importName: 't', importPath: 'ember-intl' },
+  { importName: 'tKey', importPath: 'ember-intl' },
+  { importName: 'default', importPath: 'ember-intl/helpers/t' },
+  { importName: 'default', importPath: 'ember-intl/helpers/t-key' },
+];
+
+export function findDependencies(
+  file: string,
+  translationHelpers: readonly TranslationHelper[],
+): Dependencies {
+  const helpers = [...builtInHelpers, ...translationHelpers];
+
   const dependencies: Dependencies = {
-    helpers: {
-      t: undefined,
-      tKey: undefined,
-    },
+    helpers: new Set(),
     services: {
       intl: undefined,
     },
@@ -92,63 +100,24 @@ export function findDependencies(file: string): Dependencies {
         return false;
       }
 
-      switch (importPath) {
-        case 'ember-intl': {
-          const t = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportSpecifier' &&
-              specifier.imported.name === 't'
-            );
-          });
+      specifiers.forEach((specifier) => {
+        const importName =
+          specifier.type === 'ImportDefaultSpecifier'
+            ? 'default'
+            : specifier.type === 'ImportSpecifier'
+              ? specifier.imported.name
+              : undefined;
 
-          if (t) {
-            dependencies.helpers.t = t.local!.name as string;
-          }
+        const isHelper = helpers.some((helper) => {
+          return (
+            helper.importPath === importPath && helper.importName === importName
+          );
+        });
 
-          const tKey = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportSpecifier' &&
-              specifier.imported.name === 'tKey'
-            );
-          });
-
-          if (tKey) {
-            dependencies.helpers.tKey = tKey.local!.name as string;
-          }
-
-          break;
+        if (isHelper) {
+          dependencies.helpers.add(specifier.local!.name as string);
         }
-
-        case 'ember-intl/helpers/t': {
-          const t = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportDefaultSpecifier' &&
-              specifier.local!.type === 'Identifier'
-            );
-          });
-
-          if (t) {
-            dependencies.helpers.t = t.local!.name as string;
-          }
-
-          break;
-        }
-
-        case 'ember-intl/helpers/t-key': {
-          const tKey = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportDefaultSpecifier' &&
-              specifier.local!.type === 'Identifier'
-            );
-          });
-
-          if (tKey) {
-            dependencies.helpers.tKey = tKey.local!.name as string;
-          }
-
-          break;
-        }
-      }
+      });
 
       return false;
     },
