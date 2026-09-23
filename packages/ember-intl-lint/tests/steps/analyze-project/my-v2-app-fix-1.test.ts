@@ -1,14 +1,14 @@
 import { assert, loadFixture, test } from '@codemod-utils/tests';
 
 import { analyzeProject } from '../../../src/steps/index.js';
-import { inputProject } from '../../fixtures/my-v2-app-fix/index.js';
+import { inputProject } from '../../fixtures/my-v2-app-fix-1/index.js';
 import { normalizeProject } from '../../helpers/index.js';
 import {
   codemodOptions,
   options,
-} from '../../helpers/shared-test-setups/my-v2-app-fix.js';
+} from '../../helpers/shared-test-setups/my-v2-app-fix-1.js';
 
-test('steps | analyze-project > my-v2-app-fix', async function () {
+test('steps | analyze-project > my-v2-app-fix-1', async function () {
   loadFixture(inputProject, codemodOptions);
 
   const project = await analyzeProject(options);

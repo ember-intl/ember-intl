@@ -2,35 +2,39 @@ import { writeFileSync } from 'node:fs';
 import { EOL } from 'node:os';
 import { join } from 'node:path';
 
-import type { LintErrors } from '../../../types/index.js';
+import type { LintErrors, UserConfig } from '../../../types/index.js';
 import { findUserConfig, getUserConfig } from '../../config/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
-type Args<T extends string> = {
-  ignores?: T[] | undefined;
+type Args = {
+  ignores?: string[] | undefined;
   lintRule: LintRule;
 };
 
-type DataForRecord<T extends string> =
+type DataForRecord =
   | {
-      ignore: T;
+      key: string;
       lintError: string;
       status: 'fail';
     }
   | {
-      ignore: T;
+      key: string;
       status: 'pass';
     };
 
-export class LintRunWithIgnores<T extends string> {
+function stringify(userConfig: UserConfig): string {
+  return JSON.stringify(userConfig, null, 2);
+}
+
+export class LintRunWithIgnores {
   private hasIgnoresChanged: boolean;
-  private ignores: Set<T>;
+  private ignores: Set<string>;
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
-  constructor(args: Args<T>) {
+  constructor(args: Args) {
     this.hasIgnoresChanged = false;
-    this.ignores = new Set<T>(args.ignores ?? []);
+    this.ignores = new Set(args.ignores ?? []);
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
@@ -43,17 +47,15 @@ export class LintRunWithIgnores<T extends string> {
     const filePath = findUserConfig(projectRoot) ?? 'ember-intl.config.mjs';
     const userConfig = (await getUserConfig(projectRoot)) ?? {};
 
-    const ignores = Array.from(this.ignores).sort();
-
     userConfig.lintRules = {
       ...(userConfig.lintRules ?? {}),
       [this.lintRule]: {
-        ignores,
+        ignores: Array.from(this.ignores).sort(),
       },
     };
 
     const file = [
-      `export default ${JSON.stringify(userConfig, null, 2).replaceAll('\n', EOL)};`,
+      `export default ${stringify(userConfig).replaceAll('\n', EOL)};`,
       '',
     ].join(EOL);
 
@@ -67,10 +69,10 @@ export class LintRunWithIgnores<T extends string> {
     return this.lintErrors;
   }
 
-  record(data: DataForRecord<T>): void {
+  record(data: DataForRecord): void {
     if (data.status === 'fail') {
-      if (!this.ignores.has(data.ignore)) {
-        this.ignores.add(data.ignore);
+      if (!this.ignores.has(data.key)) {
+        this.ignores.add(data.key);
         this.hasIgnoresChanged = true;
 
         this.lintErrors.push(data.lintError);
@@ -79,8 +81,8 @@ export class LintRunWithIgnores<T extends string> {
       return;
     }
 
-    if (this.ignores.has(data.ignore)) {
-      this.ignores.delete(data.ignore);
+    if (this.ignores.has(data.key)) {
+      this.ignores.delete(data.key);
       this.hasIgnoresChanged = true;
     }
   }

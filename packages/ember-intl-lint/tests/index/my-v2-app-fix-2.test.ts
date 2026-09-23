@@ -4,10 +4,10 @@ import { runCodemod } from '../../src/index.js';
 import {
   inputProject,
   outputProject,
-} from '../fixtures/my-v2-app-fix/index.js';
-import { codemodOptions } from '../helpers/shared-test-setups/my-v2-app-fix.js';
+} from '../fixtures/my-v2-app-fix-2/index.js';
+import { codemodOptions } from '../helpers/shared-test-setups/my-v2-app-fix-2.js';
 
-test('index > my-v2-app (fix)', async function () {
+test('index > my-v2-app-fix-2', async function () {
   loadFixture(inputProject, codemodOptions);
 
   let lintResults = await runCodemod(codemodOptions);

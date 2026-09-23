@@ -10,21 +10,21 @@ test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors', func
   assert.deepStrictEqual(lintRun.getLintErrors(), []);
 
   lintRun.record({
-    ignore: 'key01',
+    key: 'key01',
     status: 'pass',
   });
 
   assert.deepStrictEqual(lintRun.getLintErrors(), []);
 
   lintRun.record({
-    ignore: 'key02',
+    key: 'key02',
     status: 'pass',
   });
 
   assert.deepStrictEqual(lintRun.getLintErrors(), []);
 
   lintRun.record({
-    ignore: 'key03',
+    key: 'key03',
     lintError: 'key03',
     status: 'fail',
   });
@@ -32,7 +32,7 @@ test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors', func
   assert.deepStrictEqual(lintRun.getLintErrors(), ['key03']);
 
   lintRun.record({
-    ignore: 'key04',
+    key: 'key04',
     lintError: 'key04 (some description)',
     status: 'fail',
   });

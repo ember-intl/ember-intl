@@ -35,7 +35,10 @@ export async function getUserConfig(
 
     const fileURL = pathToFileURL(join(projectRoot, configFilePath));
 
-    const { default: userConfig } = (await import(fileURL.pathname)) as {
+    // Add timestamp to prevent caching the user config across tests
+    const filePath = `${fileURL.href}?update=${Date.now()}`;
+
+    const { default: userConfig } = (await import(filePath)) as {
       default: undefined | UserConfig;
     };
 

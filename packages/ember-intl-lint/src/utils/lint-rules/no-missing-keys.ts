@@ -21,13 +21,13 @@ export async function noMissingKeys(
   project.usedKeys.forEach((key) => {
     if (project.availableKeys.has(key)) {
       return lintRun.record({
-        ignore: key,
+        key,
         status: 'pass',
       });
     }
 
     return lintRun.record({
-      ignore: key,
+      key,
       lintError: key,
       status: 'fail',
     });

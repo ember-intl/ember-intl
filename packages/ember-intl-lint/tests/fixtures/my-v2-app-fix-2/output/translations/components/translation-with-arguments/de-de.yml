@@ -1,0 +1,4 @@
+components:
+  translation-with-arguments:
+    message: "{name} hat {numPhotos}."
+    title: Übersetzung mit Argumenten

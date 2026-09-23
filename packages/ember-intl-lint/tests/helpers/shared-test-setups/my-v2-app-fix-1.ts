@@ -2,7 +2,7 @@ import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
   fix: true,
-  projectRoot: 'tmp/my-v2-app-fix',
+  projectRoot: 'tmp/my-v2-app-fix-1',
 };
 
 const options: Options = {
@@ -20,7 +20,7 @@ const options: Options = {
     },
   },
   fix: true,
-  projectRoot: 'tmp/my-v2-app-fix',
+  projectRoot: 'tmp/my-v2-app-fix-1',
   src: 'app',
 };
 
