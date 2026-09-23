@@ -7,7 +7,7 @@ import { findUserConfig, getUserConfig } from '../../config/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
 type Args = {
-  ignores?: string[] | undefined;
+  ignores?: (RegExp | string)[] | undefined;
   lintRule: LintRule;
 };
 
@@ -27,16 +27,28 @@ function stringify(userConfig: UserConfig): string {
 }
 
 export class LintRunWithIgnores {
-  private ignores: Set<string>;
-  private ignoresNew: Set<string>;
+  private ignores: {
+    exact: Set<string>;
+    regex: RegExp[];
+  };
+  private ignoresNew: {
+    exact: Set<string>;
+    regex: RegExp[];
+  };
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
   constructor(args: Args) {
     const ignores = args.ignores ?? [];
 
-    this.ignores = new Set(ignores);
-    this.ignoresNew = new Set(ignores);
+    this.ignores = {
+      exact: new Set(ignores.filter((ignore) => typeof ignore === 'string')),
+      regex: ignores.filter((ignore) => ignore instanceof RegExp),
+    };
+    this.ignoresNew = {
+      exact: new Set(ignores.filter((ignore) => typeof ignore === 'string')),
+      regex: ignores.filter((ignore) => ignore instanceof RegExp),
+    };
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
@@ -52,7 +64,10 @@ export class LintRunWithIgnores {
     userConfig.lintRules = {
       ...(userConfig.lintRules ?? {}),
       [this.lintRule]: {
-        ignores: Array.from(this.ignoresNew).sort(),
+        ignores: [
+          ...Array.from(this.ignoresNew.exact).sort(),
+          ...this.ignoresNew.regex.sort(),
+        ],
       },
     };
 
@@ -74,7 +89,8 @@ export class LintRunWithIgnores {
   private hasIgnoresChanged(): boolean {
     const { ignores, ignoresNew } = this;
 
-    const exactChanged = ignoresNew.symmetricDifference(ignores).size > 0;
+    const exactChanged =
+      ignoresNew.exact.symmetricDifference(ignores.exact).size > 0;
 
     if (exactChanged) {
       return true;
@@ -86,11 +102,11 @@ export class LintRunWithIgnores {
   record(data: DataForRecord): void {
     const { ignores, ignoresNew, lintErrors } = this;
 
-    const ignoreByExact = ignores.has(data.key);
+    const ignoreByExact = ignores.exact.has(data.key);
 
     if (data.status === 'fail') {
       if (!ignoreByExact) {
-        ignoresNew.add(data.key);
+        ignoresNew.exact.add(data.key);
         lintErrors.push(data.lintError);
       }
 
@@ -98,7 +114,7 @@ export class LintRunWithIgnores {
     }
 
     if (ignoreByExact) {
-      ignoresNew.delete(data.key);
+      ignoresNew.exact.delete(data.key);
     }
   }
 }
