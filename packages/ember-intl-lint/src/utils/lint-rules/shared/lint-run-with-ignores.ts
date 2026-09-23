@@ -6,31 +6,31 @@ import type { LintErrors } from '../../../types/index.js';
 import { findUserConfig, getUserConfig } from '../../config/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
-type Args<T extends string> = {
-  ignores?: T[] | undefined;
+type Args = {
+  ignores?: string[] | undefined;
   lintRule: LintRule;
 };
 
-type DataForRecord<T extends string> =
+type DataForRecord =
   | {
-      ignore: T;
+      ignore: string;
       lintError: string;
       status: 'fail';
     }
   | {
-      ignore: T;
+      ignore: string;
       status: 'pass';
     };
 
-export class LintRunWithIgnores<T extends string> {
+export class LintRunWithIgnores {
   private hasIgnoresChanged: boolean;
-  private ignores: Set<T>;
+  private ignores: Set<string>;
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
-  constructor(args: Args<T>) {
+  constructor(args: Args) {
     this.hasIgnoresChanged = false;
-    this.ignores = new Set<T>(args.ignores ?? []);
+    this.ignores = new Set(args.ignores ?? []);
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
@@ -67,7 +67,7 @@ export class LintRunWithIgnores<T extends string> {
     return this.lintErrors;
   }
 
-  record(data: DataForRecord<T>): void {
+  record(data: DataForRecord): void {
     if (data.status === 'fail') {
       if (!this.ignores.has(data.ignore)) {
         this.ignores.add(data.ignore);

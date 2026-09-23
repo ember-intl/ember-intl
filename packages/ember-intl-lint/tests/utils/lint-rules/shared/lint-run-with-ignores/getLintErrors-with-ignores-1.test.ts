@@ -4,7 +4,7 @@ import { LintRunWithIgnores } from '../../../../../src/utils/lint-rules/shared/i
 
 test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors with ignores (1)', function () {
   const lintRun = new LintRunWithIgnores({
-    ignores: ['key02', 'key04'] as string[],
+    ignores: ['key02', 'key04'],
     lintRule: 'no-unused-keys',
   });
 
