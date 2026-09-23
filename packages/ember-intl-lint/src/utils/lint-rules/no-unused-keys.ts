@@ -21,7 +21,7 @@ export async function noUnusedKeys(
   project.availableKeys.forEach((localeToData, key) => {
     if (project.usedKeys.has(key)) {
       return lintRun.record({
-        ignore: key,
+        key,
         status: 'pass',
       });
     }
@@ -38,13 +38,13 @@ export async function noUnusedKeys(
 
     if (isTranslationExternal) {
       return lintRun.record({
-        ignore: key,
+        key,
         status: 'pass',
       });
     }
 
     return lintRun.record({
-      ignore: key,
+      key,
       lintError: key,
       status: 'fail',
     });

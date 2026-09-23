@@ -13,12 +13,12 @@ type Args = {
 
 type DataForRecord =
   | {
-      ignore: string;
+      key: string;
       lintError: string;
       status: 'fail';
     }
   | {
-      ignore: string;
+      key: string;
       status: 'pass';
     };
 
@@ -69,8 +69,8 @@ export class LintRunWithIgnores {
 
   record(data: DataForRecord): void {
     if (data.status === 'fail') {
-      if (!this.ignores.has(data.ignore)) {
-        this.ignores.add(data.ignore);
+      if (!this.ignores.has(data.key)) {
+        this.ignores.add(data.key);
         this.hasIgnoresChanged = true;
 
         this.lintErrors.push(data.lintError);
@@ -79,8 +79,8 @@ export class LintRunWithIgnores {
       return;
     }
 
-    if (this.ignores.has(data.ignore)) {
-      this.ignores.delete(data.ignore);
+    if (this.ignores.has(data.key)) {
+      this.ignores.delete(data.key);
       this.hasIgnoresChanged = true;
     }
   }
