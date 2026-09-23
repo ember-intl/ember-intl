@@ -2,9 +2,9 @@ import { assert, test } from '@codemod-utils/tests';
 
 import { LintRunWithIgnores } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors (has ignores)', function () {
+test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors with ignores (1)', function () {
   const lintRun = new LintRunWithIgnores({
-    ignores: ['key02', 'key03', 'key04'] as string[],
+    ignores: ['key02', 'key04'] as string[],
     lintRule: 'no-unused-keys',
   });
 
@@ -30,13 +30,13 @@ test('utils | lint-rules | shared | lint-run-with-ignores > getLintErrors (has i
     status: 'fail',
   });
 
-  assert.deepStrictEqual(lintRun.getLintErrors(), []);
+  assert.deepStrictEqual(lintRun.getLintErrors(), ['key03']);
 
   lintRun.record({
     ignore: 'key04',
-    lintError: 'key04 (some description)',
+    lintError: 'key04',
     status: 'fail',
   });
 
-  assert.deepStrictEqual(lintRun.getLintErrors(), []);
+  assert.deepStrictEqual(lintRun.getLintErrors(), ['key03']);
 });
