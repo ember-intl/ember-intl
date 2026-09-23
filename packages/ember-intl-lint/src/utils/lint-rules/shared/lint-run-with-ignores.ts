@@ -7,7 +7,7 @@ import { findUserConfig, getUserConfig } from '../../config/index.js';
 import type { LintRule } from '../../lint-rules.js';
 
 type Args = {
-  ignores?: string[] | undefined;
+  ignores?: (RegExp | string)[] | undefined;
   lintRule: LintRule;
 };
 
@@ -22,25 +22,60 @@ type DataForRecord =
       status: 'pass';
     };
 
+type Ignores = {
+  exact: Set<string>;
+  regex: RegExp[];
+};
+
 function stringify(userConfig: UserConfig): string {
-  return JSON.stringify(userConfig, null, 2);
+  const regexs: RegExp[] = [];
+
+  function replacer(_key: string, value: RegExp | string): string {
+    if (value instanceof RegExp) {
+      regexs.push(value);
+
+      return `__REGEX-PLACEHOLDER-${regexs.length - 1}__`;
+    }
+
+    return value;
+  }
+
+  return JSON.stringify(userConfig, replacer, 2).replaceAll(
+    /"__REGEX-PLACEHOLDER-(\d+)__"/g,
+    (_match, id) => {
+      const index = Number(id);
+
+      return regexs[index]!.toString();
+    },
+  );
+}
+
+function toSetOfStrings(regexes: RegExp[]): Set<string> {
+  return new Set(regexes.map((regex) => regex.toString()));
 }
 
 export class LintRunWithIgnores {
-  private hasIgnoresChanged: boolean;
-  private ignores: Set<string>;
+  private ignores: Ignores;
+  private keysFailed: string[];
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
   constructor(args: Args) {
-    this.hasIgnoresChanged = false;
-    this.ignores = new Set(args.ignores ?? []);
+    const ignores = args.ignores ?? [];
+
+    this.ignores = {
+      exact: new Set(ignores.filter((ignore) => typeof ignore === 'string')),
+      regex: ignores.filter((ignore) => ignore instanceof RegExp),
+    };
+    this.keysFailed = [];
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
 
   async fix(projectRoot: string): Promise<void> {
-    if (!this.hasIgnoresChanged) {
+    const ignoresNew = this.getIgnoresNew();
+
+    if (ignoresNew === undefined) {
       return;
     }
 
@@ -50,7 +85,10 @@ export class LintRunWithIgnores {
     userConfig.lintRules = {
       ...(userConfig.lintRules ?? {}),
       [this.lintRule]: {
-        ignores: Array.from(this.ignores).sort(),
+        ignores: [
+          ...Array.from(ignoresNew.exact).sort(),
+          ...ignoresNew.regex.sort(),
+        ],
       },
     };
 
@@ -65,25 +103,54 @@ export class LintRunWithIgnores {
     this.lintErrors = [];
   }
 
+  private getIgnoresNew(): Ignores | undefined {
+    const { ignores, keysFailed } = this;
+
+    const ignoresNew: Ignores = {
+      exact: new Set(keysFailed),
+      regex: [],
+    };
+
+    ignores.regex.forEach((regex) => {
+      const used = keysFailed.some((key) => regex.test(key));
+
+      if (used) {
+        ignoresNew.regex.push(regex);
+      }
+    });
+
+    if (ignoresNew.exact.symmetricDifference(ignores.exact).size > 0) {
+      return ignoresNew;
+    }
+
+    const regexes = toSetOfStrings(ignores.regex);
+    const regexesNew = toSetOfStrings(ignoresNew.regex);
+
+    if (regexesNew.symmetricDifference(regexes).size > 0) {
+      return ignoresNew;
+    }
+
+    return undefined;
+  }
+
   getLintErrors(): LintErrors {
     return this.lintErrors;
   }
 
   record(data: DataForRecord): void {
-    if (data.status === 'fail') {
-      if (!this.ignores.has(data.key)) {
-        this.ignores.add(data.key);
-        this.hasIgnoresChanged = true;
-
-        this.lintErrors.push(data.lintError);
-      }
-
+    if (data.status === 'pass') {
       return;
     }
 
-    if (this.ignores.has(data.key)) {
-      this.ignores.delete(data.key);
-      this.hasIgnoresChanged = true;
+    const { ignores, keysFailed, lintErrors } = this;
+
+    keysFailed.push(data.key);
+
+    const ignoreByExact = ignores.exact.has(data.key);
+    const ignoreByRegex = ignores.regex.some((regex) => regex.test(data.key));
+
+    if (!ignoreByExact && !ignoreByRegex) {
+      lintErrors.push(data.lintError);
     }
   }
 }

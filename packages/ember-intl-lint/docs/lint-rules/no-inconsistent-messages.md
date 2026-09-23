@@ -14,7 +14,7 @@ A message is consistent if it meets these conditions:
 
 ### ignores
 
-Ignore keys that fail this rule.
+Ignore keys that fail this rule. You can use strings to do an exact match, or regular expressions to do a partial match.
 
 ```js
 'no-inconsistent-messages': {

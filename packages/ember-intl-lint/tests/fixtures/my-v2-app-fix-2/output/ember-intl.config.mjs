@@ -2,14 +2,13 @@ export default {
   "lintRules": {
     "no-inconsistent-messages": {
       "ignores": [
-        "components.translation-with-arguments.message"
+        "components.translation-with-arguments.message",
+        /\.message$/
       ]
     },
     "no-missing-keys": {
       "ignores": [
-        "components.title",
-        "routes.index.description",
-        "routes.index.key-to-overwrite"
+        "routes.index.description"
       ]
     },
     "no-unused-keys": {
@@ -18,7 +17,8 @@ export default {
         "components.title",
         "components.translation-with-arguments.message",
         "components.translation-with-arguments.title",
-        "routes.index.key-to-overwrite"
+        "routes.index.key-to-overwrite",
+        /^components\.translation-with-arguments\./
       ]
     }
   }
