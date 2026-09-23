@@ -22,6 +22,11 @@ type DataForRecord =
       status: 'pass';
     };
 
+type Ignores = {
+  exact: Set<string>;
+  regex: RegExp[];
+};
+
 function stringify(userConfig: UserConfig): string {
   const regexs: RegExp[] = [];
 
@@ -45,15 +50,13 @@ function stringify(userConfig: UserConfig): string {
   );
 }
 
+function toSetOfStrings(regexes: RegExp[]): Set<string> {
+  return new Set(regexes.map((regex) => regex.toString()));
+}
+
 export class LintRunWithIgnores {
-  private ignores: {
-    exact: Set<string>;
-    regex: RegExp[];
-  };
-  private ignoresNew: {
-    exact: Set<string>;
-    regex: RegExp[];
-  };
+  private ignores: Ignores;
+  private keysFailed: string[];
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
@@ -64,16 +67,15 @@ export class LintRunWithIgnores {
       exact: new Set(ignores.filter((ignore) => typeof ignore === 'string')),
       regex: ignores.filter((ignore) => ignore instanceof RegExp),
     };
-    this.ignoresNew = {
-      exact: new Set(ignores.filter((ignore) => typeof ignore === 'string')),
-      regex: ignores.filter((ignore) => ignore instanceof RegExp),
-    };
+    this.keysFailed = [];
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
 
   async fix(projectRoot: string): Promise<void> {
-    if (!this.hasIgnoresChanged()) {
+    const ignoresNew = this.getIgnoresNew();
+
+    if (ignoresNew === undefined) {
       return;
     }
 
@@ -84,8 +86,8 @@ export class LintRunWithIgnores {
       ...(userConfig.lintRules ?? {}),
       [this.lintRule]: {
         ignores: [
-          ...Array.from(this.ignoresNew.exact).sort(),
-          ...this.ignoresNew.regex.sort(),
+          ...Array.from(ignoresNew.exact).sort(),
+          ...ignoresNew.regex.sort(),
         ],
       },
     };
@@ -101,40 +103,54 @@ export class LintRunWithIgnores {
     this.lintErrors = [];
   }
 
+  private getIgnoresNew(): Ignores | undefined {
+    const { ignores, keysFailed } = this;
+
+    const ignoresNew: Ignores = {
+      exact: new Set(keysFailed),
+      regex: [],
+    };
+
+    ignores.regex.forEach((regex) => {
+      const used = keysFailed.some((key) => regex.test(key));
+
+      if (used) {
+        ignoresNew.regex.push(regex);
+      }
+    });
+
+    if (ignoresNew.exact.symmetricDifference(ignores.exact).size > 0) {
+      return ignoresNew;
+    }
+
+    const regexes = toSetOfStrings(ignores.regex);
+    const regexesNew = toSetOfStrings(ignoresNew.regex);
+
+    if (regexesNew.symmetricDifference(regexes).size > 0) {
+      return ignoresNew;
+    }
+
+    return undefined;
+  }
+
   getLintErrors(): LintErrors {
     return this.lintErrors;
   }
 
-  private hasIgnoresChanged(): boolean {
-    const { ignores, ignoresNew } = this;
-
-    const exactChanged =
-      ignoresNew.exact.symmetricDifference(ignores.exact).size > 0;
-
-    if (exactChanged) {
-      return true;
+  record(data: DataForRecord): void {
+    if (data.status === 'pass') {
+      return;
     }
 
-    return false;
-  }
+    const { ignores, keysFailed, lintErrors } = this;
 
-  record(data: DataForRecord): void {
-    const { ignores, ignoresNew, lintErrors } = this;
+    keysFailed.push(data.key);
 
     const ignoreByExact = ignores.exact.has(data.key);
     const ignoreByRegex = ignores.regex.some((regex) => regex.test(data.key));
 
-    if (data.status === 'fail') {
-      if (!ignoreByExact && !ignoreByRegex) {
-        ignoresNew.exact.add(data.key);
-        lintErrors.push(data.lintError);
-      }
-
-      return;
-    }
-
-    if (ignoreByExact) {
-      ignoresNew.exact.delete(data.key);
+    if (!ignoreByExact && !ignoreByRegex) {
+      lintErrors.push(data.lintError);
     }
   }
 }

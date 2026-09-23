@@ -3,24 +3,20 @@ export default {
     "no-inconsistent-messages": {
       "ignores": [
         "components.translation-with-arguments.message",
-        /^routes\.index\./,
-        /^routes\.application\./,
-        /\.title$/,
         /\.message$/
       ]
     },
     "no-missing-keys": {
       "ignores": [
-        "components.title",
-        "routes.index.description",
-        "routes.index.key-to-overwrite",
-        /^routes\.application\./
+        "routes.index.description"
       ]
     },
     "no-unused-keys": {
       "ignores": [
         "components.component-from-app.message",
         "components.title",
+        "components.translation-with-arguments.message",
+        "components.translation-with-arguments.title",
         "routes.index.key-to-overwrite",
         /^components\.translation-with-arguments\./
       ]
