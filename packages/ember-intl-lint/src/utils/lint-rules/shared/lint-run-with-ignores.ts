@@ -27,7 +27,6 @@ function stringify(userConfig: UserConfig): string {
 }
 
 export class LintRunWithIgnores {
-  private hasIgnoresChanged: boolean;
   private ignores: Set<string>;
   private ignoresNew: Set<string>;
   private lintErrors: LintErrors;
@@ -36,7 +35,6 @@ export class LintRunWithIgnores {
   constructor(args: Args) {
     const ignores = args.ignores ?? [];
 
-    this.hasIgnoresChanged = false;
     this.ignores = new Set(ignores);
     this.ignoresNew = new Set(ignores);
     this.lintErrors = [];
@@ -44,7 +42,7 @@ export class LintRunWithIgnores {
   }
 
   async fix(projectRoot: string): Promise<void> {
-    if (!this.hasIgnoresChanged) {
+    if (!this.hasIgnoresChanged()) {
       return;
     }
 
@@ -73,21 +71,34 @@ export class LintRunWithIgnores {
     return this.lintErrors;
   }
 
-  record(data: DataForRecord): void {
-    if (data.status === 'fail') {
-      if (!this.ignores.has(data.key)) {
-        this.ignoresNew.add(data.key);
-        this.hasIgnoresChanged = true;
+  private hasIgnoresChanged(): boolean {
+    const { ignores, ignoresNew } = this;
 
-        this.lintErrors.push(data.lintError);
+    const exactChanged = ignoresNew.symmetricDifference(ignores).size > 0;
+
+    if (exactChanged) {
+      return true;
+    }
+
+    return false;
+  }
+
+  record(data: DataForRecord): void {
+    const { ignores, ignoresNew, lintErrors } = this;
+
+    const ignoreByExact = ignores.has(data.key);
+
+    if (data.status === 'fail') {
+      if (!ignoreByExact) {
+        ignoresNew.add(data.key);
+        lintErrors.push(data.lintError);
       }
 
       return;
     }
 
-    if (this.ignores.has(data.key)) {
-      this.ignoresNew.delete(data.key);
-      this.hasIgnoresChanged = true;
+    if (ignoreByExact) {
+      ignoresNew.delete(data.key);
     }
   }
 }
