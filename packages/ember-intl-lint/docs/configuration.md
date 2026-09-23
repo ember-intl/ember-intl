@@ -5,6 +5,7 @@ A configuration file is used to handle these cases:
 - Account for translations from addons
 - Account for build options
 - Configure lint rules
+- Recognize your own translation function
 
 To get started, create the file `ember-intl.config.{js,mjs}` in the root directory and default-export an object.
 
@@ -23,6 +24,10 @@ type UserConfig = Partial<{
     translationsDir: string;
   }>;
   lintRules: Partial<Record<LintRule, boolean | LintRuleOptions>>;
+  translationHelpers: readonly {
+    importName: string;
+    importPath: string;
+  }[];
 }>;
 ```
 
@@ -98,3 +103,24 @@ export default {
 ```
 
 See [docs/lint-rules](./lint-rules) to learn more about each rule and the options that it supports.
+
+## translationHelpers
+
+This option lets the linter recognize whichever translation function the config names, so it is no longer hard-coupled to ember-intl's own `t`.
+
+```js
+export default {
+  translationHelpers: [
+    { importName: 't', importPath: 'my-app/utils/intl' },
+    { importName: 'default', importPath: 'my-app/utils/translation-key' },
+  ],
+};
+```
+
+`importName` is a named export, or `'default'`. A helper listed here is treated like ember-intl's `t`. ember-intl's own `t`, `tKey` and the `intl` service stay recognized.
+
+Limitations:
+
+- `importPath` is matched exactly as written in your code, including any file extension.
+- The key must be the first argument, as a string, of a direct call (`t('key')`) or a helper in a `<template>` tag (`{{t "key"}}`).
+- Classic `.hbs` templates and namespace imports (`import * as intl from '...'`) are not covered.
