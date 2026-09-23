@@ -29,12 +29,16 @@ function stringify(userConfig: UserConfig): string {
 export class LintRunWithIgnores {
   private hasIgnoresChanged: boolean;
   private ignores: Set<string>;
+  private ignoresNew: Set<string>;
   private lintErrors: LintErrors;
   private lintRule: LintRule;
 
   constructor(args: Args) {
+    const ignores = args.ignores ?? [];
+
     this.hasIgnoresChanged = false;
-    this.ignores = new Set(args.ignores ?? []);
+    this.ignores = new Set(ignores);
+    this.ignoresNew = new Set(ignores);
     this.lintErrors = [];
     this.lintRule = args.lintRule;
   }
@@ -50,7 +54,7 @@ export class LintRunWithIgnores {
     userConfig.lintRules = {
       ...(userConfig.lintRules ?? {}),
       [this.lintRule]: {
-        ignores: Array.from(this.ignores).sort(),
+        ignores: Array.from(this.ignoresNew).sort(),
       },
     };
 
@@ -72,7 +76,7 @@ export class LintRunWithIgnores {
   record(data: DataForRecord): void {
     if (data.status === 'fail') {
       if (!this.ignores.has(data.key)) {
-        this.ignores.add(data.key);
+        this.ignoresNew.add(data.key);
         this.hasIgnoresChanged = true;
 
         this.lintErrors.push(data.lintError);
@@ -82,7 +86,7 @@ export class LintRunWithIgnores {
     }
 
     if (this.ignores.has(data.key)) {
-      this.ignores.delete(data.key);
+      this.ignoresNew.delete(data.key);
       this.hasIgnoresChanged = true;
     }
   }
