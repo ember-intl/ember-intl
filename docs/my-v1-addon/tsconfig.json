@@ -14,7 +14,7 @@
       "*": ["./types/*"]
     },
     "rootDir": ".",
-    "types": ["@glint/ember-tsc/types", "ember-source/types"]
+    "types": ["@glint/ember-tsc/types", "@types/qunit", "ember-source/types"]
   },
   "include": [
     "addon/**/*",
