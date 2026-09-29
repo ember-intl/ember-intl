@@ -217,7 +217,7 @@ export default class ApplicationRoute extends Route {
 
 > [!IMPORTANT]
 >
-> Addition setup is needed for [loading translations in rendering and unit tests](./test-helpers/custom-setups#add-translations).
+> Addition setup is needed for [loading translations in rendering and unit tests](./testing/custom-setups#add-translations).
 
 
 ## 5. Configure linters {#5-configure-linters}

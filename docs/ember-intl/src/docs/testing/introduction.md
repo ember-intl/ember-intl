@@ -1,4 +1,4 @@
-# Test helpers
+# Testing
 
 `ember-intl` provides test helpers so that you can test code that depend on a locale. Every test helper has a camel-cased name and can be name-imported from `test-support`.
 
