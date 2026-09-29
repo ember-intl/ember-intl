@@ -2,6 +2,8 @@ allowBuilds:
   core-js: false
   unrs-resolver: false
 
+autoDedupe: true
+
 autoInstallPeers: false
 
 minimumReleaseAge: 720
@@ -12,7 +14,7 @@ minimumReleaseAgeExclude:
 
 overrides:
   ember-cli-htmlbars: ^7.0.1
-  vite: ^8.3.0
+  vite: ^8.3.1
 
 packages:
   - "configs/**"
