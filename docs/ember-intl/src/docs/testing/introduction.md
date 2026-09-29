@@ -1,4 +1,4 @@
-# Test helpers
+# Testing
 
 `ember-intl` provides test helpers so that you can test code that depend on a locale. Every test helper has a camel-cased name and can be name-imported from `test-support`.
 
@@ -22,3 +22,7 @@ module('Integration | Component | hello', function (hooks) {
 ```
 
 The test helper that you will most frequently use is `setupIntl`. You may want to check the [documentation for `setupIntl`](./setup-intl) first.
+
+> [!IMPORTANT]
+>
+> In v2 apps, you will need to load translations in rendering and unit tests. For more information, see [Custom setups - Add translations](./custom-setups#add-translations).

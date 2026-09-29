@@ -55,7 +55,7 @@ function boostDocument(documentId: string, term: string): number {
     return 3;
   }
 
-  if (path.startsWith('/test-helpers/')) {
+  if (path.startsWith('/testing/')) {
     return 1;
   }
 

@@ -91,23 +91,27 @@ export const sidebar: DefaultTheme.Sidebar = [
     collapsed: true,
     items: [
       {
-        link: '/docs/test-helpers/introduction',
+        link: '/docs/testing/introduction',
         text: 'Introduction',
       },
       {
-        link: '/docs/test-helpers/add-translations',
+        link: '/docs/testing/custom-setups',
+        text: 'Custom setups',
+      },
+      {
+        link: '/docs/testing/add-translations',
         text: 'addTranslations',
       },
       {
-        link: '/docs/test-helpers/set-locale',
+        link: '/docs/testing/set-locale',
         text: 'setLocale',
       },
       {
-        link: '/docs/test-helpers/setup-intl',
+        link: '/docs/testing/setup-intl',
         text: 'setupIntl',
       },
     ],
-    text: 'Test Helpers',
+    text: 'Testing',
   },
   {
     collapsed: true,
