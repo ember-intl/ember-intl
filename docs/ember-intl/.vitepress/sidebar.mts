@@ -95,6 +95,10 @@ export const sidebar: DefaultTheme.Sidebar = [
         text: 'Introduction',
       },
       {
+        link: '/docs/test-helpers/custom-setups',
+        text: 'Custom setups',
+      },
+      {
         link: '/docs/test-helpers/add-translations',
         text: 'addTranslations',
       },
