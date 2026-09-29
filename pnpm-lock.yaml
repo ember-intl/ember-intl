@@ -472,6 +472,9 @@ importers:
       ember-source:
         specifier: ~6.12.0
         version: 6.12.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -607,6 +610,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -748,6 +754,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -889,6 +898,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1030,6 +1042,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1171,6 +1186,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1315,6 +1333,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1460,6 +1481,9 @@ importers:
       ember-template-imports:
         specifier: ^4.4.0
         version: 4.4.0(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1668,6 +1692,9 @@ importers:
       ember-source:
         specifier: ~7.3.0
         version: 7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1797,6 +1824,9 @@ importers:
       ember-source:
         specifier: ~7.3.0
         version: 7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -1926,6 +1956,9 @@ importers:
       ember-source:
         specifier: ~7.3.0
         version: 7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -2055,6 +2088,9 @@ importers:
       ember-source:
         specifier: ~7.3.0
         version: 7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -2359,6 +2395,9 @@ importers:
       ember-source:
         specifier: ~7.3.0
         version: 7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -2540,6 +2579,9 @@ importers:
       ember-source:
         specifier: ~7.3.0
         version: 7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)
+      ember-testem:
+        specifier: ^0.3.0
+        version: 0.3.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@10.2.2)
@@ -6669,6 +6711,11 @@ packages:
   ember-template-imports@4.4.0:
     resolution: {integrity: sha512-HNOHabTEMbRluci1uScvh3ljMDo9E46dHHNcJAIf5yjOhIQ/zN4Y0DVDWrRfcbihlHvt4v/iF69G+8tffC1YkA==}
     engines: {node: 16.* || >= 18}
+
+  ember-testem@0.3.0:
+    resolution: {integrity: sha512-rm3KUeE3wIHuYXA5sQ7qmJdkqxVZNadDwCE0PXDF1a6D/Ow63Qr/Q1BHu9T4oRoWC8TqgLVIXjILUHdDYeSBXQ==}
+    engines: {node: 22.* || >= 24}
+    hasBin: true
 
   ember-truth-helpers@5.0.0:
     resolution: {integrity: sha512-PnQd6D6hvlNC3k6gBu0SC2cvfXX6wH6W0nToomIIoxqyrD5cllk0zBh/j/1H0KsczVCWeuF9PWj5xJgL4jQAGg==}
@@ -16300,6 +16347,118 @@ snapshots:
       ember-cli-version-checker: 5.1.2(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
+
+  ember-testem@0.3.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8):
+    dependencies:
+      chokidar: 5.0.0
+      testem: 3.21.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
+      yargs: 18.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - arc-templates
+      - atpl
+      - bracket-template
+      - bufferutil
+      - coffee-script
+      - dot
+      - dust
+      - dustjs-helpers
+      - dustjs-linkedin
+      - eco
+      - ect
+      - ejs
+      - haml-coffee
+      - hamlet
+      - hamljs
+      - handlebars
+      - hogan.js
+      - htmling
+      - jazz
+      - jqtpl
+      - just
+      - liquid-node
+      - liquor
+      - mote
+      - nunjucks
+      - plates
+      - pug
+      - qejs
+      - ractive
+      - react
+      - react-dom
+      - slm
+      - supports-color
+      - swig
+      - swig-templates
+      - teacup
+      - templayed
+      - then-pug
+      - tinyliquid
+      - toffee
+      - twig
+      - twing
+      - underscore
+      - utf-8-validate
+      - vash
+      - velocityjs
+      - walrus
+      - whiskers
+
+  ember-testem@0.3.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8):
+    dependencies:
+      chokidar: 5.0.0
+      testem: 3.21.0(@babel/core@8.0.6)(ejs@3.1.10)(handlebars@4.7.9)(supports-color@10.2.2)(underscore@1.13.8)
+      yargs: 18.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - arc-templates
+      - atpl
+      - bracket-template
+      - bufferutil
+      - coffee-script
+      - dot
+      - dust
+      - dustjs-helpers
+      - dustjs-linkedin
+      - eco
+      - ect
+      - ejs
+      - haml-coffee
+      - hamlet
+      - hamljs
+      - handlebars
+      - hogan.js
+      - htmling
+      - jazz
+      - jqtpl
+      - just
+      - liquid-node
+      - liquor
+      - mote
+      - nunjucks
+      - plates
+      - pug
+      - qejs
+      - ractive
+      - react
+      - react-dom
+      - slm
+      - supports-color
+      - swig
+      - swig-templates
+      - teacup
+      - templayed
+      - then-pug
+      - tinyliquid
+      - toffee
+      - twig
+      - twing
+      - underscore
+      - utf-8-validate
+      - vash
+      - velocityjs
+      - walrus
+      - whiskers
 
   ember-truth-helpers@5.0.0(supports-color@10.2.2):
     dependencies:

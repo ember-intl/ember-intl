@@ -14,6 +14,7 @@
   },
   "scripts": {
     "build": "vite build",
+    "build:test": "NODE_ENV=development vite build --config vite.test.config.mts --mode development",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
@@ -24,7 +25,8 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
     "start": "vite",
-    "test": "NODE_ENV=development vite build --mode development && ember test --path dist --test-port 0"
+    "test": "pnpm build:test && ember-test --port 0",
+    "test:watch": "concurrently \"pnpm build:test --watch\" && \"pnpm ember-test --server\" --names build,test"
   },
   "devDependencies": {
     "@babel/core": "^8.0.6",
@@ -64,6 +66,7 @@
     "ember-qunit": "^9.1.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~7.3.0",
+    "ember-testem": "^0.3.0",
     "eslint": "^10.11.0",
     "prettier": "^3.9.9",
     "qunit": "^3.0.0",

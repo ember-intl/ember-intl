@@ -32,8 +32,9 @@
     "test": "tests"
   },
   "scripts": {
-    "_build": "ember build --environment=production",
     "_prepack": "tsc --project tsconfig.declarations.json",
+    "build": "ember build --environment production",
+    "build:test": "ember build --environment test",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" && pnpm format",
@@ -44,7 +45,8 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "glint",
     "start": "ember serve",
-    "test": "ember test --test-port 0"
+    "test": "pnpm build:test && ember-test --port 0",
+    "test:watch": "concurrently \"pnpm build:test --watch\" && \"pnpm ember-test --server\" --names build,test"
   },
   "dependencies": {
     "@babel/core": "^7.29.7",
@@ -86,6 +88,7 @@
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.0",
     "ember-template-imports": "^4.4.0",
+    "ember-testem": "^0.3.0",
     "eslint": "^10.11.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.9",
