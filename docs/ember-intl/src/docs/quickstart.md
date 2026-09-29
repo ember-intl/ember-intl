@@ -215,6 +215,10 @@ export default class ApplicationRoute extends Route {
 > 
 > File paths prefixed with `virtual:` are called a "virtual module" in Vite. They don't physically exist on disk.
 
+> [!IMPORTANT]
+>
+> Addition setup is needed for [loading translations in rendering and unit tests](./test-helpers/custom-setups#add-translations).
+
 
 ## 5. Configure linters {#5-configure-linters}
 

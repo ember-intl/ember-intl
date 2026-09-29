@@ -22,3 +22,7 @@ module('Integration | Component | hello', function (hooks) {
 ```
 
 The test helper that you will most frequently use is `setupIntl`. You may want to check the [documentation for `setupIntl`](./setup-intl) first.
+
+> [!IMPORTANT]
+>
+> In v2 apps, you will need to load translations in rendering and unit tests. For more information, see [Custom setups - Add translations](./custom-setups#add-translations).
