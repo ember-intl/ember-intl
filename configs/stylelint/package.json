@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@shared-configs/prettier": "workspace:*",
-    "prettier": "^3.9.8"
+    "prettier": "^3.9.9"
   },
   "peerDependencies": {
     "stylelint": "^17.15.0"

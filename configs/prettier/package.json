@@ -18,13 +18,13 @@
     "lint:fix": "prettier \"**/*.mjs\" --cache --write"
   },
   "dependencies": {
-    "@ijlee2-frontend-configs/prettier": "^3.4.0"
+    "@ijlee2-frontend-configs/prettier": "^3.4.1"
   },
   "devDependencies": {
-    "prettier": "^3.9.8"
+    "prettier": "^3.9.9"
   },
   "peerDependencies": {
-    "prettier": "^3.9.8"
+    "prettier": "^3.9.9"
   },
   "peerDependenciesMeta": {
     "prettier": {
