@@ -1,16 +1,16 @@
-const translationModules = {
-  'de-de': () => import('virtual:ember-intl/translations/de-de'),
-  'en-us': () => import('virtual:ember-intl/translations/en-us'),
-} as const;
-
-type Locale = keyof typeof translationModules;
+type Locale = 'de-de' | 'en-us';
 
 export function loadTranslations(hooks: NestedHooks): void {
   hooks.beforeEach(async function () {
     const intl = this.owner.lookup('service:intl');
 
     async function load(locale: Locale): Promise<void> {
-      const { default: translations } = await translationModules[locale]();
+      const { default: file } = (await import(
+        `/translations/${locale}.json`
+      )) as {
+        default: string;
+      };
+      const translations = JSON.parse(file) as Record<string, string>;
 
       intl.addTranslations(locale, translations);
     }
