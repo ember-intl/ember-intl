@@ -11,6 +11,7 @@ minimumReleaseAge: 720
 minimumReleaseAgeExclude:
   - "@codemod-utils/*"
   - "@ijlee2-frontend-configs/*"
+  - "ember-testem"
 
 overrides:
   ember-cli-htmlbars: ^7.0.1
