@@ -1,5 +1,16 @@
 # docs-app-for-ember-intl
 
+## 2.17.0
+
+### Minor Changes
+
+- [#2213](https://github.com/ember-intl/ember-intl/pull/2213) Renamed /test-helpers to /testing ([@ijlee2](https://github.com/ijlee2))
+- [#2213](https://github.com/ember-intl/ember-intl/pull/2213) Documented how to customize test setups ([@jrjohnson](https://github.com/jrjohnson))
+
+### Patch Changes
+
+- [#2215](https://github.com/ember-intl/ember-intl/pull/2215) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.16.2
 
 ### Patch Changes

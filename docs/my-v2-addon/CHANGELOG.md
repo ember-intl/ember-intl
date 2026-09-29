@@ -1,5 +1,12 @@
 # my-v2-addon
 
+## 1.8.4
+
+### Patch Changes
+
+- [#2215](https://github.com/ember-intl/ember-intl/pull/2215) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+- [#2214](https://github.com/ember-intl/ember-intl/pull/2214) Standardized test setup ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.8.3
 
 ### Patch Changes
