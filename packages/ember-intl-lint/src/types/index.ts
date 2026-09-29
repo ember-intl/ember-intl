@@ -9,6 +9,7 @@ type Config = {
   addonPaths: string[];
   buildOptions: ConfigBuildOptions;
   lintRules: ConfigLintRules;
+  translationHelpers?: TranslationHelper[];
 };
 
 type Options = {
@@ -72,10 +73,22 @@ type TranslationKey = string;
 
 type TranslationMessage = string;
 
+/**
+ * A module other than ember-intl that exports a translation helper,
+ * e.g. an app's own `t` that templates and functions import.
+ */
+type TranslationHelper = {
+  /** A named export, or `default`. */
+  export: string;
+  kind: 't' | 'tKey';
+  source: string;
+};
+
 type UserConfig = Partial<{
   addonPaths: string[];
   buildOptions: Partial<ConfigBuildOptions>;
   lintRules: Partial<ConfigLintRules>;
+  translationHelpers: TranslationHelper[];
 }>;
 
 export type {
@@ -92,6 +105,7 @@ export type {
   Project,
   ProjectTranslationData,
   TranslationFilePath,
+  TranslationHelper,
   TranslationJson,
   TranslationKey,
   TranslationMessage,

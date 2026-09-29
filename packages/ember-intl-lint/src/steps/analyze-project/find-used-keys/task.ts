@@ -11,7 +11,7 @@ import {
 } from '../../../utils/analyze-project/find-used-keys/index.js';
 
 export function task(filePath: string, options: Options): TranslationKey[] {
-  const { projectRoot } = options;
+  const { config, projectRoot } = options;
 
   const file = readFileSync(join(projectRoot, filePath), 'utf8');
   const { ext } = parseFilePath(filePath);
@@ -19,7 +19,7 @@ export function task(filePath: string, options: Options): TranslationKey[] {
   switch (ext) {
     case '.gjs':
     case '.gts': {
-      return inGjsGts(file);
+      return inGjsGts(file, config.translationHelpers);
     }
 
     case '.hbs': {
@@ -28,7 +28,7 @@ export function task(filePath: string, options: Options): TranslationKey[] {
 
     case '.js':
     case '.ts': {
-      return inJsTs(file);
+      return inJsTs(file, config.translationHelpers);
     }
 
     default: {
