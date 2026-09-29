@@ -9,7 +9,7 @@
   },
   "author": "Isaac J. Lee",
   "type": "module",
-  "main": "index.cjs",
+  "main": "index.mjs",
   "scripts": {
     "lint": "prettier \"**/*.{cjs,mjs}\" --cache --check",
     "lint:fix": "prettier \"**/*.{cjs,mjs}\" --cache --write"
