@@ -24,7 +24,7 @@ function addTranslations(
 
 ::: code-group
 
-```gts [tests/integration/components/hello-test.gts]{16-22}
+```gts [tests/integration/components/hello-test.gts]{16-20}
 import { render } from '@ember/test-helpers';
 import { addTranslations, setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
@@ -41,9 +41,7 @@ module('Integration | Component | hello', function (hooks) {
     assert.dom('[data-test-message]').hasText('t:hello.message');
 
     await addTranslations('en-us', {
-      hello: {
-        message: 'Hello, {name}!',
-      },
+      'hello.message': 'Hello, {name}!',
     });
 
     assert.dom('[data-test-message]').hasText('Hello, Zoey!');

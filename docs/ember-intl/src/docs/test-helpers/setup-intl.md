@@ -90,7 +90,7 @@ You can pass an `translations` object as the 3rd positional argument, if you wan
 
 ::: code-group
 
-```gts [tests/integration/components/hello-test.gts]{9-13,18}
+```gts [tests/integration/components/hello-test.gts]{9-11,16}
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupRenderingTest } from 'ember-qunit';
@@ -100,9 +100,7 @@ import { module, test } from 'qunit';
 module('Integration | Component | hello', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'de-de', {
-    hello: {
-      message: 'Na, {name}?',
-    },
+    'hello.message': 'Na, {name}?',
   });
 
   test('it renders', async function (assert) {
