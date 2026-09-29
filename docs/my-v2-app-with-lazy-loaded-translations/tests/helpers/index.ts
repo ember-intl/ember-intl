@@ -5,6 +5,8 @@ import {
   type SetupTestOptions,
 } from 'ember-qunit';
 
+import { loadTranslations } from './ember-intl';
+
 function setupApplicationTest(
   hooks: NestedHooks,
   options?: SetupTestOptions,
@@ -21,6 +23,7 @@ function setupRenderingTest(
   upstreamSetupRenderingTest(hooks, options);
 
   // Additional setup for rendering tests can be done here.
+  loadTranslations(hooks);
 }
 
 function setupTest(hooks: NestedHooks, options?: SetupTestOptions): void {
@@ -31,5 +34,4 @@ function setupTest(hooks: NestedHooks, options?: SetupTestOptions): void {
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
 
-export * from './ember-intl';
 export { selectLocale } from 'my-v2-addon/test-support';

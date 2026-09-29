@@ -19,9 +19,9 @@ module(
           .dom('[data-test-output="Translation with Arguments"]')
           .hasText(
             [
-              't:components.translation-with-arguments.message',
-              't:components.translation-with-arguments.message',
-              't:components.translation-with-arguments.message',
+              'Sonja hat 12 Fotos.',
+              'Chris hat keine Fotos.',
+              'Maki hat ein Foto.',
             ].join(' '),
           );
       });
@@ -37,9 +37,9 @@ module(
           .dom('[data-test-output="Translation with Arguments"]')
           .hasText(
             [
-              't:components.translation-with-arguments.message',
-              't:components.translation-with-arguments.message',
-              't:components.translation-with-arguments.message',
+              'Sonja has 12 photos.',
+              'Chris has no photos.',
+              'Maki has a photo.',
             ].join(' '),
           );
       });

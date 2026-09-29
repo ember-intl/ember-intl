@@ -15,7 +15,7 @@ module('Integration | Component | component-from-app', function (hooks) {
 
       assert
         .dom('[data-test-output="App"]')
-        .hasText('t:components.component-from-app.message');
+        .hasText('Dies ist eine Komponente aus der App.');
     });
   });
 
@@ -27,7 +27,7 @@ module('Integration | Component | component-from-app', function (hooks) {
 
       assert
         .dom('[data-test-output="App"]')
-        .hasText('t:components.component-from-app.message');
+        .hasText('This is a component from the app.');
     });
   });
 });
