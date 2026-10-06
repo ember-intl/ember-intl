@@ -1,0 +1,2 @@
+routes.index:
+  key-to-overwrite: The v1 addon's translations take precedence.
