@@ -2212,6 +2212,9 @@ importers:
       '@codemod-utils/threads':
         specifier: ^1.1.0
         version: 1.1.0
+      '@ember-intl/utils':
+        specifier: workspace:^
+        version: link:../ember-intl-utils
       '@formatjs/icu-messageformat-parser':
         specifier: ^3.5.20
         version: 3.5.20
@@ -2298,6 +2301,40 @@ importers:
       '@types/yargs':
         specifier: ^17.0.35
         version: 17.0.35
+      concurrently:
+        specifier: ^10.0.5
+        version: 10.0.5
+      eslint:
+        specifier: ^10.11.0
+        version: 10.11.0(supports-color@10.2.2)
+      prettier:
+        specifier: ^3.9.9
+        version: 3.9.9
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
+  packages/ember-intl-utils:
+    dependencies:
+      '@codemod-utils/files':
+        specifier: ^4.1.0
+        version: 4.1.0
+    devDependencies:
+      '@codemod-utils/tests':
+        specifier: ^3.3.0
+        version: 3.3.0
+      '@shared-configs/eslint-config-node':
+        specifier: workspace:*
+        version: link:../../configs/eslint/node
+      '@shared-configs/prettier':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@shared-configs/typescript':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      '@types/node':
+        specifier: ^22.20.4
+        version: 22.20.4
       concurrently:
         specifier: ^10.0.5
         version: 10.0.5
@@ -2425,6 +2462,9 @@ importers:
       '@codemod-utils/files':
         specifier: ^4.1.0
         version: 4.1.0
+      '@ember-intl/utils':
+        specifier: workspace:^
+        version: link:../ember-intl-utils
       js-yaml:
         specifier: ^5.4.2
         version: 5.4.2
