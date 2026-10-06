@@ -27,13 +27,13 @@ function listLocales(locales: Set<Locale>): string {
 
 export async function noInconsistentMessages(
   project: Project,
-  lintOptions: Partial<{
+  lintRuleOptions: Partial<{
     ignores: TranslationKey[];
   }>,
   options: Options,
 ): Promise<LintErrors> {
   const lintRun = new LintRunWithIgnores({
-    ignores: lintOptions.ignores,
+    ignores: lintRuleOptions.ignores,
     lintRule: 'no-inconsistent-messages',
   });
 

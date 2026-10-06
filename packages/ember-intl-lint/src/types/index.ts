@@ -24,7 +24,7 @@ type ConfigBuildOptions = {
   translationsDir: string;
 };
 
-type ConfigLintRules = Record<LintRule, boolean | LintOptions>;
+type ConfigLintRules = Record<LintRule, boolean | LintRuleOptions>;
 
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 
@@ -35,11 +35,11 @@ type LintErrors = string[];
 
 type LintMethod = (
   project: Project,
-  lintOptions: LintOptions,
+  lintRuleOptions: LintRuleOptions,
   options: Options,
 ) => LintErrors | Promise<LintErrors>;
 
-type LintOptions = Record<string, unknown>;
+type LintRuleOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, LintErrors>;
 
@@ -85,8 +85,8 @@ export type {
   IcuArgumentType,
   LintErrors,
   LintMethod,
-  LintOptions,
   LintResults,
+  LintRuleOptions,
   Locale,
   Options,
   Project,

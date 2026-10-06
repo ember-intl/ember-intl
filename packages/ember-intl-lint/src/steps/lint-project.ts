@@ -19,15 +19,15 @@ export async function lintProject(
     LintRule,
     LintMethod,
   ][]) {
-    const lintOptions = lintRules[lintRule];
+    const lintRuleOptions = lintRules[lintRule];
 
-    if (lintOptions === false) {
+    if (lintRuleOptions === false) {
       continue;
     }
 
     lintResults[lintRule] = await lintMethod(
       project,
-      lintOptions === true ? {} : lintOptions,
+      lintRuleOptions === true ? {} : lintRuleOptions,
       options,
     );
   }
