@@ -23,6 +23,7 @@ packages:
   - "packages/ember-intl"
   - "packages/ember-intl-lint"
   - "packages/ember-intl-update"
+  - "packages/ember-intl-utils"
   - "packages/ember-intl-v1-compat"
   - "packages/ember-intl-vite"
   - "tests/**"

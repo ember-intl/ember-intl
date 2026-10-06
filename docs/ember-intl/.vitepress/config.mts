@@ -82,6 +82,10 @@ export default defineConfig({
             text: '@ember-intl/update',
           },
           {
+            link: 'https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-utils/CHANGELOG.md',
+            text: '@ember-intl/utils',
+          },
+          {
             link: 'https://github.com/ember-intl/ember-intl/blob/main/packages/ember-intl-v1-compat/CHANGELOG.md',
             text: '@ember-intl/v1-compat',
           },

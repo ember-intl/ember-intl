@@ -1,0 +1,10 @@
+{
+  "extends": "@shared-configs/typescript/node",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["@types/node"]
+  },
+  "include": ["src"]
+}

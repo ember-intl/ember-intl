@@ -1,27 +1,27 @@
 {
-  "name": "@ember-intl/lint",
-  "version": "2.1.0",
-  "description": "Official linter for ember-intl",
+  "name": "@ember-intl/utils",
+  "version": "0.0.0",
+  "description": "Utilities for ember-intl packages",
   "keywords": [
-    "codemod",
-    "ember",
-    "ember-codemod",
-    "ember-intl",
-    "i18n",
-    "internationalization",
-    "linter"
+    "ember-intl"
   ],
   "homepage": "https://ember-intl.github.io/ember-intl/",
   "repository": {
     "type": "git",
     "url": "https://github.com/ember-intl/ember-intl.git",
-    "directory": "packages/ember-intl-lint"
+    "directory": "packages/ember-intl-utils"
   },
   "license": "MIT",
   "type": "module",
-  "main": "dist/src/index.js",
-  "bin": {
-    "ember-intl-lint": "dist/bin/ember-intl-lint.js"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
   },
   "files": [
     "dist"
@@ -39,25 +39,14 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "dependencies": {
-    "@codemod-utils/ast-javascript": "^4.3.3",
-    "@codemod-utils/ast-template": "^4.1.0",
-    "@codemod-utils/ast-template-tag": "^2.7.0",
-    "@codemod-utils/files": "^4.1.0",
-    "@codemod-utils/package-json": "^4.1.2",
-    "@codemod-utils/threads": "^1.1.0",
-    "@ember-intl/utils": "workspace:^",
-    "@formatjs/icu-messageformat-parser": "^3.5.20",
-    "js-yaml": "^5.4.2",
-    "yargs": "^18.2.0"
+    "@codemod-utils/files": "^4.1.0"
   },
   "devDependencies": {
     "@codemod-utils/tests": "^3.3.0",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.20.4",
-    "@types/yargs": "^17.0.35",
     "concurrently": "^10.0.5",
     "eslint": "^10.11.0",
     "prettier": "^3.9.9",
