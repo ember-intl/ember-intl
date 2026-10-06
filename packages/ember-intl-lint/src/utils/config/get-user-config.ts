@@ -1,8 +1,9 @@
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-import type { UserConfig } from '../../types/index.js';
-import { type LintRule, lintRules } from '../lint-rules.js';
+import { lintRules } from '@ember-intl/utils/lint-rules';
+
+import type { LintRule, UserConfig } from '../../types/index.js';
 import { findUserConfig } from './find-user-config.js';
 import { getDefaultConfig } from './get-default-config.js';
 

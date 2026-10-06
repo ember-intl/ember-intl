@@ -1,5 +1,6 @@
+import { lintRules } from '@ember-intl/utils/lint-rules';
+
 import type { Config } from '../../types/index.js';
-import { lintRules } from '../lint-rules.js';
 
 export function getDefaultConfig(): Config {
   const rules = {} as Config['lintRules'];

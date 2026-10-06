@@ -1,15 +1,9 @@
-type Config = {
-  addonPaths: string[];
-  buildOptions: ConfigBuildOptions;
-};
+import type {
+  Config as UpstreamConfig,
+  UserConfig,
+} from '@ember-intl/utils/config';
 
-type ConfigBuildOptions = {
-  fallbackLocale: string | undefined;
-  namespaceKeysByDir: boolean;
-  translationsDir: string;
-};
-
-type ConfigLintRules = Record<string, boolean | Record<string, unknown>>;
+type Config = Omit<UpstreamConfig, 'lintRules'>;
 
 type Locale = string;
 
@@ -42,12 +36,6 @@ type TranslationJson = Record<TranslationKey, TranslationMessage>;
 type TranslationKey = string;
 
 type TranslationMessage = string;
-
-type UserConfig = Partial<{
-  addonPaths: string[];
-  buildOptions: Partial<ConfigBuildOptions>;
-  lintRules: Partial<ConfigLintRules>;
-}>;
 
 export type {
   Config,

@@ -1,10 +1,11 @@
 import type {
   LintMethod,
   LintResults,
+  LintRule,
   Options,
   Project,
 } from '../types/index.js';
-import { type LintRule, lintRuleMapping } from '../utils/lint-rules.js';
+import { lintRuleMapping } from '../utils/lint-rules.js';
 
 export async function lintProject(
   project: Project,
