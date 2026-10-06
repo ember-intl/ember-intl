@@ -4,7 +4,7 @@
     "declaration": false,
     "outDir": "dist",
     "rootDir": ".",
-    "types": ["@types/js-yaml", "@types/node", "@types/yargs"]
+    "types": ["@types/node", "@types/yargs"]
   },
   "include": ["bin", "src"],
   "exclude": ["src/blueprints"]

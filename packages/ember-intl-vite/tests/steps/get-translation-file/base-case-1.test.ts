@@ -1,11 +1,8 @@
 import { assert, normalizeFile, test } from '@codemod-utils/tests';
+import type { ProjectTranslationData } from '@ember-intl/utils/translations';
 
 import { getTranslationFile } from '../../../src/steps/index.js';
-import type {
-  Project,
-  ProjectTranslationData,
-  TranslationKey,
-} from '../../../src/types/index.js';
+import type { Project, TranslationKey } from '../../../src/types/index.js';
 
 test('steps | get-translation-file > base case (1)', function () {
   const translations: Project['translations'] = new Map([
