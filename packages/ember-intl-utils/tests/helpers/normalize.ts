@@ -16,3 +16,22 @@ export function normalizeTranslationFiles(
 
   return normalizedTranslationFiles;
 }
+
+export function normalizeTranslations(
+  translations: Project['translations'],
+): Project['translations'] {
+  const normalizedTranslations: Project['translations'] = new Map();
+
+  translations.forEach((keyToData, locale) => {
+    keyToData.forEach((data, key) => {
+      keyToData.set(key, {
+        ...data,
+        filePath: normalize(data.filePath),
+      });
+    });
+
+    normalizedTranslations.set(locale, keyToData);
+  });
+
+  return normalizedTranslations;
+}
