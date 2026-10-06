@@ -1,0 +1,38 @@
+import { assert, test } from '@codemod-utils/tests';
+
+import { getDefaultConfig, mergeConfigs } from '../../../src/config.js';
+
+test('src | config | merge-configs > user config has all options', function () {
+  const userConfig = {
+    addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
+    buildOptions: {
+      fallbackLocale: 'en-us',
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
+    },
+    lintRules: {
+      'no-missing-keys': {
+        ignores: ['hello.message'],
+      },
+      'no-unused-keys': false,
+    },
+  };
+
+  const config = mergeConfigs(getDefaultConfig(), userConfig);
+
+  assert.deepStrictEqual(config, {
+    addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
+    buildOptions: {
+      fallbackLocale: 'en-us',
+      namespaceKeysByDir: true,
+      translationsDir: 'public/assets/translations',
+    },
+    lintRules: {
+      'no-inconsistent-messages': true,
+      'no-missing-keys': {
+        ignores: ['hello.message'],
+      },
+      'no-unused-keys': false,
+    },
+  });
+});
