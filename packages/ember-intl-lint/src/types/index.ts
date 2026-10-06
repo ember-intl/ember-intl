@@ -59,7 +59,6 @@ type TranslationMessage = string;
 
 export type {
   CodemodOptions,
-  Config,
   IcuArguments,
   IcuArgumentType,
   LintErrors,

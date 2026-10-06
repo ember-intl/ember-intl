@@ -10,6 +10,11 @@ const options: Options = {
       namespaceKeysByDir: true,
       translationsDir: 'translations',
     },
+    lintRules: {
+      'no-inconsistent-messages': true,
+      'no-missing-keys': true,
+      'no-unused-keys': true,
+    },
   },
   projectRoot: 'tmp/my-v2-app-with-namespace-from-folders',
 };

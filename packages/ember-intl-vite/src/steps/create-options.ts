@@ -1,9 +1,10 @@
-import type { Options } from '../types/index.js';
 import {
   getDefaultConfig,
   getUserConfig,
   mergeConfigs,
-} from '../utils/config/index.js';
+} from '@ember-intl/utils/config';
+
+import type { Options } from '../types/index.js';
 
 export async function createOptions(projectRoot: string): Promise<Options> {
   const userConfig = await getUserConfig(projectRoot);

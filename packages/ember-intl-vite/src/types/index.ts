@@ -1,9 +1,4 @@
-import type {
-  Config as UpstreamConfig,
-  UserConfig,
-} from '@ember-intl/utils/config';
-
-type Config = Omit<UpstreamConfig, 'lintRules'>;
+import type { Config, UserConfig } from '@ember-intl/utils/config';
 
 type Locale = string;
 
@@ -38,7 +33,6 @@ type TranslationKey = string;
 type TranslationMessage = string;
 
 export type {
-  Config,
   Locale,
   Options,
   Project,

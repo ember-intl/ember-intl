@@ -1,11 +1,11 @@
 import { getPackageType, readPackageJson } from '@codemod-utils/package-json';
-
-import type { CodemodOptions, Options } from '../types/index.js';
 import {
   getDefaultConfig,
   getUserConfig,
   mergeConfigs,
-} from '../utils/config/index.js';
+} from '@ember-intl/utils/config';
+
+import type { CodemodOptions, Options } from '../types/index.js';
 
 const SOURCE = {
   node: undefined,
