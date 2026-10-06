@@ -2218,9 +2218,6 @@ importers:
       '@formatjs/icu-messageformat-parser':
         specifier: ^3.5.20
         version: 3.5.20
-      js-yaml:
-        specifier: ^5.4.2
-        version: 5.4.2
       yargs:
         specifier: ^18.2.0
         version: 18.2.0
@@ -2237,9 +2234,6 @@ importers:
       '@shared-configs/typescript':
         specifier: workspace:*
         version: link:../../configs/typescript
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
       '@types/node':
         specifier: ^22.20.4
         version: 22.20.4
@@ -2319,6 +2313,9 @@ importers:
       '@codemod-utils/files':
         specifier: ^4.1.0
         version: 4.1.0
+      js-yaml:
+        specifier: ^5.4.2
+        version: 5.4.2
     devDependencies:
       '@codemod-utils/tests':
         specifier: ^3.3.0
@@ -2332,6 +2329,9 @@ importers:
       '@shared-configs/typescript':
         specifier: workspace:*
         version: link:../../configs/typescript
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/node':
         specifier: ^22.20.4
         version: 22.20.4
@@ -2465,9 +2465,6 @@ importers:
       '@ember-intl/utils':
         specifier: workspace:^
         version: link:../ember-intl-utils
-      js-yaml:
-        specifier: ^5.4.2
-        version: 5.4.2
     devDependencies:
       '@codemod-utils/tests':
         specifier: ^3.3.0
@@ -2481,9 +2478,6 @@ importers:
       '@shared-configs/typescript':
         specifier: workspace:*
         version: link:../../configs/typescript
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
       '@types/node':
         specifier: ^22.20.4
         version: 22.20.4
