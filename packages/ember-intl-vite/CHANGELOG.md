@@ -1,5 +1,12 @@
 # @ember-intl/vite
 
+## 2.1.0
+
+### Minor Changes
+
+- [#2218](https://github.com/ember-intl/ember-intl/pull/2218) Consumed utilities for translation files from @ember-intl/utils ([@ijlee2](https://github.com/ijlee2))
+- [#2217](https://github.com/ember-intl/ember-intl/pull/2217) Consumed types and utilities for config from @ember-intl/utils ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # docs-app-for-ember-intl
 
+## 2.18.0
+
+### Minor Changes
+
+- [#2217](https://github.com/ember-intl/ember-intl/pull/2217) Listed @ember-intl/utils in Changelogs ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.17.0
 
 ### Minor Changes
