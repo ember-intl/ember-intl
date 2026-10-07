@@ -2119,7 +2119,7 @@ importers:
   packages/ember-intl:
     dependencies:
       '@ember-intl/utils':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../ember-intl-utils
       '@embroider/addon-shim':
         specifier: ^1.10.3
