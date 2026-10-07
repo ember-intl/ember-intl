@@ -2,8 +2,8 @@
   "extends": "@shared-configs/typescript/ember-addon",
   "compilerOptions": {
     "declarationDir": "declarations",
-    "rootDir": ".",
+    "rootDir": "./src",
     "types": ["@glint/ember-tsc/types", "ember-source/types"]
   },
-  "include": ["src/**/*", "unpublished-development-types/**/*", "*.mts"]
+  "include": ["src/**/*"]
 }

@@ -6,5 +6,5 @@
     "rootDir": ".",
     "types": ["@ember-intl/vite/virtual", "ember-source/types"]
   },
-  "include": [".vitepress/**/*", "types/**/*"]
+  "include": [".vitepress/**/*", "types/**/*", "*.mts"]
 }

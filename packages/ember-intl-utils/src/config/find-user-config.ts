@@ -1,7 +1,7 @@
 import { findFiles } from '@codemod-utils/files';
 
 export function findUserConfig(projectRoot: string): string | undefined {
-  const filePaths = findFiles('ember-intl.config.{js,mjs}', {
+  const filePaths = findFiles('ember-intl.config.{js,mjs,mts,ts}', {
     projectRoot,
   });
 

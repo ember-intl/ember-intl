@@ -2,6 +2,7 @@ import { assert } from '@ember/debug';
 import { cancel, next, type Timer as EmberRunTimer } from '@ember/runloop';
 import Service from '@ember/service';
 import { htmlSafe } from '@ember/template';
+import type { TranslationJson } from '@ember-intl/utils/translations';
 import { tracked } from '@glimmer/tracking';
 
 import type {
@@ -38,7 +39,6 @@ import {
   type Locales,
   normalizeLocale,
 } from '../-private/utils/locale.ts';
-import type { TranslationJson } from '../-private/utils/translations.ts';
 
 export type { Formats };
 
