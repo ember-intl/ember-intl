@@ -164,7 +164,7 @@ jobs:
         working-directory: 'tests/ember-intl'
 
       - name: Install dependencies
-        run: pnpm install --no-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Test
         env: ${{ matrix.env }}
