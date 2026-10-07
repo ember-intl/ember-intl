@@ -85,6 +85,7 @@ jobs:
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v7
         with:
+          cache: 'pnpm'
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Make file changes
