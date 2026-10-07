@@ -30,7 +30,7 @@
     "sort-package-json": "^4.0.0",
     "update-workspace-root-version": "^3.0.6"
   },
-  "packageManager": "pnpm@12.6.0",
+  "packageManager": "pnpm@12.7.0",
   "engines": {
     "node": "22.* || >= 24",
     "pnpm": ">= 12"
