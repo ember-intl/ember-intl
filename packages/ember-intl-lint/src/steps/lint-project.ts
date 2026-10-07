@@ -1,10 +1,11 @@
 import type {
   LintMethod,
   LintResults,
+  LintRule,
   Options,
   Project,
 } from '../types/index.js';
-import { type LintRule, lintRuleMapping } from '../utils/lint-rules.js';
+import { lintRuleMapping } from '../utils/lint-rules.js';
 
 export async function lintProject(
   project: Project,
@@ -19,15 +20,15 @@ export async function lintProject(
     LintRule,
     LintMethod,
   ][]) {
-    const lintOptions = lintRules[lintRule];
+    const lintRuleOptions = lintRules[lintRule];
 
-    if (lintOptions === false) {
+    if (lintRuleOptions === false) {
       continue;
     }
 
     lintResults[lintRule] = await lintMethod(
       project,
-      lintOptions === true ? {} : lintOptions,
+      lintRuleOptions === true ? {} : lintRuleOptions,
       options,
     );
   }

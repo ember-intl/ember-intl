@@ -1,14 +1,9 @@
-import type { LintRule } from '../utils/lint-rules.js';
+import type { Config, UserConfig } from '@ember-intl/utils/config';
+import type { LintRule } from '@ember-intl/utils/lint-rules';
 
 type CodemodOptions = {
   fix: boolean;
   projectRoot: string;
-};
-
-type Config = {
-  addonPaths: string[];
-  buildOptions: ConfigBuildOptions;
-  lintRules: ConfigLintRules;
 };
 
 type Options = {
@@ -17,14 +12,6 @@ type Options = {
   projectRoot: string;
   src: 'addon' | 'app' | 'src';
 };
-
-type ConfigBuildOptions = {
-  fallbackLocale: string | undefined;
-  namespaceKeysByDir: boolean;
-  translationsDir: string;
-};
-
-type ConfigLintRules = Record<LintRule, boolean | LintOptions>;
 
 type IcuArguments = Record<IcuArgumentType, Set<string>>;
 
@@ -35,11 +22,9 @@ type LintErrors = string[];
 
 type LintMethod = (
   project: Project,
-  lintOptions: LintOptions,
+  lintRuleOptions: Record<string, unknown>,
   options: Options,
 ) => LintErrors | Promise<LintErrors>;
-
-type LintOptions = Record<string, unknown>;
 
 type LintResults = Record<LintRule, LintErrors>;
 
@@ -72,21 +57,14 @@ type TranslationKey = string;
 
 type TranslationMessage = string;
 
-type UserConfig = Partial<{
-  addonPaths: string[];
-  buildOptions: Partial<ConfigBuildOptions>;
-  lintRules: Partial<ConfigLintRules>;
-}>;
-
 export type {
   CodemodOptions,
-  Config,
   IcuArguments,
   IcuArgumentType,
   LintErrors,
   LintMethod,
-  LintOptions,
   LintResults,
+  LintRule,
   Locale,
   Options,
   Project,

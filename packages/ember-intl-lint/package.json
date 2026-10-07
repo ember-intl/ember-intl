@@ -45,6 +45,7 @@
     "@codemod-utils/files": "^4.1.0",
     "@codemod-utils/package-json": "^4.1.2",
     "@codemod-utils/threads": "^1.1.0",
+    "@ember-intl/utils": "workspace:^",
     "@formatjs/icu-messageformat-parser": "^3.5.20",
     "js-yaml": "^5.4.2",
     "yargs": "^18.2.0"

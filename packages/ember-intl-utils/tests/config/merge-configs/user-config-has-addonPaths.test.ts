@@ -1,0 +1,25 @@
+import { assert, test } from '@codemod-utils/tests';
+
+import { getDefaultConfig, mergeConfigs } from '../../../src/config.js';
+
+test('src | config | merge-configs > user config has addonPaths', function () {
+  const userConfig = {
+    addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
+  };
+
+  const config = mergeConfigs(getDefaultConfig(), userConfig);
+
+  assert.deepStrictEqual(config, {
+    addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
+    buildOptions: {
+      fallbackLocale: undefined,
+      namespaceKeysByDir: false,
+      translationsDir: 'translations',
+    },
+    lintRules: {
+      'no-inconsistent-messages': true,
+      'no-missing-keys': true,
+      'no-unused-keys': true,
+    },
+  });
+});

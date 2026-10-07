@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@codemod-utils/files": "^4.1.0",
+    "@ember-intl/utils": "workspace:^",
     "js-yaml": "^5.4.2"
   },
   "devDependencies": {

@@ -2,9 +2,9 @@ import { writeFileSync } from 'node:fs';
 import { EOL } from 'node:os';
 import { join } from 'node:path';
 
-import type { LintErrors, UserConfig } from '../../../types/index.js';
-import { findUserConfig, getUserConfig } from '../../config/index.js';
-import type { LintRule } from '../../lint-rules.js';
+import { findUserConfig, getUserConfig } from '@ember-intl/utils/config';
+
+import type { LintErrors, LintRule, UserConfig } from '../../../types/index.js';
 
 type Args = {
   ignores?: (RegExp | string)[] | undefined;
