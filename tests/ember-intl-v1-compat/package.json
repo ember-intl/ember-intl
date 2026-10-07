@@ -29,7 +29,7 @@
     "@types/node": "^22.20.4",
     "broccoli-test-helper": "^2.0.0",
     "concurrently": "^10.0.5",
-    "eslint": "^10.11.0",
+    "eslint": "^10.12.0",
     "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   },
