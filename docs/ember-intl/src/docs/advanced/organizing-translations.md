@@ -77,12 +77,14 @@ In your [configuration file](./configuration-file), you can set `namespaceKeysBy
 
 ::: code-group
 
-```js [ember-intl.config.mjs]{3}
+```ts [ember-intl.config.mts]{5}
+import type { UserConfig } from 'ember-intl';
+
 export default {
   buildOptions: {
     namespaceKeysByDir: true,
   },
-};
+} satisfies UserConfig;
 ```
 
 ```yaml [translations/components/hello/de-de.yaml]
