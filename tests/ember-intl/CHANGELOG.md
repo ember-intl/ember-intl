@@ -1,5 +1,12 @@
 # test-app-for-ember-intl
 
+## 2.10.0
+
+### Minor Changes
+
+- [#2219](https://github.com/ember-intl/ember-intl/pull/2219) Converted ember-intl config to TypeScript ([@ijlee2](https://github.com/ijlee2))
+- [#2221](https://github.com/ember-intl/ember-intl/pull/2221) Allowed `pnpm install --no-frozen-lockfile` for @embroider/try ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.9.0
 
 ### Minor Changes

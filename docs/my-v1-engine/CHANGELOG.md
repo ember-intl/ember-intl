@@ -1,5 +1,11 @@
 # my-v1-engine
 
+## 1.8.0
+
+### Minor Changes
+
+- [#2219](https://github.com/ember-intl/ember-intl/pull/2219) Converted ember-intl config to TypeScript ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.7.0
 
 ### Minor Changes

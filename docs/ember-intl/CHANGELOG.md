@@ -1,5 +1,12 @@
 # docs-app-for-ember-intl
 
+## 2.19.0
+
+### Minor Changes
+
+- [#2219](https://github.com/ember-intl/ember-intl/pull/2219) Documented how to write ember-intl.config.{mts,ts} ([@ijlee2](https://github.com/ijlee2))
+- [#2219](https://github.com/ember-intl/ember-intl/pull/2219) Converted ember-intl config to TypeScript ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.18.0
 
 ### Minor Changes
