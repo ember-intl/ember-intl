@@ -23,6 +23,7 @@
     "addon/**/*",
     "addon-test-support/**/*",
     "tests/**/*",
-    "types/**/*"
+    "types/**/*",
+    "*.mts"
   ]
 }

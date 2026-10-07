@@ -1,3 +1,5 @@
+import type { UserConfig } from 'ember-intl';
+
 export default {
   buildOptions: {
     namespaceKeysByDir: true,
@@ -10,4 +12,4 @@ export default {
       ignores: ['smoke-tests.hello.message', 'smoke-tests.hello.world'],
     },
   },
-};
+} satisfies UserConfig;
