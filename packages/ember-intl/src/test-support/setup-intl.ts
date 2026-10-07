@@ -1,6 +1,6 @@
 import { getContext, settled, type TestContext } from '@ember/test-helpers';
+import type { TranslationJson } from '@ember-intl/utils/translations';
 
-import type { TranslationJson } from '../-private/utils/translations.ts';
 import { addTranslations } from './add-translations.ts';
 
 /**
