@@ -1,5 +1,10 @@
 import type { Config, UserConfig } from '@ember-intl/utils/config';
 import type { LintRule } from '@ember-intl/utils/lint-rules';
+import type {
+  Project as UpstreamProject,
+  ProjectTranslationData,
+  TranslationKey,
+} from '@ember-intl/utils/translations';
 
 type CodemodOptions = {
   fix: boolean;
@@ -30,32 +35,10 @@ type LintResults = Record<LintRule, LintErrors>;
 
 type Locale = string;
 
-type Project = {
+type Project = UpstreamProject & {
   availableKeys: Map<TranslationKey, Map<Locale, ProjectTranslationData>>;
-  translationFiles: Map<
-    TranslationFilePath,
-    {
-      isInternal: boolean;
-      locale: Locale;
-      translationsDir: string;
-    }
-  >;
-  translations: Map<Locale, Map<TranslationKey, ProjectTranslationData>>;
   usedKeys: Set<TranslationKey>;
 };
-
-type ProjectTranslationData = {
-  filePath: TranslationFilePath;
-  message: TranslationMessage;
-};
-
-type TranslationFilePath = string;
-
-type TranslationJson = Record<TranslationKey, TranslationMessage>;
-
-type TranslationKey = string;
-
-type TranslationMessage = string;
 
 export type {
   CodemodOptions,
@@ -69,9 +52,6 @@ export type {
   Options,
   Project,
   ProjectTranslationData,
-  TranslationFilePath,
-  TranslationJson,
   TranslationKey,
-  TranslationMessage,
   UserConfig,
 };

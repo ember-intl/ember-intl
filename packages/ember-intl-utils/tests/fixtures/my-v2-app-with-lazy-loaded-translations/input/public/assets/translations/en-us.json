@@ -1,0 +1,17 @@
+{
+  "components": {
+    "title": "Components",
+    "translation-with-arguments": {
+      "message": "{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}.",
+      "title": "Translation with Arguments"
+    }
+  },
+  "components.component-from-app": {
+    "message": "This is a component from the app."
+  },
+  "routes.application": { "title": "ember-intl" },
+  "routes.index": {
+    "key-to-overwrite": "The app's translations take precedence.",
+    "title": "Welcome to <code>ember-intl</code>"
+  }
+}

@@ -1,0 +1,2 @@
+message: "{name} has {numPhotos, plural, =0 {no photos} =1 {a photo} other {# photos}}."
+title: Translation with Arguments

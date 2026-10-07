@@ -1,8 +1,9 @@
-import type { Options, Project } from '../types/index.js';
 import {
   findTranslationFiles,
   mergeTranslationFiles,
-} from './analyze-project/index.js';
+} from '@ember-intl/utils/translations';
+
+import type { Options, Project } from '../types/index.js';
 
 export function analyzeProject(options: Options): Project {
   const translationFiles = findTranslationFiles(options);

@@ -1,10 +1,10 @@
-import type { Options, Project } from '../types/index.js';
 import {
-  findAvailableKeys,
   findTranslationFiles,
-  findUsedKeys,
   mergeTranslationFiles,
-} from './analyze-project/index.js';
+} from '@ember-intl/utils/translations';
+
+import type { Options, Project } from '../types/index.js';
+import { findAvailableKeys, findUsedKeys } from './analyze-project/index.js';
 
 export async function analyzeProject(options: Options): Promise<Project> {
   const translationFiles = findTranslationFiles(options);
