@@ -93,7 +93,7 @@ jobs:
         working-directory: 'tests/ember-intl'
 
       - name: Install dependencies
-        run: pnpm install --allow-build '@ember-intl/utils' --no-lockfile
+        run: pnpm install --no-lockfile
 
       - name: Test
         env: ${{ matrix.env }}
