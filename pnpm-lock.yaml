@@ -2119,8 +2119,8 @@ importers:
   packages/ember-intl:
     dependencies:
       '@ember-intl/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: workspace:^
+        version: link:../ember-intl-utils
       '@embroider/addon-shim':
         specifier: ^1.10.3
         version: 1.10.3(supports-color@10.2.2)
@@ -3580,10 +3580,6 @@ packages:
 
   '@ember-data/rfc395-data@0.0.4':
     resolution: {integrity: sha512-tGRdvgC9/QMQSuSuJV45xoyhI0Pzjm7A9o/MVVA3HakXIImJbbzx/k/6dO9CUEQXIyS2y0fW6C1XaYOG7rY0FQ==}
-
-  '@ember-intl/utils@0.1.0':
-    resolution: {integrity: sha512-sNMtpIMzgU21VFbd8lT1c9qHjl4cfBcCxKSVS56oWcRvLDhQGIWe44eQBjyo0vQ/EBzOhTTt+4zyT1uDUzE3Qw==}
-    engines: {node: 22.* || >= 24}
 
   '@ember-tooling/blueprint-blueprint@0.2.1':
     resolution: {integrity: sha512-eZ5qicL3gfFFbmzLaSiEWPSmoRUJGnqg+dQmU0R81vv+0Ni7W/cS7MXx1l4HpN9B7Yg4M9GgdQTkeJnb6abQug==}
@@ -6699,6 +6695,15 @@ packages:
 
   ember-estree@0.8.1:
     resolution: {integrity: sha512-8gOi6SvtEGJ7njzSfVbzTOB46ryIYNQi9a56QBr0ZvXW676eJslnIet5n3oS6zAiaae0TkxbYForfDekzDUd2A==}
+
+  ember-intl@file:packages/ember-intl:
+    resolution: {directory: packages/ember-intl, type: directory}
+    engines: {node: 22.* || >= 24}
+    peerDependencies:
+      '@ember/test-helpers': ^5.0.0
+    peerDependenciesMeta:
+      '@ember/test-helpers':
+        optional: true
 
   ember-live-compiler@0.2.5:
     resolution: {integrity: sha512-9k17hxMfEwaaSpe2B8K4kmYm5sEj3q5oIM9vZitxXpqolQVBsFMPd63EalDnzYTzsL5FUxt+3Tg4HJJiyYjs6A==}
@@ -12111,11 +12116,6 @@ snapshots:
 
   '@ember-data/rfc395-data@0.0.4': {}
 
-  '@ember-intl/utils@0.1.0':
-    dependencies:
-      '@codemod-utils/files': 4.1.0
-      js-yaml: 5.4.2
-
   '@ember-tooling/blueprint-blueprint@0.2.1': {}
 
   '@ember-tooling/blueprint-blueprint@0.3.0': {}
@@ -16276,6 +16276,18 @@ snapshots:
       '@glimmer/syntax': 0.95.0
       content-tag: 4.2.0
       oxc-parser: 0.130.0
+
+  ember-intl@file:packages/ember-intl(@babel/core@8.0.6)(@ember/test-helpers@5.5.1(@babel/core@8.0.6)(supports-color@10.2.2))(supports-color@10.2.2):
+    dependencies:
+      '@ember-intl/utils': link:packages/ember-intl-utils
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
+      '@formatjs/intl': 6.1.2
+      decorator-transforms: 2.4.0(@babel/core@8.0.6)
+    optionalDependencies:
+      '@ember/test-helpers': 5.5.1(@babel/core@8.0.6)(supports-color@10.2.2)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
 
   ember-live-compiler@0.2.5(ember-source@7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2)):
     dependencies:

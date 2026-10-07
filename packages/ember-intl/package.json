@@ -53,7 +53,7 @@
     "test": "echo 'A v2 addon does not have tests, run tests in tests/ember-intl'"
   },
   "dependencies": {
-    "@ember-intl/utils": "^0.1.0",
+    "@ember-intl/utils": "workspace:^",
     "@embroider/addon-shim": "^1.10.3",
     "@formatjs/intl": "^6.1.2",
     "decorator-transforms": "^2.4.0"
