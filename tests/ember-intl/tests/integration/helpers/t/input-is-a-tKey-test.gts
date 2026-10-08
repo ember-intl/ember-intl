@@ -31,7 +31,7 @@ module('Integration | Helper | t > input is a tKey', function (hooks) {
     await render(
       <template>
         <div data-test-output="1">
-          <Hello @name={{undefined}} />
+          <Hello />
         </div>
 
         <div data-test-output="2">
@@ -49,7 +49,7 @@ module('Integration | Helper | t > input is a tKey', function (hooks) {
     await render(
       <template>
         <div data-test-output="1">
-          <Hello @name={{undefined}} />
+          <Hello />
         </div>
 
         <div data-test-output="2">
