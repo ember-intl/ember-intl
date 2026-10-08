@@ -1,5 +1,11 @@
 # @ember-intl/vite
 
+## 2.2.1
+
+### Patch Changes
+
+- [#2225](https://github.com/ember-intl/ember-intl/pull/2225) Provided accurate types for lint rule options ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.2.0
 
 ### Minor Changes

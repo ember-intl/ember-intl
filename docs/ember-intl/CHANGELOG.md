@@ -1,5 +1,12 @@
 # docs-app-for-ember-intl
 
+## 2.19.1
+
+### Patch Changes
+
+- [#2225](https://github.com/ember-intl/ember-intl/pull/2225) Recommended the use of exactOptionalPropertyTypes ([@ijlee2](https://github.com/ijlee2))
+- [#2224](https://github.com/ember-intl/ember-intl/pull/2224) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.19.0
 
 ### Minor Changes

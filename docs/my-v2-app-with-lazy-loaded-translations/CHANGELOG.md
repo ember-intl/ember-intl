@@ -1,5 +1,12 @@
 # my-v2-app-with-lazy-loaded-translations
 
+## 1.11.1
+
+### Patch Changes
+
+- [#2226](https://github.com/ember-intl/ember-intl/pull/2226) Enabled exactOptionalPropertyTypes ([@ijlee2](https://github.com/ijlee2))
+- [#2224](https://github.com/ember-intl/ember-intl/pull/2224) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.11.0
 
 ### Minor Changes

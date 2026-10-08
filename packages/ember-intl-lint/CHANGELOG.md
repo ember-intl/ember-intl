@@ -1,5 +1,13 @@
 # @ember-intl/lint
 
+## 2.3.1
+
+### Patch Changes
+
+- [#2225](https://github.com/ember-intl/ember-intl/pull/2225) Provided accurate types for lint rule options ([@ijlee2](https://github.com/ijlee2))
+- [#2225](https://github.com/ember-intl/ember-intl/pull/2225) Added missing type ([@ijlee2](https://github.com/ijlee2))
+- [#2224](https://github.com/ember-intl/ember-intl/pull/2224) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.3.0
 
 ### Minor Changes
