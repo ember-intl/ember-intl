@@ -1,10 +1,10 @@
-import type { UserConfig } from 'ember-intl';
+import { defineConfig } from 'ember-intl';
 
-export default {
+export default defineConfig({
   addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
   lintRules: {
     'no-missing-keys': {
       ignores: ['routes.index.key-without-translation'],
     },
   },
-} satisfies UserConfig;
+});

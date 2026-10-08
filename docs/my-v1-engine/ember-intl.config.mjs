@@ -1,9 +1,9 @@
-import type { UserConfig } from 'ember-intl';
+import { defineConfig } from 'ember-intl';
 
-export default {
+export default defineConfig({
   lintRules: {
     'no-missing-keys': {
       ignores: ['components.title', 'routes.index.key-without-translation'],
     },
   },
-} satisfies UserConfig;
+});
