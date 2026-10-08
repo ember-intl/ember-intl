@@ -215,7 +215,6 @@ export default class IntlService extends Service {
         ? value
         : {
             defaultMessage: value,
-            description: undefined,
             id: value,
           };
 

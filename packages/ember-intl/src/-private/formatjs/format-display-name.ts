@@ -25,5 +25,6 @@ export function formatDisplayName(
   intlShape: IntlShape,
   ...[value, formatOptions]: FormatDisplayNameParameters
 ): string {
+  // @ts-expect-error: Incorrect type
   return intlShape.formatDisplayName(value, formatOptions) ?? '';
 }
