@@ -2597,7 +2597,7 @@ importers:
         version: 4.0.2(supports-color@10.2.2)
       ember-intl:
         specifier: workspace:*
-        version: file:packages/ember-intl(@babel/core@8.0.7)(@ember/test-helpers@5.7.0(@babel/core@8.0.7)(supports-color@10.2.2))(supports-color@10.2.2)
+        version: link:../../packages/ember-intl
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@7.3.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2))
