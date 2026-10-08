@@ -306,8 +306,8 @@ importers:
   configs/typescript:
     dependencies:
       '@ijlee2-frontend-configs/typescript':
-        specifier: ^4.2.0
-        version: 4.2.0(typescript@6.0.3)
+        specifier: ^4.3.0
+        version: 4.3.0(typescript@6.0.3)
     devDependencies:
       '@shared-configs/prettier':
         specifier: workspace:*
@@ -3991,8 +3991,8 @@ packages:
     peerDependencies:
       stylelint: ^17.16.0
 
-  '@ijlee2-frontend-configs/typescript@4.2.0':
-    resolution: {integrity: sha512-UFj/Uc/lL2KfS+4QfCZSxIUcQn6iKV7AHZMF5YwYxrmhmyz+9wXx6FxGAKkJ4zVfR/GvxOmuQT6lk6RF/Kwr3Q==}
+  '@ijlee2-frontend-configs/typescript@4.3.0':
+    resolution: {integrity: sha512-WXVsjFOJ+l6heTiFQAtPAK2S6LaXainImuiWj7+n8zLBnQ4lqBk17I9THVESe9aiHvSF8QIKaGnbWr5QY9gPlA==}
     engines: {node: 22.* || >= 24}
     peerDependencies:
       typescript: ^6.0.3
@@ -13549,7 +13549,7 @@ snapshots:
       stylelint-config-standard: 40.0.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
       stylelint-order: 8.1.1(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
 
-  '@ijlee2-frontend-configs/typescript@4.2.0(typescript@6.0.3)':
+  '@ijlee2-frontend-configs/typescript@4.3.0(typescript@6.0.3)':
     dependencies:
       '@ember/app-tsconfig': 2.1.0
       '@ember/library-tsconfig': 3.0.0
