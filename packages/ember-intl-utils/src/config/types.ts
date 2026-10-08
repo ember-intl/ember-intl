@@ -1,6 +1,4 @@
-import type { LintRule } from '../lint-rules.js';
-
-type LintRuleOptions = Record<string, unknown>;
+import type { LintRules } from '../lint-rules.js';
 
 export type Config = {
   addonPaths: string[];
@@ -9,7 +7,7 @@ export type Config = {
     namespaceKeysByDir: boolean;
     translationsDir: string;
   };
-  lintRules: Record<LintRule, boolean | LintRuleOptions>;
+  lintRules: LintRules;
 };
 
 export type UserConfig = Partial<{
