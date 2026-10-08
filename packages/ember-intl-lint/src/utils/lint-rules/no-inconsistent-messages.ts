@@ -28,7 +28,7 @@ function listLocales(locales: Set<Locale>): string {
 export async function noInconsistentMessages(
   project: Project,
   lintRuleOptions: Partial<{
-    ignores: TranslationKey[];
+    ignores: (RegExp | TranslationKey)[];
   }>,
   options: Options,
 ): Promise<LintErrors> {
