@@ -108,16 +108,10 @@ export class LintRunWithIgnores {
 
     const ignoresNew: Ignores = {
       exact: new Set(keysFailed),
-      regex: [],
+      regex: ignores.regex.filter((regex) => {
+        return keysFailed.some((key) => regex.test(key));
+      }),
     };
-
-    ignores.regex.forEach((regex) => {
-      const used = keysFailed.some((key) => regex.test(key));
-
-      if (used) {
-        ignoresNew.regex.push(regex);
-      }
-    });
 
     if (ignoresNew.exact.symmetricDifference(ignores.exact).size > 0) {
       return ignoresNew;
@@ -146,11 +140,13 @@ export class LintRunWithIgnores {
 
     keysFailed.push(data.key);
 
-    const ignoreByExact = ignores.exact.has(data.key);
-    const ignoreByRegex = ignores.regex.some((regex) => regex.test(data.key));
-
-    if (!ignoreByExact && !ignoreByRegex) {
-      lintErrors.push(data.lintError);
+    if (
+      ignores.exact.has(data.key) ||
+      ignores.regex.some((regex) => regex.test(data.key))
+    ) {
+      return;
     }
+
+    lintErrors.push(data.lintError);
   }
 }

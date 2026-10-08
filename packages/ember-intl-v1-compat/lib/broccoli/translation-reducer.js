@@ -1,4 +1,4 @@
-const { mkdirSync, statSync, writeFileSync } = require('node:fs');
+const { mkdirSync, writeFileSync } = require('node:fs');
 const { basename, join } = require('node:path');
 const CachingWriter = require('broccoli-caching-writer');
 const extend = require('extend');
@@ -103,15 +103,7 @@ class TranslationReducer extends CachingWriter {
     });
 
     const translations = orderedFilePaths.reduce((accumulator, filePath) => {
-      if (statSync(filePath).isDirectory()) {
-        return accumulator;
-      }
-
       let translationObject = getTranslations(filePath);
-
-      if (!translationObject) {
-        return accumulator;
-      }
 
       if (this.options.namespaceKeysByDir === true) {
         translationObject = namespaceKeys(translationObject, {
