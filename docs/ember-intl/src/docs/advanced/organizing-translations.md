@@ -78,7 +78,7 @@ In your [configuration file](./configuration-file), you can set `namespaceKeysBy
 ::: code-group
 
 ```ts [ember-intl.config.mts]{5}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   buildOptions: {
