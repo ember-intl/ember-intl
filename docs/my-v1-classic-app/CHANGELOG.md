@@ -1,5 +1,11 @@
 # my-v1-classic-app
 
+## 1.9.2
+
+### Patch Changes
+
+- [#2227](https://github.com/ember-intl/ember-intl/pull/2227) Tested defineConfig and UserConfig ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.9.1
 
 ### Patch Changes

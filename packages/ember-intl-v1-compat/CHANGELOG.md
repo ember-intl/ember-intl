@@ -1,5 +1,11 @@
 # @ember-intl/v1-compat
 
+## 2.0.5
+
+### Patch Changes
+
+- [#2228](https://github.com/ember-intl/ember-intl/pull/2228) Removed unreachable code ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.0.4
 
 ### Patch Changes

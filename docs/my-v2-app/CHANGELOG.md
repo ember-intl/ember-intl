@@ -1,5 +1,11 @@
 # my-v2-app
 
+## 1.12.2
+
+### Patch Changes
+
+- [#2227](https://github.com/ember-intl/ember-intl/pull/2227) Tested defineConfig and UserConfig ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.12.1
 
 ### Patch Changes

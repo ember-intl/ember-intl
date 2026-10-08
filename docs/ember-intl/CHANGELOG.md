@@ -1,5 +1,12 @@
 # docs-app-for-ember-intl
 
+## 2.19.2
+
+### Patch Changes
+
+- [#2227](https://github.com/ember-intl/ember-intl/pull/2227) Exported defineConfig and UserConfig from config.ts ([@ijlee2](https://github.com/ijlee2))
+- [#2227](https://github.com/ember-intl/ember-intl/pull/2227) Tested defineConfig and UserConfig ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.19.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @ember-intl/utils
 
+## 0.4.0
+
+### Minor Changes
+
+- [#2227](https://github.com/ember-intl/ember-intl/pull/2227) Created defineConfig ([@ijlee2](https://github.com/ijlee2))
+
 ## 0.3.0
 
 ### Minor Changes
