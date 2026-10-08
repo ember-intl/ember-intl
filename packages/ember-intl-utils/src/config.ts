@@ -1,3 +1,4 @@
+export { defineConfig } from './config/define-config.js';
 export { findUserConfig } from './config/find-user-config.js';
 export { getDefaultConfig } from './config/get-default-config.js';
 export { getUserConfig } from './config/get-user-config.js';
