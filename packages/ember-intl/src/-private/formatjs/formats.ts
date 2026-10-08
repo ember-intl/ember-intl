@@ -9,6 +9,7 @@ export type Formats = Partial<{
 }>;
 
 export function convertToFormatjsFormats(formats: Formats): FormatjsFormats {
+  // @ts-expect-error: Incorrect type
   const formatjsFormats: FormatjsFormats = {
     dateTimeRange: formats.formatDateRange,
     date: formats.formatDate,
