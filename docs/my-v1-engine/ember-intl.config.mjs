@@ -1,4 +1,4 @@
-import { defineConfig } from 'ember-intl';
+import { defineConfig } from 'ember-intl/config';
 
 export default defineConfig({
   lintRules: {
