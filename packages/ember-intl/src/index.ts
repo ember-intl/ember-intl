@@ -9,4 +9,3 @@ export { default as formatTime } from './helpers/format-time.ts';
 export { default as t } from './helpers/t.ts';
 export { default as tKey } from './helpers/t-key.ts';
 export type { Formats, default as IntlService } from './services/intl.ts';
-export { defineConfig, type UserConfig } from '@ember-intl/utils/config';
