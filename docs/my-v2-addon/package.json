@@ -57,12 +57,12 @@
     "ember-truth-helpers": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^8.0.6",
+    "@babel/core": "^8.0.7",
     "@babel/plugin-transform-typescript": "^8.0.6",
-    "@babel/runtime": "^8.0.5",
+    "@babel/runtime": "^8.0.7",
     "@ember-intl/lint": "workspace:*",
-    "@ember/test-helpers": "^5.5.1",
-    "@embroider/addon-dev": "^8.4.0",
+    "@ember/test-helpers": "^5.7.0",
+    "@embroider/addon-dev": "^8.4.2",
     "@glimmer/tracking": "^1.1.2",
     "@glint/ember-tsc": "^1.11.6",
     "@glint/template": "^1.9.0",
@@ -71,13 +71,13 @@
     "@shared-configs/eslint-config-yaml": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
-    "babel-plugin-ember-template-compilation": "^4.0.0",
+    "babel-plugin-ember-template-compilation": "^4.0.1",
     "concurrently": "^10.0.5",
     "ember-intl": "workspace:*",
     "ember-source": "~7.3.0",
-    "eslint": "^10.11.0",
+    "eslint": "^10.12.0",
     "prettier": "^3.9.9",
-    "rollup": "^4.63.5",
+    "rollup": "^4.64.2",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {

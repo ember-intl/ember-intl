@@ -4,7 +4,7 @@
     "declaration": true,
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["@types/js-yaml", "@types/node"]
+    "types": ["@types/node"]
   },
   "include": ["src"]
 }
