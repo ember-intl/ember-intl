@@ -7,10 +7,10 @@
     "lint:intl:fix": "ember-intl-lint --fix"
   },
   "devDependencies": {
-    "@ember-intl/lint": "^2.3.0",
-    "@ember-intl/vite": "^2.2.0",
+    "@ember-intl/lint": "^2.3.2",
+    "@ember-intl/vite": "^2.2.1",
     "@embroider/vite": "^1.7.10",
-    "ember-intl": "^9.2.0",
+    "ember-intl": "^9.3.0",
     "ember-source": "~7.2.0"
   },
   "ember": {
