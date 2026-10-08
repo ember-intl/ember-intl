@@ -29,8 +29,10 @@ type UserConfig = Partial<{
 > [!TIP]
 >
 > The same file is used for `@ember-intl/lint` and `@ember-intl/vite`. The `Partial`'s in `UserConfig` above mean, you only need to specify the object keys that you need.
+
+> [!TIP]
 >
-> You can instead create the file `ember-intl.config.{mts,ts}` to get type checks.
+> Create the file `ember-intl.config.{mts,ts}` to get type checks.
 >
 > ```ts
 > import type { UserConfig } from 'ember-intl';
@@ -39,6 +41,8 @@ type UserConfig = Partial<{
 >   // ...
 > } satisfies UserConfig;
 > ```
+>
+> `UserConfig` uses `Partial`'s, which can unintentionally allow `undefined`. In `tsconfig.json`, set `compilerOptions.exactOptionalPropertyTypes` to `true` for strict type checks.
 
 
 ## addonPaths

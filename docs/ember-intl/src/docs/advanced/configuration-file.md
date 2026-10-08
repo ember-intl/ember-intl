@@ -44,9 +44,13 @@ export default {
 > 
 > Only specify the key(s) whose default value you want to override. That is, your configuration file should easily show what's different about your app or addon.
 
+> [!TIP]
+>
+> `UserConfig` uses `Partial`'s, which can unintentionally allow `undefined`. In `tsconfig.json`, set `compilerOptions.exactOptionalPropertyTypes` to `true` for strict type checks.
+
 > [!NOTE]
 > 
-> Any app or addon that uses `@ember-intl/lint` can have `ember-intl.config.{js,mjs}`.
+> Any app or addon that uses `@ember-intl/lint` can have `ember-intl.config.{js,mjs,mts,ts}`.
 > 
 > As a result, v1 apps and v1 addons can have two configuration files with some duplicate code. Once you migrate a v1 app to v2, you can delete `config/ember-intl.js`. For v1 addons, delete `tests/dummy/config/ember-intl.js`.
 

@@ -9,7 +9,7 @@ import { LintRunWithIgnores } from './shared/index.js';
 export async function noMissingKeys(
   project: Project,
   lintRuleOptions: Partial<{
-    ignores: TranslationKey[];
+    ignores: (RegExp | TranslationKey)[];
   }>,
   options: Options,
 ): Promise<LintErrors> {
