@@ -140,11 +140,13 @@ export class LintRunWithIgnores {
 
     keysFailed.push(data.key);
 
-    const ignoreByExact = ignores.exact.has(data.key);
-    const ignoreByRegex = ignores.regex.some((regex) => regex.test(data.key));
-
-    if (!ignoreByExact && !ignoreByRegex) {
-      lintErrors.push(data.lintError);
+    if (
+      ignores.exact.has(data.key) ||
+      ignores.regex.some((regex) => regex.test(data.key))
+    ) {
+      return;
     }
+
+    lintErrors.push(data.lintError);
   }
 }
