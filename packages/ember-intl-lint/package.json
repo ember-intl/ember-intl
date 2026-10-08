@@ -46,7 +46,7 @@
     "@codemod-utils/package-json": "^4.1.2",
     "@codemod-utils/threads": "^1.1.0",
     "@ember-intl/utils": "workspace:^",
-    "@formatjs/icu-messageformat-parser": "^3.5.20",
+    "@formatjs/icu-messageformat-parser": "^3.5.21",
     "yargs": "^18.2.0"
   },
   "devDependencies": {
@@ -54,10 +54,10 @@
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
-    "@types/node": "^22.20.4",
+    "@types/node": "^22.20.5",
     "@types/yargs": "^17.0.35",
     "concurrently": "^10.0.5",
-    "eslint": "^10.11.0",
+    "eslint": "^10.12.0",
     "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   },
