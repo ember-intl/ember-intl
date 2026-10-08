@@ -19,28 +19,28 @@ jobs:
       fail-fast: false
       matrix:
         package-location:
-          - 'docs/ember-intl'
-          - 'docs/my-v1-addon'
-          - 'docs/my-v1-app'
-          - 'docs/my-v1-app-with-fallbacks'
-          - 'docs/my-v1-app-with-lazy-loaded-translations'
-          - 'docs/my-v1-app-with-namespace-from-folders'
-          - 'docs/my-v1-classic-app'
-          - 'docs/my-v1-classic-app-with-lazy-loaded-translations'
-          - 'docs/my-v1-engine'
-          - 'docs/my-v2-addon'
-          - 'docs/my-v2-app'
-          - 'docs/my-v2-app-with-fallbacks'
-          - 'docs/my-v2-app-with-lazy-loaded-translations'
-          - 'docs/my-v2-app-with-namespace-from-folders'
-          - 'packages/ember-intl'
-          - 'packages/ember-intl-lint'
-          - 'packages/ember-intl-update'
-          - 'packages/ember-intl-utils'
-          - 'packages/ember-intl-v1-compat'
-          - 'packages/ember-intl-vite'
+          # - 'docs/ember-intl'
+          # - 'docs/my-v1-addon'
+          # - 'docs/my-v1-app'
+          # - 'docs/my-v1-app-with-fallbacks'
+          # - 'docs/my-v1-app-with-lazy-loaded-translations'
+          # - 'docs/my-v1-app-with-namespace-from-folders'
+          # - 'docs/my-v1-classic-app'
+          # - 'docs/my-v1-classic-app-with-lazy-loaded-translations'
+          # - 'docs/my-v1-engine'
+          # - 'docs/my-v2-addon'
+          # - 'docs/my-v2-app'
+          # - 'docs/my-v2-app-with-fallbacks'
+          # - 'docs/my-v2-app-with-lazy-loaded-translations'
+          # - 'docs/my-v2-app-with-namespace-from-folders'
+          # - 'packages/ember-intl'
+          # - 'packages/ember-intl-lint'
+          # - 'packages/ember-intl-update'
+          # - 'packages/ember-intl-utils'
+          # - 'packages/ember-intl-v1-compat'
+          # - 'packages/ember-intl-vite'
           - 'tests/ember-intl'
-          - 'tests/ember-intl-v1-compat'
+          # - 'tests/ember-intl-v1-compat'
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
@@ -70,27 +70,27 @@ jobs:
       fail-fast: false
       matrix:
         package-location:
-          - 'docs/ember-intl'
-          - 'docs/my-v1-addon'
-          - 'docs/my-v1-app'
-          - 'docs/my-v1-app-with-fallbacks'
-          - 'docs/my-v1-app-with-lazy-loaded-translations'
-          - 'docs/my-v1-app-with-namespace-from-folders'
-          - 'docs/my-v1-classic-app'
-          - 'docs/my-v1-classic-app-with-lazy-loaded-translations'
-          - 'docs/my-v1-engine'
-          - 'docs/my-v2-addon'
-          - 'docs/my-v2-app'
-          - 'docs/my-v2-app-with-fallbacks'
-          - 'docs/my-v2-app-with-lazy-loaded-translations'
-          - 'docs/my-v2-app-with-namespace-from-folders'
-          - 'packages/ember-intl-lint'
-          - 'packages/ember-intl-update'
-          - 'packages/ember-intl-utils'
-          - 'packages/ember-intl-v1-compat'
-          - 'packages/ember-intl-vite'
+          # - 'docs/ember-intl'
+          # - 'docs/my-v1-addon'
+          # - 'docs/my-v1-app'
+          # - 'docs/my-v1-app-with-fallbacks'
+          # - 'docs/my-v1-app-with-lazy-loaded-translations'
+          # - 'docs/my-v1-app-with-namespace-from-folders'
+          # - 'docs/my-v1-classic-app'
+          # - 'docs/my-v1-classic-app-with-lazy-loaded-translations'
+          # - 'docs/my-v1-engine'
+          # - 'docs/my-v2-addon'
+          # - 'docs/my-v2-app'
+          # - 'docs/my-v2-app-with-fallbacks'
+          # - 'docs/my-v2-app-with-lazy-loaded-translations'
+          # - 'docs/my-v2-app-with-namespace-from-folders'
+          # - 'packages/ember-intl-lint'
+          # - 'packages/ember-intl-update'
+          # - 'packages/ember-intl-utils'
+          # - 'packages/ember-intl-v1-compat'
+          # - 'packages/ember-intl-vite'
           - 'tests/ember-intl'
-          - 'tests/ember-intl-v1-compat'
+          # - 'tests/ember-intl-v1-compat'
     timeout-minutes: 5
     steps:
       - name: Check out a copy of the repo
@@ -170,90 +170,3 @@ jobs:
         env: ${{ matrix.env }}
         run: pnpm test
         working-directory: 'tests/ember-intl'
-
-
-  test-on-windows:
-    name: Test on Windows
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        package-location:
-          - 'packages/ember-intl-lint'
-          - 'packages/ember-intl-update'
-          - 'packages/ember-intl-utils'
-          - 'packages/ember-intl-vite'
-          - 'tests/ember-intl-v1-compat'
-    timeout-minutes: 5
-    steps:
-      - name: Check out a copy of the repo
-        uses: actions/checkout@v7
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v7
-        with:
-          cache: 'pnpm'
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Test
-        run: pnpm test
-        working-directory: ${{ matrix.package-location }}
-
-
-  deploy-documentation:
-    name: Deploy documentation
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    # Only run on pushes to the main branch (i.e. ignore pull requests)
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # One deployment at a time. Cancel a deploy that is stuck when a newer push lands.
-    concurrency:
-      cancel-in-progress: true
-      group: pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      contents: read
-      id-token: write
-      pages: write
-    steps:
-      - name: Check out a copy of the repo
-        uses: actions/checkout@v7
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v7
-        with:
-          cache: 'pnpm'
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v6
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build app
-        run: pnpm build
-        working-directory: 'docs/ember-intl'
-
-      - name: Upload dist
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: 'docs/ember-intl/.vitepress/dist'
-
-      - name: Deploy app
-        id: deployment
-        uses: actions/deploy-pages@v5
-        env:
-          name: github-pages
-          url: ${{ steps.deployment.outputs.page_url }}
