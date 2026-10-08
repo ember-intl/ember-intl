@@ -1,6 +1,6 @@
-import type { UserConfig } from 'ember-intl';
+import { defineConfig } from 'ember-intl/config';
 
-export default {
+export default defineConfig({
   addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
   buildOptions: {
     fallbackLocale: 'en-us',
@@ -16,4 +16,4 @@ export default {
       ],
     },
   },
-} satisfies UserConfig;
+});

@@ -1,4 +1,4 @@
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   lintRules: {

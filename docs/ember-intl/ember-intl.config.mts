@@ -1,7 +1,7 @@
-import type { UserConfig } from 'ember-intl';
+import { defineConfig } from 'ember-intl/config';
 
-export default {
+export default defineConfig({
   lintRules: {
     'no-unused-keys': false,
   },
-} satisfies UserConfig;
+});

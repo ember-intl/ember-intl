@@ -22,6 +22,7 @@ export default {
     addon.publicEntrypoints([
       'helpers/**/*.ts',
       'services/**/*.ts',
+      'config.ts',
       'index.ts',
       'template-registry.ts',
       'test-support.ts',

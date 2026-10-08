@@ -29,13 +29,23 @@ export default {
 ```
 
 ```ts [ember-intl.config.mts]
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   buildOptions: {
     fallbackLocale: 'en-us',
   },
 } satisfies UserConfig;
+```
+
+```ts [ember-intl.config.{mjs,mts}]
+import { defineConfig } from 'ember-intl/config';
+
+export default defineConfig({
+  buildOptions: {
+    fallbackLocale: 'en-us',
+  },
+});
 ```
 
 :::
@@ -62,7 +72,7 @@ To include an addon's translations, specify the relative path to the addon's roo
 ::: code-group
 
 ```ts [ember-intl.config.mts]{4}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   addonPaths: ['node_modules/my-v1-addon', 'node_modules/my-v2-addon'],
@@ -131,7 +141,7 @@ Copies the fallback locale's translation to all other locales' that are missing 
 ::: code-group
 
 ```ts [ember-intl.config.mts]{5}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   buildOptions: {
@@ -150,7 +160,7 @@ Derives the key's namespace from the folder path. Can be used to separate transl
 ::: code-group
 
 ```ts [ember-intl.config.mts]{5}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   buildOptions: {
@@ -173,7 +183,7 @@ For example, if an app has stored them in `public/assets/translations`:
 ::: code-group
 
 ```ts [ember-intl.config.mts]{5}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   buildOptions: {
@@ -206,7 +216,7 @@ To disable a rule, pass `false`.
 ::: code-group
 
 ```ts [ember-intl.config.mts]{5}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   lintRules: {
@@ -222,7 +232,7 @@ Lint rules may provide options (always configured as an object). For example, a 
 ::: code-group
 
 ```ts [ember-intl.config.mts]{6}
-import type { UserConfig } from 'ember-intl';
+import type { UserConfig } from 'ember-intl/config';
 
 export default {
   lintRules: {

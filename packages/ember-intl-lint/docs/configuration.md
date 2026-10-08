@@ -35,7 +35,7 @@ type UserConfig = Partial<{
 > Create the file `ember-intl.config.{mts,ts}` to get type checks.
 >
 > ```ts
-> import type { UserConfig } from 'ember-intl';
+> import type { UserConfig } from 'ember-intl/config';
 >
 > export default {
 >   // ...
