@@ -1,4 +1,8 @@
-import type { Config, UserConfig } from '@ember-intl/utils/config';
+import type {
+  Config,
+  TranslationHelper,
+  UserConfig,
+} from '@ember-intl/utils/config';
 import type { LintRule } from '@ember-intl/utils/lint-rules';
 import type {
   Project as UpstreamProject,
@@ -52,6 +56,7 @@ export type {
   Options,
   Project,
   ProjectTranslationData,
+  TranslationHelper,
   TranslationKey,
   UserConfig,
 };
