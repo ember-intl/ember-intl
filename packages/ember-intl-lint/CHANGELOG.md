@@ -1,5 +1,12 @@
 # @ember-intl/lint
 
+## 2.3.3
+
+### Patch Changes
+
+- [#2230](https://github.com/ember-intl/ember-intl/pull/2230) Introduced AST to preserve code during autofix ([@ijlee2](https://github.com/ijlee2))
+- [#2230](https://github.com/ember-intl/ember-intl/pull/2230) Updated validate to be an assertion function. Standardized error messages. ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.3.2
 
 ### Patch Changes
