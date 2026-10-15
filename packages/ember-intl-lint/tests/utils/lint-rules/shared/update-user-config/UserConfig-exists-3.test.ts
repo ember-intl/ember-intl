@@ -38,6 +38,8 @@ test('utils | lint-rules | shared | update-user-config > UserConfig exists (3)',
   assert.strictEqual(
     newFile,
     normalizeFile([
+      `import type { UserConfig } from 'ember-intl/config';`,
+      ``,
       `export default {`,
       `  "lintRules": {`,
       `    "no-unused-keys": {`,
@@ -50,7 +52,7 @@ test('utils | lint-rules | shared | update-user-config > UserConfig exists (3)',
       `      ]`,
       `    }`,
       `  }`,
-      `};`,
+      `} satisfies UserConfig;`,
       ``,
     ]),
   );

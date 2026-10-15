@@ -1,5 +1,7 @@
 import { EOL } from 'node:os';
 
+import { AST } from '@codemod-utils/ast-javascript';
+
 import type { LintRule, UserConfig } from '../../../types/index.js';
 
 type Data = {
@@ -49,10 +51,50 @@ export function updateUserConfig(file: string, data: Data): string {
     },
   };
 
-  const newFile = [
-    `export default ${stringify(userConfig).replaceAll('\n', EOL)};`,
-    '',
-  ].join(EOL);
+  const userConfigStr = stringify(userConfig).replaceAll('\n', EOL);
 
-  return newFile;
+  const ast = AST.traverse(file, {
+    visitExportDefaultDeclaration(path) {
+      switch (path.node.declaration.type) {
+        case 'CallExpression': {
+          const hasDefineConfig =
+            path.node.declaration.callee.type === 'Identifier' &&
+            path.node.declaration.callee.name === 'defineConfig';
+
+          // @ts-expect-error: Incorrect type
+          path.node.declaration = hasDefineConfig
+            ? `defineConfig(${userConfigStr})`
+            : userConfigStr;
+
+          break;
+        }
+
+        case 'ObjectExpression': {
+          // @ts-expect-error: Incorrect type
+          path.node.declaration = userConfigStr;
+
+          break;
+        }
+
+        case 'TSSatisfiesExpression': {
+          const hasUserConfig =
+            path.node.declaration.typeAnnotation.type === 'TSTypeReference' &&
+            path.node.declaration.typeAnnotation.typeName.type ===
+              'Identifier' &&
+            path.node.declaration.typeAnnotation.typeName.name === 'UserConfig';
+
+          // @ts-expect-error: Incorrect type
+          path.node.declaration = hasUserConfig
+            ? `${userConfigStr} satisfies UserConfig`
+            : userConfigStr;
+
+          break;
+        }
+      }
+
+      return false;
+    },
+  });
+
+  return AST.print(ast);
 }
