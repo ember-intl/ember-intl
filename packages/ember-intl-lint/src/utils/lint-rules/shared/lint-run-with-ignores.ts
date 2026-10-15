@@ -1,10 +1,11 @@
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { EOL } from 'node:os';
 import { join } from 'node:path';
 
 import { findUserConfig, getUserConfig } from '@ember-intl/utils/config';
 
-import type { LintErrors, LintRule, UserConfig } from '../../../types/index.js';
+import type { LintErrors, LintRule } from '../../../types/index.js';
+import { updateUserConfig } from './update-user-config.js';
 
 type Args = {
   ignores?: (RegExp | string)[] | undefined;
@@ -26,29 +27,6 @@ type Ignores = {
   exact: Set<string>;
   regex: RegExp[];
 };
-
-function stringify(userConfig: UserConfig): string {
-  const regexs: RegExp[] = [];
-
-  function replacer(_key: string, value: RegExp | string): string {
-    if (value instanceof RegExp) {
-      regexs.push(value);
-
-      return `__REGEX-PLACEHOLDER-${regexs.length - 1}__`;
-    }
-
-    return value;
-  }
-
-  return JSON.stringify(userConfig, replacer, 2).replaceAll(
-    /"__REGEX-PLACEHOLDER-(\d+)__"/g,
-    (_match, id) => {
-      const index = Number(id);
-
-      return regexs[index]!.toString();
-    },
-  );
-}
 
 function toSetOfStrings(regexes: RegExp[]): Set<string> {
   return new Set(regexes.map((regex) => regex.toString()));
@@ -79,23 +57,21 @@ export class LintRunWithIgnores {
       return;
     }
 
-    const filePath = findUserConfig(projectRoot) ?? 'ember-intl.config.mjs';
-    const userConfig = (await getUserConfig(projectRoot)) ?? {};
+    let filePath = 'ember-intl.config.mjs';
+    let file = [`export default {};`, ''].join(EOL);
 
-    userConfig.lintRules = {
-      ...(userConfig.lintRules ?? {}),
-      [this.lintRule]: {
-        ignores: [
-          ...Array.from(ignoresNew.exact).sort(),
-          ...ignoresNew.regex.sort(),
-        ],
-      },
-    };
+    const userConfig = await getUserConfig(projectRoot);
 
-    const file = [
-      `export default ${stringify(userConfig).replaceAll('\n', EOL)};`,
-      '',
-    ].join(EOL);
+    if (userConfig) {
+      filePath = findUserConfig(projectRoot)!;
+      file = readFileSync(join(projectRoot, filePath), 'utf8');
+    }
+
+    file = updateUserConfig(file, {
+      ignoresNew,
+      lintRule: this.lintRule,
+      userConfig: userConfig ?? {},
+    });
 
     writeFileSync(join(projectRoot, filePath), file, 'utf8');
 
