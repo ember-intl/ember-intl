@@ -6,9 +6,11 @@ import { findUserConfig } from './find-user-config.js';
 import { getDefaultConfig } from './get-default-config.js';
 import type { UserConfig } from './types.js';
 
-function validate(userConfig: undefined | UserConfig): void {
+function validate(
+  userConfig: undefined | UserConfig,
+): asserts userConfig is UserConfig {
   if (userConfig === undefined) {
-    return;
+    throw new Error('missing default export');
   }
 
   const defaultConfig = getDefaultConfig();
@@ -18,7 +20,7 @@ function validate(userConfig: undefined | UserConfig): void {
 
     Object.keys(userConfig.buildOptions).forEach((buildOption) => {
       if (!buildOptions.has(buildOption)) {
-        throw new Error(`Unknown build option: ${buildOption}`);
+        throw new Error(`unknown build option: ${buildOption}`);
       }
     });
   }
@@ -26,7 +28,7 @@ function validate(userConfig: undefined | UserConfig): void {
   if (userConfig.lintRules) {
     Object.keys(userConfig.lintRules).forEach((lintRule) => {
       if (!lintRules.includes(lintRule as LintRule)) {
-        throw new Error(`Unknown lint rule: ${lintRule}`);
+        throw new Error(`unknown lint rule: ${lintRule}`);
       }
     });
   }
@@ -56,7 +58,7 @@ export async function getUserConfig(
     return userConfig;
   } catch (error) {
     throw new Error(
-      `ERROR: Unable to read the config file. (${(error as Error).message})`,
+      `Unable to get ember-intl config (${(error as Error).message})`,
       {
         cause: error,
       },

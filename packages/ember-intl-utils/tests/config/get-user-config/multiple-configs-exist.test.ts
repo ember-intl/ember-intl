@@ -19,7 +19,7 @@ test('src | config | get-user-config > multiple configs exist', async function (
     (error: Error) => {
       assert.strictEqual(
         error.message,
-        `ERROR: Unable to read the config file. (Found multiple config files)`,
+        `Unable to get ember-intl config (found multiple config files)`,
       );
 
       return true;

@@ -17,7 +17,7 @@ test('src | config | find-user-config > multiple configs exist', function () {
       findUserConfig(projectRoot);
     },
     (error: Error) => {
-      assert.strictEqual(error.message, 'Found multiple config files');
+      assert.strictEqual(error.message, 'found multiple config files');
 
       return true;
     },
