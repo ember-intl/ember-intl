@@ -29,7 +29,7 @@ test('src | config | get-user-config > config has unknown lint rules', async fun
     (error: Error) => {
       assert.strictEqual(
         error.message,
-        `ERROR: Unable to read the config file. (Unknown lint rule: unknown-rule-1)`,
+        `Unable to get ember-intl config (unknown lint rule: unknown-rule-1)`,
       );
 
       return true;

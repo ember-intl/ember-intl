@@ -31,7 +31,17 @@ test('src | config | get-user-config > config has no default export (2)', async 
 
   loadFixture(inputProject, { projectRoot });
 
-  const userConfig = await getUserConfig(projectRoot);
+  await assert.rejects(
+    async () => {
+      await getUserConfig(projectRoot);
+    },
+    (error: Error) => {
+      assert.strictEqual(
+        error.message,
+        `Unable to get ember-intl config (missing default export)`,
+      );
 
-  assert.strictEqual(userConfig, undefined);
+      return true;
+    },
+  );
 });

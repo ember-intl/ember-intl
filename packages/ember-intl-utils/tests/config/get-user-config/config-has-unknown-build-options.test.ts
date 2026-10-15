@@ -27,7 +27,7 @@ test('src | config | get-user-config > config has unknown build options', async 
     (error: Error) => {
       assert.strictEqual(
         error.message,
-        `ERROR: Unable to read the config file. (Unknown build option: unknown-option-1)`,
+        `Unable to get ember-intl config (unknown build option: unknown-option-1)`,
       );
 
       return true;
