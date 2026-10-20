@@ -9,7 +9,7 @@ _Internationalization for Ember projects_
 
 ## Features
 
-- 🐹 Compatible with Ember apps, v1 addons (including engines), and v2 addons.
+- 🐹 Compatible with all apps and addons (v1 and v2).
 - 📚 Built on standards: [ICU message syntax](https://formatjs.github.io/docs/core-concepts/icu-syntax/) and [Internationalization API](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 - ⚙️ Locale-aware helpers and `intl` service, to help you display translations, numbers, dates, etc.
 - ✅ Test helpers to check locale-dependent templates.
