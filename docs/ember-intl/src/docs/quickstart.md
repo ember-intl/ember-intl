@@ -103,7 +103,7 @@ import { t } from 'ember-intl';
 
 > [!IMPORTANT]
 > 
-> This guide will show examples of templates only in "strict mode." Strict means, the template lives inside a `<template>` tag in a `*.{gjs,gts}` file, and you use `import` to get what you need from `ember-intl`.
+> This guide shows template examples in "strict mode" only. Strict means, a template lives inside the `<template>` tag in a `*.{gjs,gts}` file, and you use `import` to get what you need from `ember-intl`.
 >
 > In older projects, you can still use `ember-intl`'s helpers in "loose mode," i.e. in an `*.hbs` file or an `hbs` tag in rendering tests. To do so, you skip the import and dasherize a helper's name (e.g. `formatDate` in strict mode becomes `format-date` in loose, while `t` is the same by chance).
 > 
@@ -217,7 +217,7 @@ export default class ApplicationRoute extends Route {
 
 > [!IMPORTANT]
 >
-> Addition setup is needed for [loading translations in rendering and unit tests](./testing/custom-setups#add-translations).
+> Additional setup is needed for [loading translations in rendering and unit tests](./testing/custom-setups#add-translations).
 
 
 ## 5. Configure linters {#5-configure-linters}

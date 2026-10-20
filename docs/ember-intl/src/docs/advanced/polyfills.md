@@ -1,6 +1,6 @@
 # Polyfills
 
-`ember-intl` relies on the following APIs from `Intl`. The links on the left column provide browser compatibility.
+`ember-intl` relies on the following APIs from `Intl`. The links in the API column provide browser compatibility.
 
 | API | Polyfill | Requirements |
 |--|--|--|
