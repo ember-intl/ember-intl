@@ -39,18 +39,18 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "dependencies": {
-    "@codemod-utils/files": "^4.1.0",
-    "js-yaml": "^5.4.3"
+    "@codemod-utils/files": "^4.1.2",
+    "js-yaml": "^5.5.0"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^3.3.0",
+    "@codemod-utils/tests": "^3.3.1",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@types/node": "^22.20.5",
-    "concurrently": "^10.0.5",
-    "eslint": "^10.12.0",
-    "prettier": "^3.9.9",
+    "concurrently": "^10.0.6",
+    "eslint": "^10.13.0",
+    "prettier": "^3.9.10",
     "typescript": "^6.0.3"
   },
   "engines": {
