@@ -1,5 +1,12 @@
 # docs-app-for-ember-intl
 
+## 2.19.3
+
+### Patch Changes
+
+- [#2233](https://github.com/ember-intl/ember-intl/pull/2233) Updated README ([@ijlee2](https://github.com/ijlee2))
+- [#2231](https://github.com/ember-intl/ember-intl/pull/2231) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.19.2
 
 ### Patch Changes

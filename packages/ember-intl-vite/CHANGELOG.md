@@ -1,5 +1,12 @@
 # @ember-intl/vite
 
+## 2.2.3
+
+### Patch Changes
+
+- [#2232](https://github.com/ember-intl/ember-intl/pull/2232) Introduced trusted publishing ([@ijlee2](https://github.com/ijlee2))
+- [#2231](https://github.com/ember-intl/ember-intl/pull/2231) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.2.2
 
 ### Patch Changes
