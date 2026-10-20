@@ -6,6 +6,9 @@ autoDedupe: true
 
 autoInstallPeers: false
 
+lockfile:
+  includeResolutionSettings: true
+
 minimumReleaseAge: 720
 
 minimumReleaseAgeExclude:
@@ -15,7 +18,6 @@ minimumReleaseAgeExclude:
 
 overrides:
   ember-cli-htmlbars: ^7.0.1
-  vite: ^8.3.3
 
 packages:
   - "configs/**"

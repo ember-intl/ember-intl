@@ -21,16 +21,16 @@
     "test": "sh build.sh --test && mt dist-for-testing --quiet"
   },
   "devDependencies": {
-    "@codemod-utils/tests": "^3.3.0",
+    "@codemod-utils/tests": "^3.3.1",
     "@ember-intl/v1-compat": "workspace:*",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/typescript": "workspace:*",
     "@types/node": "^22.20.5",
     "broccoli-test-helper": "^2.0.0",
-    "concurrently": "^10.0.5",
-    "eslint": "^10.12.0",
-    "prettier": "^3.9.9",
+    "concurrently": "^10.0.6",
+    "eslint": "^10.13.0",
+    "prettier": "^3.9.10",
     "typescript": "^6.0.3"
   },
   "engines": {
