@@ -1,5 +1,11 @@
 # @ember-intl/lint
 
+## 2.3.5
+
+### Patch Changes
+
+- [#2234](https://github.com/ember-intl/ember-intl/pull/2234) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.3.4
 
 ### Patch Changes
