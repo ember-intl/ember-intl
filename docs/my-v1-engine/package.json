@@ -62,7 +62,7 @@
     "@ember/optional-features": "^3.0.0",
     "@ember/test-helpers": "^5.7.0",
     "@embroider/test-setup": "^4.0.0",
-    "@glimmer/component": "^2.1.1",
+    "@glimmer/component": "^2.2.0",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "1.5.2",
     "@glint/environment-ember-loose": "1.5.2",

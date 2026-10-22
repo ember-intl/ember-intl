@@ -42,9 +42,9 @@
     "@embroider/core": "^4.6.9",
     "@embroider/router": "^3.0.6",
     "@embroider/vite": "^1.7.15",
-    "@glimmer/component": "^2.1.1",
+    "@glimmer/component": "^2.2.0",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/ember-tsc": "^1.13.1",
+    "@glint/ember-tsc": "^1.14.1",
     "@glint/template": "^1.11.0",
     "@rollup/plugin-babel": "^7.1.0",
     "@shared-configs/eslint-config-ember": "workspace:*",
@@ -72,7 +72,7 @@
     "qunit": "^3.0.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.5"
   },
   "dependenciesMeta": {
     "ember-intl": {
