@@ -5,11 +5,11 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-intl": "^9.3.0"
+    "ember-intl": "^9.3.3"
   },
   "devDependencies": {
-    "@ember-intl/lint": "^2.3.2",
-    "@ember-intl/v1-compat": "^2.0.5",
+    "@ember-intl/lint": "^2.3.5",
+    "@ember-intl/v1-compat": "^2.0.6",
     "ember-source": "~6.12.0"
   },
   "ember": {
