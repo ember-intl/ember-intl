@@ -37,9 +37,7 @@ export function inJavascript(file: string, data: Data): TranslationKey[] {
   const { dependencies } = data;
 
   const canSkip =
-    dependencies.helpers.t === undefined &&
-    dependencies.helpers.tKey === undefined &&
-    dependencies.services.intl === undefined;
+    dependencies.helpers.size === 0 && dependencies.services.intl === undefined;
 
   if (canSkip) {
     return [];
@@ -59,10 +57,7 @@ export function inJavascript(file: string, data: Data): TranslationKey[] {
         case 'Identifier': {
           const { name } = path.node.callee;
 
-          if (
-            name !== dependencies.helpers.t &&
-            name !== dependencies.helpers.tKey
-          ) {
+          if (!dependencies.helpers.has(name)) {
             return false;
           }
 
