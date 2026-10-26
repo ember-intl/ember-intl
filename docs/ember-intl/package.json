@@ -30,7 +30,7 @@
   "devDependencies": {
     "@ember-intl/lint": "workspace:*",
     "@ember-intl/vite": "workspace:*",
-    "@glimmer/component": "^2.2.0",
+    "@glimmer/component": "^2.2.1",
     "@shared-configs/eslint-config-node": "workspace:*",
     "@shared-configs/prettier": "workspace:*",
     "@shared-configs/stylelint": "workspace:*",
@@ -44,8 +44,8 @@
     "stylelint": "^17.16.0",
     "typescript": "^6.0.3",
     "vite": "^8.3.5",
-    "vite-plugin-ember": "^0.8.2",
-    "vitepress": "^2.0.0-alpha.20"
+    "vite-plugin-ember": "^0.9.1",
+    "vitepress": "^2.0.0-alpha.21"
   },
   "engines": {
     "node": "22.* || >= 24"
