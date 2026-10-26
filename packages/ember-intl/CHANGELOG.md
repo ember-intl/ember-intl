@@ -1,5 +1,11 @@
 # ember-intl
 
+## 9.3.4
+
+### Patch Changes
+
+- [#2236](https://github.com/ember-intl/ember-intl/pull/2236) Updated @embroider/addon-shim to 1.11.0 ([@ijlee2](https://github.com/ijlee2))
+
 ## 9.3.3
 
 ### Patch Changes
