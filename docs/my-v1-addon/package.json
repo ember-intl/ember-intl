@@ -60,9 +60,9 @@
     "@ember/optional-features": "^3.0.0",
     "@ember/test-helpers": "^5.7.0",
     "@embroider/test-setup": "^4.0.0",
-    "@glimmer/component": "^2.2.0",
+    "@glimmer/component": "^2.2.1",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/ember-tsc": "^1.14.1",
+    "@glint/ember-tsc": "^1.14.2",
     "@glint/template": "^1.11.0",
     "@shared-configs/eslint-config-ember": "workspace:*",
     "@shared-configs/eslint-config-yaml": "workspace:*",
@@ -82,14 +82,14 @@
     "ember-qunit": "^9.2.0",
     "ember-resolver": "^13.2.0",
     "ember-source": "~6.12.1",
-    "ember-testem": "^0.3.3",
+    "ember-testem": "^0.5.1",
     "eslint": "^10.13.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.9.10",
     "qunit": "^3.0.0",
     "qunit-dom": "^3.6.0",
     "typescript": "^6.0.3",
-    "webpack": "^5.112.0"
+    "webpack": "^5.112.2"
   },
   "peerDependencies": {
     "ember-intl": "workspace:*"
