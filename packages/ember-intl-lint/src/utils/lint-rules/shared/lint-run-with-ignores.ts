@@ -57,14 +57,16 @@ export class LintRunWithIgnores {
       return;
     }
 
-    let filePath = 'ember-intl.config.mjs';
-    let file = [`export default {};`, ''].join(EOL);
-
     const userConfig = await getUserConfig(projectRoot);
+    let filePath: string;
+    let file: string;
 
     if (userConfig) {
       filePath = findUserConfig(projectRoot)!;
       file = readFileSync(join(projectRoot, filePath), 'utf8');
+    } else {
+      filePath = 'ember-intl.config.mjs';
+      file = [`export default {};`, ``].join(EOL);
     }
 
     file = updateUserConfig(file, {
