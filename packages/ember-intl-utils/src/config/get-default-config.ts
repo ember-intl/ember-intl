@@ -1,8 +1,8 @@
-import { lintRules } from '../lint-rules.js';
+import { type LintRules, lintRules } from '../lint-rules.js';
 import type { Config } from './types.js';
 
 export function getDefaultConfig(): Config {
-  const rules = {} as Config['lintRules'];
+  const rules = {} as LintRules;
 
   lintRules.forEach((lintRule) => {
     rules[lintRule] = true;
@@ -15,6 +15,8 @@ export function getDefaultConfig(): Config {
       namespaceKeysByDir: false,
       translationsDir: 'translations',
     },
-    lintRules: rules,
+    lintOptions: {
+      rules,
+    },
   };
 }

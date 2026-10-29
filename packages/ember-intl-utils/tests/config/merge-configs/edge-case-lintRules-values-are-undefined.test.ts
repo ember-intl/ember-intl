@@ -20,10 +20,12 @@ test('src | config | merge-configs > edge case (lintRules values are undefined)'
       namespaceKeysByDir: false,
       translationsDir: 'translations',
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': undefined,
-      'no-unused-keys': undefined,
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': undefined,
+        'no-unused-keys': undefined,
+      },
     },
   });
 });

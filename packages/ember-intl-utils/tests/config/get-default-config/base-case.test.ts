@@ -10,10 +10,12 @@ test('src | config | get-default-config > base case', function () {
       namespaceKeysByDir: false,
       translationsDir: 'translations',
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': true,
-      'no-unused-keys': true,
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': true,
+        'no-unused-keys': true,
+      },
     },
   });
 });

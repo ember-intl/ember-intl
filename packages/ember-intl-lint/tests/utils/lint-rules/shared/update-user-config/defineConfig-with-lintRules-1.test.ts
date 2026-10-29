@@ -2,11 +2,17 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { updateUserConfig } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | update-user-config > defineConfig exists (2)', function () {
+test('utils | lint-rules | shared | update-user-config > defineConfig with lintRules (1)', function () {
   const file = normalizeFile([
     `import { defineConfig } from 'ember-intl/config';`,
     ``,
-    `export default defineConfig({});`,
+    `export default defineConfig({`,
+    `  lintRules: {`,
+    `    'no-unused-keys': {`,
+    `      ignores: [],`,
+    `    },`,
+    `  },`,
+    `});`,
     ``,
   ]);
 

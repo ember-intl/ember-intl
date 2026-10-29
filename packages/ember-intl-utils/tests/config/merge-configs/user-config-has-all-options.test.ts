@@ -27,12 +27,14 @@ test('src | config | merge-configs > user config has all options', function () {
       namespaceKeysByDir: true,
       translationsDir: 'public/assets/translations',
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': {
-        ignores: ['hello.message'],
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': {
+          ignores: ['hello.message'],
+        },
+        'no-unused-keys': false,
       },
-      'no-unused-keys': false,
     },
   });
 });

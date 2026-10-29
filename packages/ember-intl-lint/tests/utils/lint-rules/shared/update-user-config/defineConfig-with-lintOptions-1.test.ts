@@ -2,18 +2,16 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { updateUserConfig } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | update-user-config > defineConfig exists (3)', function () {
+test('utils | lint-rules | shared | update-user-config > defineConfig with lintOptions (1)', function () {
   const file = normalizeFile([
     `import { defineConfig } from 'ember-intl/config';`,
     ``,
     `export default defineConfig({`,
-    `  lintRules: {`,
-    `    'no-unused-keys': {`,
-    `      ignores: [`,
-    `        'key01',`,
-    `        /^global\\./,`,
-    `        /^backend\\.error\\./`,
-    `      ],`,
+    `  lintOptions: {`,
+    `    rules: {`,
+    `      'no-unused-keys': {`,
+    `        ignores: [],`,
+    `      },`,
     `    },`,
     `  },`,
     `});`,
@@ -27,9 +25,11 @@ test('utils | lint-rules | shared | update-user-config > defineConfig exists (3)
     },
     lintRule: 'no-unused-keys',
     userConfig: {
-      lintRules: {
-        'no-unused-keys': {
-          ignores: ['key01', /^global\./, /^backend\.error\./],
+      lintOptions: {
+        rules: {
+          'no-unused-keys': {
+            ignores: [],
+          },
         },
       },
     },
@@ -41,15 +41,17 @@ test('utils | lint-rules | shared | update-user-config > defineConfig exists (3)
       `import { defineConfig } from 'ember-intl/config';`,
       ``,
       `export default defineConfig({`,
-      `  "lintRules": {`,
-      `    "no-unused-keys": {`,
-      `      "ignores": [`,
-      `        "key02",`,
-      `        "key03",`,
-      `        "key04",`,
-      `        /^backend\\.error\\./,`,
-      `        /^global\\./`,
-      `      ]`,
+      `  "lintOptions": {`,
+      `    "rules": {`,
+      `      "no-unused-keys": {`,
+      `        "ignores": [`,
+      `          "key02",`,
+      `          "key03",`,
+      `          "key04",`,
+      `          /^backend\\.error\\./,`,
+      `          /^global\\./`,
+      `        ]`,
+      `      }`,
       `    }`,
       `  }`,
       `});`,

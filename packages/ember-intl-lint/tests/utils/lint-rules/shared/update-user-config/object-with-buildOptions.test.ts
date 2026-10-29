@@ -2,7 +2,7 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { updateUserConfig } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | update-user-config > user config has buildOptions', function () {
+test('utils | lint-rules | shared | update-user-config > object with buildOptions', function () {
   const file = normalizeFile([
     `export default {`,
     `  buildOptions: {`,
@@ -38,13 +38,15 @@ test('utils | lint-rules | shared | update-user-config > user config has buildOp
       `    "namespaceKeysByDir": true,`,
       `    "translationsDir": "public/assets/translations"`,
       `  },`,
-      `  "lintRules": {`,
-      `    "no-unused-keys": {`,
-      `      "ignores": [`,
-      `        "key02",`,
-      `        "key03",`,
-      `        "key04"`,
-      `      ]`,
+      `  "lintOptions": {`,
+      `    "rules": {`,
+      `      "no-unused-keys": {`,
+      `        "ignores": [`,
+      `          "key02",`,
+      `          "key03",`,
+      `          "key04"`,
+      `        ]`,
+      `      }`,
       `    }`,
       `  }`,
       `};`,
