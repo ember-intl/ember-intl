@@ -2,8 +2,10 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { updateUserConfig } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | update-user-config > ignores exists (1)', function () {
+test('utils | lint-rules | shared | update-user-config > UserConfig with lintRules (2)', function () {
   const file = normalizeFile([
+    `import type { UserConfig } from 'ember-intl/config';`,
+    ``,
     `export default {`,
     `  lintRules: {`,
     `    'no-unused-keys': {`,
@@ -14,14 +16,14 @@ test('utils | lint-rules | shared | update-user-config > ignores exists (1)', fu
     `      ],`,
     `    },`,
     `  },`,
-    `};`,
+    `} satisfies UserConfig;`,
     ``,
   ]);
 
   const newFile = updateUserConfig(file, {
     ignoresNew: {
-      exact: new Set(),
-      regex: [],
+      exact: new Set(['key04', 'key02', 'key03']),
+      regex: [/^global\./, /^backend\.error\./],
     },
     lintRule: 'no-unused-keys',
     userConfig: {
@@ -36,13 +38,21 @@ test('utils | lint-rules | shared | update-user-config > ignores exists (1)', fu
   assert.strictEqual(
     newFile,
     normalizeFile([
+      `import type { UserConfig } from 'ember-intl/config';`,
+      ``,
       `export default {`,
       `  "lintRules": {`,
       `    "no-unused-keys": {`,
-      `      "ignores": []`,
+      `      "ignores": [`,
+      `        "key02",`,
+      `        "key03",`,
+      `        "key04",`,
+      `        /^backend\\.error\\./,`,
+      `        /^global\\./`,
+      `      ]`,
       `    }`,
       `  }`,
-      `};`,
+      `} satisfies UserConfig;`,
       ``,
     ]),
   );

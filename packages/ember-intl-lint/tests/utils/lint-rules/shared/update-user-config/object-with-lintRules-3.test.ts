@@ -2,7 +2,7 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { updateUserConfig } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | update-user-config > ignores does not exist', function () {
+test('utils | lint-rules | shared | update-user-config > object with lintRules (3)', function () {
   const file = normalizeFile([
     `export default {`,
     `  lintRules: {`,

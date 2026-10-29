@@ -2,11 +2,11 @@ import { assert, normalizeFile, test } from '@codemod-utils/tests';
 
 import { updateUserConfig } from '../../../../../src/utils/lint-rules/shared/index.js';
 
-test('utils | lint-rules | shared | update-user-config > defineConfig exists (1)', function () {
+test('utils | lint-rules | shared | update-user-config > UserConfig', function () {
   const file = normalizeFile([
-    `import { defineConfig } from 'ember-intl/config';`,
+    `import type { UserConfig } from 'ember-intl/config';`,
     ``,
-    `export default defineConfig({});`,
+    `export default {} satisfies UserConfig;`,
     ``,
   ]);
 
@@ -22,15 +22,17 @@ test('utils | lint-rules | shared | update-user-config > defineConfig exists (1)
   assert.strictEqual(
     newFile,
     normalizeFile([
-      `import { defineConfig } from 'ember-intl/config';`,
+      `import type { UserConfig } from 'ember-intl/config';`,
       ``,
-      `export default defineConfig({`,
-      `  "lintRules": {`,
-      `    "no-unused-keys": {`,
-      `      "ignores": []`,
+      `export default {`,
+      `  "lintOptions": {`,
+      `    "rules": {`,
+      `      "no-unused-keys": {`,
+      `        "ignores": []`,
+      `      }`,
       `    }`,
       `  }`,
-      `});`,
+      `} satisfies UserConfig;`,
       ``,
     ]),
   );
