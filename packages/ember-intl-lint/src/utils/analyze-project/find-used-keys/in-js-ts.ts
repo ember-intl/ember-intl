@@ -1,8 +1,11 @@
-import type { TranslationKey } from '../../../types/index.js';
+import type { Dependency, TranslationKey } from '../../../types/index.js';
 import { findDependencies, inJavascript } from './shared/index.js';
 
-export function inJsTs(file: string): TranslationKey[] {
-  const dependencies = findDependencies(file);
+export function inJsTs(
+  file: string,
+  customDependencies: Dependency[] = [],
+): TranslationKey[] {
+  const dependencies = findDependencies(file, customDependencies);
 
   const keys = inJavascript(file, { dependencies });
 
