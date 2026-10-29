@@ -5,9 +5,11 @@ export default {
   buildOptions: {
     namespaceKeysByDir: true,
   },
-  lintRules: {
-    'no-missing-keys': {
-      ignores: ['routes.index.key-without-translation'],
+  lintOptions: {
+    rules: {
+      'no-missing-keys': {
+        ignores: ['routes.index.key-without-translation'],
+      },
     },
   },
 } satisfies UserConfig;

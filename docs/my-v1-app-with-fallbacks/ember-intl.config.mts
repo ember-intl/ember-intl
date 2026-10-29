@@ -5,15 +5,17 @@ export default defineConfig({
   buildOptions: {
     fallbackLocale: 'en-us',
   },
-  lintRules: {
-    'no-inconsistent-messages': {
-      ignores: ['routes.index.title'],
-    },
-    'no-missing-keys': {
-      ignores: [
-        'components.component-from-app.message',
-        'routes.index.key-without-translation',
-      ],
+  lintOptions: {
+    rules: {
+      'no-inconsistent-messages': {
+        ignores: ['routes.index.title'],
+      },
+      'no-missing-keys': {
+        ignores: [
+          'components.component-from-app.message',
+          'routes.index.key-without-translation',
+        ],
+      },
     },
   },
 });

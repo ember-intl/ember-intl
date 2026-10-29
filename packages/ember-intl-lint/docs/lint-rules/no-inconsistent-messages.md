@@ -10,7 +10,7 @@ A message is consistent if it meets these conditions:
 - Every locale defines the key.
 
 
-## Options for `lintRules`
+## Options
 
 ### ignores
 

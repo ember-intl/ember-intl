@@ -5,9 +5,11 @@ export default defineConfig({
   buildOptions: {
     translationsDir: 'public/assets/translations',
   },
-  lintRules: {
-    'no-missing-keys': {
-      ignores: ['routes.index.key-without-translation'],
+  lintOptions: {
+    rules: {
+      'no-missing-keys': {
+        ignores: ['routes.index.key-without-translation'],
+      },
     },
   },
 });
