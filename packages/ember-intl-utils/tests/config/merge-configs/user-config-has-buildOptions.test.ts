@@ -20,10 +20,12 @@ test('src | config | merge-configs > user config has buildOptions', function () 
       namespaceKeysByDir: true,
       translationsDir: 'public/assets/translations',
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': true,
-      'no-unused-keys': true,
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': true,
+        'no-unused-keys': true,
+      },
     },
   });
 });

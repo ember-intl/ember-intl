@@ -12,10 +12,12 @@ const options: Options = {
       translationsDir: 'translations',
       namespaceKeysByDir: false,
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': true,
-      'no-unused-keys': true,
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': true,
+        'no-unused-keys': true,
+      },
     },
   },
   projectRoot: 'tmp/my-v2-app-with-fallbacks',
