@@ -32,6 +32,10 @@ function validate(
       }
     });
   } else if (userConfig.lintRules) {
+    console.warn(
+      'DEPRECATION: In ember-intl.config.{mjs,mts}, the key `lintRules` will be replaced by `lintOptions.rules` in @ember-intl/lint@3.0.0. You can rename the key now to ease migration.',
+    );
+
     Object.keys(userConfig.lintRules).forEach((lintRule) => {
       if (!lintRules.includes(lintRule as LintRule)) {
         throw new Error(`unknown lint rule: ${lintRule}`);
