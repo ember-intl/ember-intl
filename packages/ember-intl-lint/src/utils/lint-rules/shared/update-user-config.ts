@@ -41,15 +41,30 @@ function stringify(userConfig: UserConfig): string {
 export function updateUserConfig(file: string, data: Data): string {
   const { ignoresNew, lintRule, userConfig } = data;
 
-  userConfig.lintRules = {
-    ...(userConfig.lintRules ?? {}),
-    [lintRule]: {
-      ignores: [
-        ...Array.from(ignoresNew.exact).sort(),
-        ...ignoresNew.regex.sort(),
-      ],
-    },
-  };
+  if (userConfig.lintOptions || userConfig.lintRules === undefined) {
+    userConfig.lintOptions = {
+      ...userConfig.lintOptions,
+      rules: {
+        ...(userConfig.lintOptions?.rules ?? {}),
+        [lintRule]: {
+          ignores: [
+            ...Array.from(ignoresNew.exact).sort(),
+            ...ignoresNew.regex.sort(),
+          ],
+        },
+      },
+    };
+  } else {
+    userConfig.lintRules = {
+      ...userConfig.lintRules,
+      [lintRule]: {
+        ignores: [
+          ...Array.from(ignoresNew.exact).sort(),
+          ...ignoresNew.regex.sort(),
+        ],
+      },
+    };
+  }
 
   const userConfigStr = stringify(userConfig).replaceAll('\n', EOL);
 
