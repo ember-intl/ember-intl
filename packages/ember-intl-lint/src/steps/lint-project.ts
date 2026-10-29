@@ -11,9 +11,7 @@ export async function lintProject(
   project: Project,
   options: Options,
 ): Promise<LintResults> {
-  const { config } = options;
-  const { lintRules } = config;
-
+  const { rules: lintRules } = options.config.lintOptions;
   const lintResults: Partial<LintResults> = {};
 
   for (const [lintRule, lintMethod] of Object.entries(lintRuleMapping) as [

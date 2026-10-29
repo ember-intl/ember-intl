@@ -13,10 +13,12 @@ const options: Options = {
       translationsDir: 'translations',
       namespaceKeysByDir: false,
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': true,
-      'no-unused-keys': true,
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': true,
+        'no-unused-keys': true,
+      },
     },
   },
   fix: false,

@@ -14,10 +14,12 @@ test('steps | lint-project > edge-case (lint rules are disabled)', async functio
         namespaceKeysByDir: false,
         translationsDir: 'translations',
       },
-      lintRules: {
-        'no-inconsistent-messages': false,
-        'no-missing-keys': false,
-        'no-unused-keys': false,
+      lintOptions: {
+        rules: {
+          'no-inconsistent-messages': false,
+          'no-missing-keys': false,
+          'no-unused-keys': false,
+        },
       },
     },
     fix: false,

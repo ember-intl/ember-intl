@@ -13,11 +13,13 @@ const options: Options = {
       namespaceKeysByDir: false,
       translationsDir: 'translations',
     },
-    lintRules: {
-      'no-inconsistent-messages': true,
-      'no-missing-keys': true,
-      'no-unused-keys': {
-        ignores: ['routes.index.key-to-overwrite'],
+    lintOptions: {
+      rules: {
+        'no-inconsistent-messages': true,
+        'no-missing-keys': true,
+        'no-unused-keys': {
+          ignores: ['routes.index.key-to-overwrite'],
+        },
       },
     },
   },
