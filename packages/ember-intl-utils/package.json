@@ -1,6 +1,6 @@
 {
   "name": "@ember-intl/utils",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Utilities for ember-intl packages",
   "keywords": [
     "ember-intl"

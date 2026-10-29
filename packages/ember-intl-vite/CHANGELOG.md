@@ -1,5 +1,11 @@
 # @ember-intl/vite
 
+## 2.2.4
+
+### Patch Changes
+
+- [#2238](https://github.com/ember-intl/ember-intl/pull/2238) Grouped options for linting. Deprecated `Config['lintRules']`. ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.2.3
 
 ### Patch Changes

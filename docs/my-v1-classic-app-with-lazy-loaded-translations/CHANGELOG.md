@@ -1,5 +1,11 @@
 # my-v1-classic-app-with-lazy-loaded-translations
 
+## 1.9.6
+
+### Patch Changes
+
+- [#2239](https://github.com/ember-intl/ember-intl/pull/2239) Replaced lintRules with lintOptions.rules ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.9.5
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "my-v2-app-with-namespace-from-folders",
-  "version": "1.10.5",
+  "version": "1.10.6",
   "private": true,
   "description": "A Vite app to test namespaceKeysByDir",
   "repository": {
