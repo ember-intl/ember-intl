@@ -7,11 +7,16 @@ export type Config = {
     namespaceKeysByDir: boolean;
     translationsDir: string;
   };
-  lintRules: LintRules;
+  lintOptions: {
+    rules: LintRules;
+  };
 };
 
 export type UserConfig = Partial<{
   addonPaths: Config['addonPaths'];
   buildOptions: Partial<Config['buildOptions']>;
-  lintRules: Partial<Config['lintRules']>;
+  lintOptions: Partial<{
+    rules: Partial<Config['lintOptions']['rules']>;
+  }>;
+  lintRules: Partial<LintRules>;
 }>;

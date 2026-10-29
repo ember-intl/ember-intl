@@ -25,7 +25,13 @@ function validate(
     });
   }
 
-  if (userConfig.lintRules) {
+  if (userConfig.lintOptions?.rules) {
+    Object.keys(userConfig.lintOptions.rules).forEach((lintRule) => {
+      if (!lintRules.includes(lintRule as LintRule)) {
+        throw new Error(`unknown lint rule: ${lintRule}`);
+      }
+    });
+  } else if (userConfig.lintRules) {
     Object.keys(userConfig.lintRules).forEach((lintRule) => {
       if (!lintRules.includes(lintRule as LintRule)) {
         throw new Error(`unknown lint rule: ${lintRule}`);
