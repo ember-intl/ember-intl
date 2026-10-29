@@ -16,7 +16,7 @@ module.exports = function (/* environment */) {
 
 :::
 
-For v2 apps, create `ember-intl.config.{js,mjs,mts,ts}` (ESM). The file must default-export an object, which may include `addonPaths`, `buildOptions`, and `lintRules`. Only `@ember-intl/lint` and `@ember-intl/vite` make use of this file.
+For v2 apps, create `ember-intl.config.{js,mjs,mts,ts}` (ESM). The file must default-export an object, which may include `addonPaths`, `buildOptions`, and `lintOptions`. Only `@ember-intl/lint` and `@ember-intl/vite` make use of this file.
 
 ::: code-group
 
@@ -209,18 +209,34 @@ module.exports = function (/* environment */) {
 :::
 
 
-## lintRules <Badge text="Only for @ember-intl/lint" type="warning" /> {#lint-rules}
+## lintOptions <Badge text="Only for @ember-intl/lint" type="warning" /> {#lint-options}
+
+The `lintOptions` object assumes the following shape and default values.
+
+::: code-group
+
+```ts [Signature]
+type LintOptions = {
+  rules: Record<LintRule, boolean | LintRuleOptions>;
+};
+```
+
+:::
+
+### rules
 
 To disable a rule, pass `false`.
 
 ::: code-group
 
-```ts [ember-intl.config.mts]{5}
+```ts [ember-intl.config.mts]{6}
 import type { UserConfig } from 'ember-intl/config';
 
 export default {
-  lintRules: {
-    'no-inconsistent-messages': false,
+  lintOptions: {
+    rules: {
+      'no-inconsistent-messages': false,
+    },
   },
 } satisfies UserConfig;
 ```
@@ -231,13 +247,15 @@ Lint rules may provide options (always configured as an object). For example, a 
 
 ::: code-group
 
-```ts [ember-intl.config.mts]{6}
+```ts [ember-intl.config.mts]{7}
 import type { UserConfig } from 'ember-intl/config';
 
 export default {
-  lintRules: {
-    'no-unused-keys': {
-      ignores: ['hello.message', /^backend\.error\./],
+  lintOptions: {
+    rules: {
+      'no-unused-keys': {
+        ignores: ['hello.message', /^backend\.error\./],
+      },
     },
   },
 } satisfies UserConfig;

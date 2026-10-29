@@ -3,8 +3,8 @@
 A configuration file is used to handle these cases:
 
 - Account for translations from addons
-- Account for build options
-- Configure lint rules
+- Configure build
+- Configure lint
 
 To get started, create the file `ember-intl.config.{js,mjs}` in the root directory and default-export an object.
 
@@ -22,7 +22,9 @@ type UserConfig = Partial<{
     namespaceKeysByDir: boolean;
     translationsDir: string;
   }>;
-  lintRules: Partial<Record<LintRule, boolean | LintRuleOptions>>;
+  lintOptions: Partial<{
+    rules: Partial<Record<LintRule, boolean | LintRuleOptions>>;
+  }>;
 }>;
 ```
 
@@ -70,9 +72,9 @@ export default {
 };
 ```
 
-For more information, see the [documentation site](https://ember-intl.github.io/ember-intl/docs/advanced/build-options#buildoptions).
+For more information, see the [documentation site](https://ember-intl.github.io/ember-intl/docs/advanced/configuration-file#build-options).
 
 
-## lintRules
+## lintOptions
 
-`@ember-intl/vite` doesn't use `lintRules`. See [`@ember-intl/lint`](../../ember-intl-lint/docs/configuration.md#lintrules).
+`@ember-intl/vite` doesn't use `lintOptions`. See [`@ember-intl/lint`](../../ember-intl-lint/docs/configuration.md#lintoptions).
