@@ -67,6 +67,13 @@ cp -r "tests/fixtures/my-v2-app-with-addonPaths/input" "tests/fixtures/my-v2-app
   --root "tests/fixtures/my-v2-app-with-addonPaths/output"
 
 # Update fixtures
+rm -r "tests/fixtures/my-v2-app-with-dependencies/output"
+cp -r "tests/fixtures/my-v2-app-with-dependencies/input" "tests/fixtures/my-v2-app-with-dependencies/output"
+
+./dist/bin/ember-intl-lint.js \
+  --root "tests/fixtures/my-v2-app-with-dependencies/output"
+
+# Update fixtures
 rm -r "tests/fixtures/my-v2-app-with-fallbacks/output"
 cp -r "tests/fixtures/my-v2-app-with-fallbacks/input" "tests/fixtures/my-v2-app-with-fallbacks/output"
 

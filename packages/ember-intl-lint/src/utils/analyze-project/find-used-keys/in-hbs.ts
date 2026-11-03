@@ -4,10 +4,7 @@ import { inTemplate } from './shared/index.js';
 export function inHbs(file: string): TranslationKey[] {
   const keys = inTemplate(file, {
     dependencies: {
-      helpers: {
-        t: 't',
-        tKey: 't-key',
-      },
+      helpers: new Set(['t', 't-key']),
       services: {
         intl: undefined,
       },
