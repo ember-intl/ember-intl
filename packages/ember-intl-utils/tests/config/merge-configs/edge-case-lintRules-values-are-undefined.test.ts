@@ -21,6 +21,16 @@ test('src | config | merge-configs > edge case (lintRules values are undefined)'
       translationsDir: 'translations',
     },
     lintOptions: {
+      dependencies: {
+        t: [
+          { importName: 't', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t' },
+        ],
+        tKey: [
+          { importName: 'tKey', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t-key' },
+        ],
+      },
       rules: {
         'no-inconsistent-messages': true,
         'no-missing-keys': undefined,

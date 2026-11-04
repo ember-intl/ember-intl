@@ -7,6 +7,9 @@ test('src | config | get-user-config > config has lintOptions', async function (
     'ember-intl.config.mjs': normalizeFile([
       `export default {`,
       `  lintOptions: {`,
+      `    dependencies: {`,
+      `      t: [{ importName: 't', importPath: 'my-app/utils/intl' }],`,
+      `    },`,
       `    rules: {`,
       `      'no-missing-keys': {`,
       `        ignores: ['hello.message'],`,
@@ -27,6 +30,9 @@ test('src | config | get-user-config > config has lintOptions', async function (
 
   assert.deepStrictEqual(userConfig, {
     lintOptions: {
+      dependencies: {
+        t: [{ importName: 't', importPath: 'my-app/utils/intl' }],
+      },
       rules: {
         'no-missing-keys': {
           ignores: ['hello.message'],
