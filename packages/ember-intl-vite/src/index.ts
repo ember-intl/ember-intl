@@ -1,3 +1,5 @@
+import { join } from 'node:path';
+
 import type { Plugin } from 'vite';
 
 import {
@@ -12,6 +14,7 @@ export function loadTranslations(): Plugin {
   const moduleTracker = new ModuleTracker();
 
   let options: Options | undefined;
+  let translationFiles: Project['translationFiles'] | undefined;
   let translations: Project['translations'] | undefined;
 
   return {
@@ -21,7 +24,7 @@ export function loadTranslations(): Plugin {
       const projectRoot = process.cwd();
       options = await createOptions(projectRoot);
 
-      ({ translations } = analyzeProject(options));
+      ({ translationFiles, translations } = analyzeProject(options));
     },
 
     resolveId(id): string | undefined {
@@ -31,11 +34,33 @@ export function loadTranslations(): Plugin {
     load(id): string | undefined {
       const locale = moduleTracker.getLocale(id);
 
-      if (translations === undefined || locale === undefined) {
+      if (
+        options === undefined ||
+        translationFiles === undefined ||
+        translations === undefined ||
+        locale === undefined
+      ) {
         return;
       }
 
+      /*
+        Register translation files as dependencies of the virtual module,
+        so that bundlers that only watch the module graph (e.g. Vite's
+        `bundledDev` mode) rebuild the module when a file changes.
+      */
+      for (const filePath of translationFiles.keys()) {
+        this.addWatchFile(join(options.projectRoot, filePath));
+      }
+
       return getTranslationFile(translations, locale);
+    },
+
+    watchChange(id): void {
+      if (options === undefined || !isTranslationFile(id, options)) {
+        return;
+      }
+
+      ({ translationFiles, translations } = analyzeProject(options));
     },
 
     async handleHotUpdate({ file: filePath, server }): Promise<void> {
@@ -47,7 +72,7 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      ({ translations } = analyzeProject(options));
+      ({ translationFiles, translations } = analyzeProject(options));
 
       const promises = moduleTracker
         .getResolvedModuleIds()
