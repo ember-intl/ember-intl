@@ -15,10 +15,11 @@ minimumReleaseAgeExclude:
   - "@codemod-utils/*"
   - "@ijlee2-frontend-configs/*"
   - "ember-testem"
+  - type-fest@6.0.1
 
 overrides:
   ember-cli-htmlbars: ^7.0.1
-  testem: "^4.0.0-beta.1" # Due to ember-cli
+  testem: "^4.0.0-beta.3" # Due to ember-cli
 
 packages:
   - "configs/**"
@@ -32,6 +33,7 @@ packages:
   - "tests/**"
 
 publicHoistPattern:
+  - "@tsconfig/*"
   - "*eslint*"
   - "*prettier*"
   - "*stylelint*"

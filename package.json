@@ -28,9 +28,9 @@
     "@changesets/cli": "^3.0.3",
     "@ijlee2-frontend-configs/changesets": "^3.0.4",
     "sort-package-json": "^4.1.0",
-    "update-workspace-root-version": "^3.0.8"
+    "update-workspace-root-version": "^3.0.10"
   },
-  "packageManager": "pnpm@12.14.0",
+  "packageManager": "pnpm@12.21.0",
   "engines": {
     "node": "22.* || >= 24",
     "pnpm": ">= 12"
