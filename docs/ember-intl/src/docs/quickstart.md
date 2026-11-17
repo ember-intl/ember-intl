@@ -66,6 +66,10 @@ export default defineConfig({
 
 :::
 
+> [!NOTE]
+>
+> `@ember-intl/vite` reloads the app when you edit a translation file, both in Vite's default dev mode and in its experimental bundled dev mode (`experimental.bundledDev`). In bundled dev mode, a translation file that you create while the dev server is running is picked up the next time you edit an existing translation file, or when you restart the dev server.
+
 Finally, create the folder `translations` as a sibling to `app`.
 
 ```sh {:no-line-numbers}
