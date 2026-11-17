@@ -217,11 +217,58 @@ The `lintOptions` object assumes the following shape and default values.
 
 ```ts [Signature]
 type LintOptions = {
+  dependencies: Record<'t' | 'tKey', DependencyOptions[]>;
   rules: Record<LintRule, boolean | LintRuleOptions>;
 };
 ```
 
 :::
+
+### dependencies
+
+To find the translation keys in use, the linter looks for these imports by default.
+
+::: code-group
+
+```ts [Default values]
+const defaultDependencies = {
+  t: [
+    { importName: 't', importPath: 'ember-intl' },
+    { importName: 'default', importPath: 'ember-intl/helpers/t' },
+  ],
+  tKey: [
+    { importName: 'tKey', importPath: 'ember-intl' },
+    { importName: 'default', importPath: 'ember-intl/helpers/t-key' },
+  ],
+};
+```
+
+:::
+
+If your project wraps `t` or `tKey`, list your own functions. A list replaces the default list for its kind, so copy each default entry that you still import. A kind that you leave out keeps its default.
+
+::: code-group
+
+```ts [ember-intl.config.mts]{5-10}
+import type { UserConfig } from 'ember-intl/config';
+
+export default {
+  lintOptions: {
+    dependencies: {
+      t: [
+        { importName: 't', importPath: 'ember-intl' },
+        { importName: 't', importPath: 'my-app/utils/intl' },
+      ],
+    },
+  },
+} satisfies UserConfig;
+```
+
+:::
+
+Note, `importPath` is compared with the import as written (including the file extension, if any), so prefer the package name or a `#` alias over a relative path. `importName` is a named export or `'default'`.
+
+The option applies to `.gjs`, `.gts`, `.js`, and `.ts` files. In `.hbs` files, the linter looks for `t` and `t-key` only. The key must be the first argument.
 
 ### rules
 

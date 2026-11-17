@@ -23,6 +23,9 @@ type UserConfig = Partial<{
     translationsDir: string;
   }>;
   lintOptions: Partial<{
+    dependencies: Partial<
+      Record<'t' | 'tKey', { importName: string; importPath: string }[]>
+    >;
     rules: Partial<Record<LintRule, boolean | LintRuleOptions>>;
   }>;
 }>;

@@ -36,13 +36,20 @@ function saveKeys(keys: TranslationKey[], node: Expression | undefined): void {
   }
 }
 
+function isTranslation(name: string, dependencies: Dependencies): boolean {
+  return (
+    dependencies.helpers.has(name) ||
+    (dependencies.services.intl !== undefined &&
+      name === `this.${dependencies.services.intl}.t`)
+  );
+}
+
 export function inTemplate(file: string, data: Data): TranslationKey[] {
   const { dependencies, isTemplateTag } = data;
 
   const canSkip =
     isTemplateTag &&
-    dependencies.helpers.t === undefined &&
-    dependencies.helpers.tKey === undefined &&
+    dependencies.helpers.size === 0 &&
     dependencies.services.intl === undefined;
 
   if (canSkip) {
@@ -57,13 +64,8 @@ export function inTemplate(file: string, data: Data): TranslationKey[] {
         return;
       }
 
-      switch (node.path.original) {
-        case dependencies.helpers.t:
-        case dependencies.helpers.tKey:
-        case `this.${dependencies.services.intl}.t`: {
-          saveKeys(keys, node.params[0]);
-          break;
-        }
+      if (isTranslation(node.path.original, dependencies)) {
+        saveKeys(keys, node.params[0]);
       }
     },
 
@@ -72,13 +74,8 @@ export function inTemplate(file: string, data: Data): TranslationKey[] {
         return;
       }
 
-      switch (node.path.original) {
-        case dependencies.helpers.t:
-        case dependencies.helpers.tKey:
-        case `this.${dependencies.services.intl}.t`: {
-          saveKeys(keys, node.params[0]);
-          break;
-        }
+      if (isTranslation(node.path.original, dependencies)) {
+        saveKeys(keys, node.params[0]);
       }
     },
   });

@@ -14,6 +14,16 @@ const options: Options = {
       namespaceKeysByDir: false,
     },
     lintOptions: {
+      dependencies: {
+        t: [
+          { importName: 't', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t' },
+        ],
+        tKey: [
+          { importName: 'tKey', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t-key' },
+        ],
+      },
       rules: {
         'no-inconsistent-messages': true,
         'no-missing-keys': true,
