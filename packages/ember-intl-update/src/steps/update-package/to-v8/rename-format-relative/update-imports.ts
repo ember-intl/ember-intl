@@ -22,6 +22,7 @@ export function updateImports(file: string): {
 
             localName = specifier.local?.name as string | undefined;
             specifier.imported.name = 'formatRelativeTime';
+            specifier.local = null;
             update = true;
           });
 
