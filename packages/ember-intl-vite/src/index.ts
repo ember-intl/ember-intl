@@ -56,14 +56,6 @@ export function loadTranslations(): Plugin {
       return getTranslationFile(translations, locale);
     },
 
-    watchChange(id): void {
-      if (options === undefined || !isTranslationFile(id, options)) {
-        return;
-      }
-
-      project = analyzeProject(options);
-    },
-
     async handleHotUpdate({ file: filePath, server }): Promise<void> {
       if (options === undefined) {
         return;
@@ -88,6 +80,18 @@ export function loadTranslations(): Plugin {
         }, [] as Promise<void>[]);
 
       await Promise.allSettled(promises);
+    },
+
+    watchChange(filePath): void {
+      if (options === undefined) {
+        return;
+      }
+
+      if (!isTranslationFile(filePath, options)) {
+        return;
+      }
+
+      project = analyzeProject(options);
     },
   };
 }
