@@ -1,3 +1,5 @@
+import { join } from 'node:path';
+
 import type { Plugin } from 'vite';
 
 import {
@@ -12,16 +14,16 @@ export function loadTranslations(): Plugin {
   const moduleTracker = new ModuleTracker();
 
   let options: Options | undefined;
-  let translations: Project['translations'] | undefined;
+  let project: Project | undefined;
 
   return {
     name: 'ember-intl-load-translations',
 
     async buildStart(): Promise<void> {
       const projectRoot = process.cwd();
-      options = await createOptions(projectRoot);
 
-      ({ translations } = analyzeProject(options));
+      options = await createOptions(projectRoot);
+      project = analyzeProject(options);
     },
 
     resolveId(id): string | undefined {
@@ -29,10 +31,28 @@ export function loadTranslations(): Plugin {
     },
 
     load(id): string | undefined {
+      if (options === undefined || project === undefined) {
+        return;
+      }
+
       const locale = moduleTracker.getLocale(id);
 
-      if (translations === undefined || locale === undefined) {
+      if (locale === undefined) {
         return;
+      }
+
+      const { projectRoot } = options;
+      const { translations, translationFiles } = project;
+
+      /*
+        In bundled dev mode, Vite skips `handleHotUpdate` and leaves file
+        watching to Rolldown, which only watches files in its module graph.
+
+        To support reload, we explicitly list the translation files that
+        a virtual module depends on.
+      */
+      for (const filePath of translationFiles.keys()) {
+        this.addWatchFile(join(projectRoot, filePath));
       }
 
       return getTranslationFile(translations, locale);
@@ -47,7 +67,7 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      ({ translations } = analyzeProject(options));
+      project = analyzeProject(options);
 
       const promises = moduleTracker
         .getResolvedModuleIds()
@@ -62,6 +82,18 @@ export function loadTranslations(): Plugin {
         }, [] as Promise<void>[]);
 
       await Promise.allSettled(promises);
+    },
+
+    watchChange(filePath): void {
+      if (options === undefined) {
+        return;
+      }
+
+      if (!isTranslationFile(filePath, options)) {
+        return;
+      }
+
+      project = analyzeProject(options);
     },
   };
 }
