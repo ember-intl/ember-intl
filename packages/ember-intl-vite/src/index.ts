@@ -14,17 +14,16 @@ export function loadTranslations(): Plugin {
   const moduleTracker = new ModuleTracker();
 
   let options: Options | undefined;
-  let translationFiles: Project['translationFiles'] | undefined;
-  let translations: Project['translations'] | undefined;
+  let project: Project | undefined;
 
   return {
     name: 'ember-intl-load-translations',
 
     async buildStart(): Promise<void> {
       const projectRoot = process.cwd();
-      options = await createOptions(projectRoot);
 
-      ({ translationFiles, translations } = analyzeProject(options));
+      options = await createOptions(projectRoot);
+      project = analyzeProject(options);
     },
 
     resolveId(id): string | undefined {
@@ -32,16 +31,18 @@ export function loadTranslations(): Plugin {
     },
 
     load(id): string | undefined {
-      const locale = moduleTracker.getLocale(id);
-
-      if (
-        options === undefined ||
-        translationFiles === undefined ||
-        translations === undefined ||
-        locale === undefined
-      ) {
+      if (options === undefined || project === undefined) {
         return;
       }
+
+      const locale = moduleTracker.getLocale(id);
+
+      if (locale === undefined) {
+        return;
+      }
+
+      const { projectRoot } = options;
+      const { translations, translationFiles } = project;
 
       /*
         Register translation files as dependencies of the virtual module,
@@ -49,7 +50,7 @@ export function loadTranslations(): Plugin {
         `bundledDev` mode) rebuild the module when a file changes.
       */
       for (const filePath of translationFiles.keys()) {
-        this.addWatchFile(join(options.projectRoot, filePath));
+        this.addWatchFile(join(projectRoot, filePath));
       }
 
       return getTranslationFile(translations, locale);
@@ -60,7 +61,7 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      ({ translationFiles, translations } = analyzeProject(options));
+      project = analyzeProject(options);
     },
 
     async handleHotUpdate({ file: filePath, server }): Promise<void> {
@@ -72,7 +73,7 @@ export function loadTranslations(): Plugin {
         return;
       }
 
-      ({ translationFiles, translations } = analyzeProject(options));
+      project = analyzeProject(options);
 
       const promises = moduleTracker
         .getResolvedModuleIds()
