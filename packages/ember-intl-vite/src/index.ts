@@ -45,9 +45,11 @@ export function loadTranslations(): Plugin {
       const { translations, translationFiles } = project;
 
       /*
-        Register translation files as dependencies of the virtual module,
-        so that bundlers that only watch the module graph (e.g. Vite's
-        `bundledDev` mode) rebuild the module when a file changes.
+        In bundled dev mode, Vite skips `handleHotUpdate` and leaves file
+        watching to Rolldown, which only watches files in its module graph.
+
+        To support reload, we explicitly list the translation files that
+        a virtual module depends on.
       */
       for (const filePath of translationFiles.keys()) {
         this.addWatchFile(join(projectRoot, filePath));
