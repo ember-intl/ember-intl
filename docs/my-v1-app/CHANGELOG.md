@@ -1,5 +1,11 @@
 # my-v1-app
 
+## 1.8.7
+
+### Patch Changes
+
+- [#2241](https://github.com/ember-intl/ember-intl/pull/2241) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 1.8.6
 
 ### Patch Changes

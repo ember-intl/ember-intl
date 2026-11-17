@@ -1,5 +1,15 @@
 # @ember-intl/vite
 
+## 2.3.0
+
+### Minor Changes
+
+- [#2240](https://github.com/ember-intl/ember-intl/pull/2240) Supported reloading app after updating translations in bundled dev mode ([@aeodice21](https://github.com/aeodice21))
+
+### Patch Changes
+
+- [#2241](https://github.com/ember-intl/ember-intl/pull/2241) Updated dependencies ([@ijlee2](https://github.com/ijlee2))
+
 ## 2.2.4
 
 ### Patch Changes
