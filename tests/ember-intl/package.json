@@ -74,11 +74,6 @@
     "typescript": "^6.0.3",
     "vite": "^8.3.5"
   },
-  "dependenciesMeta": {
-    "ember-intl": {
-      "injected": true
-    }
-  },
   "engines": {
     "node": "22.* || >= 24"
   },
