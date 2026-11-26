@@ -1,8 +1,15 @@
-import type { TranslationKey } from '../../../types/index.js';
+import { getDefaultConfig } from '@ember-intl/utils/config';
+
+import type { Options, TranslationKey } from '../../../types/index.js';
 import { findDependencies, inJavascript } from './shared/index.js';
 
-export function inJsTs(file: string): TranslationKey[] {
-  const dependencies = findDependencies(file);
+const defaultDependencyOptions = getDefaultConfig().lintOptions.dependencies;
+
+export function inJsTs(
+  file: string,
+  dependencyOptions: Options['config']['lintOptions']['dependencies'] = defaultDependencyOptions,
+): TranslationKey[] {
+  const dependencies = findDependencies(file, dependencyOptions);
 
   const keys = inJavascript(file, { dependencies });
 

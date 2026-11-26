@@ -41,7 +41,7 @@ function stringify(userConfig: UserConfig): string {
 export function updateUserConfig(file: string, data: Data): string {
   const { ignoresNew, lintRule, userConfig } = data;
 
-  if (userConfig.lintOptions || userConfig.lintRules === undefined) {
+  if (userConfig.lintOptions?.rules || userConfig.lintRules === undefined) {
     userConfig.lintOptions = {
       ...userConfig.lintOptions,
       rules: {
