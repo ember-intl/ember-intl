@@ -1,3 +1,4 @@
+import { getDefaultConfig, mergeConfigs } from '../../../src/config.js';
 import type { Options } from '../../../src/types/index.js';
 
 const codemodOptions = {
@@ -5,21 +6,11 @@ const codemodOptions = {
 };
 
 const options: Options = {
-  config: {
-    addonPaths: [],
+  config: mergeConfigs(getDefaultConfig(), {
     buildOptions: {
       fallbackLocale: 'en-us',
-      translationsDir: 'translations',
-      namespaceKeysByDir: false,
     },
-    lintOptions: {
-      rules: {
-        'no-inconsistent-messages': true,
-        'no-missing-keys': true,
-        'no-unused-keys': true,
-      },
-    },
-  },
+  }),
   projectRoot: 'tmp/my-v2-app-with-fallbacks',
   src: 'app',
 };

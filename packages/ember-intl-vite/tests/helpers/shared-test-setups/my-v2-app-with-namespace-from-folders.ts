@@ -1,23 +1,15 @@
+import { getDefaultConfig, mergeConfigs } from '@ember-intl/utils/config';
+
 import type { Options } from '../../../src/types/index.js';
 
 const projectRoot = 'tmp/my-v2-app-with-namespace-from-folders';
 
 const options: Options = {
-  config: {
-    addonPaths: [],
+  config: mergeConfigs(getDefaultConfig(), {
     buildOptions: {
-      fallbackLocale: undefined,
       namespaceKeysByDir: true,
-      translationsDir: 'translations',
     },
-    lintOptions: {
-      rules: {
-        'no-inconsistent-messages': true,
-        'no-missing-keys': true,
-        'no-unused-keys': true,
-      },
-    },
-  },
+  }),
   projectRoot: 'tmp/my-v2-app-with-namespace-from-folders',
 };
 

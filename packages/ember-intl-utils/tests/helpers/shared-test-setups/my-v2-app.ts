@@ -1,3 +1,4 @@
+import { getDefaultConfig } from '../../../src/config.js';
 import type { Options } from '../../../src/types/index.js';
 
 const codemodOptions = {
@@ -5,21 +6,7 @@ const codemodOptions = {
 };
 
 const options: Options = {
-  config: {
-    addonPaths: [],
-    buildOptions: {
-      fallbackLocale: undefined,
-      namespaceKeysByDir: false,
-      translationsDir: 'translations',
-    },
-    lintOptions: {
-      rules: {
-        'no-inconsistent-messages': true,
-        'no-missing-keys': true,
-        'no-unused-keys': true,
-      },
-    },
-  },
+  config: getDefaultConfig(),
   projectRoot: 'tmp/my-v2-app',
   src: 'app',
 };

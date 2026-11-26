@@ -1,3 +1,4 @@
+import { getDefaultConfig, mergeConfigs } from '../../../src/config.js';
 import type { Options } from '../../../src/types/index.js';
 
 const codemodOptions = {
@@ -5,21 +6,11 @@ const codemodOptions = {
 };
 
 const options: Options = {
-  config: {
-    addonPaths: [],
+  config: mergeConfigs(getDefaultConfig(), {
     buildOptions: {
-      fallbackLocale: undefined,
-      namespaceKeysByDir: false,
       translationsDir: 'public/assets/translations',
     },
-    lintOptions: {
-      rules: {
-        'no-inconsistent-messages': true,
-        'no-missing-keys': true,
-        'no-unused-keys': true,
-      },
-    },
-  },
+  }),
   projectRoot: 'tmp/my-v2-app-with-lazy-loaded-translations',
   src: 'app',
 };

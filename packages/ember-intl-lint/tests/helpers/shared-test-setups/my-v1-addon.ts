@@ -1,3 +1,5 @@
+import { getDefaultConfig } from '@ember-intl/utils/config';
+
 import type { CodemodOptions, Options } from '../../../src/types/index.js';
 
 const codemodOptions: CodemodOptions = {
@@ -6,21 +8,7 @@ const codemodOptions: CodemodOptions = {
 };
 
 const options: Options = {
-  config: {
-    addonPaths: [],
-    buildOptions: {
-      fallbackLocale: undefined,
-      namespaceKeysByDir: false,
-      translationsDir: 'translations',
-    },
-    lintOptions: {
-      rules: {
-        'no-inconsistent-messages': true,
-        'no-missing-keys': true,
-        'no-unused-keys': true,
-      },
-    },
-  },
+  config: getDefaultConfig(),
   fix: false,
   projectRoot: 'tmp/my-v1-addon',
   src: 'addon',
