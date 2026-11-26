@@ -16,6 +16,7 @@ test('steps | analyze-project > my-v2-app-with-dependencies', async function () 
     project.usedKeys,
     new Set([
       'routes.index.description',
+      'routes.index.key-from-ember-intl',
       'routes.index.label',
       'routes.index.subtitle',
       'routes.index.title',

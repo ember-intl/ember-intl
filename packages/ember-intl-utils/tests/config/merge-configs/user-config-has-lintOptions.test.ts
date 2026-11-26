@@ -28,7 +28,11 @@ test('src | config | merge-configs > user config has lintOptions', function () {
     },
     lintOptions: {
       dependencies: {
-        t: [{ importName: 't', importPath: 'my-app/utils/intl' }],
+        t: [
+          { importName: 't', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t' },
+          { importName: 't', importPath: 'my-app/utils/intl' },
+        ],
         tKey: [
           { importName: 'tKey', importPath: 'ember-intl' },
           { importName: 'default', importPath: 'ember-intl/helpers/t-key' },

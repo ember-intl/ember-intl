@@ -15,7 +15,7 @@ test('index > my-v2-app-with-dependencies', async function () {
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
     'no-missing-keys': ['routes.index.subtitle'],
-    'no-unused-keys': ['routes.index.key-from-ember-intl'],
+    'no-unused-keys': [],
   });
 
   assertFixture(outputProject, codemodOptions);
@@ -26,7 +26,7 @@ test('index > my-v2-app-with-dependencies', async function () {
   assert.deepStrictEqual(lintResults, {
     'no-inconsistent-messages': [],
     'no-missing-keys': ['routes.index.subtitle'],
-    'no-unused-keys': ['routes.index.key-from-ember-intl'],
+    'no-unused-keys': [],
   });
 
   assertFixture(outputProject, codemodOptions);

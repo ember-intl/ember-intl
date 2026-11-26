@@ -26,7 +26,11 @@ test('src | config | merge-configs > user config has lintOptions (tKey only)', f
           { importName: 't', importPath: 'ember-intl' },
           { importName: 'default', importPath: 'ember-intl/helpers/t' },
         ],
-        tKey: [{ importName: 'tKey', importPath: 'my-app/utils/intl' }],
+        tKey: [
+          { importName: 'tKey', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t-key' },
+          { importName: 'tKey', importPath: 'my-app/utils/intl' },
+        ],
       },
       rules: {
         'no-inconsistent-messages': true,

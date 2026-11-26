@@ -101,16 +101,13 @@ export default {
 };
 ```
 
-If your project wraps `t` or `tKey`, list your own functions. A list replaces the default list for its kind, so copy each default entry that you still import. A kind that you leave out keeps its default.
+If your project wraps `t` or `tKey`, list your own functions. They are added to the defaults.
 
 ```js
 export default {
   lintOptions: {
     dependencies: {
-      t: [
-        { importName: 't', importPath: 'ember-intl' },
-        { importName: 't', importPath: 'my-app/utils/intl' },
-      ],
+      t: [{ importName: 't', importPath: 'my-app/utils/intl' }],
     },
   },
 };

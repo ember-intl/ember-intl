@@ -22,11 +22,11 @@ export function mergeConfigs(
   }
 
   if (userConfig.lintOptions?.dependencies) {
-    const { t, tKey } = userConfig.lintOptions.dependencies;
+    const { t = [], tKey = [] } = userConfig.lintOptions.dependencies;
 
     config.lintOptions.dependencies = {
-      t: t ?? config.lintOptions.dependencies.t,
-      tKey: tKey ?? config.lintOptions.dependencies.tKey,
+      t: [...config.lintOptions.dependencies.t, ...t],
+      tKey: [...config.lintOptions.dependencies.tKey, ...tKey],
     };
   }
 

@@ -245,20 +245,17 @@ const defaultDependencies = {
 
 :::
 
-If your project wraps `t` or `tKey`, list your own functions. A list replaces the default list for its kind, so copy each default entry that you still import. A kind that you leave out keeps its default.
+If your project wraps `t` or `tKey`, list your own functions. They are added to the defaults.
 
 ::: code-group
 
-```ts [ember-intl.config.mts]{5-10}
+```ts [ember-intl.config.mts]{5-7}
 import type { UserConfig } from 'ember-intl/config';
 
 export default {
   lintOptions: {
     dependencies: {
-      t: [
-        { importName: 't', importPath: 'ember-intl' },
-        { importName: 't', importPath: 'my-app/utils/intl' },
-      ],
+      t: [{ importName: 't', importPath: 'my-app/utils/intl' }],
     },
   },
 } satisfies UserConfig;
