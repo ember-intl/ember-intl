@@ -21,6 +21,15 @@ export function mergeConfigs(
     };
   }
 
+  if (userConfig.lintOptions?.dependencies) {
+    const { t, tKey } = userConfig.lintOptions.dependencies;
+
+    config.lintOptions.dependencies = {
+      t: t ?? config.lintOptions.dependencies.t,
+      tKey: tKey ?? config.lintOptions.dependencies.tKey,
+    };
+  }
+
   if (userConfig.lintOptions?.rules) {
     config.lintOptions.rules = {
       ...config.lintOptions.rules,
@@ -30,15 +39,6 @@ export function mergeConfigs(
     config.lintOptions.rules = {
       ...config.lintOptions.rules,
       ...userConfig.lintRules,
-    };
-  }
-
-  if (userConfig.lintOptions?.dependencies) {
-    const { dependencies } = userConfig.lintOptions;
-
-    config.lintOptions.dependencies = {
-      t: dependencies.t ?? config.lintOptions.dependencies.t,
-      tKey: dependencies.tKey ?? config.lintOptions.dependencies.tKey,
     };
   }
 

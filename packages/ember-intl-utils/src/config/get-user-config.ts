@@ -6,17 +6,6 @@ import { findUserConfig } from './find-user-config.js';
 import { getDefaultConfig } from './get-default-config.js';
 import type { UserConfig } from './types.js';
 
-function isDependencyOptions(value: unknown): boolean {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'importName' in value &&
-    typeof value.importName === 'string' &&
-    'importPath' in value &&
-    typeof value.importPath === 'string'
-  );
-}
-
 function validate(
   userConfig: undefined | UserConfig,
 ): asserts userConfig is UserConfig {
@@ -51,26 +40,11 @@ function validate(
       Object.keys(defaultConfig.lintOptions.dependencies),
     );
 
-    Object.entries(userConfig.lintOptions.dependencies).forEach(
-      ([dependency, dependencyOptions]) => {
-        if (!dependencies.has(dependency)) {
-          throw new Error(`unknown dependency: ${dependency}`);
-        }
-
-        if (dependencyOptions === undefined) {
-          return;
-        }
-
-        if (
-          !Array.isArray(dependencyOptions) ||
-          !dependencyOptions.every(isDependencyOptions)
-        ) {
-          throw new Error(
-            `invalid dependency: ${dependency} (expected an array of { importName, importPath })`,
-          );
-        }
-      },
-    );
+    Object.keys(userConfig.lintOptions.dependencies).forEach((dependency) => {
+      if (!dependencies.has(dependency)) {
+        throw new Error(`unknown dependency: ${dependency}`);
+      }
+    });
   }
 
   if (userConfig.lintOptions?.rules) {
