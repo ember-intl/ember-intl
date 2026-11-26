@@ -1,23 +1,55 @@
 import { AST } from '@codemod-utils/ast-javascript';
 
+import type { Options } from '../../../../types/index.js';
+
 type Decorator = ReturnType<typeof AST.builders.decorator>;
 
 export type Dependencies = {
-  helpers: {
-    t: string | undefined;
-    tKey: string | undefined;
-  };
+  helpers: Set<string>;
   services: {
     intl: string | undefined;
   };
 };
 
-export function findDependencies(file: string): Dependencies {
-  const dependencies: Dependencies = {
-    helpers: {
-      t: undefined,
-      tKey: undefined,
+type DependencyOptionsByKind = Options['config']['lintOptions']['dependencies'];
+
+type ImportNamesByPath = Map<string, Set<string>>;
+
+const cache = new WeakMap<DependencyOptionsByKind, ImportNamesByPath>();
+
+function groupByImportPath(
+  dependencyOptions: DependencyOptionsByKind,
+): ImportNamesByPath {
+  const cached = cache.get(dependencyOptions);
+
+  if (cached) {
+    return cached;
+  }
+
+  const importNamesByPath: ImportNamesByPath = new Map();
+
+  [...dependencyOptions.t, ...dependencyOptions.tKey].forEach(
+    ({ importName, importPath }) => {
+      const importNames = importNamesByPath.get(importPath) ?? new Set();
+
+      importNames.add(importName);
+      importNamesByPath.set(importPath, importNames);
     },
+  );
+
+  cache.set(dependencyOptions, importNamesByPath);
+
+  return importNamesByPath;
+}
+
+export function findDependencies(
+  file: string,
+  dependencyOptions: DependencyOptionsByKind,
+): Dependencies {
+  const importNamesByPath = groupByImportPath(dependencyOptions);
+
+  const dependencies: Dependencies = {
+    helpers: new Set(),
     services: {
       intl: undefined,
     },
@@ -88,67 +120,34 @@ export function findDependencies(file: string): Dependencies {
       const importPath = path.node.source.value;
       const specifiers = path.node.specifiers;
 
-      if (specifiers === undefined) {
+      if (typeof importPath !== 'string' || specifiers === undefined) {
         return false;
       }
 
-      switch (importPath) {
-        case 'ember-intl': {
-          const t = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportSpecifier' &&
-              specifier.imported.name === 't'
-            );
-          });
+      const importNames = importNamesByPath.get(importPath);
 
-          if (t) {
-            dependencies.helpers.t = t.local!.name as string;
-          }
-
-          const tKey = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportSpecifier' &&
-              specifier.imported.name === 'tKey'
-            );
-          });
-
-          if (tKey) {
-            dependencies.helpers.tKey = tKey.local!.name as string;
-          }
-
-          break;
-        }
-
-        case 'ember-intl/helpers/t': {
-          const t = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportDefaultSpecifier' &&
-              specifier.local!.type === 'Identifier'
-            );
-          });
-
-          if (t) {
-            dependencies.helpers.t = t.local!.name as string;
-          }
-
-          break;
-        }
-
-        case 'ember-intl/helpers/t-key': {
-          const tKey = specifiers.find((specifier) => {
-            return (
-              specifier.type === 'ImportDefaultSpecifier' &&
-              specifier.local!.type === 'Identifier'
-            );
-          });
-
-          if (tKey) {
-            dependencies.helpers.tKey = tKey.local!.name as string;
-          }
-
-          break;
-        }
+      if (importNames === undefined) {
+        return false;
       }
+
+      specifiers.forEach((specifier) => {
+        let importName: string | undefined;
+
+        if (specifier.type === 'ImportDefaultSpecifier') {
+          importName = 'default';
+        } else if (
+          specifier.type === 'ImportSpecifier' &&
+          specifier.imported.type === 'Identifier'
+        ) {
+          importName = specifier.imported.name;
+        }
+
+        if (importName === undefined || !importNames.has(importName)) {
+          return;
+        }
+
+        dependencies.helpers.add(specifier.local!.name as string);
+      });
 
       return false;
     },

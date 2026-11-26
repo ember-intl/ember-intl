@@ -1,0 +1,6 @@
+routes:
+  index:
+    description: Translations through my-app/utils/intl
+    key-from-ember-intl: Only ember-intl's t uses this key
+    label: A key marked with tKey
+    title: Welcome to ember-intl

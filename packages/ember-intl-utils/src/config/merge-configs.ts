@@ -21,6 +21,15 @@ export function mergeConfigs(
     };
   }
 
+  if (userConfig.lintOptions?.dependencies) {
+    const { t = [], tKey = [] } = userConfig.lintOptions.dependencies;
+
+    config.lintOptions.dependencies = {
+      t: [...config.lintOptions.dependencies.t, ...t],
+      tKey: [...config.lintOptions.dependencies.tKey, ...tKey],
+    };
+  }
+
   if (userConfig.lintOptions?.rules) {
     config.lintOptions.rules = {
       ...config.lintOptions.rules,
