@@ -30,6 +30,16 @@ test('src | config | merge-configs > user config has lintOptions and lintRules',
       translationsDir: 'translations',
     },
     lintOptions: {
+      dependencies: {
+        t: [
+          { importName: 't', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t' },
+        ],
+        tKey: [
+          { importName: 'tKey', importPath: 'ember-intl' },
+          { importName: 'default', importPath: 'ember-intl/helpers/t-key' },
+        ],
+      },
       rules: {
         'no-inconsistent-messages': false,
         'no-missing-keys': true,

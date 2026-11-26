@@ -6,6 +6,17 @@ import { findUserConfig } from './find-user-config.js';
 import { getDefaultConfig } from './get-default-config.js';
 import type { UserConfig } from './types.js';
 
+function isDependencyOptions(value: unknown): boolean {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'importName' in value &&
+    typeof value.importName === 'string' &&
+    'importPath' in value &&
+    typeof value.importPath === 'string'
+  );
+}
+
 function validate(
   userConfig: undefined | UserConfig,
 ): asserts userConfig is UserConfig {
@@ -23,6 +34,43 @@ function validate(
         throw new Error(`unknown build option: ${buildOption}`);
       }
     });
+  }
+
+  if (userConfig.lintOptions) {
+    const lintOptions = new Set(Object.keys(defaultConfig.lintOptions));
+
+    Object.keys(userConfig.lintOptions).forEach((lintOption) => {
+      if (!lintOptions.has(lintOption)) {
+        throw new Error(`unknown lint option: ${lintOption}`);
+      }
+    });
+  }
+
+  if (userConfig.lintOptions?.dependencies) {
+    const dependencies = new Set(
+      Object.keys(defaultConfig.lintOptions.dependencies),
+    );
+
+    Object.entries(userConfig.lintOptions.dependencies).forEach(
+      ([dependency, dependencyOptions]) => {
+        if (!dependencies.has(dependency)) {
+          throw new Error(`unknown dependency: ${dependency}`);
+        }
+
+        if (dependencyOptions === undefined) {
+          return;
+        }
+
+        if (
+          !Array.isArray(dependencyOptions) ||
+          !dependencyOptions.every(isDependencyOptions)
+        ) {
+          throw new Error(
+            `invalid dependency: ${dependency} (expected an array of { importName, importPath })`,
+          );
+        }
+      },
+    );
   }
 
   if (userConfig.lintOptions?.rules) {

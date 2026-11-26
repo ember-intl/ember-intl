@@ -33,5 +33,14 @@ export function mergeConfigs(
     };
   }
 
+  if (userConfig.lintOptions?.dependencies) {
+    const { dependencies } = userConfig.lintOptions;
+
+    config.lintOptions.dependencies = {
+      t: dependencies.t ?? config.lintOptions.dependencies.t,
+      tKey: dependencies.tKey ?? config.lintOptions.dependencies.tKey,
+    };
+  }
+
   return config;
 }
